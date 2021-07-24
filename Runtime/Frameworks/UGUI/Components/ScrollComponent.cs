@@ -13,7 +13,7 @@ namespace ReactUnity.UGUI
             { "overflow", YogaOverflow.Scroll },
             { "flex-shrink", 1 }
         };
-        public override NodeStyle DefaultStyle => new NodeStyle(DefaultLayout);
+        public override NodeStyle DefaultStyle => new NodeStyle(null, DefaultLayout);
 
         public ScrollRect ScrollRect { get; private set; }
 

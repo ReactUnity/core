@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI
             { "justify-content", YogaJustify.Center },
             { "flex-direction", YogaFlexDirection.Row },
         };
-        public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle(ToggleDefaultLayout)
+        public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle(null, ToggleDefaultLayout)
         {
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6f,

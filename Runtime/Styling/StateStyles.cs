@@ -8,20 +8,6 @@ namespace ReactUnity.Styling
     public class StateStyles
     {
         public Dictionary<string, NodeStyle> Dic = new Dictionary<string, NodeStyle>();
-
-        public NodeStyle this[string state]
-        {
-            get
-            {
-                if (Dic.ContainsKey(state)) return Dic[state];
-                SubscribeToState(state);
-                var style = new NodeStyle();
-                Dic[state] = style;
-                return style;
-            }
-            set => Dic[state] = value;
-        }
-
         public IReactComponent Component;
         public HashSet<string> States = new HashSet<string>();
         public List<NodeStyle> ActiveStates = new List<NodeStyle>();

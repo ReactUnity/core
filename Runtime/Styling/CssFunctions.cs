@@ -5,6 +5,7 @@ using System.Reflection;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Types;
+using UnityEngine;
 
 namespace ReactUnity.Styling
 {
@@ -17,6 +18,7 @@ namespace ReactUnity.Styling
         public static ICssFunction Rgba = new RgbaFunction();
         public static ICssFunction Hsla = new HslaFunction();
         public static ICssFunction Var = new VarFunction();
+        public static ICssFunction Vector3 = new Vector3Function();
 
         private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.OrdinalIgnoreCase)
         {
@@ -24,9 +26,10 @@ namespace ReactUnity.Styling
             {  "hsl", Hsla },
             {  "hsv", Hsla },
             {  "hsva", Hsla },
+            {  "vector2", Vector3 },
         };
 
-        public static bool TryCall(string expression, out object result, HashSet<string> allowed)
+        public static bool TryCall(string expression, out object result, HashSet<string> allowed = null)
         {
             if (string.IsNullOrWhiteSpace(expression))
             {
@@ -126,6 +129,31 @@ namespace ReactUnity.Styling
             }
 
             public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;
+        }
+
+        private class Vector3Function : ICssFunction
+        {
+            public string Name { get; } = "vector3";
+
+            public object Call(string name, string[] args)
+            {
+                var x = args.Length > 0 ? AllConverters.FloatConverter.Convert(args[0]) : null;
+                var y = args.Length > 1 ? AllConverters.FloatConverter.Convert(args[1]) : null;
+                var z = args.Length > 2 ? AllConverters.FloatConverter.Convert(args[2]) : null;
+
+                if (x is float xf)
+                {
+                    if (y is float yf)
+                    {
+                        if (z is float zf) return new Vector3(xf, yf, zf);
+                        return new Vector3(xf, yf, 0);
+                    }
+                    return null;
+                }
+                return null;
+            }
+
+            public bool CanHandleArguments(int count, string name, string[] args) => count == 2 || count == 3;
         }
 
         private class VarFunction : ICssFunction

@@ -9,7 +9,10 @@ namespace ReactUnity.UGUI
 {
     public class AnchorComponent : UGUIComponent
     {
-        public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle() { fontStyle = TMPro.FontStyles.Underline, cursor = CursorList.Pointer };
+        public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle(null) {
+            fontStyle = TMPro.FontStyles.Underline,
+            cursor = CursorList.Pointer,
+        };
         public override NodeStyle DefaultStyle => AnchorDefaultStyle;
 
         AnchorClickHandler clickHandler;

@@ -26,6 +26,7 @@ namespace ReactUnity.Converters
         {
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             var keyword = RuleHelpers.GetCssKeyword(value);
+            if (keyword == CssKeyword.CurrentColor) return DynamicCurrentColorValue.Instance;
             if (keyword != CssKeyword.NoKeyword) return keyword;
             return CssKeyword.Invalid;
         }

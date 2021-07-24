@@ -63,24 +63,27 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
-            ComputedStyle.fontFamily.Get(Context, font => {
+
+            var style = ComputedStyle;
+
+            style.fontFamily.Get(Context, font => {
                 if (font?.TmpFontAsset) Text.font = font?.TmpFontAsset;
             });
-            var fontSize = ComputedStyle.fontSizeActual;
+            var fontSize = style.fontSize;
             Text.fontSize = fontSize;
-            Text.fontStyle = ComputedStyle.fontStyle;
-            Text.fontWeight = ComputedStyle.fontWeight;
-            Text.color = ComputedStyle.color;
-            Text.enableWordWrapping = ComputedStyle.textWrap;
-            Text.alignment = ComputedStyle.textAlign;
-            Text.overflowMode = ComputedStyle.textOverflow;
+            Text.fontStyle = style.fontStyle;
+            Text.fontWeight = style.fontWeight;
+            Text.color = style.color;
+            Text.enableWordWrapping = style.textWrap;
+            Text.alignment = style.textAlign;
+            Text.overflowMode = style.textOverflow;
 
-            var lineHeight = ComputedStyle.lineHeightActual;
+            var lineHeight = style.lineHeight;
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
 
-            if (ComputedStyle.content != null)
+            if (style.content != null)
             {
-                Text.text = ComputedStyle.content;
+                Text.text = style.content;
                 TextSetByStyle = true;
             }
             else if (TextSetByStyle)
@@ -89,7 +92,7 @@ namespace ReactUnity.UGUI
                 TextSetByStyle = false;
             }
 
-            var isLinked = ComputedStyle.textOverflow == TextOverflowModes.Linked;
+            var isLinked = style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
             {
                 LinkedTextWatcher = AddComponent<LinkedTextWatcher>();

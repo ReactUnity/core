@@ -10,9 +10,9 @@ namespace ReactUnity.UGUI
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;
 
-        public static NodeStyle HostDefaultStyle { get; } = new NodeStyle()
+        public static NodeStyle HostDefaultStyle { get; } = new NodeStyle(null)
         {
-            fontSize = YogaValue.Point(24),
+            fontSize = 24,
         };
         public override NodeStyle DefaultStyle => HostDefaultStyle;
 

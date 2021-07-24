@@ -39,10 +39,10 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", Color.black, true, true);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
         public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
-        public static readonly StyleProperty<YogaValue> fontSize = new StyleProperty<YogaValue>("fontSize", YogaValue.Undefined(), true, true);
-        public static readonly StyleProperty<YogaValue> lineHeight = new StyleProperty<YogaValue>("lineHeight", YogaValue.Undefined(), true, true);
-        public static readonly StyleProperty<YogaValue> letterSpacing = new StyleProperty<YogaValue>("letterSpacing", YogaValue.Undefined(), true, true);
-        public static readonly StyleProperty<YogaValue> wordSpacing = new StyleProperty<YogaValue>("wordSpacing", YogaValue.Undefined(), true, true);
+        public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", null, true, true, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", null, true, true, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> letterSpacing = new StyleProperty<float>("letterSpacing", 0, true, true, AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> wordSpacing = new StyleProperty<float>("wordSpacing", 0, true, true, AllConverters.LengthConverter);
         public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));

@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI
             { "flex-direction", YogaFlexDirection.Row },
         };
 
-        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle(DefaultLayout)
+        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle(null, DefaultLayout)
         {
             backgroundColor = new Color(0.9f, 0.9f, 0.9f),
             borderRadius = 8f,

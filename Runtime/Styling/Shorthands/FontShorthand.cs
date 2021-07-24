@@ -39,8 +39,8 @@ namespace ReactUnity.Styling.Shorthands
 
             var style = FontStyles.Normal;
             var weight = FontWeight.Regular;
-            var size = YogaValue.Undefined();
-            var lineHeight = YogaValue.Undefined();
+            object size = null;
+            object lineHeight = null;
             var family = FontReference.None;
 
             for (int i = 0; i < splits.Count; i++)
@@ -77,11 +77,11 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var slashSplit = split.Split('/');
 
-                    var val = AllConverters.YogaValueConverter.Convert(slashSplit[0]);
+                    var val = AllConverters.LengthConverter.Convert(slashSplit[0]);
 
-                    if (val is YogaValue v)
+                    if (!Equals(val, CssKeyword.Invalid))
                     {
-                        size = v;
+                        size = val;
                         sizeSet = true;
 
                         var hasLine = false;
@@ -98,11 +98,11 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            var lh = AllConverters.YogaValueConverter.Convert(lineSplit);
+                            var lh = AllConverters.LengthConverter.Convert(lineSplit);
 
-                            if (lh is YogaValue l)
+                            if (!Equals(lh, CssKeyword.Invalid))
                             {
-                                lineHeight = l;
+                                lineHeight = lh;
                                 lineHeightSet = true;
                             }
                             else return null;

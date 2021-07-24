@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI
             { "overflow", YogaOverflow.Hidden },
         };
 
-        public static NodeStyle InputDefaultStyle { get; } = new NodeStyle(DefaultLayout)
+        public static NodeStyle InputDefaultStyle { get; } = new NodeStyle(null, DefaultLayout)
         {
             backgroundColor = Color.white,
             borderRadius = 8f,
@@ -115,7 +115,7 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
-            InputField.pointSize = ComputedStyle.fontSizeActual;
+            InputField.pointSize = ComputedStyle.fontSize;
         }
 
         public void Focus()

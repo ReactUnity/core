@@ -16,6 +16,7 @@ namespace ReactUnity.Styling
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
 
+        public ReactContext Context;
         public NodeStyle Parent;
 
         #region Set/Get
@@ -150,15 +151,15 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.fontStyle, value);
             get => GetStyleValue<FontStyles>(StyleProperties.fontStyle);
         }
-        public YogaValue fontSize
+        public float fontSize
         {
             set => SetStyleValue(StyleProperties.fontSize, value);
-            get => GetStyleValue<YogaValue>(StyleProperties.fontSize);
+            get => GetStyleValue<float>(StyleProperties.fontSize);
         }
-        public YogaValue lineHeight
+        public float lineHeight
         {
             set => SetStyleValue(StyleProperties.lineHeight, value);
-            get => GetStyleValue<YogaValue>(StyleProperties.lineHeight);
+            get => GetStyleValue<float>(StyleProperties.lineHeight);
         }
         public TextAlignmentOptions textAlign
         {
@@ -217,56 +218,24 @@ namespace ReactUnity.Styling
         }
         #endregion
 
-        #region Resolved values
-
-        public float fontSizeActual
+        public NodeStyle(ReactContext context, Dictionary<string, object> styles)
         {
-            get
-            {
-                if (HasValue(StyleProperties.fontSize))
-                {
-                    var fs = fontSize;
-                    var unit = fs.Unit;
-
-                    if (unit == YogaUnit.Undefined || unit == YogaUnit.Auto) return Parent?.fontSizeActual ?? 0;
-                    if (unit == YogaUnit.Point) return fs.Value;
-                    return (Parent?.fontSizeActual ?? 0) * fs.Value / 100;
-                }
-
-                return Parent?.fontSizeActual ?? 0;
-            }
-        }
-
-        public float lineHeightActual
-        {
-            get
-            {
-                if (HasValue(StyleProperties.lineHeight))
-                {
-                    var lh = lineHeight;
-                    var unit = lh.Unit;
-
-                    if (unit == YogaUnit.Undefined || unit == YogaUnit.Auto) return fontSizeActual;
-                    if (unit == YogaUnit.Point) return lh.Value;
-                    return fontSizeActual * lh.Value / 100;
-                }
-
-                return Parent?.lineHeightActual ?? fontSizeActual;
-            }
-        }
-
-        #endregion
-
-        public NodeStyle(Dictionary<string, object> styles)
-        {
+            Context = context;
             StyleMap = new Dictionary<string, object>(styles);
         }
 
-        public NodeStyle(NodeStyle defaultStyle = null, NodeStyle fallback = null)
+        public NodeStyle(ReactContext context, NodeStyle defaultStyle = null, NodeStyle fallback = null)
         {
+            Context = context;
             StyleMap = new Dictionary<string, object>();
             DefaultStyle = defaultStyle?.StyleMap;
             Fallback = fallback;
+        }
+
+        public void UpdateParent(NodeStyle parent)
+        {
+            Parent = parent;
+            Fallback?.UpdateParent(parent);
         }
 
         public void CopyStyle(NodeStyle copyFrom)
@@ -288,15 +257,13 @@ namespace ReactUnity.Styling
             {
                 if (Fallback != null)
                 {
-                    return Fallback.GetRawStyleValue(prop, fromChild, this);
+                    value = Fallback.GetRawStyleValue(prop, fromChild, this);
                 }
-
-                if (prop.inherited)
+                else if (prop.inherited)
                 {
-                    return Parent?.GetRawStyleValue(prop, true) ?? prop?.defaultValue;
+                    value = Parent?.GetRawStyleValue(prop, true) ?? prop?.defaultValue;
                 }
-
-                return prop?.defaultValue;
+                else value = prop?.defaultValue;
             }
 
             return GetStyleValueSpecial(value, prop, activeStyle ?? this);
@@ -307,13 +274,7 @@ namespace ReactUnity.Styling
             if (value == null) return null;
             if (value is CssKeyword ck)
             {
-                if (ck == CssKeyword.CurrentColor)
-                {
-                    if (prop as StyleProperty<Color> == StyleProperties.color)
-                        return Parent?.GetRawStyleValue(StyleProperties.color);
-                    return activeStyle?.GetRawStyleValue(StyleProperties.color);
-                }
-                else if (ck == CssKeyword.Invalid) return null;
+                if (ck == CssKeyword.Invalid) return null;
                 else if (ck == CssKeyword.Auto) return prop?.defaultValue;
                 else if (ck == CssKeyword.None) return prop?.noneValue;
                 else if (ck == CssKeyword.Initial || ck == CssKeyword.Unset) return prop?.defaultValue;
@@ -328,6 +289,14 @@ namespace ReactUnity.Styling
             if (value is IDynamicValue d) value = d.Convert(prop, this);
             if (value == null) return default;
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
+
+#if UNITY_EDITOR
+            if (value != null && value.GetType() != typeof(T))
+            {
+                Debug.LogError($"Error while converting {value} from type {value.GetType()} to {typeof(T)}");
+            }
+#endif
+
             return (T) value;
         }
 

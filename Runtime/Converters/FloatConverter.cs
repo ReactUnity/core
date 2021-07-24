@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -11,17 +12,24 @@ namespace ReactUnity.Converters
         static CultureInfo culture = new CultureInfo("en-US");
 
         Dictionary<string, float> SuffixMap;
+        Dictionary<string, Func<float, object>> SuffixMapper;
         bool AllowSuffixless;
 
         public FloatConverter()
         {
             SuffixMap = new Dictionary<string, float>();
+            SuffixMapper = new Dictionary<string, Func<float, object>>();
             AllowSuffixless = true;
         }
 
-        public FloatConverter(Dictionary<string, float> suffixMap, bool allowSuffixless = true)
+        public FloatConverter(
+            Dictionary<string, float> suffixMap,
+            Dictionary<string, Func<float, object>> suffixMapper = null,
+            bool allowSuffixless = true
+        )
         {
             SuffixMap = suffixMap;
+            SuffixMapper = suffixMapper ?? new Dictionary<string, Func<float, object>>();
             AllowSuffixless = allowSuffixless;
         }
 
@@ -68,6 +76,7 @@ namespace ReactUnity.Converters
                 var multiplier = 1f;
                 if (suffix != "")
                 {
+                    if (SuffixMapper.TryGetValue(suffix, out var mapper)) return mapper(res);
                     if (!SuffixMap.TryGetValue(suffix, out multiplier)) return CssKeyword.Invalid;
                 }
                 else if (!AllowSuffixless && res != 0)
@@ -100,12 +109,31 @@ namespace ReactUnity.Converters
 
     public class LengthConverter : FloatConverter
     {
-        public LengthConverter() : base(new Dictionary<string, float>
-        {
-            { "px", 1 },
-            { "pt", 1 },
-            { "%", 0.01f },
-        })
+        public LengthConverter() : base(
+            new Dictionary<string, float>
+            {
+                { "px", 1 },
+                { "pt", 96f / 72f },
+                { "pc", 16 },
+                { "in", 96 },
+                { "cm", 38 },
+                { "mm", 3.8f },
+                { "Q", 38f / 40f },
+                { "%", 0.01f },
+            },
+            new Dictionary<string, Func<float, object>>
+            {
+                { "rem", x => new DynamicRootValue(x, DynamicRootValue.RootValueType.Rem) },
+                { "vw", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Width) },
+                { "vh", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Height) },
+                { "vmin", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Min) },
+                { "vmax", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Max) },
+                { "em", x => new DynamicFontSizeValue(x) },
+                //{ "lh", x => new DynamicFontSizeValue(x) },
+                //{ "ex", x => new DynamicFontSizeValue(x / 2) },
+                //{ "ch", x => new DynamicFontSizeValue(x / 2) }
+            }
+        )
         { }
     }
 
@@ -127,7 +155,7 @@ namespace ReactUnity.Converters
         {
             { "ms", 1 },
             { "s", 1000 },
-        }, false)
+        }, null, false)
         { }
     }
 }

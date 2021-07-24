@@ -1,4 +1,5 @@
 using ReactUnity.Animations;
+using UnityEngine;
 
 namespace ReactUnity.Styling
 {
@@ -42,6 +43,112 @@ namespace ReactUnity.Styling
                 return d.Convert(prop, style);
 
             return prop.Convert(val);
+        }
+    }
+
+    public struct DynamicCurrentColorValue : IDynamicValue
+    {
+        public static DynamicCurrentColorValue Instance { get; } = new DynamicCurrentColorValue();
+
+        public object Convert(IStyleProperty prop, NodeStyle style)
+        {
+            var st = style;
+            var fromChild = ReferenceEquals(prop, StyleProperties.color);
+            if (fromChild) st = style?.Parent;
+
+            var val = st?.GetRawStyleValue(StyleProperties.color, fromChild);
+
+            if (val == null) return null;
+
+            if (val is IDynamicValue d)
+                return d.Convert(prop, st);
+
+            return prop.Convert(val);
+        }
+    }
+
+    public struct DynamicFontSizeValue : IDynamicValue
+    {
+        public static DynamicFontSizeValue Default { get; } = new DynamicFontSizeValue(1);
+
+        public float Ratio { get; }
+
+        public DynamicFontSizeValue(float ratio)
+        {
+            Ratio = ratio;
+        }
+
+        public object Convert(IStyleProperty prop, NodeStyle style)
+        {
+            var st = style;
+            var fromChild = ReferenceEquals(prop, StyleProperties.fontSize);
+            if (fromChild) st = style?.Parent;
+
+            var val = st?.GetRawStyleValue(StyleProperties.fontSize, fromChild);
+
+            if (val == null) return null;
+
+            if (val is IDynamicValue d) val = d.Convert(prop, st);
+            else val = prop.Convert(val);
+
+            if (val is float f) return f * Ratio;
+            return val;
+        }
+    }
+
+    public struct DynamicRootValue : IDynamicValue
+    {
+        public enum RootValueType
+        {
+            None,
+            Width,
+            Height,
+            Min,
+            Max,
+            Rem,
+        }
+
+        public float Ratio { get; }
+        public RootValueType Type { get; }
+
+        public DynamicRootValue(float ratio, RootValueType type)
+        {
+            Ratio = ratio;
+            Type = type;
+        }
+
+        public object Convert(IStyleProperty prop, NodeStyle style)
+        {
+            var size = 0f;
+
+            switch (Type)
+            {
+                case RootValueType.Width:
+                    size = style.Context.Host.Width;
+                    break;
+                case RootValueType.Height:
+                    size = style.Context.Host.Height;
+                    break;
+                case RootValueType.Min:
+                    size = Mathf.Min(style.Context.Host.Width, style.Context.Host.Height);
+                    break;
+                case RootValueType.Max:
+                    size = Mathf.Max(style.Context.Host.Width, style.Context.Host.Height);
+                    break;
+                case RootValueType.Rem:
+                    var hostStyle = style.Context.Host.ComputedStyle;
+                    if (style == hostStyle && ReferenceEquals(prop, StyleProperties.fontSize)) size = 24;
+                    else size = hostStyle.fontSize;
+                    break;
+                case RootValueType.None:
+                default:
+                    break;
+            }
+
+            var val = prop.Convert(size);
+
+            if (val is float f) return f * Ratio;
+            return val;
         }
     }
 

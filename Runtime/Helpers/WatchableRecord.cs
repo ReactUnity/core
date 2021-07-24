@@ -241,7 +241,6 @@ namespace ReactUnity.Helpers
     {
 #if REACT_CLEARSCRIPT
         ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
-        public object prototype;
 
         public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {
@@ -267,7 +266,6 @@ namespace ReactUnity.Helpers
     {
 #if REACT_CLEARSCRIPT
         ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
-        public object prototype;
 
         public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {

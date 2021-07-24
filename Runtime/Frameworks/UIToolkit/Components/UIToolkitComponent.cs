@@ -97,7 +97,7 @@ namespace ReactUnity.UIToolkit
             Element.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
             Element.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
 
-            if (computed.HasValue(StyleProperties.fontSize)) Element.style.fontSize = computed.fontSizeActual;
+            if (computed.HasValue(StyleProperties.fontSize)) Element.style.fontSize = computed.fontSize;
             else Element.style.fontSize = StyleKeyword.Null;
 
             Element.style.borderBottomLeftRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderBottomLeftRadius);

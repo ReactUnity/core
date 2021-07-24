@@ -225,7 +225,7 @@ namespace ReactUnity.Editor.Tests
 
         [TestCase("0", 0f)]
         [TestCase("172", 172)]
-        [TestCase("172pt", 172)]
+        [TestCase("72pt", 96)]
         [TestCase("172px", 172)]
         [TestCase("172%", 172f * (1f / 100))]
         [TestCase("50ms1", CssKeyword.Invalid)]

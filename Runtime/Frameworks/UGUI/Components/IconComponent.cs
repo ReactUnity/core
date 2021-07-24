@@ -60,7 +60,7 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
-            Text.fontSize = ComputedStyle.fontSizeActual;
+            Text.fontSize = ComputedStyle.fontSize;
             Text.fontStyle = ComputedStyle.fontStyle;
             Text.fontWeight = ComputedStyle.fontWeight;
             Text.color = ComputedStyle.color;

@@ -75,6 +75,8 @@ namespace ReactUnity
     [TypescriptListInterfaces]
     public interface IHostComponent : IContainerComponent
     {
+        public float Width { get; }
+        public float Height { get; }
     }
 
     public interface IShadowComponent : IReactComponent

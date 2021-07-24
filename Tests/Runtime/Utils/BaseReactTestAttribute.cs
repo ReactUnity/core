@@ -56,7 +56,7 @@ namespace ReactUnity.Tests
         public override IEnumerator BeforeTest(ITest test)
         {
             var canvas = GameObject.Find("REACT_CANVAS");
-            var cmp = canvas?.GetComponent<ReactUnityUGUI>();
+            var cmp = canvas?.GetComponentInChildren<ReactUnityUGUI>();
             if (cmp?.Context != null && SkipIfExisting) yield break;
 
             yield return base.BeforeTest(test);
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
         {
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
-            var ru = canvas.GetComponent<ReactUnityUGUI>();
+            var ru = canvas.GetComponentInChildren<ReactUnityUGUI>();
 
             ru.EngineType = engineType;
             ru.Script = script;

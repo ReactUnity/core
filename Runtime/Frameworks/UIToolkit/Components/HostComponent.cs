@@ -4,11 +4,15 @@ namespace ReactUnity.UIToolkit
 {
     public class HostComponent : UIToolkitComponent<VisualElement>, IHostComponent
     {
-        private float CurrentWidth = -1;
-        private float CurrentHeight = -1;
+        public float Width { get; private set; } = -1;
+        public float Height { get; private set; } = -1;
 
         public HostComponent(VisualElement element, UIToolkitContext ctx) : base(element, ctx, "_root")
         {
+            Width = Element.contentRect.width;
+            Height = Element.contentRect.width;
+            Context.MediaProvider.SetDimensions(Width, Height);
+
             element.RegisterCallback<GeometryChangedEvent>(OnResize);
         }
 
@@ -17,10 +21,10 @@ namespace ReactUnity.UIToolkit
             var width = ev.newRect.width;
             var height = ev.newRect.height;
 
-            if (width != CurrentWidth || height != CurrentHeight)
+            if (width != Width || height != Height)
             {
-                CurrentWidth = width;
-                CurrentHeight = height;
+                Width = width;
+                Height = height;
                 Context.MediaProvider.SetDimensions(width, height);
             }
         }

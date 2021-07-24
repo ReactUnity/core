@@ -67,7 +67,7 @@ namespace ReactUnity.Styling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private float getTime() => Context.Timer.AnimationTime * 1000;
 
-        private static NodeStyle DefaultStyle = new NodeStyle();
+        private static NodeStyle DefaultStyle = new NodeStyle(null);
         public NodeStyle Previous { get; private set; }
         public NodeStyle Current { get; private set; }
         public NodeStyle Active { get; private set; }
@@ -126,8 +126,8 @@ namespace ReactUnity.Styling
 
             if (hasTransition || hasAnimation)
             {
-                Active = new NodeStyle(null, Current);
-                Active.Parent = Parent?.Active;
+                Active = new NodeStyle(Context, null, Current);
+                Active.UpdateParent(Parent?.Active);
 
                 var switchTransitions = hasTransition && activeTransitions != transition;
                 var switchAnimations = hasAnimation && activeAnimations != animation;
@@ -656,7 +656,7 @@ namespace ReactUnity.Styling
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
-            Active.Parent = active;
+            Active.UpdateParent(active);
             OnUpdate?.Invoke(Active, false);
         }
     }

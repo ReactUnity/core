@@ -16,7 +16,7 @@ namespace ReactUnity.UGUI
             { "justify-content", YogaJustify.Center },
         };
 
-        public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle(DefaultLayout) { };
+        public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle(null, DefaultLayout) { };
         public override NodeStyle DefaultStyle => ImageDefaultStyle;
 
         public ImageMeasurer Measurer { get; private set; }
