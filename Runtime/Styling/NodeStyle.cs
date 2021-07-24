@@ -155,6 +155,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.fontSize, value);
             get => GetStyleValue<YogaValue>(StyleProperties.fontSize);
         }
+        public YogaValue lineHeight
+        {
+            set => SetStyleValue(StyleProperties.lineHeight, value);
+            get => GetStyleValue<YogaValue>(StyleProperties.lineHeight);
+        }
         public TextAlignmentOptions textAlign
         {
             set => SetStyleValue(StyleProperties.textAlign, value);
@@ -229,6 +234,24 @@ namespace ReactUnity.Styling
                 }
 
                 return Parent?.fontSizeActual ?? 0;
+            }
+        }
+
+        public float lineHeightActual
+        {
+            get
+            {
+                if (HasValue(StyleProperties.lineHeight))
+                {
+                    var lh = lineHeight;
+                    var unit = lh.Unit;
+
+                    if (unit == YogaUnit.Undefined || unit == YogaUnit.Auto) return fontSizeActual;
+                    if (unit == YogaUnit.Point) return lh.Value;
+                    return fontSizeActual * lh.Value / 100;
+                }
+
+                return Parent?.lineHeightActual ?? fontSizeActual;
             }
         }
 

@@ -20,6 +20,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
         public static readonly StyleShorthand Flex = new FlexShorthand("flex");
         public static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
+        public static readonly StyleShorthand Font = new FontShorthand("font");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly StyleShorthand[] List;

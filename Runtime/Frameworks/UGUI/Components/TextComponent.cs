@@ -66,13 +66,17 @@ namespace ReactUnity.UGUI
             ComputedStyle.fontFamily.Get(Context, font => {
                 if (font?.TmpFontAsset) Text.font = font?.TmpFontAsset;
             });
-            Text.fontSize = ComputedStyle.fontSizeActual;
+            var fontSize = ComputedStyle.fontSizeActual;
+            Text.fontSize = fontSize;
             Text.fontStyle = ComputedStyle.fontStyle;
             Text.fontWeight = ComputedStyle.fontWeight;
             Text.color = ComputedStyle.color;
             Text.enableWordWrapping = ComputedStyle.textWrap;
             Text.alignment = ComputedStyle.textAlign;
             Text.overflowMode = ComputedStyle.textOverflow;
+
+            var lineHeight = ComputedStyle.lineHeightActual;
+            Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
 
             if (ComputedStyle.content != null)
             {

@@ -40,6 +40,9 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
         public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
         public static readonly StyleProperty<YogaValue> fontSize = new StyleProperty<YogaValue>("fontSize", YogaValue.Undefined(), true, true);
+        public static readonly StyleProperty<YogaValue> lineHeight = new StyleProperty<YogaValue>("lineHeight", YogaValue.Undefined(), true, true);
+        public static readonly StyleProperty<YogaValue> letterSpacing = new StyleProperty<YogaValue>("letterSpacing", YogaValue.Undefined(), true, true);
+        public static readonly StyleProperty<YogaValue> wordSpacing = new StyleProperty<YogaValue>("wordSpacing", YogaValue.Undefined(), true, true);
         public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
@@ -77,6 +80,9 @@ namespace ReactUnity.Styling
             { "font-style", fontStyle },
             { "text-decoration", fontStyle },
             { "font-size", fontSize },
+            { "line-height", lineHeight },
+            { "letter-spacing", letterSpacing },
+            { "word-spacing", wordSpacing },
             { "text-align", textAlign },
             { "text-overflow", textOverflow },
             { "text-wrap", textWrap },

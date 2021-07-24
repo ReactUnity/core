@@ -1,7 +1,7 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
-using UnityEngine;
+using TMPro;
 
 namespace ReactUnity.Tests
 {
@@ -39,6 +39,28 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(125, tt.xMin);
             Assert.AreEqual(95, tt.yMin);
+        }
+
+
+        [ReactInjectableTest(style: @"
+          #test {
+            font: bold italic 23px /33px monospace;
+          }
+")]
+        public IEnumerator FontShorthandWorks()
+        {
+            yield return null;
+
+            var cmp = Q("#test");
+            var text = cmp.Children[0] as UGUI.UGUIComponent;
+
+            var tt = text.RectTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual(FontStyles.Italic, tt.fontStyle);
+            Assert.AreEqual(FontWeight.Bold, tt.fontWeight);
+            Assert.AreEqual("monospace", tt.font.name);
+            Assert.AreEqual(23, tt.fontSize);
+            Assert.AreEqual(10f / 23f * 100f, tt.lineSpacing);
         }
     }
 }
