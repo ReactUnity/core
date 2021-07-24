@@ -61,7 +61,7 @@ namespace ReactUnity.Styling
             if (val == null) return null;
 
             if (val is IDynamicValue d)
-                return d.Convert(prop, st);
+                return d.Convert(StyleProperties.color, st);
 
             return prop.Convert(val);
         }
@@ -88,7 +88,7 @@ namespace ReactUnity.Styling
 
             if (val == null) return null;
 
-            if (val is IDynamicValue d) val = d.Convert(prop, st);
+            if (val is IDynamicValue d) val = d.Convert(StyleProperties.fontSize, st);
             else val = prop.Convert(val);
 
             if (val is float f) return f * Ratio;

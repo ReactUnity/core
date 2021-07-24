@@ -161,6 +161,16 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.lineHeight, value);
             get => GetStyleValue<float>(StyleProperties.lineHeight);
         }
+        public float letterSpacing
+        {
+            set => SetStyleValue(StyleProperties.letterSpacing, value);
+            get => GetStyleValue<float>(StyleProperties.letterSpacing);
+        }
+        public float wordSpacing
+        {
+            set => SetStyleValue(StyleProperties.wordSpacing, value);
+            get => GetStyleValue<float>(StyleProperties.wordSpacing);
+        }
         public TextAlignmentOptions textAlign
         {
             set => SetStyleValue(StyleProperties.textAlign, value);

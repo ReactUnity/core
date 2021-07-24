@@ -56,5 +56,11 @@ namespace ReactUnity.Tests
         {
             if (Context != null) GameObject.DestroyImmediate(Component);
         }
+
+        public IEnumerator Pause()
+        {
+            Debug.Break();
+            yield return null;
+        }
     }
 }

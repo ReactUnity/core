@@ -80,6 +80,8 @@ namespace ReactUnity.UGUI
 
             var lineHeight = style.lineHeight;
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
+            Text.characterSpacing = style.letterSpacing * 100;
+            Text.wordSpacing = style.wordSpacing * 100;
 
             if (style.content != null)
             {
