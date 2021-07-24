@@ -49,9 +49,9 @@ namespace ReactUnity
             afterStartCallbacks.ForEach(x => x?.Invoke(this, error));
         }
 
-        public void ExecuteScript(string script)
+        public void ExecuteScript(string code, string fileName = null)
         {
-            engine.Execute(script);
+            engine.Execute(code, fileName);
         }
 
         void CreateBaseEngine(bool debug, bool awaitDebugger)

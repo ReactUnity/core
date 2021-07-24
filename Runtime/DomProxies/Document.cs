@@ -9,10 +9,10 @@ namespace ReactUnity.DomProxies
     {
         public HeadProxy head;
         public string origin;
-        public Action<string> execute;
+        public Action<string, string> execute;
         public ReactContext context;
 
-        public DocumentProxy(ReactContext context, Action<string> execute, string origin)
+        public DocumentProxy(ReactContext context, Action<string, string> execute, string origin)
         {
             head = new HeadProxy();
             this.execute = execute;
@@ -149,7 +149,9 @@ namespace ReactUnity.DomProxies
             var dispatcher = document.context.Dispatcher;
 
             Action<string> action = (sc) => {
-                document.execute(sc);
+                string fileName = script.FileName;
+
+                document.execute(sc, fileName);
                 (onload as Action)?.Invoke();
             };
 

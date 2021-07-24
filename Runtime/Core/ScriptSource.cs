@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using UnityEngine;
@@ -52,6 +53,37 @@ namespace ReactUnity
                     if (Uri.TryCreate(serverUrl, DevServerFilename, out var res)) return res.AbsoluteUri;
                 }
                 return serverUrl.AbsoluteUri;
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                string res = null;
+
+                switch (Type)
+                {
+                    case ScriptSourceType.TextAsset:
+                        res = SourceAsset.name;
+                        break;
+                    case ScriptSourceType.File:
+                        res = SourcePath;
+                        break;
+                    case ScriptSourceType.Url:
+                        res = SourcePath;
+                        break;
+                    case ScriptSourceType.Resource:
+                        res = SourcePath;
+                        break;
+                    case ScriptSourceType.Raw:
+                        res = "Inline Script";
+                        break;
+                    default:
+                        break;
+                }
+
+                return res;
             }
         }
 
