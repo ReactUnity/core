@@ -8,7 +8,7 @@ namespace ReactUnity.Converters
     public class YogaValueConverter : IStyleParser, IStyleConverter
     {
         static CultureInfo culture = new CultureInfo("en-US");
-        static Regex PxRegex = new Regex("px$");
+
         public object FromString(string value)
         {
             if (value == "auto") return YogaValue.Auto();
@@ -18,8 +18,10 @@ namespace ReactUnity.Converters
                 return CssKeyword.Invalid;
             }
 
-            if (float.TryParse(PxRegex.Replace(value, ""), NumberStyles.Float, culture, out var parsedValue2)) return YogaValue.Point(parsedValue2);
-            return CssKeyword.Invalid;
+            var converted = AllConverters.LengthConverter.Convert(value);
+
+            if (converted is float f) return YogaValue.Point(f);
+            return converted;
         }
 
         public object Convert(object value)
@@ -30,7 +32,7 @@ namespace ReactUnity.Converters
             else if (value is int i) return YogaValue.Point(i);
             else if (value is float v) return YogaValue.Point(v);
 
-            if (value is CssKeyword ck && ck == CssKeyword.Auto) return YogaValue.Auto();
+            if (Equals(value, CssKeyword.Auto)) return YogaValue.Auto();
 
             return FromString(value?.ToString());
         }

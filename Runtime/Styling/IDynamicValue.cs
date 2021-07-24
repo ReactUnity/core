@@ -145,9 +145,9 @@ namespace ReactUnity.Styling
                     break;
             }
 
-            var val = prop.Convert(size);
+            size *= Ratio;
 
-            if (val is float f) return f * Ratio;
+            var val = prop.Convert(size);
             return val;
         }
     }

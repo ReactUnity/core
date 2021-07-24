@@ -64,5 +64,47 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(81, text.fontSize);
         }
+
+        [ReactInjectableTest(MultipleLevelsScript,
+@"
+            #test {
+                font-size: 2rem;
+            }
+            view {
+                font-size: 1.5em;
+            }
+")]
+        public IEnumerator RemAndEmCombinedWorks()
+        {
+            yield return null;
+
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+            var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual(108, text.fontSize);
+        }
+
+        [ReactInjectableTest(MultipleLevelsScript,
+@"
+            #test {
+                font-size: 2rem;
+                width: 20rem;
+                height: 4em;
+                align-self: flex-start;
+            }
+")]
+        public IEnumerator RemAndEmWorksOnLayout()
+        {
+            yield return null;
+
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+            var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual(48, text.fontSize);
+            Assert.AreEqual(480, rt.rect.width);
+            Assert.AreEqual(48 * 4, rt.rect.height);
+        }
     }
 }
