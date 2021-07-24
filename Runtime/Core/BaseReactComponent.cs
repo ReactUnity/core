@@ -13,11 +13,6 @@ namespace ReactUnity
 {
     public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent where ContextType : ReactContext
     {
-        #region Statics / Defaults
-        public static readonly NodeStyle TagDefaultStyle = new NodeStyle(null);
-        public virtual NodeStyle DefaultStyle => TagDefaultStyle;
-        #endregion
-
         public ContextType Context { get; }
         ReactContext IReactComponent.Context => Context;
         public IContainerComponent Parent { get; private set; }
@@ -100,7 +95,7 @@ namespace ReactUnity
             StyleState = new StyleState(context);
             StyleState.OnUpdate += OnStylesUpdated;
             StyleState.OnEvent += FireEvent;
-            StyleState.SetCurrent(new NodeStyle(Context, DefaultStyle));
+            StyleState.SetCurrent(new NodeStyle(Context));
         }
 
         public virtual void Update()
@@ -238,7 +233,7 @@ namespace ReactUnity
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context, DefaultStyle);
+            var resolvedStyle = new NodeStyle(Context);
             resolvedStyle.CssStyles = cssStyles;
 
             StyleState.SetCurrent(resolvedStyle);

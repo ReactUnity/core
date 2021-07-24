@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
-using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,26 +9,6 @@ namespace ReactUnity.UGUI
 {
     public class InputComponent : UGUIComponent
     {
-        public static Dictionary<string, object> DefaultLayout { get; } = new Dictionary<string, object>
-        {
-            { "padding", 8 },
-            { "min-height", 40 },
-            { "min-width", 200 },
-            { "max-width", YogaValue.Percent(100) },
-            { "overflow", YogaOverflow.Hidden },
-        };
-
-        public static NodeStyle InputDefaultStyle { get; } = new NodeStyle(null, DefaultLayout)
-        {
-            backgroundColor = Color.white,
-            borderRadius = 8f,
-            fontSize = 24,
-            cursor = CursorList.Text,
-            appearance = Appearance.Input,
-        };
-
-        public override NodeStyle DefaultStyle => InputDefaultStyle;
-
         public string Value
         {
             get => InputField.text;

@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Facebook.Yoga;
-using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +6,6 @@ namespace ReactUnity.UGUI
 {
     public class ScrollComponent : UGUIComponent
     {
-        public static Dictionary<string, object> DefaultLayout { get; } = new Dictionary<string, object> {
-            { "overflow", YogaOverflow.Scroll },
-            { "flex-shrink", 1 }
-        };
-        public override NodeStyle DefaultStyle => new NodeStyle(null, DefaultLayout);
-
         public ScrollRect ScrollRect { get; private set; }
 
         public ScrollComponent(UGUIContext Context) : base(Context, "scroll")

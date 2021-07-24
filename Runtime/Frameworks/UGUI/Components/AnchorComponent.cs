@@ -1,6 +1,4 @@
 using System;
-using ReactUnity.Styling;
-using ReactUnity.Types;
 using ReactUnity.UGUI.EventHandlers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,12 +7,6 @@ namespace ReactUnity.UGUI
 {
     public class AnchorComponent : UGUIComponent
     {
-        public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle(null) {
-            fontStyle = TMPro.FontStyles.Underline,
-            cursor = CursorList.Pointer,
-        };
-        public override NodeStyle DefaultStyle => AnchorDefaultStyle;
-
         AnchorClickHandler clickHandler;
 
         public string url = "";

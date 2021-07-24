@@ -9,6 +9,7 @@
 }
 
 :root {
+  font-size: 24px;
   font-family: sans-serif;
 }
 
@@ -20,117 +21,55 @@ icon {
   flex-basis: auto;
 }
 
-slider {
-  height: 20px;
-  width: 200px;
-  transform-origin: 50% 50%;
-  navigation: vertical;
-  cursor: pointer;
-  background-image: procedural://white;
-  background-color: 0,0,0,0;
-  border-color: 0.6;
-}
-
-slider[orientation="vertical"] {
-  width: 20px;
-  height: 200px;
-  navigation: horizontal;
-}
-
-slider _track {
-  position: absolute;
-  start: 0;
-  end: 0;
-  top: 25%;
-  bottom: 25%;
-  background-image: inherit;
-  background-color: 0.78;
-  border-color: inherit;
-  border-radius: 4px;
-  border-width: 1px;
-  flex-direction: row;
-}
-
-slider[orientation="vertical"] _track {
-  start: 25%;
-  end: 25%;
-  top: 0;
-  bottom: 0;
-  flex-direction: column-reverse;
-}
-
-slider[direction="horizontal-reverse"] _track,
-slider[direction="vertical-reverse"] _track {
-  justify-content: flex-end;
-}
-
-slider _fill {
-  background-image: inherit;
-  background-color: 0.92;
-  border-color: inherit;
-  width: 100%;
-  height: 100%;
-}
-
-slider _thumbContainer {
-  background-image: inherit;
-  background-color: 0,0,0,0;
-  border-color: inherit;
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-slider[direction="horizontal"] _thumbContainer {
-  top: 50%;
-  end: 0;
-}
-
-slider[direction="horizontal-reverse"] _thumbContainer {
-  top: 50%;
-  start: 0;
-}
-
-slider[direction="vertical"] _thumbContainer {
-  start: 50%;
-  top: 0;
-}
-
-slider[direction="vertical-reverse"] _thumbContainer {
-  start: 50%;
-  bottom: 0;
-}
-
-slider _thumb {
+image {
+  overflow: hidden;
+  justify-content: center;
   align-items: center;
-  border-radius: 20px;
-  height: 20px;
-  width: 20px;
-  position: absolute;
-  transform-origin: center;
-  translate: -50% -50%;
-  border-width: 1px;
-  border-color: inherit;
-  background-image: inherit;
-  background-color: 0.92;
 }
 
-slider[orientation="horizontal"] _thumb {
-  flex-direction: column;
-}
-
-slider[orientation="vertical"] _thumb {
+button {
+  padding: 8px 12px;
+  align-items: center;
+  justify-content: center;
   flex-direction: row;
+  background-color: rgba(90%, 90%, 90%, 1);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
 }
 
-slider:hover _thumb {
-  background-color: 0.96;
+input {
+  padding: 8px;
+  min-height: 40px;
+  min-width: 200px;
+  max-width: 100%;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 8px;
+  cursor: text;
+  appearance: input;
 }
 
-slider:focus _thumb {
-  background-color: 0.98;
+scroll {
+  overflow: scroll;
+  flex-shrink: 1;
 }
 
-slider:active _thumb {
-  background-color: 0.86;
+toggle {
+  aspect-ratio: 1;
+  width: 24px;
+  margin: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgba(82%, 82%, 82%, 1);
+  border-radius: 6px;
+  cursor: pointer;
+  appearance: toggle;
+}
+
+anchor {
+  font-style: underline;
+  cursor: pointer;
 }

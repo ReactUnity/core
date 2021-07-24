@@ -12,7 +12,6 @@ namespace ReactUnity.Styling
     {
         Dictionary<string, object> StyleMap;
         public List<IDictionary<IStyleProperty, object>> CssStyles;
-        Dictionary<string, object> DefaultStyle;
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
 
@@ -228,17 +227,10 @@ namespace ReactUnity.Styling
         }
         #endregion
 
-        public NodeStyle(ReactContext context, Dictionary<string, object> styles)
-        {
-            Context = context;
-            StyleMap = new Dictionary<string, object>(styles);
-        }
-
-        public NodeStyle(ReactContext context, NodeStyle defaultStyle = null, NodeStyle fallback = null)
+        public NodeStyle(ReactContext context, NodeStyle fallback = null)
         {
             Context = context;
             StyleMap = new Dictionary<string, object>();
-            DefaultStyle = defaultStyle?.StyleMap;
             Fallback = fallback;
         }
 
@@ -262,8 +254,7 @@ namespace ReactUnity.Styling
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
-                !OwnTryGetValue(prop, out value) &&
-                (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
+                !OwnTryGetValue(prop, out value))
             {
                 if (Fallback != null)
                 {
@@ -301,7 +292,7 @@ namespace ReactUnity.Styling
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 
 #if UNITY_EDITOR
-            if (value != null && value.GetType() != typeof(T))
+            if (value != null && value.GetType() != typeof(T) && !typeof(T).IsEnum)
             {
                 Debug.LogError($"Error while converting {value} from type {value.GetType()} to {typeof(T)}");
             }
@@ -345,7 +336,6 @@ namespace ReactUnity.Styling
         {
             return StyleMap.ContainsKey(prop.name) ||
                 OwnHasValue(prop) ||
-                (DefaultStyle != null && DefaultStyle.ContainsKey(prop.name)) ||
                 (Fallback != null && Fallback.HasValue(prop));
         }
 

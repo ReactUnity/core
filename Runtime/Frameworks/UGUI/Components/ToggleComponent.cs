@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
-using ReactUnity.Types;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -12,24 +7,6 @@ namespace ReactUnity.UGUI
 
     public class ToggleComponent : UGUIComponent
     {
-        public static Dictionary<string, object> ToggleDefaultLayout { get; } = new Dictionary<string, object>
-        {
-            { "aspect-ratio", 1 },
-            { "width", YogaValue.Point(24) },
-            { "margin-horizontal", 6 },
-            { "align-items", YogaAlign.Center },
-            { "justify-content", YogaJustify.Center },
-            { "flex-direction", YogaFlexDirection.Row },
-        };
-        public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle(null, ToggleDefaultLayout)
-        {
-            backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
-            borderRadius = 6f,
-            cursor = CursorList.Pointer,
-            appearance = Appearance.Toggle,
-        };
-        public override NodeStyle DefaultStyle => ToggleDefaultStyle;
-
         public bool Value
         {
             get => Toggle.isOn;
