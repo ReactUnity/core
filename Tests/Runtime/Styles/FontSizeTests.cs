@@ -48,6 +48,19 @@ namespace ReactUnity.Tests
             Assert.AreEqual(36, text.fontSize);
         }
 
+        [ReactInjectableTest(style: @"
+            #test {
+                font-size: 23px;
+                font-size: bogus-value;
+            }
+")]
+        public IEnumerator InvalidValuesAreIgnored()
+        {
+            yield return null;
+            var text = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            Assert.AreEqual(23, text.fontSize);
+        }
+
         [ReactInjectableTest(MultipleLevelsScript,
 @"
             view {

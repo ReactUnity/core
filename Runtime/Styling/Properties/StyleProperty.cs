@@ -44,16 +44,15 @@ namespace ReactUnity.Styling
         public object Convert(object value)
         {
             var keyword = CssKeyword.NoKeyword;
-
             if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
             else if (value is CssKeyword k) keyword = k;
 
-            if (keyword == CssKeyword.Initial) value = defaultValue;
-            else if (keyword == CssKeyword.None) value = noneValue;
+            if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default) value = defaultValue;
+            else if (keyword == CssKeyword.None || keyword == CssKeyword.Unset) value = noneValue;
             else if (keyword == CssKeyword.CurrentColor) value = ComputedCurrentColor.Instance;
-            else if (keyword != CssKeyword.NoKeyword && keyword != CssKeyword.Invalid) value = keyword;
+            else if (keyword != CssKeyword.NoKeyword) value = keyword;
 
-            if (Equals(value, CssKeyword.Invalid)) return null;
+            if (value is CssKeyword) return value;
             if (value == null) return null;
 
             return converter.Convert(value);
@@ -72,6 +71,7 @@ namespace ReactUnity.Styling
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
             value = Convert(value);
+            if (Equals(value, CssKeyword.Invalid)) return null;
 
             collection[this] = value;
             return ModifiedProperties;

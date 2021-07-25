@@ -70,7 +70,7 @@ namespace ReactUnity
             MediaProvider = mediaProvider;
             CursorAPI = new CursorAPI(this);
 
-            Parser = new StylesheetParser(true, true, true, true, true);
+            Parser = new StylesheetParser(true, true, true, true, true, false, true);
             StyleTree = new StyleTree(Parser);
 
             var updateVisitor = new UpdateVisitor();
