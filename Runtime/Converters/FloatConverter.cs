@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
 using UnityEngine;
 
 namespace ReactUnity.Converters
@@ -123,12 +124,12 @@ namespace ReactUnity.Converters
             },
             new Dictionary<string, Func<float, object>>
             {
-                { "rem", x => new DynamicRootValue(x, DynamicRootValue.RootValueType.Rem) },
-                { "vw", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Width) },
-                { "vh", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Height) },
-                { "vmin", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Min) },
-                { "vmax", x => new DynamicRootValue(x / 100f, DynamicRootValue.RootValueType.Max) },
-                { "em", x => new DynamicFontSizeValue(x) },
+                { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
+                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
+                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
+                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
+                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
+                { "em", x => new ComputedFontSize(x) },
                 //{ "lh", x => new DynamicFontSizeValue(x) },
                 //{ "ex", x => new DynamicFontSizeValue(x / 2) },
                 //{ "ch", x => new DynamicFontSizeValue(x / 2) }

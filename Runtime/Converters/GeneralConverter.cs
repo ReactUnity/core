@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Converters
 {
@@ -26,7 +27,7 @@ namespace ReactUnity.Converters
         {
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             var keyword = RuleHelpers.GetCssKeyword(value);
-            if (keyword == CssKeyword.CurrentColor) return DynamicCurrentColorValue.Instance;
+            if (keyword == CssKeyword.CurrentColor) return ComputedCurrentColor.Instance;
             if (keyword != CssKeyword.NoKeyword) return keyword;
             return CssKeyword.Invalid;
         }

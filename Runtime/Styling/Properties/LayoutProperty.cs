@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Facebook.Yoga;
 using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling
 {
@@ -37,7 +38,7 @@ namespace ReactUnity.Styling
 
         public void Set(YogaNode node, object value, YogaNode defaultNode, NodeStyle style)
         {
-            if (value is IDynamicValue d) value = d.Convert(this, style);
+            if (value is IComputedValue d) value = d.Convert(this, style);
             if (Equals(value, CssKeyword.Invalid) || Equals(value, CssKeyword.None) || Equals(value, CssKeyword.NoKeyword)) return;
             else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Auto)) SetDefault(node, defaultNode);
             else if (Equals(value, CssKeyword.Unset)) SetDefault(node);

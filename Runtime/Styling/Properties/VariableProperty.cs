@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling
 {
@@ -24,7 +25,7 @@ namespace ReactUnity.Styling
 
         public object Convert(object value)
         {
-            return value is IDynamicValue d ? d : new DynamicValue(value);
+            return value is IComputedValue d ? d : new ComputedDynamic(value);
         }
 
         public object GetStyle(NodeStyle style) => style.GetRawStyleValue(this);

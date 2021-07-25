@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -175,7 +176,7 @@ namespace ReactUnity.Styling
                 var isProperty = TryCall(fallback, out var res, Allowed);
                 var resFallback = isProperty ? res : fallback;
 
-                return new DynamicPropertyValue(new VariableProperty(varName), resFallback);
+                return new ComputedVariable(new VariableProperty(varName), resFallback);
             }
 
             public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;

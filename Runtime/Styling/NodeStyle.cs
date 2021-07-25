@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Animations;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
@@ -287,7 +288,7 @@ namespace ReactUnity.Styling
         public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
         {
             var value = GetRawStyleValue(prop);
-            if (value is IDynamicValue d) value = d.Convert(prop, this);
+            if (value is IComputedValue d) value = d.Convert(prop, this);
             if (value == null) return default;
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 
