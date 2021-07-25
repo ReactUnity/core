@@ -3,3 +3,10 @@ codecov:
 
 fixes:
    - "/github/workspace/core/::"
+
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
