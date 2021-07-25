@@ -11,8 +11,6 @@
 :root {
   flex-grow: 1;
   flex-shrink: 1;
-}
-
-image {
-  color: white;
+  font-size: 12px;
+  color: black;
 }

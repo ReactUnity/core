@@ -36,7 +36,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
         public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: AllConverters.RotateConverter);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
-        public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", Color.black, true, true);
+        public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", DynamicCurrentColorValue.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
         public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
         public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", DynamicFontSizeValue.Default, true, false, AllConverters.LengthConverter);

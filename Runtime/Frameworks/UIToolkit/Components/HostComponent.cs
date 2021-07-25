@@ -9,8 +9,8 @@ namespace ReactUnity.UIToolkit
 
         public HostComponent(VisualElement element, UIToolkitContext ctx) : base(element, ctx, "_root")
         {
-            Width = Element.contentRect.width;
-            Height = Element.contentRect.width;
+            Width = Element.layout.width;
+            Height = Element.layout.width;
             Context.MediaProvider.SetDimensions(Width, Height);
 
             element.RegisterCallback<GeometryChangedEvent>(OnResize);

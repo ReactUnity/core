@@ -37,10 +37,9 @@ namespace ReactUnity.Styling
         {
             var val = style.GetRawStyleValue(Property, false);
 
-            if (val == null) val = FallbackValue;
+            if (val == null) val = FallbackValue ?? prop.defaultValue;
 
-            if (val is IDynamicValue d)
-                return d.Convert(prop, style);
+            if (val is IDynamicValue d) return d.Convert(prop, style);
 
             return prop.Convert(val);
         }
@@ -169,6 +168,9 @@ namespace ReactUnity.Styling
         {
             var from = From.Convert(prop, style);
             var to = To.Convert(prop, style);
+
+            if (Equals(from, CssKeyword.Invalid)) return to;
+            if (Equals(to, CssKeyword.Invalid)) return from;
 
             return Interpolater.Interpolate(from, to, Ratio);
         }
