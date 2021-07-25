@@ -8,7 +8,7 @@ namespace ReactUnity.Styling.Computed
             if (value is IComputedValue) throw new System.Exception("Dynamic value cannot wrap another dynamic value");
             Value = value;
         }
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             return prop.Convert(Value);
         }

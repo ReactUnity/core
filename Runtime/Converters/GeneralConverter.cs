@@ -17,6 +17,7 @@ namespace ReactUnity.Converters
 
         public object Convert(object value)
         {
+            if (value is IComputedValue) return value;
             var res = baseConverter?.Convert(value);
             if (res != null && !Equals(res, CssKeyword.Invalid)) return res;
             if (value is string s) return FromString(s);

@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Computed
         {
             Value = value;
         }
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             return Value;
         }

@@ -2,6 +2,6 @@ namespace ReactUnity.Styling.Computed
 {
     public interface IComputedValue
     {
-        object Convert(IStyleProperty prop, NodeStyle style);
+        object GetValue(IStyleProperty targetProp, NodeStyle targetStyle);
     }
 }

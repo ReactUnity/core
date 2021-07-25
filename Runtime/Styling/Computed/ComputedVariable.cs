@@ -11,13 +11,13 @@ namespace ReactUnity.Styling.Computed
             FallbackValue = fallbackValue;
         }
 
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             var val = style.GetRawStyleValue(Property, false);
 
             if (val == null) val = FallbackValue ?? prop.defaultValue;
 
-            if (val is IComputedValue d) return d.Convert(prop, style);
+            if (val is IComputedValue d) val = d.GetValue(prop, style);
 
             return prop.Convert(val);
         }

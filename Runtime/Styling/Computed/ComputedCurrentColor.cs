@@ -4,7 +4,7 @@ namespace ReactUnity.Styling.Computed
     {
         public static ComputedCurrentColor Instance { get; } = new ComputedCurrentColor();
 
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             var st = style;
             var fromChild = ReferenceEquals(prop, StyleProperties.color);
@@ -13,9 +13,7 @@ namespace ReactUnity.Styling.Computed
             var val = st?.GetRawStyleValue(StyleProperties.color, fromChild);
 
             if (val == null) return null;
-
-            if (val is IComputedValue d)
-                return d.Convert(StyleProperties.color, st);
+            if (val is IComputedValue d) val = d.GetValue(StyleProperties.color, st);
 
             return prop.Convert(val);
         }

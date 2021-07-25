@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using ReactUnity.Converters;
 using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling
 {
@@ -42,6 +43,19 @@ namespace ReactUnity.Styling
 
         public object Convert(object value)
         {
+            var keyword = CssKeyword.NoKeyword;
+
+            if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
+            else if (value is CssKeyword k) keyword = k;
+
+            if (keyword == CssKeyword.Initial) value = defaultValue;
+            else if (keyword == CssKeyword.None) value = noneValue;
+            else if (keyword == CssKeyword.CurrentColor) value = ComputedCurrentColor.Instance;
+            else if (keyword != CssKeyword.NoKeyword && keyword != CssKeyword.Invalid) value = keyword;
+
+            if (Equals(value, CssKeyword.Invalid)) return null;
+            if (value == null) return null;
+
             return converter.Convert(value);
         }
 
@@ -57,16 +71,7 @@ namespace ReactUnity.Styling
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (value is string s)
-            {
-                var specialName = RuleHelpers.GetCssKeyword(s);
-                if (specialName == CssKeyword.Initial) value = defaultValue;
-                else if (specialName == CssKeyword.None) value = noneValue;
-                else if (specialName != CssKeyword.NoKeyword && specialName != CssKeyword.Invalid) value = specialName;
-            }
-
             value = Convert(value);
-            if (Equals(value, CssKeyword.Invalid)) return null;
 
             collection[this] = value;
             return ModifiedProperties;

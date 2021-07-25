@@ -11,7 +11,7 @@ namespace ReactUnity.Styling.Computed
             Ratio = ratio;
         }
 
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             var st = style;
             var fromChild = ReferenceEquals(prop, StyleProperties.fontSize);
@@ -21,11 +21,10 @@ namespace ReactUnity.Styling.Computed
 
             if (val == null) return null;
 
-            if (val is IComputedValue d) val = d.Convert(StyleProperties.fontSize, st);
-            else val = prop.Convert(val);
+            if (val is IComputedValue d) val = d.GetValue(StyleProperties.fontSize, st);
+            if (val is float f) val = f * Ratio;
 
-            if (val is float f) return f * Ratio;
-            return val;
+            return prop.Convert(val);
         }
     }
 }

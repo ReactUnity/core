@@ -15,10 +15,10 @@ namespace ReactUnity.Styling.Computed
             Ratio = ratio;
         }
 
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
-            var from = From.Convert(prop, style);
-            var to = To.Convert(prop, style);
+            var from = From.GetValue(prop, style);
+            var to = To.GetValue(prop, style);
 
             return Interpolater.Interpolate(from, to, Ratio);
         }

@@ -288,7 +288,7 @@ namespace ReactUnity.Styling
         public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
         {
             var value = GetRawStyleValue(prop);
-            if (value is IComputedValue d) value = d.Convert(prop, this);
+            if (value is IComputedValue d) value = d.GetValue(prop, this);
             if (value == null) return default;
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 

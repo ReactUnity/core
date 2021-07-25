@@ -23,7 +23,7 @@ namespace ReactUnity.Styling.Computed
             Type = type;
         }
 
-        public object Convert(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style)
         {
             var size = 0f;
 
