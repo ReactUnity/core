@@ -169,9 +169,10 @@ namespace ReactUnity.Styling.Internal
             if (validCount == 0) return;
 
             var gIndex = 0;
-            for (int i = 0; i < shadows.Items.Length; i++)
+            var len = shadows.Items.Length;
+            for (int i = 0; i < len; i++)
             {
-                var shadow = shadows.Items[i];
+                var shadow = shadows.Items[len - 1 - i];
                 if (!shadow.Valid) continue;
 
                 BoxShadowImage g = ShadowGraphics[gIndex];
@@ -194,7 +195,6 @@ namespace ReactUnity.Styling.Internal
                     rt.sizeDelta = ((shadow.inset ? -1 : 1) * shadow.spread + shadow.blur) * 2;
                     rt.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
                 }
-
 
                 g.color = shadow.color;
                 g.SetMaterialDirty();

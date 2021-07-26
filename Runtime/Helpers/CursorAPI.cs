@@ -17,9 +17,18 @@ namespace ReactUnity.Helpers
 
         public void Push(IReactComponent cmp)
         {
-            Components.Remove(cmp);
-            Components.Add(cmp);
-            Refresh();
+            var top = Components.Count > 0 ? Components[Components.Count - 1] : null;
+
+            if (top == cmp)
+            {
+                SetCursor(cmp?.ComputedStyle?.cursor);
+            }
+            else
+            {
+                Components.Remove(cmp);
+                Components.Add(cmp);
+                Refresh();
+            }
         }
 
         public void Pop(IReactComponent cmp)
@@ -36,6 +45,7 @@ namespace ReactUnity.Helpers
 
         void SetCursor(CursorList cursor)
         {
+            if (Current == cursor) return;
             Current = cursor;
             UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 #if UNITY_WEBGL && !UNITY_EDITOR
