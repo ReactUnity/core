@@ -1,0 +1,109 @@
+:root {
+  --mat-slider-color: cornflowerblue;
+}
+
+.host {
+  height: 20px;
+  width: 200px;
+  margin: 20px;
+  transform-origin: 50% 50%;
+  navigation: vertical;
+  cursor: pointer;
+
+  &[orientation="vertical"] {
+    width: 20px;
+    height: 200px;
+    navigation: horizontal;
+  }
+
+  .track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25%;
+    bottom: 25%;
+    background-color: hsl(0, 0, 78%);
+    border-radius: 4px;
+    border-width: 1px;
+    flex-direction: row;
+  }
+
+  &[orientation="vertical"] .track {
+    left: 25%;
+    right: 25%;
+    top: 0;
+    bottom: 0;
+    flex-direction: column-reverse;
+  }
+
+  &[direction="horizontal-reverse"] .track,
+  &[direction="vertical-reverse"] .track {
+    justify-content: flex-end;
+  }
+
+  .fill {
+    background-color: hsl(0, 0, 92%);
+    width: 100%;
+    height: 100%;
+  }
+
+  .thumbContainer {
+    background-color: transparent;
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  &[direction="horizontal"] .thumbContainer {
+    top: 50%;
+    right: 0;
+  }
+
+  &[direction="horizontal-reverse"] .thumbContainer {
+    top: 50%;
+    left: 0;
+  }
+
+  &[direction="vertical"] .thumbContainer {
+    left: 50%;
+    top: 0;
+  }
+
+  &[direction="vertical-reverse"] .thumbContainer {
+    left: 50%;
+    bottom: 0;
+  }
+
+  .thumb {
+    align-items: center;
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    transform-origin: center;
+    translate: -50% -50%;
+    border-width: 1px;
+    border-color: var(--mat-slider-color);
+    background-color: hsl(0, 0, 92%);
+  }
+
+  &[orientation="horizontal"] .thumb {
+    flex-direction: column;
+  }
+
+  &[orientation="vertical"] .thumb {
+    flex-direction: row;
+  }
+
+  &:hover .thumb {
+    background-color: hsl(0, 0, 92%);
+  }
+
+  &:focus .thumb {
+    background-color: hsl(0, 0, 98%);
+  }
+
+  &:active .thumb {
+    background-color: hsl(0, 0, 86%);
+  }
+}

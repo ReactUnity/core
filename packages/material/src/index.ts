@@ -7,4 +7,5 @@ export * from './modal';
 export * from './paper';
 export * from './prompt';
 export * from './ripple';
+export * from './slider';
 
