@@ -1,7 +1,6 @@
 # React Unity
 
 [![openupm](https://img.shields.io/npm/v/com.reactunity.core?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.reactunity.core/)
-[![GitHub Wiki](https://img.shields.io/badge/wiki-available-brightgreen.svg)](https://github.com/ReactUnity/core/wiki)
 [![Tests](https://github.com/ReactUnity/core/actions/workflows/test.yml/badge.svg)](https://github.com/ReactUnity/core/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/ReactUnity/core/branch/main/graph/badge.svg?token=3ZDHD77UX1)](https://codecov.io/gh/ReactUnity/core)
 
@@ -10,10 +9,11 @@ It also supports a subset of CSS features and Flex layout system.
 
 ## Requirements
 
-Node is only used while developing and not required in runtime or after the project is built. Following are the minimum recommended versions.
+Node is only used while developing and not required in runtime or after the project is built. Following are the minimum recommended versions. Use latest stable versions when possible.
 
 - Node 12
 - Unity 2020.3
+- TMPro 3.x
 
 ## Installing
 
@@ -35,11 +35,12 @@ npx openupm-cli add com.reactunity.core
 - Run `npm start` from React project
 - Click play in Unity
 
-Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki). Also check the [sample project](https://github.com/ReactUnity/samples).
+The documentation on the [main website](https://reactunity.github.io) is under development. You can also read detailed instructions in outdated [wiki](https://github.com/ReactUnity/core/wiki).
 
 ## Known Issues
 
 - Not well tested yet
+- Low documentation coverage
 
 > Feel free to share all your questions, proposals and feedbacks by opening issues. This package is in its early stages and looking for constructive feedback.
 
@@ -48,7 +49,4 @@ Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki
 - [Sample Project](https://github.com/ReactUnity/samples) and [Demo](https://reactunity.github.io/samples)
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [`npm init @reactunity`](https://github.com/ReactUnity/create)
-- 3rd party dependencies
-  - [React](https://reactjs.org/)
-  - [Yoga](https://yogalayout.com/)
-  - [Jint](https://github.com/sebastienros/jint)
+- [Acknowledgements](./.github/acknowledgements.md)
