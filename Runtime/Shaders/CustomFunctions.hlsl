@@ -122,7 +122,7 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
     if (dx < cx) {
       float fy = dy - 0.5;
 
-      return -sqrt(fx * fx + fy * fy);
+      return min(fx, fy);
     }
     else return fx;
   }
@@ -139,7 +139,7 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
   float st = sin(t);
   float ct = cos(t);
 
-  // r = sqrt( a^2 cos^2(t) + b^2 sin^2(t) )
+  // r = a*b / sqrt( a^2 cos^2(t) + b^2 sin^2(t) )
 
   float rr = rx * ry / sqrt(ry * ry * st * st + rx * rx * ct * ct);
 
@@ -148,6 +148,12 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
 
 float ConvertRadiusToSigma(float radius) {
   return radius * 0.57735 + 0.5;
+}
+
+
+float gaussian(float x, float mu, float sigma) {
+    float a = (x - mu) / sigma;
+    return exp(-0.5 * a * a);
 }
 
 static const float pi = 3.14159265;
