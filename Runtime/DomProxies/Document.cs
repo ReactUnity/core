@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Jint.Native;
 using ReactUnity.Helpers;
+using ReactUnity.StyleEngine;
 
 namespace ReactUnity.DomProxies
 {
@@ -184,6 +185,8 @@ namespace ReactUnity.DomProxies
         public List<string> childNodes = new List<string>();
         public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
 
+        public Dictionary<string, StyleSheet> Sheets = new Dictionary<string, StyleSheet>();
+
         public bool enabled;
 
         public DocumentProxy document;
@@ -224,10 +227,16 @@ namespace ReactUnity.DomProxies
 
         void ProcessNodes()
         {
-            pendingNodes.ForEach(x => document.context.InsertStyle(x));
+            pendingNodes.ForEach(x => {
+                var sheet = document.context.InsertStyle(x);
+                Sheets[x] = sheet;
+            });
             pendingNodes.Clear();
 
-            pendingRemoval.ForEach(x => document.context.RemoveStyle(x));
+            pendingRemoval.ForEach(x => {
+                if (Sheets.TryGetValue(x, out var sheet))
+                    document.context.RemoveStyle(sheet);
+            });
             pendingRemoval.Clear();
         }
     }

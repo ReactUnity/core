@@ -224,7 +224,7 @@ namespace ReactUnity
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
-            else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
+            else matchingRules = Context.Style.StyleTree.GetMatchingRules(this).ToList();
 
             var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
             var cssStyles = new List<IDictionary<IStyleProperty, object>> { };
@@ -247,7 +247,7 @@ namespace ReactUnity
 
                 if (inheritedChanges || recursive)
                 {
-                    BeforeRules = Context.StyleTree.GetMatchingBefore(this).ToList();
+                    BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
                     if (BeforeRules.Count > 0) AddBefore();
                     else RemoveBefore();
                     BeforePseudo?.ResolveStyle();
@@ -255,7 +255,7 @@ namespace ReactUnity
                     foreach (var child in Children)
                         child.ResolveStyle(true);
 
-                    AfterRules = Context.StyleTree.GetMatchingAfter(this).ToList();
+                    AfterRules = Context.Style.StyleTree.GetMatchingAfter(this).ToList();
                     if (AfterRules.Count > 0) AddAfter();
                     else RemoveAfter();
                     AfterPseudo?.ResolveStyle();

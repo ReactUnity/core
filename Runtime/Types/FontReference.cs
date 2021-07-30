@@ -71,7 +71,8 @@ namespace ReactUnity.Types
         {
             if (realType == AssetReferenceType.Procedural || realType == AssetReferenceType.Auto)
             {
-                if (context.FontFamilies.TryGetValue((realValue as string).ToLowerInvariant(), out var found))
+                var found = context.Style.GetFontFamily(realValue as string);
+                if (found != null)
                 {
                     found.Get(context, callback);
                 }

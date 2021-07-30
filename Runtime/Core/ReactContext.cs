@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using ExCSS;
-using ReactUnity.Converters;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Types;
 using ReactUnity.Visitors;
 using UnityEngine;
 
@@ -39,16 +36,11 @@ namespace ReactUnity
         public Location Location { get; }
         public IMediaProvider MediaProvider { get; }
 
-        protected bool LayoutScheduled = false;
-
-        public StylesheetParser Parser;
-        public StyleTree StyleTree;
         public Action OnRestart;
+        public readonly StylesheetParser Parser;
+        public readonly StyleContext Style;
 
         public List<IDisposable> Disposables = new List<IDisposable>();
-
-        public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
-        public Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
 
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
@@ -71,7 +63,7 @@ namespace ReactUnity
             CursorAPI = new CursorAPI(this);
 
             Parser = new StylesheetParser(true, true, true, true, true, false, true);
-            StyleTree = new StyleTree(Parser);
+            Style = new StyleContext(this);
 
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
@@ -79,56 +71,16 @@ namespace ReactUnity
             if (CalculatesLayout) dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
         }
 
-        public virtual void InsertStyle(string style, int importanceOffset = 0)
+        public virtual StyleSheet InsertStyle(string style, int importanceOffset = 0)
         {
-            if (string.IsNullOrWhiteSpace(style)) return;
-
-            var stylesheet = StyleTree.Parser.Parse(style);
-
-            foreach (var rule in stylesheet.FontfaceSetRules)
-            {
-                FontFamilies[(AllConverters.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
-                    AllConverters.FontReferenceConverter.Convert(rule.Source) as FontReference;
-            }
-
-            foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
-            {
-                StyleTree.AddStyle(rule, importanceOffset);
-            }
-
-            foreach (var rule in stylesheet.Children.OfType<IKeyframesRule>())
-            {
-                Keyframes[rule.Name] = KeyframeList.Create(rule);
-            }
-
-
-            foreach (var media in stylesheet.MediaRules.OfType<IMediaRule>())
-            {
-                var mediaRegex = new Regex(@"@media ([^\{]*){.*");
-                var match = mediaRegex.Match(media.StylesheetText.Text);
-
-                if (match.Groups.Count < 2) continue;
-
-                var condition = match.Groups[1];
-                var mql = MediaQueryList.Create(MediaProvider, condition.Value);
-
-                foreach (var rule in media.Children.OfType<StyleRule>())
-                {
-                    StyleTree.AddStyle(rule, importanceOffset, mql);
-                }
-                mql.OnUpdate += MediaQueryUpdated;
-            }
-
-            Host.ResolveStyle(true);
+            var sheet = new StyleSheet(Style, style, importanceOffset);
+            Style.Insert(sheet);
+            return sheet;
         }
 
-        private void MediaQueryUpdated()
+        public virtual void RemoveStyle(StyleSheet sheet)
         {
-            Host.ResolveStyle(true);
-        }
-
-        public virtual void RemoveStyle(string style)
-        {
+            Style.Remove(sheet);
         }
 
         public virtual string ResolvePath(string path)

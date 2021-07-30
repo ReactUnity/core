@@ -367,7 +367,8 @@ namespace ReactUnity.Styling
 
                 if (!runningAnimations.TryGetValue(anim.Name, out var state))
                 {
-                    if (!Context.Keyframes.TryGetValue(anim.Name, out var kfs)) continue;
+                    var kfs = Context.Style.GetKeyframes(anim.Name);
+                    if (kfs == null) continue;
                     if (!kfs.Valid) continue;
 
                     runningAnimations[anim.Name] = state = new AnimationState();

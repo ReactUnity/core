@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
@@ -15,17 +16,22 @@ namespace ReactUnity.StyleEngine
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null)
+        public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
-            var addNew = new List<RuleTreeNode<StyleData>>();
+            var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
+
             foreach (var leaf in added)
             {
                 var style = rule.Style;
                 if (leaf.Data == null) leaf.Data = new StyleData();
                 var dic = RuleHelpers.ConvertStyleDeclarationToRecord(style, false);
-                leaf.Data.Rules.Add(dic);
-                leaf.MediaQuery = mql;
+
+                if (dic.Count > 0)
+                {
+                    leaf.MediaQuery = mql;
+                    pairs.Add(Tuple.Create(leaf, dic));
+                }
 
                 var importantDic = RuleHelpers.ConvertStyleDeclarationToRecord(style, true);
                 if (importantDic.Count > 0)
@@ -33,17 +39,14 @@ namespace ReactUnity.StyleEngine
                     var importantLeaf = leaf.AddChildCascading("** !");
                     importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
-                    importantLeaf.Data.Rules.Add(importantDic);
                     importantLeaf.MediaQuery = mql;
-                    addNew.Add(importantLeaf);
+                    pairs.Add(Tuple.Create(importantLeaf, importantDic));
                     LeafNodes.InsertIntoSortedList(importantLeaf);
                 }
             }
 
-            added.AddRange(addNew);
-            return added;
+            return pairs;
         }
-
     }
 
     public class RuleTree<T> : RuleTreeNode<T>
