@@ -56,6 +56,9 @@ jobs:
         run: echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
       - name: Install local React Unity package
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
+      - name: Install TMP v2
+        if: startsWith(matrix.unityVersion, '2019')
+        run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
         id: testRunner
