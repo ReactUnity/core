@@ -136,6 +136,18 @@ namespace ReactUnity.StyleEngine
             return dic;
         }
 
+        public static Dictionary<IStyleProperty, object> ConvertStyleDeclarationToRecord(IDictionary<string, object> dc)
+        {
+            var dic = new Dictionary<IStyleProperty, object>();
+
+            foreach (var item in dc)
+            {
+                var md = CssProperties.GetKey(item.Key);
+                md?.Modify(dic, item.Value);
+            }
+            return dic;
+        }
+
         public static string NormalizeSelector(string selector)
         {
             return NthChildRegex.Replace(

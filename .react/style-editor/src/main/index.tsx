@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../common/props';
+import { StyleContext, useStyleContext } from '../context';
 import style from './index.module.scss';
 
 type RC = ReactUnity.UGUI.Behaviours.ReactElement;
@@ -69,7 +70,10 @@ function Group({ group, element, className }: { group: StylePropGroup, element: 
 }
 
 function StylePropRow({ prop, element, className }: { prop: StyleProp, element: RC, className?: string }) {
-  const cmp = element.Component;
+  const cmp = element.Component as unknown as ReactUnity.IReactComponent;
+
+  const ctx = useStyleContext();
+  const styles = ctx.getStyles(cmp);
 
   const changedDebounce = React.useRef<any>();
 
@@ -93,9 +97,9 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
   const changeStyle = (name: string, value: { newValue: any }) => {
     if (prop.setter) {
       var res = prop.setter(value.newValue, element);
-      if (res !== undefined) cmp.Style.Set(name, res);
+      if (res !== undefined) ctx.setProp(cmp, name, res);
     }
-    else cmp.Style.Set(name, value.newValue);
+    else ctx.setProp(cmp, name, value.newValue);
     changed(500);
   };
 
@@ -105,9 +109,9 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   const val = prop.source === 'layout' ? element.Layout[prop.name] : cmp.ComputedStyle[prop.name];
   const gval = (prop.getter ? prop.getter(val, element) : val) || null;
-  const exists = cmp.Style.ContainsKey(prop.name);
+  const exists = Object.prototype.hasOwnProperty.call(styles, prop.name);
   const removeStyle = () => {
-    cmp.Style.Remove(prop.name);
+    ctx.removeProp(cmp, prop.name);
     changed(0);
   };
 
@@ -176,4 +180,8 @@ function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: 
   </>;
 }
 
-Renderer.render(<App />);
+Renderer.render(
+  <StyleContext>
+    <App />
+  </StyleContext>
+);

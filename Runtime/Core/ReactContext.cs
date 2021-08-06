@@ -74,6 +74,11 @@ namespace ReactUnity
         public virtual StyleSheet InsertStyle(string style, int importanceOffset = 0)
         {
             var sheet = new StyleSheet(Style, style, importanceOffset);
+            return InsertStyle(sheet);
+        }
+
+        public virtual StyleSheet InsertStyle(StyleSheet sheet)
+        {
             Style.Insert(sheet);
             return sheet;
         }

@@ -10,9 +10,7 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
-        public SerializableDictionary Globals = new SerializableDictionary();
         public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
-        private ScriptSource TestScript = new ScriptSource() { Type = ScriptSourceType.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
         public bool Debug = false;
 
@@ -29,6 +27,8 @@ namespace ReactUnity
         public IDispatcher dispatcher { get; private set; }
         public ITimer timer { get; set; }
         public ReactUnityRunner runner { get; private set; }
+
+        public SerializableDictionary Globals = new SerializableDictionary();
 
         #region Advanced Options
 
@@ -95,24 +95,6 @@ namespace ReactUnity
         {
             Clean();
             ScriptWatchDisposable = LoadAndRun(Script, false);
-        }
-
-        private void Test(bool debug = false)
-        {
-            Clean();
-            ScriptWatchDisposable = LoadAndRun(TestScript, true);
-        }
-
-        [ContextMenu("Test")]
-        public void Test()
-        {
-            Test(false);
-        }
-
-        [ContextMenu("TestDebug")]
-        public void TestDebug()
-        {
-            Test(true);
         }
 
         protected abstract ReactContext CreateContext(ScriptSource script, bool isDevServer);

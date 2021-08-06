@@ -47,6 +47,36 @@ namespace ReactUnity.StyleEngine
 
             return pairs;
         }
+
+        public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(
+            string selectorText, Dictionary<IStyleProperty, object> rules, Dictionary<IStyleProperty, object> importantRules, int importanceOffset = 0, MediaQueryList mql = null)
+        {
+            var added = AddSelector(selectorText, importanceOffset);
+            var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
+
+            foreach (var leaf in added)
+            {
+                if (leaf.Data == null) leaf.Data = new StyleData();
+
+                if (rules.Count > 0)
+                {
+                    leaf.MediaQuery = mql;
+                    pairs.Add(Tuple.Create(leaf, rules));
+                }
+
+                if (importantRules != null && importantRules.Count > 0)
+                {
+                    var importantLeaf = leaf.AddChildCascading("** !");
+                    importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
+                    if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
+                    importantLeaf.MediaQuery = mql;
+                    pairs.Add(Tuple.Create(importantLeaf, importantRules));
+                    LeafNodes.InsertIntoSortedList(importantLeaf);
+                }
+            }
+
+            return pairs;
+        }
     }
 
     public class RuleTree<T> : RuleTreeNode<T>
