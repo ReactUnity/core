@@ -122,7 +122,7 @@ namespace ReactUnity.Editor.Developer
         public static void GenerateCurrentProject()
         {
             var compiledAssemblies = UnityEditor.Compilation.CompilationPipeline.GetAssemblies(UnityEditor.Compilation.AssembliesType.Editor);
-            var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(x => x.StartsWith("Assets/")));
+            var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(f => f.StartsWith("Assets/")));
             var assemblySet = new HashSet<string>(compiledAssembliesInProject.Select(x => x.name))
             {
                 "Assembly-CSharp",
@@ -211,7 +211,7 @@ namespace ReactUnity.Editor.Developer
         {
             var types = Assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
-                .Select(x => x.OrderByDescending(x => x.GetGenericArguments().Length).First())
+                .Select(x => x.OrderByDescending(t => t.GetGenericArguments().Length).First())
                 .Append(null);
             var sb = new StringBuilder();
 
@@ -336,7 +336,7 @@ namespace ReactUnity.Editor.Developer
                 $"// Types in assemblies: {string.Join(", ", Assemblies.Select(x => x.GetName().Name))}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
-                $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(x => x))} }} from '{x.Key}';"))}{n}" +
+                $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(y => y))} }} from '{x.Key}';"))}{n}" +
                 n +
                 sb;
         }

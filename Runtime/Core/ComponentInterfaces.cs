@@ -58,8 +58,8 @@ namespace ReactUnity
         IReactComponent BeforePseudo { get; }
         IReactComponent AfterPseudo { get; }
 
-        public List<RuleTreeNode<StyleData>> BeforeRules { get; }
-        public List<RuleTreeNode<StyleData>> AfterRules { get; }
+        List<RuleTreeNode<StyleData>> BeforeRules { get; }
+        List<RuleTreeNode<StyleData>> AfterRules { get; }
 
         void RegisterChild(IReactComponent child, int index = -1);
         void UnregisterChild(IReactComponent child);
@@ -68,19 +68,19 @@ namespace ReactUnity
     [TypescriptListInterfaces]
     public interface ITextComponent : IReactComponent
     {
-        public string Content { get; }
+        string Content { get; }
         void SetText(string text);
     }
 
     [TypescriptListInterfaces]
     public interface IHostComponent : IContainerComponent
     {
-        public float Width { get; }
-        public float Height { get; }
+        float Width { get; }
+        float Height { get; }
     }
 
     public interface IShadowComponent : IReactComponent
     {
-        public IReactComponent ShadowParent { get; }
+        IReactComponent ShadowParent { get; }
     }
 }

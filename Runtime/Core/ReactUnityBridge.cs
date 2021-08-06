@@ -11,7 +11,7 @@ namespace ReactUnity
     internal class ReactUnityBridge
     {
         private static ReactUnityBridge instance;
-        public static ReactUnityBridge Instance => instance ??= new ReactUnityBridge();
+        public static ReactUnityBridge Instance => instance = instance ?? new ReactUnityBridge();
 
         private ReactUnityBridge() { }
 

@@ -9,7 +9,7 @@ namespace ReactUnity.UGUI.Behaviours
     {
         private TextMeshProUGUI tmpro;
 
-        TextMeshProUGUI Text { get => tmpro ??= GetComponent<TextMeshProUGUI>(); }
+        TextMeshProUGUI Text => tmpro = tmpro ?? GetComponent<TextMeshProUGUI>();
 
         public YogaNode Layout;
         public UGUIContext Context;

@@ -92,7 +92,9 @@ namespace ReactUnity.UIToolkit
             var computed = ComputedStyle;
             Element.style.backgroundColor = StylingHelpers.GetStyleColor(computed, StyleProperties.backgroundColor);
             Element.style.color = StylingHelpers.GetStyleColor(computed, StyleProperties.color);
+#if UNITY_2020_1_OR_NEWER
             Element.style.textOverflow = StylingHelpers.GetStyleEnumCustom<TextOverflow>(computed, StyleProperties.textOverflow);
+#endif
             Element.style.visibility = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
             Element.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
             Element.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
@@ -238,7 +240,7 @@ namespace ReactUnity.UIToolkit
 
         public override void Relayout() { }
 
-        #region Setters
+#region Setters
 
         public override void SetEventListener(string eventName, Callback fun)
         {
@@ -300,7 +302,7 @@ namespace ReactUnity.UIToolkit
             }
         }
 
-        #endregion
+#endregion
 
         public override object GetComponent(Type type)
         {

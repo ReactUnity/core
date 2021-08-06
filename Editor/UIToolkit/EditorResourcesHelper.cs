@@ -7,9 +7,9 @@ namespace ReactUnity.Editor.UIToolkit
     {
 
         private static VisualTreeAsset editorTester;
-        public static VisualTreeAsset EditorTester => editorTester ??= Resources.Load<VisualTreeAsset>("ReactUnity/editor/EditorTester");
+        public static VisualTreeAsset EditorTester => editorTester = editorTester ?? Resources.Load<VisualTreeAsset>("ReactUnity/editor/EditorTester");
 
         private static StyleSheet editorTesterStyles;
-        public static StyleSheet EditorTesterStyles => editorTesterStyles ??= Resources.Load<StyleSheet>("ReactUnity/editor/EditorTesterStyles");
+        public static StyleSheet EditorTesterStyles => editorTesterStyles = editorTesterStyles ?? Resources.Load<StyleSheet>("ReactUnity/editor/EditorTesterStyles");
     }
 }

@@ -19,8 +19,8 @@ namespace ReactUnity.ScriptEngine
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
-            Engine = new Engine(x => {
-                x.AllowClr(
+            Engine = new Engine(opt => {
+                opt.AllowClr(
                     typeof(Convert).Assembly,
 #if UNITY_EDITOR
                     typeof(UnityEditor.EditorWindow).Assembly,
@@ -31,14 +31,14 @@ namespace ReactUnity.ScriptEngine
                     typeof(Component).Assembly,
                     typeof(ReactUnityRunner).Assembly
                 );
-                x.CatchClrExceptions(ex => {
+                opt.CatchClrExceptions(ex => {
                     Debug.LogException(ex);
                     return true;
                 });
 
-                x.DebugMode(debug);
+                opt.DebugMode(debug);
 
-                x.SetTypeConverter(x => new Callback.JintCallbackConverter(x));
+                opt.SetTypeConverter(e => new Callback.JintCallbackConverter(e));
             });
 
             var deferred = Engine.RegisterPromise();

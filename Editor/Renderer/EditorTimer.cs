@@ -6,7 +6,7 @@ namespace ReactUnity.Editor
     public class EditorTimer : ITimer
     {
         private static EditorTimer instance;
-        public static EditorTimer Instance => instance ??= new EditorTimer();
+        public static EditorTimer Instance => instance = instance ?? new EditorTimer();
 
         public float AnimationTime => (float) EditorApplication.timeSinceStartup;
         public float TimeScale { get; set; } = 1;

@@ -30,7 +30,9 @@ namespace ReactUnity.UIToolkit
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
                 { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
                 { "input", (tag, text, context) => new BaseFieldComponent<TextField, string>(context, tag) }, // TODO
+#if UNITY_2020_1_OR_NEWER
                 { "helpbox", (tag, text, context) => new UIToolkitComponent<HelpBox>(context, tag) }, // TODO
+#endif
                 { "foldout", (tag, text, context) => new ValueComponent<Foldout, bool>(context, tag) }, // TODO
                 { "popup", (tag, text, context) => new TextComponent<PopupWindow>(text, context, tag) },
                 { "slider", (tag, text, context) => new BaseSliderComponent<Slider, float>(context, tag) },

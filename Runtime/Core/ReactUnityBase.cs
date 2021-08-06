@@ -10,6 +10,9 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
+        [Serializable]
+        public class ReactUnityRunnerEvent : UnityEvent<ReactUnityRunner> { }
+
         public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
 
         public bool Debug = false;
@@ -33,8 +36,8 @@ namespace ReactUnity
         #region Advanced Options
 
         [HideInInspector] public bool AutoRender = true;
-        [HideInInspector] public UnityEvent<ReactUnityRunner> BeforeStart;
-        [HideInInspector] public UnityEvent<ReactUnityRunner> AfterStart;
+        [HideInInspector] public ReactUnityRunnerEvent BeforeStart = new ReactUnityRunnerEvent();
+        [HideInInspector] public ReactUnityRunnerEvent AfterStart = new ReactUnityRunnerEvent();
 
         #endregion
 

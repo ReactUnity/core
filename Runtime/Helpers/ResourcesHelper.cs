@@ -6,22 +6,22 @@ namespace ReactUnity.Helpers
     internal static class ResourcesHelper
     {
         private static Sprite checkBoxSprite;
-        public static Sprite CheckBoxSprite => checkBoxSprite ??= Resources.Load<Sprite>("ReactUnity/sprites/checkbox");
+        public static Sprite CheckBoxSprite => checkBoxSprite = checkBoxSprite ?? Resources.Load<Sprite>("ReactUnity/sprites/checkbox");
 
         private static Sprite checkSprite;
-        public static Sprite CheckSprite => checkSprite ??= Resources.Load<Sprite>("ReactUnity/sprites/check");
+        public static Sprite CheckSprite => checkSprite = checkSprite ?? Resources.Load<Sprite>("ReactUnity/sprites/check");
 
         private static TextAsset useragentStylesheet;
-        public static TextAsset UseragentStylesheet => useragentStylesheet ??= Resources.Load<TextAsset>("ReactUnity/styles/ugui/useragent");
+        public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/styles/ugui/useragent");
 
         private static Material borderRadiusMaterial;
-        public static Material BorderRadiusMaterial => borderRadiusMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedBorder");
+        public static Material BorderRadiusMaterial => borderRadiusMaterial = borderRadiusMaterial ?? Resources.Load<Material>("ReactUnity/materials/RoundedBorder");
 
         private static Material coloredBorderMaterial;
-        public static Material ColoredBorderMaterial => coloredBorderMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedColoredBorder");
+        public static Material ColoredBorderMaterial => coloredBorderMaterial = coloredBorderMaterial ?? Resources.Load<Material>("ReactUnity/materials/RoundedColoredBorder");
 
         private static Material boxShadowMaterial;
-        public static Material BoxShadowMaterial => boxShadowMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
+        public static Material BoxShadowMaterial => boxShadowMaterial = boxShadowMaterial ?? Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
 
 
         private static Dictionary<string, TextAsset> Polyfills = new Dictionary<string, TextAsset>();

@@ -8,12 +8,12 @@ namespace ReactUnity.UIToolkit
         public const string UtilityCursorClassPrefix = "react-unity_cursor_";
 
         private static Font defaultFont;
-        public static Font DefaultFont => defaultFont ??= Resources.Load<Font>("ReactUnity/fonts/sans-serif");
+        public static Font DefaultFont => defaultFont = defaultFont ?? Resources.Load<Font>("ReactUnity/fonts/sans-serif");
 
         private static StyleSheet utilityStylesheet;
-        public static StyleSheet UtilityStylesheet => utilityStylesheet ??= Resources.Load<StyleSheet>("ReactUnity/styles/uitoolkit/react-unity-utils");
+        public static StyleSheet UtilityStylesheet => utilityStylesheet = utilityStylesheet ?? Resources.Load<StyleSheet>("ReactUnity/styles/uitoolkit/react-unity-utils");
 
         private static TextAsset useragentStylesheet;
-        public static TextAsset UseragentStylesheet => useragentStylesheet ??= Resources.Load<TextAsset>("ReactUnity/styles/uitoolkit/useragent");
+        public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/styles/uitoolkit/useragent");
     }
 }

@@ -569,7 +569,7 @@ namespace ReactUnity.Styling
 
                 if (!part.Valid || part.IterationCount == 0) continue;
 
-                var state = audioStates[i] ??= new AudioState();
+                var state = audioStates[i] = audioStates[i] ?? new AudioState();
 
 
                 Action tryPlayClip = () => {

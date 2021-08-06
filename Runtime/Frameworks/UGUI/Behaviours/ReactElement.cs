@@ -11,7 +11,7 @@ namespace ReactUnity.UGUI.Behaviours
     public class ReactElement : MonoBehaviour
     {
         private RectTransform rt;
-        private RectTransform RT => rt ??= GetComponent<RectTransform>();
+        private RectTransform RT => rt = rt ?? GetComponent<RectTransform>();
 
         public YogaNode Layout { get; internal set; }
         public UGUIComponent Component { get; internal set; }

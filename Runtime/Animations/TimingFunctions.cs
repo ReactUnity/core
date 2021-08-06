@@ -81,51 +81,51 @@ namespace ReactUnity.Animations
                 return Mathf.Lerp(start, end, value);
             }
 
+            static float A(float aA1, float aA2) { return 1f - 3 * aA2 + 3 * aA1; }
+            static float B(float aA1, float aA2) { return 3 * aA2 - 6 * aA1; }
+            static float C(float aA1) { return 3 * aA1; }
+            static float calcBezier(float aT, float aA1, float aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
+            static float getSlope(float aT, float aA1, float aA2) { return 3 * A(aA1, aA2) * aT * aT + 2 * B(aA1, aA2) * aT + C(aA1); }
+
+
+            static float binarySubdivide(float aX, float aA, float aB, float mX1, float mX2)
+            {
+                var currentX = 0f;
+                var currentT = 0f;
+                var i = 0;
+                do
+                {
+                    currentT = aA + (aB - aA) / 2f;
+                    currentX = calcBezier(currentT, mX1, mX2) - aX;
+                    if (currentX > 0.0)
+                    {
+                        aB = currentT;
+                    }
+                    else
+                    {
+                        aA = currentT;
+                    }
+                } while (Math.Abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+                return currentT;
+            }
+
+            static float newtonRaphsonIterate(float aX, float aGuessT, float mX1, float mX2)
+            {
+                for (var i = 0; i < NEWTON_ITERATIONS; ++i)
+                {
+                    var currentSlope = getSlope(aGuessT, mX1, mX2);
+                    if (currentSlope == 0f)
+                    {
+                        return aGuessT;
+                    }
+                    var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+                    aGuessT -= currentX / currentSlope;
+                }
+                return aGuessT;
+            }
+
             public static TimingFunction Create(float mX1, float mY1, float mX2, float mY2)
             {
-                static float A(float aA1, float aA2) { return 1f - 3 * aA2 + 3 * aA1; }
-                static float B(float aA1, float aA2) { return 3 * aA2 - 6 * aA1; }
-                static float C(float aA1) { return 3 * aA1; }
-                static float calcBezier(float aT, float aA1, float aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
-                static float getSlope(float aT, float aA1, float aA2) { return 3 * A(aA1, aA2) * aT * aT + 2 * B(aA1, aA2) * aT + C(aA1); }
-
-
-                static float binarySubdivide(float aX, float aA, float aB, float mX1, float mX2)
-                {
-                    var currentX = 0f;
-                    var currentT = 0f;
-                    var i = 0;
-                    do
-                    {
-                        currentT = aA + (aB - aA) / 2f;
-                        currentX = calcBezier(currentT, mX1, mX2) - aX;
-                        if (currentX > 0.0)
-                        {
-                            aB = currentT;
-                        }
-                        else
-                        {
-                            aA = currentT;
-                        }
-                    } while (Math.Abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
-                    return currentT;
-                }
-
-                static float newtonRaphsonIterate(float aX, float aGuessT, float mX1, float mX2)
-                {
-                    for (var i = 0; i < NEWTON_ITERATIONS; ++i)
-                    {
-                        var currentSlope = getSlope(aGuessT, mX1, mX2);
-                        if (currentSlope == 0f)
-                        {
-                            return aGuessT;
-                        }
-                        var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-                        aGuessT -= currentX / currentSlope;
-                    }
-                    return aGuessT;
-                }
-
                 if (mX1 == mY1 && mX2 == mY2) return Linear;
 
                 // Precompute samples table

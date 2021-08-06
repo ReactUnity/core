@@ -6,7 +6,7 @@ namespace ReactUnity.Tests
     public class CodeTransformer
     {
         private static CodeTransformer instance;
-        public static CodeTransformer Instance => instance ??= new CodeTransformer();
+        public static CodeTransformer Instance => instance = instance ?? new CodeTransformer();
 
         public IJavaScriptEngine Engine;
         private IJavaScriptEngineFactory EngineFactory;

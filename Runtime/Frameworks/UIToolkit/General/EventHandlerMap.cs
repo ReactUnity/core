@@ -10,7 +10,9 @@ namespace ReactUnity.UIToolkit
     {
         static Dictionary<string, Type> EventMap = new Dictionary<string, Type>
         {
+#if UNITY_2020_1_OR_NEWER
             { "onClick", typeof(ClickEvent) },
+#endif
             { "onPointerUp", typeof(PointerUpEvent) },
             { "onPointerDown", typeof(PointerDownEvent) },
             { "onPointerEnter", typeof(PointerEnterEvent) },
@@ -77,10 +79,10 @@ namespace ReactUnity.UIToolkit
             var eventType = GetEventType(eventName);
             if (eventType == null) return (null, null);
 
-            var register = RegisterMethod ??= typeof(CallbackEventHandler).GetMethods()
+            var register = RegisterMethod = RegisterMethod ?? typeof(CallbackEventHandler).GetMethods()
                 .First(x => x.Name == nameof(CallbackEventHandler.RegisterCallback) && x.GetParameters().Length == 2);
 
-            var unregister = UnregisterMethod ??= typeof(CallbackEventHandler).GetMethods()
+            var unregister = UnregisterMethod = UnregisterMethod ?? typeof(CallbackEventHandler).GetMethods()
                 .First(x => x.Name == nameof(CallbackEventHandler.UnregisterCallback) && x.GetParameters().Length == 2);
 
             return (register.MakeGenericMethod(eventType), unregister.MakeGenericMethod(eventType));

@@ -6,7 +6,7 @@ namespace ReactUnity.StyleEngine
 {
     public interface IMediaProvider
     {
-        public event Action<IMediaProvider> OnUpdate;
+        event Action<IMediaProvider> OnUpdate;
         string MediaType { get; set; }
         string GetValue(string property);
         float GetNumericalValue(string property);
