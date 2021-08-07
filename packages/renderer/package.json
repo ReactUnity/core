@@ -32,13 +32,13 @@
   "scripts": {
     "preinstall": "npx only-allow@1.0.0 yarn",
     "build:clean": "rimraf dist",
-    "build:base": "tsc -d",
-    "build:editor": "tsc -d -p tsconfig.editor.json",
-    "build:ugui": "tsc -d -p tsconfig.ugui.json",
-    "build:uitoolkit": "tsc -d -p tsconfig.uitoolkit.json",
+    "build:base": "tsc",
+    "build:editor": "tsc -p tsconfig.editor.json",
+    "build:ugui": "tsc -p tsconfig.ugui.json",
+    "build:uitoolkit": "tsc -p tsconfig.uitoolkit.json",
     "build": "yarn build:clean && yarn build:base && yarn build:editor && yarn build:ugui && yarn build:uitoolkit",
     "prepare": "yarn build",
-    "watch": "tsc -d --watch",
+    "watch": "tsc --watch",
     "lint": "eslint --ext js,ts,tsx src models",
     "local": "yalc publish --push",
     "pack": "npm pack"

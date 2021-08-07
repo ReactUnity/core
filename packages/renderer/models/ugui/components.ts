@@ -8,6 +8,7 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
   active?: boolean;
   name?: string;
   className?: string;
+  id?: string;
   style?: Style;
 }
 
