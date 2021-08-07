@@ -254,7 +254,7 @@ namespace ReactUnity.Styling
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
-                !OwnTryGetValue(prop, out value))
+                !CssTryGetValue(prop, out value))
             {
                 if (Fallback != null)
                 {
@@ -335,11 +335,11 @@ namespace ReactUnity.Styling
         public bool HasValue(IStyleProperty prop)
         {
             return StyleMap.ContainsKey(prop.name) ||
-                OwnHasValue(prop) ||
+                CssHasValue(prop) ||
                 (Fallback != null && Fallback.HasValue(prop));
         }
 
-        private bool OwnTryGetValue(IStyleProperty prop, out object res)
+        private bool CssTryGetValue(IStyleProperty prop, out object res)
         {
             if (CssStyles == null)
             {
@@ -355,7 +355,7 @@ namespace ReactUnity.Styling
             return false;
         }
 
-        private bool OwnHasValue(IStyleProperty prop)
+        private bool CssHasValue(IStyleProperty prop)
         {
             if (CssStyles == null) return false;
             for (int i = 0; i < CssStyles.Count; i++)
