@@ -5,7 +5,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/styles",
+    "./src/styles/**/*.*",
+    "./dist/src/styles",
+    "./dist/src/styles/**/*.*",
+    "**/*.css",
+    "**/*.scss"
+  ],
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "repository": {
     "type": "git",

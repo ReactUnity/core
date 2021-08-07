@@ -1,10 +1,10 @@
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React from 'react';
-import '../styles/index.scss';
 import { getElevationClass } from '../util/helpers';
 import { MdBase } from '../util/types';
 import style from './index.module.scss';
+
 
 type ViewProps = UGUIElements['view'];
 type Props = ViewProps & MdBase;

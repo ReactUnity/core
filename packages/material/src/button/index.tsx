@@ -2,10 +2,10 @@ import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React from 'react';
 import { useRipple } from '../ripple';
-import '../styles/index.scss';
 import { getElevationClass } from '../util/helpers';
 import { MdBase, MdInteractible } from '../util/types';
 import style from './index.module.scss';
+
 
 type Props = UGUIElements['button'] & MdInteractible & MdBase;
 
