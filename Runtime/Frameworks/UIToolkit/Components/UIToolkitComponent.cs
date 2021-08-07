@@ -240,7 +240,7 @@ namespace ReactUnity.UIToolkit
 
         public override void Relayout() { }
 
-#region Setters
+        #region Setters
 
         public override void SetEventListener(string eventName, Callback fun)
         {
@@ -302,7 +302,7 @@ namespace ReactUnity.UIToolkit
             }
         }
 
-#endregion
+        #endregion
 
         public override object GetComponent(Type type)
         {

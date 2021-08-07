@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Facebook.Yoga;
 using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ReactUnity.Helpers;
 
 namespace ReactUnity.Styling

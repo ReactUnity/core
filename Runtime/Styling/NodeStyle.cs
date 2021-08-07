@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Facebook.Yoga;
 using ReactUnity.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;

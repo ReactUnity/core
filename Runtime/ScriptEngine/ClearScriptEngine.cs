@@ -9,7 +9,6 @@ using System.IO;
 using System.Reflection;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.ScriptEngine

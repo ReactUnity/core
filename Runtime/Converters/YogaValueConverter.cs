@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Text.RegularExpressions;
 using Facebook.Yoga;
 using ReactUnity.Styling;
 
