@@ -62,10 +62,10 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
+    "@types/react": "^17.0.16",
+    "@types/react-reconciler": "^0.26.3",
+    "@types/styled-components": "5.1.12",
     "@types/webpack-env": "^1.16.2",
-    "@types/react": "^17.0.14",
-    "@types/react-reconciler": "^0.26.2",
-    "@types/styled-components": "5.1.11",
     "rimraf": "^3.0.2",
     "typescript": "^4.3.5"
   }
