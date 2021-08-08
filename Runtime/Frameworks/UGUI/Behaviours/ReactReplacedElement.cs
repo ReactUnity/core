@@ -1,4 +1,3 @@
-using System.Collections;
 using Facebook.Yoga;
 using ReactUnity.Types;
 using UnityEngine;
@@ -10,8 +9,6 @@ namespace ReactUnity.UGUI.Behaviours
     public class ReactReplacedElement : MonoBehaviour
     {
         private RectTransform rt;
-        private RectTransform RT => rt = rt ?? GetComponent<RectTransform>();
-
         public YogaNode Layout { get; internal set; }
 
         private bool hasPositionUpdate = true;
@@ -30,22 +27,14 @@ namespace ReactUnity.UGUI.Behaviours
             }
         }
 
-        private Coroutine cr;
-
         private void OnEnable()
         {
-            cr = StartCoroutine(LateLateUpdate());
-        }
-
-        private void OnDisable()
-        {
-            if (cr != null) StopCoroutine(cr);
-            cr = null;
+            rt = GetComponent<RectTransform>();
         }
 
         private void Start()
         {
-            if (Layout == null) DestroyImmediate(this);
+            if (Layout == null) enabled = false;
         }
 
         private void LateUpdate()
@@ -66,7 +55,7 @@ namespace ReactUnity.UGUI.Behaviours
             var anX = xPer ? 0 : xVal;
             var anY = yPer ? 0 : yVal;
 
-            var parent = RT.parent as RectTransform;
+            var parent = rt.parent as RectTransform;
 
             var parMinX = xPer ? xVal : 0;
             var parMaxX = xPer ? xVal : 1;
@@ -75,26 +64,17 @@ namespace ReactUnity.UGUI.Behaviours
             var parMaxY = yPer ? yVal : 1;
 
 
-            RT.pivot = new Vector2(pivotX, pivotY);
-            RT.localPosition = Vector2.zero;
+            rt.pivot = new Vector2(pivotX, pivotY);
+            rt.localPosition = Vector2.zero;
 
-            RT.anchorMin = new Vector2(parMinX, parMinY);
-            RT.anchorMax = new Vector2(parMaxX, parMaxY);
-            RT.anchoredPosition = new Vector2(anX, anY);
-            RT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
-            RT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+            rt.anchorMin = new Vector2(parMinX, parMinY);
+            rt.anchorMax = new Vector2(parMaxX, parMaxY);
+            rt.anchoredPosition = new Vector2(anX, anY);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
 
             hasPositionUpdate = false;
-        }
-
-        IEnumerator LateLateUpdate()
-        {
-            var wait = new WaitForEndOfFrame();
-            while (true)
-            {
-                yield return wait;
-                if (Layout.HasNewLayout) Layout.MarkLayoutSeen();
-            }
+            Layout.MarkLayoutSeen();
         }
     }
 }

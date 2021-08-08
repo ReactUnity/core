@@ -22,6 +22,11 @@ namespace ReactUnity.UGUI.StateHandlers
 
         private bool cursorShown = false;
 
+        private void OnEnable()
+        {
+            if (Context == null) enabled = false;
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             Context.CursorAPI.Push(Component);
@@ -36,7 +41,7 @@ namespace ReactUnity.UGUI.StateHandlers
 
         private void OnDisable()
         {
-            Context.CursorAPI.Pop(Component);
+            Context?.CursorAPI.Pop(Component);
             cursorShown = false;
         }
     }

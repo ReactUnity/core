@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI.Behaviours
 
         private void Start()
         {
-            if (Layout == null) DestroyImmediate(this);
+            if (Layout == null) enabled = false;
         }
 
         void LateUpdate()

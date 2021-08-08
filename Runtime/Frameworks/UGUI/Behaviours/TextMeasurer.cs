@@ -16,17 +16,17 @@ namespace ReactUnity.UGUI.Behaviours
 
         void Start()
         {
-            if (Layout == null) DestroyImmediate(this);
+            if (Layout == null) enabled = false;
         }
 
         void ILayoutController.SetLayoutHorizontal()
         {
-            Layout.MarkDirty();
+            Layout?.MarkDirty();
         }
 
         void ILayoutController.SetLayoutVertical()
         {
-            Layout.MarkDirty();
+            Layout?.MarkDirty();
         }
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)

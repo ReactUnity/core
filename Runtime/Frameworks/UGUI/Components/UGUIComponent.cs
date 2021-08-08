@@ -197,12 +197,15 @@ namespace ReactUnity.UGUI
 
         protected void ResolveTransform()
         {
+            var style = ComputedStyle;
+            Component.Translate = style.translate;
+
             // Reset rotation and scale before setting pivot
             RectTransform.localScale = Vector3.one;
             RectTransform.localRotation = Quaternion.identity;
 
 
-            var origin = ComputedStyle.transformOrigin;
+            var origin = style.transformOrigin;
             var rect = RectTransform.sizeDelta;
             var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
             var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
@@ -217,9 +220,9 @@ namespace ReactUnity.UGUI
 
 
             // Restore rotation and scale
-            var scale = ComputedStyle.scale;
+            var scale = style.scale;
             RectTransform.localScale = new Vector3(scale.x, scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(ComputedStyle.rotate);
+            RectTransform.localRotation = Quaternion.Euler(style.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()
@@ -395,7 +398,9 @@ namespace ReactUnity.UGUI
 
         public override object GetComponent(Type type)
         {
-            return GameObject.GetComponent(type);
+            var res = GameObject.GetComponent(type);
+            if (res is MonoBehaviour mn && !mn.enabled) mn.enabled = true;
+            return res;
         }
 
         public override object AddComponent(Type type)
