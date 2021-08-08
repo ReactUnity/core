@@ -52,6 +52,7 @@ namespace ReactUnity.UGUI
                     VideoPlayer.clip = res.Clip;
                     VideoPlayer.url = res.Url;
                     VideoPlayer.source = res.Type;
+                    VideoPlayer.Prepare();
                 }
             });
         }

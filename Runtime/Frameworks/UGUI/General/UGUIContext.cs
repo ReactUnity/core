@@ -43,15 +43,8 @@ namespace ReactUnity.UGUI
                 { "hover", typeof(HoverStateHandler) },
             };
 
+        public IconSet DefaultIconSet { get; }
         public Dictionary<string, IconSet> IconSets { get; } = new Dictionary<string, IconSet>() { };
-        public IconSet DefaultIconSet
-        {
-            get
-            {
-                if (IconSets.TryGetValue("default", out var i)) return i;
-                return null;
-            }
-        }
 
         public override CursorSet CursorSet { get; }
 
@@ -64,7 +57,7 @@ namespace ReactUnity.UGUI
         public UGUIContext(
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart, List<IconSet> iconSets, CursorSet cursorSet
+            bool isDevServer, Action onRestart, List<IconSet> iconSets, IconSet defaultIconSet, CursorSet cursorSet
         ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, true)
         {
             Host = new HostComponent(hostElement, this);
@@ -78,6 +71,11 @@ namespace ReactUnity.UGUI
             }
 
             CursorSet = cursorSet;
+            DefaultIconSet = defaultIconSet;
+            if (DefaultIconSet == null)
+            {
+                if (IconSets.TryGetValue("default", out var def)) DefaultIconSet = def;
+            }
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

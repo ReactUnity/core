@@ -10,8 +10,9 @@ namespace ReactUnity.UGUI
     public class ReactUnityUGUI : ReactUnityBase
     {
         public RectTransform Root => transform as RectTransform;
-        public List<IconSet> IconSets;
         public CursorSet CursorSet;
+        public IconSet DefaultIconSet;
+        public List<IconSet> IconSets;
 
         protected override void ClearRoot()
         {
@@ -23,7 +24,7 @@ namespace ReactUnity.UGUI
         protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, IconSets, CursorSet);
+            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, IconSets, DefaultIconSet, CursorSet);
         }
 
         protected override IMediaProvider CreateMediaProvider()
