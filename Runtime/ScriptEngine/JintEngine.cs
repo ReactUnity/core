@@ -43,7 +43,7 @@ namespace ReactUnity.ScriptEngine
 
             var deferred = Engine.RegisterPromise();
             var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<JsValue>;
-            context?.Dispatcher.OnEveryUpdate(() => resolve(""));
+            context?.Dispatcher.OnEveryUpdate(() => resolve(JsValue.Undefined));
         }
 
         public object Evaluate(string code, string fileName = null)
