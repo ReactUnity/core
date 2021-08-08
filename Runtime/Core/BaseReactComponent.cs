@@ -233,8 +233,7 @@ namespace ReactUnity
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context);
-            resolvedStyle.CssStyles = cssStyles;
+            var resolvedStyle = new NodeStyle(Context, null, cssStyles);
 
             StyleState.SetCurrent(resolvedStyle);
             ApplyStyles();

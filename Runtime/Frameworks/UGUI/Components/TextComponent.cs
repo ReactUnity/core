@@ -38,7 +38,6 @@ namespace ReactUnity.UGUI
         public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, "")
         {
             Layout.CopyStyle(linkedTo.Layout);
-            ComputedStyle.CopyStyle(linkedTo.ComputedStyle);
             Style = linkedTo.Style;
             Style.changed += StyleChanged;
 

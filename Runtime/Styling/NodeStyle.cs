@@ -11,12 +11,13 @@ namespace ReactUnity.Styling
     public class NodeStyle
     {
         Dictionary<string, object> StyleMap;
-        public List<IDictionary<IStyleProperty, object>> CssStyles;
+        List<IDictionary<IStyleProperty, object>> CssStyles;
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
 
         public ReactContext Context;
         public NodeStyle Parent;
+        Dictionary<IStyleProperty, object> Cache;
 
         #region Set/Get
 
@@ -227,27 +228,27 @@ namespace ReactUnity.Styling
         }
         #endregion
 
-        public NodeStyle(ReactContext context, NodeStyle fallback = null)
+        public NodeStyle(ReactContext context, NodeStyle fallback = null, List<IDictionary<IStyleProperty, object>> cssStyles = null)
         {
             Context = context;
             StyleMap = new Dictionary<string, object>();
             Fallback = fallback;
+            CssStyles = cssStyles;
         }
 
         public void UpdateParent(NodeStyle parent)
         {
             Parent = parent;
             Fallback?.UpdateParent(parent);
-        }
-
-        public void CopyStyle(NodeStyle copyFrom)
-        {
-            StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
+            Cache?.Clear();
         }
 
         public object GetRawStyleValue(IStyleProperty prop, bool fromChild = false, NodeStyle activeStyle = null)
         {
             if (fromChild) HasInheritedChanges = true;
+
+            if (Cache == null) Cache = new Dictionary<IStyleProperty, object>();
+            else if (Cache.TryGetValue(prop, out var cached)) return cached;
 
             object value;
             var name = prop.name;
@@ -267,7 +268,7 @@ namespace ReactUnity.Styling
                 else value = prop?.defaultValue;
             }
 
-            return GetStyleValueSpecial(value, prop, activeStyle ?? this);
+            return Cache[prop] = GetStyleValueSpecial(value, prop, activeStyle ?? this);
         }
 
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
@@ -312,17 +313,13 @@ namespace ReactUnity.Styling
             }
 
             var changed = currentValue != value;
-            if (value == null)
-            {
-                StyleMap.Remove(name);
-            }
-            else
-            {
-                StyleMap[name] = value;
-            }
 
             if (changed)
             {
+                if (value == null) StyleMap.Remove(name);
+                else StyleMap[name] = value;
+
+                Cache.Remove(prop);
                 if (prop.inherited) HasInheritedChanges = true;
             }
         }

@@ -14,7 +14,7 @@ namespace ReactUnity.UGUI
             VideoPlayer = AddComponent<VideoPlayer>();
             VideoPlayer.renderMode = VideoRenderMode.RenderTexture;
             VideoPlayer.targetTexture = RenderTexture;
-
+            VideoPlayer.playOnAwake = false;
             VideoPlayer.prepareCompleted += PrepareCompleted;
         }
 
