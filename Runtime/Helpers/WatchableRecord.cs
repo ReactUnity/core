@@ -246,10 +246,8 @@ namespace ReactUnity.Helpers
         {
             if (exposedEngines.TryAdd(engine))
             {
-                engine.AddHostObject("___key___", this);
-                engine.AddRestrictedHostObject<WatchableAdaptibleRecord<TKey, T>>("___host___", this);
-                engine.Execute(null, true,
-                    $"Object.setPrototypeOf(___key___, ___host___); delete ___key___; delete ___host___;");
+                var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);
+                engine.Script.Object.setPrototypeOf(this, restricted);
             }
         }
 #endif
@@ -271,10 +269,8 @@ namespace ReactUnity.Helpers
         {
             if (exposedEngines.TryAdd(engine))
             {
-                engine.AddHostObject("___key___", this);
-                engine.AddRestrictedHostObject<WatchableRecord<object>>("___host___", this);
-                engine.Execute(null, true,
-                    $"Object.setPrototypeOf(___key___, ___host___); delete ___key___; delete ___host___;");
+                var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableRecord<object>>(this, engine);
+                engine.Script.Object.setPrototypeOf(this, restricted);
             }
         }
 #endif
