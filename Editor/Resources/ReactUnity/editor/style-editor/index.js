@@ -14,7 +14,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main_host__W3tT_{flex-direction:column;align-items:stretch}.main_styles__1If1m{flex-direction:column;align-items:stretch}.main_styles__1If1m .main_showAllButton__3mKO1{margin-bottom:20px}.main_styles__1If1m:not(.main_showAll__1j1Jr) .main_row__1Cs27:not(.main_exists__cYxGf){display:none}.main_row__1Cs27{flex-direction:row;flex-shrink:0;align-items:center;margin-bottom:4px;overflow:hidden}.main_row__1Cs27:hover{background:.82}.main_row__1Cs27 .main_removeButton__JTmyH{visibility:hidden;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;margin:0}.main_row__1Cs27.main_exists__cYxGf{font-weight:bold}.main_row__1Cs27.main_exists__cYxGf .main_removeButton__JTmyH{font-weight:none;visibility:visible}.main_row__1Cs27.main_rectPart__CeJQD{flex-grow:0;width:100px}.main_row__1Cs27.main_rectPart__CeJQD .main_rowContent__3S9dV{align-items:stretch;justify-content:center;text-align:center}.main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um .main_rowContent__3S9dV{flex-direction:column}.main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p .main_rowContent__3S9dV{flex-direction:column-reverse}.main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti .main_rowContent__3S9dV,.main_row__1Cs27.main_rectPart__CeJQD.main_part-start__s_9Cz .main_rowContent__3S9dV{flex-direction:row}.main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn,.main_row__1Cs27.main_rectPart__CeJQD.main_part-end__2o2_-{margin-left:40px;flex-direction:row-reverse}.main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn .main_rowContent__3S9dV,.main_row__1Cs27.main_rectPart__CeJQD.main_part-end__2o2_- .main_rowContent__3S9dV{flex-direction:row-reverse}.main_propRectContainer__1a2eI{padding-top:6px;padding-bottom:6px;flex-direction:row}.main_propRectContainer__1a2eI:not(:first-child){border-top-color:.78;border-top-width:2px}.main_propRectContainer__1a2eI:hover{background:.82}.main_rectHead__rGTf0{width:150px;align-self:center}.main_rectHead__rGTf0 .main_rowContent__3S9dV{flex-direction:column;align-self:center}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn{margin-left:12px;flex-direction:row-reverse}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um .main_rowContent__3S9dV,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn .main_rowContent__3S9dV{flex-direction:row-reverse}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti{flex-direction:row}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p .main_rowContent__3S9dV,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti .main_rowContent__3S9dV{flex-direction:row}.main_propRectRow__3RMuQ{flex-direction:row;justify-content:center}.main_rowContent__3S9dV{flex-grow:1;flex-basis:0;align-items:stretch;align-self:stretch}.main_group__MesUC{border-radius:8px;padding:6px;margin:6px;background:.86;border-width:2px;border-color:.83}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".main_host__W3tT_{flex-direction:column;align-items:stretch}.main_styles__1If1m{flex-direction:column;align-items:stretch}.main_styles__1If1m .main_showAllButton__3mKO1{margin-bottom:20px}.main_styles__1If1m:not(.main_showAll__1j1Jr) .main_row__1Cs27:not(.main_exists__cYxGf){display:none}.main_row__1Cs27{flex-direction:row;flex-shrink:0;align-items:center;margin-bottom:4px;overflow:hidden}.main_row__1Cs27:hover{background:.82}.main_row__1Cs27 .main_removeButton__JTmyH{visibility:hidden;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;margin:0}.main_row__1Cs27.main_exists__cYxGf{font-weight:bold}.main_row__1Cs27.main_exists__cYxGf .main_removeButton__JTmyH{font-weight:none;visibility:visible}.main_row__1Cs27.main_rectPart__CeJQD{flex-grow:0;width:100px}.main_row__1Cs27.main_rectPart__CeJQD .main_rowContent__3S9dV{align-items:stretch;justify-content:center;text-align:center}.main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um .main_rowContent__3S9dV{flex-direction:column}.main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p .main_rowContent__3S9dV{flex-direction:column-reverse}.main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti .main_rowContent__3S9dV,.main_row__1Cs27.main_rectPart__CeJQD.main_part-start__s_9Cz .main_rowContent__3S9dV{flex-direction:row}.main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn,.main_row__1Cs27.main_rectPart__CeJQD.main_part-end__2o2_-{margin-left:40px;flex-direction:row-reverse}.main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn .main_rowContent__3S9dV,.main_row__1Cs27.main_rectPart__CeJQD.main_part-end__2o2_- .main_rowContent__3S9dV{flex-direction:row-reverse}.main_propRectContainer__1a2eI{padding-top:6px;padding-bottom:6px;flex-direction:row}.main_propRectContainer__1a2eI:not(:first-child){border-top-color:.78;border-top-width:2px}.main_propRectContainer__1a2eI:hover{background:.82}.main_rectHead__rGTf0{width:150px;align-self:center}.main_rectHead__rGTf0 .main_rowContent__3S9dV{flex-direction:column;align-self:center}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn{margin-left:12px;flex-direction:row-reverse}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-top__1K1um .main_rowContent__3S9dV,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-right__2erXn .main_rowContent__3S9dV{flex-direction:row-reverse}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti{flex-direction:row}.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-bottom__bTk4p .main_rowContent__3S9dV,.main_propRect__3CIZ5.main_corner__G2xP6 .main_row__1Cs27.main_rectPart__CeJQD.main_part-left__3_7ti .main_rowContent__3S9dV{flex-direction:row}.main_propRectRow__3RMuQ{flex-direction:row;justify-content:center}.main_rowContent__3S9dV{flex-grow:1;flex-basis:0;align-items:stretch;align-self:stretch}.main_group__MesUC{border-radius:8px;padding:6px;margin:6px;background:.86;border-width:2px;border-color:.83}.main_logo__lXeY0{max-height:200px;max-width:200px;align-self:center;animation:main_appear__2IQW0 800ms 400ms both;transform-origin:center}.main_logo__lXeY0+view{font-size:16px;align-self:center}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "main_host__W3tT_",
@@ -37,44 +37,12 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"propRect": "main_propRect__3CIZ5",
 	"corner": "main_corner__G2xP6",
 	"propRectRow": "main_propRectRow__3RMuQ",
-	"group": "main_group__MesUC"
+	"group": "main_group__MesUC",
+	"logo": "main_logo__lXeY0",
+	"appear": "main_appear__2IQW0"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
-
-/***/ }),
-
-/***/ 468:
-/***/ ((module) => {
-
-"use strict";
-
-
-var memo = {};
-/* istanbul ignore next  */
-
-function getTarget(target) {
-  if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
-
-    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-      try {
-        // This will throw an exception if access to iframe is blocked
-        // due to cross-origin restrictions
-        styleTarget = styleTarget.contentDocument.head;
-      } catch (e) {
-        // istanbul ignore next
-        styleTarget = null;
-      }
-    }
-
-    memo[target] = styleTarget;
-  }
-
-  return memo[target];
-}
-
-module.exports = getTarget;
 
 /***/ }),
 
@@ -182,6 +150,52 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ 52:
+/***/ ((module) => {
+
+"use strict";
+
+
+var memo = {};
+/* istanbul ignore next  */
+
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
+      }
+    }
+
+    memo[target] = styleTarget;
+  }
+
+  return memo[target];
+}
+/* istanbul ignore next  */
+
+
+function insertBySelector(insert, style) {
+  var target = getTarget(insert);
+
+  if (!target) {
+    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+  }
+
+  target.appendChild(style);
+}
+
+module.exports = insertBySelector;
+
+/***/ }),
+
 /***/ 469:
 /***/ ((module) => {
 
@@ -197,6 +211,25 @@ function insertStyleElement(options) {
 }
 
 module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ 10:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(style) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+
+  if (nonce) {
+    style.setAttribute("nonce", nonce);
+  }
+}
+
+module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
@@ -252,6 +285,29 @@ function domAPI(options) {
 }
 
 module.exports = domAPI;
+
+/***/ }),
+
+/***/ 329:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function styleTagTransform(css, style) {
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+module.exports = styleTagTransform;
 
 /***/ }),
 
@@ -7552,18 +7608,28 @@ var StyleLength=UnityEngine.UIElements.StyleLength;var StyleKeyword=UnityEngine.
 var YogaValue2=ReactUnity.Types.YogaValue2;function YogaValue2Field(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var x=convertYogaToLength(value.X);var y=convertYogaToLength(value.Y);var xRef=(0,react.useRef)();var yRef=(0,react.useRef)();var changed=function changed(){var xVal=xRef.current.Element.value;var yVal=yRef.current.Element.value;var val=new YogaValue2(convertLengthToYoga(xVal),convertLengthToYoga(yVal));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,'unity-composite-field','unity-base-field'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m('unity-base-field__input','unity-composite-field__input'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"X",value:x,onChange:changed,ref:xRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field','unity-composite-field__field--first')}),/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"Y",value:y,onChange:changed,ref:yRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field')}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"unity-composite-field__field-spacer"})]})]});}
 ;// CONCATENATED MODULE: ./src/common/props.ts
 var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var commaSeparatedListField={component:'input',getter:convertListToString,setter:convertStringToList};var borderRadiusField={component:'length',getter:convertFloatToLength,setter:convertLengthToFloat};var styleProps=[{props:[{name:'Display',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'PositionType',component:enumComponent('Facebook.Yoga.YogaPositionType'),label:'Position Type',source:'layout'},{name:'backgroundColor',component:'color',label:'Background Color'},{name:'backgroundImage',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',component:sliderComponent(),label:'Opacity'},{name:'zIndex',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',component:'toggle',label:'Visibility'}]},{props:[{name:'boxShadow',component:BoxShadowField,label:'Box Shadow'}]},{label:'Text',props:[{name:'StyleDirection',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',component:'color',label:'Color'},{name:'fontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',label:'Font Size'},lengthField),{name:'textAlign',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',component:'toggle',label:'Text Wrap'},{name:'content',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',component:YogaValue2Field,label:'Translate'},{name:'scale',component:'vector2',label:'Scale'},{name:'rotate',component:'vector3',label:'Rotate'}]},{props:[_objectSpread2(_objectSpread2({name:'animation'},commaSeparatedListField),{},{label:'Animation'}),_objectSpread2(_objectSpread2({name:'transition'},commaSeparatedListField),{},{label:'Transition'}),_objectSpread2(_objectSpread2({name:'audio'},commaSeparatedListField),{},{label:'Audio'})]},{props:[_objectSpread2(_objectSpread2({name:'cursor'},commaSeparatedListField),{},{label:'Cursor'}),{name:'pointerEvents',component:enumComponent('ReactUnity.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',component:enumComponent('ReactUnity.Types.Appearance'),label:'Appearance'},{name:'navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth'},lengthField),{},{label:'Max Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight'},lengthField),{},{label:'Max Height',source:'layout'})]},{props:[{name:'FlexDirection',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[_objectSpread2(_objectSpread2({name:'borderRadius'},borderRadiusField),{},{label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}}),{name:'borderColor',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];
+;// CONCATENATED MODULE: ./src/context/selection.tsx
+var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}var ctx=/*#__PURE__*/react.createContext(undefined);function SelectionProvider(_ref){var children=_ref.children;var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/react.createElement(ctx.Provider,{value:selection},children);};function useSelection(){var context=react.useContext(ctx);if(context===undefined){throw new Error('useSelection must be used within a provider');}return context;}
+;// CONCATENATED MODULE: ./src/context/style.tsx
+var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.Id='style-editor-el-'+ind;el.SetData('style-editor-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var type=importType('ReactUnity.StyleEngine.StyleSheet');var dicCtor=System.Collections.Generic.Dictionary(System.String,System.Object);var sheet=new type(state.element.Context.Style,'',1);var style=state.styles;var selector="#style-editor-el-".concat(state.ind);var values=[];var valuesDic=new dicCtor();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(487);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleDomAPI.js
 var styleDomAPI = __webpack_require__(631);
 var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/getTarget.js
-var getTarget = __webpack_require__(468);
-var getTarget_default = /*#__PURE__*/__webpack_require__.n(getTarget);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(52);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(10);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertStyleElement.js
 var insertStyleElement = __webpack_require__(469);
 var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(329);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/main/index.module.scss
 var index_module = __webpack_require__(521);
 ;// CONCATENATED MODULE: ./src/main/index.module.scss
@@ -7575,39 +7641,16 @@ var index_module = __webpack_require__(521);
       
       
       
+      
+      
 
 var options = {};
 
-options.styleTagTransform = function(css, style){
-      if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-      } else {
-      while (style.firstChild) {
-        style.removeChild(style.firstChild);
-      }
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
 
-      style.appendChild(document.createTextNode(css));
-    }
-  };
-options.setAttributes = function(style) {
-        var nonce =
-           true ? __webpack_require__.nc : 0;
-
-        if (nonce) {
-          style.setAttribute("nonce", nonce);
-        }
-      };
-options.insert = function(style){
-    var target = getTarget_default()("head");
-
-    if (!target) {
-      throw new Error(
-        "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
-      );
-    }
-
-    target.appendChild(style);
-  };
+      options.insert = insertBySelector_default().bind(null, "head");
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7619,7 +7662,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
        /* harmony default export */ const main_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/main/index.tsx
-var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}function App(){var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.host,children:selection?/*#__PURE__*/(0,jsx_runtime.jsx)(Styles,{element:selection}):'Select an element to edit its styles'});}function Styles(_ref){var element=_ref.element;var _useState3=(0,react.useState)(true),_useState4=_slicedToArray(_useState3,2),showAll=_useState4[0],setShowAll=_useState4[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:clsx_m(main_index_module.styles,showAll&&main_index_module.showAll),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:main_index_module.showAllButton}),styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x,element:element},i);})]});}function Group(_ref2){var group=_ref2.group,element=_ref2.element,className=_ref2.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.groupHeader,children:group.label}),group.props.map(function(x){return x.arrangement==='rect'||x.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{element:element,prop:x},x.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{element:element,prop:x},x.name);})]});}function StylePropRow(_ref3){var _prop$label;var prop=_ref3.prop,element=_ref3.element,className=_ref3.className;var cmp=element.Component;var changedDebounce=react.useRef();var changed=function changed(debounce){if(changedDebounce.current!=null){clearTimeout(changedDebounce.current);changedDebounce.current=null;}changedDebounce.current=setTimeout(function(){changedDebounce.current=null;cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});},debounce);};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)cmp.Style.Set(name,res);}else cmp.Style.Set(name,value.newValue);changed(500);};var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),setRender=_useState6[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:cmp.ComputedStyle[prop.name];var gval=(prop.getter?prop.getter(val,element):val)||null;var exists=cmp.Style.ContainsKey(prop.name);var removeStyle=function removeStyle(){cmp.Style.Remove(prop.name);changed(0);};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,main_index_module.row,exists&&main_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:removeStyle,className:main_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:main_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref4){var _prop$label2;var prop=_ref4.prop,element=_ref4.element;var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,element:element,className:clsx_m(main_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:main_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:main_index_module.removeButton,style:{visibility:'hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRect,main_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref5){var prop=_ref5.prop,part=_ref5.part,element=_ref5.element;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,element:element,className:clsx_m(main_index_module.rectPart,main_index_module['part-'+part],'react-unity__field__inline',isCorner&&main_index_module.corner)})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+function App(){var selection=useSelection();return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.host,children:selection?/*#__PURE__*/(0,jsx_runtime.jsx)(Styles,{}):/*#__PURE__*/(0,jsx_runtime.jsx)(NotSelectedView,{})});}function NotSelectedView(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:main_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Select an element in the scene to edit its styles"})]});}function Styles(){var _useState=(0,react.useState)(true),_useState2=_slicedToArray(_useState,2),showAll=_useState2[0],setShowAll=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:clsx_m(main_index_module.styles,showAll&&main_index_module.showAll),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:main_index_module.showAllButton}),styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x},i);})]});}function Group(_ref){var group=_ref.group,className=_ref.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.groupHeader,children:group.label}),group.props.map(function(x){return x.arrangement==='rect'||x.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{prop:x},x.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:x},x.name);})]});}function StylePropRow(_ref2){var _prop$label;var prop=_ref2.prop,className=_ref2.className;var element=useSelection();var cmp=element.Component;var ctx=useStyleContext();var styles=ctx.getStyles(cmp);var changedDebounce=react.useRef();var changed=function changed(debounce){if(changedDebounce.current!=null){clearTimeout(changedDebounce.current);changedDebounce.current=null;}changedDebounce.current=setTimeout(function(){changedDebounce.current=null;cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});},debounce);};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)ctx.setProp(cmp,name,res);}else ctx.setProp(cmp,name,value.newValue);changed(500);};var _useState3=(0,react.useState)(0),_useState4=_slicedToArray(_useState3,2),setRender=_useState4[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:cmp.ComputedStyle[prop.name];var gval=(prop.getter?prop.getter(val,element):val)||null;var exists=(prop.name in styles);var removeStyle=function removeStyle(){ctx.removeProp(cmp,prop.name);changed(0);};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,main_index_module.row,exists&&main_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:removeStyle,className:main_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:main_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref3){var _prop$label2;var prop=_ref3.prop;var element=useSelection();var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,className:clsx_m(main_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:main_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:main_index_module.removeButton,style:{visibility:'hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_index_module.propRect,main_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref4){var prop=_ref4.prop,part=_ref4.part;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,className:clsx_m(main_index_module.rectPart,main_index_module['part-'+part],'react-unity__field__inline',isCorner&&main_index_module.corner)})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(StyleContext,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(SelectionProvider,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(App,{})})}));
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();

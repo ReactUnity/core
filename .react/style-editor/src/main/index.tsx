@@ -1,75 +1,51 @@
 import { ReactUnity, Renderer } from '@reactunity/renderer';
 import clsx from 'clsx';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../common/props';
-import { StyleContext, useStyleContext } from '../context';
+import { SelectionProvider, useSelection } from '../context/selection';
+import { StyleContext, useStyleContext } from '../context/style';
 import style from './index.module.scss';
 
-type RC = ReactUnity.UGUI.Behaviours.ReactElement;
-
-const Window = Globals.Window;
-const Inspector = Globals.Inspector;
-
-function getSelection() {
-  if (Window) {
-    const activeObject = UnityEditor.Selection.activeGameObject;
-    if (!activeObject) return null;
-    return activeObject.GetComponent('ReactElement') as RC;
-  } else if (Inspector) {
-    return Inspector.target as RC;
-  }
-
-  return null;
-}
-
 function App() {
-  const [selection, setSelection] = useState<RC>(getSelection());
-
-  const updateSelection = () => setSelection(getSelection());
-
-  useEffect(() => {
-    if (Window) {
-      const removeSelectionChange = Window.AddSelectionChange(updateSelection);
-      const removeStateChange = Window.AddPlayModeStateChange(updateSelection);
-      const removeVisibilityChange = Window.AddVisibilityChange(updateSelection);
-      return () => {
-        removeSelectionChange();
-        removeStateChange();
-        removeVisibilityChange();
-      };
-    }
-  }, []);
-
+  const selection = useSelection();
   return <view className={style.host}>
     {selection ?
-      <Styles element={selection} /> :
-      'Select an element to edit its styles'}
+      <Styles /> :
+      <NotSelectedView />}
   </view>;
 }
 
-function Styles({ element }: { element: RC }) {
+function NotSelectedView() {
+  return <view>
+    <image source="url(resource:ReactUnity/editor/logo)" className={style.logo}></image>
+
+    <view>Select an element in the scene to edit its styles</view>
+  </view>;
+}
+
+function Styles() {
   const [showAll, setShowAll] = useState(true);
 
   return <scroll className={clsx(style.styles, showAll && style.showAll)}>
     <toggle label="Show All" value={showAll} onChange={ev => setShowAll(ev.newValue)} className={style.showAllButton} />
 
-    {styleProps.map((x, i) => <Group group={x} element={element} key={i} />)}
+    {styleProps.map((x, i) => <Group group={x} key={i} />)}
   </scroll>;
 }
 
-function Group({ group, element, className }: { group: StylePropGroup, element: RC, className?: string }) {
-
+function Group({ group, className }: { group: StylePropGroup, className?: string }) {
   return <view className={clsx(style.group, className)}>
     {!!group.label && <view className={style.groupHeader}>{group.label}</view>}
 
     {group.props.map(x => x.arrangement === 'rect' || x.arrangement === 'corner' ?
-      <StylePropRect element={element} prop={x} key={x.name} /> :
-      <StylePropRow element={element} prop={x} key={x.name} />)}
+      <StylePropRect prop={x} key={x.name} /> :
+      <StylePropRow prop={x} key={x.name} />)}
   </view>;
 }
 
-function StylePropRow({ prop, element, className }: { prop: StyleProp, element: RC, className?: string }) {
+function StylePropRow({ prop, className }: { prop: StyleProp, className?: string }) {
+  const element = useSelection();
   const cmp = element.Component as unknown as ReactUnity.IReactComponent;
 
   const ctx = useStyleContext();
@@ -109,7 +85,7 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   const val = prop.source === 'layout' ? element.Layout[prop.name] : cmp.ComputedStyle[prop.name];
   const gval = (prop.getter ? prop.getter(val, element) : val) || null;
-  const exists = Object.prototype.hasOwnProperty.call(styles, prop.name);
+  const exists = prop.name in styles;
   const removeStyle = () => {
     ctx.removeProp(cmp, prop.name);
     changed(0);
@@ -124,13 +100,14 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
   </view>;
 }
 
-function StylePropRect({ prop, element }: { prop: StyleProp, element: RC }) {
+function StylePropRect({ prop }: { prop: StyleProp }) {
+  const element = useSelection();
   const partName = typeof prop.partTemplate === 'string' ? prop.partTemplate.replace('{part}', '') : prop.partTemplate('');
   const isCorner = prop.arrangement === 'corner';
 
   return <view className={clsx(style.propRectContainer)}>
     {partName ?
-      <StylePropRow prop={prop} element={element} className={clsx(style.rectHead, 'react-unity__field__inline', 'react-unity__field__no-grow')} /> :
+      <StylePropRow prop={prop} className={clsx(style.rectHead, 'react-unity__field__inline', 'react-unity__field__no-grow')} /> :
       <view style={{ flexDirection: 'row' }} className={style.rectHead}>
         <button className={style.removeButton} style={{ visibility: 'hidden' }}>X</button>
         {prop.label ?? prop.name}
@@ -139,34 +116,34 @@ function StylePropRect({ prop, element }: { prop: StyleProp, element: RC }) {
     {!isCorner ?
       <view className={clsx(style.propRect)}>
         <view className={style.propRectRow}>
-          <StylePropRectPart element={element} prop={prop} part={'top'} />
+          <StylePropRectPart prop={prop} part={'top'} />
         </view>
 
         <view className={style.propRectRow}>
-          <StylePropRectPart element={element} prop={prop} part={'left'} />
-          <StylePropRectPart element={element} prop={prop} part={'right'} />
+          <StylePropRectPart prop={prop} part={'left'} />
+          <StylePropRectPart prop={prop} part={'right'} />
         </view>
 
         <view className={style.propRectRow}>
-          <StylePropRectPart element={element} prop={prop} part={'bottom'} />
+          <StylePropRectPart prop={prop} part={'bottom'} />
         </view>
       </view> :
       <view className={clsx(style.propRect, style.corner)}>
         <view className={style.propRectRow}>
-          <StylePropRectPart element={element} prop={prop} part={'left'} />
-          <StylePropRectPart element={element} prop={prop} part={'top'} />
+          <StylePropRectPart prop={prop} part={'left'} />
+          <StylePropRectPart prop={prop} part={'top'} />
         </view>
 
         <view className={style.propRectRow}>
-          <StylePropRectPart element={element} prop={prop} part={'bottom'} />
-          <StylePropRectPart element={element} prop={prop} part={'right'} />
+          <StylePropRectPart prop={prop} part={'bottom'} />
+          <StylePropRectPart prop={prop} part={'right'} />
         </view>
       </view>}
   </view>;
 }
 
 
-function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: RC, part: StylePropPart }) {
+function StylePropRectPart({ prop, part }: { prop: StyleProp, part: StylePropPart }) {
   const partName = !part ? prop.name :
     typeof prop.partTemplate === 'string' ? prop.partTemplate.replace('{part}', part) : prop.partTemplate(part);
 
@@ -175,13 +152,15 @@ function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: 
   const partProp: StyleProp = { ...prop, partlessName: prop.name, name: partName, label };
 
   return <>
-    <StylePropRow prop={partProp} element={element}
+    <StylePropRow prop={partProp}
       className={clsx(style.rectPart, style['part-' + part], 'react-unity__field__inline', isCorner && style.corner)} />
   </>;
 }
 
 Renderer.render(
   <StyleContext>
-    <App />
+    <SelectionProvider>
+      <App />
+    </SelectionProvider>
   </StyleContext>
 );
