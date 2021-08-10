@@ -10,7 +10,7 @@ using UnityEngine.Events;
 
 namespace ReactUnity
 {
-    public class ReactUnityRunner
+    public class ReactUnityRunner : IDisposable
     {
         public IJavaScriptEngineFactory engineFactory { get; private set; }
         public IJavaScriptEngine engine { get; private set; }
@@ -132,6 +132,14 @@ namespace ReactUnity
             engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
 
             engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
+        }
+
+        public void Dispose()
+        {
+            engine?.Dispose();
+            engine = null;
+            engineFactory = null;
+            context = null;
         }
     }
 }

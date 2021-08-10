@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace ReactUnity.ScriptEngine
 {
-    public class ClearScriptEngine : IJavaScriptEngine
+    public class ClearScriptEngine : IJavaScriptEngine, IDisposable
     {
         public string Key { get; } = "clearscript";
 
@@ -132,6 +132,11 @@ namespace ReactUnity.ScriptEngine
             }
 
             return obj;
+        }
+
+        public void Dispose()
+        {
+            Engine.Dispose();
         }
     }
 

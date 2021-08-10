@@ -72,6 +72,7 @@ namespace ReactUnity
 
             Context?.Dispose();
             dispatcher?.Dispose();
+            runner?.Dispose();
             runner = null;
             dispatcher = null;
             Context = null;

@@ -130,6 +130,10 @@ namespace ReactUnity.ScriptEngine
 
             return obj;
         }
+
+        public void Dispose()
+        {
+        }
     }
 
     public class JintEngineFactory : IJavaScriptEngineFactory
