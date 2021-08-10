@@ -257,13 +257,18 @@ namespace ReactUnity.UGUI
         private void SetOverflow()
         {
             var mask = MaskAndImage;
+            var maskImage = ComputedStyle.maskImage;
+
+            var hasImage = maskImage != null && maskImage != ImageReference.None;
+            var hasMask = Layout.Overflow != YogaOverflow.Visible || hasImage;
 
             // Mask is not defined and there is no need for it
-            if (Layout.Overflow == YogaOverflow.Visible && mask == null) return;
+            if (!hasMask && mask == null) return;
 
-            if (mask == null) mask = MaskAndImage = MaskAndImage.Create(GameObject);
+            if (mask == null) mask = MaskAndImage = MaskAndImage.Create(GameObject, Context);
 
-            mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
+            mask.SetMaskImage(maskImage);
+            mask.SetEnabled(hasMask);
             mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
         }
 

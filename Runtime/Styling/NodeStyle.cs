@@ -56,6 +56,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.backgroundImage, value);
             get => GetStyleValue<ImageReference>(StyleProperties.backgroundImage);
         }
+        public ImageReference maskImage
+        {
+            set => SetStyleValue(StyleProperties.maskImage, value);
+            get => GetStyleValue<ImageReference>(StyleProperties.maskImage);
+        }
         public float borderRadius
         {
             set => SetStyleValue(StyleProperties.borderRadius, value);

@@ -65,9 +65,11 @@ Shader "ReactUnity/RoundedBorder"
           CalculateBorderRadius_float(_borderRadius, i.uv, _size, visible);
           float alpha = visible ? 1 : 0;
 
-          clip(alpha - 0.001);
+          fixed4 res = mixAlpha(tex2D(_MainTex, i.uv), i.color, alpha);
 
-          return mixAlpha(tex2D(_MainTex, i.uv), i.color, alpha);
+          clip(res.a - 0.001);
+
+          return res;
         }
 
         ENDCG
