@@ -1,9 +1,9 @@
 import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
-import { AssetReference, ColorAux, Vector2Aux, Vector3Aux } from './values';
+import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
-  opacity?: number;
+  opacity?: NumberAux;
   zIndex?: number;
   visibility?: Visibility | boolean;
   cursor?: CursorType | string;
@@ -14,12 +14,14 @@ export interface RenderStyle {
 
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
+  mask?: AssetReference;
+  maskImage?: AssetReference;
 
-  borderRadius?: number;
-  borderTopLeftRadius?: number;
-  borderTopRightRadius?: number;
-  borderBottomRightRadius?: number;
-  borderBottomLeftRadius?: number;
+  borderRadius?: NumberAux;
+  borderTopLeftRadius?: NumberAux;
+  borderTopRightRadius?: NumberAux;
+  borderBottomRightRadius?: NumberAux;
+  borderBottomLeftRadius?: NumberAux;
 
   borderColor?: ColorAux;
   borderTopColor?: ColorAux;
@@ -48,4 +50,18 @@ export interface RenderStyle {
   fontSize?: YogaValueAux;
   textOverflow?: TextOverflowModes;
   whiteSpace?: WhiteSpace;
+
+  // Shorthands
+  border?: string;
+  borderTop?: string;
+  borderRight?: string;
+  borderBottom?: string;
+  borderLeft?: string;
+  borderWidth?: string;
+  margin?: string;
+  padding?: string;
+  inset?: string;
+  flex?: string;
+  flexFlow?: string;
+  font?: string;
 }

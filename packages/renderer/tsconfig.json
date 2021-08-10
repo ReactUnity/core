@@ -5,7 +5,7 @@
     "sourceMap": false,
     "allowJs": true,
     "pretty": true,
-    "declaration": false,
+    "declaration": true,
     "module": "ES2015",
     "moduleResolution": "node",
     "preserveSymlinks": true,

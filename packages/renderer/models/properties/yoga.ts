@@ -72,4 +72,4 @@ export interface LayoutExtended {
   flexWrap?: Wrap;
 }
 
-export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap'> & LayoutExtended;
+export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap' | 'margin' | 'padding' | 'borderWidth'> & LayoutExtended;
