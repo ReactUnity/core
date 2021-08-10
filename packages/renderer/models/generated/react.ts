@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 07/08/2021 17:58:22
+// Generated 11/08/2021 02:15:50
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -632,6 +632,7 @@ export declare namespace ReactUnity {
     context: ReactUnity.ReactContext;
     RunScript(script: string, ctx: ReactUnity.ReactContext, engineType: ReactUnity.ScriptEngine.JavascriptEngineType, debug: boolean, awaitDebugger: boolean, beforeStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>, afterStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>): void;
     ExecuteScript(code: string, fileName?: string): void;
+    Dispose(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2686,6 +2687,22 @@ export declare namespace ReactUnity {
       AnimationTime: number;
       TimeScale: number;
     }
+    export class NoScheduler {
+      constructor();
+      setTimeout(callback: ReactUnity.Helpers.Callback, timeout: number): number;
+      setInterval(callback: ReactUnity.Helpers.Callback, timeout: number): number;
+      setImmediate(callback: ReactUnity.Helpers.Callback): number;
+      requestAnimationFrame(callback: ReactUnity.Helpers.Callback): number;
+      clearTimeout(handle: number): void;
+      clearInterval(handle: number): void;
+      clearImmediate(handle: number): void;
+      cancelAnimationFrame(handle: number): void;
+      clearAllTimeouts(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class RuntimeDispatcher {
       constructor();
       Scheduler: ReactUnity.Scheduling.IScheduler;
@@ -2791,6 +2808,7 @@ export declare namespace ReactUnity {
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2833,6 +2851,7 @@ export declare namespace ReactUnity {
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3262,7 +3281,7 @@ export declare namespace ReactUnity {
       Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
     }
     export class NodeStyle {
-      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle);
+      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle, cssStyles?: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[]);
       HasInheritedChanges: boolean;
       opacity: number;
       zIndex: number;
@@ -3271,6 +3290,7 @@ export declare namespace ReactUnity {
       pointerEvents: ReactUnity.Types.PointerEvents;
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ImageReference;
+      maskImage: ReactUnity.Types.ImageReference;
       borderRadius: number;
       borderTopLeftRadius: number;
       borderTopRightRadius: number;
@@ -3305,11 +3325,9 @@ export declare namespace ReactUnity {
       audio: ReactUnity.Animations.AudioList;
       objectFit: ReactUnity.Types.ObjectFit;
       objectPosition: ReactUnity.Types.YogaValue2;
-      CssStyles: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[];
       Context: ReactUnity.ReactContext;
       Parent: ReactUnity.Styling.NodeStyle;
       UpdateParent(parent: ReactUnity.Styling.NodeStyle): void;
-      CopyStyle(copyFrom: ReactUnity.Styling.NodeStyle): void;
       GetRawStyleValue(prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean, activeStyle?: ReactUnity.Styling.NodeStyle): any;
       SetStyleValue(prop: ReactUnity.Styling.IStyleProperty, value: any): void;
       MarkChangesSeen(): void;
@@ -3432,6 +3450,7 @@ export declare namespace ReactUnity {
       static pointerEvents: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.PointerEvents]
       static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static backgroundImage: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageReference]
+      static maskImage: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageReference]
       static borderRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderTopLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderTopRightRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
@@ -4022,7 +4041,8 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         Mask: UnityEngine.UI.Mask;
         Image: ReactUnity.Styling.Internal.RoundedBorderMaskImage;
-        static Create(go: UnityEngine.GameObject): ReactUnity.Styling.Internal.MaskAndImage;
+        MaskImage: ReactUnity.Types.ImageReference;
+        static Create(go: UnityEngine.GameObject, ctx: ReactUnity.ReactContext): ReactUnity.Styling.Internal.MaskAndImage;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -6007,8 +6027,9 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      IconSets: ReactUnity.Styling.IconSet[];
       CursorSet: ReactUnity.Styling.CursorSet;
+      DefaultIconSet: ReactUnity.Styling.IconSet;
+      IconSets: ReactUnity.Styling.IconSet[];
       Script: ReactUnity.ScriptSource;
       Debug: boolean;
       AwaitDebugger: boolean;
@@ -6074,11 +6095,11 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class UGUIContext {
-      constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Scheduling.IDispatcher, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), iconSets: ReactUnity.Styling.IconSet[], cursorSet: ReactUnity.Styling.CursorSet);
+      constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Scheduling.IDispatcher, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), iconSets: ReactUnity.Styling.IconSet[], defaultIconSet: ReactUnity.Styling.IconSet, cursorSet: ReactUnity.Styling.CursorSet);
       static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUI.UGUIContext,ReactUnity.UGUI.UGUIComponent]]
       StateHandlers: Record<string, System.Type>;
-      IconSets: Record<string, ReactUnity.Styling.IconSet>;
       DefaultIconSet: ReactUnity.Styling.IconSet;
+      IconSets: Record<string, ReactUnity.Styling.IconSet>;
       CursorSet: ReactUnity.Styling.CursorSet;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
@@ -6415,6 +6436,7 @@ export declare namespace ReactUnity {
         constructor();
         Layout: Facebook.Yoga.YogaNode;
         Component: ReactUnity.UGUI.UGUIComponent;
+        Translate: ReactUnity.Types.YogaValue2;
         useGUILayout: boolean;
         runInEditMode: boolean;
         enabled: boolean;

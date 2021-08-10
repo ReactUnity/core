@@ -31,5 +31,8 @@
         "functions": "only-multiline"
       }
     ]
-  }
+  },
+  "ignorePatterns": [
+    "models/generated/**"
+  ]
 }

@@ -3,11 +3,11 @@ import * as rc from 'react';
 import { ReactUnity } from '../generated';
 import * as Components from './components';
 
+import Cmp = ReactUnity.UIToolkit;
+
 type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
-
-import Cmp = ReactUnity.UIToolkit;
 
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
 type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;

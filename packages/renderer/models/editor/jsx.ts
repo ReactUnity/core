@@ -4,12 +4,12 @@ import { ReactUnity, UnityEngine } from '../generated';
 import * as Components from '../uitoolkit/components';
 import * as EComponents from './components';
 
+import Cmp = ReactUnity.UIToolkit;
+import ECmp = ReactUnity.Editor.UIToolkit;
+
 type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
-
-import Cmp = ReactUnity.UIToolkit;
-import ECmp = ReactUnity.Editor.UIToolkit;
 
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
 type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
