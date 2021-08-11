@@ -235,8 +235,8 @@ namespace ReactUnity.Helpers
 
     public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>
 #if REACT_CLEARSCRIPT
-        , Microsoft.ClearScript.IPropertyBag
-        , Microsoft.ClearScript.IScriptableObject
+        //, Microsoft.ClearScript.IPropertyBag
+        //, Microsoft.ClearScript.IScriptableObject
 #endif
     {
 #if REACT_CLEARSCRIPT
@@ -247,7 +247,7 @@ namespace ReactUnity.Helpers
             if (exposedEngines.TryAdd(engine))
             {
                 var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);
-                engine.Script.Object.setPrototypeOf(this, restricted);
+                Callback.From(engine.Evaluate("Object.setPrototypeOf")).Call(this, restricted);
             }
         }
 #endif
@@ -270,7 +270,7 @@ namespace ReactUnity.Helpers
             if (exposedEngines.TryAdd(engine))
             {
                 var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableRecord<object>>(this, engine);
-                engine.Script.Object.setPrototypeOf(this, restricted);
+                Callback.From(engine.Evaluate("Object.setPrototypeOf")).Call(this, restricted);
             }
         }
 #endif
