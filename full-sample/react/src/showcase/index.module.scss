@@ -1,5 +1,9 @@
 @import "~@reactunity/material/styles";
 
+:root {
+  font-size: 24px;
+}
+
 :root > * {
   background-color: #fafafa;
 }
@@ -32,6 +36,12 @@
     font-style: smallcaps, bold;
     color: #582a9c;
     margin-bottom: 12px;
+    transition: border 1s;
+    border-color: yellow;
+
+    &:hover {
+      border: 20px solid red;
+    }
   }
 
   h2 {
@@ -77,7 +87,7 @@
     border-radius: 20px;
     border-color: black;
     margin: 5px;
-    background-color: hsla(152, 37%, 59%, 0.745);
+    background-color: hsla(152deg, 37%, 59%, 0.745);
     object-fit: none;
   }
 
@@ -92,4 +102,26 @@
       audio: url(res:click);
     }
   }
+}
+
+pulsar {
+  cursor: pointer;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  animation: pulsate 6s linear infinite;
+  box-shadow: 0 0 20px #fff, -20px 0 80px #f0f, 20px 0 80px #0ff, inset 0 0 50px #fff, inset 50px 0 80px #f0f,
+    inset -50px 0 80px #0ff, inset 50px 0 300px #f0f, inset -50px 0 300px #0ff;
+}
+
+@keyframes pulsate {
+  50% {
+    box-shadow: 0 0 20px #fff, 20px 0 80px #f0f, -20px 0 80px #0ff, inset 0 0 50px #fff, inset -50px 0 80px #f0f,
+      inset 50px 0 80px #0ff, inset -50px 0 300px #f0f, inset 50px 0 300px #0ff;
+  }
+}
+
+lorem {
+  color: red;
+  font: 20px /40px;
 }

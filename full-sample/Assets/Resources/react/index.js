@@ -257,7 +257,7 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-var gl=__webpack_require__.g;switch(gl.location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(790), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(790), __webpack_require__.e(270), __webpack_require__.e(739)]).then(__webpack_require__.bind(__webpack_require__, 739));break;}
+var gl=__webpack_require__.g;switch(gl.location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(476), __webpack_require__.e(844)]).then(__webpack_require__.bind(__webpack_require__, 844));break;}
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

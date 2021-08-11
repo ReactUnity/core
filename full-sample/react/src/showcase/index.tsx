@@ -3,6 +3,8 @@ import { AlertDialog } from '@reactunity/material/alert';
 import { Button } from '@reactunity/material/button';
 import { Card } from '@reactunity/material/card';
 import { Paper } from '@reactunity/material/paper';
+import { Slider } from '@reactunity/material/slider';
+import '@reactunity/material/styles';
 import { GlobalsProvider, globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
@@ -26,7 +28,7 @@ const SuperInput = styled.input`
   }
 `;
 
-export function RenderObject({ object }: { object: UE.GameObject }) {
+export const RenderObject = React.memo(function RenderObject({ object }: { object: UE.GameObject }) {
   return <object width={300} height={400} style={{ flexGrow: 0 }}
     onDrag={(ev) => {
       Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
@@ -39,7 +41,7 @@ export function RenderObject({ object }: { object: UE.GameObject }) {
     camera={Globals.camera2}
     target={object}
   />;
-}
+});
 
 export function App() {
   const [videoRef, setVideoRef] = useState<ReactUnityNS.UGUI.VideoComponent>();
@@ -63,10 +65,18 @@ export function App() {
     <view className={style.app}>
       <h1>React Unity Showcase</h1>
 
+      {/* <pulsar /> */}
+
       <Paper elevation={2}>
         <h2>Button</h2>
 
-        <Button elevation={5} onClick={() => setDlOpen(true)}>Open Dialog</Button>
+        <lorem>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque autem vero illum repudiandae praesentium ad mollitia fugiat molestiae consectetur ratione? Soluta dolorem nobis numquam! Aut quas dicta error expedita et?
+        </lorem>
+
+        <Button elevation={5} onClick={() => setDlOpen(true)} id="my-button">
+          <text id="my-text">Open Dialog</text>
+        </Button>
       </Paper>
 
       <AlertDialog open={dlOpen} onClose={() => setDlOpen(false)} backdropClose text={'Some alert'}></AlertDialog>
@@ -156,7 +166,16 @@ export function App() {
         </row>
       </section>
 
+      <section>
+        <h2>Slider</h2>
 
+        <Slider direction="horizontal" mode="normal" max={100} step={20}>{(val) => val * val}</Slider>
+        <Slider direction="horizontal" mode="diff" max={100} step={20}>{(val) => val * val}</Slider>
+        <Slider direction="horizontal-reverse" mode="normal" max={100} step={20}>asdf</Slider>
+        <Slider direction="horizontal-reverse" mode="diff" max={100} step={20}>asdf</Slider>
+      </section>
+
+      {/* TODO: Object component too slow
       <section>
         <h2>Object</h2>
 
@@ -166,6 +185,7 @@ export function App() {
           <RenderObject object={Globals.capsule} />
         </row>
       </section>
+      */}
 
 
     </view>
@@ -173,7 +193,7 @@ export function App() {
 };
 
 
-const sheet = new ServerStyleSheet()
+const sheet = new ServerStyleSheet();
 
 Renderer.render(
   <StyleSheetManager disableVendorPrefixes sheet={sheet.instance}>

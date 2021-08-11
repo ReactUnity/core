@@ -1,6 +1,6 @@
 //
 // Types in assemblies: Assembly-CSharp, Assembly-CSharp-Editor
-// Generated 3.07.2021 18:55:02
+// Generated 15/08/2021 23:40:17
 //
 import { Facebook, InlineStyleRemap, ReactUnity, System, UnityEditor, UnityEngine } from '@reactunity/renderer';
 
@@ -48,7 +48,6 @@ export declare class CameraRotater {
   GetComponentInChildren(t: System.Type): UnityEngine.Component;
   GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-  GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
   GetComponentInParent(t: System.Type): UnityEngine.Component;
   GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -75,23 +74,20 @@ export declare class CameraRotater {
 }
 export declare class CustomButtonComponent {
   constructor(context: ReactUnity.UGUI.UGUIContext, backgroundColor: UnityEngine.Color);
-  DefaultStyle: ReactUnity.Styling.NodeStyle;
-  DefaultLayout: Facebook.Yoga.YogaNode;
   Button: UnityEngine.UI.Button;
   GameObject: UnityEngine.GameObject;
   RectTransform: UnityEngine.RectTransform;
   Component: ReactUnity.UGUI.Behaviours.ReactElement;
-  BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
-  MaskAndImage: ReactUnity.Styling.MaskAndImage;
+  BorderAndBackground: ReactUnity.Styling.Internal.BorderAndBackground;
+  MaskAndImage: ReactUnity.Styling.Internal.MaskAndImage;
   Selectable: UnityEngine.UI.Selectable;
   CanvasGroup: UnityEngine.CanvasGroup;
   Canvas: UnityEngine.Canvas;
   Container: UnityEngine.RectTransform;
-  TextContent: string;
   Name: string;
   Context: ReactUnity.UGUI.UGUIContext;
   Parent: ReactUnity.IContainerComponent;
-  Data: ReactUnity.Styling.InlineData;
+  Data: ReactUnity.Helpers.WatchableObjectRecord;
   Layout: Facebook.Yoga.YogaNode;
   ComputedStyle: ReactUnity.Styling.NodeStyle;
   StyleState: ReactUnity.Styling.StyleState;
@@ -99,8 +95,10 @@ export declare class CustomButtonComponent {
   Style: InlineStyleRemap;
   IsPseudoElement: boolean;
   Tag: string;
+  TextContent: string;
   ClassName: string;
-  ClassList: System.Collections.Generic.HashSet<string>;
+  ClassList: ReactUnity.Helpers.ClassList;
+  Id: string;
   IsContainer: boolean;
   Children: ReactUnity.IReactComponent[];
   BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
@@ -111,15 +109,16 @@ export declare class CustomButtonComponent {
   Update(): void;
   DestroySelf(): void;
   SetProperty(propertyName: string, value: any): void;
-  UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
+  Relayout(): void;
+  UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.Internal.BorderAndBackground;
   GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+  GetBoundingClientRect(): UnityEngine.Rect;
   GetComponent(type: System.Type): any;
   AddComponent(type: System.Type): any;
   Destroy(): void;
   SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+  FireEvent(eventName: string, arg: any): void;
   SetData(propertyName: string, value: any): void;
-  UpdateClasses(oldClassName: string, oldClassList: System.Collections.Generic.HashSet<string>): void;
-  ScheduleLayout(): void;
   ResolveStyle(recursive?: boolean): void;
   ApplyStyles(): void;
   ApplyLayoutStyles(): void;
@@ -183,7 +182,6 @@ export declare class CustomComponentInitializer {
   GetComponentInChildren(t: System.Type): UnityEngine.Component;
   GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-  GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
   GetComponentInParent(t: System.Type): UnityEngine.Component;
   GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -234,10 +232,12 @@ export declare class ReactWebBridge {
   hideFlags: UnityEngine.HideFlags;
   ReactCanvas: ReactUnity.UGUI.ReactUnityUGUI;
   TestScript: string;
+  TestStyle: string;
   InjectableScript: UnityEngine.TextAsset;
   Test(): void;
   SetJSX(script: string): void;
   SetCSS(script: string): void;
+  ReplaceCSS(script: string): void;
   Render(): void;
   ReloadScene(): void;
   LoadScene(sceneName: string): void;
@@ -261,7 +261,6 @@ export declare class ReactWebBridge {
   GetComponentInChildren(t: System.Type): UnityEngine.Component;
   GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-  GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
   GetComponentInParent(t: System.Type): UnityEngine.Component;
   GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
   GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -288,6 +287,16 @@ export declare class ReactWebBridge {
 }
 export declare class ReactNodesSample {
   constructor();
+  runner: ReactUnity.ReactUnityRunner;
+  context: ReactUnity.ReactContext;
+  dispatcher: ReactUnity.Scheduling.IDispatcher;
+  mediaProvider: ReactUnity.StyleEngine.IMediaProvider;
+  hostElement: ReactUnity.Editor.UIToolkit.ReactUnityEditorElement;
+  DebugEnabled: boolean;
+  AwaitDebugger: boolean;
+  EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
+  Timer: ReactUnity.Scheduling.ITimer;
+  AutoRun: boolean;
   rootVisualElement: UnityEngine.UIElements.VisualElement;
   wantsMouseMove: boolean;
   wantsMouseEnterLeaveWindow: boolean;
@@ -311,11 +320,11 @@ export declare class ReactNodesSample {
   Run(root?: UnityEngine.UIElements.VisualElement): void;
   Restart(root?: UnityEngine.UIElements.VisualElement): void;
   AddSelectionChange(cb: any): (() => void);
-  // AddSelectionChange(cb: Jint.Native.JsValue): (() => void);
+  AddSelectionChange(cb: any): (() => void);
   AddPlayModeStateChange(cb: any): (() => void);
-  // AddPlayModeStateChange(cb: Jint.Native.JsValue): (() => void);
+  AddPlayModeStateChange(cb: any): (() => void);
   AddVisibilityChange(cb: any): (() => void);
-  // AddVisibilityChange(cb: Jint.Native.JsValue): (() => void);
+  AddVisibilityChange(cb: any): (() => void);
   AddItemsToMenu(menu: UnityEditor.GenericMenu): void;
   BeginWindows(): void;
   EndWindows(): void;
@@ -333,7 +342,6 @@ export declare class ReactNodesSample {
   ShowAuxWindow(): void;
   ShowModal(): void;
   SaveChanges(): void;
-  DiscardChanges(): void;
   Close(): void;
   Repaint(): void;
   SendEvent(e: UnityEngine.Event): boolean;
