@@ -6,12 +6,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+#if REACT_CLEARSCRIPT
+using Microsoft.ClearScript;
+using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTable<Microsoft.ClearScript.ScriptEngine, ReactUnity.Helpers.PrototypeEntry>;
+#endif
 
 namespace ReactUnity.Helpers
 {
     public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>
     {
-
         protected Dictionary<TKey, T> collection;
 
         internal event Action<TKey, T, WatchableDictionary<TKey, T>> changed;
@@ -235,20 +238,17 @@ namespace ReactUnity.Helpers
 
     public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>
 #if REACT_CLEARSCRIPT
-        , Microsoft.ClearScript.IPropertyBag
-        , Microsoft.ClearScript.IScriptableObject
+        , IPropertyBag
+        , IScriptableObject
 #endif
     {
 #if REACT_CLEARSCRIPT
-        ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
+        private readonly EnginePrototypeTable map = new EnginePrototypeTable();
 
         public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {
-            if (exposedEngines.TryAdd(engine))
-            {
-                var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);
-                Callback.From(engine.Evaluate("Object.setPrototypeOf")).Call(this, restricted);
-            }
+            var entry = map.GetOrCreateValue(engine);
+            entry.ExposeObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);
         }
 #endif
     }
@@ -258,21 +258,39 @@ namespace ReactUnity.Helpers
 
     public class WatchableObjectRecord : WatchableRecord<object>
 #if REACT_CLEARSCRIPT
-        , Microsoft.ClearScript.IPropertyBag
-        , Microsoft.ClearScript.IScriptableObject
+        , IPropertyBag
+        , IScriptableObject
 #endif
     {
 #if REACT_CLEARSCRIPT
-        ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
+        private readonly EnginePrototypeTable map = new EnginePrototypeTable();
 
         public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {
-            if (exposedEngines.TryAdd(engine))
-            {
-                var restricted = Microsoft.ClearScript.Extensions.ToRestrictedHostObject<WatchableRecord<object>>(this, engine);
-                Callback.From(engine.Evaluate("Object.setPrototypeOf")).Call(this, restricted);
-            }
+            var entry = map.GetOrCreateValue(engine);
+            entry.ExposeObject<WatchableRecord<object>>(this, engine);
         }
 #endif
     }
+
+#if REACT_CLEARSCRIPT
+    /// <summary>
+    /// Class required to hold the prototyped object in .NET side to prevent it from GCed in script side
+    /// </summary>
+    internal class PrototypeEntry
+    {
+        public object Prototype;
+        public object ProxyHolder;
+
+        public void ExposeObject<T>(T obj, Microsoft.ClearScript.ScriptEngine engine)
+        {
+            if (Prototype == null)
+            {
+                Prototype = obj.ToRestrictedHostObject(engine);
+                Callback.From(engine.Evaluate("Object.setPrototypeOf")).Call(obj, Prototype);
+                ProxyHolder = Callback.From(engine.Evaluate("Object.create")).Call(obj);
+            }
+        }
+    }
+#endif
 }
