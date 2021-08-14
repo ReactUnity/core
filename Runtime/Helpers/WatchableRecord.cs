@@ -235,8 +235,8 @@ namespace ReactUnity.Helpers
 
     public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>
 #if REACT_CLEARSCRIPT
-        //, Microsoft.ClearScript.IPropertyBag
-        //, Microsoft.ClearScript.IScriptableObject
+        , Microsoft.ClearScript.IPropertyBag
+        , Microsoft.ClearScript.IScriptableObject
 #endif
     {
 #if REACT_CLEARSCRIPT

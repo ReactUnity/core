@@ -29,7 +29,7 @@ namespace ReactUnity
         string ClassName { get; set; }
         ClassList ClassList { get; }
         StateStyles StateStyles { get; }
-        InlineData Data { get; }
+        WatchableObjectRecord Data { get; }
 
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);

@@ -17,7 +17,7 @@ namespace ReactUnity
         ReactContext IReactComponent.Context => Context;
         public IContainerComponent Parent { get; private set; }
 
-        public InlineData Data { get; private set; } = new InlineData("Data");
+        public WatchableObjectRecord Data { get; private set; } = new WatchableObjectRecord();
         public YogaNode Layout { get; private set; }
         public NodeStyle ComputedStyle => StyleState.Active;
         public StyleState StyleState { get; private set; }
