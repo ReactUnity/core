@@ -22,6 +22,7 @@ export interface BaseEvents<T = BaseCmp> {
 export type Textable = string | number | boolean | null | undefined;
 
 export interface StyleCmpProps {
+  active?: boolean;
   id?: string;
   name?: string;
   className?: string;
