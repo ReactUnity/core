@@ -18,15 +18,15 @@ namespace ReactUnity.StyleEngine
         public List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
-        public StyleSheet(StyleContext context, string style, int importanceOffset = 0)
+        public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null)
         {
             Context = context;
             ImportanceOffset = importanceOffset;
 
-            Initialize(style);
+            Initialize(style, scope);
         }
 
-        public void Initialize(string style)
+        private void Initialize(string style, IReactComponent scope)
         {
             if (string.IsNullOrWhiteSpace(style)) return;
 
@@ -46,7 +46,7 @@ namespace ReactUnity.StyleEngine
 
                     foreach (var rule in media.Children.OfType<StyleRule>())
                     {
-                        var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql);
+                        var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, scope);
                         Declarations.AddRange(dcl);
                     }
                     MediaQueries.Add(mql);
@@ -62,7 +62,7 @@ namespace ReactUnity.StyleEngine
                 }
                 else if (child is StyleRule str)
                 {
-                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset);
+                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, scope);
                     Declarations.AddRange(dcl);
                 }
             }

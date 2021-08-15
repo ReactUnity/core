@@ -16,7 +16,7 @@ namespace ReactUnity.Editor.Tests.Renderer
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
-                    {!globals.disable && <style>{'#test { color: blue; }'}</style>}
+                    {!globals.disable && <style scope=':root'>{'#test { color: blue; }'}</style>}
                     <view id='test'>
                         Test text
                     </view>
@@ -40,6 +40,72 @@ namespace ReactUnity.Editor.Tests.Renderer
             Globals["disable"] = true;
             yield return null;
             Assert.AreEqual(Color.clear, rt.style.color.value);
+        }
+
+
+        [EditorInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <view id='testScope'>
+                        <view id='test'>Test text</view>
+                    </view>
+                    <view id='non-test'>Test text</view>
+                    {!globals.disable &&
+                        <style scope='#testScope'>{':scope view { color: blue; }'}</style>}
+                </>;
+            }
+
+            Renderer.render(
+                <GlobalsProvider>
+                    <App />
+                </GlobalsProvider>
+            );
+        ")]
+        public IEnumerator StyleTagShouldRespectScope()
+        {
+            yield return null;
+            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Element;
+
+            var cmp2 = Q("#non-test") as UIToolkitComponent<VisualElement>;
+            var rt2 = cmp2.Element;
+
+            Assert.AreEqual(Color.blue, rt.style.color.value);
+            Assert.AreEqual(Color.clear, rt2.style.color.value);
+        }
+
+
+        [EditorInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <view id='testScope'>
+                        <view id='test'>Test text</view>
+                        {!globals.disable &&
+                            <style scope=':parent'>{':scope view { color: blue; }'}</style>}
+                    </view>
+                    <view id='non-test'>Test text</view>
+                </>;
+            }
+
+            Renderer.render(
+                <GlobalsProvider>
+                    <App />
+                </GlobalsProvider>
+            );
+        ")]
+        public IEnumerator ParentScopedStyleTagShouldAffectParentOnly()
+        {
+            yield return null;
+            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Element;
+
+            var cmp2 = Q("#non-test") as UIToolkitComponent<VisualElement>;
+            var rt2 = cmp2.Element;
+
+            Assert.AreEqual(Color.blue, rt.style.color.value);
+            Assert.AreEqual(Color.clear, rt2.style.color.value);
         }
     }
 }

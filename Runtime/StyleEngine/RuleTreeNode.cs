@@ -14,11 +14,11 @@ namespace ReactUnity.StyleEngine
         public RuleRelationType RelationType = RuleRelationType.Parent;
         public T Data;
 
-        public MediaQueryList MediaQuery;
+        public MediaQueryList MediaQuery { get; private set; }
+        public IReactComponent Scope { get; private set; }
+        public int Specifity { get; private set; }
 
-        public int Specifity { get; set; }
-
-        public RuleTreeNode<T> AddChildCascading(string selector)
+        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int specifity)
         {
             var shadowParent = selector.StartsWith(":deep ") || selector.StartsWith(">>> ");
             var directParent = selector[0] == '>';
@@ -60,8 +60,16 @@ namespace ReactUnity.StyleEngine
                 var child = new RuleTreeNode<T>();
                 Children.AddLast(child);
                 child.Parent = this;
-                return child.AddChildCascading(selectorOther);
+                child.MediaQuery = mq;
+                child.Scope = scope;
+                child.Specifity = specifity;
+                return child.AddChildCascading(selectorOther, mq, scope, specifity);
             }
+        }
+
+        public bool Matches(IReactComponent component)
+        {
+            return Matches(component, Scope);
         }
 
         public bool Matches(IReactComponent component, IReactComponent scope)

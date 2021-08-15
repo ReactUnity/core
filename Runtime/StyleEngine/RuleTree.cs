@@ -16,9 +16,10 @@ namespace ReactUnity.StyleEngine
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null)
+        public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
+            (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
         {
-            var added = AddSelector(rule.SelectorText, importanceOffset);
+            var added = AddSelector(rule.SelectorText, importanceOffset, mql, scope);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)
@@ -26,22 +27,21 @@ namespace ReactUnity.StyleEngine
                 var style = rule.Style;
                 if (leaf.Data == null) leaf.Data = new StyleData();
                 var dic = RuleHelpers.ConvertStyleDeclarationToRecord(style, false);
-
-                if (dic.Count > 0)
-                {
-                    leaf.MediaQuery = mql;
-                    pairs.Add(Tuple.Create(leaf, dic));
-                }
-
                 var importantDic = RuleHelpers.ConvertStyleDeclarationToRecord(style, true);
+
+                if (dic.Count > 0) pairs.Add(Tuple.Create(leaf, dic));
+
                 if (importantDic.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !");
-                    importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, leaf.Specifity + RuleHelpers.ImportantSpecifity);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
-                    importantLeaf.MediaQuery = mql;
                     pairs.Add(Tuple.Create(importantLeaf, importantDic));
-                    LeafNodes.InsertIntoSortedList(importantLeaf);
+
+                    var list = LeafNodes;
+                    if (leaf.Selector.EndsWith(":before")) list = BeforeNodes;
+                    if (leaf.Selector.EndsWith(":after")) list = AfterNodes;
+
+                    list.InsertIntoSortedList(importantLeaf);
                 }
             }
 
@@ -49,7 +49,9 @@ namespace ReactUnity.StyleEngine
         }
 
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle(
-            string selectorText, Dictionary<IStyleProperty, object> rules, Dictionary<IStyleProperty, object> importantRules, int importanceOffset = 0, MediaQueryList mql = null)
+            string selectorText, Dictionary<IStyleProperty, object> rules, Dictionary<IStyleProperty, object> importantRules,
+            int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null
+        )
         {
             var added = AddSelector(selectorText, importanceOffset);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
@@ -58,20 +60,20 @@ namespace ReactUnity.StyleEngine
             {
                 if (leaf.Data == null) leaf.Data = new StyleData();
 
-                if (rules.Count > 0)
-                {
-                    leaf.MediaQuery = mql;
-                    pairs.Add(Tuple.Create(leaf, rules));
-                }
+                if (rules.Count > 0) pairs.Add(Tuple.Create(leaf, rules));
 
                 if (importantRules != null && importantRules.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !");
-                    importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, leaf.Specifity + RuleHelpers.ImportantSpecifity);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
-                    importantLeaf.MediaQuery = mql;
                     pairs.Add(Tuple.Create(importantLeaf, importantRules));
-                    LeafNodes.InsertIntoSortedList(importantLeaf);
+
+
+                    var list = LeafNodes;
+                    if (leaf.Selector.EndsWith(":before")) list = BeforeNodes;
+                    if (leaf.Selector.EndsWith(":after")) list = AfterNodes;
+
+                    list.InsertIntoSortedList(importantLeaf);
                 }
             }
 
@@ -95,15 +97,15 @@ namespace ReactUnity.StyleEngine
 
         public IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
         {
-            return LeafNodes.Where(x => x.Matches(component, null));
+            return LeafNodes.Where(x => x.Matches(component));
         }
         public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(IReactComponent component)
         {
-            return BeforeNodes.Where(x => x.Matches(component, null));
+            return BeforeNodes.Where(x => x.Matches(component));
         }
         public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(IReactComponent component)
         {
-            return AfterNodes.Where(x => x.Matches(component, null));
+            return AfterNodes.Where(x => x.Matches(component));
         }
 
         public IReactComponent GetMatchingChild(IReactComponent component)
@@ -149,7 +151,7 @@ namespace ReactUnity.StyleEngine
             return false;
         }
 
-        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0)
+        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
         {
             var splits = selectorText.Split(',');
 
@@ -159,14 +161,14 @@ namespace ReactUnity.StyleEngine
                 var selector = RuleHelpers.NormalizeSelector(split);
                 var sl = Tree.Parser.ParseSelector(selector);
                 var specificity = RuleHelpers.GetSpecificity(sl.Specifity);
+                var leaf = AddChildCascading("** " + selector, mql, scope, specificity + (1 << (29 + importanceOffset)));
+
+                added.Add(leaf);
 
                 var list = LeafNodes;
                 if (selector.EndsWith(":before")) list = BeforeNodes;
                 if (selector.EndsWith(":after")) list = AfterNodes;
-                var leaf = AddChildCascading("** " + selector);
-                leaf.Specifity = specificity + (1 << (29 + importanceOffset));
 
-                added.Add(leaf);
                 list.InsertIntoSortedList(leaf);
             }
 

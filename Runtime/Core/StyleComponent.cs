@@ -5,7 +5,29 @@ namespace ReactUnity
 {
     public class StyleComponent : BaseReactComponent<ReactContext>, ITextComponent
     {
-        public StyleSheet Sheet;
+        private object scope;
+        public object Scope
+        {
+            get => scope;
+            set
+            {
+                scope = value;
+                UpdateSheet();
+            }
+        }
+
+        private int importance = 0;
+        public int Importance
+        {
+            get => importance;
+            set
+            {
+                importance = value;
+                UpdateSheet();
+            }
+        }
+
+        public StyleSheet Sheet { get; private set; }
         public string Content { get; private set; }
         public override string Name { get; set; }
 
@@ -17,15 +39,52 @@ namespace ReactUnity
 
         public void SetText(string text)
         {
-            var newSheet = string.IsNullOrWhiteSpace(text) ? null : new StyleSheet(Context.Style, text, 0);
-            UpdateSheet(newSheet);
+            Content = text;
+            UpdateSheet();
         }
 
-        private void UpdateSheet(StyleSheet sheet)
+        private void UpdateSheet()
         {
             if (Sheet != null) Context.RemoveStyle(Sheet);
-            Sheet = sheet;
-            if (Sheet != null && Parent != null) Context.InsertStyle(Sheet);
+            Sheet = null;
+
+            if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(Content))
+            {
+                var scopeEl = GetScopeElement();
+
+                if (scopeEl != null)
+                {
+                    Sheet = new StyleSheet(Context.Style, Content, Importance, scopeEl);
+                    Context.InsertStyle(Sheet);
+                }
+            }
+        }
+
+        public IReactComponent GetScopeElement()
+        {
+            IReactComponent res;
+            if (scope is string s)
+            {
+                if (s == "root" || s == ":root") res = Context.Host;
+                else if (s == "parent" || s == ":parent") res = Parent;
+                else res = Context.Host.QuerySelector(s);
+            }
+            else if (scope is IReactComponent c) res = c;
+            else res = null;
+
+            return res;
+        }
+
+        public void Refresh()
+        {
+            UpdateSheet();
+        }
+
+        public override void SetProperty(string propertyName, object value)
+        {
+            if (propertyName == "scope") Scope = value;
+            else if (propertyName == "importance") Importance = Convert.ToInt32(Converters.AllConverters.IntConverter.Convert(value ?? "0"));
+            else base.SetProperty(propertyName, value);
         }
 
         #region BaseReactComponent Implementation
@@ -35,7 +94,7 @@ namespace ReactUnity
         public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
             base.SetParent(newParent, relativeTo, insertAfter);
-            UpdateSheet(Sheet);
+            UpdateSheet();
         }
 
         public override object AddComponent(Type type) { return null; }
