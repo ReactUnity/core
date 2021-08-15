@@ -1,4 +1,4 @@
-import { BaseEvents } from '../base-events';
+import { BaseEvents } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 
 type BaseCmp = ReactUnity.UGUI.UGUIComponent;

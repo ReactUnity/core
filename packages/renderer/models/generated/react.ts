@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 11/08/2021 02:15:50
+// Generated 15/08/2021 21:34:42
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -391,7 +391,7 @@ export declare namespace ReactUnity {
   export class BaseReactComponent<ContextType = any> {
     Context: ContextType;
     Parent: ReactUnity.IContainerComponent;
-    Data: ReactUnity.Styling.InlineData;
+    Data: ReactUnity.Helpers.WatchableObjectRecord;
     Layout: Facebook.Yoga.YogaNode;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     StyleState: ReactUnity.Styling.StyleState;
@@ -453,7 +453,7 @@ export declare namespace ReactUnity {
     ClassName: string;
     ClassList: ReactUnity.Helpers.ClassList;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: ReactUnity.Styling.InlineData;
+    Data: ReactUnity.Helpers.WatchableObjectRecord;
     DestroySelf(): void;
     Destroy(): void;
     ApplyLayoutStyles(): void;
@@ -666,6 +666,64 @@ export declare namespace ReactUnity {
     Url = 2,
     Resource = 3,
     Raw = 4,
+  }
+  export class StyleComponent {
+    constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
+    Scope: any; // System.Object
+    Importance: number;
+    Sheet: ReactUnity.StyleEngine.StyleSheet;
+    Content: string;
+    Name: string;
+    Context: ReactUnity.ReactContext;
+    Parent: ReactUnity.IContainerComponent;
+    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Layout: Facebook.Yoga.YogaNode;
+    ComputedStyle: ReactUnity.Styling.NodeStyle;
+    StyleState: ReactUnity.Styling.StyleState;
+    StateStyles: ReactUnity.Styling.StateStyles;
+    Style: InlineStyleRemap;
+    IsPseudoElement: boolean;
+    Tag: string;
+    TextContent: string;
+    ClassName: string;
+    ClassList: ReactUnity.Helpers.ClassList;
+    Id: string;
+    IsContainer: boolean;
+    Children: ReactUnity.IReactComponent[];
+    BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+    AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+    BeforePseudo: ReactUnity.IReactComponent;
+    AfterPseudo: ReactUnity.IReactComponent;
+    SetText(text: string): void;
+    GetScopeElement(): ReactUnity.IReactComponent;
+    Refresh(): void;
+    SetProperty(propertyName: string, value: any): void;
+    Update(): void;
+    SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+    AddComponent(type: System.Type): any;
+    GetComponent(type: System.Type): any;
+    Relayout(): void;
+    DestroySelf(): void;
+    Destroy(): void;
+    SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+    FireEvent(eventName: string, arg: any): void;
+    SetData(propertyName: string, value: any): void;
+    ResolveStyle(recursive?: boolean): void;
+    ApplyStyles(): void;
+    ApplyLayoutStyles(): void;
+    QuerySelector(query: string): ReactUnity.IReactComponent;
+    QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+    Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+    AddBefore(): void;
+    RemoveBefore(): void;
+    AddAfter(): void;
+    RemoveAfter(): void;
+    RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+    UnregisterChild(child: ReactUnity.IReactComponent): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
   }
   export enum ReactContext_LayoutMergeMode {
     Both = 0,
@@ -1756,6 +1814,7 @@ export declare namespace ReactUnity {
       hideFlags: UnityEngine.HideFlags;
       static ShowDefaultWindow(): void;
       GetResolvedStyles(component: ReactUnity.IReactComponent): any;
+      CreateStyleDictionary(): Record<string, any>;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
@@ -2057,7 +2116,7 @@ export declare namespace ReactUnity {
         Name: string;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Styling.InlineData;
+        Data: ReactUnity.Helpers.WatchableObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -2115,7 +2174,7 @@ export declare namespace ReactUnity {
         Name: string;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Styling.InlineData;
+        Data: ReactUnity.Helpers.WatchableObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -2928,6 +2987,8 @@ export declare namespace ReactUnity {
     export class StyleTree {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
+      Scope: ReactUnity.IReactComponent;
       Specifity: number;
       LeafNodes: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforeNodes: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
@@ -2939,16 +3000,16 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: ReactUnity.StyleEngine.StyleData;
-      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
-      AddStyle(rule: any, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList): System.Tuple<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
-      AddStyle(selectorText: string, rules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importantRules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList): System.Tuple<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
+      AddStyle(rule: any, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): System.Tuple<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
+      AddStyle(selectorText: string, rules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importantRules: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): System.Tuple<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingChild(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
       GetMatchingChildren(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
-      AddSelector(selectorText: string, importanceOffset?: number): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
-      AddChildCascading(selector: string): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>;
+      AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AddChildCascading(selector: string, mq: ReactUnity.StyleEngine.MediaQueryList, scope: ReactUnity.IReactComponent, specifity: number): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>;
+      Matches(component: ReactUnity.IReactComponent): boolean;
       Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
       CompareTo(other: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>): number;
       Equals(obj: any): boolean;
@@ -2959,6 +3020,8 @@ export declare namespace ReactUnity {
     export class RuleTree<T = any> {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
+      Scope: ReactUnity.IReactComponent;
       Specifity: number;
       LeafNodes: ReactUnity.StyleEngine.RuleTreeNode<T>[];
       BeforeNodes: ReactUnity.StyleEngine.RuleTreeNode<T>[];
@@ -2970,14 +3033,14 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
-      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingChild(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
       GetMatchingChildren(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
-      AddSelector(selectorText: string, importanceOffset?: number): ReactUnity.StyleEngine.RuleTreeNode<T>[];
-      AddChildCascading(selector: string): ReactUnity.StyleEngine.RuleTreeNode<T>;
+      AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.StyleEngine.RuleTreeNode<T>[];
+      AddChildCascading(selector: string, mq: ReactUnity.StyleEngine.MediaQueryList, scope: ReactUnity.IReactComponent, specifity: number): ReactUnity.StyleEngine.RuleTreeNode<T>;
+      Matches(component: ReactUnity.IReactComponent): boolean;
       Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
       CompareTo(other: ReactUnity.StyleEngine.RuleTreeNode<T>): number;
       Equals(obj: any): boolean;
@@ -2987,6 +3050,8 @@ export declare namespace ReactUnity {
     }
     export class RuleTreeNode<T = any> {
       constructor();
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
+      Scope: ReactUnity.IReactComponent;
       Specifity: number;
       Tree: ReactUnity.StyleEngine.RuleTree<T>;
       Parent: ReactUnity.StyleEngine.RuleTreeNode<T>;
@@ -2995,8 +3060,8 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
-      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
-      AddChildCascading(selector: string): ReactUnity.StyleEngine.RuleTreeNode<T>;
+      AddChildCascading(selector: string, mq: ReactUnity.StyleEngine.MediaQueryList, scope: ReactUnity.IReactComponent, specifity: number): ReactUnity.StyleEngine.RuleTreeNode<T>;
+      Matches(component: ReactUnity.IReactComponent): boolean;
       Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
       CompareTo(other: ReactUnity.StyleEngine.RuleTreeNode<T>): number;
       Equals(obj: any): boolean;
@@ -3087,14 +3152,13 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class StyleSheet {
-      constructor(context: ReactUnity.StyleEngine.StyleContext, style: string, importanceOffset?: number);
+      constructor(context: ReactUnity.StyleEngine.StyleContext, style: string, importanceOffset?: number, scope?: ReactUnity.IReactComponent);
       Context: ReactUnity.StyleEngine.StyleContext;
       ImportanceOffset: number;
       FontFamilies: Record<string, ReactUnity.Types.FontReference>;
       Keyframes: Record<string, ReactUnity.KeyframeList>;
       MediaQueries: ReactUnity.StyleEngine.MediaQueryList[];
       Declarations: System.Tuple<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>, System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>>[];
-      Initialize(style: string): void;
       AddRules(selector: string, rules: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, important?: boolean): void;
       AddRules(selector: string, rules: System.Collections.Generic.IDictionary<string, any>, important?: boolean): void;
       Enable(): void;
@@ -3212,33 +3276,6 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class InlineData {
-      constructor(identifier?: string);
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<any>;
-      Count: number;
-      IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
-      Set(key: string, value: any): void;
-      SetWithoutNotify(key: string, value: any): void;
-      Add(key: string, value: any): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      Remove(key: string): boolean;
-      RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
-      AddListener(cb: any): (() => void);
-      GetValueOrDefault(key: string): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export class InlineStyles {
       constructor();
       [key: string]: any;
@@ -3291,12 +3328,10 @@ export declare namespace ReactUnity {
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ImageReference;
       maskImage: ReactUnity.Types.ImageReference;
-      borderRadius: number;
       borderTopLeftRadius: number;
       borderTopRightRadius: number;
       borderBottomLeftRadius: number;
       borderBottomRightRadius: number;
-      borderColor: UnityEngine.Color;
       borderLeftColor: UnityEngine.Color;
       borderRightColor: UnityEngine.Color;
       borderTopColor: UnityEngine.Color;
@@ -3451,12 +3486,10 @@ export declare namespace ReactUnity {
       static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static backgroundImage: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageReference]
       static maskImage: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageReference]
-      static borderRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderTopLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderTopRightRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderBottomLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static borderBottomRightRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static borderColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderLeftColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderRightColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderTopColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
@@ -4666,7 +4699,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -4735,7 +4768,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -4804,7 +4837,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -4868,7 +4901,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -4931,7 +4964,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -4996,7 +5029,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5065,7 +5098,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5136,7 +5169,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5200,7 +5233,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5271,7 +5304,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5335,7 +5368,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5399,7 +5432,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5467,7 +5500,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5536,7 +5569,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5600,7 +5633,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5668,7 +5701,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5738,7 +5771,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5805,7 +5838,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5868,7 +5901,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -5937,7 +5970,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6096,7 +6129,7 @@ export declare namespace ReactUnity {
     }
     export class UGUIContext {
       constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Scheduling.IDispatcher, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), iconSets: ReactUnity.Styling.IconSet[], defaultIconSet: ReactUnity.Styling.IconSet, cursorSet: ReactUnity.Styling.CursorSet);
-      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUI.UGUIContext,ReactUnity.UGUI.UGUIComponent]]
+      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUI.UGUIContext,ReactUnity.IReactComponent]]
       StateHandlers: Record<string, System.Type>;
       DefaultIconSet: ReactUnity.Styling.IconSet;
       IconSets: Record<string, ReactUnity.Styling.IconSet>;
@@ -8598,7 +8631,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8654,7 +8687,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8712,7 +8745,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8767,7 +8800,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8824,7 +8857,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8879,7 +8912,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8934,7 +8967,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8991,7 +9024,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9049,7 +9082,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9108,7 +9141,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9164,7 +9197,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9225,7 +9258,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9280,7 +9313,7 @@ export declare namespace ReactUnity {
       Name: string;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Styling.InlineData;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -9472,7 +9505,7 @@ export declare namespace ReactUnity {
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UIToolkit.UIToolkitContext) => any);
       static textCreator: ((arg0: string, arg1: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
-      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.UIToolkit.IUIToolkitComponent`1[UnityEngine.UIElements.VisualElement]]]
+      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.IReactComponent]]
       OnRestart: (() => void);
       Parser: any; // ExCSS.StylesheetParser
       Style: ReactUnity.StyleEngine.StyleContext;

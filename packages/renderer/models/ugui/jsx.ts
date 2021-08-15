@@ -1,16 +1,17 @@
 
 import { Attributes, ClassAttributes, RefAttributes } from 'react';
+import { StyleCmpDef, Textable } from '../base';
 import { ReactUnity } from '../generated';
 import * as Components from './components';
 import { Input } from './input';
 import NS = ReactUnity.UGUI;
 
 type Children<T = any> = { children?: T };
-
-type Textable = string | number | boolean | null | undefined;
+type BaseCmp = Components.View<any> & RefAttributes<NS.UGUIComponent> & Children;
 
 export interface UGUIElements {
-  [key: string]: Components.View<any> & RefAttributes<NS.UGUIComponent> & Children;
+  [key: string]: BaseCmp | StyleCmpDef;
+  style: StyleCmpDef;
   view: Components.View & RefAttributes<NS.ContainerComponent> & { tag?: string } & Children;
   anchor: Components.Anchor & RefAttributes<NS.AnchorComponent> & Children;
   text: Components.Text & RefAttributes<NS.TextComponent> & Children<Textable | Textable[]>;

@@ -51,7 +51,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon') {
+      if (type === 'text' || type === 'icon' || type === 'style') {
         UnityBridge.setText(instance, value ? ((Array.isArray(value) && value.join) ? value.join('') : value + '') : '');
       }
       continue;
@@ -104,7 +104,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     hostContext,
     internalInstanceHandle,
   ) {
-    if (type === 'text' || type === 'icon') {
+    if (type === 'text' || type === 'icon' || type === 'style') {
       const text = props.children === true ? '' :
         Array.isArray(props.children) ? props.children.join('') :
           props.children?.toString() || '';
@@ -154,7 +154,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     applyUpdate(instance, props, true);
   },
 
-  shouldSetTextContent(type, props) { return type === 'text' || type === 'icon'; },
+  shouldSetTextContent(type, props) { return type === 'text' || type === 'icon' || type === 'style'; },
 
   shouldDeprioritizeSubtree(type, props) { return false; },
 

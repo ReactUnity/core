@@ -1,5 +1,6 @@
 
 import * as rc from 'react';
+import { StyleCmpDef, Textable } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 import * as Components from '../uitoolkit/components';
 import * as EComponents from './components';
@@ -9,15 +10,14 @@ import ECmp = ReactUnity.Editor.UIToolkit;
 
 type Children<T = any> = { children?: T };
 
-type Textable = string | number | boolean | null | undefined;
-
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
 type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
 type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children<never>;
 type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
 export interface EditorElements {
-  [key: string]: BaseElement<any>;
+  [key: string]: BaseElement<any> | StyleCmpDef;
+  style: StyleCmpDef;
   view: BaseElement & { tag?: string };
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;

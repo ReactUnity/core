@@ -1,3 +1,4 @@
+import { RefAttributes } from 'react';
 import { ReactUnity } from './generated';
 
 type BaseCmp = ReactUnity.IReactComponent;
@@ -17,3 +18,15 @@ export interface BaseEvents<T = BaseCmp> {
   onTransitionCancel?: AnimationCallback<T>;
   onTransitionEnd?: AnimationCallback<T>;
 }
+
+export type Textable = string | number | boolean | null | undefined;
+
+export interface StyleCmpProps {
+  id?: string;
+  name?: string;
+  className?: string;
+  scope?: string | BaseCmp;
+  importance?: number;
+}
+
+export type StyleCmpDef = StyleCmpProps & RefAttributes<ReactUnity.StyleComponent> & { children?: Textable | Textable[] };
