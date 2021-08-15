@@ -61,55 +61,45 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.maskImage, value);
             get => GetStyleValue<ImageReference>(StyleProperties.maskImage);
         }
-        public float borderRadius
-        {
-            set => SetStyleValue(StyleProperties.borderRadius, value);
-            get => GetStyleValue<float>(StyleProperties.borderRadius);
-        }
         public float borderTopLeftRadius
         {
             set => SetStyleValue(StyleProperties.borderTopLeftRadius, value);
-            get => HasValue(StyleProperties.borderTopLeftRadius) ? GetStyleValue<float>(StyleProperties.borderTopLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => GetStyleValue<float>(StyleProperties.borderTopLeftRadius);
         }
         public float borderTopRightRadius
         {
             set => SetStyleValue(StyleProperties.borderTopRightRadius, value);
-            get => HasValue(StyleProperties.borderTopRightRadius) ? GetStyleValue<float>(StyleProperties.borderTopRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => GetStyleValue<float>(StyleProperties.borderTopRightRadius);
         }
         public float borderBottomLeftRadius
         {
             set => SetStyleValue(StyleProperties.borderBottomLeftRadius, value);
-            get => HasValue(StyleProperties.borderBottomLeftRadius) ? GetStyleValue<float>(StyleProperties.borderBottomLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => GetStyleValue<float>(StyleProperties.borderBottomLeftRadius);
         }
         public float borderBottomRightRadius
         {
             set => SetStyleValue(StyleProperties.borderBottomRightRadius, value);
-            get => HasValue(StyleProperties.borderBottomRightRadius) ? GetStyleValue<float>(StyleProperties.borderBottomRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
-        }
-        public Color borderColor
-        {
-            set => SetStyleValue(StyleProperties.borderColor, value);
-            get => GetStyleValue<Color>(StyleProperties.borderColor);
+            get => GetStyleValue<float>(StyleProperties.borderBottomRightRadius);
         }
         public Color borderLeftColor
         {
             set => SetStyleValue(StyleProperties.borderLeftColor, value);
-            get => HasValue(StyleProperties.borderLeftColor) ? GetStyleValue<Color>(StyleProperties.borderLeftColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => GetStyleValue<Color>(StyleProperties.borderLeftColor);
         }
         public Color borderRightColor
         {
             set => SetStyleValue(StyleProperties.borderRightColor, value);
-            get => HasValue(StyleProperties.borderRightColor) ? GetStyleValue<Color>(StyleProperties.borderRightColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => GetStyleValue<Color>(StyleProperties.borderRightColor);
         }
         public Color borderTopColor
         {
             set => SetStyleValue(StyleProperties.borderTopColor, value);
-            get => HasValue(StyleProperties.borderTopColor) ? GetStyleValue<Color>(StyleProperties.borderTopColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => GetStyleValue<Color>(StyleProperties.borderTopColor);
         }
         public Color borderBottomColor
         {
             set => SetStyleValue(StyleProperties.borderBottomColor, value);
-            get => HasValue(StyleProperties.borderBottomColor) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => GetStyleValue<Color>(StyleProperties.borderBottomColor);
         }
         public BoxShadowList boxShadow
         {

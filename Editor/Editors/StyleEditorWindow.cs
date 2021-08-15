@@ -46,5 +46,7 @@ namespace ReactUnity.Editor
 
             return runner.engine.CreateNativeObject(obj);
         }
+
+        public Dictionary<string, object> CreateStyleDictionary() => new Dictionary<string, object>();
     }
 }

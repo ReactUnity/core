@@ -295,10 +295,11 @@ namespace ReactUnity.UGUI
                 || Layout.BorderStartWidth > 0 || Layout.BorderEndWidth > 0;
             if (borderAny) return true;
 
-            if (ComputedStyle.borderRadius > 0 && ComputedStyle.borderColor.a > 0) return true;
             if (ComputedStyle.backgroundColor.a > 0) return true;
             if (ComputedStyle.backgroundImage != null) return true;
             if (ComputedStyle.boxShadow != null) return true;
+            if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
+                ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;
 
             return false;
         }

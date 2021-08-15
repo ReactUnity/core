@@ -146,14 +146,12 @@ namespace ReactUnity.UIToolkit
         public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<float> prop)
         {
             if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
-            if (style.HasValue(StyleProperties.borderRadius)) return style.borderRadius;
             else return StyleKeyword.Null;
         }
 
         public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
         {
             if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
-            if (style.HasValue(StyleProperties.borderColor)) return style.borderColor;
             else return StyleKeyword.Null;
         }
     }

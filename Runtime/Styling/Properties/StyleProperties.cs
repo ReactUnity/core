@@ -21,12 +21,10 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
         public static readonly StyleProperty<ImageReference> maskImage = new StyleProperty<ImageReference>("maskImage", ImageReference.None);
-        public static readonly StyleProperty<float> borderRadius = new StyleProperty<float>("borderRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderBottomRightRadius = new StyleProperty<float>("borderBottomRightRadius", 0f, true, converter: AllConverters.LengthConverter);
-        public static readonly StyleProperty<Color> borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
         public static readonly StyleProperty<Color> borderLeftColor = new StyleProperty<Color>("borderLeftColor", Color.black, true);
         public static readonly StyleProperty<Color> borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);
         public static readonly StyleProperty<Color> borderTopColor = new StyleProperty<Color>("borderTopColor", Color.black, true);
@@ -66,12 +64,10 @@ namespace ReactUnity.Styling
             { "background-image", backgroundImage },
             { "mask", maskImage },
             { "mask-image", maskImage },
-            { "border-radius", borderRadius },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },
             { "border-bottom-left-radius", borderBottomLeftRadius },
             { "border-bottom-right-radius", borderBottomRightRadius },
-            { "border-color", borderColor },
             { "border-left-color", borderLeftColor },
             { "border-right-color", borderRightColor },
             { "border-top-color", borderTopColor },

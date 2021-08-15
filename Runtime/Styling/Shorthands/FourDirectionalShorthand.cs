@@ -99,6 +99,17 @@ namespace ReactUnity.Styling.Shorthands
         {
             if (value == null) return null;
 
+            if (!(value is string))
+            {
+                var converted = Converter.Convert(value);
+                if (!Equals(converted, CssKeyword.Invalid))
+                {
+                    collection[ModifiedProperties[0]] = collection[ModifiedProperties[1]] =
+                        collection[ModifiedProperties[2]] = collection[ModifiedProperties[3]] = converted;
+                    return ModifiedProperties;
+                }
+            }
+
             var str = value.ToString();
             var splits = ParserHelpers.SplitWhitespace(str);
 

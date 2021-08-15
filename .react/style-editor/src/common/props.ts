@@ -31,6 +31,8 @@ export interface StyleProp<T = any> {
 
 export type StylePropPart = 'left' | 'right' | 'top' | 'bottom' | 'start' | 'end' | '';
 
+export const fourDirectionParts: StylePropPart[] = ['', 'top', 'right', 'bottom', 'left'];
+
 export const CornerHack = {
   'left': 'TopLeft',
   'top': 'TopRight',
@@ -173,3 +175,27 @@ export const styleProps: StylePropGroup[] = [
     ]
   },
 ];
+
+
+export const allProps = [];
+
+for (let pIndex = 0; pIndex < styleProps.length; pIndex++) {
+  const group = styleProps[pIndex];
+
+  for (let index = 0; index < group.props.length; index++) {
+    const prop = group.props[index];
+
+    if (prop.arrangement) {
+      for (let partIndex = 0; partIndex < fourDirectionParts.length; partIndex++) {
+        const part = fourDirectionParts[partIndex];
+        const partName = typeof prop.partTemplate === 'string' ? prop.partTemplate.replace('{part}', part) : prop.partTemplate(part);
+
+        const { arrangement, partTemplate, ...rest } = prop;
+        allProps.push({ ...rest, name: partName, partlessName: prop.name, label: partName } as StyleProp);
+      }
+    }
+    else {
+      allProps.push(prop);
+    }
+  }
+}

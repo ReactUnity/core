@@ -1,4 +1,4 @@
-import { ReactUnity, System as SystemNS } from '@reactunity/renderer';
+import { ReactUnity } from '@reactunity/renderer';
 import React, { useContext, useMemo, useRef } from "react";
 
 type Cmp = ReactUnity.IReactComponent;
@@ -29,7 +29,6 @@ const findElementId = (state: State, el: Cmp) => {
     ind = state.length;
     const st = { element: el, styles: {}, ind } as ElementProps;
     state.push(st);
-    el.Id = 'style-editor-el-' + ind;
     el.SetData('style-editor-el', ind + '');
   }
 
@@ -38,16 +37,14 @@ const findElementId = (state: State, el: Cmp) => {
 
 const buildSheet = (state: ElementProps) => {
   const type = importType('ReactUnity.StyleEngine.StyleSheet') as any;
-  const dicCtor = (System.Collections.Generic.Dictionary as any)(System.String, System.Object);
-
-  const sheet = new type(state.element.Context.Style, '', 1);
+  const sheet = new type(state.element.Context.Style, '', 1) as ReactUnity.StyleEngine.StyleSheet;
 
   const style = state.styles;
 
-  const selector = `#style-editor-el-${state.ind}`;
+  const selector = `[style-editor-el=${state.ind}]`;
 
   const values = [];
-  const valuesDic: SystemNS.Collections.Generic.Dictionary<string, any> = new dicCtor();
+  const valuesDic = (Globals.Window as any).CreateStyleDictionary();
 
   for (const prop in style) {
     if (Object.prototype.hasOwnProperty.call(style, prop)) {
