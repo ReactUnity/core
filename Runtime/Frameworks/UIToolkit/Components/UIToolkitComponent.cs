@@ -23,7 +23,7 @@ namespace ReactUnity.UIToolkit
         public override string Name
         {
             get => Element.name;
-            set => Element.name = value;
+            set => Element.name = string.IsNullOrWhiteSpace(value) ? DefaultName : value;
         }
 
         protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
@@ -35,7 +35,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = element;
             Element.userData = Data;
-            Name = DefaultName;
+            Name = null;
         }
 
         public UIToolkitComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
@@ -43,7 +43,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = new T();
             Element.userData = Data;
-            Name = DefaultName;
+            Name = null;
         }
 
         protected override void ApplyLayoutStylesSelf()

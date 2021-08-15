@@ -7,6 +7,8 @@ namespace ReactUnity.UIToolkit
         public float Width { get; private set; } = -1;
         public float Height { get; private set; } = -1;
 
+        protected string OriginalName { get; private set; }
+        protected override string DefaultName => OriginalName;
         public HostComponent(VisualElement element, UIToolkitContext ctx) : base(element, ctx, "_root")
         {
             Width = Element.layout.width;
@@ -14,6 +16,7 @@ namespace ReactUnity.UIToolkit
             Context.MediaProvider.SetDimensions(Width, Height);
 
             element.RegisterCallback<GeometryChangedEvent>(OnResize);
+            OriginalName = Name;
         }
 
         void OnResize(GeometryChangedEvent ev)
