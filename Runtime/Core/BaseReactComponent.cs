@@ -29,6 +29,7 @@ namespace ReactUnity
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
+        protected string DefaultName => $"<{Tag}>";
 
         public string ClassName
         {
@@ -59,7 +60,7 @@ namespace ReactUnity
                 ResolveStyle(true);
             }
         }
-        public abstract string Name { get; }
+        public abstract string Name { get; set; }
 
         #region Container Properties
         public bool IsContainer { get; }
@@ -200,6 +201,9 @@ namespace ReactUnity
             {
                 case "id":
                     Id = value?.ToString();
+                    return;
+                case "name":
+                    Name = value is string s && !string.IsNullOrEmpty(s) ? s : DefaultName;
                     return;
                 case "className":
                     ClassName = value?.ToString();

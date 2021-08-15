@@ -20,7 +20,11 @@ namespace ReactUnity.UIToolkit
     public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
-        public override string Name => Element.name;
+        public override string Name
+        {
+            get => Element.name;
+            set => Element.name = value;
+        }
 
         protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
         protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
@@ -31,6 +35,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = element;
             Element.userData = Data;
+            Name = DefaultName;
         }
 
         public UIToolkitComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
@@ -38,6 +43,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = new T();
             Element.userData = Data;
+            Name = DefaultName;
         }
 
         protected override void ApplyLayoutStylesSelf()

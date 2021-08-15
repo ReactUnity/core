@@ -23,7 +23,7 @@ namespace ReactUnity
         NodeStyle ComputedStyle { get; }
         InlineStyles Style { get; }
         string Id { get; set; }
-        string Name { get; }
+        string Name { get; set; }
         string Tag { get; }
         string TextContent { get; }
         string ClassName { get; set; }

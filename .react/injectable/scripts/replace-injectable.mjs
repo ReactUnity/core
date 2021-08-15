@@ -3,8 +3,8 @@ import path from 'path';
 
 const folder = '../../Tests/Runtime/Resources/ReactUnity/tests/injectable';
 
-const replaceStart = `/* INJECTABLE_START */`;
-const replaceEnd = `/* INJECTABLE_END */`;
+const replaceStart = `/*INJECTABLE_START*/`;
+const replaceEnd = `/*INJECTABLE_END*/`;
 
 const replaceWith = `
 var React = react;

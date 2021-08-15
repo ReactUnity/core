@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 625:
+/***/ 243:
 /***/ ((module) => {
 
 "use strict";
@@ -103,7 +103,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 314:
+/***/ 742:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
@@ -119,9 +119,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(625),
-      ba = __webpack_require__(359),
-      m = __webpack_require__(22);
+  var aa = __webpack_require__(243),
+      ba = __webpack_require__(28),
+      m = __webpack_require__(697);
 
   function q(a) {
     for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++) {
@@ -5814,19 +5814,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 84:
+/***/ 502:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(314);
+  module.exports = __webpack_require__(742);
 } else {}
 
 /***/ }),
 
-/***/ 357:
+/***/ 723:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -5840,7 +5840,7 @@ if (true) {
  */
 
 
-var l = __webpack_require__(625),
+var l = __webpack_require__(243),
     n = 60103,
     p = 60106;
 
@@ -6247,19 +6247,19 @@ exports.version = "17.0.2";
 
 /***/ }),
 
-/***/ 359:
+/***/ 28:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(357);
+  module.exports = __webpack_require__(723);
 } else {}
 
 /***/ }),
 
-/***/ 822:
+/***/ 778:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -6611,14 +6611,14 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 697:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(822);
+  module.exports = __webpack_require__(778);
 } else {}
 
 /***/ })
@@ -6696,7 +6696,7 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-// NAMESPACE OBJECT: ./node_modules/@reactunity/renderer/dist/index.js
+// NAMESPACE OBJECT: ../../../renderer/dist/index.js
 var dist_namespaceObject = {};
 __webpack_require__.r(dist_namespaceObject);
 __webpack_require__.d(dist_namespaceObject, {
@@ -6708,9 +6708,9 @@ __webpack_require__.d(dist_namespaceObject, {
   "useGlobals": () => (useGlobals)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(359);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js
+// EXTERNAL MODULE: ../../../node_modules/react/index.js
+var react = __webpack_require__(28);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -6788,7 +6788,7 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/styled-components-helper.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/styled-components-helper.js
 function insertStyledComponentsSheet(sheet) {
   try {
     var styleElements = sheet.getStyleElement();
@@ -6804,9 +6804,9 @@ function insertStyledComponentsSheet(sheet) {
     sheet.seal();
   }
 }
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(84);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
+// EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__(502);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
@@ -6857,7 +6857,7 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
 
   return updatePayload;
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
 
 
 var hostContext = {};
@@ -6910,7 +6910,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon') {
+      if (type === 'text' || type === 'icon' || type === 'style') {
         UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
@@ -6971,7 +6971,7 @@ var hostConfig = {
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
     var _a;
 
-    if (type === 'text' || type === 'icon') {
+    if (type === 'text' || type === 'icon' || type === 'style') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
       return UnityBridge.createElement(type, text, rootContainerInstance);
     }
@@ -7003,7 +7003,7 @@ var hostConfig = {
     applyUpdate(instance, props, true);
   },
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text' || type === 'icon';
+    return type === 'text' || type === 'icon' || type === 'style';
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
@@ -7077,7 +7077,7 @@ var Renderer = {
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/index.js
+;// CONCATENATED MODULE: ../../../renderer/dist/index.js
 
 
 
@@ -7087,7 +7087,7 @@ var Renderer = {
 
 
 ;// CONCATENATED MODULE: ./src/app.tsx
-var ReactUnity=dist_namespaceObject;/* INJECTABLE_START */
+var ReactUnity=dist_namespaceObject;/*INJECTABLE_START*/
 
 var React = react;
 var ReactUnityRenderer = ReactUnity.Renderer;
@@ -7095,7 +7095,7 @@ var Renderer = ReactUnity.Renderer;
 
 /*INJECT_CODE*/
 
-/* INJECTABLE_END */
+/*INJECTABLE_END*/
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();

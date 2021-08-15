@@ -11,8 +11,8 @@ namespace ReactUnity.UGUI
 {
     public class UGUIContext : ReactContext
     {
-        static public Dictionary<string, Func<string, string, UGUIContext, UGUIComponent>> ComponentCreators { get; }
-            = new Dictionary<string, Func<string, string, UGUIContext, UGUIComponent>>
+        static public Dictionary<string, Func<string, string, UGUIContext, IReactComponent>> ComponentCreators { get; }
+            = new Dictionary<string, Func<string, string, UGUIContext, IReactComponent>>
             {
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
@@ -30,6 +30,7 @@ namespace ReactUnity.UGUI
                 { "prefab", (tag, text, context) => new PrefabComponent(context) },
                 { "portal", (tag, text, context) => new PortalComponent(context) },
                 { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
+                { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
             };
 
 
@@ -80,11 +81,10 @@ namespace ReactUnity.UGUI
 
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            UGUIComponent res = null;
+            IReactComponent res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
                 res = creator(tag, text, this);
             else res = defaultCreator(tag, text, this);
-            res.GameObject.name = $"<{tag}>";
             return res;
         }
 

@@ -35,7 +35,11 @@ namespace ReactUnity.UGUI
 
         public RectTransform Container { get; protected set; }
 
-        public override string Name => GameObject.name;
+        public override string Name
+        {
+            get => GameObject.name;
+            set => GameObject.name = value;
+        }
 
         private bool markedUpdateBackgroundImage;
 
@@ -53,6 +57,7 @@ namespace ReactUnity.UGUI
             Component.Component = this;
 
             Container = RectTransform;
+            Name = DefaultName;
         }
 
         protected UGUIComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
@@ -60,6 +65,7 @@ namespace ReactUnity.UGUI
             GameObject = existing.gameObject;
             RectTransform = existing;
             Container = existing;
+            Name = DefaultName;
         }
 
         public override void Update()
@@ -185,10 +191,7 @@ namespace ReactUnity.UGUI
             UpdateBackgroundGraphic(false, true);
         }
 
-        public override void Relayout()
-        {
-            Layout.MarkDirty();
-        }
+        public override void Relayout() => Layout.MarkDirty();
 
         #endregion
 

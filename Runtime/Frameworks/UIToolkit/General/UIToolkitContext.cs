@@ -17,8 +17,8 @@ namespace ReactUnity.UIToolkit
         public static Func<string, UIToolkitContext, ITextComponent> textCreator =
             (text, context) => new TextComponent<TextElement>(text, context, "_text", false);
 
-        public static Dictionary<string, Func<string, string, UIToolkitContext, IUIToolkitComponent<VisualElement>>> ComponentCreators
-            = new Dictionary<string, Func<string, string, UIToolkitContext, IUIToolkitComponent<VisualElement>>>()
+        public static Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>> ComponentCreators
+            = new Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>>()
             {
                 { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false) },
                 { "label", (tag, text, context) => new TextComponent<Label>(text, context, tag) },
@@ -30,6 +30,7 @@ namespace ReactUnity.UIToolkit
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
                 { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
                 { "input", (tag, text, context) => new BaseFieldComponent<TextField, string>(context, tag) }, // TODO
+                { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
 #if UNITY_2020_1_OR_NEWER
                 { "helpbox", (tag, text, context) => new UIToolkitComponent<HelpBox>(context, tag) }, // TODO
 #endif
@@ -80,11 +81,10 @@ namespace ReactUnity.UIToolkit
 
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            IUIToolkitComponent<VisualElement> res = null;
+            IReactComponent res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
                 res = creator(tag, text, this);
             else res = defaultCreator(tag, text, this);
-            if (res.Element != null) res.Element.name = $"<{tag}>";
             return res;
         }
 

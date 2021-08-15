@@ -3,7 +3,7 @@ import * as React from 'react';
 
 const ReactUnity = ReactUnityModule;
 
-/* INJECTABLE_START */
+/*INJECTABLE_START*/
 
 function App() {
   return <></>;
@@ -11,4 +11,4 @@ function App() {
 
 ReactUnity.Renderer.render(<App />);
 
-/* INJECTABLE_END */
+/*INJECTABLE_END*/
