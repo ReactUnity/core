@@ -27,7 +27,33 @@ namespace ReactUnity
             }
         }
 
-        public StyleSheet Sheet { get; private set; }
+        private bool active = true;
+        public bool Active
+        {
+            get => active;
+            set
+            {
+                if (active != value)
+                {
+                    if (sheet != null && active) Context.RemoveStyle(sheet);
+                    active = value;
+                    if (sheet != null && active) Context.InsertStyle(sheet);
+                }
+            }
+        }
+
+        private StyleSheet sheet;
+        public StyleSheet Sheet
+        {
+            get => sheet;
+            private set
+            {
+                if (sheet != null && active) Context.RemoveStyle(sheet);
+                sheet = value;
+                if (sheet != null && active) Context.InsertStyle(sheet);
+            }
+        }
+
         public string Content { get; private set; }
         public override string Name { get; set; }
 
@@ -45,7 +71,6 @@ namespace ReactUnity
 
         private void UpdateSheet()
         {
-            if (Sheet != null) Context.RemoveStyle(Sheet);
             Sheet = null;
 
             if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(Content))
@@ -55,7 +80,6 @@ namespace ReactUnity
                 if (scopeEl != null)
                 {
                     Sheet = new StyleSheet(Context.Style, Content, Importance, scopeEl);
-                    Context.InsertStyle(Sheet);
                 }
             }
         }
@@ -82,9 +106,22 @@ namespace ReactUnity
 
         public override void SetProperty(string propertyName, object value)
         {
-            if (propertyName == "scope") Scope = value;
-            else if (propertyName == "importance") Importance = Convert.ToInt32(Converters.AllConverters.IntConverter.Convert(value ?? "0"));
-            else base.SetProperty(propertyName, value);
+
+            switch (propertyName)
+            {
+                case "scope":
+                    Scope = value;
+                    break;
+                case "active":
+                    Active = Convert.ToBoolean(value);
+                    break;
+                case "importance":
+                    Importance = Convert.ToInt32(Converters.AllConverters.IntConverter.Convert(value ?? "0"));
+                    break;
+                default:
+                    base.SetProperty(propertyName, value);
+                    break;
+            }
         }
 
         #region BaseReactComponent Implementation

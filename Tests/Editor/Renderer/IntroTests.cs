@@ -26,5 +26,18 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
+
+        [EditorInjectableTest]
+        public IEnumerator HostNameCanBeChanged()
+        {
+            yield return null;
+            Assert.AreEqual(null, Host.Name);
+
+            Host.Name = "hey";
+            Assert.AreEqual("hey", Host.Name);
+
+            Host.Name = null;
+            Assert.AreEqual(null, Host.Name);
+        }
     }
 }

@@ -107,5 +107,35 @@ namespace ReactUnity.Editor.Tests.Renderer
             Assert.AreEqual(Color.blue, rt.style.color.value);
             Assert.AreEqual(Color.clear, rt2.style.color.value);
         }
+
+        [EditorInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <style active={!globals.disable} scope=':root'>{'#test { color: blue; }'}</style>
+                    <view id='test'>
+                        Test text
+                    </view>
+                </>;
+            }
+
+            Renderer.render(
+                <GlobalsProvider>
+                    <App />
+                </GlobalsProvider>
+            );
+        ")]
+        public IEnumerator ActivePropertyShouldWorkForStyleTag()
+        {
+            yield return null;
+            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Element;
+
+            Assert.AreEqual(Color.blue, rt.style.color.value);
+
+            Globals["disable"] = true;
+            yield return null;
+            Assert.AreEqual(Color.clear, rt.style.color.value);
+        }
     }
 }

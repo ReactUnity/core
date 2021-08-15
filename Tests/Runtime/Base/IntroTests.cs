@@ -135,5 +135,18 @@ namespace ReactUnity.Tests
             sd.Set("image", tx);
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
+
+        [ReactInjectableTest]
+        public IEnumerator HostNameCanBeChanged()
+        {
+            yield return null;
+            Assert.AreEqual("REACT_ROOT", Host.Name);
+
+            Host.Name = "hey";
+            Assert.AreEqual("hey", Host.Name);
+
+            Host.Name = null;
+            Assert.AreEqual("REACT_ROOT", Host.Name);
+        }
     }
 }
