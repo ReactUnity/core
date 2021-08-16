@@ -11,17 +11,23 @@ interface Props<T> extends ModalProps {
   yes?: string;
   no?: string;
   buttons?: { value: T, text: string }[];
+  backdropClose?: boolean;
   onClose: (value: T) => void;
 }
 
-export function ConfirmDialog<T = boolean>({ title, text, buttons, error, submitting, yes, no, onClose, ...props }: Props<T>) {
+export function ConfirmDialog<T = boolean>({ title, text, buttons, error, submitting, yes, no, onClose, backdropClose, onClickBackdrop, ...props }: Props<T>) {
   buttons = useMemo(() => buttons ?? [
     no == null && { value: false as any, text: no || 'No' },
     yes == null && { value: true as any, text: yes || 'Yes' },
   ].filter(x => x),
     [buttons, yes, no]);
 
-  return <Modal {...props} className={clsx('md-confirm-dialog', style.host, props.className)}>
+  const clickBackdrop = () => {
+    if (backdropClose) onClose(null);
+    if (onClickBackdrop) onClickBackdrop();
+  };
+
+  return <Modal {...props} className={clsx('md-confirm-dialog', style.host, props.className)} onClickBackdrop={clickBackdrop}>
     {title && <div className={clsx('md-confirm-dialog-title', style.title)}>{title}</div>}
     {text && <div className={clsx('md-confirm-dialog-text', style.text)}>{text}</div>}
 

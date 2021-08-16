@@ -53,6 +53,7 @@
 .content {
   @include elevation(5);
 
+  font-size: 1rem;
   box-sizing: border-box;
   position: relative;
   z-index: 1001;

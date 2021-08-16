@@ -1,0 +1,34 @@
+@import "..";
+
+.host :global(.md-modal-content) {
+  padding: 18px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 6px;
+
+  + .text {
+    margin-top: 8px;
+  }
+}
+
+.text {
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+
+.error {
+  font-size: 1em;
+  margin-top: 8px;
+  color: $error;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
