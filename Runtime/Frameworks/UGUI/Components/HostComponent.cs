@@ -26,9 +26,5 @@ namespace ReactUnity.UGUI
             Layout.Width = Width;
             Layout.Height = Height;
         }
-
-        protected override void ApplyStylesSelf()
-        {
-        }
     }
 }
