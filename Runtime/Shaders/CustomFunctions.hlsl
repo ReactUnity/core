@@ -138,18 +138,15 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
 
   float ox = (dx - cx);
   float oy = (dy - cy);
+  float oc = sqrt(ox * ox + oy * oy);
 
-  float v = ox / oy;
-  float t = atan(v);
-
-  float st = sin(t);
-  float ct = cos(t);
+  float st = ox / oc;
+  float ct = oy / oc;
 
   // r = a*b / sqrt( a^2 cos^2(t) + b^2 sin^2(t) )
-
   float rr = rx * ry / sqrt(ry * ry * st * st + rx * rx * ct * ct);
 
-  return sqrt(ox * ox + oy * oy) - rr;
+  return oc - rr;
 }
 
 float ConvertRadiusToSigma(float radius) {
@@ -158,8 +155,8 @@ float ConvertRadiusToSigma(float radius) {
 
 
 float gaussian(float x, float mu, float sigma) {
-    float a = (x - mu) / sigma;
-    return exp(-0.5 * a * a);
+  float a = (x - mu) / sigma;
+  return exp(-0.5 * a * a);
 }
 
 static const float pi = 3.14159265;

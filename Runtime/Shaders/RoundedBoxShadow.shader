@@ -8,7 +8,6 @@ Shader "ReactUnity/RoundedBoxShadow"
     _spread("spread", Vector) = (0,0,0,0)
     _offset("offset", Vector) = (0,0,0,0)
     [Toggle] _inset("inset", Float) = 0
-    _variant("variant", Float) = 3
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -65,7 +64,6 @@ Shader "ReactUnity/RoundedBoxShadow"
         float2 _spread;
         float2 _offset;
         bool _inset;
-        int _variant;
         sampler2D _MainTex;
         float4 _MainTex_ST;
 
@@ -77,111 +75,30 @@ Shader "ReactUnity/RoundedBoxShadow"
           float2 innerSize = float2((1 - blur.x * 2 - spread.x * 2), (1 - blur.y * 2 - spread.y * 2));
           float2 uv = float2((i.uv.x - blur.x - spread.x - offset.x) / innerSize.x, (i.uv.y - blur.y - spread.y + offset.y) / innerSize.y);
 
-          if(_variant == 0) {
-            const int KERNEL_SIZE = 13;
-            const float KERNEL_[13] = { 0.0438, 0.1138, 0.2486, 0.4566, 0.7046, 0.9141, 1.0, 0.9141, 0.7046, 0.4566, 0.2486, 0.1138, 0.0438};
-            const float step = float(KERNEL_SIZE) / 2;
 
-            float4 o = 0;
-            float sum = 0;
-            float2 shift = 0;
-            for (int x = 0; x < KERNEL_SIZE; x++)
-            {
-              shift.x = blur.x * (float(x) - step) / step / innerSize.x;
-              for (int y = 0; y < KERNEL_SIZE; y++)
-              {
-                shift.y = blur.y * (float(y) - step) / step / innerSize.y;
+          float d = DistanceToBox(_borderRadius, uv, _size);
+          float rad = min(100, max(3, round(blur.x * _size.x)));
+          float sigma = ConvertRadiusToSigma(rad);
 
-                float weight = KERNEL_[x] * KERNEL_[y];
-                sum += weight;
-                float alpha = CalculateBorderRadius(_borderRadius, uv + shift, _size);
-                if (_inset) alpha = 1 - alpha;
-                fixed4 col = tex2D(_MainTex, uv + shift) * weight;
-                col.a = col.a * alpha;
-                o += col;
-              }
-            }
+          int KERNEL_SIZE = rad * 2 + 1;
+          const float step = float(KERNEL_SIZE) / 2;
 
-            return mixAlpha(o / sum, i.color, 1);
+          float o = 0;
+          float sum = 0;
+          for (int x = 0; x < KERNEL_SIZE; x++)
+          {
+            float shiftX = blur.x * (float(x) - step) / step / innerSize.x;
+            float weight = gaussian(x, rad, sigma);
+            float alpha = shiftX < d ? 0 : 1;
+            if (_inset) alpha = 1 - alpha;
+            o += alpha * weight;
+            sum += weight;
           }
-          else if(_variant == 1) {
-            // TODO: Attempt 1 -  more efficient box shadow - work faster but poor quality
-            float d = DistanceToBox(_borderRadius, uv, _size);
+          fixed4 col = tex2D(_MainTex, uv);
+          col.a = o / sum;
 
-            const int KERNEL_SIZE = 13;
-            const float KERNEL_[13] = { 0.0438, 0.1138, 0.2486, 0.4566, 0.7046, 0.9141, 1.0, 0.9141, 0.7046, 0.4566, 0.2486, 0.1138, 0.0438};
-            const float step = float(KERNEL_SIZE) / 2;
-
-            float4 o = 0;
-            float sum = 0;
-            float2 shift = 0;
-            for (int x = 0; x < KERNEL_SIZE; x++)
-            {
-              shift.x = blur.x * (float(x) - step) / step / innerSize.x;
-              for (int y = 0; y < KERNEL_SIZE; y++)
-              {
-                shift.y = blur.y * (float(y) - step) / step / innerSize.y;
-
-                float weight = KERNEL_[x] * KERNEL_[y];
-                sum += weight;
-                float alpha = shift.x < d ? 0 : 1;
-                if (_inset) alpha = 1 - alpha;
-                fixed4 col = tex2D(_MainTex, uv + shift) * weight;
-                col.a = col.a * alpha;
-                o += col;
-              }
-            }
-
-            return mixAlpha(o / sum, i.color, 1);
-          }
-          else if(_variant == 2) {
-            // TODO: Attempt 2 -  more efficient box shadow - does not work well
-            float d = DistanceToBox(_borderRadius, uv, _size);
-
-            float end;
-            if (d >= 1) return 0;
-            if (_inset != d <= 0) end = i.color;
-            else {
-              d = abs(d);
-              // float b = ConvertRadiusToSigma(blur.x) / 4;
-              // float deno = e / (b * sqrt(2 * pi));
-              // float ex = -(d * d) / (2 * b * b);
-              // end = pow(deno, ex);
-              end = max(0, (blur.x - d) / blur.x);
-            }
-            fixed4 col = tex2D(_MainTex, uv);
-            col.a *= end;
-            return mixAlpha(col, i.color, 1);
-          }
-          else if (_variant == 3) {
-            // TODO: Attempt 3 - Kernel based on blur radius, alpha based on distance
-            float d = DistanceToBox(_borderRadius, uv, _size);
-            float rad = min(100, max(3, round(blur.x * _size.x)));
-            float sigma = ConvertRadiusToSigma(rad);
-
-            int KERNEL_SIZE = rad * 2 + 1;
-            const float step = float(KERNEL_SIZE) / 2;
-
-            float o = 0;
-            float sum = 0;
-            for (int x = 0; x < KERNEL_SIZE; x++)
-            {
-              float shiftX = blur.x * (float(x) - step) / step / innerSize.x;
-              float weight = gaussian(x, rad, sigma);
-              float alpha = shiftX < d ? 0 : 1;
-              if (_inset) alpha = 1 - alpha;
-              o += alpha * weight;
-              sum += weight;
-            }
-            fixed4 col = tex2D(_MainTex, uv);
-            col.a = o / sum;
-
-            return mixAlpha(col, i.color, 1);
-          }
-
-          return 0;
+          return mixAlpha(col, i.color, 1);
         }
-
         ENDCG
       }
     }
