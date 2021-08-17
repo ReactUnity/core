@@ -87,7 +87,7 @@ Shader "ReactUnity/RoundedBoxShadow"
           float sum = 0;
           for (int x = 0; x < KERNEL_SIZE; x++)
           {
-            float shiftX = blur.x * (float(x) - step) / step / innerSize.x;
+            float shiftX = blur.x * (float(x) - step) / step / innerSize.x * _size.x;
             float weight = gaussian(x, rad, sigma);
             float alpha = shiftX < d ? 0 : 1;
             if (_inset) alpha = 1 - alpha;

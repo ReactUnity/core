@@ -128,24 +128,26 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
       //if (kx > ky) return fy;
       //else return fx;
 
-      return min(fx, fy);
+      return min(fx * size.x, fy * size.y);
     }
-    else return fx;
+    else return fx * size.x;
   }
   else if (dx < cx) {
-    return dy - 0.5;
+    return (dy - 0.5) * size.y;
   }
 
-  float ox = (dx - cx);
-  float oy = (dy - cy);
+  float ox = (dx - cx) * size.x;
+  float oy = (dy - cy) * size.y;
   float oc = sqrt(ox * ox + oy * oy);
 
   float st = ox / oc;
   float ct = oy / oc;
 
+  if (rx == 0 && ry == 0) return oc;
+  rx = rx * size.x;
+  ry = ry * size.y;
   // r = a*b / sqrt( a^2 cos^2(t) + b^2 sin^2(t) )
   float rr = rx * ry / sqrt(ry * ry * st * st + rx * rx * ct * ct);
-
   return oc - rr;
 }
 
