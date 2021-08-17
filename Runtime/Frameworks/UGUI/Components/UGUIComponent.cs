@@ -205,7 +205,7 @@ namespace ReactUnity.UGUI
         protected void ResolveTransform()
         {
             var style = ComputedStyle;
-            Component.Translate = style.translate;
+            if (Component) Component.Translate = style.translate;
 
             // Reset rotation and scale before setting pivot
             RectTransform.localScale = Vector3.one;
@@ -340,10 +340,17 @@ namespace ReactUnity.UGUI
             }
             if (updateStyle)
             {
-                ComputedStyle.backgroundImage.Get(Context, (res) => {
-                    Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
-                    image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
-                });
+                if (ComputedStyle.HasValue(StyleProperties.backgroundImage))
+                {
+                    image.SetBackgroundColorAndImage(Color.clear, null);
+                    ComputedStyle.backgroundImage.Get(Context, (res) => {
+                        Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+
+                        if (ComputedStyle.HasValue(StyleProperties.backgroundColor)) image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
+                        else image.SetBackgroundColorAndImage(Color.white, sprite);
+                    });
+                }
+                else image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, null);
                 image.SetBoxShadow(ComputedStyle.boxShadow);
                 markedUpdateBackgroundImage = true;
 

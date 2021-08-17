@@ -22,7 +22,8 @@ namespace ReactUnity.Styling.Internal
 
         public static BorderAndBackground Create(GameObject go)
         {
-            var cmp = go.AddComponent<BorderAndBackground>();
+            var cmp = go.GetComponent<BorderAndBackground>();
+            if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
 
             var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
             var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
