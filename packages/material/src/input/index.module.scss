@@ -1,0 +1,109 @@
+@import "../styles";
+@import "./theming";
+
+$textColor: black;
+$focusedColor: black;
+
+.host {
+  font-size: 16px;
+  padding: 14px 8px;
+  position: relative;
+  border-radius: 6px;
+
+  .content {
+    color: $textColor;
+    caret-color: $focusedColor;
+
+    &:focus-within {
+      ~ .placeholder {
+        .placeholder-text {
+          color: $focusedColor;
+          opacity: 1;
+        }
+      }
+
+      ~ .frame {
+        border-color: $focusedColor;
+      }
+    }
+  }
+
+  .frame {
+    border-color: $textColor;
+  }
+
+  .placeholderText {
+    color: $textColor;
+    opacity: 0.7;
+  }
+
+  .content {
+    border: none;
+    appearance: none;
+    background: none;
+    outline: none;
+
+    margin: 0;
+    padding: inherit;
+    line-height: inherit;
+    font-size: inherit;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: inherit;
+  }
+
+  &.float,
+  &.float-always {
+    .placeholderContent {
+      translate: -3px -22px;
+      scale: 0.75;
+      padding: 0 4px;
+      background-color: white;
+    }
+  }
+
+  &.float.float-never {
+    .placeholderContent {
+      display: none;
+    }
+  }
+
+  .content:focus-within {
+    ~ .inputFrame {
+      border-width: 2px;
+    }
+  }
+}
+
+.inputFrame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 1px solid;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.placeholder {
+  pointer-events: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+.placeholderGhost {
+  opacity: 0;
+}
+
+.placeholderContent {
+  position: absolute;
+  transition: 160ms ease-out;
+  transform-origin: left;
+  left: 0;
+  border-radius: 4px;
+}

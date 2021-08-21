@@ -1,0 +1,31 @@
+@import "../styles";
+
+.host {
+  .input {
+    border: none;
+    appearance: none;
+    background: none;
+
+    font-size: 1em;
+    flex: 1 1 0;
+    overflow: hidden;
+    text-align: left;
+  }
+}
+
+.passwordToggle {
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: visible;
+  flex: 0 0 auto;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+
+  icon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+}
