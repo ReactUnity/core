@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-
-    public class ToggleComponent : UGUIComponent
+    public class ToggleComponent : UGUIComponent, IActivatableComponent
     {
         public bool Value
         {
@@ -63,6 +62,11 @@ namespace ReactUnity.UGUI
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        public void Activate()
+        {
+            Toggle.isOn = !Toggle.isOn;
         }
     }
 }

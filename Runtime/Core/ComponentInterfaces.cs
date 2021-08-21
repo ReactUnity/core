@@ -87,4 +87,9 @@ namespace ReactUnity
     {
         IReactComponent ShadowParent { get; }
     }
+
+    public interface IActivatableComponent : IReactComponent
+    {
+        void Activate();
+    }
 }

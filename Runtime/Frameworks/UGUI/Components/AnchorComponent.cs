@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI
 {
-    public class AnchorComponent : UGUIComponent
+    public class AnchorComponent : UGUIComponent, IActivatableComponent
     {
         AnchorClickHandler clickHandler;
 
@@ -43,8 +43,12 @@ namespace ReactUnity.UGUI
 
             var pe = ev as PointerEventData;
 
-            var openInNewTab = pe.button == PointerEventData.InputButton.Middle || !openInThisTab;
+            var openInNewTab = pe.button != PointerEventData.InputButton.Left || !openInThisTab;
+            OpenUrl(openInNewTab);
+        }
 
+        public void OpenUrl(bool openInNewTab)
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
             if(openInNewTab) {
                 openWindow(url);
@@ -54,6 +58,11 @@ namespace ReactUnity.UGUI
 #else
             Application.OpenURL(url);
 #endif
+        }
+
+        public void Activate()
+        {
+            OpenUrl(!openInThisTab);
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR

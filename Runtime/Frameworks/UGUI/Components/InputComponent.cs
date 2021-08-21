@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class InputComponent : UGUIComponent
+    public class InputComponent : UGUIComponent, IActivatableComponent
     {
         public string Value
         {
@@ -20,7 +20,7 @@ namespace ReactUnity.UGUI
         }
 
 
-        private TMP_InputField InputField { get; set; }
+        public TMP_InputField InputField { get; private set; }
         private ContainerComponent TextViewport { get; set; }
         private TextComponent TextComponent { get; set; }
         private TextComponent Placeholder { get; set; }
@@ -101,6 +101,10 @@ namespace ReactUnity.UGUI
             InputField.Select();
         }
 
+        public void Activate()
+        {
+            Focus();
+        }
 
         public override void SetEventListener(string eventName, Callback callback)
         {

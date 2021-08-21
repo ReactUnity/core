@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace ReactUnity.UGUI
 {
 
-    public class ButtonComponent : UGUIComponent
+    public class ButtonComponent : UGUIComponent, IActivatableComponent
     {
         public Button Button { get; private set; }
 
@@ -27,6 +27,11 @@ namespace ReactUnity.UGUI
                     base.SetEventListener(eventName, callback);
                     return;
             }
+        }
+
+        public void Activate()
+        {
+            Button.onClick?.Invoke();
         }
     }
 }
