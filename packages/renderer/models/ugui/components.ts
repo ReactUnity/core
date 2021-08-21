@@ -14,6 +14,10 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
 
 export interface Text extends View<ReactUnity.UGUI.TextComponent> { }
 
+export interface Label extends View<ReactUnity.UGUI.LabelComponent> {
+  for?: ReactUnity.UGUI.UGUIComponent | string;
+}
+
 export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
   set?: ReactUnity.Styling.IconSet | string;
 }

@@ -15,6 +15,7 @@ export interface UGUIElements {
   view: Components.View & RefAttributes<NS.ContainerComponent> & { tag?: string } & Children;
   anchor: Components.Anchor & RefAttributes<NS.AnchorComponent> & Children;
   text: Components.Text & RefAttributes<NS.TextComponent> & Children<Textable | Textable[]>;
+  label: Components.Label & RefAttributes<NS.LabelComponent> & Children;
   icon: Components.Icon & RefAttributes<NS.IconComponent> & Children<Textable | Textable[]>;
   button: Components.Button & RefAttributes<NS.ButtonComponent> & Children;
   input: Input & RefAttributes<NS.InputComponent> & Children<never>;

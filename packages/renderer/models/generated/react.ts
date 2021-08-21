@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 21/08/2021 18:26:04
+// Generated 22/08/2021 02:54:07
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -411,6 +411,7 @@ export declare namespace ReactUnity {
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
     Update(): void;
+    MarkForStyleResolving(recursive: boolean): void;
     DestroySelf(): void;
     Destroy(): void;
     SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -422,6 +423,8 @@ export declare namespace ReactUnity {
     ApplyStyles(): void;
     ApplyLayoutStyles(): void;
     Relayout(): void;
+    Matches(query: string): boolean;
+    Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
     QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
     Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -468,6 +471,9 @@ export declare namespace ReactUnity {
     FireEvent(eventName: string, arg: any): void;
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
+    MarkForStyleResolving(recursive: boolean): void;
+    Matches(query: string): boolean;
+    Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
     QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
   }
@@ -490,6 +496,9 @@ export declare namespace ReactUnity {
   }
   export interface IShadowComponent {
     ShadowParent: ReactUnity.IReactComponent;
+  }
+  export interface IActivatableComponent {
+    Activate(): void;
   }
   export interface IStateHandler {
     ClearListeners(): void;
@@ -705,6 +714,7 @@ export declare namespace ReactUnity {
     AddComponent(type: System.Type): any;
     GetComponent(type: System.Type): any;
     Relayout(): void;
+    MarkForStyleResolving(recursive: boolean): void;
     DestroySelf(): void;
     Destroy(): void;
     SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
@@ -713,6 +723,8 @@ export declare namespace ReactUnity {
     ResolveStyle(recursive?: boolean): void;
     ApplyStyles(): void;
     ApplyLayoutStyles(): void;
+    Matches(query: string): boolean;
+    Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
     QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
     Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -2149,6 +2161,7 @@ export declare namespace ReactUnity {
         ReleaseMouse(): void;
         HasMouseCapture(): boolean;
         Update(): void;
+        MarkForStyleResolving(recursive: boolean): void;
         Destroy(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         FireEvent(eventName: string, arg: any): void;
@@ -2156,6 +2169,8 @@ export declare namespace ReactUnity {
         ResolveStyle(recursive?: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
+        Matches(query: string): boolean;
+        Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
         Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -2207,6 +2222,7 @@ export declare namespace ReactUnity {
         ReleaseMouse(): void;
         HasMouseCapture(): boolean;
         Update(): void;
+        MarkForStyleResolving(recursive: boolean): void;
         Destroy(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         FireEvent(eventName: string, arg: any): void;
@@ -2214,6 +2230,8 @@ export declare namespace ReactUnity {
         ResolveStyle(recursive?: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
+        Matches(query: string): boolean;
+        Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
         Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -3034,8 +3052,10 @@ export declare namespace ReactUnity {
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
-      GetMatchingChild(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
-      GetMatchingChildren(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
+      AnyMatches(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): boolean;
+      Closest(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+      GetMatchingChild(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+      GetMatchingChildren(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
       AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       AddChildCascading(selector: string, mq: ReactUnity.StyleEngine.MediaQueryList, scope: ReactUnity.IReactComponent, specifity: number): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>;
       Matches(component: ReactUnity.IReactComponent): boolean;
@@ -3065,8 +3085,10 @@ export declare namespace ReactUnity {
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
-      GetMatchingChild(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
-      GetMatchingChildren(component: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
+      AnyMatches(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): boolean;
+      Closest(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+      GetMatchingChild(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+      GetMatchingChildren(component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent): ReactUnity.IReactComponent[];
       AddSelector(selectorText: string, importanceOffset?: number, mql?: ReactUnity.StyleEngine.MediaQueryList, scope?: ReactUnity.IReactComponent): ReactUnity.StyleEngine.RuleTreeNode<T>[];
       AddChildCascading(selector: string, mq: ReactUnity.StyleEngine.MediaQueryList, scope: ReactUnity.IReactComponent, specifity: number): ReactUnity.StyleEngine.RuleTreeNode<T>;
       Matches(component: ReactUnity.IReactComponent): boolean;
@@ -3127,6 +3149,15 @@ export declare namespace ReactUnity {
       Empty = 26,
       Root = 27,
       Scope = 28,
+      Activatable = 29,
+      Blank = 30,
+      Enabled = 31,
+      Disabled = 32,
+      PlaceholderShown = 33,
+      ReadOnly = 34,
+      ReadWrite = 35,
+      Checked = 36,
+      Indeterminate = 37,
       Hover = 100,
       Focus = 101,
       FocusVisible = 102,
@@ -4749,6 +4780,8 @@ export declare namespace ReactUnity {
       url: string;
       openInThisTab: boolean;
       SetProperty(propertyName: string, value: any): void;
+      OpenUrl(openInNewTab: boolean): void;
+      Activate(): void;
       Update(): void;
       DestroySelf(): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
@@ -4758,6 +4791,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -4765,6 +4799,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -4825,6 +4861,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -4832,6 +4869,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -4894,6 +4933,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -4901,6 +4941,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -4949,6 +4991,7 @@ export declare namespace ReactUnity {
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       SetEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): void;
+      Activate(): void;
       Update(): void;
       DestroySelf(): void;
       SetProperty(propertyName: string, value: any): void;
@@ -4958,6 +5001,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -4965,6 +5009,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5021,6 +5067,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5028,6 +5075,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5086,6 +5135,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5093,6 +5143,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5158,6 +5210,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5165,6 +5218,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5226,6 +5281,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5233,6 +5289,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5250,6 +5308,7 @@ export declare namespace ReactUnity {
     export class InputComponent {
       constructor(text: string, context: ReactUnity.UGUI.UGUIContext);
       Value: string;
+      InputField: any; // TMPro.TMP_InputField
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -5283,6 +5342,7 @@ export declare namespace ReactUnity {
       SetText(text: string): void;
       ResolveStyle(recursive?: boolean): void;
       Focus(): void;
+      Activate(): void;
       SetEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): void;
       SetProperty(propertyName: string, value: any): void;
       Update(): void;
@@ -5293,12 +5353,82 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class LabelComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.Styling.Internal.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.Internal.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      Name: string;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      SetProperty(propertyName: string, value: any): void;
+      Activate(): boolean;
+      Update(): void;
+      DestroySelf(): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      Relayout(): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
+      Destroy(): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5361,6 +5491,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5368,6 +5499,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5426,12 +5559,15 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5489,6 +5625,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5496,6 +5633,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5557,6 +5696,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5564,6 +5704,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5626,6 +5768,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5633,6 +5776,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5690,6 +5835,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5697,6 +5843,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5758,6 +5906,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5765,6 +5914,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5829,6 +5980,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5836,6 +5988,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5888,6 +6042,7 @@ export declare namespace ReactUnity {
       Focus(): void;
       SetEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): void;
       SetProperty(propertyName: string, value: any): void;
+      Activate(): void;
       Update(): void;
       DestroySelf(): void;
       Relayout(): void;
@@ -5896,6 +6051,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5903,6 +6059,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -5958,6 +6116,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5965,6 +6124,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -6028,6 +6189,7 @@ export declare namespace ReactUnity {
       GetBoundingClientRect(): UnityEngine.Rect;
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6035,6 +6197,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -6794,76 +6958,6 @@ export declare namespace ReactUnity {
       }
     }
     export namespace EventHandlers {
-      export class AnchorClickHandler {
-        constructor();
-        useGUILayout: boolean;
-        runInEditMode: boolean;
-        enabled: boolean;
-        isActiveAndEnabled: boolean;
-        transform: UnityEngine.Transform;
-        gameObject: UnityEngine.GameObject;
-        tag: string;
-        rigidbody: UnityEngine.Component;
-        rigidbody2D: UnityEngine.Component;
-        camera: UnityEngine.Component;
-        light: UnityEngine.Component;
-        animation: UnityEngine.Component;
-        constantForce: UnityEngine.Component;
-        renderer: UnityEngine.Component;
-        audio: UnityEngine.Component;
-        networkView: UnityEngine.Component;
-        collider: UnityEngine.Component;
-        collider2D: UnityEngine.Component;
-        hingeJoint: UnityEngine.Component;
-        particleSystem: UnityEngine.Component;
-        name: string;
-        hideFlags: UnityEngine.HideFlags;
-        OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
-        ClearListeners(): void;
-        IsInvoking(): boolean;
-        CancelInvoke(): void;
-        Invoke(methodName: string, time: number): void;
-        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-        CancelInvoke(methodName: string): void;
-        IsInvoking(methodName: string): boolean;
-        StartCoroutine(methodName: string): UnityEngine.Coroutine;
-        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
-        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-        StopCoroutine(routine: System.Collections.IEnumerator): void;
-        StopCoroutine(routine: UnityEngine.Coroutine): void;
-        StopCoroutine(methodName: string): void;
-        StopAllCoroutines(): void;
-        GetComponent(type: System.Type): UnityEngine.Component;
-        GetComponent(type: string): UnityEngine.Component;
-        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-        GetComponentInChildren(t: System.Type): UnityEngine.Component;
-        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type): UnityEngine.Component;
-        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-        GetComponents(type: System.Type): UnityEngine.Component[];
-        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-        CompareTag(tag: string): boolean;
-        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-        SendMessageUpwards(methodName: string, value: any): void;
-        SendMessageUpwards(methodName: string): void;
-        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-        SendMessage(methodName: string, value: any): void;
-        SendMessage(methodName: string): void;
-        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
-        BroadcastMessage(methodName: string, parameter: any): void;
-        BroadcastMessage(methodName: string): void;
-        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-        GetInstanceID(): number;
-        GetHashCode(): number;
-        Equals(other: any): boolean;
-        ToString(): string;
-        GetType(): System.Type;
-      }
       export class BeginDragHandler {
         constructor();
         useGUILayout: boolean;
@@ -8689,6 +8783,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8696,6 +8791,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -8747,6 +8844,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8754,6 +8852,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -8802,6 +8902,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8809,6 +8910,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -8857,6 +8960,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8864,6 +8968,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -8914,6 +9020,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8921,6 +9028,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -8969,6 +9078,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -8976,6 +9086,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9026,6 +9138,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9033,6 +9146,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9084,6 +9199,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9091,6 +9207,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9142,6 +9260,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9149,6 +9268,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9199,6 +9320,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9206,6 +9328,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9257,6 +9381,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9264,6 +9389,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9315,6 +9442,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9322,6 +9450,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
@@ -9373,6 +9503,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
       Destroy(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       FireEvent(eventName: string, arg: any): void;
@@ -9380,6 +9511,8 @@ export declare namespace ReactUnity {
       ResolveStyle(recursive?: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
       Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
