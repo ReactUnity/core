@@ -173,6 +173,17 @@ namespace ReactUnity.StyleEngine
         Empty = 26,
         Root = 27,
         Scope = 28,
+        Activatable = 29,
+
+        Blank = 30,
+        Enabled = 31,
+        Disabled = 32,
+        PlaceholderShown = 33,
+        ReadOnly = 34,
+        ReadWrite = 35,
+        Checked = 36,
+        Indeterminate = 37,
+
 
         Hover = 100,
         Focus = 101,
@@ -248,6 +259,8 @@ namespace ReactUnity.StyleEngine
                     return component is IHostComponent;
                 case RuleSelectorPartType.Scope:
                     return scope != null && component == scope;
+                case RuleSelectorPartType.Activatable:
+                    return component is IActivatableComponent;
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
                     return true;

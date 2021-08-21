@@ -14,6 +14,26 @@ namespace ReactUnity.StyleEngine
         public static Regex SplitSelectorRegex = new Regex("\\s+");
         public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
 
+        private static Dictionary<string, RuleSelectorPartType> BasicPartTypes = new Dictionary<string, RuleSelectorPartType>(StringComparer.InvariantCultureIgnoreCase)
+        {
+            { "first-child", RuleSelectorPartType.FirstChild },
+            { "last-child", RuleSelectorPartType.LastChild },
+            { "before", RuleSelectorPartType.Before },
+            { "after", RuleSelectorPartType.After },
+            { "empty", RuleSelectorPartType.Empty },
+            { "activatable", RuleSelectorPartType.Activatable },
+            { "root", RuleSelectorPartType.Root },
+            { "scope", RuleSelectorPartType.Scope },
+            { "blank", RuleSelectorPartType.Blank },
+            { "enabled", RuleSelectorPartType.Enabled },
+            { "disabled", RuleSelectorPartType.Disabled },
+            { "placeholder-shown", RuleSelectorPartType.PlaceholderShown },
+            { "read-only", RuleSelectorPartType.ReadOnly },
+            { "read-write", RuleSelectorPartType.ReadWrite },
+            { "checked", RuleSelectorPartType.Checked },
+            { "indeterminate", RuleSelectorPartType.Indeterminate },
+        };
+
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)
         {
             // Special selector for the root element, skip parsing in this case
@@ -41,13 +61,7 @@ namespace ReactUnity.StyleEngine
                     {
                         var paran = paranContent.ToString();
                         if (nm == "not") list.AddRange(ParseSelector(paran, !negated));
-                        else if (nm == "first-child") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.FirstChild, Negated = negated });
-                        else if (nm == "last-child") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.LastChild, Negated = negated });
-                        else if (nm == "before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
-                        else if (nm == "after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
-                        else if (nm == "empty") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Empty, Negated = negated });
-                        else if (nm == "root") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Root, Negated = negated });
-                        else if (nm == "scope") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Scope, Negated = negated });
+                        else if (BasicPartTypes.TryGetValue(nm, out var partType)) list.Add(new RuleSelectorPart() { Type = partType, Negated = negated });
                         else if (nm == "nth-child") list.Add(new RuleSelectorPart()
                         {
                             Type = RuleSelectorPartType.NthChild,
