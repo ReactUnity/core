@@ -62,7 +62,7 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.18",
+    "@types/react": "^17.0.19",
     "@types/react-reconciler": "^0.26.3",
     "@types/styled-components": "5.1.12",
     "@types/webpack-env": "^1.16.2",

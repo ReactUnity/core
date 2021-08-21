@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/08/2021 21:34:42
+// Generated 21/08/2021 18:26:04
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -630,6 +630,7 @@ export declare namespace ReactUnity {
     engineFactory: ReactUnity.ScriptEngine.IJavaScriptEngineFactory;
     engine: ReactUnity.ScriptEngine.IJavaScriptEngine;
     context: ReactUnity.ReactContext;
+    interop: ReactUnity.Helpers.ReactInterop;
     RunScript(script: string, ctx: ReactUnity.ReactContext, engineType: ReactUnity.ScriptEngine.JavascriptEngineType, debug: boolean, awaitDebugger: boolean, beforeStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>, afterStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>): void;
     ExecuteScript(code: string, fileName?: string): void;
     Dispose(): void;
@@ -671,6 +672,7 @@ export declare namespace ReactUnity {
     constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
     Scope: any; // System.Object
     Importance: number;
+    Active: boolean;
     Sheet: ReactUnity.StyleEngine.StyleSheet;
     Content: string;
     Name: string;
@@ -2428,6 +2430,33 @@ export declare namespace ReactUnity {
       AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactInterop {
+      constructor(engine: ReactUnity.ScriptEngine.IJavaScriptEngine);
+      [key: string]: any;
+      Comparer: System.Collections.Generic.IEqualityComparer<string>;
+      Count: number;
+      Keys: Record<string, any>;
+      Values: Record<string, any>;
+      InitializeDefault(): void;
+      GetType(typeName: string): any;
+      GetNamespace(nsName: string): any;
+      GetNamespace(nsName: string, assembly: System.Reflection.Assembly): any;
+      AddType(name: string, type: System.Type): any;
+      AddNamespace(name: string, nsName: string, ...assemblies: System.Reflection.Assembly[]): any;
+      Add(key: string, value: any): void;
+      Clear(): void;
+      ContainsKey(key: string): boolean;
+      ContainsValue(value: any): boolean;
+      GetEnumerator(): Record<string, any>;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      OnDeserialization(sender: any): void;
+      Remove(key: string): boolean;
+      TryAdd(key: string, value: any): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
