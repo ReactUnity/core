@@ -289,6 +289,7 @@ namespace ReactUnity.UGUI
                 handler = AddComponent<CursorHandler>();
                 handler.Context = Context;
                 handler.Component = this;
+                handler.enabled = true;
             }
             handler.Cursor = ComputedStyle.cursor;
         }

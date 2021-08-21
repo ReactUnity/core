@@ -134,17 +134,17 @@ namespace ReactUnity.StyleEngine
             return null;
         }
 
-        public IReactComponent GetMatchingChild(IReactComponent component)
+        public IReactComponent GetMatchingChild(IReactComponent component, IReactComponent scope = null)
         {
             var list = new List<IReactComponent>();
-            GetMatchingChildrenInner(component, list, component, true, LeafNodes);
+            GetMatchingChildrenInner(component, list, scope ?? component, true, LeafNodes);
             return list.Count > 0 ? list[0] : default;
         }
 
-        public List<IReactComponent> GetMatchingChildren(IReactComponent component)
+        public List<IReactComponent> GetMatchingChildren(IReactComponent component, IReactComponent scope = null)
         {
             var list = new List<IReactComponent>();
-            GetMatchingChildrenInner(component, list, component, false, LeafNodes);
+            GetMatchingChildrenInner(component, list, scope ?? component, false, LeafNodes);
             return list;
         }
 

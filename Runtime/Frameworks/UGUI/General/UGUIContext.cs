@@ -16,9 +16,10 @@ namespace ReactUnity.UGUI
             {
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
-                { "view", (tag, text, context) => new ContainerComponent(context, "view") },
+                { "view", (tag, text, context) => new ContainerComponent(context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent(context) },
                 { "toggle", (tag, text, context) => new ToggleComponent(context) },
+                { "label", (tag, text, context) => new LabelComponent(context, tag) },
                 { "input", (tag, text, context) => new InputComponent(text, context) },
                 { "scroll", (tag, text, context) => new ScrollComponent(context) },
                 { "image", (tag, text, context) => new ImageComponent(context) },

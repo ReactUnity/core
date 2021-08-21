@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.UGUI.EventHandlers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +8,9 @@ namespace ReactUnity.UGUI
 {
     public class AnchorComponent : UGUIComponent, IActivatableComponent
     {
+        [TypescriptExclude]
+        public class AnchorClickHandler : PointerDownHandler { }
+
         AnchorClickHandler clickHandler;
 
         public string url = "";

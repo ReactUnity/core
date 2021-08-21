@@ -76,3 +76,9 @@ anchor {
   font-style: underline;
   cursor: pointer;
 }
+
+label {
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+}
