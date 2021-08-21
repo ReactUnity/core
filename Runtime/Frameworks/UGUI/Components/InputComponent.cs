@@ -35,6 +35,7 @@ namespace ReactUnity.UGUI
             TextViewport = new ContainerComponent(context, "_viewport");
             TextViewport.IsPseudoElement = true;
             TextViewport.GameObject.name = "[Text Viewport]";
+            TextViewport.Style["flex-grow"] = 1;
             TextViewport.SetParent(this);
             TextViewport.AddComponent<RectMask2D>();
 
@@ -138,10 +139,10 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "placeholder":
-                    Placeholder.SetText(value.ToString());
+                    Placeholder.SetText(value?.ToString() ?? "");
                     return;
                 case "value":
-                    InputField.text = value.ToString();
+                    InputField.text = value?.ToString() ?? "";
                     return;
                 case "characterLimit":
                     InputField.characterLimit = System.Convert.ToInt32(value);

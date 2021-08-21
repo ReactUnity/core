@@ -11,12 +11,12 @@ namespace ReactUnity.Helpers
 
         internal override void OnAdd(string item)
         {
-            Component.ResolveStyle(true);
+            Component.MarkForStyleResolving(true);
         }
 
         internal override void OnRemove(string item)
         {
-            Component.ResolveStyle(true);
+            Component.MarkForStyleResolving(true);
         }
 
         internal override void OnBeforeChange()
@@ -25,7 +25,7 @@ namespace ReactUnity.Helpers
 
         internal override void OnAfterChange()
         {
-            Component.ResolveStyle(true);
+            Component.MarkForStyleResolving(true);
         }
     }
 }

@@ -46,6 +46,8 @@ namespace ReactUnity
         object GetComponent(Type type);
         object AddComponent(Type type);
 
+        void MarkForStyleResolving(bool recursive);
+
         IReactComponent QuerySelector(string query);
         List<IReactComponent> QuerySelectorAll(string query);
     }

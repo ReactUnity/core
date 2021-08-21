@@ -57,7 +57,7 @@ namespace ReactUnity
             set
             {
                 id = value?.ToString();
-                ResolveStyle(true);
+                MarkForStyleResolving(true);
             }
         }
         public abstract string Name { get; set; }
@@ -117,7 +117,7 @@ namespace ReactUnity
             MarkForStyleResolving(key == null || key.inherited);
         }
 
-        protected void MarkForStyleResolving(bool recursive)
+        public void MarkForStyleResolving(bool recursive)
         {
             markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
             markedStyleResolve = true;
@@ -175,7 +175,7 @@ namespace ReactUnity
             }
 
             StyleState.SetParent(newParent.StyleState);
-            ResolveStyle(true);
+            MarkForStyleResolving(true);
         }
 
 

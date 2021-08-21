@@ -41,6 +41,7 @@ button {
 }
 
 input {
+  flex-direction: row;
   padding: 8px;
   min-height: 40px;
   min-width: 200px;
@@ -48,6 +49,7 @@ input {
   overflow: hidden;
   background-color: white;
   border-radius: 8px;
+  text-align: left;
   cursor: text;
   appearance: input;
 }

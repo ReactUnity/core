@@ -98,6 +98,7 @@ namespace ReactUnity.Types
             public object Convert(object value)
             {
                 if (value == null) return None;
+                if (value is ImageReference ir) return ir;
                 if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
                 if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
                 if (value is UnityEngine.Object o) return new ImageReference(AssetReferenceType.Object, o);
