@@ -24,6 +24,12 @@ namespace ReactUnity.Animations
         }
         public static Color Interpolate(Color from, Color to, float t)
         {
+            if (from == Color.clear || to == Color.clear)
+            {
+                if (from.a == 0) return new Color(to.r, to.g, to.b, Interpolate(0, to.a, t));
+                return new Color(from.r, from.g, from.b, Interpolate(from.a, 0, t));
+            }
+
             return Color.LerpUnclamped(from, to, t);
         }
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t)
