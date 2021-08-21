@@ -48,6 +48,8 @@ namespace ReactUnity
 
         void MarkForStyleResolving(bool recursive);
 
+        bool Matches(string query);
+        IReactComponent Closest(string query);
         IReactComponent QuerySelector(string query);
         List<IReactComponent> QuerySelectorAll(string query);
     }

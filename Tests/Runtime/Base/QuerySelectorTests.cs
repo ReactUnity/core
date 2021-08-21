@@ -140,5 +140,76 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Host, Q(":scope"));
             Assert.AreEqual(Host, Q("*"));
         }
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [TestCase("v1", "view", true)]
+        [TestCase("v1", ":root > view", true)]
+        [TestCase("v1", ":scope > view", true)]
+        [TestCase("v1", "#v1", true)]
+        [TestCase("v1", ".v1class", true)]
+        [TestCase("v2", ":scope > view + view", true)]
+        [TestCase("v2", ":scope > * + *", true)]
+        [TestCase("v2", ":scope > * + view", true)]
+        [TestCase("v2", ":scope > view + *", true)]
+        [TestCase("v2", ":scope > view ~ view", true)]
+        [TestCase("v4", ":scope > #v3 ~ view", true)]
+        [TestCase("v5", ":scope > #v3 ~ view ~ view", true)]
+        [TestCase("v1v2", "view:empty", true)]
+        [TestCase("v1v1t4", "*:empty", true)]
+        [TestCase("v1v1t4", "text:empty", true)]
+        [TestCase("v1v4", "view:nth-child(4)", true)]
+        [TestCase("v1v1t4", "*:nth-child(4)", true)]
+        [TestCase("v1", "viewa", false)]
+        [TestCase("v1", ":root > viewa", false)]
+        [TestCase("v1", ":scope > viewa", false)]
+        [TestCase("v1", "#v", false)]
+        [TestCase("v1", ".v1cla", false)]
+        [TestCase("v2", ":scope > view2 + view", false)]
+        [TestCase("v2", ":scope > * + * + *", false)]
+        [TestCase("v2", ":scope > * + * + view", false)]
+        [TestCase("v2", ":scope > view + view + *", false)]
+        [TestCase("v2", ":scope > view ~ view ~ view", false)]
+        [TestCase("v4", ":scope > #v4 ~ view", false)]
+        [TestCase("v5", ":scope > #v4 ~ view ~ view", false)]
+        [TestCase("v1v1", "view:empty", false)]
+        [TestCase("v1v1t3", "*:empty", false)]
+        [TestCase("v1v1t3", "text:empty", false)]
+        [TestCase("v1v4", "view:nth-child(5)", false)]
+        [TestCase("v1v1t4", "*:nth-child(5)", false)]
+        public void Matches(string id, string query, bool result)
+        {
+            Assert.AreEqual(result, Q("#" + id)?.Matches(query));
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [TestCase("v1", "view", "v1")]
+        [TestCase("v1", ":root > view", "v1")]
+        [TestCase("v1", ":scope > view", "v1")]
+        [TestCase("v1", "#v1", "v1")]
+        [TestCase("v1", ".v1class", "v1")]
+        [TestCase("v2", ":scope > view + view", "v2")]
+        [TestCase("v2", ":scope > * + *", "v2")]
+        [TestCase("v2", ":scope > * + view", "v2")]
+        [TestCase("v2", ":scope > view + *", "v2")]
+        [TestCase("v2", ":scope > view ~ view", "v2")]
+        [TestCase("v4", ":scope > #v3 ~ view", "v4")]
+        [TestCase("v5", ":scope > #v3 ~ view ~ view", "v5")]
+        [TestCase("v1v2", "view:empty", "v1v2")]
+        [TestCase("v1v1t4", "*:empty", "v1v1t4")]
+        [TestCase("v1v1t4", "text:empty", "v1v1t4")]
+        [TestCase("v1v4", "view:nth-child(4)", "v1v4")]
+        [TestCase("v1v1t4", "*:nth-child(4)", "v1v1t4")]
+        [TestCase("v1v2", "view:not(#v1v2)", "v1")]
+        [TestCase("v1v1t4", "*:not(:empty)", "v1v1")]
+        [TestCase("v1v1t4", "view", "v1v1")]
+        [TestCase("v1v4", "view:nth-child(1)", "v1")]
+        [TestCase("v1v1t4", "*:nth-child(1)", "v1v1")]
+        [TestCase("v1v1t4", ":scope > *:nth-child(1)", "v1")]
+        [TestCase("v1v1t4", ":scope > *:nth-child(2)", null)]
+        public void Closest(string id, string query, string resultId)
+        {
+            Assert.AreEqual(resultId, Q("#" + id)?.Closest(query)?.Id);
+        }
     }
 }

@@ -108,6 +108,32 @@ namespace ReactUnity.StyleEngine
             return AfterNodes.Where(x => x.Matches(component));
         }
 
+        public bool AnyMatches(IReactComponent component, IReactComponent scope = null)
+        {
+            var leafList = LeafNodes;
+            for (int i = 0; i < leafList.Count; i++)
+            {
+                var leaf = leafList[i];
+                if (leaf.Matches(component, scope))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public IReactComponent Closest(IReactComponent component, IReactComponent scope = null)
+        {
+            IReactComponent current = component;
+            while (current != null)
+            {
+                if (AnyMatches(current, scope)) return current;
+                current = current.Parent;
+            }
+
+            return null;
+        }
+
         public IReactComponent GetMatchingChild(IReactComponent component)
         {
             var list = new List<IReactComponent>();

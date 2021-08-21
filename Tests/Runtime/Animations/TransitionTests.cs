@@ -47,6 +47,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
             Globals["started"] = true;
+            yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(100, rt.rect.width);
 
@@ -66,6 +67,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
             Globals["started"] = true;
+            yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(100, rt.rect.width);
 
@@ -84,6 +86,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
 
             Globals["started"] = true;
+            yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(Color.white, text.color);
 
@@ -115,6 +118,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
             Globals["started"] = true;
+            yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(100, rt.rect.width);
 
@@ -144,6 +148,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
 
             Globals["started"] = true;
+            yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(Color.white, text.color);
 

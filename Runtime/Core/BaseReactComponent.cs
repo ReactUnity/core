@@ -293,6 +293,20 @@ namespace ReactUnity
 
         #region Component Tree Functions
 
+        public bool Matches(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.AnyMatches(this, Context.Host);
+        }
+
+        public IReactComponent Closest(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.Closest(this, Context.Host);
+        }
+
         public IReactComponent QuerySelector(string query)
         {
             var tree = new RuleTree<string>(Context.Parser);
