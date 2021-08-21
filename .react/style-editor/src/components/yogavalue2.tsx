@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { convertLengthToYoga, convertYogaToLength } from '../common/helpers';
 import type { StylePropComponentProps } from '../common/props';
 
-const YogaValue2 = ReactUnity.Types.YogaValue2;
+const YogaValue2 = Interop.ReactUnity.Types.YogaValue2;
 
 export function YogaValue2Field({ className, label, onChange, value }: StylePropComponentProps<RU.Types.YogaValue2>) {
   const x = convertYogaToLength(value.X);

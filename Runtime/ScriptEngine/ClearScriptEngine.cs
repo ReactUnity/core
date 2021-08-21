@@ -119,7 +119,8 @@ namespace ReactUnity.ScriptEngine
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
         {
-            return new HostTypeCollection(assemblies).GetNamespaceNode(ns);
+            if (assemblies.Length > 0) return new HostTypeCollection(assemblies).GetNamespaceNode(ns);
+            else return new HostTypeCollection().GetNamespaceNode(ns);
         }
 
         public object CreateNativeObject(Dictionary<string, object> props)

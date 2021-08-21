@@ -9,7 +9,7 @@ const Inspector = Globals.Inspector;
 
 function getSelection() {
   if (Window) {
-    const activeObject = UnityEditor.Selection.activeGameObject;
+    const activeObject = Interop.UnityEditor.Selection.activeGameObject;
     if (!activeObject) return null;
     return activeObject.GetComponent('ReactElement') as RC;
   } else if (Inspector) {

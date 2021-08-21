@@ -36,8 +36,7 @@ const findElementId = (state: State, el: Cmp) => {
 };
 
 const buildSheet = (state: ElementProps) => {
-  const type = importType('ReactUnity.StyleEngine.StyleSheet') as any;
-  const sheet = new type(state.element.Context.Style, '', 1) as ReactUnity.StyleEngine.StyleSheet;
+  const sheet = new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style, '', 1);
 
   const style = state.styles;
 

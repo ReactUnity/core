@@ -1,6 +1,9 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
+using ReactUnity.UIToolkit;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Tests.Renderer
 {
@@ -38,6 +41,23 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             Host.Name = null;
             Assert.AreEqual(null, Host.Name);
+        }
+
+        [EditorInjectableTest(@"
+            Renderer.render(
+                <view style={{ color: Interop.UnityEngine.Color.red }}>
+                    Hello world
+                </view>
+            );
+        ")]
+        public IEnumerator InteropWorks()
+        {
+            yield return null;
+
+            var cmp = Q("view") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Element;
+
+            Assert.AreEqual(Color.red, rt.style.color.value);
         }
     }
 }

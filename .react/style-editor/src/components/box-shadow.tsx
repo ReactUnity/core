@@ -16,7 +16,7 @@ export function BoxShadowField({ className, label, onChange, value }: StylePropC
     const color = colorRef.current.Element.value;
     const offset = offsetRef.current.Element.value;
     const inset = insetRef.current.Element.value;
-    const val = new ReactUnity.Types.BoxShadowList(new ReactUnity.Types.BoxShadow(offset, blur, spread, color, inset));
+    const val = new Interop.ReactUnity.Types.BoxShadowList(new Interop.ReactUnity.Types.BoxShadow(offset, blur, spread, color, inset));
     onChange?.({ newValue: val });
   };
 

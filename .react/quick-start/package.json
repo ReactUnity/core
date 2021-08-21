@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.2.3",
-    "@types/react": "^17.0.18",
+    "@types/react": "^17.0.19",
     "typescript": "^4.3.5"
   }
 }

@@ -15,6 +15,7 @@ namespace ReactUnity
         public IJavaScriptEngineFactory engineFactory { get; private set; }
         public IJavaScriptEngine engine { get; private set; }
         public ReactContext context { get; private set; }
+        public ReactInterop interop { get; private set; }
 
         public void RunScript(string script, ReactContext ctx, JavascriptEngineType engineType, bool debug, bool awaitDebugger, UnityEvent<ReactUnityRunner> beforeStart = null, UnityEvent<ReactUnityRunner> afterStart = null)
         {
@@ -63,14 +64,10 @@ namespace ReactUnity
 
             engine.SetValue("Engine", engine);
             engine.SetValue("Callback", typeof(Callback));
-            engine.SetValue("importType", new Func<string, object>((string typeName) => engine.CreateTypeReference(ReflectionHelpers.FindType(typeName))));
 
-            engine.SetValue("UnityEngine", engine.CreateNamespaceReference("UnityEngine", typeof(Vector2).Assembly, typeof(UnityEngine.UIElements.Button).Assembly));
-            engine.SetValue("ReactUnity", engine.CreateNamespaceReference("ReactUnity", typeof(ReactUnityBridge).Assembly));
-            engine.SetValue("Facebook", engine.CreateNamespaceReference("Facebook", typeof(YogaValue).Assembly));
-#if UNITY_EDITOR
-            engine.SetValue("UnityEditor", engine.CreateNamespaceReference("UnityEditor", typeof(UnityEditor.EditorWindow).Assembly, typeof(UnityEditor.UIElements.ColorField).Assembly));
-#endif
+            interop = new ReactInterop(engine);
+            interop.InitializeDefault();
+            engine.SetValue("Interop", interop);
 
             engine.SetValue("Unity", ReactUnityBridge.Instance);
             engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
