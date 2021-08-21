@@ -17,6 +17,8 @@ export interface SliderProps extends View {
   keyStep?: number;
   mode?: SliderMode;
   initialValue?: number;
+  allowScroll?: boolean;
+  scrollMultiplier?: number;
   direction?: SliderDirection;
   children?: ReactNode | SliderChildCallback;
 }
@@ -33,8 +35,9 @@ const SliderChild = forwardRef(
   });
 
 function _Slider({
-  onChange, name, children, initialValue, value, direction = 'horizontal',
-  mode = 'normal', min = 0, max = 1, step = 0, keyStep = null, ...otherProps
+  onChange, onScroll, name, children, initialValue, value, direction = 'horizontal',
+  mode = 'normal', min = 0, max = 1, step = 0, keyStep = null, allowScroll = false,
+  scrollMultiplier = 1 / 6, ...otherProps
 }: SliderProps): ReactElement {
 
   const curValue = useRef(initialValue ?? value ?? min);
@@ -97,8 +100,19 @@ function _Slider({
     setValWithStep(curValue.current + diff);
   }, [coordProp, moveStep, isReverse, setValWithStep]);
 
+  const scrollCallback: PointerEventCallback = useCallback((ev, sender) => {
+    if (allowScroll) {
+      const delta = Math.abs(ev.scrollDelta.y) > Math.abs(ev.scrollDelta.x) ? ev.scrollDelta.y : ev.scrollDelta.x;
+      let diff = delta * moveStep * scrollMultiplier;
+      if (isReverse) diff = -diff;
+      setValWithStep(curValue.current + diff);
+    }
+
+    onScroll?.(ev, sender);
+  }, [moveStep, isReverse, setValWithStep, onScroll, allowScroll, scrollMultiplier]);
+
   return <view name={name || '<Slider>'} {...otherProps} ref={ref} data-direction={direction} data-orientation={orientation}
-    onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback}
+    onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback} onScroll={scrollCallback}
     className={clsx(style.host, otherProps.className, 'mat-slider')}>
     <view name="<Slider-Track>" className={clsx(style.track, 'mat-slider-track')}>
       <view name="<Slider-Fill>" className={clsx(style.fill, 'mat-slider-fill')} ref={fillRef} style={{ [sizeProp]: (curValue.current - min) / range }}>
