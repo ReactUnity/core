@@ -3,6 +3,7 @@ import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { Modal, ModalProps } from '../modal';
+import { TextInput } from '../text';
 import style from './index.module.scss';
 
 interface Props extends ModalProps, Omit<UGUIElements['input'], 'ref'> {
@@ -29,7 +30,9 @@ export function PromptDialog({ title, text, error, placeholder, submit, submitti
     {title && <div className={clsx('md-prompt-dialog-title', style.title)}>{title}</div>}
     {text && <div className={clsx('md-prompt-dialog-text', style.text)}>{text}</div>}
 
-    <input placeholder={placeholder} ref={inputRef} {...inputProps} />
+    <TextInput className={clsx('md-prompt-dialog-input', style.input)}
+      placeholder={placeholder} ref={inputRef} {...inputProps} />
+
     {error && <div className={clsx('md-prompt-dialog-error', style.error)}>{error}</div>}
 
     <div className={clsx('md-prompt-dialog-buttons', style.buttons)}>
@@ -37,7 +40,7 @@ export function PromptDialog({ title, text, error, placeholder, submit, submitti
         {cancel || 'Cancel'}
       </button>
 
-      <button data-temp-disabled={submitting}>
+      <button onClick={() => onClose(inputRef.current.Value, true)} data-temp-disabled={submitting}>
         {submit || 'Submit'}
       </button>
     </div>

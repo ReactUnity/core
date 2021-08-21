@@ -9,6 +9,7 @@ $focusedColor: black;
   padding: 14px 8px;
   position: relative;
   border-radius: 6px;
+  min-height: 40px;
 
   .content {
     color: $textColor;
@@ -41,13 +42,8 @@ $focusedColor: black;
     border: none;
     appearance: none;
     background: none;
-    outline: none;
 
     margin: 0;
-    padding: inherit;
-    line-height: inherit;
-    font-size: inherit;
-
     position: absolute;
     left: 0;
     right: 0;
