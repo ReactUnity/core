@@ -7,6 +7,10 @@ switch (gl.location.hash) {
     import('./uitoolkit');
     break;
 
+  case '#material':
+    import('./material');
+    break;
+
   case '#ugui':
   default:
     import('./showcase');

@@ -233,12 +233,14 @@
 /******/ 			// add "moreModules" to the modules object,
 /******/ 			// then flag all "chunkIds" as loaded and fire callback
 /******/ 			var moduleId, chunkId, i = 0;
-/******/ 			for(moduleId in moreModules) {
-/******/ 				if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
 /******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
 /******/ 			}
-/******/ 			if(runtime) var result = runtime(__webpack_require__);
 /******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for(;i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
@@ -257,7 +259,7 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-var gl=__webpack_require__.g;switch(gl.location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(476), __webpack_require__.e(844)]).then(__webpack_require__.bind(__webpack_require__, 844));break;}
+var gl=__webpack_require__.g;switch(gl.location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 3201));break;case'#material':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(832), __webpack_require__.e(72)]).then(__webpack_require__.bind(__webpack_require__, 3072));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(90), __webpack_require__.e(832), __webpack_require__.e(903)]).then(__webpack_require__.bind(__webpack_require__, 1903));break;}
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

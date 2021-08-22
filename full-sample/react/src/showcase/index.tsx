@@ -31,10 +31,10 @@ const SuperInput = styled.input`
 export const RenderObject = React.memo(function RenderObject({ object }: { object: UE.GameObject }) {
   return <object width={300} height={400} style={{ flexGrow: 0 }}
     onDrag={(ev) => {
-      Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
+      Globals.camera2root.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
     }}
     onScroll={(ev: UE.EventSystems.PointerEventData) => {
-      Globals.camera2.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), UnityEngine.Space.Self);
+      Globals.camera2.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), Interop.UnityEngine.Space.Self);
     }}
     onMount={ev => ev.gameObject.SetActive(true)}
     onUnmount={ev => ev.gameObject.SetActive(false)}
@@ -73,11 +73,11 @@ export function App() {
         <lorem>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque autem vero illum repudiandae praesentium ad mollitia fugiat molestiae consectetur ratione? Soluta dolorem nobis numquam! Aut quas dicta error expedita et?
         </lorem>
-
-        <Button elevation={5} onClick={() => setDlOpen(true)} id="my-button">
-          <text id="my-text">Open Dialog</text>
-        </Button>
       </Paper>
+
+      <Button elevation={5} onClick={() => setDlOpen(true)} id="my-button">
+        <text id="my-text">Open Dialog</text>
+      </Button>
 
       <AlertDialog open={dlOpen} onClose={() => setDlOpen(false)} backdropClose text={'Some alert'}></AlertDialog>
 
@@ -154,10 +154,10 @@ export function App() {
         <row>
           <render width={900} height={400} style={{ flexGrow: 1 }}
             onDrag={(ev) => {
-              Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
+              Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
             }}
             onScroll={(ev: UE.EventSystems.PointerEventData) => {
-              Globals.renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), UnityEngine.Space.Self);
+              Globals.renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), Interop.UnityEngine.Space.Self);
             }}
             onMount={ev => ev.gameObject.SetActive(true)}
             onUnmount={ev => ev.gameObject.SetActive(false)}

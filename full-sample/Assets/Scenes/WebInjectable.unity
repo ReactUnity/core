@@ -267,9 +267,8 @@ GameObject:
   - component: {fileID: 420524929}
   - component: {fileID: 420524928}
   - component: {fileID: 420524927}
-  - component: {fileID: 420524926}
   - component: {fileID: 420524932}
-  - component: {fileID: 420524931}
+  - component: {fileID: 420524926}
   - component: {fileID: 420524933}
   m_Layer: 5
   m_Name: ReactCanvas
@@ -290,16 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Globals:
-    Entries:
-    - Key: Light
-      Value: {fileID: 952785541}
-    - Key: Camera
-      Value: {fileID: 1277903368}
-    - Key: Cube
-      Value: {fileID: 1764012036}
-    - Key: WebInjectable
-      Value: {fileID: 420524925}
   Script:
     Type: 4
     SourceAsset: {fileID: 0}
@@ -311,6 +300,16 @@ MonoBehaviour:
   Debug: 0
   AwaitDebugger: 0
   EngineType: 0
+  Globals:
+    Entries:
+    - Key: Light
+      Value: {fileID: 952785541}
+    - Key: Camera
+      Value: {fileID: 1277903368}
+    - Key: Cube
+      Value: {fileID: 1764012036}
+    - Key: WebInjectable
+      Value: {fileID: 420524925}
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -318,6 +317,8 @@ MonoBehaviour:
   AfterStart:
     m_PersistentCalls:
       m_Calls: []
+  CursorSet: {fileID: 11400000, guid: 4169d60088612bd47b2c2a0a907960fa, type: 2}
+  DefaultIconSet: {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
   IconSets:
   - {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
 --- !u!114 &420524927
@@ -400,36 +401,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &420524931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420524925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &420524932
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -456,10 +427,10 @@ MonoBehaviour:
     null), /*#__PURE__*/React.createElement(\"view\", null), /*#__PURE__*/React.createElement(\"view\",
     null));\r\n}\r\n\r\n;\r\nReactUnityRenderer.render( /*#__PURE__*/React.createElement(Example,
     null));"
-  TestStyle: "view {\r\n  flex-grow: 1;\r\n}\r\n\r\nview:nth-child(1) {\r\n  background-color:
-    crimson;\r\n}\r\n\r\nview:nth-child(2) {\r\n  background-color: #a5a5a5;\r\n}\r\n\r\nview:nth-child(3)
-    {\r\n  background-color: rgba(10, 10, 235, 0.4);\r\n}\r\n\r\nview:nth-child(4)
-    {\r\n  background-color: #00ff0033;\r\n}\r\n\r"
+  TestStyle: ":root {  background-color: white; }\n\nview {\r\n  flex-grow: 1;\r\n}\r\n\r\nview:nth-child(1)
+    {\r\n  background-color: crimson;\r\n}\r\n\r\nview:nth-child(2) {\r\n  background-color:
+    #a5a5a5;\r\n}\r\n\r\nview:nth-child(3) {\r\n  background-color: rgba(10, 10,
+    235, 0.4);\r\n}\r\n\r\nview:nth-child(4) {\r\n  background-color: #00ff0033;\r\n}\r\n\r"
   InjectableScript: {fileID: 4900000, guid: 2a395c58d00601541a5ccd68c072bef3, type: 3}
 --- !u!1 &952785539
 GameObject:

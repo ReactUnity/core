@@ -1,0 +1,17 @@
+@import "~@reactunity/material/styles";
+
+:root {
+  background-color: #fafafa;
+}
+
+.app {
+  padding: 20px;
+
+  > * {
+    margin-bottom: 10px;
+  }
+
+  section > * {
+    margin-bottom: 12px;
+  }
+}

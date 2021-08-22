@@ -2,9 +2,6 @@
 
 :root {
   font-size: 24px;
-}
-
-:root > * {
   background-color: #fafafa;
 }
 
@@ -14,18 +11,6 @@
   width: 100%;
   align-self: center;
   align-items: stretch;
-
-  :global(.md-button) {
-    align-self: center;
-
-    &:hover {
-      @include elevation(9);
-    }
-
-    &:active {
-      @include elevation(1);
-    }
-  }
 
   anchor {
     align-self: flex-start;
@@ -96,12 +81,6 @@
     object-fit: scale-down;
     object-position: left;
   }
-
-  button {
-    &:hover {
-      audio: url(res:click);
-    }
-  }
 }
 
 pulsar {
@@ -124,4 +103,8 @@ pulsar {
 lorem {
   color: red;
   font: 20px /40px;
+}
+
+#my-button {
+  box-shadow: 0 0 4px 15px 3px -5px black;
 }

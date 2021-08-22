@@ -207,7 +207,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -244,12 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Globals:
-    Entries:
-    - Key: Camera
-      Value: {fileID: 1277903368}
-    - Key: WebInspector
-      Value: {fileID: 420524925}
   Script:
     Type: 2
     SourceAsset: {fileID: 0}
@@ -261,6 +254,12 @@ MonoBehaviour:
   Debug: 0
   AwaitDebugger: 0
   EngineType: 0
+  Globals:
+    Entries:
+    - Key: Camera
+      Value: {fileID: 1277903368}
+    - Key: WebInspector
+      Value: {fileID: 420524925}
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -268,6 +267,8 @@ MonoBehaviour:
   AfterStart:
     m_PersistentCalls:
       m_Calls: []
+  CursorSet: {fileID: 11400000, guid: 4169d60088612bd47b2c2a0a907960fa, type: 2}
+  DefaultIconSet: {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
   IconSets:
   - {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
 --- !u!114 &420524927
@@ -341,7 +342,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -430,7 +430,6 @@ Transform:
   m_LocalRotation: {x: 0.114045, y: 0.35338345, z: -0.043452647, w: 0.92748356}
   m_LocalPosition: {x: -3.44, y: 2.4, z: -3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
