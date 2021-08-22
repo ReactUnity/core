@@ -27,11 +27,11 @@ export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldPro
     className,
     defaultValue,
     contentType,
-    variant,
+    variant = 'filled',
     ...inputProps
   }, ref) {
     const [passwordShown, setPasswordShown] = useState(false);
-    variant = variant || 'standard';
+    variant = variant || 'filled';
 
     const isPassword = contentType === 'password';
 

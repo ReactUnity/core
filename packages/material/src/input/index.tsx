@@ -20,9 +20,9 @@ export interface InputFieldRef {
 }
 
 export const InputField = forwardRef<InputFieldRef, InputFieldProps>(
-  function InputField({ children, float = 'auto', placeholder, className, variant, ...other }, ref) {
+  function InputField({ children, float = 'auto', placeholder, className, variant = 'filled', ...other }, ref) {
     const hostRef = useRef<ReactUnity.UGUI.ContainerComponent>();
-    variant = variant || 'standard';
+    variant = variant || 'filled';
 
     useImperativeHandle(ref, () => ({
       setEmpty: (empty: boolean) => {

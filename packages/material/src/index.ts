@@ -10,4 +10,5 @@ export * from './prompt';
 export * from './ripple';
 export * from './slider';
 export * from './text';
+export * from './toggle';
 

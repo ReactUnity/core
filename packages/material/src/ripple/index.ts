@@ -1,6 +1,6 @@
 import { ReactUnity, UnityEngine } from '@reactunity/renderer';
 import { PointerEventCallback, UGUIElements } from '@reactunity/renderer/ugui';
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import style from './index.module.scss';
 
 type Props = UGUIElements['view'];
@@ -8,6 +8,8 @@ export type RippleBaseProps = {
   onPointerDown?: PointerEventCallback<any>;
   onPointerUp?: PointerEventCallback<any>;
   noRipple?: boolean;
+  centered?: boolean;
+  target?: React.RefObject<ReactUnity.UGUI.UGUIComponent>;
 };
 
 export interface Ripple {
@@ -16,6 +18,7 @@ export interface Ripple {
 }
 
 export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, pressPosition?: UnityEngine.Vector2) {
+  if (!containerElement) return null;
   const ripple = UnityBridge.createElement('view', '', HostContainer) as unknown as ReactUnity.UGUI.UGUIComponent;
   ripple.ClassName = `${style.ripple} md-ripple`;
 
@@ -61,7 +64,7 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
   } as Ripple;
 }
 
-export function useRipple({ onPointerDown, onPointerUp, noRipple }: RippleBaseProps) {
+export function useRipple({ onPointerDown, onPointerUp, noRipple, centered, target }: RippleBaseProps) {
   const rippleRef = useRef<Ripple>();
 
   const pointerDown: Props['onPointerDown'] = useCallback((ev, sender) => {
@@ -69,9 +72,9 @@ export function useRipple({ onPointerDown, onPointerUp, noRipple }: RippleBasePr
 
     if (!noRipple) {
       rippleRef.current?.fade();
-      rippleRef.current = addRipple(sender, ev.pressPosition);
+      rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
     }
-  }, [noRipple, onPointerDown]);
+  }, [noRipple, onPointerDown, centered, target]);
 
   const pointerUp: Props['onPointerUp'] = useCallback((...args) => {
     onPointerUp?.apply(null, args);
