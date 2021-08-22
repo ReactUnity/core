@@ -30,7 +30,8 @@ export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {
 }
 
 export interface Toggle extends View<ReactUnity.UGUI.ToggleComponent> {
-  value?: boolean;
+  value?: any;
+  checked?: boolean;
   onChange?: (val: boolean, sender: ReactUnity.UGUI.ToggleComponent) => void;
   disabled?: boolean;
   indeterminate?: boolean;
