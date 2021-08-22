@@ -15,6 +15,7 @@ namespace ReactUnity.UGUI.Behaviours
 
         private bool hasPositionUpdate = true;
         private YogaValue2 position = YogaValue2.Center;
+        private PositionType positionType = PositionType.Relative;
         public YogaValue2 Translate
         {
             get => position;
@@ -24,6 +25,18 @@ namespace ReactUnity.UGUI.Behaviours
                 {
                     hasPositionUpdate = true;
                     position = value;
+                }
+            }
+        }
+        public PositionType PositionType
+        {
+            get => positionType;
+            set
+            {
+                if (value != positionType)
+                {
+                    hasPositionUpdate = true;
+                    positionType = value;
                 }
             }
         }
@@ -47,19 +60,39 @@ namespace ReactUnity.UGUI.Behaviours
 
             var pivotDiff = rt.pivot - Vector2.up;
 
-            var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
-            var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
 
-            var scale = new Vector2(translate.X.Unit == YogaUnit.Percent ? Layout.LayoutWidth / 100 : 1, translate.Y.Unit == YogaUnit.Percent ? Layout.LayoutHeight / 100 : 1);
-            var tran = new Vector2(translate.X.Value * scale.x, -translate.Y.Value * scale.y);
+            var tran = new Vector2(CalculateYogaVal(translate.X, Layout.LayoutWidth), -CalculateYogaVal(translate.Y, Layout.LayoutHeight));
 
-            rt.localPosition = Vector2.zero;
-            rt.anchoredPosition = new Vector2(posX, posY) + tran;
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+            if (positionType == PositionType.Static)
+            {
+                // TODO: improve static positioning to affect 4 sides
+                var x = CalculateYogaVal(Layout.Left, Layout.LayoutWidth);
+                var y = CalculateYogaVal(Layout.Top, Layout.LayoutHeight);
 
+                var posX = x + pivotDiff.x * Layout.LayoutWidth;
+                var posY = -y + pivotDiff.y * Layout.LayoutHeight;
+
+                rt.localPosition = Vector2.zero;
+                rt.anchoredPosition = new Vector2(posX, posY) + tran;
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+            }
+            else
+            {
+                var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
+                var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
+                rt.localPosition = Vector2.zero;
+                rt.anchoredPosition = new Vector2(posX, posY) + tran;
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+            }
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
+        }
+
+        private float CalculateYogaVal(YogaValue val, float size)
+        {
+            return val.Unit == YogaUnit.Percent ? size * val.Value / 100 : val.Value;
         }
     }
 }

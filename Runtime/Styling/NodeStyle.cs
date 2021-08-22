@@ -36,6 +36,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.visibility, value);
             get => GetStyleValue<bool>(StyleProperties.visibility);
         }
+        public PositionType position
+        {
+            set => SetStyleValue(StyleProperties.position, value);
+            get => GetStyleValue<PositionType>(StyleProperties.position);
+        }
         public CursorList cursor
         {
             set => SetStyleValue(StyleProperties.cursor, value);

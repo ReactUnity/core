@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using ReactUnity.Types;
 
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
@@ -84,7 +85,9 @@ namespace ReactUnity.UIToolkit
             Element.style.borderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
             Element.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
-            Element.style.position = StylingHelpers.GetStyleEnumCustom<Position>(computed, LayoutProperties.PositionType);
+
+            var pos = computed.position;
+            Element.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;
             Element.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
 
             Element.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignContent);

@@ -177,7 +177,8 @@ namespace ReactUnity.UGUI
             Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
             Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
-            Layout.PositionType = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.PositionType);
+            var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
+            Layout.PositionType = pos == PositionType.Relative ? YogaPositionType.Relative : YogaPositionType.Absolute;
             Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
 
             Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);
@@ -206,7 +207,11 @@ namespace ReactUnity.UGUI
         protected void ResolveTransform()
         {
             var style = ComputedStyle;
-            if (Component) Component.Translate = style.translate;
+            if (Component)
+            {
+                Component.Translate = style.translate;
+                Component.PositionType = style.position;
+            }
 
             // Reset rotation and scale before setting pivot
             RectTransform.localScale = Vector3.one;

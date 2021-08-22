@@ -17,7 +17,6 @@ namespace ReactUnity.Styling
         public static LayoutProperty<YogaAlign> AlignItems = new LayoutProperty<YogaAlign>("AlignItems");
         public static LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
         public static LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
-        public static LayoutProperty<YogaPositionType> PositionType = new LayoutProperty<YogaPositionType>("PositionType");
         public static LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
         public static LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", true);
 
@@ -72,7 +71,6 @@ namespace ReactUnity.Styling
         public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "direction", StyleDirection },
-            { "position", PositionType },
             { "flex-wrap", Wrap },
         };
         public static ILayoutProperty[] AllProperties;

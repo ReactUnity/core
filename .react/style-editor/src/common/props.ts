@@ -67,7 +67,7 @@ export const styleProps: StylePropGroup[] = [
   {
     props: [
       { name: 'Display', component: enumComponent('Facebook.Yoga.YogaDisplay'), label: 'Display', source: 'layout' },
-      { name: 'PositionType', component: enumComponent('Facebook.Yoga.YogaPositionType'), label: 'Position Type', source: 'layout' },
+      { name: 'position', component: enumComponent('ReactUnity.Types.PositionType'), label: 'Position Type' },
       { name: 'backgroundColor', component: 'color', label: 'Background Color' },
       { name: 'backgroundImage', component: objectComponent('UnityEngine.Texture2D'), label: 'Background Image' },
       { name: 'opacity', component: sliderComponent(), label: 'Opacity' },
