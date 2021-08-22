@@ -1,10 +1,12 @@
 import type * as React from 'react';
+import { createElement } from 'react';
 import * as Reconciler from 'react-reconciler';
 import { ReactUnity } from '../../models/generated';
 import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
+import { DefaultView } from '../views/default-view';
 import { diffProperties, DiffResult } from './diffing';
 
 const hostContext = {};
@@ -233,10 +235,12 @@ export const Renderer = {
   render(
     element: React.ReactNode,
     hostContainer?: NativeContainerInstance,
-    callback?: () => void,
+    renderWithoutHelpers?: boolean,
   ): number {
     if (!hostContainer) hostContainer = HostContainer;
     const hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
+
+    if (!renderWithoutHelpers) element = createElement(DefaultView, null, element);
+    return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   },
 };
