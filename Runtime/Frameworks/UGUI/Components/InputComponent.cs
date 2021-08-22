@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class InputComponent : UGUIComponent, IActivatableComponent
+    public class InputComponent : UGUIComponent, IInputComponent
     {
         public string Value
         {
@@ -19,6 +19,19 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public bool Disabled
+        {
+            get => !InputField.interactable;
+            set => InputField.interactable = !value;
+        }
+
+        public bool ReadOnly
+        {
+            get => InputField.readOnly;
+            set => InputField.readOnly = value;
+        }
+
+        public bool PlaceholderShown => !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder.TextContent);
 
         public TMP_InputField InputField { get; private set; }
         private ContainerComponent TextViewport { get; set; }
@@ -147,6 +160,9 @@ namespace ReactUnity.UGUI
                     return;
                 case "value":
                     InputField.text = value?.ToString() ?? "";
+                    return;
+                case "disabled":
+                    Disabled = System.Convert.ToBoolean(value);
                     return;
                 case "characterLimit":
                     InputField.characterLimit = System.Convert.ToInt32(value);

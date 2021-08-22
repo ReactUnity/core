@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class ToggleComponent : UGUIComponent, IActivatableComponent
+    public class ToggleComponent : UGUIComponent, IToggleComponent
     {
         public bool Value
         {
@@ -15,6 +15,17 @@ namespace ReactUnity.UGUI
         public Toggle Toggle { get; private set; }
         public ImageComponent Check { get; private set; }
 
+        public bool Checked
+        {
+            get => Value;
+            set => Value = value;
+        }
+        public bool Indeterminate { get; private set; }
+        public bool Disabled
+        {
+            get => !Toggle.interactable;
+            set => Toggle.interactable = !value;
+        }
 
         public ToggleComponent(UGUIContext context) : base(context, "toggle")
         {
@@ -57,6 +68,12 @@ namespace ReactUnity.UGUI
             {
                 case "value":
                     Toggle.SetIsOnWithoutNotify(System.Convert.ToBoolean(value));
+                    return;
+                case "indeterminate":
+                    Indeterminate = System.Convert.ToBoolean(value);
+                    return;
+                case "disabled":
+                    Disabled = System.Convert.ToBoolean(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

@@ -90,6 +90,20 @@ namespace ReactUnity
 
     public interface IActivatableComponent : IReactComponent
     {
+        bool Disabled { get; }
         void Activate();
+    }
+
+    public interface IToggleComponent : IActivatableComponent
+    {
+        bool Checked { get; }
+        bool Indeterminate { get; }
+    }
+
+    public interface IInputComponent : IActivatableComponent
+    {
+        string Value { get; }
+        bool ReadOnly { get; }
+        bool PlaceholderShown { get; }
     }
 }

@@ -16,6 +16,8 @@ namespace ReactUnity.UGUI
         public string url = "";
         public bool openInThisTab = false;
 
+        public bool Disabled { get; set; }
+
         public AnchorComponent(UGUIContext context) : base(context, "anchor")
         {
             clickHandler = AddComponent<AnchorClickHandler>();
@@ -27,6 +29,9 @@ namespace ReactUnity.UGUI
         {
             switch (propertyName)
             {
+                case "disabled":
+                    Disabled = System.Convert.ToBoolean(value);
+                    return;
                 case "url":
                     url = Convert.ToString(value);
                     return;
@@ -41,6 +46,7 @@ namespace ReactUnity.UGUI
 
         private void OnClick(BaseEventData ev)
         {
+            if (Disabled) return;
             // TODO: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
             if (ev.used) return;
             if (string.IsNullOrWhiteSpace(url)) return;
@@ -66,6 +72,7 @@ namespace ReactUnity.UGUI
 
         public void Activate()
         {
+            if (Disabled) return;
             OpenUrl(!openInThisTab);
         }
 

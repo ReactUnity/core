@@ -253,6 +253,22 @@ namespace ReactUnity.StyleEngine
                     else if (component is IContainerComponent cc)
                         return cc?.Children == null || cc.Children.Count == 0;
                     return true;
+                case RuleSelectorPartType.Blank:
+                    return component is IInputComponent ic && string.IsNullOrEmpty(ic.Value);
+                case RuleSelectorPartType.PlaceholderShown:
+                    return component is IInputComponent icp && icp.PlaceholderShown;
+                case RuleSelectorPartType.Enabled:
+                    return component is IActivatableComponent ace && !ace.Disabled;
+                case RuleSelectorPartType.Disabled:
+                    return component is IActivatableComponent acd && acd.Disabled;
+                case RuleSelectorPartType.ReadOnly:
+                    return component is IInputComponent icr && icr.ReadOnly;
+                case RuleSelectorPartType.ReadWrite:
+                    return component is IInputComponent icw && !icw.ReadOnly;
+                case RuleSelectorPartType.Checked:
+                    return component is IToggleComponent tgc && tgc.Checked;
+                case RuleSelectorPartType.Indeterminate:
+                    return component is IToggleComponent tgi && tgi.Indeterminate;
                 case RuleSelectorPartType.OnlyChild:
                     return component.Parent != null && component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:

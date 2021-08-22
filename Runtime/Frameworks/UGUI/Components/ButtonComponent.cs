@@ -9,6 +9,12 @@ namespace ReactUnity.UGUI
     {
         public Button Button { get; private set; }
 
+        public bool Disabled
+        {
+            get => !Button.interactable;
+            set => Button.interactable = !value;
+        }
+
         public ButtonComponent(UGUIContext context) : base(context, "button")
         {
             Button = AddComponent<Button>();
@@ -27,6 +33,12 @@ namespace ReactUnity.UGUI
                     base.SetEventListener(eventName, callback);
                     return;
             }
+        }
+
+        public override void SetProperty(string propertyName, object value)
+        {
+            if (propertyName == "disabled") Disabled = System.Convert.ToBoolean(value);
+            else base.SetProperty(propertyName, value);
         }
 
         public void Activate()
