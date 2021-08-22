@@ -1,11 +1,4 @@
-import { Accordion } from '@reactunity/material/accordion';
-import { AlertDialog } from '@reactunity/material/alert';
-import { Button } from '@reactunity/material/button';
-import { Card } from '@reactunity/material/card';
-import { Paper } from '@reactunity/material/paper';
-import { Slider } from '@reactunity/material/slider';
-import '@reactunity/material/styles';
-import { GlobalsProvider, globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
+import { globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -67,45 +60,6 @@ export function App() {
 
       {/* <pulsar /> */}
 
-      <Paper elevation={2}>
-        <h2>Button</h2>
-
-        <lorem>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque autem vero illum repudiandae praesentium ad mollitia fugiat molestiae consectetur ratione? Soluta dolorem nobis numquam! Aut quas dicta error expedita et?
-        </lorem>
-      </Paper>
-
-      <Button elevation={5} onClick={() => setDlOpen(true)} id="my-button">
-        <text id="my-text">Open Dialog</text>
-      </Button>
-
-      <AlertDialog open={dlOpen} onClose={() => setDlOpen(false)} backdropClose text={'Some alert'}></AlertDialog>
-
-      <section>
-        <h2>Anchor</h2>
-
-        <Card>
-          <Card.Content>
-            <anchor url="https://www.google.com">Open Google</anchor>
-          </Card.Content>
-        </Card>
-      </section>
-
-      <section>
-        <h2>Accordion</h2>
-
-        <Accordion>
-          <Accordion.Summary>
-            <view>Some stuff is happening</view>
-          </Accordion.Summary>
-
-          <Accordion.Content>
-            <anchor url="https://www.google.com">Open Google</anchor>
-          </Accordion.Content>
-        </Accordion>
-      </section>
-
-
       <section>
         <h2>Input</h2>
 
@@ -166,15 +120,6 @@ export function App() {
         </row>
       </section>
 
-      <section>
-        <h2>Slider</h2>
-
-        <Slider direction="horizontal" mode="normal" max={100} step={20}>{(val) => val * val}</Slider>
-        <Slider direction="horizontal" mode="diff" max={100} step={20}>{(val) => val * val}</Slider>
-        <Slider direction="horizontal-reverse" mode="normal" max={100} step={20}>asdf</Slider>
-        <Slider direction="horizontal-reverse" mode="diff" max={100} step={20}>asdf</Slider>
-      </section>
-
       {/* TODO: Object component too slow
       <section>
         <h2>Object</h2>
@@ -197,9 +142,7 @@ const sheet = new ServerStyleSheet();
 
 Renderer.render(
   <StyleSheetManager disableVendorPrefixes sheet={sheet.instance}>
-    <GlobalsProvider>
-      <App />
-    </GlobalsProvider>
+    <App />
   </StyleSheetManager>
 );
 

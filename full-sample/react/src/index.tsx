@@ -1,8 +1,6 @@
 export { };
 
-const gl = global as any;
-
-switch (gl.location.hash) {
+switch (location.hash) {
   case '#uitoolkit':
     import('./uitoolkit');
     break;
