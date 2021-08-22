@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -7,9 +6,6 @@ namespace ReactUnity.UGUI
     public class RenderComponent : BaseRenderTextureComponent
     {
         Camera currentCamera;
-
-        Callback onMount;
-        Callback onUnmount;
 
         public RenderComponent(UGUIContext context) : base(context, "render")
         {
@@ -22,7 +18,7 @@ namespace ReactUnity.UGUI
             if (currentCamera)
             {
                 currentCamera.targetTexture = null;
-                onUnmount?.Call(currentCamera, this);
+                FireEvent("onUnmount", currentCamera);
                 currentCamera = null;
             }
 
@@ -31,7 +27,7 @@ namespace ReactUnity.UGUI
             if (currentCamera)
             {
                 currentCamera.targetTexture = RenderTexture;
-                onMount?.Call(currentCamera, this);
+                FireEvent("onMount", currentCamera);
             }
         }
 
@@ -61,25 +57,9 @@ namespace ReactUnity.UGUI
             }
         }
 
-        public override void SetEventListener(string eventName, Callback callback)
-        {
-            switch (eventName)
-            {
-                case "onMount":
-                    onMount = callback;
-                    return;
-                case "onUnmount":
-                    onUnmount = callback;
-                    return;
-                default:
-                    base.SetEventListener(eventName, callback);
-                    return;
-            }
-        }
-
         protected override void SetSource(object value)
         {
-            throw new System.Exception($"source property cannot be set on a render component");
+            throw new Exception($"source property cannot be set on a render component");
         }
     }
 }

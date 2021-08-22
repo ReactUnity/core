@@ -41,6 +41,7 @@ namespace ReactUnity
         void SetProperty(string property, object value);
         void SetData(string property, object value);
         void SetEventListener(string eventType, Callback callback);
+        Action AddEventListener(string eventType, Callback callback);
         void FireEvent(string eventName, object arg);
 
         object GetComponent(Type type);

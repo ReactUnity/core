@@ -1,3 +1,4 @@
+using System;
 using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
@@ -139,35 +140,32 @@ namespace ReactUnity.UGUI
             Focus();
         }
 
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onEndEdit":
-                    InputField.onEndEdit.RemoveAllListeners();
-                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
-                    return;
+                    var l1 = new UnityAction<string>(x => callback.Call(x, this));
+                    InputField.onEndEdit.AddListener(l1);
+                    return () => InputField.onEndEdit.RemoveListener(l1);
                 case "onReturn":
-                    InputField.onSubmit.RemoveAllListeners();
-                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
-                    return;
+                    var l2 = new UnityAction<string>(x => callback.Call(x, this));
+                    InputField.onSubmit.AddListener(l2);
+                    return () => InputField.onSubmit.RemoveListener(l2);
                 case "onChange":
-                    InputField.onValueChanged.RemoveAllListeners();
-                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
-                    return;
+                    var l3 = new UnityAction<string>(x => callback.Call(x, this));
+                    InputField.onValueChanged.AddListener(l3);
+                    return () => InputField.onValueChanged.RemoveListener(l3);
                 case "onTextSelection":
-                    InputField.onTextSelection.RemoveAllListeners();
-                    if (callback != null) InputField.onTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this)));
-                    return;
+                    var l4 = new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this));
+                    InputField.onTextSelection.AddListener(l4);
+                    return () => InputField.onTextSelection.RemoveListener(l4);
                 case "onEndTextSelection":
-                    InputField.onEndTextSelection.RemoveAllListeners();
-                    if (callback != null) InputField.onEndTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this)));
-                    return;
+                    var l5 = new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this));
+                    InputField.onEndTextSelection.AddListener(l5);
+                    return () => InputField.onEndTextSelection.RemoveListener(l5);
                 default:
-                    base.SetEventListener(eventName, callback);
-                    return;
+                    return base.AddEventListener(eventName, callback);
             }
         }
 
@@ -182,19 +180,19 @@ namespace ReactUnity.UGUI
                     Value = value?.ToString() ?? "";
                     return;
                 case "disabled":
-                    Disabled = System.Convert.ToBoolean(value);
+                    Disabled = Convert.ToBoolean(value);
                     return;
                 case "characterLimit":
-                    InputField.characterLimit = System.Convert.ToInt32(value);
+                    InputField.characterLimit = Convert.ToInt32(value);
                     return;
                 case "lineLimit":
-                    InputField.lineLimit = System.Convert.ToInt32(value);
+                    InputField.lineLimit = Convert.ToInt32(value);
                     return;
                 case "readonly":
-                    InputField.readOnly = System.Convert.ToBoolean(value);
+                    InputField.readOnly = Convert.ToBoolean(value);
                     return;
                 case "richText":
-                    InputField.richText = System.Convert.ToBoolean(value);
+                    InputField.richText = Convert.ToBoolean(value);
                     return;
                 case "contentType":
                     var val = AllConverters.Get<TMP_InputField.ContentType>().Convert(value);

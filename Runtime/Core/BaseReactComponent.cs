@@ -78,7 +78,8 @@ namespace ReactUnity
         private bool markedForStyleApply;
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
-        protected Dictionary<string, Callback> BaseEventHandlers = new Dictionary<string, Callback>();
+        protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
+        protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
 
         protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
         {
@@ -179,15 +180,38 @@ namespace ReactUnity
         }
 
 
-        public virtual void SetEventListener(string eventName, Callback fun)
+        public void SetEventListener(string eventName, Callback fun)
         {
-            BaseEventHandlers[eventName] = fun;
+            if (EventHandlerRemovers.TryGetValue(eventName, out var remover))
+            {
+                remover?.Invoke();
+                EventHandlerRemovers[eventName] = null;
+            }
+
+            if (fun != null)
+            {
+                var newRemover = AddEventListener(eventName, fun);
+                EventHandlerRemovers[eventName] = newRemover;
+            }
+        }
+
+        public virtual Action AddEventListener(string eventName, Callback fun)
+        {
+            List<Callback> list;
+            if (!BaseEventHandlers.TryGetValue(eventName, out list))
+                BaseEventHandlers[eventName] = list = new List<Callback>();
+            list.Add(fun);
+
+            return () => list.Remove(fun);
         }
 
         public virtual void FireEvent(string eventName, object arg)
         {
-            if (BaseEventHandlers.TryGetValue(eventName, out var existingHandler))
-                existingHandler?.Call(arg, this);
+            if (BaseEventHandlers.TryGetValue(eventName, out var existingHandlers))
+            {
+                foreach (var handler in existingHandlers)
+                    handler?.Call(arg, this);
+            }
         }
 
         public virtual void SetData(string propertyName, object value)

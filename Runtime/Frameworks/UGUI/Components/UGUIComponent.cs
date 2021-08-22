@@ -86,26 +86,21 @@ namespace ReactUnity.UGUI
 
         #region Setters
 
-        public override void SetEventListener(string eventName, Callback fun)
+        public override Action AddEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
             if (eventType == null)
             {
-                base.SetEventListener(eventName, fun);
-                return;
+                return base.AddEventListener(eventName, fun);
             }
 
-            // Remove
-            var handler = GameObject.GetComponent(eventType) as IEventHandler;
-            handler?.ClearListeners();
-
-            // No event to add
-            if (fun == null) return;
-
+            var handler = GetComponent(eventType) as IEventHandler;
             if (handler == null) handler = AddComponent(eventType) as IEventHandler;
 
             Action<BaseEventData> callAction = (e) => fun.Call(e, this);
             handler.OnEvent += callAction;
+
+            return () => handler.OnEvent -= callAction;
         }
 
         public override void SetProperty(string propertyName, object value)

@@ -1,3 +1,4 @@
+using System;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.UGUI.Behaviours;
@@ -13,9 +14,6 @@ namespace ReactUnity.UGUI
         private Transform InstanceParent;
         private bool InstanceWasPrefab;
         IPrefabTarget TargetHandler;
-
-        Callback onMount;
-        Callback onUnmount;
 
         public PrefabComponent(UGUIContext context, string tag = "prefab") : base(context, tag)
         {
@@ -40,7 +38,7 @@ namespace ReactUnity.UGUI
             if (currentTarget)
             {
                 TargetHandler?.Unmount(this);
-                onUnmount?.Call(currentTarget, this);
+                FireEvent("onUnmount", currentTarget);
                 currentTarget = null;
                 TargetHandler = null;
 
@@ -62,7 +60,7 @@ namespace ReactUnity.UGUI
 
                 Instance.transform.SetParent(Container, false);
                 TargetHandler?.Mount(this);
-                onMount?.Call(currentTarget, this);
+                FireEvent("onMount", currentTarget);
             }
 
             Relayout();
@@ -117,20 +115,14 @@ namespace ReactUnity.UGUI
             }
         }
 
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
-                case "onMount":
-                    onMount = callback;
-                    return;
-                case "onUnmount":
-                    onUnmount = callback;
-                    return;
                 default:
-                    var handled = TargetHandler != null ? TargetHandler.SetEventListener(eventName, callback) : false;
-                    if (!handled) base.SetEventListener(eventName, callback);
-                    return;
+                    var handled = TargetHandler != null ? TargetHandler.AddEventListener(eventName, callback) : null;
+                    if (handled == null) return base.AddEventListener(eventName, callback);
+                    return handled;
             }
         }
     }

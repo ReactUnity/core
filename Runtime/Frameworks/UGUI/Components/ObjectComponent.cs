@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -9,9 +8,6 @@ namespace ReactUnity.UGUI
         Camera currentCamera;
         GameObject targetObject;
         bool shouldRender;
-
-        Callback onMount;
-        Callback onUnmount;
 
         public ObjectComponent(UGUIContext context) : base(context, "object")
         {
@@ -23,7 +19,7 @@ namespace ReactUnity.UGUI
 
             if (currentCamera)
             {
-                onUnmount?.Call(currentCamera, this);
+                FireEvent("onUnmount", currentCamera);
                 currentCamera = null;
             }
 
@@ -31,7 +27,7 @@ namespace ReactUnity.UGUI
 
             if (currentCamera)
             {
-                onMount?.Call(currentCamera, this);
+                FireEvent("onMount", currentCamera);
             }
         }
 
@@ -101,22 +97,6 @@ namespace ReactUnity.UGUI
                 default:
                     base.SetProperty(propertyName, value);
                     break;
-            }
-        }
-
-        public override void SetEventListener(string eventName, Callback callback)
-        {
-            switch (eventName)
-            {
-                case "onMount":
-                    onMount = callback;
-                    return;
-                case "onUnmount":
-                    onUnmount = callback;
-                    return;
-                default:
-                    base.SetEventListener(eventName, callback);
-                    return;
             }
         }
 

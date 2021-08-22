@@ -27,7 +27,6 @@ namespace ReactUnity.UIToolkit
             set => Element.name = string.IsNullOrWhiteSpace(value) ? DefaultName : value;
         }
 
-        protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
         protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
         private string currentCursor = null;
 
@@ -251,30 +250,19 @@ namespace ReactUnity.UIToolkit
 
         #region Setters
 
-        public override void SetEventListener(string eventName, Callback fun)
+        public override Action AddEventListener(string eventName, Callback fun)
         {
             var (register, unregister) = EventHandlerMap.GetEventMethods(eventName);
 
             if (register == null)
             {
-                base.SetEventListener(eventName, fun);
-                return;
+                return base.AddEventListener(eventName, fun);
             }
-
-            // Remove
-            if (EventHandlers.TryGetValue(eventName, out var existingHandler))
-            {
-                unregister.Invoke(Element, new object[] { existingHandler, TrickleDown.NoTrickleDown });
-                EventHandlers.Remove(eventName);
-            }
-
-            // No event to add
-            if (fun == null) return;
 
             EventCallback<EventBase> callAction = (e) => fun.Call(e, this);
 
             register.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
-            EventHandlers[eventName] = callAction;
+            return () => unregister.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
         }
 
         public override void SetProperty(string property, object value)

@@ -1,3 +1,4 @@
+using System;
 using ReactUnity.Helpers;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -6,7 +7,11 @@ namespace ReactUnity.UGUI
 {
     public class ToggleComponent : UGUIComponent, IToggleComponent
     {
-        public bool Value
+        public object Value { get; set; }
+
+        public Toggle Toggle { get; private set; }
+
+        public bool Checked
         {
             get => Toggle.isOn;
             set
@@ -16,19 +21,11 @@ namespace ReactUnity.UGUI
             }
         }
 
-        public Toggle Toggle { get; private set; }
-
-        public bool Checked
-        {
-            get => Value;
-            set => Value = value;
-        }
-
         private bool indeterminate;
         public bool Indeterminate
         {
             get => indeterminate;
-            private set
+            set
             {
                 indeterminate = value;
                 MarkForStyleResolving(true);
@@ -43,8 +40,6 @@ namespace ReactUnity.UGUI
                 MarkForStyleResolving(true);
             }
         }
-
-        UnityAction<bool> ChangeListener;
 
         public ToggleComponent(UGUIContext context) : base(context, "toggle")
         {
@@ -62,26 +57,16 @@ namespace ReactUnity.UGUI
             base.ApplyLayoutStylesSelf();
         }
 
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onChange":
-                    if (ChangeListener != null)
-                    {
-                        Toggle.onValueChanged.RemoveListener(ChangeListener);
-                        ChangeListener = null;
-                    }
-
-                    if (callback != null)
-                    {
-                        ChangeListener = new UnityAction<bool>((x) => callback.Call(x, this));
-                        Toggle.onValueChanged.AddListener(ChangeListener);
-                    }
-                    return;
+                    var listener = new UnityAction<bool>((x) => callback.Call(x, this));
+                    Toggle.onValueChanged.AddListener(listener);
+                    return () => Toggle.onValueChanged.RemoveListener(listener);
                 default:
-                    base.SetEventListener(eventName, callback);
-                    return;
+                    return base.AddEventListener(eventName, callback);
             }
         }
 
@@ -90,13 +75,16 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "value":
-                    Value = System.Convert.ToBoolean(value);
+                    Value = value;
+                    return;
+                case "checked":
+                    Checked = Convert.ToBoolean(value);
                     return;
                 case "indeterminate":
-                    Indeterminate = System.Convert.ToBoolean(value);
+                    Indeterminate = Convert.ToBoolean(value);
                     return;
                 case "disabled":
-                    Disabled = System.Convert.ToBoolean(value);
+                    Disabled = Convert.ToBoolean(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

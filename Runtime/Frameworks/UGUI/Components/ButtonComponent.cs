@@ -1,3 +1,4 @@
+using System;
 using ReactUnity.Helpers;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -25,17 +26,16 @@ namespace ReactUnity.UGUI
         }
 
 
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onClick":
-                    Button.onClick.RemoveAllListeners();
-                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Call(this)));
-                    return;
+                    var listener = new UnityAction(() => callback.Call(this));
+                    Button.onClick.AddListener(listener);
+                    return () => Button.onClick.RemoveListener(listener);
                 default:
-                    base.SetEventListener(eventName, callback);
-                    return;
+                    return base.AddEventListener(eventName, callback);
             }
         }
 

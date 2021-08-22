@@ -10,27 +10,20 @@ namespace ReactUnity.UIToolkit
 {
     public class ValueComponent<TElementType, TValueType> : BindableComponent<TElementType> where TElementType : VisualElement, IBindable, INotifyValueChanged<TValueType>, new()
     {
-        private EventCallback<ChangeEvent<TValueType>> previousChangeEvent;
-
         public ValueComponent(UIToolkitContext context, string tag) : base(context, tag)
         {
         }
 
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onChange":
-                    if (previousChangeEvent != null)
-                    {
-                        Element.UnregisterValueChangedCallback(previousChangeEvent);
-                        previousChangeEvent = null;
-                    }
-                    if (callback != null) Element.RegisterValueChangedCallback(previousChangeEvent = (ev) => callback.Call(ev, this));
-                    return;
+                    EventCallback<ChangeEvent<TValueType>> listener = (ev) => callback.Call(ev, this);
+                    Element.RegisterValueChangedCallback(listener);
+                    return () => Element.UnregisterValueChangedCallback(listener);
                 default:
-                    base.SetEventListener(eventName, callback);
-                    return;
+                    return base.AddEventListener(eventName, callback);
             }
         }
 

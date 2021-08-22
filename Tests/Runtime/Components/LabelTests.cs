@@ -13,12 +13,12 @@ namespace ReactUnity.Tests
         public LabelTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest("Renderer.render(<label><toggle value={false} /></label>)")]
+        [ReactInjectableTest("Renderer.render(<label><toggle checked={false} /></label>)")]
         public IEnumerator ClickingLabelActivatesChildComponent()
         {
             yield return null;
             Assert.AreEqual(true, Label.Activate());
-            Assert.AreEqual(true, Toggle.Value);
+            Assert.AreEqual(true, Toggle.Checked);
         }
 
         [ReactInjectableTest("Renderer.render(<><toggle id='myToggle' /><label for='#myToggle'>hey</label></>)")]
@@ -26,7 +26,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
             Assert.AreEqual(true, Label.Activate());
-            Assert.AreEqual(true, Toggle.Value);
+            Assert.AreEqual(true, Toggle.Checked);
         }
 
         [ReactInjectableTest("Renderer.render(<><label for=':scope + *'>hey</label><toggle/></>)")]
@@ -34,7 +34,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
             Assert.AreEqual(true, Label.Activate());
-            Assert.AreEqual(true, Toggle.Value);
+            Assert.AreEqual(true, Toggle.Checked);
         }
     }
 }

@@ -6,27 +6,18 @@ namespace ReactUnity.UIToolkit
 {
     public class ButtonComponent<T> : UIToolkitComponent<T> where T : Button, new()
     {
-        private Action previousClickEvent;
+        public ButtonComponent(UIToolkitContext context, string tag) : base(context, tag) { }
 
-        public ButtonComponent(UIToolkitContext context, string tag) : base(context, tag)
-        {
-        }
-
-        public override void SetEventListener(string eventName, Callback callback)
+        public override Action AddEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onButtonClick":
-                    if (previousClickEvent != null)
-                    {
-                        Element.clicked -= previousClickEvent;
-                        previousClickEvent = null;
-                    }
-                    if (callback != null) Element.clicked += (previousClickEvent = () => callback.Call(this));
-                    return;
+                    Action listener = () => callback.Call(this);
+                    Element.clicked += listener;
+                    return () => Element.clicked -= listener;
                 default:
-                    base.SetEventListener(eventName, callback);
-                    return;
+                    return base.AddEventListener(eventName, callback);
             }
         }
     }

@@ -1,4 +1,3 @@
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -9,9 +8,6 @@ namespace ReactUnity.UGUI
         public IReactComponent ShadowParent { get; private set; }
 
         RectTransform currentTarget;
-
-        Callback onMount;
-        Callback onUnmount;
 
         public PortalComponent(UGUIContext context, string tag = "portal") : base(context, tag)
         {
@@ -37,7 +33,7 @@ namespace ReactUnity.UGUI
 
             if (currentTarget)
             {
-                onUnmount?.Call(currentTarget, this);
+                FireEvent("onUnmount", currentTarget);
                 currentTarget = null;
             }
 
@@ -45,7 +41,7 @@ namespace ReactUnity.UGUI
 
             if (currentTarget)
             {
-                onMount?.Call(currentTarget, this);
+                FireEvent("onMount", currentTarget);
             }
 
             Attach();
@@ -90,22 +86,6 @@ namespace ReactUnity.UGUI
                 default:
                     base.SetProperty(propertyName, value);
                     break;
-            }
-        }
-
-        public override void SetEventListener(string eventName, Callback callback)
-        {
-            switch (eventName)
-            {
-                case "onMount":
-                    onMount = callback;
-                    return;
-                case "onUnmount":
-                    onUnmount = callback;
-                    return;
-                default:
-                    base.SetEventListener(eventName, callback);
-                    return;
             }
         }
     }

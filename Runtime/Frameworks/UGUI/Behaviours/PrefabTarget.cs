@@ -30,10 +30,11 @@ namespace ReactUnity.UGUI.Behaviours
             MountedTo = null;
         }
 
-        public virtual bool SetEventListener(string eventName, Callback callback)
+        public virtual Action AddEventListener(string eventName, Callback callback)
         {
-            OnSetEventListener?.Invoke(eventName, callback);
-            return OnSetEventListener != null;
+            if (OnSetEventListener == null) return null;
+            OnSetEventListener.Invoke(eventName, callback);
+            return () => OnSetEventListener.Invoke(eventName, null);
         }
 
         public virtual bool SetProperty(string propertyName, object value)
@@ -52,7 +53,7 @@ namespace ReactUnity.UGUI.Behaviours
         bool SetProperty(string propertyName, object value);
 
         /* Return true to notify that this event is handled */
-        bool SetEventListener(string eventName, Callback callback);
+        Action AddEventListener(string eventName, Callback callback);
 
         /* Callback called when the target is mounted on the component */
         void Mount(PrefabComponent cmp);

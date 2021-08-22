@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
@@ -8,13 +7,7 @@ namespace ReactUnity.UIToolkit
     {
         public IMGUIComponent(UIToolkitContext context) : base(context, "imgui")
         {
-        }
-
-        public override void SetEventListener(string eventName, Callback fun)
-        {
-            if (eventName == "onGUI")
-                Element.onGUIHandler = () => fun?.Call(this);
-            else base.SetEventListener(eventName, fun);
+            Element.onGUIHandler = () => FireEvent("onGUI", this);
         }
 
         public override void SetProperty(string property, object value)

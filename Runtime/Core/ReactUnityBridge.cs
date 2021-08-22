@@ -98,6 +98,17 @@ namespace ReactUnity
                 c.SetEventListener(eventType, Callback.From(value));
         }
 
+        public System.Action addEventListener(object element, string eventType, object value)
+        {
+#if REACT_CLEARSCRIPT
+            value = value is Microsoft.ClearScript.Undefined ? null : value;
+#endif
+            if (value == null) return null;
+            if (element is IReactComponent c)
+                return c.AddEventListener(eventType, Callback.From(value));
+            return null;
+        }
+
         #endregion
     }
 }
