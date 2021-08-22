@@ -9,33 +9,47 @@ namespace ReactUnity.UGUI
         public bool Value
         {
             get => Toggle.isOn;
-            set => Toggle.SetIsOnWithoutNotify(value);
+            set
+            {
+                Toggle.SetIsOnWithoutNotify(value);
+                MarkForStyleResolving(true);
+            }
         }
 
         public Toggle Toggle { get; private set; }
-        public ImageComponent Check { get; private set; }
 
         public bool Checked
         {
             get => Value;
             set => Value = value;
         }
-        public bool Indeterminate { get; private set; }
+
+        private bool indeterminate;
+        public bool Indeterminate
+        {
+            get => indeterminate;
+            private set
+            {
+                indeterminate = value;
+                MarkForStyleResolving(true);
+            }
+        }
         public bool Disabled
         {
             get => !Toggle.interactable;
-            set => Toggle.interactable = !value;
+            set
+            {
+                Toggle.interactable = !value;
+                MarkForStyleResolving(true);
+            }
         }
+
+        UnityAction<bool> ChangeListener;
 
         public ToggleComponent(UGUIContext context) : base(context, "toggle")
         {
             Toggle = AddComponent<Toggle>();
-
-            Check = new ImageComponent(context, "_toggle-image");
-            Check.SetProperty("source", ResourcesHelper.CheckSprite);
-            Check.SetParent(this);
-
-            Toggle.graphic = Check.Image;
+            Toggle.onValueChanged.AddListener(x => MarkForStyleResolving(true));
         }
 
         public void Focus()
@@ -53,8 +67,17 @@ namespace ReactUnity.UGUI
             switch (eventName)
             {
                 case "onChange":
-                    Toggle.onValueChanged.RemoveAllListeners();
-                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Call(x, this)));
+                    if (ChangeListener != null)
+                    {
+                        Toggle.onValueChanged.RemoveListener(ChangeListener);
+                        ChangeListener = null;
+                    }
+
+                    if (callback != null)
+                    {
+                        ChangeListener = new UnityAction<bool>((x) => callback.Call(x, this));
+                        Toggle.onValueChanged.AddListener(ChangeListener);
+                    }
                     return;
                 default:
                     base.SetEventListener(eventName, callback);
@@ -67,7 +90,7 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "value":
-                    Toggle.SetIsOnWithoutNotify(System.Convert.ToBoolean(value));
+                    Value = System.Convert.ToBoolean(value);
                     return;
                 case "indeterminate":
                     Indeterminate = System.Convert.ToBoolean(value);

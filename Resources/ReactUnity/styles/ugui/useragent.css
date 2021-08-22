@@ -60,8 +60,9 @@ scroll {
 }
 
 toggle {
-  aspect-ratio: 1;
   width: 24px;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
   margin: 6px;
   align-items: center;
   justify-content: center;
@@ -70,6 +71,21 @@ toggle {
   border-radius: 6px;
   cursor: pointer;
   appearance: toggle;
+}
+
+toggle:after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+toggle:checked:after {
+  background-image: url(res:ReactUnity/sprites/check);
+}
+
+toggle:indeterminate:after {
+  background-image: url(res:ReactUnity/sprites/indeterminate);
 }
 
 anchor {

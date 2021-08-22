@@ -149,6 +149,7 @@ namespace ReactUnity.UGUI
             Layout.Width = StylingHelpers.GetStyleLength(computed, LayoutProperties.Width);
             Layout.Height = StylingHelpers.GetStyleLength(computed, LayoutProperties.Height);
             Layout.FlexBasis = StylingHelpers.GetStyleLength(computed, LayoutProperties.FlexBasis);
+            Layout.AspectRatio = StylingHelpers.GetStyleFloat(computed, LayoutProperties.AspectRatio);
 
             Layout.MinWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinWidth);
             Layout.MinHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinHeight);

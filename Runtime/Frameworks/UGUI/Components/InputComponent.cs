@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Converters;
 using ReactUnity.Helpers;
 using TMPro;
 using UnityEngine;
@@ -15,28 +16,47 @@ namespace ReactUnity.UGUI
             set
             {
                 InputField.text = value;
-                Placeholder.ApplyStyles();
+                MarkForStyleResolving(true);
             }
         }
 
         public bool Disabled
         {
             get => !InputField.interactable;
-            set => InputField.interactable = !value;
+            set
+            {
+                InputField.interactable = !value;
+                MarkForStyleResolving(true);
+            }
         }
 
         public bool ReadOnly
         {
             get => InputField.readOnly;
-            set => InputField.readOnly = value;
+            set
+            {
+                InputField.readOnly = value;
+                MarkForStyleResolving(true);
+            }
         }
 
-        public bool PlaceholderShown => !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder.TextContent);
+        private string placeholder;
+        public string Placeholder
+        {
+            get => placeholder;
+            set
+            {
+                placeholder = value;
+                MarkForStyleResolving(true);
+            }
+        }
+
+        public bool PlaceholderShown => !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder);
 
         public TMP_InputField InputField { get; private set; }
         private ContainerComponent TextViewport { get; set; }
         private TextComponent TextComponent { get; set; }
-        private TextComponent Placeholder { get; set; }
+        private TextComponent PlaceholderCmp { get; set; }
 
         public InputComponent(string text, UGUIContext context) : base(context, "input")
         {
@@ -53,11 +73,11 @@ namespace ReactUnity.UGUI
             TextViewport.AddComponent<RectMask2D>();
 
 
-            Placeholder = new TextComponent("", context, "_placeholder");
-            Placeholder.IsPseudoElement = true;
-            Placeholder.GameObject.name = "[Placeholder]";
-            Placeholder.Layout.PositionType = YogaPositionType.Absolute;
-            Placeholder.SetParent(TextViewport);
+            PlaceholderCmp = new TextComponent("", context, "_placeholder");
+            PlaceholderCmp.IsPseudoElement = true;
+            PlaceholderCmp.GameObject.name = "[Placeholder]";
+            PlaceholderCmp.Layout.PositionType = YogaPositionType.Absolute;
+            PlaceholderCmp.SetParent(TextViewport);
 
 
             TextComponent = new TextComponent(text, context, "_value");
@@ -76,7 +96,7 @@ namespace ReactUnity.UGUI
 
             InputField.textViewport = TextViewport.RectTransform;
             InputField.textComponent = TextComponent.Text;
-            InputField.placeholder = Placeholder.Text;
+            InputField.placeholder = PlaceholderCmp.Text;
             InputField.fontAsset = TextComponent.Text.font;
 
             GameObject.SetActive(true);
@@ -99,8 +119,8 @@ namespace ReactUnity.UGUI
             base.ResolveStyle(recursive);
 
             var c = TextComponent.ComputedStyle.color;
-            Placeholder.ComputedStyle.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
-            Placeholder.ApplyStyles();
+            PlaceholderCmp.ComputedStyle.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            PlaceholderCmp.ApplyStyles();
         }
 
         protected override void ApplyStylesSelf()
@@ -156,10 +176,10 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "placeholder":
-                    Placeholder.SetText(value?.ToString() ?? "");
+                    Placeholder = value?.ToString() ?? "";
                     return;
                 case "value":
-                    InputField.text = value?.ToString() ?? "";
+                    Value = value?.ToString() ?? "";
                     return;
                 case "disabled":
                     Disabled = System.Convert.ToBoolean(value);
@@ -177,16 +197,25 @@ namespace ReactUnity.UGUI
                     InputField.richText = System.Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    InputField.contentType = (TMP_InputField.ContentType) System.Convert.ToInt32(value);
+                    var val = AllConverters.Get<TMP_InputField.ContentType>().Convert(value);
+                    if (val is TMP_InputField.ContentType ct) InputField.contentType = ct;
+                    else InputField.contentType = TMP_InputField.ContentType.Standard;
+                    Value = Value; // Workaround to fix password switching bug
                     return;
                 case "keyboardType":
-                    InputField.keyboardType = (TouchScreenKeyboardType) System.Convert.ToInt32(value);
+                    var val2 = AllConverters.Get<TouchScreenKeyboardType>().Convert(value);
+                    if (val2 is TouchScreenKeyboardType ct2) InputField.keyboardType = ct2;
+                    else InputField.keyboardType = TouchScreenKeyboardType.Default;
                     return;
                 case "lineType":
-                    InputField.lineType = (TMP_InputField.LineType) System.Convert.ToInt32(value);
+                    var val3 = AllConverters.Get<TMP_InputField.LineType>().Convert(value);
+                    if (val3 is TMP_InputField.LineType lt) InputField.lineType = lt;
+                    else InputField.lineType = TMP_InputField.LineType.SingleLine;
                     return;
                 case "validation":
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
+                    var val4 = AllConverters.Get<TMP_InputField.CharacterValidation>().Convert(value);
+                    if (val4 is TMP_InputField.CharacterValidation cv) InputField.characterValidation = cv;
+                    else InputField.characterValidation = TMP_InputField.CharacterValidation.None;
                     return;
                 default:
                     base.SetProperty(propertyName, value);

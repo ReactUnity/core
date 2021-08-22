@@ -8,15 +8,21 @@ namespace ReactUnity.UGUI
 {
     public class AnchorComponent : UGUIComponent, IActivatableComponent
     {
-        [TypescriptExclude]
-        public class AnchorClickHandler : PointerDownHandler { }
-
         AnchorClickHandler clickHandler;
 
         public string url = "";
         public bool openInThisTab = false;
 
-        public bool Disabled { get; set; }
+        private bool disabled;
+        public bool Disabled
+        {
+            get => disabled;
+            set
+            {
+                disabled = value;
+                MarkForStyleResolving(true);
+            }
+        }
 
         public AnchorComponent(UGUIContext context) : base(context, "anchor")
         {

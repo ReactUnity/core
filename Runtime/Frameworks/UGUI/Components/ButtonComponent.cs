@@ -12,7 +12,11 @@ namespace ReactUnity.UGUI
         public bool Disabled
         {
             get => !Button.interactable;
-            set => Button.interactable = !value;
+            set
+            {
+                Button.interactable = !value;
+                MarkForStyleResolving(true);
+            }
         }
 
         public ButtonComponent(UGUIContext context) : base(context, "button")

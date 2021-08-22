@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.StyleEngine;
 using ReactUnity.UGUI.EventHandlers;
 using UnityEngine.EventSystems;
@@ -8,9 +7,6 @@ namespace ReactUnity.UGUI
 {
     public class LabelComponent : UGUIComponent
     {
-        [TypescriptExclude]
-        public class LabelClickHandler : PointerDownHandler { }
-
         LabelClickHandler clickHandler;
 
         private object forQuery;
