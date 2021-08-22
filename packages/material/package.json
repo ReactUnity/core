@@ -57,7 +57,7 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.3.1",
+    "@reactunity/renderer": "^0.4.0",
     "react": "^17.0.2"
   },
   "devDependencies": {
