@@ -7180,8 +7180,204 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
+// EXTERNAL MODULE: ../../../node_modules/react/index.js
+var react = __webpack_require__(28);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
+// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(76);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
+
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = react.createContext(undefined);
+  if (displayName) ctx.displayName = displayName;
+
+  var Provider = function Provider(_a) {
+    var children = _a.children;
+
+    var _b = react.useState(0),
+        render = _b[0],
+        setRender = _b[1];
+
+    react.useEffect(function () {
+      var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+        setRender(function (x) {
+          return x + 1;
+        });
+      });
+
+      if (!remove) {
+        if (displayName) console.warn(displayName + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
+      }
+
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    var value = react.useMemo(function () {
+      return __assign({}, dictionary);
+    }, [render]);
+    return react.createElement(ctx.Provider, {
+      value: value
+    }, children);
+  };
+
+  function useContext() {
+    var context = react.useContext(ctx);
+
+    if (context === undefined) {
+      if (displayName) throw new Error(displayName + ".useContext must be used within a " + displayName + ".Provider");else throw new Error('useContext must be used within a provider');
+    }
+
+    return context;
+  }
+
+  return {
+    context: ctx,
+    Provider: Provider,
+    useContext: useContext
+  };
+}
+var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
+var useGlobals = globalsWatcher.useContext;
+var GlobalsProvider = globalsWatcher.Provider;
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var error_boundary_assign = undefined && undefined.__assign || function () {
+  error_boundary_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return error_boundary_assign.apply(this, arguments);
+};
+
+
+
+
+var ErrorBoundary = function (_super) {
+  __extends(ErrorBoundary, _super);
+
+  function ErrorBoundary(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {
+      hasError: false,
+      error: null
+    };
+    return _this;
+  }
+
+  ErrorBoundary.getDerivedStateFromError = function (error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      error: error
+    };
+  };
+
+  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {// You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo);
+  };
+
+  ErrorBoundary.prototype.render = function () {
+    var _a, _b;
+
+    if (this.state.hasError) {
+      return (0,jsx_runtime.jsxs)("view", error_boundary_assign({
+        style: {
+          color: 'crimson',
+          padding: 20
+        }
+      }, {
+        children: [(0,jsx_runtime.jsx)("view", error_boundary_assign({
+          style: {
+            marginBottom: '12px'
+          }
+        }, {
+          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
+        }), void 0), (0,jsx_runtime.jsx)("view", {
+          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
+        }, void 0)]
+      }), void 0);
+    }
+
+    return this.props.children;
+  };
+
+  return ErrorBoundary;
+}(react.Component);
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
+
+
+
+function DefaultView(_a) {
+  var children = _a.children;
+  return (0,jsx_runtime.jsx)(ErrorBoundary, {
+    children: (0,jsx_runtime.jsx)(GlobalsProvider, {
+      children: children
+    }, void 0)
+  }, void 0);
+}
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -7234,6 +7430,8 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   return updatePayload;
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
+
+
 
 
 var hostContext = {};
@@ -7447,10 +7645,11 @@ var hostConfig = {
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var Renderer = {
-  render: function render(element, hostContainer, callback) {
+  render: function render(element, hostContainer, renderWithoutHelpers) {
     if (!hostContainer) hostContainer = HostContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
+    if (!renderWithoutHelpers) element = (0,react.createElement)(DefaultView, null, element);
+    return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   }
 };
 ;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
@@ -7516,12 +7715,8 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-// EXTERNAL MODULE: ../../../node_modules/react/index.js
-var react = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/context/selection.tsx
 var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=Interop.UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}var ctx=/*#__PURE__*/react.createContext(undefined);function SelectionProvider(_ref){var children=_ref.children;var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/react.createElement(ctx.Provider,{value:selection},children);};function useSelection(){var context=react.useContext(ctx);if(context===undefined){throw new Error('useSelection must be used within a provider');}return context;}
-// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(76);
 ;// CONCATENATED MODULE: ./src/context/style.tsx
 var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('style-editor-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style,'',1);var style=state.styles;var selector="[style-editor-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
 ;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js

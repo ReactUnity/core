@@ -30,40 +30,6 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 468:
-/***/ ((module) => {
-
-"use strict";
-
-
-var memo = {};
-/* istanbul ignore next  */
-
-function getTarget(target) {
-  if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
-
-    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-      try {
-        // This will throw an exception if access to iframe is blocked
-        // due to cross-origin restrictions
-        styleTarget = styleTarget.contentDocument.head;
-      } catch (e) {
-        // istanbul ignore next
-        styleTarget = null;
-      }
-    }
-
-    memo[target] = styleTarget;
-  }
-
-  return memo[target];
-}
-
-module.exports = getTarget;
-
-/***/ }),
-
 /***/ 487:
 /***/ ((module) => {
 
@@ -168,6 +134,52 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ 52:
+/***/ ((module) => {
+
+"use strict";
+
+
+var memo = {};
+/* istanbul ignore next  */
+
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
+      }
+    }
+
+    memo[target] = styleTarget;
+  }
+
+  return memo[target];
+}
+/* istanbul ignore next  */
+
+
+function insertBySelector(insert, style) {
+  var target = getTarget(insert);
+
+  if (!target) {
+    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+  }
+
+  target.appendChild(style);
+}
+
+module.exports = insertBySelector;
+
+/***/ }),
+
 /***/ 469:
 /***/ ((module) => {
 
@@ -183,6 +195,25 @@ function insertStyleElement(options) {
 }
 
 module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ 10:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(style) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+
+  if (nonce) {
+    style.setAttribute("nonce", nonce);
+  }
+}
+
+module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
@@ -238,6 +269,29 @@ function domAPI(options) {
 }
 
 module.exports = domAPI;
+
+/***/ }),
+
+/***/ 329:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function styleTagTransform(css, style) {
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+module.exports = styleTagTransform;
 
 /***/ }),
 
@@ -7157,8 +7211,204 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
+// EXTERNAL MODULE: ../../../node_modules/react/index.js
+var react = __webpack_require__(28);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
+// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(76);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
+
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = react.createContext(undefined);
+  if (displayName) ctx.displayName = displayName;
+
+  var Provider = function Provider(_a) {
+    var children = _a.children;
+
+    var _b = react.useState(0),
+        render = _b[0],
+        setRender = _b[1];
+
+    react.useEffect(function () {
+      var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+        setRender(function (x) {
+          return x + 1;
+        });
+      });
+
+      if (!remove) {
+        if (displayName) console.warn(displayName + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
+      }
+
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    var value = react.useMemo(function () {
+      return __assign({}, dictionary);
+    }, [render]);
+    return react.createElement(ctx.Provider, {
+      value: value
+    }, children);
+  };
+
+  function useContext() {
+    var context = react.useContext(ctx);
+
+    if (context === undefined) {
+      if (displayName) throw new Error(displayName + ".useContext must be used within a " + displayName + ".Provider");else throw new Error('useContext must be used within a provider');
+    }
+
+    return context;
+  }
+
+  return {
+    context: ctx,
+    Provider: Provider,
+    useContext: useContext
+  };
+}
+var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
+var useGlobals = globalsWatcher.useContext;
+var GlobalsProvider = globalsWatcher.Provider;
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var error_boundary_assign = undefined && undefined.__assign || function () {
+  error_boundary_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return error_boundary_assign.apply(this, arguments);
+};
+
+
+
+
+var ErrorBoundary = function (_super) {
+  __extends(ErrorBoundary, _super);
+
+  function ErrorBoundary(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {
+      hasError: false,
+      error: null
+    };
+    return _this;
+  }
+
+  ErrorBoundary.getDerivedStateFromError = function (error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      error: error
+    };
+  };
+
+  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {// You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo);
+  };
+
+  ErrorBoundary.prototype.render = function () {
+    var _a, _b;
+
+    if (this.state.hasError) {
+      return (0,jsx_runtime.jsxs)("view", error_boundary_assign({
+        style: {
+          color: 'crimson',
+          padding: 20
+        }
+      }, {
+        children: [(0,jsx_runtime.jsx)("view", error_boundary_assign({
+          style: {
+            marginBottom: '12px'
+          }
+        }, {
+          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
+        }), void 0), (0,jsx_runtime.jsx)("view", {
+          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
+        }, void 0)]
+      }), void 0);
+    }
+
+    return this.props.children;
+  };
+
+  return ErrorBoundary;
+}(react.Component);
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
+
+
+
+function DefaultView(_a) {
+  var children = _a.children;
+  return (0,jsx_runtime.jsx)(ErrorBoundary, {
+    children: (0,jsx_runtime.jsx)(GlobalsProvider, {
+      children: children
+    }, void 0)
+  }, void 0);
+}
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -7213,6 +7463,8 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
 
 
+
+
 var hostContext = {};
 var childContext = {};
 
@@ -7263,7 +7515,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon') {
+      if (type === 'text' || type === 'icon' || type === 'style') {
         UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
@@ -7324,7 +7576,7 @@ var hostConfig = {
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
     var _a;
 
-    if (type === 'text' || type === 'icon') {
+    if (type === 'text' || type === 'icon' || type === 'style') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
       return UnityBridge.createElement(type, text, rootContainerInstance);
     }
@@ -7356,7 +7608,7 @@ var hostConfig = {
     applyUpdate(instance, props, true);
   },
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text' || type === 'icon';
+    return type === 'text' || type === 'icon' || type === 'style';
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
@@ -7424,14 +7676,13 @@ var hostConfig = {
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var Renderer = {
-  render: function render(element, hostContainer, callback) {
+  render: function render(element, hostContainer, renderWithoutHelpers) {
     if (!hostContainer) hostContainer = HostContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
+    if (!renderWithoutHelpers) element = (0,react.createElement)(DefaultView, null, element);
+    return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   }
 };
-// EXTERNAL MODULE: ../../../node_modules/react/index.js
-var react = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/assets/check.png
 /* harmony default export */ const assets_check = (__webpack_require__.p + "static/media/check.png");
 ;// CONCATENATED MODULE: ./src/assets/close.png
@@ -7442,12 +7693,18 @@ var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(inject
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleDomAPI.js
 var styleDomAPI = __webpack_require__(631);
 var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/getTarget.js
-var getTarget = __webpack_require__(468);
-var getTarget_default = /*#__PURE__*/__webpack_require__.n(getTarget);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(52);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(10);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertStyleElement.js
 var insertStyleElement = __webpack_require__(469);
 var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(329);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/index.module.scss
 var index_module = __webpack_require__(682);
 ;// CONCATENATED MODULE: ./src/index.module.scss
@@ -7459,39 +7716,16 @@ var index_module = __webpack_require__(682);
       
       
       
+      
+      
 
 var options = {};
 
-options.styleTagTransform = function(css, style){
-      if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-      } else {
-      while (style.firstChild) {
-        style.removeChild(style.firstChild);
-      }
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
 
-      style.appendChild(document.createTextNode(css));
-    }
-  };
-options.setAttributes = function(style) {
-        var nonce =
-           true ? __webpack_require__.nc : 0;
-
-        if (nonce) {
-          style.setAttribute("nonce", nonce);
-        }
-      };
-options.insert = function(style){
-    var target = getTarget_default()("head");
-
-    if (!target) {
-      throw new Error(
-        "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
-      );
-    }
-
-    target.appendChild(style);
-  };
+      options.insert = insertBySelector_default().bind(null, "head");
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7502,8 +7736,6 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
        /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
-// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(76);
 ;// CONCATENATED MODULE: ./src/main.tsx
 var Window=Globals.Window;var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:assets_check,className:src_index_module.checkIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:assets_close,className:src_index_module.warnIcon});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts

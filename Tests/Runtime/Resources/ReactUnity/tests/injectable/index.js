@@ -5826,6 +5826,74 @@ if (true) {
 
 /***/ }),
 
+/***/ 8:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+/** @license React v17.0.2
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+__webpack_require__(243);
+
+var f = __webpack_require__(28),
+    g = 60103;
+
+__webpack_unused_export__ = 60107;
+
+if ("function" === typeof Symbol && Symbol["for"]) {
+  var h = Symbol["for"];
+  g = h("react.element");
+  __webpack_unused_export__ = h("react.fragment");
+}
+
+var m = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,
+    n = Object.prototype.hasOwnProperty,
+    p = {
+  key: !0,
+  ref: !0,
+  __self: !0,
+  __source: !0
+};
+
+function q(c, a, k) {
+  var b,
+      d = {},
+      e = null,
+      l = null;
+  void 0 !== k && (e = "" + k);
+  void 0 !== a.key && (e = "" + a.key);
+  void 0 !== a.ref && (l = a.ref);
+
+  for (b in a) {
+    n.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
+  }
+
+  if (c && c.defaultProps) for (b in a = c.defaultProps, a) {
+    void 0 === d[b] && (d[b] = a[b]);
+  }
+  return {
+    $$typeof: g,
+    type: c,
+    key: e,
+    ref: l,
+    props: d,
+    _owner: m.current
+  };
+}
+
+exports.jsx = q;
+exports.jsxs = q;
+
+/***/ }),
+
 /***/ 723:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -6255,6 +6323,18 @@ exports.version = "17.0.2";
 
 if (true) {
   module.exports = __webpack_require__(723);
+} else {}
+
+/***/ }),
+
+/***/ 76:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__(8);
 } else {}
 
 /***/ }),
@@ -6806,6 +6886,122 @@ function insertStyledComponentsSheet(sheet) {
 }
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
+// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(76);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var error_boundary_assign = undefined && undefined.__assign || function () {
+  error_boundary_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return error_boundary_assign.apply(this, arguments);
+};
+
+
+
+
+var ErrorBoundary = function (_super) {
+  __extends(ErrorBoundary, _super);
+
+  function ErrorBoundary(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {
+      hasError: false,
+      error: null
+    };
+    return _this;
+  }
+
+  ErrorBoundary.getDerivedStateFromError = function (error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      error: error
+    };
+  };
+
+  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {// You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo);
+  };
+
+  ErrorBoundary.prototype.render = function () {
+    var _a, _b;
+
+    if (this.state.hasError) {
+      return (0,jsx_runtime.jsxs)("view", error_boundary_assign({
+        style: {
+          color: 'crimson',
+          padding: 20
+        }
+      }, {
+        children: [(0,jsx_runtime.jsx)("view", error_boundary_assign({
+          style: {
+            marginBottom: '12px'
+          }
+        }, {
+          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
+        }), void 0), (0,jsx_runtime.jsx)("view", {
+          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
+        }, void 0)]
+      }), void 0);
+    }
+
+    return this.props.children;
+  };
+
+  return ErrorBoundary;
+}(react.Component);
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
+
+
+
+function DefaultView(_a) {
+  var children = _a.children;
+  return (0,jsx_runtime.jsx)(ErrorBoundary, {
+    children: (0,jsx_runtime.jsx)(GlobalsProvider, {
+      children: children
+    }, void 0)
+  }, void 0);
+}
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -6858,6 +7054,8 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   return updatePayload;
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
+
+
 
 
 var hostContext = {};
@@ -7071,9 +7269,10 @@ var hostConfig = {
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var Renderer = {
-  render: function render(element, hostContainer, callback) {
+  render: function render(element, hostContainer, callback, renderWithoutHelpers) {
     if (!hostContainer) hostContainer = HostContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
+    if (!renderWithoutHelpers) element = (0,react.createElement)(DefaultView, null, element);
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };

@@ -9,17 +9,12 @@ namespace ReactUnity.Tests
     {
         const string BaseScript = @"
             function App() {
-                const globals = ReactUnity.useGlobals();
                 return <view id='test'>
                     Test text
                 </view>;
             }
 
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
+            Renderer.render(<App />);
         ";
 
         const string BaseStyle = @"
