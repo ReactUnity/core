@@ -3,62 +3,55 @@
 
 $textColor: black;
 $focusedColor: black;
+$animSpeed: 200ms;
 
 .host {
   font-size: 16px;
-  padding: 14px 8px;
+  padding: 14px 12px;
   position: relative;
   border-radius: 6px;
-  min-height: 40px;
+  min-height: 56px;
 
-  .content {
-    color: $textColor;
-    caret-color: $focusedColor;
+  &.filled {
+    background-color: rgb(232, 232, 232);
+    border-bottom: 1px black;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 
-    &:focus-within {
-      ~ .placeholder {
-        .placeholder-text {
-          color: $focusedColor;
-          opacity: 1;
-        }
-      }
+  &.standard {
+    border-bottom: 1px black;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
-      ~ .frame {
-        border-color: $focusedColor;
-      }
+    :global(.mat-input-field-target) {
+      padding-top: 16px;
+    }
+
+    .placeholderContent {
+      translate: 0 8px;
     }
   }
 
-  .frame {
-    border-color: $textColor;
-  }
-
-  .placeholderText {
-    color: $textColor;
-    opacity: 0.7;
-  }
-
-  .content {
-    border: none;
-    appearance: none;
-    background: none;
-
-    margin: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-radius: inherit;
-  }
-
   &.float,
-  &.float-always {
+  &.float-always,
+  &.float-focus:focus-within {
     .placeholderContent {
-      translate: -3px -22px;
+      translate: 1px -12px;
       scale: 0.75;
-      padding: 0 4px;
-      background-color: white;
+    }
+
+    &.filled {
+      :global(.mat-input-field-target) {
+        padding-top: 18px;
+      }
+    }
+
+    &.outlined {
+      .placeholderContent {
+        background-color: white;
+        translate: 1px -26px;
+      }
     }
   }
 
@@ -67,12 +60,21 @@ $focusedColor: black;
       display: none;
     }
   }
+}
 
-  .content:focus-within {
-    ~ .inputFrame {
-      border-width: 2px;
-    }
-  }
+.content {
+  color: $textColor;
+  caret-color: $focusedColor;
+  border: none;
+  background-color: none;
+
+  margin: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: inherit;
 }
 
 .inputFrame {
@@ -84,22 +86,42 @@ $focusedColor: black;
   border: 1px solid;
   border-radius: 6px;
   pointer-events: none;
+  border-color: $textColor;
+
+  .content:focus-within ~ & {
+    border-color: $focusedColor;
+    border-width: 2px;
+  }
 }
 
 .placeholder {
   pointer-events: none;
   position: relative;
   white-space: nowrap;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
 }
 
 .placeholderGhost {
   opacity: 0;
 }
 
+.placeholderText {
+  color: $textColor;
+  opacity: 0.7;
+
+  .content:focus-within ~ .placeholder & {
+    color: $focusedColor;
+    opacity: 1;
+  }
+}
+
 .placeholderContent {
   position: absolute;
-  transition: 160ms ease-out;
+  padding: 0 4px;
+  transition: translate $animSpeed ease-out, scale $animSpeed ease-out, background-color $animSpeed ease-out;
   transform-origin: left;
-  left: 0;
+  left: -4px;
   border-radius: 4px;
 }

@@ -2,21 +2,22 @@ import { ReactUnity } from '@reactunity/renderer';
 import { ContentType, InputEvent, UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
-import { InputField, InputFieldRef } from '../input';
+import { InputField, InputFieldRef, InputFieldVariant } from '../input';
 import style from './index.module.scss';
 
 type InputEl = UGUIElements['input'];
 
-export interface TextInputProps extends Omit<InputEl, 'placeholder'> {
+export interface TextFieldProps extends Omit<InputEl, 'placeholder'> {
   float?: 'always' | 'never' | 'auto';
   selectAllOnFocus?: boolean;
   onValue?: (val: string) => void;
   placeholder?: ReactNode;
   defaultValue?: string;
+  variant?: InputFieldVariant;
 }
 
-export const TextInput = forwardRef<ReactUnity.UGUI.InputComponent, TextInputProps>(
-  function TextInput({
+export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldProps>(
+  function TextField({
     placeholder = '',
     onSelect,
     onChange,
@@ -26,9 +27,11 @@ export const TextInput = forwardRef<ReactUnity.UGUI.InputComponent, TextInputPro
     className,
     defaultValue,
     contentType,
+    variant,
     ...inputProps
   }, ref) {
     const [passwordShown, setPasswordShown] = useState(false);
+    variant = variant || 'standard';
 
     const isPassword = contentType === 'password';
 
@@ -52,11 +55,10 @@ export const TextInput = forwardRef<ReactUnity.UGUI.InputComponent, TextInputPro
       onValue?.(val);
     }, [fieldRef, onChange, onValue]);
 
-    return <InputField className={clsx(className, style.host, 'mat-text-field')}
+    return <InputField className={clsx(className, style.host, 'mat-text-field', style[variant])} variant={variant}
       placeholder={placeholder} float={float} ref={fieldRef} name="<TextField>">
-      <input className={clsx(style.input, 'mat-text-input')} contentType={realType} ref={ref}
-        placeholder={' '} onSelect={focusHandler} onChange={change}
-        {...inputProps} />
+      <input className={clsx(style.input, 'mat-text-input', 'mat-input-field-target')} contentType={realType} ref={ref}
+        placeholder={' '} onSelect={focusHandler} onChange={change} {...inputProps} />
 
       {isPassword &&
         <button className={clsx(style.passwordToggle, 'mat-text-password-toggle')} onClick={() => setPasswordShown(st => !st)}>

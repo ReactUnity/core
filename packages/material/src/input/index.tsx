@@ -5,12 +5,14 @@ import React, { forwardRef, ReactNode, useImperativeHandle, useRef } from 'react
 import style from './index.module.scss';
 
 type ViewEl = UGUIElements['view'];
+export type InputFieldVariant = 'standard' | 'filled' | 'outlined';
 
 export interface InputFieldProps extends ViewEl {
   children: ReactNode;
   placeholder?: ReactNode;
   className?: string;
-  float?: 'always' | 'never' | 'auto';
+  float?: 'always' | 'never' | 'auto' | 'focus';
+  variant?: InputFieldVariant;
 }
 
 export interface InputFieldRef {
@@ -18,8 +20,9 @@ export interface InputFieldRef {
 }
 
 export const InputField = forwardRef<InputFieldRef, InputFieldProps>(
-  function InputField({ children, float = 'auto', placeholder, className, ...other }, ref) {
+  function InputField({ children, float = 'auto', placeholder, className, variant, ...other }, ref) {
     const hostRef = useRef<ReactUnity.UGUI.ContainerComponent>();
+    variant = variant || 'standard';
 
     useImperativeHandle(ref, () => ({
       setEmpty: (empty: boolean) => {
@@ -29,20 +32,23 @@ export const InputField = forwardRef<InputFieldRef, InputFieldProps>(
     }), [hostRef]);
 
     return <view name="<InputField>" {...other} ref={hostRef}
-      className={clsx(style.host, 'mat-input-field', className, style['float-' + (float || 'auto')], `float-${float || 'auto'}`)}>
+      className={clsx(style.host, 'mat-input-field', className,
+        style[variant], 'mat-text-field-' + variant, !!placeholder && style.hasPlaceholder,
+        style['float-' + (float || 'auto')], `float-${float || 'auto'}`)}>
       <view className={clsx(style.content, 'mat-input-content')}>
         {children}
       </view>
 
-      <view className={clsx(style.inputFrame, 'mat-input-frame')}></view>
+      {variant === 'outlined' && <view className={clsx(style.inputFrame, 'mat-input-frame')}></view>}
 
-      <view className={clsx(style.placeholder, 'mat-input-placeholder')}>
-        <view className={clsx(style.placeholderGhost, 'mat-input-placeholder-ghost')}>{placeholder}</view>
-        <view className={clsx(style.placeholderContent, 'mat-input-placeholder-content')}>
-          <view className={clsx(style.placeholderText, 'mat-input-placeholder-text')}>
-            {placeholder}
+      {!!placeholder &&
+        <view className={clsx(style.placeholder, 'mat-input-placeholder')}>
+          <view className={clsx(style.placeholderGhost, 'mat-input-placeholder-ghost')}>{placeholder}</view>
+          <view className={clsx(style.placeholderContent, 'mat-input-placeholder-content')}>
+            <view className={clsx(style.placeholderText, 'mat-input-placeholder-text')}>
+              {placeholder}
+            </view>
           </view>
-        </view>
-      </view>
+        </view>}
     </view >;
   });
