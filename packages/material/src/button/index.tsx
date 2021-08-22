@@ -6,14 +6,18 @@ import { getElevationClass } from '../util/helpers';
 import { MdBase, MdInteractible } from '../util/types';
 import style from './index.module.scss';
 
+export type ButtonVariant = 'text' | 'outlined' | 'filled' | 'icon';
 
-type Props = UGUIElements['button'] & MdInteractible & MdBase;
+type Props = UGUIElements['button'] & MdInteractible & MdBase & {
+  variant?: ButtonVariant;
+};
 
-function _Button({ children, className, elevation, noRipple, onPointerDown, onPointerUp, ...props }: Props) {
-  const ripple = useRipple({ onPointerDown, onPointerUp, noRipple });
+function _Button({ children, className, elevation, noRipple, onPointerDown, onPointerUp, variant, ...props }: Props) {
+  variant = variant || 'text';
+  const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
 
-  return <button name="<Button>" className={clsx(className, style.host, getElevationClass(elevation), 'md-button')}
-    {...props} {...ripple}>
+  return <button name="<Button>" {...props} {...ripple}
+    className={clsx(className, style.host, getElevationClass(elevation), 'md-button', style[variant], 'md-variant-' + variant)}>
     {children}
   </button>;
 }

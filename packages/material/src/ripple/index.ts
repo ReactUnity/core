@@ -21,6 +21,7 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
   if (!containerElement) return null;
   const ripple = UnityBridge.createElement('view', '', HostContainer) as unknown as ReactUnity.UGUI.UGUIComponent;
   ripple.ClassName = `${style.ripple} md-ripple`;
+  ripple.Name = '<Ripple>';
 
   const w = containerElement.RectTransform.rect.width;
   const h = containerElement.RectTransform.rect.height;
@@ -45,6 +46,7 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
     ripple.Style.Set('width', mag);
     ripple.Style.Set('height', mag);
   } else {
+    ripple.Style.Set('position', 'static');
     ripple.Style.Set('left', '50%');
     ripple.Style.Set('top', '50%');
     ripple.Style.Set('width', maxDimension);

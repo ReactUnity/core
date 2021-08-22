@@ -2,6 +2,7 @@ import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { useRef } from 'react';
+import { Button } from '../button';
 import { Modal, ModalProps } from '../modal';
 import { TextField } from '../text';
 import style from './index.module.scss';
@@ -36,13 +37,13 @@ export function PromptDialog({ title, text, error, placeholder, submit, submitti
     {error && <div className={clsx('md-prompt-dialog-error', style.error)}>{error}</div>}
 
     <div className={clsx('md-prompt-dialog-buttons', style.buttons)}>
-      <button onClick={() => onClose(inputRef.current.Value, false)}>
+      <Button onClick={() => onClose(inputRef.current.Value, false)}>
         {cancel || 'Cancel'}
-      </button>
+      </Button>
 
-      <button onClick={() => onClose(inputRef.current.Value, true)} data-temp-disabled={submitting}>
+      <Button onClick={() => onClose(inputRef.current.Value, true)} data-temp-disabled={submitting}>
         {submit || 'Submit'}
-      </button>
+      </Button>
     </div>
   </Modal >;
 }

@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
+import { Button } from '../button';
 import { Modal, ModalProps } from '../modal';
 import style from './index.module.scss';
 
@@ -36,9 +37,9 @@ export function ConfirmDialog<T = boolean>({ title, text, buttons, error, submit
     {buttons?.length > 0 &&
       <div className={clsx('md-confirm-dialog-buttons', style.buttons)}>
         {buttons.map((btn, ind) =>
-          <button key={ind} className={clsx(style.button)} onClick={() => onClose(btn.value)} data-temp-disabled={submitting}>
+          <Button key={ind} className={clsx(style.button)} onClick={() => onClose(btn.value)} data-temp-disabled={submitting}>
             {btn.text}
-          </button>)}
+          </Button>)}
       </div>}
   </Modal>;
 }

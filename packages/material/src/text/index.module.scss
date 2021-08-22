@@ -25,11 +25,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: visible;
+  overflow: hidden;
   flex: 0 0 auto;
   padding: 8px;
   position: absolute;
-  right: 0;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  background-color: transparent;
+  box-shadow: none;
 
   icon {
     width: 20px;

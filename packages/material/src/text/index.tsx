@@ -1,7 +1,8 @@
 import { ReactUnity } from '@reactunity/renderer';
-import { ContentType, InputEvent, UGUIElements } from '@reactunity/renderer/ugui';
+import { InputEvent, UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
+import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
 import style from './index.module.scss';
 
@@ -33,7 +34,7 @@ export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldPro
     const [passwordShown, setPasswordShown] = useState(false);
     variant = variant || 'filled';
 
-    const isPassword = contentType === 'password';
+    const isPassword = contentType === 'password' || contentType === 'pin';
 
     const focusHandler: InputEl['onSelect'] = !selectAllOnFocus ? onSelect : (ev, sender) => {
       setTimeout(() => {
@@ -42,9 +43,8 @@ export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldPro
       onSelect?.(ev, sender);
     };
 
-    const realType = (isPassword && passwordShown) ? 'standard' as ContentType : contentType;
+    const realType = (isPassword && passwordShown) ? 'standard' : contentType;
     const fieldRef = useRef<InputFieldRef>();
-
 
     const change: InputEvent = useCallback((ev, sender) => {
       const val = sender.Value;
@@ -61,10 +61,9 @@ export const TextField = forwardRef<ReactUnity.UGUI.InputComponent, TextFieldPro
         placeholder={' '} onSelect={focusHandler} onChange={change} {...inputProps} />
 
       {isPassword &&
-        <button className={clsx(style.passwordToggle, 'mat-text-password-toggle')} onClick={() => setPasswordShown(st => !st)}>
-          {passwordShown ?
-            <icon>visibility</icon> :
-            <icon>visibility_off</icon>}
-        </button>}
+        <Button variant="icon" onClick={() => setPasswordShown(st => !st)}
+          className={clsx(style.passwordToggle, 'mat-text-password-toggle')}>
+          <icon>{passwordShown ? 'visibility' : 'visibility_off'}</icon>
+        </Button>}
     </InputField>;
   });
