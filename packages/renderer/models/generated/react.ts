@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 22/08/2021 02:54:07
+// Generated 22/08/2021 17:17:06
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -498,7 +498,17 @@ export declare namespace ReactUnity {
     ShadowParent: ReactUnity.IReactComponent;
   }
   export interface IActivatableComponent {
+    Disabled: boolean;
     Activate(): void;
+  }
+  export interface IToggleComponent {
+    Checked: boolean;
+    Indeterminate: boolean;
+  }
+  export interface IInputComponent {
+    Value: string;
+    ReadOnly: boolean;
+    PlaceholderShown: boolean;
   }
   export interface IStateHandler {
     ClearListeners(): void;
@@ -4747,6 +4757,7 @@ export declare namespace ReactUnity {
   export namespace UGUI {
     export class AnchorComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext);
+      Disabled: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -4960,6 +4971,7 @@ export declare namespace ReactUnity {
     export class ButtonComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       Button: UnityEngine.UI.Button;
+      Disabled: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -4991,10 +5003,10 @@ export declare namespace ReactUnity {
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       SetEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): void;
+      SetProperty(propertyName: string, value: any): void;
       Activate(): void;
       Update(): void;
       DestroySelf(): void;
-      SetProperty(propertyName: string, value: any): void;
       Relayout(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
@@ -5308,6 +5320,10 @@ export declare namespace ReactUnity {
     export class InputComponent {
       constructor(text: string, context: ReactUnity.UGUI.UGUIContext);
       Value: string;
+      Disabled: boolean;
+      ReadOnly: boolean;
+      Placeholder: string;
+      PlaceholderShown: boolean;
       InputField: any; // TMPro.TMP_InputField
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6008,7 +6024,9 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       Value: boolean;
       Toggle: UnityEngine.UI.Toggle;
-      Check: ReactUnity.UGUI.ImageComponent;
+      Checked: boolean;
+      Indeterminate: boolean;
+      Disabled: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;

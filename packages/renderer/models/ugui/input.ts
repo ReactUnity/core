@@ -26,6 +26,7 @@ export interface Input extends View<ReactUnity.UGUI.InputComponent> {
   keyboardType?: TouchScreenKeyboardType;
   lineType?: LineType;
   validation?: CharacterValidation;
+  disabled?: boolean;
 
   onReturn?: InputEvent;
   onEndEdit?: InputEvent;

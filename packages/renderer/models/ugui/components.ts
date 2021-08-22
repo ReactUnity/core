@@ -26,15 +26,19 @@ export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> { }
 
 export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {
   onClick?: ActionCallback<ReactUnity.UGUI.ButtonComponent>;
+  disabled?: boolean;
 }
 
 export interface Toggle extends View<ReactUnity.UGUI.ToggleComponent> {
   value?: boolean;
   onChange?: (val: boolean, sender: ReactUnity.UGUI.ToggleComponent) => void;
+  disabled?: boolean;
+  indeterminate?: boolean;
 }
 
 export interface Anchor extends View<ReactUnity.UGUI.AnchorComponent> {
   url?: string;
+  disabled?: boolean;
   /** Works in WebGL only */
   openInThisTab?: boolean;
 }
