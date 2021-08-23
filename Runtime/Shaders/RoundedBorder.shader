@@ -50,6 +50,8 @@ Shader "ReactUnity/RoundedBorder"
         #pragma vertex vert
         #pragma fragment frag
         #pragma target 2.0
+        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
+        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
 
         #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
         #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
