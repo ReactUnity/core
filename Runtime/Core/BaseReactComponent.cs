@@ -33,20 +33,8 @@ namespace ReactUnity
 
         public string ClassName
         {
-            get => string.Join(" ", ClassList);
-            set
-            {
-                ClassList.OnBeforeChange();
-                ClassList.ClearWithoutNotify();
-
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    var classes = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    for (int i = 0; i < classes.Length; i++)
-                        ClassList.AddWithoutNotify(classes[i]);
-                }
-                ClassList.OnAfterChange();
-            }
+            get => ClassList.Name;
+            set => ClassList.Name = value;
         }
         public ClassList ClassList { get; protected set; }
 
