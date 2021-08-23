@@ -6,7 +6,10 @@ fixes:
 
 coverage:
   status:
-    project:
+    patch:
       default:
         target: 0%
+    project:
+      default:
+        target: 50%
         threshold: 1%

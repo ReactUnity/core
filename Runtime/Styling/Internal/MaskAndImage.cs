@@ -11,15 +11,13 @@ namespace ReactUnity.Styling.Internal
         public RectMask2D RectMask;
         public RoundedBorderMaskImage Image;
         public ImageReference MaskImage;
+        private bool Enabled;
 
         public static MaskAndImage Create(GameObject go, ReactContext ctx)
         {
             var cmp = go.AddComponent<MaskAndImage>();
             cmp.Context = ctx;
             cmp.Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
-            cmp.Mask = go.GetComponent<Mask>() ?? go.AddComponent<Mask>();
-            cmp.Mask.showMaskGraphic = false;
-            cmp.Mask.enabled = false;
             cmp.RectMask = go.GetComponent<RectMask2D>() ?? go.AddComponent<RectMask2D>();
             return cmp;
         }
@@ -27,8 +25,8 @@ namespace ReactUnity.Styling.Internal
         internal void SetEnabled(bool enabled)
         {
             Image.enabled = enabled;
-            Mask.enabled = Image.sprite != null;
-            RectMask.enabled = Image.sprite == null;
+            Enabled = enabled;
+            MaskChanged();
         }
 
         internal void SetMaskImage(ImageReference img)
@@ -38,14 +36,11 @@ namespace ReactUnity.Styling.Internal
             if (img == null)
             {
                 Image.sprite = null;
-                Mask.enabled = Image.sprite != null;
-                RectMask.enabled = Image.sprite == null;
+                MaskChanged();
             }
             else img.Get(Context, res => {
                 var sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
                 Image.sprite = sprite;
-                Mask.enabled = Image.sprite != null;
-                RectMask.enabled = Image.sprite == null;
             });
         }
 
@@ -53,7 +48,29 @@ namespace ReactUnity.Styling.Internal
         {
             Image.BorderRadius = new Vector4(tl, tr, br, bl);
             Image.SetMaterialDirty();
-            if (Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);
+            MaskChanged();
+            if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);
+        }
+
+        void MaskChanged()
+        {
+            var isRect = Image.sprite == null && Image.BorderRadius == Vector4.zero;
+            RectMask.enabled = Enabled && isRect;
+
+            if (Enabled && !isRect)
+            {
+                if (!Mask)
+                {
+                    Mask = gameObject.GetComponent<Mask>() ?? gameObject.AddComponent<Mask>();
+                    Mask.showMaskGraphic = false;
+                    Mask.enabled = false;
+                }
+                Mask.enabled = true;
+            }
+            else
+            {
+                if (Mask) Mask.enabled = false;
+            }
         }
     }
 }
