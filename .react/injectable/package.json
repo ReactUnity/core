@@ -6,12 +6,14 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
-    "build": "react-unity-scripts build",
-    "postbuild": "node scripts/replace-injectable.mjs",
+    "build": "yarn build:self && yarn build:replace",
+    "build:self": "react-unity-scripts build",
+    "build:replace": "node scripts/replace-injectable.mjs",
     "postyalc": "yarn",
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
+    "@reactunity/material": "^0.1.1",
     "@reactunity/renderer": "^0.4.0",
     "react": "^17.0.2"
   },
