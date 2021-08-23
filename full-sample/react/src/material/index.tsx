@@ -113,7 +113,7 @@ export function App() {
       <Toggle value="val2">Option 2</Toggle>
       <Toggle value="val3">Option 3</Toggle>
     </ToggleGroup>
-  </scroll >;
+  </scroll>;
 };
 
 Renderer.render(<App />);
