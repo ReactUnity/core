@@ -41,8 +41,12 @@ namespace ReactUnity
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (runner) => beforeStart?.Invoke(runner) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
 
-            engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) => {
-                if (e == "DOMContentLoaded") afterStartCallbacks.Add((runner, success) => f(runner));
+            engine.Execute("postMessage = function() {}");
+
+            engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
+                var callback = Callback.From(f);
+                if (e == "DOMContentLoaded")
+                    afterStartCallbacks.Add((runner, success) => callback.Call(runner));
             }));
 
             beforeStartCallbacks.ForEach(x => x?.Invoke(this));
