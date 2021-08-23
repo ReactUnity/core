@@ -95,9 +95,9 @@ choosePort(host, DEFAULT_PORT)
     );
     const devSocket = {
       warnings: warnings =>
-        devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+        devServer.sendMessage(devServer.sockets, 'warnings', warnings),
       errors: errors =>
-        devServer.sockWrite(devServer.sockets, 'errors', errors),
+        devServer.sendMessage(devServer.sockets, 'errors', errors),
     };
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
