@@ -24,7 +24,6 @@ namespace ReactUnity.Styling.Internal
 
         internal void SetEnabled(bool enabled)
         {
-            Image.enabled = enabled;
             Enabled = enabled;
             MaskChanged();
         }
@@ -41,14 +40,15 @@ namespace ReactUnity.Styling.Internal
             else img.Get(Context, res => {
                 var sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
                 Image.sprite = sprite;
+                MaskChanged();
             });
         }
 
         internal void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             Image.BorderRadius = new Vector4(tl, tr, br, bl);
-            Image.SetMaterialDirty();
             MaskChanged();
+            Image.SetMaterialDirty();
             if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);
         }
 
@@ -56,6 +56,8 @@ namespace ReactUnity.Styling.Internal
         {
             var isRect = Image.sprite == null && Image.BorderRadius == Vector4.zero;
             RectMask.enabled = Enabled && isRect;
+
+            Image.enabled = Enabled && !isRect;
 
             if (Enabled && !isRect)
             {
