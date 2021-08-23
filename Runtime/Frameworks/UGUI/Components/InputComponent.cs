@@ -52,7 +52,7 @@ namespace ReactUnity.UGUI
             }
         }
 
-        public bool PlaceholderShown => !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder);
+        public bool PlaceholderShown => string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder);
 
         public TMP_InputField InputField { get; private set; }
         private ContainerComponent TextViewport { get; set; }

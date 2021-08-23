@@ -199,7 +199,7 @@ namespace ReactUnity.UGUI
 
         #region Style Functions
 
-        protected void ResolveTransform()
+        protected virtual void ResolveTransform()
         {
             var style = ComputedStyle;
             if (Component)
