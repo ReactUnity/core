@@ -4,6 +4,7 @@ struct appdata {
   // float2 uv1 : TEXCOORD1;
   // float2 uv2 : TEXCOORD2;
   float4 color : COLOR;  // set from Image component property
+  UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
 struct v2f {
@@ -12,10 +13,16 @@ struct v2f {
   // float2 uv2 : TEXCOORD2;
   float4 vertex : SV_POSITION;
   float4 color : COLOR;
+  UNITY_VERTEX_INPUT_INSTANCE_ID
+  UNITY_VERTEX_OUTPUT_STEREO
 };
 
 v2f vert (appdata v) {
   v2f o;
+  UNITY_SETUP_INSTANCE_ID(v);
+  UNITY_INITIALIZE_OUTPUT(v2f, o);
+  UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+  UNITY_TRANSFER_INSTANCE_ID(v, o);
   o.vertex = UnityObjectToClipPos(v.vertex);
   // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
   o.uv = v.uv;
