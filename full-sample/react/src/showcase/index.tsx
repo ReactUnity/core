@@ -40,8 +40,6 @@ export function App() {
   const [videoRef, setVideoRef] = useState<ReactUnityNS.UGUI.VideoComponent>();
   const Globals = globalsWatcher.useContext();
 
-  const [dlOpen, setDlOpen] = useState(false);
-
   useEffect(() => {
     if (videoRef) {
       videoRef.VideoPlayer.Pause();

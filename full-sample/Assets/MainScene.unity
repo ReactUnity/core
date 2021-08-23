@@ -643,11 +643,11 @@ MonoBehaviour:
     SourcePath: react/index#material
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 0
+    UseDevServer: 1
     DevServer: http://localhost:3100#material
   Debug: 0
   AwaitDebugger: 0
-  EngineType: 2
+  EngineType: 1
   Globals:
     Entries:
     - Key: renderCamera
@@ -1145,7 +1145,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0}
+  m_BackGroundColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
