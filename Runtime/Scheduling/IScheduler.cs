@@ -5,10 +5,10 @@ namespace ReactUnity.Scheduling
 {
     public interface IScheduler
     {
-        int setImmediate(Callback callback);
-        int setTimeout(Callback callback, int timeout);
-        int setInterval(Callback callback, int timeout);
-        int requestAnimationFrame(Callback callback);
+        int setImmediate(object callback);
+        int setTimeout(object callback, double timeout);
+        int setInterval(object callback, double timeout);
+        int requestAnimationFrame(object callback);
         void clearTimeout(int? handle);
         void clearInterval(int? handle);
         void clearImmediate(int? handle);

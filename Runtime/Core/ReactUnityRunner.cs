@@ -107,10 +107,10 @@ namespace ReactUnity
         {
             var scheduler = context.Dispatcher.Scheduler;
             engine.SetValue("UnityScheduler", scheduler);
-            engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(new Callback(fun), delay); }");
-            engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(new Callback(fun), delay); }");
-            engine.Execute("global.setImmediate = function setImmediate(fun) { return UnityScheduler.setImmediate(new Callback(fun)); }");
-            engine.Execute("global.requestAnimationFrame = function requestAnimationFrame(fun) { return UnityScheduler.requestAnimationFrame(new Callback(fun)); }");
+            engine.SetValue("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
+            engine.SetValue("setInterval", new Func<object, double, int>(scheduler.setInterval));
+            engine.SetValue("setImmediate", new Func<object, int>(scheduler.setImmediate));
+            engine.SetValue("requestAnimationFrame", new Func<object, int>(scheduler.requestAnimationFrame));
             engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
             engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
             engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
@@ -126,13 +126,12 @@ namespace ReactUnity
         void CreateLocation(IJavaScriptEngine engine)
         {
             engine.SetValue("location", context.Location);
+            engine.SetValue("document", new DocumentProxy(context, ExecuteScript, context.Location.origin));
 
             engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
             engine.SetProperty(engine.GetValue("WebSocket"), "original", typeof(WebSocketProxy));
             engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
-
-            engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
         }
 
         public void Dispose()

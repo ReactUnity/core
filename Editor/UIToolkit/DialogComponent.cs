@@ -26,6 +26,7 @@ namespace ReactUnity.Editor.UIToolkit
             Element.OnSelectionChanged += OnSelectionChange;
             Element.OnFocusChange += OnFocusChange;
             Element.OnVisibilityChange += OnVisibilityChange;
+            Element.Context = context;
         }
 
         private void OnVisibilityChange(DialogWindow window, bool visible) => FireEvent("onVisibilityChange", visible);
@@ -60,7 +61,7 @@ namespace ReactUnity.Editor.UIToolkit
         protected override void ApplyLayoutStylesSelf()
         {
             base.ApplyLayoutStylesSelf();
-            Element.ResolveStyle(Element.Window);
+            Element.ResolveStyle();
         }
     }
 
@@ -126,8 +127,8 @@ namespace ReactUnity.Editor.UIToolkit
 
     public class DialogElement : VisualElement
     {
-        public static float DefaultMinWidth = 160;
-        public static float DefaultMinHeight = 240;
+        public static float DefaultMinWidth = 240;
+        public static float DefaultMinHeight = 320;
         public static float DefaultMaxWidth = 10000;
         public static float DefaultMaxHeight = 10000;
 
@@ -198,13 +199,15 @@ namespace ReactUnity.Editor.UIToolkit
             }
         }
 
+        public EditorContext Context { get; internal set; }
+
         public DialogElement()
         {
             style.display = DisplayStyle.None;
             contentContainer = new VisualElement();
         }
 
-        private DialogWindow CreateWindow()
+        private void CreateWindow()
         {
             var window = DialogWindow.Create();
             window.name = Name;
@@ -212,14 +215,27 @@ namespace ReactUnity.Editor.UIToolkit
             window.maximized = Maximized;
             window.rootVisualElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
             window.rootVisualElement.Add(contentContainer);
-            ResolveStyle(window);
-            return window;
+
+            window.OnOpen += (ev) => {
+                shown = true;
+                OnOpen?.Invoke(ev);
+            };
+            window.OnClose += (ev) => {
+                shown = false;
+                OnClose?.Invoke(ev);
+            };
+            window.OnSelectionChanged += (ev) => OnSelectionChanged?.Invoke(ev);
+            window.OnFocusChange += (ev, val) => OnFocusChange?.Invoke(ev, val);
+            window.OnVisibilityChange += (ev, val) => OnVisibilityChange?.Invoke(ev, val);
+
+            Window = window;
+            ResolveStyle();
         }
 
         public void Show(DialogType type)
         {
             if (contentContainer.parent != null) contentContainer.RemoveFromHierarchy();
-            if (Window == null) Window = CreateWindow();
+            if (Window == null) CreateWindow();
 
             switch (type)
             {
@@ -246,18 +262,6 @@ namespace ReactUnity.Editor.UIToolkit
                     Window.Show();
                     break;
             }
-
-            Window.OnOpen += (ev) => {
-                shown = true;
-                OnOpen?.Invoke(ev);
-            };
-            Window.OnClose += (ev) => {
-                shown = false;
-                OnClose?.Invoke(ev);
-            };
-            Window.OnSelectionChanged += (ev) => OnSelectionChanged?.Invoke(ev);
-            Window.OnFocusChange += (ev, val) => OnFocusChange?.Invoke(ev, val);
-            Window.OnVisibilityChange += (ev, val) => OnVisibilityChange?.Invoke(ev, val);
         }
 
         public void Close()
@@ -273,63 +277,117 @@ namespace ReactUnity.Editor.UIToolkit
             Show(Type);
         }
 
-        public void ResolveStyle(DialogWindow window)
+        public void ResolveStyle()
         {
+            var window = Window;
             if (window == null) return;
 
             var style = contentContainer.style;
-            var width = style.width;
-            var height = style.height;
-            var hasWidth = width.keyword == StyleKeyword.Undefined && width.value.unit == LengthUnit.Pixel;
-            var hasHeight = height.keyword == StyleKeyword.Undefined && height.value.unit == LengthUnit.Pixel;
 
-            if (hasWidth || hasHeight)
+            if (!window.docked)
             {
-                var min = new Vector2(hasWidth ? width.value.value : 0, hasHeight ? height.value.value : 0);
-                var max = new Vector2(hasWidth ? width.value.value : float.MaxValue, hasHeight ? height.value.value : float.MaxValue);
+                var scw = Screen.currentResolution.width / EditorGUIUtility.pixelsPerPoint;
+                var sch = Screen.currentResolution.height / EditorGUIUtility.pixelsPerPoint;
+                var xr = 0f;
+                var yr = 0f;
 
-                window.minSize = min;
-                window.maxSize = max;
-            }
+                var isAbsolute = style.position.keyword == StyleKeyword.Undefined && style.position.value == Position.Absolute;
 
+                if (!isAbsolute)
+                {
+                    var host = Context.Host as HostComponent;
+                    var worldPos = GUIUtility.GUIToScreenRect(host.Element.worldBound);
+                    scw = worldPos.width;
+                    sch = worldPos.height;
+                    xr = worldPos.x;
+                    yr = worldPos.y;
+                }
 
-            var minw = DefaultMinWidth;
-            var minh = DefaultMinHeight;
-            var maxw = DefaultMaxWidth;
-            var maxh = DefaultMaxHeight;
+                // Calculate position and size
+                var width = style.width;
+                var height = style.height;
+                var hasWidth = width.keyword == StyleKeyword.Undefined;
+                var hasHeight = height.keyword == StyleKeyword.Undefined;
 
-            if (hasWidth) minw = maxw = width.value.value;
-            else
-            {
+                var left = style.left;
+                var top = style.top;
+                var bottom = style.bottom;
+                var right = style.right;
+
+                var hasLeft = left.keyword == StyleKeyword.Undefined;
+                var hasTop = top.keyword == StyleKeyword.Undefined;
+                var hasBottom = bottom.keyword == StyleKeyword.Undefined;
+                var hasRight = right.keyword == StyleKeyword.Undefined;
+
+                if (hasLeft || hasRight || hasTop || hasBottom || hasWidth || hasHeight)
+                {
+                    var w = window.position.width;
+                    var h = window.position.height;
+
+                    if (hasWidth) w = GetValueFromLength(width, scw);
+                    else if (hasLeft && hasRight) w = Math.Max(0, scw - GetValueFromLength(left, scw) - GetValueFromLength(right, scw));
+
+                    if (hasHeight) h = GetValueFromLength(height, sch);
+                    else if (hasTop && hasBottom) h = Math.Max(0, sch - GetValueFromLength(top, sch) - GetValueFromLength(bottom, sch));
+
+                    var x = hasLeft ? GetValueFromLength(left, scw) :
+                        hasRight ? scw - GetValueFromLength(right, scw) - w
+                        : window.position.x;
+
+                    var y = hasTop ? GetValueFromLength(top, sch) :
+                        hasBottom ? sch - GetValueFromLength(bottom, sch) - h
+                        : window.position.y;
+
+                    window.position = new Rect(x + xr, y + yr, w, h);
+                }
+
+                // Calculate min and max sizes
+                var minw = DefaultMinWidth;
+                var minh = DefaultMinHeight;
+                var maxw = DefaultMaxWidth;
+                var maxh = DefaultMaxHeight;
+
                 var minWidth = style.minWidth;
-                var hasMinWidth = minWidth.keyword == StyleKeyword.Undefined && minWidth.value.unit == LengthUnit.Pixel;
-                if (hasMinWidth) minw = minWidth.value.value;
+                var hasMinWidth = minWidth.keyword == StyleKeyword.Undefined;
+                var minWidthVal = GetValueFromLength(minWidth, scw);
+                if (hasMinWidth) minh = minWidthVal;
 
                 var maxWidth = style.maxWidth;
-                var hasMaxWidth = maxWidth.keyword == StyleKeyword.Undefined && maxWidth.value.unit == LengthUnit.Pixel;
-                if (hasMaxWidth) maxw = maxWidth.value.value;
-            }
+                var hasMaxWidth = maxWidth.keyword == StyleKeyword.Undefined;
+                var maxWidthVal = GetValueFromLength(maxWidth, scw);
+                if (hasMaxWidth) maxh = maxWidthVal;
 
-            if (hasHeight) minh = maxh = height.value.value;
-            else
-            {
                 var minHeight = style.minHeight;
-                var hasMinHeight = minHeight.keyword == StyleKeyword.Undefined && minHeight.value.unit == LengthUnit.Pixel;
-                if (hasMinHeight) minh = minHeight.value.value;
+                var hasMinHeight = minHeight.keyword == StyleKeyword.Undefined;
+                var minHeightVal = GetValueFromLength(minHeight, sch);
+                if (hasMinHeight) minh = minHeightVal;
 
                 var maxHeight = style.maxHeight;
-                var hasMaxHeight = maxHeight.keyword == StyleKeyword.Undefined && maxHeight.value.unit == LengthUnit.Pixel;
-                if (hasMaxHeight) maxh = maxHeight.value.value;
+                var hasMaxHeight = maxHeight.keyword == StyleKeyword.Undefined;
+                var maxHeightVal = GetValueFromLength(maxHeight, sch);
+                if (hasMaxHeight) maxh = maxHeightVal;
+
+                window.minSize = new Vector2(minw, minh);
+                window.maxSize = new Vector2(maxw, maxh);
             }
 
-            window.minSize = new Vector2(minw, minh);
-            window.maxSize = new Vector2(maxw, maxh);
-            contentContainer.style.width = StyleKeyword.Initial;
-            contentContainer.style.height = StyleKeyword.Initial;
-            contentContainer.style.minWidth = StyleKeyword.Initial;
-            contentContainer.style.minHeight = StyleKeyword.Initial;
-            contentContainer.style.maxWidth = StyleKeyword.Initial;
-            contentContainer.style.maxHeight = StyleKeyword.Initial;
+            style.top = StyleKeyword.Initial;
+            style.right = StyleKeyword.Initial;
+            style.bottom = StyleKeyword.Initial;
+            style.left = StyleKeyword.Initial;
+            style.width = StyleKeyword.Initial;
+            style.height = StyleKeyword.Initial;
+            style.minWidth = StyleKeyword.Initial;
+            style.minHeight = StyleKeyword.Initial;
+            style.maxWidth = StyleKeyword.Initial;
+            style.maxHeight = StyleKeyword.Initial;
+        }
+
+        private float GetValueFromLength(StyleLength len, float fullSize)
+        {
+            var val = len.value.value;
+            if (len.value.unit == LengthUnit.Percent) val *= fullSize / 100;
+            return val;
         }
     }
 }

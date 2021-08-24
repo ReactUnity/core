@@ -11,14 +11,16 @@ namespace ReactUnity.Scheduling
             Dispatcher = dispatcher;
         }
 
-        public int setTimeout(Callback callback, int timeout)
+        public int setTimeout(object callback, double timeout)
         {
-            return Dispatcher.Timeout(() => callback.Call(), timeout / 1000f);
+            var cb = Callback.From(callback);
+            return Dispatcher.Timeout(() => cb.Call(), (float) timeout / 1000f);
         }
 
-        public int setInterval(Callback callback, int timeout)
+        public int setInterval(object callback, double timeout)
         {
-            return Dispatcher.Interval(() => callback.Call(), timeout / 1000f);
+            var cb = Callback.From(callback);
+            return Dispatcher.Interval(() => cb.Call(), (float) timeout / 1000f);
         }
 
         public void clearTimeout(int? handle)
@@ -31,15 +33,17 @@ namespace ReactUnity.Scheduling
             if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
         }
 
-        public int setImmediate(Callback callback)
+        public int setImmediate(object callback)
         {
-            return Dispatcher.Immediate(() => callback.Call());
+            var cb = Callback.From(callback);
+            return Dispatcher.Immediate(() => cb.Call());
         }
 
 
-        public int requestAnimationFrame(Callback callback)
+        public int requestAnimationFrame(object callback)
         {
-            return Dispatcher.AnimationFrame(() => callback.Call());
+            var cb = Callback.From(callback);
+            return Dispatcher.AnimationFrame(() => cb.Call());
         }
 
         public void cancelAnimationFrame(int? handle)

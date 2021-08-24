@@ -6,10 +6,10 @@ namespace ReactUnity.Scheduling
     [ExcludeFromCodeCoverage]
     public class NoScheduler : IScheduler
     {
-        public int setTimeout(Callback callback, int timeout) => -1;
-        public int setInterval(Callback callback, int timeout) => -1;
-        public int setImmediate(Callback callback) => -1;
-        public int requestAnimationFrame(Callback callback) => -1;
+        public int setTimeout(object callback, double timeout) => -1;
+        public int setInterval(object callback, double timeout) => -1;
+        public int setImmediate(object callback) => -1;
+        public int requestAnimationFrame(object callback) => -1;
         public void clearTimeout(int? handle) { }
         public void clearInterval(int? handle) { }
         public void clearImmediate(int? handle) { }
