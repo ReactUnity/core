@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI.Behaviours
 
         protected override void OnRectTransformDimensionsChange()
         {
-            MountedTo?.Relayout();
+            MountedTo?.Layout?.MarkDirty();
         }
 
         public virtual void Mount(PrefabComponent cmp)

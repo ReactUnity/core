@@ -138,8 +138,6 @@ namespace ReactUnity
 
         public override object GetComponent(Type type) { return null; }
 
-        public override void Relayout() { }
-
         protected override void ApplyLayoutStylesSelf() { }
 
         protected override void ApplyStylesSelf() { }

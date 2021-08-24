@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ReactUnity.Helpers
 {
@@ -17,6 +18,8 @@ namespace ReactUnity.Helpers
         internal virtual void OnAfterChange() { }
 
         #region Main Functions
+
+        public T[] GetArray() => original.ToArray();
 
         public bool Add(T item)
         {

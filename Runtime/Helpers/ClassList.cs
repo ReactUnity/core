@@ -9,11 +9,7 @@ namespace ReactUnity.Helpers
         private string name;
         public string Name
         {
-            get
-            {
-                if (name == null) name = string.Join(" ", this);
-                return name;
-            }
+            get => name ?? (name = string.Join(" ", this));
             set
             {
                 OnBeforeChange();

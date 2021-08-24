@@ -33,8 +33,6 @@ namespace ReactUnity
 
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);
-        void Relayout();
-
         void Update();
         void Accept(ReactComponentVisitor visitor);
         void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false);

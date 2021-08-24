@@ -63,7 +63,7 @@ namespace ReactUnity.UGUI
                 FireEvent("onMount", currentTarget);
             }
 
-            Relayout();
+            Layout?.MarkDirty();
         }
 
         void ResolveInstance()
