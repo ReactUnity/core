@@ -15,16 +15,16 @@ namespace ReactUnity.UIToolkit
                 case "vertical":
                     Element.direction = Convert.ToBoolean(value) ? SliderDirection.Vertical : SliderDirection.Horizontal;
                     break;
-#if UNITY_2021_1_OR_NEWER
                 case "inverted":
+#if UNITY_2021_1_OR_NEWER
                     Element.inverted = Convert.ToBoolean(value);
-                    break;
 #endif
-#if UNITY_2020_1_OR_NEWER
+                    break;
                 case "showInput":
+#if UNITY_2020_1_OR_NEWER
                     Element.showInputField = Convert.ToBoolean(value);
-                    break;
 #endif
+                    break;
                 case "step":
                     Element.pageSize = Convert.ToSingle(value);
                     break;

@@ -19,15 +19,19 @@ namespace ReactUnity.UIToolkit
 
         public override void SetProperty(string property, object value)
         {
+            if (property == "displayTooltipWhenElided")
+            {
 #if UNITY_2020_1_OR_NEWER
-            if (property == "displayTooltipWhenElided") Element.displayTooltipWhenElided = Convert.ToBoolean(value);
+                Element.displayTooltipWhenElided = Convert.ToBoolean(value);
+#endif
+            }
+            else if (property == "richText")
+            {
 #if UNITY_2021_1_OR_NEWER
-            else if (property == "richText") Element.enableRichText = Convert.ToBoolean(value);
+                Element.enableRichText = Convert.ToBoolean(value);
 #endif
+            }
             else base.SetProperty(property, value);
-#else
-            base.SetProperty(property, value);
-#endif
         }
     }
 }

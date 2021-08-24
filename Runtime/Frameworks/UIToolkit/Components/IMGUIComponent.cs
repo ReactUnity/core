@@ -12,12 +12,13 @@ namespace ReactUnity.UIToolkit
 
         public override void SetProperty(string property, object value)
         {
+            if (property == "cullingEnabled")
+            {
 #if UNITY_2020_1_OR_NEWER
-            if (property == "cullingEnabled") Element.cullingEnabled = Convert.ToBoolean(value);
-            else base.SetProperty(property, value);
-#else
-            base.SetProperty(property, value);
+                Element.cullingEnabled = Convert.ToBoolean(value);
 #endif
+            }
+            else base.SetProperty(property, value);
         }
 
         public void MarkDirtyLayout()

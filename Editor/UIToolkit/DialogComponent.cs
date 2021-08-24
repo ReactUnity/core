@@ -84,6 +84,20 @@ namespace ReactUnity.Editor.UIToolkit
         public event Action<DialogWindow> OnSelectionChanged;
         public event Action<DialogWindow, bool> OnVisibilityChange;
 
+        public bool Docked
+        {
+            get
+            {
+#if UNITY_2020_1_OR_NEWER
+                return docked;
+#else
+                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+                var method = GetType().GetProperty("docked", flags).GetGetMethod(true);
+                return (bool) method.Invoke(this, null);
+#endif
+            }
+        }
+
         public static DialogWindow Create()
         {
             return CreateWindow<DialogWindow>();
@@ -284,7 +298,7 @@ namespace ReactUnity.Editor.UIToolkit
 
             var style = contentContainer.style;
 
-            if (!window.docked)
+            if (!window.Docked)
             {
                 var scw = Screen.currentResolution.width / EditorGUIUtility.pixelsPerPoint;
                 var sch = Screen.currentResolution.height / EditorGUIUtility.pixelsPerPoint;

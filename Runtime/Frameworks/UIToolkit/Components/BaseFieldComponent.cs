@@ -5,11 +5,19 @@ namespace ReactUnity.UIToolkit
 {
     public class BaseFieldComponent<TElementType, TValueType> : ValueComponent<TElementType, TValueType> where TElementType : BaseField<TValueType>, new()
     {
+#if UNITY_2021_1_OR_NEWER
         public bool Indeterminate
         {
             get => Element.showMixedValue;
             set => Element.showMixedValue = value;
         }
+#else
+        public bool Indeterminate
+        {
+            get => false;
+            set { }
+        }
+#endif
 
         public BaseFieldComponent(UIToolkitContext context, string tag) : base(context, tag)
         {

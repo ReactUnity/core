@@ -25,3 +25,7 @@
   flex-grow: 1;
   margin-bottom: 1px;
 }
+
+.unity-base-text-field__input {
+  -unity-text-align: upper-left;
+}

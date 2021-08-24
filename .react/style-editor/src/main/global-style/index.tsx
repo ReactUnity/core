@@ -30,11 +30,11 @@ export function GlobalStyle() {
 
   const inputRef = useRef<ReactUnity.UIToolkit.TextFieldComponent>();
 
-  const save: EditorElements['button']['onClick'] = () => {
+  const save: EditorElements['button']['onButtonClick'] = () => {
     setSavedInput(inputRef.current.Value);
   };
 
-  const cancel: EditorElements['button']['onClick'] = () => {
+  const cancel: EditorElements['button']['onButtonClick'] = () => {
     inputRef.current.Value = savedInput;
     setShow(false);
   };
@@ -42,15 +42,24 @@ export function GlobalStyle() {
   const keyup: EditorElements['input']['onKeyDown'] = (ev) => {
     if (ev.ctrlKey &&
       (ev.keyCode === Interop.UnityEngine.KeyCode.Return ||
-        ev.keyCode === Interop.UnityEngine.KeyCode.KeypadEnter))
-      save(null, null);
-    else if (ev.keyCode === Interop.UnityEngine.KeyCode.Escape) cancel(null, null);
+        ev.keyCode === Interop.UnityEngine.KeyCode.KeypadEnter)) {
+      ev.PreventDefault();
+      ev.StopImmediatePropagation();
+      ev.StopPropagation();
+      save(null);
+    }
+    else if (ev.keyCode === Interop.UnityEngine.KeyCode.Escape) {
+      ev.PreventDefault();
+      ev.StopImmediatePropagation();
+      ev.StopPropagation();
+      cancel(null);
+    }
   };
 
   const closeCallback = useCallback(() => setShow(false), []);
 
   return <view className={style.host}>
-    <button onClick={() => setShow(x => !x)}>Edit Global Styles</button>
+    <button onButtonClick={() => setShow(x => !x)}>Edit Global Styles</button>
 
     <dialog show={show} onClose={closeCallback} title="Global Styles" className={style.dialog}>
       <scroll className={style.scroll}>
@@ -58,8 +67,8 @@ export function GlobalStyle() {
       </scroll>
 
       <view className={style.actions}>
-        <button onClick={cancel}>Cancel (Esc)</button>
-        <button onClick={save}>Save (Ctrl + Enter)</button>
+        <button onButtonClick={cancel}>Cancel (Esc)</button>
+        <button onButtonClick={save}>Save (Ctrl + Enter)</button>
       </view>
     </dialog>
   </view>;
