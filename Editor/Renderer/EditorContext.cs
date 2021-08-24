@@ -50,6 +50,7 @@ namespace ReactUnity.Editor.Renderer
                 { "tb-search", (tag, text, context) => new UIToolkitComponent<ToolbarSearchField>(context, tag) }, // TODO
                 { "tb-spacer", (tag, text, context) => new UIToolkitComponent<ToolbarSpacer>(context, tag) },
                 { "tb-toggle", (tag, text, context) => new ToggleComponent<ToolbarToggle>(context, tag) },
+                { "dialog", (tag, text, context) => new DialogComponent(context, tag) },
             };
 
         public EditorContext(

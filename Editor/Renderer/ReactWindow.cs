@@ -133,7 +133,7 @@ namespace ReactUnity.Editor.Renderer
 
         protected void OnBecameInvisible()
         {
-            VisibilityChange?.Invoke(true, this);
+            VisibilityChange?.Invoke(false, this);
         }
 
         public Action AddSelectionChange(object cb)
