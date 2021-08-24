@@ -25,7 +25,7 @@ export interface UIToolkitElements {
   scroll: BaseElement;
   image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
   toggle: Components.Toggle & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
-  input: BaseFieldElementSimple<string>;
+  input: Components.TextField<Cmp.TextFieldComponent> & rc.RefAttributes<Cmp.TextFieldComponent> & Children<never>;
   helpbox: BaseElement;
   foldout: BaseElement;
   popup: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;

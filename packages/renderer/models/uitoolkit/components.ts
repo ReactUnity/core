@@ -34,6 +34,19 @@ export interface ValueComponent<T, TSender = BaseCmp> extends Bindable<TSender> 
 
 export interface BaseField<T, TSender = BaseCmp> extends ValueComponent<T, TSender> {
   label?: string;
+  indeterminate?: boolean;
+}
+
+export interface StringField<TSender = BaseCmp> extends BaseField<string, TSender> {
+  readOnly?: boolean;
+  maskChar?: string;
+  maxLength?: number;
+  password?: boolean;
+  delayed?: boolean;
+}
+
+export interface TextField<TSender = Cmp.TextFieldComponent> extends StringField<TSender> {
+  multiline?: boolean;
 }
 
 export interface BaseSlider<T, TSender = Cmp.BaseSliderComponent<Slider, any>> extends BaseField<T, TSender> {
