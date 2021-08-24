@@ -237,6 +237,7 @@ namespace ReactUnity
 
         public virtual void ResolveStyle(bool recursive = false)
         {
+            if (Destroyed) return;
             markedStyleResolve = false;
             markedStyleResolveRecursive = false;
 

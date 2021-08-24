@@ -81,7 +81,7 @@ namespace ReactUnity.UGUI
         public override void DestroySelf()
         {
             base.DestroySelf();
-            GameObject.DestroyImmediate(GameObject);
+            GameObject.Destroy(GameObject);
         }
 
         #region Setters

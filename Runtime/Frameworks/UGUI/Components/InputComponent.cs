@@ -117,6 +117,7 @@ namespace ReactUnity.UGUI
 
         public override void ResolveStyle(bool recursive = false)
         {
+            if (Destroyed) return;
             base.ResolveStyle(recursive);
 
             var c = TextComponent.ComputedStyle.color;

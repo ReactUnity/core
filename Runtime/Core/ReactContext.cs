@@ -140,6 +140,7 @@ namespace ReactUnity
 
         public void Dispose()
         {
+            Host.DestroySelf();
             Dispatcher?.Dispose();
             foreach (var item in Disposables) item?.Dispose();
         }
