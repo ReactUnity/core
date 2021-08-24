@@ -7,11 +7,13 @@ import { useSelection } from '../../context/selection';
 import { useStyleContext } from '../../context/style';
 import style from './index.module.scss';
 
-export function GroupedStyles() {
+export function GroupedStyles({ showShowAll }: { showShowAll?: boolean }) {
   const [showAll, setShowAll] = useState(true);
 
   return <scroll className={style.styles}>
-    <toggle label="Show All" value={showAll} onChange={ev => setShowAll(ev.newValue)} className={style.showAllButton} />
+    {!!showShowAll &&
+      <toggle label="Show All" value={showAll}
+        onChange={ev => setShowAll(ev.newValue)} className={style.showAllButton} />}
 
     {showAll ?
       styleProps.map((x, i) => <Group group={x} key={i} />) :

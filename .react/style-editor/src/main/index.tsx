@@ -1,14 +1,19 @@
 import { Renderer } from '@reactunity/renderer';
 import { SelectionProvider, useSelection } from '../context/selection';
 import { StyleContext } from '../context/style';
+import { Classes } from './classes';
+import { GlobalStyle } from './global-style';
 import { GroupedStyles } from './grouped-styles';
 import style from './index.module.scss';
 
 function App() {
   const selection = useSelection();
   return <view className={style.host}>
-    {selection ?
-      <GroupedStyles /> :
+    {selection ? <>
+      <GlobalStyle />
+      <Classes />
+      <GroupedStyles />
+    </> :
       <NotSelectedView />}
   </view>;
 }

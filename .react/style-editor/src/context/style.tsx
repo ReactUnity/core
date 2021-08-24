@@ -5,6 +5,7 @@ type Cmp = ReactUnity.IReactComponent;
 type Styles = Record<string, object>;
 
 export interface ContextType {
+  getElementId(cmp: Cmp): number;
   getStyles(cmp: Cmp): Styles;
   setProp(el: Cmp, prop: string, value: any): void;
   removeProp(el: Cmp, prop: string): void;
@@ -99,6 +100,7 @@ export function StyleContext({ children }) {
       const ind = findElementId(state.current, el);
       return state.current[ind].styles;
     },
+    getElementId: (el: Cmp) => findElementId(state.current, el),
   }), []);
 
   return <styleContext.Provider value={ctx}>

@@ -8,7 +8,7 @@ export function BoxShadowField({ className, label, onChange, value }: StylePropC
   const offsetRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
   const spreadRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
   const colorRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Color>>();
-  const insetRef = useRef<RU.UIToolkit.BaseFieldComponent<any, boolean>>();
+  const insetRef = useRef<RU.UIToolkit.ToggleComponent>();
 
   const changed = () => {
     const blur = blurRef.current.Element.value;

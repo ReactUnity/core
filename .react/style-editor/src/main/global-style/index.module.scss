@@ -1,0 +1,13 @@
+.host {
+  flex-shrink: 0;
+  padding: 16px;
+}
+
+.scroll {
+  flex-grow: 1;
+}
+
+.input {
+  flex-grow: 1;
+  min-height: 100%;
+}
