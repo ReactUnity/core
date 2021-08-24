@@ -24,6 +24,8 @@ namespace ReactUnity.Editor.UIToolkit
             set => Element.Title = value;
         }
 
+        public override VisualElement TargetElement => Element.contentContainer;
+
         private bool shown;
         public bool Show
         {
@@ -51,9 +53,6 @@ namespace ReactUnity.Editor.UIToolkit
 
         public DialogComponent(EditorContext context, string tag = "dialog") : base(context, tag)
         {
-            Style[StyleProperties.position] = PositionType.Absolute;
-            Style[LayoutProperties.Display] = Facebook.Yoga.YogaDisplay.None;
-
             Element.OnOpen += OnOpen;
             Element.OnClose += OnClose;
             Element.OnSelectionChanged += OnSelectionChange;
@@ -212,9 +211,8 @@ namespace ReactUnity.Editor.UIToolkit
 
         public DialogElement()
         {
+            style.display = DisplayStyle.None;
             contentContainer = new VisualElement();
-            contentContainer.style.width = Length.Percent(100);
-            contentContainer.style.height = Length.Percent(100);
         }
 
         private DialogWindow CreateWindow()

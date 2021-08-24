@@ -26,6 +26,7 @@ namespace ReactUnity
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
 
+        public bool Destroyed { get; private set; }
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
@@ -90,6 +91,7 @@ namespace ReactUnity
 
         public virtual void Update()
         {
+            if (Destroyed) return;
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();
@@ -120,6 +122,7 @@ namespace ReactUnity
 
         public virtual void DestroySelf()
         {
+            Destroyed = true;
         }
 
         public void Destroy()

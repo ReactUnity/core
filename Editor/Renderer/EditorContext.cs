@@ -53,12 +53,18 @@ namespace ReactUnity.Editor.Renderer
                 { "dialog", (tag, text, context) => new DialogComponent(context, tag) },
             };
 
+
+        private static TextAsset useragentStylesheet;
+        public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/editor/useragent");
+
         public EditorContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart = null
         ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart)
         {
+            InsertStyle(UseragentStylesheet?.text, -1);
+            Host.ResolveStyle(true);
         }
 
         public override IReactComponent CreateComponent(string tag, string text)
@@ -66,7 +72,6 @@ namespace ReactUnity.Editor.Renderer
             if (!ComponentCreators.TryGetValue(tag, out var creator)) return base.CreateComponent(tag, text);
 
             IUIToolkitComponent<VisualElement> res = creator(tag, text, this);
-            if (res.Element != null) res.Element.name = $"<{tag}>";
             return res;
         }
 

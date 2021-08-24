@@ -92,7 +92,6 @@ namespace ReactUnity.UIToolkit
         {
             var tc = new TextComponent<TextElement>("", this, tag, false);
             tc.IsPseudoElement = true;
-            tc.Element.name = tag;
             return tc;
         }
 

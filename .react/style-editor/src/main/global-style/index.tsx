@@ -52,7 +52,7 @@ export function GlobalStyle() {
   return <view className={style.host}>
     <button onClick={() => setShow(x => !x)}>Edit Global Styles</button>
 
-    <dialog show={show} onClose={closeCallback} title="Global Styles">
+    <dialog show={show} onClose={closeCallback} title="Global Styles" className={style.dialog}>
       <scroll className={style.scroll}>
         <input className={style.input} value={savedInput} ref={inputRef} multiline onKeyUp={keyup} />
       </scroll>

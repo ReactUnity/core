@@ -16,11 +16,13 @@ namespace ReactUnity.UIToolkit
     public interface IUIToolkitComponent<out T> : IReactComponent where T : VisualElement, new()
     {
         T Element { get; }
+        VisualElement TargetElement { get; }
     }
 
     public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
+        public virtual VisualElement TargetElement => Element;
         public override string Name
         {
             get => Element.name;
@@ -49,112 +51,112 @@ namespace ReactUnity.UIToolkit
         protected override void ApplyLayoutStylesSelf()
         {
             var computed = ComputedStyle;
-            Element.style.flexDirection = StylingHelpers.GetStyleEnumCustom<FlexDirection>(computed, LayoutProperties.FlexDirection);
-            Element.style.flexWrap = StylingHelpers.GetStyleEnumCustom<Wrap>(computed, LayoutProperties.Wrap);
-            Element.style.flexGrow = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexGrow);
-            Element.style.flexShrink = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexShrink);
+            TargetElement.style.flexDirection = StylingHelpers.GetStyleEnumCustom<FlexDirection>(computed, LayoutProperties.FlexDirection);
+            TargetElement.style.flexWrap = StylingHelpers.GetStyleEnumCustom<Wrap>(computed, LayoutProperties.Wrap);
+            TargetElement.style.flexGrow = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexGrow);
+            TargetElement.style.flexShrink = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexShrink);
 
-            Element.style.width = StylingHelpers.GetStyleLength(computed, LayoutProperties.Width);
-            Element.style.height = StylingHelpers.GetStyleLength(computed, LayoutProperties.Height);
-            Element.style.flexBasis = StylingHelpers.GetStyleLength(computed, LayoutProperties.FlexBasis);
+            TargetElement.style.width = StylingHelpers.GetStyleLength(computed, LayoutProperties.Width);
+            TargetElement.style.height = StylingHelpers.GetStyleLength(computed, LayoutProperties.Height);
+            TargetElement.style.flexBasis = StylingHelpers.GetStyleLength(computed, LayoutProperties.FlexBasis);
 
-            Element.style.minWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinWidth);
-            Element.style.minHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinHeight);
-            Element.style.maxWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxWidth);
-            Element.style.maxHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxHeight);
+            TargetElement.style.minWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinWidth);
+            TargetElement.style.minHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinHeight);
+            TargetElement.style.maxWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxWidth);
+            TargetElement.style.maxHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxHeight);
 
-            Element.style.paddingBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingBottom, LayoutProperties.Padding);
-            Element.style.paddingTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingTop, LayoutProperties.Padding);
-            Element.style.paddingLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
-            Element.style.paddingRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingRight, LayoutProperties.Padding);
+            TargetElement.style.paddingBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingBottom, LayoutProperties.Padding);
+            TargetElement.style.paddingTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingTop, LayoutProperties.Padding);
+            TargetElement.style.paddingLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
+            TargetElement.style.paddingRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.PaddingRight, LayoutProperties.Padding);
 
-            Element.style.marginBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginBottom, LayoutProperties.Margin);
-            Element.style.marginTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginTop, LayoutProperties.Margin);
-            Element.style.marginLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginLeft, LayoutProperties.Margin);
-            Element.style.marginRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginRight, LayoutProperties.Margin);
+            TargetElement.style.marginBottom = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginBottom, LayoutProperties.Margin);
+            TargetElement.style.marginTop = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginTop, LayoutProperties.Margin);
+            TargetElement.style.marginLeft = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginLeft, LayoutProperties.Margin);
+            TargetElement.style.marginRight = StylingHelpers.GetStyleLengthDouble(computed, LayoutProperties.MarginRight, LayoutProperties.Margin);
 
-            Element.style.left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
-            Element.style.right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
-            Element.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
-            Element.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+            TargetElement.style.left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
+            TargetElement.style.right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
+            TargetElement.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            TargetElement.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
-            Element.style.borderLeftWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
-            Element.style.borderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
-            Element.style.borderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
-            Element.style.borderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
+            TargetElement.style.borderLeftWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+            TargetElement.style.borderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+            TargetElement.style.borderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
+            TargetElement.style.borderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
-            Element.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
+            TargetElement.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
 
             var pos = computed.position;
-            Element.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;
-            Element.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
+            TargetElement.style.position = pos == PositionType.Relative ? Position.Relative : Position.Absolute;
+            TargetElement.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(computed, LayoutProperties.Overflow);
 
-            Element.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignContent);
-            Element.style.alignItems = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignItems);
-            Element.style.alignSelf = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignSelf);
-            Element.style.justifyContent = StylingHelpers.GetStyleEnumCustom<Justify>(computed, LayoutProperties.JustifyContent);
+            TargetElement.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignContent);
+            TargetElement.style.alignItems = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignItems);
+            TargetElement.style.alignSelf = StylingHelpers.GetStyleEnumCustom<Align>(computed, LayoutProperties.AlignSelf);
+            TargetElement.style.justifyContent = StylingHelpers.GetStyleEnumCustom<Justify>(computed, LayoutProperties.JustifyContent);
         }
 
         protected override void ApplyStylesSelf()
         {
             var computed = ComputedStyle;
-            Element.style.backgroundColor = StylingHelpers.GetStyleColor(computed, StyleProperties.backgroundColor);
-            Element.style.color = StylingHelpers.GetStyleColor(computed, StyleProperties.color);
+            TargetElement.style.backgroundColor = StylingHelpers.GetStyleColor(computed, StyleProperties.backgroundColor);
+            TargetElement.style.color = StylingHelpers.GetStyleColor(computed, StyleProperties.color);
 #if UNITY_2020_1_OR_NEWER
-            Element.style.textOverflow = StylingHelpers.GetStyleEnumCustom<TextOverflow>(computed, StyleProperties.textOverflow);
+            TargetElement.style.textOverflow = StylingHelpers.GetStyleEnumCustom<TextOverflow>(computed, StyleProperties.textOverflow);
 #endif
-            Element.style.visibility = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
-            Element.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
-            Element.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
+            TargetElement.style.visibility = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
+            TargetElement.style.opacity = StylingHelpers.GetStyleFloat(computed, StyleProperties.opacity);
+            TargetElement.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(computed, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
 
-            if (computed.HasValue(StyleProperties.fontSize)) Element.style.fontSize = computed.fontSize;
-            else Element.style.fontSize = StyleKeyword.Null;
+            if (computed.HasValue(StyleProperties.fontSize)) TargetElement.style.fontSize = computed.fontSize;
+            else TargetElement.style.fontSize = StyleKeyword.Null;
 
-            Element.style.borderBottomLeftRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderBottomLeftRadius);
-            Element.style.borderBottomRightRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderBottomRightRadius);
-            Element.style.borderTopLeftRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderTopLeftRadius);
-            Element.style.borderTopRightRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderTopRightRadius);
+            TargetElement.style.borderBottomLeftRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderBottomLeftRadius);
+            TargetElement.style.borderBottomRightRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderBottomRightRadius);
+            TargetElement.style.borderTopLeftRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderTopLeftRadius);
+            TargetElement.style.borderTopRightRadius = StylingHelpers.GetStyleBorderRadius(computed, StyleProperties.borderTopRightRadius);
 
-            Element.style.borderBottomColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderBottomColor);
-            Element.style.borderTopColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderTopColor);
-            Element.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderLeftColor);
-            Element.style.borderRightColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderRightColor);
+            TargetElement.style.borderBottomColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderBottomColor);
+            TargetElement.style.borderTopColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderTopColor);
+            TargetElement.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderLeftColor);
+            TargetElement.style.borderRightColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderRightColor);
 
-            if (computed.HasValue(StyleProperties.backgroundImage)) computed.backgroundImage?.Get(Context, tx => Element.style.backgroundImage = tx);
-            else Element.style.backgroundImage = StyleKeyword.Null;
+            if (computed.HasValue(StyleProperties.backgroundImage)) computed.backgroundImage?.Get(Context, tx => TargetElement.style.backgroundImage = tx);
+            else TargetElement.style.backgroundImage = StyleKeyword.Null;
 
             if (computed.HasValue(StyleProperties.fontStyle) || computed.HasValue(StyleProperties.fontWeight))
-                Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(computed.fontStyle, computed.fontWeight);
-            else Element.style.unityFontStyleAndWeight = StyleKeyword.Null;
+                TargetElement.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(computed.fontStyle, computed.fontWeight);
+            else TargetElement.style.unityFontStyleAndWeight = StyleKeyword.Null;
 
 
             if (computed.HasValue(StyleProperties.backgroundImage) && computed.HasValue(StyleProperties.backgroundColor))
-                Element.style.unityBackgroundImageTintColor = computed.backgroundColor;
-            else Element.style.unityBackgroundImageTintColor = StyleKeyword.Null;
+                TargetElement.style.unityBackgroundImageTintColor = computed.backgroundColor;
+            else TargetElement.style.unityBackgroundImageTintColor = StyleKeyword.Null;
 
 
             if (computed.HasValue(StyleProperties.textAlign))
             {
-                if (StylingHelpers.TextAlignMap.TryGetValue(computed.textAlign, out var value)) Element.style.unityTextAlign = value;
-                else Element.style.unityTextAlign = TextAnchor.MiddleCenter;
+                if (StylingHelpers.TextAlignMap.TryGetValue(computed.textAlign, out var value)) TargetElement.style.unityTextAlign = value;
+                else TargetElement.style.unityTextAlign = TextAnchor.MiddleCenter;
             }
-            else Element.style.unityTextAlign = StyleKeyword.Null;
+            else TargetElement.style.unityTextAlign = StyleKeyword.Null;
 
 
             if (computed.HasValue(StyleProperties.fontFamily))
             {
                 if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x => {
-                    if (x?.Font != null) Element.style.unityFont = x?.Font;
+                    if (x?.Font != null) TargetElement.style.unityFont = x?.Font;
 #if REACT_TEXTCORE
-                    else if (x?.TextCoreFontAsset != null) Element.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                    else if (x?.TextCoreFontAsset != null) TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
 #endif
 #if REACT_TMP
-                    else if (x?.TmpFontAsset != null) Element.style.unityFont = x?.TmpFontAsset?.sourceFontFile;
+                    else if (x?.TmpFontAsset != null) TargetElement.style.unityFont = x?.TmpFontAsset?.sourceFontFile;
 #endif
-                    else Element.style.unityFont = ResourcesHelper.DefaultFont;
+                    else TargetElement.style.unityFont = ResourcesHelper.DefaultFont;
                 });
             }
-            else Element.style.unityFont = StyleKeyword.Null;
+            else TargetElement.style.unityFont = StyleKeyword.Null;
 
 
             if (computed.HasValue(StyleProperties.cursor))
@@ -164,35 +166,35 @@ namespace ReactUnity.UIToolkit
                 {
                     if (currentCursor != null)
                     {
-                        Element.RemoveFromClassList(currentCursor);
+                        TargetElement.RemoveFromClassList(currentCursor);
                         currentCursor = null;
                     }
                     if (cursor != null)
                     {
                         currentCursor = cursor;
-                        Element.AddToClassList(currentCursor);
+                        TargetElement.AddToClassList(currentCursor);
                     }
                 }
             }
             else if (currentCursor != null)
             {
-                Element.RemoveFromClassList(currentCursor);
+                TargetElement.RemoveFromClassList(currentCursor);
                 currentCursor = null;
             }
 
             // Transforms
 
-            if (computed.HasValue(StyleProperties.scale)) Element.transform.scale = new Vector3(computed.scale.x, computed.scale.y, 1);
-            else Element.transform.scale = Vector3.one;
+            if (computed.HasValue(StyleProperties.scale)) TargetElement.transform.scale = new Vector3(computed.scale.x, computed.scale.y, 1);
+            else TargetElement.transform.scale = Vector3.one;
 
-            if (computed.HasValue(StyleProperties.rotate)) Element.transform.rotation = Quaternion.Euler(computed.rotate);
-            else Element.transform.rotation = Quaternion.identity;
+            if (computed.HasValue(StyleProperties.rotate)) TargetElement.transform.rotation = Quaternion.Euler(computed.rotate);
+            else TargetElement.transform.rotation = Quaternion.identity;
 
 
 
             Vector3 translate;
 
-            var size = Element.layout.size;
+            var size = TargetElement.layout.size;
             var rect = new Vector2(float.IsNaN(size.x) ? 0 : size.x, float.IsNaN(size.y) ? 0 : size.y);
 
             if (computed.HasValue(StyleProperties.translate))
@@ -215,29 +217,29 @@ namespace ReactUnity.UIToolkit
                 var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
                 var pivot = new Vector3(pivotX, 1 - pivotY, 0);
 
-                if (pivot == Vector3.zero) Element.transform.position = translate;
+                if (pivot == Vector3.zero) TargetElement.transform.position = translate;
                 else
                 {
                     Vector3 deltaPosition = -pivot;    // get change in pivot
                     deltaPosition.Scale(rect);           // apply sizing
-                    deltaPosition.Scale(Element.transform.scale);          // apply scaling
-                    deltaPosition = Element.transform.rotation * deltaPosition; // apply rotation
+                    deltaPosition.Scale(TargetElement.transform.scale);          // apply scaling
+                    deltaPosition = TargetElement.transform.rotation * deltaPosition; // apply rotation
 
                     var counter = new Vector3(pivot.x, pivot.y, 0);
                     counter.Scale(rect);
 
                     var pos = deltaPosition + translate + counter;
-                    Element.transform.position = new Vector3(pos.x, pos.y, 0);
+                    TargetElement.transform.position = new Vector3(pos.x, pos.y, 0);
                 }
 
 #if UNITY_2021_2_OR_NEWER
                 // TODO: Versions before 2021.2 does not have this property, so we need the above hack
                 // But using the official way should be faster to use for >2021.2
                 // So we should write a separate logic for before 2021.2 and after
-                Element.style.transformOrigin = new TransformOrigin(0, 0, 0);
+                TargetElement.style.transformOrigin = new TransformOrigin(0, 0, 0);
 #endif
             }
-            else Element.transform.position = translate;
+            else TargetElement.transform.position = translate;
         }
 
         public override void DestroySelf()
@@ -310,7 +312,7 @@ namespace ReactUnity.UIToolkit
             var instance = Activator.CreateInstance(type);
             if (instance is IManipulator m)
             {
-                Element.AddManipulator(m);
+                TargetElement.AddManipulator(m);
                 Manipulators[type] = m;
             }
 
@@ -344,17 +346,17 @@ namespace ReactUnity.UIToolkit
 
         public void CaptureMouse()
         {
-            MouseCaptureController.CaptureMouse(Element);
+            MouseCaptureController.CaptureMouse(TargetElement);
         }
 
         public void ReleaseMouse()
         {
-            MouseCaptureController.ReleaseMouse(Element);
+            MouseCaptureController.ReleaseMouse(TargetElement);
         }
 
         public bool HasMouseCapture()
         {
-            return MouseCaptureController.HasMouseCapture(Element);
+            return MouseCaptureController.HasMouseCapture(TargetElement);
         }
 
         public class UITClassList : ClassList
@@ -369,27 +371,27 @@ namespace ReactUnity.UIToolkit
             internal override void OnAdd(string item)
             {
                 base.OnAdd(item);
-                Component.Element.AddToClassList(item);
+                Component.TargetElement.AddToClassList(item);
             }
 
             internal override void OnRemove(string item)
             {
                 base.OnRemove(item);
-                Component.Element.RemoveFromClassList(item);
+                Component.TargetElement.RemoveFromClassList(item);
             }
 
             internal override void OnBeforeChange()
             {
                 base.OnBeforeChange();
                 foreach (var item in Component.ClassList)
-                    Component.Element.RemoveFromClassList(item);
+                    Component.TargetElement.RemoveFromClassList(item);
             }
 
             internal override void OnAfterChange()
             {
                 base.OnAfterChange();
                 foreach (var item in Component.ClassList)
-                    Component.Element.AddToClassList(item);
+                    Component.TargetElement.AddToClassList(item);
             }
         }
     }
