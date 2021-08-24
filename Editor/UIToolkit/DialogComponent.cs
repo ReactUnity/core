@@ -199,21 +199,30 @@ namespace ReactUnity.Editor.UIToolkit
             }
         }
 
+        private string title;
         public string Title
         {
-            get => Window.titleContent.text;
-            set => Window.titleContent = new GUIContent(value);
+            get => title;
+            set
+            {
+                title = value;
+                if (Window != null) Window.titleContent = new GUIContent(title);
+            }
         }
 
         public DialogElement()
         {
             contentContainer = new VisualElement();
+            contentContainer.style.width = Length.Percent(100);
+            contentContainer.style.height = Length.Percent(100);
         }
 
         private DialogWindow CreateWindow()
         {
             var window = DialogWindow.Create();
             window.name = Name;
+            window.titleContent = new GUIContent(title);
+            window.rootVisualElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
             window.rootVisualElement.Add(contentContainer);
             return window;
         }

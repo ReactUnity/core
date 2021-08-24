@@ -20,3 +20,8 @@
 
 .react-unity__field__inline .unity-base-field__label { min-width: auto; }
 .react-unity__field__no-grow .unity-base-field__input { flex-grow: 0; }
+
+.unity-scroll-view__content-container {
+  flex-grow: 1;
+  margin-bottom: 1px;
+}

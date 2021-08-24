@@ -29,7 +29,7 @@ namespace ReactUnity.UIToolkit
                 { "toggle", (tag, text, context) => new ToggleComponent<Toggle>(context, tag) },
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
                 { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
-                { "input", (tag, text, context) => new BaseFieldComponent<TextField, string>(context, tag) }, // TODO
+                { "input", (tag, text, context) => new TextFieldComponent(context, tag) },
                 { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
 #if UNITY_2020_1_OR_NEWER
                 { "helpbox", (tag, text, context) => new UIToolkitComponent<HelpBox>(context, tag) }, // TODO

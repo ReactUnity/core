@@ -332,8 +332,12 @@ namespace ReactUnity.UIToolkit
         {
             if (child is IUIToolkitComponent<VisualElement> u)
             {
-                Element.Remove(u.Element);
-                return true;
+                if (u.Element.parent == Element)
+                {
+                    Element.Remove(u.Element);
+                    return true;
+                }
+                return false;
             }
             return false;
         }

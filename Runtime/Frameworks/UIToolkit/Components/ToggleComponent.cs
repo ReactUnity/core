@@ -2,10 +2,16 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class ToggleComponent<T> : BaseFieldComponent<T, bool> where T : Toggle, new()
+    public class ToggleComponent<T> : BaseFieldComponent<T, bool>, IToggleComponent where T : Toggle, new()
     {
         public ToggleComponent(UIToolkitContext context, string tag) : base(context, tag)
         { }
+
+        public bool Checked
+        {
+            get => Value;
+            set => Value = value;
+        }
 
         public override void SetProperty(string property, object value)
         {

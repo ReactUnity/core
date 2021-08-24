@@ -8,8 +8,20 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class ValueComponent<TElementType, TValueType> : BindableComponent<TElementType> where TElementType : VisualElement, IBindable, INotifyValueChanged<TValueType>, new()
+    public class ValueComponent<TElementType, TValueType> : BindableComponent<TElementType>, IActivatableComponent where TElementType : VisualElement, IBindable, INotifyValueChanged<TValueType>, new()
     {
+        public bool Disabled
+        {
+            get => !Element.enabledSelf;
+            set => Element.SetEnabled(!value);
+        }
+
+        public TValueType Value
+        {
+            get => Element.value;
+            set => Element.SetValueWithoutNotify(value);
+        }
+
         public ValueComponent(UIToolkitContext context, string tag) : base(context, tag)
         {
         }
@@ -29,7 +41,7 @@ namespace ReactUnity.UIToolkit
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "value") Element.SetValueWithoutNotify(ConvertValue(value));
+            if (property == "value") Value = ConvertValue(value);
             else base.SetProperty(property, value);
         }
 
@@ -51,6 +63,11 @@ namespace ReactUnity.UIToolkit
         public void SetValueWithoutNotify(TValueType value)
         {
             Element.SetValueWithoutNotify(value);
+        }
+
+        public void Activate()
+        {
+            Element.Focus();
         }
     }
 }
