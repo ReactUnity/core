@@ -9,14 +9,20 @@ namespace ReactUnity.Editor.UIToolkit
 {
     public class ReactUnityEditorElement : ReactUnityElement
     {
-        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+        public ReactWindow Window { get; internal set; }
+        public ReactInspector Inspector { get; internal set; }
+        public ReactProperty Property { get; internal set; }
+
+        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = false)
             : base(script, globals, timer, mediaProvider, engineType, debug, awaitDebugger, autorun)
         {
         }
 
         protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
-            return new EditorContext(this, Globals, script, dispatcher, Timer ?? EditorTimer.Instance, MediaProvider, isDevServer, Restart);
+            var ctx = new EditorContext(this, Globals, script, dispatcher, Timer ?? EditorTimer.Instance, MediaProvider, isDevServer, Restart, Window, Inspector, Property);
+            ctx.Initialize();
+            return ctx;
         }
 
         protected override IDispatcher CreateDispatcher() => new EditorDispatcher();

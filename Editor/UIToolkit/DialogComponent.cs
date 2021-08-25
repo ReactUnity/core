@@ -84,20 +84,6 @@ namespace ReactUnity.Editor.UIToolkit
         public event Action<DialogWindow> OnSelectionChanged;
         public event Action<DialogWindow, bool> OnVisibilityChange;
 
-        public bool Docked
-        {
-            get
-            {
-#if UNITY_2020_1_OR_NEWER
-                return docked;
-#else
-                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
-                var method = GetType().GetProperty("docked", flags).GetGetMethod(true);
-                return (bool) method.Invoke(this, null);
-#endif
-            }
-        }
-
         public static DialogWindow Create()
         {
             return CreateWindow<DialogWindow>();
@@ -295,30 +281,43 @@ namespace ReactUnity.Editor.UIToolkit
             Show(Type);
         }
 
-        public void ResolveStyle()
+        public void ResolveStyle() => ResolveStyle(Context, Window, contentContainer.style);
+
+        public static void ResolveStyle(EditorContext context, EditorWindow window, IStyle style)
         {
-            var window = Window;
-            if (window == null) return;
+            if (!window) return;
 
-            var style = contentContainer.style;
+            bool isDocked()
+            {
+#if UNITY_2020_1_OR_NEWER
+                return window.docked;
+#else
+                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+                var method = typeof(EditorWindow).GetProperty("docked", flags).GetGetMethod(true);
+                return (bool) method.Invoke(window, null);
+#endif
+            };
 
-            if (!window.Docked)
+            if (!isDocked())
             {
                 var scw = Screen.currentResolution.width / EditorGUIUtility.pixelsPerPoint;
                 var sch = Screen.currentResolution.height / EditorGUIUtility.pixelsPerPoint;
                 var xr = 0f;
                 var yr = 0f;
 
-                var isAbsolute = style.position.keyword == StyleKeyword.Undefined && style.position.value == Position.Absolute;
+                var isAbsolute = (style.position.keyword == StyleKeyword.Undefined && style.position.value == Position.Absolute)
+                    || window == context.Window;
 
                 if (!isAbsolute)
                 {
-                    var host = Context.Host as HostComponent;
-                    var worldPos = GUIUtility.GUIToScreenRect(host.Element.worldBound);
-                    scw = worldPos.width;
-                    sch = worldPos.height;
-                    xr = worldPos.x;
-                    yr = worldPos.y;
+                    if (context.Window)
+                    {
+                        var worldPos = context.Window.position;
+                        scw = worldPos.width;
+                        sch = worldPos.height;
+                        xr = worldPos.x;
+                        yr = worldPos.y;
+                    }
                 }
 
                 // Calculate min and max sizes
@@ -386,7 +385,9 @@ namespace ReactUnity.Editor.UIToolkit
                         hasBottom ? sch - GetValueFromLength(bottom, sch) - h
                         : window.position.y;
 
-                    window.position = new Rect(x + xr, y + yr, w, h);
+                    var pos = new Vector2(x + xr, y + yr);
+                    var size = new Vector2(w, h);
+                    window.position = new Rect(pos, size);
                 }
             }
 
@@ -402,7 +403,7 @@ namespace ReactUnity.Editor.UIToolkit
             style.maxHeight = StyleKeyword.Initial;
         }
 
-        private float GetValueFromLength(StyleLength len, float fullSize)
+        private static float GetValueFromLength(StyleLength len, float fullSize)
         {
             var val = len.value.value;
             if (len.value.unit == LengthUnit.Percent) val *= fullSize / 100;

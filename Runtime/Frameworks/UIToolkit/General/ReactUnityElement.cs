@@ -39,6 +39,7 @@ namespace ReactUnity.UIToolkit
 
         public virtual void Run()
         {
+            if (runner != null) throw new Exception("ReactUnity UIToolkit is already running");
             var src = Script;
 
             runner = new ReactUnityRunner();
@@ -70,7 +71,9 @@ namespace ReactUnity.UIToolkit
 
         protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
-            return new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
+            var ctx = new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
+            ctx.Initialize();
+            return ctx;
         }
 
         protected virtual IDispatcher CreateDispatcher() => new RuntimeDispatcher();

@@ -59,6 +59,8 @@ namespace ReactUnity.UIToolkit
 
         private Action<AudioClip> OnAudioPlayback = null;
 
+        public VisualElement HostElement { get; }
+
         public UIToolkitContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
@@ -66,12 +68,17 @@ namespace ReactUnity.UIToolkit
         ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, false)
         {
             OnAudioPlayback = onAudioPlayback;
+            HostElement = hostElement;
+        }
 
-            Host = new HostComponent(hostElement, this);
+        public virtual void Initialize()
+        {
+            if (Host != null) throw new Exception("Context was already initialized");
+            HostElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
+
+            Host = new HostComponent(HostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
-
-            hostElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
         }
 
         public override ITextComponent CreateText(string text)

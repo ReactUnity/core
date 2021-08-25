@@ -24,7 +24,10 @@ namespace ReactUnity.Editor.Renderer
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            return new ReactUnityEditorElement(GetScript(), GetGlobals(property), null, DefaultMediaProvider.CreateMediaProvider("property", "uitoolkit", true));
+            var el = new ReactUnityEditorElement(GetScript(), GetGlobals(property), null, DefaultMediaProvider.CreateMediaProvider("property", "uitoolkit", true));
+            el.Property = this;
+            el.Run();
+            return el;
         }
 
         protected abstract ScriptSource GetScript();

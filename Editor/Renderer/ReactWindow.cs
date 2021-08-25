@@ -95,6 +95,8 @@ namespace ReactUnity.Editor.Renderer
             hostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
                 DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true),
                 EngineType, DebugEnabled, AwaitDebugger);
+            hostElement.Window = this;
+            hostElement.Run();
             (root ?? rootVisualElement).Add(hostElement);
         }
 

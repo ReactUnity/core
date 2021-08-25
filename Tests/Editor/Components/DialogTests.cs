@@ -78,12 +78,12 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             Assert.NotNull(rt.Window);
             Assert.AreEqual(new Vector2(50, 60), rt.Window.minSize);
-            Assert.That(rt.Window.maxSize.x, Is.EqualTo(2 * pos.width).Within(1));
-            Assert.That(rt.Window.maxSize.y, Is.EqualTo(240).Within(1));
+            Assert.AreEqual(2 * pos.width, rt.Window.maxSize.x, 1);
+            Assert.AreEqual(240, rt.Window.maxSize.y, 1);
             if (!Application.isBatchMode)
             {
                 Assert.AreEqual(100 + pos.x, rt.Window.position.x, 1);
-                Assert.AreEqual(pos.height / 2 + pos.y + 22, rt.Window.position.y, 10);
+                Assert.AreEqual(pos.height / 2 + pos.y, rt.Window.position.y, 10);
                 Assert.AreEqual(120, rt.Window.position.width, 1);
                 Assert.AreEqual(140, rt.Window.position.height, 1);
             }

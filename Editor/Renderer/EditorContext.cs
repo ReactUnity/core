@@ -53,6 +53,9 @@ namespace ReactUnity.Editor.Renderer
                 { "dialog", (tag, text, context) => new DialogComponent(context, tag) },
             };
 
+        public ReactWindow Window { get; }
+        public ReactInspector Inspector { get; }
+        public ReactProperty Property { get; }
 
         private static TextAsset useragentStylesheet;
         public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/editor/useragent");
@@ -60,9 +63,22 @@ namespace ReactUnity.Editor.Renderer
         public EditorContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart = null
+            bool isDevServer, Action onRestart = null,
+            ReactWindow window = null, ReactInspector inspector = null, ReactProperty property = null
         ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart)
         {
+            Window = window;
+            Inspector = inspector;
+            Property = property;
+        }
+
+        public override void Initialize()
+        {
+            if (Host != null) throw new Exception("Context was already initialized");
+            HostElement.styleSheets.Add(ReactUnity.UIToolkit.ResourcesHelper.UtilityStylesheet);
+
+            Host = new EditorHostComponent(HostElement, this);
+            InsertStyle(ReactUnity.UIToolkit.ResourcesHelper.UseragentStylesheet?.text, -1);
             InsertStyle(UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
         }
