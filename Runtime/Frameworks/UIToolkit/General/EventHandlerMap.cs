@@ -56,6 +56,7 @@ namespace ReactUnity.UIToolkit
             { "onDragUpdated", typeof(DragUpdatedEvent) },
 #endif
 
+            { "onAttachToPanel", typeof(AttachToPanelEvent) },
             { "onDetachFromPanel", typeof(DetachFromPanelEvent) },
             { "onCustomStyleResolved", typeof(CustomStyleResolvedEvent) },
             { "onExecuteCommand", typeof(ExecuteCommandEvent) },

@@ -184,7 +184,7 @@ namespace ReactUnity.Editor.UIToolkit
             set
             {
                 title = value;
-                if (Window != null) Window.titleContent = new GUIContent(title);
+                if (Window != null) Window.titleContent = string.IsNullOrWhiteSpace(title) ? GUIContent.none : new GUIContent(title);
             }
         }
 
@@ -219,13 +219,17 @@ namespace ReactUnity.Editor.UIToolkit
         {
             style.display = DisplayStyle.None;
             contentContainer = new VisualElement();
+
+            RegisterCallback<DetachFromPanelEvent>(x => {
+                Close();
+            }, TrickleDown.TrickleDown);
         }
 
         private void CreateWindow()
         {
             var window = DialogWindow.Create();
             window.name = Name;
-            window.titleContent = new GUIContent(Title);
+            window.titleContent = string.IsNullOrWhiteSpace(title) ? GUIContent.none : new GUIContent(title);
             window.maximized = Maximized;
             window.rootVisualElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
             window.rootVisualElement.Add(contentContainer);
@@ -317,6 +321,36 @@ namespace ReactUnity.Editor.UIToolkit
                     yr = worldPos.y;
                 }
 
+                // Calculate min and max sizes
+                var minw = DefaultMinWidth;
+                var minh = DefaultMinHeight;
+                var maxw = DefaultMaxWidth;
+                var maxh = DefaultMaxHeight;
+
+                var minWidth = style.minWidth;
+                var hasMinWidth = minWidth.keyword == StyleKeyword.Undefined;
+                var minWidthVal = GetValueFromLength(minWidth, scw);
+                if (hasMinWidth) minw = minWidthVal;
+
+                var maxWidth = style.maxWidth;
+                var hasMaxWidth = maxWidth.keyword == StyleKeyword.Undefined;
+                var maxWidthVal = GetValueFromLength(maxWidth, scw);
+                if (hasMaxWidth) maxw = maxWidthVal;
+
+                var minHeight = style.minHeight;
+                var hasMinHeight = minHeight.keyword == StyleKeyword.Undefined;
+                var minHeightVal = GetValueFromLength(minHeight, sch);
+                if (hasMinHeight) minh = minHeightVal;
+
+                var maxHeight = style.maxHeight;
+                var hasMaxHeight = maxHeight.keyword == StyleKeyword.Undefined;
+                var maxHeightVal = GetValueFromLength(maxHeight, sch);
+                if (hasMaxHeight) maxh = maxHeightVal;
+
+                window.minSize = new Vector2(minw, minh);
+                window.maxSize = new Vector2(maxw, maxh);
+
+
                 // Calculate position and size
                 var width = style.width;
                 var height = style.height;
@@ -354,35 +388,6 @@ namespace ReactUnity.Editor.UIToolkit
 
                     window.position = new Rect(x + xr, y + yr, w, h);
                 }
-
-                // Calculate min and max sizes
-                var minw = DefaultMinWidth;
-                var minh = DefaultMinHeight;
-                var maxw = DefaultMaxWidth;
-                var maxh = DefaultMaxHeight;
-
-                var minWidth = style.minWidth;
-                var hasMinWidth = minWidth.keyword == StyleKeyword.Undefined;
-                var minWidthVal = GetValueFromLength(minWidth, scw);
-                if (hasMinWidth) minh = minWidthVal;
-
-                var maxWidth = style.maxWidth;
-                var hasMaxWidth = maxWidth.keyword == StyleKeyword.Undefined;
-                var maxWidthVal = GetValueFromLength(maxWidth, scw);
-                if (hasMaxWidth) maxh = maxWidthVal;
-
-                var minHeight = style.minHeight;
-                var hasMinHeight = minHeight.keyword == StyleKeyword.Undefined;
-                var minHeightVal = GetValueFromLength(minHeight, sch);
-                if (hasMinHeight) minh = minHeightVal;
-
-                var maxHeight = style.maxHeight;
-                var hasMaxHeight = maxHeight.keyword == StyleKeyword.Undefined;
-                var maxHeightVal = GetValueFromLength(maxHeight, sch);
-                if (hasMaxHeight) maxh = maxHeightVal;
-
-                window.minSize = new Vector2(minw, minh);
-                window.maxSize = new Vector2(maxw, maxh);
             }
 
             style.top = StyleKeyword.Initial;
