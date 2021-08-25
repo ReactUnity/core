@@ -18,12 +18,12 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             var view = Q("#test") as ReactUnity.UIToolkit.UIToolkitComponent<VisualElement>;
 
-            Assert.AreEqual(120, view.Element.layout.width);
+            Assert.AreEqual(120, view.Element.layout.width, 0.5f);
 
             Context.InsertStyle(@":root { font-size: 16px; }");
             yield return null;
 
-            Assert.AreEqual(160, view.Element.layout.width);
+            Assert.AreEqual(160, view.Element.layout.width, 0.5f);
         }
     }
 }

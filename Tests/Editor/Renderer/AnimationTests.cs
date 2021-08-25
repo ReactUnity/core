@@ -58,13 +58,13 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             cmp.Style.Set("animation", "growWidth 1s 400ms both");
             yield return null;
-            Assert.AreEqual(100, rt.layout.width);
+            Assert.AreEqual(100, rt.layout.width, 0.5f);
 
             yield return AdvanceTime(0.5f);
             Assert.IsTrue(rt.layout.width < 500 && rt.layout.width > 100);
 
             yield return AdvanceTime(1f);
-            Assert.That(rt.layout.width, Is.EqualTo(500).Within(1));
+            Assert.AreEqual(500, rt.layout.width, 1);
         }
 
 
@@ -77,13 +77,13 @@ namespace ReactUnity.Editor.Tests.Renderer
 
             cmp.Style.Set("animation", "growWidth 1s 400ms both linear");
             yield return null;
-            Assert.AreEqual(100, rt.layout.width);
+            Assert.AreEqual(100, rt.layout.width, 0.5f);
 
             yield return AdvanceTime(0.5f);
             Assert.AreEqual(140, rt.layout.width);
 
             yield return AdvanceTime(1f);
-            Assert.That(rt.layout.width, Is.EqualTo(500));
+            Assert.AreEqual(500, rt.layout.width);
         }
     }
 }
