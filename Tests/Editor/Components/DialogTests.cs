@@ -47,12 +47,12 @@ namespace ReactUnity.Editor.Tests.Renderer
             Assert.NotNull(rt.Window);
             Assert.AreEqual(new Vector2(50, 60), rt.Window.minSize);
             Assert.AreEqual(new Vector2(200, 240), rt.Window.maxSize);
-            Assert.That(rt.Window.position.width, Is.EqualTo(120).Within(1));
-            Assert.That(rt.Window.position.height, Is.EqualTo(140).Within(1));
             if (!Application.isBatchMode)
             {
                 Assert.AreEqual(100, rt.Window.position.x, 1);
                 Assert.AreEqual(110, rt.Window.position.y, 1);
+                Assert.AreEqual(120, rt.Window.position.width, 1);
+                Assert.AreEqual(140, rt.Window.position.height, 1);
             }
         }
 
@@ -80,12 +80,12 @@ namespace ReactUnity.Editor.Tests.Renderer
             Assert.AreEqual(new Vector2(50, 60), rt.Window.minSize);
             Assert.That(rt.Window.maxSize.x, Is.EqualTo(2 * pos.width).Within(1));
             Assert.That(rt.Window.maxSize.y, Is.EqualTo(240).Within(1));
-            Assert.That(rt.Window.position.width, Is.EqualTo(120).Within(1));
-            Assert.That(rt.Window.position.height, Is.EqualTo(140).Within(1));
             if (!Application.isBatchMode)
             {
                 Assert.AreEqual(100 + pos.x, rt.Window.position.x, 1);
                 Assert.AreEqual(pos.height / 2 + pos.y + 22, rt.Window.position.y, 10);
+                Assert.AreEqual(120, rt.Window.position.width, 1);
+                Assert.AreEqual(140, rt.Window.position.height, 1);
             }
         }
 
