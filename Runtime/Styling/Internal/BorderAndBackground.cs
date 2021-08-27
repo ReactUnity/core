@@ -13,6 +13,12 @@ namespace ReactUnity.Styling.Internal
         public RectTransform Background { get; private set; }
         public RectTransform ShadowRoot { get; private set; }
 
+        private ReactContext Context;
+        private ImageReference BgImage;
+        private Color BgColor;
+        private BackgroundBlendMode BgBlendMode;
+
+
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;
 
@@ -20,7 +26,7 @@ namespace ReactUnity.Styling.Internal
 
         public List<BoxShadowImage> ShadowGraphics;
 
-        public static BorderAndBackground Create(GameObject go)
+        public static BorderAndBackground Create(GameObject go, ReactContext ctx)
         {
             var cmp = go.GetComponent<BorderAndBackground>();
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
@@ -32,6 +38,7 @@ namespace ReactUnity.Styling.Internal
 
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
 
+            cmp.Context = ctx;
             cmp.RootMask = root.AddComponent<Mask>();
             cmp.RootMask.showMaskGraphic = false;
 
@@ -120,11 +127,37 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackgroundColorAndImage(Color? color, Sprite sprite)
+        public void SetBackgroundColorAndImage(Color color, ImageReference image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
             var bg = Background.GetComponent<Image>();
-            bg.color = color.HasValue ? color.Value : (sprite ? Color.white : Color.clear);
-            bg.sprite = sprite;
+
+            if (image != BgImage)
+            {
+                BgImage = image;
+
+                if (image != null && image != ImageReference.None)
+                {
+                    bg.sprite = null;
+                    bg.color = Color.clear;
+                    image.Get(Context, (res) => {
+                        if (image != BgImage) return;
+                        Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+
+                        bg.color = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
+                        bg.sprite = sprite;
+                    });
+                }
+                else
+                {
+                    bg.sprite = null;
+                    bg.color = color;
+                }
+            }
+            else
+            {
+                if (BgImage == null || BgImage == ImageReference.None || blendMode != BackgroundBlendMode.Normal)
+                    bg.color = color;
+            }
         }
 
         public void SetBoxShadow(BoxShadowList shadows)

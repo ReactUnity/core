@@ -61,6 +61,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.backgroundImage, value);
             get => GetStyleValue<ImageReference>(StyleProperties.backgroundImage);
         }
+        public BackgroundBlendMode backgroundBlendMode
+        {
+            set => SetStyleValue(StyleProperties.backgroundBlendMode, value);
+            get => GetStyleValue<BackgroundBlendMode>(StyleProperties.backgroundBlendMode);
+        }
         public ImageReference maskImage
         {
             set => SetStyleValue(StyleProperties.maskImage, value);

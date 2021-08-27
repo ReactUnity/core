@@ -45,8 +45,6 @@ namespace ReactUnity.UGUI
             }
         }
 
-        private bool markedUpdateBackgroundImage;
-
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             GameObject = new GameObject();
@@ -70,12 +68,6 @@ namespace ReactUnity.UGUI
             RectTransform = existing;
             Container = existing;
             Name = null;
-        }
-
-        public override void Update()
-        {
-            base.Update();
-            if (markedUpdateBackgroundImage) UpdateBackgroundImage();
         }
 
         public override void DestroySelf()
@@ -303,7 +295,8 @@ namespace ReactUnity.UGUI
             if (borderAny) return true;
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
-            if (ComputedStyle.backgroundImage != null) return true;
+            var bgImage = ComputedStyle.backgroundImage;
+            if (bgImage != null && bgImage != ImageReference.None) return true;
             if (ComputedStyle.boxShadow != null) return true;
             if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
                 ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;
@@ -328,7 +321,7 @@ namespace ReactUnity.UGUI
             {
                 updateStyle = true;
                 updateLayout = true;
-                image = BorderAndBackground.Create(GameObject);
+                image = BorderAndBackground.Create(GameObject, Context);
 
                 if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
                 BorderAndBackground = image;
@@ -340,19 +333,8 @@ namespace ReactUnity.UGUI
             }
             if (updateStyle)
             {
-                if (ComputedStyle.HasValue(StyleProperties.backgroundImage))
-                {
-                    image.SetBackgroundColorAndImage(Color.clear, null);
-                    ComputedStyle.backgroundImage.Get(Context, (res) => {
-                        Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
-
-                        if (ComputedStyle.HasValue(StyleProperties.backgroundColor)) image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
-                        else image.SetBackgroundColorAndImage(Color.white, sprite);
-                    });
-                }
-                else image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, null);
+                image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, ComputedStyle.backgroundImage, ComputedStyle.backgroundBlendMode);
                 image.SetBoxShadow(ComputedStyle.boxShadow);
-                markedUpdateBackgroundImage = true;
 
                 image.SetBorderColor(ComputedStyle.borderTopColor, ComputedStyle.borderRightColor, ComputedStyle.borderBottomColor, ComputedStyle.borderLeftColor);
                 image.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
@@ -374,15 +356,6 @@ namespace ReactUnity.UGUI
 
             canvas.overrideSorting = z != 0;
             canvas.sortingOrder = z;
-        }
-
-        private void UpdateBackgroundImage()
-        {
-            markedUpdateBackgroundImage = false;
-
-            if (!GameObject) return;
-
-            BorderAndBackground.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
         }
 
         #endregion

@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None, noneValue: ImageReference.None);
+        public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
         public static readonly StyleProperty<ImageReference> maskImage = new StyleProperty<ImageReference>("maskImage", ImageReference.None, noneValue: ImageReference.None);
         public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: AllConverters.LengthConverter);
@@ -61,9 +62,8 @@ namespace ReactUnity.Styling
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
-            { "background", backgroundImage },
             { "background-image", backgroundImage },
-            { "mask", maskImage },
+            { "background-blend-mode", backgroundBlendMode },
             { "mask-image", maskImage },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },

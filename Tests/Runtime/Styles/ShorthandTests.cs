@@ -2,6 +2,8 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Tests
 {
@@ -61,6 +63,28 @@ namespace ReactUnity.Tests
             Assert.AreEqual("monospace", tt.font.name);
             Assert.AreEqual(23, tt.fontSize);
             Assert.AreEqual(10f / 23f * 100f, tt.lineSpacing);
+        }
+        [ReactInjectableTest(style: @"
+          #test {
+            background: red url(res:star);
+            background-blend-mode: multiply;
+            mask: url(res:star);
+          }
+")]
+
+        public IEnumerator BackgroundAndMaskWorks()
+        {
+            yield return null;
+
+            var cmp = Q("#test");
+            var bg = cmp.BorderAndBackground;
+            var mask = cmp.MaskAndImage;
+
+            var bgImage = bg.Background.GetComponent<Image>();
+            Assert.AreEqual(typeof(Texture2D), bgImage.sprite?.texture?.GetType());
+            Assert.AreEqual(Color.red, bgImage.color);
+
+            Assert.AreEqual(typeof(Texture2D), mask.Image.sprite?.texture?.GetType());
         }
     }
 }
