@@ -2,6 +2,7 @@ using System;
 using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
+using ReactUnity.UGUI.Behaviours;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -64,6 +65,7 @@ namespace ReactUnity.UGUI
             // Input field's properties must be fully assigned before OnEnable is called
             GameObject.SetActive(false);
 
+            AddComponent<ScrollEventBubbling>();
             InputField = AddComponent<TMP_InputField>();
 
             TextViewport = new ContainerComponent(context, "_viewport");
