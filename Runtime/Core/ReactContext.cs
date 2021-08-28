@@ -71,7 +71,9 @@ namespace ReactUnity
             if (CalculatesLayout) dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
         }
 
-        public virtual StyleSheet InsertStyle(string style, int importanceOffset = 0)
+        public virtual StyleSheet InsertStyle(string style) => InsertStyle(style, 0);
+
+        public virtual StyleSheet InsertStyle(string style, int importanceOffset)
         {
             var sheet = new StyleSheet(Style, style, importanceOffset);
             return InsertStyle(sheet);

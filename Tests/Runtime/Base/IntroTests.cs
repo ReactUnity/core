@@ -140,13 +140,13 @@ namespace ReactUnity.Tests
         public IEnumerator HostNameCanBeChanged()
         {
             yield return null;
-            Assert.AreEqual("REACT_ROOT", Host.Name);
+            Assert.AreEqual("REACT_ROOT", Host.GameObject.name);
 
             Host.Name = "hey";
-            Assert.AreEqual("hey", Host.Name);
+            Assert.AreEqual("hey", Host.GameObject.name);
 
             Host.Name = null;
-            Assert.AreEqual("REACT_ROOT", Host.Name);
+            Assert.AreEqual("REACT_ROOT", Host.GameObject.name);
         }
     }
 }

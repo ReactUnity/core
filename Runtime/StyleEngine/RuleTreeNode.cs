@@ -228,7 +228,8 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.ClassName:
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:
-                    return component.Data.TryGetValue(Name, out var val) && Equals(val, Parameter);
+                    return component.Data.TryGetValue(Name, out var val) &&
+                        (Parameter == null ? Converters.BoolConverter.IsTruthy(val) : Equals(val, Parameter));
                 case RuleSelectorPartType.DirectDescendant:
                 case RuleSelectorPartType.AdjacentSibling:
                 case RuleSelectorPartType.Sibling:

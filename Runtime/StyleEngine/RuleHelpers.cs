@@ -56,7 +56,6 @@ namespace ReactUnity.StyleEngine
                     || nm == "*" || nm == ">" || nm == "~" || nm == "+" || nm == "!";
                 if (!ignore)
                 {
-
                     if (type == RuleSelectorPartType.Special)
                     {
                         var paran = paranContent.ToString();
@@ -87,6 +86,12 @@ namespace ReactUnity.StyleEngine
                         }
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
                     }
+                }
+                else if (acc.Length == 0 && type == RuleSelectorPartType.Special)
+                {
+                    acc.Append("_");
+                    type = RuleSelectorPartType.Tag;
+                    return;
                 }
 
                 acc.Clear();
@@ -121,11 +126,7 @@ namespace ReactUnity.StyleEngine
                 else if (ch == '[') end(RuleSelectorPartType.Attribute);
                 else if (ch == ']') end(RuleSelectorPartType.Tag);
                 else if (ch == ':') end(RuleSelectorPartType.Special);
-
-                else
-                {
-                    acc.Append(ch);
-                }
+                else acc.Append(ch);
             }
             end(RuleSelectorPartType.None);
 
@@ -165,7 +166,7 @@ namespace ReactUnity.StyleEngine
         public static string NormalizeSelector(string selector)
         {
             return NthChildRegex.Replace(
-                SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Trim(), " "),
+                SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Replace("::", " ::").Trim(), " "),
                 "($1+$2)");
         }
 

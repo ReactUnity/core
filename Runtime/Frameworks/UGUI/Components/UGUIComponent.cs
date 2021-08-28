@@ -35,11 +35,13 @@ namespace ReactUnity.UGUI
 
         public RectTransform Container { get; protected set; }
 
+        private string name;
         public override string Name
         {
-            get => GameObject.name;
+            get => name;
             set
             {
+                name = value;
                 if (!string.IsNullOrWhiteSpace(value)) GameObject.name = value;
                 else if (!string.IsNullOrWhiteSpace(DefaultName)) GameObject.name = DefaultName;
             }

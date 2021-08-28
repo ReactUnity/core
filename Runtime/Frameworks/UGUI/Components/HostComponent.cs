@@ -19,7 +19,7 @@ namespace ReactUnity.UGUI
             responsive.Layout = Layout;
             responsive.Context = context;
             responsive.Restart();
-            OriginalName = Name;
+            OriginalName = GameObject.name;
         }
 
         protected override void ApplyLayoutStylesSelf()

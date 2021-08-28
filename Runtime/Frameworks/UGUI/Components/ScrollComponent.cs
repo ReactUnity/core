@@ -69,6 +69,9 @@ namespace ReactUnity.UGUI
                 if (value != horizontal)
                 {
                     horizontal = value;
+                    Data["horizontal"] = value;
+                    Data["vertical"] = !value;
+                    Data["direction"] = value ? "horizontal" : "vertical";
                     Name = Name;
                     UpdatePosition();
                 }
@@ -78,7 +81,7 @@ namespace ReactUnity.UGUI
         protected override string DefaultName => $"[{(Horizontal ? "Horizontal" : "Vertical")} Scrollbar]";
 
         public Scrollbar Scrollbar { get; }
-        public ScrollBarThumbComponent Handle { get; }
+        public ScrollBarThumbComponent Thumb { get; }
 
         public ScrollBarComponent(UGUIContext context) : base(context, "_scrollbar")
         {
@@ -87,8 +90,11 @@ namespace ReactUnity.UGUI
             Layout.PositionType = YogaPositionType.Absolute;
             Scrollbar = AddComponent<Scrollbar>();
 
-            Handle = new ScrollBarThumbComponent(context);
-            Handle.SetParent(this);
+            Thumb = new ScrollBarThumbComponent(context);
+            Thumb.SetParent(this);
+            Data["horizontal"] = false;
+            Data["vertical"] = true;
+            Data["direction"] = "vertical";
         }
 
         public override void ResolveStyle(bool recursive = false)
