@@ -1,3 +1,6 @@
+using System;
+using Facebook.Yoga;
+using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,20 +23,23 @@ namespace ReactUnity.UGUI
             viewport.anchorMax = Vector2.one;
             viewport.sizeDelta = Vector2.zero;
             viewport.pivot = Vector2.up;
+            var vpImage = viewport.gameObject.AddComponent<Image>();
+            vpImage.color = Color.clear;
+
 
             var content = new GameObject("[Scroll Container]").AddComponent<RectTransform>();
             Container = content;
             content.SetParent(viewport, false);
 
-            content.anchorMin = Vector2.zero;
-            content.anchorMax = Vector2.one;
+            content.anchorMin = Vector2.up;
+            content.anchorMax = Vector2.up;
             content.pivot = Vector2.up;
             content.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
             content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-            content.gameObject.AddComponent<CalculateSizeFromContents>().Layout = Layout;
+            content.gameObject.AddComponent<ScrollContentResizer>().Layout = Layout;
 
-            ScrollRect.horizontalScrollbar = CreateScrollbar(false, viewport);
-            ScrollRect.verticalScrollbar = CreateScrollbar(true, viewport);
+            ScrollRect.horizontalScrollbar = CreateScrollbar(false);
+            ScrollRect.verticalScrollbar = CreateScrollbar(true);
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
             ScrollRect.scrollSensitivity = 50;
@@ -42,48 +48,187 @@ namespace ReactUnity.UGUI
             ScrollRect.movementType = ScrollRect.MovementType.Clamped;
         }
 
-        private Scrollbar CreateScrollbar(bool vertical, RectTransform parent)
+        private Scrollbar CreateScrollbar(bool vertical)
         {
-            var typeStr = vertical ? "Vertical" : "Horizontal";
-            var go = new GameObject($"[{typeStr} Scrollbar]");
-            go.SetActive(false);
-            var rt = go.AddComponent<RectTransform>();
-            var sc = go.AddComponent<Scrollbar>();
+            var sc = new ScrollBarComponent(Context);
+            sc.Horizontal = !vertical;
+            sc.SetParent(this);
+            return sc.Scrollbar;
+        }
+    }
 
-            var handle = new GameObject($"[{typeStr} Scrollbar Handle]");
-            var hrt = handle.AddComponent<RectTransform>();
 
-            sc.handleRect = hrt;
-
-            hrt.SetParent(rt);
-            hrt.anchorMin = Vector2.zero;
-            hrt.anchorMax = Vector2.one;
-            hrt.sizeDelta = Vector2.zero;
-
-            rt.SetParent(parent, false);
-            if (vertical)
+    public class ScrollBarComponent : UGUIComponent
+    {
+        private bool horizontal;
+        public bool Horizontal
+        {
+            get => horizontal;
+            set
             {
-                rt.anchorMin = Vector2.right;
-                rt.anchorMax = Vector2.one;
-                rt.pivot = Vector2.one;
-                rt.sizeDelta = Vector2.zero;
+                if (value != horizontal)
+                {
+                    horizontal = value;
+                    Name = Name;
+                    UpdatePosition();
+                }
             }
-            else
+        }
+
+        protected override string DefaultName => $"[{(Horizontal ? "Horizontal" : "Vertical")} Scrollbar]";
+
+        public Scrollbar Scrollbar { get; }
+        public ScrollBarThumbComponent Handle { get; }
+
+        public ScrollBarComponent(UGUIContext context) : base(context, "_scrollbar")
+        {
+            IsPseudoElement = true;
+            Component.enabled = false;
+            Layout.PositionType = YogaPositionType.Absolute;
+            Scrollbar = AddComponent<Scrollbar>();
+
+            Handle = new ScrollBarThumbComponent(context);
+            Handle.SetParent(this);
+        }
+
+        public override void ResolveStyle(bool recursive = false)
+        {
+            base.ResolveStyle(recursive);
+        }
+
+        public override void SetProperty(string propertyName, object value)
+        {
+            if (propertyName == "horizontal") Horizontal = Convert.ToBoolean(value);
+            else base.SetProperty(propertyName, value);
+        }
+
+        void UpdatePosition()
+        {
+            Scrollbar.SetDirection(!Horizontal ? Scrollbar.Direction.BottomToTop : Scrollbar.Direction.LeftToRight, true);
+
+            var rt = RectTransform;
+            if (Horizontal)
             {
                 rt.anchorMin = Vector2.zero;
                 rt.anchorMax = Vector2.right;
                 rt.pivot = Vector2.zero;
                 rt.sizeDelta = Vector2.zero;
             }
+            else
+            {
+                rt.anchorMin = Vector2.right;
+                rt.anchorMax = Vector2.one;
+                rt.pivot = Vector2.one;
+                rt.sizeDelta = Vector2.zero;
+            }
+        }
+
+        public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
+        {
+            base.SetParent(newParent, relativeTo, insertAfter);
+            Attach();
+        }
+
+        void Attach()
+        {
+            if (Parent is UGUIComponent u)
+            {
+                RectTransform.SetParent(u.RectTransform);
+                UpdatePosition();
+            }
+        }
+
+        protected override void ApplyLayoutStylesSelf()
+        {
+            var size = ComputedStyle.GetStyleValue<YogaValue>(Horizontal ? LayoutProperties.Height : LayoutProperties.Width);
+
+            var sizeValue = 10f;
+            if (size.Unit == YogaUnit.Point) sizeValue = size.Value;
+            else if (size.Unit == YogaUnit.Percent) sizeValue = size.Value;
+
+            var rt = RectTransform;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+
+            var top = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Top);
+            var right = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Right);
+            var bottom = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Bottom);
+            var left = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Left);
 
 
-            sc.targetGraphic = go.AddComponent<Image>();
-            var handleImage = handle.AddComponent<Image>();
-            handleImage.color = new Color(0, 0, 0, 0.3f);
-            sc.SetDirection(vertical ? Scrollbar.Direction.BottomToTop : Scrollbar.Direction.LeftToRight, true);
-            rt.SetSizeWithCurrentAnchors(vertical ? RectTransform.Axis.Horizontal : RectTransform.Axis.Vertical, 10);
-            go.SetActive(true);
-            return sc;
+            if (Horizontal)
+            {
+                if (top.Unit == YogaUnit.Point)
+                {
+                    rt.anchorMin = Vector2.up;
+                    rt.anchorMax = Vector2.one;
+                    rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, StylingHelpers.GetPointValue(top, 0), sizeValue);
+                }
+                else
+                {
+                    rt.anchorMin = Vector2.zero;
+                    rt.anchorMax = Vector2.right;
+                    rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, StylingHelpers.GetPointValue(bottom, 0), sizeValue);
+                }
+
+                rt.offsetMin = new Vector2(StylingHelpers.GetPointValue(left, 0), RectTransform.offsetMin.y);
+                rt.offsetMax = new Vector2(-StylingHelpers.GetPointValue(right, 0), RectTransform.offsetMax.y);
+            }
+            else
+            {
+                if (left.Unit == YogaUnit.Point)
+                {
+                    rt.anchorMin = Vector2.zero;
+                    rt.anchorMax = Vector2.up;
+                    rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, StylingHelpers.GetPointValue(left, 0), sizeValue);
+                }
+                else
+                {
+                    rt.anchorMin = Vector2.right;
+                    rt.anchorMax = Vector2.one;
+                    rt.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, StylingHelpers.GetPointValue(right, 0), sizeValue);
+                }
+
+                rt.offsetMin = new Vector2(RectTransform.offsetMin.x, StylingHelpers.GetPointValue(bottom, 0));
+                rt.offsetMax = new Vector2(RectTransform.offsetMax.x, -StylingHelpers.GetPointValue(top, 0));
+            }
+        }
+    }
+
+
+    public class ScrollBarThumbComponent : UGUIComponent
+    {
+        protected override string DefaultName => "[Thumb]";
+
+        public ScrollBarThumbComponent(UGUIContext context) : base(context, "_scrollbar-thumb", false)
+        {
+            IsPseudoElement = true;
+            Component.enabled = false;
+        }
+
+        public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
+        {
+            base.SetParent(newParent, relativeTo, insertAfter);
+            Attach();
+        }
+
+        void Attach()
+        {
+            var hrt = RectTransform;
+            hrt.sizeDelta = Vector2.zero;
+            hrt.anchorMin = Vector2.zero;
+            hrt.anchorMax = Vector2.one;
+            hrt.anchoredPosition = Vector2.zero;
+            hrt.offsetMin = Vector2.zero;
+            hrt.offsetMax = Vector2.zero;
+
+            if (Parent is ScrollBarComponent sc) sc.Scrollbar.handleRect = hrt;
+        }
+
+        protected override void ApplyLayoutStylesSelf() { }
+
+        protected override void ResolveTransform()
+        {
         }
     }
 }

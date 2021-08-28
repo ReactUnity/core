@@ -44,5 +44,12 @@ namespace ReactUnity.UGUI
         {
             return style.GetStyleValue<T>(prop, true);
         }
+
+        public static float GetPointValue(YogaValue val, float fullSize)
+        {
+            if (val.Unit == YogaUnit.Point) return val.Value;
+            if (val.Unit == YogaUnit.Percent) return fullSize * val.Value / 100f;
+            return 0;
+        }
     }
 }

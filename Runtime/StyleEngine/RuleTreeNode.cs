@@ -215,14 +215,12 @@ namespace ReactUnity.StyleEngine
 
         public bool Matches(IReactComponent component, IReactComponent scope = null)
         {
-            if (component.IsPseudoElement) return Type == RuleSelectorPartType.Tag && Name == component.Tag;
-
             switch (Type)
             {
                 case RuleSelectorPartType.None:
                     return false;
                 case RuleSelectorPartType.All:
-                    return true;
+                    return !component.IsPseudoElement;
                 case RuleSelectorPartType.Tag:
                     return Name == component.Tag;
                 case RuleSelectorPartType.Id:
@@ -240,13 +238,13 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Not:
                     break;
                 case RuleSelectorPartType.FirstChild:
-                    return component.Parent != null && component.Parent.Children[0] == component;
+                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children[0] == component;
                 case RuleSelectorPartType.LastChild:
-                    return component.Parent != null && component.Parent.Children[component.Parent.Children.Count - 1] == component;
+                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children[component.Parent.Children.Count - 1] == component;
                 case RuleSelectorPartType.NthChild:
-                    return component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
+                    return !component.IsPseudoElement && component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
                 case RuleSelectorPartType.NthLastChild:
-                    return component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
+                    return !component.IsPseudoElement && component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
                     if (component is ITextComponent tc)
                         return string.IsNullOrEmpty(tc.Content);
@@ -270,7 +268,7 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Indeterminate:
                     return component is IToggleComponent tgi && tgi.Indeterminate;
                 case RuleSelectorPartType.OnlyChild:
-                    return component.Parent != null && component.Parent.Children.Count == 1;
+                    return !component.IsPseudoElement && component.Parent != null && component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
                     return component is IHostComponent;
                 case RuleSelectorPartType.Scope:

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ReactUnity.UGUI.Behaviours
 {
-    public class CalculateSizeFromContents : MonoBehaviour
+    public class ScrollContentResizer : MonoBehaviour
     {
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
@@ -44,10 +44,16 @@ namespace ReactUnity.UGUI.Behaviours
             }
 
             var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxX - minX + rightInset);
+            var width = Mathf.Floor(maxX - minX + rightInset);
+            var dfx = width - Layout.LayoutWidth;
+            if (dfx <= 1 && dfx > 0) width = Layout.LayoutWidth;
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
 
             var bottomInset = NormalizeFloat(Layout.LayoutPaddingBottom) + NormalizeFloat(Layout.BorderBottomWidth);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxY - minY + bottomInset);
+            var height = Mathf.Floor(maxY - minY + bottomInset);
+            var dfy = height - Layout.LayoutHeight;
+            if (dfy <= 1 && dfy > 0) height = Layout.LayoutHeight;
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         }
 
         float NormalizeFloat(float value)

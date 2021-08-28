@@ -115,7 +115,7 @@ namespace ReactUnity.StyleEngine
                 else if (ch == '_' && i == 0)
                 {
                     // Special case for pseudo-elements
-                    end(RuleSelectorPartType.Id);
+                    end(RuleSelectorPartType.Tag);
                     acc.Append(ch);
                 }
                 else if (ch == '[') end(RuleSelectorPartType.Attribute);

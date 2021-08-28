@@ -59,6 +59,17 @@ scroll {
   flex-shrink: 1;
 }
 
+scroll _scrollbar {
+  background-color: rgba(0, 0, 0, 0.3);
+  appearance: button;
+  width: 12px;
+  height: 12px;
+}
+
+scroll _scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 toggle {
   width: 24px;
   aspect-ratio: 1;
