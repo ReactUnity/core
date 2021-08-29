@@ -89,6 +89,9 @@ toggle:after {
   inset: 0;
   content: "";
   pointer-events: none;
+  background-blend-mode: multiply;
+  background-color: black;
+  background-image: transparent;
 }
 
 toggle:checked:after {

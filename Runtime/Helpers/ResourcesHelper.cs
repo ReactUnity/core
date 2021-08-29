@@ -5,9 +5,6 @@ namespace ReactUnity.Helpers
 {
     internal static class ResourcesHelper
     {
-        private static Sprite checkBoxSprite;
-        public static Sprite CheckBoxSprite => checkBoxSprite = checkBoxSprite ?? Resources.Load<Sprite>("ReactUnity/sprites/checkbox");
-
         private static Sprite checkSprite;
         public static Sprite CheckSprite => checkSprite = checkSprite ?? Resources.Load<Sprite>("ReactUnity/sprites/check");
 
