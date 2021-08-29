@@ -41,6 +41,7 @@ export interface Events<TSender = BaseCmp> extends BaseEvents<TSender> {
   onKeyDown?: Handler<ui.KeyDownEvent, TSender>;
   onKeyUp?: Handler<ui.KeyUpEvent, TSender>;
   onInput?: Handler<ui.InputEvent, TSender>;
+  onAttachToPanel?: Handler<ui.AttachToPanelEvent, TSender>;
   onDetachFromPanel?: Handler<ui.DetachFromPanelEvent, TSender>;
   onCustomStyleResolved?: Handler<ui.CustomStyleResolvedEvent, TSender>;
   onExecuteCommand?: Handler<ui.ExecuteCommandEvent, TSender>;

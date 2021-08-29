@@ -22,7 +22,14 @@ export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
   set?: ReactUnity.Styling.IconSet | string;
 }
 
-export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> { }
+export type ScrollDirection = 'none' | 'horizontal' | 'vertical' | 'both';
+
+export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
+  onValueChanged?: (ev: UnityEngine.Vector2, sender: ReactUnity.UGUI.ScrollComponent) => void;
+  direction?: ScrollDirection;
+  alwaysShow?: ScrollDirection;
+  sensitivity?: number;
+}
 
 export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {
   onClick?: ActionCallback<ReactUnity.UGUI.ButtonComponent>;

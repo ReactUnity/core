@@ -46,6 +46,7 @@ export interface Events<TSender = BaseCmp> extends BaseEvents<TSender> {
   onDragExited?: Handler<ui.DragExitedEvent, TSender>;
   onDragPerform?: Handler<ui.DragPerformEvent, TSender>;
   onDragUpdated?: Handler<ui.DragUpdatedEvent, TSender>;
+  onAttachToPanel?: Handler<ui.AttachToPanelEvent, TSender>;
   onDetachFromPanel?: Handler<ui.DetachFromPanelEvent, TSender>;
   onCustomStyleResolved?: Handler<ui.CustomStyleResolvedEvent, TSender>;
   onExecuteCommand?: Handler<ui.ExecuteCommandEvent, TSender>;
