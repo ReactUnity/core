@@ -296,6 +296,8 @@ namespace ReactUnity.UGUI
                 || Layout.BorderStartWidth > 0 || Layout.BorderEndWidth > 0;
             if (borderAny) return true;
 
+            if (ComputedStyle.pointerEvents == PointerEvents.All) return true;
+
             if (ComputedStyle.backgroundColor.a > 0) return true;
             var bgImage = ComputedStyle.backgroundImage;
             if (bgImage != null && bgImage != ImageReference.None) return true;
@@ -323,10 +325,7 @@ namespace ReactUnity.UGUI
             {
                 updateStyle = true;
                 updateLayout = true;
-                image = BorderAndBackground.Create(GameObject, Context);
-
-                if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
-                BorderAndBackground = image;
+                image = CreateBorderAndBackground();
             }
 
             if (updateLayout)
@@ -335,6 +334,7 @@ namespace ReactUnity.UGUI
             }
             if (updateStyle)
             {
+                image.SetPointerEvents(ComputedStyle.pointerEvents);
                 image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, ComputedStyle.backgroundImage, ComputedStyle.backgroundBlendMode);
                 image.SetBoxShadow(ComputedStyle.boxShadow);
 
@@ -343,6 +343,14 @@ namespace ReactUnity.UGUI
             }
 
             return image;
+        }
+
+        protected BorderAndBackground CreateBorderAndBackground()
+        {
+            var image = BorderAndBackground.Create(GameObject, Context);
+            if (Selectable && Selectable.targetGraphic == null)
+                Selectable.targetGraphic = image.Background.GetComponent<Image>();
+            return BorderAndBackground = image;
         }
 
         private void SetZIndex()

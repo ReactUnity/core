@@ -14,10 +14,19 @@ namespace ReactUnity.Styling.Internal
         public RectTransform ShadowRoot { get; private set; }
 
         private ReactContext Context;
-        private ImageReference BgImage;
-        private Color BgColor;
-        private BackgroundBlendMode BgBlendMode;
+        private ImageReference BgImageRef;
+        private Image BgImage;
 
+        private Color BgColor
+        {
+            set
+            {
+                BgImage.color = value;
+                BgImage.raycastTarget = BgImage.color.a > 0 || PointerEvents == PointerEvents.All;
+            }
+        }
+
+        private PointerEvents PointerEvents;
 
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;
@@ -37,6 +46,7 @@ namespace ReactUnity.Styling.Internal
 
 
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
+            cmp.RootGraphic.raycastTarget = false;
 
             cmp.Context = ctx;
             cmp.RootMask = root.AddComponent<Mask>();
@@ -45,6 +55,8 @@ namespace ReactUnity.Styling.Internal
             cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
 
             var bgImage = bg.GetComponent<Image>();
+            cmp.BgImage = bgImage;
+            bgImage.color = Color.clear;
             bgImage.type = Image.Type.Sliced;
             bgImage.pixelsPerUnitMultiplier = 1;
 
@@ -131,32 +143,31 @@ namespace ReactUnity.Styling.Internal
         {
             var bg = Background.GetComponent<Image>();
 
-            if (image != BgImage)
+            if (image != BgImageRef)
             {
-                BgImage = image;
+                BgImageRef = image;
 
                 if (image != null && image != ImageReference.None)
                 {
                     bg.sprite = null;
-                    bg.color = Color.clear;
+                    BgColor = Color.clear;
                     image.Get(Context, (res) => {
-                        if (image != BgImage) return;
+                        if (image != BgImageRef) return;
                         Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
 
-                        bg.color = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
+                        BgColor = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
                         bg.sprite = sprite;
                     });
                 }
                 else
                 {
                     bg.sprite = null;
-                    bg.color = color;
+                    BgColor = color;
                 }
             }
             else
             {
-                if (BgImage == null || BgImage == ImageReference.None || blendMode != BackgroundBlendMode.Normal)
-                    bg.color = color;
+                BgColor = blendMode == BackgroundBlendMode.Normal && bg.sprite != null ? Color.white : color;
             }
         }
 
@@ -238,7 +249,9 @@ namespace ReactUnity.Styling.Internal
         private void CreateShadow()
         {
             var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
-            ShadowGraphics.Add(sd.GetComponent<BoxShadowImage>());
+            var img = sd.GetComponent<BoxShadowImage>();
+            img.raycastTarget = false;
+            ShadowGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, ShadowRoot);
         }
 
@@ -262,6 +275,13 @@ namespace ReactUnity.Styling.Internal
             }
 
             return 0;
+        }
+
+        public void SetPointerEvents(PointerEvents pointerEvents)
+        {
+            PointerEvents = pointerEvents;
+            var bg = Background.GetComponent<Image>();
+            bg.raycastTarget = bg.color.a > 0 || PointerEvents == PointerEvents.All;
         }
     }
 }

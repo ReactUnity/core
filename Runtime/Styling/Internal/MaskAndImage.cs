@@ -18,6 +18,7 @@ namespace ReactUnity.Styling.Internal
             var cmp = go.AddComponent<MaskAndImage>();
             cmp.Context = ctx;
             cmp.Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
+            cmp.Image.raycastTarget = false;
             cmp.RectMask = go.GetComponent<RectMask2D>() ?? go.AddComponent<RectMask2D>();
             return cmp;
         }

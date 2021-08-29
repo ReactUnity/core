@@ -60,14 +60,14 @@ scroll {
 }
 
 scroll _scrollbar {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgb(210, 210, 210);
   appearance: button;
   width: 12px;
   height: 12px;
 }
 
 scroll _scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(170, 170, 170);
 }
 
 toggle {

@@ -1,6 +1,7 @@
 using System;
 using Facebook.Yoga;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,6 +93,11 @@ namespace ReactUnity.UGUI
 
             Thumb = new ScrollBarThumbComponent(context);
             Thumb.SetParent(this);
+            Thumb.Style["pointer-events"] = PointerEvents.All;
+            Thumb.ResolveStyle();
+            Thumb.UpdateBackgroundGraphic(true, true);
+            Scrollbar.targetGraphic = Thumb.BorderAndBackground?.Background?.GetComponent<Image>();
+
             Data["horizontal"] = false;
             Data["vertical"] = true;
             Data["direction"] = "vertical";
