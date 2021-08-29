@@ -19,6 +19,11 @@ namespace ReactUnity.UIToolkit
             OriginalName = Name;
         }
 
+        public override void DestroySelf()
+        {
+            Destroyed = true;
+        }
+
         void OnResize(GeometryChangedEvent ev)
         {
             var width = ev.newRect.width;

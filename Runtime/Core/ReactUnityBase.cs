@@ -64,7 +64,7 @@ namespace ReactUnity
             }
         }
 
-        void Clean()
+        protected virtual void Clean()
         {
             if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
 

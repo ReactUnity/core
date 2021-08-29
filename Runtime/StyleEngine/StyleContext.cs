@@ -24,7 +24,8 @@ namespace ReactUnity.StyleEngine
 
         public void ResolveStyle()
         {
-            Context.Host.ResolveStyle(true);
+            if (!Context.IsDisposed)
+                Context.Host.ResolveStyle(true);
         }
 
         public virtual void Insert(StyleSheet sheet)

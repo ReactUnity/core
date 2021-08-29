@@ -28,6 +28,7 @@ namespace ReactUnity
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
         public bool IsDevServer { get; }
+        public bool IsDisposed { get; private set; }
 
         public ScriptSource Script { get; }
         public ITimer Timer { get; }
@@ -142,8 +143,10 @@ namespace ReactUnity
 
         public void Dispose()
         {
+            IsDisposed = true;
             Host.DestroySelf();
             Dispatcher?.Dispose();
+            Globals?.Dispose();
             foreach (var item in Disposables) item?.Dispose();
         }
     }

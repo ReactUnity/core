@@ -13,13 +13,24 @@ namespace ReactUnity.UGUI
         protected string OriginalName { get; private set; }
         protected override string DefaultName => OriginalName;
 
+        public ResponsiveElement ResponsiveElement { get; private set; }
+
         public HostComponent(RectTransform host, UGUIContext context) : base(host, context, "_root", true)
         {
             var responsive = GetOrAddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
             responsive.Restart();
+            ResponsiveElement = responsive;
             OriginalName = GameObject.name;
+        }
+
+        public override void DestroySelf()
+        {
+            Destroyed = true;
+            GameObject.Destroy(ResponsiveElement);
+            if (BorderAndBackground) GameObject.Destroy(BorderAndBackground);
+            if (MaskAndImage) GameObject.Destroy(MaskAndImage);
         }
 
         protected override void ApplyLayoutStylesSelf()

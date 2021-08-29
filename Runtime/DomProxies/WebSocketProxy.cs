@@ -27,7 +27,13 @@ namespace ReactUnity.DomProxies
         public JsValue Onclose { set => onclose = value; }
         public object onclose
         {
-            set { socket.OnClose += (code, reason) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { code, reason })); }
+            set
+            {
+                socket.OnClose += (code, reason) => {
+                    if (context.IsDisposed) return;
+                    context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { code, reason }));
+                };
+            }
             get => null;
         }
 

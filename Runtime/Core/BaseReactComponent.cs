@@ -26,7 +26,7 @@ namespace ReactUnity
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
 
-        public bool Destroyed { get; private set; }
+        public bool Destroyed { get; protected set; }
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
