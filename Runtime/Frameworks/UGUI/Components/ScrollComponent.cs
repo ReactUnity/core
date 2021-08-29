@@ -1,9 +1,12 @@
 using System;
 using Facebook.Yoga;
+using ReactUnity.Converters;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
@@ -56,8 +59,54 @@ namespace ReactUnity.UGUI
             sc.SetParent(this);
             return sc.Scrollbar;
         }
+
+        public override void SetProperty(string propertyName, object value)
+        {
+            switch (propertyName)
+            {
+                case "direction":
+                    var dirs = AllConverters.Get<ScrollBarDirection>().Convert(value);
+                    var dir = dirs is ScrollBarDirection s ? s : ScrollBarDirection.Both;
+                    ScrollRect.horizontal = dir.HasFlag(ScrollBarDirection.Horizontal);
+                    ScrollRect.vertical = dir.HasFlag(ScrollBarDirection.Vertical);
+                    break;
+                case "alwaysShow":
+                    var dirs2 = AllConverters.Get<ScrollBarDirection>().Convert(value);
+                    var dir2 = dirs2 is ScrollBarDirection s2 ? s2 : ScrollBarDirection.None;
+                    ScrollRect.horizontalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Horizontal) ? ScrollRect.ScrollbarVisibility.Permanent : ScrollRect.ScrollbarVisibility.AutoHide;
+                    ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Vertical) ? ScrollRect.ScrollbarVisibility.Permanent : ScrollRect.ScrollbarVisibility.AutoHide;
+                    break;
+                case "sensitivity":
+                    var fl = AllConverters.FloatConverter.Convert(value);
+                    if (fl is float f) ScrollRect.scrollSensitivity = f;
+                    else ScrollRect.scrollSensitivity = 50;
+                    break;
+                default:
+                    base.SetProperty(propertyName, value);
+                    break;
+            }
+        }
+
+        public override Action AddEventListener(string eventName, Callback fun)
+        {
+            if (eventName == "onValueChanged")
+            {
+                var listener = new UnityAction<Vector2>((e) => fun.Call(e, this));
+                ScrollRect.onValueChanged.AddListener(listener);
+                return () => ScrollRect.onValueChanged.RemoveListener(listener);
+            }
+            else return base.AddEventListener(eventName, fun);
+        }
     }
 
+    [Flags]
+    public enum ScrollBarDirection
+    {
+        None = 0,
+        Horizontal = 1,
+        Vertical = 2,
+        Both = 3,
+    }
 
     public class ScrollBarComponent : UGUIComponent
     {

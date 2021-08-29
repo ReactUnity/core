@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
-                    <scroll>
+                    <scroll direction={globals.direction} alwaysShow={globals.alwaysShow} sensitivity={globals.sensitivity}>
                         <view>
                         </view>
                     </scroll>
@@ -104,6 +104,32 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Scroll.ScrollRect.horizontalScrollbar, hbar.Scrollbar);
             Assert.AreEqual(Color.red, hbar.BorderAndBackground.Background.GetComponent<Image>().color);
             Assert.AreEqual(Color.blue, hbar.Thumb.BorderAndBackground.Background.GetComponent<Image>().color);
+        }
+
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator PropertiesGetAppliedToScrollbar()
+        {
+            yield return null;
+
+            Assert.AreEqual(true, Scroll.ScrollRect.horizontal);
+            Assert.AreEqual(true, Scroll.ScrollRect.vertical);
+            Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
+            Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.verticalScrollbarVisibility);
+            Assert.AreEqual(50, Scroll.ScrollRect.scrollSensitivity);
+
+
+            Globals.Set("sensitivity", 100);
+            Globals.Set("direction", "vertical");
+            Globals.Set("alwaysShow", "both");
+            yield return null;
+
+            Assert.AreEqual(false, Scroll.ScrollRect.horizontal);
+            Assert.AreEqual(true, Scroll.ScrollRect.vertical);
+            Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.horizontalScrollbarVisibility);
+            Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.verticalScrollbarVisibility);
+            Assert.AreEqual(100, Scroll.ScrollRect.scrollSensitivity);
         }
     }
 }
