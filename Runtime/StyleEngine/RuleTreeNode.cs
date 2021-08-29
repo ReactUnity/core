@@ -12,6 +12,7 @@ namespace ReactUnity.StyleEngine
         public LinkedList<RuleTreeNode<T>> Children;
 
         public RuleRelationType RelationType = RuleRelationType.Parent;
+        public RulePseudoType PseudoType = RulePseudoType.None;
         public T Data;
 
         public MediaQueryList MediaQuery { get; private set; }
@@ -47,6 +48,21 @@ namespace ReactUnity.StyleEngine
             {
                 Selector = selectorSelf;
                 ParsedSelector = RuleHelpers.ParseSelector(selectorSelf);
+
+                if (ParsedSelector != null)
+                {
+                    for (int i = 0; i < ParsedSelector.Count; i++)
+                    {
+                        var sel = ParsedSelector[i];
+                        if (sel.Type == RuleSelectorPartType.After || sel.Type == RuleSelectorPartType.Before)
+                        {
+                            RelationType = RuleRelationType.Pseudo;
+                            if (sel.Type == RuleSelectorPartType.After) PseudoType = RulePseudoType.After;
+                            else if (sel.Type == RuleSelectorPartType.Before) PseudoType = RulePseudoType.Before;
+                            break;
+                        }
+                    }
+                }
             }
 
             if (!hasChild)
@@ -82,7 +98,8 @@ namespace ReactUnity.StyleEngine
             if (MediaQuery != null && !MediaQuery.matches) return false;
 
             var relative = component;
-            var runOnce = RelationType == RuleRelationType.DirectSibling || RelationType == RuleRelationType.DirectParent || RelationType == RuleRelationType.Self;
+            var runOnce = RelationType == RuleRelationType.DirectSibling || RelationType == RuleRelationType.DirectParent
+                || RelationType == RuleRelationType.Self || RelationType == RuleRelationType.Pseudo;
 
             while (relative != null)
             {
@@ -147,6 +164,14 @@ namespace ReactUnity.StyleEngine
         Sibling = 3,
         DirectSibling = 4,
         ShadowParent = 5,
+        Pseudo = 6,
+    }
+
+    public enum RulePseudoType
+    {
+        None = 0,
+        Before = 1,
+        After = 2,
     }
 
     public enum RuleSelectorPartType

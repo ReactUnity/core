@@ -38,8 +38,8 @@ namespace ReactUnity.StyleEngine
                     pairs.Add(Tuple.Create(importantLeaf, importantDic));
 
                     var list = LeafNodes;
-                    if (leaf.Selector.EndsWith(":before")) list = BeforeNodes;
-                    if (leaf.Selector.EndsWith(":after")) list = AfterNodes;
+                    if (leaf.PseudoType == RulePseudoType.Before) list = BeforeNodes;
+                    else if (leaf.PseudoType == RulePseudoType.After) list = AfterNodes;
 
                     list.InsertIntoSortedList(importantLeaf);
                 }
@@ -70,8 +70,8 @@ namespace ReactUnity.StyleEngine
 
 
                     var list = LeafNodes;
-                    if (leaf.Selector.EndsWith(":before")) list = BeforeNodes;
-                    if (leaf.Selector.EndsWith(":after")) list = AfterNodes;
+                    if (leaf.PseudoType == RulePseudoType.Before) list = BeforeNodes;
+                    else if (leaf.PseudoType == RulePseudoType.After) list = AfterNodes;
 
                     list.InsertIntoSortedList(importantLeaf);
                 }

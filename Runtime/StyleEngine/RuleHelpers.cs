@@ -75,6 +75,12 @@ namespace ReactUnity.StyleEngine
                         });
                         else list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.State, Negated = negated, Parameter = nm });
                     }
+                    else if (type == RuleSelectorPartType.Tag)
+                    {
+                        if(nm == "_after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
+                        else if(nm == "_before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
+                        else list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated });
+                    }
                     else
                     {
                         string parameter = null;
