@@ -77,8 +77,8 @@ namespace ReactUnity.StyleEngine
                     }
                     else if (type == RuleSelectorPartType.Tag)
                     {
-                        if(nm == "_after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
-                        else if(nm == "_before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
+                        if (nm == "_after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
+                        else if (nm == "_before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
                         else list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated });
                     }
                     else

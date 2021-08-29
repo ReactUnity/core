@@ -1,6 +1,3 @@
-
-using ReactUnity.Helpers;
-
 namespace ReactUnity.Scheduling
 {
     public interface IScheduler

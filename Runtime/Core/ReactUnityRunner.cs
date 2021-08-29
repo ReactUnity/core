@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Facebook.Yoga;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace ReactUnity

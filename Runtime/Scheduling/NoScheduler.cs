@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using ReactUnity.Helpers;
 
 namespace ReactUnity.Scheduling
 {

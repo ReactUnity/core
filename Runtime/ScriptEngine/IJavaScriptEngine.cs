@@ -11,7 +11,7 @@ namespace ReactUnity.ScriptEngine
         ClearScript = 2,
     }
 
-    public interface IJavaScriptEngine: IDisposable
+    public interface IJavaScriptEngine : IDisposable
     {
         string Key { get; }
         void Execute(string code, string fileName = null);
