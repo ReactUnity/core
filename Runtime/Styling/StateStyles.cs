@@ -41,8 +41,7 @@ namespace ReactUnity.Styling
             if (res)
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
-                // TODO: handle sibling selectors (+ and ~)
-                Component.Parent.ResolveStyle(true);
+                Component.MarkStyleUpdateWithSiblings(true);
             }
             return res;
         }
@@ -54,13 +53,12 @@ namespace ReactUnity.Styling
             if (res)
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
-                // TODO: handle sibling selectors (+ and ~)
-                Component.Parent.ResolveStyle(true);
+                Component.MarkStyleUpdateWithSiblings(true);
             }
             return res;
         }
 
-        public bool GetState(string state)
+        public bool GetStateOrSubscribe(string state)
         {
             if (!Dic.ContainsKey(state)) SubscribeToState(state);
             return States.Contains(state);

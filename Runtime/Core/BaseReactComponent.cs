@@ -46,7 +46,7 @@ namespace ReactUnity
             set
             {
                 id = value?.ToString();
-                MarkForStyleResolving(true);
+                MarkStyleUpdateWithSiblings(true);
             }
         }
         public abstract string Name { get; set; }
@@ -100,7 +100,7 @@ namespace ReactUnity
 
         protected void DataChanged(string key, object value, WatchableDictionary<string, object> style)
         {
-            MarkForStyleResolving(true);
+            MarkStyleUpdateWithSiblings(true);
         }
 
         protected void StyleChanged(IStyleProperty key, object value, WatchableDictionary<IStyleProperty, object> style)
@@ -167,7 +167,7 @@ namespace ReactUnity
             }
 
             StyleState.SetParent(newParent.StyleState);
-            MarkForStyleResolving(true);
+            MarkStyleUpdateWithSiblings(true);
         }
 
 
@@ -279,6 +279,24 @@ namespace ReactUnity
                     else RemoveAfter();
                     AfterPseudo?.ResolveStyle();
                 }
+            }
+        }
+
+        public void MarkStyleUpdateWithSiblings(bool recursive)
+        {
+            if (Parent == null) return;
+
+            if (Parent.Children == null)
+            {
+                MarkForStyleResolving(recursive);
+                return;
+            }
+
+            var resolve = false;
+            foreach (var child in Parent.Children)
+            {
+                resolve = resolve || child == this;
+                if (resolve) child.MarkForStyleResolving(recursive);
             }
         }
 

@@ -46,6 +46,7 @@ namespace ReactUnity
         object AddComponent(Type type);
 
         void MarkForStyleResolving(bool recursive);
+        void MarkStyleUpdateWithSiblings(bool recursive);
 
         bool Matches(string query);
         IReactComponent Closest(string query);

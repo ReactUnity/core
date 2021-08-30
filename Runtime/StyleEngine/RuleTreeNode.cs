@@ -209,12 +209,14 @@ namespace ReactUnity.StyleEngine
         Checked = 36,
         Indeterminate = 37,
 
-
         Hover = 100,
         Focus = 101,
         FocusVisible = 102,
         FocusWithin = 103,
         Active = 104,
+
+        Enter = 200,
+        Leave = 201,
 
         Before = 500,
         After = 501,
@@ -314,7 +316,7 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Special:
                     return true;
                 case RuleSelectorPartType.State:
-                    return component.StateStyles.GetState(Parameter as string);
+                    return component.StateStyles.GetStateOrSubscribe(Parameter as string);
                 default:
                     break;
             }

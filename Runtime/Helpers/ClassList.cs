@@ -33,13 +33,13 @@ namespace ReactUnity.Helpers
         internal override void OnAdd(string item)
         {
             name = null;
-            Component.MarkForStyleResolving(true);
+            Component.MarkStyleUpdateWithSiblings(true);
         }
 
         internal override void OnRemove(string item)
         {
             name = null;
-            Component.MarkForStyleResolving(true);
+            Component.MarkStyleUpdateWithSiblings(true);
         }
 
         internal override void OnBeforeChange()
@@ -49,7 +49,7 @@ namespace ReactUnity.Helpers
 
         internal override void OnAfterChange()
         {
-            Component.MarkForStyleResolving(true);
+            Component.MarkStyleUpdateWithSiblings(true);
         }
     }
 }
