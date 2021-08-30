@@ -1,15 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace ReactUnity.Styling
 {
-
     public class StateStyles
     {
-        public HashSet<string> Subscribed = new HashSet<string>();
-        public IReactComponent Component;
-        public HashSet<string> States = new HashSet<string>();
+        public HashSet<string> Subscribed { get; } = new HashSet<string>();
+        private readonly HashSet<string> States = new HashSet<string>();
+        private readonly IReactComponent Component;
 
         public StateStyles(IReactComponent cmp)
         {

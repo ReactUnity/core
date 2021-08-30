@@ -66,7 +66,6 @@ namespace ReactUnity.Styling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private float getTime() => Context.Timer.AnimationTime * 1000;
 
-        private static NodeStyle DefaultStyle = new NodeStyle(null);
         public NodeStyle Previous { get; private set; }
         public NodeStyle Current { get; private set; }
         public NodeStyle Active { get; private set; }
@@ -100,14 +99,11 @@ namespace ReactUnity.Styling
         public StyleState(ReactContext context)
         {
             Context = context;
-            SetCurrent(DefaultStyle);
         }
 
         public void SetCurrent(NodeStyle newStyle)
         {
-            if (Current == DefaultStyle) Previous = newStyle;
-            else Previous = Active ?? Current ?? newStyle;
-
+            Previous = Active ?? Current;
             Current = newStyle;
             RecalculateActive();
         }
@@ -204,6 +200,10 @@ namespace ReactUnity.Styling
                 {
                     if (sp == null) continue;
                     finished = false;
+
+                    // If there is not a previous state, no need to continue anymore
+                    // But transitions may not be finished so return false
+                    if (Previous == null) return false;
 
                     var prevValue = Previous.GetRawStyleValue(sp);
                     var curValue = Current.GetRawStyleValue(sp);
@@ -656,7 +656,7 @@ namespace ReactUnity.Styling
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
-            Active.UpdateParent(active);
+            Active?.UpdateParent(active);
             OnUpdate?.Invoke(Active, false);
         }
     }

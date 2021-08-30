@@ -310,6 +310,8 @@ namespace ReactUnity.UGUI
 
         public virtual BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle)
         {
+            if (ComputedStyle == null) return null;
+
             if (Selectable)
             {
                 Selectable.transition = ComputedStyle.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;

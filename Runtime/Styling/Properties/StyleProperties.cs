@@ -50,6 +50,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<Navigation.Mode> navigation = new StyleProperty<Navigation.Mode>("navigation", Navigation.Mode.Automatic);
+        public static readonly StyleProperty<float> stateDuration = new StyleProperty<float>("stateDuration", 0f, true, false, AllConverters.DurationConverter);
         public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
         public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
         public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
@@ -89,6 +90,7 @@ namespace ReactUnity.Styling
             { "white-space", textWrap },
             { "object-fit", objectFit },
             { "object-position", objectPosition },
+            { "state-duration", stateDuration },
         };
         public static IStyleProperty[] AllProperties { get; }
         public static HashSet<string> InheritedProperties { get; } = new HashSet<string>();

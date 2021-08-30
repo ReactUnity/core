@@ -67,6 +67,8 @@ namespace ReactUnity
         private bool markedForStyleApply;
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
+        private bool isEntering;
+        private float enteredAt;
         protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
         protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
 
@@ -83,15 +85,19 @@ namespace ReactUnity
             if (context.CalculatesLayout) Layout = new YogaNode();
 
             StateStyles = new StateStyles(this);
+            StateStyles.StartState("enter");
+            isEntering = true;
+            enteredAt = Context.Timer.AnimationTime;
+
             StyleState = new StyleState(context);
             StyleState.OnUpdate += OnStylesUpdated;
             StyleState.OnEvent += FireEvent;
-            StyleState.SetCurrent(new NodeStyle(Context));
         }
 
         public virtual void Update()
         {
             if (Destroyed) return;
+            ApplyEnterLeave();
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();
@@ -306,7 +312,31 @@ namespace ReactUnity
         public void ApplyStyles()
         {
             markedForStyleApply = false;
+            ApplyEnterLeave();
             ApplyStylesSelf();
+        }
+
+        private void ApplyEnterLeave()
+        {
+            if (isEntering)
+            {
+                if (StateStyles.Subscribed.Contains("enter"))
+                {
+                    var enterDuration = ComputedStyle.stateDuration / 1000f;
+
+                    if (Context.Timer.AnimationTime >= enteredAt + enterDuration)
+                    {
+                        StateStyles.EndState("enter");
+                        isEntering = false;
+                        MarkStyleUpdateWithSiblings(true);
+                    }
+                }
+                else
+                {
+                    StateStyles.EndState("enter");
+                    isEntering = false;
+                }
+            }
         }
 
         public void ApplyLayoutStyles()

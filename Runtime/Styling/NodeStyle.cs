@@ -206,6 +206,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.navigation, value);
             get => GetStyleValue<Navigation.Mode>(StyleProperties.navigation);
         }
+        public float stateDuration
+        {
+            set => SetStyleValue(StyleProperties.stateDuration, value);
+            get => GetStyleValue<float>(StyleProperties.stateDuration);
+        }
         public TransitionList transition
         {
             set => SetStyleValue(StyleProperties.transition, value);
