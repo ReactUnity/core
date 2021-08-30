@@ -72,18 +72,18 @@ namespace ReactUnity.Tests
             View.Style.Set("height", 300);
 
             Context.InsertStyle(@"
-                scroll _scrollbar {
+                scroll::scrollbar {
                     width: 20px;
                     height: 30px;
                 }
 
-                scroll _scrollbar[vertical] {
+                scroll::scrollbar[vertical] {
                     left: 5px;
                     top: 10px;
                     bottom: 15px;
                 }
 
-                scroll _scrollbar[horizontal] {
+                scroll::scrollbar[horizontal] {
                     top: 5px;
                     left: 8px;
                     right: 16px;

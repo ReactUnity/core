@@ -37,7 +37,7 @@ namespace ReactUnity.Tests
             var tt = text.GetBoundingClientRect();
 
             Assert.AreEqual(95, rt.x);
-            Assert.AreEqual(53, rt.y);
+            Assert.AreEqual(53, rt.y, 1);
 
             Assert.AreEqual(125, tt.xMin);
             Assert.AreEqual(95, tt.yMin);
