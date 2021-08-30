@@ -111,8 +111,13 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator PropertiesGetAppliedToScrollbar()
         {
+            View.Style.Set("width", 300);
+            View.Style.Set("height", 300);
+
             yield return null;
 
+            Assert.AreEqual(true, Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.AreEqual(true, Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
             Assert.AreEqual(true, Scroll.ScrollRect.horizontal);
             Assert.AreEqual(true, Scroll.ScrollRect.vertical);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
@@ -125,6 +130,8 @@ namespace ReactUnity.Tests
             Globals.Set("alwaysShow", "both");
             yield return null;
 
+            Assert.AreEqual(false, Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.AreEqual(true, Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
             Assert.AreEqual(false, Scroll.ScrollRect.horizontal);
             Assert.AreEqual(true, Scroll.ScrollRect.vertical);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.horizontalScrollbarVisibility);

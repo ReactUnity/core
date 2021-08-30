@@ -8,6 +8,17 @@ namespace ReactUnity.UGUI.Behaviours
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
 
+        private ScrollBarDirection direction = ScrollBarDirection.Both;
+        public ScrollBarDirection Direction
+        {
+            get => direction;
+            internal set
+            {
+                direction = value;
+                RecalculateSize();
+            }
+        }
+
         private void OnEnable()
         {
             rt = GetComponent<RectTransform>();
@@ -21,6 +32,20 @@ namespace ReactUnity.UGUI.Behaviours
         void LateUpdate()
         {
             if (!Layout.HasNewLayout) return;
+            RecalculateSize();
+        }
+
+        public void RecalculateSize()
+        {
+            var hasHorizontal = direction.HasFlag(ScrollBarDirection.Horizontal);
+            var hasVertical = direction.HasFlag(ScrollBarDirection.Vertical);
+
+            if (!hasHorizontal && !hasVertical)
+            {
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                return;
+            }
 
             float minX = 0;
             float minY = 0;
@@ -43,17 +68,25 @@ namespace ReactUnity.UGUI.Behaviours
                 if (yEnd > maxY) maxY = yEnd;
             }
 
-            var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth);
-            var width = Mathf.Floor(maxX - minX + rightInset);
-            var dfx = width - Layout.LayoutWidth;
-            if (dfx <= 1 && dfx > 0) width = Layout.LayoutWidth;
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+            if (hasHorizontal)
+            {
+                var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth);
+                var width = Mathf.Floor(maxX - minX + rightInset);
+                var dfx = width - Layout.LayoutWidth;
+                if (dfx <= 1 && dfx > 0) width = Layout.LayoutWidth;
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+            }
+            else rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
 
-            var bottomInset = NormalizeFloat(Layout.LayoutPaddingBottom) + NormalizeFloat(Layout.BorderBottomWidth);
-            var height = Mathf.Floor(maxY - minY + bottomInset);
-            var dfy = height - Layout.LayoutHeight;
-            if (dfy <= 1 && dfy > 0) height = Layout.LayoutHeight;
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            if (hasVertical)
+            {
+                var bottomInset = NormalizeFloat(Layout.LayoutPaddingBottom) + NormalizeFloat(Layout.BorderBottomWidth);
+                var height = Mathf.Floor(maxY - minY + bottomInset);
+                var dfy = height - Layout.LayoutHeight;
+                if (dfy <= 1 && dfy > 0) height = Layout.LayoutHeight;
+                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            }
+            else rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
         }
 
         float NormalizeFloat(float value)

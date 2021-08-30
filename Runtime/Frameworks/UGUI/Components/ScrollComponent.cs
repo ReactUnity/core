@@ -15,6 +15,8 @@ namespace ReactUnity.UGUI
     {
         public ScrollRect ScrollRect { get; private set; }
 
+        public ScrollContentResizer ContentResizer { get; private set; }
+
         public ScrollComponent(UGUIContext Context) : base(Context, "scroll")
         {
             ScrollRect = AddComponent<ScrollRect>();
@@ -40,7 +42,8 @@ namespace ReactUnity.UGUI
             content.pivot = Vector2.up;
             content.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
             content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-            content.gameObject.AddComponent<ScrollContentResizer>().Layout = Layout;
+            var resizer = ContentResizer = content.gameObject.AddComponent<ScrollContentResizer>();
+            resizer.Layout = Layout;
 
             ScrollRect.horizontalScrollbar = CreateScrollbar(false);
             ScrollRect.verticalScrollbar = CreateScrollbar(true);
@@ -69,6 +72,7 @@ namespace ReactUnity.UGUI
                     var dir = dirs is ScrollBarDirection s ? s : ScrollBarDirection.Both;
                     ScrollRect.horizontal = dir.HasFlag(ScrollBarDirection.Horizontal);
                     ScrollRect.vertical = dir.HasFlag(ScrollBarDirection.Vertical);
+                    ContentResizer.Direction = dir;
                     break;
                 case "alwaysShow":
                     var dirs2 = AllConverters.Get<ScrollBarDirection>().Convert(value);
