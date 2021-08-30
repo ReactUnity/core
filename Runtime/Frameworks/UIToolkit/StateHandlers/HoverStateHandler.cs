@@ -6,8 +6,8 @@ namespace ReactUnity.UIToolkit.StateHandlers
 {
     public class HoverStateHandler : MouseManipulator, IStateHandler
     {
-        public event Action<BaseEventData> OnStateStart = default;
-        public event Action<BaseEventData> OnStateEnd = default;
+        public event Action OnStateStart = default;
+        public event Action OnStateEnd = default;
 
         public void ClearListeners()
         {
@@ -17,12 +17,12 @@ namespace ReactUnity.UIToolkit.StateHandlers
 
         public void OnPointerEnter(MouseEnterEvent eventData)
         {
-            OnStateStart?.Invoke(null);
+            OnStateStart?.Invoke();
         }
 
         public void OnPointerLeave(MouseLeaveEvent eventData)
         {
-            OnStateEnd?.Invoke(null);
+            OnStateEnd?.Invoke();
         }
 
 

@@ -7,40 +7,40 @@ namespace ReactUnity.Styling
 
     public class StateStyles
     {
-        public Dictionary<string, NodeStyle> Dic = new Dictionary<string, NodeStyle>();
+        public HashSet<string> Subscribed = new HashSet<string>();
         public IReactComponent Component;
         public HashSet<string> States = new HashSet<string>();
-        public List<NodeStyle> ActiveStates = new List<NodeStyle>();
 
         public StateStyles(IReactComponent cmp)
         {
             Component = cmp;
         }
 
-        public void SubscribeToState(string state)
+        public IStateHandler SubscribeToState(string state)
         {
             if (Component.Context.StateHandlers.TryGetValue(state, out var handlerClass))
             {
                 var existingHandler = Component.GetComponent(handlerClass);
-                if (existingHandler != null) return;
+                if (existingHandler != null) return existingHandler as IStateHandler;
 
                 var handler = Component.AddComponent(handlerClass) as IStateHandler;
                 if (handler != null)
                 {
-                    handler.OnStateStart += (e) => StartState(state);
-                    handler.OnStateEnd += (e) => EndState(state);
+                    handler.OnStateStart += () => StartState(state);
+                    handler.OnStateEnd += () => EndState(state);
                 }
                 else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
+                return handler;
             }
+            return null;
         }
 
         public bool StartState(string state)
         {
-            var res = States.Add(state);
+            var res = States.Add(state) && Subscribed.Contains(state);
 
             if (res)
             {
-                ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
                 Component.MarkStyleUpdateWithSiblings(true);
             }
             return res;
@@ -48,11 +48,10 @@ namespace ReactUnity.Styling
 
         public bool EndState(string state)
         {
-            var res = States.Remove(state);
+            var res = States.Remove(state) && Subscribed.Contains(state);
 
             if (res)
             {
-                ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
                 Component.MarkStyleUpdateWithSiblings(true);
             }
             return res;
@@ -60,7 +59,7 @@ namespace ReactUnity.Styling
 
         public bool GetStateOrSubscribe(string state)
         {
-            if (!Dic.ContainsKey(state)) SubscribeToState(state);
+            if (Subscribed.Add(state)) SubscribeToState(state);
             return States.Contains(state);
         }
     }

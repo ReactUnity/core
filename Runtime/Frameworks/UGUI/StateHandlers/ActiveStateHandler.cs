@@ -6,8 +6,8 @@ namespace ReactUnity.UGUI.StateHandlers
 {
     public class ActiveStateHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IStateHandler
     {
-        public event Action<BaseEventData> OnStateStart = default;
-        public event Action<BaseEventData> OnStateEnd = default;
+        public event Action OnStateStart = default;
+        public event Action OnStateEnd = default;
 
         public void ClearListeners()
         {
@@ -17,12 +17,12 @@ namespace ReactUnity.UGUI.StateHandlers
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            OnStateStart?.Invoke(eventData);
+            OnStateStart?.Invoke();
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            OnStateEnd?.Invoke(eventData);
+            OnStateEnd?.Invoke();
         }
     }
 }

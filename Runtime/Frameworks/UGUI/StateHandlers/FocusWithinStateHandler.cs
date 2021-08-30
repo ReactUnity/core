@@ -6,8 +6,8 @@ namespace ReactUnity.UGUI.StateHandlers
 {
     public class FocusWithinStateHandler : MonoBehaviour, IStateHandler
     {
-        public event Action<BaseEventData> OnStateStart = default;
-        public event Action<BaseEventData> OnStateEnd = default;
+        public event Action OnStateStart = default;
+        public event Action OnStateEnd = default;
 
         private bool hasFocus = false;
 
@@ -38,14 +38,14 @@ namespace ReactUnity.UGUI.StateHandlers
                 if (current == transform)
                 {
                     hasFocus = true;
-                    OnStateStart?.Invoke(null);
+                    OnStateStart?.Invoke();
                     return;
                 }
 
                 current = current.parent;
             }
 
-            if (hasFocus) OnStateEnd?.Invoke(null);
+            if (hasFocus) OnStateEnd?.Invoke();
         }
     }
 }

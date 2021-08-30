@@ -8,8 +8,8 @@ namespace ReactUnity.UGUI.StateHandlers
     [RequireComponent(typeof(Selectable))]
     public class FocusStateHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IStateHandler
     {
-        public event Action<BaseEventData> OnStateStart = default;
-        public event Action<BaseEventData> OnStateEnd = default;
+        public event Action OnStateStart = default;
+        public event Action OnStateEnd = default;
 
         public void ClearListeners()
         {
@@ -19,12 +19,12 @@ namespace ReactUnity.UGUI.StateHandlers
 
         public void OnSelect(BaseEventData eventData)
         {
-            OnStateStart?.Invoke(eventData);
+            OnStateStart?.Invoke();
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
-            OnStateEnd?.Invoke(eventData);
+            OnStateEnd?.Invoke();
         }
     }
 }
