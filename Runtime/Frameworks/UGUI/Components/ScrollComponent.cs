@@ -156,11 +156,6 @@ namespace ReactUnity.UGUI
             Data["direction"] = "vertical";
         }
 
-        public override void ResolveStyle(bool recursive = false)
-        {
-            base.ResolveStyle(recursive);
-        }
-
         public override void SetProperty(string propertyName, object value)
         {
             if (propertyName == "horizontal") Horizontal = Convert.ToBoolean(value);
@@ -212,15 +207,12 @@ namespace ReactUnity.UGUI
             else if (size.Unit == YogaUnit.Percent) sizeValue = size.Value;
 
             var rt = RectTransform;
-            rt.offsetMin = Vector2.zero;
-            rt.offsetMax = Vector2.zero;
-
             var top = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Top);
             var right = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Right);
             var bottom = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Bottom);
             var left = ComputedStyle.GetStyleValue<YogaValue>(LayoutProperties.Left);
 
-
+            rt.anchoredPosition3D = Vector3.zero;
             if (Horizontal)
             {
                 if (top.Unit == YogaUnit.Point)
