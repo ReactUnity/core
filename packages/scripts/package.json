@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/scripts",
-  "version": "0.2.3",
+  "version": "0.4.0",
   "description": "Configuration and scripts for React Unity.",
   "repository": {
     "type": "git",
