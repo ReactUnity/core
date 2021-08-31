@@ -25,9 +25,8 @@ namespace ReactUnity.UGUI
             OriginalName = GameObject.name;
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
-            Destroyed = true;
             GameObject.Destroy(ResponsiveElement);
             if (BorderAndBackground) GameObject.Destroy(BorderAndBackground);
             if (MaskAndImage) GameObject.Destroy(MaskAndImage);

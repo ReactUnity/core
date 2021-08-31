@@ -51,7 +51,7 @@ namespace ReactUnity.Editor.UIToolkit
             else base.SetProperty(property, value);
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
             base.DestroySelf();
             Element.Close();

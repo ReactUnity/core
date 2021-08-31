@@ -29,7 +29,7 @@ namespace ReactUnity.UIToolkit
             set => Element.name = string.IsNullOrWhiteSpace(value) ? DefaultName : value;
         }
 
-        protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
+        protected Dictionary<Type, IManipulator> Manipulators = new Dictionary<Type, IManipulator>();
         private string currentCursor = null;
 
         protected UIToolkitComponent(T element, UIToolkitContext context, string tag) : base(context, tag, true)
@@ -242,7 +242,7 @@ namespace ReactUnity.UIToolkit
             else TargetElement.transform.position = translate;
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
             base.DestroySelf();
             Element.RemoveFromHierarchy();

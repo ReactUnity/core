@@ -26,7 +26,9 @@ namespace ReactUnity
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
 
-        public bool Destroyed { get; protected set; }
+        public bool Entering { get; private set; }
+        public bool Leaving { get; private set; }
+        public bool Destroyed { get; private set; }
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
@@ -67,8 +69,6 @@ namespace ReactUnity
         private bool markedForStyleApply = true;
         private bool markedForLayoutApply = true;
         private bool markedStyleResolveRecursive = true;
-        public bool Entering { get; private set; }
-        public bool Leaving { get; private set; }
         private float stateUpdateTime;
         protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
         protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
@@ -97,8 +97,8 @@ namespace ReactUnity
 
         public virtual void Update()
         {
-            if (Destroyed) return;
             ApplyEnterLeave();
+            if (Destroyed) return;
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();
@@ -142,30 +142,28 @@ namespace ReactUnity
             }
             else
             {
-                Destroy();
+                Destroy(true);
             }
         }
 
-        public virtual void DestroySelf()
-        {
-            Destroyed = true;
-        }
+        protected virtual void DestroySelf() { }
 
-        public void Destroy()
+        public void Destroy(bool recursive = true)
         {
             Entering = false;
             Leaving = false;
+            Destroyed = true;
             var pr = Parent;
             SetParent(null);
             pr?.ResolveStyle(true);
             DestroySelf();
 
-            if (IsContainer)
+            if (recursive && IsContainer)
             {
                 RemoveAfter();
                 for (int i = Children.Count - 1; i >= 0; i--)
                 {
-                    Children[i].Destroy();
+                    Children[i].Destroy(true);
                 }
                 RemoveBefore();
                 Children.Clear();
@@ -341,12 +339,13 @@ namespace ReactUnity
         {
             markedForStyleApply = false;
             ApplyEnterLeave();
+            if (Destroyed) return;
             ApplyStylesSelf();
         }
 
         private void ApplyEnterLeave()
         {
-            if (ComputedStyle == null || Destroyed) return;
+            if (Destroyed || ComputedStyle == null) return;
 
             if (Leaving)
             {
@@ -354,7 +353,7 @@ namespace ReactUnity
 
                 if (Context.Timer.AnimationTime >= stateUpdateTime + stateDuration)
                 {
-                    Context.Dispatcher.OnceUpdate(() => Destroy());
+                    Destroy(true);
                 }
             }
             else if (Entering)
@@ -429,8 +428,12 @@ namespace ReactUnity
             if (IsContainer)
             {
                 BeforePseudo?.Accept(visitor);
-                foreach (var child in Children)
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    var child = Children[i];
                     child.Accept(visitor);
+                    if (child.Destroyed) i--;
+                }
                 AfterPseudo?.Accept(visitor);
             }
         }

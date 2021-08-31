@@ -72,7 +72,7 @@ namespace ReactUnity.UGUI
             Name = null;
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
             base.DestroySelf();
             GameObject.Destroy(GameObject);

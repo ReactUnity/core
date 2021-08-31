@@ -12,13 +12,12 @@ namespace ReactUnity
     public interface IReactComponent
     {
         ReactContext Context { get; }
-
-        void DestroySelf();
-        void Destroy();
-        void Remove();
         IContainerComponent Parent { get; }
 
         bool IsPseudoElement { get; }
+        bool Destroyed { get; }
+        bool Entering { get; }
+        bool Leaving { get; }
         YogaNode Layout { get; }
         StyleState StyleState { get; }
         NodeStyle ComputedStyle { get; }
@@ -53,6 +52,9 @@ namespace ReactUnity
         IReactComponent Closest(string query);
         IReactComponent QuerySelector(string query);
         List<IReactComponent> QuerySelectorAll(string query);
+
+        void Remove();
+        void Destroy(bool recursive = true);
     }
 
     [TypescriptListInterfaces]

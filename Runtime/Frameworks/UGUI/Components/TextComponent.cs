@@ -103,16 +103,16 @@ namespace ReactUnity.UGUI
             {
                 GameObject.Destroy(LinkedTextWatcher);
                 if (LinkedTextWatcher?.LinkedText != null)
-                    LinkedTextWatcher.LinkedText.Destroy();
+                    LinkedTextWatcher.LinkedText.Destroy(false);
                 LinkedTextWatcher = null;
             }
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
             base.DestroySelf();
             if (LinkedTextWatcher?.LinkedText != null)
-                LinkedTextWatcher.LinkedText.Destroy();
+                LinkedTextWatcher.LinkedText.Destroy(false);
         }
     }
 }

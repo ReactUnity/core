@@ -19,9 +19,10 @@ namespace ReactUnity.UIToolkit
             OriginalName = Name;
         }
 
-        public override void DestroySelf()
+        protected override void DestroySelf()
         {
-            Destroyed = true;
+            foreach (var manipulator in Manipulators)
+                Element.RemoveManipulator(manipulator.Value);
         }
 
         void OnResize(GeometryChangedEvent ev)

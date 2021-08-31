@@ -18,7 +18,7 @@ namespace ReactUnity.UGUI.Behaviours
             }
             else if (!enableLink && LinkedText != null)
             {
-                LinkedText.Destroy();
+                LinkedText.Destroy(false);
                 LinkedText = null;
                 WatchedText.Text.linkedTextComponent = null;
             }
