@@ -57,7 +57,7 @@ namespace ReactUnity
         public void removeChild(object parent, object child)
         {
             if (child is IReactComponent c)
-                c.Destroy();
+                c.Remove();
         }
 
         #endregion

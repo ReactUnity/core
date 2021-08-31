@@ -15,6 +15,7 @@ namespace ReactUnity
 
         void DestroySelf();
         void Destroy();
+        void Remove();
         IContainerComponent Parent { get; }
 
         bool IsPseudoElement { get; }

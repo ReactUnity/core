@@ -67,8 +67,9 @@ namespace ReactUnity
         private bool markedForStyleApply;
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
-        private bool isEntering;
-        private float enteredAt;
+        public bool Entering { get; private set; }
+        public bool Leaving { get; private set; }
+        private float stateUpdateTime;
         protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
         protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
 
@@ -86,8 +87,8 @@ namespace ReactUnity
 
             StateStyles = new StateStyles(this);
             StateStyles.StartState("enter");
-            isEntering = true;
-            enteredAt = Context.Timer.AnimationTime;
+            Entering = true;
+            stateUpdateTime = Context.Timer.AnimationTime;
 
             StyleState = new StyleState(context);
             StyleState.OnUpdate += OnStylesUpdated;
@@ -126,6 +127,25 @@ namespace ReactUnity
             markedForLayoutApply = markedForLayoutApply || hasLayout;
         }
 
+        public void Remove()
+        {
+            if (Leaving) return;
+
+            if (StateStyles.Subscribed.Contains("leave"))
+            {
+                StateStyles.EndState("enter");
+                StateStyles.StartState("leave");
+                Entering = false;
+                Leaving = true;
+                stateUpdateTime = Context.Timer.AnimationTime;
+                ResolveStyle(true);
+            }
+            else
+            {
+                Destroy();
+            }
+        }
+
         public virtual void DestroySelf()
         {
             Destroyed = true;
@@ -133,7 +153,11 @@ namespace ReactUnity
 
         public void Destroy()
         {
+            Entering = false;
+            Leaving = false;
+            var pr = Parent;
             SetParent(null);
+            pr?.ResolveStyle(true);
             DestroySelf();
 
             if (IsContainer)
@@ -318,23 +342,34 @@ namespace ReactUnity
 
         private void ApplyEnterLeave()
         {
-            if (isEntering)
+            if (ComputedStyle == null || Destroyed) return;
+
+            if (Leaving)
+            {
+                var stateDuration = ComputedStyle.stateDuration / 1000f;
+
+                if (Context.Timer.AnimationTime >= stateUpdateTime + stateDuration)
+                {
+                    Context.Dispatcher.OnceUpdate(() => Destroy());
+                }
+            }
+            else if (Entering)
             {
                 if (StateStyles.Subscribed.Contains("enter"))
                 {
-                    var enterDuration = ComputedStyle.stateDuration / 1000f;
+                    var stateDuration = ComputedStyle.stateDuration / 1000f;
 
-                    if (Context.Timer.AnimationTime >= enteredAt + enterDuration)
+                    if (Context.Timer.AnimationTime >= stateUpdateTime + stateDuration)
                     {
                         StateStyles.EndState("enter");
-                        isEntering = false;
+                        Entering = false;
                         MarkStyleUpdateWithSiblings(true);
                     }
                 }
                 else
                 {
                     StateStyles.EndState("enter");
-                    isEntering = false;
+                    Entering = false;
                 }
             }
         }
@@ -410,7 +445,7 @@ namespace ReactUnity
 
         public void RemoveBefore()
         {
-            BeforePseudo?.Destroy();
+            BeforePseudo?.Remove();
             BeforePseudo = null;
         }
 
@@ -424,7 +459,7 @@ namespace ReactUnity
 
         public void RemoveAfter()
         {
-            AfterPseudo?.Destroy();
+            AfterPseudo?.Remove();
             AfterPseudo = null;
         }
 

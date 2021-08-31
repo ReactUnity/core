@@ -36,11 +36,11 @@ namespace ReactUnity.Tests
             var rt = cmp.GetBoundingClientRect();
             var tt = text.GetBoundingClientRect();
 
-            Assert.AreEqual(95, rt.x);
+            Assert.AreEqual(95, rt.x, 1);
             Assert.AreEqual(53, rt.y, 1);
 
-            Assert.AreEqual(125, tt.xMin);
-            Assert.AreEqual(95, tt.yMin);
+            Assert.AreEqual(125, tt.xMin, 1);
+            Assert.AreEqual(95, tt.yMin, 1);
         }
 
 
