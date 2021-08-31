@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "0.4.4",
+      "version": "0.4.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -92,9 +92,22 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.xr.interaction.toolkit": {
+      "version": "1.0.0-pre.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.inputsystem": "1.0.2",
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.audio": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.xr.legacyinputhelpers": "2.1.7"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.7",
-      "depth": 2,
+      "version": "2.1.8",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.vr": "1.0.0",
@@ -103,7 +116,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.management": {
-      "version": "4.0.1",
+      "version": "4.0.7",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -125,7 +138,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.oculus": {
-      "version": "1.9.1",
+      "version": "1.10.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -194,6 +207,12 @@
       "dependencies": {}
     },
     "com.unity.modules.jsonserialize": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.modules.nvidia": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",

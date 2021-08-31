@@ -17,7 +17,7 @@ export function App() {
   const [dlOpen, setDlOpen] = useState(0);
 
   return <scroll className={style.app}>
-    <h1>Material Showcase</h1>
+    <h1>Material Showcase 😎</h1>
 
     <Paper elevation={2}>
       <Button onClick={() => setDlOpen(1)}>Open Alert With Text Only</Button>

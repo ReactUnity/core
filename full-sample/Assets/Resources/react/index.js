@@ -79,18 +79,6 @@
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -259,7 +247,7 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-var gl=__webpack_require__.g;switch(gl.location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 3201));break;case'#material':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(832), __webpack_require__.e(72)]).then(__webpack_require__.bind(__webpack_require__, 3072));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(90), __webpack_require__.e(832), __webpack_require__.e(903)]).then(__webpack_require__.bind(__webpack_require__, 1903));break;}
+switch(location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#material':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(472)]).then(__webpack_require__.bind(__webpack_require__, 472));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(422), __webpack_require__.e(903)]).then(__webpack_require__.bind(__webpack_require__, 903));break;}
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
