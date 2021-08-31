@@ -57,11 +57,11 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.4.0",
+    "@reactunity/renderer": "^0.4.1",
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.2.3",
+    "@reactunity/scripts": "^0.4.0",
     "@types/react": "^17.0.19",
     "@types/webpack-env": "^1.16.2",
     "concurrently": "^6.2.1",
@@ -69,6 +69,6 @@
     "eslint": "^7.32.0",
     "onchange": "^7.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2"
   }
 }

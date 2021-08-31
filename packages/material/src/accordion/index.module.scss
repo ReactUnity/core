@@ -17,6 +17,7 @@
   padding-right: 16px;
   transition: padding-top 200ms, padding-bottom 200ms;
   cursor: pointer;
+  pointer-events: all;
 
   icon {
     font-size: 32px;

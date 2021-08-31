@@ -4,7 +4,7 @@
   flex-direction: row;
   align-items: center;
 
-  &:hover .toggle {
+  &:hover .toggle:not(:checked):not(:indeterminate) {
     background-color: rgba($color: #000000, $alpha: 0.04);
   }
 }
