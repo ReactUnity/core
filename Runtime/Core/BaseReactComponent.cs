@@ -63,10 +63,10 @@ namespace ReactUnity
         #endregion
 
 
-        private bool markedStyleResolve;
-        private bool markedForStyleApply;
-        private bool markedForLayoutApply;
-        private bool markedStyleResolveRecursive;
+        private bool markedStyleResolve = true;
+        private bool markedForStyleApply = true;
+        private bool markedForLayoutApply = true;
+        private bool markedStyleResolveRecursive = true;
         public bool Entering { get; private set; }
         public bool Leaving { get; private set; }
         private float stateUpdateTime;
@@ -176,7 +176,11 @@ namespace ReactUnity
 
         public virtual void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
-            if (Parent != null) Parent.UnregisterChild(this);
+            if (Parent != null)
+            {
+                Parent.UnregisterChild(this);
+                Parent.MarkStyleUpdateWithSiblings(true);
+            }
 
             Parent = newParent;
 
@@ -197,7 +201,7 @@ namespace ReactUnity
             }
 
             StyleState.SetParent(newParent.StyleState);
-            MarkStyleUpdateWithSiblings(true);
+            newParent.MarkStyleUpdateWithSiblings(true);
         }
 
 
