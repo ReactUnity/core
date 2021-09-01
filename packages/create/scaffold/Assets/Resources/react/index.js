@@ -265,7 +265,7 @@ var ReactUnityReconciler = react_reconciler(hostConfig);
 var hostRoot;
 var renderer_Renderer = {
   render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = RootContainer;
+    if (!hostContainer) hostContainer = HostContainer;
 
     if (!hostRoot) {
       hostRoot = ReactUnityReconciler.createContainer(hostContainer, false, false);
@@ -6336,7 +6336,7 @@ var update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_1_oneOf_3_us
 
 /* harmony default export */ const src = (cjs_ruleSet_1_rules_1_oneOf_3_use_1_src/* default.locals */.Z.locals || {});
 ;// CONCATENATED MODULE: ./src/app.tsx
-function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Go to <color=red>app.tsx</color> to edit this file"})});}renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
+function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Go to <color=red>app.tsx</color> to edit this file"})});}renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 /* module decorator */ module = __webpack_require__.hmd(module);
 var _module,_module$hot;(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();

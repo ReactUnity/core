@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import * as cp from 'child_process';
 import { Command, Option } from 'commander';
 import * as fse from 'fs-extra';
@@ -12,7 +12,7 @@ program
   .option('-u, --unity', 'Create Unity project from scratch', false)
   .addOption(new Option('-i, --install [manager]', 'Install packages with selected').choices(['npm', 'yarn']).default(false));
 
-program.parse();
+program.parse(process.argv);
 const options: {
   install?: 'npm' | 'yarn' | true | false;
   unity?: boolean;
@@ -36,8 +36,8 @@ const unityDir = createUnity ? path.resolve(cwd, unityFolderName) : cwd;
 const reactDir = path.resolve(unityDir, reactFolderName);
 const createdDir = createUnity ? unityDir : reactDir;
 
-const unityScaffold = path.join(__dirname, 'unity-scaffold');
-const reactScaffold = path.join(__dirname, 'scaffold');
+const unityScaffold = path.join(__dirname, 'scaffold');
+const reactScaffold = path.join(__dirname, 'scaffold/react');
 
 async function isDirEmpty(dirname) {
   const files = await fse.readdir(dirname);
