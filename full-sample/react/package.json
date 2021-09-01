@@ -27,7 +27,7 @@
     "styled-components": "^5.3.1"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.4.0",
+    "@reactunity/scripts": "^0.4.1",
     "@types/react-redux": "^7.1.18",
     "@types/styled-components": "5.1.13",
     "eslint": "^7.32.0",

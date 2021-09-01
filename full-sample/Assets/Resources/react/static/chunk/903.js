@@ -60,10 +60,10 @@ __webpack_require__.d(__webpack_exports__, {
   "RenderObject": () => (/* binding */ RenderObject)
 });
 
-// EXTERNAL MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 5 modules
-var slicedToArray = __webpack_require__(149);
-// EXTERNAL MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js
-var taggedTemplateLiteral = __webpack_require__(500);
+// EXTERNAL MODULE: ../../node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 5 modules
+var slicedToArray = __webpack_require__(790);
+// EXTERNAL MODULE: ../../node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js
+var taggedTemplateLiteral = __webpack_require__(171);
 ;// CONCATENATED MODULE: ../../renderer/dist/src/helpers/styled-components-helper.js
 function insertStyledComponentsSheet(sheet) {
   try {

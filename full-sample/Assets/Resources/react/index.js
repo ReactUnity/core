@@ -247,7 +247,7 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-switch(location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#material':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(472)]).then(__webpack_require__.bind(__webpack_require__, 472));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(422), __webpack_require__.e(903)]).then(__webpack_require__.bind(__webpack_require__, 903));break;}
+switch(location.hash){case'#uitoolkit':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(201)]).then(__webpack_require__.bind(__webpack_require__, 201));break;case'#material':Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(472)]).then(__webpack_require__.bind(__webpack_require__, 472));break;case'#ugui':default:Promise.all(/* import() */[__webpack_require__.e(407), __webpack_require__.e(979), __webpack_require__.e(903)]).then(__webpack_require__.bind(__webpack_require__, 903));break;}
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
