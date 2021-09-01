@@ -55,12 +55,6 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
 
   // Copy project template
   await fse.copy(scaffoldDir, targetDir, { recursive: true });
-
-
-  // Workaround for npm deleting .gitignore file
-  const gitignoreSrcPath = path.join(targetDir, 'gitignore');
-  const gitignoreDestPath = path.join(targetDir, '.gitignore');
-  await fse.move(gitignoreSrcPath, gitignoreDestPath);
 }
 
 async function runOpenUPM() {
