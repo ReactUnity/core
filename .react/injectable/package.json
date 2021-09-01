@@ -1,5 +1,5 @@
 {
-  "name": "my-react-unity-ui",
+  "name": "@reactunity/injectable",
   "version": "0.0.1",
   "description": "",
   "main": "index.ts",
