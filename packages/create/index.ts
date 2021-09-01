@@ -67,8 +67,9 @@ async function create() {
     if (createUnity) {
       await copyScaffold(unityScaffold, unityDir);
       await runOpenUPM();
+    } else {
+      await copyScaffold(reactScaffold, reactDir);
     }
-    await copyScaffold(reactScaffold, reactDir);
   } catch (err) {
     console.log();
     console.error(`Copying files ${chalkError('failed')}`);
