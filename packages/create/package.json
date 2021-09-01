@@ -1,5 +1,6 @@
 {
   "name": "@reactunity/create",
+  "packageManager": "yarn@3.0.0",
   "version": "0.2.0",
   "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",

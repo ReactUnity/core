@@ -9,12 +9,12 @@
     "build": "react-unity-scripts build"
   },
   "dependencies": {
-    "@reactunity/renderer": "latest",
+    "@reactunity/renderer": "^0.4.1",
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@reactunity/scripts": "latest",
-    "@types/react": "^17.0.14",
-    "typescript": "^4.3.5"
+    "@reactunity/scripts": "^0.4.1",
+    "@types/react": "^17.0.19",
+    "typescript": "^4.4.2"
   }
 }

@@ -64,3 +64,17 @@ dist/
 /react
 /react-unity-project
 /index.js
+
+
+# yarn v2
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# For zero installs:
+# !.yarn/cache
+# !.pnp.*

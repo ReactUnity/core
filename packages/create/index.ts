@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import * as cp from 'child_process';
 import { Command, Option } from 'commander';
 import * as fse from 'fs-extra';
@@ -12,7 +12,7 @@ program
   .option('-u, --unity', 'Create Unity project from scratch', false)
   .addOption(new Option('-i, --install [manager]', 'Install packages with selected').choices(['npm', 'yarn']).default(false));
 
-program.parse(process.argv);
+program.parse();
 const options: {
   install?: 'npm' | 'yarn' | true | false;
   unity?: boolean;

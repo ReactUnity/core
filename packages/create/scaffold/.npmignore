@@ -1,0 +1,8 @@
+*
+!/Assets/**
+!/Library/LastSceneManagerSetup.txt
+!/Packages/**
+!/ProjectSettings/**
+!/react/**
+!/gitignore
+!/.gitignore
