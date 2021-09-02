@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,32 @@ namespace ReactUnity.UGUI
         private string TextInside;
         private bool TextSetByStyle = false;
 
+        private FontReference font;
+        public FontReference Font
+        {
+            get => font;
+            set
+            {
+                if (value != font)
+                {
+                    font = value;
+
+                    font?.Get(Context, ft => {
+                        if (font != value) return;
+
+                        if (ft?.TmpFontAsset)
+                        {
+                            var asset = ft.TmpFontAsset;
+                            Text.font = asset;
+                            RecalculateFontStyleAndWeight();
+                        }
+                    });
+                }
+            }
+        }
+
+        public FontStyles FontStyles { get; set; }
+        public FontWeight FontWeight { get; set; }
 
         public TextComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
@@ -65,17 +92,16 @@ namespace ReactUnity.UGUI
 
             var style = ComputedStyle;
 
-            style.fontFamily.Get(Context, font => {
-                if (font?.TmpFontAsset) Text.font = font?.TmpFontAsset;
-            });
             var fontSize = style.fontSize;
             Text.fontSize = fontSize;
-            Text.fontStyle = style.fontStyle;
-            Text.fontWeight = style.fontWeight;
             Text.color = style.color;
             Text.enableWordWrapping = style.textWrap;
             Text.alignment = style.textAlign;
             Text.overflowMode = style.textOverflow;
+            Font = style.fontFamily;
+            Text.fontStyle = FontStyles = style.fontStyle;
+            Text.fontWeight = FontWeight = style.fontWeight;
+            RecalculateFontStyleAndWeight();
 
             var lineHeight = style.lineHeight;
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
@@ -113,6 +139,30 @@ namespace ReactUnity.UGUI
             base.DestroySelf();
             if (LinkedTextWatcher?.LinkedText != null)
                 LinkedTextWatcher.LinkedText.Destroy(false);
+        }
+
+        private void RecalculateFontStyleAndWeight()
+        {
+            if (!Text.font) return;
+
+            if (FontWeight == FontWeight.Bold)
+            {
+                var boldWeight = Text.font.fontWeightTable[6];
+
+                var isItalic = FontStyles.HasFlag(FontStyles.Italic);
+                var wg = isItalic ? boldWeight.italicTypeface : boldWeight.regularTypeface;
+
+                if (wg)
+                {
+                    Text.fontWeight = FontWeight;
+                    Text.fontStyle = FontStyles;
+                }
+                else
+                {
+                    Text.fontWeight = FontWeight.Regular;
+                    Text.fontStyle = FontStyles | FontStyles.Bold;
+                }
+            }
         }
     }
 }

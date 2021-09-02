@@ -58,12 +58,13 @@ namespace ReactUnity.Tests
 
             var tt = text.RectTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(FontStyles.Italic, tt.fontStyle);
-            Assert.AreEqual(FontWeight.Bold, tt.fontWeight);
+            Assert.AreEqual(FontStyles.Italic | FontStyles.Bold, tt.fontStyle);
+            Assert.AreEqual(FontWeight.Regular, tt.fontWeight);
             Assert.AreEqual("monospace", tt.font.name);
             Assert.AreEqual(23, tt.fontSize);
             Assert.AreEqual(10f / 23f * 100f, tt.lineSpacing);
         }
+
         [ReactInjectableTest(style: @"
           #test {
             background: red url(res:star);
@@ -71,7 +72,6 @@ namespace ReactUnity.Tests
             mask: url(res:star);
           }
 ")]
-
         public IEnumerator BackgroundAndMaskWorks()
         {
             yield return null;

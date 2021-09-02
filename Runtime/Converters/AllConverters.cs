@@ -40,6 +40,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter CursorListConverter = new CursorList.Converter();
         static public IStyleConverter BoxShadowListConverter = new BoxShadowList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
+        static public IStyleConverter FontWeightConverter = new EnumConverter<TMPro.FontWeight>(false, false);
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
@@ -64,6 +65,7 @@ namespace ReactUnity.Converters
             { typeof(CursorList), CursorListConverter},
             { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(TimingFunction), TimingFunctionConverter },
+            { typeof(TMPro.FontWeight), FontWeightConverter },
         };
 
         public static IStyleConverter Get<T>() => Get(typeof(T));
