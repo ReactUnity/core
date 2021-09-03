@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
@@ -7,6 +8,7 @@ using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
@@ -19,7 +21,7 @@ namespace ReactUnity.UGUI
 
         public ScrollComponent(UGUIContext Context) : base(Context, "scroll")
         {
-            ScrollRect = AddComponent<ScrollRect>();
+            ScrollRect = AddComponent<SmoothScrollRect>();
 
             var viewport = new GameObject("[Scroll Viewport]").AddComponent<RectTransform>();
             viewport.gameObject.AddComponent<RectMask2D>();
@@ -286,6 +288,59 @@ namespace ReactUnity.UGUI
 
         protected override void ResolveTransform()
         {
+        }
+    }
+
+    /// <summary>
+    /// Version of <see cref="ScrollRect"/> that supports smooth scrolling.
+    /// </summary>
+    public class SmoothScrollRect : ScrollRect
+    {
+        public bool SmoothScrolling { get; set; } = true;
+        public float SmoothScrollTime { get; set; } = 0.12f;
+
+        private Coroutine SmoothCoroutine;
+        private Vector2 targetPosition;
+
+        public override void OnScroll(PointerEventData data)
+        {
+            if (!IsActive())
+                return;
+
+            if (SmoothCoroutine != null)
+            {
+                StopCoroutine(SmoothCoroutine);
+                SmoothCoroutine = null;
+                normalizedPosition = targetPosition;
+            }
+
+            if (SmoothScrolling)
+            {
+                Vector2 positionBefore = normalizedPosition;
+                base.OnScroll(data);
+                Vector2 positionAfter = normalizedPosition;
+                targetPosition = positionAfter;
+
+                normalizedPosition = positionBefore;
+                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter, SmoothScrollTime));
+            }
+            else
+            {
+                base.OnScroll(data);
+            }
+        }
+
+        private IEnumerator StartScroll(Vector2 from, Vector2 to, float time)
+        {
+            var passed = 0f;
+
+            while (passed < time)
+            {
+                normalizedPosition = Vector2.Lerp(from, to, passed / time);
+                passed += Time.deltaTime;
+                yield return null;
+            }
+            normalizedPosition = to;
         }
     }
 }

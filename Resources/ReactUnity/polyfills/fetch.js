@@ -481,19 +481,14 @@
     return new Response(null, {status: status, headers: {location: url}})
   };
 
-  exports.DOMException = global.DOMException;
-  try {
-    new exports.DOMException();
-  } catch (err) {
-    exports.DOMException = function(message, name) {
-      this.message = message;
-      this.name = name;
-      var error = Error(message);
-      this.stack = error.stack;
-    };
-    exports.DOMException.prototype = Object.create(Error.prototype);
-    exports.DOMException.prototype.constructor = exports.DOMException;
-  }
+  exports.DOMException = function(message, name) {
+    this.message = message;
+    this.name = name;
+    var error = Error(message);
+    this.stack = error.stack;
+  };
+  exports.DOMException.prototype = Object.create(Error.prototype);
+  exports.DOMException.prototype.constructor = exports.DOMException;
 
   function fetch(input, init) {
     return new Promise(function(resolve, reject) {

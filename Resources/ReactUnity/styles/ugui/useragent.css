@@ -38,6 +38,7 @@ button {
   cursor: pointer;
   text-align: center;
   appearance: button;
+  pointer-events: all;
 }
 
 input {
@@ -52,11 +53,13 @@ input {
   text-align: left;
   cursor: text;
   appearance: input;
+  pointer-events: all;
 }
 
 scroll {
   overflow: scroll;
   flex-shrink: 1;
+  scroll-behavior: smooth;
 }
 
 scroll _scrollbar {
@@ -82,6 +85,7 @@ toggle {
   border-radius: 6px;
   cursor: pointer;
   appearance: toggle;
+  pointer-events: all;
 }
 
 toggle:after {
