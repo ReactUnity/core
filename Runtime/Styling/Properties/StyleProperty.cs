@@ -12,7 +12,6 @@ namespace ReactUnity.Styling
         public string name { get; private set; }
         public Type type { get; private set; }
         public object defaultValue { get; private set; }
-        public object noneValue { get; private set; }
         public bool transitionable { get; private set; }
         public bool inherited { get; private set; }
         public IStyleConverter converter;
@@ -20,12 +19,11 @@ namespace ReactUnity.Styling
         private Func<NodeStyle, T> getter;
         public virtual bool affectsLayout => false;
         public List<IStyleProperty> ModifiedProperties { get; }
-        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, IStyleConverter converter = null, object noneValue = null)
+        public StyleProperty(string name, object initialValue = null, bool transitionable = false, bool inherited = false, IStyleConverter converter = null)
         {
             this.type = typeof(T);
             this.name = name;
-            this.defaultValue = defaultValue;
-            this.noneValue = noneValue;
+            this.defaultValue = initialValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
 
@@ -47,8 +45,9 @@ namespace ReactUnity.Styling
             if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
             else if (value is CssKeyword k) keyword = k;
 
-            if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default) value = defaultValue;
-            else if (keyword == CssKeyword.None || keyword == CssKeyword.Unset) value = noneValue;
+            if (converter.CanHandleKeyword(keyword)) return converter.Convert(value);
+
+            if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default || keyword == CssKeyword.None || keyword == CssKeyword.Unset) value = defaultValue;
             else if (keyword == CssKeyword.CurrentColor) value = ComputedCurrentColor.Instance;
             else if (keyword != CssKeyword.NoKeyword) value = keyword;
 

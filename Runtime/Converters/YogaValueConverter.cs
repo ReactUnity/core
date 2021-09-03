@@ -8,6 +8,8 @@ namespace ReactUnity.Converters
     {
         static CultureInfo culture = new CultureInfo("en-US");
 
+        public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.Auto;
+
         public object FromString(string value)
         {
             if (value == "auto") return YogaValue.Auto();

@@ -1,3 +1,5 @@
+using ReactUnity.Styling;
+
 namespace ReactUnity.Converters
 {
     public interface IStyleParser
@@ -8,5 +10,7 @@ namespace ReactUnity.Converters
     public interface IStyleConverter
     {
         object Convert(object value);
+
+        bool CanHandleKeyword(CssKeyword keyword);
     }
 }

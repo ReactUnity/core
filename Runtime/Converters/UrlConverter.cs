@@ -8,6 +8,8 @@ namespace ReactUnity.Converters
     {
         private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
 
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
+
         public object Convert(object value)
         {
             if (value is Url u) return u;

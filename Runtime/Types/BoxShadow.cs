@@ -18,6 +18,8 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
+            public bool CanHandleKeyword(CssKeyword keyword) => false;
+
             public object Convert(object value)
             {
                 if (value is BoxShadowList f) return f;

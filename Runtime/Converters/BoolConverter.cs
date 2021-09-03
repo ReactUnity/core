@@ -8,6 +8,7 @@ namespace ReactUnity.Converters
     {
         HashSet<string> truthyValues;
         HashSet<string> falsyValues;
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
 
         public BoolConverter(string[] truthyValues, string[] falsyValues)
         {

@@ -15,6 +15,8 @@ namespace ReactUnity.Converters
             this.baseConverter = baseConverter;
         }
 
+        public bool CanHandleKeyword(CssKeyword keyword) => baseConverter != null ? baseConverter.CanHandleKeyword(keyword) : false;
+
         public object Convert(object value)
         {
             if (value is IComputedValue) return value;

@@ -95,6 +95,8 @@ namespace ReactUnity.Types
             private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
             private static IStyleConverter ColorConverter = AllConverters.ColorConverter;
 
+            public bool CanHandleKeyword(CssKeyword keyword) => false;
+
             public object Convert(object value)
             {
                 if (value == null) return None;

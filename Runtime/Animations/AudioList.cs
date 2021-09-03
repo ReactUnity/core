@@ -16,6 +16,8 @@ namespace ReactUnity.Animations
 
         public class Converter : IStyleParser, IStyleConverter
         {
+            public bool CanHandleKeyword(Styling.CssKeyword keyword) => false;
+
             public object Convert(object value)
             {
                 if (value is AudioList f) return f;

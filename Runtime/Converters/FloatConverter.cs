@@ -34,6 +34,7 @@ namespace ReactUnity.Converters
             AllowSuffixless = allowSuffixless;
         }
 
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
 
         public object FromString(string value)
         {

@@ -183,6 +183,8 @@ namespace ReactUnity.Animations
             static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
             static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(true);
 
+            public bool CanHandleKeyword(CssKeyword keyword) => false;
+
             public object Convert(object value)
             {
                 if (value is TimingFunction f) return f;

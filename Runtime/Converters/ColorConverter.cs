@@ -12,6 +12,8 @@ namespace ReactUnity.Converters
         IStyleConverter floatDs = AllConverters.FloatConverter;
         static char[] splitChars = new char[] { ',', ' ' };
 
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
+
         static Dictionary<string, string> KnownColors = new Dictionary<string, string> {
             { "aliceblue", "#f0f8ff" },
             { "antiquewhite", "#faebd7" },

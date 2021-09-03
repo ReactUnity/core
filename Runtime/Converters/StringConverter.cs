@@ -1,7 +1,11 @@
+using ReactUnity.Styling;
+
 namespace ReactUnity.Converters
 {
     public class StringConverter : IStyleParser, IStyleConverter
     {
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
+
         public object Convert(object value)
         {
             return FromString(value?.ToString());

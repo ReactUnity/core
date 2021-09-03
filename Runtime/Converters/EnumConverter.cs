@@ -119,25 +119,13 @@ namespace ReactUnity.Converters
         public object Convert(object value) => Convert(EnumType, value, AllowFlags);
 
         public object FromString(string value) => FromString(EnumType, value, AllowFlags);
+
+        public bool CanHandleKeyword(CssKeyword keyword) => Enum.IsDefined(EnumType, keyword.ToString());
     }
 
-    public class EnumConverter<T> : IStyleParser, IStyleConverter where T : struct, Enum
+    public class EnumConverter<T> : EnumConverter where T : struct, Enum
     {
-        public bool AllowFlags { get; }
-        public bool KeywordOnly { get; }
-        public EnumConverter(bool keywordOnly)
-        {
-            AllowFlags = typeof(T).GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
-            KeywordOnly = keywordOnly;
-        }
-
-        public EnumConverter(bool allowFlags, bool keywordOnly)
-        {
-            AllowFlags = allowFlags;
-            KeywordOnly = keywordOnly;
-        }
-
-        public object Convert(object value) => EnumConverter.Convert<T>(value, AllowFlags, KeywordOnly);
-        public object FromString(string value) => EnumConverter.FromString<T>(value, AllowFlags, KeywordOnly);
+        public EnumConverter(bool allowFlags, bool keywordOnly) : base(typeof(T), allowFlags, keywordOnly) { }
+        public EnumConverter(bool keywordOnly) : this(typeof(T).GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0, keywordOnly) { }
     }
 }

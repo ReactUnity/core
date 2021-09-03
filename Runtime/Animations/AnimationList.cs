@@ -1,4 +1,5 @@
 using ReactUnity.Converters;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 
 namespace ReactUnity.Animations
@@ -16,6 +17,8 @@ namespace ReactUnity.Animations
 
         public class Converter : IStyleParser, IStyleConverter
         {
+            public bool CanHandleKeyword(CssKeyword keyword) => false;
+
             public object Convert(object value)
             {
                 if (value is AnimationList f) return f;

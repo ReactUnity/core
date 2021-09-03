@@ -287,10 +287,9 @@ namespace ReactUnity.Styling
             if (value is CssKeyword ck)
             {
                 if (ck == CssKeyword.Invalid) return null;
-                else if (ck == CssKeyword.Auto) return prop?.defaultValue;
-                else if (ck == CssKeyword.None) return prop?.noneValue;
-                else if (ck == CssKeyword.Initial || ck == CssKeyword.Unset) return prop?.defaultValue;
                 else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop) ?? prop?.defaultValue;
+                else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Unset || ck == CssKeyword.Default)
+                    return prop?.defaultValue;
             }
             return value;
         }

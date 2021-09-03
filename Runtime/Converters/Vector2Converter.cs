@@ -10,6 +10,8 @@ namespace ReactUnity.Converters
         IStyleConverter FloatParser = AllConverters.FloatConverter;
         char[] splitters = new char[] { ' ', ',' };
 
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
+
         public object FromString(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;

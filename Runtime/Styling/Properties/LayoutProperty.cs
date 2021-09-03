@@ -40,7 +40,7 @@ namespace ReactUnity.Styling
         {
             if (value is IComputedValue d) value = d.GetValue(this, style);
             if (Equals(value, CssKeyword.Invalid) || Equals(value, CssKeyword.None) || Equals(value, CssKeyword.NoKeyword)) return;
-            else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Auto)) SetDefault(node, defaultNode);
+            else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Default) || Equals(value, CssKeyword.Auto)) SetDefault(node, defaultNode);
             else if (Equals(value, CssKeyword.Unset)) SetDefault(node);
             else if (Equals(value, CssKeyword.Inherit))
             {

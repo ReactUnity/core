@@ -17,12 +17,12 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
-        public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false, noneValue: CursorList.None);
-        public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
+        public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false);
+        public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
-        public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None, noneValue: ImageReference.None);
+        public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
         public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
-        public static readonly StyleProperty<ImageReference> maskImage = new StyleProperty<ImageReference>("maskImage", ImageReference.None, noneValue: ImageReference.None);
+        public static readonly StyleProperty<ImageReference> maskImage = new StyleProperty<ImageReference>("maskImage", ImageReference.None);
         public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
@@ -54,7 +54,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
         public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
         public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
-        public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("object-fit", ObjectFit.Fill, noneValue: ObjectFit.None);
+        public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("object-fit", ObjectFit.Fill);
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("object-position", YogaValue2.Center, true);
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();

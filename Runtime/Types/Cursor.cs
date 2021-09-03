@@ -1,5 +1,6 @@
 using System.Linq;
 using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -27,10 +28,13 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
+            public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
+
             public object Convert(object value)
             {
                 if (value is CursorList f) return f;
                 if (value is Cursor t) return new CursorList(t);
+                if (Equals(value, CssKeyword.Default) || Equals(value, CssKeyword.Auto)) return Default;
                 return FromString(value?.ToString());
             }
 

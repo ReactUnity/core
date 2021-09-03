@@ -75,6 +75,8 @@ namespace ReactUnity.Types
             IStyleConverter YogaValueParser = AllConverters.YogaValueConverter;
             char[] splitters = new char[] { ' ', ',' };
 
+            public bool CanHandleKeyword(CssKeyword keyword) => false;
+
             public object FromString(string value)
             {
                 if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;

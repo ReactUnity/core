@@ -12,6 +12,8 @@ namespace ReactUnity.Converters
             { "%", 0.01f },
         });
 
+        public bool CanHandleKeyword(CssKeyword keyword) => false;
+
         public object FromString(string value)
         {
             var pr = FloatParser.FromString(value);
