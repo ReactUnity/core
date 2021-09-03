@@ -49,7 +49,7 @@
     "copy-files": "copyfiles -u 1 src/**/*.scss dist/src",
     "prepare": "yarn clean && yarn build",
     "watch": "concurrently --kill-others \"yarn watch:tsc\" \"yarn watch:files\"",
-    "watch:tsc": "tsc -d --watch",
+    "watch:tsc": "tsc -d --watch --sourceMap",
     "watch:files": "onchange -i \"src/**/*.scss\" -- yarn copy-files",
     "clean": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx src",

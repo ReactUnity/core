@@ -23,18 +23,21 @@ export const InputField = forwardRef<InputFieldRef, InputFieldProps>(
   function InputField({ children, float = 'auto', placeholder, className, variant = 'filled', ...other }, ref) {
     const hostRef = useRef<ReactUnity.UGUI.ContainerComponent>();
     variant = variant || 'filled';
+    const emptyRef = useRef(true);
 
     useImperativeHandle(ref, () => ({
       setEmpty: (empty: boolean) => {
         hostRef.current?.ClassList.Toggle(style.float, !empty);
         hostRef.current?.ClassList.Toggle('float', !empty);
+        emptyRef.current = empty;
       },
-    }), [hostRef]);
+    }), []);
 
     return <view name="<InputField>" {...other} ref={hostRef}
       className={clsx(style.host, 'mat-input-field', className,
         style[variant], 'mat-text-field-' + variant, !!placeholder && style.hasPlaceholder,
-        style['float-' + (float || 'auto')], `float-${float || 'auto'}`)}>
+        style['float-' + (float || 'auto')], `float-${float || 'auto'}`,
+        !emptyRef.current && [style.float, 'float'])}>
       <view className={clsx(style.content, 'mat-input-content')}>
         {children}
       </view>

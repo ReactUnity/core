@@ -3,28 +3,42 @@ import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { useRipple } from '../ripple';
+import { SelectionElement, SelectionState } from '../util/selection';
 import { MdInteractible } from '../util/types';
 import style from './index.module.scss';
 
 type ToggleEl = ReactUnity.UGUI.ToggleComponent;
 
-export type ToggleVariant = 'checkbox' | 'radio';
+export type ToggleType = 'checkbox' | 'radio';
+export type ToggleVariant = 'standard' | 'filled' | 'switch';
 type Props = Omit<UGUIElements['toggle'], 'children'>
   & MdInteractible
   & {
+    type?: ToggleType;
     variant?: ToggleVariant;
     children?: ReactNode;
     independent?: boolean;
   };
 
 const _Toggle = React.forwardRef<ToggleEl, Props>(
-  function _Toggle({ children, className, noRipple, onPointerDown, onPointerUp, variant, independent, ...props }, ref) {
+  function _Toggle({ children, className, noRipple, onPointerDown, onPointerUp, type, variant, independent, ...props }, ref) {
     const toggleRef = useRef<ToggleEl>();
     const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: true, target: toggleRef });
 
     let ctx = useContext(ToggleGroupContext);
     if (independent) ctx = null;
-    variant = variant || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
+    type = type || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
+
+    const selectionRef = useMemo<SelectionElement>(() => ({
+      get selected() { return toggleRef.current.Checked; },
+      set selected(val: boolean) { toggleRef.current.Checked = val; },
+      get value() { return toggleRef.current.Value; },
+      addOnChange: (callback) => {
+        return UnityBridge.addEventListener(toggleRef.current, 'onChange', () => {
+          callback?.();
+        });
+      },
+    }), []);
 
     const innerRef = useCallback((val: ToggleEl) => {
       toggleRef.current = val;
@@ -32,16 +46,16 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
       if (typeof ref === 'function') ref(val);
       else if (ref) ref.current = val;
 
-      if (ctx) ctx.register(val);
-    }, [ctx, ref]);
+      if (ctx) ctx.register(selectionRef);
+    }, [ctx, ref, selectionRef]);
 
     useEffect(() => {
       return () => {
-        if (ctx && toggleRef.current) ctx.unregister(toggleRef.current);
+        if (ctx) ctx.unregister(selectionRef);
       };
-    }, [ctx]);
+    }, [ctx, selectionRef]);
 
-    return <label className={clsx(className, style.label, 'md-toggle-label', style[variant], 'md-variant-' + variant)} {...ripple}>
+    return <label className={clsx(className, style.label, 'md-toggle-label', style[type], 'md-toggle-' + type, 'md-variant-' + variant)} {...ripple}>
       <toggle name="<Toggle>" ref={innerRef}
         className={clsx(style.toggle, 'md-toggle')}
         {...props}  {...ripple} />
@@ -53,124 +67,7 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
 export const Toggle = React.memo(_Toggle);
 
 
-export class ToggleGroupState<T = any> {
-  elements: { el: ToggleEl, listener: () => void }[] = [];
-  value: T | T[];
-  any: boolean;
-  all: boolean;
-  onChange: (val: T | T[], all: boolean, any: boolean) => void;
-
-  constructor(
-    public readonly allowMultiple: boolean,
-    public readonly initialValue: any | any[],
-  ) {
-    this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
-  }
-
-  changed(sender?: ToggleEl): T | T[] {
-    if (this.allowMultiple) {
-      let all = true;
-      let any = false;
-      const res = [];
-      for (let index = 0; index < this.elements.length; index++) {
-        const element = this.elements[index];
-        if (element.el.Checked) {
-          res.push(element.el.Value);
-          any = true;
-        }
-        else all = false;
-      }
-      this.value = res;
-      this.all = all;
-      this.any = any;
-      return;
-    } else {
-      this.all = false;
-      let firstChecked = sender;
-
-      if (!firstChecked) {
-        for (let index = 0; index < this.elements.length; index++) {
-          const element = this.elements[index];
-          if (element.el.Checked) {
-            firstChecked = element.el;
-            break;
-          }
-        }
-      }
-
-      if (!firstChecked) {
-        this.value = undefined;
-        this.any = false;
-        return;
-      }
-
-      if (!firstChecked.Checked) firstChecked.Checked = true;
-
-      for (let index = 0; index < this.elements.length; index++) {
-        const element = this.elements[index];
-        if (element.el !== firstChecked) element.el.Checked = false;
-      }
-
-      this.value = firstChecked.Value;
-      this.any = true;
-    }
-  }
-
-  register(el: ToggleEl) {
-    const listener = UnityBridge.addEventListener(el, 'onChange', (ev, sender) => {
-      this.changed(sender);
-      this.onChange?.(this.value, this.all, this.any);
-    });
-
-    this.elements.push({ el, listener });
-
-    if (this.allowMultiple && Array.isArray(this.value)) el.Checked = this.value.includes(el.Value);
-    else el.Checked = this.value === el.Value;
-
-    if (this.allowMultiple) {
-      if (this.all && !el.Checked) {
-        this.all = false;
-        this.onChange?.(this.value, this.all, this.any);
-      }
-
-      if (!this.any && el.Checked) {
-        this.any = true;
-        this.onChange?.(this.value, this.all, this.any);
-      }
-    }
-  }
-
-  unregister(el: ToggleEl) {
-    const ind = this.elements.findIndex(x => x.el === el);
-    if (ind >= 0) {
-      this.elements.splice(ind, 1);
-      const item = this.elements[ind];
-      if (item.listener) item.listener();
-    }
-  }
-
-  setAll(checked?: boolean) {
-    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
-    checked = !!checked;
-
-    this.all = checked;
-    this.any = checked;
-
-    const values = [];
-    for (let index = 0; index < this.elements.length; index++) {
-      const element = this.elements[index];
-      element.el.Checked = checked;
-    }
-
-    this.value = this.allowMultiple ? values : undefined;
-    this.all = checked;
-    this.any = checked;
-    this.onChange?.(this.value, this.all, this.any);
-  }
-}
-
-const ToggleGroupContext = React.createContext<ToggleGroupState>(null);
+const ToggleGroupContext = React.createContext<SelectionState>(null);
 
 type ToggleGroupProps<T = any> = { children?: ReactNode } &
   ({
@@ -187,10 +84,12 @@ type ToggleGroupProps<T = any> = { children?: ReactNode } &
     selectAllLabel?: never;
   });
 
-const _ToggleGroup = React.forwardRef<ToggleGroupState, ToggleGroupProps>(
+const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
   function _ToggleGroup({ children, multiple, showSelectAll, selectAllLabel, onChange, initialValue }, ref) {
     const init = useRef(initialValue);
-    const state = useMemo(() => new ToggleGroupState(multiple, init.current), [multiple, init]);
+    const selectAllRef = useRef<ToggleEl>();
+
+    const state = useMemo(() => new SelectionState(multiple, init.current), [multiple, init]);
     state.onChange = useCallback((val, all, any) => {
       onChange?.(val, all, any);
 
@@ -199,8 +98,6 @@ const _ToggleGroup = React.forwardRef<ToggleGroupState, ToggleGroupProps>(
         selectAllRef.current.Checked = !!all;
       }
     }, [onChange]);
-
-    const selectAllRef = useRef<ToggleEl>();
 
     const selectAllCallback: UGUIElements['toggle']['onChange'] = useCallback((checked, sender) => {
       state.setAll(checked);

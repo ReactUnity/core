@@ -1,0 +1,96 @@
+@import "../styles/elevation";
+
+.trigger {
+  font-size: 1em;
+  flex: 1 1 0;
+  overflow: hidden;
+  text-align: left;
+  padding: 0 12px;
+  border: none;
+  appearance: none;
+  background-color: none;
+  border-radius: 0;
+  pointer-events: all;
+}
+
+.menuRoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 0;
+  z-index: 10000;
+  translate: 0 -20px;
+  opacity: 0;
+  display: none;
+  transition: translate 300ms ease-out, opacity 300ms ease-out, display 300ms step-end;
+  pointer-events: none;
+
+  &.opened {
+    transition: translate 300ms ease-out, opacity 300ms ease-out, display 300ms step-start;
+    display: flex;
+    translate: 0 0;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.backdrop {
+  position: absolute;
+  top: -5000px;
+  right: -5000px;
+  bottom: -5000px;
+  left: -5000px;
+  background-color: transparent;
+  cursor: main;
+  pointer-events: all;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  minwidth: 100%;
+  background-color: white;
+}
+
+.option {
+  border-radius: 0;
+  text-align: left;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 48px;
+}
+
+.trigger {
+  text-align: left;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.caret {
+  pointer-events: none;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  width: 36px;
+  height: 36px;
+  line-height: 20px;
+  transition: rotate 300ms;
+}
+
+.host.opened {
+  .caret {
+    rotate: 180deg;
+  }
+}
+
+.defaultSeparator {
+  margin-right: 0.4em;
+}

@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist",
-    "sourceMap": false,
     "allowJs": true,
     "pretty": true,
     "declaration": false,
