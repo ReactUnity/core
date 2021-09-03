@@ -8,6 +8,7 @@ export * from './modal';
 export * from './paper';
 export * from './prompt';
 export * from './ripple';
+export * from './select';
 export * from './slider';
 export * from './text';
 export * from './toggle';

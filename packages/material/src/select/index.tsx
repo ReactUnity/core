@@ -3,9 +3,11 @@ import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import * as React from 'react';
 import { ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Toggle } from '..';
 import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
 import { getElevationClass } from '../util/helpers';
+import useAutoRef from '../util/hooks/use-auto-ref';
 import { SelectionElement, SelectionState } from '../util/selection';
 import style from './index.module.scss';
 
@@ -80,22 +82,29 @@ export function _Select<T = any>({
     separator = <text className={style.defaultSeparator}>,</text>;
   }
 
-  return <InputField className={clsx(className, style.host, 'mat-select-field', style[variant], opened && [style.opened, 'mat-select-opened'])} variant={variant}
-    placeholder={placeholder} float={float} name={name || '<SelectField>'} ref={fieldRef}>
+  const setFieldRef: ((val: InputFieldRef) => void) = useCallback((val) => {
+    fieldRef.current = val;
+    fieldRef.current?.setEmpty(multiple ? (init.current as T[]).length === 0 : typeof init.current === 'undefined');
+  }, [multiple]);
+
+  return <InputField className={clsx(className, style.host, 'mat-select-field', style[variant], chips && style.chips, opened && [style.opened, 'mat-select-opened'])}
+    variant={variant} placeholder={placeholder} float={float} name={name || '<SelectField>'} ref={setFieldRef}>
 
     <button name="<Select>" onClick={toggle} className={clsx(style.trigger, 'mat-input-field-target')} {...otherProps}>
-      {selectedElements.map((x, i) => <React.Fragment key={i}>
-        {i > 0 && separator}
-        <view className={style.triggerPart}>{x.getTemplate()}</view>
-      </React.Fragment>)}
+      <view className={style.triggerContent}>
+        {selectedElements.map((x, i) => <React.Fragment key={i}>
+          {i > 0 && separator}
+          <view className={style.triggerPart}>{x.getTemplate()}</view>
+        </React.Fragment>)}
+      </view>
 
       <view className={clsx(style.menuRoot, opened && style.opened)}>
         <button name="<SelectBackdrop>" onClick={close} className={clsx(style.backdrop)} />
 
         <SelectContext.Provider value={state}>
-          <view name="<SelectMenu>" className={clsx(style.menu, getElevationClass(4))}>
+          <scroll name="<SelectMenu>" className={clsx(style.menu, getElevationClass(4))}>
             {children}
-          </view>
+          </scroll>
         </SelectContext.Provider>
       </view>
     </button>
@@ -107,17 +116,24 @@ export function _Select<T = any>({
 
 export interface OptionProps {
   children?: ReactNode;
+  className?: string;
   value?: any;
   triggerTemplate?: React.ReactNode;
+  showToggle?: boolean | 'auto';
 }
 
-export function _Option({ children, value, triggerTemplate }: OptionProps) {
+export function _Option({ className, children, value, triggerTemplate, showToggle = 'auto' }: OptionProps) {
   const ctx = useContext(SelectContext);
 
-  const stateRef = useRef<{ Selected: boolean }>({ Selected: false });
+  const [selected, setSelected] = useState(false);
+  const selectedRef = useAutoRef(selected);
+
   const onChangeRef = useRef<(() => void)[]>([]);
   const getTemplateRef = useRef<() => ReactNode>(() => triggerTemplate ?? children);
   const childRef = useRef(children);
+
+  const shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
+
   useEffect(() => { childRef.current = children; }, [children]);
 
   useEffect(() => {
@@ -126,8 +142,8 @@ export function _Option({ children, value, triggerTemplate }: OptionProps) {
   }, [triggerTemplate, ctx]);
 
   const selectionRef = React.useMemo<SelectSelectionElement>(() => ({
-    get selected() { return stateRef.current.Selected; },
-    set selected(val: boolean) { stateRef.current.Selected = val; },
+    get selected() { return selectedRef.current; },
+    set selected(val: boolean) { setSelected(val); },
     value,
     addOnChange: (callback) => {
       if (!callback) return;
@@ -140,7 +156,7 @@ export function _Option({ children, value, triggerTemplate }: OptionProps) {
     getTemplate: () => {
       return getTemplateRef.current();
     },
-  }), [value]);
+  }), [value, setSelected, selectedRef]);
 
   useEffect(() => {
     if (ctx) {
@@ -150,15 +166,17 @@ export function _Option({ children, value, triggerTemplate }: OptionProps) {
   }, [ctx, selectionRef]);
 
   const onClick = useCallback<UGUIElements['button']['onClick']>(() => {
-    stateRef.current.Selected = !stateRef.current.Selected;
+    setSelected(x => !x);
 
     for (let index = 0; index < onChangeRef.current.length; index++) {
       const cb = onChangeRef.current[index];
       cb();
     }
-  }, []);
+  }, [setSelected]);
 
-  return <Button className={style.option} onClick={onClick} variant="text">
+  return <Button onClick={onClick} variant="text"
+    className={clsx(style.option, 'mat-select-option', selected && ['mat-select-option-selected', style.selected], className)}>
+    {shouldShowToggle && <Toggle className={clsx(style.toggle, 'mat-select-option-toggle')} type={ctx.allowMultiple ? 'checkbox' : 'radio'} checked={selected} independent />}
     {children}
   </Button>;
 }

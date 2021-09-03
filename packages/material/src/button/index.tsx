@@ -1,6 +1,7 @@
+import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useRipple } from '../ripple';
 import { getElevationClass } from '../util/helpers';
 import { MdBase, MdInteractible } from '../util/types';
@@ -12,14 +13,15 @@ type Props = UGUIElements['button'] & MdInteractible & MdBase & {
   variant?: ButtonVariant;
 };
 
-function _Button({ children, className, elevation, noRipple, onPointerDown, onPointerUp, variant, ...props }: Props) {
-  variant = variant || 'text';
-  const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
+const _Button = forwardRef<ReactUnity.UGUI.ButtonComponent, Props>(
+  function _Button({ children, className, elevation, noRipple, onPointerDown, onPointerUp, variant, ...props }, ref) {
+    variant = variant || 'text';
+    const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
 
-  return <button name="<Button>" {...props} {...ripple}
-    className={clsx(className, style.host, getElevationClass(elevation), 'md-button', style[variant], 'md-variant-' + variant)}>
-    {children}
-  </button>;
-}
+    return <button name="<Button>" {...props} {...ripple} ref={ref}
+      className={clsx(className, style.host, getElevationClass(elevation), 'md-button', style[variant], 'md-variant-' + variant)}>
+      {children}
+    </button>;
+  });
 
 export const Button = React.memo(_Button);

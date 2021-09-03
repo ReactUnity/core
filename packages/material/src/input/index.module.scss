@@ -40,7 +40,7 @@ $animSpeed: 200ms;
       scale: 0.75;
     }
 
-    &.filled {
+    &.filled.hasPlaceholder {
       :global(.mat-input-field-target) {
         padding-top: 18px;
       }
