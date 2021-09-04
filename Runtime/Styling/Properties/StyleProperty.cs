@@ -62,10 +62,7 @@ namespace ReactUnity.Styling
         public override int GetHashCode() => name.GetHashCode();
         public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
 
-        public object GetStyle(NodeStyle style)
-        {
-            return getter != null ? getter(style) : default;
-        }
+        public virtual object GetStyle(NodeStyle style) => getter != null ? getter(style) : default;
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {

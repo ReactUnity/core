@@ -32,15 +32,7 @@ namespace ReactUnity.Editor
 
             foreach (var prop in props)
             {
-                if (prop.Value is ILayoutProperty ll)
-                {
-                    obj[prop.Key] = ll.Get(component.Layout);
-
-                }
-                else if (prop.Value is IStyleProperty ss)
-                {
-                    obj[prop.Key] = ss.GetStyle(component.ComputedStyle);
-                }
+                obj[prop.Key] = prop.Value.GetStyle(component.ComputedStyle);
                 obj[prop.Key + "_exists"] = component.ComputedStyle.HasValue(prop.Value);
             }
 
