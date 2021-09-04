@@ -61,5 +61,16 @@ namespace ReactUnity.Tests
             Assert.AreEqual(0.4f, Text.Text.outlineWidth);
             Assert.AreEqual(new Color32(0, 0, 255, 255), Text.Text.outlineColor);
         }
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator OverflowAndMaskDoesNotBreakText()
+        {
+            InsertStyle(@"text {
+                overflow: hidden;
+                mask-image: url(res:star);
+            }");
+            yield return null;
+            Assert.IsNotNull(Text);
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace ReactUnity.Styling.Internal
     {
         private ReactContext Context;
         public Mask Mask;
+        public Graphic Graphic;
         public RoundedBorderMaskImage Image;
         public ImageReference MaskImage;
         private bool Enabled;
@@ -16,8 +17,12 @@ namespace ReactUnity.Styling.Internal
         {
             var cmp = go.AddComponent<MaskAndImage>();
             cmp.Context = ctx;
-            cmp.Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
-            cmp.Image.raycastTarget = false;
+            cmp.Graphic = go.GetComponent<Graphic>();
+
+            if (cmp.Graphic) cmp.Image = cmp.Graphic as RoundedBorderMaskImage;
+            else cmp.Graphic = cmp.Image = go.AddComponent<RoundedBorderMaskImage>();
+
+            if (cmp.Image) cmp.Image.raycastTarget = false;
             return cmp;
         }
 
@@ -29,6 +34,7 @@ namespace ReactUnity.Styling.Internal
 
         internal void SetMaskImage(ImageReference img)
         {
+            if (!Image) return;
             if (MaskImage == img) return;
             MaskImage = img;
             if (img == null)
@@ -45,6 +51,7 @@ namespace ReactUnity.Styling.Internal
 
         internal void SetBorderRadius(float tl, float tr, float br, float bl)
         {
+            if (!Image) return;
             Image.BorderRadius = new Vector4(tl, tr, br, bl);
             MaskChanged();
             Image.SetMaterialDirty();
@@ -53,7 +60,7 @@ namespace ReactUnity.Styling.Internal
 
         void MaskChanged()
         {
-            Image.enabled = Enabled;
+            Graphic.enabled = Enabled;
 
             if (Enabled)
             {

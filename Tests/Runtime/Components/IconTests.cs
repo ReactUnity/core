@@ -48,5 +48,17 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(string.Empty, Icon.TextContent);
         }
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator OverflowAndMaskDoesNotBreakIcon()
+        {
+            InsertStyle(@"icon {
+                overflow: hidden;
+                mask-image: url(res:star);
+            }");
+            yield return null;
+            Assert.IsNotNull(Icon);
+        }
     }
 }
