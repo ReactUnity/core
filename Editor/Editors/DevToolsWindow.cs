@@ -6,18 +6,18 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    public class StyleEditorWindow : ReactWindow
+    public class DevToolsWindow : ReactWindow
     {
-        [MenuItem("React/Style Editor")]
+        [MenuItem("React/Dev Tools")]
         public static void ShowDefaultWindow()
         {
-            var window = GetWindow<StyleEditorWindow>();
-            window.titleContent = new GUIContent("React Style Editor");
+            var window = GetWindow<DevToolsWindow>();
+            window.titleContent = new GUIContent("React Dev Tools");
         }
 
         protected override ScriptSource GetScript()
         {
-            var res = ScriptSource.Resource("ReactUnity/editor/style-editor/index");
+            var res = ScriptSource.Resource("ReactUnity/editor/devtools/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4000";
             res.UseDevServer = DevServerEnabled;

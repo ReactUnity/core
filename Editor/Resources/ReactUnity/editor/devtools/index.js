@@ -14,10 +14,10 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".classes_host__3RZlM{flex-shrink:0;margin-bottom:16px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".classes_host__1lnUd{flex-shrink:0;margin-bottom:16px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "classes_host__3RZlM"
+	"host": "classes_host__1lnUd"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37,13 +37,13 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".global-style_host__2UAzZ{flex-shrink:0;padding:16px}.global-style_scroll__1qbFf{flex-grow:1}.global-style_input__e_qf-{flex-grow:1;min-height:100%}.global-style_dialog__2KkEO{left:100%;top:0;position:relative}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".global-style_host__iSrdk{flex-shrink:0;padding:16px}.global-style_scroll__Js-Sc{flex-grow:1}.global-style_input__WMFct{flex-grow:1;min-height:100%}.global-style_dialog__3cBgk{left:100%;top:0;position:relative}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "global-style_host__2UAzZ",
-	"scroll": "global-style_scroll__1qbFf",
-	"input": "global-style_input__e_qf-",
-	"dialog": "global-style_dialog__2KkEO"
+	"host": "global-style_host__iSrdk",
+	"scroll": "global-style_scroll__Js-Sc",
+	"input": "global-style_input__WMFct",
+	"dialog": "global-style_dialog__3cBgk"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63,28 +63,28 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".grouped-styles_styles__2rmTD{flex-direction:column;align-items:stretch}.grouped-styles_styles__2rmTD .grouped-styles_showAllButton__6-NSM{margin-bottom:20px}.grouped-styles_row__a0h8E{flex-direction:row;flex-shrink:0;align-items:center;margin-bottom:4px;overflow:hidden}.grouped-styles_row__a0h8E:hover{background:.82}.grouped-styles_row__a0h8E .grouped-styles_removeButton__2xbU9{visibility:hidden;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;margin:0}.grouped-styles_row__a0h8E.grouped-styles_exists__3t-to{font-weight:bold}.grouped-styles_row__a0h8E.grouped-styles_exists__3t-to .grouped-styles_removeButton__2xbU9{font-weight:none;visibility:visible}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB{flex-grow:0;width:100px}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB .grouped-styles_rowContent__1Y8Md{align-items:stretch;justify-content:center;text-align:center}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-top__1rxwe .grouped-styles_rowContent__1Y8Md{flex-direction:column}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-bottom__3m0ot .grouped-styles_rowContent__1Y8Md{flex-direction:column-reverse}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-left__vs_ww .grouped-styles_rowContent__1Y8Md,.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-start__32HBq .grouped-styles_rowContent__1Y8Md{flex-direction:row}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-right__Th22J,.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-end__35caE{margin-left:40px;flex-direction:row-reverse}.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-right__Th22J .grouped-styles_rowContent__1Y8Md,.grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-end__35caE .grouped-styles_rowContent__1Y8Md{flex-direction:row-reverse}.grouped-styles_propRectContainer__2acGU{padding-top:6px;padding-bottom:6px;flex-direction:row}.grouped-styles_propRectContainer__2acGU:not(:first-child){border-top-color:.78;border-top-width:2px}.grouped-styles_propRectContainer__2acGU:hover{background:.82}.grouped-styles_rectHead__2o6_e{width:150px;align-self:center}.grouped-styles_rectHead__2o6_e .grouped-styles_rowContent__1Y8Md{flex-direction:column;align-self:center}.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-top__1rxwe,.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-right__Th22J{margin-left:12px;flex-direction:row-reverse}.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-top__1rxwe .grouped-styles_rowContent__1Y8Md,.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-right__Th22J .grouped-styles_rowContent__1Y8Md{flex-direction:row-reverse}.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-bottom__3m0ot,.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-left__vs_ww{flex-direction:row}.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-bottom__3m0ot .grouped-styles_rowContent__1Y8Md,.grouped-styles_propRect__DMttj.grouped-styles_corner__1woum .grouped-styles_row__a0h8E.grouped-styles_rectPart__7oXLB.grouped-styles_part-left__vs_ww .grouped-styles_rowContent__1Y8Md{flex-direction:row}.grouped-styles_propRectRow__2eFLD{flex-direction:row;justify-content:center}.grouped-styles_rowContent__1Y8Md{flex-grow:1;flex-basis:0;align-items:stretch;align-self:stretch}.grouped-styles_group__3Rwka{border-radius:8px;padding:6px;margin:6px;background:.86;border-width:2px;border-color:.83}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".grouped-styles_styles__P52xN{flex-direction:column;align-items:stretch}.grouped-styles_styles__P52xN .grouped-styles_showAllButton__17YWY{margin-bottom:20px}.grouped-styles_row__ZBxre{flex-direction:row;flex-shrink:0;align-items:center;margin-bottom:4px;overflow:hidden}.grouped-styles_row__ZBxre:hover{background:.82}.grouped-styles_row__ZBxre .grouped-styles_removeButton__1vsuF{visibility:hidden;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;margin:0}.grouped-styles_row__ZBxre.grouped-styles_exists__2e3SY{font-weight:bold}.grouped-styles_row__ZBxre.grouped-styles_exists__2e3SY .grouped-styles_removeButton__1vsuF{font-weight:none;visibility:visible}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm{flex-grow:0;width:100px}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm .grouped-styles_rowContent__3FENW{align-items:stretch;justify-content:center;text-align:center}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-top__1GDfF .grouped-styles_rowContent__3FENW{flex-direction:column}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-bottom__1gA6R .grouped-styles_rowContent__3FENW{flex-direction:column-reverse}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-left__Pb3UI .grouped-styles_rowContent__3FENW,.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-start__1I9V0 .grouped-styles_rowContent__3FENW{flex-direction:row}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-right__2oHZu,.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-end__2jBLP{margin-left:40px;flex-direction:row-reverse}.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-right__2oHZu .grouped-styles_rowContent__3FENW,.grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-end__2jBLP .grouped-styles_rowContent__3FENW{flex-direction:row-reverse}.grouped-styles_propRectContainer__PxyyT{padding-top:6px;padding-bottom:6px;flex-direction:row}.grouped-styles_propRectContainer__PxyyT:not(:first-child){border-top-color:.78;border-top-width:2px}.grouped-styles_propRectContainer__PxyyT:hover{background:.82}.grouped-styles_rectHead__37tez{width:150px;align-self:center}.grouped-styles_rectHead__37tez .grouped-styles_rowContent__3FENW{flex-direction:column;align-self:center}.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-top__1GDfF,.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-right__2oHZu{margin-left:12px;flex-direction:row-reverse}.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-top__1GDfF .grouped-styles_rowContent__3FENW,.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-right__2oHZu .grouped-styles_rowContent__3FENW{flex-direction:row-reverse}.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-bottom__1gA6R,.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-left__Pb3UI{flex-direction:row}.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-bottom__1gA6R .grouped-styles_rowContent__3FENW,.grouped-styles_propRect__hlV4r.grouped-styles_corner__1HOyA .grouped-styles_row__ZBxre.grouped-styles_rectPart__dzSOm.grouped-styles_part-left__Pb3UI .grouped-styles_rowContent__3FENW{flex-direction:row}.grouped-styles_propRectRow__3mYXN{flex-direction:row;justify-content:center}.grouped-styles_rowContent__3FENW{flex-grow:1;flex-basis:0;align-items:stretch;align-self:stretch}.grouped-styles_group__3pHwG{border-radius:8px;padding:6px;margin:6px;background:.86;border-width:2px;border-color:.83}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"styles": "grouped-styles_styles__2rmTD",
-	"showAllButton": "grouped-styles_showAllButton__6-NSM",
-	"row": "grouped-styles_row__a0h8E",
-	"removeButton": "grouped-styles_removeButton__2xbU9",
-	"exists": "grouped-styles_exists__3t-to",
-	"rectPart": "grouped-styles_rectPart__7oXLB",
-	"rowContent": "grouped-styles_rowContent__1Y8Md",
-	"part-top": "grouped-styles_part-top__1rxwe",
-	"part-bottom": "grouped-styles_part-bottom__3m0ot",
-	"part-left": "grouped-styles_part-left__vs_ww",
-	"part-start": "grouped-styles_part-start__32HBq",
-	"part-right": "grouped-styles_part-right__Th22J",
-	"part-end": "grouped-styles_part-end__35caE",
-	"propRectContainer": "grouped-styles_propRectContainer__2acGU",
-	"rectHead": "grouped-styles_rectHead__2o6_e",
-	"propRect": "grouped-styles_propRect__DMttj",
-	"corner": "grouped-styles_corner__1woum",
-	"propRectRow": "grouped-styles_propRectRow__2eFLD",
-	"group": "grouped-styles_group__3Rwka"
+	"styles": "grouped-styles_styles__P52xN",
+	"showAllButton": "grouped-styles_showAllButton__17YWY",
+	"row": "grouped-styles_row__ZBxre",
+	"removeButton": "grouped-styles_removeButton__1vsuF",
+	"exists": "grouped-styles_exists__2e3SY",
+	"rectPart": "grouped-styles_rectPart__dzSOm",
+	"rowContent": "grouped-styles_rowContent__3FENW",
+	"part-top": "grouped-styles_part-top__1GDfF",
+	"part-bottom": "grouped-styles_part-bottom__1gA6R",
+	"part-left": "grouped-styles_part-left__Pb3UI",
+	"part-start": "grouped-styles_part-start__1I9V0",
+	"part-right": "grouped-styles_part-right__2oHZu",
+	"part-end": "grouped-styles_part-end__2jBLP",
+	"propRectContainer": "grouped-styles_propRectContainer__PxyyT",
+	"rectHead": "grouped-styles_rectHead__37tez",
+	"propRect": "grouped-styles_propRect__hlV4r",
+	"corner": "grouped-styles_corner__1HOyA",
+	"propRectRow": "grouped-styles_propRectRow__3mYXN",
+	"group": "grouped-styles_group__3pHwG"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -104,11 +104,11 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main_host__W3tT_{flex-direction:column;align-items:stretch}.main_logo__lXeY0{max-height:200px;max-width:200px;align-self:center;transform-origin:center}.main_logo__lXeY0+view{font-size:16px;align-self:center}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".main_host__13Qki{flex-direction:column;align-items:stretch}.main_logo__HLW_k{max-height:200px;max-width:200px;align-self:center;transform-origin:center}.main_logo__HLW_k+view{font-size:16px;align-self:center}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "main_host__W3tT_",
-	"logo": "main_logo__lXeY0"
+	"host": "main_host__13Qki",
+	"logo": "main_logo__HLW_k"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7700,20 +7700,23 @@ var Renderer = {
     return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   }
 };
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+
+  var _s, _e;
 
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -7731,7 +7734,7 @@ function _iterableToArrayLimit(arr, i) {
 
   return _arr;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
 
@@ -7741,7 +7744,7 @@ function _arrayLikeToArray(arr, len) {
 
   return arr2;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -7751,11 +7754,11 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
 
 
@@ -7766,7 +7769,7 @@ function _slicedToArray(arr, i) {
 ;// CONCATENATED MODULE: ./src/context/selection.tsx
 var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=Interop.UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}var ctx=/*#__PURE__*/react.createContext(undefined);function SelectionProvider(_ref){var children=_ref.children;var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/react.createElement(ctx.Provider,{value:selection},children);};function useSelection(){var context=react.useContext(ctx);if(context===undefined){throw new Error('useSelection must be used within a provider');}return context;}
 ;// CONCATENATED MODULE: ./src/context/style.tsx
-var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('style-editor-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style,'',1,null);var style=state.styles;var selector="[style-editor-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
+var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('devtools-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style,'',1,null);var style=state.styles;var selector="[devtools-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(487);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -7851,7 +7854,7 @@ var index_module_update = injectStylesIntoStyleTag_default()(global_style_index_
 
 ;// CONCATENATED MODULE: ./src/main/global-style/index.tsx
 var stylesheets={};function GlobalStyle(){var _useState=(0,react.useState)(false),_useState2=_slicedToArray(_useState,2),show=_useState2[0],setShow=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),savedInput=_useState4[0],setSavedInput=_useState4[1];var selection=useSelection();(0,react.useEffect)(function(){if(!selection)return;var sheet=stylesheets[savedInput];if(sheet){selection.Component.Context.InsertStyle(sheet);}else{sheet=stylesheets[savedInput]=selection.Component.Context.InsertStyle(savedInput);}return function(){if(sheet)selection.Component.Context.RemoveStyle(sheet);};},[savedInput,selection]);var inputRef=(0,react.useRef)();var save=function save(){setSavedInput(inputRef.current.Value);};var cancel=function cancel(){inputRef.current.Value=savedInput;setShow(false);};var keyup=function keyup(ev){if(ev.ctrlKey&&(ev.keyCode===Interop.UnityEngine.KeyCode.Return||ev.keyCode===Interop.UnityEngine.KeyCode.KeypadEnter)){ev.PreventDefault();ev.StopImmediatePropagation();ev.StopPropagation();save(null);}else if(ev.keyCode===Interop.UnityEngine.KeyCode.Escape){ev.PreventDefault();ev.StopImmediatePropagation();ev.StopPropagation();cancel(null);}};var closeCallback=(0,react.useCallback)(function(){return setShow(false);},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_global_style_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:function onButtonClick(){return setShow(function(x){return!x;});},children:"Edit Global Styles"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("dialog",{show:show,onClose:closeCallback,title:"Global Styles",className:main_global_style_index_module.dialog,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:main_global_style_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("input",{className:main_global_style_index_module.input,value:savedInput,ref:inputRef,multiline:true,onKeyUp:keyup})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_global_style_index_module.actions,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:cancel,children:"Cancel (Esc)"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:save,children:"Save (Ctrl + Enter)"})]})]})]});}
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -7866,7 +7869,7 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 
 
 function ownKeys(object, enumerableOnly) {
@@ -7874,9 +7877,13 @@ function ownKeys(object, enumerableOnly) {
 
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
     keys.push.apply(keys, symbols);
   }
 
@@ -7950,7 +7957,7 @@ function toVal(mix) {
 
   return str;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -7965,7 +7972,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
   return target;
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};

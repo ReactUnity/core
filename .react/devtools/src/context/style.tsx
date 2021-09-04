@@ -30,7 +30,7 @@ const findElementId = (state: State, el: Cmp) => {
     ind = state.length;
     const st = { element: el, styles: {}, ind } as ElementProps;
     state.push(st);
-    el.SetData('style-editor-el', ind + '');
+    el.SetData('devtools-el', ind + '');
   }
 
   return ind;
@@ -41,7 +41,7 @@ const buildSheet = (state: ElementProps) => {
 
   const style = state.styles;
 
-  const selector = `[style-editor-el=${state.ind}]`;
+  const selector = `[devtools-el=${state.ind}]`;
 
   const values = [];
   const valuesDic = (Globals.Window as any).CreateStyleDictionary();

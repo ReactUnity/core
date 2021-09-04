@@ -8,7 +8,7 @@ namespace ReactUnity.Editor
     {
         protected override ScriptSource GetScript()
         {
-            var res = ScriptSource.Resource("ReactUnity/editor/style-editor/index");
+            var res = ScriptSource.Resource("ReactUnity/editor/devtools/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4000";
             res.UseDevServer = false;
