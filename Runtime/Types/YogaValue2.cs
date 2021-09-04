@@ -143,14 +143,14 @@ namespace ReactUnity.Types
                 if (str.Contains("top"))
                 {
                     x = 0.5f;
-                    y = 1;
+                    y = 0;
                     if (str.Contains("left")) x = 0;
                     if (str.Contains("right")) x = 1;
                 }
                 else if (str.Contains("bottom"))
                 {
                     x = 0.5f;
-                    y = 0;
+                    y = 1;
                     if (str.Contains("left")) x = 0;
                     if (str.Contains("right")) x = 1;
                 }

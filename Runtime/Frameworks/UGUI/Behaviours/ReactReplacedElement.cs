@@ -55,8 +55,6 @@ namespace ReactUnity.UGUI.Behaviours
             var anX = xPer ? 0 : xVal;
             var anY = yPer ? 0 : yVal;
 
-            var parent = rt.parent as RectTransform;
-
             var parMinX = xPer ? xVal : 0;
             var parMaxX = xPer ? xVal : 1;
 

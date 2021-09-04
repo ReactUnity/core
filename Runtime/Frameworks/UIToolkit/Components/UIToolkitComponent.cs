@@ -215,7 +215,7 @@ namespace ReactUnity.UIToolkit
 
                 var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
                 var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
-                var pivot = new Vector3(pivotX, 1 - pivotY, 0);
+                var pivot = new Vector3(pivotX, pivotY, 0);
 
                 if (pivot == Vector3.zero) TargetElement.transform.position = translate;
                 else

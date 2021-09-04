@@ -55,7 +55,7 @@ namespace ReactUnity.UGUI
                 var rect = RectTransform.sizeDelta;
                 var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
                 var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
-                var pivot = new Vector2(pivotX, pivotY);
+                var pivot = new Vector2(pivotX, 1 - pivotY);
                 Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
                 deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
                 deltaPosition.Scale(scaleBefore);                       // apply scaling
