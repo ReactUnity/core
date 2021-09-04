@@ -1,4 +1,9 @@
-import type { ServerStyleSheet } from 'styled-components';
+import { ReactElement } from 'react';
+
+interface ServerStyleSheet {
+  getStyleElement(): Array<ReactElement<{}>>;
+  seal(): void;
+}
 
 export function insertStyledComponentsSheet(sheet: ServerStyleSheet) {
   try {

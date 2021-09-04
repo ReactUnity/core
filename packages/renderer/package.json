@@ -64,7 +64,6 @@
   "devDependencies": {
     "@types/react": "^17.0.19",
     "@types/react-reconciler": "^0.26.3",
-    "@types/styled-components": "5.1.13",
     "@types/webpack-env": "^1.16.2",
     "eslint": "^7.32.0",
     "rimraf": "^3.0.2",
