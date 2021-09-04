@@ -14,7 +14,7 @@ namespace ReactUnity.Tests
                 </view>;
             }
 
-            Renderer.render(<GlobalsProvider children={<App />} />);
+            Renderer.render(<App />);
 ";
 
         public FontSizeTests(JavascriptEngineType engineType) : base(engineType) { }
