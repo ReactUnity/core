@@ -10,12 +10,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using ScrollbarVisibility = UnityEngine.UI.ScrollRect.ScrollbarVisibility;
+using MovementType = UnityEngine.UI.ScrollRect.MovementType;
 
 namespace ReactUnity.UGUI
 {
     public class ScrollComponent : UGUIComponent
     {
-        public ScrollRect ScrollRect { get; private set; }
+        public SmoothScrollRect ScrollRect { get; private set; }
 
         public ScrollContentResizer ContentResizer { get; private set; }
 
@@ -52,9 +54,9 @@ namespace ReactUnity.UGUI
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
             ScrollRect.scrollSensitivity = 50;
-            ScrollRect.horizontalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
-            ScrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
-            ScrollRect.movementType = ScrollRect.MovementType.Clamped;
+            ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
+            ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
+            ScrollRect.movementType = MovementType.Clamped;
         }
 
         private Scrollbar CreateScrollbar(bool vertical)
@@ -69,6 +71,17 @@ namespace ReactUnity.UGUI
         {
             switch (propertyName)
             {
+                case "elasticity":
+                    var el = AllConverters.FloatConverter.Convert(value);
+                    var elas = el is float f ? f : 0;
+                    ScrollRect.movementType = elas > 0 ? MovementType.Elastic : MovementType.Elastic;
+                    ScrollRect.elasticity = elas;
+                    break;
+                case "smoothness":
+                    var sm = AllConverters.FloatConverter.Convert(value);
+                    if (sm is float f2) ScrollRect.SmoothScrollTime = f2;
+                    else ScrollRect.SmoothScrollTime = 0.12f;
+                    break;
                 case "direction":
                     var dirs = AllConverters.Get<ScrollBarDirection>().Convert(value);
                     var dir = dirs is ScrollBarDirection s ? s : ScrollBarDirection.Both;
@@ -79,12 +92,12 @@ namespace ReactUnity.UGUI
                 case "alwaysShow":
                     var dirs2 = AllConverters.Get<ScrollBarDirection>().Convert(value);
                     var dir2 = dirs2 is ScrollBarDirection s2 ? s2 : ScrollBarDirection.None;
-                    ScrollRect.horizontalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Horizontal) ? ScrollRect.ScrollbarVisibility.Permanent : ScrollRect.ScrollbarVisibility.AutoHide;
-                    ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Vertical) ? ScrollRect.ScrollbarVisibility.Permanent : ScrollRect.ScrollbarVisibility.AutoHide;
+                    ScrollRect.horizontalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Horizontal) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
+                    ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollBarDirection.Vertical) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
                     break;
                 case "sensitivity":
                     var fl = AllConverters.FloatConverter.Convert(value);
-                    if (fl is float f) ScrollRect.scrollSensitivity = f;
+                    if (fl is float f3) ScrollRect.scrollSensitivity = f3;
                     else ScrollRect.scrollSensitivity = 50;
                     break;
                 default:
@@ -296,7 +309,6 @@ namespace ReactUnity.UGUI
     /// </summary>
     public class SmoothScrollRect : ScrollRect
     {
-        public bool SmoothScrolling { get; set; } = true;
         public float SmoothScrollTime { get; set; } = 0.12f;
 
         private Coroutine SmoothCoroutine;
@@ -314,7 +326,7 @@ namespace ReactUnity.UGUI
                 normalizedPosition = targetPosition;
             }
 
-            if (SmoothScrolling)
+            if (SmoothScrollTime > 0)
             {
                 Vector2 positionBefore = normalizedPosition;
                 base.OnScroll(data);
@@ -322,21 +334,18 @@ namespace ReactUnity.UGUI
                 targetPosition = positionAfter;
 
                 normalizedPosition = positionBefore;
-                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter, SmoothScrollTime));
+                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter));
             }
-            else
-            {
-                base.OnScroll(data);
-            }
+            else base.OnScroll(data);
         }
 
-        private IEnumerator StartScroll(Vector2 from, Vector2 to, float time)
+        private IEnumerator StartScroll(Vector2 from, Vector2 to)
         {
             var passed = 0f;
 
-            while (passed < time)
+            while (passed < SmoothScrollTime)
             {
-                normalizedPosition = Vector2.Lerp(from, to, passed / time);
+                normalizedPosition = Vector2.Lerp(from, to, passed / SmoothScrollTime);
                 passed += Time.deltaTime;
                 yield return null;
             }
