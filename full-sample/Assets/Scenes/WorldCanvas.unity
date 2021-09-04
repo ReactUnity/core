@@ -237,7 +237,7 @@ RectTransform:
   m_GameObject: {fileID: 1291822657}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.55}
-  m_LocalScale: {x: 0.0005, y: 0.0005, z: 0.0005}
+  m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2023844850}
@@ -246,7 +246,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3000, y: 1500}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1291822659
 MonoBehaviour:
@@ -270,7 +270,7 @@ MonoBehaviour:
     DevServer: http://localhost:3100#material
   Debug: 0
   AwaitDebugger: 0
-  EngineType: 0
+  EngineType: 2
   Globals:
     Entries: []
   AutoRender: 1

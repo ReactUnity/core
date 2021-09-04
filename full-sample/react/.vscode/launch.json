@@ -16,6 +16,8 @@
       "continueOnAttach": true,
       "trace": true,
       "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
       ]
     }
   ]
