@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RoundedColoredBorder
   m_Shader: {fileID: 4800000, guid: 3157c57765b2da04e801bd8e3173d3f1, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNITY_UI_CLIP_RECT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -121,6 +121,7 @@ Material:
     - _StencilWriteMask: 255
     - _Surface: 0
     - _UseUIAlphaClip: 0
+    - _UseUIClipRect: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

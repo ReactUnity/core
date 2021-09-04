@@ -18,6 +18,7 @@ Shader "ReactUnity/RoundedColoredBorder"
     _StencilReadMask("Stencil Read Mask", Float) = 255
     _ColorMask("Color Mask", Float) = 15
     [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
+    [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
   }
 
     SubShader{
@@ -73,6 +74,7 @@ Shader "ReactUnity/RoundedColoredBorder"
 
         sampler2D _MainTex;
         float4 _MainTex_ST;
+        float4 _ClipRect;
 
         fixed4 frag(v2f i) : SV_Target
         {
@@ -80,11 +82,17 @@ Shader "ReactUnity/RoundedColoredBorder"
           CalculateBorderRadius_float(_borderRadius, i.uv, _size, visible);
           float alpha = visible ? 1 : 0;
 
-          clip(alpha - 0.001);
-
           float4 borderSizeScaled = float4(_borderSize.x / _size.y, _borderSize.y / _size.x, _borderSize.z / _size.y, _borderSize.w / _size.x);
 
           float4 borderColor = 0;
+
+#ifdef UNITY_UI_CLIP_RECT
+          alpha *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+#endif
+
+#ifdef UNITY_UI_ALPHACLIP
+          clip(alpha - 0.001);
+#endif
 
           if (alpha > 0.001) PickBorderColorTrapezoidal_float(i.uv, borderSizeScaled, _topColor, _rightColor, _bottomColor, _leftColor, borderColor);
 

@@ -12,6 +12,7 @@ Shader "ReactUnity/RoundedBorder"
     _StencilReadMask("Stencil Read Mask", Float) = 255
     _ColorMask("Color Mask", Float) = 15
     [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
+    [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
   }
 
     SubShader{
@@ -60,6 +61,7 @@ Shader "ReactUnity/RoundedBorder"
         float2 _size;
         sampler2D _MainTex;
         float4 _MainTex_ST;
+        float4 _ClipRect;
 
         fixed4 frag(v2f i) : SV_Target
         {
@@ -69,7 +71,13 @@ Shader "ReactUnity/RoundedBorder"
 
           fixed4 res = mixAlpha(tex2D(_MainTex, i.uv), i.color, alpha);
 
+#ifdef UNITY_UI_CLIP_RECT
+          res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+#endif
+
+#ifdef UNITY_UI_ALPHACLIP
           clip(res.a - 0.001);
+#endif
 
           return res;
         }

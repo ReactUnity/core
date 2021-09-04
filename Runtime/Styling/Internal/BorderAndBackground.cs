@@ -250,6 +250,7 @@ namespace ReactUnity.Styling.Internal
         {
             var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
             var img = sd.GetComponent<BoxShadowImage>();
+            img.MaskRoot = transform;
             img.raycastTarget = false;
             ShadowGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, ShadowRoot);

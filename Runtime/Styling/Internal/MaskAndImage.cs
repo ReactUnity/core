@@ -8,7 +8,6 @@ namespace ReactUnity.Styling.Internal
     {
         private ReactContext Context;
         public Mask Mask;
-        public RectMask2D RectMask;
         public RoundedBorderMaskImage Image;
         public ImageReference MaskImage;
         private bool Enabled;
@@ -19,7 +18,6 @@ namespace ReactUnity.Styling.Internal
             cmp.Context = ctx;
             cmp.Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
             cmp.Image.raycastTarget = false;
-            cmp.RectMask = go.GetComponent<RectMask2D>() ?? go.AddComponent<RectMask2D>();
             return cmp;
         }
 
@@ -55,12 +53,9 @@ namespace ReactUnity.Styling.Internal
 
         void MaskChanged()
         {
-            var isRect = Image.sprite == null && Image.BorderRadius == Vector4.zero;
-            RectMask.enabled = Enabled && isRect;
+            Image.enabled = Enabled;
 
-            Image.enabled = Enabled && !isRect;
-
-            if (Enabled && !isRect)
+            if (Enabled)
             {
                 if (!Mask)
                 {

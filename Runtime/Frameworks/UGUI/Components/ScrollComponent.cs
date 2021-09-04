@@ -26,7 +26,6 @@ namespace ReactUnity.UGUI
             ScrollRect = AddComponent<SmoothScrollRect>();
 
             var viewport = new GameObject("[Scroll Viewport]").AddComponent<RectTransform>();
-            viewport.gameObject.AddComponent<RectMask2D>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;

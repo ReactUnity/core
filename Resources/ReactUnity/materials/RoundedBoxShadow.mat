@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RoundedBoxShadow
   m_Shader: {fileID: 4800000, guid: 24082fc1e680bd044a88409bb9d23f68, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNITY_UI_CLIP_RECT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -79,6 +79,7 @@ Material:
     - _StencilWriteMask: 0
     - _UVSec: 0
     - _UseUIAlphaClip: 0
+    - _UseUIClipRect: 1
     - _ZWrite: 1
     - _blurRadius: 8.4
     - _inset: 0

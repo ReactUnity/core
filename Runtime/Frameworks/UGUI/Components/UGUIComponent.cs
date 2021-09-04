@@ -258,11 +258,12 @@ namespace ReactUnity.UGUI
 
         private void SetOverflow()
         {
+            var computed = ComputedStyle;
             var mask = MaskAndImage;
-            var maskImage = ComputedStyle.maskImage;
+            var maskImage = computed.maskImage;
 
             var hasImage = maskImage != null && maskImage != ImageReference.None;
-            var hasMask = Layout.Overflow != YogaOverflow.Visible || hasImage;
+            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) != YogaOverflow.Visible || hasImage;
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
@@ -271,7 +272,7 @@ namespace ReactUnity.UGUI
 
             mask.SetMaskImage(maskImage);
             mask.SetEnabled(hasMask);
-            mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
+            mask.SetBorderRadius(computed.borderTopLeftRadius, computed.borderTopRightRadius, computed.borderBottomRightRadius, computed.borderBottomLeftRadius);
         }
 
         private void SetCursor()

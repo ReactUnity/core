@@ -59,7 +59,6 @@ input {
 scroll {
   overflow: scroll;
   flex-shrink: 1;
-  scroll-behavior: smooth;
 }
 
 scroll _scrollbar {
