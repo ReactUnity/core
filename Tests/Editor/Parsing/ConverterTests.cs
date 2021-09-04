@@ -1,3 +1,4 @@
+using Facebook.Yoga;
 using NUnit.Framework;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
@@ -272,6 +273,18 @@ namespace ReactUnity.Editor.Tests
 
             if (converted is Color c) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
             else Assert.AreEqual(expected, converted);
+        }
+
+
+        [Test]
+        public void NoneAndDefaultWorksForSupportingTypes()
+        {
+            Assert.AreEqual(YogaDisplay.None, LayoutProperties.Display.Convert("none"));
+            Assert.AreEqual(PointerEvents.None, StyleProperties.pointerEvents.Convert("none"));
+            Assert.AreEqual(Appearance.None, StyleProperties.appearance.Convert("none"));
+            Assert.AreEqual(ObjectFit.None, StyleProperties.objectFit.Convert("none"));
+            Assert.AreEqual(CursorList.None, StyleProperties.cursor.Convert("none"));
+            Assert.AreEqual(CursorList.Default, StyleProperties.cursor.Convert("default"));
         }
     }
 }

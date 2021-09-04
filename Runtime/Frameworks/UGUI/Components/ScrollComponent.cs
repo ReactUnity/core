@@ -10,8 +10,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using ScrollbarVisibility = UnityEngine.UI.ScrollRect.ScrollbarVisibility;
 using MovementType = UnityEngine.UI.ScrollRect.MovementType;
+using ScrollbarVisibility = UnityEngine.UI.ScrollRect.ScrollbarVisibility;
 
 namespace ReactUnity.UGUI
 {
@@ -56,6 +56,7 @@ namespace ReactUnity.UGUI
             ScrollRect.scrollSensitivity = 50;
             ScrollRect.horizontalScrollbarVisibility = ScrollbarVisibility.AutoHide;
             ScrollRect.verticalScrollbarVisibility = ScrollbarVisibility.AutoHide;
+            ScrollRect.elasticity = 0;
             ScrollRect.movementType = MovementType.Clamped;
         }
 
@@ -74,7 +75,7 @@ namespace ReactUnity.UGUI
                 case "elasticity":
                     var el = AllConverters.FloatConverter.Convert(value);
                     var elas = el is float f ? f : 0;
-                    ScrollRect.movementType = elas > 0 ? MovementType.Elastic : MovementType.Elastic;
+                    ScrollRect.movementType = elas > 0 ? MovementType.Elastic : MovementType.Clamped;
                     ScrollRect.elasticity = elas;
                     break;
                 case "smoothness":

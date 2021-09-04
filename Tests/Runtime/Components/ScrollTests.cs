@@ -13,7 +13,11 @@ namespace ReactUnity.Tests
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
-                    <scroll direction={globals.direction} alwaysShow={globals.alwaysShow} sensitivity={globals.sensitivity}>
+                    <scroll direction={globals.direction}
+                        alwaysShow={globals.alwaysShow}
+                        sensitivity={globals.sensitivity}
+                        elasticity={globals.elasticity}
+                        smoothness={globals.smoothness}>
                         <view>
                         </view>
                     </scroll>
@@ -123,11 +127,16 @@ namespace ReactUnity.Tests
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.verticalScrollbarVisibility);
             Assert.AreEqual(50, Scroll.ScrollRect.scrollSensitivity);
+            Assert.AreEqual(0.12f, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
+            Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
 
 
             Globals.Set("sensitivity", 100);
             Globals.Set("direction", "vertical");
             Globals.Set("alwaysShow", "both");
+            Globals.Set("elasticity", 0.5f);
+            Globals.Set("smoothness", 0.4f);
             yield return null;
 
             Assert.AreEqual(false, Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
@@ -137,6 +146,17 @@ namespace ReactUnity.Tests
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.verticalScrollbarVisibility);
             Assert.AreEqual(100, Scroll.ScrollRect.scrollSensitivity);
+            Assert.AreEqual(0.4f, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(ScrollRect.MovementType.Elastic, Scroll.ScrollRect.movementType);
+            Assert.AreEqual(0.5f, Scroll.ScrollRect.elasticity);
+
+
+            Globals.Set("elasticity", 0);
+            Globals.Set("smoothness", 0);
+            yield return null;
+            Assert.AreEqual(0, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
+            Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
         }
     }
 }

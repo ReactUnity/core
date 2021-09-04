@@ -34,7 +34,8 @@ namespace ReactUnity.Types
             {
                 if (value is CursorList f) return f;
                 if (value is Cursor t) return new CursorList(t);
-                if (Equals(value, CssKeyword.Default) || Equals(value, CssKeyword.Auto)) return Default;
+                if (Equals(value, CssKeyword.Default)) return Default;
+                if (Equals(value, CssKeyword.None)) return None;
                 return FromString(value?.ToString());
             }
 

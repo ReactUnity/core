@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit.StateHandlers
