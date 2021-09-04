@@ -191,6 +191,16 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.textWrap, value);
             get => GetStyleValue<bool>(StyleProperties.textWrap);
         }
+        public Color textStrokeColor
+        {
+            set => SetStyleValue(StyleProperties.textStrokeColor, value);
+            get => GetStyleValue<Color>(StyleProperties.textStrokeColor);
+        }
+        public float textStrokeWidth
+        {
+            set => SetStyleValue(StyleProperties.textStrokeWidth, value);
+            get => GetStyleValue<float>(StyleProperties.textStrokeWidth);
+        }
         public string content
         {
             set => SetStyleValue(StyleProperties.content, value);

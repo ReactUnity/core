@@ -23,6 +23,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand Font = new FontShorthand("font");
         public static readonly StyleShorthand Background = new BackgroundShorthand("background");
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
+        public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly StyleShorthand[] List;

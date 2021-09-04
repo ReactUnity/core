@@ -47,6 +47,8 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
+        public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
+        public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<Navigation.Mode> navigation = new StyleProperty<Navigation.Mode>("navigation", Navigation.Mode.Automatic);
@@ -87,6 +89,8 @@ namespace ReactUnity.Styling
             { "text-align", textAlign },
             { "text-overflow", textOverflow },
             { "text-wrap", textWrap },
+            { "text-stroke-color", textStrokeColor },
+            { "text-stroke-width", textStrokeWidth },
             { "white-space", textWrap },
             { "object-fit", objectFit },
             { "object-position", objectPosition },

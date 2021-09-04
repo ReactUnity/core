@@ -1,3 +1,4 @@
+using System;
 using Facebook.Yoga;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
@@ -80,6 +81,15 @@ namespace ReactUnity.UGUI
             TextInside = text;
         }
 
+        public override void SetProperty(string property, object value)
+        {
+            if (property == "richText")
+            {
+                Text.richText = Convert.ToBoolean(value);
+            }
+            else base.SetProperty(property, value);
+        }
+
         protected override void ApplyLayoutStylesSelf()
         {
             base.ApplyLayoutStylesSelf();
@@ -98,6 +108,9 @@ namespace ReactUnity.UGUI
             Text.enableWordWrapping = style.textWrap;
             Text.alignment = style.textAlign;
             Text.overflowMode = style.textOverflow;
+            Text.outlineWidth = style.textStrokeWidth;
+            Text.outlineColor = style.textStrokeColor;
+
             Font = style.fontFamily;
             Text.fontStyle = FontStyles = style.fontStyle;
             Text.fontWeight = FontWeight = style.fontWeight;
