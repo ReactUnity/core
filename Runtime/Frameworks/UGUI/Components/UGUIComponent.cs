@@ -130,6 +130,10 @@ namespace ReactUnity.UGUI
         protected void ApplyYogaValues()
         {
             var computed = ComputedStyle;
+
+            var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
+            Layout.PositionType = pos == PositionType.Relative ? YogaPositionType.Relative : YogaPositionType.Absolute;
+
             Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
             Layout.Wrap = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Wrap);
             Layout.FlexGrow = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexGrow);
@@ -166,8 +170,6 @@ namespace ReactUnity.UGUI
             Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
             Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
-            var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
-            Layout.PositionType = pos == PositionType.Relative ? YogaPositionType.Relative : YogaPositionType.Absolute;
             Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
 
             Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);

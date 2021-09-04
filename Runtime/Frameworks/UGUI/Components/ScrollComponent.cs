@@ -351,6 +351,7 @@ namespace ReactUnity.UGUI
                 yield return null;
             }
             normalizedPosition = to;
+            SmoothCoroutine = null;
         }
     }
 }
