@@ -12,7 +12,9 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
   style?: Style;
 }
 
-export interface Text extends View<ReactUnity.UGUI.TextComponent> { }
+export interface Text extends View<ReactUnity.UGUI.TextComponent> {
+  richText?: boolean;
+}
 
 export interface Label extends View<ReactUnity.UGUI.LabelComponent> {
   for?: ReactUnity.UGUI.UGUIComponent | string;
@@ -29,6 +31,8 @@ export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
   direction?: ScrollDirection;
   alwaysShow?: ScrollDirection;
   sensitivity?: number;
+  elasticity?: number;
+  smoothness?: number;
 }
 
 export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {

@@ -1,4 +1,4 @@
-import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
+import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextAlign, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
 import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -49,7 +49,10 @@ export interface RenderStyle {
   fontStyle?: FontStyles;
   fontSize?: YogaValueAux;
   textOverflow?: TextOverflowModes;
+  textAlign?: TextAlign;
   whiteSpace?: WhiteSpace;
+  textStrokeWidth?: NumberAux;
+  textStrokeColor?: ColorAux;
 
   // Shorthands
   border?: string;
@@ -64,4 +67,8 @@ export interface RenderStyle {
   flex?: string;
   flexFlow?: string;
   font?: string;
+  textStroke?: string;
+
+  // Custom CSS variables
+  [variable: `--${string}`]: any;
 }
