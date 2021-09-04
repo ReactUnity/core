@@ -65,9 +65,32 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.IsTrue(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
             Assert.IsFalse(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            View.Style.Set("width", 100);
         }
 
+        private IEnumerator RunWithRandomRotation(System.Func<IEnumerator> cb)
+        {
+            var cube = GameObject.Find("Cube");
 
+            for (int i = 0; i < 10; i++)
+            {
+                yield return cb();
+                cube.transform.rotation = Random.rotation;
+            }
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
+        public IEnumerator ScrollbarCanBePositionedAndColoredWithStylingWorldScene()
+        {
+            yield return RunWithRandomRotation(ScrollbarCanBePositionedAndColoredWithStyling);
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
+        public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflowsWorldScene()
+        {
+            yield return RunWithRandomRotation(ScrollbarIsVisibleOnlyWhenSideOverflows);
+        }
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStyling()
@@ -102,6 +125,8 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(new Rect(-10, -87.5f, 20, 175), (Scroll.ScrollRect.verticalScrollbar.transform as RectTransform).rect);
             Assert.AreEqual(new Rect(-88, -15, 176, 30), (Scroll.ScrollRect.horizontalScrollbar.transform as RectTransform).rect);
+            Assert.AreEqual(0, Scroll.ScrollRect.verticalScrollbar.transform.localPosition.z);
+            Assert.AreEqual(0, Scroll.ScrollRect.horizontalScrollbar.transform.localPosition.z);
 
             var hbar = Q("scroll _scrollbar[horizontal]") as ScrollBarComponent;
 

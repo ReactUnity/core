@@ -14,6 +14,7 @@ namespace ReactUnity.Tests
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
         public const string DefaultSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
+        public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene_World.unity";
 
 #if UNITY_EDITOR
         #region Test Debug Toggle
