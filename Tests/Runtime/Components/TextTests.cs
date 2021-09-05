@@ -35,8 +35,8 @@ namespace ReactUnity.Tests
             Assert.AreEqual(false, Text.Text.richText);
             Assert.AreEqual("this is default text content", Text.TextContent);
 
-            Globals.Set("richText", true);
-            Globals.Set("textContent", "some other text content");
+            Component.Globals.Set("richText", true);
+            Component.Globals.Set("textContent", "some other text content");
             yield return null;
 
             Assert.AreEqual(true, Text.Text.richText);

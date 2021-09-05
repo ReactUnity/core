@@ -89,11 +89,7 @@ namespace ReactUnity.Tests
                 return <image source={globals.image} />;
             }
 
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
+            Renderer.render(<App />);
         ")]
         public IEnumerator TestGlobalsChange()
         {
@@ -104,6 +100,27 @@ namespace ReactUnity.Tests
 
             var tx = new Texture2D(1, 1);
             Component.Globals.Set("image", tx);
+            Assert.AreEqual(tx, imgCmp.mainTexture);
+        }
+
+
+        [ReactInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <image source={globals.image} />;
+            }
+
+            Renderer.render(<App />);
+        ")]
+        public IEnumerator TestGlobalsChangeOnComponent()
+        {
+            yield return null;
+
+            var imgCmp = (Host.QuerySelector("image") as UGUI.ImageComponent).Image;
+            Assert.AreEqual(Texture2D.whiteTexture, imgCmp.mainTexture);
+
+            var tx = new Texture2D(1, 1);
+            Component.Globals["image"] = tx;
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
 
