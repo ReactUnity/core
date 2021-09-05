@@ -4,7 +4,7 @@ export type Unique<T, K> = T & { $type: K };
 
 export type NativeInstance = ReactUnity.IReactComponent;
 export type NativeTextInstance = ReactUnity.ITextComponent;
-export type NativeContainerInstance = ReactUnity.IHostComponent;
+export type NativeContainerInstance = ReactUnity.IReactComponent;
 
 export type InstanceTag = string;
 export type Props = React.RefAttributes<NativeInstance> & {

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 04/09/2021 22:34:27
+// Generated 05/09/2021 18:25:37
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -640,8 +640,8 @@ export declare namespace ReactUnity {
   }
   export class ReactUnityBridge {
     static Instance: ReactUnity.ReactUnityBridge;
-    createText(text: string, host: ReactUnity.IHostComponent): ReactUnity.ITextComponent;
-    createElement(tag: string, text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
+    createText(text: string, host: ReactUnity.IReactComponent): ReactUnity.ITextComponent;
+    createElement(tag: string, text: string, host: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
     appendChild(parent: any, child: any): void;
     appendChildToContainer(parent: any, child: any): void;
     insertBefore(parent: any, child: any, beforeChild: any): void;
@@ -5131,6 +5131,7 @@ export declare namespace ReactUnity {
       Equals(obj: any): boolean;
       GetHashCode(): number;
       ToCSS(): string;
+      Negate(): ReactUnity.Types.YogaValue2;
       ToString(): string;
       GetType(): System.Type;
     }
