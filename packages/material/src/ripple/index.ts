@@ -12,11 +12,6 @@ export type RippleBaseProps = {
   target?: React.RefObject<ReactUnity.UGUI.UGUIComponent>;
 };
 
-export interface Ripple {
-  element: ReactUnity.UGUI.UGUIComponent;
-  fade: () => void;
-}
-
 export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, pressPosition?: UnityEngine.Vector2) {
   if (!containerElement) return null;
   const ripple = UnityBridge.createElement('view', '', HostContainer) as unknown as ReactUnity.UGUI.UGUIComponent;
@@ -54,33 +49,24 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
   }
 
   UnityBridge.appendChild(containerElement, ripple);
-  return {
-    element: ripple,
-    fade: () => {
-      ripple.ClassList.Add(style.fading);
-
-      setTimeout(() => {
-        UnityBridge.removeChild(containerElement, ripple);
-      }, 400);
-    },
-  } as Ripple;
+  return ripple;
 }
 
 export function useRipple({ onPointerDown, onPointerUp, noRipple, centered, target }: RippleBaseProps) {
-  const rippleRef = useRef<Ripple>();
+  const rippleRef = useRef<ReactUnity.UGUI.UGUIComponent>();
 
   const pointerDown: Props['onPointerDown'] = useCallback((ev, sender) => {
     onPointerDown?.call(null, ev, sender);
 
     if (!noRipple) {
-      rippleRef.current?.fade();
+      rippleRef.current?.Remove();
       rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
     }
   }, [noRipple, onPointerDown, centered, target]);
 
   const pointerUp: Props['onPointerUp'] = useCallback((...args) => {
     onPointerUp?.apply(null, args);
-    rippleRef.current?.fade();
+    rippleRef.current?.Remove();
     rippleRef.current = null;
   }, [onPointerUp]);
 

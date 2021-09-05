@@ -15,7 +15,7 @@
 
   &:leave {
     opacity: 0;
-    transition: opacity 200ms ease-in !important;
+    transition: opacity 200ms ease-in;
     state-duration: 200ms;
   }
 }
