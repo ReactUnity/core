@@ -1,0 +1,43 @@
+.anchor {
+  position: absolute;
+  inset: 0;
+  z-index: 30000;
+  pointer-events: none;
+  transition: opacity 400ms ease-out;
+
+  &.interactive {
+    pointer-events: auto;
+  }
+
+  &:enter {
+    opacity: 0;
+  }
+
+  &:leave {
+    opacity: 0;
+    transition: opacity 200ms ease-in !important;
+    state-duration: 200ms;
+  }
+}
+
+.tooltip {
+  border-radius: 6px;
+  background-color: rgb(78, 78, 78);
+  color: white;
+  position: absolute;
+  translate: -50% 50%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 40px;
+  min-height: 24px;
+  padding: 6px 10px;
+}
+
+.backdrop {
+  pointer-events: all;
+  cursor: default;
+  position: absolute;
+  inset: 0;
+  z-index: 29999;
+}

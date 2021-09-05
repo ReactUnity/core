@@ -12,4 +12,5 @@ export * from './select';
 export * from './slider';
 export * from './text';
 export * from './toggle';
+export * from './tooltip';
 
