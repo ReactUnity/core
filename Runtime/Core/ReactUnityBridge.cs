@@ -17,12 +17,12 @@ namespace ReactUnity
 
         #region Creation
 
-        public ITextComponent createText(string text, IHostComponent host)
+        public ITextComponent createText(string text, IReactComponent host)
         {
             return host.Context.CreateText(text);
         }
 
-        public IReactComponent createElement(string tag, string text, IHostComponent host)
+        public IReactComponent createElement(string tag, string text, IReactComponent host)
         {
             return host.Context.CreateComponent(tag, text);
         }
@@ -41,7 +41,7 @@ namespace ReactUnity
 
         public void appendChildToContainer(object parent, object child)
         {
-            if (parent is IHostComponent p)
+            if (parent is IContainerComponent p)
                 if (child is IReactComponent c)
                     c.SetParent(p);
         }

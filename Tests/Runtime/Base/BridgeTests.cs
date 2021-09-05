@@ -42,17 +42,18 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest]
-        public IEnumerator appendChildToContainer_WhenNotHost_ShouldNotAddElement()
+        public IEnumerator appendChildToContainer_ShouldAddElementAlsoWhenNotHost()
         {
             yield return null;
 
+            var str = "appendChild Test Text";
             var view = Host.Children[0];
-            var text = new TextComponent("bogus", UGUIContext, "text");
+            var text = new TextComponent(str, UGUIContext, "text");
 
             Bridge.appendChildToContainer(view, text);
 
-            var tmp = Canvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>().ElementAtOrDefault(1);
-            Assert.Null(tmp);
+            var tmp = Canvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
+            Assert.AreEqual(str, tmp.text);
         }
 
 
