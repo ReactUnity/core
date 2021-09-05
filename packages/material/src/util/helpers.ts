@@ -9,6 +9,6 @@ export function getOnlyChildOfType(children: React.ReactNode, type: any) {
 }
 
 export function getElevationClass(elevation: number) {
-  if (elevation > 0) return `md-elevation-${elevation}`;
-  return 'md-elevation-0';
+  if (elevation > 0) return `mat-elevation-${elevation}`;
+  return 'mat-elevation-0';
 }

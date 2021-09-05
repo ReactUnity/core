@@ -35,16 +35,16 @@ function _Accordion({ children, className, elevation = 1, ...props }: Props) {
   }, [opened]);
 
   return <view name="<Accordion>"
-    className={clsx(className, style.host, opened && [style.expanded, 'md-expanded'], getElevationClass(elevation), 'md-accordion')}
+    className={clsx(className, style.host, opened && [style.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')}
     {...props}>
 
-    <view name="<AccordionHeader>" className={clsx(style.header, 'md-accordion-header')} onPointerClick={() => setOpened(x => !x)}>
+    <view name="<AccordionHeader>" className={clsx(style.header, 'mat-accordion-header')} onPointerClick={() => setOpened(x => !x)}>
       {summary}
 
       <icon>expand_more</icon>
     </view>
 
-    <view className={clsx(style.expander, 'md-accordion-expander')} ref={expanderRef} style={expanderBaseStyle}>
+    <view className={clsx(style.expander, 'mat-accordion-expander')} ref={expanderRef} style={expanderBaseStyle}>
       <view onResize={onResize} ref={wrapperRef} className={style.contentWrapper}>
         {content}
       </view>
@@ -53,11 +53,11 @@ function _Accordion({ children, className, elevation = 1, ...props }: Props) {
 }
 
 function _Summary({ className, ...props }: ViewProps) {
-  return <view name="<Accordion.Summary>" className={clsx(className, style.summary, 'md-accordion-summary')} {...props} />;
+  return <view name="<Accordion.Summary>" className={clsx(className, style.summary, 'mat-accordion-summary')} {...props} />;
 }
 
 function _Content({ className, ...props }: ViewProps) {
-  return <view name="<Accordion.Content>" className={clsx(className, style.content, 'md-accordion-content')} {...props} />;
+  return <view name="<Accordion.Content>" className={clsx(className, style.content, 'mat-accordion-content')} {...props} />;
 }
 
 type AccordionType = typeof _Accordion & {

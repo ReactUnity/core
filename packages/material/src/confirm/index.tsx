@@ -28,14 +28,14 @@ export function ConfirmDialog<T = boolean>({ title, text, buttons, error, submit
     if (onClickBackdrop) onClickBackdrop();
   };
 
-  return <Modal {...props} className={clsx('md-confirm-dialog', style.host, props.className)} onClickBackdrop={clickBackdrop}>
-    {title && <div className={clsx('md-confirm-dialog-title', style.title)}>{title}</div>}
-    {text && <div className={clsx('md-confirm-dialog-text', style.text)}>{text}</div>}
+  return <Modal {...props} className={clsx('mat-confirm-dialog', style.host, props.className)} onClickBackdrop={clickBackdrop}>
+    {title && <div className={clsx('mat-confirm-dialog-title', style.title)}>{title}</div>}
+    {text && <div className={clsx('mat-confirm-dialog-text', style.text)}>{text}</div>}
 
-    {error && <div className={clsx('md-modal-dialog-error', style.error)}>{error}</div>}
+    {error && <div className={clsx('mat-modal-dialog-error', style.error)}>{error}</div>}
 
     {buttons?.length > 0 &&
-      <div className={clsx('md-confirm-dialog-buttons', style.buttons)}>
+      <div className={clsx('mat-confirm-dialog-buttons', style.buttons)}>
         {buttons.map((btn, ind) =>
           <Button key={ind} className={clsx(style.button)} onClick={() => onClose(btn.value)} data-temp-disabled={submitting}>
             {btn.text}

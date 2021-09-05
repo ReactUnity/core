@@ -20,7 +20,7 @@ export interface Ripple {
 export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, pressPosition?: UnityEngine.Vector2) {
   if (!containerElement) return null;
   const ripple = UnityBridge.createElement('view', '', HostContainer) as unknown as ReactUnity.UGUI.UGUIComponent;
-  ripple.ClassName = `${style.ripple} md-ripple`;
+  ripple.ClassName = `${style.ripple} mat-ripple`;
   ripple.Name = '<Ripple>';
 
   const w = containerElement.RectTransform.rect.width;

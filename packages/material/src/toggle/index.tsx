@@ -55,12 +55,12 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
       };
     }, [ctx, selectionRef]);
 
-    return <label className={clsx(className, style.label, 'md-toggle-label', style[type], 'md-toggle-' + type, 'md-variant-' + variant)} {...ripple}>
+    return <label className={clsx(className, style.label, 'mat-toggle-label', style[type], 'mat-toggle-' + type, 'mat-variant-' + variant)} {...ripple}>
       <toggle name="<Toggle>" ref={innerRef}
-        className={clsx(style.toggle, 'md-toggle')}
+        className={clsx(style.toggle, 'mat-toggle')}
         {...props}  {...ripple} />
 
-      {!!children && <view className={clsx(style.labelContent, 'md-toggle-label-content')}>{children}</view>}
+      {!!children && <view className={clsx(style.labelContent, 'mat-toggle-label-content')}>{children}</view>}
     </label>;
   });
 
@@ -106,10 +106,10 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
     useImperativeHandle(ref, () => state, [state]);
 
     return <ToggleGroupContext.Provider value={state}>
-      <view name="<ToggleGroup>" className={clsx('md-toggle-group')}>
+      <view name="<ToggleGroup>" className={clsx('mat-toggle-group')}>
         {!!(multiple && showSelectAll) &&
           <Toggle ref={selectAllRef} independent onChange={selectAllCallback}
-            className={clsx('md-toggle-select-all', style.selectAllToggle)}>
+            className={clsx('mat-toggle-select-all', style.selectAllToggle)}>
             {selectAllLabel || 'Select All'}
           </Toggle>}
 

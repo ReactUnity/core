@@ -27,16 +27,16 @@ export function PromptDialog({ title, text, error, placeholder, submit, submitti
     if (onClickBackdrop) onClickBackdrop();
   };
 
-  return <Modal open={open} className={clsx('md-prompt-dialog', style.host, className)} onClickBackdrop={clickBackdrop}>
-    {title && <div className={clsx('md-prompt-dialog-title', style.title)}>{title}</div>}
-    {text && <div className={clsx('md-prompt-dialog-text', style.text)}>{text}</div>}
+  return <Modal open={open} className={clsx('mat-prompt-dialog', style.host, className)} onClickBackdrop={clickBackdrop}>
+    {title && <div className={clsx('mat-prompt-dialog-title', style.title)}>{title}</div>}
+    {text && <div className={clsx('mat-prompt-dialog-text', style.text)}>{text}</div>}
 
-    <TextField className={clsx('md-prompt-dialog-input', style.input)}
+    <TextField className={clsx('mat-prompt-dialog-input', style.input)}
       placeholder={placeholder} ref={inputRef} {...inputProps} />
 
-    {error && <div className={clsx('md-prompt-dialog-error', style.error)}>{error}</div>}
+    {error && <div className={clsx('mat-prompt-dialog-error', style.error)}>{error}</div>}
 
-    <div className={clsx('md-prompt-dialog-buttons', style.buttons)}>
+    <div className={clsx('mat-prompt-dialog-buttons', style.buttons)}>
       <Button onClick={() => onClose(inputRef.current.Value, false)}>
         {cancel || 'Cancel'}
       </Button>

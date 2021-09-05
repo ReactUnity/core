@@ -9,7 +9,7 @@ import style from './index.module.scss';
 type Props = UGUIElements['view'] & MdBase;
 
 function _Paper({ children, className, elevation, ...props }: Props) {
-  return <view name="<Paper>" className={clsx(className, style.host, getElevationClass(elevation), 'md-paper')} {...props}>
+  return <view name="<Paper>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-paper')} {...props}>
     {children}
   </view>;
 }

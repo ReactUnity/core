@@ -31,11 +31,11 @@ export function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: Tooltip
   if (!target) return null;
 
   const tooltipAnchor = UnityBridge.createElement('view', '', HostContainer) as ReactUnity.UGUI.UGUIComponent;
-  tooltipAnchor.ClassName = clsx(style.anchor, 'md-tooltip-anchor', props.interactive && style.interactive);
+  tooltipAnchor.ClassName = clsx(style.anchor, 'mat-tooltip-anchor', props.interactive && style.interactive);
   tooltipAnchor.Name = '<TooltipAnchor>';
 
   const tooltip = UnityBridge.createElement('view', '', HostContainer) as ReactUnity.UGUI.UGUIComponent;
-  tooltip.ClassName = clsx(style.tooltip, 'md-tooltip', props.className);
+  tooltip.ClassName = clsx(style.tooltip, 'mat-tooltip', props.className);
   tooltip.Name = '<Tooltip>';
 
   const pos = positions[props.position];
@@ -51,7 +51,7 @@ export function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: Tooltip
 
   if (props.trigger === 'click') {
     const backdrop = UnityBridge.createElement('portal', '', HostContainer) as ReactUnity.UGUI.UGUIComponent;
-    backdrop.ClassName = clsx(style.backdrop, 'md-tooltip-backdrop');
+    backdrop.ClassName = clsx(style.backdrop, 'mat-tooltip-backdrop');
     backdrop.Name = '<TooltipBackdrop>';
     UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
     UnityBridge.appendChild(tooltipAnchor, backdrop);

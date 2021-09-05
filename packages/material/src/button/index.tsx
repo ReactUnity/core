@@ -19,7 +19,7 @@ const _Button = forwardRef<ReactUnity.UGUI.ButtonComponent, Props>(
     const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: variant === 'icon' });
 
     return <button name="<Button>" {...props} {...ripple} ref={ref}
-      className={clsx(className, style.host, getElevationClass(elevation), 'md-button', style[variant], 'md-variant-' + variant)}>
+      className={clsx(className, style.host, getElevationClass(elevation), 'mat-button', style[variant], 'mat-variant-' + variant)}>
       {children}
     </button>;
   });

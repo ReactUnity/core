@@ -17,7 +17,7 @@ interface Props {
 export type ModalProps = Omit<Props, 'children'>;
 
 export function Modal({ open, children, className, onClickBackdrop, onEscape, onCloseButton }: Props) {
-  useRootClass(open && [style.body, 'md-modal-open']);
+  useRootClass(open && [style.body, 'mat-modal-open']);
 
   const portalRef = useRef<ReactUnity.UGUI.PortalComponent>();
   const initialOpen = useRef(open);
@@ -45,10 +45,10 @@ export function Modal({ open, children, className, onClickBackdrop, onEscape, on
       portalRef.current.SetProperty('active', !!open);
   }, [open]);
 
-  return <portal className={clsx(style.host, 'md-modal', className, open ? style.opened : style.closed)}
+  return <portal className={clsx(style.host, 'mat-modal', className, open ? style.opened : style.closed)}
     onPointerClick={onClickBackdrop ? click : null} onKeyDown={onEscape ? keyup : null} active={initialOpen.current}
     onAnimationEnd={onAnimationEnd} ref={portalRef}>
-    <view className={clsx(style.content, 'md-modal-content')} onPointerClick={clickContent}>
+    <view className={clsx(style.content, 'mat-modal-content')} onPointerClick={clickContent}>
       {children}
 
       {onCloseButton &&

@@ -18,11 +18,11 @@ export function AlertDialog({ title, text, button = 'Ok', onClose, onClickBackdr
     if (onClickBackdrop) onClickBackdrop();
   };
 
-  return <Modal {...props} className={clsx('md-alert-dialog', style.host, props.className)} onClickBackdrop={clickBackdrop}>
-    {title && <div className={clsx('md-alert-dialog-title', style.title)}>{title}</div>}
-    {text && <div className={clsx('md-alert-dialog-text', style.text)}>{text}</div>}
+  return <Modal {...props} className={clsx('mat-alert-dialog', style.host, props.className)} onClickBackdrop={clickBackdrop}>
+    {title && <div className={clsx('mat-alert-dialog-title', style.title)}>{title}</div>}
+    {text && <div className={clsx('mat-alert-dialog-text', style.text)}>{text}</div>}
     {button &&
-      <div className={clsx('md-alert-dialog-buttons', style.buttons)}>
+      <div className={clsx('mat-alert-dialog-buttons', style.buttons)}>
         <Button className={clsx(style.button)} onClick={() => onClose()}>
           {button}
         </Button>

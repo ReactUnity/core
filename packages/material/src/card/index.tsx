@@ -10,13 +10,13 @@ type ViewProps = UGUIElements['view'];
 type Props = ViewProps & MdBase;
 
 function _Card({ children, className, elevation = 1, ...props }: Props) {
-  return <view name="<Card>" className={clsx(className, style.host, getElevationClass(elevation), 'md-card')} {...props}>
+  return <view name="<Card>" className={clsx(className, style.host, getElevationClass(elevation), 'mat-card')} {...props}>
     {children}
   </view>;
 }
 
 function _Content({ className, ...props }: ViewProps) {
-  return <view name="<Card.Content>" className={clsx(className, style.content, 'md-card-content')} {...props} />;
+  return <view name="<Card.Content>" className={clsx(className, style.content, 'mat-card-content')} {...props} />;
 }
 
 type CardType = typeof _Card & {
