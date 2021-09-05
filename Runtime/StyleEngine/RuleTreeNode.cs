@@ -17,9 +17,74 @@ namespace ReactUnity.StyleEngine
 
         public MediaQueryList MediaQuery { get; private set; }
         public IReactComponent Scope { get; private set; }
+        private int RawSpecifity { get; set; } = 0;
         public int Specifity { get; private set; }
 
-        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int specifity)
+        private void RecalculateSpecificity(int importanceOffset, bool important)
+        {
+            RawSpecifity = Parent == null ? 0 : Parent.RawSpecifity;
+
+            if (important && RawSpecifity < RuleHelpers.ImportantSpecifity) RawSpecifity += RuleHelpers.ImportantSpecifity;
+
+            if (ParsedSelector != null)
+            {
+                foreach (var selector in ParsedSelector)
+                {
+                    switch (selector.Type)
+                    {
+                        case RuleSelectorPartType.Id:
+                            RawSpecifity += 1 << 12;
+                            break;
+
+                        case RuleSelectorPartType.Empty:
+                        case RuleSelectorPartType.Activatable:
+                        case RuleSelectorPartType.Blank:
+                        case RuleSelectorPartType.Enabled:
+                        case RuleSelectorPartType.Disabled:
+                        case RuleSelectorPartType.PlaceholderShown:
+                        case RuleSelectorPartType.ReadOnly:
+                        case RuleSelectorPartType.ReadWrite:
+                        case RuleSelectorPartType.Checked:
+                        case RuleSelectorPartType.Indeterminate:
+                        case RuleSelectorPartType.Hover:
+                        case RuleSelectorPartType.Focus:
+                        case RuleSelectorPartType.FocusVisible:
+                        case RuleSelectorPartType.FocusWithin:
+                        case RuleSelectorPartType.Active:
+                        case RuleSelectorPartType.Enter:
+                        case RuleSelectorPartType.Leave:
+                        case RuleSelectorPartType.Attribute:
+                        case RuleSelectorPartType.ClassName:
+                            RawSpecifity += 1 << 6;
+                            break;
+
+                        case RuleSelectorPartType.Root:
+                        case RuleSelectorPartType.Scope:
+                        case RuleSelectorPartType.Before:
+                        case RuleSelectorPartType.After:
+                        case RuleSelectorPartType.FirstChild:
+                        case RuleSelectorPartType.LastChild:
+                        case RuleSelectorPartType.NthChild:
+                        case RuleSelectorPartType.NthLastChild:
+                        case RuleSelectorPartType.OnlyChild:
+                        case RuleSelectorPartType.State:
+                        case RuleSelectorPartType.Tag:
+                            RawSpecifity += 1;
+                            break;
+
+                        case RuleSelectorPartType.Important:
+                            if (RawSpecifity < RuleHelpers.ImportantSpecifity) RawSpecifity += RuleHelpers.ImportantSpecifity;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            Specifity = RawSpecifity + importanceOffset * (1 << 24);
+        }
+
+        public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0)
         {
             var shadowParent = selector.StartsWith(":deep ") || selector.StartsWith(">>> ");
             var directParent = selector[0] == '>';
@@ -64,6 +129,7 @@ namespace ReactUnity.StyleEngine
                     }
                 }
             }
+            RecalculateSpecificity(importanceOffset, important);
 
             if (!hasChild)
             {
@@ -78,8 +144,7 @@ namespace ReactUnity.StyleEngine
                 child.Parent = this;
                 child.MediaQuery = mq;
                 child.Scope = scope;
-                child.Specifity = specifity;
-                return child.AddChildCascading(selectorOther, mq, scope, specifity);
+                return child.AddChildCascading(selectorOther, mq, scope, importanceOffset);
             }
         }
 
@@ -228,6 +293,8 @@ namespace ReactUnity.StyleEngine
 
     public class RuleSelectorPart : IComparable<RuleSelectorPart>
     {
+        public static RuleSelectorPart Important = new RuleSelectorPart { Type = RuleSelectorPartType.Important };
+
         public bool Negated = false;
         public RuleSelectorPartType Type = RuleSelectorPartType.None;
         public string Name = null;

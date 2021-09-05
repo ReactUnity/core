@@ -33,7 +33,7 @@ namespace ReactUnity.StyleEngine
 
                 if (importantDic.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, leaf.Specifity + RuleHelpers.ImportantSpecifity);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     pairs.Add(Tuple.Create(importantLeaf, importantDic));
 
@@ -64,7 +64,7 @@ namespace ReactUnity.StyleEngine
 
                 if (importantRules != null && importantRules.Count > 0)
                 {
-                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, leaf.Specifity + RuleHelpers.ImportantSpecifity);
+                    var importantLeaf = leaf.AddChildCascading("** !", mql, scope, importanceOffset);
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     pairs.Add(Tuple.Create(importantLeaf, importantRules));
 
@@ -185,9 +185,7 @@ namespace ReactUnity.StyleEngine
             foreach (var split in splits)
             {
                 var selector = RuleHelpers.NormalizeSelector(split);
-                var sl = Tree.Parser.ParseSelector(selector);
-                var specificity = RuleHelpers.GetSpecificity(sl.Specifity);
-                var leaf = AddChildCascading("** " + selector, mql, scope, specificity + (1 << (29 + importanceOffset)));
+                var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset);
 
                 added.Add(leaf);
 

@@ -10,7 +10,7 @@ namespace ReactUnity.StyleEngine
 {
     public static class RuleHelpers
     {
-        public static int ImportantSpecifity = 1 << 30;
+        public static int ImportantSpecifity = 1 << 18;
         public static Regex SplitSelectorRegex = new Regex("\\s+");
         public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
 
@@ -98,6 +98,10 @@ namespace ReactUnity.StyleEngine
                     acc.Append("_");
                     type = RuleSelectorPartType.Tag;
                     return;
+                }
+                else if (nm == "!")
+                {
+                    list.Add(RuleSelectorPart.Important);
                 }
 
                 acc.Clear();

@@ -15,8 +15,8 @@ namespace ReactUnity.StyleEngine
         public readonly int ImportanceOffset;
         public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
-        public List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
-        public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
+        public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
+        public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
         public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null)
         {

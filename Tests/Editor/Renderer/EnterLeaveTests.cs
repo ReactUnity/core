@@ -30,12 +30,12 @@ namespace ReactUnity.Editor.Tests.Renderer
             }
 
             #test:enter {
-                color: white !important;
+                color: white;
                 state-duration: 2s;
             }
 
             #test:leave {
-                color: red !important;
+                color: red;
                 state-duration: 3s;
             }
 ";
