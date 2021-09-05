@@ -13,6 +13,7 @@ using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTabl
 
 namespace ReactUnity.Helpers
 {
+    [UnityEngine.Scripting.Preserve]
     public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable
     {
         protected Dictionary<TKey, T> collection;

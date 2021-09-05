@@ -8,6 +8,7 @@ using ReactUnity.Helpers.TypescriptUtils;
 namespace ReactUnity
 {
     [TypescriptInclude]
+    [UnityEngine.Scripting.Preserve]
     internal class ReactUnityBridge
     {
         private static ReactUnityBridge instance;
