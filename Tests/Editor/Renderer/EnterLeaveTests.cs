@@ -140,5 +140,29 @@ namespace ReactUnity.Editor.Tests.Renderer
             Assert.True(view.Destroyed);
             Assert.IsNull(View);
         }
+
+        [EditorInjectableTest(BaseScript, BaseStyle, RealTimer = true)]
+        public IEnumerator ZeroLeaveDoesNotCauseCrash()
+        {
+            Assert.IsNull(View);
+            InsertStyle(@"
+                #test { state-duration: 0s !important; }
+            ");
+            yield return null;
+            Globals.Set("show", true);
+            yield return null;
+
+            var view = View;
+            Assert.NotNull(View);
+            Assert.False(view.Entering);
+            Assert.False(view.Leaving);
+            Assert.False(view.Destroyed);
+
+            Globals.Set("show", false);
+            yield return null;
+            Assert.False(view.Leaving);
+            Assert.True(view.Destroyed);
+            Assert.IsNull(View);
+        }
     }
 }

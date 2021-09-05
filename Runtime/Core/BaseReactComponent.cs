@@ -303,8 +303,12 @@ namespace ReactUnity
                     else RemoveBefore();
                     BeforePseudo?.ResolveStyle();
 
-                    foreach (var child in Children)
+                    for (int i = 0; i < Children.Count; i++)
+                    {
+                        var child = Children[i];
                         child.ResolveStyle(true);
+                        if (child.Destroyed) i--;
+                    }
 
                     AfterRules = Context.Style.StyleTree.GetMatchingAfter(this).ToList();
                     if (AfterRules.Count > 0) AddAfter();
