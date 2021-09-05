@@ -1,25 +1,11 @@
-import { globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
+import { globalsWatcher, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
-import styled, { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
-
-const SuperInput = styled.input`
-  appearance: none;
-  background-color: white;
-  box-shadow: 1px 1px 6px -2px black;
-  border-width: 0;
-  border-radius: 4px;
-  transition: background-color 280ms ease-in-out;
-
-  &:hover {
-    background-color: limegreen;
-  }
-`;
 
 export const RenderObject = React.memo(function RenderObject({ object }: { object: UE.GameObject }) {
   return <object width={300} height={400} style={{ flexGrow: 0 }}
@@ -61,7 +47,6 @@ export function App() {
       <section>
         <h2>Input</h2>
 
-        <SuperInput />
       </section>
 
 
@@ -135,13 +120,4 @@ export function App() {
   </scroll>;
 };
 
-
-const sheet = new ServerStyleSheet();
-
-Renderer.render(
-  <StyleSheetManager disableVendorPrefixes sheet={sheet.instance}>
-    <App />
-  </StyleSheetManager>
-);
-
-insertStyledComponentsSheet(sheet);
+Renderer.render(<App />);
