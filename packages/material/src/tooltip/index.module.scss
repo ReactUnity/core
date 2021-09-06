@@ -4,6 +4,7 @@
   z-index: 30000;
   pointer-events: none;
   transition: opacity 400ms ease-out;
+  flex-direction: row;
 
   &.interactive {
     pointer-events: auto;
@@ -25,6 +26,8 @@
   background-color: rgb(78, 78, 78);
   color: white;
   position: absolute;
+  left: 0;
+  top: 0;
   translate: -50% 50%;
   flex-direction: row;
   align-items: center;
