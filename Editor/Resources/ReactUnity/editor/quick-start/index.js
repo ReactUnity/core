@@ -7255,7 +7255,7 @@ function createDictionaryWatcher(dictionary, displayName) {
         render = _b[0],
         setRender = _b[1];
 
-    react.useEffect(function () {
+    react.useLayoutEffect(function () {
       var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
         setRender(function (x) {
           return x + 1;

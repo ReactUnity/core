@@ -11,11 +11,39 @@ namespace ReactUnity.Tests
 
         public class MyComponent : MonoBehaviour
         {
-            public void OnEnable()
+            public string type;
+            public bool started;
+            public void Start()
             {
                 var component = GetComponent<ReactUnity.UGUI.ReactUnityUGUI>();
-                component.Globals["myComponent"] = this;
-                component.Globals["myObject"] = new MyObject();
+                if (type == "start_before" || type == "update_before") component.Render();
+
+                if (type != "update_before")
+                {
+                    component.Globals["myComponent"] = this;
+                    component.Globals["myObject"] = new MyObject();
+                }
+                if (type == "start_after") component.Render();
+            }
+
+            public void Update()
+            {
+                if (!started)
+                {
+                    var component = GetComponent<ReactUnity.UGUI.ReactUnityUGUI>();
+                    if (type == "update_before")
+                    {
+                        component.Globals["myComponent"] = this;
+                        component.Globals["myObject"] = new MyObject();
+                    }
+
+                    if (type == "update_after")
+                    {
+                        component.Render();
+                    }
+
+                    started = true;
+                }
             }
 
             public string GetText() => "mycmp";
@@ -35,13 +63,22 @@ namespace ReactUnity.Tests
             }
 
             Renderer.render(<App />);
-        ")]
-        public IEnumerator MonobehaviorAndObjectMethodsAreVisible()
+        ", autoRender: false)]
+        public IEnumerator GlobalsGetUpdatedWhenChangedOnSameFrameAsRender()
         {
-            yield return null;
+            var types = new string[] { "start_before", "start_after", "update_before", "update_after" };
 
-            Component.gameObject.AddComponent<MyComponent>();
-            Assert.AreEqual("myobj mycmp", Q("text").TextContent);
+            foreach (var type in types)
+            {
+                var cmp = Component.gameObject.AddComponent<MyComponent>();
+                cmp.type = type;
+                yield return null;
+                Assert.AreEqual("myobj mycmp", Q("text").TextContent, type + " has failed");
+                GameObject.Destroy(cmp);
+                Component.enabled = false;
+                Component.AutoRender = false;
+                Component.enabled = true;
+            }
         }
     }
 }

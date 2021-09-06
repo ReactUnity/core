@@ -19,7 +19,8 @@ namespace ReactUnity.Helpers
 
         public void BindSerializableDictionary(SerializableDictionary dict, bool isSerializing)
         {
-            if (this.removeStringDictionaryListener != null) this.removeStringDictionaryListener();
+            removeStringDictionaryListener?.Invoke();
+            removeStringDictionaryListener = null;
 
             UpdateStringObjectDictionary(dict, isSerializing);
 
