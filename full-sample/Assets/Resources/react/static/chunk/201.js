@@ -164,7 +164,7 @@ function createDictionaryWatcher(dictionary, displayName) {
         render = _b[0],
         setRender = _b[1];
 
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect(function () {
       var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
         setRender(function (x) {
           return x + 1;

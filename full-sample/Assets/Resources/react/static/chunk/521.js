@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[472],{
+(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[521],{
 
 /***/ 877:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
@@ -16,7 +16,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".md-elevation-0{box-shadow:none}.md-elevation-1{box-shadow:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-2{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-3{box-shadow:0px 3px 3px -2px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 1px 8px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-4{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-5{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-6{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-7{box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2),0px 7px 10px 1px rgba(0, 0, 0, 0.14),0px 2px 16px 1px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-8{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-9{box-shadow:0px 5px 6px -3px rgba(0, 0, 0, 0.2),0px 9px 12px 1px rgba(0, 0, 0, 0.14),0px 3px 16px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-10{box-shadow:0px 6px 6px -3px rgba(0, 0, 0, 0.2),0px 10px 14px 1px rgba(0, 0, 0, 0.14),0px 4px 18px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-11{box-shadow:0px 6px 7px -4px rgba(0, 0, 0, 0.2),0px 11px 15px 1px rgba(0, 0, 0, 0.14),0px 4px 20px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-12{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 12px 17px 2px rgba(0, 0, 0, 0.14),0px 5px 22px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-13{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 13px 19px 2px rgba(0, 0, 0, 0.14),0px 5px 24px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-14{box-shadow:0px 7px 9px -4px rgba(0, 0, 0, 0.2),0px 14px 21px 2px rgba(0, 0, 0, 0.14),0px 5px 26px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-15{box-shadow:0px 8px 9px -5px rgba(0, 0, 0, 0.2),0px 15px 22px 2px rgba(0, 0, 0, 0.14),0px 6px 28px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-16{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-17{box-shadow:0px 8px 11px -5px rgba(0, 0, 0, 0.2),0px 17px 26px 2px rgba(0, 0, 0, 0.14),0px 6px 32px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-18{box-shadow:0px 9px 11px -5px rgba(0, 0, 0, 0.2),0px 18px 28px 2px rgba(0, 0, 0, 0.14),0px 7px 34px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-19{box-shadow:0px 9px 12px -6px rgba(0, 0, 0, 0.2),0px 19px 29px 2px rgba(0, 0, 0, 0.14),0px 7px 36px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-20{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 20px 31px 3px rgba(0, 0, 0, 0.14),0px 8px 38px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-21{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 21px 33px 3px rgba(0, 0, 0, 0.14),0px 8px 40px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-22{box-shadow:0px 10px 14px -6px rgba(0, 0, 0, 0.2),0px 22px 35px 3px rgba(0, 0, 0, 0.14),0px 8px 42px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.md-elevation-23{box-shadow:0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}:root{font-size:16px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/globals.scss","webpack://./../../material/dist/src/styles/elevation.scss"],"names":[],"mappings":"AAEA,gBACE,eAAA,CAIA,gBC+GA,kHAAA,CD7GE,4DAAA,CAFF,gBC+GA,kHAAA,CD7GE,4DAAA,CAFF,gBC+GA,kHAAA,CD7GE,4DAAA,CAFF,gBC+GA,mHAAA,CD7GE,4DAAA,CAFF,gBC+GA,mHAAA,CD7GE,4DAAA,CAFF,gBC+GA,oHAAA,CD7GE,4DAAA,CAFF,gBC+GA,oHAAA,CD7GE,4DAAA,CAFF,gBC+GA,oHAAA,CD7GE,4DAAA,CAFF,gBC+GA,oHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,qHAAA,CD7GE,4DAAA,CAFF,iBC+GA,sHAAA,CD7GE,4DAAA,CAFF,iBC+GA,sHAAA,CD7GE,4DAAA,CAFF,iBC+GA,sHAAA,CD7GE,4DAAA,CAFF,iBC+GA,sHAAA,CD7GE,4DAAA,CAFF,iBC+GA,uHAAA,CD7GE,4DAAA,CAFF,iBC+GA,uHAAA,CD7GE,4DAAA,CAFF,iBC+GA,uHAAA,CD7GE,4DAAA,CAFF,iBC+GA,uHAAA,CD7GE,4DAAA,CAIJ,MACE,cAAA","sourcesContent":["@import \"./elevation\";\n\n.md-elevation-0 {\n  box-shadow: none;\n}\n\n@for $var from 1 to 24 {\n  .md-elevation-#{$var} {\n    @include elevation($var);\n    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;\n  }\n}\n\n:root {\n  font-size: 16px;\n}\n","// From: https://github.com/material-components/material-components-web/blob/master/packages/mdc-elevation/_elevation-theme.scss\n\n$baseline-color: black !default;\n$umbra-opacity: 0.2 !default;\n$penumbra-opacity: 0.14 !default;\n$ambient-opacity: 0.12 !default;\n\n$umbra-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 2px 1px -1px\",\n  2: \"0px 3px 1px -2px\",\n  3: \"0px 3px 3px -2px\",\n  4: \"0px 2px 4px -1px\",\n  5: \"0px 3px 5px -1px\",\n  6: \"0px 3px 5px -1px\",\n  7: \"0px 4px 5px -2px\",\n  8: \"0px 5px 5px -3px\",\n  9: \"0px 5px 6px -3px\",\n  10: \"0px 6px 6px -3px\",\n  11: \"0px 6px 7px -4px\",\n  12: \"0px 7px 8px -4px\",\n  13: \"0px 7px 8px -4px\",\n  14: \"0px 7px 9px -4px\",\n  15: \"0px 8px 9px -5px\",\n  16: \"0px 8px 10px -5px\",\n  17: \"0px 8px 11px -5px\",\n  18: \"0px 9px 11px -5px\",\n  19: \"0px 9px 12px -6px\",\n  20: \"0px 10px 13px -6px\",\n  21: \"0px 10px 13px -6px\",\n  22: \"0px 10px 14px -6px\",\n  23: \"0px 11px 14px -7px\",\n  24: \"0px 11px 15px -7px\",\n) !default;\n\n$penumbra-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 1px 1px 0px\",\n  2: \"0px 2px 2px 0px\",\n  3: \"0px 3px 4px 0px\",\n  4: \"0px 4px 5px 0px\",\n  5: \"0px 5px 8px 0px\",\n  6: \"0px 6px 10px 0px\",\n  7: \"0px 7px 10px 1px\",\n  8: \"0px 8px 10px 1px\",\n  9: \"0px 9px 12px 1px\",\n  10: \"0px 10px 14px 1px\",\n  11: \"0px 11px 15px 1px\",\n  12: \"0px 12px 17px 2px\",\n  13: \"0px 13px 19px 2px\",\n  14: \"0px 14px 21px 2px\",\n  15: \"0px 15px 22px 2px\",\n  16: \"0px 16px 24px 2px\",\n  17: \"0px 17px 26px 2px\",\n  18: \"0px 18px 28px 2px\",\n  19: \"0px 19px 29px 2px\",\n  20: \"0px 20px 31px 3px\",\n  21: \"0px 21px 33px 3px\",\n  22: \"0px 22px 35px 3px\",\n  23: \"0px 23px 36px 3px\",\n  24: \"0px 24px 38px 3px\",\n) !default;\n\n$ambient-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 1px 3px 0px\",\n  2: \"0px 1px 5px 0px\",\n  3: \"0px 1px 8px 0px\",\n  4: \"0px 1px 10px 0px\",\n  5: \"0px 1px 14px 0px\",\n  6: \"0px 1px 18px 0px\",\n  7: \"0px 2px 16px 1px\",\n  8: \"0px 3px 14px 2px\",\n  9: \"0px 3px 16px 2px\",\n  10: \"0px 4px 18px 3px\",\n  11: \"0px 4px 20px 3px\",\n  12: \"0px 5px 22px 4px\",\n  13: \"0px 5px 24px 4px\",\n  14: \"0px 5px 26px 4px\",\n  15: \"0px 6px 28px 5px\",\n  16: \"0px 6px 30px 5px\",\n  17: \"0px 6px 32px 5px\",\n  18: \"0px 7px 34px 6px\",\n  19: \"0px 7px 36px 6px\",\n  20: \"0px 8px 38px 7px\",\n  21: \"0px 8px 40px 7px\",\n  22: \"0px 8px 42px 7px\",\n  23: \"0px 9px 44px 8px\",\n  24: \"0px 9px 46px 8px\",\n) !default;\n\n// Returns the correct box-shadow specified by $z-value.\n// The $z-value must be between 0 and 24.\n// If $color has an alpha channel, it will be ignored and overridden.\n// To increase the opacity of the shadow, use $opacity-boost.\n@function elevation-box-shadow($z-value, $color: black, $opacity-boost: 0) {\n  @if $z-value < 0 or $z-value > 24 {\n    @error \"$z-value must be between 0 and 24, but received '#{$z-value}'\";\n  }\n\n  $umbra-z-value: map-get($umbra-map, $z-value);\n  $penumbra-z-value: map-get($penumbra-map, $z-value);\n  $ambient-z-value: map-get($ambient-map, $z-value);\n\n  $umbra-color: rgba($color, $umbra-opacity + $opacity-boost);\n  $penumbra-color: rgba($color, $penumbra-opacity + $opacity-boost);\n  $ambient-color: rgba($color, $ambient-opacity + $opacity-boost);\n\n  $box-shadow: (\n    #{\"#{$umbra-z-value} #{$umbra-color}\"},\n    #{\"#{$penumbra-z-value} #{$penumbra-color}\"},\n    #{$ambient-z-value} $ambient-color\n  );\n\n  @return $box-shadow;\n}\n\n@mixin elevation($z-value, $color: $baseline-color, $opacity-boost: 0) {\n  box-shadow: elevation-box-shadow($z-value, $color: $color, $opacity-boost: $opacity-boost);\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".mat-elevation-0{box-shadow:none}.mat-elevation-1{box-shadow:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-2{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-3{box-shadow:0px 3px 3px -2px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 1px 8px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-4{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-5{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-6{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-7{box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2),0px 7px 10px 1px rgba(0, 0, 0, 0.14),0px 2px 16px 1px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-8{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-9{box-shadow:0px 5px 6px -3px rgba(0, 0, 0, 0.2),0px 9px 12px 1px rgba(0, 0, 0, 0.14),0px 3px 16px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-10{box-shadow:0px 6px 6px -3px rgba(0, 0, 0, 0.2),0px 10px 14px 1px rgba(0, 0, 0, 0.14),0px 4px 18px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-11{box-shadow:0px 6px 7px -4px rgba(0, 0, 0, 0.2),0px 11px 15px 1px rgba(0, 0, 0, 0.14),0px 4px 20px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-12{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 12px 17px 2px rgba(0, 0, 0, 0.14),0px 5px 22px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-13{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 13px 19px 2px rgba(0, 0, 0, 0.14),0px 5px 24px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-14{box-shadow:0px 7px 9px -4px rgba(0, 0, 0, 0.2),0px 14px 21px 2px rgba(0, 0, 0, 0.14),0px 5px 26px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-15{box-shadow:0px 8px 9px -5px rgba(0, 0, 0, 0.2),0px 15px 22px 2px rgba(0, 0, 0, 0.14),0px 6px 28px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-16{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-17{box-shadow:0px 8px 11px -5px rgba(0, 0, 0, 0.2),0px 17px 26px 2px rgba(0, 0, 0, 0.14),0px 6px 32px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-18{box-shadow:0px 9px 11px -5px rgba(0, 0, 0, 0.2),0px 18px 28px 2px rgba(0, 0, 0, 0.14),0px 7px 34px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-19{box-shadow:0px 9px 12px -6px rgba(0, 0, 0, 0.2),0px 19px 29px 2px rgba(0, 0, 0, 0.14),0px 7px 36px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-20{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 20px 31px 3px rgba(0, 0, 0, 0.14),0px 8px 38px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-21{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 21px 33px 3px rgba(0, 0, 0, 0.14),0px 8px 40px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-22{box-shadow:0px 10px 14px -6px rgba(0, 0, 0, 0.2),0px 22px 35px 3px rgba(0, 0, 0, 0.14),0px 8px 42px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-23{box-shadow:0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}:root{font-size:16px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/globals.scss","webpack://./../../material/dist/src/styles/elevation.scss"],"names":[],"mappings":"AAEA,iBACE,eAAA,CAIA,iBC+GA,kHAAA,CD7GE,4DAAA,CAFF,iBC+GA,kHAAA,CD7GE,4DAAA,CAFF,iBC+GA,kHAAA,CD7GE,4DAAA,CAFF,iBC+GA,mHAAA,CD7GE,4DAAA,CAFF,iBC+GA,mHAAA,CD7GE,4DAAA,CAFF,iBC+GA,oHAAA,CD7GE,4DAAA,CAFF,iBC+GA,oHAAA,CD7GE,4DAAA,CAFF,iBC+GA,oHAAA,CD7GE,4DAAA,CAFF,iBC+GA,oHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,qHAAA,CD7GE,4DAAA,CAFF,kBC+GA,sHAAA,CD7GE,4DAAA,CAFF,kBC+GA,sHAAA,CD7GE,4DAAA,CAFF,kBC+GA,sHAAA,CD7GE,4DAAA,CAFF,kBC+GA,sHAAA,CD7GE,4DAAA,CAFF,kBC+GA,uHAAA,CD7GE,4DAAA,CAFF,kBC+GA,uHAAA,CD7GE,4DAAA,CAFF,kBC+GA,uHAAA,CD7GE,4DAAA,CAFF,kBC+GA,uHAAA,CD7GE,4DAAA,CAIJ,MACE,cAAA","sourcesContent":["@import \"./elevation\";\n\n.mat-elevation-0 {\n  box-shadow: none;\n}\n\n@for $var from 1 to 24 {\n  .mat-elevation-#{$var} {\n    @include elevation($var);\n    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;\n  }\n}\n\n:root {\n  font-size: 16px;\n}\n","// From: https://github.com/material-components/material-components-web/blob/master/packages/mdc-elevation/_elevation-theme.scss\n\n$baseline-color: black !default;\n$umbra-opacity: 0.2 !default;\n$penumbra-opacity: 0.14 !default;\n$ambient-opacity: 0.12 !default;\n\n$umbra-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 2px 1px -1px\",\n  2: \"0px 3px 1px -2px\",\n  3: \"0px 3px 3px -2px\",\n  4: \"0px 2px 4px -1px\",\n  5: \"0px 3px 5px -1px\",\n  6: \"0px 3px 5px -1px\",\n  7: \"0px 4px 5px -2px\",\n  8: \"0px 5px 5px -3px\",\n  9: \"0px 5px 6px -3px\",\n  10: \"0px 6px 6px -3px\",\n  11: \"0px 6px 7px -4px\",\n  12: \"0px 7px 8px -4px\",\n  13: \"0px 7px 8px -4px\",\n  14: \"0px 7px 9px -4px\",\n  15: \"0px 8px 9px -5px\",\n  16: \"0px 8px 10px -5px\",\n  17: \"0px 8px 11px -5px\",\n  18: \"0px 9px 11px -5px\",\n  19: \"0px 9px 12px -6px\",\n  20: \"0px 10px 13px -6px\",\n  21: \"0px 10px 13px -6px\",\n  22: \"0px 10px 14px -6px\",\n  23: \"0px 11px 14px -7px\",\n  24: \"0px 11px 15px -7px\",\n) !default;\n\n$penumbra-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 1px 1px 0px\",\n  2: \"0px 2px 2px 0px\",\n  3: \"0px 3px 4px 0px\",\n  4: \"0px 4px 5px 0px\",\n  5: \"0px 5px 8px 0px\",\n  6: \"0px 6px 10px 0px\",\n  7: \"0px 7px 10px 1px\",\n  8: \"0px 8px 10px 1px\",\n  9: \"0px 9px 12px 1px\",\n  10: \"0px 10px 14px 1px\",\n  11: \"0px 11px 15px 1px\",\n  12: \"0px 12px 17px 2px\",\n  13: \"0px 13px 19px 2px\",\n  14: \"0px 14px 21px 2px\",\n  15: \"0px 15px 22px 2px\",\n  16: \"0px 16px 24px 2px\",\n  17: \"0px 17px 26px 2px\",\n  18: \"0px 18px 28px 2px\",\n  19: \"0px 19px 29px 2px\",\n  20: \"0px 20px 31px 3px\",\n  21: \"0px 21px 33px 3px\",\n  22: \"0px 22px 35px 3px\",\n  23: \"0px 23px 36px 3px\",\n  24: \"0px 24px 38px 3px\",\n) !default;\n\n$ambient-map: (\n  0: \"0px 0px 0px 0px\",\n  1: \"0px 1px 3px 0px\",\n  2: \"0px 1px 5px 0px\",\n  3: \"0px 1px 8px 0px\",\n  4: \"0px 1px 10px 0px\",\n  5: \"0px 1px 14px 0px\",\n  6: \"0px 1px 18px 0px\",\n  7: \"0px 2px 16px 1px\",\n  8: \"0px 3px 14px 2px\",\n  9: \"0px 3px 16px 2px\",\n  10: \"0px 4px 18px 3px\",\n  11: \"0px 4px 20px 3px\",\n  12: \"0px 5px 22px 4px\",\n  13: \"0px 5px 24px 4px\",\n  14: \"0px 5px 26px 4px\",\n  15: \"0px 6px 28px 5px\",\n  16: \"0px 6px 30px 5px\",\n  17: \"0px 6px 32px 5px\",\n  18: \"0px 7px 34px 6px\",\n  19: \"0px 7px 36px 6px\",\n  20: \"0px 8px 38px 7px\",\n  21: \"0px 8px 40px 7px\",\n  22: \"0px 8px 42px 7px\",\n  23: \"0px 9px 44px 8px\",\n  24: \"0px 9px 46px 8px\",\n) !default;\n\n// Returns the correct box-shadow specified by $z-value.\n// The $z-value must be between 0 and 24.\n// If $color has an alpha channel, it will be ignored and overridden.\n// To increase the opacity of the shadow, use $opacity-boost.\n@function elevation-box-shadow($z-value, $color: black, $opacity-boost: 0) {\n  @if $z-value < 0 or $z-value > 24 {\n    @error \"$z-value must be between 0 and 24, but received '#{$z-value}'\";\n  }\n\n  $umbra-z-value: map-get($umbra-map, $z-value);\n  $penumbra-z-value: map-get($penumbra-map, $z-value);\n  $ambient-z-value: map-get($ambient-map, $z-value);\n\n  $umbra-color: rgba($color, $umbra-opacity + $opacity-boost);\n  $penumbra-color: rgba($color, $penumbra-opacity + $opacity-boost);\n  $ambient-color: rgba($color, $ambient-opacity + $opacity-boost);\n\n  $box-shadow: (\n    #{\"#{$umbra-z-value} #{$umbra-color}\"},\n    #{\"#{$penumbra-z-value} #{$penumbra-color}\"},\n    #{$ambient-z-value} $ambient-color\n  );\n\n  @return $box-shadow;\n}\n\n@mixin elevation($z-value, $color: $baseline-color, $opacity-boost: 0) {\n  box-shadow: elevation-box-shadow($z-value, $color: $color, $opacity-boost: $opacity-boost);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -93,7 +93,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".alert_host__2_2qF .md-modal-content{padding:18px;width:100%;max-width:400px}.alert_title__FJg3-{font-size:1.2em;font-weight:500;margin-bottom:6px}.alert_title__FJg3-+.alert_text__3_6k2{margin-top:8px}.alert_text__3_6k2{font-size:1em;margin-bottom:8px}.alert_error__3KoUk{font-size:1em;margin-top:8px;color:red}.alert_buttons__27Lxx{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss"],"names":[],"mappings":"AAEA,qCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,oBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,uCACE,cAAA,CAIJ,mBACE,aAAA,CACA,iBAAA,CAGF,oBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,sBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.md-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".alert_host__2_2qF .mat-modal-content{padding:18px;width:100%;max-width:400px}.alert_title__FJg3-{font-size:1.2em;font-weight:500;margin-bottom:6px}.alert_title__FJg3-+.alert_text__3_6k2{margin-top:8px}.alert_text__3_6k2{font-size:1em;margin-bottom:8px}.alert_error__3KoUk{font-size:1em;margin-top:8px;color:red}.alert_buttons__27Lxx{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss"],"names":[],"mappings":"AAEA,sCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,oBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,uCACE,cAAA,CAIJ,mBACE,aAAA,CACA,iBAAA,CAGF,oBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,sBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.mat-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "alert_host__2_2qF",
@@ -174,7 +174,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".confirm_host__2Twm- .md-modal-content{padding:18px;width:100%;max-width:400px}.confirm_title__1d1Tr{font-size:1.2em;font-weight:500;margin-bottom:6px}.confirm_title__1d1Tr+.confirm_text__30k4X{margin-top:8px}.confirm_text__30k4X{font-size:1em;margin-bottom:8px}.confirm_error__1mCQC{font-size:1em;margin-top:8px;color:red}.confirm_buttons__2iId7{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss"],"names":[],"mappings":"AAEA,uCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,sBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,2CACE,cAAA,CAIJ,qBACE,aAAA,CACA,iBAAA,CAGF,sBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,wBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.md-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".confirm_host__2Twm- .mat-modal-content{padding:18px;width:100%;max-width:400px}.confirm_title__1d1Tr{font-size:1.2em;font-weight:500;margin-bottom:6px}.confirm_title__1d1Tr+.confirm_text__30k4X{margin-top:8px}.confirm_text__30k4X{font-size:1em;margin-bottom:8px}.confirm_error__1mCQC{font-size:1em;margin-top:8px;color:red}.confirm_buttons__2iId7{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss"],"names":[],"mappings":"AAEA,wCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,sBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,2CACE,cAAA,CAIJ,qBACE,aAAA,CACA,iBAAA,CAGF,sBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,wBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.mat-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "confirm_host__2Twm-",
@@ -203,7 +203,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".input_host__1F0W4{font-size:16px;padding:14px 12px;position:relative;border-radius:6px;min-height:56px}.input_host__1F0W4.input_filled__ETrmR{background-color:#e8e8e8;border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm{border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm .mat-input-field-target{padding-top:16px}.input_host__1F0W4.input_standard__joskm .input_placeholderContent__2aYa-{translate:0 8px}.input_host__1F0W4.input_float__2yuAx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within .input_placeholderContent__2aYa-{translate:1px -12px;scale:.75}.input_host__1F0W4.input_float__2yuAx.input_filled__ETrmR .mat-input-field-target,.input_host__1F0W4.input_float-always__1IyaU.input_filled__ETrmR .mat-input-field-target,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_filled__ETrmR .mat-input-field-target{padding-top:18px}.input_host__1F0W4.input_float__2yuAx.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_outlined__1inCx .input_placeholderContent__2aYa-{background-color:#fff;translate:1px -26px}.input_host__1F0W4.input_float__2yuAx.input_float-never__3lnS6 .input_placeholderContent__2aYa-{display:none}.input_content__2WySh{color:#000;caret-color:#000;border:none;background-color:none;margin:0;position:absolute;left:0;right:0;top:0;bottom:0;border-radius:inherit}.input_inputFrame__1J55j{position:absolute;left:0;right:0;top:0;bottom:0;border:1px solid;border-radius:6px;pointer-events:none;border-color:#000}.input_content__2WySh:focus-within~.input_inputFrame__1J55j{border-color:#000;border-width:2px}.input_placeholder__3yCys{pointer-events:none;position:relative;white-space:nowrap;flex-grow:1;flex-direction:row;align-items:center}.input_placeholderGhost__1yLmD{opacity:0}.input_placeholderText__1wktR{color:#000;opacity:.7}.input_content__2WySh:focus-within~.input_placeholder__3yCys .input_placeholderText__1wktR{color:#000;opacity:1}.input_placeholderContent__2aYa-{position:absolute;padding:0 4px;transition:translate 200ms ease-out,scale 200ms ease-out,background-color 200ms ease-out;transform-origin:left;left:-4px;border-radius:4px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/input/index.module.scss"],"names":[],"mappings":"AAMA,mBACE,cAAA,CACA,iBAAA,CACA,iBAAA,CACA,iBAAA,CACA,eAAA,CAEA,uCACE,wBAAA,CACA,sBAAA,CACA,2BAAA,CACA,4BAAA,CAGF,yCACE,sBAAA,CACA,2BAAA,CACA,4BAAA,CAEA,iEACE,gBAAA,CAGF,0EACE,eAAA,CAOF,+OACE,mBAAA,CACA,SAAA,CAIA,gRACE,gBAAA,CAKF,iTACE,qBAAA,CACA,mBAAA,CAMJ,gGACE,YAAA,CAKN,sBACE,UA9DU,CA+DV,gBA9Da,CA+Db,WAAA,CACA,qBAAA,CAEA,QAAA,CACA,iBAAA,CACA,MAAA,CACA,OAAA,CACA,KAAA,CACA,QAAA,CACA,qBAAA,CAGF,yBACE,iBAAA,CACA,MAAA,CACA,OAAA,CACA,KAAA,CACA,QAAA,CACA,gBAAA,CACA,iBAAA,CACA,mBAAA,CACA,iBArFU,CAuFV,4DACE,iBAvFW,CAwFX,gBAAA,CAIJ,0BACE,mBAAA,CACA,iBAAA,CACA,kBAAA,CACA,WAAA,CACA,kBAAA,CACA,kBAAA,CAGF,+BACE,SAAA,CAGF,8BACE,UA3GU,CA4GV,UAAA,CAEA,2FACE,UA9GW,CA+GX,SAAA,CAIJ,iCACE,iBAAA,CACA,aAAA,CACA,wFAAA,CACA,qBAAA,CACA,SAAA,CACA,iBAAA","sourcesContent":["@import \"../styles\";\n\n$textColor: black;\n$focusedColor: black;\n$animSpeed: 200ms;\n\n.host {\n  font-size: 16px;\n  padding: 14px 12px;\n  position: relative;\n  border-radius: 6px;\n  min-height: 56px;\n\n  &.filled {\n    background-color: rgb(232, 232, 232);\n    border-bottom: 1px black;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n  }\n\n  &.standard {\n    border-bottom: 1px black;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n\n    :global(.mat-input-field-target) {\n      padding-top: 16px;\n    }\n\n    .placeholderContent {\n      translate: 0 8px;\n    }\n  }\n\n  &.float,\n  &.float-always,\n  &.float-focus:focus-within {\n    .placeholderContent {\n      translate: 1px -12px;\n      scale: 0.75;\n    }\n\n    &.filled {\n      :global(.mat-input-field-target) {\n        padding-top: 18px;\n      }\n    }\n\n    &.outlined {\n      .placeholderContent {\n        background-color: white;\n        translate: 1px -26px;\n      }\n    }\n  }\n\n  &.float.float-never {\n    .placeholderContent {\n      display: none;\n    }\n  }\n}\n\n.content {\n  color: $textColor;\n  caret-color: $focusedColor;\n  border: none;\n  background-color: none;\n\n  margin: 0;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  border-radius: inherit;\n}\n\n.inputFrame {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  border: 1px solid;\n  border-radius: 6px;\n  pointer-events: none;\n  border-color: $textColor;\n\n  .content:focus-within ~ & {\n    border-color: $focusedColor;\n    border-width: 2px;\n  }\n}\n\n.placeholder {\n  pointer-events: none;\n  position: relative;\n  white-space: nowrap;\n  flex-grow: 1;\n  flex-direction: row;\n  align-items: center;\n}\n\n.placeholderGhost {\n  opacity: 0;\n}\n\n.placeholderText {\n  color: $textColor;\n  opacity: 0.7;\n\n  .content:focus-within ~ .placeholder & {\n    color: $focusedColor;\n    opacity: 1;\n  }\n}\n\n.placeholderContent {\n  position: absolute;\n  padding: 0 4px;\n  transition: translate $animSpeed ease-out, scale $animSpeed ease-out, background-color $animSpeed ease-out;\n  transform-origin: left;\n  left: -4px;\n  border-radius: 4px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".input_host__1F0W4{font-size:16px;padding:14px 12px;position:relative;border-radius:6px;min-height:56px}.input_host__1F0W4.input_filled__ETrmR{background-color:#e8e8e8;border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm{border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm .mat-input-field-target{padding-top:16px}.input_host__1F0W4.input_standard__joskm .input_placeholderContent__2aYa-{translate:0 8px}.input_host__1F0W4.input_float__2yuAx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within .input_placeholderContent__2aYa-{translate:1px -12px;scale:.75}.input_host__1F0W4.input_float__2yuAx.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target,.input_host__1F0W4.input_float-always__1IyaU.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target{padding-top:18px}.input_host__1F0W4.input_float__2yuAx.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_outlined__1inCx .input_placeholderContent__2aYa-{background-color:#fff;translate:1px -26px}.input_host__1F0W4.input_float__2yuAx.input_float-never__3lnS6 .input_placeholderContent__2aYa-{display:none}.input_content__2WySh{color:#000;caret-color:#000;border:none;background-color:none;margin:0;position:absolute;left:0;right:0;top:0;bottom:0;border-radius:inherit}.input_inputFrame__1J55j{position:absolute;left:0;right:0;top:0;bottom:0;border:1px solid;border-radius:6px;pointer-events:none;border-color:#000}.input_content__2WySh:focus-within~.input_inputFrame__1J55j{border-color:#000;border-width:2px}.input_placeholder__3yCys{pointer-events:none;position:relative;white-space:nowrap;flex-grow:1;flex-direction:row;align-items:center}.input_placeholderGhost__1yLmD{opacity:0}.input_placeholderText__1wktR{color:#000;opacity:.7}.input_content__2WySh:focus-within~.input_placeholder__3yCys .input_placeholderText__1wktR{color:#000;opacity:1}.input_placeholderContent__2aYa-{position:absolute;padding:0 4px;transition:translate 200ms ease-out,scale 200ms ease-out,background-color 200ms ease-out;transform-origin:left;left:-4px;border-radius:4px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/input/index.module.scss"],"names":[],"mappings":"AAMA,mBACE,cAAA,CACA,iBAAA,CACA,iBAAA,CACA,iBAAA,CACA,eAAA,CAEA,uCACE,wBAAA,CACA,sBAAA,CACA,2BAAA,CACA,4BAAA,CAGF,yCACE,sBAAA,CACA,2BAAA,CACA,4BAAA,CAEA,iEACE,gBAAA,CAGF,0EACE,eAAA,CAOF,+OACE,mBAAA,CACA,SAAA,CAIA,oWACE,gBAAA,CAKF,iTACE,qBAAA,CACA,mBAAA,CAMJ,gGACE,YAAA,CAKN,sBACE,UA9DU,CA+DV,gBA9Da,CA+Db,WAAA,CACA,qBAAA,CAEA,QAAA,CACA,iBAAA,CACA,MAAA,CACA,OAAA,CACA,KAAA,CACA,QAAA,CACA,qBAAA,CAGF,yBACE,iBAAA,CACA,MAAA,CACA,OAAA,CACA,KAAA,CACA,QAAA,CACA,gBAAA,CACA,iBAAA,CACA,mBAAA,CACA,iBArFU,CAuFV,4DACE,iBAvFW,CAwFX,gBAAA,CAIJ,0BACE,mBAAA,CACA,iBAAA,CACA,kBAAA,CACA,WAAA,CACA,kBAAA,CACA,kBAAA,CAGF,+BACE,SAAA,CAGF,8BACE,UA3GU,CA4GV,UAAA,CAEA,2FACE,UA9GW,CA+GX,SAAA,CAIJ,iCACE,iBAAA,CACA,aAAA,CACA,wFAAA,CACA,qBAAA,CACA,SAAA,CACA,iBAAA","sourcesContent":["@import \"../styles\";\n\n$textColor: black;\n$focusedColor: black;\n$animSpeed: 200ms;\n\n.host {\n  font-size: 16px;\n  padding: 14px 12px;\n  position: relative;\n  border-radius: 6px;\n  min-height: 56px;\n\n  &.filled {\n    background-color: rgb(232, 232, 232);\n    border-bottom: 1px black;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n  }\n\n  &.standard {\n    border-bottom: 1px black;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n\n    :global(.mat-input-field-target) {\n      padding-top: 16px;\n    }\n\n    .placeholderContent {\n      translate: 0 8px;\n    }\n  }\n\n  &.float,\n  &.float-always,\n  &.float-focus:focus-within {\n    .placeholderContent {\n      translate: 1px -12px;\n      scale: 0.75;\n    }\n\n    &.filled.hasPlaceholder {\n      :global(.mat-input-field-target) {\n        padding-top: 18px;\n      }\n    }\n\n    &.outlined {\n      .placeholderContent {\n        background-color: white;\n        translate: 1px -26px;\n      }\n    }\n  }\n\n  &.float.float-never {\n    .placeholderContent {\n      display: none;\n    }\n  }\n}\n\n.content {\n  color: $textColor;\n  caret-color: $focusedColor;\n  border: none;\n  background-color: none;\n\n  margin: 0;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  border-radius: inherit;\n}\n\n.inputFrame {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  border: 1px solid;\n  border-radius: 6px;\n  pointer-events: none;\n  border-color: $textColor;\n\n  .content:focus-within ~ & {\n    border-color: $focusedColor;\n    border-width: 2px;\n  }\n}\n\n.placeholder {\n  pointer-events: none;\n  position: relative;\n  white-space: nowrap;\n  flex-grow: 1;\n  flex-direction: row;\n  align-items: center;\n}\n\n.placeholderGhost {\n  opacity: 0;\n}\n\n.placeholderText {\n  color: $textColor;\n  opacity: 0.7;\n\n  .content:focus-within ~ .placeholder & {\n    color: $focusedColor;\n    opacity: 1;\n  }\n}\n\n.placeholderContent {\n  position: absolute;\n  padding: 0 4px;\n  transition: translate $animSpeed ease-out, scale $animSpeed ease-out, background-color $animSpeed ease-out;\n  transform-origin: left;\n  left: -4px;\n  border-radius: 4px;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "input_host__1F0W4",
@@ -213,6 +213,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"float": "input_float__2yuAx",
 	"float-always": "input_float-always__1IyaU",
 	"float-focus": "input_float-focus__2KwEV",
+	"hasPlaceholder": "input_hasPlaceholder__3WH8d",
 	"outlined": "input_outlined__1inCx",
 	"float-never": "input_float-never__3lnS6",
 	"content": "input_content__2WySh",
@@ -297,7 +298,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".prompt_host__2b198 .md-modal-content{padding:18px;width:100%;max-width:400px}.prompt_title__3f5P2{font-size:1.2em;font-weight:500;margin-bottom:6px}.prompt_title__3f5P2+.prompt_text__A4Wr5{margin-top:8px}.prompt_text__A4Wr5{font-size:1em;margin-bottom:8px}.prompt_error__21UXX{font-size:1em;margin-top:8px;color:red}.prompt_buttons__2PzX-{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}.prompt_input__3r86h{font-size:1em;margin-top:8px;margin-bottom:8px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss","webpack://./../../material/dist/src/prompt/index.module.scss"],"names":[],"mappings":"AAEA,sCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,qBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,yCACE,cAAA,CAIJ,oBACE,aAAA,CACA,iBAAA,CAGF,qBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,uBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA,CE9BF,qBACE,aAAA,CACA,cAAA,CACA,iBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.md-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n","@import \"../styles/variables\";\n@import \"../styles/common/dialog\";\n\n.input {\n  font-size: 1em;\n  margin-top: 8px;\n  margin-bottom: 8px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".prompt_host__2b198 .mat-modal-content{padding:18px;width:100%;max-width:400px}.prompt_title__3f5P2{font-size:1.2em;font-weight:500;margin-bottom:6px}.prompt_title__3f5P2+.prompt_text__A4Wr5{margin-top:8px}.prompt_text__A4Wr5{font-size:1em;margin-bottom:8px}.prompt_error__21UXX{font-size:1em;margin-top:8px;color:red}.prompt_buttons__2PzX-{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}.prompt_input__3r86h{font-size:1em;margin-top:8px;margin-bottom:8px}", "",{"version":3,"sources":["webpack://./../../material/dist/src/styles/common/dialog.scss","webpack://./../../material/dist/src/styles/variables.scss","webpack://./../../material/dist/src/prompt/index.module.scss"],"names":[],"mappings":"AAEA,uCACE,YAAA,CACA,UAAA,CACA,eAAA,CAGF,qBACE,eAAA,CACA,eAAA,CACA,iBAAA,CAEA,yCACE,cAAA,CAIJ,oBACE,aAAA,CACA,iBAAA,CAGF,qBACE,aAAA,CACA,cAAA,CACA,SCzBM,CD4BR,uBACE,cAAA,CACA,YAAA,CACA,kBAAA,CACA,wBAAA,CE9BF,qBACE,aAAA,CACA,cAAA,CACA,iBAAA","sourcesContent":["@import \"..\";\n\n.host :global(.mat-modal-content) {\n  padding: 18px;\n  width: 100%;\n  max-width: 400px;\n}\n\n.title {\n  font-size: 1.2em;\n  font-weight: 500;\n  margin-bottom: 6px;\n\n  + .text {\n    margin-top: 8px;\n  }\n}\n\n.text {\n  font-size: 1em;\n  margin-bottom: 8px;\n}\n\n.error {\n  font-size: 1em;\n  margin-top: 8px;\n  color: $error;\n}\n\n.buttons {\n  margin-top: 8px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n}\n","$primary: red;\n$error: red;\n","@import \"../styles/variables\";\n@import \"../styles/common/dialog\";\n\n.input {\n  font-size: 1em;\n  margin-top: 8px;\n  margin-bottom: 8px;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "prompt_host__2b198",
@@ -327,12 +328,48 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ripple_ripple__1bQj_{pointer-events:none;border-radius:50%;background-color:rgba(0,0,0,.1);position:absolute;animation:ripple_expandRipple__3v4yW 450ms cubic-bezier(0, 0, 0.2, 1) both;transition:opacity 300ms ease-out;translate:-50% -50%}.ripple_ripple__1bQj_.ripple_fading__3ERUB{opacity:0;transition:opacity 400ms ease-out}@keyframes ripple_expandRipple__3v4yW{from{scale:0}to{scale:1}}", "",{"version":3,"sources":["webpack://./../../material/dist/src/ripple/index.module.scss"],"names":[],"mappings":"AAAA,sBACE,mBAAA,CACA,iBAAA,CACA,+BAAA,CACA,iBAAA,CACA,0EAAA,CACA,iCAAA,CACA,mBAAA,CAEA,2CACE,SAAA,CACA,iCAAA,CAIJ,sCACE,KACE,OAAA,CAGF,GACE,OAAA,CAAA","sourcesContent":[".ripple {\n  pointer-events: none;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, 0.1);\n  position: absolute;\n  animation: expandRipple 450ms cubic-bezier(0, 0, 0.2, 1) both;\n  transition: opacity 300ms ease-out;\n  translate: -50% -50%;\n\n  &.fading {\n    opacity: 0;\n    transition: opacity 400ms ease-out;\n  }\n}\n\n@keyframes expandRipple {\n  from {\n    scale: 0;\n  }\n\n  to {\n    scale: 1;\n  }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ripple_ripple__1bQj_{pointer-events:none;border-radius:50%;background-color:rgba(0,0,0,.1);position:absolute;transition:opacity 300ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);translate:-50% -50%;scale:1}.ripple_ripple__1bQj_:enter{scale:0}.ripple_ripple__1bQj_:leave{opacity:0;transition:opacity 400ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);state-duration:400ms}", "",{"version":3,"sources":["webpack://./../../material/dist/src/ripple/index.module.scss"],"names":[],"mappings":"AAAA,sBACE,mBAAA,CACA,iBAAA,CACA,+BAAA,CACA,iBAAA,CACA,wEAAA,CACA,mBAAA,CACA,OAAA,CAEA,4BACE,OAAA,CAGF,4BACE,SAAA,CACA,wEAAA,CACA,oBAAA","sourcesContent":[".ripple {\n  pointer-events: none;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, 0.1);\n  position: absolute;\n  transition: opacity 300ms ease-out, scale 450ms cubic-bezier(0, 0, 0.2, 1);\n  translate: -50% -50%;\n  scale: 1;\n\n  &:enter {\n    scale: 0;\n  }\n\n  &:leave {\n    opacity: 0;\n    transition: opacity 400ms ease-out, scale 450ms cubic-bezier(0, 0, 0.2, 1);\n    state-duration: 400ms;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"ripple": "ripple_ripple__1bQj_",
-	"expandRipple": "ripple_expandRipple__3v4yW",
-	"fading": "ripple_fading__3ERUB"
+	"ripple": "ripple_ripple__1bQj_"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 115:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(411);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(531);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".select_host__1I6lD.select_chips__V5DkN .select_triggerPart__2jlvv{font-size:.8125rem;margin:4px 4px 2px 4px;height:24px;background-color:rgba(0,0,0,.12);border-radius:12px;padding:4px 8px;text-align:center}.select_host__1I6lD.select_chips__V5DkN .select_triggerContent__4e0fC{margin-left:-4px}.select_triggerContent__4e0fC{flex-direction:row;align-items:center;justify-content:flex-start}.select_trigger__OaISN{font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px;border:none;appearance:none;background-color:none;border-radius:0;pointer-events:all;flex-direction:row;align-items:center;justify-content:flex-start}.select_menuRoot__1MGMP{position:absolute;left:0;right:0;bottom:-1px;height:0;z-index:10000;translate:0 -20px;opacity:0;display:none;transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-end;pointer-events:none}.select_menuRoot__1MGMP.select_opened__26FhZ{transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-start;display:flex;translate:0 0;opacity:1;pointer-events:auto}.select_backdrop__1ZJS0{position:absolute;top:-5000px;right:-5000px;bottom:-5000px;left:-5000px;background-color:transparent;cursor:default;pointer-events:all}.select_menu__JC2qW{position:absolute;top:100%;left:0;minwidth:100%;background-color:#fff;max-height:60vh}.select_option__4Prbl{border-radius:0;text-align:left;flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px}.select_option__4Prbl.select_selected__1gei1{background-color:rgba(0,0,0,.06)}.select_option__4Prbl .select_toggle__31KME{pointer-events:none}.select_caret__2JiDG{pointer-events:none;align-items:center;justify-content:center;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;width:36px;height:36px;line-height:20px;transition:rotate 300ms}.select_host__1I6lD.select_opened__26FhZ .select_caret__2JiDG{rotate:180deg}.select_defaultSeparator__2NDw7{margin-right:.4em}", "",{"version":3,"sources":["webpack://./../../material/dist/src/select/index.module.scss"],"names":[],"mappings":"AAGE,mEACE,kBAAA,CACA,sBAAA,CACA,WAAA,CACA,gCAAA,CACA,kBAAA,CACA,eAAA,CACA,iBAAA,CAGF,sEACE,gBAAA,CAIJ,8BACE,kBAAA,CACA,kBAAA,CACA,0BAAA,CAGF,uBACE,aAAA,CACA,UAAA,CACA,eAAA,CACA,eAAA,CACA,cAAA,CACA,WAAA,CACA,eAAA,CACA,qBAAA,CACA,eAAA,CACA,kBAAA,CACA,kBAAA,CACA,kBAAA,CACA,0BAAA,CAGF,wBACE,iBAAA,CACA,MAAA,CACA,OAAA,CACA,WAAA,CACA,QAAA,CACA,aAAA,CACA,iBAAA,CACA,SAAA,CACA,YAAA,CACA,iFAAA,CACA,mBAAA,CAEA,6CACE,mFAAA,CACA,YAAA,CACA,aAAA,CACA,SAAA,CACA,mBAAA,CAIJ,wBACE,iBAAA,CACA,WAAA,CACA,aAAA,CACA,cAAA,CACA,YAAA,CACA,4BAAA,CACA,cAAA,CACA,kBAAA,CAGF,oBACE,iBAAA,CACA,QAAA,CACA,MAAA,CACA,aAAA,CACA,qBAAA,CACA,eAAA,CAGF,sBACE,eAAA,CACA,eAAA,CACA,kBAAA,CACA,kBAAA,CACA,0BAAA,CACA,eAAA,CAEA,6CACE,gCAAA,CAGF,4CACE,mBAAA,CAIJ,qBACE,mBAAA,CACA,kBAAA,CACA,sBAAA,CACA,WAAA,CACA,iBAAA,CACA,UAAA,CACA,OAAA,CACA,gBAAA,CACA,UAAA,CACA,WAAA,CACA,gBAAA,CACA,uBAAA,CAIA,8DACE,aAAA,CAIJ,gCACE,iBAAA","sourcesContent":["@import \"../styles/elevation\";\n\n.host.chips {\n  .triggerPart {\n    font-size: 0.8125rem;\n    margin: 4px 4px 2px 4px;\n    height: 24px;\n    background-color: rgba(0, 0, 0, 0.12);\n    border-radius: 12px;\n    padding: 4px 8px;\n    text-align: center;\n  }\n\n  .triggerContent {\n    margin-left: -4px;\n  }\n}\n\n.triggerContent {\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n}\n\n.trigger {\n  font-size: 1em;\n  flex: 1 1 0;\n  overflow: hidden;\n  text-align: left;\n  padding: 0 12px;\n  border: none;\n  appearance: none;\n  background-color: none;\n  border-radius: 0;\n  pointer-events: all;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n}\n\n.menuRoot {\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: -1px;\n  height: 0;\n  z-index: 10000;\n  translate: 0 -20px;\n  opacity: 0;\n  display: none;\n  transition: translate 300ms ease-out, opacity 300ms ease-out, display 300ms step-end;\n  pointer-events: none;\n\n  &.opened {\n    transition: translate 300ms ease-out, opacity 300ms ease-out, display 300ms step-start;\n    display: flex;\n    translate: 0 0;\n    opacity: 1;\n    pointer-events: auto;\n  }\n}\n\n.backdrop {\n  position: absolute;\n  top: -5000px;\n  right: -5000px;\n  bottom: -5000px;\n  left: -5000px;\n  background-color: transparent;\n  cursor: default;\n  pointer-events: all;\n}\n\n.menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  minwidth: 100%;\n  background-color: white;\n  max-height: 60vh;\n}\n\n.option {\n  border-radius: 0;\n  text-align: left;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  min-height: 48px;\n\n  &.selected {\n    background-color: rgba(0, 0, 0, 0.06);\n  }\n\n  .toggle {\n    pointer-events: none;\n  }\n}\n\n.caret {\n  pointer-events: none;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  position: absolute;\n  right: 12px;\n  top: 50%;\n  translate: 0 -50%;\n  width: 36px;\n  height: 36px;\n  line-height: 20px;\n  transition: rotate 300ms;\n}\n\n.host.opened {\n  .caret {\n    rotate: 180deg;\n  }\n}\n\n.defaultSeparator {\n  margin-right: 0.4em;\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"host": "select_host__1I6lD",
+	"chips": "select_chips__V5DkN",
+	"triggerPart": "select_triggerPart__2jlvv",
+	"triggerContent": "select_triggerContent__4e0fC",
+	"trigger": "select_trigger__OaISN",
+	"menuRoot": "select_menuRoot__1MGMP",
+	"opened": "select_opened__26FhZ",
+	"backdrop": "select_backdrop__1ZJS0",
+	"menu": "select_menu__JC2qW",
+	"option": "select_option__4Prbl",
+	"selected": "select_selected__1gei1",
+	"toggle": "select_toggle__31KME",
+	"caret": "select_caret__2JiDG",
+	"defaultSeparator": "select_defaultSeparator__2NDw7"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -424,7 +461,35 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 472:
+/***/ 452:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(411);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(531);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".tooltip_anchor__vyPfr{position:absolute;inset:0;z-index:30000;pointer-events:none;transition:opacity 400ms ease-out;flex-direction:row}.tooltip_anchor__vyPfr.tooltip_interactive__2o0xk{pointer-events:auto}.tooltip_anchor__vyPfr:enter{opacity:0}.tooltip_anchor__vyPfr:leave{opacity:0;transition:opacity 200ms ease-in;state-duration:200ms}.tooltip_tooltip__mYMSs{border-radius:6px;background-color:#4e4e4e;color:#fff;position:absolute;left:0;top:0;translate:-50% 50%;flex-direction:row;align-items:center;justify-content:flex-start;min-width:40px;min-height:24px;padding:6px 10px}.tooltip_backdrop__Z6hyP{pointer-events:all;cursor:default;position:absolute;inset:0;z-index:29999}", "",{"version":3,"sources":["webpack://./../../material/dist/src/tooltip/index.module.scss"],"names":[],"mappings":"AAAA,uBACE,iBAAA,CACA,OAAA,CACA,aAAA,CACA,mBAAA,CACA,iCAAA,CACA,kBAAA,CAEA,kDACE,mBAAA,CAGF,6BACE,SAAA,CAGF,6BACE,SAAA,CACA,gCAAA,CACA,oBAAA,CAIJ,wBACE,iBAAA,CACA,wBAAA,CACA,UAAA,CACA,iBAAA,CACA,MAAA,CACA,KAAA,CACA,kBAAA,CACA,kBAAA,CACA,kBAAA,CACA,0BAAA,CACA,cAAA,CACA,eAAA,CACA,gBAAA,CAGF,yBACE,kBAAA,CACA,cAAA,CACA,iBAAA,CACA,OAAA,CACA,aAAA","sourcesContent":[".anchor {\n  position: absolute;\n  inset: 0;\n  z-index: 30000;\n  pointer-events: none;\n  transition: opacity 400ms ease-out;\n  flex-direction: row;\n\n  &.interactive {\n    pointer-events: auto;\n  }\n\n  &:enter {\n    opacity: 0;\n  }\n\n  &:leave {\n    opacity: 0;\n    transition: opacity 200ms ease-in;\n    state-duration: 200ms;\n  }\n}\n\n.tooltip {\n  border-radius: 6px;\n  background-color: rgb(78, 78, 78);\n  color: white;\n  position: absolute;\n  left: 0;\n  top: 0;\n  translate: -50% 50%;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-start;\n  min-width: 40px;\n  min-height: 24px;\n  padding: 6px 10px;\n}\n\n.backdrop {\n  pointer-events: all;\n  cursor: default;\n  position: absolute;\n  inset: 0;\n  z-index: 29999;\n}\n"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"anchor": "tooltip_anchor__vyPfr",
+	"interactive": "tooltip_interactive__2o0xk",
+	"tooltip": "tooltip_tooltip__mYMSs",
+	"backdrop": "tooltip_backdrop__Z6hyP"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 521:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -500,8 +565,8 @@ function getOnlyChildOfType(children, type) {
   return getChildrenOfType(children, type);
 }
 function getElevationClass(elevation) {
-  if (elevation > 0) return "md-elevation-" + elevation;
-  return 'md-elevation-0';
+  if (elevation > 0) return "mat-elevation-" + elevation;
+  return 'mat-elevation-0';
 }
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(62);
@@ -623,11 +688,11 @@ function _Accordion(_a) {
   }, [opened]);
   return (0,jsx_runtime.jsxs)("view", __assign({
     name: "<Accordion>",
-    className: clsx_m(className, accordion_index_module.host, opened && [accordion_index_module.expanded, 'md-expanded'], getElevationClass(elevation), 'md-accordion')
+    className: clsx_m(className, accordion_index_module.host, opened && [accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
   }, props, {
     children: [(0,jsx_runtime.jsxs)("view", __assign({
       name: "<AccordionHeader>",
-      className: clsx_m(accordion_index_module.header, 'md-accordion-header'),
+      className: clsx_m(accordion_index_module.header, 'mat-accordion-header'),
       onPointerClick: function onPointerClick() {
         return setOpened(function (x) {
           return !x;
@@ -638,7 +703,7 @@ function _Accordion(_a) {
         children: "expand_more"
       }, void 0)]
     }), void 0), (0,jsx_runtime.jsx)("view", __assign({
-      className: clsx_m(accordion_index_module.expander, 'md-accordion-expander'),
+      className: clsx_m(accordion_index_module.expander, 'mat-accordion-expander'),
       ref: expanderRef,
       style: expanderBaseStyle
     }, {
@@ -659,7 +724,7 @@ function _Summary(_a) {
 
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Summary>",
-    className: clsx_m(className, accordion_index_module.summary, 'md-accordion-summary')
+    className: clsx_m(className, accordion_index_module.summary, 'mat-accordion-summary')
   }, props), void 0);
 }
 
@@ -669,7 +734,7 @@ function _Content(_a) {
 
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Content>",
-    className: clsx_m(className, accordion_index_module.content, 'md-accordion-content')
+    className: clsx_m(className, accordion_index_module.content, 'mat-accordion-content')
   }, props), void 0);
 }
 
@@ -713,7 +778,7 @@ var index_module_update = injectStylesIntoStyleTag_default()(ripple_index_module
 function addRipple(containerElement, pressPosition) {
   if (!containerElement) return null;
   var ripple = UnityBridge.createElement('view', '', HostContainer);
-  ripple.ClassName = src_ripple_index_module.ripple + " md-ripple";
+  ripple.ClassName = src_ripple_index_module.ripple + " mat-ripple";
   ripple.Name = '<Ripple>';
   var w = containerElement.RectTransform.rect.width;
   var h = containerElement.RectTransform.rect.height;
@@ -741,15 +806,7 @@ function addRipple(containerElement, pressPosition) {
   }
 
   UnityBridge.appendChild(containerElement, ripple);
-  return {
-    element: ripple,
-    fade: function fade() {
-      ripple.ClassList.Add(src_ripple_index_module.fading);
-      setTimeout(function () {
-        UnityBridge.removeChild(containerElement, ripple);
-      }, 400);
-    }
-  };
+  return ripple;
 }
 function useRipple(_a) {
   var onPointerDown = _a.onPointerDown,
@@ -764,7 +821,7 @@ function useRipple(_a) {
     onPointerDown === null || onPointerDown === void 0 ? void 0 : onPointerDown.call(null, ev, sender);
 
     if (!noRipple) {
-      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.fade();
+      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
       rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
     }
   }, [noRipple, onPointerDown, centered, target]);
@@ -778,7 +835,7 @@ function useRipple(_a) {
     }
 
     onPointerUp === null || onPointerUp === void 0 ? void 0 : onPointerUp.apply(null, args);
-    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.fade();
+    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
     rippleRef.current = null;
   }, [onPointerUp]);
   return {
@@ -854,7 +911,7 @@ var button_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
-function _Button(_a) {
+var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
   var children = _a.children,
       className = _a.className,
       elevation = _a.elevation,
@@ -874,11 +931,12 @@ function _Button(_a) {
   return (0,jsx_runtime.jsx)("button", button_assign({
     name: "<Button>"
   }, props, ripple, {
-    className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'md-button', src_button_index_module[variant], 'md-variant-' + variant)
+    ref: ref,
+    className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant)
   }, {
     children: children
   }), void 0);
-}
+});
 
 var Button = react.memo(_Button);
 ;// CONCATENATED MODULE: ../../material/dist/src/util/hooks/use-root-class.js
@@ -966,7 +1024,7 @@ function Modal(_a) {
       onClickBackdrop = _a.onClickBackdrop,
       onEscape = _a.onEscape,
       onCloseButton = _a.onCloseButton;
-  useRootClass(open && [src_modal_index_module.body, 'md-modal-open']);
+  useRootClass(open && [src_modal_index_module.body, 'mat-modal-open']);
   var portalRef = (0,react.useRef)();
   var initialOpen = (0,react.useRef)(open);
 
@@ -992,7 +1050,7 @@ function Modal(_a) {
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", modal_assign({
-    className: clsx_m(src_modal_index_module.host, 'md-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
+    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
@@ -1000,7 +1058,7 @@ function Modal(_a) {
     ref: portalRef
   }, {
     children: (0,jsx_runtime.jsxs)("view", modal_assign({
-      className: clsx_m(src_modal_index_module.content, 'md-modal-content'),
+      className: clsx_m(src_modal_index_module.content, 'mat-modal-content'),
       onPointerClick: clickContent
     }, {
       children: [children, onCloseButton && (0,jsx_runtime.jsx)("button", modal_assign({
@@ -1096,19 +1154,19 @@ function AlertDialog(_a) {
   };
 
   return (0,jsx_runtime.jsxs)(Modal, alert_assign({}, props, {
-    className: clsx_m('md-alert-dialog', src_alert_index_module.host, props.className),
+    className: clsx_m('mat-alert-dialog', src_alert_index_module.host, props.className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-title', src_alert_index_module.title)
+      className: clsx_m('mat-alert-dialog-title', src_alert_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-text', src_alert_index_module.text)
+      className: clsx_m('mat-alert-dialog-text', src_alert_index_module.text)
     }, {
       children: text
     }), void 0), button && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-buttons', src_alert_index_module.buttons)
+      className: clsx_m('mat-alert-dialog-buttons', src_alert_index_module.buttons)
     }, {
       children: (0,jsx_runtime.jsx)(Button, alert_assign({
         className: clsx_m(src_alert_index_module.button),
@@ -1197,7 +1255,7 @@ function _Card(_a) {
 
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card>",
-    className: clsx_m(className, src_card_index_module.host, getElevationClass(elevation), 'md-card')
+    className: clsx_m(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
   }, props, {
     children: children
   }), void 0);
@@ -1209,7 +1267,7 @@ function card_Content(_a) {
 
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card.Content>",
-    className: clsx_m(className, src_card_index_module.content, 'md-card-content')
+    className: clsx_m(className, src_card_index_module.content, 'mat-card-content')
   }, props), void 0);
 }
 
@@ -1313,23 +1371,23 @@ function ConfirmDialog(_a) {
   };
 
   return (0,jsx_runtime.jsxs)(Modal, confirm_assign({}, props, {
-    className: clsx_m('md-confirm-dialog', src_confirm_index_module.host, props.className),
+    className: clsx_m('mat-confirm-dialog', src_confirm_index_module.host, props.className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-title', src_confirm_index_module.title)
+      className: clsx_m('mat-confirm-dialog-title', src_confirm_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-text', src_confirm_index_module.text)
+      className: clsx_m('mat-confirm-dialog-text', src_confirm_index_module.text)
     }, {
       children: text
     }), void 0), error && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-modal-dialog-error', src_confirm_index_module.error)
+      className: clsx_m('mat-modal-dialog-error', src_confirm_index_module.error)
     }, {
       children: error
     }), void 0), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-buttons', src_confirm_index_module.buttons)
+      className: clsx_m('mat-confirm-dialog-buttons', src_confirm_index_module.buttons)
     }, {
       children: buttons.map(function (btn, ind) {
         return (0,jsx_runtime.jsx)(Button, confirm_assign({
@@ -1420,7 +1478,7 @@ function _Paper(_a) {
 
   return (0,jsx_runtime.jsx)("view", paper_assign({
     name: "<Paper>",
-    className: clsx_m(className, src_paper_index_module.host, getElevationClass(elevation), 'md-paper')
+    className: clsx_m(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
   }, props, {
     children: children
   }), void 0);
@@ -1504,6 +1562,7 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
 
   var hostRef = (0,react.useRef)();
   variant = variant || 'filled';
+  var emptyRef = (0,react.useRef)(true);
   (0,react.useImperativeHandle)(ref, function () {
     return {
       setEmpty: function setEmpty(empty) {
@@ -1511,14 +1570,15 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
 
         (_a = hostRef.current) === null || _a === void 0 ? void 0 : _a.ClassList.Toggle(src_input_index_module.float, !empty);
         (_b = hostRef.current) === null || _b === void 0 ? void 0 : _b.ClassList.Toggle('float', !empty);
+        emptyRef.current = empty;
       }
     };
-  }, [hostRef]);
+  }, []);
   return (0,jsx_runtime.jsxs)("view", input_assign({
     name: "<InputField>"
   }, other, {
     ref: hostRef,
-    className: clsx_m(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-" + (_float || 'auto'))
+    className: clsx_m(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-" + (_float || 'auto'), !emptyRef.current && [src_input_index_module.float, 'float'])
   }, {
     children: [(0,jsx_runtime.jsx)("view", input_assign({
       className: clsx_m(src_input_index_module.content, 'mat-input-content')
@@ -1771,27 +1831,27 @@ function PromptDialog(_a) {
 
   return (0,jsx_runtime.jsxs)(Modal, prompt_assign({
     open: open,
-    className: clsx_m('md-prompt-dialog', src_prompt_index_module.host, className),
+    className: clsx_m('mat-prompt-dialog', src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-title', src_prompt_index_module.title)
+      className: clsx_m('mat-prompt-dialog-title', src_prompt_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-text', src_prompt_index_module.text)
+      className: clsx_m('mat-prompt-dialog-text', src_prompt_index_module.text)
     }, {
       children: text
     }), void 0), (0,jsx_runtime.jsx)(TextField, prompt_assign({
-      className: clsx_m('md-prompt-dialog-input', src_prompt_index_module.input),
+      className: clsx_m('mat-prompt-dialog-input', src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
     }, inputProps), void 0), error && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-error', src_prompt_index_module.error)
+      className: clsx_m('mat-prompt-dialog-error', src_prompt_index_module.error)
     }, {
       children: error
     }), void 0), (0,jsx_runtime.jsxs)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-buttons', src_prompt_index_module.buttons)
+      className: clsx_m('mat-prompt-dialog-buttons', src_prompt_index_module.buttons)
     }, {
       children: [(0,jsx_runtime.jsx)(Button, prompt_assign({
         onClick: function onClick() {
@@ -1810,6 +1870,640 @@ function PromptDialog(_a) {
     }), void 0)]
   }), void 0);
 }
+;// CONCATENATED MODULE: ../../material/dist/src/util/selection.js
+;
+
+var SelectionState = function () {
+  function SelectionState(allowMultiple, initialValue) {
+    this.allowMultiple = allowMultiple;
+    this.initialValue = initialValue;
+    this.elements = [];
+    this.value = initialValue || (allowMultiple ? [] : undefined);
+    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
+  }
+
+  SelectionState.prototype.changed = function (sender) {
+    if (this.allowMultiple) {
+      var all = true;
+      var any = false;
+      var res = [];
+
+      for (var index = 0; index < this.elements.length; index++) {
+        var element = this.elements[index];
+
+        if (element.el.selected) {
+          res.push(element.el.value);
+          any = true;
+        } else all = false;
+      }
+
+      this.value = res;
+      this.all = all;
+      this.any = any;
+      return;
+    } else {
+      this.all = false;
+      var firstChecked = sender;
+
+      if (!firstChecked) {
+        for (var index = 0; index < this.elements.length; index++) {
+          var element = this.elements[index];
+
+          if (element.el.selected) {
+            firstChecked = element.el;
+            break;
+          }
+        }
+      }
+
+      if (!firstChecked) {
+        this.value = undefined;
+        this.any = false;
+        return;
+      }
+
+      if (!firstChecked.selected) firstChecked.selected = true;
+
+      for (var index = 0; index < this.elements.length; index++) {
+        var element = this.elements[index];
+        if (element.el !== firstChecked) element.el.selected = false;
+      }
+
+      this.value = firstChecked.value;
+      this.any = true;
+    }
+  };
+
+  SelectionState.prototype.triggerChange = function () {
+    var _a;
+
+    (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
+  };
+
+  SelectionState.prototype.triggerUpdate = function () {
+    var _a;
+
+    (_a = this.onUpdate) === null || _a === void 0 ? void 0 : _a.call(this, this);
+  };
+
+  SelectionState.prototype.register = function (el) {
+    var _this = this;
+
+    var listener = el.addOnChange(function () {
+      _this.changed(el);
+
+      _this.triggerChange();
+
+      _this.triggerUpdate();
+    });
+    this.elements.push({
+      el: el,
+      listener: listener
+    });
+    if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
+
+    if (this.allowMultiple) {
+      if (this.all && !el.selected) {
+        this.all = false;
+        this.triggerChange();
+      }
+
+      if (!this.any && el.selected) {
+        this.any = true;
+        this.triggerChange();
+      }
+    }
+
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.unregister = function (el) {
+    var ind = this.elements.findIndex(function (x) {
+      return x.el === el;
+    });
+
+    if (ind >= 0) {
+      this.elements.splice(ind, 1);
+      var item = this.elements[ind];
+      if (item.listener) item.listener();
+    }
+
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.setAll = function (checked) {
+    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
+    checked = !!checked;
+    this.all = checked;
+    this.any = checked;
+    var values = [];
+
+    for (var index = 0; index < this.elements.length; index++) {
+      var element = this.elements[index];
+      element.el.selected = checked;
+    }
+
+    this.value = this.allowMultiple ? values : undefined;
+    this.all = checked;
+    this.any = checked;
+    this.triggerChange();
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.getSelectedElements = function () {
+    var res = [];
+
+    for (var index = 0; index < this.elements.length; index++) {
+      var el = this.elements[index].el;
+      var isSelected = this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value;
+      if (isSelected) res.push(el);
+    }
+
+    return res;
+  };
+
+  return SelectionState;
+}();
+
+
+// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../material/dist/src/toggle/index.module.scss
+var toggle_index_module = __webpack_require__(495);
+;// CONCATENATED MODULE: ../../material/dist/src/toggle/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var toggle_index_module_options = {};
+
+toggle_index_module_options.styleTagTransform = (styleTagTransform_default());
+toggle_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      toggle_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+toggle_index_module_options.domAPI = (styleDomAPI_default());
+toggle_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index_module/* default */.Z, toggle_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_toggle_index_module = (toggle_index_module/* default */.Z && toggle_index_module/* default.locals */.Z.locals ? toggle_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../material/dist/src/toggle/index.js
+var toggle_assign = undefined && undefined.__assign || function () {
+  toggle_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return toggle_assign.apply(this, arguments);
+};
+
+var toggle_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+
+
+
+var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
+  var children = _a.children,
+      className = _a.className,
+      noRipple = _a.noRipple,
+      onPointerDown = _a.onPointerDown,
+      onPointerUp = _a.onPointerUp,
+      type = _a.type,
+      variant = _a.variant,
+      independent = _a.independent,
+      props = toggle_rest(_a, ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"]);
+
+  var toggleRef = (0,react.useRef)();
+  var ripple = useRipple({
+    onPointerDown: onPointerDown,
+    onPointerUp: onPointerUp,
+    noRipple: noRipple,
+    centered: true,
+    target: toggleRef
+  });
+  var ctx = (0,react.useContext)(ToggleGroupContext);
+  if (independent) ctx = null;
+  type = type || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
+  var selectionRef = (0,react.useMemo)(function () {
+    return {
+      get selected() {
+        return toggleRef.current.Checked;
+      },
+
+      set selected(val) {
+        toggleRef.current.Checked = val;
+      },
+
+      get value() {
+        return toggleRef.current.Value;
+      },
+
+      addOnChange: function addOnChange(callback) {
+        return UnityBridge.addEventListener(toggleRef.current, 'onChange', function () {
+          callback === null || callback === void 0 ? void 0 : callback();
+        });
+      }
+    };
+  }, []);
+  var innerRef = (0,react.useCallback)(function (val) {
+    toggleRef.current = val;
+    if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
+    if (ctx) ctx.register(selectionRef);
+  }, [ctx, ref, selectionRef]);
+  (0,react.useEffect)(function () {
+    return function () {
+      if (ctx) ctx.unregister(selectionRef);
+    };
+  }, [ctx, selectionRef]);
+  return (0,jsx_runtime.jsxs)("label", toggle_assign({
+    className: clsx_m(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
+  }, ripple, {
+    children: [(0,jsx_runtime.jsx)("toggle", toggle_assign({
+      name: "<Toggle>",
+      ref: innerRef,
+      className: clsx_m(src_toggle_index_module.toggle, 'mat-toggle')
+    }, props, ripple), void 0), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
+      className: clsx_m(src_toggle_index_module.labelContent, 'mat-toggle-label-content')
+    }, {
+      children: children
+    }), void 0)]
+  }), void 0);
+});
+
+var Toggle = react.memo(_Toggle);
+var ToggleGroupContext = react.createContext(null);
+
+var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
+  var children = _a.children,
+      multiple = _a.multiple,
+      showSelectAll = _a.showSelectAll,
+      selectAllLabel = _a.selectAllLabel,
+      onChange = _a.onChange,
+      initialValue = _a.initialValue;
+  var init = (0,react.useRef)(initialValue);
+  var selectAllRef = (0,react.useRef)();
+  var state = (0,react.useMemo)(function () {
+    return new SelectionState(multiple, init.current);
+  }, [multiple, init]);
+  state.onChange = (0,react.useCallback)(function (val, all, any) {
+    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+
+    if (selectAllRef.current) {
+      selectAllRef.current.Indeterminate = !!any && !all;
+      selectAllRef.current.Checked = !!all;
+    }
+  }, [onChange]);
+  var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
+    state.setAll(checked);
+  }, [state]);
+  (0,react.useImperativeHandle)(ref, function () {
+    return state;
+  }, [state]);
+  return (0,jsx_runtime.jsx)(ToggleGroupContext.Provider, toggle_assign({
+    value: state
+  }, {
+    children: (0,jsx_runtime.jsxs)("view", toggle_assign({
+      name: "<ToggleGroup>",
+      className: clsx_m('mat-toggle-group')
+    }, {
+      children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, toggle_assign({
+        ref: selectAllRef,
+        independent: true,
+        onChange: selectAllCallback,
+        className: clsx_m('mat-toggle-select-all', src_toggle_index_module.selectAllToggle)
+      }, {
+        children: selectAllLabel || 'Select All'
+      }), void 0), children]
+    }), void 0)
+  }), void 0);
+});
+
+var ToggleGroup = react.memo(_ToggleGroup);
+;// CONCATENATED MODULE: ../../material/dist/src/util/hooks/use-auto-ref.js
+
+function useAutoRef(val) {
+  var ref = (0,react.useRef)(val);
+  ref.current = val;
+  return ref;
+}
+// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../material/dist/src/select/index.module.scss
+var select_index_module = __webpack_require__(115);
+;// CONCATENATED MODULE: ../../material/dist/src/select/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var select_index_module_options = {};
+
+select_index_module_options.styleTagTransform = (styleTagTransform_default());
+select_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      select_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+select_index_module_options.domAPI = (styleDomAPI_default());
+select_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var select_index_module_update = injectStylesIntoStyleTag_default()(select_index_module/* default */.Z, select_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_select_index_module = (select_index_module/* default */.Z && select_index_module/* default.locals */.Z.locals ? select_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../material/dist/src/select/index.js
+var select_assign = undefined && undefined.__assign || function () {
+  select_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return select_assign.apply(this, arguments);
+};
+
+var select_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var SelectContext = react.createContext(null);
+function _Select(_a) {
+  var _b = _a.keepOpen,
+      keepOpen = _b === void 0 ? 'auto' : _b,
+      onChange = _a.onChange,
+      name = _a.name,
+      children = _a.children,
+      initialValue = _a.initialValue,
+      multiple = _a.multiple,
+      separator = _a.separator,
+      chips = _a.chips,
+      variant = _a.variant,
+      placeholder = _a.placeholder,
+      _float = _a["float"],
+      className = _a.className,
+      hideCaret = _a.hideCaret,
+      otherProps = select_rest(_a, ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"]);
+
+  var init = (0,react.useRef)(initialValue);
+  var selectAllRef = (0,react.useRef)();
+  var fieldRef = (0,react.useRef)();
+  var shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
+  var state = (0,react.useMemo)(function () {
+    return new SelectionState(!!multiple, init.current);
+  }, [multiple, init]);
+  state.onChange = (0,react.useCallback)(function (val, all, any) {
+    var _a;
+
+    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+
+    if (selectAllRef.current) {
+      selectAllRef.current.Indeterminate = !!any && !all;
+      selectAllRef.current.Checked = !!all;
+    }
+
+    if (!shouldKeepOpen) {
+      setOpened(false);
+    }
+
+    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!any);
+  }, [onChange, shouldKeepOpen]);
+
+  var _c = (0,react.useState)(state.getSelectedElements()),
+      selectedElements = _c[0],
+      setSelectedElements = _c[1];
+
+  state.onUpdate = (0,react.useCallback)(function (st) {
+    setSelectedElements(st.getSelectedElements());
+  }, []);
+
+  var _d = (0,react.useState)(false),
+      opened = _d[0],
+      setOpened = _d[1];
+
+  var toggle = (0,react.useCallback)(function () {
+    return setOpened(function (st) {
+      return !st;
+    });
+  }, [setOpened]);
+  var close = (0,react.useCallback)(function () {
+    return setOpened(false);
+  }, [setOpened]);
+
+  if (typeof separator === 'undefined' && !chips) {
+    separator = (0,jsx_runtime.jsx)("text", select_assign({
+      className: src_select_index_module.defaultSeparator
+    }, {
+      children: ","
+    }), void 0);
+  }
+
+  var setFieldRef = (0,react.useCallback)(function (val) {
+    var _a;
+
+    fieldRef.current = val;
+    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? init.current.length === 0 : typeof init.current === 'undefined');
+  }, [multiple]);
+  return (0,jsx_runtime.jsxs)(InputField, select_assign({
+    className: clsx_m(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
+    variant: variant,
+    placeholder: placeholder,
+    "float": _float,
+    name: name || '<SelectField>',
+    ref: setFieldRef
+  }, {
+    children: [(0,jsx_runtime.jsxs)("button", select_assign({
+      name: "<Select>",
+      onClick: toggle,
+      className: clsx_m(src_select_index_module.trigger, 'mat-input-field-target')
+    }, otherProps, {
+      children: [(0,jsx_runtime.jsx)("view", select_assign({
+        className: src_select_index_module.triggerContent
+      }, {
+        children: selectedElements.map(function (x, i) {
+          return (0,jsx_runtime.jsxs)(react.Fragment, {
+            children: [i > 0 && separator, (0,jsx_runtime.jsx)("view", select_assign({
+              className: src_select_index_module.triggerPart
+            }, {
+              children: x.getTemplate()
+            }), void 0)]
+          }, i);
+        })
+      }), void 0), (0,jsx_runtime.jsxs)("view", select_assign({
+        className: clsx_m(src_select_index_module.menuRoot, opened && src_select_index_module.opened)
+      }, {
+        children: [(0,jsx_runtime.jsx)("button", {
+          name: "<SelectBackdrop>",
+          onClick: close,
+          className: clsx_m(src_select_index_module.backdrop)
+        }, void 0), (0,jsx_runtime.jsx)(SelectContext.Provider, select_assign({
+          value: state
+        }, {
+          children: (0,jsx_runtime.jsx)("scroll", select_assign({
+            name: "<SelectMenu>",
+            className: clsx_m(src_select_index_module.menu, getElevationClass(4))
+          }, {
+            children: children
+          }), void 0)
+        }), void 0)]
+      }), void 0)]
+    }), void 0), !hideCaret && (0,jsx_runtime.jsx)("icon", select_assign({
+      className: clsx_m(src_select_index_module.caret, 'mat-select-caret')
+    }, {
+      children: 'keyboard_arrow_down'
+    }), void 0)]
+  }), void 0);
+}
+function _Option(_a) {
+  var className = _a.className,
+      children = _a.children,
+      value = _a.value,
+      triggerTemplate = _a.triggerTemplate,
+      _b = _a.showToggle,
+      showToggle = _b === void 0 ? 'auto' : _b;
+  var ctx = (0,react.useContext)(SelectContext);
+
+  var _c = (0,react.useState)(false),
+      selected = _c[0],
+      setSelected = _c[1];
+
+  var selectedRef = useAutoRef(selected);
+  var onChangeRef = (0,react.useRef)([]);
+  var getTemplateRef = (0,react.useRef)(function () {
+    return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : children;
+  });
+  var childRef = (0,react.useRef)(children);
+  var shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
+  (0,react.useEffect)(function () {
+    childRef.current = children;
+  }, [children]);
+  (0,react.useEffect)(function () {
+    getTemplateRef.current = function () {
+      return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
+    };
+
+    ctx.triggerUpdate();
+  }, [triggerTemplate, ctx]);
+  var selectionRef = react.useMemo(function () {
+    return {
+      get selected() {
+        return selectedRef.current;
+      },
+
+      set selected(val) {
+        setSelected(val);
+      },
+
+      value: value,
+      addOnChange: function addOnChange(callback) {
+        if (!callback) return;
+        onChangeRef.current.push(callback);
+        return function () {
+          var ind = onChangeRef.current.indexOf(callback);
+          if (ind >= 0) onChangeRef.current.splice(ind, 1);
+        };
+      },
+      getTemplate: function getTemplate() {
+        return getTemplateRef.current();
+      }
+    };
+  }, [value, setSelected, selectedRef]);
+  (0,react.useEffect)(function () {
+    if (ctx) {
+      ctx.register(selectionRef);
+      return function () {
+        ctx.unregister(selectionRef);
+      };
+    }
+  }, [ctx, selectionRef]);
+  var onClick = (0,react.useCallback)(function () {
+    setSelected(function (x) {
+      return !x;
+    });
+
+    for (var index = 0; index < onChangeRef.current.length; index++) {
+      var cb = onChangeRef.current[index];
+      cb();
+    }
+  }, [setSelected]);
+  return (0,jsx_runtime.jsxs)(Button, select_assign({
+    onClick: onClick,
+    variant: "text",
+    className: clsx_m(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className)
+  }, {
+    children: [shouldShowToggle && (0,jsx_runtime.jsx)(Toggle, {
+      className: clsx_m(src_select_index_module.toggle, 'mat-select-option-toggle'),
+      type: ctx.allowMultiple ? 'checkbox' : 'radio',
+      checked: selected,
+      independent: true
+    }, void 0), children]
+  }), void 0);
+}
+var Select = react.memo(_Select);
+Select.Option = _Option;
 // EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../material/dist/src/slider/index.module.scss
 var slider_index_module = __webpack_require__(646);
 ;// CONCATENATED MODULE: ../../material/dist/src/slider/index.module.scss
@@ -2060,299 +2754,178 @@ var globals_update = injectStylesIntoStyleTag_default()(globals/* default */.Z, 
 
 ;// CONCATENATED MODULE: ../../material/dist/src/styles/index.js
 
-// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../material/dist/src/toggle/index.module.scss
-var toggle_index_module = __webpack_require__(495);
-;// CONCATENATED MODULE: ../../material/dist/src/toggle/index.module.scss
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var toggle_index_module_options = {};
-
-toggle_index_module_options.styleTagTransform = (styleTagTransform_default());
-toggle_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      toggle_index_module_options.insert = insertBySelector_default().bind(null, "head");
-    
-toggle_index_module_options.domAPI = (styleDomAPI_default());
-toggle_index_module_options.insertStyleElement = (insertStyleElement_default());
-
-var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index_module/* default */.Z, toggle_index_module_options);
-
-
-
-
-       /* harmony default export */ const src_toggle_index_module = (toggle_index_module/* default */.Z && toggle_index_module/* default.locals */.Z.locals ? toggle_index_module/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ../../material/dist/src/toggle/index.js
-var toggle_assign = undefined && undefined.__assign || function () {
-  toggle_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return toggle_assign.apply(this, arguments);
-};
-
-var toggle_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-
-
-var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
-  var children = _a.children,
-      className = _a.className,
-      noRipple = _a.noRipple,
-      onPointerDown = _a.onPointerDown,
-      onPointerUp = _a.onPointerUp,
-      variant = _a.variant,
-      independent = _a.independent,
-      props = toggle_rest(_a, ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "variant", "independent"]);
-
-  var toggleRef = (0,react.useRef)();
-  var ripple = useRipple({
-    onPointerDown: onPointerDown,
-    onPointerUp: onPointerUp,
-    noRipple: noRipple,
-    centered: true,
-    target: toggleRef
-  });
-  var ctx = (0,react.useContext)(ToggleGroupContext);
-  if (independent) ctx = null;
-  variant = variant || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
-  var innerRef = (0,react.useCallback)(function (val) {
-    toggleRef.current = val;
-    if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
-    if (ctx) ctx.register(val);
-  }, [ctx, ref]);
-  (0,react.useEffect)(function () {
-    return function () {
-      if (ctx && toggleRef.current) ctx.unregister(toggleRef.current);
-    };
-  }, [ctx]);
-  return (0,jsx_runtime.jsxs)("label", toggle_assign({
-    className: clsx_m(className, src_toggle_index_module.label, 'md-toggle-label', src_toggle_index_module[variant], 'md-variant-' + variant)
-  }, ripple, {
-    children: [(0,jsx_runtime.jsx)("toggle", toggle_assign({
-      name: "<Toggle>",
-      ref: innerRef,
-      className: clsx_m(src_toggle_index_module.toggle, 'md-toggle')
-    }, props, ripple), void 0), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
-      className: clsx_m(src_toggle_index_module.labelContent, 'md-toggle-label-content')
-    }, {
-      children: children
-    }), void 0)]
-  }), void 0);
-});
-
-var Toggle = react.memo(_Toggle);
-
-var ToggleGroupState = function () {
-  function ToggleGroupState(allowMultiple, initialValue) {
-    this.allowMultiple = allowMultiple;
-    this.initialValue = initialValue;
-    this.elements = [];
-    this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
-  }
-
-  ToggleGroupState.prototype.changed = function (sender) {
-    if (this.allowMultiple) {
-      var all = true;
-      var any = false;
-      var res = [];
-
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-
-        if (element.el.Checked) {
-          res.push(element.el.Value);
-          any = true;
-        } else all = false;
-      }
-
-      this.value = res;
-      this.all = all;
-      this.any = any;
-      return;
-    } else {
-      this.all = false;
-      var firstChecked = sender;
-
-      if (!firstChecked) {
-        for (var index = 0; index < this.elements.length; index++) {
-          var element = this.elements[index];
-
-          if (element.el.Checked) {
-            firstChecked = element.el;
-            break;
-          }
-        }
-      }
-
-      if (!firstChecked) {
-        this.value = undefined;
-        this.any = false;
-        return;
-      }
-
-      if (!firstChecked.Checked) firstChecked.Checked = true;
-
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-        if (element.el !== firstChecked) element.el.Checked = false;
-      }
-
-      this.value = firstChecked.Value;
-      this.any = true;
-    }
-  };
-
-  ToggleGroupState.prototype.register = function (el) {
-    var _this = this;
-
-    var _a, _b;
-
-    var listener = UnityBridge.addEventListener(el, 'onChange', function (ev, sender) {
-      var _a;
-
-      _this.changed(sender);
-
-      (_a = _this.onChange) === null || _a === void 0 ? void 0 : _a.call(_this, _this.value, _this.all, _this.any);
-    });
-    this.elements.push({
-      el: el,
-      listener: listener
-    });
-    if (this.allowMultiple && Array.isArray(this.value)) el.Checked = this.value.includes(el.Value);else el.Checked = this.value === el.Value;
-
-    if (this.allowMultiple) {
-      if (this.all && !el.Checked) {
-        this.all = false;
-        (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
-      }
-
-      if (!this.any && el.Checked) {
-        this.any = true;
-        (_b = this.onChange) === null || _b === void 0 ? void 0 : _b.call(this, this.value, this.all, this.any);
-      }
-    }
-  };
-
-  ToggleGroupState.prototype.unregister = function (el) {
-    var ind = this.elements.findIndex(function (x) {
-      return x.el === el;
-    });
-
-    if (ind >= 0) {
-      this.elements.splice(ind, 1);
-      var item = this.elements[ind];
-      if (item.listener) item.listener();
-    }
-  };
-
-  ToggleGroupState.prototype.setAll = function (checked) {
-    var _a;
-
-    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
-    checked = !!checked;
-    this.all = checked;
-    this.any = checked;
-    var values = [];
-
-    for (var index = 0; index < this.elements.length; index++) {
-      var element = this.elements[index];
-      element.el.Checked = checked;
-    }
-
-    this.value = this.allowMultiple ? values : undefined;
-    this.all = checked;
-    this.any = checked;
-    (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
-  };
-
-  return ToggleGroupState;
-}();
-
-
-var ToggleGroupContext = react.createContext(null);
-
-var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
-  var children = _a.children,
-      multiple = _a.multiple,
-      showSelectAll = _a.showSelectAll,
-      selectAllLabel = _a.selectAllLabel,
-      onChange = _a.onChange,
-      initialValue = _a.initialValue;
-  var init = (0,react.useRef)(initialValue);
-  var state = (0,react.useMemo)(function () {
-    return new ToggleGroupState(multiple, init.current);
-  }, [multiple, init]);
-  state.onChange = (0,react.useCallback)(function (val, all, any) {
-    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
-
-    if (selectAllRef.current) {
-      selectAllRef.current.Indeterminate = !!any && !all;
-      selectAllRef.current.Checked = !!all;
-    }
-  }, [onChange]);
-  var selectAllRef = (0,react.useRef)();
-  var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
-    state.setAll(checked);
-  }, [state]);
-  (0,react.useImperativeHandle)(ref, function () {
-    return state;
-  }, [state]);
-  return (0,jsx_runtime.jsx)(ToggleGroupContext.Provider, toggle_assign({
-    value: state
-  }, {
-    children: (0,jsx_runtime.jsxs)("view", toggle_assign({
-      name: "<ToggleGroup>",
-      className: clsx_m('md-toggle-group')
-    }, {
-      children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, toggle_assign({
-        ref: selectAllRef,
-        independent: true,
-        onChange: selectAllCallback,
-        className: clsx_m('md-toggle-select-all', src_toggle_index_module.selectAllToggle)
-      }, {
-        children: selectAllLabel || 'Select All'
-      }), void 0), children]
-    }), void 0)
-  }), void 0);
-});
-
-var ToggleGroup = react.memo(_ToggleGroup);
 // EXTERNAL MODULE: ../../renderer/dist/src/renderer/renderer.js + 3 modules
 var renderer = __webpack_require__(550);
+// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../material/dist/src/tooltip/index.module.scss
+var tooltip_index_module = __webpack_require__(452);
+;// CONCATENATED MODULE: ../../material/dist/src/tooltip/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var tooltip_index_module_options = {};
+
+tooltip_index_module_options.styleTagTransform = (styleTagTransform_default());
+tooltip_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      tooltip_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+tooltip_index_module_options.domAPI = (styleDomAPI_default());
+tooltip_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var tooltip_index_module_update = injectStylesIntoStyleTag_default()(tooltip_index_module/* default */.Z, tooltip_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_tooltip_index_module = (tooltip_index_module/* default */.Z && tooltip_index_module/* default.locals */.Z.locals ? tooltip_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../material/dist/src/tooltip/index.js
+
+
+
+
+
+var positions = {
+  left: {
+    anchor: 'left',
+    pivot: 'right'
+  },
+  right: {
+    anchor: 'right',
+    pivot: 'left'
+  },
+  top: {
+    anchor: 'top',
+    pivot: 'bottom'
+  },
+  bottom: {
+    anchor: 'bottom',
+    pivot: 'top'
+  },
+  center: {
+    anchor: 'center',
+    pivot: 'center'
+  }
+};
+
+function addTooltip(target, props, withBackdrop, hide) {
+  target = props.target ? props.target.current : target;
+  if (!target) return null;
+  var anchor = UnityBridge.createElement('view', '', HostContainer);
+  anchor.ClassName = clsx_m(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
+  anchor.Name = '<TooltipAnchor>';
+  var tooltip = UnityBridge.createElement('view', '', HostContainer);
+  tooltip.ClassName = clsx_m(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
+  tooltip.Name = '<Tooltip>';
+  var pos = positions[props.position];
+  anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
+  anchor.Style.Set('inset', -(props.offset || 5));
+  var pivot = Interop.ReactUnity.Converters.AllConverters.YogaValue2Converter.Convert(props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top');
+  var realPivot = pivot.GetType().ToString() === 'ReactUnity.Types.YogaValue2' ? pivot : Interop.ReactUnity.Types.YogaValue2.Center;
+  tooltip.Style.Set('translate', realPivot.Negate());
+  UnityBridge.appendChild(target, anchor);
+
+  if (withBackdrop) {
+    var backdrop = UnityBridge.createElement('portal', '', HostContainer);
+    backdrop.ClassName = clsx_m(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
+    backdrop.Name = '<TooltipBackdrop>';
+    UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
+    UnityBridge.appendChild(anchor, backdrop);
+  }
+
+  UnityBridge.appendChild(anchor, tooltip);
+  renderer/* Renderer.render */.T.render(props.content, tooltip, true);
+  return anchor;
+}
+
+function useTooltip(props, trigger) {
+  if (trigger === void 0) {
+    trigger = 'hover';
+  }
+
+  var tooltipRef = (0,react.useRef)();
+  var callbacksRef = (0,react.useRef)([]);
+  var elementsRef = (0,react.useRef)([]);
+  var propsRef = useAutoRef(props);
+  var clearAll = (0,react.useCallback)(function () {
+    var callbacks = callbacksRef.current;
+
+    for (var _i = 0, callbacks_1 = callbacks; _i < callbacks_1.length; _i++) {
+      var cb = callbacks_1[_i];
+      cb === null || cb === void 0 ? void 0 : cb();
+    }
+  }, []);
+  var hide = (0,react.useCallback)(function () {
+    var _a;
+
+    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    tooltipRef.current = null;
+  }, []);
+  var show = (0,react.useCallback)(function (target, properties, withBackdrop) {
+    var _a;
+
+    if (withBackdrop === void 0) {
+      withBackdrop = false;
+    }
+
+    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
+  }, [hide]);
+  var showWithCurrent = (0,react.useCallback)(function (ev, sender) {
+    var calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
+    show(sender, calculatedProps, trigger === 'click');
+  }, [show, trigger, propsRef]);
+  var register = (0,react.useCallback)(function (el) {
+    if (!el) return;
+    elementsRef.current.push(el);
+    var callbacks = callbacksRef.current;
+
+    if (trigger === 'click') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
+    } else if (trigger === 'press') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
+    } else {
+      // hover
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
+    }
+  }, [trigger, showWithCurrent, hide]);
+  return {
+    register: register,
+    show: show,
+    hide: hide,
+    clearAll: clearAll
+  };
+}
+function useDataTooltip(trigger) {
+  if (trigger === void 0) {
+    trigger = 'hover';
+  }
+
+  var props = function props(el) {
+    return propsProxy(el.Data);
+  };
+
+  return useTooltip(props, trigger);
+}
+
+function propsProxy(data) {
+  return new Proxy(data, {
+    get: function get(tg, prop) {
+      if (typeof prop === 'symbol') return data[prop];
+      return data['tooltip-' + prop];
+    }
+  });
+}
 // EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/material/index.module.scss
 var material_index_module = __webpack_require__(854);
 ;// CONCATENATED MODULE: ./src/material/index.module.scss
@@ -2385,7 +2958,7 @@ var material_index_module_update = injectStylesIntoStyleTag_default()(material_i
        /* harmony default export */ const src_material_index_module = (material_index_module/* default */.Z && material_index_module/* default.locals */.Z.locals ? material_index_module/* default.locals */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/material/index.tsx
-function App(){var _useState=(0,react.useState)(0),_useState2=(0,slicedToArray/* default */.Z)(_useState,2),dlOpen=_useState2[0],setDlOpen=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_material_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"Material Showcase \uD83D\uDE0E"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(1);},children:"Open Alert With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(2);},children:"Open Alert With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(3);},children:"Open Alert With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===1,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===2,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some alert title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===3,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text',title:'Some alert title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(4);},children:"Open Confirm With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(5);},children:"Open Confirm With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(6);},children:"Open Confirm With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===4,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===5,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some confirm title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===6,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text',title:'Some confirm title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(7);},children:"Open Prompt With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(8);},children:"Open Prompt With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(9);},children:"Open Prompt With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===7,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===8,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some prompt title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{placeholder:"Some placeholder",open:dlOpen===9,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text',title:'Some prompt title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Card,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(Card.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Accordion"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Accordion,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Summary,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Some stuff is happening"})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"normal",max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"diff",max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal-reverse",mode:"normal",max:100,step:20,children:"asdf"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal-reverse",mode:"diff",max:100,step:20,children:"asdf"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"No Placeholder:"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Standard with placeholder",variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Outlined with placeholder",variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Filled with placeholder",variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Password Input",contentType:"password"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Checkbox"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{indeterminate:true,children:"Indeterminate"}),"Radio Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 3"})]}),"Checkbox Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{multiple:true,initialValue:['val1','val2'],showSelectAll:true,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val3",children:"Option 3"})]})]});};renderer/* Renderer.render */.T.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+function App(){var _React$useState=react.useState(0),_React$useState2=(0,slicedToArray/* default */.Z)(_React$useState,2),dlOpen=_React$useState2[0],setDlOpen=_React$useState2[1];var ttHover=useDataTooltip('hover');var ttPress=useDataTooltip('press');var ttClick=useDataTooltip('click');return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_material_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"Material Showcase \uD83D\uDE0E"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(1);},children:"Open Alert With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(2);},children:"Open Alert With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(3);},children:"Open Alert With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===1,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===2,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some alert title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===3,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text',title:'Some alert title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(4);},children:"Open Confirm With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(5);},children:"Open Confirm With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(6);},children:"Open Confirm With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===4,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===5,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some confirm title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===6,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text',title:'Some confirm title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(7);},children:"Open Prompt With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(8);},children:"Open Prompt With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(9);},children:"Open Prompt With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===7,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===8,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some prompt title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{placeholder:"Some placeholder",open:dlOpen===9,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text',title:'Some prompt title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row',justifyContent:'space-around'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{alignItems:'center'},children:["Hover",/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-offset":20,"data-tooltip-position":"top","data-tooltip-content":"This is shown on top",children:"Top"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-position":"bottom","data-tooltip-content":"This is shown on bottom",children:"Bottom"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-position":"left","data-tooltip-content":"This is shown on left",children:"Left"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-position":"right","data-tooltip-content":"This is shown on right",children:"Right"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-position":"center","data-tooltip-content":"This is shown on center",children:"Center"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttHover.register,"data-tooltip-anchor":"bottom right","data-tooltip-pivot":"top left","data-tooltip-content":"This is shown on right bottom corner",children:"Custom"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{alignItems:'center'},children:["Press",/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-offset":20,"data-tooltip-position":"top","data-tooltip-content":"This is shown on top",children:"Top"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-position":"bottom","data-tooltip-content":"This is shown on bottom",children:"Bottom"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-position":"left","data-tooltip-content":"This is shown on left",children:"Left"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-position":"right","data-tooltip-content":"This is shown on right",children:"Right"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-position":"center","data-tooltip-content":"This is shown on center",children:"Center"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttPress.register,"data-tooltip-anchor":"bottom right","data-tooltip-pivot":"top left","data-tooltip-content":"This is shown on right bottom corner",children:"Custom"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{alignItems:'center'},children:["Click",/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-offset":20,"data-tooltip-position":"top","data-tooltip-content":"This is shown on top",children:"Top"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-position":"bottom","data-tooltip-content":"This is shown on bottom",children:"Bottom"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-position":"left","data-tooltip-content":"This is shown on left",children:"Left"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-position":"right","data-tooltip-content":"This is shown on right",children:"Right"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-position":"center","data-tooltip-content":"This is shown on center",children:"Center"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{ref:ttClick.register,"data-tooltip-anchor":"bottom right","data-tooltip-pivot":"top left","data-tooltip-content":"This is shown on right bottom corner",children:"Custom"})]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Card"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Card,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(Card.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Accordion"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Accordion,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Summary,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Some stuff is happening"})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"normal",max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"diff",max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal-reverse",mode:"normal",max:100,step:20,children:"asdf"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal-reverse",mode:"diff",max:100,step:20,children:"asdf"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"No Placeholder:"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Standard with placeholder",variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Outlined with placeholder",variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Filled with placeholder",variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Password Input",contentType:"password"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{placeholder:'Regular select',initialValue:"val1",children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val4",children:"Option 4"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val5",children:"Option 5"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val6",children:"Option 6"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val7",children:"Option 7"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val8",children:"Option 8"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val9",children:"Option 9"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val10",children:"Option 10"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val11",children:"Option 11"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val12",children:"Option 12"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val13",children:"Option 13"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{multiple:true,initialValue:['val1','val2'],placeholder:'Multiple with initial value',children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{multiple:true,chips:true,initialValue:['val1','val2'],placeholder:'Chips selection',children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val4",children:"Option 4"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val5",children:"Option 5"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Checkbox"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{indeterminate:true,children:"Indeterminate"}),"Radio Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 3"})]}),"Checkbox Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{multiple:true,initialValue:['val1','val2'],showSelectAll:true,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val3",children:"Option 3"})]})]});};renderer/* Renderer.render */.T.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 
 /***/ }),
 
@@ -2432,7 +3005,7 @@ function createDictionaryWatcher(dictionary, displayName) {
         render = _b[0],
         setRender = _b[1];
 
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect(function () {
       var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
         setRender(function (x) {
           return x + 1;
@@ -2965,4 +3538,4 @@ function _slicedToArray(arr, i) {
 /***/ })
 
 }]);
-//# sourceMappingURL=472.js.map
+//# sourceMappingURL=521.js.map
