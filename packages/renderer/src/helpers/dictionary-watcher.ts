@@ -46,7 +46,7 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
   const Provider = function Provider({ children }: { children?: React.ReactNode }) {
     const [render, setRender] = React.useState(0);
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
       const remove = dictionary?.AddListener((key, value, dic) => {
         setRender(x => x + 1);
       });
