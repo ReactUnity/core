@@ -240,7 +240,7 @@ namespace ReactUnity.Tests
             View.Style.Set("width", 100);
             View.Style.Set("height", 120);
             yield return null;
-            yield return new WaitForEndOfFrame();
+            yield return WaitForEndOfFrame();
 
             Assert.AreEqual(100, View.ClientWidth, 1);
             Assert.AreEqual(200, Scroll.ClientWidth, 1);

@@ -21,11 +21,11 @@ namespace ReactUnity.DomProxies
             this.context = context;
         }
 
-        public IDomElementProxy createElement(string type)
+        public object createElement(string type)
         {
             if (type == "script") return new ScriptProxy(this);
             if (type == "style") return new StyleProxy(this);
-            else return null;
+            else return context.CreateComponent(type, "");
         }
 
         public string createTextNode(string text)
@@ -206,7 +206,12 @@ namespace ReactUnity.DomProxies
 
         public void OnRemove()
         {
-            // TODO:
+            foreach (var sheet in Sheets)
+            {
+                document.context.RemoveStyle(sheet.Value);
+            }
+
+            Sheets.Clear();
         }
 
         public void appendChild(string text)
@@ -235,7 +240,10 @@ namespace ReactUnity.DomProxies
 
             pendingRemoval.ForEach(x => {
                 if (Sheets.TryGetValue(x, out var sheet))
+                {
                     document.context.RemoveStyle(sheet);
+                    Sheets.Remove(x);
+                }
             });
             pendingRemoval.Clear();
         }

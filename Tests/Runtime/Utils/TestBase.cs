@@ -62,5 +62,10 @@ namespace ReactUnity.Tests
             Debug.Break();
             yield return null;
         }
+
+        public IEnumerator WaitForEndOfFrame()
+        {
+            yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
+        }
     }
 }
