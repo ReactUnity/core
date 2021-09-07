@@ -1,8 +1,9 @@
 # React Unity
 
-[![openupm](https://img.shields.io/npm/v/com.reactunity.core?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.reactunity.core/)
-[![Tests](https://github.com/ReactUnity/core/actions/workflows/test.yml/badge.svg)](https://github.com/ReactUnity/core/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/ReactUnity/core/branch/main/graph/badge.svg?token=3ZDHD77UX1)](https://codecov.io/gh/ReactUnity/core)
+[![openupm](https://img.shields.io/npm/v/com.reactunity.core?label=openupm&style=for-the-badge&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.reactunity.core/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ReactUnity/core/Tests?style=for-the-badge&label=Tests)](https://github.com/ReactUnity/core/actions/workflows/test.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/ReactUnity/core?style=for-the-badge&token=3ZDHD77UX1)](https://codecov.io/gh/ReactUnity/core)
+[![Discord](https://img.shields.io/discord/884829138991603792?style=for-the-badge&label=Discord)](https://discord.gg/dbcaX7Xu)
 
 React Unity is a way to build declarative UI in Unity3D using React. It can be used together with packages like Typescript, redux, i18next, react-router and more.
 It also supports a subset of CSS features and Flex layout system.
