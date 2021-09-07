@@ -183,5 +183,71 @@ namespace ReactUnity.Tests
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
         }
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
+        public IEnumerator ScrollCanBeDoneByCode()
+        {
+            View.Style.Set("width", 400);
+            View.Style.Set("height", 420);
+            yield return null;
+
+            Assert.AreEqual(0, Scroll.ScrollTop, 1);
+            Assert.AreEqual(0, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(200, Scroll.ClientWidth, 1);
+            Assert.AreEqual(200, Scroll.ClientHeight, 1);
+            Assert.AreEqual(400, Scroll.ScrollWidth, 1);
+            Assert.AreEqual(420, Scroll.ScrollHeight, 1);
+            Assert.AreEqual(0, Scroll.ScrollRect.content.offsetMin.x, 1);
+            Assert.AreEqual(0, Scroll.ScrollRect.content.offsetMax.y, 1);
+
+            Scroll.ScrollTop = 100;
+            Scroll.ScrollLeft = 70;
+
+            Assert.AreEqual(100, Scroll.ScrollTop, 1);
+            Assert.AreEqual(70, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(200, Scroll.ClientWidth, 1);
+            Assert.AreEqual(200, Scroll.ClientHeight, 1);
+            Assert.AreEqual(-70, Scroll.ScrollRect.content.offsetMin.x, 1);
+            Assert.AreEqual(100, Scroll.ScrollRect.content.offsetMax.y, 1);
+
+
+            Scroll.ScrollTop = 320;
+            Scroll.ScrollLeft = 360;
+            Assert.AreEqual(200, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(220, Scroll.ScrollTop, 1);
+
+
+            Scroll.ScrollTo(120, 140, 0);
+            Assert.AreEqual(120, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(140, Scroll.ScrollTop, 1);
+
+
+            Scroll.ScrollBy(10, 30, 0);
+            Assert.AreEqual(130, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(170, Scroll.ScrollTop, 1);
+            Assert.AreEqual(-130, Scroll.ScrollRect.content.offsetMin.x, 1);
+            Assert.AreEqual(170, Scroll.ScrollRect.content.offsetMax.y, 1);
+
+
+            Scroll.SetProperty("smoothness", 0.4f);
+            Scroll.ScrollBy(-100, -150);
+            yield return AdvanceTime(0.45f);
+            Assert.AreEqual(30, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(20, Scroll.ScrollTop, 1);
+
+
+            View.Style.Set("width", 400);
+            View.Style.Set("height", 420);
+            yield return null;
+
+            Assert.AreEqual(30, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(20, Scroll.ScrollTop, 1);
+            Assert.AreEqual(200, Scroll.ClientWidth, 1);
+            Assert.AreEqual(200, Scroll.ClientHeight, 1);
+            Assert.AreEqual(200, Scroll.ScrollWidth, 1);
+            Assert.AreEqual(200, Scroll.ScrollHeight, 1);
+
+        }
     }
 }

@@ -21,19 +21,22 @@ namespace ReactUnity.UGUI
 
         public ScrollContentResizer ContentResizer { get; private set; }
 
-        public override float ScrollWidth => ScrollRect.content.rect.width;
-        public override float ScrollHeight => ScrollRect.content.rect.height;
+        public ScrollBarComponent HorizontalScrollbar { get; }
+        public ScrollBarComponent VerticalScrollbar { get; }
+
+        public override float ScrollWidth => ScrollRect.ScrollWidth;
+        public override float ScrollHeight => ScrollRect.ScrollHeight;
 
         public override float ScrollLeft
         {
-            get => ScrollRect.normalizedPosition.x * (ScrollWidth - ClientWidth);
-            set => ScrollRect.normalizedPosition = new Vector2(value / (ScrollWidth - ClientWidth), ScrollRect.normalizedPosition.y);
+            get => ScrollRect.ScrollLeft;
+            set => ScrollRect.ScrollLeft = value;
         }
 
         public override float ScrollTop
         {
-            get => (1 - ScrollRect.normalizedPosition.y) * (ScrollHeight - ClientHeight);
-            set => ScrollRect.normalizedPosition = new Vector2(ScrollRect.normalizedPosition.x, 1 - value / (ScrollHeight - ClientHeight));
+            get => ScrollRect.ScrollTop;
+            set => ScrollRect.ScrollTop = value;
         }
 
         public ScrollComponent(UGUIContext Context) : base(Context, "scroll")
@@ -63,8 +66,10 @@ namespace ReactUnity.UGUI
             var resizer = ContentResizer = content.gameObject.AddComponent<ScrollContentResizer>();
             resizer.Layout = Layout;
 
-            ScrollRect.horizontalScrollbar = CreateScrollbar(false);
-            ScrollRect.verticalScrollbar = CreateScrollbar(true);
+            HorizontalScrollbar = CreateScrollbar(false);
+            VerticalScrollbar = CreateScrollbar(true);
+            ScrollRect.horizontalScrollbar = HorizontalScrollbar.Scrollbar;
+            ScrollRect.verticalScrollbar = VerticalScrollbar.Scrollbar;
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
             ScrollRect.scrollSensitivity = 50;
@@ -74,12 +79,12 @@ namespace ReactUnity.UGUI
             ScrollRect.movementType = MovementType.Clamped;
         }
 
-        private Scrollbar CreateScrollbar(bool vertical)
+        private ScrollBarComponent CreateScrollbar(bool vertical)
         {
             var sc = new ScrollBarComponent(Context);
             sc.Horizontal = !vertical;
             sc.SetParent(this);
-            return sc.Scrollbar;
+            return sc;
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -103,6 +108,7 @@ namespace ReactUnity.UGUI
                     ScrollRect.horizontal = dir.HasFlag(ScrollBarDirection.Horizontal);
                     ScrollRect.vertical = dir.HasFlag(ScrollBarDirection.Vertical);
                     ContentResizer.Direction = dir;
+                    ScrollRect.WheelDirectionTransposed = dir == ScrollBarDirection.Horizontal;
                     break;
                 case "alwaysShow":
                     var dirs2 = AllConverters.Get<ScrollBarDirection>().Convert(value);
@@ -131,6 +137,9 @@ namespace ReactUnity.UGUI
             }
             else return base.AddEventListener(eventName, fun);
         }
+
+        public void ScrollTo(float? left = null, float? top = null, float? smoothness = null) => ScrollRect.ScrollTo(left, top, smoothness);
+        public void ScrollBy(float? left = null, float? top = null, float? smoothness = null) => ScrollRect.ScrollBy(left, top, smoothness);
     }
 
     [Flags]
@@ -328,12 +337,78 @@ namespace ReactUnity.UGUI
 
         private Coroutine SmoothCoroutine;
         private Vector2 targetPosition;
+        private RectTransform rt;
+
+        public bool WheelDirectionTransposed { get; set; } = false;
+
+        protected override void OnEnable()
+        {
+            rt = GetComponent<RectTransform>();
+        }
+
+        public float ClientWidth => rt.rect.width;
+        public float ClientHeight => rt.rect.height;
+        public float ScrollWidth => Math.Max(content.rect.width, ClientWidth);
+        public float ScrollHeight => content.rect.height;
+
+        public float ScrollLeft
+        {
+            get => normalizedPosition.x * (ScrollWidth - ClientWidth);
+            set => ScrollTo(value, null, 0);
+        }
+
+        public float ScrollTop
+        {
+            get => (1 - normalizedPosition.y) * (ScrollHeight - ClientHeight);
+            set => ScrollTo(null, value, 0);
+        }
+
+
 
         public override void OnScroll(PointerEventData data)
         {
             if (!IsActive())
                 return;
 
+            var transpose = WheelDirectionTransposed;
+
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
+            if (UnityEngine.InputSystem.Keyboard.current.shiftKey.isPressed)
+                transpose = !transpose;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            if(UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift))
+                transpose = !transpose;
+#endif
+
+            if (transpose) data.scrollDelta = new Vector2(data.scrollDelta.y, data.scrollDelta.x);
+
+            var positionBefore = normalizedPosition;
+            base.OnScroll(data);
+            var positionAfter = normalizedPosition;
+            ScrollTo(positionBefore, positionAfter, SmoothScrollTime);
+        }
+
+        public void ScrollBy(float? left = null, float? top = null, float? smoothness = null)
+        {
+            var sl = left ?? 0;
+            var st = top ?? 0;
+
+            ScrollTo(ScrollLeft + sl, ScrollTop + st, smoothness);
+        }
+
+        public void ScrollTo(float? left = null, float? top = null, float? smoothness = null)
+        {
+            var sl = left ?? ScrollLeft;
+            var st = top ?? ScrollTop;
+
+            var slr = Mathf.Clamp01(sl / (ScrollWidth - ClientWidth));
+            var str = Mathf.Clamp01(1 - st / (ScrollHeight - ClientHeight));
+
+            ScrollTo(normalizedPosition, new Vector2(slr, str), smoothness ?? SmoothScrollTime);
+        }
+
+        private void ScrollTo(Vector2 positionBefore, Vector2 positionAfter, float smoothness)
+        {
             if (SmoothCoroutine != null)
             {
                 StopCoroutine(SmoothCoroutine);
@@ -341,20 +416,21 @@ namespace ReactUnity.UGUI
                 normalizedPosition = targetPosition;
             }
 
-            if (SmoothScrollTime > 0)
+            if (smoothness > 0)
             {
-                Vector2 positionBefore = normalizedPosition;
-                base.OnScroll(data);
-                Vector2 positionAfter = normalizedPosition;
                 targetPosition = positionAfter;
 
                 normalizedPosition = positionBefore;
-                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter));
+                SmoothCoroutine = StartCoroutine(StartScroll(positionBefore, positionAfter, smoothness));
             }
-            else base.OnScroll(data);
+            else
+            {
+                if (normalizedPosition != positionAfter)
+                    normalizedPosition = positionAfter;
+            }
         }
 
-        private IEnumerator StartScroll(Vector2 from, Vector2 to)
+        private IEnumerator StartScroll(Vector2 from, Vector2 to, float smoothness)
         {
             var passed = 0f;
 
@@ -362,8 +438,8 @@ namespace ReactUnity.UGUI
             {
                 yield return null;
                 passed += Time.deltaTime;
-                if (passed < SmoothScrollTime)
-                    normalizedPosition = Vector2.Lerp(from, to, passed / SmoothScrollTime);
+                if (passed < smoothness)
+                    normalizedPosition = Vector2.Lerp(from, to, passed / smoothness);
                 else
                 {
                     normalizedPosition = to;
