@@ -1,4 +1,5 @@
-import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextAlign, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
+import { ObjectFit } from '.';
+import { Appearance, BackgroundBlendMode, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextAlign, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
 import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -12,6 +13,7 @@ export interface RenderStyle {
   appearance?: Appearance;
   navigation?: NavigationMode;
 
+  backgroundBlendMode?: BackgroundBlendMode;
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
   mask?: AssetReference;
@@ -30,7 +32,7 @@ export interface RenderStyle {
   borderLeftColor?: ColorAux;
 
   boxShadow?: string;
-  objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
+  objectFit?: ObjectFit;
   objectPosition?: YogaValue2Aux;
 
   transformOrigin?: Vector2Aux;
@@ -41,6 +43,7 @@ export interface RenderStyle {
   animation?: string;
   transition?: string;
   audio?: string;
+  stateDuration?: number;
 
   // Inherited styles
   color?: ColorAux;
@@ -53,6 +56,9 @@ export interface RenderStyle {
   whiteSpace?: WhiteSpace;
   textStrokeWidth?: NumberAux;
   textStrokeColor?: ColorAux;
+  lineHeight?: number;
+  letterSpacing?: number;
+  wordSpacing?: number;
 
   // Shorthands
   border?: string;
