@@ -56,8 +56,8 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
         public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
         public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
-        public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("object-fit", ObjectFit.Fill);
-        public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("object-position", YogaValue2.Center, true);
+        public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("objectFit", ObjectFit.Fill);
+        public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()

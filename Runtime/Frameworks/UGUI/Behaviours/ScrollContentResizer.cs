@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.UGUI.Behaviours
@@ -8,8 +9,8 @@ namespace ReactUnity.UGUI.Behaviours
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
 
-        private ScrollBarDirection direction = ScrollBarDirection.Both;
-        public ScrollBarDirection Direction
+        private ScrollDirection direction = ScrollDirection.Both;
+        public ScrollDirection Direction
         {
             get => direction;
             internal set
@@ -37,8 +38,8 @@ namespace ReactUnity.UGUI.Behaviours
 
         public void RecalculateSize()
         {
-            var hasHorizontal = direction.HasFlag(ScrollBarDirection.Horizontal);
-            var hasVertical = direction.HasFlag(ScrollBarDirection.Vertical);
+            var hasHorizontal = direction.HasFlag(ScrollDirection.Horizontal);
+            var hasVertical = direction.HasFlag(ScrollDirection.Vertical);
 
             if (!hasHorizontal && !hasVertical)
             {

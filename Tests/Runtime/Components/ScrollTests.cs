@@ -128,7 +128,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(0, Scroll.ScrollRect.verticalScrollbar.transform.localPosition.z);
             Assert.AreEqual(0, Scroll.ScrollRect.horizontalScrollbar.transform.localPosition.z);
 
-            var hbar = Q("scroll _scrollbar[horizontal]") as ScrollBarComponent;
+            var hbar = Q("scroll _scrollbar[horizontal]") as ScrollbarComponent;
 
             Assert.AreEqual(Scroll.ScrollRect.horizontalScrollbar, hbar.Scrollbar);
             Assert.AreEqual(Color.red, hbar.BorderAndBackground.Background.GetComponent<Image>().color);
@@ -152,7 +152,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.AutoHide, Scroll.ScrollRect.verticalScrollbarVisibility);
             Assert.AreEqual(50, Scroll.ScrollRect.scrollSensitivity);
-            Assert.AreEqual(0.12f, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(0.12f, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
 
@@ -171,7 +171,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.horizontalScrollbarVisibility);
             Assert.AreEqual(ScrollRect.ScrollbarVisibility.Permanent, Scroll.ScrollRect.verticalScrollbarVisibility);
             Assert.AreEqual(100, Scroll.ScrollRect.scrollSensitivity);
-            Assert.AreEqual(0.4f, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(0.4f, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Elastic, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0.5f, Scroll.ScrollRect.elasticity);
 
@@ -179,7 +179,7 @@ namespace ReactUnity.Tests
             Globals.Set("elasticity", 0);
             Globals.Set("smoothness", 0);
             yield return null;
-            Assert.AreEqual(0, Scroll.ScrollRect.SmoothScrollTime);
+            Assert.AreEqual(0, Scroll.ScrollRect.Smoothness);
             Assert.AreEqual(ScrollRect.MovementType.Clamped, Scroll.ScrollRect.movementType);
             Assert.AreEqual(0, Scroll.ScrollRect.elasticity);
         }
@@ -237,17 +237,18 @@ namespace ReactUnity.Tests
             Assert.AreEqual(20, Scroll.ScrollTop, 1);
 
 
-            View.Style.Set("width", 400);
-            View.Style.Set("height", 420);
+            View.Style.Set("width", 100);
+            View.Style.Set("height", 120);
             yield return null;
+            yield return new WaitForEndOfFrame();
 
-            Assert.AreEqual(30, Scroll.ScrollLeft, 1);
-            Assert.AreEqual(20, Scroll.ScrollTop, 1);
+            Assert.AreEqual(100, View.ClientWidth, 1);
             Assert.AreEqual(200, Scroll.ClientWidth, 1);
             Assert.AreEqual(200, Scroll.ClientHeight, 1);
+            Assert.AreEqual(0, Scroll.ScrollLeft, 1);
+            Assert.AreEqual(0, Scroll.ScrollTop, 1);
             Assert.AreEqual(200, Scroll.ScrollWidth, 1);
             Assert.AreEqual(200, Scroll.ScrollHeight, 1);
-
         }
     }
 }
