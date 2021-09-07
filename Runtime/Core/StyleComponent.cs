@@ -57,6 +57,9 @@ namespace ReactUnity
         public string Content { get; private set; }
         public override string Name { get; set; }
 
+        public override float ClientWidth => 0;
+        public override float ClientHeight => 0;
+
         public StyleComponent(ReactContext ctx, string tag = "style", string text = null) : base(ctx, tag, false)
         {
             SetText(text);

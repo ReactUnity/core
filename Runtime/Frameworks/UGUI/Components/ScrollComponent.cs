@@ -21,6 +21,21 @@ namespace ReactUnity.UGUI
 
         public ScrollContentResizer ContentResizer { get; private set; }
 
+        public override float ScrollWidth => ScrollRect.content.rect.width;
+        public override float ScrollHeight => ScrollRect.content.rect.height;
+
+        public override float ScrollLeft
+        {
+            get => ScrollRect.normalizedPosition.x * (ScrollWidth - ClientWidth);
+            set => ScrollRect.normalizedPosition = new Vector2(value / (ScrollWidth - ClientWidth), ScrollRect.normalizedPosition.y);
+        }
+
+        public override float ScrollTop
+        {
+            get => (1 - ScrollRect.normalizedPosition.y) * (ScrollHeight - ClientHeight);
+            set => ScrollRect.normalizedPosition = new Vector2(ScrollRect.normalizedPosition.x, 1 - value / (ScrollHeight - ClientHeight));
+        }
+
         public ScrollComponent(UGUIContext Context) : base(Context, "scroll")
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
@@ -343,14 +358,19 @@ namespace ReactUnity.UGUI
         {
             var passed = 0f;
 
-            while (passed < SmoothScrollTime)
+            while (true)
             {
-                normalizedPosition = Vector2.Lerp(from, to, passed / SmoothScrollTime);
-                passed += Time.deltaTime;
                 yield return null;
+                passed += Time.deltaTime;
+                if (passed < SmoothScrollTime)
+                    normalizedPosition = Vector2.Lerp(from, to, passed / SmoothScrollTime);
+                else
+                {
+                    normalizedPosition = to;
+                    SmoothCoroutine = null;
+                    yield break;
+                }
             }
-            normalizedPosition = to;
-            SmoothCoroutine = null;
         }
     }
 }

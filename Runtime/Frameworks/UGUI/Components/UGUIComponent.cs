@@ -47,6 +47,9 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override float ClientWidth => RectTransform.rect.width;
+        public override float ClientHeight => RectTransform.rect.height;
+
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             GameObject = new GameObject();

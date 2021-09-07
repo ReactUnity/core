@@ -29,6 +29,9 @@ namespace ReactUnity.UIToolkit
             set => Element.name = string.IsNullOrWhiteSpace(value) ? DefaultName : value;
         }
 
+        public override float ClientWidth => Element.layout.width;
+        public override float ClientHeight => Element.layout.height;
+
         protected Dictionary<Type, IManipulator> Manipulators = new Dictionary<Type, IManipulator>();
         private string currentCursor = null;
 

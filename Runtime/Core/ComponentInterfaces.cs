@@ -55,6 +55,13 @@ namespace ReactUnity
 
         void Remove();
         void Destroy(bool recursive = true);
+
+        float ScrollLeft { get; set; }
+        float ScrollTop { get; set; }
+        float ScrollWidth { get; }
+        float ScrollHeight { get; }
+        float ClientWidth { get; }
+        float ClientHeight { get; }
     }
 
     [TypescriptListInterfaces]

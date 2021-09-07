@@ -60,8 +60,15 @@ namespace ReactUnity
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
         public IReactComponent BeforePseudo { get; protected set; }
         public IReactComponent AfterPseudo { get; protected set; }
+        #endregion
 
-
+        #region DOM-like Properties
+        public virtual float ScrollLeft { get => 0; set { } }
+        public virtual float ScrollTop { get => 0; set { } }
+        public virtual float ScrollWidth => ClientWidth;
+        public virtual float ScrollHeight => ClientHeight;
+        public abstract float ClientWidth { get; }
+        public abstract float ClientHeight { get; }
         #endregion
 
 
