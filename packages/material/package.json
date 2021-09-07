@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@reactunity/renderer": "^0.5.1",
+    "memoize-one": "^5.2.1",
     "react": "^17.0.2"
   },
   "devDependencies": {
