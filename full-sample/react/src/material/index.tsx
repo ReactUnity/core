@@ -14,6 +14,7 @@ import { useDataTooltip } from '@reactunity/material/tooltip';
 import { Renderer } from '@reactunity/renderer';
 import React from 'react';
 import style from './index.module.scss';
+import { VirtualScrolls } from './virtual-scrolls';
 
 export function App() {
   const [dlOpen, setDlOpen] = React.useState(0);
@@ -53,6 +54,11 @@ export function App() {
       <PromptDialog open={dlOpen === 7} onClose={() => setDlOpen(0)} backdropClose text={'Some prompt text'} />
       <PromptDialog open={dlOpen === 8} onClose={() => setDlOpen(0)} backdropClose title={'Some prompt title'} />
       <PromptDialog placeholder="Some placeholder" open={dlOpen === 9} onClose={() => setDlOpen(0)} backdropClose text={'Some prompt text'} title={'Some prompt title'} />
+    </Paper>
+
+    <Paper elevation={2}>
+      Virtual Scrolls:
+      <VirtualScrolls />
     </Paper>
 
     <section>
