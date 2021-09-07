@@ -17,9 +17,12 @@
     animation: appearAnim 400ms both;
   }
 
+  &:not(.opened) {
+    pointer-events: none;
+  }
+
   &.closed {
     animation: closeAnim 200ms both;
-    pointer-events: none;
   }
 
   &:after {

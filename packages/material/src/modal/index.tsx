@@ -35,7 +35,7 @@ export function Modal({ open, children, className, onClickBackdrop, onEscape, on
   };
 
   const onAnimationEnd: Events['onAnimationEnd'] = (ev) => {
-    if (ev.Animation.Name === style.closeAnim && portalRef.current) {
+    if (ev.AnimationName === style.closeAnim && portalRef.current) {
       portalRef.current.SetProperty('active', false);
     }
   };

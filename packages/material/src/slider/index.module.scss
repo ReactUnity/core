@@ -84,7 +84,7 @@
     translate: -50% -50%;
     border-width: 1px;
     border-color: var(--mat-slider-color);
-    background-color: hsl(0deg, 0%, 92%);
+    background-color: var(--mat-slider-color);
   }
 
   &[orientation="horizontal"] .thumb {
