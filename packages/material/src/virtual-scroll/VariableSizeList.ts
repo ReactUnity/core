@@ -1,6 +1,6 @@
 
 import type { Props, ScrollToAlign } from './createListComponent';
-import createListComponent from './createListComponent';
+import { createListComponent } from './createListComponent';
 
 
 const DEFAULT_ESTIMATED_ITEM_SIZE = 50;
@@ -159,7 +159,7 @@ const getEstimatedTotalSize = (
   return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
 };
 
-const VariableSizeList = createListComponent({
+export const VariableSizeList = createListComponent({
   getItemOffset: (
     props: Props<any>,
     index: number,
@@ -307,5 +307,3 @@ const VariableSizeList = createListComponent({
     }
   },
 });
-
-export default VariableSizeList;

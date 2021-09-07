@@ -1,6 +1,6 @@
 
 import type { Props, ScrollToAlign } from './createGridComponent';
-import createGridComponent from './createGridComponent';
+import { createGridComponent } from './createGridComponent';
 
 
 const DEFAULT_ESTIMATED_ITEM_SIZE = 50;
@@ -284,7 +284,7 @@ const getOffsetForIndexAndAlignment = (
   }
 };
 
-const VariableSizeGrid = createGridComponent({
+export const VariableSizeGrid = createGridComponent({
   getColumnOffset: (
     props: Props<any>,
     index: number,
@@ -500,5 +500,3 @@ const VariableSizeGrid = createGridComponent({
     }
   },
 });
-
-export default VariableSizeGrid;

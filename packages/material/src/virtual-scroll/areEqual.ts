@@ -1,9 +1,9 @@
-import shallowDiffers from './shallowDiffers';
+import { shallowDiffers } from './shallowDiffers';
 
 // Custom comparison function for React.memo().
 // It knows to compare individual style props and ignore the wrapper object.
 // See https://reactjs.org/docs/react-api.html#reactmemo
-export default function areEqual(
+export function areEqual(
   prevProps: any,
   nextProps: any
 ): boolean {

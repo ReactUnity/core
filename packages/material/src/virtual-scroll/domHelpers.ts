@@ -1,7 +1,10 @@
+import { ReactUnity } from '@reactunity/renderer';
 
-export function getScrollbarSize(): number {
-  // TODO:
-  return 10;
+export function getScrollbarSize(el: ReactUnity.UGUI.ScrollComponent): { verticalWidth: number, horizontalHeight: number } {
+  return {
+    verticalWidth: el.VerticalScrollbar.Thumb.ClientWidth,
+    horizontalHeight: el.HorizontalScrollbar.Thumb.ClientHeight,
+  };
 }
 
 export type RTLOffsetType =

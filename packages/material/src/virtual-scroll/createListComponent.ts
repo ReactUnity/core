@@ -1,5 +1,6 @@
 
 import { ReactUnity, UnityEngine } from '@reactunity/renderer';
+import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
 import { createElement, PureComponent } from 'react';
 import { getRTLOffsetType } from './domHelpers';
@@ -75,10 +76,9 @@ export type Props<T> = {
   outerRef?: any;
   outerElementType?: string | React.Component<OuterProps, any>;
   overscanCount?: number;
-  style?: Object;
   useIsScrolling?: boolean;
   width?: number | string;
-};
+} & UGUIElements['scroll'];
 
 type State = {
   instance: any;
@@ -131,7 +131,7 @@ const IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
 
 const defaultItemKey = (index: number, data: any) => index;
 
-export default function createListComponent({
+export function createListComponent({
   getItemOffset,
   getEstimatedTotalSize,
   getItemSize,
@@ -298,6 +298,15 @@ export default function createListComponent({
         style,
         useIsScrolling,
         width,
+
+        // Unused
+        initialScrollOffset,
+        itemSize,
+        onItemsRendered,
+        onScroll: _,
+        outerRef,
+        overscanCount,
+        ...rest
       } = this.props;
       const { isScrolling } = this.state;
 
@@ -332,6 +341,7 @@ export default function createListComponent({
       return createElement(
         (outerElementType || 'scroll') as any,
         {
+          ...rest,
           className,
           onValueChanged: onScroll,
           ref: this._outerRefSetter,

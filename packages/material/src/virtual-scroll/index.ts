@@ -1,8 +1,8 @@
 
-export { default as areEqual } from './areEqual';
-export { default as FixedSizeGrid } from './FixedSizeGrid';
-export { default as FixedSizeList } from './FixedSizeList';
-export { default as shouldComponentUpdate } from './shouldComponentUpdate';
-export { default as VariableSizeGrid } from './VariableSizeGrid';
-export { default as VariableSizeList } from './VariableSizeList';
+export { areEqual } from './areEqual';
+export { FixedSizeGrid } from './FixedSizeGrid';
+export { FixedSizeList } from './FixedSizeList';
+export { shouldComponentUpdate } from './shouldComponentUpdate';
+export { VariableSizeGrid } from './VariableSizeGrid';
+export { VariableSizeList } from './VariableSizeList';
 

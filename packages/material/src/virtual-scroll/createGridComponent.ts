@@ -1,7 +1,8 @@
 import { ReactUnity, UnityEngine } from '@reactunity/renderer';
+import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
 import { createElement, PureComponent } from 'react';
-import { getRTLOffsetType } from './domHelpers';
+import { getRTLOffsetType, getScrollbarSize } from './domHelpers';
 import { cancelTimeout, requestTimeout, TimeoutID } from './timer';
 
 
@@ -83,7 +84,7 @@ export type Props<T> = {
   style?: Object;
   useIsScrolling?: boolean;
   width: number;
-};
+} & UGUIElements['scroll'];;
 
 type State = {
   instance: any;
@@ -133,7 +134,7 @@ const IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
 const defaultItemKey = ({ columnIndex, data, rowIndex }) =>
   `${rowIndex}:${columnIndex}`;
 
-export default function createGridComponent({
+export function createGridComponent({
   getColumnOffset,
   getColumnStartIndexForOffset,
   getColumnStopIndexForStartIndex,
@@ -261,8 +262,7 @@ export default function createGridComponent({
     }): void {
       const { columnCount, height, rowCount, width } = this.props;
       const { scrollLeft, scrollTop } = this.state;
-      const scrollbarWidth = this._outerRef.ScrollRect.verticalScrollbar.handleRect.rect.width;
-      const scrollbarHeight = this._outerRef.ScrollRect.horizontalScrollbar.handleRect.rect.width;
+      const sizes = getScrollbarSize(this._outerRef);
 
       if (columnIndex !== undefined) {
         columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
@@ -284,9 +284,9 @@ export default function createGridComponent({
       // to ensure it's fully visible.
       // But we only need to account for its size when it's actually visible.
       const horizontalScrollbarSize =
-        estimatedTotalWidth > width ? scrollbarHeight : 0;
+        estimatedTotalWidth > width ? sizes.horizontalHeight : 0;
       const verticalScrollbarSize =
-        estimatedTotalHeight > height ? scrollbarWidth : 0;
+        estimatedTotalHeight > height ? sizes.verticalWidth : 0;
 
       this.scrollTo({
         scrollLeft:
@@ -385,6 +385,18 @@ export default function createGridComponent({
         style,
         useIsScrolling,
         width,
+
+        // Unused
+        columnWidth,
+        initialScrollLeft,
+        initialScrollTop,
+        onItemsRendered,
+        onScroll,
+        outerRef,
+        overscanColumnCount,
+        overscanRowCount,
+        rowHeight,
+        ...rest
       } = this.props;
       const { isScrolling } = this.state;
 
@@ -434,6 +446,7 @@ export default function createGridComponent({
       return createElement(
         (outerElementType || 'scroll') as any,
         {
+          ...rest,
           className,
           onValueChanged: this._onScroll,
           ref: this._outerRefSetter,

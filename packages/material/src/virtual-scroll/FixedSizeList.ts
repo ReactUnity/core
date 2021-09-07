@@ -1,9 +1,9 @@
 
 import type { Props, ScrollToAlign } from './createListComponent';
-import createListComponent from './createListComponent';
+import { createListComponent } from './createListComponent';
 
 
-const FixedSizeList = createListComponent({
+export const FixedSizeList = createListComponent({
   getItemOffset: ({ itemSize }: Props<any>, index: number): number =>
     index * (itemSize as number),
 
@@ -123,5 +123,3 @@ const FixedSizeList = createListComponent({
     }
   },
 });
-
-export default FixedSizeList;
