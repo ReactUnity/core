@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 398:
+/***/ 218:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -14,22 +14,22 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".accordion_host__14D6Y{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}.accordion_header__1BAJu{flex-direction:row;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;padding-left:16px;padding-right:16px;transition:padding-top 200ms,padding-bottom 200ms;cursor:pointer;pointer-events:all}.accordion_header__1BAJu icon{font-size:32px;transform-origin:center;transition:rotate 200ms}.accordion_expanded__1TYeW .accordion_header__1BAJu{padding-top:20px;padding-bottom:20px}.accordion_expanded__1TYeW .accordion_header__1BAJu icon{rotate:-180deg}.accordion_content__ZaoZ_{padding:16px;padding-top:6px}.accordion_expander__VABE6{transition:height 200ms,opacity 200ms;overflow:hidden}.accordion_contentWrapper__2k89p{top:0;left:0;position:absolute;flex-shrink:0;height:auto}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".accordion_host__1coWr{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}.accordion_header__13UKc{flex-direction:row;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;padding-left:16px;padding-right:16px;transition:padding-top 200ms,padding-bottom 200ms;cursor:pointer;pointer-events:all}.accordion_header__13UKc icon{font-size:32px;transform-origin:center;transition:rotate 200ms}.accordion_expanded__gPmpC .accordion_header__13UKc{padding-top:20px;padding-bottom:20px}.accordion_expanded__gPmpC .accordion_header__13UKc icon{rotate:-180deg}.accordion_content__nmNtx{padding:16px;padding-top:6px}.accordion_expander__1yyl_{transition:height 200ms,opacity 200ms;overflow:hidden}.accordion_contentWrapper__yxLTB{top:0;left:0;position:absolute;flex-shrink:0;height:auto}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "accordion_host__14D6Y",
-	"header": "accordion_header__1BAJu",
-	"expanded": "accordion_expanded__1TYeW",
-	"content": "accordion_content__ZaoZ_",
-	"expander": "accordion_expander__VABE6",
-	"contentWrapper": "accordion_contentWrapper__2k89p"
+	"host": "accordion_host__1coWr",
+	"header": "accordion_header__13UKc",
+	"expanded": "accordion_expanded__gPmpC",
+	"content": "accordion_content__nmNtx",
+	"expander": "accordion_expander__1yyl_",
+	"contentWrapper": "accordion_contentWrapper__yxLTB"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 823:
+/***/ 745:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -42,21 +42,21 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".alert_host__29Y8n .md-modal-content{padding:18px;width:100%;max-width:400px}.alert_title__2Coa8{font-size:1.2em;font-weight:500;margin-bottom:6px}.alert_title__2Coa8+.alert_text__18-of{margin-top:8px}.alert_text__18-of{font-size:1em;margin-bottom:8px}.alert_error__2w7ad{font-size:1em;margin-top:8px;color:red}.alert_buttons__3w7RU{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".alert_host__2_2qF .mat-modal-content{padding:18px;width:100%;max-width:400px}.alert_title__FJg3-{font-size:1.2em;font-weight:500;margin-bottom:6px}.alert_title__FJg3-+.alert_text__3_6k2{margin-top:8px}.alert_text__3_6k2{font-size:1em;margin-bottom:8px}.alert_error__3KoUk{font-size:1em;margin-top:8px;color:red}.alert_buttons__27Lxx{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "alert_host__29Y8n",
-	"title": "alert_title__2Coa8",
-	"text": "alert_text__18-of",
-	"error": "alert_error__2w7ad",
-	"buttons": "alert_buttons__3w7RU"
+	"host": "alert_host__2_2qF",
+	"title": "alert_title__FJg3-",
+	"text": "alert_text__3_6k2",
+	"error": "alert_error__3KoUk",
+	"buttons": "alert_buttons__27Lxx"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 41:
+/***/ 289:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -69,18 +69,18 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".button_host__1AY5w{appearance:none;overflow:hidden;background-color:#fff;color:#000;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.button_host__1AY5w.button_icon__1o4RN{border-radius:50%;aspect-ratio:1}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".button_host__W3Rog{appearance:none;overflow:hidden;background-color:#fff;color:#000;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.button_host__W3Rog.button_icon__4pKE9{border-radius:50%;aspect-ratio:1}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "button_host__1AY5w",
-	"icon": "button_icon__1o4RN"
+	"host": "button_host__W3Rog",
+	"icon": "button_icon__4pKE9"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 636:
+/***/ 95:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -93,18 +93,18 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".card_host__stgZi{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}.card_content__2-Vd_{padding:16px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".card_host__3TVwc{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}.card_content__356Jz{padding:16px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "card_host__stgZi",
-	"content": "card_content__2-Vd_"
+	"host": "card_host__3TVwc",
+	"content": "card_content__356Jz"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 452:
+/***/ 603:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -117,21 +117,21 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".confirm_host__2lLBG .md-modal-content{padding:18px;width:100%;max-width:400px}.confirm_title__2ShAK{font-size:1.2em;font-weight:500;margin-bottom:6px}.confirm_title__2ShAK+.confirm_text__3x8Nf{margin-top:8px}.confirm_text__3x8Nf{font-size:1em;margin-bottom:8px}.confirm_error__29NAG{font-size:1em;margin-top:8px;color:red}.confirm_buttons___tACS{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".confirm_host__2Twm- .mat-modal-content{padding:18px;width:100%;max-width:400px}.confirm_title__1d1Tr{font-size:1.2em;font-weight:500;margin-bottom:6px}.confirm_title__1d1Tr+.confirm_text__30k4X{margin-top:8px}.confirm_text__30k4X{font-size:1em;margin-bottom:8px}.confirm_error__1mCQC{font-size:1em;margin-top:8px;color:red}.confirm_buttons__2iId7{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "confirm_host__2lLBG",
-	"title": "confirm_title__2ShAK",
-	"text": "confirm_text__3x8Nf",
-	"error": "confirm_error__29NAG",
-	"buttons": "confirm_buttons___tACS"
+	"host": "confirm_host__2Twm-",
+	"title": "confirm_title__1d1Tr",
+	"text": "confirm_text__30k4X",
+	"error": "confirm_error__1mCQC",
+	"buttons": "confirm_buttons__2iId7"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 752:
+/***/ 456:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -144,30 +144,31 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".input_host__1x2pJ{font-size:16px;padding:14px 12px;position:relative;border-radius:6px;min-height:56px}.input_host__1x2pJ.input_filled__3sDx8{background-color:#e8e8e8;border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1x2pJ.input_standard__1F4YK{border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1x2pJ.input_standard__1F4YK .mat-input-field-target{padding-top:16px}.input_host__1x2pJ.input_standard__1F4YK .input_placeholderContent__BKECd{translate:0 8px}.input_host__1x2pJ.input_float__2KkaR .input_placeholderContent__BKECd,.input_host__1x2pJ.input_float-always__2Zxuj .input_placeholderContent__BKECd,.input_host__1x2pJ.input_float-focus__31vz5:focus-within .input_placeholderContent__BKECd{translate:1px -12px;scale:.75}.input_host__1x2pJ.input_float__2KkaR.input_filled__3sDx8 .mat-input-field-target,.input_host__1x2pJ.input_float-always__2Zxuj.input_filled__3sDx8 .mat-input-field-target,.input_host__1x2pJ.input_float-focus__31vz5:focus-within.input_filled__3sDx8 .mat-input-field-target{padding-top:18px}.input_host__1x2pJ.input_float__2KkaR.input_outlined__3TGPE .input_placeholderContent__BKECd,.input_host__1x2pJ.input_float-always__2Zxuj.input_outlined__3TGPE .input_placeholderContent__BKECd,.input_host__1x2pJ.input_float-focus__31vz5:focus-within.input_outlined__3TGPE .input_placeholderContent__BKECd{background-color:#fff;translate:1px -26px}.input_host__1x2pJ.input_float__2KkaR.input_float-never__1zggu .input_placeholderContent__BKECd{display:none}.input_content__byual{color:#000;caret-color:#000;border:none;background-color:none;margin:0;position:absolute;left:0;right:0;top:0;bottom:0;border-radius:inherit}.input_inputFrame__2W5P_{position:absolute;left:0;right:0;top:0;bottom:0;border:1px solid;border-radius:6px;pointer-events:none;border-color:#000}.input_content__byual:focus-within~.input_inputFrame__2W5P_{border-color:#000;border-width:2px}.input_placeholder__18NAV{pointer-events:none;position:relative;white-space:nowrap;flex-grow:1;flex-direction:row;align-items:center}.input_placeholderGhost__1k8Ch{opacity:0}.input_placeholderText__3zc36{color:#000;opacity:.7}.input_content__byual:focus-within~.input_placeholder__18NAV .input_placeholderText__3zc36{color:#000;opacity:1}.input_placeholderContent__BKECd{position:absolute;padding:0 4px;transition:translate 200ms ease-out,scale 200ms ease-out,background-color 200ms ease-out;transform-origin:left;left:-4px;border-radius:4px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".input_host__1F0W4{font-size:16px;padding:14px 12px;position:relative;border-radius:6px;min-height:56px}.input_host__1F0W4.input_filled__ETrmR{background-color:#e8e8e8;border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm{border-bottom:1px #000;border-bottom-left-radius:0;border-bottom-right-radius:0}.input_host__1F0W4.input_standard__joskm .mat-input-field-target{padding-top:16px}.input_host__1F0W4.input_standard__joskm .input_placeholderContent__2aYa-{translate:0 8px}.input_host__1F0W4.input_float__2yuAx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within .input_placeholderContent__2aYa-{translate:1px -12px;scale:.75}.input_host__1F0W4.input_float__2yuAx.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target,.input_host__1F0W4.input_float-always__1IyaU.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_filled__ETrmR.input_hasPlaceholder__3WH8d .mat-input-field-target{padding-top:18px}.input_host__1F0W4.input_float__2yuAx.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-always__1IyaU.input_outlined__1inCx .input_placeholderContent__2aYa-,.input_host__1F0W4.input_float-focus__2KwEV:focus-within.input_outlined__1inCx .input_placeholderContent__2aYa-{background-color:#fff;translate:1px -26px}.input_host__1F0W4.input_float__2yuAx.input_float-never__3lnS6 .input_placeholderContent__2aYa-{display:none}.input_content__2WySh{color:#000;caret-color:#000;border:none;background-color:none;margin:0;position:absolute;left:0;right:0;top:0;bottom:0;border-radius:inherit}.input_inputFrame__1J55j{position:absolute;left:0;right:0;top:0;bottom:0;border:1px solid;border-radius:6px;pointer-events:none;border-color:#000}.input_content__2WySh:focus-within~.input_inputFrame__1J55j{border-color:#000;border-width:2px}.input_placeholder__3yCys{pointer-events:none;position:relative;white-space:nowrap;flex-grow:1;flex-direction:row;align-items:center}.input_placeholderGhost__1yLmD{opacity:0}.input_placeholderText__1wktR{color:#000;opacity:.7}.input_content__2WySh:focus-within~.input_placeholder__3yCys .input_placeholderText__1wktR{color:#000;opacity:1}.input_placeholderContent__2aYa-{position:absolute;padding:0 4px;transition:translate 200ms ease-out,scale 200ms ease-out,background-color 200ms ease-out;transform-origin:left;left:-4px;border-radius:4px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "input_host__1x2pJ",
-	"filled": "input_filled__3sDx8",
-	"standard": "input_standard__1F4YK",
-	"placeholderContent": "input_placeholderContent__BKECd",
-	"float": "input_float__2KkaR",
-	"float-always": "input_float-always__2Zxuj",
-	"float-focus": "input_float-focus__31vz5",
-	"outlined": "input_outlined__3TGPE",
-	"float-never": "input_float-never__1zggu",
-	"content": "input_content__byual",
-	"inputFrame": "input_inputFrame__2W5P_",
-	"placeholder": "input_placeholder__18NAV",
-	"placeholderGhost": "input_placeholderGhost__1k8Ch",
-	"placeholderText": "input_placeholderText__3zc36"
+	"host": "input_host__1F0W4",
+	"filled": "input_filled__ETrmR",
+	"standard": "input_standard__joskm",
+	"placeholderContent": "input_placeholderContent__2aYa-",
+	"float": "input_float__2yuAx",
+	"float-always": "input_float-always__1IyaU",
+	"float-focus": "input_float-focus__2KwEV",
+	"hasPlaceholder": "input_hasPlaceholder__3WH8d",
+	"outlined": "input_outlined__1inCx",
+	"float-never": "input_float-never__3lnS6",
+	"content": "input_content__2WySh",
+	"inputFrame": "input_inputFrame__1J55j",
+	"placeholder": "input_placeholder__3yCys",
+	"placeholderGhost": "input_placeholderGhost__1yLmD",
+	"placeholderText": "input_placeholderText__1wktR"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 951:
+/***/ 428:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -180,23 +181,23 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modal_host__2GaOs{z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background-color:rgba(0,0,0,.45);overflow:auto;overscroll-behavior:contain;position:absolute;left:0;right:0;top:0;bottom:0;min-width:100%;min-height:100%}.modal_host__2GaOs.modal_opened__1_LQx{animation:modal_appearAnim__36sAe 400ms both}.modal_host__2GaOs.modal_closed__i0rY_{animation:modal_closeAnim__3aU9F 200ms both;pointer-events:none}.modal_host__2GaOs:after{content:\"\";opacity:0;flex-grow:0;flex-shrink:1;flex-basis:30%}@keyframes modal_appearAnim__36sAe{from{opacity:0}to{opacity:1}}@keyframes modal_closeAnim__3aU9F{from{opacity:1}to{opacity:0}}.modal_content__3UpwO{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);font-size:1rem;box-sizing:border-box;position:relative;z-index:1001;background-color:#fff;border-radius:4px;white-space:pre-wrap;margin:auto}.modal_close__3NlzW{border-radius:50%;background-color:#bfbcbc;color:#000;box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);position:absolute;transform:translate(50%, -50%) scale(0.8);padding:4px;right:2px;top:2px;display:flex}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".modal_host__3wZhR{z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background-color:rgba(0,0,0,.45);overflow:auto;overscroll-behavior:contain;position:absolute;left:0;right:0;top:0;bottom:0;min-width:100%;min-height:100%}.modal_host__3wZhR.modal_opened__2ROvb{animation:modal_appearAnim__1Vlgf 400ms both}.modal_host__3wZhR.modal_closed__2u4cg{animation:modal_closeAnim__1Sy9u 200ms both;pointer-events:none}.modal_host__3wZhR:after{content:\"\";opacity:0;flex-grow:0;flex-shrink:1;flex-basis:30%}@keyframes modal_appearAnim__1Vlgf{from{opacity:0}to{opacity:1}}@keyframes modal_closeAnim__1Sy9u{from{opacity:1}to{opacity:0}}.modal_content__1zFXq{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);font-size:1rem;box-sizing:border-box;position:relative;z-index:1001;background-color:#fff;border-radius:4px;white-space:pre-wrap;margin:auto}.modal_close__HRGZX{border-radius:50%;background-color:#bfbcbc;color:#000;box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);position:absolute;transform:translate(50%, -50%) scale(0.8);padding:4px;right:2px;top:2px;display:flex}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "modal_host__2GaOs",
-	"opened": "modal_opened__1_LQx",
-	"appearAnim": "modal_appearAnim__36sAe",
-	"closed": "modal_closed__i0rY_",
-	"closeAnim": "modal_closeAnim__3aU9F",
-	"content": "modal_content__3UpwO",
-	"close": "modal_close__3NlzW"
+	"host": "modal_host__3wZhR",
+	"opened": "modal_opened__2ROvb",
+	"appearAnim": "modal_appearAnim__1Vlgf",
+	"closed": "modal_closed__2u4cg",
+	"closeAnim": "modal_closeAnim__1Sy9u",
+	"content": "modal_content__1zFXq",
+	"close": "modal_close__HRGZX"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 860:
+/***/ 630:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -209,17 +210,17 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".paper_host__2UxUi{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".paper_host__2PeVr{appearance:none;overflow:hidden;background-color:#fff;border-radius:4px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "paper_host__2UxUi"
+	"host": "paper_host__2PeVr"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 738:
+/***/ 128:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -232,22 +233,22 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".prompt_host__2lu2d .md-modal-content{padding:18px;width:100%;max-width:400px}.prompt_title__K4MNo{font-size:1.2em;font-weight:500;margin-bottom:6px}.prompt_title__K4MNo+.prompt_text__3PR0Q{margin-top:8px}.prompt_text__3PR0Q{font-size:1em;margin-bottom:8px}.prompt_error__3YN5M{font-size:1em;margin-top:8px;color:red}.prompt_buttons__212wb{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}.prompt_input__3gGsI{font-size:1em;margin-top:8px;margin-bottom:8px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".prompt_host__2b198 .mat-modal-content{padding:18px;width:100%;max-width:400px}.prompt_title__3f5P2{font-size:1.2em;font-weight:500;margin-bottom:6px}.prompt_title__3f5P2+.prompt_text__A4Wr5{margin-top:8px}.prompt_text__A4Wr5{font-size:1em;margin-bottom:8px}.prompt_error__21UXX{font-size:1em;margin-top:8px;color:red}.prompt_buttons__2PzX-{margin-top:8px;display:flex;flex-direction:row;justify-content:flex-end}.prompt_input__3r86h{font-size:1em;margin-top:8px;margin-bottom:8px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "prompt_host__2lu2d",
-	"title": "prompt_title__K4MNo",
-	"text": "prompt_text__3PR0Q",
-	"error": "prompt_error__3YN5M",
-	"buttons": "prompt_buttons__212wb",
-	"input": "prompt_input__3gGsI"
+	"host": "prompt_host__2b198",
+	"title": "prompt_title__3f5P2",
+	"text": "prompt_text__A4Wr5",
+	"error": "prompt_error__21UXX",
+	"buttons": "prompt_buttons__2PzX-",
+	"input": "prompt_input__3r86h"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 609:
+/***/ 488:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -260,19 +261,17 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ripple_ripple__I1-r7{pointer-events:none;border-radius:50%;background-color:rgba(0,0,0,.1);position:absolute;animation:ripple_expandRipple__1y26u 450ms cubic-bezier(0, 0, 0.2, 1) both;transition:opacity 300ms ease-out;translate:-50% -50%}.ripple_ripple__I1-r7.ripple_fading__3_VF1{opacity:0;transition:opacity 400ms ease-out}@keyframes ripple_expandRipple__1y26u{from{scale:0}to{scale:1}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ripple_ripple__1bQj_{pointer-events:none;border-radius:50%;background-color:rgba(0,0,0,.1);position:absolute;transition:opacity 300ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);translate:-50% -50%;scale:1}.ripple_ripple__1bQj_:enter{scale:0}.ripple_ripple__1bQj_:leave{opacity:0;transition:opacity 400ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);state-duration:400ms}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"ripple": "ripple_ripple__I1-r7",
-	"expandRipple": "ripple_expandRipple__1y26u",
-	"fading": "ripple_fading__3_VF1"
+	"ripple": "ripple_ripple__1bQj_"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 270:
+/***/ 113:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -285,21 +284,30 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__1uqO8{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__1uqO8[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__1uqO8 .slider_track__3814y{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__1uqO8[orientation=vertical] .slider_track__3814y{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__1uqO8[direction=horizontal-reverse] .slider_track__3814y,.slider_host__1uqO8[direction=vertical-reverse] .slider_track__3814y{justify-content:flex-end}.slider_host__1uqO8 .slider_fill__YTINV{background-color:#ebebeb;width:100%;height:100%}.slider_host__1uqO8 .slider_thumbContainer__3lMo_{background-color:transparent;position:absolute;width:0;height:0}.slider_host__1uqO8[direction=horizontal] .slider_thumbContainer__3lMo_{top:50%;right:0}.slider_host__1uqO8[direction=horizontal-reverse] .slider_thumbContainer__3lMo_{top:50%;left:0}.slider_host__1uqO8[direction=vertical] .slider_thumbContainer__3lMo_{left:50%;top:0}.slider_host__1uqO8[direction=vertical-reverse] .slider_thumbContainer__3lMo_{left:50%;bottom:0}.slider_host__1uqO8 .slider_thumb__3zyl8{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__1uqO8[orientation=horizontal] .slider_thumb__3zyl8{flex-direction:column}.slider_host__1uqO8[orientation=vertical] .slider_thumb__3zyl8{flex-direction:row}.slider_host__1uqO8:hover .slider_thumb__3zyl8{background-color:#ebebeb}.slider_host__1uqO8:focus .slider_thumb__3zyl8{background-color:#fafafa}.slider_host__1uqO8:active .slider_thumb__3zyl8{background-color:#dbdbdb}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".select_host__1I6lD.select_chips__V5DkN .select_triggerPart__2jlvv{font-size:.8125rem;margin:4px 4px 2px 4px;height:24px;background-color:rgba(0,0,0,.12);border-radius:12px;padding:4px 8px;text-align:center}.select_host__1I6lD.select_chips__V5DkN .select_triggerContent__4e0fC{margin-left:-4px}.select_triggerContent__4e0fC{flex-direction:row;align-items:center;justify-content:flex-start}.select_trigger__OaISN{font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px;border:none;appearance:none;background-color:none;border-radius:0;pointer-events:all;flex-direction:row;align-items:center;justify-content:flex-start}.select_menuRoot__1MGMP{position:absolute;left:0;right:0;bottom:-1px;height:0;z-index:10000;translate:0 -20px;opacity:0;display:none;transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-end;pointer-events:none}.select_menuRoot__1MGMP.select_opened__26FhZ{transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-start;display:flex;translate:0 0;opacity:1;pointer-events:auto}.select_backdrop__1ZJS0{position:absolute;top:-5000px;right:-5000px;bottom:-5000px;left:-5000px;background-color:transparent;cursor:default;pointer-events:all}.select_menu__JC2qW{position:absolute;top:100%;left:0;minwidth:100%;background-color:#fff;max-height:60vh}.select_option__4Prbl{border-radius:0;text-align:left;flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px}.select_option__4Prbl.select_selected__1gei1{background-color:rgba(0,0,0,.06)}.select_option__4Prbl .select_toggle__31KME{pointer-events:none}.select_caret__2JiDG{pointer-events:none;align-items:center;justify-content:center;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;width:36px;height:36px;line-height:20px;transition:rotate 300ms}.select_host__1I6lD.select_opened__26FhZ .select_caret__2JiDG{rotate:180deg}.select_defaultSeparator__2NDw7{margin-right:.4em}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "slider_host__1uqO8",
-	"track": "slider_track__3814y",
-	"fill": "slider_fill__YTINV",
-	"thumbContainer": "slider_thumbContainer__3lMo_",
-	"thumb": "slider_thumb__3zyl8"
+	"host": "select_host__1I6lD",
+	"chips": "select_chips__V5DkN",
+	"triggerPart": "select_triggerPart__2jlvv",
+	"triggerContent": "select_triggerContent__4e0fC",
+	"trigger": "select_trigger__OaISN",
+	"menuRoot": "select_menuRoot__1MGMP",
+	"opened": "select_opened__26FhZ",
+	"backdrop": "select_backdrop__1ZJS0",
+	"menu": "select_menu__JC2qW",
+	"option": "select_option__4Prbl",
+	"selected": "select_selected__1gei1",
+	"toggle": "select_toggle__31KME",
+	"caret": "select_caret__2JiDG",
+	"defaultSeparator": "select_defaultSeparator__2NDw7"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 772:
+/***/ 724:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -312,20 +320,21 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".text_host__cX260 .text_input__3Awuz{border:none;appearance:none;background-color:none;font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px}.text_host__cX260.text_filled__2Whfv .text_input__3Awuz{border:none;margin:0}.text_passwordToggle__2ruFU{align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex:0 0 auto;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;background-color:transparent;box-shadow:none}.text_passwordToggle__2ruFU icon{width:20px;height:20px;line-height:20px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__2FgNB{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__2FgNB[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__2FgNB .slider_track__a52m9{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__2FgNB[orientation=vertical] .slider_track__a52m9{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__2FgNB[direction=horizontal-reverse] .slider_track__a52m9,.slider_host__2FgNB[direction=vertical-reverse] .slider_track__a52m9{justify-content:flex-end}.slider_host__2FgNB .slider_fill__3vy4C{background-color:#ebebeb;width:100%;height:100%}.slider_host__2FgNB .slider_thumbContainer__tpYcV{background-color:transparent;position:absolute;width:0;height:0}.slider_host__2FgNB[direction=horizontal] .slider_thumbContainer__tpYcV{top:50%;right:0}.slider_host__2FgNB[direction=horizontal-reverse] .slider_thumbContainer__tpYcV{top:50%;left:0}.slider_host__2FgNB[direction=vertical] .slider_thumbContainer__tpYcV{left:50%;top:0}.slider_host__2FgNB[direction=vertical-reverse] .slider_thumbContainer__tpYcV{left:50%;bottom:0}.slider_host__2FgNB .slider_thumb__3myYe{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__2FgNB[orientation=horizontal] .slider_thumb__3myYe{flex-direction:column}.slider_host__2FgNB[orientation=vertical] .slider_thumb__3myYe{flex-direction:row}.slider_host__2FgNB:hover .slider_thumb__3myYe{background-color:#ebebeb}.slider_host__2FgNB:focus .slider_thumb__3myYe{background-color:#fafafa}.slider_host__2FgNB:active .slider_thumb__3myYe{background-color:#dbdbdb}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "text_host__cX260",
-	"input": "text_input__3Awuz",
-	"filled": "text_filled__2Whfv",
-	"passwordToggle": "text_passwordToggle__2ruFU"
+	"host": "slider_host__2FgNB",
+	"track": "slider_track__a52m9",
+	"fill": "slider_fill__3vy4C",
+	"thumbContainer": "slider_thumbContainer__tpYcV",
+	"thumb": "slider_thumb__3myYe"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 83:
+/***/ 257:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -338,13 +347,65 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".toggle_label__bwoKV{flex-direction:row;align-items:center}.toggle_label__bwoKV:hover .toggle_toggle__1IlaM:not(:checked):not(:indeterminate){background-color:rgba(0,0,0,.04)}.toggle_toggle__1IlaM{appearance:none;overflow:hidden;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);color:#000;border:2px #000;background-color:transparent;box-shadow:none;width:20px}.toggle_selectAllToggle__3phJO{margin-bottom:4px}.toggle_label__bwoKV.toggle_radio__JLjhL .toggle_toggle__1IlaM{border-radius:50%}.toggle_label__bwoKV.toggle_radio__JLjhL .toggle_toggle__1IlaM:checked:not(:indeterminate):after{background-image:url(res:ReactUnity/sprites/radio)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".text_host__LeJoV .text_input__2EnNK{border:none;appearance:none;background-color:none;font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px}.text_host__LeJoV.text_filled__2BatK .text_input__2EnNK{border:none;margin:0}.text_passwordToggle__rED3J{align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex:0 0 auto;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;background-color:transparent;box-shadow:none}.text_passwordToggle__rED3J icon{width:20px;height:20px;line-height:20px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"label": "toggle_label__bwoKV",
-	"toggle": "toggle_toggle__1IlaM",
-	"selectAllToggle": "toggle_selectAllToggle__3phJO",
-	"radio": "toggle_radio__JLjhL"
+	"host": "text_host__LeJoV",
+	"input": "text_input__2EnNK",
+	"filled": "text_filled__2BatK",
+	"passwordToggle": "text_passwordToggle__rED3J"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 258:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(408);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".toggle_label__1KwTc{flex-direction:row;align-items:center}.toggle_label__1KwTc:hover .toggle_toggle__3sM53:not(:checked):not(:indeterminate){background-color:rgba(0,0,0,.04)}.toggle_toggle__3sM53{appearance:none;overflow:hidden;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);color:#000;border:2px #000;background-color:transparent;box-shadow:none;width:20px}.toggle_selectAllToggle__sYoCP{margin-bottom:4px}.toggle_label__1KwTc.toggle_radio__3fqgZ .toggle_toggle__3sM53{border-radius:50%}.toggle_label__1KwTc.toggle_radio__3fqgZ .toggle_toggle__3sM53:checked:not(:indeterminate):after{background-image:url(res:ReactUnity/sprites/radio)}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"label": "toggle_label__1KwTc",
+	"toggle": "toggle_toggle__3sM53",
+	"selectAllToggle": "toggle_selectAllToggle__sYoCP",
+	"radio": "toggle_radio__3fqgZ"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 546:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(408);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".tooltip_anchor__vyPfr{position:absolute;inset:0;z-index:30000;pointer-events:none;transition:opacity 400ms ease-out;flex-direction:row}.tooltip_anchor__vyPfr.tooltip_interactive__2o0xk{pointer-events:auto}.tooltip_anchor__vyPfr:enter{opacity:0}.tooltip_anchor__vyPfr:leave{opacity:0;transition:opacity 200ms ease-in;state-duration:200ms}.tooltip_tooltip__mYMSs{border-radius:6px;background-color:#4e4e4e;color:#fff;position:absolute;left:0;top:0;translate:-50% 50%;flex-direction:row;align-items:center;justify-content:flex-start;min-width:40px;min-height:24px;padding:6px 10px}.tooltip_backdrop__Z6hyP{pointer-events:all;cursor:default;position:absolute;inset:0;z-index:29999}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"anchor": "tooltip_anchor__vyPfr",
+	"interactive": "tooltip_interactive__2o0xk",
+	"tooltip": "tooltip_tooltip__mYMSs",
+	"backdrop": "tooltip_backdrop__Z6hyP"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7475,7 +7536,7 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-// NAMESPACE OBJECT: ./node_modules/@reactunity/material/dist/index.js
+// NAMESPACE OBJECT: ../../../material/dist/index.js
 var dist_namespaceObject = {};
 __webpack_require__.r(dist_namespaceObject);
 __webpack_require__.d(dist_namespaceObject, {
@@ -7488,13 +7549,17 @@ __webpack_require__.d(dist_namespaceObject, {
   "Modal": () => (Modal),
   "Paper": () => (Paper),
   "PromptDialog": () => (PromptDialog),
+  "Select": () => (Select),
   "Slider": () => (Slider),
   "TextField": () => (TextField),
   "Toggle": () => (Toggle),
   "ToggleGroup": () => (ToggleGroup),
-  "ToggleGroupState": () => (ToggleGroupState),
+  "_Option": () => (_Option),
+  "_Select": () => (_Select),
   "addRipple": () => (addRipple),
-  "useRipple": () => (useRipple)
+  "useDataTooltip": () => (useDataTooltip),
+  "useRipple": () => (useRipple),
+  "useTooltip": () => (useTooltip)
 });
 
 // NAMESPACE OBJECT: ../../../renderer/dist/index.js
@@ -7561,7 +7626,7 @@ function toVal(mix) {
 }
 // EXTERNAL MODULE: ../../../node_modules/react/index.js
 var react = __webpack_require__(28);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/util/helpers.js
+;// CONCATENATED MODULE: ../../../material/dist/src/util/helpers.js
 
 function getChildrenOfType(children, type) {
   return react.Children.toArray(children).filter(function (x) {
@@ -7572,8 +7637,8 @@ function getOnlyChildOfType(children, type) {
   return getChildrenOfType(children, type);
 }
 function getElevationClass(elevation) {
-  if (elevation > 0) return "md-elevation-" + elevation;
-  return 'md-elevation-0';
+  if (elevation > 0) return "mat-elevation-" + elevation;
+  return 'mat-elevation-0';
 }
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(487);
@@ -7593,9 +7658,9 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(329);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/accordion/index.module.scss
-var index_module = __webpack_require__(398);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/accordion/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/accordion/index.module.scss
+var index_module = __webpack_require__(218);
+;// CONCATENATED MODULE: ../../../material/dist/src/accordion/index.module.scss
 
       
       
@@ -7624,7 +7689,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
        /* harmony default export */ const accordion_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/accordion/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/accordion/index.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7695,11 +7760,11 @@ function _Accordion(_a) {
   }, [opened]);
   return (0,jsx_runtime.jsxs)("view", __assign({
     name: "<Accordion>",
-    className: clsx_m(className, accordion_index_module.host, opened && [accordion_index_module.expanded, 'md-expanded'], getElevationClass(elevation), 'md-accordion')
+    className: clsx_m(className, accordion_index_module.host, opened && [accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
   }, props, {
     children: [(0,jsx_runtime.jsxs)("view", __assign({
       name: "<AccordionHeader>",
-      className: clsx_m(accordion_index_module.header, 'md-accordion-header'),
+      className: clsx_m(accordion_index_module.header, 'mat-accordion-header'),
       onPointerClick: function onPointerClick() {
         return setOpened(function (x) {
           return !x;
@@ -7710,7 +7775,7 @@ function _Accordion(_a) {
         children: "expand_more"
       }, void 0)]
     }), void 0), (0,jsx_runtime.jsx)("view", __assign({
-      className: clsx_m(accordion_index_module.expander, 'md-accordion-expander'),
+      className: clsx_m(accordion_index_module.expander, 'mat-accordion-expander'),
       ref: expanderRef,
       style: expanderBaseStyle
     }, {
@@ -7731,7 +7796,7 @@ function _Summary(_a) {
 
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Summary>",
-    className: clsx_m(className, accordion_index_module.summary, 'md-accordion-summary')
+    className: clsx_m(className, accordion_index_module.summary, 'mat-accordion-summary')
   }, props), void 0);
 }
 
@@ -7741,16 +7806,16 @@ function _Content(_a) {
 
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Content>",
-    className: clsx_m(className, accordion_index_module.content, 'md-accordion-content')
+    className: clsx_m(className, accordion_index_module.content, 'mat-accordion-content')
   }, props), void 0);
 }
 
 var Accordion = react.memo(_Accordion);
 Accordion.Summary = _Summary;
 Accordion.Content = _Content;
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/ripple/index.module.scss
-var ripple_index_module = __webpack_require__(609);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/ripple/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/ripple/index.module.scss
+var ripple_index_module = __webpack_require__(488);
+;// CONCATENATED MODULE: ../../../material/dist/src/ripple/index.module.scss
 
       
       
@@ -7779,13 +7844,13 @@ var index_module_update = injectStylesIntoStyleTag_default()(ripple_index_module
 
        /* harmony default export */ const src_ripple_index_module = (ripple_index_module/* default */.Z && ripple_index_module/* default.locals */.Z.locals ? ripple_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/ripple/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/ripple/index.js
 
 
 function addRipple(containerElement, pressPosition) {
   if (!containerElement) return null;
   var ripple = UnityBridge.createElement('view', '', HostContainer);
-  ripple.ClassName = src_ripple_index_module.ripple + " md-ripple";
+  ripple.ClassName = src_ripple_index_module.ripple + " mat-ripple";
   ripple.Name = '<Ripple>';
   var w = containerElement.RectTransform.rect.width;
   var h = containerElement.RectTransform.rect.height;
@@ -7813,15 +7878,7 @@ function addRipple(containerElement, pressPosition) {
   }
 
   UnityBridge.appendChild(containerElement, ripple);
-  return {
-    element: ripple,
-    fade: function fade() {
-      ripple.ClassList.Add(src_ripple_index_module.fading);
-      setTimeout(function () {
-        UnityBridge.removeChild(containerElement, ripple);
-      }, 400);
-    }
-  };
+  return ripple;
 }
 function useRipple(_a) {
   var onPointerDown = _a.onPointerDown,
@@ -7836,7 +7893,7 @@ function useRipple(_a) {
     onPointerDown === null || onPointerDown === void 0 ? void 0 : onPointerDown.call(null, ev, sender);
 
     if (!noRipple) {
-      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.fade();
+      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
       rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
     }
   }, [noRipple, onPointerDown, centered, target]);
@@ -7850,7 +7907,7 @@ function useRipple(_a) {
     }
 
     onPointerUp === null || onPointerUp === void 0 ? void 0 : onPointerUp.apply(null, args);
-    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.fade();
+    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
     rippleRef.current = null;
   }, [onPointerUp]);
   return {
@@ -7858,9 +7915,9 @@ function useRipple(_a) {
     onPointerUp: pointerUp
   };
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/button/index.module.scss
-var button_index_module = __webpack_require__(41);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/button/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/button/index.module.scss
+var button_index_module = __webpack_require__(289);
+;// CONCATENATED MODULE: ../../../material/dist/src/button/index.module.scss
 
       
       
@@ -7889,7 +7946,7 @@ var button_index_module_update = injectStylesIntoStyleTag_default()(button_index
 
        /* harmony default export */ const src_button_index_module = (button_index_module/* default */.Z && button_index_module/* default.locals */.Z.locals ? button_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/button/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/button/index.js
 var button_assign = undefined && undefined.__assign || function () {
   button_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7926,7 +7983,7 @@ var button_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
-function _Button(_a) {
+var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
   var children = _a.children,
       className = _a.className,
       elevation = _a.elevation,
@@ -7946,14 +8003,15 @@ function _Button(_a) {
   return (0,jsx_runtime.jsx)("button", button_assign({
     name: "<Button>"
   }, props, ripple, {
-    className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'md-button', src_button_index_module[variant], 'md-variant-' + variant)
+    ref: ref,
+    className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant)
   }, {
     children: children
   }), void 0);
-}
+});
 
 var Button = react.memo(_Button);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/util/hooks/use-root-class.js
+;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-root-class.js
 
 
 function useRootClass(className) {
@@ -7978,9 +8036,9 @@ function useRootClass(className) {
     }
   }, [classes]);
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/modal/index.module.scss
-var modal_index_module = __webpack_require__(951);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/modal/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/modal/index.module.scss
+var modal_index_module = __webpack_require__(428);
+;// CONCATENATED MODULE: ../../../material/dist/src/modal/index.module.scss
 
       
       
@@ -8009,7 +8067,7 @@ var modal_index_module_update = injectStylesIntoStyleTag_default()(modal_index_m
 
        /* harmony default export */ const src_modal_index_module = (modal_index_module/* default */.Z && modal_index_module/* default.locals */.Z.locals ? modal_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/modal/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/modal/index.js
 var modal_assign = undefined && undefined.__assign || function () {
   modal_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8038,7 +8096,7 @@ function Modal(_a) {
       onClickBackdrop = _a.onClickBackdrop,
       onEscape = _a.onEscape,
       onCloseButton = _a.onCloseButton;
-  useRootClass(open && [src_modal_index_module.body, 'md-modal-open']);
+  useRootClass(open && [src_modal_index_module.body, 'mat-modal-open']);
   var portalRef = (0,react.useRef)();
   var initialOpen = (0,react.useRef)(open);
 
@@ -8064,7 +8122,7 @@ function Modal(_a) {
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", modal_assign({
-    className: clsx_m(src_modal_index_module.host, 'md-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
+    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
@@ -8072,7 +8130,7 @@ function Modal(_a) {
     ref: portalRef
   }, {
     children: (0,jsx_runtime.jsxs)("view", modal_assign({
-      className: clsx_m(src_modal_index_module.content, 'md-modal-content'),
+      className: clsx_m(src_modal_index_module.content, 'mat-modal-content'),
       onPointerClick: clickContent
     }, {
       children: [children, onCloseButton && (0,jsx_runtime.jsx)("button", modal_assign({
@@ -8086,9 +8144,9 @@ function Modal(_a) {
     }), void 0)
   }), void 0);
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/alert/index.module.scss
-var alert_index_module = __webpack_require__(823);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/alert/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/alert/index.module.scss
+var alert_index_module = __webpack_require__(745);
+;// CONCATENATED MODULE: ../../../material/dist/src/alert/index.module.scss
 
       
       
@@ -8117,7 +8175,7 @@ var alert_index_module_update = injectStylesIntoStyleTag_default()(alert_index_m
 
        /* harmony default export */ const src_alert_index_module = (alert_index_module/* default */.Z && alert_index_module/* default.locals */.Z.locals ? alert_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/alert/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/alert/index.js
 var alert_assign = undefined && undefined.__assign || function () {
   alert_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8168,19 +8226,19 @@ function AlertDialog(_a) {
   };
 
   return (0,jsx_runtime.jsxs)(Modal, alert_assign({}, props, {
-    className: clsx_m('md-alert-dialog', src_alert_index_module.host, props.className),
+    className: clsx_m('mat-alert-dialog', src_alert_index_module.host, props.className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-title', src_alert_index_module.title)
+      className: clsx_m('mat-alert-dialog-title', src_alert_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-text', src_alert_index_module.text)
+      className: clsx_m('mat-alert-dialog-text', src_alert_index_module.text)
     }, {
       children: text
     }), void 0), button && (0,jsx_runtime.jsx)("div", alert_assign({
-      className: clsx_m('md-alert-dialog-buttons', src_alert_index_module.buttons)
+      className: clsx_m('mat-alert-dialog-buttons', src_alert_index_module.buttons)
     }, {
       children: (0,jsx_runtime.jsx)(Button, alert_assign({
         className: clsx_m(src_alert_index_module.button),
@@ -8193,9 +8251,9 @@ function AlertDialog(_a) {
     }), void 0)]
   }), void 0);
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/card/index.module.scss
-var card_index_module = __webpack_require__(636);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/card/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/card/index.module.scss
+var card_index_module = __webpack_require__(95);
+;// CONCATENATED MODULE: ../../../material/dist/src/card/index.module.scss
 
       
       
@@ -8224,7 +8282,7 @@ var card_index_module_update = injectStylesIntoStyleTag_default()(card_index_mod
 
        /* harmony default export */ const src_card_index_module = (card_index_module/* default */.Z && card_index_module/* default.locals */.Z.locals ? card_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/card/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/card/index.js
 var card_assign = undefined && undefined.__assign || function () {
   card_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8269,7 +8327,7 @@ function _Card(_a) {
 
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card>",
-    className: clsx_m(className, src_card_index_module.host, getElevationClass(elevation), 'md-card')
+    className: clsx_m(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
   }, props, {
     children: children
   }), void 0);
@@ -8281,15 +8339,15 @@ function card_Content(_a) {
 
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card.Content>",
-    className: clsx_m(className, src_card_index_module.content, 'md-card-content')
+    className: clsx_m(className, src_card_index_module.content, 'mat-card-content')
   }, props), void 0);
 }
 
 var Card = react.memo(_Card);
 Card.Content = card_Content;
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/confirm/index.module.scss
-var confirm_index_module = __webpack_require__(452);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/confirm/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/confirm/index.module.scss
+var confirm_index_module = __webpack_require__(603);
+;// CONCATENATED MODULE: ../../../material/dist/src/confirm/index.module.scss
 
       
       
@@ -8318,7 +8376,7 @@ var confirm_index_module_update = injectStylesIntoStyleTag_default()(confirm_ind
 
        /* harmony default export */ const src_confirm_index_module = (confirm_index_module/* default */.Z && confirm_index_module/* default.locals */.Z.locals ? confirm_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/confirm/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/confirm/index.js
 var confirm_assign = undefined && undefined.__assign || function () {
   confirm_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8385,23 +8443,23 @@ function ConfirmDialog(_a) {
   };
 
   return (0,jsx_runtime.jsxs)(Modal, confirm_assign({}, props, {
-    className: clsx_m('md-confirm-dialog', src_confirm_index_module.host, props.className),
+    className: clsx_m('mat-confirm-dialog', src_confirm_index_module.host, props.className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-title', src_confirm_index_module.title)
+      className: clsx_m('mat-confirm-dialog-title', src_confirm_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-text', src_confirm_index_module.text)
+      className: clsx_m('mat-confirm-dialog-text', src_confirm_index_module.text)
     }, {
       children: text
     }), void 0), error && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-modal-dialog-error', src_confirm_index_module.error)
+      className: clsx_m('mat-modal-dialog-error', src_confirm_index_module.error)
     }, {
       children: error
     }), void 0), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", confirm_assign({
-      className: clsx_m('md-confirm-dialog-buttons', src_confirm_index_module.buttons)
+      className: clsx_m('mat-confirm-dialog-buttons', src_confirm_index_module.buttons)
     }, {
       children: buttons.map(function (btn, ind) {
         return (0,jsx_runtime.jsx)(Button, confirm_assign({
@@ -8417,9 +8475,9 @@ function ConfirmDialog(_a) {
     }), void 0)]
   }), void 0);
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/input/index.module.scss
-var input_index_module = __webpack_require__(752);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/input/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/input/index.module.scss
+var input_index_module = __webpack_require__(456);
+;// CONCATENATED MODULE: ../../../material/dist/src/input/index.module.scss
 
       
       
@@ -8448,7 +8506,7 @@ var input_index_module_update = injectStylesIntoStyleTag_default()(input_index_m
 
        /* harmony default export */ const src_input_index_module = (input_index_module/* default */.Z && input_index_module/* default.locals */.Z.locals ? input_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/input/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/input/index.js
 var input_assign = undefined && undefined.__assign || function () {
   input_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8494,6 +8552,7 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
 
   var hostRef = (0,react.useRef)();
   variant = variant || 'filled';
+  var emptyRef = (0,react.useRef)(true);
   (0,react.useImperativeHandle)(ref, function () {
     return {
       setEmpty: function setEmpty(empty) {
@@ -8501,14 +8560,15 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
 
         (_a = hostRef.current) === null || _a === void 0 ? void 0 : _a.ClassList.Toggle(src_input_index_module.float, !empty);
         (_b = hostRef.current) === null || _b === void 0 ? void 0 : _b.ClassList.Toggle('float', !empty);
+        emptyRef.current = empty;
       }
     };
-  }, [hostRef]);
+  }, []);
   return (0,jsx_runtime.jsxs)("view", input_assign({
     name: "<InputField>"
   }, other, {
     ref: hostRef,
-    className: clsx_m(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-" + (_float || 'auto'))
+    className: clsx_m(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-" + (_float || 'auto'), !emptyRef.current && [src_input_index_module.float, 'float'])
   }, {
     children: [(0,jsx_runtime.jsx)("view", input_assign({
       className: clsx_m(src_input_index_module.content, 'mat-input-content')
@@ -8535,9 +8595,9 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
     }), void 0)]
   }), void 0);
 });
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/paper/index.module.scss
-var paper_index_module = __webpack_require__(860);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/paper/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/paper/index.module.scss
+var paper_index_module = __webpack_require__(630);
+;// CONCATENATED MODULE: ../../../material/dist/src/paper/index.module.scss
 
       
       
@@ -8566,7 +8626,7 @@ var paper_index_module_update = injectStylesIntoStyleTag_default()(paper_index_m
 
        /* harmony default export */ const src_paper_index_module = (paper_index_module/* default */.Z && paper_index_module/* default.locals */.Z.locals ? paper_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/paper/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/paper/index.js
 var paper_assign = undefined && undefined.__assign || function () {
   paper_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8610,16 +8670,16 @@ function _Paper(_a) {
 
   return (0,jsx_runtime.jsx)("view", paper_assign({
     name: "<Paper>",
-    className: clsx_m(className, src_paper_index_module.host, getElevationClass(elevation), 'md-paper')
+    className: clsx_m(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
   }, props, {
     children: children
   }), void 0);
 }
 
 var Paper = react.memo(_Paper);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/text/index.module.scss
-var text_index_module = __webpack_require__(772);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/text/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/text/index.module.scss
+var text_index_module = __webpack_require__(257);
+;// CONCATENATED MODULE: ../../../material/dist/src/text/index.module.scss
 
       
       
@@ -8648,7 +8708,7 @@ var text_index_module_update = injectStylesIntoStyleTag_default()(text_index_mod
 
        /* harmony default export */ const src_text_index_module = (text_index_module/* default */.Z && text_index_module/* default.locals */.Z.locals ? text_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/text/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/text/index.js
 var text_assign = undefined && undefined.__assign || function () {
   text_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8751,9 +8811,9 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
     }), void 0)]
   }), void 0);
 });
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/prompt/index.module.scss
-var prompt_index_module = __webpack_require__(738);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/prompt/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/prompt/index.module.scss
+var prompt_index_module = __webpack_require__(128);
+;// CONCATENATED MODULE: ../../../material/dist/src/prompt/index.module.scss
 
       
       
@@ -8782,7 +8842,7 @@ var prompt_index_module_update = injectStylesIntoStyleTag_default()(prompt_index
 
        /* harmony default export */ const src_prompt_index_module = (prompt_index_module/* default */.Z && prompt_index_module/* default.locals */.Z.locals ? prompt_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/prompt/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/prompt/index.js
 var prompt_assign = undefined && undefined.__assign || function () {
   prompt_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8843,27 +8903,27 @@ function PromptDialog(_a) {
 
   return (0,jsx_runtime.jsxs)(Modal, prompt_assign({
     open: open,
-    className: clsx_m('md-prompt-dialog', src_prompt_index_module.host, className),
+    className: clsx_m('mat-prompt-dialog', src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop
   }, {
     children: [title && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-title', src_prompt_index_module.title)
+      className: clsx_m('mat-prompt-dialog-title', src_prompt_index_module.title)
     }, {
       children: title
     }), void 0), text && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-text', src_prompt_index_module.text)
+      className: clsx_m('mat-prompt-dialog-text', src_prompt_index_module.text)
     }, {
       children: text
     }), void 0), (0,jsx_runtime.jsx)(TextField, prompt_assign({
-      className: clsx_m('md-prompt-dialog-input', src_prompt_index_module.input),
+      className: clsx_m('mat-prompt-dialog-input', src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
     }, inputProps), void 0), error && (0,jsx_runtime.jsx)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-error', src_prompt_index_module.error)
+      className: clsx_m('mat-prompt-dialog-error', src_prompt_index_module.error)
     }, {
       children: error
     }), void 0), (0,jsx_runtime.jsxs)("div", prompt_assign({
-      className: clsx_m('md-prompt-dialog-buttons', src_prompt_index_module.buttons)
+      className: clsx_m('mat-prompt-dialog-buttons', src_prompt_index_module.buttons)
     }, {
       children: [(0,jsx_runtime.jsx)(Button, prompt_assign({
         onClick: function onClick() {
@@ -8882,9 +8942,643 @@ function PromptDialog(_a) {
     }), void 0)]
   }), void 0);
 }
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/slider/index.module.scss
-var slider_index_module = __webpack_require__(270);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/slider/index.module.scss
+;// CONCATENATED MODULE: ../../../material/dist/src/util/selection.js
+;
+
+var SelectionState = function () {
+  function SelectionState(allowMultiple, initialValue) {
+    this.allowMultiple = allowMultiple;
+    this.initialValue = initialValue;
+    this.elements = [];
+    this.value = initialValue || (allowMultiple ? [] : undefined);
+    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
+  }
+
+  SelectionState.prototype.changed = function (sender) {
+    if (this.allowMultiple) {
+      var all = true;
+      var any = false;
+      var res = [];
+
+      for (var index = 0; index < this.elements.length; index++) {
+        var element = this.elements[index];
+
+        if (element.el.selected) {
+          res.push(element.el.value);
+          any = true;
+        } else all = false;
+      }
+
+      this.value = res;
+      this.all = all;
+      this.any = any;
+      return;
+    } else {
+      this.all = false;
+      var firstChecked = sender;
+
+      if (!firstChecked) {
+        for (var index = 0; index < this.elements.length; index++) {
+          var element = this.elements[index];
+
+          if (element.el.selected) {
+            firstChecked = element.el;
+            break;
+          }
+        }
+      }
+
+      if (!firstChecked) {
+        this.value = undefined;
+        this.any = false;
+        return;
+      }
+
+      if (!firstChecked.selected) firstChecked.selected = true;
+
+      for (var index = 0; index < this.elements.length; index++) {
+        var element = this.elements[index];
+        if (element.el !== firstChecked) element.el.selected = false;
+      }
+
+      this.value = firstChecked.value;
+      this.any = true;
+    }
+  };
+
+  SelectionState.prototype.triggerChange = function () {
+    var _a;
+
+    (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
+  };
+
+  SelectionState.prototype.triggerUpdate = function () {
+    var _a;
+
+    (_a = this.onUpdate) === null || _a === void 0 ? void 0 : _a.call(this, this);
+  };
+
+  SelectionState.prototype.register = function (el) {
+    var _this = this;
+
+    var listener = el.addOnChange(function () {
+      _this.changed(el);
+
+      _this.triggerChange();
+
+      _this.triggerUpdate();
+    });
+    this.elements.push({
+      el: el,
+      listener: listener
+    });
+    if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);else el.selected = this.value === el.value;
+
+    if (this.allowMultiple) {
+      if (this.all && !el.selected) {
+        this.all = false;
+        this.triggerChange();
+      }
+
+      if (!this.any && el.selected) {
+        this.any = true;
+        this.triggerChange();
+      }
+    }
+
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.unregister = function (el) {
+    var ind = this.elements.findIndex(function (x) {
+      return x.el === el;
+    });
+
+    if (ind >= 0) {
+      this.elements.splice(ind, 1);
+      var item = this.elements[ind];
+      if (item.listener) item.listener();
+    }
+
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.setAll = function (checked) {
+    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
+    checked = !!checked;
+    this.all = checked;
+    this.any = checked;
+    var values = [];
+
+    for (var index = 0; index < this.elements.length; index++) {
+      var element = this.elements[index];
+      element.el.selected = checked;
+    }
+
+    this.value = this.allowMultiple ? values : undefined;
+    this.all = checked;
+    this.any = checked;
+    this.triggerChange();
+    this.triggerUpdate();
+  };
+
+  SelectionState.prototype.getSelectedElements = function () {
+    var res = [];
+
+    for (var index = 0; index < this.elements.length; index++) {
+      var el = this.elements[index].el;
+      var isSelected = this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value;
+      if (isSelected) res.push(el);
+    }
+
+    return res;
+  };
+
+  return SelectionState;
+}();
+
+
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/toggle/index.module.scss
+var toggle_index_module = __webpack_require__(258);
+;// CONCATENATED MODULE: ../../../material/dist/src/toggle/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var toggle_index_module_options = {};
+
+toggle_index_module_options.styleTagTransform = (styleTagTransform_default());
+toggle_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      toggle_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+toggle_index_module_options.domAPI = (styleDomAPI_default());
+toggle_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index_module/* default */.Z, toggle_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_toggle_index_module = (toggle_index_module/* default */.Z && toggle_index_module/* default.locals */.Z.locals ? toggle_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../../material/dist/src/toggle/index.js
+var toggle_assign = undefined && undefined.__assign || function () {
+  toggle_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return toggle_assign.apply(this, arguments);
+};
+
+var toggle_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+
+
+
+var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
+  var children = _a.children,
+      className = _a.className,
+      noRipple = _a.noRipple,
+      onPointerDown = _a.onPointerDown,
+      onPointerUp = _a.onPointerUp,
+      type = _a.type,
+      variant = _a.variant,
+      independent = _a.independent,
+      props = toggle_rest(_a, ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "type", "variant", "independent"]);
+
+  var toggleRef = (0,react.useRef)();
+  var ripple = useRipple({
+    onPointerDown: onPointerDown,
+    onPointerUp: onPointerUp,
+    noRipple: noRipple,
+    centered: true,
+    target: toggleRef
+  });
+  var ctx = (0,react.useContext)(ToggleGroupContext);
+  if (independent) ctx = null;
+  type = type || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
+  var selectionRef = (0,react.useMemo)(function () {
+    return {
+      get selected() {
+        return toggleRef.current.Checked;
+      },
+
+      set selected(val) {
+        toggleRef.current.Checked = val;
+      },
+
+      get value() {
+        return toggleRef.current.Value;
+      },
+
+      addOnChange: function addOnChange(callback) {
+        return UnityBridge.addEventListener(toggleRef.current, 'onChange', function () {
+          callback === null || callback === void 0 ? void 0 : callback();
+        });
+      }
+    };
+  }, []);
+  var innerRef = (0,react.useCallback)(function (val) {
+    toggleRef.current = val;
+    if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
+    if (ctx) ctx.register(selectionRef);
+  }, [ctx, ref, selectionRef]);
+  (0,react.useEffect)(function () {
+    return function () {
+      if (ctx) ctx.unregister(selectionRef);
+    };
+  }, [ctx, selectionRef]);
+  return (0,jsx_runtime.jsxs)("label", toggle_assign({
+    className: clsx_m(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
+  }, ripple, {
+    children: [(0,jsx_runtime.jsx)("toggle", toggle_assign({
+      name: "<Toggle>",
+      ref: innerRef,
+      className: clsx_m(src_toggle_index_module.toggle, 'mat-toggle')
+    }, props, ripple), void 0), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
+      className: clsx_m(src_toggle_index_module.labelContent, 'mat-toggle-label-content')
+    }, {
+      children: children
+    }), void 0)]
+  }), void 0);
+});
+
+var Toggle = react.memo(_Toggle);
+var ToggleGroupContext = react.createContext(null);
+
+var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
+  var children = _a.children,
+      multiple = _a.multiple,
+      showSelectAll = _a.showSelectAll,
+      selectAllLabel = _a.selectAllLabel,
+      onChange = _a.onChange,
+      initialValue = _a.initialValue;
+  var init = (0,react.useRef)(initialValue);
+  var selectAllRef = (0,react.useRef)();
+  var state = (0,react.useMemo)(function () {
+    return new SelectionState(multiple, init.current);
+  }, [multiple, init]);
+  state.onChange = (0,react.useCallback)(function (val, all, any) {
+    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+
+    if (selectAllRef.current) {
+      selectAllRef.current.Indeterminate = !!any && !all;
+      selectAllRef.current.Checked = !!all;
+    }
+  }, [onChange]);
+  var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
+    state.setAll(checked);
+  }, [state]);
+  (0,react.useImperativeHandle)(ref, function () {
+    return state;
+  }, [state]);
+  return (0,jsx_runtime.jsx)(ToggleGroupContext.Provider, toggle_assign({
+    value: state
+  }, {
+    children: (0,jsx_runtime.jsxs)("view", toggle_assign({
+      name: "<ToggleGroup>",
+      className: clsx_m('mat-toggle-group')
+    }, {
+      children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, toggle_assign({
+        ref: selectAllRef,
+        independent: true,
+        onChange: selectAllCallback,
+        className: clsx_m('mat-toggle-select-all', src_toggle_index_module.selectAllToggle)
+      }, {
+        children: selectAllLabel || 'Select All'
+      }), void 0), children]
+    }), void 0)
+  }), void 0);
+});
+
+var ToggleGroup = react.memo(_ToggleGroup);
+;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-auto-ref.js
+
+function useAutoRef(val) {
+  var ref = (0,react.useRef)(val);
+  ref.current = val;
+  return ref;
+}
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/select/index.module.scss
+var select_index_module = __webpack_require__(113);
+;// CONCATENATED MODULE: ../../../material/dist/src/select/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var select_index_module_options = {};
+
+select_index_module_options.styleTagTransform = (styleTagTransform_default());
+select_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      select_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+select_index_module_options.domAPI = (styleDomAPI_default());
+select_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var select_index_module_update = injectStylesIntoStyleTag_default()(select_index_module/* default */.Z, select_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_select_index_module = (select_index_module/* default */.Z && select_index_module/* default.locals */.Z.locals ? select_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../../material/dist/src/select/index.js
+var select_assign = undefined && undefined.__assign || function () {
+  select_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return select_assign.apply(this, arguments);
+};
+
+var select_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var SelectContext = react.createContext(null);
+function _Select(_a) {
+  var _b = _a.keepOpen,
+      keepOpen = _b === void 0 ? 'auto' : _b,
+      onChange = _a.onChange,
+      name = _a.name,
+      children = _a.children,
+      initialValue = _a.initialValue,
+      multiple = _a.multiple,
+      separator = _a.separator,
+      chips = _a.chips,
+      variant = _a.variant,
+      placeholder = _a.placeholder,
+      _float = _a["float"],
+      className = _a.className,
+      hideCaret = _a.hideCaret,
+      otherProps = select_rest(_a, ["keepOpen", "onChange", "name", "children", "initialValue", "multiple", "separator", "chips", "variant", "placeholder", "float", "className", "hideCaret"]);
+
+  var init = (0,react.useRef)(initialValue);
+  var selectAllRef = (0,react.useRef)();
+  var fieldRef = (0,react.useRef)();
+  var shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
+  var state = (0,react.useMemo)(function () {
+    return new SelectionState(!!multiple, init.current);
+  }, [multiple, init]);
+  state.onChange = (0,react.useCallback)(function (val, all, any) {
+    var _a;
+
+    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+
+    if (selectAllRef.current) {
+      selectAllRef.current.Indeterminate = !!any && !all;
+      selectAllRef.current.Checked = !!all;
+    }
+
+    if (!shouldKeepOpen) {
+      setOpened(false);
+    }
+
+    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!any);
+  }, [onChange, shouldKeepOpen]);
+
+  var _c = (0,react.useState)(state.getSelectedElements()),
+      selectedElements = _c[0],
+      setSelectedElements = _c[1];
+
+  state.onUpdate = (0,react.useCallback)(function (st) {
+    setSelectedElements(st.getSelectedElements());
+  }, []);
+
+  var _d = (0,react.useState)(false),
+      opened = _d[0],
+      setOpened = _d[1];
+
+  var toggle = (0,react.useCallback)(function () {
+    return setOpened(function (st) {
+      return !st;
+    });
+  }, [setOpened]);
+  var close = (0,react.useCallback)(function () {
+    return setOpened(false);
+  }, [setOpened]);
+
+  if (typeof separator === 'undefined' && !chips) {
+    separator = (0,jsx_runtime.jsx)("text", select_assign({
+      className: src_select_index_module.defaultSeparator
+    }, {
+      children: ","
+    }), void 0);
+  }
+
+  var setFieldRef = (0,react.useCallback)(function (val) {
+    var _a;
+
+    fieldRef.current = val;
+    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? init.current.length === 0 : typeof init.current === 'undefined');
+  }, [multiple]);
+  return (0,jsx_runtime.jsxs)(InputField, select_assign({
+    className: clsx_m(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
+    variant: variant,
+    placeholder: placeholder,
+    "float": _float,
+    name: name || '<SelectField>',
+    ref: setFieldRef
+  }, {
+    children: [(0,jsx_runtime.jsxs)("button", select_assign({
+      name: "<Select>",
+      onClick: toggle,
+      className: clsx_m(src_select_index_module.trigger, 'mat-input-field-target')
+    }, otherProps, {
+      children: [(0,jsx_runtime.jsx)("view", select_assign({
+        className: src_select_index_module.triggerContent
+      }, {
+        children: selectedElements.map(function (x, i) {
+          return (0,jsx_runtime.jsxs)(react.Fragment, {
+            children: [i > 0 && separator, (0,jsx_runtime.jsx)("view", select_assign({
+              className: src_select_index_module.triggerPart
+            }, {
+              children: x.getTemplate()
+            }), void 0)]
+          }, i);
+        })
+      }), void 0), (0,jsx_runtime.jsxs)("view", select_assign({
+        className: clsx_m(src_select_index_module.menuRoot, opened && src_select_index_module.opened)
+      }, {
+        children: [(0,jsx_runtime.jsx)("button", {
+          name: "<SelectBackdrop>",
+          onClick: close,
+          className: clsx_m(src_select_index_module.backdrop)
+        }, void 0), (0,jsx_runtime.jsx)(SelectContext.Provider, select_assign({
+          value: state
+        }, {
+          children: (0,jsx_runtime.jsx)("scroll", select_assign({
+            name: "<SelectMenu>",
+            className: clsx_m(src_select_index_module.menu, getElevationClass(4))
+          }, {
+            children: children
+          }), void 0)
+        }), void 0)]
+      }), void 0)]
+    }), void 0), !hideCaret && (0,jsx_runtime.jsx)("icon", select_assign({
+      className: clsx_m(src_select_index_module.caret, 'mat-select-caret')
+    }, {
+      children: 'keyboard_arrow_down'
+    }), void 0)]
+  }), void 0);
+}
+function _Option(_a) {
+  var className = _a.className,
+      children = _a.children,
+      value = _a.value,
+      triggerTemplate = _a.triggerTemplate,
+      _b = _a.showToggle,
+      showToggle = _b === void 0 ? 'auto' : _b;
+  var ctx = (0,react.useContext)(SelectContext);
+
+  var _c = (0,react.useState)(false),
+      selected = _c[0],
+      setSelected = _c[1];
+
+  var selectedRef = useAutoRef(selected);
+  var onChangeRef = (0,react.useRef)([]);
+  var getTemplateRef = (0,react.useRef)(function () {
+    return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : children;
+  });
+  var childRef = (0,react.useRef)(children);
+  var shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
+  (0,react.useEffect)(function () {
+    childRef.current = children;
+  }, [children]);
+  (0,react.useEffect)(function () {
+    getTemplateRef.current = function () {
+      return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
+    };
+
+    ctx.triggerUpdate();
+  }, [triggerTemplate, ctx]);
+  var selectionRef = react.useMemo(function () {
+    return {
+      get selected() {
+        return selectedRef.current;
+      },
+
+      set selected(val) {
+        setSelected(val);
+      },
+
+      value: value,
+      addOnChange: function addOnChange(callback) {
+        if (!callback) return;
+        onChangeRef.current.push(callback);
+        return function () {
+          var ind = onChangeRef.current.indexOf(callback);
+          if (ind >= 0) onChangeRef.current.splice(ind, 1);
+        };
+      },
+      getTemplate: function getTemplate() {
+        return getTemplateRef.current();
+      }
+    };
+  }, [value, setSelected, selectedRef]);
+  (0,react.useEffect)(function () {
+    if (ctx) {
+      ctx.register(selectionRef);
+      return function () {
+        ctx.unregister(selectionRef);
+      };
+    }
+  }, [ctx, selectionRef]);
+  var onClick = (0,react.useCallback)(function () {
+    setSelected(function (x) {
+      return !x;
+    });
+
+    for (var index = 0; index < onChangeRef.current.length; index++) {
+      var cb = onChangeRef.current[index];
+      cb();
+    }
+  }, [setSelected]);
+  return (0,jsx_runtime.jsxs)(Button, select_assign({
+    onClick: onClick,
+    variant: "text",
+    className: clsx_m(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className)
+  }, {
+    children: [shouldShowToggle && (0,jsx_runtime.jsx)(Toggle, {
+      className: clsx_m(src_select_index_module.toggle, 'mat-select-option-toggle'),
+      type: ctx.allowMultiple ? 'checkbox' : 'radio',
+      checked: selected,
+      independent: true
+    }, void 0), children]
+  }), void 0);
+}
+var Select = react.memo(_Select);
+Select.Option = _Option;
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/slider/index.module.scss
+var slider_index_module = __webpack_require__(724);
+;// CONCATENATED MODULE: ../../../material/dist/src/slider/index.module.scss
 
       
       
@@ -8913,7 +9607,7 @@ var slider_index_module_update = injectStylesIntoStyleTag_default()(slider_index
 
        /* harmony default export */ const src_slider_index_module = (slider_index_module/* default */.Z && slider_index_module/* default.locals */.Z.locals ? slider_index_module/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/slider/index.js
+;// CONCATENATED MODULE: ../../../material/dist/src/slider/index.js
 var slider_assign = undefined && undefined.__assign || function () {
   slider_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -9099,313 +9793,8 @@ function _Slider(_a) {
 }
 
 var Slider = react.memo(_Slider);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/toggle/index.module.scss
-var toggle_index_module = __webpack_require__(83);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/toggle/index.module.scss
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var toggle_index_module_options = {};
-
-toggle_index_module_options.styleTagTransform = (styleTagTransform_default());
-toggle_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      toggle_index_module_options.insert = insertBySelector_default().bind(null, "head");
-    
-toggle_index_module_options.domAPI = (styleDomAPI_default());
-toggle_index_module_options.insertStyleElement = (insertStyleElement_default());
-
-var toggle_index_module_update = injectStylesIntoStyleTag_default()(toggle_index_module/* default */.Z, toggle_index_module_options);
-
-
-
-
-       /* harmony default export */ const src_toggle_index_module = (toggle_index_module/* default */.Z && toggle_index_module/* default.locals */.Z.locals ? toggle_index_module/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/toggle/index.js
-var toggle_assign = undefined && undefined.__assign || function () {
-  toggle_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return toggle_assign.apply(this, arguments);
-};
-
-var toggle_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-
-
-var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
-  var children = _a.children,
-      className = _a.className,
-      noRipple = _a.noRipple,
-      onPointerDown = _a.onPointerDown,
-      onPointerUp = _a.onPointerUp,
-      variant = _a.variant,
-      independent = _a.independent,
-      props = toggle_rest(_a, ["children", "className", "noRipple", "onPointerDown", "onPointerUp", "variant", "independent"]);
-
-  var toggleRef = (0,react.useRef)();
-  var ripple = useRipple({
-    onPointerDown: onPointerDown,
-    onPointerUp: onPointerUp,
-    noRipple: noRipple,
-    centered: true,
-    target: toggleRef
-  });
-  var ctx = (0,react.useContext)(ToggleGroupContext);
-  if (independent) ctx = null;
-  variant = variant || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
-  var innerRef = (0,react.useCallback)(function (val) {
-    toggleRef.current = val;
-    if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
-    if (ctx) ctx.register(val);
-  }, [ctx, ref]);
-  (0,react.useEffect)(function () {
-    return function () {
-      if (ctx && toggleRef.current) ctx.unregister(toggleRef.current);
-    };
-  }, [ctx]);
-  return (0,jsx_runtime.jsxs)("label", toggle_assign({
-    className: clsx_m(className, src_toggle_index_module.label, 'md-toggle-label', src_toggle_index_module[variant], 'md-variant-' + variant)
-  }, ripple, {
-    children: [(0,jsx_runtime.jsx)("toggle", toggle_assign({
-      name: "<Toggle>",
-      ref: innerRef,
-      className: clsx_m(src_toggle_index_module.toggle, 'md-toggle')
-    }, props, ripple), void 0), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
-      className: clsx_m(src_toggle_index_module.labelContent, 'md-toggle-label-content')
-    }, {
-      children: children
-    }), void 0)]
-  }), void 0);
-});
-
-var Toggle = react.memo(_Toggle);
-
-var ToggleGroupState = function () {
-  function ToggleGroupState(allowMultiple, initialValue) {
-    this.allowMultiple = allowMultiple;
-    this.initialValue = initialValue;
-    this.elements = [];
-    this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
-  }
-
-  ToggleGroupState.prototype.changed = function (sender) {
-    if (this.allowMultiple) {
-      var all = true;
-      var any = false;
-      var res = [];
-
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-
-        if (element.el.Checked) {
-          res.push(element.el.Value);
-          any = true;
-        } else all = false;
-      }
-
-      this.value = res;
-      this.all = all;
-      this.any = any;
-      return;
-    } else {
-      this.all = false;
-      var firstChecked = sender;
-
-      if (!firstChecked) {
-        for (var index = 0; index < this.elements.length; index++) {
-          var element = this.elements[index];
-
-          if (element.el.Checked) {
-            firstChecked = element.el;
-            break;
-          }
-        }
-      }
-
-      if (!firstChecked) {
-        this.value = undefined;
-        this.any = false;
-        return;
-      }
-
-      if (!firstChecked.Checked) firstChecked.Checked = true;
-
-      for (var index = 0; index < this.elements.length; index++) {
-        var element = this.elements[index];
-        if (element.el !== firstChecked) element.el.Checked = false;
-      }
-
-      this.value = firstChecked.Value;
-      this.any = true;
-    }
-  };
-
-  ToggleGroupState.prototype.register = function (el) {
-    var _this = this;
-
-    var _a, _b;
-
-    var listener = UnityBridge.addEventListener(el, 'onChange', function (ev, sender) {
-      var _a;
-
-      _this.changed(sender);
-
-      (_a = _this.onChange) === null || _a === void 0 ? void 0 : _a.call(_this, _this.value, _this.all, _this.any);
-    });
-    this.elements.push({
-      el: el,
-      listener: listener
-    });
-    if (this.allowMultiple && Array.isArray(this.value)) el.Checked = this.value.includes(el.Value);else el.Checked = this.value === el.Value;
-
-    if (this.allowMultiple) {
-      if (this.all && !el.Checked) {
-        this.all = false;
-        (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
-      }
-
-      if (!this.any && el.Checked) {
-        this.any = true;
-        (_b = this.onChange) === null || _b === void 0 ? void 0 : _b.call(this, this.value, this.all, this.any);
-      }
-    }
-  };
-
-  ToggleGroupState.prototype.unregister = function (el) {
-    var ind = this.elements.findIndex(function (x) {
-      return x.el === el;
-    });
-
-    if (ind >= 0) {
-      this.elements.splice(ind, 1);
-      var item = this.elements[ind];
-      if (item.listener) item.listener();
-    }
-  };
-
-  ToggleGroupState.prototype.setAll = function (checked) {
-    var _a;
-
-    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
-    checked = !!checked;
-    this.all = checked;
-    this.any = checked;
-    var values = [];
-
-    for (var index = 0; index < this.elements.length; index++) {
-      var element = this.elements[index];
-      element.el.Checked = checked;
-    }
-
-    this.value = this.allowMultiple ? values : undefined;
-    this.all = checked;
-    this.any = checked;
-    (_a = this.onChange) === null || _a === void 0 ? void 0 : _a.call(this, this.value, this.all, this.any);
-  };
-
-  return ToggleGroupState;
-}();
-
-
-var ToggleGroupContext = react.createContext(null);
-
-var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
-  var children = _a.children,
-      multiple = _a.multiple,
-      showSelectAll = _a.showSelectAll,
-      selectAllLabel = _a.selectAllLabel,
-      onChange = _a.onChange,
-      initialValue = _a.initialValue;
-  var init = (0,react.useRef)(initialValue);
-  var state = (0,react.useMemo)(function () {
-    return new ToggleGroupState(multiple, init.current);
-  }, [multiple, init]);
-  state.onChange = (0,react.useCallback)(function (val, all, any) {
-    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
-
-    if (selectAllRef.current) {
-      selectAllRef.current.Indeterminate = !!any && !all;
-      selectAllRef.current.Checked = !!all;
-    }
-  }, [onChange]);
-  var selectAllRef = (0,react.useRef)();
-  var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
-    state.setAll(checked);
-  }, [state]);
-  (0,react.useImperativeHandle)(ref, function () {
-    return state;
-  }, [state]);
-  return (0,jsx_runtime.jsx)(ToggleGroupContext.Provider, toggle_assign({
-    value: state
-  }, {
-    children: (0,jsx_runtime.jsxs)("view", toggle_assign({
-      name: "<ToggleGroup>",
-      className: clsx_m('md-toggle-group')
-    }, {
-      children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, toggle_assign({
-        ref: selectAllRef,
-        independent: true,
-        onChange: selectAllCallback,
-        className: clsx_m('md-toggle-select-all', src_toggle_index_module.selectAllToggle)
-      }, {
-        children: selectAllLabel || 'Select All'
-      }), void 0), children]
-    }), void 0)
-  }), void 0);
-});
-
-var ToggleGroup = react.memo(_ToggleGroup);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/index.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/index.js
-
+// EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var dictionary_watcher_assign = undefined && undefined.__assign || function () {
   dictionary_watcher_assign = Object.assign || function (t) {
@@ -9484,24 +9873,6 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/styled-components-helper.js
-function insertStyledComponentsSheet(sheet) {
-  try {
-    var styleElements = sheet.getStyleElement();
-
-    for (var _i = 0, styleElements_1 = styleElements; _i < styleElements_1.length; _i++) {
-      var element = styleElements_1[_i];
-      var styleContent = element.props.dangerouslySetInnerHTML.__html;
-      Context.InsertStyle(styleContent);
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    sheet.seal();
-  }
-}
-// EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -9890,6 +10261,210 @@ var Renderer = {
     return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   }
 };
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/tooltip/index.module.scss
+var tooltip_index_module = __webpack_require__(546);
+;// CONCATENATED MODULE: ../../../material/dist/src/tooltip/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var tooltip_index_module_options = {};
+
+tooltip_index_module_options.styleTagTransform = (styleTagTransform_default());
+tooltip_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      tooltip_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+tooltip_index_module_options.domAPI = (styleDomAPI_default());
+tooltip_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var tooltip_index_module_update = injectStylesIntoStyleTag_default()(tooltip_index_module/* default */.Z, tooltip_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_tooltip_index_module = (tooltip_index_module/* default */.Z && tooltip_index_module/* default.locals */.Z.locals ? tooltip_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../../material/dist/src/tooltip/index.js
+
+
+
+
+
+var positions = {
+  left: {
+    anchor: 'left',
+    pivot: 'right'
+  },
+  right: {
+    anchor: 'right',
+    pivot: 'left'
+  },
+  top: {
+    anchor: 'top',
+    pivot: 'bottom'
+  },
+  bottom: {
+    anchor: 'bottom',
+    pivot: 'top'
+  },
+  center: {
+    anchor: 'center',
+    pivot: 'center'
+  }
+};
+
+function addTooltip(target, props, withBackdrop, hide) {
+  target = props.target ? props.target.current : target;
+  if (!target) return null;
+  var anchor = UnityBridge.createElement('view', '', HostContainer);
+  anchor.ClassName = clsx_m(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
+  anchor.Name = '<TooltipAnchor>';
+  var tooltip = UnityBridge.createElement('view', '', HostContainer);
+  tooltip.ClassName = clsx_m(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
+  tooltip.Name = '<Tooltip>';
+  var pos = positions[props.position];
+  anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
+  anchor.Style.Set('inset', -(props.offset || 5));
+  var pivot = Interop.ReactUnity.Converters.AllConverters.YogaValue2Converter.Convert(props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top');
+  var realPivot = pivot.GetType().ToString() === 'ReactUnity.Types.YogaValue2' ? pivot : Interop.ReactUnity.Types.YogaValue2.Center;
+  tooltip.Style.Set('translate', realPivot.Negate());
+  UnityBridge.appendChild(target, anchor);
+
+  if (withBackdrop) {
+    var backdrop = UnityBridge.createElement('portal', '', HostContainer);
+    backdrop.ClassName = clsx_m(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
+    backdrop.Name = '<TooltipBackdrop>';
+    UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
+    UnityBridge.appendChild(anchor, backdrop);
+  }
+
+  UnityBridge.appendChild(anchor, tooltip);
+  Renderer.render(props.content, tooltip, true);
+  return anchor;
+}
+
+function useTooltip(props, trigger) {
+  if (trigger === void 0) {
+    trigger = 'hover';
+  }
+
+  var tooltipRef = (0,react.useRef)();
+  var callbacksRef = (0,react.useRef)([]);
+  var elementsRef = (0,react.useRef)([]);
+  var propsRef = useAutoRef(props);
+  var clearAll = (0,react.useCallback)(function () {
+    var callbacks = callbacksRef.current;
+
+    for (var _i = 0, callbacks_1 = callbacks; _i < callbacks_1.length; _i++) {
+      var cb = callbacks_1[_i];
+      cb === null || cb === void 0 ? void 0 : cb();
+    }
+  }, []);
+  var hide = (0,react.useCallback)(function () {
+    var _a;
+
+    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    tooltipRef.current = null;
+  }, []);
+  var show = (0,react.useCallback)(function (target, properties, withBackdrop) {
+    var _a;
+
+    if (withBackdrop === void 0) {
+      withBackdrop = false;
+    }
+
+    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
+  }, [hide]);
+  var showWithCurrent = (0,react.useCallback)(function (ev, sender) {
+    var calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
+    show(sender, calculatedProps, trigger === 'click');
+  }, [show, trigger, propsRef]);
+  var register = (0,react.useCallback)(function (el) {
+    if (!el) return;
+    elementsRef.current.push(el);
+    var callbacks = callbacksRef.current;
+
+    if (trigger === 'click') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
+    } else if (trigger === 'press') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
+    } else {
+      // hover
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
+    }
+  }, [trigger, showWithCurrent, hide]);
+  return {
+    register: register,
+    show: show,
+    hide: hide,
+    clearAll: clearAll
+  };
+}
+function useDataTooltip(trigger) {
+  if (trigger === void 0) {
+    trigger = 'hover';
+  }
+
+  var props = function props(el) {
+    return propsProxy(el.Data);
+  };
+
+  return useTooltip(props, trigger);
+}
+
+function propsProxy(data) {
+  return new Proxy(data, {
+    get: function get(tg, prop) {
+      if (typeof prop === 'symbol') return data[prop];
+      return data['tooltip-' + prop];
+    }
+  });
+}
+;// CONCATENATED MODULE: ../../../material/dist/src/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ../../../material/dist/index.js
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/styled-components-helper.js
+function insertStyledComponentsSheet(sheet) {
+  try {
+    var styleElements = sheet.getStyleElement();
+
+    for (var _i = 0, styleElements_1 = styleElements; _i < styleElements_1.length; _i++) {
+      var element = styleElements_1[_i];
+      var styleContent = element.props.dangerouslySetInnerHTML.__html;
+      Context.InsertStyle(styleContent);
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    sheet.seal();
+  }
+}
 ;// CONCATENATED MODULE: ../../../renderer/dist/index.js
 
 
