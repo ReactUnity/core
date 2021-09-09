@@ -39,26 +39,28 @@ namespace ReactUnity.UGUI
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
 
-            var viewport = new GameObject("[Scroll Viewport]").AddComponent<RectTransform>();
+            var viewport = new GameObject("[ScrollViewport]").AddComponent<RectTransform>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;
             viewport.anchorMax = Vector2.one;
             viewport.sizeDelta = Vector2.zero;
             viewport.pivot = Vector2.up;
+            viewport.offsetMin = new Vector2(0, -1);
+            viewport.offsetMax = new Vector2(1, 0);
             var vpImage = viewport.gameObject.AddComponent<Image>();
             vpImage.color = Color.clear;
 
 
-            var content = new GameObject("[Scroll Container]").AddComponent<RectTransform>();
+            var content = new GameObject("[ScrollContent]").AddComponent<RectTransform>();
             Container = content;
             content.SetParent(viewport, false);
 
             content.anchorMin = Vector2.up;
             content.anchorMax = Vector2.up;
             content.pivot = Vector2.up;
-            content.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
-            content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            content.anchoredPosition3D = Vector3.zero;
+            content.sizeDelta = Vector2.zero;
             var resizer = ContentResizer = content.gameObject.AddComponent<ScrollContentResizer>();
             resizer.Layout = Layout;
 

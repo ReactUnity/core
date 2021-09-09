@@ -43,8 +43,7 @@ namespace ReactUnity.UGUI.Behaviours
 
             if (!hasHorizontal && !hasVertical)
             {
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                rt.sizeDelta = new Vector2(0, 0);
                 return;
             }
 
@@ -69,15 +68,17 @@ namespace ReactUnity.UGUI.Behaviours
                 if (yEnd > maxY) maxY = yEnd;
             }
 
+            var horizontal = 0f;
+            var vertical = 0f;
+
             if (hasHorizontal)
             {
                 var rightInset = NormalizeFloat(Layout.LayoutPaddingRight) + NormalizeFloat(Layout.BorderRightWidth);
                 var width = Mathf.Floor(maxX - minX + rightInset);
                 var dfx = width - Layout.LayoutWidth;
                 if (dfx <= 1 && dfx > 0) width = Layout.LayoutWidth;
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+                horizontal = width;
             }
-            else rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
 
             if (hasVertical)
             {
@@ -85,9 +86,9 @@ namespace ReactUnity.UGUI.Behaviours
                 var height = Mathf.Floor(maxY - minY + bottomInset);
                 var dfy = height - Layout.LayoutHeight;
                 if (dfy <= 1 && dfy > 0) height = Layout.LayoutHeight;
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                vertical = height;
             }
-            else rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            rt.sizeDelta = new Vector2(horizontal, vertical);
         }
 
         float NormalizeFloat(float value)

@@ -44,7 +44,7 @@ namespace ReactUnity.UGUI.Behaviours
             var transpose = WheelDirectionTransposed;
 
 #if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
-            if (UnityEngine.InputSystem.Keyboard.current.shiftKey.isPressed)
+            if (UnityEngine.InputSystem.Keyboard.current?.shiftKey?.isPressed ?? false)
                 transpose = !transpose;
 #elif ENABLE_LEGACY_INPUT_MANAGER
             if(UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift))

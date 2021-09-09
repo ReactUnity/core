@@ -60,16 +60,33 @@ namespace ReactUnity.Tests
             Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
             Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
 
+            View.Style.Set("width", 200);
+            View.Style.Set("height", 300);
+            yield return null;
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsTrue(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
             View.Style.Set("width", 300);
             View.Style.Set("height", 100);
             yield return null;
             Assert.IsTrue(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
             Assert.IsFalse(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
 
-            View.Style.Set("width", 100);
+            View.Style.Set("width", 300);
+            View.Style.Set("height", 200);
+            yield return null;
+            Assert.IsTrue(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsFalse(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
+            View.Style.Set("width", 200);
+            View.Style.Set("height", 200);
+            yield return null;
+            Assert.IsFalse(Scroll.ScrollRect.horizontalScrollbar.isActiveAndEnabled);
+            Assert.IsFalse(Scroll.ScrollRect.verticalScrollbar.isActiveAndEnabled);
+
         }
 
-        private IEnumerator RunWithRandomRotation(System.Func<IEnumerator> cb)
+        private IEnumerator RunWithRandomCoords(System.Func<IEnumerator> cb)
         {
             var cube = GameObject.Find("Cube");
 
@@ -77,19 +94,20 @@ namespace ReactUnity.Tests
             {
                 yield return cb();
                 cube.transform.rotation = Random.rotation;
+                cube.transform.position = Random.insideUnitSphere * 1000;
             }
         }
 
         [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStylingWorldScene()
         {
-            yield return RunWithRandomRotation(ScrollbarCanBePositionedAndColoredWithStyling);
+            yield return RunWithRandomCoords(ScrollbarCanBePositionedAndColoredWithStyling);
         }
 
         [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
         public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflowsWorldScene()
         {
-            yield return RunWithRandomRotation(ScrollbarIsVisibleOnlyWhenSideOverflows);
+            yield return RunWithRandomCoords(ScrollbarIsVisibleOnlyWhenSideOverflows);
         }
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
