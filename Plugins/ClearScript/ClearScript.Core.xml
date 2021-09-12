@@ -1877,6 +1877,15 @@
             resources such as native assemblies and related data files.
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.HostSettings.IsAndroid">
+            <summary>
+            Sets the runtime platform to android and loads android native binaries.
+            </summary>
+            <remarks>
+            This property allows ClearScript to load android native assemblies instead of 
+            linux assemblies on Android Mono
+            </remarks>
+        </member>
         <member name="T:Microsoft.ClearScript.HostTypeCollection">
             <summary>
             Represents a scriptable collection of host types.

@@ -23,9 +23,9 @@ namespace ReactUnity.ScriptEngine
 
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
-
-            var location = typeof(ClearScriptEngine).Assembly.Location;
-            HostSettings.AuxiliarySearchPath = Path.GetFullPath(Path.Combine(location, "../../../../../../lib/arm/"));
+#if UNITY_ANDROID && !UNITY_EDITOR
+            HostSettings.IsAndroid = true;
+#endif
 
             Engine = new V8ScriptEngine(
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |
