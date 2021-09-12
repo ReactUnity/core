@@ -13,10 +13,10 @@ namespace ReactUnity.ScriptEngine
                 case JavascriptEngineType.Jint:
                     return new JintEngineFactory();
 #if REACT_CLEARSCRIPT
+                case JavascriptEngineType.Auto:
                 case JavascriptEngineType.ClearScript:
                     return new ClearScriptEngineFactory();
 #endif
-                case JavascriptEngineType.Auto:
                 default:
                     return new JintEngineFactory();
             }

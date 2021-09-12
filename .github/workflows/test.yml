@@ -68,13 +68,13 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
-          checkName: ${{ matrix.suite.name }} results
+          checkName: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
           projectPath: tests
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
         if: always() && matrix.suite.main
         with:
-          name: ${{ matrix.suite.name }} results
+          name: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
           path: ${{ steps.testRunner.outputs.artifactsPath }}
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
