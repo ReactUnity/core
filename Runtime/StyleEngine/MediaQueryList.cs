@@ -136,14 +136,15 @@ namespace ReactUnity.StyleEngine
 
         private static MediaNode ParseInner(string media, int depth)
         {
-            if (media.StartsWith("(") && media.EndsWith(")"))
+            var splits = ParserHelpers.SplitWhitespace(media);
+
+            if (splits.Count == 1 && media.StartsWith("(") && media.EndsWith(")"))
             {
                 return ParseInner(new Regex("\\)$").Replace(new Regex("^\\(").Replace(media, ""), ""), depth + 1);
             }
 
             var allowFeatures = depth > 0;
 
-            var splits = ParserHelpers.SplitWhitespace(media);
             var first = splits.Count > 0 ? splits[0] : null;
 
             if (first == null) return ConstantMediaNode.Never;

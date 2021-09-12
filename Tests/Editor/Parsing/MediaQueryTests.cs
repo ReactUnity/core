@@ -18,6 +18,42 @@ namespace ReactUnity.Editor.Tests
             Assert.True(mq.matches);
         }
 
+        [Test]
+        public void DefaultTypesWorks()
+        {
+            var provider = DefaultMediaProvider.CreateMediaProvider("runtime", "ugui", false);
+
+            var mq = MediaQueryList.Create(provider, "screen");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "runtime");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "ugui");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "(framework: ugui)");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "all");
+            Assert.True(mq.matches);
+
+
+            provider = DefaultMediaProvider.CreateMediaProvider("inspector", "uitoolkit", true);
+
+            mq = MediaQueryList.Create(provider, "inspector");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "editor");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "uitoolkit");
+            Assert.True(mq.matches);
+
+            mq = MediaQueryList.Create(provider, "(framework: uitoolkit)");
+            Assert.True(mq.matches);
+        }
+
 
         [Test]
         public void NotCondition()
@@ -371,6 +407,25 @@ namespace ReactUnity.Editor.Tests
             Assert.False(mq.matches);
 
             provider.SetValue("a", "bye");
+            Assert.True(mq.matches);
+        }
+
+        [Test]
+        public void CanParseDoubleParensCorrectly()
+        {
+            var provider = new DefaultMediaProvider("runtime");
+
+            var query = "(runtime) and (a)";
+            var mq = MediaQueryList.Create(provider, query);
+
+
+            Assert.False(mq.matches);
+
+            provider.SetValue("a", null);
+            Assert.False(mq.matches);
+
+
+            provider.SetValue("a", "hello");
             Assert.True(mq.matches);
         }
 

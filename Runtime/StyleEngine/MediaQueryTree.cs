@@ -80,10 +80,7 @@ namespace ReactUnity.StyleEngine
         public override bool Matches(IMediaProvider context)
         {
             if (MediaType == null) return false;
-
-            var type = context.MediaType;
-
-            return MediaType == "all" || type == MediaType;
+            return context.HasType(MediaType);
         }
     }
 
@@ -100,9 +97,7 @@ namespace ReactUnity.StyleEngine
         {
             if (Name == null) return false;
 
-            var type = context.MediaType;
-
-            if (Name == "all" || type == Name) return true;
+            if (context.HasType(Name)) return true;
 
             var value = context.GetValue(Name);
             return value != null;

@@ -8,6 +8,7 @@ namespace ReactUnity.StyleEngine
     {
         event Action<IMediaProvider> OnUpdate;
         string MediaType { get; set; }
+        bool HasType(string type);
         string GetValue(string property);
         float GetNumericalValue(string property);
 
@@ -32,30 +33,41 @@ namespace ReactUnity.StyleEngine
 
         Dictionary<string, float> numbers;
         Dictionary<string, string> values;
+        HashSet<string> types;
 
         public event Action<IMediaProvider> OnUpdate;
 
         public static DefaultMediaProvider CreateMediaProvider(string type, string framework, bool isEditor)
         {
             return new DefaultMediaProvider(type, null,
-                new Dictionary<string, string> {
+                new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
                     { "framework", framework },
-                    { "editor", isEditor ? "true" : null },
-                    { "runtime", isEditor ? null : "true" },
-                    { "screen", "true" },
+                },
+                new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+                {
+                    type,
+                    framework,
+                    "all",
+                    "screen",
+                    isEditor ? "editor" : "runtime",
                 });
         }
 
 
-        public DefaultMediaProvider(string mediaType, Dictionary<string, float> numbers = null, Dictionary<string, string> values = null)
+        public DefaultMediaProvider(string mediaType, Dictionary<string, float> numbers = null, Dictionary<string, string> values = null, HashSet<string> types = null)
         {
             MediaType = mediaType;
             this.numbers = numbers ?? new Dictionary<string, float>();
             this.values = values ?? new Dictionary<string, string>();
+            this.types = types ?? new HashSet<string>();
 
             RecalculateDefaults();
         }
 
+        public bool HasType(string type)
+        {
+            return MediaType == type || type == "all" || types.Contains(type);
+        }
 
         public void RecalculateDefaults()
         {
