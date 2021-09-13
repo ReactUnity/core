@@ -5,7 +5,6 @@
 #if REACT_CLEARSCRIPT
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;

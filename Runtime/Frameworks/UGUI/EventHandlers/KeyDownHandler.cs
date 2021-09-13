@@ -23,8 +23,7 @@ namespace ReactUnity.UGUI.EventHandlers
             if (action == null)
             {
                 action = new InputAction(binding: "/*/<button>");
-                action.performed += (ctx) =>
-                {
+                action.performed += (ctx) => {
                     if (selected) OnEvent(new KeyEventData(EventSystem.current, ctx));
                 };
             }

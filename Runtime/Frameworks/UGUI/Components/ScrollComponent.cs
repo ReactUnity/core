@@ -1,8 +1,8 @@
 using System;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
-using ReactUnity.UGUI.Behaviours;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
