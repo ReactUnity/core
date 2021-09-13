@@ -6,16 +6,16 @@ namespace ReactUnity.Styling
 {
     public static class CssProperties
     {
-        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
+        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
         private static readonly Dictionary<string, VariableProperty> VariableProperties = new Dictionary<string, VariableProperty>(StringComparer.InvariantCultureIgnoreCase);
 
         static CssProperties()
         {
-            foreach (var kv in StyleProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
-            foreach (var kv in LayoutProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
+            foreach (var kv in StyleProperties.PropertyMap) PropertyMap[kv.Key] = kv.Value;
+            foreach (var kv in LayoutProperties.PropertyMap) PropertyMap[kv.Key] = kv.Value;
 
-            foreach (var kv in CssPropertyMap)
+            foreach (var kv in PropertyMap)
             {
                 if (kv.Value.transitionable) TransitionableProperties.Add(kv.Value);
             }
@@ -28,7 +28,7 @@ namespace ReactUnity.Styling
                 if (VariableProperties.TryGetValue(name, out var val)) return val;
                 return VariableProperties[name] = new VariableProperty(name);
             }
-            CssPropertyMap.TryGetValue(name, out var style);
+            PropertyMap.TryGetValue(name, out var style);
             return style;
         }
 

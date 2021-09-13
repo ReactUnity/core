@@ -37,7 +37,7 @@ namespace ReactUnity.Converters
             var str = obj as string;
             if (str != null)
                 return !string.IsNullOrWhiteSpace(str) &&
-                    !str.Trim().Equals(bool.FalseString, StringComparison.OrdinalIgnoreCase);
+                    !str.Trim().Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase);
 
             try
             {

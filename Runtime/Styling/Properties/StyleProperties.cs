@@ -1,13 +1,12 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using NavigationMode = UnityEngine.UI.Navigation.Mode;
 
 namespace ReactUnity.Styling
 {
@@ -51,7 +50,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
-        public static readonly StyleProperty<Navigation.Mode> navigation = new StyleProperty<Navigation.Mode>("navigation", Navigation.Mode.Automatic);
+        public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
         public static readonly StyleProperty<float> stateDuration = new StyleProperty<float>("stateDuration", 0f, true, false, AllConverters.DurationConverter);
         public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
         public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
@@ -59,9 +58,54 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("objectFit", ObjectFit.Fill);
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
 
-        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
-        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()
+        public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
+            { "opacity", opacity },
+            { "zIndex", zIndex },
+            { "visibility", visibility },
+            { "position", position },
+            { "cursor", cursor },
+            { "pointerEvents", pointerEvents },
+            { "backgroundColor", backgroundColor },
+            { "backgroundImage", backgroundImage },
+            { "backgroundBlendMode", backgroundBlendMode },
+            { "maskImage", maskImage },
+            { "borderTopLeftRadius", borderTopLeftRadius },
+            { "borderTopRightRadius", borderTopRightRadius },
+            { "borderBottomLeftRadius", borderBottomLeftRadius },
+            { "borderBottomRightRadius", borderBottomRightRadius },
+            { "borderLeftColor", borderLeftColor },
+            { "borderRightColor", borderRightColor },
+            { "borderTopColor", borderTopColor },
+            { "borderBottomColor", borderBottomColor },
+            { "boxShadow", boxShadow },
+            { "transformOrigin", transformOrigin },
+            { "translate", translate },
+            { "scale", scale },
+            { "rotate", rotate },
+            { "fontFamily", fontFamily },
+            { "color", color },
+            { "fontWeight", fontWeight },
+            { "fontStyle", fontStyle },
+            { "fontSize", fontSize },
+            { "lineHeight", lineHeight },
+            { "letterSpacing", letterSpacing },
+            { "wordSpacing", wordSpacing },
+            { "textAlign", textAlign },
+            { "textOverflow", textOverflow },
+            { "textWrap", textWrap },
+            { "textStrokeWidth", textStrokeWidth },
+            { "textStrokeColor", textStrokeColor },
+            { "content", content },
+            { "appearance", appearance },
+            { "navigation", navigation },
+            { "stateDuration", stateDuration },
+            { "transition", transition },
+            { "animation", animation },
+            { "audio", audio },
+            { "objectFit", objectFit },
+            { "objectPosition", objectPosition },
+
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
@@ -96,28 +140,5 @@ namespace ReactUnity.Styling
             { "object-position", objectPosition },
             { "state-duration", stateDuration },
         };
-        public static IStyleProperty[] AllProperties { get; }
-        public static HashSet<string> InheritedProperties { get; } = new HashSet<string>();
-
-        static StyleProperties()
-        {
-            var type = typeof(StyleProperties);
-            var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
-            var styleFields = fields.Where(x => typeof(IStyleProperty).IsAssignableFrom(x.FieldType));
-
-            foreach (var style in styleFields)
-            {
-                var prop = style.GetValue(type) as IStyleProperty;
-                PropertyMap[style.Name] = prop;
-                CssPropertyMap[style.Name] = prop;
-            }
-
-            foreach (var entry in CssPropertyMap)
-            {
-                if (entry.Value.inherited) InheritedProperties.Add(entry.Key);
-            }
-
-            AllProperties = PropertyMap.Values.ToArray();
-        }
     }
 }

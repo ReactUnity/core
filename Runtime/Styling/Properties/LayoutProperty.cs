@@ -11,7 +11,5 @@ namespace ReactUnity.Styling
         public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) :
             base(name, defaultValue, transitionable, false, converter)
         { }
-
-        public override object GetStyle(NodeStyle style) => style.GetStyleValue<T>(this);
     }
 }

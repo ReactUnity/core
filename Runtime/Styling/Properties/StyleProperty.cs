@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using ReactUnity.Converters;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling.Computed;
@@ -31,12 +30,7 @@ namespace ReactUnity.Styling
             if (!(converter is GeneralConverter)) converter = new GeneralConverter(converter);
             this.converter = converter;
 
-            var propInfo = typeof(NodeStyle).GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
-
             ModifiedProperties = new List<IStyleProperty>(1) { this };
-
-            if (propInfo != null)
-                getter = (Func<NodeStyle, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<NodeStyle, T>));
         }
 
         public object Convert(object value)
@@ -62,7 +56,7 @@ namespace ReactUnity.Styling
         public override int GetHashCode() => name.GetHashCode();
         public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
 
-        public virtual object GetStyle(NodeStyle style) => getter != null ? getter(style) : default;
+        public object GetStyle(NodeStyle style) => style.GetStyleValue<T>(this);
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {

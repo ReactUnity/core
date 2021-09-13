@@ -28,7 +28,7 @@ namespace ReactUnity.Editor
         public object GetResolvedStyles(IReactComponent component)
         {
             var obj = new Dictionary<string, object>();
-            var props = CssProperties.CssPropertyMap;
+            var props = CssProperties.PropertyMap;
 
             foreach (var prop in props)
             {

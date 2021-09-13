@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -25,23 +23,36 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
 
-        public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase);
-        public static readonly StyleShorthand[] List;
-
-        static AllShorthands()
+        public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
-            var type = typeof(AllShorthands);
-            var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
-            var styleFields = fields.Where(x => typeof(StyleShorthand).IsAssignableFrom(x.FieldType));
+            { "margin", Margin },
+            { "padding", Padding },
+            { "inset", Inset },
+            { "borderWidth", BorderWidth },
+            { "borderColor", BorderColor },
+            { "borderRadius", BorderRadius },
+            { "border", Border },
+            { "borderTop", BorderTop },
+            { "borderRight", BorderRight },
+            { "borderBottom", BorderBottom },
+            { "borderLeft", BorderLeft },
+            { "flex", Flex },
+            { "flexFlow", FlexFlow },
+            { "font", Font },
+            { "background", Background },
+            { "mask", Mask },
+            { "textStroke", TextStroke },
 
-            foreach (var style in styleFields)
-            {
-                var prop = style.GetValue(type) as StyleShorthand;
-                Map[style.Name] = Map[prop.Name] = prop;
-            }
-
-            List = Map.Values.Distinct().ToArray();
-        }
+            { "border-width", BorderWidth },
+            { "border-color", BorderColor },
+            { "border-radius", BorderRadius },
+            { "border-top", BorderTop },
+            { "border-right", BorderRight },
+            { "border-bottom", BorderBottom },
+            { "border-left", BorderLeft },
+            { "flex-flow", FlexFlow },
+            { "text-stroke", TextStroke },
+        };
 
         public static StyleShorthand GetShorthand(string name)
         {

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling.Computed;
@@ -21,13 +19,20 @@ namespace ReactUnity.Styling
         public static ICssFunction Var = new VarFunction();
         public static ICssFunction Vector3 = new Vector3Function();
 
-        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.OrdinalIgnoreCase)
+        private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
         {
-            {  "rgb", Rgba },
-            {  "hsl", Hsla },
-            {  "hsv", Hsla },
-            {  "hsva", Hsla },
-            {  "vector2", Vector3 },
+            { "rgb", Rgba },
+            { "hsl", Hsla },
+            { "hsv", Hsla },
+            { "hsva", Hsla },
+            { "vector2", Vector3 },
+            { "steps", Steps },
+            { "cubic-bezier", CubicBezier },
+            { "url", Url },
+            { "rgba", Rgba },
+            { "hsla", Hsla },
+            { "var", Var },
+            { "vector3", Vector3 },
         };
 
         public static bool TryCall(string expression, out object result, HashSet<string> allowed = null)
@@ -56,19 +61,6 @@ namespace ReactUnity.Styling
 
             result = null;
             return false;
-        }
-
-        static CssFunctions()
-        {
-            var type = typeof(CssFunctions);
-            var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
-            var functionFields = fields.Where(x => typeof(ICssFunction).IsAssignableFrom(x.FieldType));
-
-            foreach (var fn in functionFields)
-            {
-                var prop = fn.GetValue(type) as ICssFunction;
-                Functions[prop.Name] = prop;
-            }
         }
 
         private class StepsFunction : ICssFunction
