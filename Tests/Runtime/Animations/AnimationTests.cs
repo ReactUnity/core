@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Animations;
 using ReactUnity.ScriptEngine;
@@ -46,15 +47,14 @@ namespace ReactUnity.Tests
 
 
         [ReactInjectableTest()]
-        public IEnumerator AnimationParsingWorksCorrectly()
+        public IEnumerator ParsingWorksCorrectly()
         {
-            var anim = Q("#test");
+            var view = Q("#test");
 
-            anim.Style.Set("animation", "growWidth 1s 400ms both, shrinkWidth 1.2s 100ms");
-
+            view.Style.Set("animation", "growWidth 1s 400ms both, shrinkWidth 1.2s 100ms");
             yield return null;
 
-            var st = anim.ComputedStyle;
+            var st = view.ComputedStyle;
 
             Assert.AreEqual("growWidth", st.animationName.Get(0));
             Assert.AreEqual(1000, st.animationDuration.Get(0));
@@ -67,16 +67,29 @@ namespace ReactUnity.Tests
             Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(1));
 
 
-            anim.Style.Set("animation", "none");
+            view.Style.Set("animation", "none");
             yield return null;
 
-            st = anim.ComputedStyle;
+            st = view.ComputedStyle;
 
             Assert.AreEqual(null, st.animationName.Get(0));
             Assert.AreEqual(0, st.animationDuration.Get(0));
             Assert.AreEqual(0, st.animationDelay.Get(0));
             Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(0));
 
+
+            view.Style.Set("animation", "growWidth 1s 400ms both, shrinkWidth 1.2s 100ms");
+            yield return null;
+
+            view.Style.Set("animation", null);
+            yield return null;
+
+            st = view.ComputedStyle;
+
+            Assert.AreEqual(null, st.animationName.Get(0));
+            Assert.AreEqual(0, st.animationDuration.Get(0));
+            Assert.AreEqual(0, st.animationDelay.Get(0));
+            Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(0));
         }
 
 
@@ -274,6 +287,80 @@ namespace ReactUnity.Tests
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);
+        }
+
+
+        [ReactInjectableTest(@"
+            function addEvent(eventName) {
+                Globals.list.Add(eventName);
+            }
+
+            function App() {
+                return <view id='test'
+                    onAnimationRun={() => addEvent('run')}
+                    onAnimationStart={() => addEvent('start')}
+                    onAnimationEnd={() => addEvent('end')}
+                    onAnimationCancel={() => addEvent('cancel')}
+                    onAnimationIteration={() => addEvent('iteration')}
+                >
+                    Test text
+                </view>;
+            }
+
+            Renderer.render(<App />);
+")]
+        public IEnumerator EventsAreFiredCorrectly()
+        {
+            InsertStyle(@"
+                @keyframes testAnimation {
+                    from { color: black; }
+                    to { color: white; }
+                }
+");
+
+            var view = Q("#test");
+            var list = new List<string>();
+            Globals["list"] = list;
+            view.Style.Set("color", "red");
+            yield return null;
+
+            view.Style.Set("animation", "testAnimation 1s 3 400ms linear both");
+            Assert.IsEmpty(list);
+
+            yield return null;
+            list.AssertListExhaustive("run");
+
+            yield return AdvanceTime(0.2f);
+            Assert.IsEmpty(list);
+            yield return AdvanceTime(0.201f);
+            list.AssertListExhaustive("start");
+
+            yield return AdvanceTime(0.5f);
+            Assert.IsEmpty(list);
+
+            yield return AdvanceTime(0.501f);
+            list.AssertListExhaustive("iteration");
+
+            yield return AdvanceTime(1f);
+            list.AssertListExhaustive("iteration");
+
+            yield return AdvanceTime(1f);
+            list.AssertListExhaustive("end");
+
+            view.Style.Set("animation", "none");
+            yield return null;
+            Assert.IsEmpty(list);
+
+            view.Style.Set("animation", "testAnimation 1s linear both");
+            yield return null;
+            list.AssertListExhaustive("run");
+            yield return AdvanceTime(0.01f);
+            list.AssertListExhaustive("start");
+
+            yield return AdvanceTime(0.501f);
+            view.Style.Set("animation", "none");
+            yield return null;
+            list.AssertListExhaustive("cancel");
         }
     }
 }

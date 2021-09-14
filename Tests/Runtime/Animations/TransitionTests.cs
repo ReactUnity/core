@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
@@ -15,11 +16,7 @@ namespace ReactUnity.Tests
                 </view>;
             }
 
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
+            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"
@@ -37,6 +34,47 @@ namespace ReactUnity.Tests
 
         public TransitionTests(JavascriptEngineType engineType) : base(engineType) { }
 
+        [ReactInjectableTest()]
+        public IEnumerator ParsingWorksCorrectly()
+        {
+            var view = Q("#test");
+
+            view.Style.Set("transition", "color 1s 400ms linear, width 5s 1.2s ease-in");
+            yield return null;
+
+            var st = view.ComputedStyle;
+
+            Assert.AreEqual("color", st.transitionProperty.Get(0).Definition);
+            Assert.AreEqual(1000, st.transitionDuration.Get(0));
+            Assert.AreEqual(400, st.transitionDelay.Get(0));
+
+            Assert.AreEqual("width", st.transitionProperty.Get(1).Definition);
+            Assert.AreEqual(5000, st.transitionDuration.Get(1));
+            Assert.AreEqual(1200, st.transitionDelay.Get(1));
+
+
+            view.Style.Set("transition", "none");
+            yield return null;
+
+            st = view.ComputedStyle;
+
+            Assert.AreEqual(null, st.transitionProperty.Get(0));
+            Assert.AreEqual(0, st.transitionDuration.Get(0));
+            Assert.AreEqual(0, st.transitionDelay.Get(0));
+
+
+            view.Style.Set("transition", "color 1s 400ms linear, width 5s 1.2s ease-in");
+            yield return null;
+
+            view.Style.Set("transition", null);
+            yield return null;
+
+            st = view.ComputedStyle;
+
+            Assert.AreEqual(null, st.transitionProperty.Get(0));
+            Assert.AreEqual(0, st.transitionDuration.Get(0));
+            Assert.AreEqual(0, st.transitionDelay.Get(0));
+        }
 
         [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
         public IEnumerator TransitionShouldWorkWithRealTimer()
@@ -157,6 +195,72 @@ namespace ReactUnity.Tests
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.black, text.color);
+        }
+
+        [ReactInjectableTest(@"
+            function addEvent(eventName) {
+                Globals.list.Add(eventName);
+            }
+
+            function App() {
+                return <view id='test'
+                    onTransitionRun={() => addEvent('run')}
+                    onTransitionStart={() => addEvent('start')}
+                    onTransitionEnd={() => addEvent('end')}
+                    onTransitionCancel={() => addEvent('cancel')}
+                >
+                    Test text
+                </view>;
+            }
+
+            Renderer.render(<App />);
+")]
+        public IEnumerator EventsAreFiredCorrectly()
+        {
+            var view = Q("#test");
+            var list = new List<string>();
+            Globals["list"] = list;
+            view.Style.Set("color", "red");
+            yield return null;
+
+
+            view.Style.Set("transition", "color 1s 400ms linear");
+            yield return null;
+
+            Assert.IsEmpty(list);
+
+            view.Style.Set("color", "white");
+            yield return null;
+            list.AssertListExhaustive("run");
+
+            yield return AdvanceTime(0.3f);
+            Assert.IsEmpty(list);
+            yield return AdvanceTime(0.11f);
+            list.AssertListExhaustive("start");
+
+            yield return AdvanceTime(0.4f);
+            Assert.IsEmpty(list);
+            yield return AdvanceTime(0.6f);
+            list.AssertListExhaustive("end");
+
+
+            view.Style.Set("color", "red");
+            yield return null;
+            list.AssertListExhaustive("run");
+
+            yield return AdvanceTime(0.41f);
+            list.AssertListExhaustive("start");
+
+            yield return AdvanceTime(0.2f);
+            Assert.IsEmpty(list);
+
+            view.Style.Set("color", "blue");
+            yield return null;
+            list.AssertListExhaustive("cancel", "run");
+
+            view.Style.Set("transition", "none");
+            yield return null;
+            list.AssertListExhaustive("cancel");
         }
     }
 }

@@ -176,6 +176,16 @@ namespace ReactUnity.Styling
             if (reset)
             {
                 activeTransitions = null;
+
+                if (propertyTransitionStates != null)
+                {
+                    foreach (var st in propertyTransitionStates)
+                    {
+                        var state = st.Value;
+                        if (state.Ratio < 1) OnEvent?.Invoke("onTransitionCancel", state.CreateEvent());
+                    }
+                }
+
                 propertyTransitionStates = null;
             }
         }
@@ -214,6 +224,7 @@ namespace ReactUnity.Styling
 
                     var prevValue = Previous.GetRawStyleValue(sp);
                     var curValue = Current.GetRawStyleValue(sp);
+                    var shouldRun = prevValue != curValue;
 
                     propertyTransitionStates.TryGetValue(sp.name, out var state);
 
@@ -238,35 +249,57 @@ namespace ReactUnity.Styling
                         {
                             if (state.Ratio < 1) OnEvent?.Invoke("onTransitionCancel", state.CreateEvent());
 
-                            // Start running transition in reverse direction
-                            state.StartedAt = currentTime;
-                            state.Duration = Math.Min(duration.Get(i), state.Ratio * state.Duration);
-                            state.Ratio = 0;
 
-                            OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                            if (shouldRun)
+                            {
+                                // Start running transition in reverse direction
+                                state.StartedAt = currentTime;
+                                state.Duration = Math.Min(duration.Get(i), state.Ratio * state.Duration);
+                                state.Ratio = 0;
+
+                                OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                            }
+                            else
+                            {
+                                propertyTransitionStates[sp.name] = null;
+                                continue;
+                            }
                         }
                         else
                         {
                             if (state.Ratio < 1) OnEvent?.Invoke("onTransitionCancel", state.CreateEvent());
 
-                            // Start a new transition
-                            state.StartedAt = currentTime;
-                            state.Duration = duration.Get(i);
-                            state.Ratio = 0;
+                            if (shouldRun)
+                            {
+                                // Start a new transition
+                                state.StartedAt = currentTime;
+                                state.Duration = duration.Get(i);
+                                state.Ratio = 0;
 
-                            OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                                OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                            }
+                            else
+                            {
+                                propertyTransitionStates[sp.name] = null;
+                                continue;
+                            }
                         }
                     }
                     else
                     {
-                        // Start a new transition
-                        propertyTransitionStates[sp.name] = state = new TransitionState();
-                        state.StartedAt = currentTime;
-                        state.LastUpdatedAt = currentTime;
-                        state.Duration = duration.Get(i);
-                        state.PropertyName = sp.name;
 
-                        OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                        if (shouldRun)
+                        {
+                            // Start a new transition
+                            propertyTransitionStates[sp.name] = state = new TransitionState();
+                            state.StartedAt = currentTime;
+                            state.LastUpdatedAt = currentTime;
+                            state.Duration = duration.Get(i);
+                            state.PropertyName = sp.name;
+
+                            OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
+                        }
+                        else continue;
                     }
 
                     float delta = playState.Get(i) == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
@@ -288,7 +321,7 @@ namespace ReactUnity.Styling
 
                     object activeValue = curValue;
 
-                    if (prevValue != curValue && ratio < 1)
+                    if (shouldRun && ratio < 1)
                     {
                         activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default, sp.type);
                     }
