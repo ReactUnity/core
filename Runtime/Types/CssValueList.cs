@@ -25,8 +25,8 @@ namespace ReactUnity.Types
             public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
             public object Convert(object value)
             {
+                if (value == null || Equals(value, CssKeyword.None)) return Empty;
                 if (value is CssValueList<T>) return value;
-                if (Equals(value, CssKeyword.None)) return Empty;
 
                 if (!(value is string))
                 {

@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using ReactUnity.Animations;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
 
@@ -42,6 +43,41 @@ namespace ReactUnity.Tests
 ";
 
         public AnimationTests(JavascriptEngineType engineType) : base(engineType) { }
+
+
+        [ReactInjectableTest()]
+        public IEnumerator AnimationParsingWorksCorrectly()
+        {
+            var anim = Q("#test");
+
+            anim.Style.Set("animation", "growWidth 1s 400ms both, shrinkWidth 1.2s 100ms");
+
+            yield return null;
+
+            var st = anim.ComputedStyle;
+
+            Assert.AreEqual("growWidth", st.animationName.Get(0));
+            Assert.AreEqual(1000, st.animationDuration.Get(0));
+            Assert.AreEqual(400, st.animationDelay.Get(0));
+            Assert.AreEqual(AnimationFillMode.Both, st.animationFillMode.Get(0));
+
+            Assert.AreEqual("shrinkWidth", st.animationName.Get(1));
+            Assert.AreEqual(1200, st.animationDuration.Get(1));
+            Assert.AreEqual(100, st.animationDelay.Get(1));
+            Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(1));
+
+
+            anim.Style.Set("animation", "none");
+            yield return null;
+
+            st = anim.ComputedStyle;
+
+            Assert.AreEqual(null, st.animationName.Get(0));
+            Assert.AreEqual(0, st.animationDuration.Get(0));
+            Assert.AreEqual(0, st.animationDelay.Get(0));
+            Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(0));
+
+        }
 
 
         [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
@@ -105,6 +141,25 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(140, rt.rect.width);
             cmp.Style.Set("animation", "growWidth 1s 400ms linear both");
+
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(500, rt.rect.width);
+
+
+            cmp.Style.Set("animation", null);
+            yield return null;
+
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both");
+            yield return null;
+            Assert.AreEqual(100, rt.rect.width);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(140, rt.rect.width);
+
+            cmp.Style.Set("animation-play-state", "paused");
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(140, rt.rect.width);
+            cmp.Style.Set("animation-play-state", null);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(500, rt.rect.width);

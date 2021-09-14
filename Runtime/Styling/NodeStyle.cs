@@ -293,7 +293,7 @@ namespace ReactUnity.Styling
                 else value = prop?.defaultValue;
             }
 
-            return Cache[prop] = GetStyleValueSpecial(value, prop, activeStyle ?? this);
+            return Cache[prop] = GetStyleValueSpecial(value, prop, activeStyle ?? this) ?? prop?.defaultValue;
         }
 
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
@@ -301,8 +301,8 @@ namespace ReactUnity.Styling
             if (value == null) return null;
             if (value is CssKeyword ck)
             {
-                if (ck == CssKeyword.Invalid) return null;
-                else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop) ?? prop?.defaultValue;
+                if (ck == CssKeyword.Invalid || ck == CssKeyword.NoKeyword || ck == CssKeyword.Invalid) return null;
+                else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop, true);
                 else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Unset || ck == CssKeyword.Default)
                     return prop?.defaultValue;
             }

@@ -57,6 +57,12 @@ namespace ReactUnity.Styling
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
+            if (value == null)
+            {
+                collection.Remove(this);
+                return ModifiedProperties;
+            }
+
             value = Convert(value);
             if (Equals(value, CssKeyword.Invalid)) return null;
 

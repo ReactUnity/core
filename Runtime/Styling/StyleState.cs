@@ -521,7 +521,7 @@ namespace ReactUnity.Styling
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
 
-                    if (sp == StyleProperties.audioClip)
+                    if (sp.name == StyleProperties.audioClip.name)
                     {
                         RecalculateAudio();
                     }

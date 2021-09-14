@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.StyleEngine;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -12,6 +13,47 @@ namespace ReactUnity.Styling.Shorthands
             Name = name;
         }
 
-        public abstract List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value);
+        public List<IStyleProperty> ClearValues(IDictionary<IStyleProperty, object> collection)
+        {
+            var count = ModifiedProperties.Count;
+            for (int i = 0; i < count; i++)
+                collection.Remove(ModifiedProperties[i]);
+            return ModifiedProperties;
+        }
+
+        public List<IStyleProperty> SetAllValues(IDictionary<IStyleProperty, object> collection, object value)
+        {
+            var count = ModifiedProperties.Count;
+            for (int i = 0; i < count; i++)
+                collection[ModifiedProperties[i]] = value;
+            return ModifiedProperties;
+        }
+
+        public List<IStyleProperty> SetAllValuesDefault(IDictionary<IStyleProperty, object> collection)
+        {
+            var count = ModifiedProperties.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var prop = ModifiedProperties[i];
+                collection[prop] = prop.defaultValue;
+            }
+            return ModifiedProperties;
+        }
+
+        public virtual List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
+        {
+            var keyword = CssKeyword.NoKeyword;
+            if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
+            else if (value is CssKeyword k) keyword = k;
+
+            if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default || keyword == CssKeyword.None || keyword == CssKeyword.Unset || keyword == CssKeyword.Auto)
+                return SetAllValuesDefault(collection);
+            else if (keyword != CssKeyword.CurrentColor && keyword != CssKeyword.Invalid && keyword != CssKeyword.NoKeyword) value = keyword;
+
+            if (value is CssKeyword) return SetAllValues(collection, value);
+            if (value == null) return ClearValues(collection);
+
+            return null;
+        }
     }
 }

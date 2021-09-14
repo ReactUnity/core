@@ -12,9 +12,17 @@ namespace ReactUnity.Styling
 
         protected override void SaveValue(IStyleProperty key, object value, bool notify)
         {
-            var normalizedValue = key.Convert(value);
-            collection[key] = normalizedValue;
-            if (notify) Change(key, normalizedValue);
+            if (value == null)
+            {
+                if (notify) Remove(key);
+                else RemoveWithoutNotify(key);
+            }
+            else
+            {
+                var normalizedValue = key.Convert(value);
+                collection[key] = normalizedValue;
+                if (notify) Change(key, normalizedValue);
+            }
         }
 
         protected override object RetrieveValueAdaptible(string key)
