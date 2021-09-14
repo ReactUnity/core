@@ -643,8 +643,8 @@ namespace ReactUnity.Styling
                 {
                     state.Loading = true;
 
-                    clip.Get(i, AudioReference.None).Get(Context, (clip) => {
-                        state.Clip = clip;
+                    clip.Get(i, AudioReference.None).Get(Context, (cl) => {
+                        state.Clip = cl;
                         state.Loaded = true;
                         state.Loading = false;
 
