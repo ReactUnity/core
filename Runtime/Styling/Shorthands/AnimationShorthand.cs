@@ -77,7 +77,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var count = split == "infinite" ? -1 : AllConverters.IntConverter.Convert(split);
+                    var count = AllConverters.IterationCountConverter.Convert(split);
 
                     if (count is int fcount)
                     {

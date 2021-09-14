@@ -29,7 +29,7 @@ namespace ReactUnity.Converters
             bool allowSuffixless = true
         )
         {
-            SuffixMap = suffixMap;
+            SuffixMap = suffixMap ?? new Dictionary<string, float>();
             SuffixMapper = suffixMapper ?? new Dictionary<string, Func<float, object>>();
             AllowSuffixless = allowSuffixless;
         }

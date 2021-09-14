@@ -237,11 +237,10 @@ namespace ReactUnity.Styling
         public CssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
         public CssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
 
-        public AudioList audio
-        {
-            set => SetStyleValue(StyleProperties.audio, value);
-            get => GetStyleValue<AudioList>(StyleProperties.audio);
-        }
+        public CssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
+        public CssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
+        public CssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
+
         public ObjectFit objectFit
         {
             set => SetStyleValue(StyleProperties.objectFit, value);

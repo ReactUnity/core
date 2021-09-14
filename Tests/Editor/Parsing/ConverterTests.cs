@@ -157,34 +157,30 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var converted = AllConverters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;
+            var collection = new InlineStyles();
+            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
 
-            var part0 = converted.Items[0];
-            Assert.IsTrue(part0.Valid);
-            Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.Type);
-            Assert.AreEqual("click", part0.AudioClip.Value);
-            Assert.AreEqual(3000, part0.Delay);
-            Assert.AreEqual(5, part0.IterationCount);
-            Assert.True(part0.Local);
+            collection["audio"] =
+                "url(res:click) 3s 5, url(https://example.com) infinite 2s, url(res:something)";
 
-            var part1 = converted.Items[1];
-            Assert.IsTrue(part1.Valid);
-            Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.Type);
-            Assert.AreEqual("https://example.com", part1.AudioClip.Value);
-            Assert.AreEqual(2000, part1.Delay);
-            Assert.AreEqual(-1, part1.IterationCount);
-            Assert.False(part1.Local);
+            var Clip = style.audioClip;
+            var Delay = style.audioDelay;
+            var IterationCount = style.audioIterationCount;
 
-            var part2 = converted.Items[2];
-            Assert.IsTrue(part2.Valid);
-            Assert.AreEqual(AssetReferenceType.Resource, part2.AudioClip.Type);
-            Assert.AreEqual("something", part2.AudioClip.Value);
-            Assert.AreEqual(0, part2.Delay);
-            Assert.AreEqual(1, part2.IterationCount);
-            Assert.False(part2.Local);
+            Assert.AreEqual(AssetReferenceType.Resource, Clip.Get(0).Type);
+            Assert.AreEqual("click", Clip.Get(0).Value);
+            Assert.AreEqual(3000, Delay.Get(0));
+            Assert.AreEqual(5, IterationCount.Get(0));
 
-            var part3 = converted.Items[3];
-            Assert.IsFalse(part3.Valid);
+            Assert.AreEqual(AssetReferenceType.Url, Clip.Get(1).Type);
+            Assert.AreEqual("https://example.com", Clip.Get(1).Value);
+            Assert.AreEqual(2000, Delay.Get(1));
+            Assert.AreEqual(-1, IterationCount.Get(1));
+
+            Assert.AreEqual(AssetReferenceType.Resource, Clip.Get(2).Type);
+            Assert.AreEqual("something", Clip.Get(2).Value);
+            Assert.AreEqual(0, Delay.Get(2));
+            Assert.AreEqual(1, IterationCount.Get(2, 1));
         }
 
 

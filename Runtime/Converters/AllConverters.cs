@@ -27,7 +27,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter Vector2Converter = new Vector2Converter();
         static public IStyleConverter Vector3Converter = new Vector3Converter();
         static public IStyleConverter IntConverter = new IntConverter();
-        static public IStyleConverter IterationCountConverter = new CountConverter(false);
+        static public IStyleConverter IterationCountConverter = new CountConverter();
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
@@ -36,7 +36,6 @@ namespace ReactUnity.Converters
         static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
         static public IStyleConverter TransitionPropertyConverter = new TransitionProperty.Converter();
-        static public IStyleConverter AudioListConverter = new AudioList.Converter();
         static public IStyleConverter CursorListConverter = new CursorList.Converter();
         static public IStyleConverter BoxShadowListConverter = new BoxShadowList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
@@ -59,7 +58,6 @@ namespace ReactUnity.Converters
             { typeof(Url), UrlConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
-            { typeof(AudioList), AudioListConverter},
             { typeof(CursorList), CursorListConverter},
             { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(TimingFunction), TimingFunctionConverter },

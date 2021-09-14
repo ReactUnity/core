@@ -12,6 +12,7 @@ namespace ReactUnity.Styling
     {
         private class AnimationState
         {
+            public string AnimationName;
             public float Ratio = 0;
             public float LastUpdatedAt = 0;
             public float StartedAt = 0;
@@ -21,12 +22,18 @@ namespace ReactUnity.Styling
 
             public KeyframeList Keyframes;
 
+            public AnimationState(string name)
+            {
+                AnimationName = name;
+            }
+
             public AnimationEvent CreateEvent()
             {
                 return new AnimationEvent
                 {
                     ElapsedTime = Duration * Ratio,
                     Keyframes = Keyframes,
+                    AnimationName = AnimationName,
                 };
             }
         }
@@ -86,7 +93,7 @@ namespace ReactUnity.Styling
 
 
         private AudioState[] audioStates;
-        private AudioList activeAudioList;
+        private CssValueList<AudioReference> activeAudioList;
         private bool audioRunning;
         private float audioStartTime;
 
@@ -384,7 +391,7 @@ namespace ReactUnity.Styling
                     if (kfs == null) continue;
                     if (!kfs.Valid) continue;
 
-                    runningAnimations[nm] = state = new AnimationState();
+                    runningAnimations[nm] = state = new AnimationState(nm);
                     state.Keyframes = kfs;
                     state.Duration = dr;
                     state.LastUpdatedAt = currentTime;
@@ -514,7 +521,7 @@ namespace ReactUnity.Styling
                     hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
 
-                    if (sp.name == StyleProperties.audio.name)
+                    if (sp == StyleProperties.audioClip)
                     {
                         RecalculateAudio();
                     }
@@ -538,16 +545,15 @@ namespace ReactUnity.Styling
 
         private void RecalculateAudio()
         {
-            var audio = Active.audio;
+            var audio = Active.audioClip;
 
             if (audio == null) StopAudio(true);
             else if (activeAudioList != audio) StartAudio(audio);
         }
 
-        private void StartAudio(AudioList audio)
+        private void StartAudio(CssValueList<AudioReference> audio)
         {
             StopAudio(true);
-            audioStates = new AudioState[audio.Items.Length];
             activeAudioList = audio;
             audioStartTime = getTime();
             var finished = UpdateAudio();
@@ -567,20 +573,23 @@ namespace ReactUnity.Styling
 
         private bool UpdateAudio()
         {
-            if (activeAudioList?.Items == null) return true;
-
             var finished = true;
 
             var currentTime = getTime();
             var passedTime = currentTime - audioStartTime;
 
-            var parts = activeAudioList.Items;
+            var clip = Current.audioClip;
+            var delay = Current.audioDelay;
+            var iterationCount = Current.audioIterationCount;
 
-            for (int i = 0; i < parts.Length; i++)
+            var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count);
+
+            if (audioStates == null) audioStates = new AudioState[maxLength];
+
+            for (int i = 0; i < maxLength; i++)
             {
-                var part = parts[i];
-
-                if (!part.Valid || part.IterationCount == 0) continue;
+                var it = iterationCount.Get(i, 1);
+                if (it == 0) continue;
 
                 var state = audioStates[i] = audioStates[i] ?? new AudioState();
 
@@ -594,14 +603,14 @@ namespace ReactUnity.Styling
                 };
 
 
-                var offsetTime = passedTime - part.Delay;
+                var offsetTime = passedTime - delay.Get(i);
                 var delayPassed = offsetTime >= 0;
 
                 if (!state.Loaded && !state.Loading)
                 {
                     state.Loading = true;
 
-                    part.AudioClip.Get(Context, (clip) => {
+                    clip.Get(i, AudioReference.None).Get(Context, (clip) => {
                         state.Clip = clip;
                         state.Loaded = true;
                         state.Loading = false;
@@ -622,7 +631,7 @@ namespace ReactUnity.Styling
 
                     var clipLength = state.Clip.length * 1000;
                     var currentLoop = Mathf.FloorToInt(offsetTime / clipLength);
-                    var canLoop = part.IterationCount < 0 || part.IterationCount > currentLoop;
+                    var canLoop = it < 0 || it > currentLoop;
 
                     if (!canLoop) continue;
 
@@ -643,7 +652,7 @@ namespace ReactUnity.Styling
                     }
                 }
 
-                if (part.IterationCount < 0 || state.CurrentLoop < part.IterationCount)
+                if (it < 0 || state.CurrentLoop < it)
                 {
                     finished = false;
                 }

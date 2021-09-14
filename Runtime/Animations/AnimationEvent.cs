@@ -2,6 +2,7 @@ namespace ReactUnity.Animations
 {
     public class AnimationEvent
     {
+        public string AnimationName;
         public KeyframeList Keyframes;
         public float ElapsedTime;
     }

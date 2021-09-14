@@ -25,6 +25,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
         public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
         public static readonly StyleShorthand Animation = new AnimationShorthand("animation");
+        public static readonly StyleShorthand Audio = new AudioShorthand("audio");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -48,6 +49,7 @@ namespace ReactUnity.Styling.Shorthands
             { "textStroke", TextStroke },
             { "transition", Transition },
             { "animation", Animation },
+            { "audio", Audio },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },

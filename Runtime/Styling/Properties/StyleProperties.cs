@@ -52,24 +52,27 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
         public static readonly StyleProperty<float> stateDuration = new StyleProperty<float>("stateDuration", 0f, true, false, AllConverters.DurationConverter);
-        public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
         public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("objectFit", ObjectFit.Fill);
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
 
-        public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transition-property");
-        public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transition-duration");
-        public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transition-timing-function");
-        public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transition-delay");
-        public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transition-play-state");
+        public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
+        public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration");
+        public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction");
+        public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transitionDelay");
+        public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transitionPlayState");
 
-        public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animation-delay");
-        public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animation-direction");
-        public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animation-duration");
-        public static readonly ValueListStyleProperty<AnimationFillMode> animationFillMode = new ValueListStyleProperty<AnimationFillMode>("animation-fill-mode");
-        public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animation-iteration-count", baseConverter: AllConverters.IterationCountConverter);
-        public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animation-name");
-        public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animation-play-state");
-        public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animation-timing-function");
+        public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animationDelay");
+        public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animationDirection");
+        public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animationDuration");
+        public static readonly ValueListStyleProperty<AnimationFillMode> animationFillMode = new ValueListStyleProperty<AnimationFillMode>("animationFillMode");
+        public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animationIterationCount", baseConverter: AllConverters.IterationCountConverter);
+        public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animationName");
+        public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animationPlayState");
+        public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction");
+
+        public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
+        public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount");
+        public static readonly ValueListStyleProperty<float> audioDelay = new ValueListStyleProperty<float>("audioDelay");
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -113,7 +116,6 @@ namespace ReactUnity.Styling
             { "appearance", appearance },
             { "navigation", navigation },
             { "stateDuration", stateDuration },
-            { "audio", audio },
             { "objectFit", objectFit },
             { "objectPosition", objectPosition },
 
@@ -146,6 +148,14 @@ namespace ReactUnity.Styling
             { "animation-name", animationName },
             { "animation-play-state", animationPlayState },
             { "animation-timing-function", animationTimingFunction },
+
+            { "audioClip", audioClip },
+            { "audioDelay", audioDelay },
+            { "audioIterationCount", audioIterationCount },
+
+            { "audio-clip", audioClip },
+            { "audio-delay", audioDelay },
+            { "audio-iteration-count", audioIterationCount },
 
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },
