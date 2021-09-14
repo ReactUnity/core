@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
-using UnityEngine;
 
 namespace ReactUnity.Types
 {
     public class CssValueList<T> : List<T>
     {
         static public CssValueList<T> Empty = new CssValueList<T>();
-        public T Get(int index) => Count == 0 ? default : this[index % Count];
+        public T Get(int index, T defaultValue = default) => Count == 0 ? defaultValue : this[index % Count];
 
         public CssValueList() { }
         public CssValueList(T item) : base(new[] { item }) { }
@@ -19,14 +17,15 @@ namespace ReactUnity.Types
         {
             IStyleConverter BaseConverter;
 
-            public Converter()
+            public Converter(IStyleConverter baseConverter = null)
             {
-                BaseConverter = AllConverters.Get<T>();
+                BaseConverter = baseConverter ?? AllConverters.Get<T>();
             }
 
             public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
             public object Convert(object value)
             {
+                if (value is CssValueList<T>) return value;
                 if (Equals(value, CssKeyword.None)) return Empty;
 
                 if (!(value is string))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ReactUnity.Animations;
+using ReactUnity.Types;
 using Mathf = UnityEngine.Mathf;
 
 namespace ReactUnity.Styling
@@ -14,18 +15,17 @@ namespace ReactUnity.Styling
             public float Ratio = 0;
             public float LastUpdatedAt = 0;
             public float StartedAt = 0;
+            public float Duration = 0;
             public float ElapsedTimeSinceRun = 0;
             public bool Ended = false;
 
-            public Animation Animation;
             public KeyframeList Keyframes;
 
             public AnimationEvent CreateEvent()
             {
                 return new AnimationEvent
                 {
-                    ElapsedTime = Animation.Duration * Ratio,
-                    Animation = Animation,
+                    ElapsedTime = Duration * Ratio,
                     Keyframes = Keyframes,
                 };
             }
@@ -40,7 +40,6 @@ namespace ReactUnity.Styling
             public float StartedAt = 0;
             public float Duration = 0;
 
-            public Transition Transition;
             public string PropertyName;
 
             public TransitionEvent CreateEvent()
@@ -49,7 +48,6 @@ namespace ReactUnity.Styling
                 {
                     ElapsedTime = Duration * Ratio,
                     PropertyName = PropertyName,
-                    Transition = Transition,
                 };
             }
         }
@@ -78,12 +76,12 @@ namespace ReactUnity.Styling
 
 
         private Dictionary<string, TransitionState> propertyTransitionStates;
-        private TransitionList activeTransitions;
+        private CssValueList<float> activeTransitions;
         private bool transitionRunning;
 
 
         private Dictionary<string, AnimationState> runningAnimations;
-        private AnimationList activeAnimations;
+        private CssValueList<string> activeAnimations;
         private bool animationRunning;
 
 
@@ -110,11 +108,11 @@ namespace ReactUnity.Styling
 
         private void RecalculateActive()
         {
-            var transition = Current.transition;
-            var animation = Current.animation;
+            var transition = Current.transitionDuration;
+            var animation = Current.animationName;
 
-            var hasTransition = Current != Previous && (transition != null && transition.Any);
-            var hasAnimation = Current != Previous && (animation != null && animation.Any);
+            var hasTransition = Current != Previous && (transition != null && transition.Any() && transition.Get(0) > 0);
+            var hasAnimation = Current != Previous && (animation != null && animation.Any());
 
             if (!hasTransition) StopTransitions(true);
             if (!hasAnimation) StopAnimations(true);
@@ -155,7 +153,7 @@ namespace ReactUnity.Styling
 
         #region Transitions
 
-        private void StartTransitions(TransitionList transition)
+        private void StartTransitions(CssValueList<float> transition)
         {
             StopTransitions(true);
             propertyTransitionStates = new Dictionary<string, TransitionState>();
@@ -185,16 +183,18 @@ namespace ReactUnity.Styling
 
             var currentTime = getTime();
 
-            for (int i = 0; i < activeTransitions.Items.Length; i++)
+            var duration = Current.GetStyleValue(StyleProperties.transitionDuration);
+            var delay = Current.GetStyleValue(StyleProperties.transitionDelay);
+            var easing = Current.GetStyleValue(StyleProperties.transitionTimingFunction);
+            var prop = Current.GetStyleValue(StyleProperties.transitionProperty);
+            var playState = Current.GetStyleValue(StyleProperties.transitionPlayState);
+
+            var maxLength = Mathf.Max(prop.Count, duration.Count, easing.Count, delay.Count, playState.Count);
+
+            for (int i = 0; i < maxLength; i++)
             {
-                var tran = activeTransitions.Items[i];
-                if (!tran.Valid) continue;
-
-                IEnumerable<IStyleProperty> properties;
-
-                if (tran.All) properties = CssProperties.TransitionableProperties;
-                else properties = CssProperties.GetKey(tran.Property).ModifiedProperties;
-
+                IEnumerable<IStyleProperty> properties = prop.Get(i)?.Properties;
+                if (properties == null) continue;
 
                 foreach (var sp in properties)
                 {
@@ -215,7 +215,6 @@ namespace ReactUnity.Styling
 
                     if (state != null)
                     {
-                        state.Transition = tran;
                         if (state.FromValue == prevValue && state.ToValue == curValue)
                         {
                             // Continue existing transition
@@ -234,7 +233,7 @@ namespace ReactUnity.Styling
 
                             // Start running transition in reverse direction
                             state.StartedAt = currentTime;
-                            state.Duration = Math.Min(tran.Duration, state.Ratio * state.Duration);
+                            state.Duration = Math.Min(duration.Get(i), state.Ratio * state.Duration);
                             state.Ratio = 0;
 
                             OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
@@ -245,7 +244,7 @@ namespace ReactUnity.Styling
 
                             // Start a new transition
                             state.StartedAt = currentTime;
-                            state.Duration = tran.Duration;
+                            state.Duration = duration.Get(i);
                             state.Ratio = 0;
 
                             OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
@@ -257,15 +256,14 @@ namespace ReactUnity.Styling
                         propertyTransitionStates[sp.name] = state = new TransitionState();
                         state.StartedAt = currentTime;
                         state.LastUpdatedAt = currentTime;
-                        state.Duration = tran.Duration;
+                        state.Duration = duration.Get(i);
                         state.PropertyName = sp.name;
-                        state.Transition = tran;
 
                         OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
                     }
 
-                    float delta = tran.PlayState == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
-                    var delayDiff = Math.Max(0, currentTime - state.StartedAt - tran.Delay);
+                    float delta = playState.Get(i) == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
+                    var delayDiff = Math.Max(0, currentTime - state.StartedAt - delay.Get(i));
                     var delayPassed = delayDiff > 0;
                     delta = Math.Min(delayDiff, delta);
                     var tDelta = !delayPassed ? 0 : (state.Duration == 0 ? 1 : delta / state.Duration);
@@ -285,7 +283,7 @@ namespace ReactUnity.Styling
 
                     if (prevValue != curValue && ratio < 1)
                     {
-                        activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, tran.TimingFunction, sp.type);
+                        activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default, sp.type);
                     }
 
                     updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
@@ -310,7 +308,7 @@ namespace ReactUnity.Styling
 
         #region Animations
 
-        private void StartAnimations(AnimationList animation)
+        private void StartAnimations(CssValueList<string> animation)
         {
             StopAnimations(false);
             activeAnimations = animation;
@@ -340,7 +338,7 @@ namespace ReactUnity.Styling
             {
                 var ra = anims[i];
 
-                if (activeAnimations == null || !activeAnimations.Items.Any(x => x.Name == ra.Key))
+                if (activeAnimations == null || !activeAnimations.Any(x => x == ra.Key))
                 {
                     if (!ra.Value.Ended) OnEvent?.Invoke("onAnimationCancel", ra.Value.CreateEvent());
                     runningAnimations.Remove(ra.Key);
@@ -351,7 +349,20 @@ namespace ReactUnity.Styling
 
         private bool UpdateAnimations()
         {
-            if (activeAnimations?.Items == null) return true;
+            if (activeAnimations == null ||
+                activeAnimations.Count == 0) return true;
+
+            var delay = Current.animationDelay;
+            var direction = Current.animationDirection;
+            var duration = Current.animationDuration;
+            var fillMode = Current.animationFillMode;
+            var iterationCount = Current.animationIterationCount;
+            var name = Current.animationName;
+            var playState = Current.animationPlayState;
+            var timingFunction = Current.animationTimingFunction;
+
+            var maxLength = Mathf.Max(delay.Count, direction.Count, duration.Count, fillMode.Count,
+                iterationCount.Count, name.Count, playState.Count, timingFunction.Count);
 
             var updated = false;
             var finished = true;
@@ -359,20 +370,23 @@ namespace ReactUnity.Styling
 
             var currentTime = getTime();
 
-            for (int animIndex = 0; animIndex < activeAnimations.Items.Length; animIndex++)
+            for (int ind = 0; ind < maxLength; ind++)
             {
-                var anim = activeAnimations.Items[animIndex];
-                if (!anim.Valid) continue;
+                var nm = name.Get(ind);
+                var dr = duration.Get(ind);
+                var dir = direction.Get(ind);
+                var fm = fillMode.Get(ind);
+                var it = iterationCount.Get(ind, 1);
 
-                if (!runningAnimations.TryGetValue(anim.Name, out var state))
+                if (!runningAnimations.TryGetValue(nm, out var state))
                 {
-                    var kfs = Context.Style.GetKeyframes(anim.Name);
+                    var kfs = Context.Style.GetKeyframes(nm);
                     if (kfs == null) continue;
                     if (!kfs.Valid) continue;
 
-                    runningAnimations[anim.Name] = state = new AnimationState();
+                    runningAnimations[nm] = state = new AnimationState();
                     state.Keyframes = kfs;
-                    state.Animation = anim;
+                    state.Duration = dr;
                     state.LastUpdatedAt = currentTime;
                     state.StartedAt = currentTime;
 
@@ -380,31 +394,31 @@ namespace ReactUnity.Styling
                 }
                 else
                 {
-                    state.Animation = anim;
+                    state.Duration = dr;
                 }
 
-                float delta = anim.PlayState == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
+                float delta = playState.Get(ind) == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
                 state.ElapsedTimeSinceRun += delta;
 
-                var delayDiff = state.ElapsedTimeSinceRun - anim.Delay;
+                var delayDiff = state.ElapsedTimeSinceRun - delay.Get(ind);
                 var delayPassed = delayDiff > 0;
-                var ratio = delayDiff / anim.Duration;
-                var maxRatio = anim.IterationCount >= 0 ? anim.IterationCount : float.MaxValue;
+                var ratio = delayDiff / dr;
+                var maxRatio = it >= 0 ? it : float.MaxValue;
                 ratio = Math.Max(0, Math.Min(ratio, maxRatio));
 
-                var ended = anim.Duration <= 0 || (anim.IterationCount >= 0 && ratio >= anim.IterationCount);
+                var ended = dr <= 0 || (it >= 0 && ratio >= it);
 
-                var cycle = anim.Duration == 0 ? 0 : Mathf.FloorToInt(ratio);
+                var cycle = dr == 0 ? 0 : Mathf.FloorToInt(ratio);
                 var cycleOffset = ratio - cycle;
 
                 var even = cycle % 2 == 0;
 
-                var reverse = anim.Direction == AnimationDirection.Reverse
-                    || (anim.Direction == AnimationDirection.Alternate && !even)
-                    || (anim.Direction == AnimationDirection.AlternateReverse && even);
+                var reverse = dir == AnimationDirection.Reverse
+                    || (dir == AnimationDirection.Alternate && !even)
+                    || (dir == AnimationDirection.AlternateReverse && even);
 
 
-                var step = !delayPassed ? 0 : (anim.Duration == 0 ? 1 : Mathf.Min(Mathf.Max(0, cycleOffset), 1));
+                var step = !delayPassed ? 0 : (dr == 0 ? 1 : Mathf.Min(Mathf.Max(0, cycleOffset), 1));
                 if (reverse) step = 1 - step;
 
 
@@ -434,14 +448,14 @@ namespace ReactUnity.Styling
                     {
                         if (!delayPassed) finished = false;
 
-                        if ((anim.FillMode == AnimationFillMode.Forwards && ended)
-                            || (anim.FillMode == AnimationFillMode.Backwards && !delayPassed)
-                            || anim.FillMode == AnimationFillMode.Both)
+                        if ((fm == AnimationFillMode.Forwards && ended)
+                            || (fm == AnimationFillMode.Backwards && !delayPassed)
+                            || fm == AnimationFillMode.Both)
                         {
-                            var fillReverse = ended ? (anim.Direction == AnimationDirection.Reverse
-                                    || (anim.Direction == AnimationDirection.Alternate && anim.IterationCount % 2 == 0)
-                                    || (anim.Direction == AnimationDirection.AlternateReverse && anim.IterationCount % 2 != 0))
-                                    : !(anim.Direction == AnimationDirection.Reverse || anim.Direction == AnimationDirection.AlternateReverse);
+                            var fillReverse = ended ? (dir == AnimationDirection.Reverse
+                                    || (dir == AnimationDirection.Alternate && it % 2 == 0)
+                                    || (dir == AnimationDirection.AlternateReverse && it % 2 != 0))
+                                    : !(dir == AnimationDirection.Reverse || dir == AnimationDirection.AlternateReverse);
 
                             if (!(fillReverse ? keyframes.From : keyframes.To).Rules.TryGetValue(sp, out activeValue))
                                 activeValue = Current.GetRawStyleValue(sp);
@@ -491,7 +505,7 @@ namespace ReactUnity.Styling
 
                         if (lowValue != highValue)
                         {
-                            activeValue = Interpolater.Interpolate(lowValue, highValue, t, anim.TimingFunction, sp.type);
+                            activeValue = Interpolater.Interpolate(lowValue, highValue, t, timingFunction.Get(ind) ?? TimingFunctions.Default, sp.type);
                         }
                         else activeValue = highValue;
                     }

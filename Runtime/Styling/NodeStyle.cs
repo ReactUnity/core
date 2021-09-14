@@ -228,11 +228,15 @@ namespace ReactUnity.Styling
         public CssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public CssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
 
-        public AnimationList animation
-        {
-            set => SetStyleValue(StyleProperties.animation, value);
-            get => GetStyleValue<AnimationList>(StyleProperties.animation);
-        }
+        public CssValueList<float> animationDelay => GetStyleValue(StyleProperties.animationDelay);
+        public CssValueList<AnimationDirection> animationDirection => GetStyleValue(StyleProperties.animationDirection);
+        public CssValueList<float> animationDuration => GetStyleValue(StyleProperties.animationDuration);
+        public CssValueList<AnimationFillMode> animationFillMode => GetStyleValue(StyleProperties.animationFillMode);
+        public CssValueList<int> animationIterationCount => GetStyleValue(StyleProperties.animationIterationCount);
+        public CssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
+        public CssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
+        public CssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
+
         public AudioList audio
         {
             set => SetStyleValue(StyleProperties.audio, value);

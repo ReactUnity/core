@@ -19,7 +19,8 @@
     "precompiledReferences": [
         "nunit.framework.dll",
         "Jint.dll",
-        "ExCSS.dll"
+        "ExCSS.dll",
+        "ClearScript.Core.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

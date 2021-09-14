@@ -52,7 +52,6 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
         public static readonly StyleProperty<float> stateDuration = new StyleProperty<float>("stateDuration", 0f, true, false, AllConverters.DurationConverter);
-        public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
         public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
         public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("objectFit", ObjectFit.Fill);
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
@@ -63,6 +62,14 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transition-delay");
         public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transition-play-state");
 
+        public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animation-delay");
+        public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animation-direction");
+        public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animation-duration");
+        public static readonly ValueListStyleProperty<AnimationFillMode> animationFillMode = new ValueListStyleProperty<AnimationFillMode>("animation-fill-mode");
+        public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animation-iteration-count", baseConverter: AllConverters.IterationCountConverter);
+        public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animation-name");
+        public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animation-play-state");
+        public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animation-timing-function");
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -106,7 +113,6 @@ namespace ReactUnity.Styling
             { "appearance", appearance },
             { "navigation", navigation },
             { "stateDuration", stateDuration },
-            { "animation", animation },
             { "audio", audio },
             { "objectFit", objectFit },
             { "objectPosition", objectPosition },
@@ -116,11 +122,30 @@ namespace ReactUnity.Styling
             { "transitionTimingFunction", transitionTimingFunction },
             { "transitionDelay", transitionDelay },
             { "transitionPlayState", transitionPlayState },
+
             { "transition-property", transitionProperty },
             { "transition-duration", transitionDuration },
             { "transition-timing-function", transitionTimingFunction },
             { "transition-delay", transitionDelay },
             { "transition-play-state", transitionPlayState },
+
+            { "animationDelay", animationDelay },
+            { "animationDirection", animationDirection },
+            { "animationDuration", animationDuration },
+            { "animationFillMode", animationFillMode },
+            { "animationIterationCount", animationIterationCount },
+            { "animationName", animationName },
+            { "animationPlayState", animationPlayState },
+            { "animationTimingFunction", animationTimingFunction },
+
+            { "animation-delay", animationDelay },
+            { "animation-direction", animationDirection },
+            { "animation-duration", animationDuration },
+            { "animation-fill-mode", animationFillMode },
+            { "animation-iteration-count", animationIterationCount },
+            { "animation-name", animationName },
+            { "animation-play-state", animationPlayState },
+            { "animation-timing-function", animationTimingFunction },
 
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },

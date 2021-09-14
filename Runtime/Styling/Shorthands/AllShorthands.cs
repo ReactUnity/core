@@ -24,6 +24,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
         public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
+        public static readonly StyleShorthand Animation = new AnimationShorthand("animation");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -46,6 +47,7 @@ namespace ReactUnity.Styling.Shorthands
             { "mask", Mask },
             { "textStroke", TextStroke },
             { "transition", Transition },
+            { "animation", Animation },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },

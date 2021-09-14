@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
 using NUnit.Framework;
 using ReactUnity.Animations;
@@ -13,6 +14,7 @@ namespace ReactUnity.Editor.Tests
     {
         private void AssertTimingFunction(TimingFunction expected, TimingFunction actual)
         {
+            Assert.IsNotNull(actual);
             var values = new float[] { 0, 0.1f, 0.25f, 0.4f, 0.5f, 0.6f, 0.75f, 0.9f, 1f };
 
             foreach (var val in values)
@@ -24,98 +26,92 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var converted = AllConverters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear") as TransitionList;
 
-            var widthTr = converted.Items[0];
-            Assert.IsTrue(widthTr.Valid);
-            Assert.AreEqual("width", widthTr.Property);
-            Assert.IsFalse(widthTr.All);
-            Assert.AreEqual(2000, widthTr.Duration);
-            Assert.AreEqual(0, widthTr.Delay);
-            Assert.AreEqual("width", widthTr.Property);
-            AssertTimingFunction(TimingFunctions.Ease, widthTr.TimingFunction);
+            var collection = new InlineStyles();
+            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
 
+            collection["transition"] =
+                "width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear";
 
-            var heightTr = converted.Items[1];
-            Assert.IsTrue(heightTr.Valid);
-            Assert.AreEqual("height", heightTr.Property);
-            Assert.IsFalse(heightTr.All);
-            Assert.AreEqual(400, heightTr.Duration);
-            Assert.AreEqual(0, heightTr.Delay);
-            Assert.AreEqual("height", heightTr.Property);
-            AssertTimingFunction(TimingFunctions.EaseInOut, heightTr.TimingFunction);
+            var Duration = style.transitionDuration;
+            var Delay = style.transitionDelay;
+            var TimingFunction = style.transitionTimingFunction;
+            var Property = style.transitionProperty;
+            var PlayState = style.transitionPlayState;
+
+            Assert.AreEqual("width", Property.Get(0).Definition);
+            Assert.IsFalse(Property.Get(0).IsAll);
+            Assert.AreEqual(2000, Duration.Get(0));
+            Assert.AreEqual(0, Delay.Get(0));
+            AssertTimingFunction(TimingFunctions.Ease, TimingFunction.Get(0) ?? TimingFunctions.Default);
 
 
-            var allTr = converted.Items[2];
-            Assert.IsTrue(allTr.Valid);
-            Assert.AreEqual("all", allTr.Property);
-            Assert.IsTrue(allTr.All);
-            Assert.AreEqual(500, allTr.Duration);
-            Assert.AreEqual(300, allTr.Delay);
-            Assert.AreEqual("all", allTr.Property);
-            AssertTimingFunction(TimingFunctions.StepStart, allTr.TimingFunction);
+            Assert.AreEqual("height", Property.Get(1).Definition);
+            Assert.IsFalse(Property.Get(1).IsAll);
+            Assert.AreEqual(400, Duration.Get(1));
+            Assert.AreEqual(0, Delay.Get(1));
+            AssertTimingFunction(TimingFunctions.EaseInOut, TimingFunction.Get(1));
 
-            var invalidTr = converted.Items[3];
-            Assert.IsTrue(invalidTr.Valid);
-            Assert.IsFalse(invalidTr.All);
-            Assert.AreEqual("bbb", invalidTr.Property);
 
-            var pausedTr = converted.Items[4];
-            Assert.IsTrue(pausedTr.Valid);
-            Assert.AreEqual("bg", pausedTr.Property);
-            Assert.IsFalse(pausedTr.All);
-            Assert.AreEqual(AnimationPlayState.Paused, pausedTr.PlayState);
+            Assert.AreEqual("all", Property.Get(2).Definition);
+            Assert.IsTrue(Property.Get(2).IsAll);
+            Assert.AreEqual(500, Duration.Get(2));
+            Assert.AreEqual(300, Delay.Get(2));
+            AssertTimingFunction(TimingFunctions.StepStart, TimingFunction.Get(2));
 
-            var namelessTr = converted.Items[5];
-            Assert.IsTrue(namelessTr.Valid);
-            Assert.AreEqual("all", namelessTr.Property);
-            Assert.IsTrue(namelessTr.All);
-            Assert.AreEqual(3000, namelessTr.Duration);
-            Assert.AreEqual(400, namelessTr.Delay);
-            AssertTimingFunction(TimingFunctions.Linear, namelessTr.TimingFunction);
+            Assert.IsFalse(Property.Get(3).IsAll);
+            Assert.AreEqual("bbb", Property.Get(3).Definition);
+
+            Assert.AreEqual("bg", Property.Get(4).Definition);
+            Assert.IsFalse(Property.Get(4).IsAll);
+            Assert.AreEqual(AnimationPlayState.Paused, PlayState.Get(4));
+
+            Assert.AreEqual("all", Property.Get(5).Definition);
+            Assert.IsTrue(Property.Get(5).IsAll);
+            Assert.AreEqual(3000, Duration.Get(5));
+            Assert.AreEqual(400, Delay.Get(5));
+            AssertTimingFunction(TimingFunctions.Linear, TimingFunction.Get(5));
         }
 
         [Test]
         public void AnimationConverter()
         {
-            var converted = AllConverters.AnimationListConverter.Convert(
-                "roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing, 2s") as AnimationList;
+            var collection = new InlineStyles();
+            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
 
-            var roll = converted.Items[0];
-            Assert.IsTrue(roll.Valid);
-            Assert.AreEqual("roll", roll.Name);
-            Assert.AreEqual(3000, roll.Duration);
-            Assert.AreEqual(1000, roll.Delay);
-            Assert.AreEqual(2, roll.IterationCount);
-            Assert.AreEqual(AnimationFillMode.Both, roll.FillMode);
-            Assert.AreEqual(AnimationDirection.Reverse, roll.Direction);
-            AssertTimingFunction(TimingFunctions.EaseIn, roll.TimingFunction);
-
-            var slidein = converted.Items[1];
-            Assert.IsTrue(slidein.Valid);
-            Assert.AreEqual("slidein", slidein.Name);
-            Assert.AreEqual(500, slidein.Duration);
-            Assert.AreEqual(0, slidein.Delay);
-            Assert.AreEqual(1, slidein.IterationCount);
-            Assert.AreEqual(AnimationFillMode.None, slidein.FillMode);
-            Assert.AreEqual(AnimationDirection.AlternateReverse, slidein.Direction);
-            AssertTimingFunction(TimingFunctions.Linear, slidein.TimingFunction);
-
-            var slideout = converted.Items[2];
-            Assert.IsTrue(slideout.Valid);
-            Assert.AreEqual("slideout", slideout.Name);
-            Assert.AreEqual(4000, slideout.Duration);
-            Assert.AreEqual(-1, slideout.IterationCount);
-            AssertTimingFunction(TimingFunctions.Ease, slideout.TimingFunction);
-
-            var something = converted.Items[3];
-            Assert.IsFalse(something.Valid);
-            Assert.AreEqual("something", something.Name);
+            collection["animation"] =
+                "roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite";
 
 
-            var nameless = converted.Items[4];
-            Assert.IsFalse(nameless.Valid);
-            Assert.AreEqual(2000, nameless.Duration);
+            var Delay = style.animationDelay;
+            var Direction = style.animationDirection;
+            var Duration = style.animationDuration;
+            var FillMode = style.animationFillMode;
+            var IterationCount = style.animationIterationCount;
+            var Name = style.animationName;
+            var PlayState = style.animationPlayState;
+            var TimingFunction = style.animationTimingFunction;
+
+            Assert.AreEqual("roll", Name.Get(0));
+            Assert.AreEqual(3000, Duration.Get(0));
+            Assert.AreEqual(1000, Delay.Get(0));
+            Assert.AreEqual(2, IterationCount.Get(0));
+            Assert.AreEqual(AnimationFillMode.Both, FillMode.Get(0));
+            Assert.AreEqual(AnimationDirection.Reverse, Direction.Get(0));
+            AssertTimingFunction(TimingFunctions.EaseIn, TimingFunction.Get(0));
+
+            Assert.AreEqual("slidein", Name.Get(1));
+            Assert.AreEqual(500, Duration.Get(1));
+            Assert.AreEqual(0, Delay.Get(1));
+            Assert.AreEqual(1, IterationCount.Get(1));
+            Assert.AreEqual(AnimationFillMode.None, FillMode.Get(1));
+            Assert.AreEqual(AnimationDirection.AlternateReverse, Direction.Get(1));
+            AssertTimingFunction(TimingFunctions.Linear, TimingFunction.Get(1));
+
+            Assert.AreEqual("slideout", Name.Get(2));
+            Assert.AreEqual(4000, Duration.Get(2));
+            Assert.AreEqual(-1, IterationCount.Get(2));
+            AssertTimingFunction(TimingFunctions.Ease, TimingFunction.Get(2) ?? TimingFunctions.Default);
         }
 
         [Test]
