@@ -221,11 +221,13 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.stateDuration, value);
             get => GetStyleValue<float>(StyleProperties.stateDuration);
         }
-        public TransitionList transition
-        {
-            set => SetStyleValue(StyleProperties.transition, value);
-            get => GetStyleValue<TransitionList>(StyleProperties.transition);
-        }
+
+        public CssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
+        public CssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
+        public CssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
+        public CssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
+        public CssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
+
         public AnimationList animation
         {
             set => SetStyleValue(StyleProperties.animation, value);
@@ -303,6 +305,7 @@ namespace ReactUnity.Styling
             }
             return value;
         }
+        public T GetStyleValue<T>(StyleProperty<T> prop, bool convert = false) => GetStyleValue<T>(prop as IStyleProperty, convert);
 
         public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
         {

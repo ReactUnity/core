@@ -14,8 +14,6 @@ namespace ReactUnity.Styling
         public bool transitionable { get; private set; }
         public bool inherited { get; private set; }
         public IStyleConverter converter;
-
-        private Func<NodeStyle, T> getter;
         public virtual bool affectsLayout => false;
         public List<IStyleProperty> ModifiedProperties { get; }
         public StyleProperty(string name, object initialValue = null, bool transitionable = false, bool inherited = false, IStyleConverter converter = null)
@@ -27,8 +25,7 @@ namespace ReactUnity.Styling
             this.inherited = inherited;
 
             if (converter == null) converter = AllConverters.Get(type);
-            if (!(converter is GeneralConverter)) converter = new GeneralConverter(converter);
-            this.converter = converter;
+            this.converter = GeneralConverter.Wrap(converter);
 
             ModifiedProperties = new List<IStyleProperty>(1) { this };
         }
@@ -39,7 +36,7 @@ namespace ReactUnity.Styling
             if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
             else if (value is CssKeyword k) keyword = k;
 
-            if (converter.CanHandleKeyword(keyword)) return converter.Convert(value);
+            if (converter.CanHandleKeyword(keyword)) return converter.Convert(keyword);
 
             if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default || keyword == CssKeyword.None || keyword == CssKeyword.Unset) value = defaultValue;
             else if (keyword == CssKeyword.CurrentColor) value = ComputedCurrentColor.Instance;
@@ -56,7 +53,7 @@ namespace ReactUnity.Styling
         public override int GetHashCode() => name.GetHashCode();
         public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
 
-        public object GetStyle(NodeStyle style) => style.GetStyleValue<T>(this);
+        public object GetStyle(NodeStyle style) => style.GetStyleValue(this);
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {

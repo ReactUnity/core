@@ -10,6 +10,12 @@ namespace ReactUnity.Converters
         static private HashSet<string> AllowedFunctions = new HashSet<string> { "var" };
         IStyleConverter baseConverter;
 
+        static public GeneralConverter Wrap(IStyleConverter baseConverter)
+        {
+            if (baseConverter is GeneralConverter gc) return gc;
+            return new GeneralConverter(baseConverter);
+        }
+
         public GeneralConverter(IStyleConverter baseConverter = null)
         {
             this.baseConverter = baseConverter;

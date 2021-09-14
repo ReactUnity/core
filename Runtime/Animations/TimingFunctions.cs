@@ -17,6 +17,7 @@ namespace ReactUnity.Animations
         public static readonly TimingFunction EaseInOut = CubicBezier.Create(0.42f, 0f, 0.58f, 1f);
         public static readonly TimingFunction StepStart = Steps(1, StepsJumpMode.Start);
         public static readonly TimingFunction StepEnd = Steps(1, StepsJumpMode.End);
+        public static readonly TimingFunction Default = Ease;
 
         private static readonly TimingFunction[] timingFunctions = new TimingFunction[] {
             Ease,

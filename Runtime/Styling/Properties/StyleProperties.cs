@@ -52,11 +52,17 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<NavigationMode> navigation = new StyleProperty<NavigationMode>("navigation", NavigationMode.Automatic);
         public static readonly StyleProperty<float> stateDuration = new StyleProperty<float>("stateDuration", 0f, true, false, AllConverters.DurationConverter);
-        public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
         public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
         public static readonly StyleProperty<AudioList> audio = new StyleProperty<AudioList>("audio");
         public static readonly StyleProperty<ObjectFit> objectFit = new StyleProperty<ObjectFit>("objectFit", ObjectFit.Fill);
         public static readonly StyleProperty<YogaValue2> objectPosition = new StyleProperty<YogaValue2>("objectPosition", YogaValue2.Center, true);
+
+        public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transition-property");
+        public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transition-duration");
+        public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transition-timing-function");
+        public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transition-delay");
+        public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transition-play-state");
+
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -100,11 +106,21 @@ namespace ReactUnity.Styling
             { "appearance", appearance },
             { "navigation", navigation },
             { "stateDuration", stateDuration },
-            { "transition", transition },
             { "animation", animation },
             { "audio", audio },
             { "objectFit", objectFit },
             { "objectPosition", objectPosition },
+
+            { "transitionProperty", transitionProperty },
+            { "transitionDuration", transitionDuration },
+            { "transitionTimingFunction", transitionTimingFunction },
+            { "transitionDelay", transitionDelay },
+            { "transitionPlayState", transitionPlayState },
+            { "transition-property", transitionProperty },
+            { "transition-duration", transitionDuration },
+            { "transition-timing-function", transitionTimingFunction },
+            { "transition-delay", transitionDelay },
+            { "transition-play-state", transitionPlayState },
 
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },

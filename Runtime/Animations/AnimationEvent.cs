@@ -9,7 +9,6 @@ namespace ReactUnity.Animations
 
     public class TransitionEvent
     {
-        public Transition Transition;
         public string PropertyName;
         public float ElapsedTime;
     }

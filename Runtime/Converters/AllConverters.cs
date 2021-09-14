@@ -34,7 +34,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
         static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
-        static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
+        static public IStyleConverter TransitionPropertyConverter = new TransitionProperty.Converter();
         static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
         static public IStyleConverter AudioListConverter = new AudioList.Converter();
         static public IStyleConverter CursorListConverter = new CursorList.Converter();
@@ -59,13 +59,13 @@ namespace ReactUnity.Converters
             { typeof(Url), UrlConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
-            { typeof(TransitionList), TransitionListConverter},
             { typeof(AnimationList), AnimationListConverter},
             { typeof(AudioList), AudioListConverter},
             { typeof(CursorList), CursorListConverter},
             { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(TimingFunction), TimingFunctionConverter },
             { typeof(TMPro.FontWeight), FontWeightConverter },
+            { typeof(TransitionProperty), TransitionPropertyConverter },
         };
 
         public static IStyleConverter Get<T>() => Get(typeof(T));

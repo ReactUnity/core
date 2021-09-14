@@ -41,7 +41,7 @@ namespace ReactUnity.Animations
         public float Duration { get; } = 0;
         public int IterationCount { get; } = 1;
         public string Name { get; }
-        public TimingFunction TimingFunction { get; } = TimingFunctions.Ease;
+        public TimingFunction TimingFunction { get; } = TimingFunctions.Default;
         public bool Valid { get; } = true;
         public AnimationFillMode FillMode { get; }
         public AnimationDirection Direction { get; }

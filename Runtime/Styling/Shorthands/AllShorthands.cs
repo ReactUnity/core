@@ -5,6 +5,7 @@ namespace ReactUnity.Styling.Shorthands
 {
     public static class AllShorthands
     {
+        public static readonly StyleShorthand All = new AllShorthand("all");
         public static readonly StyleShorthand Margin = new FourDirectionalShorthand("margin", FourDirectionalShorthand.PropertyType.Margin);
         public static readonly StyleShorthand Padding = new FourDirectionalShorthand("padding", FourDirectionalShorthand.PropertyType.Padding);
         public static readonly StyleShorthand Inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
@@ -22,9 +23,11 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand Background = new BackgroundShorthand("background");
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
+        public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
+            { "all", All },
             { "margin", Margin },
             { "padding", Padding },
             { "inset", Inset },
@@ -42,6 +45,7 @@ namespace ReactUnity.Styling.Shorthands
             { "background", Background },
             { "mask", Mask },
             { "textStroke", TextStroke },
+            { "transition", Transition },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },
