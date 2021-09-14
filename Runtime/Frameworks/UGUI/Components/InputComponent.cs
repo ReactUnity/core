@@ -123,8 +123,8 @@ namespace ReactUnity.UGUI
             base.ResolveStyle(recursive);
 
             var c = TextComponent.ComputedStyle.color;
-            PlaceholderCmp.ComputedStyle.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
-            PlaceholderCmp.ApplyStyles();
+            PlaceholderCmp.Style["color"] = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            PlaceholderCmp.ResolveStyle();
         }
 
         protected override void ApplyStylesSelf()

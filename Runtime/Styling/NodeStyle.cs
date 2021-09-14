@@ -4,7 +4,7 @@ using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using NavigationMode = UnityEngine.UI.Navigation.Mode;
 
 namespace ReactUnity.Styling
 {
@@ -21,213 +21,53 @@ namespace ReactUnity.Styling
 
         #region Set/Get
 
-        public float opacity
-        {
-            set => SetStyleValue(StyleProperties.opacity, value);
-            get => GetStyleValue<float>(StyleProperties.opacity);
-        }
-        public int zIndex
-        {
-            set => SetStyleValue(StyleProperties.zIndex, value);
-            get => GetStyleValue<int>(StyleProperties.zIndex);
-        }
-        public bool visibility
-        {
-            set => SetStyleValue(StyleProperties.visibility, value);
-            get => GetStyleValue<bool>(StyleProperties.visibility);
-        }
-        public PositionType position
-        {
-            set => SetStyleValue(StyleProperties.position, value);
-            get => GetStyleValue<PositionType>(StyleProperties.position);
-        }
-        public CursorList cursor
-        {
-            set => SetStyleValue(StyleProperties.cursor, value);
-            get => GetStyleValue<CursorList>(StyleProperties.cursor);
-        }
-        public PointerEvents pointerEvents
-        {
-            set => SetStyleValue(StyleProperties.pointerEvents, value);
-            get => GetStyleValue<PointerEvents>(StyleProperties.pointerEvents);
-        }
-        public Color backgroundColor
-        {
-            set => SetStyleValue(StyleProperties.backgroundColor, value);
-            get => GetStyleValue<Color>(StyleProperties.backgroundColor);
-        }
-        public ImageReference backgroundImage
-        {
-            set => SetStyleValue(StyleProperties.backgroundImage, value);
-            get => GetStyleValue<ImageReference>(StyleProperties.backgroundImage);
-        }
-        public BackgroundBlendMode backgroundBlendMode
-        {
-            set => SetStyleValue(StyleProperties.backgroundBlendMode, value);
-            get => GetStyleValue<BackgroundBlendMode>(StyleProperties.backgroundBlendMode);
-        }
-        public ImageReference maskImage
-        {
-            set => SetStyleValue(StyleProperties.maskImage, value);
-            get => GetStyleValue<ImageReference>(StyleProperties.maskImage);
-        }
-        public float borderTopLeftRadius
-        {
-            set => SetStyleValue(StyleProperties.borderTopLeftRadius, value);
-            get => GetStyleValue<float>(StyleProperties.borderTopLeftRadius);
-        }
-        public float borderTopRightRadius
-        {
-            set => SetStyleValue(StyleProperties.borderTopRightRadius, value);
-            get => GetStyleValue<float>(StyleProperties.borderTopRightRadius);
-        }
-        public float borderBottomLeftRadius
-        {
-            set => SetStyleValue(StyleProperties.borderBottomLeftRadius, value);
-            get => GetStyleValue<float>(StyleProperties.borderBottomLeftRadius);
-        }
-        public float borderBottomRightRadius
-        {
-            set => SetStyleValue(StyleProperties.borderBottomRightRadius, value);
-            get => GetStyleValue<float>(StyleProperties.borderBottomRightRadius);
-        }
-        public Color borderLeftColor
-        {
-            set => SetStyleValue(StyleProperties.borderLeftColor, value);
-            get => GetStyleValue<Color>(StyleProperties.borderLeftColor);
-        }
-        public Color borderRightColor
-        {
-            set => SetStyleValue(StyleProperties.borderRightColor, value);
-            get => GetStyleValue<Color>(StyleProperties.borderRightColor);
-        }
-        public Color borderTopColor
-        {
-            set => SetStyleValue(StyleProperties.borderTopColor, value);
-            get => GetStyleValue<Color>(StyleProperties.borderTopColor);
-        }
-        public Color borderBottomColor
-        {
-            set => SetStyleValue(StyleProperties.borderBottomColor, value);
-            get => GetStyleValue<Color>(StyleProperties.borderBottomColor);
-        }
-        public BoxShadowList boxShadow
-        {
-            set => SetStyleValue(StyleProperties.boxShadow, value);
-            get => GetStyleValue<BoxShadowList>(StyleProperties.boxShadow);
-        }
-        public YogaValue2 translate
-        {
-            set => SetStyleValue(StyleProperties.translate, value);
-            get => GetStyleValue<YogaValue2>(StyleProperties.translate);
-        }
-        public Vector2 scale
-        {
-            set => SetStyleValue(StyleProperties.scale, value);
-            get => GetStyleValue<Vector2>(StyleProperties.scale);
-        }
-        public YogaValue2 transformOrigin
-        {
-            set => SetStyleValue(StyleProperties.transformOrigin, value);
-            get => GetStyleValue<YogaValue2>(StyleProperties.transformOrigin);
-        }
-        public Vector3 rotate
-        {
-            set => SetStyleValue(StyleProperties.rotate, value);
-            get => GetStyleValue<Vector3>(StyleProperties.rotate);
-        }
-        public FontReference fontFamily
-        {
-            set => SetStyleValue(StyleProperties.fontFamily, value);
-            get => GetStyleValue<FontReference>(StyleProperties.fontFamily);
-        }
-        public Color color
-        {
-            set => SetStyleValue(StyleProperties.color, value);
-            get => GetStyleValue<Color>(StyleProperties.color);
-        }
-        public FontWeight fontWeight
-        {
-            set => SetStyleValue(StyleProperties.fontWeight, value);
-            get => GetStyleValue<FontWeight>(StyleProperties.fontWeight);
-        }
-        public FontStyles fontStyle
-        {
-            set => SetStyleValue(StyleProperties.fontStyle, value);
-            get => GetStyleValue<FontStyles>(StyleProperties.fontStyle);
-        }
-        public float fontSize
-        {
-            set => SetStyleValue(StyleProperties.fontSize, value);
-            get => GetStyleValue<float>(StyleProperties.fontSize);
-        }
-        public float lineHeight
-        {
-            set => SetStyleValue(StyleProperties.lineHeight, value);
-            get => GetStyleValue<float>(StyleProperties.lineHeight);
-        }
-        public float letterSpacing
-        {
-            set => SetStyleValue(StyleProperties.letterSpacing, value);
-            get => GetStyleValue<float>(StyleProperties.letterSpacing);
-        }
-        public float wordSpacing
-        {
-            set => SetStyleValue(StyleProperties.wordSpacing, value);
-            get => GetStyleValue<float>(StyleProperties.wordSpacing);
-        }
-        public TextAlignmentOptions textAlign
-        {
-            set => SetStyleValue(StyleProperties.textAlign, value);
-            get => GetStyleValue<TextAlignmentOptions>(StyleProperties.textAlign);
-        }
-        public TextOverflowModes textOverflow
-        {
-            set => SetStyleValue(StyleProperties.textOverflow, value);
-            get => GetStyleValue<TextOverflowModes>(StyleProperties.textOverflow);
-        }
-        public bool textWrap
-        {
-            set => SetStyleValue(StyleProperties.textWrap, value);
-            get => GetStyleValue<bool>(StyleProperties.textWrap);
-        }
-        public Color textStrokeColor
-        {
-            set => SetStyleValue(StyleProperties.textStrokeColor, value);
-            get => GetStyleValue<Color>(StyleProperties.textStrokeColor);
-        }
-        public float textStrokeWidth
-        {
-            set => SetStyleValue(StyleProperties.textStrokeWidth, value);
-            get => GetStyleValue<float>(StyleProperties.textStrokeWidth);
-        }
-        public string content
-        {
-            set => SetStyleValue(StyleProperties.content, value);
-            get => GetStyleValue<string>(StyleProperties.content);
-        }
-        public Appearance appearance
-        {
-            set => SetStyleValue(StyleProperties.appearance, value);
-            get => GetStyleValue<Appearance>(StyleProperties.appearance);
-        }
-        public Navigation.Mode navigation
-        {
-            set => SetStyleValue(StyleProperties.navigation, value);
-            get => GetStyleValue<Navigation.Mode>(StyleProperties.navigation);
-        }
-        public float stateDuration
-        {
-            set => SetStyleValue(StyleProperties.stateDuration, value);
-            get => GetStyleValue<float>(StyleProperties.stateDuration);
-        }
-
-        public CssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
-        public CssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
-        public CssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
+        public float opacity => GetStyleValue(StyleProperties.opacity);
+        public int zIndex => GetStyleValue(StyleProperties.zIndex);
+        public bool visibility => GetStyleValue(StyleProperties.visibility);
+        public PositionType position => GetStyleValue(StyleProperties.position);
+        public CursorList cursor => GetStyleValue(StyleProperties.cursor);
+        public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
+        public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
+        public ImageReference backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
+        public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+        public ImageReference maskImage => GetStyleValue(StyleProperties.maskImage);
+        public float borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
+        public float borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
+        public float borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
+        public float borderBottomRightRadius => GetStyleValue(StyleProperties.borderBottomRightRadius);
+        public Color borderLeftColor => GetStyleValue(StyleProperties.borderLeftColor);
+        public Color borderRightColor => GetStyleValue(StyleProperties.borderRightColor);
+        public Color borderTopColor => GetStyleValue(StyleProperties.borderTopColor);
+        public Color borderBottomColor => GetStyleValue(StyleProperties.borderBottomColor);
+        public BoxShadowList boxShadow => GetStyleValue(StyleProperties.boxShadow);
+        public YogaValue2 transformOrigin => GetStyleValue(StyleProperties.transformOrigin);
+        public YogaValue2 translate => GetStyleValue(StyleProperties.translate);
+        public Vector2 scale => GetStyleValue(StyleProperties.scale);
+        public Vector3 rotate => GetStyleValue(StyleProperties.rotate);
+        public FontReference fontFamily => GetStyleValue(StyleProperties.fontFamily);
+        public Color color => GetStyleValue(StyleProperties.color);
+        public FontWeight fontWeight => GetStyleValue(StyleProperties.fontWeight);
+        public FontStyles fontStyle => GetStyleValue(StyleProperties.fontStyle);
+        public float fontSize => GetStyleValue(StyleProperties.fontSize);
+        public float lineHeight => GetStyleValue(StyleProperties.lineHeight);
+        public float letterSpacing => GetStyleValue(StyleProperties.letterSpacing);
+        public float wordSpacing => GetStyleValue(StyleProperties.wordSpacing);
+        public TextAlignmentOptions textAlign => GetStyleValue(StyleProperties.textAlign);
+        public TextOverflowModes textOverflow => GetStyleValue(StyleProperties.textOverflow);
+        public bool textWrap => GetStyleValue(StyleProperties.textWrap);
+        public float textStrokeWidth => GetStyleValue(StyleProperties.textStrokeWidth);
+        public Color textStrokeColor => GetStyleValue(StyleProperties.textStrokeColor);
+        public string content => GetStyleValue(StyleProperties.content);
+        public Appearance appearance => GetStyleValue(StyleProperties.appearance);
+        public NavigationMode navigation => GetStyleValue(StyleProperties.navigation);
+        public float stateDuration => GetStyleValue(StyleProperties.stateDuration);
+        public ObjectFit objectFit => GetStyleValue(StyleProperties.objectFit);
+        public YogaValue2 objectPosition => GetStyleValue(StyleProperties.objectPosition);
         public CssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
+        public CssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
+        public CssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
+        public CssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
         public CssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
-
         public CssValueList<float> animationDelay => GetStyleValue(StyleProperties.animationDelay);
         public CssValueList<AnimationDirection> animationDirection => GetStyleValue(StyleProperties.animationDirection);
         public CssValueList<float> animationDuration => GetStyleValue(StyleProperties.animationDuration);
@@ -236,21 +76,10 @@ namespace ReactUnity.Styling
         public CssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
         public CssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
         public CssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
-
         public CssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
-        public CssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
         public CssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
+        public CssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
 
-        public ObjectFit objectFit
-        {
-            set => SetStyleValue(StyleProperties.objectFit, value);
-            get => GetStyleValue<ObjectFit>(StyleProperties.objectFit);
-        }
-        public YogaValue2 objectPosition
-        {
-            set => SetStyleValue(StyleProperties.objectPosition, value);
-            get => GetStyleValue<YogaValue2>(StyleProperties.objectPosition);
-        }
         #endregion
 
         public NodeStyle(ReactContext context, NodeStyle fallback = null, List<IDictionary<IStyleProperty, object>> cssStyles = null)
