@@ -9,7 +9,10 @@ namespace ReactUnity.UGUI.Behaviours
 
         void Update()
         {
-            var enableLink = WatchedText.ComputedStyle.textOverflow == TMPro.TextOverflowModes.Linked && WatchedText.Text.isTextOverflowing;
+            var enableLink = WatchedText.ComputedStyle.textOverflow == TMPro.TextOverflowModes.Linked &&
+                WatchedText.Text.isTextOverflowing &&
+                WatchedText.Text.firstOverflowCharacterIndex > 6;
+            // The threshold (6) prevents an endless loop bug in TMPro
 
             if (enableLink && LinkedText == null)
             {

@@ -63,16 +63,12 @@ namespace ReactUnity.UGUI
             if (text != null) SetText(text);
         }
 
-        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, "")
+        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, linkedTo.Tag)
         {
-            Layout.CopyStyle(linkedTo.Layout);
             Style = linkedTo.Style;
             Style.changed += StyleChanged;
 
             SetParent(linkedTo.Parent, linkedTo, true);
-
-            ApplyLayoutStylesSelf();
-            ApplyStyles();
         }
 
         public void SetText(string text)
@@ -120,6 +116,7 @@ namespace ReactUnity.UGUI
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
             Text.characterSpacing = style.letterSpacing * 100;
             Text.wordSpacing = style.wordSpacing * 100;
+            Text.maxVisibleLines = style.maxLines;
 
             if (style.content != null)
             {

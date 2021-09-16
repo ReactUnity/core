@@ -46,6 +46,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
+        public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
         public static readonly StyleProperty<float> textStrokeWidth = new StyleProperty<float>("textStrokeWidth", 0f, true, true);
         public static readonly StyleProperty<Color> textStrokeColor = new StyleProperty<Color>("textStrokeColor", ComputedCurrentColor.Instance, true, true);
         public static readonly StyleProperty<string> content = new StyleProperty<string>("content", null, false);
@@ -110,6 +111,8 @@ namespace ReactUnity.Styling
             { "textAlign", textAlign },
             { "textOverflow", textOverflow },
             { "textWrap", textWrap },
+            { "maxLines", maxLines },
+            { "lineClamp", maxLines },
             { "textStrokeWidth", textStrokeWidth },
             { "textStrokeColor", textStrokeColor },
             { "content", content },
@@ -184,6 +187,8 @@ namespace ReactUnity.Styling
             { "text-align", textAlign },
             { "text-overflow", textOverflow },
             { "text-wrap", textWrap },
+            { "max-lines", maxLines },
+            { "line-clamp", maxLines },
             { "text-stroke-color", textStrokeColor },
             { "text-stroke-width", textStrokeWidth },
             { "white-space", textWrap },

@@ -37,6 +37,7 @@ namespace ReactUnity.StyleEngine
                             break;
 
                         case RuleSelectorPartType.Empty:
+                        case RuleSelectorPartType.Text:
                         case RuleSelectorPartType.Activatable:
                         case RuleSelectorPartType.Blank:
                         case RuleSelectorPartType.Enabled:
@@ -255,6 +256,8 @@ namespace ReactUnity.StyleEngine
         ShadowDescendant = 14,
 
         Not = 20,
+
+        // Standard pseudo classes
         FirstChild = 21,
         LastChild = 22,
         NthChild = 23,
@@ -263,8 +266,8 @@ namespace ReactUnity.StyleEngine
         Empty = 26,
         Root = 27,
         Scope = 28,
-        Activatable = 29,
 
+        // Input related pseudo classes
         Blank = 30,
         Enabled = 31,
         Disabled = 32,
@@ -274,18 +277,26 @@ namespace ReactUnity.StyleEngine
         Checked = 36,
         Indeterminate = 37,
 
+        // Standard states
         Hover = 100,
         Focus = 101,
         FocusVisible = 102,
         FocusWithin = 103,
         Active = 104,
 
+        // Custom states
         Enter = 200,
         Leave = 201,
 
+        // Custom pseudo classes
+        Activatable = 300,
+        Text = 301,
+
+        // Pseudo-elements
         Before = 500,
         After = 501,
 
+        // Special
         Important = 1000,
         Special = 1001,
         State = 2000,
@@ -370,6 +381,8 @@ namespace ReactUnity.StyleEngine
                     return scope != null && component == scope;
                 case RuleSelectorPartType.Activatable:
                     return component is IActivatableComponent;
+                case RuleSelectorPartType.Text:
+                    return component is ITextComponent;
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
                     return true;

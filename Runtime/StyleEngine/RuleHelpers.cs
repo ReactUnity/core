@@ -21,7 +21,6 @@ namespace ReactUnity.StyleEngine
             { "before", RuleSelectorPartType.Before },
             { "after", RuleSelectorPartType.After },
             { "empty", RuleSelectorPartType.Empty },
-            { "activatable", RuleSelectorPartType.Activatable },
             { "root", RuleSelectorPartType.Root },
             { "scope", RuleSelectorPartType.Scope },
             { "blank", RuleSelectorPartType.Blank },
@@ -32,6 +31,8 @@ namespace ReactUnity.StyleEngine
             { "read-write", RuleSelectorPartType.ReadWrite },
             { "checked", RuleSelectorPartType.Checked },
             { "indeterminate", RuleSelectorPartType.Indeterminate },
+            { "activatable", RuleSelectorPartType.Activatable },
+            { "text", RuleSelectorPartType.Text },
         };
 
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)

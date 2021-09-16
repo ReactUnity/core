@@ -18,11 +18,10 @@ namespace ReactUnity.Tests
                 </>;
             }
 
-            Renderer.render(<GlobalsProvider children={<App />} />);
+            Renderer.render(<App />);
         ";
 
-        const string BaseStyle = @"
-        ";
+        const string BaseStyle = @"";
 
         public TextComponent Text => Q("text") as TextComponent;
 
@@ -71,6 +70,35 @@ namespace ReactUnity.Tests
             }");
             yield return null;
             Assert.IsNotNull(Text);
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator TextCanBeWrappedWithLinkedStyle()
+        {
+            var textContent = "this is default text content";
+            Globals["textContent"] = textContent;
+
+            Text.Style["text-overflow"] = "linked";
+            Assert.IsNull(Text.LinkedTextWatcher?.LinkedText);
+            yield return null;
+            Assert.IsNull(Text.LinkedTextWatcher?.LinkedText);
+
+            Text.Style["width"] = 80;
+            Text.Style["max-height"] = "2em";
+            yield return null;
+            // TODO: make this able to render in 1 frame
+            yield return null;
+            Assert.IsNotNull(Text.LinkedTextWatcher?.LinkedText);
+
+            var overflowAt = Text.Text.firstOverflowCharacterIndex;
+            Assert.AreEqual(1, Text.LinkedTextWatcher.LinkedText.Text.pageToDisplay);
+            Assert.AreEqual(overflowAt, Text.LinkedTextWatcher.LinkedText.Text.firstVisibleCharacter);
+            Assert.AreEqual(textContent, Text.LinkedTextWatcher.LinkedText.Text.text);
+
+
+            Text.Style["text-overflow"] = null;
+            yield return null;
+            Assert.IsNull(Text.LinkedTextWatcher?.LinkedText);
         }
     }
 }

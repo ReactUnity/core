@@ -55,6 +55,7 @@ namespace ReactUnity.Styling
         public TextAlignmentOptions textAlign => GetStyleValue(StyleProperties.textAlign);
         public TextOverflowModes textOverflow => GetStyleValue(StyleProperties.textOverflow);
         public bool textWrap => GetStyleValue(StyleProperties.textWrap);
+        public int maxLines => GetStyleValue(StyleProperties.maxLines);
         public float textStrokeWidth => GetStyleValue(StyleProperties.textStrokeWidth);
         public Color textStrokeColor => GetStyleValue(StyleProperties.textStrokeColor);
         public string content => GetStyleValue(StyleProperties.content);
