@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/09/2021 00:49:42
+// Generated 17/09/2021 20:06:05
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -625,7 +625,6 @@ export declare namespace ReactUnity {
     GetComponentInChildren(t: System.Type): UnityEngine.Component;
     GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
     GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
     GetComponentInParent(t: System.Type): UnityEngine.Component;
     GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
     GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -797,7 +796,6 @@ export declare namespace ReactUnity {
     GetPersistentTarget(index: number): UnityEngine.Object;
     GetPersistentMethodName(index: number): string;
     SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
-    GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
     RemoveAllListeners(): void;
     ToString(): string;
     Equals(obj: any): boolean;
@@ -807,7 +805,7 @@ export declare namespace ReactUnity {
   export namespace Animations {
     export class AnimationEvent {
       constructor();
-      Animation: ReactUnity.Animations.Animation;
+      AnimationName: string;
       Keyframes: ReactUnity.KeyframeList;
       ElapsedTime: number;
       Equals(obj: any): boolean;
@@ -817,38 +815,8 @@ export declare namespace ReactUnity {
     }
     export class TransitionEvent {
       constructor();
-      Transition: ReactUnity.Animations.Transition;
       PropertyName: string;
       ElapsedTime: number;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class AnimationList {
-      constructor(definition: string);
-      constructor(item: ReactUnity.Animations.Animation);
-      constructor(items: ReactUnity.Animations.Animation[]);
-      Definition: string;
-      Items: ReactUnity.Animations.Animation[];
-      Any: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export class Animation {
-      constructor(definition: string);
-      Definition: string;
-      Delay: number;
-      Duration: number;
-      IterationCount: number;
-      Name: string;
-      TimingFunction: ReactUnity.Animations.TimingFunction;
-      Valid: boolean;
-      FillMode: ReactUnity.Animations.AnimationFillMode;
-      Direction: ReactUnity.Animations.AnimationDirection;
-      PlayState: ReactUnity.Animations.AnimationPlayState;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -869,31 +837,6 @@ export declare namespace ReactUnity {
     export enum AnimationPlayState {
       Running = 0,
       Paused = 1,
-    }
-    export class AudioList {
-      constructor(definition: string);
-      constructor(item: ReactUnity.Animations.AudioListPart);
-      constructor(items: ReactUnity.Animations.AudioListPart[]);
-      Definition: string;
-      Items: ReactUnity.Animations.AudioListPart[];
-      Any: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export class AudioListPart {
-      constructor(definition: string);
-      Definition: string;
-      AudioClip: ReactUnity.Types.AudioReference;
-      IterationCount: number;
-      Delay: number;
-      Local: boolean;
-      Valid: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
     }
     export class Interpolater {
       static Interpolate(t: number, mirror?: boolean): number;
@@ -956,6 +899,7 @@ export declare namespace ReactUnity {
       static EaseInOut: ReactUnity.Animations.TimingFunction;
       static StepStart: ReactUnity.Animations.TimingFunction;
       static StepEnd: ReactUnity.Animations.TimingFunction;
+      static Default: ReactUnity.Animations.TimingFunction;
       static Linear(t: number, start?: number, end?: number): number;
       static Steps(count: number, mode?: ReactUnity.Animations.StepsJumpMode): ReactUnity.Animations.TimingFunction;
       static Get(easeType: ReactUnity.Animations.TimingFunctionType): ReactUnity.Animations.TimingFunction;
@@ -984,48 +928,13 @@ export declare namespace ReactUnity {
       Both = 3,
       JumpBoth = 3,
     }
-    export class TransitionList {
-      constructor(definition: string);
-      constructor(item: ReactUnity.Animations.Transition);
-      constructor(items: ReactUnity.Animations.Transition[]);
-      Definition: string;
-      Items: ReactUnity.Animations.Transition[];
-      Any: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export class Transition {
+    export class TransitionProperty {
       constructor(definition: string);
       Definition: string;
-      Delay: number;
-      Duration: number;
-      Property: string;
-      PlayState: ReactUnity.Animations.AnimationPlayState;
-      TimingFunction: ReactUnity.Animations.TimingFunction;
-      Valid: boolean;
-      All: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class AnimationList_Converter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      FromString(value: string): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class AudioList_Converter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      FromString(value: string): any;
+      IsAll: boolean;
+      Properties: ReactUnity.Styling.IStyleProperty[];
+      static None: ReactUnity.Animations.TransitionProperty;
+      static All: ReactUnity.Animations.TransitionProperty;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -1049,7 +958,7 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class TransitionList_Converter {
+    export class TransitionProperty_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): any;
@@ -1078,6 +987,7 @@ export declare namespace ReactUnity {
       static Vector2Converter: ReactUnity.Converters.IStyleConverter;
       static Vector3Converter: ReactUnity.Converters.IStyleConverter;
       static IntConverter: ReactUnity.Converters.IStyleConverter;
+      static IterationCountConverter: ReactUnity.Converters.IStyleConverter;
       static BoolConverter: ReactUnity.Converters.IStyleConverter;
       static ColorConverter: ReactUnity.Converters.IStyleConverter;
       static ImageReferenceConverter: ReactUnity.Converters.IStyleConverter;
@@ -1085,9 +995,7 @@ export declare namespace ReactUnity {
       static VideoReferenceConverter: ReactUnity.Converters.IStyleConverter;
       static FontReferenceConverter: ReactUnity.Converters.IStyleConverter;
       static RotateConverter: ReactUnity.Converters.IStyleConverter;
-      static TransitionListConverter: ReactUnity.Converters.IStyleConverter;
-      static AnimationListConverter: ReactUnity.Converters.IStyleConverter;
-      static AudioListConverter: ReactUnity.Converters.IStyleConverter;
+      static TransitionPropertyConverter: ReactUnity.Converters.IStyleConverter;
       static CursorListConverter: ReactUnity.Converters.IStyleConverter;
       static BoxShadowListConverter: ReactUnity.Converters.IStyleConverter;
       static TimingFunctionConverter: ReactUnity.Converters.IStyleConverter;
@@ -1112,6 +1020,23 @@ export declare namespace ReactUnity {
     export class ColorConverter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      FromString(value: string): any;
+      Convert(value: any): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CountConverter {
+      constructor();
+      AllowFloats: boolean;
+      AllowInfinite: boolean;
+      InfiniteValue: number;
+      Min: number;
+      Max: number;
+      FloatConverter: ReactUnity.Converters.FloatConverter;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Validate(value: number): any;
       FromString(value: string): any;
       Convert(value: any): any;
       Equals(obj: any): boolean;
@@ -1196,6 +1121,7 @@ export declare namespace ReactUnity {
     }
     export class GeneralConverter {
       constructor(baseConverter?: ReactUnity.Converters.IStyleConverter);
+      static Wrap(baseConverter: ReactUnity.Converters.IStyleConverter): ReactUnity.Converters.GeneralConverter;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): any;
       FromString(value: string): any;
@@ -1301,7 +1227,7 @@ export declare namespace ReactUnity {
       origin: string;
       execute: ((arg0: string, arg1: string) => void);
       context: ReactUnity.ReactContext;
-      createElement(type: string): ReactUnity.DomProxies.IDomElementProxy;
+      createElement(type: string): any;
       createTextNode(text: string): string;
       querySelector(query: string): any;
       querySelectorAll(query: string): any;
@@ -1802,7 +1728,6 @@ export declare namespace ReactUnity {
       ShowAuxWindow(): void;
       ShowModal(): void;
       SaveChanges(): void;
-      DiscardChanges(): void;
       Close(): void;
       Repaint(): void;
       SendEvent(e: UnityEngine.Event): boolean;
@@ -1890,7 +1815,6 @@ export declare namespace ReactUnity {
       ShowAuxWindow(): void;
       ShowModal(): void;
       SaveChanges(): void;
-      DiscardChanges(): void;
       Close(): void;
       Repaint(): void;
       SendEvent(e: UnityEngine.Event): boolean;
@@ -2079,7 +2003,6 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
-        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -2191,7 +2114,6 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
-        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -2323,7 +2245,6 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
-        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -2367,7 +2288,6 @@ export declare namespace ReactUnity {
         cacheAsBitmap: boolean;
         parent: UnityEngine.UIElements.VisualElement;
         panel: UnityEngine.UIElements.IPanel;
-        visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
@@ -2686,7 +2606,6 @@ export declare namespace ReactUnity {
         parent: UnityEngine.UIElements.VisualElement;
         panel: UnityEngine.UIElements.IPanel;
         contentContainer: UnityEngine.UIElements.VisualElement;
-        visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
@@ -2811,7 +2730,6 @@ export declare namespace ReactUnity {
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
       SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
-      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
       RemoveAllListeners(): void;
       ToString(): string;
       Equals(obj: any): boolean;
@@ -2827,7 +2745,6 @@ export declare namespace ReactUnity {
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
       SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
-      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
       RemoveAllListeners(): void;
       ToString(): string;
       Equals(obj: any): boolean;
@@ -2856,7 +2773,6 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
@@ -2887,9 +2803,6 @@ export declare namespace ReactUnity {
       OnDeserialization(sender: any): void;
       Remove(key: string): boolean;
       TryAdd(key: string, value: any): boolean;
-      EnsureCapacity(capacity: number): number;
-      TrimExcess(): void;
-      TrimExcess(capacity: number): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2934,7 +2847,6 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: string): boolean;
       AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
-      AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2961,7 +2873,6 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
@@ -2997,7 +2908,6 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
@@ -3035,7 +2945,6 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       AddListener(cb: any): (() => void);
-      AddListener(cb: any): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -3061,7 +2970,6 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): T;
       Dispose(): void;
@@ -3089,7 +2997,6 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
@@ -3290,7 +3197,6 @@ export declare namespace ReactUnity {
       GetComponentInChildren(t: System.Type): UnityEngine.Component;
       GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
       GetComponentInParent(t: System.Type): UnityEngine.Component;
       GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -3398,6 +3304,7 @@ export declare namespace ReactUnity {
   export namespace StyleEngine {
     export interface IMediaProvider {
       MediaType: string;
+      HasType(type: string): boolean;
       GetValue(property: string): string;
       GetNumericalValue(property: string): number;
       SetValue(property: string, value: string): void;
@@ -3406,9 +3313,10 @@ export declare namespace ReactUnity {
       RecalculateDefaults(): void;
     }
     export class DefaultMediaProvider {
-      constructor(mediaType: string, numbers?: Record<string, number>, values?: Record<string, string>);
+      constructor(mediaType: string, numbers?: Record<string, number>, values?: Record<string, string>, types?: System.Collections.Generic.HashSet<string>);
       MediaType: string;
       static CreateMediaProvider(type: string, framework: string, isEditor: boolean): ReactUnity.StyleEngine.DefaultMediaProvider;
+      HasType(type: string): boolean;
       RecalculateDefaults(): void;
       GetNumericalValue(property: string): number;
       GetValue(property: string): string;
@@ -3581,7 +3489,6 @@ export declare namespace ReactUnity {
       Empty = 26,
       Root = 27,
       Scope = 28,
-      Activatable = 29,
       Blank = 30,
       Enabled = 31,
       Disabled = 32,
@@ -3597,6 +3504,8 @@ export declare namespace ReactUnity {
       Active = 104,
       Enter = 200,
       Leave = 201,
+      Activatable = 300,
+      Text = 301,
       Before = 500,
       After = 501,
       Important = 1000,
@@ -3695,8 +3604,9 @@ export declare namespace ReactUnity {
       CurrentColor = 8,
     }
     export class CssProperties {
-      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
       static TransitionableProperties: any; // System.Collections.Generic.HashSet`1[ReactUnity.Styling.IStyleProperty]
+      static AllProperties: ReactUnity.Styling.IStyleProperty[];
       static GetProperty(name: string): ReactUnity.Styling.IStyleProperty;
       static GetKey(name: string): ReactUnity.Styling.IStyleKey;
       Equals(obj: any): boolean;
@@ -3747,7 +3657,6 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(listener: ((arg0: string, arg1: ReactUnity.Styling.CursorPair, arg2: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
@@ -3802,7 +3711,6 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: ReactUnity.Styling.IStyleProperty): boolean;
       AddListener(listener: ((arg0: ReactUnity.Styling.IStyleProperty, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
-      AddListener(cb: any): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -3836,9 +3744,9 @@ export declare namespace ReactUnity {
       borderTopColor: UnityEngine.Color;
       borderBottomColor: UnityEngine.Color;
       boxShadow: ReactUnity.Types.BoxShadowList;
+      transformOrigin: ReactUnity.Types.YogaValue2;
       translate: ReactUnity.Types.YogaValue2;
       scale: UnityEngine.Vector2;
-      transformOrigin: ReactUnity.Types.YogaValue2;
       rotate: UnityEngine.Vector3;
       fontFamily: ReactUnity.Types.FontReference;
       color: UnityEngine.Color;
@@ -3851,17 +3759,31 @@ export declare namespace ReactUnity {
       textAlign: any; // TMPro.TextAlignmentOptions
       textOverflow: any; // TMPro.TextOverflowModes
       textWrap: boolean;
-      textStrokeColor: UnityEngine.Color;
+      maxLines: number;
       textStrokeWidth: number;
+      textStrokeColor: UnityEngine.Color;
       content: string;
       appearance: ReactUnity.Types.Appearance;
       navigation: UnityEngine.UI.Navigation_Mode;
       stateDuration: number;
-      transition: ReactUnity.Animations.TransitionList;
-      animation: ReactUnity.Animations.AnimationList;
-      audio: ReactUnity.Animations.AudioList;
       objectFit: ReactUnity.Types.ObjectFit;
       objectPosition: ReactUnity.Types.YogaValue2;
+      transitionProperty: ReactUnity.Animations.TransitionProperty[];
+      transitionDuration: number[];
+      transitionTimingFunction: ReactUnity.Animations.TimingFunction[];
+      transitionDelay: number[];
+      transitionPlayState: ReactUnity.Animations.AnimationPlayState[];
+      animationDelay: number[];
+      animationDirection: ReactUnity.Animations.AnimationDirection[];
+      animationDuration: number[];
+      animationFillMode: ReactUnity.Animations.AnimationFillMode[];
+      animationIterationCount: number[];
+      animationName: string[];
+      animationPlayState: ReactUnity.Animations.AnimationPlayState[];
+      animationTimingFunction: ReactUnity.Animations.TimingFunction[];
+      audioClip: ReactUnity.Types.AudioReference[];
+      audioIterationCount: number[];
+      audioDelay: number[];
       Context: ReactUnity.ReactContext;
       Parent: ReactUnity.Styling.NodeStyle;
       UpdateParent(parent: ReactUnity.Styling.NodeStyle): void;
@@ -3894,6 +3816,7 @@ export declare namespace ReactUnity {
       static AlignContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
       static Wrap: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaWrap]
       static Overflow: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaOverflow]
+      static AspectRatio: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static FlexGrow: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static FlexShrink: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static FlexBasis: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
@@ -3903,7 +3826,6 @@ export declare namespace ReactUnity {
       static MinHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
       static MaxWidth: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
       static MaxHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static AspectRatio: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static Left: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
       static Right: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
       static Top: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
@@ -3936,8 +3858,6 @@ export declare namespace ReactUnity {
       static BorderStartWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static BorderEndWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
-      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
-      static AllProperties: ReactUnity.Styling.ILayoutProperty[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3955,17 +3875,15 @@ export declare namespace ReactUnity {
       inherited: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       converter: ReactUnity.Converters.IStyleConverter;
-      GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       Convert(value: any): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
+      GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
       GetType(): System.Type;
       ToString(): string;
     }
     export class StyleProperties {
-      static AllProperties: ReactUnity.Styling.IStyleProperty[];
-      static InheritedProperties: any; // System.Collections.Generic.HashSet`1[System.String]
       static opacity: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
       static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
@@ -4000,19 +3918,32 @@ export declare namespace ReactUnity {
       static textAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextAlignmentOptions]
       static textOverflow: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextOverflowModes]
       static textWrap: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
+      static maxLines: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
       static textStrokeWidth: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static textStrokeColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static content: any; // ReactUnity.Styling.StyleProperty`1[System.String]
       static appearance: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.Appearance]
       static navigation: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.UI.Navigation+Mode]
       static stateDuration: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static transition: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Animations.TransitionList]
-      static animation: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Animations.AnimationList]
-      static audio: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Animations.AudioList]
       static objectFit: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ObjectFit]
       static objectPosition: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
+      static transitionProperty: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.TransitionProperty]
+      static transitionDuration: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
+      static transitionTimingFunction: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.TimingFunction]
+      static transitionDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
+      static transitionPlayState: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.AnimationPlayState]
+      static animationDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
+      static animationDirection: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.AnimationDirection]
+      static animationDuration: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
+      static animationFillMode: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.AnimationFillMode]
+      static animationIterationCount: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Int32]
+      static animationName: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.String]
+      static animationPlayState: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.AnimationPlayState]
+      static animationTimingFunction: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Animations.TimingFunction]
+      static audioClip: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.AudioReference]
+      static audioIterationCount: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Int32]
+      static audioDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
-      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4020,6 +3951,24 @@ export declare namespace ReactUnity {
     }
     export class StyleProperty<T = any> {
       constructor(name: string, initialValue?: any, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Converters.IStyleConverter);
+      name: string;
+      type: System.Type;
+      defaultValue: any; // System.Object
+      transitionable: boolean;
+      inherited: boolean;
+      affectsLayout: boolean;
+      ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+      converter: ReactUnity.Converters.IStyleConverter;
+      Convert(value: any): any;
+      GetHashCode(): number;
+      Equals(obj: any): boolean;
+      GetStyle(style: ReactUnity.Styling.NodeStyle): any;
+      Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ValueListStyleProperty<T = any> {
+      constructor(name: string, initialValue?: any, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Converters.IStyleConverter, baseConverter?: ReactUnity.Converters.IStyleConverter);
       name: string;
       type: System.Type;
       defaultValue: any; // System.Object
@@ -4285,7 +4234,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -4369,7 +4317,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -4517,7 +4464,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -4591,7 +4537,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -4736,7 +4681,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -4763,7 +4707,21 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Shorthands {
+      export class AllShorthand {
+        constructor(name: string);
+        ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+        Name: string;
+        Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class AllShorthands {
+        static All: ReactUnity.Styling.Shorthands.StyleShorthand;
         static Margin: ReactUnity.Styling.Shorthands.StyleShorthand;
         static Padding: ReactUnity.Styling.Shorthands.StyleShorthand;
         static Inset: ReactUnity.Styling.Shorthands.StyleShorthand;
@@ -4781,9 +4739,37 @@ export declare namespace ReactUnity {
         static Background: ReactUnity.Styling.Shorthands.StyleShorthand;
         static Mask: ReactUnity.Styling.Shorthands.StyleShorthand;
         static TextStroke: ReactUnity.Styling.Shorthands.StyleShorthand;
+        static Transition: ReactUnity.Styling.Shorthands.StyleShorthand;
+        static Animation: ReactUnity.Styling.Shorthands.StyleShorthand;
+        static Audio: ReactUnity.Styling.Shorthands.StyleShorthand;
         static Map: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.Shorthands.StyleShorthand]
-        static List: ReactUnity.Styling.Shorthands.StyleShorthand[];
         static GetShorthand(name: string): ReactUnity.Styling.Shorthands.StyleShorthand;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class AnimationShorthand {
+        constructor(name: string);
+        ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+        Name: string;
+        Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class AudioShorthand {
+        constructor(name: string);
+        ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+        Name: string;
+        Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4794,6 +4780,9 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4805,6 +4794,9 @@ export declare namespace ReactUnity {
         Side: ReactUnity.Styling.Shorthands.BorderShorthand_BorderSide;
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4815,6 +4807,9 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4825,6 +4820,9 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4835,6 +4833,9 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4847,6 +4848,9 @@ export declare namespace ReactUnity {
         Converter: ReactUnity.Converters.IStyleConverter;
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4857,6 +4861,9 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4866,6 +4873,9 @@ export declare namespace ReactUnity {
         constructor(name: string);
         Name: string;
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -4877,6 +4887,22 @@ export declare namespace ReactUnity {
         ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
         Name: string;
         Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TransitionShorthand {
+        constructor(name: string);
+        ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+        Name: string;
+        Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        ClearValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
+        SetAllValues(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+        SetAllValuesDefault(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>): ReactUnity.Styling.IStyleProperty[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -5023,6 +5049,65 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class CssValueList<T = any> {
+      constructor();
+      constructor(item: T);
+      constructor(items: T[]);
+      [key: string]: any;
+      Capacity: number;
+      Count: number;
+      static Empty: any[];
+      Get(index: number, defaultValue?: T): T;
+      Add(item: T): void;
+      AddRange(collection: System.Collections.Generic.IEnumerable<T>): void;
+      AsReadOnly(): T[];
+      BinarySearch(index: number, count: number, item: T, comparer: System.Collections.Generic.IComparer<T>): number;
+      BinarySearch(item: T): number;
+      BinarySearch(item: T, comparer: System.Collections.Generic.IComparer<T>): number;
+      Clear(): void;
+      Contains(item: T): boolean;
+      CopyTo(array: T[]): void;
+      CopyTo(index: number, array: T[], arrayIndex: number, count: number): void;
+      CopyTo(array: T[], arrayIndex: number): void;
+      Exists(match: System.Predicate<T>): boolean;
+      Find(match: System.Predicate<T>): T;
+      FindAll(match: System.Predicate<T>): T[];
+      FindIndex(match: System.Predicate<T>): number;
+      FindIndex(startIndex: number, match: System.Predicate<T>): number;
+      FindIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
+      FindLast(match: System.Predicate<T>): T;
+      FindLastIndex(match: System.Predicate<T>): number;
+      FindLastIndex(startIndex: number, match: System.Predicate<T>): number;
+      FindLastIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
+      ForEach(action: ((arg0: T) => void)): void;
+      GetEnumerator(): System.Collections.Generic.List<T>;
+      GetRange(index: number, count: number): T[];
+      IndexOf(item: T): number;
+      IndexOf(item: T, index: number): number;
+      IndexOf(item: T, index: number, count: number): number;
+      Insert(index: number, item: T): void;
+      InsertRange(index: number, collection: System.Collections.Generic.IEnumerable<T>): void;
+      LastIndexOf(item: T): number;
+      LastIndexOf(item: T, index: number): number;
+      LastIndexOf(item: T, index: number, count: number): number;
+      Remove(item: T): boolean;
+      RemoveAll(match: System.Predicate<T>): number;
+      RemoveAt(index: number): void;
+      RemoveRange(index: number, count: number): void;
+      Reverse(): void;
+      Reverse(index: number, count: number): void;
+      Sort(): void;
+      Sort(comparer: System.Collections.Generic.IComparer<T>): void;
+      Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<T>): void;
+      Sort(comparison: System.Comparison<T>): void;
+      ToArray(): T[];
+      TrimExcess(): void;
+      TrueForAll(match: System.Predicate<T>): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class CursorList {
       constructor(definition: string);
       constructor(item: ReactUnity.Types.Cursor);
@@ -5061,11 +5146,9 @@ export declare namespace ReactUnity {
       constructor(other: ReactUnity.Types.FontSource);
       constructor(font: UnityEngine.Font);
       constructor(font: any);
-      constructor(font: UnityEngine.TextCore.Text.FontAsset);
       Valid: boolean;
       Font: UnityEngine.Font;
       TmpFontAsset: any; // TMPro.TMP_FontAsset
-      TextCoreFontAsset: UnityEngine.TextCore.Text.FontAsset;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5258,6 +5341,8 @@ export declare namespace ReactUnity {
   export namespace UGUI {
     export class AnchorComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext);
+      Url: string;
+      OpenInThisTab: boolean;
       Disabled: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -5298,8 +5383,6 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
-      url: string;
-      openInThisTab: boolean;
       SetProperty(propertyName: string, value: any): void;
       OpenUrl(openInNewTab: boolean): void;
       Activate(): void;
@@ -7178,7 +7261,6 @@ export declare namespace ReactUnity {
       GetComponentInChildren(t: System.Type): UnityEngine.Component;
       GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
       GetComponentInParent(t: System.Type): UnityEngine.Component;
       GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7307,7 +7389,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7378,7 +7459,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7458,7 +7538,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7537,7 +7616,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7608,7 +7686,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7680,7 +7757,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7752,7 +7828,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7829,7 +7904,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7950,7 +8024,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8022,7 +8095,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8056,7 +8128,6 @@ export declare namespace ReactUnity {
         GetPersistentTarget(index: number): UnityEngine.Object;
         GetPersistentMethodName(index: number): string;
         SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
-        GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
         RemoveAllListeners(): void;
         ToString(): string;
         Equals(obj: any): boolean;
@@ -8111,7 +8182,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8182,7 +8252,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8253,7 +8322,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8324,7 +8392,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8395,7 +8462,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8466,7 +8532,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8538,7 +8603,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8626,7 +8690,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8697,7 +8760,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8768,7 +8830,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8839,7 +8900,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8910,7 +8970,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8981,7 +9040,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9052,7 +9110,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9124,7 +9181,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9207,7 +9263,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9278,7 +9333,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9349,7 +9403,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9420,7 +9473,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9494,7 +9546,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9568,7 +9619,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9640,7 +9690,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9712,7 +9761,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9782,7 +9830,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9854,7 +9901,6 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -11027,7 +11073,6 @@ export declare namespace ReactUnity {
       parent: UnityEngine.UIElements.VisualElement;
       panel: UnityEngine.UIElements.IPanel;
       contentContainer: UnityEngine.UIElements.VisualElement;
-      visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
       childCount: number;
       schedule: UnityEngine.UIElements.IVisualElementScheduler;
       style: UnityEngine.UIElements.IStyle;
@@ -11080,91 +11125,6 @@ export declare namespace ReactUnity {
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
-      GetType(): System.Type;
-    }
-    export class ReactUnityUIDocument {
-      constructor();
-      Root: UnityEngine.UIElements.VisualElement;
-      MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
-      Context: ReactUnity.ReactContext;
-      dispatcher: ReactUnity.Scheduling.IDispatcher;
-      timer: ReactUnity.Scheduling.ITimer;
-      runner: ReactUnity.ReactUnityRunner;
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      Script: ReactUnity.ScriptSource;
-      Debug: boolean;
-      AwaitDebugger: boolean;
-      EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
-      AutoRender: boolean;
-      BeforeStart: ReactUnity.ReactUnityBase_ReactUnityRunnerEvent;
-      AfterStart: ReactUnity.ReactUnityBase_ReactUnityRunnerEvent;
-      PlayAudio(clip: UnityEngine.AudioClip): void;
-      Render(): void;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: any): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: any): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: any): boolean;
-      ToString(): string;
       GetType(): System.Type;
     }
     export class ResourcesHelper {
