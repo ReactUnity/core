@@ -1,5 +1,4 @@
-import { ObjectFit } from '.';
-import { Appearance, BackgroundBlendMode, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextAlign, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
 import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -16,7 +15,6 @@ export interface RenderStyle {
   backgroundBlendMode?: BackgroundBlendMode;
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
-  mask?: AssetReference;
   maskImage?: AssetReference;
 
   borderRadius?: NumberAux;
@@ -40,9 +38,6 @@ export interface RenderStyle {
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
 
-  animation?: string;
-  transition?: string;
-  audio?: string;
   stateDuration?: number;
 
   // Inherited styles
@@ -59,8 +54,28 @@ export interface RenderStyle {
   lineHeight?: number;
   letterSpacing?: number;
   wordSpacing?: number;
+  maxLines?: number;
+
+  transitionProperty: keyof RenderStyle | string;
+  transitionDuration: number | string;
+  transitionTimingFunction: TimingFunctionType | string;
+  transitionDelay: number | string;
+  transitionPlayState: AnimationPlayState | string;
+  animationDelay: number | string;
+  animationDirection: AnimationDirection | string;
+  animationDuration: number | string;
+  animationFillMode: AnimationFillMode | string;
+  animationIterationCount: number | string;
+  animationName: string | string;
+  animationPlayState: AnimationPlayState | string;
+  animationTimingFunction: TimingFunctionType | string;
+  audioClip: AssetReference;
+  audioIterationCount: number | string;
+  audioDelay: number | string;
 
   // Shorthands
+  all?: string;
+  background?: string;
   border?: string;
   borderTop?: string;
   borderRight?: string;
@@ -68,12 +83,16 @@ export interface RenderStyle {
   borderLeft?: string;
   borderWidth?: string;
   margin?: string;
+  mask?: string;
   padding?: string;
   inset?: string;
   flex?: string;
   flexFlow?: string;
   font?: string;
   textStroke?: string;
+  animation?: string;
+  transition?: string;
+  audio?: string;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;

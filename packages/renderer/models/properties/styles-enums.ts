@@ -28,3 +28,8 @@ export type TextAlign = 'top-left' | 'top' | 'top-right' | 'top-justified' | 'to
   | 'baseline-right' | 'baseline-justified' | 'baseline-flush' | 'baseline-geo-aligned' | 'midline-left' | 'midline'
   | 'midline-right' | 'midline-justified' | 'midline-flush' | 'midline-geo-aligned' | 'capline-left' | 'capline'
   | 'capline-right' | 'capline-justified' | 'capline-flush' | 'capline-geo-aligned' | 'converted';
+
+export type TimingFunctionType = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'step-start' | 'step-end';
+export type AnimationFillMode = 'none' | 'both' | 'forwards' | 'backwards';
+export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+export type AnimationPlayState = 'running' | 'paused';
