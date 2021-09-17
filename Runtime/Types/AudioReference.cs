@@ -46,12 +46,13 @@ namespace ReactUnity.Types
             var www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
             yield return www.SendWebRequest();
 
-            if (www.isDone)
+            AudioClip result = null;
+            try
             {
-                var result = DownloadHandlerAudioClip.GetContent(www);
-                callback(result);
+                result = DownloadHandlerAudioClip.GetContent(www);
             }
-            else callback(null);
+            catch { }
+            callback(result);
         }
 
         public override void Dispose()
