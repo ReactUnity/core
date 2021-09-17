@@ -17,7 +17,7 @@ namespace ReactUnity.UGUI
             get => InputField.text;
             set
             {
-                InputField.text = value;
+                InputField.SetTextWithoutNotify(value);
                 MarkStyleUpdateWithSiblings(true);
             }
         }

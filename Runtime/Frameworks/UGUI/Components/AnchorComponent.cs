@@ -9,8 +9,8 @@ namespace ReactUnity.UGUI
     {
         AnchorClickHandler clickHandler;
 
-        public string url = "";
-        public bool openInThisTab = false;
+        public string Url { get; set; } = "";
+        public bool OpenInThisTab { get; set; } = false;
 
         private bool disabled;
         public bool Disabled
@@ -38,10 +38,10 @@ namespace ReactUnity.UGUI
                     Disabled = System.Convert.ToBoolean(value);
                     return;
                 case "url":
-                    url = Convert.ToString(value);
+                    Url = Convert.ToString(value);
                     return;
                 case "openInThisTab":
-                    openInThisTab = Convert.ToBoolean(value);
+                    OpenInThisTab = Convert.ToBoolean(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -54,11 +54,11 @@ namespace ReactUnity.UGUI
             if (Disabled) return;
             // TODO: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
             if (ev.used) return;
-            if (string.IsNullOrWhiteSpace(url)) return;
+            if (string.IsNullOrWhiteSpace(Url)) return;
 
             var pe = ev as PointerEventData;
 
-            var openInNewTab = pe.button != PointerEventData.InputButton.Left || !openInThisTab;
+            var openInNewTab = pe.button != PointerEventData.InputButton.Left || !OpenInThisTab;
             OpenUrl(openInNewTab);
         }
 
@@ -66,19 +66,19 @@ namespace ReactUnity.UGUI
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             if(openInNewTab) {
-                openWindow(url);
+                openWindow(Url);
             } else {
-                Application.OpenURL(url);
+                Application.OpenURL(Url);
             }
 #else
-            Application.OpenURL(url);
+            Application.OpenURL(Url);
 #endif
         }
 
         public void Activate()
         {
             if (Disabled) return;
-            OpenUrl(!openInThisTab);
+            OpenUrl(!OpenInThisTab);
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR

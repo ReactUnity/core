@@ -8,6 +8,7 @@ using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using ReactUnity.UGUI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ReactUnity.Tests
 {
@@ -15,6 +16,8 @@ namespace ReactUnity.Tests
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
     public abstract class TestBase
     {
+        protected InputTestFixture Input { get; private set; }
+
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
         protected ReactUnityRunner Runner => Component?.runner;
@@ -66,6 +69,26 @@ namespace ReactUnity.Tests
         public IEnumerator WaitForEndOfFrame()
         {
             yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
+        }
+
+        public InputTestFixture SetupInput()
+        {
+            Input?.TearDown();
+            Input = new InputTestFixture();
+            Input.Setup();
+            return Input;
+        }
+
+        public void TeardownInput()
+        {
+            Input?.TearDown();
+            Input = null;
+        }
+
+        [TearDown]
+        void TearDown()
+        {
+            TeardownInput();
         }
     }
 }

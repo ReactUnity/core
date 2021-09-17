@@ -1,13 +1,14 @@
 {
     "name": "ReactUnity.Tests",
-    "rootNamespace": "ReactUnity.Tests",
     "references": [
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
         "GUID:0acc523941302664db1f4e527237feb3",
-        "GUID:ed4a920eac98dc342ba18a6baa202849",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:dc04f38471c3a459fb4d31124ee9127d",
+        "GUID:3ae5734e49d646442ad24f37762ebdd2",
         "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:ed4a920eac98dc342ba18a6baa202849",
         "GUID:347a20883bb61d74abf78fec0515bb21",
         "GUID:f3df39452b4b85c48b166389e7ca3670"
     ],

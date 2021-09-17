@@ -133,8 +133,6 @@ namespace ReactUnity.Helpers
             return () => changed -= listener;
         }
 
-        public Action AddListener(Jint.Native.JsValue cb) => AddListener(cb as object);
-
         public T GetValueOrDefault(TKey key)
         {
             if (!TryGetValue(key, out var value)) value = default;

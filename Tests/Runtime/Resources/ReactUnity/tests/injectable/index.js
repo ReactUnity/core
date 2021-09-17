@@ -181,7 +181,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modal_host__3wZhR{z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background-color:rgba(0,0,0,.45);overflow:auto;overscroll-behavior:contain;position:absolute;left:0;right:0;top:0;bottom:0;min-width:100%;min-height:100%}.modal_host__3wZhR.modal_opened__2ROvb{animation:modal_appearAnim__1Vlgf 400ms both}.modal_host__3wZhR.modal_closed__2u4cg{animation:modal_closeAnim__1Sy9u 200ms both;pointer-events:none}.modal_host__3wZhR:after{content:\"\";opacity:0;flex-grow:0;flex-shrink:1;flex-basis:30%}@keyframes modal_appearAnim__1Vlgf{from{opacity:0}to{opacity:1}}@keyframes modal_closeAnim__1Sy9u{from{opacity:1}to{opacity:0}}.modal_content__1zFXq{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);font-size:1rem;box-sizing:border-box;position:relative;z-index:1001;background-color:#fff;border-radius:4px;white-space:pre-wrap;margin:auto}.modal_close__HRGZX{border-radius:50%;background-color:#bfbcbc;color:#000;box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);position:absolute;transform:translate(50%, -50%) scale(0.8);padding:4px;right:2px;top:2px;display:flex}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".modal_host__3wZhR{z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background-color:rgba(0,0,0,.45);overflow:auto;overscroll-behavior:contain;position:absolute;left:0;right:0;top:0;bottom:0;min-width:100%;min-height:100%}.modal_host__3wZhR.modal_opened__2ROvb{animation:modal_appearAnim__1Vlgf 400ms both}.modal_host__3wZhR:not(.modal_opened__2ROvb){pointer-events:none}.modal_host__3wZhR.modal_closed__2u4cg{animation:modal_closeAnim__1Sy9u 200ms both}.modal_host__3wZhR:after{content:\"\";opacity:0;flex-grow:0;flex-shrink:1;flex-basis:30%}@keyframes modal_appearAnim__1Vlgf{from{opacity:0}to{opacity:1}}@keyframes modal_closeAnim__1Sy9u{from{opacity:1}to{opacity:0}}.modal_content__1zFXq{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);font-size:1rem;box-sizing:border-box;position:relative;z-index:1001;background-color:#fff;border-radius:4px;white-space:pre-wrap;margin:auto}.modal_close__HRGZX{border-radius:50%;background-color:#bfbcbc;color:#000;box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);position:absolute;transform:translate(50%, -50%) scale(0.8);padding:4px;right:2px;top:2px;display:flex}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "modal_host__3wZhR",
@@ -8113,7 +8113,7 @@ function Modal(_a) {
   };
 
   var onAnimationEnd = function onAnimationEnd(ev) {
-    if (ev.Animation.Name === src_modal_index_module.closeAnim && portalRef.current) {
+    if (ev.AnimationName === src_modal_index_module.closeAnim && portalRef.current) {
       portalRef.current.SetProperty('active', false);
     }
   };
@@ -9796,20 +9796,17 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
-var dictionary_watcher_assign = undefined && undefined.__assign || function () {
-  dictionary_watcher_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
+var dictionary_watcher_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
 
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
 
-    return t;
-  };
-
-  return dictionary_watcher_assign.apply(this, arguments);
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
 };
 
 
@@ -9844,10 +9841,12 @@ function createDictionaryWatcher(dictionary, displayName) {
       return function () {
         return remove === null || remove === void 0 ? void 0 : remove();
       };
-    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
-
+    }, []);
     var value = react.useMemo(function () {
-      return dictionary_watcher_assign({}, dictionary);
+      var AddListener = dictionary.AddListener,
+          props = dictionary_watcher_rest(dictionary, ["AddListener"]);
+
+      return props; // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [render]);
     return react.createElement(ctx.Provider, {
       value: value
