@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WebInjectable.unity
     guid: 7538a29573b1e994099b6ccbe6757a39
   - enabled: 0
     path: Assets/Scenes/WebInspector.unity
     guid: 4618dbd3ce4fa5d4e80c5c69d344b40f
-  - enabled: 0
+  - enabled: 1
     path: Assets/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:

@@ -16,7 +16,7 @@
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
-    "target": "ES5",
+    "target": "ESNext",
     "skipLibCheck": true,
     "lib": [],
     "preserveConstEnums": true,

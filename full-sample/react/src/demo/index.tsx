@@ -1,11 +1,9 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
 import { Renderer } from '@reactunity/renderer';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from 'src/store';
+import { persistor, store } from 'src/demo/store';
 import { Redux } from './redux';
 
 function App() {

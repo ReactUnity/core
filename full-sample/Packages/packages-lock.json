@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "0.5.4",
+      "version": "0.6.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -54,6 +54,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.mobile.android-logcat": {
+      "version": "1.2.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.subsystemregistration": {
       "version": "1.1.0",
       "depth": 2,
@@ -93,7 +100,7 @@
       }
     },
     "com.unity.xr.interaction.toolkit": {
-      "version": "1.0.0-pre.5",
+      "version": "1.0.0-pre.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -106,7 +113,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.8",
+      "version": "2.1.7",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -116,7 +123,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.management": {
-      "version": "4.0.7",
+      "version": "4.0.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {

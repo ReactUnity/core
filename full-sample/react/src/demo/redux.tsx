@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCount, increment, decrement } from 'src/store';
+import { decrement, increment, selectCount } from 'src/demo/store';
 
 export function Redux() {
   const dispatch = useDispatch();
