@@ -1,5 +1,4 @@
 using System;
-using Jint.Native;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
@@ -146,11 +145,6 @@ namespace ReactUnity.Editor.Renderer
             return () => SelectionChange -= callback;
         }
 
-        public Action AddSelectionChange(JsValue cb)
-        {
-            return AddSelectionChange(cb as object);
-        }
-
         public Action AddPlayModeStateChange(object cb)
         {
             var cbObject = new Callback(cb);
@@ -159,22 +153,12 @@ namespace ReactUnity.Editor.Renderer
             return () => EditorApplication.playModeStateChanged -= callback;
         }
 
-        public Action AddPlayModeStateChange(JsValue cb)
-        {
-            return AddPlayModeStateChange(cb as object);
-        }
-
         public Action AddVisibilityChange(object cb)
         {
             var cbObject = new Callback(cb);
             var callback = new Action<bool, ReactWindow>((arg1, arg2) => cbObject.Call(arg1, arg2));
             VisibilityChange += callback;
             return () => VisibilityChange -= callback;
-        }
-
-        public Action AddVisibilityChange(JsValue cb)
-        {
-            return AddVisibilityChange(cb as object);
         }
 
         public void AddItemsToMenu(GenericMenu menu)

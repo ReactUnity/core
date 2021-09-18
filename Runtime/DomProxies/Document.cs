@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Jint.Native;
 using ReactUnity.Helpers;
 using ReactUnity.StyleEngine;
 
@@ -109,23 +108,10 @@ namespace ReactUnity.DomProxies
         private Callback onloadCallback { get; set; }
         private Callback onerrorCallback { get; set; }
 
-        public JsValue Onload
-        {
-            set { onload = value; }
-            get => null;
-        }
-
         public object onload
         {
             set { onloadCallback = new Callback(value); }
             get => new Action(() => onloadCallback.Call());
-        }
-
-
-        public JsValue Onerror
-        {
-            set { onerror = value; }
-            get => null;
         }
 
         public object onerror

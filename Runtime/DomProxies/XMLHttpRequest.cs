@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Jint;
 using ReactUnity.Helpers;
 using UnityEngine.Networking;
 
@@ -103,10 +102,9 @@ namespace ReactUnity.DomProxies
             requestHandle = null;
         }
 
-        public void send(object o)
+        public void send(IDictionary<string, object> o)
         {
-            var args = o as Jint.Native.Object.ObjectInstance;
-            options = extractOptions(args);
+            options = extractOptions(o);
             url = new Uri(origin + options["url"]);
 
             req = UnityWebRequest.Get(url);
@@ -193,7 +191,7 @@ namespace ReactUnity.DomProxies
             return responseHeaders;
         }
 
-        private Dictionary<string, string> extractOptions(Jint.Native.Object.ObjectInstance args)
+        private Dictionary<string, string> extractOptions(IDictionary<string, object> args)
         {
             var defaults = new Dictionary<string, string>() {
                 { "url", null },
@@ -218,7 +216,7 @@ namespace ReactUnity.DomProxies
             {
                 foreach (string key in defaults.Keys)
                 {
-                    options.Add(key, args.Get(key).AsString());
+                    if (args.TryGetValue(key, out var val)) options.Add(key, val?.ToString());
                 }
             }
             string value;

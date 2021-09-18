@@ -9796,17 +9796,20 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
-var dictionary_watcher_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
+var dictionary_watcher_assign = undefined && undefined.__assign || function () {
+  dictionary_watcher_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
 
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
 
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
+    return t;
+  };
+
+  return dictionary_watcher_assign.apply(this, arguments);
 };
 
 
@@ -9841,12 +9844,10 @@ function createDictionaryWatcher(dictionary, displayName) {
       return function () {
         return remove === null || remove === void 0 ? void 0 : remove();
       };
-    }, []);
-    var value = react.useMemo(function () {
-      var AddListener = dictionary.AddListener,
-          props = dictionary_watcher_rest(dictionary, ["AddListener"]);
+    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
-      return props; // eslint-disable-next-line react-hooks/exhaustive-deps
+    var value = react.useMemo(function () {
+      return dictionary_watcher_assign({}, dictionary);
     }, [render]);
     return react.createElement(ctx.Provider, {
       value: value

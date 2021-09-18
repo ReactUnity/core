@@ -1,5 +1,4 @@
 using System;
-using Jint.Native;
 using ReactUnity.Helpers;
 
 namespace ReactUnity.DomProxies
@@ -17,14 +16,12 @@ namespace ReactUnity.DomProxies
 
         private ReactContext context;
 
-        public JsValue Onmessage { set => onmessage = value; }
         public object onmessage
         {
             set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData) })); }
             get => null;
         }
 
-        public JsValue Onclose { set => onclose = value; }
         public object onclose
         {
             set
@@ -37,14 +34,12 @@ namespace ReactUnity.DomProxies
             get => null;
         }
 
-        public JsValue Onopen { set => onopen = value; }
         public object onopen
         {
             set { socket.OnOpen += () => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call()); }
             get => null;
         }
 
-        public JsValue Onerror { set => onerror = value; }
         public object onerror
         {
             set { socket.OnError += (message) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { message })); }
