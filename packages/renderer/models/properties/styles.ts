@@ -56,22 +56,22 @@ export interface RenderStyle {
   wordSpacing?: number;
   maxLines?: number;
 
-  transitionProperty: keyof RenderStyle | string;
-  transitionDuration: number | string;
-  transitionTimingFunction: TimingFunctionType | string;
-  transitionDelay: number | string;
-  transitionPlayState: AnimationPlayState | string;
-  animationDelay: number | string;
-  animationDirection: AnimationDirection | string;
-  animationDuration: number | string;
-  animationFillMode: AnimationFillMode | string;
-  animationIterationCount: number | string;
-  animationName: string | string;
-  animationPlayState: AnimationPlayState | string;
-  animationTimingFunction: TimingFunctionType | string;
-  audioClip: AssetReference;
-  audioIterationCount: number | string;
-  audioDelay: number | string;
+  transitionProperty?: keyof RenderStyle | string;
+  transitionDuration?: number | string;
+  transitionTimingFunction?: TimingFunctionType | string;
+  transitionDelay?: number | string;
+  transitionPlayState?: AnimationPlayState | string;
+  animationDelay?: number | string;
+  animationDirection?: AnimationDirection | string;
+  animationDuration?: number | string;
+  animationFillMode?: AnimationFillMode | string;
+  animationIterationCount?: number | string;
+  animationName?: string | string;
+  animationPlayState?: AnimationPlayState | string;
+  animationTimingFunction?: TimingFunctionType | string;
+  audioClip?: AssetReference;
+  audioIterationCount?: number | string;
+  audioDelay?: number | string;
 
   // Shorthands
   all?: string;
