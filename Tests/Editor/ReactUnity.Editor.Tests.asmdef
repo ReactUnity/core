@@ -8,7 +8,8 @@
         "ReactUnity.Editor",
         "ReactUnity.UGUI",
         "ReactUnity.UIToolkit",
-        "ReactUnity.Tests"
+        "ReactUnity.Tests",
+        "Facebook.Yoga"
     ],
     "includePlatforms": [
         "Editor"
