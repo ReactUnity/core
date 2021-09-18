@@ -2,19 +2,27 @@
 #define REACT_CLEARSCRIPT
 #endif
 
+#if !REACT_DISABLE_JINT
+#define REACT_JINT
+#endif
+
 using System;
 using System.Linq;
+
+#if REACT_JINT
 using Jint;
 using Jint.Native;
 using Jint.Native.Function;
-using Jint.Runtime.Interop;
+#endif
 
 namespace ReactUnity.Helpers
 {
     public class Callback
     {
         public object callback;
+#if REACT_JINT
         public Engine Engine;
+#endif
 
         public static Callback From(object value, bool checkCallable = false)
         {
@@ -26,7 +34,9 @@ namespace ReactUnity.Helpers
             if (checkCallable)
             {
                 var callable =
+#if REACT_JINT
                  (value as JsValue)?.As<FunctionInstance>() != null ||
+#endif
 #if REACT_CLEARSCRIPT
                 (value is Microsoft.ClearScript.ScriptObject so) ||
 #endif
@@ -40,6 +50,7 @@ namespace ReactUnity.Helpers
             return new Callback(value);
         }
 
+#if REACT_JINT
         public Callback(Func<JsValue, JsValue[], JsValue> callback, Engine engine)
         {
             this.callback = callback;
@@ -50,6 +61,7 @@ namespace ReactUnity.Helpers
         {
             this.callback = callback;
         }
+#endif
 
         public Callback(object callback)
         {
@@ -66,15 +78,21 @@ namespace ReactUnity.Helpers
             if (callback == null) return null;
             if (args == null) args = new object[0];
 
-            if (callback is JsValue v)
+            if (callback is Callback c)
             {
-                var c = v.As<FunctionInstance>();
-                return c.Invoke(args.Select(x => JsValue.FromObject(c.Engine, x)).ToArray());
+                return c.Call(args);
+            }
+#if REACT_JINT
+            else if (callback is JsValue v)
+            {
+                var fi = v.As<FunctionInstance>();
+                return fi.Invoke(args.Select(x => JsValue.FromObject(fi.Engine, x)).ToArray());
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
             {
                 return cb.Invoke(JsValue.Null, args.Select(x => JsValue.FromObject(Engine, x)).ToArray());
             }
+#endif
             else if (callback is Delegate d)
             {
                 var parameters = d.Method.GetParameters();
@@ -83,10 +101,6 @@ namespace ReactUnity.Helpers
                 if (args.Length < argCount) args = args.Concat(new object[argCount - args.Length]).ToArray();
                 if (args.Length > argCount) args = args.Take(argCount).ToArray();
                 return d.DynamicInvoke(args);
-            }
-            else if (callback is Callback c)
-            {
-                return c.Call(args);
             }
 #if REACT_CLEARSCRIPT
             else if (callback is Microsoft.ClearScript.ScriptObject so)
@@ -97,34 +111,6 @@ namespace ReactUnity.Helpers
             else
             {
                 return null;
-            }
-        }
-
-        public class JintCallbackConverter : DefaultTypeConverter
-        {
-            private Engine Engine;
-
-            public JintCallbackConverter(Engine engine) : base(engine)
-            {
-                Engine = engine;
-            }
-
-            public override object Convert(object value, Type type, IFormatProvider formatProvider)
-            {
-                if (type == typeof(Callback) || type == typeof(object))
-                {
-                    if (value is Func<JsValue, JsValue[], JsValue> cb)
-                    {
-                        return new Callback(cb, Engine);
-                    }
-
-                    if (value is FunctionInstance fi)
-                    {
-                        return new Callback(fi);
-                    }
-                }
-
-                return base.Convert(value, type, formatProvider);
             }
         }
     }

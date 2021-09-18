@@ -74,36 +74,24 @@ namespace ReactUnity
 
         public void setProperty(object element, string property, object value)
         {
-#if REACT_CLEARSCRIPT
-            value = value is Microsoft.ClearScript.Undefined ? null : value;
-#endif
             if (element is IReactComponent c)
                 c.SetProperty(property, value);
         }
 
         public void setData(object element, string property, object value)
         {
-#if REACT_CLEARSCRIPT
-            value = value is Microsoft.ClearScript.Undefined ? null : value;
-#endif
             if (element is IReactComponent c)
                 c.SetData(property, value);
         }
 
         public void setEventListener(object element, string eventType, object value)
         {
-#if REACT_CLEARSCRIPT
-            value = value is Microsoft.ClearScript.Undefined ? null : value;
-#endif
             if (element is IReactComponent c)
                 c.SetEventListener(eventType, Callback.From(value));
         }
 
         public System.Action addEventListener(object element, string eventType, object value)
         {
-#if REACT_CLEARSCRIPT
-            value = value is Microsoft.ClearScript.Undefined ? null : value;
-#endif
             if (value == null) return null;
             if (element is IReactComponent c)
                 return c.AddEventListener(eventType, Callback.From(value));

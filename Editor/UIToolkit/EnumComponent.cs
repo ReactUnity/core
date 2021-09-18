@@ -43,7 +43,7 @@ namespace ReactUnity.Editor.UIToolkit
 
         void SetValue(object val, bool initialize = false)
         {
-            if (val == null || val == Microsoft.ClearScript.Undefined.Value) val = 0;
+            if (val == null) val = 0;
             Enum en = (Enum) Enum.ToObject(type, Convert.ChangeType(val, type.GetEnumUnderlyingType()));
 
             if (initialize)

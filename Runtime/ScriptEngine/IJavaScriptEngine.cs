@@ -1,3 +1,11 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#define REACT_CLEARSCRIPT
+#endif
+
+#if !REACT_DISABLE_JINT
+#define REACT_JINT
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,7 +15,15 @@ namespace ReactUnity.ScriptEngine
     public enum JavascriptEngineType
     {
         Auto = 0,
+
+#if !REACT_JINT
+        [UnityEngine.InspectorName("Jint (Disabled)")]
+#endif
         Jint = 1,
+
+#if !REACT_CLEARSCRIPT
+        [UnityEngine.InspectorName("ClearScript (Disabled)")]
+#endif
         ClearScript = 2,
     }
 

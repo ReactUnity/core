@@ -1,3 +1,7 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#define REACT_CLEARSCRIPT
+#endif
+
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build;
@@ -9,11 +13,13 @@ namespace ReactUnity.Editor
     {
         public int callbackOrder => 0;
 
+#if REACT_CLEARSCRIPT
         private static string ClearScriptDllPathTemplate = "Packages/com.reactunity.core/Plugins/ClearScript/ClearScriptV8.{0}";
+#endif
 
         public void OnPostprocessBuild(BuildReport report)
         {
-#if !REACT_DISABLE_CLEARSCRIPT
+#if REACT_CLEARSCRIPT
             if (report.summary.platformGroup == BuildTargetGroup.Standalone)
             {
                 var buildDir = Path.GetDirectoryName(report.summary.outputPath);

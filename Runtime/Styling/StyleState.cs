@@ -261,7 +261,7 @@ namespace ReactUnity.Styling
                             }
                             else
                             {
-                                propertyTransitionStates[sp.name] = null;
+                                propertyTransitionStates.Remove(sp.name);
                                 continue;
                             }
                         }
@@ -280,7 +280,7 @@ namespace ReactUnity.Styling
                             }
                             else
                             {
-                                propertyTransitionStates[sp.name] = null;
+                                propertyTransitionStates.Remove(sp.name);
                                 continue;
                             }
                         }

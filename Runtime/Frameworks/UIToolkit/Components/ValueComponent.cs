@@ -1,7 +1,3 @@
-#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
-#define REACT_CLEARSCRIPT
-#endif
-
 using System;
 using ReactUnity.Helpers;
 using UnityEngine.UIElements;
@@ -48,9 +44,6 @@ namespace ReactUnity.UIToolkit
         public TValueType ConvertValue(object value)
         {
             if (value == null) return default;
-#if REACT_CLEARSCRIPT
-            if (value == Microsoft.ClearScript.Undefined.Value) return default;
-#endif
             if (value is TValueType val) return val;
             return (TValueType) Convert.ChangeType(value, typeof(TValueType));
         }

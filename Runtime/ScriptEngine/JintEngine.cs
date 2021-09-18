@@ -1,3 +1,8 @@
+#if !REACT_DISABLE_JINT
+#define REACT_JINT
+#endif
+
+#if REACT_JINT
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -7,7 +12,6 @@ using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.ScriptEngine
@@ -38,7 +42,7 @@ namespace ReactUnity.ScriptEngine
 
                 opt.DebugMode(debug);
 
-                opt.SetTypeConverter(e => new Callback.JintCallbackConverter(e));
+                opt.SetTypeConverter(e => new JintTypeConverter(e));
             });
 
             var deferred = Engine.RegisterPromise();
@@ -144,3 +148,4 @@ namespace ReactUnity.ScriptEngine
         }
     }
 }
+#endif
