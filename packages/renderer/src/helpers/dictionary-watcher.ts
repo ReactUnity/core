@@ -59,11 +59,8 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
       return () => remove?.();
     }, []);
 
-    const value: any = React.useMemo(() => {
-      const { AddListener, ...props } = dictionary;
-      return props;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [render]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const value: any = React.useMemo(() => ({ ...dictionary }), [render]);
 
     return React.createElement(ctx.Provider, { value }, children);
   };
