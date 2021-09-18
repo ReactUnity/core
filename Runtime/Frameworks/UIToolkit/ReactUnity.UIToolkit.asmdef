@@ -13,7 +13,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "UNITY_EDITOR || UNITY_2021_2_OR_NEWER"
+        "UNITY_EDITOR || UNITY_2021_2_OR_NEWER",
+        "UNITY_EDITOR || !REACT_DISABLE_UITOOLKIT"
     ],
     "versionDefines": [
         {
