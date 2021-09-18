@@ -85,9 +85,23 @@ namespace ReactUnity.Editor.Developer
         {
             GenerateWith(
                 new List<Assembly> { typeof(ReactContext).Assembly, typeof(TypescriptModelsGenerator).Assembly, typeof(ReactUnity.UGUI.UGUIContext).Assembly, typeof(ReactUnity.UIToolkit.UIToolkitContext).Assembly, },
-                new List<string> { "ReactUnity", "Facebook.Yoga" },
+                new List<string> { "ReactUnity" },
                 new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
+                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                new List<string> { },
+                true,
+                true
+            );
+        }
+
+        [UnityEditor.MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
+        public static void GenerateYoga()
+        {
+            GenerateWith(
+                new List<Assembly> { typeof(Facebook.Yoga.YogaNode).Assembly, },
+                new List<string> { "Facebook.Yoga" },
+                new List<string> { },
+                new Dictionary<string, string> { { "System", "./system" } },
                 new List<string> { },
                 true,
                 true

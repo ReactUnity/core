@@ -2,13 +2,14 @@
     "name": "ReactUnity.Editor",
     "rootNamespace": "ReactUnity.Editor",
     "references": [
-        "GUID:ed4a920eac98dc342ba18a6baa202849",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:68550284b645f4b9894995579f34290a",
         "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:ed4a920eac98dc342ba18a6baa202849",
+        "GUID:347a20883bb61d74abf78fec0515bb21",
         "GUID:f3df39452b4b85c48b166389e7ca3670",
-        "GUID:347a20883bb61d74abf78fec0515bb21"
+        "GUID:9a66a2efedc711946b7428ea9b41cc0d"
     ],
     "includePlatforms": [
         "Editor"
