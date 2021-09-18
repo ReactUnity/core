@@ -107,14 +107,6 @@ export const styleProps: StylePropGroup[] = [
 
   {
     props: [
-      { name: 'animation', ...commaSeparatedListField, label: 'Animation' },
-      { name: 'transition', ...commaSeparatedListField, label: 'Transition' },
-      { name: 'audio', ...commaSeparatedListField, label: 'Audio' },
-    ],
-  },
-
-  {
-    props: [
       { name: 'cursor', ...commaSeparatedListField, label: 'Cursor' },
       { name: 'pointerEvents', component: enumComponent('ReactUnity.Types.PointerEvents'), label: 'Pointer Events' },
       { name: 'appearance', component: enumComponent('ReactUnity.Types.Appearance'), label: 'Appearance' },
