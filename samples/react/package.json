@@ -1,0 +1,8 @@
+{
+  "name": "react",
+  "packageManager": "yarn@3.0.0",
+  "private": true,
+  "workspaces": [
+    "rpg"
+  ]
+}

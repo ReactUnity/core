@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import persistStore from "redux-persist/es/persistStore";
 import { inventoryReducer } from "./slices/inventory";
 
@@ -8,7 +8,7 @@ export const store = configureStore({
   },
   devTools: false,
 
-  middleware: getDefaultMiddleware({
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
     serializableCheck: false,
     thunk: true,
     immutableCheck: false,

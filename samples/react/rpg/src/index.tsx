@@ -22,4 +22,4 @@ function Main() {
   </PersistGate>;
 }
 
-Renderer.render(<Main />, RootContainer, null);
+Renderer.render(<Main />);

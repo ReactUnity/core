@@ -3,11 +3,8 @@
   "tasks": [
     {
       "label": "RPG",
-      "command": "npm run ${input:script}",
-      "type": "shell",
-      "presentation": {
-        "group": "dev",
-      }
+      "command": "yarn ${input:script}",
+      "type": "shell"
     }
   ],
   "inputs": [

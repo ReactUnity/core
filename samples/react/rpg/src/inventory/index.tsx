@@ -1,4 +1,5 @@
-import { ImageFitMode, PointerEventCallback, ReactUnity } from '@reactunity/renderer';
+import { ReactUnity } from '@reactunity/renderer';
+import { PointerEventCallback } from '@reactunity/renderer/ugui';
 import { useRef } from 'react';
 import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +9,7 @@ import style from './index.module.scss';
 let draggingItem: ItemObject;
 
 export function Item({ item }: { item: ItemObject }) {
-  const ref = useRef<ReactUnity.Components.ContainerComponent>();
+  const ref = useRef<ReactUnity.UGUI.ContainerComponent>();
   const dragRef = useRef({ startPoint: null });
 
   if (!item) return null;
@@ -39,7 +40,7 @@ export function Item({ item }: { item: ItemObject }) {
   };
 
   return <view className={style.item} onBeginDrag={beginDrag} onDrag={onDrag} onEndDrag={endDrag} ref={ref}>
-    <image source={item.image} fit={ImageFitMode.Fill} />
+    <image source={item.image} />
   </view>;
 }
 
