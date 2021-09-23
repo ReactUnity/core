@@ -26,6 +26,9 @@
   "types": "./lib/types/main.d.ts",
   "typesVersions": {
     "*": {
+      "main": [
+        "./lib/types/main.d.ts"
+      ],
       "editor": [
         "./lib/types/editor.d.ts"
       ],

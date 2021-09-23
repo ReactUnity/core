@@ -263,6 +263,30 @@ function verifyTypeScriptSetup() {
     );
   }
 
+  const types = appTsConfig.compilerOptions.types || (appTsConfig.compilerOptions.types = []);
+
+  if (!types.includes('@reactunity/scripts/main')) {
+    types.push('@reactunity/scripts/main');
+    messages.push(
+      `${chalk.cyan('types')} should include ${chalk.cyan.bold('@reactunity/scripts/main')}`
+    );
+  }
+
+  if (!types.includes('@reactunity/scripts/ugui') && !types.includes('@reactunity/scripts/uitoolkit')
+    && !types.includes('@reactunity/scripts/editor') && !types.includes('@reactunity/scripts/tests')) {
+    types.push('@reactunity/scripts/ugui');
+    messages.push(
+      `${chalk.cyan('types')} should include a valid platform target. Assuming ${chalk.cyan.bold('@reactunity/scripts/ugui')}`
+    );
+  }
+
+  // Deprecate `react-unity-scripts` types
+  if (fs.existsSync(paths.appTypeDeclarations)) {
+    messages.push(
+      `References to ${chalk.cyan('@reactunity/scripts')} does not have to be in ${chalk.cyan.bold('react-unity.d.ts')} anymore. It can be removed.`
+    );
+  }
+
   if (messages.length > 0) {
     if (firstTimeSetup) {
       console.log(
@@ -287,14 +311,6 @@ function verifyTypeScriptSetup() {
       console.warn();
     }
     writeJson(paths.appTsConfig, appTsConfig);
-  }
-
-  // Reference `react-unity-scripts` types
-  if (!fs.existsSync(paths.appTypeDeclarations)) {
-    fs.writeFileSync(
-      paths.appTypeDeclarations,
-      `/// <reference types="@reactunity/scripts" />${os.EOL}`
-    );
   }
 }
 
