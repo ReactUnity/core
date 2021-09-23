@@ -10,38 +10,56 @@
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
 
 module.exports = function (cssWithMappingToString) {
   var list = []; // return the list of modules as css string
 
   list.toString = function toString() {
     return this.map(function (item) {
-      var content = cssWithMappingToString(item);
+      var content = "";
+      var needLayer = typeof item[5] !== "undefined";
+
+      if (item[4]) {
+        content += "@supports (".concat(item[4], ") {");
+      }
 
       if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
+        content += "@media ".concat(item[2], " {");
+      }
+
+      if (needLayer) {
+        content += "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {");
+      }
+
+      content += cssWithMappingToString(item);
+
+      if (needLayer) {
+        content += "}";
+      }
+
+      if (item[2]) {
+        content += "}";
+      }
+
+      if (item[4]) {
+        content += "}";
       }
 
       return content;
     }).join("");
   }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
 
 
-  list.i = function (modules, mediaQuery, dedupe) {
+  list.i = function i(modules, media, dedupe, supports, layer) {
     if (typeof modules === "string") {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, ""]];
+      modules = [[null, modules, undefined]];
     }
 
     var alreadyImportedModules = {};
 
     if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
+      for (var _i = 0; _i < this.length; _i++) {
+        var id = this[_i][0];
 
         if (id != null) {
           alreadyImportedModules[id] = true;
@@ -49,19 +67,37 @@ module.exports = function (cssWithMappingToString) {
       }
     }
 
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
+    for (var _i2 = 0; _i2 < modules.length; _i2++) {
+      var item = [].concat(modules[_i2]);
 
       if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
         continue;
       }
 
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
+      if (typeof layer !== "undefined") {
+        if (typeof item[5] === "undefined") {
+          item[5] = layer;
         } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+          item[1] = "@layer".concat(item[5].length > 0 ? " ".concat(item[5]) : "", " {").concat(item[1], "}");
+          item[5] = layer;
+        }
+      }
+
+      if (media) {
+        if (!item[2]) {
+          item[2] = media;
+        } else {
+          item[1] = "@media ".concat(item[2], " {").concat(item[1], "}");
+          item[2] = media;
+        }
+      }
+
+      if (supports) {
+        if (!item[4]) {
+          item[4] = "".concat(supports);
+        } else {
+          item[1] = "@supports (".concat(item[4], ") {").concat(item[1], "}");
+          item[4] = supports;
         }
       }
 
@@ -70,6 +106,18 @@ module.exports = function (cssWithMappingToString) {
   };
 
   return list;
+};
+
+/***/ }),
+
+/***/ 264:
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function (i) {
+  return i[1];
 };
 
 /***/ }),
@@ -6776,20 +6824,23 @@ if (true) {
 
 /***/ }),
 
-/***/ 484:
+/***/ 269:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(489);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(264);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(489);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "scroll {\n  flex-direction: column;\n  align-items: flex-start;\n  flex-wrap: wrap;\n  padding: 40px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "scroll{flex-direction:column;align-items:flex-start;flex-wrap:wrap;padding:40px}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6802,13 +6853,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, "scroll {\n  flex-direction: column;\n 
 "use strict";
 
 
-var stylesInDom = [];
+var stylesInDOM = [];
 
 function getIndexByIdentifier(identifier) {
   var result = -1;
 
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
@@ -6827,20 +6878,24 @@ function modulesToDom(list, options) {
     var count = idCountMap[id] || 0;
     var identifier = "".concat(id, " ").concat(count);
     idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
+    var indexByIdentifier = getIndexByIdentifier(identifier);
     var obj = {
       css: item[1],
       media: item[2],
-      sourceMap: item[3]
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
     };
 
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
     } else {
-      stylesInDom.push({
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
         identifier: identifier,
-        updater: addStyle(obj, options),
+        updater: updater,
         references: 1
       });
     }
@@ -6851,12 +6906,13 @@ function modulesToDom(list, options) {
   return identifiers;
 }
 
-function addStyle(obj, options) {
+function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-  return function updateStyle(newObj) {
+
+  var updater = function updater(newObj) {
     if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
 
@@ -6865,6 +6921,8 @@ function addStyle(obj, options) {
       api.remove();
     }
   };
+
+  return updater;
 }
 
 module.exports = function (list, options) {
@@ -6877,7 +6935,7 @@ module.exports = function (list, options) {
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
+      stylesInDOM[index].references--;
     }
 
     var newLastIdentifiers = modulesToDom(newList, options);
@@ -6887,10 +6945,10 @@ module.exports = function (list, options) {
 
       var _index = getIndexByIdentifier(_identifier);
 
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
 
-        stylesInDom.splice(_index, 1);
+        stylesInDOM.splice(_index, 1);
       }
     }
 
@@ -6954,10 +7012,10 @@ module.exports = insertBySelector;
 
 /* istanbul ignore next  */
 function insertStyleElement(options) {
-  var style = document.createElement("style");
-  options.setAttributes(style, options.attributes);
-  options.insert(style);
-  return style;
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
 }
 
 module.exports = insertStyleElement;
@@ -6971,11 +7029,11 @@ module.exports = insertStyleElement;
 
 
 /* istanbul ignore next  */
-function setAttributesWithoutAttributes(style) {
+function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
 
   if (nonce) {
-    style.setAttribute("nonce", nonce);
+    styleElement.setAttribute("nonce", nonce);
   }
 }
 
@@ -6990,16 +7048,38 @@ module.exports = setAttributesWithoutAttributes;
 
 
 /* istanbul ignore next  */
-function apply(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
+function apply(styleElement, options, obj) {
+  var css = "";
 
-  if (media) {
-    style.setAttribute("media", media);
-  } else {
-    style.removeAttribute("media");
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
   }
+
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+
+  var needLayer = typeof obj.layer !== "undefined";
+
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+
+  css += obj.css;
+
+  if (needLayer) {
+    css += "}";
+  }
+
+  if (obj.media) {
+    css += "}";
+  }
+
+  if (obj.supports) {
+    css += "}";
+  }
+
+  var sourceMap = obj.sourceMap;
 
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
@@ -7008,28 +7088,28 @@ function apply(style, options, obj) {
   /* istanbul ignore if  */
 
 
-  options.styleTagTransform(css, style);
+  options.styleTagTransform(css, styleElement, options.options);
 }
 
-function removeStyleElement(style) {
+function removeStyleElement(styleElement) {
   // istanbul ignore if
-  if (style.parentNode === null) {
+  if (styleElement.parentNode === null) {
     return false;
   }
 
-  style.parentNode.removeChild(style);
+  styleElement.parentNode.removeChild(styleElement);
 }
 /* istanbul ignore next  */
 
 
 function domAPI(options) {
-  var style = options.insertStyleElement(options);
+  var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
-      apply(style, options, obj);
+      apply(styleElement, options, obj);
     },
     remove: function remove() {
-      removeStyleElement(style);
+      removeStyleElement(styleElement);
     }
   };
 }
@@ -7045,15 +7125,15 @@ module.exports = domAPI;
 
 
 /* istanbul ignore next  */
-function styleTagTransform(css, style) {
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
   } else {
-    while (style.firstChild) {
-      style.removeChild(style.firstChild);
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
     }
 
-    style.appendChild(document.createTextNode(css));
+    styleElement.appendChild(document.createTextNode(css));
   }
 }
 
@@ -7176,7 +7256,7 @@ function createDictionaryWatcher(dictionary, displayName) {
         render = _b[0],
         setRender = _b[1];
 
-    react.useEffect(function () {
+    react.useLayoutEffect(function () {
       var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
         setRender(function (x) {
           return x + 1;
@@ -7625,9 +7705,9 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(589);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[3].use[1]!./src/index.css
-var cjs_ruleSet_1_rules_1_oneOf_3_use_1_src = __webpack_require__(484);
-;// CONCATENATED MODULE: ./src/index.css
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!./src/index.scss
+var cjs_ruleSet_1_rules_1_oneOf_5_use_3_src = __webpack_require__(269);
+;// CONCATENATED MODULE: ./src/index.scss
 
       
       
@@ -7649,17 +7729,15 @@ options.setAttributes = (setAttributesWithoutAttributes_default());
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_1_oneOf_3_use_1_src/* default */.Z, options);
+var update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default */.Z, options);
 
 
 
 
-       /* harmony default export */ const src = (cjs_ruleSet_1_rules_1_oneOf_3_use_1_src/* default */.Z && cjs_ruleSet_1_rules_1_oneOf_3_use_1_src/* default.locals */.Z.locals ? cjs_ruleSet_1_rules_1_oneOf_3_use_1_src/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ const src = (cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default */.Z && cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default.locals */.Z.locals ? cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./src/app.tsx
+;// CONCATENATED MODULE: ./src/index.tsx
 function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Go to <color=red>app.tsx</color> to edit this file"})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
-;// CONCATENATED MODULE: ./src/index.ts
-
 })();
 
 /******/ })()

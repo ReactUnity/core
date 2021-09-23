@@ -1,6 +1,6 @@
 import { Renderer } from '@reactunity/renderer';
 import * as React from 'react';
-import './index.css';
+import './index.scss';
 
 function App() {
   return <scroll>

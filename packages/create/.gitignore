@@ -54,9 +54,6 @@ dist/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # Typescript v1 declaration files
 # typings/
 
