@@ -5,6 +5,9 @@
     },
     {
       "path": "react\\rpg"
+    },
+    {
+      "path": "react\\settings"
     }
   ],
   "settings": {}
