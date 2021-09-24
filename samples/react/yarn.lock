@@ -1568,9 +1568,9 @@ __metadata:
   resolution: "@reactunity-samples/rpg@workspace:rpg"
   dependencies:
     "@reactunity/renderer": ^0.6.0
-    "@reactunity/scripts": ^0.6.0
+    "@reactunity/scripts": ^0.6.1
     "@reduxjs/toolkit": ^1.6.1
-    "@types/react": ^17.0.22
+    "@types/react": ^17.0.24
     "@types/react-redux": ^7.1.18
     clsx: ^1.1.1
     react: ^17.0.2
@@ -1592,16 +1592,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reactunity/scripts@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@reactunity/scripts@npm:0.6.0"
+"@reactunity/scripts@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@reactunity/scripts@npm:0.6.1"
   dependencies:
     "@babel/core": 7.15.5
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.1
-    "@types/react": ^17.0.21
+    "@types/react": ^17.0.24
     "@types/webpack-env": 1.16.2
-    "@typescript-eslint/eslint-plugin": ^4.31.1
-    "@typescript-eslint/parser": ^4.31.1
+    "@typescript-eslint/eslint-plugin": ^4.31.2
+    "@typescript-eslint/parser": ^4.31.2
     babel-eslint: ^10.1.0
     babel-loader: 8.2.2
     babel-plugin-named-asset-import: ^0.3.7
@@ -1615,12 +1615,12 @@ __metadata:
     dotenv-expand: 5.1.0
     eslint: ^7.32.0
     eslint-config-react-app: ^6.0.0
-    eslint-plugin-flowtype: ^6.0.1
+    eslint-plugin-flowtype: ^6.1.0
     eslint-plugin-import: ^2.24.2
     eslint-plugin-jsx-a11y: 6.4.1
-    eslint-plugin-react: ^7.25.2
+    eslint-plugin-react: ^7.26.0
     eslint-plugin-react-hooks: ^4.2.0
-    eslint-plugin-testing-library: ^4.12.2
+    eslint-plugin-testing-library: ^4.12.4
     eslint-webpack-plugin: ^3.0.1
     file-loader: 6.2.0
     fs-extra: ^10.0.0
@@ -1635,10 +1635,10 @@ __metadata:
     react-refresh: ^0.10.0
     resolve: 1.20.0
     resolve-url-loader: ^4.0.0
-    sass: ^1.41.1
+    sass: ^1.42.1
     sass-loader: ^12.1.0
     semver: 7.3.5
-    style-loader: 3.2.1
+    style-loader: 3.3.0
     terser-webpack-plugin: 5.2.4
     ts-pnp: 1.2.0
     url-loader: 4.1.1
@@ -1657,7 +1657,7 @@ __metadata:
       optional: true
   bin:
     react-unity-scripts: bin/react-unity-scripts.js
-  checksum: 671596ecd0912a745fd86fa7f2f57b8593c9f803c5289d6ad80fab50a5d2a22ced367dab85b13defb3be8d2033fe77d29dfe3f14d27776d3845b901bb4a2ecf2
+  checksum: b05e73ffaced7cf5ac69b128af8dc8b890f123603ba06ad4fcf16be6bfa40022e24262317223348fa7dcd015382bb5dceb463791a896f414f7d0f4b0765aeb1a
   languageName: node
   linkType: hard
 
@@ -1781,7 +1781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.21, @types/react@npm:^17.0.22":
+"@types/react@npm:*":
   version: 17.0.22
   resolution: "@types/react@npm:17.0.22"
   dependencies:
@@ -1824,7 +1824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.31.1":
+"@typescript-eslint/eslint-plugin@npm:^4.31.2":
   version: 4.31.2
   resolution: "@typescript-eslint/eslint-plugin@npm:4.31.2"
   dependencies:
@@ -1861,7 +1861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^4.31.1":
+"@typescript-eslint/parser@npm:^4.31.2":
   version: 4.31.2
   resolution: "@typescript-eslint/parser@npm:4.31.2"
   dependencies:
@@ -3667,7 +3667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-flowtype@npm:^6.0.1":
+"eslint-plugin-flowtype@npm:^6.1.0":
   version: 6.1.0
   resolution: "eslint-plugin-flowtype@npm:6.1.0"
   dependencies:
@@ -3734,9 +3734,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.25.2":
-  version: 7.25.3
-  resolution: "eslint-plugin-react@npm:7.25.3"
+"eslint-plugin-react@npm:^7.26.0":
+  version: 7.26.0
+  resolution: "eslint-plugin-react@npm:7.26.0"
   dependencies:
     array-includes: ^3.1.3
     array.prototype.flatmap: ^1.2.4
@@ -3750,21 +3750,22 @@ __metadata:
     object.values: ^1.1.4
     prop-types: ^15.7.2
     resolve: ^2.0.0-next.3
+    semver: ^6.3.0
     string.prototype.matchall: ^4.0.5
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7
-  checksum: a451527938aa02e530d37e7a014f9a19069acc344f95ff079128c71e7faa93715cbd4be6d6aba2c755abe1b7dc20db061759b73a46750a8540cd14558c089419
+  checksum: 363c2ed43ae0c6457c6ad1e7e7c561892189d3e1253a7d5e369413053e9629129c533d3512d9992087f95a3ac71e464d552d63e8c711f90d83c6e8db543587df
   languageName: node
   linkType: hard
 
-"eslint-plugin-testing-library@npm:^4.12.2":
-  version: 4.12.3
-  resolution: "eslint-plugin-testing-library@npm:4.12.3"
+"eslint-plugin-testing-library@npm:^4.12.4":
+  version: 4.12.4
+  resolution: "eslint-plugin-testing-library@npm:4.12.4"
   dependencies:
     "@typescript-eslint/experimental-utils": ^4.30.0
   peerDependencies:
     eslint: ^7.5.0
-  checksum: f9eca047b2e481739567510f0d07132b6b36178bd6881d608a0f7c6f2f61a1140848e987c40a3b7fb42e8d4953a844f2eb4e12489772b7c5578aa13672c8ee6e
+  checksum: 8b4c65b22dd3c2bdcd51db590b0c931b9ae8f6a23b4008047e78fa3b9dde30bfc58e3539a9788a07183d23cbf40ec49f892af9ba0fc4f0d850c0eb81560627b7
   languageName: node
   linkType: hard
 
@@ -6058,7 +6059,7 @@ __metadata:
   resolution: "my-react-unity-ui@workspace:settings"
   dependencies:
     "@reactunity/renderer": ^0.6.0
-    "@reactunity/scripts": ^0.6.0
+    "@reactunity/scripts": ^0.6.1
     "@reduxjs/toolkit": ^1.6.1
     "@types/react": ^17.0.24
     "@types/react-redux": ^7.1.18
@@ -7546,14 +7547,14 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.41.1":
-  version: 1.41.1
-  resolution: "sass@npm:1.41.1"
+"sass@npm:^1.42.1":
+  version: 1.42.1
+  resolution: "sass@npm:1.42.1"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
   bin:
     sass: sass.js
-  checksum: a5dcf0e80f068ecaf0feb7603acfbb0ce30885dde58ef1f03b2f153973aed075525d4e539ab5fdf7fbff47a66033716270f64579eafa17b7e4591f404281e1d6
+  checksum: 467817475b23a3da3aac2f5e401f3b3d9431845b31ff1bc6269d4677852b4e1445e50d6ed1a8daffa4a76398cff6c531670171823466137ed8c2721c17983973
   languageName: node
   linkType: hard
 
@@ -8192,12 +8193,12 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"style-loader@npm:3.2.1":
-  version: 3.2.1
-  resolution: "style-loader@npm:3.2.1"
+"style-loader@npm:3.3.0":
+  version: 3.3.0
+  resolution: "style-loader@npm:3.3.0"
   peerDependencies:
     webpack: ^5.0.0
-  checksum: 10e47c29f4fff7a95fd24cc905c61abba82910cf956730294e8823271b1c2777bd0a180248c2a5185fccf2555863c695b4be31f3b5a8ca2026aab31ee4cba809
+  checksum: edad553a1ae74af9afb4dd582774d484e8e4e5f8c9593a921b0f3f0e2cdb3a58c4b44a3afb43021956804042eaffd68d5dc4f956d4c5f633e7e67eda6a750042
   languageName: node
   linkType: hard
 

@@ -387,11 +387,11 @@ MonoBehaviour:
   Script:
     Type: 3
     SourceAsset: {fileID: 0}
-    SourcePath: react/rpg/index
+    SourcePath: react/settings/index
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3000
+    DevServer: http://localhost:3001
   Debug: 0
   AwaitDebugger: 0
   EngineType: 0
