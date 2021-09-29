@@ -1,0 +1,15 @@
+.host {
+  flex-direction: row;
+}
+
+.sidepanel {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.main {
+  flex-direction: column;
+}

@@ -27,7 +27,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "types": [
-      "@reactunity/scripts",
+      "@reactunity/scripts/main",
       "@reactunity/scripts/ugui"
     ]
   },

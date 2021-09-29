@@ -10,5 +10,11 @@
       "path": "react\\settings"
     }
   ],
-  "settings": {}
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": true
+    }
+  }
 }

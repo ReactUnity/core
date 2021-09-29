@@ -9,12 +9,13 @@
     "build": "react-unity-scripts build"
   },
   "dependencies": {
+    "@reactunity/material": "^0.6.1",
     "@reactunity/renderer": "^0.6.0",
     "@reduxjs/toolkit": "^1.6.1",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
     "react-redux": "^7.2.5",
-    "react-router": "latest"
+    "react-router": "^6.0.0-beta.0"
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.6.1",

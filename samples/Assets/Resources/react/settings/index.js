@@ -1,6 +1,29 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 986:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(232);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(553);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".mat-elevation-0{box-shadow:none}.mat-elevation-1{box-shadow:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-2{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-3{box-shadow:0px 3px 3px -2px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 1px 8px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-4{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-5{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-6{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-7{box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2),0px 7px 10px 1px rgba(0, 0, 0, 0.14),0px 2px 16px 1px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-8{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-9{box-shadow:0px 5px 6px -3px rgba(0, 0, 0, 0.2),0px 9px 12px 1px rgba(0, 0, 0, 0.14),0px 3px 16px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-10{box-shadow:0px 6px 6px -3px rgba(0, 0, 0, 0.2),0px 10px 14px 1px rgba(0, 0, 0, 0.14),0px 4px 18px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-11{box-shadow:0px 6px 7px -4px rgba(0, 0, 0, 0.2),0px 11px 15px 1px rgba(0, 0, 0, 0.14),0px 4px 20px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-12{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 12px 17px 2px rgba(0, 0, 0, 0.14),0px 5px 22px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-13{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 13px 19px 2px rgba(0, 0, 0, 0.14),0px 5px 24px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-14{box-shadow:0px 7px 9px -4px rgba(0, 0, 0, 0.2),0px 14px 21px 2px rgba(0, 0, 0, 0.14),0px 5px 26px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-15{box-shadow:0px 8px 9px -5px rgba(0, 0, 0, 0.2),0px 15px 22px 2px rgba(0, 0, 0, 0.14),0px 6px 28px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-16{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-17{box-shadow:0px 8px 11px -5px rgba(0, 0, 0, 0.2),0px 17px 26px 2px rgba(0, 0, 0, 0.14),0px 6px 32px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-18{box-shadow:0px 9px 11px -5px rgba(0, 0, 0, 0.2),0px 18px 28px 2px rgba(0, 0, 0, 0.14),0px 7px 34px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-19{box-shadow:0px 9px 12px -6px rgba(0, 0, 0, 0.2),0px 19px 29px 2px rgba(0, 0, 0, 0.14),0px 7px 36px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-20{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 20px 31px 3px rgba(0, 0, 0, 0.14),0px 8px 38px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-21{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 21px 33px 3px rgba(0, 0, 0, 0.14),0px 8px 40px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-22{box-shadow:0px 10px 14px -6px rgba(0, 0, 0, 0.2),0px 22px 35px 3px rgba(0, 0, 0, 0.14),0px 8px 42px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-23{box-shadow:0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}:root{font-size:16px}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ 174:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -17,8 +40,89 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root{background-color:#344769;color:#fff}.mat-button{background-color:transparent !important;color:#fff !important;border-radius:6px;border-width:2px;border-color:#fff;margin:6px}", ""]);
 // Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 177:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(232);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(553);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".button_host__11-IH{appearance:none;overflow:hidden;background-color:#fff;color:#000;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.button_host__11-IH.button_icon__1WpBR{border-radius:50%;aspect-ratio:1}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"host": "button_host__11-IH",
+	"icon": "button_icon__1WpBR"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 939:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(232);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(553);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".ripple_ripple__1wKrn{pointer-events:none;border-radius:50%;background-color:rgba(0,0,0,.1);position:absolute;transition:opacity 300ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);translate:-50% -50%;scale:1}.ripple_ripple__1wKrn:enter{scale:0}.ripple_ripple__1wKrn:leave{opacity:0;transition:opacity 400ms ease-out,scale 450ms cubic-bezier(0, 0, 0.2, 1);state-duration:400ms}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"ripple": "ripple_ripple__1wKrn"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 428:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(232);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(553);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".settings_host__1ZQ9b{flex-direction:row}.settings_sidepanel__1o3Ix{flex-direction:column;align-items:stretch;padding:8px;padding-top:24px;padding-bottom:24px}.settings_main__19rnR{flex-direction:column}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"host": "settings_host__1ZQ9b",
+	"sidepanel": "settings_sidepanel__1o3Ix",
+	"main": "settings_main__19rnR"
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -30,13 +134,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
 "use strict";
 
 
-var stylesInDom = [];
+var stylesInDOM = [];
 
 function getIndexByIdentifier(identifier) {
   var result = -1;
 
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
@@ -55,20 +159,24 @@ function modulesToDom(list, options) {
     var count = idCountMap[id] || 0;
     var identifier = "".concat(id, " ").concat(count);
     idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
+    var indexByIdentifier = getIndexByIdentifier(identifier);
     var obj = {
       css: item[1],
       media: item[2],
-      sourceMap: item[3]
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
     };
 
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
     } else {
-      stylesInDom.push({
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
         identifier: identifier,
-        updater: addStyle(obj, options),
+        updater: updater,
         references: 1
       });
     }
@@ -79,12 +187,13 @@ function modulesToDom(list, options) {
   return identifiers;
 }
 
-function addStyle(obj, options) {
+function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-  return function updateStyle(newObj) {
+
+  var updater = function updater(newObj) {
     if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
 
@@ -93,6 +202,8 @@ function addStyle(obj, options) {
       api.remove();
     }
   };
+
+  return updater;
 }
 
 module.exports = function (list, options) {
@@ -105,7 +216,7 @@ module.exports = function (list, options) {
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
+      stylesInDOM[index].references--;
     }
 
     var newLastIdentifiers = modulesToDom(newList, options);
@@ -115,10 +226,10 @@ module.exports = function (list, options) {
 
       var _index = getIndexByIdentifier(_identifier);
 
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
 
-        stylesInDom.splice(_index, 1);
+        stylesInDOM.splice(_index, 1);
       }
     }
 
@@ -182,10 +293,10 @@ module.exports = insertBySelector;
 
 /* istanbul ignore next  */
 function insertStyleElement(options) {
-  var style = document.createElement("style");
-  options.setAttributes(style, options.attributes);
-  options.insert(style);
-  return style;
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
 }
 
 module.exports = insertStyleElement;
@@ -199,11 +310,11 @@ module.exports = insertStyleElement;
 
 
 /* istanbul ignore next  */
-function setAttributesWithoutAttributes(style) {
+function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
 
   if (nonce) {
-    style.setAttribute("nonce", nonce);
+    styleElement.setAttribute("nonce", nonce);
   }
 }
 
@@ -218,16 +329,38 @@ module.exports = setAttributesWithoutAttributes;
 
 
 /* istanbul ignore next  */
-function apply(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
+function apply(styleElement, options, obj) {
+  var css = "";
 
-  if (media) {
-    style.setAttribute("media", media);
-  } else {
-    style.removeAttribute("media");
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
   }
+
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+
+  var needLayer = typeof obj.layer !== "undefined";
+
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+
+  css += obj.css;
+
+  if (needLayer) {
+    css += "}";
+  }
+
+  if (obj.media) {
+    css += "}";
+  }
+
+  if (obj.supports) {
+    css += "}";
+  }
+
+  var sourceMap = obj.sourceMap;
 
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
@@ -236,28 +369,28 @@ function apply(style, options, obj) {
   /* istanbul ignore if  */
 
 
-  options.styleTagTransform(css, style);
+  options.styleTagTransform(css, styleElement, options.options);
 }
 
-function removeStyleElement(style) {
+function removeStyleElement(styleElement) {
   // istanbul ignore if
-  if (style.parentNode === null) {
+  if (styleElement.parentNode === null) {
     return false;
   }
 
-  style.parentNode.removeChild(style);
+  styleElement.parentNode.removeChild(styleElement);
 }
 /* istanbul ignore next  */
 
 
 function domAPI(options) {
-  var style = options.insertStyleElement(options);
+  var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
-      apply(style, options, obj);
+      apply(styleElement, options, obj);
     },
     remove: function remove() {
-      removeStyleElement(style);
+      removeStyleElement(styleElement);
     }
   };
 }
@@ -273,15 +406,15 @@ module.exports = domAPI;
 
 
 /* istanbul ignore next  */
-function styleTagTransform(css, style) {
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
   } else {
-    while (style.firstChild) {
-      style.removeChild(style.firstChild);
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
     }
 
-    style.appendChild(document.createTextNode(css));
+    styleElement.appendChild(document.createTextNode(css));
   }
 }
 
@@ -7186,6 +7319,57 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(892);
+var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/styleDomAPI.js
+var styleDomAPI = __webpack_require__(760);
+var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(311);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(192);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/insertStyleElement.js
+var insertStyleElement = __webpack_require__(60);
+var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(865);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+// EXTERNAL MODULE: ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!./node_modules/@reactunity/material/dist/src/styles/globals.scss
+var globals = __webpack_require__(986);
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/styles/globals.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      options.insert = insertBySelector_default().bind(null, "head");
+    
+options.domAPI = (styleDomAPI_default());
+options.insertStyleElement = (insertStyleElement_default());
+
+var update = injectStylesIntoStyleTag_default()(globals/* default */.Z, options);
+
+
+
+
+       /* harmony default export */ const styles_globals = (globals/* default */.Z && globals/* default.locals */.Z.locals ? globals/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/styles/index.js
+
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(201);
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
@@ -7658,24 +7842,1421 @@ var Renderer = {
     return ReactUnityReconciler.updateContainer(element, hostRoot, null);
   }
 };
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(892);
-var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(760);
-var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/insertBySelector.js
-var insertBySelector = __webpack_require__(311);
-var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(192);
-var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(60);
-var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
-// EXTERNAL MODULE: ../node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(865);
-var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/extends.js
+function extends_extends() {
+  extends_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return extends_extends.apply(this, arguments);
+}
+;// CONCATENATED MODULE: ../../../node_modules/history/index.js
+
+var r,
+    B = r || (r = {});
+B.Pop = "POP";
+B.Push = "PUSH";
+B.Replace = "REPLACE";
+var C =  false ? 0 : function (b) {
+  return b;
+};
+
+function D(b, h) {
+  if (!b) {
+    "undefined" !== typeof console && console.warn(h);
+
+    try {
+      throw Error(h);
+    } catch (k) {}
+  }
+}
+
+function E(b) {
+  b.preventDefault();
+  b.returnValue = "";
+}
+
+function F() {
+  var b = [];
+  return {
+    get length() {
+      return b.length;
+    },
+
+    push: function push(h) {
+      b.push(h);
+      return function () {
+        b = b.filter(function (k) {
+          return k !== h;
+        });
+      };
+    },
+    call: function call(h) {
+      b.forEach(function (k) {
+        return k && k(h);
+      });
+    }
+  };
+}
+
+function H() {
+  return Math.random().toString(36).substr(2, 8);
+}
+
+function I(b) {
+  var h = b.pathname,
+      k = b.search;
+  b = b.hash;
+  return (void 0 === h ? "/" : h) + (void 0 === k ? "" : k) + (void 0 === b ? "" : b);
+}
+
+function J(b) {
+  var h = {};
+
+  if (b) {
+    var k = b.indexOf("#");
+    0 <= k && (h.hash = b.substr(k), b = b.substr(0, k));
+    k = b.indexOf("?");
+    0 <= k && (h.search = b.substr(k), b = b.substr(0, k));
+    b && (h.pathname = b);
+  }
+
+  return h;
+}
+
+function createBrowserHistory(b) {
+  function h() {
+    var c = p.location,
+        a = m.state || {};
+    return [a.idx, C({
+      pathname: c.pathname,
+      search: c.search,
+      hash: c.hash,
+      state: a.usr || null,
+      key: a.key || "default"
+    })];
+  }
+
+  function k(c) {
+    return "string" === typeof c ? c : I(c);
+  }
+
+  function x(c, a) {
+    void 0 === a && (a = null);
+    return C(_extends({}, q, "string" === typeof c ? J(c) : c, {
+      state: a,
+      key: H()
+    }));
+  }
+
+  function z(c) {
+    t = c;
+    c = h();
+    v = c[0];
+    q = c[1];
+    d.call({
+      action: t,
+      location: q
+    });
+  }
+
+  function A(c, a) {
+    function e() {
+      A(c, a);
+    }
+
+    var l = r.Push,
+        g = x(c, a);
+
+    if (!f.length || (f.call({
+      action: l,
+      location: g,
+      retry: e
+    }), !1)) {
+      var n = [{
+        usr: g.state,
+        key: g.key,
+        idx: v + 1
+      }, k(g)];
+      g = n[0];
+      n = n[1];
+
+      try {
+        m.pushState(g, "", n);
+      } catch (G) {
+        p.location.assign(n);
+      }
+
+      z(l);
+    }
+  }
+
+  function y(c, a) {
+    function e() {
+      y(c, a);
+    }
+
+    var l = r.Replace,
+        g = x(c, a);
+    f.length && (f.call({
+      action: l,
+      location: g,
+      retry: e
+    }), 1) || (g = [{
+      usr: g.state,
+      key: g.key,
+      idx: v
+    }, k(g)], m.replaceState(g[0], "", g[1]), z(l));
+  }
+
+  function w(c) {
+    m.go(c);
+  }
+
+  void 0 === b && (b = {});
+  b = b.window;
+  var p = void 0 === b ? document.defaultView : b,
+      m = p.history,
+      u = null;
+  p.addEventListener("popstate", function () {
+    if (u) f.call(u), u = null;else {
+      var c = r.Pop,
+          a = h(),
+          e = a[0];
+      a = a[1];
+      if (f.length) {
+        if (null != e) {
+          var l = v - e;
+          l && (u = {
+            action: c,
+            location: a,
+            retry: function retry() {
+              w(-1 * l);
+            }
+          }, w(l));
+        } else  false ? 0 : void 0;
+      } else z(c);
+    }
+  });
+  var t = r.Pop;
+  b = h();
+  var v = b[0],
+      q = b[1],
+      d = F(),
+      f = F();
+  null == v && (v = 0, m.replaceState(_extends({}, m.state, {
+    idx: v
+  }), ""));
+  return {
+    get action() {
+      return t;
+    },
+
+    get location() {
+      return q;
+    },
+
+    createHref: k,
+    push: A,
+    replace: y,
+    go: w,
+    back: function back() {
+      w(-1);
+    },
+    forward: function forward() {
+      w(1);
+    },
+    listen: function listen(c) {
+      return d.push(c);
+    },
+    block: function block(c) {
+      var a = f.push(c);
+      1 === f.length && p.addEventListener("beforeunload", E);
+      return function () {
+        a();
+        f.length || p.removeEventListener("beforeunload", E);
+      };
+    }
+  };
+}
+
+;
+
+function createHashHistory(b) {
+  function h() {
+    var a = J(m.location.hash.substr(1)),
+        e = a.pathname,
+        l = a.search;
+    a = a.hash;
+    var g = u.state || {};
+    return [g.idx, C({
+      pathname: void 0 === e ? "/" : e,
+      search: void 0 === l ? "" : l,
+      hash: void 0 === a ? "" : a,
+      state: g.usr || null,
+      key: g.key || "default"
+    })];
+  }
+
+  function k() {
+    if (t) c.call(t), t = null;else {
+      var a = r.Pop,
+          e = h(),
+          l = e[0];
+      e = e[1];
+      if (c.length) {
+        if (null != l) {
+          var g = q - l;
+          g && (t = {
+            action: a,
+            location: e,
+            retry: function retry() {
+              p(-1 * g);
+            }
+          }, p(g));
+        } else  false ? 0 : void 0;
+      } else A(a);
+    }
+  }
+
+  function x(a) {
+    var e = document.querySelector("base"),
+        l = "";
+    e && e.getAttribute("href") && (e = m.location.href, l = e.indexOf("#"), l = -1 === l ? e : e.slice(0, l));
+    return l + "#" + ("string" === typeof a ? a : I(a));
+  }
+
+  function z(a, e) {
+    void 0 === e && (e = null);
+    return C(_extends({}, d, "string" === typeof a ? J(a) : a, {
+      state: e,
+      key: H()
+    }));
+  }
+
+  function A(a) {
+    v = a;
+    a = h();
+    q = a[0];
+    d = a[1];
+    f.call({
+      action: v,
+      location: d
+    });
+  }
+
+  function y(a, e) {
+    function l() {
+      y(a, e);
+    }
+
+    var g = r.Push,
+        n = z(a, e);
+     false ? 0 : void 0;
+
+    if (!c.length || (c.call({
+      action: g,
+      location: n,
+      retry: l
+    }), !1)) {
+      var G = [{
+        usr: n.state,
+        key: n.key,
+        idx: q + 1
+      }, x(n)];
+      n = G[0];
+      G = G[1];
+
+      try {
+        u.pushState(n, "", G);
+      } catch (K) {
+        m.location.assign(G);
+      }
+
+      A(g);
+    }
+  }
+
+  function w(a, e) {
+    function l() {
+      w(a, e);
+    }
+
+    var g = r.Replace,
+        n = z(a, e);
+     false ? 0 : void 0;
+    c.length && (c.call({
+      action: g,
+      location: n,
+      retry: l
+    }), 1) || (n = [{
+      usr: n.state,
+      key: n.key,
+      idx: q
+    }, x(n)], u.replaceState(n[0], "", n[1]), A(g));
+  }
+
+  function p(a) {
+    u.go(a);
+  }
+
+  void 0 === b && (b = {});
+  b = b.window;
+  var m = void 0 === b ? document.defaultView : b,
+      u = m.history,
+      t = null;
+  m.addEventListener("popstate", k);
+  m.addEventListener("hashchange", function () {
+    var a = h()[1];
+    I(a) !== I(d) && k();
+  });
+  var v = r.Pop;
+  b = h();
+  var q = b[0],
+      d = b[1],
+      f = F(),
+      c = F();
+  null == q && (q = 0, u.replaceState(_extends({}, u.state, {
+    idx: q
+  }), ""));
+  return {
+    get action() {
+      return v;
+    },
+
+    get location() {
+      return d;
+    },
+
+    createHref: x,
+    push: y,
+    replace: w,
+    go: p,
+    back: function back() {
+      p(-1);
+    },
+    forward: function forward() {
+      p(1);
+    },
+    listen: function listen(a) {
+      return f.push(a);
+    },
+    block: function block(a) {
+      var e = c.push(a);
+      1 === c.length && m.addEventListener("beforeunload", E);
+      return function () {
+        e();
+        c.length || m.removeEventListener("beforeunload", E);
+      };
+    }
+  };
+}
+
+;
+
+function createMemoryHistory(b) {
+  function h(d, f) {
+    void 0 === f && (f = null);
+    return C(extends_extends({}, t, "string" === typeof d ? J(d) : d, {
+      state: f,
+      key: H()
+    }));
+  }
+
+  function k(d, f, c) {
+    return !q.length || (q.call({
+      action: d,
+      location: f,
+      retry: c
+    }), !1);
+  }
+
+  function x(d, f) {
+    u = d;
+    t = f;
+    v.call({
+      action: u,
+      location: t
+    });
+  }
+
+  function z(d, f) {
+    var c = r.Push,
+        a = h(d, f);
+     false ? 0 : void 0;
+    k(c, a, function () {
+      z(d, f);
+    }) && (m += 1, p.splice(m, p.length, a), x(c, a));
+  }
+
+  function A(d, f) {
+    var c = r.Replace,
+        a = h(d, f);
+     false ? 0 : void 0;
+    k(c, a, function () {
+      A(d, f);
+    }) && (p[m] = a, x(c, a));
+  }
+
+  function y(d) {
+    var f = Math.min(Math.max(m + d, 0), p.length - 1),
+        c = r.Pop,
+        a = p[f];
+    k(c, a, function () {
+      y(d);
+    }) && (m = f, x(c, a));
+  }
+
+  void 0 === b && (b = {});
+  var w = b;
+  b = w.initialEntries;
+  w = w.initialIndex;
+  var p = (void 0 === b ? ["/"] : b).map(function (d) {
+    var f = C(extends_extends({
+      pathname: "/",
+      search: "",
+      hash: "",
+      state: null,
+      key: H()
+    }, "string" === typeof d ? J(d) : d));
+     false ? 0 : void 0;
+    return f;
+  }),
+      m = Math.min(Math.max(null == w ? p.length - 1 : w, 0), p.length - 1),
+      u = r.Pop,
+      t = p[m],
+      v = F(),
+      q = F();
+  return {
+    get index() {
+      return m;
+    },
+
+    get action() {
+      return u;
+    },
+
+    get location() {
+      return t;
+    },
+
+    createHref: function createHref(d) {
+      return "string" === typeof d ? d : I(d);
+    },
+    push: z,
+    replace: A,
+    go: y,
+    back: function back() {
+      y(-1);
+    },
+    forward: function forward() {
+      y(1);
+    },
+    listen: function listen(d) {
+      return v.push(d);
+    },
+    block: function block(d) {
+      return q.push(d);
+    }
+  };
+}
+
+;
+
+;// CONCATENATED MODULE: ./node_modules/react-router/index.js
+
+
+
+
+function react_router_extends() {
+  react_router_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return react_router_extends.apply(this, arguments);
+}
+
+function invariant(cond, message) {
+  if (!cond) throw new Error(message);
+}
+
+function warning(cond, message) {
+  if (!cond) {
+    // eslint-disable-next-line no-console
+    if (typeof console !== "undefined") console.warn(message);
+
+    try {
+      // Welcome to debugging React Router!
+      //
+      // This error is thrown as a convenience so you can more easily
+      // find the source for a warning that appears in the console by
+      // enabling "pause on exceptions" in your JavaScript debugger.
+      throw new Error(message); // eslint-disable-next-line no-empty
+    } catch (e) {}
+  }
+}
+
+var alreadyWarned = {};
+
+function warningOnce(key, cond, message) {
+  if (!cond && !alreadyWarned[key]) {
+    alreadyWarned[key] = true;
+     false ? 0 : void 0;
+  }
+}
+
+var NavigatorContext = /*#__PURE__*/(0,react.createContext)(null);
+var LocationContext = /*#__PURE__*/(0,react.createContext)({
+  "static": false
+});
+
+if (false) {}
+
+var RouteContext = /*#__PURE__*/(0,react.createContext)({
+  outlet: null,
+  params: {},
+  pathname: "",
+  basename: "",
+  route: null
+});
+
+if (false) {}
+/**
+ * A <Router> that stores all entries in memory.
+ *
+ * @see https://reactrouter.com/api/MemoryRouter
+ */
+
+
+function MemoryRouter(_ref) {
+  var children = _ref.children,
+      initialEntries = _ref.initialEntries,
+      initialIndex = _ref.initialIndex;
+  var historyRef = (0,react.useRef)();
+
+  if (historyRef.current == null) {
+    historyRef.current = createMemoryHistory({
+      initialEntries: initialEntries,
+      initialIndex: initialIndex
+    });
+  }
+
+  var history = historyRef.current;
+
+  var _useState = (0,react.useState)({
+    action: history.action,
+    location: history.location
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  (0,react.useLayoutEffect)(function () {
+    return history.listen(setState);
+  }, [history]);
+  return /*#__PURE__*/(0,react.createElement)(Router, {
+    children: children,
+    action: state.action,
+    location: state.location,
+    navigator: history
+  });
+}
+/**
+ * Changes the current location.
+ *
+ * Note: This API is mostly useful in React.Component subclasses that are not
+ * able to use hooks. In functional components, we recommend you use the
+ * `useNavigate` hook instead.
+ *
+ * @see https://reactrouter.com/api/Navigate
+ */
+
+
+function Navigate(_ref2) {
+  var to = _ref2.to,
+      replace = _ref2.replace,
+      state = _ref2.state;
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+   false ? 0 : void 0;
+  var navigate = useNavigate();
+  useEffect(function () {
+    navigate(to, {
+      replace: replace,
+      state: state
+    });
+  });
+  return null;
+}
+/**
+ * Renders the child route's element, if there is one.
+ *
+ * @see https://reactrouter.com/api/Outlet
+ */
+
+
+function Outlet(_props) {
+  return useOutlet();
+}
+/**
+ * Declares an element that should be rendered at a certain URL path.
+ *
+ * @see https://reactrouter.com/api/Route
+ */
+
+
+function Route(_props) {
+   false ? 0 : invariant(false);
+}
+/**
+ * Provides location context for the rest of the app.
+ *
+ * Note: You usually won't render a <Router> directly. Instead, you'll render a
+ * router that is more specific to your environment such as a <BrowserRouter>
+ * in web browsers or a <StaticRouter> for server rendering.
+ *
+ * @see https://reactrouter.com/api/Router
+ */
+
+
+function Router(_ref3) {
+  var _ref3$children = _ref3.children,
+      children = _ref3$children === void 0 ? null : _ref3$children,
+      _ref3$action = _ref3.action,
+      action = _ref3$action === void 0 ? r.Pop : _ref3$action,
+      location = _ref3.location,
+      navigator = _ref3.navigator,
+      _ref3$static = _ref3["static"],
+      staticProp = _ref3$static === void 0 ? false : _ref3$static;
+  !!useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  return /*#__PURE__*/(0,react.createElement)(NavigatorContext.Provider, {
+    value: navigator
+  }, /*#__PURE__*/(0,react.createElement)(LocationContext.Provider, {
+    children: children,
+    value: {
+      action: action,
+      location: location,
+      "static": staticProp
+    }
+  }));
+}
+/**
+ * A container for a nested tree of <Route> elements that renders the branch
+ * that best matches the current location.
+ *
+ * @see https://reactrouter.com/api/Routes
+ */
+
+
+function Routes(_ref4) {
+  var _ref4$basename = _ref4.basename,
+      basename = _ref4$basename === void 0 ? "" : _ref4$basename,
+      children = _ref4.children,
+      location = _ref4.location;
+  var routes = createRoutesFromChildren(children);
+  return useRoutes(routes, {
+    location: location,
+    basename: basename
+  });
+} ///////////////////////////////////////////////////////////////////////////////
+// HOOKS
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Blocks all navigation attempts. This is useful for preventing the page from
+ * changing until some condition is met, like saving form data.
+ *
+ * @see https://reactrouter.com/api/useBlocker
+ */
+
+
+function useBlocker(blocker, when) {
+  if (when === void 0) {
+    when = true;
+  }
+
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  var navigator = useContext(NavigatorContext);
+  useEffect(function () {
+    if (!when) return;
+    var unblock = navigator.block(function (tx) {
+      var autoUnblockingTx = react_router_extends({}, tx, {
+        retry: function retry() {
+          // Automatically unblock the transition so it can play all the way
+          // through before retrying it. TODO: Figure out how to re-enable
+          // this block if the transition is cancelled for some reason.
+          unblock();
+          tx.retry();
+        }
+      });
+
+      blocker(autoUnblockingTx);
+    });
+    return unblock;
+  }, [navigator, blocker, when]);
+}
+/**
+ * Returns the full href for the given "to" value. This is useful for building
+ * custom links that are also accessible and preserve right-click behavior.
+ *
+ * @see https://reactrouter.com/api/useHref
+ */
+
+
+function useHref(to) {
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  var navigator = useContext(NavigatorContext);
+  var path = useResolvedPath(to);
+  return navigator.createHref(path);
+}
+/**
+ * Returns true if this component is a descendant of a <Router>.
+ *
+ * @see https://reactrouter.com/api/useInRouterContext
+ */
+
+
+function useInRouterContext() {
+  return (0,react.useContext)(LocationContext).location != null;
+}
+/**
+ * Returns the current location object, which represents the current URL in web
+ * browsers.
+ *
+ * Note: If you're using this it may mean you're doing some of your own
+ * "routing" in your app, and we'd like to know what your use case is. We may
+ * be able to provide something higher-level to better suit your needs.
+ *
+ * @see https://reactrouter.com/api/useLocation
+ */
+
+
+function useLocation() {
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  return (0,react.useContext)(LocationContext).location;
+}
+/**
+ * Returns true if the URL for the given "to" value matches the current URL.
+ * This is useful for components that need to know "active" state, e.g.
+ * <NavLink>.
+ *
+ * @see https://reactrouter.com/api/useMatch
+ */
+
+
+function useMatch(pattern) {
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  var location = useLocation();
+  return matchPath(pattern, location.pathname);
+}
+/**
+ * Returns an imperative method for changing the location. Used by <Link>s, but
+ * may also be used by other elements to change the location.
+ *
+ * @see https://reactrouter.com/api/useNavigate
+ */
+
+
+function useNavigate() {
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+  var navigator = (0,react.useContext)(NavigatorContext);
+
+  var _useContext = (0,react.useContext)(RouteContext),
+      basename = _useContext.basename,
+      parentRoutePathname = _useContext.pathname;
+
+  var _useLocation = useLocation(),
+      currentLocationPathname = _useLocation.pathname;
+
+  var activeRef = (0,react.useRef)(false);
+  (0,react.useEffect)(function () {
+    activeRef.current = true;
+  });
+  var navigate = (0,react.useCallback)(function (to, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (activeRef.current) {
+      if (typeof to === "number") {
+        navigator.go(to);
+      } else {
+        var toPathname = // Empty strings should be treated the same as / paths
+        to === "" || to.pathname === "" ? "/" : typeof to === "string" ? J(to).pathname : to.pathname;
+        var path = resolvePath(to, // If a pathname is explicitly provided in `to`, it should be
+        // relative to the parent route context. This is explained in `Note
+        // on `<Link to>` values` in our migration guide from v5 as a means
+        // of disambiguation between `to` values that begin with `/` and
+        // those that do not. However, this is problematic for `to` values
+        // that do not provide a pathname. `to` can simply be a search or
+        // hash string, in which case we should assume that the navigation
+        // is relative to the current location's pathname and *not* the
+        // pathname from the parent route.
+        toPathname ? parentRoutePathname : currentLocationPathname, basename);
+        (!!options.replace ? navigator.replace : navigator.push)(path, options.state);
+      }
+    } else {
+       false ? 0 : void 0;
+    }
+  }, [basename, navigator, parentRoutePathname, currentLocationPathname]);
+  return navigate;
+}
+/**
+ * Returns the element for the child route at this level of the route
+ * hierarchy. Used internally by <Outlet> to render child routes.
+ *
+ * @see https://reactrouter.com/api/useOutlet
+ */
+
+
+function useOutlet() {
+  return (0,react.useContext)(RouteContext).outlet;
+}
+/**
+ * Returns an object of key/value pairs of the dynamic params from the current
+ * URL that were matched by the route path.
+ *
+ * @see https://reactrouter.com/api/useParams
+ */
+
+
+function useParams() {
+  return useContext(RouteContext).params;
+}
+/**
+ * Resolves the pathname of the given `to` value against the current location.
+ *
+ * @see https://reactrouter.com/api/useResolvedPath
+ */
+
+
+function useResolvedPath(to) {
+  var _useContext2 = useContext(RouteContext),
+      pathname = _useContext2.pathname,
+      basename = _useContext2.basename;
+
+  return useMemo(function () {
+    return resolvePath(to, pathname, basename);
+  }, [to, pathname, basename]);
+}
+/**
+ * Returns the element of the route that matched the current location, prepared
+ * with the correct context to render the remainder of the route tree. Route
+ * elements in the tree must render an <Outlet> to render their child route's
+ * element.
+ *
+ * @see https://reactrouter.com/api/useRoutes
+ */
+
+
+function useRoutes(routes, _temp) {
+  var _ref6 = _temp === void 0 ? {} : _temp,
+      _ref6$basename = _ref6.basename,
+      basename = _ref6$basename === void 0 ? "" : _ref6$basename,
+      locationArg = _ref6.location;
+
+  !useInRouterContext() ?  false ? 0 : invariant(false) : void 0;
+
+  var _useContext3 = (0,react.useContext)(RouteContext),
+      parentRoute = _useContext3.route,
+      parentPathname = _useContext3.pathname,
+      parentParams = _useContext3.params;
+
+  if (false) { var parentPath; }
+
+  var locationFromContext = useLocation();
+  var location = locationArg !== null && locationArg !== void 0 ? locationArg : locationFromContext;
+  var basenameForMatching = basename ? joinPaths([parentPathname, basename]) : parentPathname;
+  var matches = (0,react.useMemo)(function () {
+    return matchRoutes(routes, location, basenameForMatching);
+  }, [routes, location, basenameForMatching]);
+
+  if (!matches) {
+    // TODO: Warn about nothing matching, suggest using a catch-all route.
+    return null;
+  } // Otherwise render an element.
+
+
+  var params = Object.assign({}, parentParams);
+  var element = matches.reduceRight(function (outlet, match) {
+    Object.assign(params, match.params);
+    return /*#__PURE__*/(0,react.createElement)(RouteContext.Provider, {
+      children: match.route.element || /*#__PURE__*/(0,react.createElement)(Outlet, null),
+      value: {
+        outlet: outlet,
+        params: params,
+        pathname: joinPaths([basenameForMatching, match.pathname]),
+        basename: basename,
+        route: match.route
+      }
+    });
+  }, null);
+  return element;
+} ///////////////////////////////////////////////////////////////////////////////
+// UTILS
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Creates a route config from a React "children" object, which is usually
+ * either a `<Route>` element or an array of them. Used internally by
+ * `<Routes>` to create a route config from its children.
+ *
+ * @see https://reactrouter.com/api/createRoutesFromChildren
+ */
+
+
+function createRoutesFromChildren(children) {
+  var routes = [];
+  react.Children.forEach(children, function (element) {
+    if (! /*#__PURE__*/(0,react.isValidElement)(element)) {
+      // Ignore non-elements. This allows people to more easily inline
+      // conditionals in their route config.
+      return;
+    }
+
+    if (element.type === react.Fragment) {
+      // Transparently support React.Fragment and its children.
+      routes.push.apply(routes, createRoutesFromChildren(element.props.children));
+      return;
+    }
+
+    var route = {
+      path: element.props.path,
+      caseSensitive: element.props.caseSensitive,
+      index: element.props.index,
+      element: element.props.element
+    };
+
+    if (element.props.children) {
+      route.children = createRoutesFromChildren(element.props.children);
+    }
+
+    routes.push(route);
+  });
+  return routes;
+}
+/**
+ * Returns a path with params interpolated.
+ *
+ * @see https://reactrouter.com/api/generatePath
+ */
+
+
+function generatePath(path, params) {
+  if (params === void 0) {
+    params = {};
+  }
+
+  return path.replace(/:(\w+)/g, function (_, key) {
+    !(params[key] != null) ?  false ? 0 : invariant(false) : void 0;
+    return params[key];
+  }).replace(/\/*\*$/, function (_) {
+    return params["*"] == null ? "" : params["*"].replace(/^\/*/, "/");
+  });
+}
+/**
+ * Matches the given routes to a location and returns the match data.
+ *
+ * @see https://reactrouter.com/api/matchRoutes
+ */
+
+
+function matchRoutes(routes, location, basename) {
+  if (basename === void 0) {
+    basename = "";
+  }
+
+  if (typeof location === "string") {
+    location = J(location);
+  }
+
+  var pathname = location.pathname || "/";
+
+  if (basename) {
+    var base = basename.replace(/^\/*/, "/").replace(/\/+$/, ""); // Basename should be case-insensitive
+    // https://github.com/remix-run/react-router/issues/7997#issuecomment-911916907
+
+    if (!pathname.toLowerCase().startsWith(base.toLowerCase())) {
+      return null;
+    }
+
+    pathname = pathname.slice(base.length) || "/";
+  }
+
+  var branches = flattenRoutes(routes);
+  rankRouteBranches(branches);
+  var matches = null;
+
+  for (var i = 0; matches == null && i < branches.length; ++i) {
+    matches = matchRouteBranch(branches[i], pathname, routes);
+  }
+
+  return matches;
+}
+
+function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+  if (branches === void 0) {
+    branches = [];
+  }
+
+  if (parentsMeta === void 0) {
+    parentsMeta = [];
+  }
+
+  if (parentPath === void 0) {
+    parentPath = "";
+  }
+
+  routes.forEach(function (route, index) {
+    var meta = {
+      relativePath: route.path || "",
+      caseSensitive: route.caseSensitive === true,
+      childrenIndex: index
+    };
+
+    if (meta.relativePath.startsWith("/")) {
+      !meta.relativePath.startsWith(parentPath) ?  false ? 0 : invariant(false) : void 0;
+      meta.relativePath = meta.relativePath.slice(parentPath.length);
+    }
+
+    var path = joinPaths([parentPath, meta.relativePath]);
+    var routesMeta = parentsMeta.concat(meta); // Add the children before adding this route to the array so we traverse the
+    // route tree depth-first and child routes appear before their parents in
+    // the "flattened" version.
+
+    if (route.children && route.children.length > 0) {
+      !(route.index !== true) ?  false ? 0 : invariant(false) : void 0;
+      flattenRoutes(route.children, branches, routesMeta, path);
+    }
+
+    branches.push({
+      path: path,
+      routesMeta: routesMeta
+    });
+  });
+  return branches;
+}
+
+function rankRouteBranches(branches) {
+  var pathScores = {};
+  var pathIndexes = {};
+  branches.forEach(function (_ref5) {
+    var path = _ref5.path,
+        routesMeta = _ref5.routesMeta;
+    pathScores[path] = computeScore(path);
+    pathIndexes[path] = routesMeta.map(function (meta) {
+      return meta.childrenIndex;
+    });
+  });
+  branches.sort(function (a, b) {
+    var aScore = pathScores[a.path];
+    var bScore = pathScores[b.path];
+    return aScore !== bScore ? bScore - aScore // Higher score first
+    : compareIndexes(pathIndexes[a.path], pathIndexes[b.path]);
+  });
+}
+
+var paramRe = /^:\w+$/;
+var dynamicSegmentValue = 2;
+var emptySegmentValue = 1;
+var staticSegmentValue = 10;
+var splatPenalty = -2;
+
+var isSplat = function isSplat(s) {
+  return s === "*";
+};
+
+function computeScore(path) {
+  var segments = path.split("/");
+  var initialScore = segments.length;
+
+  if (segments.some(isSplat)) {
+    initialScore += splatPenalty;
+  }
+
+  return segments.filter(function (s) {
+    return !isSplat(s);
+  }).reduce(function (score, segment) {
+    return score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue);
+  }, initialScore);
+}
+
+function compareIndexes(a, b) {
+  var siblings = a.length === b.length && a.slice(0, -1).every(function (n, i) {
+    return n === b[i];
+  });
+  return siblings ? // If two routes are siblings, we should try to match the earlier sibling
+  // first. This allows people to have fine-grained control over the matching
+  // behavior by simply putting routes with identical paths in the order they
+  // want them tried.
+  a[a.length - 1] - b[b.length - 1] : // Otherwise, it doesn't really make sense to rank non-siblings by index,
+  // so they sort equally.
+  0;
+}
+
+function matchRouteBranch(branch, pathname, originalRoutes) {
+  var matchedPathname = "/";
+  var matchedParams = {};
+  var routesMeta = branch.routesMeta;
+  var routes = originalRoutes;
+  var matches = [];
+
+  for (var i = 0; i < routesMeta.length; ++i) {
+    var meta = routesMeta[i];
+    var remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
+    var match = matchPath({
+      path: meta.relativePath,
+      caseSensitive: meta.caseSensitive,
+      end: i === routesMeta.length - 1
+    }, remainingPathname);
+    if (!match) return null;
+    matchedParams = react_router_extends({}, matchedParams, match.params);
+    matchedPathname = joinPaths([matchedPathname, match.pathname]);
+    var route = routes[meta.childrenIndex];
+    matches.push({
+      params: matchedParams,
+      pathname: matchedPathname,
+      route: route
+    });
+    routes = route.children;
+  }
+
+  return matches;
+}
+/**
+ * Performs pattern matching on a URL pathname and returns information about
+ * the match.
+ *
+ * @see https://reactrouter.com/api/matchPath
+ */
+
+
+function matchPath(pattern, pathname) {
+  if (typeof pattern === "string") {
+    pattern = {
+      path: pattern,
+      caseSensitive: false,
+      end: true
+    };
+  }
+
+  var _compilePath = compilePath(pattern.path, pattern.caseSensitive, pattern.end),
+      _compilePath2 = _slicedToArray(_compilePath, 2),
+      matcher = _compilePath2[0],
+      paramNames = _compilePath2[1];
+
+  var match = pathname.match(matcher);
+  if (!match) return null;
+  var matchedPathname = match[1];
+  var values = match.slice(2);
+  var params = paramNames.reduce(function (memo, paramName, index) {
+    memo[paramName] = safelyDecodeURIComponent(values[index] || "", paramName);
+    return memo;
+  }, {});
+  return {
+    params: params,
+    pathname: matchedPathname,
+    pattern: pattern
+  };
+}
+
+function compilePath(path, caseSensitive, end) {
+  if (caseSensitive === void 0) {
+    caseSensitive = false;
+  }
+
+  if (end === void 0) {
+    end = true;
+  }
+
+  var keys = [];
+  var source = "^(" + path.replace(/^\/*/, "/") // Make sure it has a leading /
+  .replace(/\/?\*?$/, "") // Ignore trailing / and /*, we'll handle it below
+  .replace(/[\\.*+^$?{}|()[\]]/g, "\\$&") // Escape special regex chars
+  .replace(/:(\w+)/g, function (_, key) {
+    keys.push(key);
+    return "([^\\/]+)";
+  }) + ")";
+
+  if (path.endsWith("*")) {
+    if (path.endsWith("/*")) {
+      source += "(?:\\/(.+)|\\/?)"; // Don't include the / in params['*']
+    } else {
+      source += "(.*)";
+    }
+
+    keys.push("*");
+  } else if (end) {
+    source += "\\/?";
+  }
+
+  if (end) source += "$";
+  var flags = caseSensitive ? undefined : "i";
+  var matcher = new RegExp(source, flags);
+  return [matcher, keys];
+}
+
+function safelyDecodeURIComponent(value, paramName) {
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+     false ? 0 : void 0;
+    return value;
+  }
+}
+/**
+ * Returns a resolved path object relative to the given pathname.
+ *
+ * @see https://reactrouter.com/api/resolvePath
+ */
+
+
+function resolvePath(to, fromPathname, basename) {
+  if (fromPathname === void 0) {
+    fromPathname = "/";
+  }
+
+  if (basename === void 0) {
+    basename = "";
+  }
+
+  var _ref7 = typeof to === "string" ? J(to) : to,
+      toPathname = _ref7.pathname,
+      _ref7$search = _ref7.search,
+      search = _ref7$search === void 0 ? "" : _ref7$search,
+      _ref7$hash = _ref7.hash,
+      hash = _ref7$hash === void 0 ? "" : _ref7$hash;
+
+  var pathname = toPathname ? resolvePathname(toPathname, toPathname.startsWith("/") ? basename ? normalizeSlashes("/" + basename) : "/" : fromPathname) : fromPathname;
+  return {
+    pathname: pathname,
+    search: normalizeSearch(search),
+    hash: normalizeHash(hash)
+  };
+}
+
+var trimTrailingSlashes = function trimTrailingSlashes(path) {
+  return path.replace(/\/+$/, "");
+};
+
+var normalizeSlashes = function normalizeSlashes(path) {
+  return path.replace(/\/\/+/g, "/");
+};
+
+var joinPaths = function joinPaths(paths) {
+  return normalizeSlashes(paths.join("/"));
+};
+
+var splitPath = function splitPath(path) {
+  return normalizeSlashes(path).split("/");
+};
+
+var normalizeSearch = function normalizeSearch(search) {
+  return !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
+};
+
+var normalizeHash = function normalizeHash(hash) {
+  return !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
+};
+
+function resolvePathname(toPathname, fromPathname) {
+  var segments = splitPath(trimTrailingSlashes(fromPathname));
+  var relativeSegments = splitPath(toPathname);
+  relativeSegments.forEach(function (segment) {
+    if (segment === "..") {
+      // Keep the root "" segment so the pathname starts at /
+      if (segments.length > 1) segments.pop();
+    } else if (segment !== ".") {
+      segments.push(segment);
+    }
+  });
+  return segments.length > 1 ? joinPaths(segments) : "/";
+} ///////////////////////////////////////////////////////////////////////////////
+
+
+
 // EXTERNAL MODULE: ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!./src/index.scss
 var cjs_ruleSet_1_rules_1_oneOf_5_use_3_src = __webpack_require__(174);
 ;// CONCATENATED MODULE: ./src/index.scss
@@ -7690,25 +9271,322 @@ var cjs_ruleSet_1_rules_1_oneOf_5_use_3_src = __webpack_require__(174);
       
       
 
-var options = {};
+var src_options = {};
 
-options.styleTagTransform = (styleTagTransform_default());
-options.setAttributes = (setAttributesWithoutAttributes_default());
+src_options.styleTagTransform = (styleTagTransform_default());
+src_options.setAttributes = (setAttributesWithoutAttributes_default());
 
-      options.insert = insertBySelector_default().bind(null, "head");
+      src_options.insert = insertBySelector_default().bind(null, "head");
     
-options.domAPI = (styleDomAPI_default());
-options.insertStyleElement = (insertStyleElement_default());
+src_options.domAPI = (styleDomAPI_default());
+src_options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default */.Z, options);
+var src_update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default */.Z, src_options);
 
 
 
 
        /* harmony default export */ const src = (cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default */.Z && cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default.locals */.Z.locals ? cjs_ruleSet_1_rules_1_oneOf_5_use_3_src/* default.locals */.Z.locals : undefined);
 
+;// CONCATENATED MODULE: ./src/menu/index.tsx
+function MainMenu(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Play"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('/settings');},children:"Settings"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Interop.UnityEngine.Application.Quit();},children:"Quit"})]});}
+;// CONCATENATED MODULE: ../node_modules/clsx/dist/clsx.m.js
+function toVal(mix) {
+  var k,
+      y,
+      str = '';
+
+  if (typeof mix === 'string' || typeof mix === 'number') {
+    str += mix;
+  } else if (typeof mix === 'object') {
+    if (Array.isArray(mix)) {
+      for (k = 0; k < mix.length; k++) {
+        if (mix[k]) {
+          if (y = toVal(mix[k])) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      }
+    } else {
+      for (k in mix) {
+        if (mix[k]) {
+          str && (str += ' ');
+          str += k;
+        }
+      }
+    }
+  }
+
+  return str;
+}
+
+/* harmony default export */ function clsx_m() {
+  var i = 0,
+      tmp,
+      x,
+      str = '';
+
+  while (i < arguments.length) {
+    if (tmp = arguments[i++]) {
+      if (x = toVal(tmp)) {
+        str && (str += ' ');
+        str += x;
+      }
+    }
+  }
+
+  return str;
+}
+// EXTERNAL MODULE: ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/ripple/index.module.scss
+var index_module = __webpack_require__(939);
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/ripple/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var index_module_options = {};
+
+index_module_options.styleTagTransform = (styleTagTransform_default());
+index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+index_module_options.domAPI = (styleDomAPI_default());
+index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var index_module_update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, index_module_options);
+
+
+
+
+       /* harmony default export */ const ripple_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/ripple/index.js
+
+
+function addRipple(containerElement, pressPosition) {
+  if (!containerElement) return null;
+  var ripple = UnityBridge.createElement('view', '', HostContainer);
+  ripple.ClassName = ripple_index_module.ripple + " mat-ripple";
+  ripple.Name = '<Ripple>';
+  var w = containerElement.RectTransform.rect.width;
+  var h = containerElement.RectTransform.rect.height;
+  var maxDimension = Math.max(w, h);
+
+  if (pressPosition) {
+    var pos = containerElement.GetRelativePosition(pressPosition.x, pressPosition.y);
+    ripple.Style.Set('left', pos.x);
+    ripple.Style.Set('top', pos.y);
+    var hw = w / 2;
+    var hh = h / 2;
+    var rx = pos.x > hw ? 0 : w;
+    var ry = pos.y > hh ? 0 : h;
+    var dx = rx - pos.x;
+    var dy = ry - pos.y;
+    var mag = Math.sqrt(dx * dx + dy * dy) * 2.1;
+    ripple.Style.Set('width', mag);
+    ripple.Style.Set('height', mag);
+  } else {
+    ripple.Style.Set('position', 'static');
+    ripple.Style.Set('left', '50%');
+    ripple.Style.Set('top', '50%');
+    ripple.Style.Set('width', maxDimension);
+    ripple.Style.Set('height', maxDimension);
+  }
+
+  UnityBridge.appendChild(containerElement, ripple);
+  return ripple;
+}
+function useRipple(_a) {
+  var onPointerDown = _a.onPointerDown,
+      onPointerUp = _a.onPointerUp,
+      noRipple = _a.noRipple,
+      centered = _a.centered,
+      target = _a.target;
+  var rippleRef = (0,react.useRef)();
+  var pointerDown = (0,react.useCallback)(function (ev, sender) {
+    var _a;
+
+    onPointerDown === null || onPointerDown === void 0 ? void 0 : onPointerDown.call(null, ev, sender);
+
+    if (!noRipple) {
+      (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+      rippleRef.current = addRipple(target ? target.current : sender, centered ? null : ev.pressPosition);
+    }
+  }, [noRipple, onPointerDown, centered, target]);
+  var pointerUp = (0,react.useCallback)(function () {
+    var _a;
+
+    var args = [];
+
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+
+    onPointerUp === null || onPointerUp === void 0 ? void 0 : onPointerUp.apply(null, args);
+    (_a = rippleRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    rippleRef.current = null;
+  }, [onPointerUp]);
+  return {
+    onPointerDown: pointerDown,
+    onPointerUp: pointerUp
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/util/helpers.js
+
+function getChildrenOfType(children, type) {
+  return React.Children.toArray(children).filter(function (x) {
+    return x['type'] === type;
+  });
+}
+function getOnlyChildOfType(children, type) {
+  return getChildrenOfType(children, type);
+}
+function getElevationClass(elevation) {
+  if (elevation > 0) return "mat-elevation-" + elevation;
+  return 'mat-elevation-0';
+}
+// EXTERNAL MODULE: ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./node_modules/@reactunity/material/dist/src/button/index.module.scss
+var button_index_module = __webpack_require__(177);
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/button/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var button_index_module_options = {};
+
+button_index_module_options.styleTagTransform = (styleTagTransform_default());
+button_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      button_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+button_index_module_options.domAPI = (styleDomAPI_default());
+button_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var button_index_module_update = injectStylesIntoStyleTag_default()(button_index_module/* default */.Z, button_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_button_index_module = (button_index_module/* default */.Z && button_index_module/* default.locals */.Z.locals ? button_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/material/dist/src/button/index.js
+var button_assign = undefined && undefined.__assign || function () {
+  button_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return button_assign.apply(this, arguments);
+};
+
+var __rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+
+
+
+var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
+  var children = _a.children,
+      className = _a.className,
+      elevation = _a.elevation,
+      noRipple = _a.noRipple,
+      onPointerDown = _a.onPointerDown,
+      onPointerUp = _a.onPointerUp,
+      variant = _a.variant,
+      props = __rest(_a, ["children", "className", "elevation", "noRipple", "onPointerDown", "onPointerUp", "variant"]);
+
+  variant = variant || 'text';
+  var ripple = useRipple({
+    onPointerDown: onPointerDown,
+    onPointerUp: onPointerUp,
+    noRipple: noRipple,
+    centered: variant === 'icon'
+  });
+  return (0,jsx_runtime.jsx)("button", button_assign({
+    name: "<Button>"
+  }, props, ripple, {
+    ref: ref,
+    className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant)
+  }, {
+    children: children
+  }), void 0);
+});
+
+var Button = react.memo(_Button);
+;// CONCATENATED MODULE: ./src/settings/gameplay/index.tsx
+function GameplaySettings(){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Gameplay settings"});}
+// EXTERNAL MODULE: ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/settings/index.module.scss
+var settings_index_module = __webpack_require__(428);
+;// CONCATENATED MODULE: ./src/settings/index.module.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var settings_index_module_options = {};
+
+settings_index_module_options.styleTagTransform = (styleTagTransform_default());
+settings_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      settings_index_module_options.insert = insertBySelector_default().bind(null, "head");
+    
+settings_index_module_options.domAPI = (styleDomAPI_default());
+settings_index_module_options.insertStyleElement = (insertStyleElement_default());
+
+var settings_index_module_update = injectStylesIntoStyleTag_default()(settings_index_module/* default */.Z, settings_index_module_options);
+
+
+
+
+       /* harmony default export */ const src_settings_index_module = (settings_index_module/* default */.Z && settings_index_module/* default.locals */.Z.locals ? settings_index_module/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./src/settings/index.tsx
+function Settings(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_settings_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_settings_index_module.sidepanel,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:"text",onClick:function onClick(){return nav('gameplay');},children:"Gameplay"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:"text",onClick:function onClick(){return nav('video');},children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:"text",onClick:function onClick(){return nav('audio');},children:"Audio"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:"text",onClick:function onClick(){return nav('..');},children:"Back"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Routes,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_settings_index_module.main,children:/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:"gameplay",element:/*#__PURE__*/(0,jsx_runtime.jsx)(GameplaySettings,{})})})})]});}
 ;// CONCATENATED MODULE: ./src/index.tsx
-function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Go to <color=red>app.tsx</color> to edit this file"})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)(MemoryRouter,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)(Routes,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:"/",element:/*#__PURE__*/(0,jsx_runtime.jsx)(MainMenu,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:"/settings/*",element:/*#__PURE__*/(0,jsx_runtime.jsx)(Settings,{})})]})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 })();
 
 /******/ })()
