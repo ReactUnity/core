@@ -162,6 +162,8 @@ float gaussian(float x, float mu, float sigma) {
 }
 
 static const float pi = 3.14159265;
+static const float hpi = pi / 2;
+static const float pi2 = 2 * pi;
 static const float e = 2.71828183;
 
 #endif // CUSTOM_FUNCTIONS_INCLUDED

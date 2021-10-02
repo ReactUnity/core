@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("red, 10%, blue", "56fd6f2be2865253779dc5299c2bc152", 0, 1, "56fd6f2be2865253779dc5299c2bc152")]
         [TestCase("red, 10%, blue 30%", "1ddcd0ec3aca0da46c534e4f79d36138", 0, 0.3f, "0bfcda05ba4588e1c7e22a6705783aa9")]
         [TestCase("red 30%, green, blue", "e88d9b0391089d924765673d129ba4a8", 0.3f, 0.7f, "94fd77aaf94c4cd38c3302d33dce5cce")]
-        [TestCase("red 30%, transparent, blue", "5176bfdc574ac6d7e982a67b54aa4dea", 0.3f, 0.7f, "b05db7beb1db3e9cb04188c3f7e0a53d")]
+        [TestCase("red 30%, transparent, blue", "93d6c5472c8b66ecb70e33d3e012a064", 0.3f, 0.7f, "230d56f03f117084d4c7f0cf8a28ab74")]
         [TestCase("red, green, blue", "94fd77aaf94c4cd38c3302d33dce5cce", 0, 1, "94fd77aaf94c4cd38c3302d33dce5cce")]
         [TestCase("red, green, yellow, white, blue", "401970bedba40c5508292e7c56cc704d", 0, 1, "401970bedba40c5508292e7c56cc704d")]
         [TestCase("red, green, yellow 30% 60%, white, blue", "d0a072dcfd29fa91f6c8ff7ddc8e16f8", 0, 1, "d0a072dcfd29fa91f6c8ff7ddc8e16f8")]

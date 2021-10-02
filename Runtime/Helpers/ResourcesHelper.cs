@@ -20,6 +20,9 @@ namespace ReactUnity.Helpers
         private static Material boxShadowMaterial;
         public static Material BoxShadowMaterial => boxShadowMaterial = boxShadowMaterial ?? Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
 
+        private static Material backgroundImageMaterial;
+        public static Material BackgroundImageMaterial => backgroundImageMaterial = backgroundImageMaterial ?? Resources.Load<Material>("ReactUnity/materials/BackgroundImage");
+
 
         private static Dictionary<string, TextAsset> Polyfills = new Dictionary<string, TextAsset>();
 

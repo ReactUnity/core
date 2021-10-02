@@ -113,7 +113,7 @@ namespace ReactUnity.Animations
         }
         public static Color Interpolate(Color from, Color to, float t, TimingFunctionType easeType)
         {
-            return Color.LerpUnclamped(from, to, Interpolate(t, easeType));
+            return Interpolate(from, to, Interpolate(t, easeType));
         }
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctionType easeType)
         {
@@ -146,7 +146,7 @@ namespace ReactUnity.Animations
         }
         public static Color Interpolate(Color from, Color to, float t, TimingFunction timingFunction)
         {
-            return Color.LerpUnclamped(from, to, Interpolate(t, timingFunction));
+            return Interpolate(from, to, Interpolate(t, timingFunction));
         }
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunction timingFunction)
         {

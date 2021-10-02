@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
+using ReactUnity.Animations;
 using ReactUnity.Styling;
 using UnityEngine;
 
@@ -14,9 +15,10 @@ namespace ReactUnity.Types
 
     public enum GradientType
     {
-        Linear = 0,
-        Radial = 1,
-        Conic = 2,
+        None = 0,
+        Linear = 1,
+        Radial = 2,
+        Conic = 3,
     }
 
     public enum RadialGradientSize
@@ -78,7 +80,7 @@ namespace ReactUnity.Types
 
                     if (!pk.Color.HasValue || !nk.Color.HasValue) return false;
 
-                    key.Color = Color.Lerp(pk.Color.Value, nk.Color.Value, 0.5f);
+                    key.Color = Interpolater.Interpolate(pk.Color.Value, nk.Color.Value, 0.5f);
                 }
                 else if (noUnit)
                 {
@@ -203,7 +205,7 @@ namespace ReactUnity.Types
             var fr = Keys[ind];
             var tr = Keys[ind + 1];
 
-            return Color.Lerp(fr.Color.Value, tr.Color.Value, indDelta);
+            return Interpolater.Interpolate(fr.Color.Value, tr.Color.Value, indDelta);
         }
     }
 

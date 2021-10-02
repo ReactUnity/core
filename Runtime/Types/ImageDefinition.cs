@@ -21,7 +21,7 @@ namespace ReactUnity.Types
             });
         }
 
-        internal virtual Material GetMaterial(ReactContext context) => null;
+        internal virtual void ModifyMaterial(ReactContext context, Material material) { }
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -95,6 +95,11 @@ namespace ReactUnity.Types
             var calc = Gradient.GetCalculatedGradient(100);
 
             callback(calc.Ramp);
+        }
+
+        internal override void ModifyMaterial(ReactContext context, Material material)
+        {
+            material.SetFloat("_gradientType", (float) (int) Gradient.Type);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Animations;
 using ReactUnity.Styling;
 using UnityEngine;
 
@@ -222,7 +223,7 @@ namespace ReactUnity.Converters
                         if (endColor is Color e)
                         {
                             var t = v1f as float? ?? 0.5f;
-                            return Color.LerpUnclamped(s, e, t);
+                            return Interpolater.Interpolate(s, e, t);
                         }
                         else
                         {

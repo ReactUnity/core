@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,19 +15,7 @@ namespace ReactUnity.Styling.Internal
         public RectTransform ShadowRoot { get; private set; }
 
         private ReactContext Context;
-        private ImageDefinition BgImageRef;
-        private Image BgImage;
-
-        private Color BgColor
-        {
-            set
-            {
-                BgImage.color = value;
-                BgImage.raycastTarget = BgImage.color.a > 0 || PointerEvents == PointerEvents.All;
-            }
-        }
-
-        private PointerEvents PointerEvents;
+        private BackgroundImage BgImage;
 
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;
@@ -42,7 +31,7 @@ namespace ReactUnity.Styling.Internal
 
             var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
             var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
-            var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(Image));
+            var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(BackgroundImage));
 
 
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
@@ -54,11 +43,12 @@ namespace ReactUnity.Styling.Internal
 
             cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
 
-            var bgImage = bg.GetComponent<Image>();
+            var bgImage = bg.GetComponent<BackgroundImage>();
             cmp.BgImage = bgImage;
             bgImage.color = Color.clear;
             bgImage.type = Image.Type.Sliced;
             bgImage.pixelsPerUnitMultiplier = 1;
+            bgImage.Context = ctx;
 
             var sr = new GameObject("[Shadows]", typeof(RectTransform));
 
@@ -139,35 +129,8 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
-        {
-            var bg = Background.GetComponent<Image>();
-
-            if (image != BgImageRef)
-            {
-                BgImageRef = image;
-
-                if (image != null && image != ImageDefinition.None)
-                {
-                    bg.sprite = null;
-                    BgColor = Color.clear;
-                    image.GetSprite(Context, (sprite) => {
-                        if (image != BgImageRef) return;
-                        BgColor = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
-                        bg.sprite = sprite;
-                    });
-                }
-                else
-                {
-                    bg.sprite = null;
-                    BgColor = color;
-                }
-            }
-            else
-            {
-                BgColor = blendMode == BackgroundBlendMode.Normal && bg.sprite != null ? Color.white : color;
-            }
-        }
+        public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal) =>
+            BgImage.SetBackgroundColorAndImage(color, image, blendMode);
 
         public void SetBoxShadow(BoxShadowList shadows)
         {
@@ -276,11 +239,6 @@ namespace ReactUnity.Styling.Internal
             return 0;
         }
 
-        public void SetPointerEvents(PointerEvents pointerEvents)
-        {
-            PointerEvents = pointerEvents;
-            var bg = Background.GetComponent<Image>();
-            bg.raycastTarget = bg.color.a > 0 || PointerEvents == PointerEvents.All;
-        }
+        public void SetPointerEvents(PointerEvents pointerEvents) => BgImage.SetPointerEvents(pointerEvents);
     }
 }
