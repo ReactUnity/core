@@ -2,7 +2,6 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
-using TMPro;
 using UnityEngine;
 
 namespace ReactUnity.Tests

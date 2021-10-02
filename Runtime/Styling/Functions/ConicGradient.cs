@@ -1,5 +1,6 @@
 using ReactUnity.Converters;
 using ReactUnity.Types;
+using UnityEngine;
 
 namespace ReactUnity.Styling.Functions
 {
@@ -73,7 +74,7 @@ namespace ReactUnity.Styling.Functions
                 Keys = colors,
                 At = at,
                 Repeating = isRepeating,
-                From = from,
+                From = from * Mathf.Deg2Rad,
             };
 
             if (def.ProcessKeys()) return def;
