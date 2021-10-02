@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Functions
 {
-    public class LinearGradientFunction : ICssFunction
+    internal class LinearGradientFunction : ICssFunction
     {
         public string Name { get; } = "linear-gradient";
 

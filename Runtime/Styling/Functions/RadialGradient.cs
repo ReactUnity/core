@@ -4,7 +4,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Functions
 {
-    public class RadialGradientFunction : ICssFunction
+    internal class RadialGradientFunction : ICssFunction
     {
         static IStyleConverter ShapeConverter = AllConverters.Get<RadialGradientShape>();
         static IStyleConverter SizeHintConverter = AllConverters.Get<RadialGradientSizeHint>();
@@ -78,6 +78,8 @@ namespace ReactUnity.Styling.Functions
                     startIndex = 1;
                     continue;
                 }
+
+                break;
             }
 
             if (args.Length - startIndex < 2) return null;

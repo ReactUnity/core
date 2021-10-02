@@ -3,7 +3,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Functions
 {
-    public class ConicGradientFunction : ICssFunction
+    internal class ConicGradientFunction : ICssFunction
     {
         public string Name { get; } = "conic-gradient";
 
