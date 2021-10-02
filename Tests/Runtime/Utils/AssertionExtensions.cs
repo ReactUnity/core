@@ -27,7 +27,7 @@ namespace ReactUnity.Tests
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
-                capture = ScreenCapture.CaptureScreenshotAsTexture();
+                capture = CaptureScreenshot();
 
                 if (capture.width < width || capture.height < height)
                 {
@@ -64,6 +64,23 @@ namespace ReactUnity.Tests
                 if (croppedCapture) Object.Destroy(croppedCapture);
                 if (expectedTexture) Object.Destroy(expectedTexture);
             }
+        }
+
+        private static Texture2D CaptureScreenshot()
+        {
+            var cam = Camera.main;
+            var render = new RenderTexture(Screen.width, Screen.height, 24);
+            cam.targetTexture = render;
+            cam.Render();
+            cam.targetTexture = null;
+
+            RenderTexture.active = render;
+            Texture2D screenshot = new Texture2D(render.width, render.height, TextureFormat.RGB24, false);
+            screenshot.ReadPixels(new Rect(0, 0, render.width, render.height), 0, 0);
+            screenshot.Apply();
+            RenderTexture.active = null;
+
+            return screenshot;
         }
 
         private static void CompareTexture(Texture2D first, Texture2D second)
