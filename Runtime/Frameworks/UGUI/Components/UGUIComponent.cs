@@ -307,7 +307,7 @@ namespace ReactUnity.UGUI
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
             var bgImage = ComputedStyle.backgroundImage;
-            if (bgImage != null && bgImage != ImageReference.None) return true;
+            if (bgImage != null && bgImage != ImageDefinition.None) return true;
             if (ComputedStyle.boxShadow != null) return true;
             if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
                 ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;

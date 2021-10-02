@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Functions;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ namespace ReactUnity.Styling
 {
     public static class CssFunctions
     {
-        // Static props here will be automatically added to the Functions list
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
@@ -18,6 +18,9 @@ namespace ReactUnity.Styling
         public static ICssFunction Hsla = new HslaFunction();
         public static ICssFunction Var = new VarFunction();
         public static ICssFunction Vector3 = new Vector3Function();
+        public static ICssFunction LinearGradient = new LinearGradientFunction();
+        public static ICssFunction RadialGradient = new RadialGradientFunction();
+        public static ICssFunction ConicGradient = new ConicGradientFunction();
 
         private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -33,6 +36,12 @@ namespace ReactUnity.Styling
             { "hsla", Hsla },
             { "var", Var },
             { "vector3", Vector3 },
+            { "linear-gradient", LinearGradient },
+            { "repeating-linear-gradient", LinearGradient },
+            { "radial-gradient", RadialGradient },
+            { "repeating-radial-gradient", RadialGradient },
+            { "conic-gradient", ConicGradient },
+            { "repeating-conic-gradient", ConicGradient },
         };
 
         public static bool TryCall(string expression, out object result, HashSet<string> allowed = null)

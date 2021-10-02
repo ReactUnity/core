@@ -28,7 +28,7 @@ namespace ReactUnity.Styling.Shorthands
             var imageSet = false;
 
             var color = Color.clear;
-            var image = ImageReference.None;
+            var image = ImageDefinition.None;
 
             for (int i = 0; i < splits.Count; i++)
             {
@@ -48,9 +48,9 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!imageSet)
                 {
-                    var val = AllConverters.ImageReferenceConverter.Convert(split);
+                    var val = AllConverters.ImageDefinitionConverter.Convert(split);
 
-                    if (val is ImageReference v)
+                    if (val is ImageDefinition v)
                     {
                         image = v;
                         imageSet = true;

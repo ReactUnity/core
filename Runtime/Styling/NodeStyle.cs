@@ -28,7 +28,7 @@ namespace ReactUnity.Styling
         public CursorList cursor => GetStyleValue(StyleProperties.cursor);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
-        public ImageReference backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
+        public ImageDefinition backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
         public ImageReference maskImage => GetStyleValue(StyleProperties.maskImage);
         public float borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
@@ -148,7 +148,7 @@ namespace ReactUnity.Styling
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 
 #if UNITY_EDITOR
-            if (value != null && value.GetType() != typeof(T) && !typeof(T).IsEnum)
+            if (value != null && !typeof(T).IsAssignableFrom(value.GetType()) && !typeof(T).IsEnum)
             {
                 Debug.LogError($"Error while converting {value} from type {value.GetType()} to {typeof(T)}");
             }

@@ -14,7 +14,7 @@ namespace ReactUnity.Styling.Internal
         public RectTransform ShadowRoot { get; private set; }
 
         private ReactContext Context;
-        private ImageReference BgImageRef;
+        private ImageDefinition BgImageRef;
         private Image BgImage;
 
         private Color BgColor
@@ -139,7 +139,7 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackgroundColorAndImage(Color color, ImageReference image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
             var bg = Background.GetComponent<Image>();
 
@@ -147,14 +147,12 @@ namespace ReactUnity.Styling.Internal
             {
                 BgImageRef = image;
 
-                if (image != null && image != ImageReference.None)
+                if (image != null && image != ImageDefinition.None)
                 {
                     bg.sprite = null;
                     BgColor = Color.clear;
-                    image.Get(Context, (res) => {
+                    image.GetSprite(Context, (sprite) => {
                         if (image != BgImageRef) return;
-                        Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
-
                         BgColor = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
                         bg.sprite = sprite;
                     });

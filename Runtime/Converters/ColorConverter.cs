@@ -173,7 +173,6 @@ namespace ReactUnity.Converters
             if (KnownColors.TryGetValue(value, out var known)) value = known;
             if (value == "clear" || value == "transparent") return Color.clear;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
-            if (value.IndexOf(',') >= 0 || value.IndexOf(' ') >= 0) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
             return CssKeyword.Invalid;
         }
 

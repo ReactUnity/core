@@ -16,6 +16,8 @@ namespace ReactUnity.Converters
         Dictionary<string, Func<float, object>> SuffixMapper;
         bool AllowSuffixless;
 
+        protected virtual Dictionary<string, float> SpecialValues { get; set; }
+
         public FloatConverter()
         {
             SuffixMap = new Dictionary<string, float>();
@@ -36,9 +38,10 @@ namespace ReactUnity.Converters
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-        public object FromString(string value)
+        public virtual object FromString(string value)
         {
             if (value == null) return CssKeyword.Invalid;
+            if (SpecialValues != null && SpecialValues.TryGetValue(value, out var val)) return val;
             return Parse(value);
         }
 
@@ -147,8 +150,25 @@ namespace ReactUnity.Converters
             { "rad", 180 / Mathf.PI },
             { "grad", 400 / 360f },
             { "turn", 360 },
+            { "%", 3.6f },
         })
-        { }
+        {
+            SpecialValues = new Dictionary<string, float>
+            {
+                { "to top", 0 },
+                { "to top right", 45 },
+                { "to right top", 45 },
+                { "to right", 90 },
+                { "to bottom right", 135 },
+                { "to right bottom", 135 },
+                { "to bottom", 180 },
+                { "to bottom left", 225 },
+                { "to left bottom", 225 },
+                { "to left", 270 },
+                { "to top left", 315 },
+                { "to left top", 315 },
+            };
+        }
     }
 
     public class DurationConverter : FloatConverter
