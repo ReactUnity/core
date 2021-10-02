@@ -125,7 +125,15 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderLeftColor);
             TargetElement.style.borderRightColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderRightColor);
 
-            if (computed.HasValue(StyleProperties.backgroundImage)) computed.backgroundImage?.GetTexture(Context, tx => TargetElement.style.backgroundImage = tx);
+            if (computed.HasValue(StyleProperties.backgroundImage))
+            {
+                var bg = computed.backgroundImage;
+
+                bg?.GetTexture(Context, TargetElement.layout.size, tx => {
+                    if (bg != ComputedStyle.backgroundImage) return;
+                    TargetElement.style.backgroundImage = tx;
+                });
+            }
             else TargetElement.style.backgroundImage = StyleKeyword.Null;
 
             if (computed.HasValue(StyleProperties.fontStyle) || computed.HasValue(StyleProperties.fontWeight))

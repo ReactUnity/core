@@ -1,3 +1,4 @@
+using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Types;
 
@@ -6,7 +7,8 @@ namespace ReactUnity.Styling.Functions
     public class RadialGradientFunction : ICssFunction
     {
         static IStyleConverter ShapeConverter = AllConverters.Get<RadialGradientShape>();
-        static IStyleConverter SizeHintConverter = AllConverters.Get<RadialGradientSize>();
+        static IStyleConverter SizeHintConverter = AllConverters.Get<RadialGradientSizeHint>();
+        static IStyleConverter YogaValueConverter = AllConverters.YogaValueConverter;
 
         public string Name { get; } = "radial-gradient";
 
@@ -18,8 +20,9 @@ namespace ReactUnity.Styling.Functions
             var startIndex = 0;
 
             var shape = RadialGradientShape.Ellipse;
-            var sizeHint = RadialGradientSize.FarthestCorner;
+            var sizeHint = RadialGradientSizeHint.FarthestCorner;
             var at = YogaValue2.Center;
+            var radius = YogaValue.Undefined();
             var isRepeating = name.StartsWith("repeating-");
 
 
@@ -34,7 +37,7 @@ namespace ReactUnity.Styling.Functions
                     i++;
                     if (firstSplit.Count <= i) return null;
 
-                    sp = firstSplit[i];
+                    sp = string.Join(" ", firstSplit.ToArray(), i, firstSplit.Count - i);
 
                     var cAt = AllConverters.YogaValue2Converter.Convert(sp);
 
@@ -45,7 +48,7 @@ namespace ReactUnity.Styling.Functions
                     else return null;
 
                     startIndex = 1;
-                    continue;
+                    break;
                 }
 
                 var shp = ShapeConverter.Convert(sp);
@@ -59,9 +62,19 @@ namespace ReactUnity.Styling.Functions
 
                 var sz = SizeHintConverter.Convert(sp);
 
-                if (sz is RadialGradientSize szv)
+                if (sz is RadialGradientSizeHint szv)
                 {
                     sizeHint = szv;
+                    startIndex = 1;
+                    continue;
+                }
+
+                var rd = YogaValueConverter.Convert(sp);
+
+                if (rd is YogaValue rdv)
+                {
+                    radius = rdv;
+                    sizeHint = RadialGradientSizeHint.Custom;
                     startIndex = 1;
                     continue;
                 }
@@ -78,6 +91,7 @@ namespace ReactUnity.Styling.Functions
                 Repeating = isRepeating,
                 SizeHint = sizeHint,
                 Shape = shape,
+                Radius = radius,
             };
 
             if (def.ProcessKeys()) return def;

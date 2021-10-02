@@ -25,49 +25,49 @@ namespace ReactUnity.Editor.Tests
             collection["background"] = $"linear-gradient({def})";
             style.UpdateParent(null);
             var bg = style.backgroundImage as GradientImageDefinition;
-            var calc = bg.Gradient.GetCalculatedGradient(100);
+            var calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
-            Assert.AreEqual(1, calc.Size);
+            Assert.AreEqual(1, calc.Length);
             Assert.AreEqual(Hash128.Parse(nHash), calc.Ramp.imageContentsHash);
 
             collection["background"] = $"radial-gradient({def})";
             style.UpdateParent(null);
             bg = style.backgroundImage as GradientImageDefinition;
-            calc = bg.Gradient.GetCalculatedGradient(100);
+            calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
-            Assert.AreEqual(1, calc.Size);
+            Assert.AreEqual(1, calc.Length);
             Assert.AreEqual(Hash128.Parse(nHash), calc.Ramp.imageContentsHash);
 
             collection["background"] = $"conic-gradient({def})";
             style.UpdateParent(null);
             bg = style.backgroundImage as GradientImageDefinition;
-            calc = bg.Gradient.GetCalculatedGradient(100);
+            calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
-            Assert.AreEqual(1, calc.Size);
+            Assert.AreEqual(1, calc.Length);
             Assert.AreEqual(Hash128.Parse(nHash), calc.Ramp.imageContentsHash);
 
             collection["background"] = $"repeating-linear-gradient({def})";
             style.UpdateParent(null);
             bg = style.backgroundImage as GradientImageDefinition;
-            calc = bg.Gradient.GetCalculatedGradient(100);
+            calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
-            Assert.AreEqual(rSize, calc.Size);
+            Assert.AreEqual(rSize, calc.Length);
             Assert.AreEqual(Hash128.Parse(rHash), calc.Ramp.imageContentsHash);
 
             collection["background"] = $"repeating-radial-gradient({def})";
             style.UpdateParent(null);
             bg = style.backgroundImage as GradientImageDefinition;
-            calc = bg.Gradient.GetCalculatedGradient(100);
+            calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
-            Assert.AreEqual(rSize, calc.Size);
+            Assert.AreEqual(rSize, calc.Length);
             Assert.AreEqual(Hash128.Parse(rHash), calc.Ramp.imageContentsHash);
 
             collection["background"] = $"repeating-conic-gradient({def})";
             style.UpdateParent(null);
             bg = style.backgroundImage as GradientImageDefinition;
-            calc = bg.Gradient.GetCalculatedGradient(100);
+            calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
-            Assert.AreEqual(rSize, calc.Size);
+            Assert.AreEqual(rSize, calc.Length);
             Assert.AreEqual(Hash128.Parse(rHash), calc.Ramp.imageContentsHash);
         }
     }

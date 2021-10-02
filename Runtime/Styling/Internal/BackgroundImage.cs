@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Styling.Internal
 {
-    public class BackgroundImage : Image
+    public class BackgroundImage : RawImage
     {
         public static readonly int SizeProp = Shader.PropertyToID("_size");
 
@@ -26,6 +26,7 @@ namespace ReactUnity.Styling.Internal
 
         public ReactContext Context;
         private PointerEvents PointerEvents;
+        private BackgroundBlendMode BlendMode;
 
         private Color Color
         {
@@ -41,8 +42,6 @@ namespace ReactUnity.Styling.Internal
         protected override void OnEnable()
         {
             base.OnEnable();
-            type = Type.Sliced;
-            pixelsPerUnitMultiplier = 100;
             material = GetDefaultMaterial();
         }
 
@@ -58,7 +57,7 @@ namespace ReactUnity.Styling.Internal
             {
                 Material result = base.materialForRendering;
                 result.SetVector(ShaderHelpers.SizeProp, Size);
-                Definition?.ModifyMaterial(Context, result);
+                Definition?.ModifyMaterial(Context, result, Size);
                 return result;
             }
         }
@@ -85,34 +84,47 @@ namespace ReactUnity.Styling.Internal
 
             var mask = GetComponent<Mask>();
             if (mask) MaskUtilities.NotifyStencilStateChanged(mask);
+
+
+            var image = Definition;
+
+            if (image != null && image.SizeUpdatesGraphic)
+            {
+                image.GetTexture(Context, Size, (sp) => {
+                    if (image != Definition) return;
+                    Color = BlendMode == BackgroundBlendMode.Normal && sp != null ? Color.white : color;
+                    texture = sp;
+                });
+            }
         }
 
 
         public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
+            BlendMode = blendMode;
             if (image != Definition)
             {
                 Definition = image;
 
                 if (image != null && image != ImageDefinition.None)
                 {
-                    sprite = null;
+                    texture = null;
                     Color = Color.clear;
-                    image.GetSprite(Context, (sp) => {
+                    image.GetTexture(Context, Size, (sp) => {
                         if (image != Definition) return;
                         Color = blendMode == BackgroundBlendMode.Normal && sp != null ? Color.white : color;
-                        sprite = sp;
+                        texture = sp;
                     });
                 }
                 else
                 {
-                    sprite = null;
+                    texture = null;
                     Color = color;
                 }
             }
             else
             {
-                Color = blendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : color;
+                Color = blendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : color;
             }
         }
 

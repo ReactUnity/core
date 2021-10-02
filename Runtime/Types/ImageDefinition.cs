@@ -11,17 +11,19 @@ namespace ReactUnity.Types
     {
         public static ImageDefinition None { get; } = UrlImageDefinition.None;
 
-        internal virtual void GetTexture(ReactContext context, Action<Texture2D> callback) => callback(null);
-        internal virtual void GetSprite(ReactContext context, Action<Sprite> callback)
+        public virtual bool SizeUpdatesGraphic => false;
+
+        internal virtual void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback) => callback(null);
+        internal virtual void GetSprite(ReactContext context, Vector2 size, Action<Sprite> callback)
         {
-            GetTexture(context, texture => {
+            GetTexture(context, size, texture => {
                 var sprite = texture == null ? null :
                     Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
                 callback(sprite);
             });
         }
 
-        internal virtual void ModifyMaterial(ReactContext context, Material material) { }
+        internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size) { }
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -75,7 +77,7 @@ namespace ReactUnity.Types
             Reference = reference;
         }
 
-        internal override void GetTexture(ReactContext context, Action<Texture2D> callback)
+        internal override void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback)
         {
             Reference.Get(context, callback);
         }
@@ -84,22 +86,19 @@ namespace ReactUnity.Types
     public class GradientImageDefinition : ImageDefinition
     {
         public BaseGradient Gradient { get; }
+        public override bool SizeUpdatesGraphic => Gradient.SizeUpdatesGraphic;
 
         public GradientImageDefinition(BaseGradient gradient)
         {
             Gradient = gradient;
         }
 
-        internal override void GetTexture(ReactContext context, Action<Texture2D> callback)
+        internal override void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback)
         {
-            var calc = Gradient.GetCalculatedGradient(100);
-
+            var calc = Gradient.GetCalculatedGradient(size);
             callback(calc.Ramp);
         }
 
-        internal override void ModifyMaterial(ReactContext context, Material material)
-        {
-            material.SetFloat("_gradientType", (float) (int) Gradient.Type);
-        }
+        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size) => Gradient.ModifyMaterial(context, material, size);
     }
 }

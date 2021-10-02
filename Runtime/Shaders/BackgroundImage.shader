@@ -2,12 +2,17 @@ Shader "ReactUnity/BackgroundImage"
 {
   Properties{
     _MainTex("Texture", 2D) = "white" {}
+    [Toggle()] _repeating("Repeating", Integer) = 0
     _size("size", Vector) = (1,1,1,1)
     _angle("Angle", Float) = 0
     _from("From", Float) = 0
+    _offset("Offset", Float) = 0
+    _length("Length", Float) = 1
     _at("At", Vector) = (0.5, 0.5, 1, 1)
-    [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Float) = 0
-    [Toggle()] _repeating("Repeating", Float) = 0
+    _radius("Radius", Float) = 1
+    [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Integer) = 0
+    [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Integer) = 0
+    [Enum(ReactUnity.Types.RadialGradientSizeHint)] _sizeHint("Gradient Size Hint", Integer) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -65,6 +70,11 @@ Shader "ReactUnity/BackgroundImage"
         float _gradientType;
         float _angle;
         float _from;
+        float _offset;
+        float _length;
+        float _radius;
+        int _sizeHint;
+        int _shape;
         float2 _at;
         float2 _size;
         sampler2D _MainTex;
@@ -79,34 +89,42 @@ Shader "ReactUnity/BackgroundImage"
             pos = i.uv;
           }
           else if (_gradientType == 1) {
-            float y = 1 - i.uv.y;
+            float y = i.uv.y;
             float x = i.uv.x;
 
             float sa = sin(_angle);
             float ca = cos(_angle);
 
-            ca = ca < 0 ? 1 - ca : ca;
-            sa = sa < 0 ? 1 - sa : sa;
+            y = (ca < 0 ? 1 - y : y);
+            x = (sa < 0 ? 1 - x : x);
 
-            float ratioX = y * ca + x * sa;
-            float ratioY = x * ca + y * sa;
+            float ratioX = y * ca * ca + x * sa * sa;
 
-            pos = float2(ratioX, ratioY);
+            pos = float2(ratioX, 0);
           }
           else if (_gradientType == 2) {
             float2 r2 = i.uv - _at;
 
-            float r = sqrt(r2.x * r2.x + r2.y * r2.y) * 2;
+            if (_shape == 1) {
+              r2 = float2(r2.x * _size.x / _size.y, r2.y);
+            }
 
-            pos = float2(r, 0);
+            float r = sqrt(r2.x * r2.x + r2.y * r2.y);
+
+            pos = float2(r / _radius, 0);
           }
           else if (_gradientType == 3) {
             float2 r2 = i.uv - _at;
 
             float angle = (atan2(r2.x, r2.y) - _from) % pi2;
-            angle = angle < 0 ? pi2 + angle : angle;
+            angle = angle < 0 ? (pi2 + angle) : angle;
 
             pos = float2(angle / pi2, 0);
+          }
+
+          if (_gradientType != 0 && _repeating) {
+            float x = (((pos.x - _offset) / _length % 1) + 1) % 1;
+            pos = float2(x, pos.y);
           }
 
           fixed4 res = mixAlpha(tex2D(_MainTex, pos), i.color, 1);

@@ -46,8 +46,6 @@ namespace ReactUnity.Styling.Internal
             var bgImage = bg.GetComponent<BackgroundImage>();
             cmp.BgImage = bgImage;
             bgImage.color = Color.clear;
-            bgImage.type = Image.Type.Sliced;
-            bgImage.pixelsPerUnitMultiplier = 1;
             bgImage.Context = ctx;
 
             var sr = new GameObject("[Shadows]", typeof(RectTransform));

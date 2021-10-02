@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Animations;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace ReactUnity.Types
     {
         public Texture2D Ramp;
         public float Offset;
-        public float Size;
+        public float Length;
     }
 
     public enum GradientType
@@ -21,7 +22,7 @@ namespace ReactUnity.Types
         Conic = 3,
     }
 
-    public enum RadialGradientSize
+    public enum RadialGradientSizeHint
     {
         FarthestCorner = 0,
         FarthestSide = 1,
@@ -36,7 +37,7 @@ namespace ReactUnity.Types
         Circle = 1,
     }
 
-    public class BaseGradient
+    public abstract class BaseGradient
     {
         public class ColorKey
         {
@@ -47,6 +48,7 @@ namespace ReactUnity.Types
         public virtual GradientType Type { get; }
         public List<ColorKey> Keys { get; set; }
         public bool Repeating { get; set; }
+        public virtual bool SizeUpdatesGraphic => true;
 
         public bool ProcessKeys()
         {
@@ -100,9 +102,10 @@ namespace ReactUnity.Types
             return true;
         }
 
-        public CalculatedGradient GetCalculatedGradient(float width, int resolution = 1024)
+        public CalculatedGradient GetCalculatedGradient(Vector2 dimensions, int resolution = 1024)
         {
             if (Keys == null || Keys.Count == 0) return null;
+            var width = CalculateLength(dimensions);
 
             float offset = 0f;
             float size = 1f;
@@ -147,7 +150,7 @@ namespace ReactUnity.Types
             {
                 Ramp = tx,
                 Offset = offset,
-                Size = size,
+                Length = size,
             };
         }
 
@@ -207,26 +210,111 @@ namespace ReactUnity.Types
 
             return Interpolater.Interpolate(fr.Color.Value, tr.Color.Value, indDelta);
         }
+
+
+        internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        {
+            material.SetInteger("_gradientType", (int) Type);
+            material.SetInteger("_repeating", Repeating ? 1 : 0);
+
+            var calc = GetCalculatedGradient(size);
+            material.SetFloat("_length", calc.Length);
+            material.SetFloat("_offset", calc.Offset);
+        }
+
+        protected abstract float CalculateLength(Vector2 size);
     }
 
     public class LinearGradient : BaseGradient
     {
         public override GradientType Type => GradientType.Linear;
         public float Angle { get; set; }
+
+        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        {
+            base.ModifyMaterial(context, material, size);
+            material.SetFloat("_angle", Angle);
+        }
+
+        protected override float CalculateLength(Vector2 size)
+        {
+            var c = Mathf.Cos(Angle);
+            var s = Mathf.Sin(Angle);
+
+            return size.y * c * c + size.x * s * s;
+        }
     }
 
     public class RadialGradient : BaseGradient
     {
         public override GradientType Type => GradientType.Radial;
         public YogaValue2 At { get; set; }
-        public YogaValue2 Size { get; set; }
-        public RadialGradientSize SizeHint { get; set; }
+        public YogaValue Radius { get; set; }
+        public RadialGradientSizeHint SizeHint { get; set; }
         public RadialGradientShape Shape { get; set; }
+
+        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        {
+            base.ModifyMaterial(context, material, size);
+            material.SetVector("_at", StylingUtils.GetRatioValue(At, size));
+            material.SetInteger("_sizeHint", (int) SizeHint);
+            material.SetInteger("_shape", (int) Shape);
+            material.SetFloat("_radius", CalculateRadius(size));
+        }
+
+        protected override float CalculateLength(Vector2 size)
+        {
+            var at = StylingUtils.GetPointValue(At, size);
+
+            switch (SizeHint)
+            {
+                case RadialGradientSizeHint.Custom:
+                    return StylingUtils.GetPointValue(Radius, size.x, 0);
+                case RadialGradientSizeHint.FarthestSide:
+                    return Mathf.Max(at.x, size.x - at.x, at.y, size.y - at.y);
+                case RadialGradientSizeHint.ClosestCorner:
+                    return new Vector2(Mathf.Min(at.x, size.x - at.x), Mathf.Min(at.y, size.y - at.y)).magnitude;
+                case RadialGradientSizeHint.ClosestSide:
+                    return Mathf.Min(at.x, size.x - at.x, at.y, size.y - at.y);
+                case RadialGradientSizeHint.FarthestCorner:
+                default:
+                    return new Vector2(Mathf.Max(at.x, size.x - at.x), Mathf.Max(at.y, size.y - at.y)).magnitude;
+            }
+        }
+
+        protected float CalculateRadius(Vector2 size)
+        {
+            var at = StylingUtils.GetRatioValue(At, size);
+
+            switch (SizeHint)
+            {
+                case RadialGradientSizeHint.Custom:
+                    return StylingUtils.GetRatioValue(Radius, size.y, 0);
+                case RadialGradientSizeHint.FarthestSide:
+                    return Mathf.Max(at.x, 1 - at.x, at.y, 1 - at.y);
+                case RadialGradientSizeHint.ClosestCorner:
+                    return new Vector2(Mathf.Min(at.x, 1 - at.x), Mathf.Min(at.y, 1 - at.y)).magnitude;
+                case RadialGradientSizeHint.ClosestSide:
+                    return Mathf.Min(at.x, 1 - at.x, at.y, 1 - at.y);
+                case RadialGradientSizeHint.FarthestCorner:
+                default:
+                    return new Vector2(Mathf.Max(at.x, 1 - at.x), Mathf.Max(at.y, 1 - at.y)).magnitude;
+            }
+        }
     }
     public class ConicGradient : BaseGradient
     {
         public override GradientType Type => GradientType.Conic;
         public YogaValue2 At { get; set; }
         public float From { get; set; }
+
+        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        {
+            base.ModifyMaterial(context, material, size);
+            material.SetVector("_at", StylingUtils.GetRatioValue(At, size));
+            material.SetFloat("_from", From);
+        }
+
+        protected override float CalculateLength(Vector2 size) => 1;
     }
 }
