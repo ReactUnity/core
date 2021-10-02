@@ -15,7 +15,7 @@ namespace ReactUnity.Styling.Internal
         public RectTransform ShadowRoot { get; private set; }
 
         private ReactContext Context;
-        private BackgroundImage BgImage;
+        internal BackgroundImage BgImage;
 
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;

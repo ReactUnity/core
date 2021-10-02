@@ -214,8 +214,8 @@ namespace ReactUnity.Types
 
         internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
-            material.SetInteger("_gradientType", (int) Type);
-            material.SetInteger("_repeating", Repeating ? 1 : 0);
+            material.SetFloat("_gradientType", (int) Type);
+            material.SetFloat("_repeating", Repeating ? 1 : 0);
 
             var calc = GetCalculatedGradient(size);
             material.SetFloat("_length", calc.Length);
@@ -257,8 +257,8 @@ namespace ReactUnity.Types
         {
             base.ModifyMaterial(context, material, size);
             material.SetVector("_at", StylingUtils.GetRatioValue(At, size));
-            material.SetInteger("_sizeHint", (int) SizeHint);
-            material.SetInteger("_shape", (int) Shape);
+            material.SetFloat("_sizeHint", (int) SizeHint);
+            material.SetFloat("_shape", (int) Shape);
             material.SetFloat("_radius", CalculateRadius(size));
         }
 

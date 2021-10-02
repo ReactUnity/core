@@ -2,7 +2,7 @@ Shader "ReactUnity/BackgroundImage"
 {
   Properties{
     _MainTex("Texture", 2D) = "white" {}
-    [Toggle()] _repeating("Repeating", Integer) = 0
+    [Toggle()] _repeating("Repeating", Int) = 0
     _size("size", Vector) = (1,1,1,1)
     _angle("Angle", Float) = 0
     _from("From", Float) = 0
@@ -10,9 +10,9 @@ Shader "ReactUnity/BackgroundImage"
     _length("Length", Float) = 1
     _at("At", Vector) = (0.5, 0.5, 1, 1)
     _radius("Radius", Float) = 1
-    [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Integer) = 0
-    [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Integer) = 0
-    [Enum(ReactUnity.Types.RadialGradientSizeHint)] _sizeHint("Gradient Size Hint", Integer) = 0
+    [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
+    [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
+    [Enum(ReactUnity.Types.RadialGradientSizeHint)] _sizeHint("Gradient Size Hint", Int) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0

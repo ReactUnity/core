@@ -80,8 +80,8 @@ namespace ReactUnity.Tests
             var bg = cmp.BorderAndBackground;
             var mask = cmp.MaskAndImage;
 
-            var bgImage = bg.Background.GetComponent<Image>();
-            Assert.AreEqual(typeof(Texture2D), bgImage.sprite?.texture?.GetType());
+            var bgImage = bg.BgImage;
+            Assert.AreEqual(typeof(Texture2D), bgImage.texture?.GetType());
             Assert.AreEqual(Color.red, bgImage.color);
 
             Assert.AreEqual(typeof(Texture2D), mask.Image.sprite?.texture?.GetType());
