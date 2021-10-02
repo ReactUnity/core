@@ -134,8 +134,8 @@ namespace ReactUnity.Types
             }
 
 
-            var tx = new Texture2D(resolution, 1);
-            tx.wrapMode = TextureWrapMode.Clamp;
+            var tx = new Texture2D(resolution, 1, TextureFormat.RGBA32, false, true);
+            tx.wrapMode = Repeating ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
             var resRp = 1f / (resolution - 1);
 
             for (int i = 0; i < resolution; i++)

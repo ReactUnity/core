@@ -123,7 +123,7 @@ Shader "ReactUnity/BackgroundImage"
           }
 
           if (_gradientType != 0 && _repeating) {
-            float x = (((pos.x - _offset) / _length % 1) + 1) % 1;
+            float x = (pos.x - _offset) / _length;
             pos = float2(x, pos.y);
           }
 
