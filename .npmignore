@@ -1,0 +1,30 @@
+# Ignore all files except the following and their contents
+*
+
+# Folders and their metas
+!Runtime/**
+!Runtime.meta
+!Assets/**
+!Assets.meta
+!Plugins/**
+!Plugins.meta
+!Resources/**
+!Resources.meta
+!Editor/**
+!Editor.meta
+
+# Top level files which should be included
+!package.json
+!package.json.meta
+!LICENSE
+!LICENSE.meta
+!README.md
+!README.md.meta
+
+# Ignore all folders and files starting with dot
+.*
+
+# Other files that should be ignored
+*.pdb
+*.pdb.meta
+*.tgz
