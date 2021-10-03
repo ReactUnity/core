@@ -55,6 +55,10 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("gradients/repeating-linear-" + bg.Item1);
 
+            View.Style["background"] = $"linear-gradient(244deg, {bg.Item2})";
+            yield return null;
+            Assertions.Snapshot("gradients/linear-angled-" + bg.Item1);
+
             View.Style["background"] = $"radial-gradient({bg.Item2})";
             yield return null;
             Assertions.Snapshot("gradients/radial-" + bg.Item1);
@@ -82,7 +86,27 @@ namespace ReactUnity.Tests
             View.Style["background"] = $"conic-gradient(from 25deg at 10% 20%, {bg.Item2})";
             yield return null;
             Assertions.Snapshot("gradients/conic-off-center-" + bg.Item1);
+        }
 
+
+
+        protected static Tuple<string, string>[] boxShadows = new Tuple<string, string>[] {
+            Tuple.Create("00", "none"),
+            Tuple.Create("01", "1px 1px 4px 0 black"),
+            Tuple.Create("02", "0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%)"),
+            Tuple.Create("03", "1px 1px 4px 0 black inset"),
+            Tuple.Create("04", "0 0 4px 15px 3px -5px black"),
+        };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator BoxShadowSnapshots([ValueSource("boxShadows")] Tuple<string, string> bg)
+        {
+            View.Style["margin"] = 50;
+            View.Style["width"] = 150;
+            View.Style["height"] = 70;
+            View.Style["box-shadow"] = bg.Item2;
+            yield return null;
+            Assertions.Snapshot("box-shadows/" + bg.Item1);
         }
     }
 }

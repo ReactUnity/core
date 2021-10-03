@@ -34,7 +34,7 @@ namespace ReactUnity.Tests
 
                 if (capture.width < width || capture.height < height)
                 {
-                    Assert.Fail($"Cannot verify texture on this screen size. Screen size must be greater than {width}x{height}");
+                    Assert.Fail($"Snapshot failed ({name}): Cannot verify texture on this screen size. Screen size must be greater than {width}x{height}");
                     return;
                 }
 
@@ -47,7 +47,7 @@ namespace ReactUnity.Tests
                 if (!File.Exists(filePath))
                 {
                     File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
-                    Debug.LogWarning("Snapshot file did not exist. Verify manually at: " + filePath);
+                    Debug.LogWarning($"Snapshot ({name}) did not exist. Verify manually at: {filePath}");
 
                     File.WriteAllText(lockfile, "updated");
                 }
@@ -56,12 +56,12 @@ namespace ReactUnity.Tests
                 expectedTexture = new Texture2D(width, height, TextureFormat.RGB24, false);
                 if (!expectedTexture.LoadImage(bytes))
                 {
-                    Assert.Fail("Cannot load image into texture");
+                    Assert.Fail($"Snapshot failed ({name}): Cannot load image into texture");
                     return;
                 }
                 expectedTexture.Apply();
 
-                CompareTexture(expectedTexture, croppedCapture);
+                CompareTexture(expectedTexture, croppedCapture, name);
             }
             finally
             {
@@ -88,20 +88,20 @@ namespace ReactUnity.Tests
             return screenshot;
         }
 
-        private static void CompareTexture(Texture2D first, Texture2D second)
+        private static void CompareTexture(Texture2D first, Texture2D second, string name)
         {
-            Assert.AreEqual(first.width, second.width, "Textures should have same width");
-            Assert.AreEqual(first.height, second.height, "Textures should have same height");
+            Assert.AreEqual(first.width, second.width, $"Snapshot failed ({name}): Textures should have same width");
+            Assert.AreEqual(first.height, second.height, $"Snapshot failed ({name}): Textures should have same height");
 
             Color[] firstPix = first.GetPixels();
             Color[] secondPix = second.GetPixels();
 
-            Assert.AreEqual(firstPix.Length, secondPix.Length, "Textures should have same size");
+            Assert.AreEqual(firstPix.Length, secondPix.Length, $"Snapshot failed ({name}): Textures should have same size");
 
             for (int i = 0; i < firstPix.Length; i++)
             {
                 if (firstPix[i] != secondPix[i])
-                    Assert.Fail($"Textures should have same color at {i % first.width}x{Mathf.FloorToInt(i / first.width)}");
+                    Assert.Fail($"Snapshot failed ({name}): Textures should have same color at {i % first.width}x{Mathf.FloorToInt(i / first.width)}");
             }
         }
     }
