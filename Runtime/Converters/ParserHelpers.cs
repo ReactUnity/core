@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,44 +9,16 @@ namespace ReactUnity.Converters
     {
         public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`\(\)-]*)\)$", RegexOptions.IgnoreCase);
 
-        public static (string, string[]) ParseFunction(string fn)
+        public static (string, string[]) ParseFunction(string val)
         {
-            if (fn == null) return (null, null);
-            fn = fn.Trim();
-            var match = FunctionRegex.Match(fn);
+            if (string.IsNullOrWhiteSpace(val)) return default;
+            val = val.Trim();
 
-            if (!match.Success) return (null, null);
-
-            var name = match.Groups[1].Value;
-            var args = match.Groups[2].Value;
-
-            var splits = Split(args, ',');
-
-            if (splits.Count == 1 && splits[0] == "") return (name, new string[] { });
-            else
-            {
-                var res = new string[splits.Count];
-
-                for (int i = 0; i < splits.Count; i++)
-                    res[i] = splits[i];
-
-                return (name, res);
-            }
-        }
-
-        public static List<string> SplitComma(string val) => Split(val, ',');
-        public static List<string> SplitWhitespace(string val) => Split(val, ' ');
-
-        public static List<string> Split(string val, char separator)
-        {
-            var acc = new StringBuilder();
-            var spaces = new StringBuilder();
-
-            var list = new List<string>();
-
+            var name = new StringBuilder();
+            var args = new StringBuilder();
             var len = val.Length;
-
             var parensStack = 0;
+            var hasParens = false;
 
             for (int i = 0; i < len; i++)
             {
@@ -54,7 +27,58 @@ namespace ReactUnity.Converters
                 if (c == '(')
                 {
                     parensStack++;
+                    hasParens = true;
+
+                    if (parensStack > 1) args.Append(c);
+                    else if (name.Length == 0) return default;
                 }
+                else if (c == ')')
+                {
+                    parensStack--;
+
+                    if (parensStack < 0) return default;
+                    else if (parensStack > 0) args.Append(c);
+                    else
+                    {
+                        if (i == len - 1) break;
+                        else return (null, null);
+                    }
+                }
+                else if (parensStack == 0)
+                {
+                    if (char.IsWhiteSpace(c)) return default;
+                    name.Append(c);
+                }
+                else args.Append(c);
+            }
+
+            if (!hasParens) return default;
+
+            var splits = SplitComma(args.ToString());
+
+            if (splits.Count == 1 && splits[0] == "") return (name.ToString(), new string[] { });
+            else return (name.ToString(), splits.ToArray());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<string> SplitComma(string val) => Split(val, ',');
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<string> SplitWhitespace(string val) => Split(val, ' ');
+
+        public static List<string> Split(string val, char separator)
+        {
+            var acc = new StringBuilder();
+            var spaces = new StringBuilder();
+            var list = new List<string>();
+            var len = val.Length;
+            var parensStack = 0;
+
+            for (int i = 0; i < len; i++)
+            {
+                var c = val[i];
+
+                if (c == '(') parensStack++;
 
                 if (parensStack == 0 && c == separator)
                 {
