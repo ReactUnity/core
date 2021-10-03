@@ -22,8 +22,11 @@ namespace ReactUnity.Tests
                 if (!name.EndsWith(".png")) name += ".png";
 
                 var basePath = Path.GetFullPath("Packages/com.reactunity.core/Tests/.snapshots");
-                var filePath = Path.Combine(basePath, name);
+                var os = SystemInfo.operatingSystemFamily.ToString().ToLower();
+                var filePath = Path.Combine(basePath, os, name);
                 var dir = Path.GetDirectoryName(filePath);
+
+                var lockfile = Path.Combine(basePath, "snapshots.lock");
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
@@ -45,6 +48,8 @@ namespace ReactUnity.Tests
                 {
                     File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
                     Debug.LogWarning("Snapshot file did not exist. Verify manually at: " + filePath);
+
+                    File.Create(lockfile);
                 }
 
                 var bytes = File.ReadAllBytes(filePath);
