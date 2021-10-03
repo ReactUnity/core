@@ -70,6 +70,16 @@ jobs:
           customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
           projectPath: tests
+
+      - name: Commit Snapshots
+        if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.suite.main
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          add: 'Tests/.snapshots'
+          cwd: './core'
+          default_author: github_actions
+          message: 'Update snapshots'
+          pull: 'NO-PULL'
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
         if: always() && matrix.suite.main

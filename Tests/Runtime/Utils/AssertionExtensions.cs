@@ -49,7 +49,7 @@ namespace ReactUnity.Tests
                     File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
                     Debug.LogWarning("Snapshot file did not exist. Verify manually at: " + filePath);
 
-                    File.Create(lockfile);
+                    File.WriteAllText(lockfile, "updated");
                 }
 
                 var bytes = File.ReadAllBytes(filePath);
