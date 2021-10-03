@@ -37,6 +37,29 @@ namespace ReactUnity.Styling.Internal
             }
         }
 
+        public YogaValue2 backgroundSize = YogaValue2.Full;
+        public YogaValue2 BackgroundSize
+        {
+            get => backgroundSize;
+            set
+            {
+                backgroundSize = value;
+                var sz = StylingUtils.GetRatioValue(value, Size, 1, false);
+                uvRect = new Rect(uvRect.position, sz);
+            }
+        }
+
+        public YogaValue2 backgroundPosition = YogaValue2.Zero;
+        public YogaValue2 BackgroundPosition
+        {
+            get => backgroundPosition;
+            set
+            {
+                backgroundPosition = value;
+                var ps = StylingUtils.GetRatioValue(value, Size, 0, false);
+                uvRect = new Rect(ps, uvRect.size);
+            }
+        }
 
 
         protected override void OnEnable()
@@ -96,6 +119,10 @@ namespace ReactUnity.Styling.Internal
                     texture = sp;
                 });
             }
+
+            var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
+            var sz = StylingUtils.GetRatioValue(backgroundSize, Size, 1, false);
+            uvRect = new Rect(ps, sz);
         }
 
 

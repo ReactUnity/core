@@ -19,51 +19,66 @@ namespace ReactUnity.Styling.Shorthands
         {
             if (base.Modify(collection, value) != null) return ModifiedProperties;
 
-            var str = value.ToString();
-            var splits = ParserHelpers.SplitWhitespace(str);
-
-            if (splits.Count == 0 || splits.Count > 2) return null;
+            var commas = ParserHelpers.SplitComma(value?.ToString());
+            var count = commas.Count;
 
             var colorSet = false;
-            var imageSet = false;
-
             var color = Color.clear;
-            var image = ImageDefinition.None;
 
-            for (int i = 0; i < splits.Count; i++)
+            var last = commas[count - 1];
+
+            if (AllConverters.ColorConverter.Convert(last) is Color cv)
             {
-                var split = splits[i];
+                color = cv;
+                colorSet = true;
+                count -= 1;
+            };
 
-                if (!colorSet)
+            var images = new ImageDefinition[count];
+
+            for (int ci = 0; ci < count; ci++)
+            {
+                var comma = commas[ci];
+                var splits = ParserHelpers.SplitWhitespace(comma);
+
+                var isLast = ci == count - 1;
+
+                var imageSet = false;
+
+                for (int i = 0; i < splits.Count; i++)
                 {
-                    var val = AllConverters.ColorConverter.Convert(split);
+                    var split = splits[i];
 
-                    if (val is Color c)
+                    if (isLast && !colorSet)
                     {
-                        color = c;
-                        colorSet = true;
-                        continue;
+                        var val = AllConverters.ColorConverter.Convert(split);
+
+                        if (val is Color c)
+                        {
+                            color = c;
+                            colorSet = true;
+                            continue;
+                        }
                     }
-                }
 
-                if (!imageSet)
-                {
-                    var val = AllConverters.ImageDefinitionConverter.Convert(split);
-
-                    if (val is ImageDefinition v)
+                    if (!imageSet)
                     {
-                        image = v;
-                        imageSet = true;
-                        continue;
-                    }
-                }
+                        var val = AllConverters.ImageDefinitionConverter.Convert(split);
 
-                return null;
+                        if (val is ImageDefinition v)
+                        {
+                            images[ci] = v;
+                            imageSet = true;
+                            continue;
+                        }
+                    }
+
+                    return null;
+                }
             }
 
-            if (colorSet) collection[StyleProperties.backgroundColor] = color;
-            if (imageSet) collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(image);
-
+            collection[StyleProperties.backgroundColor] = color;
+            collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(images);
             return ModifiedProperties;
         }
     }

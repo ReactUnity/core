@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
             list.Clear();
         }
 
-        public static void Snapshot(string name, int width = 300, int height = 300)
+        public static void Snapshot(string name, string namePrefix = null, int width = 300, int height = 300)
         {
             Texture2D capture = null, croppedCapture = null, expectedTexture = null;
 
@@ -24,7 +24,12 @@ namespace ReactUnity.Tests
                 var basePath = Path.GetFullPath("Packages/com.reactunity.core/Tests/.snapshots");
                 var os = SystemInfo.operatingSystemFamily.ToString().ToLower();
                 var filePath = Path.Combine(basePath, os, name);
+
                 var dir = Path.GetDirectoryName(filePath);
+                var fileName = Path.GetFileName(filePath);
+
+                if (!string.IsNullOrWhiteSpace(namePrefix)) fileName = namePrefix + "-" + fileName;
+                filePath = Path.Combine(dir, fileName);
 
                 var lockfile = Path.Combine(basePath, "snapshots.lock");
 

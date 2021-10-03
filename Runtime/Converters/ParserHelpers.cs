@@ -6,7 +6,7 @@ namespace ReactUnity.Converters
 {
     internal static class ParserHelpers
     {
-        public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`-]*)\)$", RegexOptions.IgnoreCase);
+        public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`\(\)-]*)\)$", RegexOptions.IgnoreCase);
 
         public static (string, string[]) ParseFunction(string fn)
         {

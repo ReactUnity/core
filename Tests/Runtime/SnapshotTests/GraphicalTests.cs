@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
@@ -42,6 +44,7 @@ namespace ReactUnity.Tests
             Tuple.Create("06", "red, green, blue"),
             Tuple.Create("07", "red, green, yellow, white, blue"),
             Tuple.Create("08", "red, green, yellow 30% 60%, white, blue"),
+            Tuple.Create("08", "red, green, yellow 30% 60%, white, blue"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
@@ -49,45 +52,81 @@ namespace ReactUnity.Tests
         {
             View.Style["background"] = $"linear-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/linear-" + bg.Item1);
+            Assertions.Snapshot("gradients/linear", bg.Item1);
 
             View.Style["background"] = $"repeating-linear-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/repeating-linear-" + bg.Item1);
+            Assertions.Snapshot("gradients/repeating-linear", bg.Item1);
 
             View.Style["background"] = $"linear-gradient(244deg, {bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/linear-angled-" + bg.Item1);
+            Assertions.Snapshot("gradients/linear-angled", bg.Item1);
 
             View.Style["background"] = $"radial-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/radial-" + bg.Item1);
+            Assertions.Snapshot("gradients/radial", bg.Item1);
 
             View.Style["background"] = $"repeating-radial-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/repeating-radial-" + bg.Item1);
+            Assertions.Snapshot("gradients/repeating-radial", bg.Item1);
 
             View.Style["background"] = $"radial-gradient(circle at 80% 24%, {bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/radial-off-center-" + bg.Item1);
+            Assertions.Snapshot("gradients/radial-off-center", bg.Item1);
 
             View.Style["background"] = $"radial-gradient(closest-corner at 32% 90%, {bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/radial-sized-" + bg.Item1);
+            Assertions.Snapshot("gradients/radial-sized", bg.Item1);
 
             View.Style["background"] = $"conic-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/conic-" + bg.Item1);
+            Assertions.Snapshot("gradients/conic", bg.Item1);
 
             View.Style["background"] = $"repeating-conic-gradient({bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/repeating-conic-" + bg.Item1);
+            Assertions.Snapshot("gradients/repeating-conic", bg.Item1);
 
             View.Style["background"] = $"conic-gradient(from 25deg at 10% 20%, {bg.Item2})";
             yield return null;
-            Assertions.Snapshot("gradients/conic-off-center-" + bg.Item1);
+            Assertions.Snapshot("gradients/conic-off-center", bg.Item1);
         }
 
+
+        protected static Tuple<string, List<string>>[] multiGradients = new Tuple<string, List<string>>[] {
+            Tuple.Create("01",
+                new List<string> { "rgba(0,0,0,0.5) 0% 6%, transparent 6% 18%, rgba(0,0,0,0.5) 18% 24%", "rgba(0,0,0,0.5) 0% 6%, transparent 6% 18%, rgba(0,0,0,0.5) 18% 24%" }),
+        };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator MultiGradientSnapshots([ValueSource("multiGradients")] Tuple<string, List<string>> bg)
+        {
+            var linearParts = new List<string> { "45deg,", "-45deg," };
+            var linearCombined = bg.Item2.Select((x, i) => linearParts[i % linearParts.Count] + x);
+
+            View.Style["background"] = string.Join(",", linearCombined.Select(x => $"repeating-linear-gradient({x})"));
+            yield return null;
+            Assertions.Snapshot($"gradients/multi/repeating-linear", bg.Item1);
+
+            View.Style["background"] = string.Join(",", linearCombined.Select(x => $"repeating-linear-gradient({x})")) + ", red";
+            yield return null;
+            Assertions.Snapshot($"gradients/multi/repeating-linear-bg", bg.Item1);
+
+
+            var conicParts = new List<string> { "", "from 25deg at 10% 20%," };
+            var conicCombined = bg.Item2.Select((x, i) => conicParts[i % conicParts.Count] + x);
+
+            View.Style["background"] = string.Join(",", conicCombined.Select(x => $"repeating-conic-gradient({x})"));
+            yield return null;
+            Assertions.Snapshot($"gradients/multi/repeating-conic", bg.Item1);
+
+
+            var radialParts = new List<string> { "", "at 10% 20%," };
+            var radialCombined = bg.Item2.Select((x, i) => radialParts[i % radialParts.Count] + x);
+
+            View.Style["background"] = string.Join(",", radialCombined.Select(x => $"repeating-radial-gradient({x})"));
+            yield return null;
+            Assertions.Snapshot($"gradients/multi/repeating-radial", bg.Item1);
+        }
 
 
         protected static Tuple<string, string>[] boxShadows = new Tuple<string, string>[] {
