@@ -44,7 +44,7 @@ namespace ReactUnity.UGUI
             Thumb.Style["pointer-events"] = PointerEvents.All;
             Thumb.ResolveStyle();
             Thumb.UpdateBackgroundGraphic(true, true);
-            Scrollbar.targetGraphic = Thumb.BorderAndBackground?.Background?.GetComponent<Image>();
+            Scrollbar.targetGraphic = Thumb.BorderAndBackground?.BgImage;
 
             Data["horizontal"] = false;
             Data["vertical"] = true;

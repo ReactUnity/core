@@ -306,8 +306,7 @@ namespace ReactUnity.UGUI
             if (ComputedStyle.pointerEvents == PointerEvents.All) return true;
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
-            var bgImage = ComputedStyle.backgroundImage;
-            if (bgImage != null && bgImage != ImageDefinition.None) return true;
+            if (ComputedStyle.HasValue(StyleProperties.backgroundImage)) return true;
             if (ComputedStyle.boxShadow != null) return true;
             if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
                 ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;
@@ -358,7 +357,7 @@ namespace ReactUnity.UGUI
         {
             var image = BorderAndBackground.Create(GameObject, Context);
             if (Selectable && Selectable.targetGraphic == null)
-                Selectable.targetGraphic = image.Background.GetComponent<Image>();
+                Selectable.targetGraphic = image.BgImage;
             return BorderAndBackground = image;
         }
 

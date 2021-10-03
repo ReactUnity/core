@@ -24,7 +24,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"linear-gradient({def})";
             style.UpdateParent(null);
-            var bg = style.backgroundImage as GradientImageDefinition;
+            var bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             var calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
             Assert.AreEqual(1, calc.Length);
@@ -32,7 +32,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"radial-gradient({def})";
             style.UpdateParent(null);
-            bg = style.backgroundImage as GradientImageDefinition;
+            bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
             Assert.AreEqual(1, calc.Length);
@@ -40,7 +40,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"conic-gradient({def})";
             style.UpdateParent(null);
-            bg = style.backgroundImage as GradientImageDefinition;
+            bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(0, calc.Offset);
             Assert.AreEqual(1, calc.Length);
@@ -48,7 +48,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"repeating-linear-gradient({def})";
             style.UpdateParent(null);
-            bg = style.backgroundImage as GradientImageDefinition;
+            bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
             Assert.AreEqual(rSize, calc.Length);
@@ -56,7 +56,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"repeating-radial-gradient({def})";
             style.UpdateParent(null);
-            bg = style.backgroundImage as GradientImageDefinition;
+            bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
             Assert.AreEqual(rSize, calc.Length);
@@ -64,7 +64,7 @@ namespace ReactUnity.Editor.Tests
 
             collection["background"] = $"repeating-conic-gradient({def})";
             style.UpdateParent(null);
-            bg = style.backgroundImage as GradientImageDefinition;
+            bg = style.backgroundImage?.Get(0) as GradientImageDefinition;
             calc = bg.Gradient.GetCalculatedGradient(Vector2.one * 100);
             Assert.AreEqual(rOffset, calc.Offset);
             Assert.AreEqual(rSize, calc.Length);

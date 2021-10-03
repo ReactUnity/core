@@ -11,11 +11,11 @@ namespace ReactUnity.Styling.Internal
     {
         public RectTransform Root { get; private set; }
         public RectTransform Border { get; private set; }
-        public RectTransform Background { get; private set; }
+        public RectTransform BackgroundRoot { get; private set; }
         public RectTransform ShadowRoot { get; private set; }
 
         private ReactContext Context;
-        internal BackgroundImage BgImage;
+        internal RawImage BgImage;
 
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;
@@ -23,6 +23,18 @@ namespace ReactUnity.Styling.Internal
         public BasicBorderImage BorderGraphic;
 
         public List<BoxShadowImage> ShadowGraphics;
+        public List<BackgroundImage> BackgroundGraphics;
+
+        private Color BgColor
+        {
+            set
+            {
+                BgImage.color = value;
+                BgImage.raycastTarget = BgImage.color.a > 0 || PointerEvents == PointerEvents.All;
+            }
+        }
+
+        private PointerEvents PointerEvents;
 
         public static BorderAndBackground Create(GameObject go, ReactContext ctx)
         {
@@ -43,20 +55,19 @@ namespace ReactUnity.Styling.Internal
 
             cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
 
-            var bgImage = bg.GetComponent<BackgroundImage>();
+            var bgImage = bg.GetComponent<RawImage>();
             cmp.BgImage = bgImage;
             bgImage.color = Color.clear;
-            bgImage.Context = ctx;
 
             var sr = new GameObject("[Shadows]", typeof(RectTransform));
 
             cmp.Root = root.transform as RectTransform;
             cmp.ShadowRoot = sr.transform as RectTransform;
             cmp.Border = border.transform as RectTransform;
-            cmp.Background = bg.transform as RectTransform;
+            cmp.BackgroundRoot = bg.transform as RectTransform;
 
             FullStretch(cmp.ShadowRoot, cmp.Root);
-            FullStretch(cmp.Background, cmp.Root);
+            FullStretch(cmp.BackgroundRoot, cmp.Root);
             FullStretch(cmp.Border, cmp.Root);
             FullStretch(cmp.Root, cmp.transform as RectTransform);
             cmp.Root.SetAsFirstSibling();
@@ -84,8 +95,8 @@ namespace ReactUnity.Styling.Internal
             Border.offsetMin = min;
             Border.offsetMax = max;
 
-            Background.offsetMin = min;
-            Background.offsetMax = max;
+            BackgroundRoot.offsetMin = min;
+            BackgroundRoot.offsetMax = max;
 
             ShadowRoot.offsetMin = min;
             ShadowRoot.offsetMax = max;
@@ -127,8 +138,42 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal) =>
-            BgImage.SetBackgroundColorAndImage(color, image, blendMode);
+        public void SetBackgroundColorAndImage(Color color, CssValueList<ImageDefinition> images, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        {
+            if (BackgroundGraphics == null) BackgroundGraphics = new List<BackgroundImage>();
+
+            BgColor = color;
+            BgImage.enabled = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
+
+            var validCount = images.Count;
+            var diff = BackgroundGraphics.Count - validCount;
+
+            if (diff > 0)
+            {
+                for (int i = diff - 1; i >= 0; i--)
+                {
+                    var sd = BackgroundGraphics[validCount + i];
+
+                    BackgroundGraphics.RemoveAt(validCount + i);
+                    DestroyImmediate(sd.gameObject);
+                }
+            }
+            else if (diff < 0)
+            {
+                for (int i = -diff - 1; i >= 0; i--)
+                {
+                    CreateBackgroundImage();
+                }
+            }
+
+
+            for (int i = 0; i < images.Count; i++)
+            {
+                var img = images[i];
+                var sd = BackgroundGraphics[i];
+                sd.SetBackgroundColorAndImage(color, img, blendMode);
+            }
+        }
 
         public void SetBoxShadow(BoxShadowList shadows)
         {
@@ -188,7 +233,7 @@ namespace ReactUnity.Styling.Internal
 
                 if (shadow.inset)
                 {
-                    if (rt.parent != Background) FullStretch(rt, Background);
+                    if (rt.parent != BackgroundRoot) FullStretch(rt, BackgroundRoot);
                     rt.sizeDelta = Vector2.zero;
                     rt.anchoredPosition = Vector2.zero;
                 }
@@ -215,6 +260,16 @@ namespace ReactUnity.Styling.Internal
             FullStretch(sd.transform as RectTransform, ShadowRoot);
         }
 
+        private void CreateBackgroundImage()
+        {
+            var sd = new GameObject("[Background]", typeof(RectTransform), typeof(BackgroundImage));
+            var img = sd.GetComponent<BackgroundImage>();
+            img.color = Color.clear;
+            img.Context = Context;
+            BackgroundGraphics.Add(img);
+            FullStretch(sd.transform as RectTransform, BackgroundRoot);
+        }
+
         static void FullStretch(RectTransform child, RectTransform parent)
         {
             child.transform.SetParent(parent, false);
@@ -237,6 +292,11 @@ namespace ReactUnity.Styling.Internal
             return 0;
         }
 
-        public void SetPointerEvents(PointerEvents pointerEvents) => BgImage.SetPointerEvents(pointerEvents);
+        public void SetPointerEvents(PointerEvents pointerEvents)
+        {
+            PointerEvents = pointerEvents;
+            var bg = BgImage;
+            bg.raycastTarget = bg.color.a > 0 || PointerEvents == PointerEvents.All;
+        }
     }
 }

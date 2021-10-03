@@ -62,7 +62,7 @@ namespace ReactUnity.Styling.Shorthands
             }
 
             if (colorSet) collection[StyleProperties.backgroundColor] = color;
-            if (imageSet) collection[StyleProperties.backgroundImage] = image;
+            if (imageSet) collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(image);
 
             return ModifiedProperties;
         }
