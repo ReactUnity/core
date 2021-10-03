@@ -22,12 +22,14 @@ namespace ReactUnity.Styling
 
         public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = true)
         {
-            return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue), fullSize.y - GetPointValue(val.Y, fullSize.y, defaultValue));
+            var yval = GetPointValue(val.Y, fullSize.y, defaultValue);
+            return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue), yInverted ? fullSize.y - yval : yval);
         }
 
         public static Vector2 GetRatioValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = true)
         {
-            return new Vector2(GetRatioValue(val.X, fullSize.x, defaultValue), 1 - GetRatioValue(val.Y, fullSize.y, defaultValue));
+            var yval = GetRatioValue(val.Y, fullSize.y, defaultValue);
+            return new Vector2(GetRatioValue(val.X, fullSize.x, defaultValue), yInverted ? 1 - yval : yval);
         }
     }
 }

@@ -112,5 +112,30 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("box-shadows/" + bg.Item1);
         }
+
+
+
+        protected static Tuple<string, string, string, string>[] borders = new Tuple<string, string, string, string>[] {
+            Tuple.Create("00", "0", "0", "black"),
+            Tuple.Create("01", "0", "5px", "black"),
+            Tuple.Create("02", "0 5px 10px 20px", "5px 10px", "red blue"),
+            Tuple.Create("03", "0 5px 10px 20px", "5px 10px 3px", "red blue lime"),
+            Tuple.Create("04", "0 5px 10px 20px", "5px 10px 15px", "red blue lime"),
+            Tuple.Create("05", "0 5px 10px 20px", "5px 10px 15px 22px", "red blue lime purple"),
+            Tuple.Create("06", "6px", "0 0 20px 10px", "black red black black"),
+        };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator BorderSnapshots([ValueSource("borders")] Tuple<string, string, string, string> bg)
+        {
+            View.Style["margin"] = 50;
+            View.Style["width"] = 150;
+            View.Style["height"] = 70;
+            View.Style["border-radius"] = bg.Item2;
+            View.Style["border-width"] = bg.Item3;
+            View.Style["border-color"] = bg.Item4;
+            yield return null;
+            Assertions.Snapshot("borders/" + bg.Item1);
+        }
     }
 }
