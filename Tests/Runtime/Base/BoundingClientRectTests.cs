@@ -7,7 +7,6 @@ namespace ReactUnity.Tests
 {
     [TestFixture(JavascriptEngineType.Auto, RenderMode.ScreenSpaceCamera, Category = "RenderMode")]
     [TestFixture(JavascriptEngineType.Auto, RenderMode.ScreenSpaceOverlay, Category = "RenderMode")]
-    [TestFixture(JavascriptEngineType.Auto, RenderMode.WorldSpace, Category = "RenderMode")]
     public class BoundingClientRectTests : TestBase
     {
         public BoundingClientRectTests(JavascriptEngineType engineType, RenderMode renderMode) : base(engineType, renderMode) { }
