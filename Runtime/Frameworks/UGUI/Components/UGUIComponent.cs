@@ -393,15 +393,7 @@ namespace ReactUnity.UGUI
             return new Vector2(pos.x + midx, rt.rect.height - (pos.y + midy));
         }
 
-        public Rect GetBoundingClientRect()
-        {
-            var transform = RectTransform;
-            Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
-            Rect rect = new Rect(transform.position.x, Screen.height - transform.position.y, size.x, size.y);
-            rect.x -= (transform.pivot.x * size.x);
-            rect.y -= ((1.0f - transform.pivot.y) * size.y);
-            return rect;
-        }
+        public Rect GetBoundingClientRect() => StylingHelpers.GetScreenClientRect(RectTransform);
 
         #endregion
 

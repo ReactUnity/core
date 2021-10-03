@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Styling;
+using UnityEngine;
 
 namespace ReactUnity.UGUI
 {
@@ -50,6 +51,26 @@ namespace ReactUnity.UGUI
             if (val.Unit == YogaUnit.Point) return val.Value;
             if (val.Unit == YogaUnit.Percent) return fullSize * val.Value / 100f;
             return 0;
+        }
+
+        public static Rect GetScreenClientRect(RectTransform transform)
+        {
+            var canvas = transform.GetComponentInParent<Canvas>();
+            var rootCanvas = canvas.rootCanvas;
+
+            var size = Vector2.Scale(transform.rect.size, new Vector2(transform.lossyScale.x / rootCanvas.transform.lossyScale.x, transform.lossyScale.y / rootCanvas.transform.lossyScale.y));
+            Vector2 pos;
+
+            if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+                pos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, transform.position);
+            else if (canvas.renderMode == RenderMode.WorldSpace)
+                pos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, transform.position);
+            else
+                pos = RectTransformUtility.WorldToScreenPoint(null, transform.position);
+
+            pos.x -= (transform.pivot.x * size.x);
+            pos.y = Screen.height - pos.y - ((1.0f - transform.pivot.y) * size.y);
+            return new Rect(pos, size);
         }
     }
 }

@@ -29,10 +29,12 @@ namespace ReactUnity.Tests
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;
 
         public readonly JavascriptEngineType EngineType;
+        public readonly RenderMode RenderMode;
 
-        public TestBase(JavascriptEngineType engineType)
+        public TestBase(JavascriptEngineType engineType, RenderMode renderMode = RenderMode.ScreenSpaceCamera)
         {
             EngineType = engineType;
+            RenderMode = renderMode;
         }
 
         public void Render() => Component.Render();
@@ -58,6 +60,12 @@ namespace ReactUnity.Tests
         public void InitializeFixture()
         {
             if (Context != null) GameObject.DestroyImmediate(Component);
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            Canvas.GetComponent<Canvas>().renderMode = RenderMode;
         }
 
         public IEnumerator Pause()
