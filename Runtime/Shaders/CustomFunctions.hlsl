@@ -122,13 +122,10 @@ float DistanceToBox(float4 br, float2 uv, float2 size)
     if (dx < cx) {
       float fy = dy - 0.5;
 
-      //float kx = fx * size.x;
-      //float ky = fy * size.y;
+      float kx = fx * size.x;
+      float ky = fy * size.y;
 
-      //if (kx > ky) return fy;
-      //else return fx;
-
-      return min(fx * size.x, fy * size.y);
+      return kx < 0 ? max(kx, ky) : min(kx, ky);
     }
     else return fx * size.x;
   }

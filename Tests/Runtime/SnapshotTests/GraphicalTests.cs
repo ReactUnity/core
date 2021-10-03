@@ -94,8 +94,11 @@ namespace ReactUnity.Tests
             Tuple.Create("00", "none"),
             Tuple.Create("01", "1px 1px 4px 0 black"),
             Tuple.Create("02", "0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%)"),
-            Tuple.Create("03", "1px 1px 4px 0 black inset"),
+            Tuple.Create("03", "0 0 4px 15px 3px -5px red"),
             Tuple.Create("04", "0 0 4px 15px 3px -5px black"),
+            Tuple.Create("inset/00", "0 0 black inset"),
+            Tuple.Create("inset/01", "1px 1px 4px 0 black inset"),
+            Tuple.Create("inset/02", "1px 1px 14px 1px black inset"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
@@ -105,6 +108,7 @@ namespace ReactUnity.Tests
             View.Style["width"] = 150;
             View.Style["height"] = 70;
             View.Style["box-shadow"] = bg.Item2;
+            View.Style["border-radius"] = "0 5px 10px 20px";
             yield return null;
             Assertions.Snapshot("box-shadows/" + bg.Item1);
         }

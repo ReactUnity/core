@@ -6,7 +6,7 @@
 [![Discord](https://img.shields.io/discord/884829138991603792?style=for-the-badge&label=Discord)](https://discord.gg/UY2EFW5ZKG)
 
 React Unity is a way to build declarative UI in Unity3D using React. It can be used together with packages like Typescript, redux, i18next, react-router and more.
-It also supports a subset of CSS features and Flex layout system.
+It also supports a subset of CSS features and Flexbox layout system.
 
 ## Requirements
 
@@ -36,14 +36,14 @@ npx openupm-cli add com.reactunity.core
 - Run `npm start` from React project
 - Click play in Unity
 
-The documentation on the [main website](https://reactunity.github.io) is under development. You can also read detailed instructions in outdated [wiki](https://github.com/ReactUnity/core/wiki).
+The documentation on the [main website](https://reactunity.github.io) is under development. You can also read detailed instructions in the outdated [wiki](https://github.com/ReactUnity/core/wiki).
 
 ## Known Issues
 
-- Not well tested yet
 - Low documentation coverage
 
-> Feel free to share all your questions, proposals and feedbacks by opening issues. This package is in its early stages and looking for constructive feedback.
+> Most of ReactUnity's features are not well documented yet. All questions, bug reports and requests are welcome. 
+> You can share them by opening issues or posting them in the [Discord server](https://discord.gg/UY2EFW5ZKG).
 
 ## Resources and References
 
