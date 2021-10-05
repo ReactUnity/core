@@ -138,7 +138,7 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackgroundColorAndImage(Color color, CssValueList<ImageDefinition> images, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        public void SetBackground(Color color, CssValueList<ImageDefinition> images, CssValueList<YogaValue2> positions, CssValueList<YogaValue2> sizes, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
             if (BackgroundGraphics == null) BackgroundGraphics = new List<BackgroundImage>();
 
@@ -169,9 +169,10 @@ namespace ReactUnity.Styling.Internal
 
             for (int i = 0; i < images.Count; i++)
             {
-                var img = images[i];
-                var sd = BackgroundGraphics[i];
-                sd.SetBackgroundColorAndImage(color, img, blendMode);
+                var sd = BackgroundGraphics[images.Count - 1 - i];
+                sd.SetBackgroundColorAndImage(color, images.Get(i), blendMode);
+                sd.BackgroundPosition = positions.Get(i, YogaValue2.Undefined);
+                sd.BackgroundSize = sizes.Get(i, YogaValue2.Undefined);
             }
         }
 

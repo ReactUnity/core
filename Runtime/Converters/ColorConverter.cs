@@ -170,7 +170,7 @@ namespace ReactUnity.Converters
         public object FromString(string value)
         {
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
-            if (value == null) return CssKeyword.Invalid;
+            if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
             if (KnownColors.TryGetValue(value, out var known)) value = known;
             if (value == "clear" || value == "transparent") return Color.clear;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;

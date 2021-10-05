@@ -343,7 +343,7 @@ namespace ReactUnity.UGUI
             if (updateStyle)
             {
                 image.SetPointerEvents(ComputedStyle.pointerEvents);
-                image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, ComputedStyle.backgroundImage, ComputedStyle.backgroundBlendMode);
+                image.SetBackground(ComputedStyle.backgroundColor, ComputedStyle.backgroundImage, ComputedStyle.backgroundPosition, ComputedStyle.backgroundSize, ComputedStyle.backgroundBlendMode);
                 image.SetBoxShadow(ComputedStyle.boxShadow);
 
                 image.SetBorderColor(ComputedStyle.borderTopColor, ComputedStyle.borderRightColor, ComputedStyle.borderBottomColor, ComputedStyle.borderLeftColor);

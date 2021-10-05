@@ -63,6 +63,8 @@ namespace ReactUnity.Styling
         public YogaValue2 objectPosition => GetStyleValue(StyleProperties.objectPosition);
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
         public CssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
+        public CssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
+        public CssValueList<YogaValue2> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
         public CssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public CssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);

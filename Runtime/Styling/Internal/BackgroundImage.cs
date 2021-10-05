@@ -9,6 +9,8 @@ namespace ReactUnity.Styling.Internal
     public class BackgroundImage : RawImage
     {
         public static readonly int SizeProp = Shader.PropertyToID("_size");
+        public static readonly int PosProp = Shader.PropertyToID("_pos");
+        public static readonly int AspectProp = Shader.PropertyToID("_aspect");
 
         public Vector4 Size;
 
@@ -25,17 +27,7 @@ namespace ReactUnity.Styling.Internal
 
 
         public ReactContext Context;
-        private PointerEvents PointerEvents;
         private BackgroundBlendMode BlendMode;
-
-        private Color Color
-        {
-            set
-            {
-                color = value;
-                raycastTarget = color.a > 0 || PointerEvents == PointerEvents.All;
-            }
-        }
 
         public YogaValue2 backgroundSize = YogaValue2.Full;
         public YogaValue2 BackgroundSize
@@ -44,8 +36,8 @@ namespace ReactUnity.Styling.Internal
             set
             {
                 backgroundSize = value;
-                var sz = StylingUtils.GetRatioValue(value, Size, 1, false);
-                uvRect = new Rect(uvRect.position, sz);
+                RefreshSize();
+                SetMaterialDirty();
             }
         }
 
@@ -56,8 +48,7 @@ namespace ReactUnity.Styling.Internal
             set
             {
                 backgroundPosition = value;
-                var ps = StylingUtils.GetRatioValue(value, Size, 0, false);
-                uvRect = new Rect(ps, uvRect.size);
+                SetMaterialDirty();
             }
         }
 
@@ -65,6 +56,7 @@ namespace ReactUnity.Styling.Internal
         protected override void OnEnable()
         {
             base.OnEnable();
+            raycastTarget = false;
             material = GetDefaultMaterial();
         }
 
@@ -79,8 +71,15 @@ namespace ReactUnity.Styling.Internal
             get
             {
                 Material result = base.materialForRendering;
-                result.SetVector(ShaderHelpers.SizeProp, Size);
-                Definition?.ModifyMaterial(Context, result, Size);
+
+                var sz = StylingUtils.GetRatioValue(backgroundSize, Size, 1, false);
+                var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
+                result.SetVector(SizeProp, sz);
+                result.SetVector(PosProp, ps);
+                result.SetFloat(AspectProp, sz.x / sz.y);
+
+                var pointSz = StylingUtils.GetPointValue(backgroundSize, Size, Size, false);
+                Definition?.ModifyMaterial(Context, result, pointSz);
                 return result;
             }
         }
@@ -108,25 +107,11 @@ namespace ReactUnity.Styling.Internal
             var mask = GetComponent<Mask>();
             if (mask) MaskUtilities.NotifyStencilStateChanged(mask);
 
-
-            var image = Definition;
-
-            if (image != null && image.SizeUpdatesGraphic)
-            {
-                image.GetTexture(Context, Size, (sp) => {
-                    if (image != Definition) return;
-                    Color = BlendMode == BackgroundBlendMode.Normal && sp != null ? Color.white : color;
-                    texture = sp;
-                });
-            }
-
-            var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
-            var sz = StylingUtils.GetRatioValue(backgroundSize, Size, 1, false);
-            uvRect = new Rect(ps, sz);
+            if (Definition != null && Definition.SizeUpdatesGraphic) UpdateImage();
         }
 
 
-        public void SetBackgroundColorAndImage(Color color, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        public void SetBackgroundColorAndImage(Color tint, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
             BlendMode = blendMode;
             if (image != Definition)
@@ -136,29 +121,40 @@ namespace ReactUnity.Styling.Internal
                 if (image != null && image != ImageDefinition.None)
                 {
                     texture = null;
-                    Color = Color.clear;
-                    image.GetTexture(Context, Size, (sp) => {
-                        if (image != Definition) return;
-                        Color = blendMode == BackgroundBlendMode.Normal && sp != null ? Color.white : color;
-                        texture = sp;
-                    });
+                    color = Color.clear;
+                    UpdateImage();
                 }
                 else
                 {
                     texture = null;
-                    Color = color;
+                    color = tint;
                 }
             }
             else
             {
-                Color = blendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : color;
+                UpdateBlendMode();
             }
         }
 
-        public void SetPointerEvents(PointerEvents pointerEvents)
+        private void UpdateImage()
         {
-            PointerEvents = pointerEvents;
-            raycastTarget = color.a > 0 || PointerEvents == PointerEvents.All;
+            var image = Definition;
+
+            if (image != null)
+            {
+                var sz = StylingUtils.GetPointValue(backgroundSize, Size, Size, false);
+
+                image.GetTexture(Context, sz, (sp) => {
+                    if (image != Definition) return;
+                    texture = sp;
+                    UpdateBlendMode();
+                });
+            }
+        }
+
+        private void UpdateBlendMode()
+        {
+            color = BlendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : color;
         }
     }
 }

@@ -20,13 +20,19 @@ namespace ReactUnity.Styling
             return defaultValue;
         }
 
-        public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = true)
+        public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = false)
         {
             var yval = GetPointValue(val.Y, fullSize.y, defaultValue);
             return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue), yInverted ? fullSize.y - yval : yval);
         }
 
-        public static Vector2 GetRatioValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = true)
+        public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, Vector2 defaultValue = default, bool yInverted = false)
+        {
+            var yval = GetPointValue(val.Y, fullSize.y, defaultValue.y);
+            return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue.x), yInverted ? fullSize.y - yval : yval);
+        }
+
+        public static Vector2 GetRatioValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = false)
         {
             var yval = GetRatioValue(val.Y, fullSize.y, defaultValue);
             return new Vector2(GetRatioValue(val.X, fullSize.x, defaultValue), yInverted ? 1 - yval : yval);

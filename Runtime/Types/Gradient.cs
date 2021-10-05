@@ -12,6 +12,7 @@ namespace ReactUnity.Types
         public Texture2D Ramp;
         public float Offset;
         public float Length;
+        public float Distance;
     }
 
     public enum GradientType
@@ -84,19 +85,6 @@ namespace ReactUnity.Types
 
                     key.Color = Interpolater.Interpolate(pk.Color.Value, nk.Color.Value, 0.5f);
                 }
-                else if (noUnit)
-                {
-                    var pk = Keys[i - 1];
-
-                    var count = 1;
-
-                    for (int j = i + 1; j < Keys.Count; j++)
-                    {
-                        var keyUnit = Keys[j].Offset.Unit;
-                        if (keyUnit == YogaUnit.Auto || keyUnit == YogaUnit.Undefined) count++;
-                        else break;
-                    }
-                }
             }
 
             return true;
@@ -107,42 +95,61 @@ namespace ReactUnity.Types
             if (Keys == null || Keys.Count == 0) return null;
             var width = CalculateLength(dimensions);
 
-            float offset = 0f;
+            var first = Keys[0];
+            float offset = StylingUtils.GetRatioValue(first.Offset, width, 0);
             float size = 1f;
 
+            if (Repeating) size = 0;
+            else offset = Mathf.Min(0, offset);
 
-            var first = Keys[0];
-            var last = Keys[Keys.Count - 1];
-
-            if (Repeating)
+            for (int i = 1; i < Keys.Count; i++)
             {
-                offset = StylingUtils.GetRatioValue(first.Offset, width, 0);
-                size = 0;
+                var key = Keys[i];
 
-                for (int i = 1; i < Keys.Count; i++)
+                var off = StylingUtils.GetRatioValue(key.Offset, width, float.NaN);
+
+                if (!float.IsNaN(off) && off > size)
                 {
-                    var key = Keys[i];
-
-                    var off = StylingUtils.GetRatioValue(key.Offset, width, float.NaN);
-
-                    if (!float.IsNaN(off) && off > size)
-                    {
-                        size = off;
-                    }
+                    size = off;
                 }
-                size = size - offset;
             }
 
+            size = size - offset;
 
             var tx = new Texture2D(resolution, 1, TextureFormat.RGBA32, false, true);
             tx.wrapMode = Repeating ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
             var resRp = 1f / (resolution - 1);
 
+            var lastPixel = Color.clear;
             for (int i = 0; i < resolution; i++)
             {
                 var t = i * resRp;
                 var rt = size * t + offset;
-                tx.SetPixel(i, 0, GetColorForOffset(width, rt));
+
+                var px = GetColorForOffset(width, rt);
+
+                // This is done so that transparent pixels have same color channel as next pixel
+                // So that the bilinear interpolation shows a better texture
+                if (i > 0 && lastPixel == Color.clear)
+                    tx.SetPixel(i - 1, 0, new Color(px.r, px.g, px.a, 0));
+                else if (px == Color.clear)
+                    px = new Color(lastPixel.r, lastPixel.g, lastPixel.a, 0);
+
+                tx.SetPixel(i, 0, px);
+                lastPixel = px;
+            }
+
+            // Prevent tearing on repeat
+            var firstPixel = tx.GetPixel(0, 0);
+            if (firstPixel == Color.clear)
+            {
+                if (tx.GetPixel(1, 0).a == 0 && lastPixel != Color.clear)
+                    tx.SetPixel(0, 0, new Color(lastPixel.r, lastPixel.g, lastPixel.a, 0));
+            }
+            else if (lastPixel == Color.clear)
+            {
+                if (tx.GetPixel(resolution - 2, 0).a == 0)
+                    tx.SetPixel(resolution - 1, 0, new Color(firstPixel.r, firstPixel.g, firstPixel.a, 0));
             }
 
             tx.Apply();
@@ -151,6 +158,7 @@ namespace ReactUnity.Types
                 Ramp = tx,
                 Offset = offset,
                 Length = size,
+                Distance = width,
             };
         }
 
@@ -218,6 +226,7 @@ namespace ReactUnity.Types
             material.SetFloat("_repeating", Repeating ? 1 : 0);
 
             var calc = GetCalculatedGradient(size);
+            material.SetFloat("_distance", calc.Distance);
             material.SetFloat("_length", calc.Length);
             material.SetFloat("_offset", calc.Offset);
         }
@@ -238,10 +247,23 @@ namespace ReactUnity.Types
 
         protected override float CalculateLength(Vector2 size)
         {
-            var c = Mathf.Cos(Angle);
-            var s = Mathf.Sin(Angle);
+            var angle = Mathf.PI - Angle;
+            var c = Mathf.Cos(angle);
+            var s = Mathf.Sin(angle);
 
-            return size.y * c * c + size.x * s * s;
+            if (c == 0 || s == 1) return size.x;
+            if (s == 0 || c == 1) return size.y;
+
+            var slope = Mathf.Tan(Mathf.PI / 2 - angle);
+
+            if (slope == 0) return size.x;
+
+            float perpendicularSlope = -1 / slope;
+            float cc = Mathf.Sign(c) * size.y - perpendicularSlope * Mathf.Sign(s) * size.x;
+            float endX = cc / (slope - perpendicularSlope);
+            float endY = perpendicularSlope * endX + cc;
+
+            return new Vector2(endX, endY).magnitude;
         }
     }
 
@@ -256,15 +278,17 @@ namespace ReactUnity.Types
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
             base.ModifyMaterial(context, material, size);
-            material.SetVector("_at", StylingUtils.GetRatioValue(At, size));
+
+            var calc = GetCalculatedGradient(size);
+            material.SetVector("_at", StylingUtils.GetRatioValue(At, size, float.NaN, true));
             material.SetFloat("_sizeHint", (int) SizeHint);
             material.SetFloat("_shape", (int) Shape);
-            material.SetFloat("_radius", CalculateRadius(size));
+            material.SetFloat("_radius", CalculateRadius(size) * Mathf.Max(1, calc.Length));
         }
 
         protected override float CalculateLength(Vector2 size)
         {
-            var at = StylingUtils.GetPointValue(At, size);
+            var at = StylingUtils.GetPointValue(At, size, float.NaN, true);
 
             switch (SizeHint)
             {
@@ -284,7 +308,7 @@ namespace ReactUnity.Types
 
         protected float CalculateRadius(Vector2 size)
         {
-            var at = StylingUtils.GetRatioValue(At, size);
+            var at = StylingUtils.GetRatioValue(At, size, float.NaN, true);
 
             switch (SizeHint)
             {
@@ -311,7 +335,7 @@ namespace ReactUnity.Types
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
             base.ModifyMaterial(context, material, size);
-            material.SetVector("_at", StylingUtils.GetRatioValue(At, size));
+            material.SetVector("_at", StylingUtils.GetRatioValue(At, size, float.NaN, true));
             material.SetFloat("_from", From);
         }
 
