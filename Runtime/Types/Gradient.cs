@@ -346,21 +346,22 @@ namespace ReactUnity.Types
 
         protected float CalculateRadius(Vector2 size)
         {
+            var aspect = size.x / size.y;
             var at = StylingUtils.GetRatioValue(At, size, float.NaN, true);
 
             switch (SizeHint)
             {
                 case RadialGradientSizeHint.Custom:
-                    return StylingUtils.GetRatioValue(Radius, size.y, 0);
+                    return StylingUtils.GetRatioValue(Radius, size.y, 0) / aspect;
                 case RadialGradientSizeHint.FarthestSide:
-                    return Mathf.Max(at.x, 1 - at.x, at.y, 1 - at.y);
+                    return Mathf.Max(at.x, 1 - at.x, at.y / aspect, (1 - at.y) / aspect);
                 case RadialGradientSizeHint.ClosestCorner:
-                    return new Vector2(Mathf.Min(at.x, 1 - at.x), Mathf.Min(at.y, 1 - at.y)).magnitude;
+                    return new Vector2(Mathf.Min(at.x, 1 - at.x), Mathf.Min(at.y, 1 - at.y) / aspect).magnitude;
                 case RadialGradientSizeHint.ClosestSide:
-                    return Mathf.Min(at.x, 1 - at.x, at.y, 1 - at.y);
+                    return Mathf.Min(at.x, 1 - at.x, at.y / aspect, (1 - at.y) / aspect);
                 case RadialGradientSizeHint.FarthestCorner:
                 default:
-                    return new Vector2(Mathf.Max(at.x, 1 - at.x), Mathf.Max(at.y, 1 - at.y)).magnitude;
+                    return new Vector2(Mathf.Max(at.x, 1 - at.x), Mathf.Max(at.y, 1 - at.y) / aspect).magnitude;
             }
         }
     }
