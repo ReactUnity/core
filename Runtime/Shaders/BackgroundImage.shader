@@ -11,7 +11,6 @@ Shader "ReactUnity/BackgroundImage"
     _distance("Distance", Float) = 0
     _at("At", Vector) = (0.5, 0.5, 1, 1)
     _radius("Radius", Float) = 1
-    _aspect("Aspect", Float) = 1
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
     [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
     [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
@@ -76,7 +75,6 @@ Shader "ReactUnity/BackgroundImage"
         float _length;
         float _distance;
         float _radius;
-        float _aspect;
         int _shape;
         float2 _at;
         float2 _pos;
@@ -87,30 +85,47 @@ Shader "ReactUnity/BackgroundImage"
 
         fixed4 frag(v2f i) : SV_Target
         {
-          float2 txPos;
+          float aspectRatio = _size.x / _size.y;
 
-          float uvx = i.uv.x - _pos.x;
-          float uvy = (1 - i.uv.y) - _pos.y;
+          float uvx = (i.uv.x - _pos.x);
+          float uvy = ((1 - i.uv.y) - _pos.y);
 
           float uvxd = uvx / _size.x;
           float uvyd = uvy / _size.y;
 
           float2 uv = float2(uvxd - floor(uvxd), ceil(uvyd) - uvyd);
+          float2 txPos = uv;
 
-          if (_gradientType == 0) {
-            txPos = uv;
-          }
-          else if (_gradientType == 1) {
+          if (_gradientType == 1) {
+            float maxY = 1 / aspectRatio;
             float y = uv.y;
             float x = uv.x;
 
             float sa = sin(_angle);
             float ca = cos(_angle);
 
-            y = (ca < 0 ? 1 - y : y);
-            x = (sa < 0 ? 1 - x : x);
+            float ratioX = 0;
+            if (ca == 0) {
+              ratioX = sa < 0 ? 1 - x : x;
+            }
+            else if (sa == 0) {
+              ratioX = ca < 0 ? 1 - y : y;
+            }
+            else {
+              float zx = sa < 0 ? 1 : 0;
+              float zy = ca < 0 ? maxY : 0;
 
-            float ratioX = y * ca * ca + x * sa * sa;
+              float2 A = float2(x, y / aspectRatio);
+              float2 B = A + float2(ca, -sa);
+
+              float2 C = float2(zx, zy);
+              float2 D = float2(1 - zx, maxY - zy);
+
+              ratioX = ((B.x*A.y - A.x*B.y) * (D.x - C.x) - (B.x - A.x) * (D.x * C.y - D.y * C.x))
+                / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
+
+              ratioX = (sa < 0) ? 1 - ratioX : ratioX;
+            }
 
             txPos = float2(ratioX, 0);
           }
@@ -118,20 +133,15 @@ Shader "ReactUnity/BackgroundImage"
             float2 r2 = uv - _at;
 
             if (_shape == 1) {
-              r2 = float2(r2.x, r2.y / _aspect);
+              r2 = float2(r2.x, r2.y / aspectRatio);
             }
 
-            float r = sqrt(r2.x * r2.x + r2.y * r2.y);
-
-            txPos = float2(r / _radius, 0);
+            txPos = float2(length(r2) / _radius, 0);
           }
           else if (_gradientType == 3) {
             float2 r2 = uv - _at;
-
-            float angle = (atan2(r2.x, r2.y) - _from) % pi2;
-            angle = angle < 0 ? (pi2 + angle) : angle;
-
-            txPos = float2(angle / pi2, 0);
+            float angle = (atan2(r2.x, r2.y) - _from) / pi2;
+            txPos = float2(angle - floor(angle), 0);
           }
 
           if (_gradientType != 0 && _repeating) {

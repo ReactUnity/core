@@ -10,7 +10,6 @@ namespace ReactUnity.Styling.Internal
     {
         public static readonly int SizeProp = Shader.PropertyToID("_size");
         public static readonly int PosProp = Shader.PropertyToID("_pos");
-        public static readonly int AspectProp = Shader.PropertyToID("_aspect");
 
         public Vector4 Size;
 
@@ -76,7 +75,6 @@ namespace ReactUnity.Styling.Internal
                 var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
                 result.SetVector(SizeProp, sz);
                 result.SetVector(PosProp, ps);
-                result.SetFloat(AspectProp, sz.x / sz.y);
 
                 var pointSz = StylingUtils.GetPointValue(backgroundSize, Size, Size, false);
                 Definition?.ModifyMaterial(Context, result, pointSz);
