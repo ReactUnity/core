@@ -86,18 +86,8 @@ namespace ReactUnity.Styling.Functions
 
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
-            var def = new RadialGradient
-            {
-                Keys = colors,
-                At = at,
-                Repeating = isRepeating,
-                SizeHint = sizeHint,
-                Shape = shape,
-                Radius = radius,
-            };
-
-            if (def.ProcessKeys()) return def;
-            return null;
+            var def = new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
+            return def.Valid ? def : null;
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 2;

@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Animations;
-using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Types
 {
-    public class CalculatedGradient
+    internal class GradientRampProperties
     {
-        public Texture2D Ramp;
+        public Texture2D Texture;
         public float Offset;
         public float Length;
         public float Distance;
@@ -47,11 +46,22 @@ namespace ReactUnity.Types
         }
 
         public virtual GradientType Type { get; }
-        public List<ColorKey> Keys { get; set; }
-        public bool Repeating { get; set; }
+        public List<ColorKey> Keys { get; }
+        public bool Repeating { get; }
+        public bool Valid { get; private set; }
         public virtual bool SizeUpdatesGraphic => true;
 
-        public bool ProcessKeys()
+        private Dictionary<Vector2, GradientRampProperties> Ramps = new Dictionary<Vector2, GradientRampProperties>();
+
+
+        public BaseGradient(List<ColorKey> keys, bool repeating)
+        {
+            Keys = keys;
+            Repeating = repeating;
+            Valid = ProcessKeys();
+        }
+
+        private bool ProcessKeys()
         {
             if (Keys == null) return false;
 
@@ -87,34 +97,38 @@ namespace ReactUnity.Types
                 }
             }
 
+            Ramps = new Dictionary<Vector2, GradientRampProperties>();
+
             return true;
         }
 
-        public CalculatedGradient GetCalculatedGradient(Vector2 dimensions, int resolution = 1024)
+        internal GradientRampProperties GetRamp(Vector2 dimensions, int resolution = 1024)
         {
             if (Keys == null || Keys.Count == 0) return null;
-            var width = CalculateLength(dimensions);
+            if (Ramps.TryGetValue(dimensions, out var rmp)) return rmp;
+
+            var distance = CalculateLength(dimensions);
 
             var first = Keys[0];
-            float offset = StylingUtils.GetRatioValue(first.Offset, width, 0);
-            float size = 1f;
+            float offset = StylingUtils.GetRatioValue(first.Offset, distance, 0);
+            float length = 1f;
 
-            if (Repeating) size = 0;
+            if (Repeating) length = 0;
             else offset = Mathf.Min(0, offset);
 
             for (int i = 1; i < Keys.Count; i++)
             {
                 var key = Keys[i];
 
-                var off = StylingUtils.GetRatioValue(key.Offset, width, float.NaN);
+                var off = StylingUtils.GetRatioValue(key.Offset, distance, float.NaN);
 
-                if (!float.IsNaN(off) && off > size)
+                if (!float.IsNaN(off) && off > length)
                 {
-                    size = off;
+                    length = off;
                 }
             }
 
-            size = size - offset;
+            length = length - offset;
 
             var tx = new Texture2D(resolution, 1, TextureFormat.RGBA32, false, true);
             tx.wrapMode = Repeating ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
@@ -124,9 +138,9 @@ namespace ReactUnity.Types
             for (int i = 0; i < resolution; i++)
             {
                 var t = i * resRp;
-                var rt = size * t + offset;
+                var rt = length * t + offset;
 
-                var px = GetColorForOffset(width, rt);
+                var px = GetColorForOffset(distance, rt);
 
                 // This is done so that transparent pixels have same color channel as next pixel
                 // So that the bilinear interpolation shows a better texture
@@ -153,13 +167,18 @@ namespace ReactUnity.Types
             }
 
             tx.Apply();
-            return new CalculatedGradient
+
+            var ramp = new GradientRampProperties
             {
-                Ramp = tx,
+                Texture = tx,
                 Offset = offset,
-                Length = size,
-                Distance = width,
+                Length = length,
+                Distance = distance,
             };
+
+            Ramps[dimensions] = ramp;
+
+            return ramp;
         }
 
         public Color GetColorForOffset(float width, float t)
@@ -225,7 +244,7 @@ namespace ReactUnity.Types
             material.SetFloat("_gradientType", (int) Type);
             material.SetFloat("_repeating", Repeating ? 1 : 0);
 
-            var calc = GetCalculatedGradient(size);
+            var calc = GetRamp(size);
             material.SetFloat("_distance", calc.Distance);
             material.SetFloat("_length", calc.Length);
             material.SetFloat("_offset", calc.Offset);
@@ -238,6 +257,11 @@ namespace ReactUnity.Types
     {
         public override GradientType Type => GradientType.Linear;
         public float Angle { get; set; }
+
+        public LinearGradient(List<ColorKey> keys, bool repeating, float angle) : base(keys, repeating)
+        {
+            Angle = angle;
+        }
 
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
@@ -253,6 +277,11 @@ namespace ReactUnity.Types
 
             if (c == 0 || s == 1) return size.x;
             if (s == 0 || c == 1) return size.y;
+
+            // TODO: remove unnecessary code
+            //var tan = s / c;
+            //if (tan == 0) return size.y;
+            //return Mathf.Abs(size.x / s) - Mathf.Abs((Mathf.Abs(size.x / tan) - size.y) * c);
 
             var slope = Mathf.Tan(Mathf.PI / 2 - angle);
 
@@ -275,11 +304,20 @@ namespace ReactUnity.Types
         public RadialGradientSizeHint SizeHint { get; set; }
         public RadialGradientShape Shape { get; set; }
 
+        public RadialGradient(List<ColorKey> keys, bool repeating, YogaValue2 at, YogaValue radius,
+            RadialGradientSizeHint sizeHint, RadialGradientShape shape) : base(keys, repeating)
+        {
+            At = at;
+            Radius = radius;
+            SizeHint = sizeHint;
+            Shape = shape;
+        }
+
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
             base.ModifyMaterial(context, material, size);
 
-            var calc = GetCalculatedGradient(size);
+            var calc = GetRamp(size);
             material.SetVector("_at", StylingUtils.GetRatioValue(At, size, float.NaN, true));
             material.SetFloat("_sizeHint", (int) SizeHint);
             material.SetFloat("_shape", (int) Shape);
@@ -326,11 +364,18 @@ namespace ReactUnity.Types
             }
         }
     }
+
     public class ConicGradient : BaseGradient
     {
         public override GradientType Type => GradientType.Conic;
         public YogaValue2 At { get; set; }
         public float From { get; set; }
+
+        public ConicGradient(List<ColorKey> keys, bool repeating, YogaValue2 at, float from) : base(keys, repeating)
+        {
+            At = at;
+            From = from;
+        }
 
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {

@@ -32,15 +32,8 @@ namespace ReactUnity.Styling.Functions
 
             var colors = GetColorKeys(args, startIndex, false);
 
-            var def = new LinearGradient
-            {
-                Keys = colors,
-                Angle = angle * Mathf.Deg2Rad,
-                Repeating = isRepeating,
-            };
-
-            if (def.ProcessKeys()) return def;
-            return null;
+            var def = new LinearGradient(colors, isRepeating, angle * Mathf.Deg2Rad);
+            return def.Valid ? def : null;
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 2;

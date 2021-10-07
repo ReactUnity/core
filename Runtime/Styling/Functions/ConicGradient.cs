@@ -69,16 +69,8 @@ namespace ReactUnity.Styling.Functions
 
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
-            var def = new ConicGradient
-            {
-                Keys = colors,
-                At = at,
-                Repeating = isRepeating,
-                From = from * Mathf.Deg2Rad,
-            };
-
-            if (def.ProcessKeys()) return def;
-            return null;
+            var def = new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
+            return def.Valid ? def : null;
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 2;

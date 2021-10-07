@@ -95,8 +95,8 @@ namespace ReactUnity.Types
 
         internal override void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback)
         {
-            var calc = Gradient.GetCalculatedGradient(size);
-            callback(calc.Ramp);
+            var calc = Gradient.GetRamp(size);
+            callback(calc.Texture);
         }
 
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size) => Gradient.ModifyMaterial(context, material, size);
