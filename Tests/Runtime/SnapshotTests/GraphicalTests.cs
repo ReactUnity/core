@@ -89,6 +89,14 @@ namespace ReactUnity.Tests
             View.Style["background"] = $"conic-gradient(from 25deg at 10% 20%, {bg.Item2})";
             yield return null;
             Assertions.Snapshot("gradients/conic-off-center", bg.Item1);
+
+            View.Style["background"] = $"linear-gradient(244deg, {bg.Item2})";
+            View.Style["width"] = "300px";
+            View.Style["height"] = "200px";
+            yield return null;
+            Assertions.Snapshot("gradients/linear-angled-resized", bg.Item1);
+            View.Style["width"] = null;
+            View.Style["height"] = null;
         }
 
 
