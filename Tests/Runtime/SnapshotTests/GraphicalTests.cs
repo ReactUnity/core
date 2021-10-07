@@ -137,6 +137,121 @@ namespace ReactUnity.Tests
         }
 
 
+
+        protected static Tuple<string, string>[] advancedGradients = new Tuple<string, string>[] {
+            Tuple.Create("japanese-cube",
+                @"
+    background-color: #556;
+    background-image: linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+      linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+      linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+      linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),
+      linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a),
+      linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+"),
+
+            Tuple.Create("waves",
+                @"
+    background: radial-gradient(
+          circle at 100% 50%,
+          transparent 20%,
+          rgba(255, 255, 255, 0.3) 21%,
+          rgba(255, 255, 255, 0.3) 34%,
+          transparent 35%,
+          transparent
+        )
+        0 0,
+      radial-gradient(
+          circle at 0% 50%,
+          transparent 20%,
+          rgba(255, 255, 255, 0.3) 21%,
+          rgba(255, 255, 255, 0.3) 34%,
+          transparent 35%,
+          transparent
+        )
+        0 -50px;
+    background-color: slategray;
+    background-size: 75px 100px;
+    background-position: 0 0, 0 -50px;
+"
+            ),
+
+            Tuple.Create("steps", @"
+    background-color: #ff7d9d;
+    background-size: 58px 58px;
+    background-position: 0px 2px, 4px 35px, 29px 31px, 33px 6px, 0px 36px, 4px 2px, 29px 6px, 33px 30px;
+    background-image: linear-gradient(335deg, #c90032 23px, transparent 23px),
+      linear-gradient(155deg, #c90032 23px, transparent 23px), linear-gradient(335deg, #c90032 23px, transparent 23px),
+      linear-gradient(155deg, #c90032 23px, transparent 23px), linear-gradient(335deg, #c90032 10px, transparent 10px),
+      linear-gradient(155deg, #c90032 10px, transparent 10px), linear-gradient(335deg, #c90032 10px, transparent 10px),
+      linear-gradient(155deg, #c90032 10px, transparent 10px);
+"),
+
+            Tuple.Create("stars", @"
+    background: linear-gradient(324deg, #232927 4%, transparent 4%) -70px 43px,
+      linear-gradient(36deg, #232927 4%, transparent 4%) 30px 43px,
+      linear-gradient(72deg, #e3d7bf 8.5%, transparent 8.5%) 30px 43px,
+      linear-gradient(288deg, #e3d7bf 8.5%, transparent 8.5%) -70px 43px,
+      linear-gradient(216deg, #e3d7bf 7.5%, transparent 7.5%) -70px 23px,
+      linear-gradient(144deg, #e3d7bf 7.5%, transparent 7.5%) 30px 23px,
+      linear-gradient(324deg, #232927 4%, transparent 4%) -20px 93px,
+      linear-gradient(36deg, #232927 4%, transparent 4%) 80px 93px,
+      linear-gradient(72deg, #e3d7bf 8.5%, transparent 8.5%) 80px 93px,
+      linear-gradient(288deg, #e3d7bf 8.5%, transparent 8.5%) -20px 93px,
+      linear-gradient(216deg, #e3d7bf 7.5%, transparent 7.5%) -20px 73px,
+      linear-gradient(144deg, #e3d7bf 7.5%, transparent 7.5%) 80px 73px;
+    background-color: #232927;
+    background-size: 100px 100px;
+"),
+            Tuple.Create("weave", @"
+    background: linear-gradient(
+        135deg,
+        #708090 21px,
+        #d9ecff 22px,
+        #d9ecff 24px,
+        transparent 24px,
+        transparent 67px,
+        #d9ecff 67px,
+        #d9ecff 69px,
+        transparent 69px
+      ),
+      linear-gradient(
+          225deg,
+          #708090 21px,
+          #d9ecff 22px,
+          #d9ecff 24px,
+          transparent 24px,
+          transparent 67px,
+          #d9ecff 67px,
+          #d9ecff 69px,
+          transparent 69px
+        )
+        0 64px;
+    background-color: #708090;
+    background-size: 64px 128px;
+"),
+
+            Tuple.Create("blueprint", @"
+    background-color: #269;
+    background-image: linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px),
+      linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+"),
+    };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator AdvancedGradientSnapshots([ValueSource("advancedGradients")] Tuple<string, string> bg)
+        {
+            InsertStyle("#test {" + bg.Item2 + "}");
+            yield return null;
+
+            Assertions.Snapshot($"gradients/advanced/" + bg.Item1);
+        }
+
         protected static Tuple<string, string>[] boxShadows = new Tuple<string, string>[] {
             Tuple.Create("00", "none"),
             Tuple.Create("01", "1px 1px 4px 0 black"),
