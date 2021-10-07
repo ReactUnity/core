@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
@@ -9,15 +10,18 @@ namespace ReactUnity.Animations
     public static class Interpolater
     {
         #region Linear interpolations
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float t, bool mirror = false)
         {
             if (mirror && t < 0) return Mathf.Abs(t);
             else return t;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float from, float to, float t)
         {
             return TimingFunctions.Linear(t, from, to);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Interpolate(int from, int to, float t)
         {
             return Mathf.RoundToInt(TimingFunctions.Linear(t, from, to));
@@ -32,18 +36,22 @@ namespace ReactUnity.Animations
 
             return Color.LerpUnclamped(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t)
         {
             return Vector2.LerpUnclamped(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Interpolate(Vector3 from, Vector3 to, float t)
         {
             return Vector3.LerpUnclamped(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 Interpolate(Vector4 from, Vector4 to, float t)
         {
             return Vector4.LerpUnclamped(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Quaternion Interpolate(Quaternion from, Quaternion to, float t)
         {
             return Quaternion.SlerpUnclamped(from, to, t);
@@ -62,6 +70,7 @@ namespace ReactUnity.Animations
             if (unit == YogaUnit.Percent) return YogaValue.Percent(Interpolate(from.Value, to.Value, t));
             return YogaValue.Point(Interpolate(from.Value, to.Value, t));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static YogaValue2 Interpolate(YogaValue2 from, YogaValue2 to, float t)
         {
             return new YogaValue2(Interpolate(from.X, to.X, t), Interpolate(from.Y, to.Y, t));
@@ -85,6 +94,7 @@ namespace ReactUnity.Animations
                 from != BoxShadow.Default ? from.inset : to.inset
             );
         }
+
         public static BoxShadowList Interpolate(BoxShadowList from, BoxShadowList to, float t)
         {
             var len = Mathf.Max(from.Items.Length, to.Items.Length);
@@ -98,35 +108,58 @@ namespace ReactUnity.Animations
 
             return new BoxShadowList(items);
         }
+
+        public static CssValueList<T> Interpolate<T>(CssValueList<T> from, CssValueList<T> to, float t)
+        {
+            var len = Mathf.Max(from.Count, to.Count);
+
+            var items = new T[len];
+
+
+            for (int i = 0; i < len; i++)
+            {
+                items[i] = ForceTypedInterpolate<T>(i < from.Count ? from[i] : default(T), i < to.Count ? to[i] : default(T), t);
+            }
+
+            return new CssValueList<T>(items);
+        }
+
         #endregion
 
 
         #region Enum interpolations
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float t, TimingFunctionType easeType, bool mirror = false)
         {
             if (mirror && t < 0) return TimingFunctions.Get(easeType)(Mathf.Abs(t));
             else return TimingFunctions.Get(easeType)(t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float from, float to, float t, TimingFunctionType easeType)
         {
             return TimingFunctions.Get(easeType)(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color Interpolate(Color from, Color to, float t, TimingFunctionType easeType)
         {
             return Interpolate(from, to, Interpolate(t, easeType));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctionType easeType)
         {
             return Vector2.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunctionType easeType)
         {
             return Vector3.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunctionType easeType)
         {
             return Vector4.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunctionType easeType)
         {
             return Quaternion.SlerpUnclamped(from, to, Interpolate(t, easeType));
@@ -135,31 +168,38 @@ namespace ReactUnity.Animations
 
 
         #region Function interpolations
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float t, TimingFunction timingFunction, bool mirror = false)
         {
             if (mirror && t < 0) return timingFunction(Mathf.Abs(t));
             else return timingFunction(t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float from, float to, float t, TimingFunction timingFunction)
         {
             return timingFunction(from, to, t);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color Interpolate(Color from, Color to, float t, TimingFunction timingFunction)
         {
             return Interpolate(from, to, Interpolate(t, timingFunction));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunction timingFunction)
         {
             return Vector2.LerpUnclamped(from, to, Interpolate(t, timingFunction));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunction timingFunction)
         {
             return Vector3.LerpUnclamped(from, to, Interpolate(t, timingFunction));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunction timingFunction)
         {
             return Vector4.LerpUnclamped(from, to, Interpolate(t, timingFunction));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunction timingFunction)
         {
             return Quaternion.SlerpUnclamped(from, to, Interpolate(t, timingFunction));
@@ -168,6 +208,15 @@ namespace ReactUnity.Animations
 
 
         #region Object interpolations
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T ForceTypedInterpolate<T>(object from, object to, float t)
+        {
+            var res = Interpolate(from, to, t);
+            if (res is IComputedValue) return default;
+            return (T) res;
+        }
+
         public static object Interpolate(object from, object to, float t)
         {
             if (from is float f1 && to is float f2) return Interpolate(f1, f2, t);
@@ -180,6 +229,7 @@ namespace ReactUnity.Animations
             if (from is YogaValue b1 && to is YogaValue b2) return Interpolate(b1, b2, t);
             if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t);
             if (from is BoxShadowList s1 && to is BoxShadowList s2) return Interpolate(s1, s2, t);
+            if (from is CssValueList<YogaValue2> cv1 && to is CssValueList<YogaValue2> cv2) return Interpolate(cv1, cv2, t);
 
             if (from is IComputedValue d1)
             {
@@ -211,21 +261,25 @@ namespace ReactUnity.Animations
             return Interpolate(from, to, t);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Interpolate(object from, object to, float t, TimingFunction timingFunction)
         {
             return Interpolate(from, to, timingFunction(t));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Interpolate(object from, object to, float t, TimingFunction timingFunction, Type type)
         {
             return Interpolate(from, to, timingFunction(t), type);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType)
         {
             return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType, Type type)
         {
             return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t), type);
