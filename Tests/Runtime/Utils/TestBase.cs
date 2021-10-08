@@ -17,6 +17,7 @@ namespace ReactUnity.Tests
     public abstract class TestBase
     {
         protected InputTestFixture Input { get; private set; }
+        protected Mouse Mouse { get; private set; }
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
@@ -81,20 +82,25 @@ namespace ReactUnity.Tests
 
         public InputTestFixture SetupInput()
         {
-            Input?.TearDown();
+            TeardownInput();
             Input = new InputTestFixture();
             Input.Setup();
+
+            Mouse = InputSystem.AddDevice<Mouse>();
+
             return Input;
         }
 
         public void TeardownInput()
         {
+            if (Mouse != null) InputSystem.RemoveDevice(Mouse);
+            Mouse = null;
             Input?.TearDown();
             Input = null;
         }
 
         [TearDown]
-        void TearDown()
+        public void TearDown()
         {
             TeardownInput();
         }

@@ -25,16 +25,35 @@ namespace ReactUnity.Styling.Internal
         public List<BoxShadowImage> ShadowGraphics;
         public List<BackgroundImage> BackgroundGraphics;
 
-        private Color BgColor
+        private BackgroundBlendMode blendMode;
+        public BackgroundBlendMode BlendMode
         {
             set
             {
-                BgImage.color = value;
-                BgImage.raycastTarget = BgImage.color.a > 0 || PointerEvents == PointerEvents.All;
+                blendMode = value;
+                UpdateBgColor();
             }
         }
 
-        private PointerEvents PointerEvents;
+        private Color bgColor;
+        public Color BgColor
+        {
+            set
+            {
+                bgColor = value;
+                UpdateBgColor();
+            }
+        }
+
+        private PointerEvents pointerEvents;
+        public PointerEvents PointerEvents
+        {
+            set
+            {
+                pointerEvents = value;
+                UpdateBgColor();
+            }
+        }
 
         public static BorderAndBackground Create(GameObject go, ReactContext ctx)
         {
@@ -43,7 +62,7 @@ namespace ReactUnity.Styling.Internal
 
             var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
             var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
-            var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(BackgroundImage));
+            var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(RawImage));
 
 
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
@@ -75,7 +94,35 @@ namespace ReactUnity.Styling.Internal
             return cmp;
         }
 
-        public void SetBorderSize(YogaNode layout)
+        private void UpdateBgColor()
+        {
+            var bg = BgImage;
+            var hasColor = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
+            var hasTarget = bgColor.a > 0 || pointerEvents == PointerEvents.All;
+            bg.color = hasColor ? bgColor : Color.clear;
+            bg.raycastTarget = hasTarget;
+            bg.enabled = hasColor || hasTarget;
+        }
+
+        public void UpdateStyle(NodeStyle style)
+        {
+            blendMode = style.backgroundBlendMode;
+            bgColor = style.backgroundColor;
+            pointerEvents = style.pointerEvents;
+            UpdateBgColor();
+
+            SetBackground(bgColor, style.backgroundImage, style.backgroundPosition, style.backgroundSize);
+            SetBoxShadow(style.boxShadow);
+            SetBorderColor(style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor);
+            SetBorderRadius(style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius);
+        }
+
+        public void UpdateLayout(YogaNode layout)
+        {
+            SetBorderSize(layout);
+        }
+
+        private void SetBorderSize(YogaNode layout)
         {
             var bidiLeft = layout.LayoutDirection == YogaDirection.LTR ? layout.BorderStartWidth : layout.BorderEndWidth;
             var bidiRight = layout.LayoutDirection == YogaDirection.RTL ? layout.BorderStartWidth : layout.BorderEndWidth;
@@ -106,7 +153,7 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBorderRadius(float tl, float tr, float br, float bl)
+        private void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             var v = new Vector4(tl, tr, br, bl);
 
@@ -129,7 +176,7 @@ namespace ReactUnity.Styling.Internal
             }
         }
 
-        public void SetBorderColor(Color top, Color right, Color bottom, Color left)
+        private void SetBorderColor(Color top, Color right, Color bottom, Color left)
         {
             BorderGraphic.TopColor = top;
             BorderGraphic.RightColor = right;
@@ -138,12 +185,9 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBackground(Color color, CssValueList<ImageDefinition> images, CssValueList<YogaValue2> positions, CssValueList<YogaValue2> sizes, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
+        private void SetBackground(Color color, CssValueList<ImageDefinition> images, CssValueList<YogaValue2> positions, CssValueList<YogaValue2> sizes)
         {
             if (BackgroundGraphics == null) BackgroundGraphics = new List<BackgroundImage>();
-
-            BgColor = color;
-            BgImage.enabled = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
 
             var validCount = images.Count;
             var diff = BackgroundGraphics.Count - validCount;
@@ -176,7 +220,7 @@ namespace ReactUnity.Styling.Internal
             }
         }
 
-        public void SetBoxShadow(BoxShadowList shadows)
+        private void SetBoxShadow(BoxShadowList shadows)
         {
             var validCount = 0;
 
@@ -291,13 +335,6 @@ namespace ReactUnity.Styling.Internal
             }
 
             return 0;
-        }
-
-        public void SetPointerEvents(PointerEvents pointerEvents)
-        {
-            PointerEvents = pointerEvents;
-            var bg = BgImage;
-            bg.raycastTarget = bg.color.a > 0 || PointerEvents == PointerEvents.All;
         }
     }
 }

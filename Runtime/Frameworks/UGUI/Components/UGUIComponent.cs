@@ -338,16 +338,11 @@ namespace ReactUnity.UGUI
 
             if (updateLayout)
             {
-                image.SetBorderSize(Layout);
+                image.UpdateLayout(Layout);
             }
             if (updateStyle)
             {
-                image.SetPointerEvents(ComputedStyle.pointerEvents);
-                image.SetBackground(ComputedStyle.backgroundColor, ComputedStyle.backgroundImage, ComputedStyle.backgroundPosition, ComputedStyle.backgroundSize, ComputedStyle.backgroundBlendMode);
-                image.SetBoxShadow(ComputedStyle.boxShadow);
-
-                image.SetBorderColor(ComputedStyle.borderTopColor, ComputedStyle.borderRightColor, ComputedStyle.borderBottomColor, ComputedStyle.borderLeftColor);
-                image.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
+                image.UpdateStyle(ComputedStyle);
             }
 
             return image;

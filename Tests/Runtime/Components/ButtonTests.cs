@@ -74,7 +74,6 @@ namespace ReactUnity.Tests
         public IEnumerator ButtonClickEventWorks()
         {
             var input = SetupInput();
-            var mouse = InputSystem.AddDevice<Mouse>();
 
             var list = new List<string>();
             Globals["list"] = list;
@@ -82,11 +81,40 @@ namespace ReactUnity.Tests
 
             Assert.IsEmpty(list);
 
-            input.Move(mouse.position, new Vector2(20, Screen.height - 20));
-            input.Click(mouse.leftButton);
+            input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
+            input.Click(Mouse.leftButton);
 
             yield return null;
 
+            list.AssertListExhaustive("click");
+        }
+
+        [ReactInjectableTest(BaseScript)]
+        public IEnumerator ButtonShouldBeClickableWithoutBackground()
+        {
+            Button.Style["background"] = null;
+            var input = SetupInput();
+
+            var list = new List<string>();
+            Globals["list"] = list;
+            yield return null;
+            Assert.IsEmpty(list);
+
+            input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
+            input.Click(Mouse.leftButton);
+            yield return null;
+            list.AssertListExhaustive("click");
+
+            Button.Style["background-blend-mode"] = "multiply";
+            yield return null;
+            input.Click(Mouse.leftButton);
+            yield return null;
+            list.AssertListExhaustive("click");
+
+            Button.Style["background-blend-mode"] = "color";
+            yield return null;
+            input.Click(Mouse.leftButton);
+            yield return null;
             list.AssertListExhaustive("click");
         }
 
