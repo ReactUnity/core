@@ -51,6 +51,8 @@ namespace ReactUnity.Styling.Internal
             }
         }
 
+        private Color TintColor;
+
 
         protected override void OnEnable()
         {
@@ -88,14 +90,6 @@ namespace ReactUnity.Styling.Internal
             RefreshSize();
         }
 
-#if UNITY_EDITOR
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-            RefreshSize();
-        }
-#endif
-
         private void RefreshSize()
         {
             var rect = ((RectTransform) transform).rect;
@@ -112,6 +106,7 @@ namespace ReactUnity.Styling.Internal
         public void SetBackgroundColorAndImage(Color tint, ImageDefinition image, BackgroundBlendMode blendMode = BackgroundBlendMode.Normal)
         {
             BlendMode = blendMode;
+            TintColor = tint;
             if (image != Definition)
             {
                 Definition = image;
@@ -152,7 +147,7 @@ namespace ReactUnity.Styling.Internal
 
         private void UpdateBlendMode()
         {
-            color = BlendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : color;
+            color = BlendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : TintColor;
         }
     }
 }

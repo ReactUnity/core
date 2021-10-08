@@ -2,7 +2,8 @@ namespace ReactUnity.Types
 {
     public enum BackgroundBlendMode
     {
-        Normal,
+        Normal = 0,
+        Color,
         Multiply,
         Screen,
         Overlay,
@@ -16,7 +17,6 @@ namespace ReactUnity.Types
         Exclusion,
         Hue,
         Saturation,
-        Color,
         Luminosity,
     }
 }

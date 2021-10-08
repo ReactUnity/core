@@ -299,5 +299,25 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("borders/" + bg.Item1);
         }
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator BackgroundImageSnapshots()
+        {
+            View.Style["background"] = "url(res:star)";
+            yield return null;
+            Assertions.Snapshot("backgrounds/star-colorless");
+
+            View.Style["background"] = "url(res:star) rgba(0, 0, 200, 0.4)";
+            yield return null;
+            Assertions.Snapshot("backgrounds/star-normal-blend");
+
+            View.Style["background-blend-mode"] = "multiply";
+            yield return null;
+            Assertions.Snapshot("backgrounds/star-multiply-blend");
+
+            View.Style["background-blend-mode"] = "color";
+            yield return null;
+            Assertions.Snapshot("backgrounds/star-color-blend");
+        }
     }
 }
