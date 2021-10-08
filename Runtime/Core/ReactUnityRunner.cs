@@ -25,12 +25,10 @@ namespace ReactUnity
             if (engine == null) CreateBaseEngine(debug, awaitDebugger);
             engine.SetValue("Context", context);
             engine.SetValue("HostContainer", context.Host);
-            // TODO: deprecate RootContainer in favor of HostContainer
-            engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
+            engine.SetValue("localStorage", context.LocalStorage);
             CreateLocation(engine);
             CreateConsole(engine);
-            CreateLocalStorage(engine);
             CreateScheduler(engine, context);
             CreatePolyfills(engine);
 
@@ -113,12 +111,6 @@ namespace ReactUnity
             engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
             engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
             engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
-        }
-
-        void CreateLocalStorage(IJavaScriptEngine engine)
-        {
-            var storage = new LocalStorage();
-            engine.SetValue("localStorage", storage);
         }
 
         void CreateLocation(IJavaScriptEngine engine)

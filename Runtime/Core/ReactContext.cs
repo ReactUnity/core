@@ -35,6 +35,7 @@ namespace ReactUnity
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
         public Location Location { get; }
+        public LocalStorage LocalStorage { get; }
         public IMediaProvider MediaProvider { get; }
 
         public Action OnRestart;
@@ -62,6 +63,7 @@ namespace ReactUnity
             Location = new Location(this);
             MediaProvider = mediaProvider;
             CursorAPI = new CursorAPI(this);
+            LocalStorage = new LocalStorage();
 
             Parser = new StylesheetParser(true, true, true, true, true, false, true);
             Style = new StyleContext(this);

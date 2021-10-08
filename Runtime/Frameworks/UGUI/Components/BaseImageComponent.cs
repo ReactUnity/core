@@ -44,9 +44,6 @@ namespace ReactUnity.UGUI
                 case "source":
                     SetSource(value);
                     return;
-                case "fit":
-                    Debug.LogWarning("fit property is deprecated. Use CSS object-fit property.");
-                    return;
                 default:
                     base.SetProperty(propertyName, value);
                     break;

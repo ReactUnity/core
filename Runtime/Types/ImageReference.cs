@@ -93,7 +93,12 @@ namespace ReactUnity.Types
         public class Converter : IStyleParser, IStyleConverter
         {
             private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
-            private static IStyleConverter ColorConverter = AllConverters.ColorConverter;
+            public bool AllowWithoutUrl { get; }
+
+            public Converter(bool allowWithoutUrl = false)
+            {
+                AllowWithoutUrl = allowWithoutUrl;
+            }
 
             public bool CanHandleKeyword(CssKeyword keyword) => false;
 
@@ -114,15 +119,8 @@ namespace ReactUnity.Types
                     if (result is Url u) return new ImageReference(u);
                 }
 
-                var url = new Url(value);
-
-                if (!url.HasKnownProtocol)
-                {
-                    var color = ColorConverter.Convert(value);
-                    if (color is Color c) return new ImageReference(AssetReferenceType.Procedural, c);
-                }
-
-                return new ImageReference(url);
+                if (AllowWithoutUrl) return new ImageReference(new Url(value));
+                return CssKeyword.Invalid;
             }
         }
     }

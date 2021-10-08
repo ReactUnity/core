@@ -68,7 +68,7 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(style: @"
           #test {
             background: red url(res:star);
-            background-blend-mode: multiply;
+            background-blend-mode: color;
             mask: url(res:star);
           }
 ")]
@@ -82,6 +82,7 @@ namespace ReactUnity.Tests
 
             var bgImage = bg.BgImage;
             Assert.AreEqual(typeof(Texture2D), bg.BackgroundGraphics[0].texture?.GetType());
+            Assert.AreEqual(Color.red, bg.BackgroundGraphics[0].color);
             Assert.AreEqual(Color.red, bgImage.color);
 
             Assert.AreEqual(typeof(Texture2D), mask.Image.sprite?.texture?.GetType());

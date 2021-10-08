@@ -11,7 +11,6 @@ namespace ReactUnity.Converters
     {
         static private HashSet<string> AllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
         IStyleConverter floatDs = AllConverters.FloatConverter;
-        static char[] splitChars = new char[] { ',', ' ' };
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
@@ -169,8 +168,8 @@ namespace ReactUnity.Converters
 
         public object FromString(string value)
         {
-            if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
+            if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             if (KnownColors.TryGetValue(value, out var known)) value = known;
             if (value == "clear" || value == "transparent") return Color.clear;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
@@ -179,18 +178,15 @@ namespace ReactUnity.Converters
 
         public object Convert(object value)
         {
-            if (value is Color c) return c;
-            if (value is string s)
-            {
-                var res = FromString(s);
-                if (res is Color) return res;
-            }
-            else if (value is IEnumerable en) return FromArray(en);
-
             if (value == null) return CssKeyword.Invalid;
-            var fl = floatDs.Convert(value);
-            if (fl is float f) return new Color(f, f, f);
-            return FromString(value?.ToString());
+            if (value is string s) return FromString(s);
+            if (value is Color c) return c;
+            if (value is IEnumerable en) return FromArray(en);
+
+            if (value is double d) value = (float) d;
+            if (value is float f) return new Color(f, f, f);
+
+            return CssKeyword.Invalid;
         }
 
         private object FromArray(IEnumerable obj, float rgbScale = 1, float alphaScale = 1)
@@ -210,30 +206,6 @@ namespace ReactUnity.Converters
             var v1f = floatDs.Convert(v1);
             var v2f = floatDs.Convert(v2);
             var v3f = floatDs.Convert(v3);
-
-            if (!(v0f is float))
-            {
-                if (len == 2 || len == 3)
-                {
-                    var startColor = Convert(v0);
-                    var endColor = Convert(v2);
-
-                    if (startColor is Color s)
-                    {
-                        if (endColor is Color e)
-                        {
-                            var t = v1f as float? ?? 0.5f;
-                            return Interpolater.Interpolate(s, e, t);
-                        }
-                        else
-                        {
-                            var t = v1f as float? ?? 1;
-                            s.a = t;
-                            return s;
-                        }
-                    }
-                }
-            }
 
             var r = v0f as float? ?? 0;
             var g = v1f as float? ?? 0;

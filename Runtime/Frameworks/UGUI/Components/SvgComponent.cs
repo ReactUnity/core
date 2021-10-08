@@ -28,7 +28,7 @@ namespace ReactUnity.UGUI
 
         protected override void SetSource(object value)
         {
-            var source = AllConverters.ImageReferenceConverter.Convert(value) as ImageReference;
+            var source = AllConverters.ImageSourceConverter.Convert(value) as ImageReference;
             source.Get(Context, SetTexture);
         }
 

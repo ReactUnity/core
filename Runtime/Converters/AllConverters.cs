@@ -31,6 +31,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
+        static public IStyleConverter ImageSourceConverter = new ImageReference.Converter(true);
         static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
         static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
         static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
