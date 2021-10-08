@@ -242,9 +242,9 @@ namespace ReactUnity.Editor.Tests
         }
 
 
-        [TestCase("0", "000000ff")]
-        [TestCase("1", "ffffffff")]
-        [TestCase("0.5", "808080ff")]
+        [TestCase(0, "000000ff")]
+        [TestCase(1, "ffffffff")]
+        [TestCase(0.5d, "808080ff")]
         [TestCase("#70bd99", "70bd99ff")]
         [TestCase("#70bd99be", "70bd99be")]
         [TestCase("hsl(152, 37%, 59%)", "70bd99ff")]

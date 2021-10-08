@@ -181,38 +181,12 @@ namespace ReactUnity.Converters
             if (value == null) return CssKeyword.Invalid;
             if (value is string s) return FromString(s);
             if (value is Color c) return c;
-            if (value is IEnumerable en) return FromArray(en);
 
             if (value is double d) value = (float) d;
+            if (value is int i) value = (float) i;
             if (value is float f) return new Color(f, f, f);
 
             return CssKeyword.Invalid;
-        }
-
-        private object FromArray(IEnumerable obj, float rgbScale = 1, float alphaScale = 1)
-        {
-            var arr = obj.OfType<object>().ToArray();
-            var len = arr.Length;
-
-            if (len == 0) return Color.clear;
-
-            var v0 = arr.ElementAtOrDefault(0);
-            var v1 = arr.ElementAtOrDefault(1);
-            var v2 = arr.ElementAtOrDefault(2);
-            var v3 = arr.ElementAtOrDefault(3);
-
-
-            var v0f = floatDs.Convert(v0);
-            var v1f = floatDs.Convert(v1);
-            var v2f = floatDs.Convert(v2);
-            var v3f = floatDs.Convert(v3);
-
-            var r = v0f as float? ?? 0;
-            var g = v1f as float? ?? 0;
-            var b = v2f as float? ?? 0;
-            var a = v3f as float? ?? 1;
-
-            return new Color(r * rgbScale, g * rgbScale, b * rgbScale, a * alphaScale);
         }
     }
 }
