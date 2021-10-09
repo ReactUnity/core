@@ -5,8 +5,6 @@ using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 
 namespace ReactUnity.Tests
 {

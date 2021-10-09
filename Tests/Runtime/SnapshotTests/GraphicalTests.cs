@@ -5,7 +5,6 @@ using System.Linq;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
-using UnityEngine;
 
 namespace ReactUnity.Tests
 {

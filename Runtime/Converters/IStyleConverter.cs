@@ -7,7 +7,7 @@ namespace ReactUnity.Converters
         object Parse(string value);
     }
 
-    public interface IStyleConverter: IStyleParser
+    public interface IStyleConverter : IStyleParser
     {
         object Convert(object value);
 
