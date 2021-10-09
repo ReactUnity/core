@@ -128,10 +128,10 @@ namespace ReactUnity.Types
 #if REACT_TEXTCORE
                 if (value is UnityEngine.TextCore.Text.FontAsset fa) return new FontReference(AssetReferenceType.Object, fa);
 #endif
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {

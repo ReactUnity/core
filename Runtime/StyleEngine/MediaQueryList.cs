@@ -168,7 +168,7 @@ namespace ReactUnity.StyleEngine
 
                 if (separator == ":")
                 {
-                    var number = NumberConverter.Convert(splits[2]);
+                    var number = NumberConverter.Parse(splits[2]);
 
                     if (number is float f)
                     {
@@ -181,8 +181,8 @@ namespace ReactUnity.StyleEngine
 
                 if (separator.StartsWith("$"))
                 {
-                    var number0 = NumberConverter.Convert(splits[0]);
-                    var number2 = NumberConverter.Convert(splits[2]);
+                    var number0 = NumberConverter.Parse(splits[0]);
+                    var number2 = NumberConverter.Parse(splits[2]);
                     var reversed = false;
 
                     string prop;
@@ -225,8 +225,8 @@ namespace ReactUnity.StyleEngine
                 if (separator1.StartsWith("$") && separator3.StartsWith("$"))
                 {
 
-                    var number0 = NumberConverter.Convert(splits[0]);
-                    var number4 = NumberConverter.Convert(splits[4]);
+                    var number0 = NumberConverter.Parse(splits[0]);
+                    var number4 = NumberConverter.Parse(splits[4]);
                     var prop = splits[2];
 
                     if (number0 is float f0 && number4 is float f4)

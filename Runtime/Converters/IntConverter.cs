@@ -14,9 +14,9 @@ namespace ReactUnity.Converters
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
-            var pr = FloatParser.FromString(value);
+            var pr = FloatParser.Parse(value);
             if (pr is float f) return Mathf.RoundToInt(f);
             return CssKeyword.Invalid;
         }
@@ -25,7 +25,7 @@ namespace ReactUnity.Converters
         {
             if (value is float f) return Mathf.RoundToInt(f);
             if (value is double d) return (int) Math.Round(d);
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
     }
 }

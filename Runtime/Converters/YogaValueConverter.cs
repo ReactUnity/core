@@ -10,7 +10,7 @@ namespace ReactUnity.Converters
 
         public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.Auto;
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (value == "auto") return YogaValue.Auto();
             else if (value.EndsWith("%"))
@@ -19,7 +19,7 @@ namespace ReactUnity.Converters
                 return CssKeyword.Invalid;
             }
 
-            var converted = AllConverters.LengthConverter.Convert(value);
+            var converted = AllConverters.LengthConverter.Parse(value);
 
             if (converted is float f) return YogaValue.Point(f);
             return converted;
@@ -35,7 +35,7 @@ namespace ReactUnity.Converters
 
             if (Equals(value, CssKeyword.Auto)) return YogaValue.Auto();
 
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
     }
 }

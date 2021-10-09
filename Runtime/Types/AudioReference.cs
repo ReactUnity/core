@@ -73,10 +73,10 @@ namespace ReactUnity.Types
                 if (value is AudioReference a) return a;
                 if (value is AudioClip c) return new AudioReference(AssetReferenceType.Object, c);
                 if (value is UnityEngine.Object o) return new AudioReference(AssetReferenceType.Object, o);
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {

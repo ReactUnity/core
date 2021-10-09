@@ -41,7 +41,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!growSet)
                 {
-                    var val = AllConverters.FloatConverter.Convert(split);
+                    var val = AllConverters.FloatConverter.Parse(split);
 
                     if (val is float v)
                     {
@@ -53,7 +53,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!shrinkSet)
                 {
-                    var val = AllConverters.FloatConverter.Convert(split);
+                    var val = AllConverters.FloatConverter.Parse(split);
 
                     if (val is float v)
                     {
@@ -65,7 +65,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!basisSet)
                 {
-                    var val = AllConverters.YogaValueConverter.Convert(split);
+                    var val = AllConverters.YogaValueConverter.Parse(split);
 
                     if (val is YogaValue v)
                     {

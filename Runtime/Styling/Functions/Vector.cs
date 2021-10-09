@@ -9,9 +9,9 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args)
         {
-            var x = args.Length > 0 ? AllConverters.FloatConverter.Convert(args[0]) : null;
-            var y = args.Length > 1 ? AllConverters.FloatConverter.Convert(args[1]) : null;
-            var z = args.Length > 2 ? AllConverters.FloatConverter.Convert(args[2]) : null;
+            var x = args.Length > 0 ? AllConverters.FloatConverter.Parse(args[0]) : null;
+            var y = args.Length > 1 ? AllConverters.FloatConverter.Parse(args[1]) : null;
+            var z = args.Length > 2 ? AllConverters.FloatConverter.Parse(args[2]) : null;
 
             if (x is float xf)
             {

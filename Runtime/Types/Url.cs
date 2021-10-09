@@ -16,7 +16,7 @@ namespace ReactUnity.Types
 
         public Url(string fullUrl)
         {
-            fullUrl = AllConverters.StringConverter.Convert(fullUrl) as string;
+            fullUrl = AllConverters.StringConverter.Parse(fullUrl) as string;
 
             FullUrl = fullUrl;
 

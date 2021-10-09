@@ -7,6 +7,10 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class AnimationShorthand : StyleShorthand
     {
+        private static GeneralConverter DirectionConverter = AllConverters.Get<AnimationDirection>();
+        private static GeneralConverter FillModeConverter = AllConverters.Get<AnimationFillMode>();
+        private static GeneralConverter PlayStateConverter = AllConverters.Get<AnimationPlayState>();
+
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
             StyleProperties.animationDelay,
@@ -56,7 +60,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var dur = AllConverters.DurationConverter.Convert(split);
+                    var dur = AllConverters.DurationConverter.Parse(split);
 
                     if (dur is float f)
                     {
@@ -77,7 +81,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var count = AllConverters.IterationCountConverter.Convert(split);
+                    var count = AllConverters.IterationCountConverter.Parse(split);
 
                     if (count is int fcount)
                     {
@@ -91,7 +95,7 @@ namespace ReactUnity.Styling.Shorthands
                     }
 
 
-                    var dir = !directionSet ? AllConverters.Get<AnimationDirection>().Convert(split) : null;
+                    var dir = !directionSet ? DirectionConverter.Parse(split) : null;
 
                     if (dir is AnimationDirection d)
                     {
@@ -100,7 +104,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var fm = !fillModeSet ? AllConverters.Get<AnimationFillMode>().Convert(split) : null;
+                    var fm = !fillModeSet ? FillModeConverter.Parse(split) : null;
 
                     if (fm is AnimationFillMode fmd)
                     {
@@ -109,7 +113,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var ps = !playStateSet ? AllConverters.Get<AnimationPlayState>().Convert(split) : null;
+                    var ps = !playStateSet ? PlayStateConverter.Parse(split) : null;
 
                     if (ps is AnimationPlayState psd)
                     {
@@ -118,7 +122,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Convert(split) : null;
+                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Parse(split) : null;
 
                     if (tm is TimingFunction tmf)
                     {

@@ -4,10 +4,10 @@ namespace ReactUnity.Converters
 {
     public interface IStyleParser
     {
-        object FromString(string value);
+        object Parse(string value);
     }
 
-    public interface IStyleConverter
+    public interface IStyleConverter: IStyleParser
     {
         object Convert(object value);
 

@@ -109,10 +109,10 @@ namespace ReactUnity.Types
                 if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
                 if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
                 if (value is UnityEngine.Object o) return new ImageReference(AssetReferenceType.Object, o);
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {

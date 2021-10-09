@@ -8,10 +8,10 @@ namespace ReactUnity.Converters
 
         public object Convert(object value)
         {
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return value;
             if (value.StartsWith("\"") && value.EndsWith("\"")) return value.Substring(1, value.Length - 2);

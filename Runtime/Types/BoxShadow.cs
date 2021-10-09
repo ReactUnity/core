@@ -24,10 +24,10 @@ namespace ReactUnity.Types
             {
                 if (value is BoxShadowList f) return f;
                 if (value is BoxShadow t) return new BoxShadowList(t);
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (string.IsNullOrWhiteSpace(value)) return null;
                 return new BoxShadowList(value);
@@ -80,12 +80,12 @@ namespace ReactUnity.Types
             Color color;
 
             if (lastIsNumber) color = Color.black;
-            else if (ColorParser.FromString(last) is Color c) color = c;
+            else if (ColorParser.Parse(last) is Color c) color = c;
             else color = Color.black;
 
             if (!lastIsNumber) splits.RemoveAt(splits.Count - 1);
 
-            var lengths = splits.Select(x => FloatParser.FromString(x)).ToList();
+            var lengths = splits.Select(x => FloatParser.Parse(x)).ToList();
 
             if (lengths.Count < 2 || lengths.Count > 6 || lengths.Count == 5 || lengths.Any(x => x.Equals(CssKeyword.Invalid)))
             {

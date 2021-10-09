@@ -7,6 +7,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class BorderShorthand : StyleShorthand
     {
+        private static GeneralConverter BorderStyleConverter = AllConverters.Get<BorderStyle>();
+
         public enum BorderSide
         {
             All = 0,
@@ -93,7 +95,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!sizeSet)
                 {
-                    var val = AllConverters.LengthConverter.Convert(split);
+                    var val = AllConverters.LengthConverter.Parse(split);
 
                     if (val is float v)
                     {
@@ -105,7 +107,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!styleSet)
                 {
-                    var val = AllConverters.Get<BorderStyle>().Convert(split);
+                    var val = BorderStyleConverter.Parse(split);
 
                     if (val is BorderStyle v)
                     {
@@ -117,7 +119,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!colorSet)
                 {
-                    var val = AllConverters.ColorConverter.Convert(split);
+                    var val = AllConverters.ColorConverter.Parse(split);
 
                     if (val is Color v)
                     {

@@ -19,9 +19,9 @@ namespace ReactUnity.Styling.Shorthands
             if (splits.Count != 1) return null;
 
             var val = splits[0];
-            var converted = AllConverters.GeneralConverter.Convert(val);
+            var converted = AllConverters.GeneralConverter.Parse(val);
 
-            if (converted is CssKeyword k)
+            if (converted is CssKeyword k && k != CssKeyword.Invalid)
             {
                 foreach (var item in ModifiedProperties)
                 {

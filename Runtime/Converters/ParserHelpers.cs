@@ -119,13 +119,13 @@ namespace ReactUnity.Converters
 
             for (int i = 0; i < 3; i++)
             {
-                if (AllConverters.ColorValueConverter.Convert(vals[i]) is float v) list[i] = v;
+                if (AllConverters.ColorValueConverter.Parse(vals[i]) is float v) list[i] = v;
                 else return null;
             }
 
             if (vals.Length == 4)
             {
-                if (AllConverters.PercentageConverter.Convert(vals[3]) is float alpha) list[3] = alpha;
+                if (AllConverters.PercentageConverter.Parse(vals[3]) is float alpha) list[3] = alpha;
                 else return null;
             }
 

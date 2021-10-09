@@ -38,7 +38,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!sizeSet)
                 {
-                    var val = AllConverters.LengthConverter.Convert(split);
+                    var val = AllConverters.LengthConverter.Parse(split);
 
                     if (val is float v)
                     {
@@ -50,7 +50,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!colorSet)
                 {
-                    var val = AllConverters.ColorConverter.Convert(split);
+                    var val = AllConverters.ColorConverter.Parse(split);
 
                     if (val is Color v)
                     {

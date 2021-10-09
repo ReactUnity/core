@@ -20,7 +20,7 @@ namespace ReactUnity.Styling.Functions
             var angle = 180f;
             var isRepeating = name.StartsWith("repeating-");
 
-            var cAngle = AllConverters.AngleConverter.Convert(first);
+            var cAngle = AllConverters.AngleConverter.Parse(first);
 
             if (cAngle is float fAngle)
             {
@@ -42,13 +42,13 @@ namespace ReactUnity.Styling.Functions
         {
             if (angular)
             {
-                var ang = AllConverters.AngleConverter.Convert(val);
+                var ang = AllConverters.AngleConverter.Parse(val);
 
                 if (ang is float f) return YogaValue.Percent(f * 100f / 360f);
                 return null;
             }
 
-            return AllConverters.YogaValueConverter.Convert(val);
+            return AllConverters.YogaValueConverter.Parse(val);
         }
 
         internal static List<BaseGradient.ColorKey> GetColorKeys(string[] args, int startIndex, bool angular)
@@ -62,7 +62,7 @@ namespace ReactUnity.Styling.Functions
 
                 var p0 = parts[0];
 
-                var p0c = AllConverters.ColorConverter.Convert(p0);
+                var p0c = AllConverters.ColorConverter.Parse(p0);
 
                 if (p0c is Color c)
                 {

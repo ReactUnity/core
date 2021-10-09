@@ -57,8 +57,8 @@ namespace ReactUnity.StyleEngine
                 }
                 else if (child is IFontFaceRule ffr)
                 {
-                    FontFamilies[AllConverters.StringConverter.Convert(ffr.Family) as string] =
-                        AllConverters.FontReferenceConverter.Convert(ffr.Source) as FontReference;
+                    FontFamilies[AllConverters.StringConverter.Parse(ffr.Family) as string] =
+                        AllConverters.FontReferenceConverter.Parse(ffr.Source) as FontReference;
                 }
                 else if (child is StyleRule str)
                 {

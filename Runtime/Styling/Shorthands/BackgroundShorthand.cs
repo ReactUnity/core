@@ -29,7 +29,7 @@ namespace ReactUnity.Styling.Shorthands
 
             var last = commas[count - 1];
 
-            if (AllConverters.ColorConverter.Convert(last) is Color cv)
+            if (AllConverters.ColorConverter.Parse(last) is Color cv)
             {
                 color = cv;
                 colorSet = true;
@@ -58,7 +58,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!imageSet)
                     {
-                        var val = AllConverters.ImageDefinitionConverter.Convert(split);
+                        var val = AllConverters.ImageDefinitionConverter.Parse(split);
 
                         if (val is ImageDefinition v)
                         {
@@ -70,7 +70,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posXSet)
                     {
-                        var val = AllConverters.YogaValueConverter.Convert(split);
+                        var val = AllConverters.YogaValueConverter.Parse(split);
 
                         if (val is YogaValue v)
                         {
@@ -83,7 +83,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posYSet)
                     {
-                        var val = AllConverters.YogaValueConverter.Convert(split);
+                        var val = AllConverters.YogaValueConverter.Parse(split);
 
                         if (val is YogaValue v)
                         {
@@ -95,7 +95,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posXSet && !posYSet)
                     {
-                        var val = AllConverters.YogaValue2Converter.Convert(split);
+                        var val = AllConverters.YogaValue2Converter.Parse(split);
 
                         if (val is YogaValue2 v)
                         {
@@ -108,7 +108,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (isLast && !colorSet)
                     {
-                        var val = AllConverters.ColorConverter.Convert(split);
+                        var val = AllConverters.ColorConverter.Parse(split);
 
                         if (val is Color c)
                         {

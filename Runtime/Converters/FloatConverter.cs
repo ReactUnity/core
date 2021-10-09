@@ -38,11 +38,11 @@ namespace ReactUnity.Converters
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-        public virtual object FromString(string value)
+        public virtual object Parse(string value)
         {
             if (value == null) return CssKeyword.Invalid;
             if (SpecialValues != null && SpecialValues.TryGetValue(value, out var val)) return val;
-            return Parse(value);
+            return ParseVal(value);
         }
 
         public object Convert(object value)
@@ -50,11 +50,14 @@ namespace ReactUnity.Converters
             if (value is float f) return f;
             if (value is int i) return (float) i;
             if (value is double d) return (float) d;
-            return FromString(value?.ToString());
+            if (value is string s) return Parse(s);
+            return CssKeyword.Invalid;
         }
 
-        private object Parse(string value)
+        private object ParseVal(string value)
         {
+            if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
+
             var i = 0;
 
             var numberPart = new StringBuilder();

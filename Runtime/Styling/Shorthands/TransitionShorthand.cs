@@ -7,6 +7,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class TransitionShorthand : StyleShorthand
     {
+        private static GeneralConverter PlayStateConverter = AllConverters.Get<AnimationPlayState>();
+
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
             StyleProperties.transitionProperty,
@@ -47,7 +49,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var dur = AllConverters.DurationConverter.Convert(split);
+                    var dur = AllConverters.DurationConverter.Parse(split);
 
                     if (dur is float f)
                     {
@@ -68,7 +70,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var ps = !playStateSet ? AllConverters.Get<AnimationPlayState>().Convert(split) : null;
+                    var ps = !playStateSet ? PlayStateConverter.Parse(split) : null;
 
                     if (ps is AnimationPlayState psd)
                     {
@@ -77,7 +79,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Convert(split) : null;
+                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Parse(split) : null;
 
                     if (tm is TimingFunction tmf)
                     {
@@ -89,7 +91,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!nameSet)
                     {
-                        var nm = AllConverters.TransitionPropertyConverter.Convert(split);
+                        var nm = AllConverters.TransitionPropertyConverter.Parse(split);
 
                         if (nm is TransitionProperty tp)
                         {

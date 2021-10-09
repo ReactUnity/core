@@ -32,7 +32,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!imageSet)
                 {
-                    var val = AllConverters.ImageReferenceConverter.Convert(split);
+                    var val = AllConverters.ImageReferenceConverter.Parse(split);
 
                     if (val is ImageReference v)
                     {

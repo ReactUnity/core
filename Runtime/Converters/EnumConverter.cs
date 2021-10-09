@@ -118,7 +118,7 @@ namespace ReactUnity.Converters
 
         public object Convert(object value) => Convert(EnumType, value, AllowFlags);
 
-        public object FromString(string value) => FromString(EnumType, value, AllowFlags);
+        public object Parse(string value) => FromString(EnumType, value, AllowFlags);
 
         public bool CanHandleKeyword(CssKeyword keyword) => Enum.IsDefined(EnumType, keyword.ToString());
     }

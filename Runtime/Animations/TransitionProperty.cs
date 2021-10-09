@@ -29,8 +29,8 @@ namespace ReactUnity.Animations
         public class Converter : IStyleParser, IStyleConverter
         {
             public bool CanHandleKeyword(CssKeyword keyword) => false;
-            public object Convert(object value) => FromString(value?.ToString());
-            public object FromString(string value) => new TransitionProperty(value);
+            public object Convert(object value) => Parse(value?.ToString());
+            public object Parse(string value) => new TransitionProperty(value);
         }
     }
 }

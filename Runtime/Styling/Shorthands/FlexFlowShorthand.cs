@@ -6,6 +6,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class FlexFlowShorthand : StyleShorthand
     {
+        private static GeneralConverter DirectionConverter = AllConverters.Get<YogaFlexDirection>();
+        private static GeneralConverter WrapConverter = AllConverters.Get<YogaWrap>();
         public override List<IStyleProperty> ModifiedProperties { get; }
 
         public FlexFlowShorthand(string name) : base(name)
@@ -38,7 +40,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!dirSet)
                 {
-                    var val = AllConverters.Get<YogaFlexDirection>().Convert(split);
+                    var val = DirectionConverter.Parse(split);
 
                     if (val is YogaFlexDirection v)
                     {
@@ -50,7 +52,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!wrapSet)
                 {
-                    var val = AllConverters.Get<YogaWrap>().Convert(split);
+                    var val = WrapConverter.Parse(split);
 
                     if (val is YogaWrap v)
                     {

@@ -11,8 +11,8 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args)
         {
-            var a1 = AllConverters.IntConverter.Convert(args[0]);
-            var a2 = args.Length > 1 ? StepConverter.Convert(args[1]) : StepsJumpMode.End;
+            var a1 = AllConverters.IntConverter.Parse(args[0]);
+            var a2 = args.Length > 1 ? StepConverter.Parse(args[1]) : StepsJumpMode.End;
 
             var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
 

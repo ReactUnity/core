@@ -33,7 +33,7 @@ namespace ReactUnity.Styling.Functions
 
                     sp = firstSplit[i];
 
-                    var cAt = AllConverters.YogaValue2Converter.Convert(sp);
+                    var cAt = AllConverters.YogaValue2Converter.Parse(sp);
 
                     if (cAt is YogaValue2 cvAt)
                     {
@@ -52,7 +52,7 @@ namespace ReactUnity.Styling.Functions
 
                     sp = firstSplit[i];
 
-                    var cAt = AllConverters.AngleConverter.Convert(sp);
+                    var cAt = AllConverters.AngleConverter.Parse(sp);
 
                     if (cAt is float cvAt)
                     {

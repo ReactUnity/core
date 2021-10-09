@@ -166,7 +166,7 @@ namespace ReactUnity.Converters
         };
 
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
@@ -179,7 +179,7 @@ namespace ReactUnity.Converters
         public object Convert(object value)
         {
             if (value == null) return CssKeyword.Invalid;
-            if (value is string s) return FromString(s);
+            if (value is string s) return Parse(s);
             if (value is Color c) return c;
 
             if (value is double d) value = (float) d;

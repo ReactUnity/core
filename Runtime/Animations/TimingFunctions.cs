@@ -189,19 +189,17 @@ namespace ReactUnity.Animations
             public object Convert(object value)
             {
                 if (value is TimingFunction f) return f;
-
                 var type = TypeConverter.Convert(value);
-
-                if (type is TimingFunctionType tt)
-                    return Get(tt);
-
-                return FromString(value?.ToString());
+                if (type is TimingFunctionType tt) return Get(tt);
+                return CssKeyword.Invalid;
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
-                return null;
+                var type = TypeConverter.Parse(value);
+                if (type is TimingFunctionType tt) return Get(tt);
+                return CssKeyword.Invalid;
             }
         }
     }

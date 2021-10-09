@@ -25,19 +25,20 @@ namespace ReactUnity.Converters
 
         public object Convert(object value)
         {
+            if (value is string s) return Parse(s);
             if (value is IComputedValue) return value;
             var res = baseConverter?.Convert(value);
             if (res != null && !Equals(res, CssKeyword.Invalid)) return res;
-            if (value is string s) return FromString(s);
             return CssKeyword.Invalid;
         }
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             var keyword = RuleHelpers.GetCssKeyword(value);
             if (keyword == CssKeyword.CurrentColor) return ComputedCurrentColor.Instance;
-            if (keyword != CssKeyword.NoKeyword) return keyword;
+            if (keyword != CssKeyword.NoKeyword && keyword != CssKeyword.Invalid) return keyword;
+            if (baseConverter != null) return baseConverter?.Parse(value);
             return CssKeyword.Invalid;
         }
     }

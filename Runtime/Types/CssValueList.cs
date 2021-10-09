@@ -37,9 +37,9 @@ namespace ReactUnity.Types
                         return new CssValueList<T>(t);
                     }
                 }
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 var splits = ParserHelpers.Split(value, ',');
 
@@ -48,7 +48,7 @@ namespace ReactUnity.Types
                 for (int i = 0; i < splits.Count; i++)
                 {
                     var split = splits[i];
-                    var item = BaseConverter.Convert(split);
+                    var item = BaseConverter.Parse(split);
                     if (item is T it)
                     {
                         items[i] = it;

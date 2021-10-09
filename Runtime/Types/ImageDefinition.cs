@@ -41,27 +41,26 @@ namespace ReactUnity.Types
 
             public object Convert(object value)
             {
+                if (value is string s) return Parse(value?.ToString());
+
                 if (value == null || Equals(value, CssKeyword.None)) return None;
-
-                if (value is string s)
-                {
-                    var srs = FromString(value?.ToString());
-
-                    if (!Equals(srs, CssKeyword.Invalid)) return srs;
-                }
 
                 var ir = ImageConverter.Convert(value);
                 if (ir is ImageReference irr) return new UrlImageDefinition(irr);
 
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {
                     if (result is BaseGradient u) return new GradientImageDefinition(u);
                 }
+
+                var ir = ImageConverter.Parse(value);
+                if (ir is ImageReference irr) return new UrlImageDefinition(irr);
+
                 return CssKeyword.Invalid;
             }
         }

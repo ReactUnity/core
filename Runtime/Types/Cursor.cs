@@ -36,10 +36,10 @@ namespace ReactUnity.Types
                 if (value is Cursor t) return new CursorList(t);
                 if (Equals(value, CssKeyword.Default)) return Default;
                 if (Equals(value, CssKeyword.None)) return None;
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (string.IsNullOrWhiteSpace(value)) return null;
                 return new CursorList(value);
@@ -80,7 +80,7 @@ namespace ReactUnity.Types
 
             if (splits.Count == 1)
             {
-                Image = AllConverters.ImageReferenceConverter.Convert(splits[0]) as ImageReference;
+                Image = AllConverters.ImageReferenceConverter.Parse(splits[0]) as ImageReference;
                 if (Image == null || Image.Type == AssetReferenceType.Auto)
                 {
                     Image = null;
@@ -89,7 +89,7 @@ namespace ReactUnity.Types
             }
             else if (splits.Count == 3)
             {
-                Image = AllConverters.ImageReferenceConverter.Convert(splits[0]) as ImageReference;
+                Image = AllConverters.ImageReferenceConverter.Parse(splits[0]) as ImageReference;
 
                 if (Image == null || Image.Type == AssetReferenceType.Auto)
                 {
@@ -97,8 +97,8 @@ namespace ReactUnity.Types
                     return;
                 }
 
-                var x = AllConverters.FloatConverter.Convert(splits[1]);
-                var y = AllConverters.FloatConverter.Convert(splits[2]);
+                var x = AllConverters.FloatConverter.Parse(splits[1]);
+                var y = AllConverters.FloatConverter.Parse(splits[2]);
 
                 if (x is float hx && y is float hy) Offset = new Vector2(hx, hy);
                 else Valid = false;

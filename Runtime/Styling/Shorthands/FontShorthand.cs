@@ -7,6 +7,9 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class FontShorthand : StyleShorthand
     {
+        private static GeneralConverter WeightConverter = AllConverters.Get<FontWeight>();
+        private static GeneralConverter StylesConverter = AllConverters.Get<FontStyles>();
+
         public override List<IStyleProperty> ModifiedProperties { get; }
 
         public FontShorthand(string name) : base(name)
@@ -50,7 +53,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!weightSet)
                 {
-                    var val = AllConverters.Get<FontWeight>().Convert(split);
+                    var val = WeightConverter.Parse(split);
 
                     if (val is FontWeight v)
                     {
@@ -62,7 +65,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!styleSet)
                 {
-                    var val = AllConverters.Get<FontStyles>().Convert(split);
+                    var val = StylesConverter.Parse(split);
 
                     if (val is FontStyles v)
                     {
@@ -76,7 +79,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var slashSplit = split.Split('/');
 
-                    var val = AllConverters.LengthConverter.Convert(slashSplit[0]);
+                    var val = AllConverters.LengthConverter.Parse(slashSplit[0]);
 
                     if (!Equals(val, CssKeyword.Invalid))
                     {
@@ -97,7 +100,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            var lh = AllConverters.LengthConverter.Convert(lineSplit);
+                            var lh = AllConverters.LengthConverter.Parse(lineSplit);
 
                             if (!Equals(lh, CssKeyword.Invalid))
                             {
@@ -113,7 +116,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!familySet)
                 {
-                    var val = AllConverters.FontReferenceConverter.Convert(split);
+                    var val = AllConverters.FontReferenceConverter.Parse(split);
 
                     if (val is FontReference v)
                     {

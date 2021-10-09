@@ -19,10 +19,10 @@ namespace ReactUnity.Converters
         public object Convert(object value)
         {
             if (value is bool b) return b;
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (truthyValues.Contains(value)) return true;
             if (falsyValues.Contains(value)) return false;

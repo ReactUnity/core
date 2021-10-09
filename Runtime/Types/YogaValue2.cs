@@ -88,7 +88,7 @@ namespace ReactUnity.Types
 
             public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-            public object FromString(string value)
+            public object Parse(string value)
             {
                 if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
 
@@ -99,14 +99,14 @@ namespace ReactUnity.Types
 
                 if (values.Length == 1)
                 {
-                    var pr = YogaValueParser.Convert(values[0]);
+                    var pr = YogaValueParser.Parse(values[0]);
                     if (pr is YogaValue fl) return new YogaValue2(fl, fl);
                 }
 
                 if (values.Length == 2)
                 {
-                    var pr1 = YogaValueParser.Convert(values[0]);
-                    var pr2 = YogaValueParser.Convert(values[1]);
+                    var pr1 = YogaValueParser.Parse(values[0]);
+                    var pr2 = YogaValueParser.Parse(values[1]);
                     if (pr1 is YogaValue fl1)
                         if (pr2 is YogaValue fl2)
                             return new YogaValue2(fl1, fl2);
@@ -124,7 +124,7 @@ namespace ReactUnity.Types
                 if (value is YogaValue v) return new YogaValue2(v, v);
                 if (value is Vector2 v2) return new YogaValue2(v2.x, v2.y);
                 if (!(value is string) && (value is IEnumerable e)) return FromArray(e);
-                return FromString(value?.ToString());
+                return Parse(value?.ToString());
             }
 
             private object FromArray(IEnumerable obj)

@@ -16,18 +16,18 @@ namespace ReactUnity.Styling.Functions
 
             var vals = new float[parsedArgs.Length];
 
-            if (AllConverters.AngleConverter.Convert(parsedArgs[0]) is float h) vals[0] = h;
+            if (AllConverters.AngleConverter.Parse(parsedArgs[0]) is float h) vals[0] = h;
             else return null;
 
-            if (AllConverters.PercentageConverter.Convert(parsedArgs[1]) is float s) vals[1] = s;
+            if (AllConverters.PercentageConverter.Parse(parsedArgs[1]) is float s) vals[1] = s;
             else return null;
 
-            if (AllConverters.PercentageConverter.Convert(parsedArgs[2]) is float l) vals[2] = l;
+            if (AllConverters.PercentageConverter.Parse(parsedArgs[2]) is float l) vals[2] = l;
             else return null;
 
             if (parsedArgs.Length == 4)
             {
-                if (AllConverters.PercentageConverter.Convert(parsedArgs[3]) is float alpha) vals[3] = alpha;
+                if (AllConverters.PercentageConverter.Parse(parsedArgs[3]) is float alpha) vals[3] = alpha;
                 else return null;
             }
 

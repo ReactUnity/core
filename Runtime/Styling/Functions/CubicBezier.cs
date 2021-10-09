@@ -9,10 +9,10 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args)
         {
-            var a1 = AllConverters.FloatConverter.Convert(args[0]);
-            var a2 = AllConverters.FloatConverter.Convert(args[1]);
-            var a3 = AllConverters.FloatConverter.Convert(args[2]);
-            var a4 = AllConverters.FloatConverter.Convert(args[3]);
+            var a1 = AllConverters.FloatConverter.Parse(args[0]);
+            var a2 = AllConverters.FloatConverter.Parse(args[1]);
+            var a3 = AllConverters.FloatConverter.Parse(args[2]);
+            var a4 = AllConverters.FloatConverter.Parse(args[3]);
 
             if (a1 is float f1 &&
                 a2 is float f2 &&

@@ -68,16 +68,19 @@ namespace ReactUnity.Converters
             { typeof(ImageDefinition), ImageDefinitionConverter },
         };
 
-        public static IStyleConverter Get<T>() => Get(typeof(T));
+        public static GeneralConverter Get<T>() => Get(typeof(T));
 
-        public static IStyleConverter Get(Type type)
+        public static GeneralConverter Get(Type type)
         {
             var hasValue = Map.TryGetValue(type, out var converter);
 
-            if (!hasValue && type.IsEnum)
-                converter = Map[type] = new EnumConverter(type, true);
+            if (converter is GeneralConverter gc) return gc;
 
-            return new GeneralConverter(converter);
+            if (!hasValue && type.IsEnum)
+                converter = new EnumConverter(type, true);
+
+            Map[type] = gc = new GeneralConverter(converter);
+            return gc;
         }
     }
 }

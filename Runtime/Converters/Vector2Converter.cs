@@ -12,7 +12,7 @@ namespace ReactUnity.Converters
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
 
@@ -23,14 +23,14 @@ namespace ReactUnity.Converters
 
             if (values.Length == 1)
             {
-                var pr = FloatParser.Convert(values[0]);
+                var pr = FloatParser.Parse(values[0]);
                 if (pr is float fl) return new Vector2(fl, fl);
             }
 
             if (values.Length == 2)
             {
-                var pr1 = FloatParser.Convert(values[0]);
-                var pr2 = FloatParser.Convert(values[1]);
+                var pr1 = FloatParser.Parse(values[0]);
+                var pr2 = FloatParser.Parse(values[1]);
                 if (pr1 is float fl1)
                     if (pr2 is float fl2)
                         return new Vector2(fl1, fl2);
@@ -48,7 +48,7 @@ namespace ReactUnity.Converters
             if (value is float f) return new Vector2(f, f);
             if (value is int i) return new Vector2(i, i);
             if (!(value is string) && (value is IEnumerable e)) return FromArray(e);
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
 
         private object FromArray(IEnumerable obj)

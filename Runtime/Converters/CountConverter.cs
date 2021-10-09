@@ -24,10 +24,10 @@ namespace ReactUnity.Converters
             return value;
         }
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (AllowInfinite && value == "infinite") return InfiniteValue;
-            var pr = FloatConverter.FromString(value);
+            var pr = FloatConverter.Parse(value);
             if (pr is float f)
             {
                 if (Mathf.Abs(f % 1) < Mathf.Epsilon || AllowFloats)
@@ -43,7 +43,7 @@ namespace ReactUnity.Converters
                 return Validate(Mathf.RoundToInt(f));
             if (value is double d && (d % 1 == 0 || AllowFloats))
                 return Validate((int) Math.Round(d));
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
     }
 }

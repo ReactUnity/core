@@ -40,7 +40,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var it = AllConverters.IterationCountConverter.Convert(split);
+                    var it = AllConverters.IterationCountConverter.Parse(split);
 
                     if (it is int fcount)
                     {
@@ -53,7 +53,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var dur = AllConverters.DurationConverter.Convert(split);
+                    var dur = AllConverters.DurationConverter.Parse(split);
 
                     if (dur is float f)
                     {
@@ -71,7 +71,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!clipSet)
                     {
-                        clips[ci] = AllConverters.AudioReferenceConverter.Convert(split) as AudioReference;
+                        clips[ci] = AllConverters.AudioReferenceConverter.Parse(split) as AudioReference;
                         clipSet = true;
                         continue;
                     }

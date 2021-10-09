@@ -13,10 +13,10 @@ namespace ReactUnity.Converters
         public object Convert(object value)
         {
             if (value is Url u) return u;
-            return FromString(value?.ToString());
+            return Parse(value?.ToString());
         }
 
-        public object FromString(string value)
+        public object Parse(string value)
         {
             if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
             {

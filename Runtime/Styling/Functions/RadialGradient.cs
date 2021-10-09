@@ -39,7 +39,7 @@ namespace ReactUnity.Styling.Functions
 
                     sp = string.Join(" ", firstSplit.ToArray(), i, firstSplit.Count - i);
 
-                    var cAt = AllConverters.YogaValue2Converter.Convert(sp);
+                    var cAt = AllConverters.YogaValue2Converter.Parse(sp);
 
                     if (cAt is YogaValue2 cvAt)
                     {
@@ -51,7 +51,7 @@ namespace ReactUnity.Styling.Functions
                     break;
                 }
 
-                var shp = ShapeConverter.Convert(sp);
+                var shp = ShapeConverter.Parse(sp);
 
                 if (shp is RadialGradientShape shpv)
                 {
@@ -60,7 +60,7 @@ namespace ReactUnity.Styling.Functions
                     continue;
                 }
 
-                var sz = SizeHintConverter.Convert(sp);
+                var sz = SizeHintConverter.Parse(sp);
 
                 if (sz is RadialGradientSizeHint szv)
                 {
@@ -69,7 +69,7 @@ namespace ReactUnity.Styling.Functions
                     continue;
                 }
 
-                var rd = YogaValueConverter.Convert(sp);
+                var rd = YogaValueConverter.Parse(sp);
 
                 if (rd is YogaValue rdv)
                 {
