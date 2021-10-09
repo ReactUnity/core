@@ -368,6 +368,11 @@ namespace ReactUnity.UIToolkit
             return MouseCaptureController.HasMouseCapture(TargetElement);
         }
 
+        public override void UpdateOrder(int prev, int current)
+        {
+            // TODO: implement order
+        }
+
         public class UITClassList : ClassList
         {
             private readonly IUIToolkitComponent<T> Component;

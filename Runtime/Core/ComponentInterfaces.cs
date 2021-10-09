@@ -30,6 +30,8 @@ namespace ReactUnity
         ClassList ClassList { get; }
         StateStyles StateStyles { get; }
         WatchableObjectRecord Data { get; }
+        int ParentIndex { get; }
+        int CurrentOrder { get; }
 
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);

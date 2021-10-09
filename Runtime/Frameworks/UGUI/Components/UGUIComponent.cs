@@ -450,6 +450,52 @@ namespace ReactUnity.UGUI
             }
             return false;
         }
+
+        public override void UpdateOrder(int prev, int current)
+        {
+            var siblings = Parent.Layout;
+            var count = siblings.Count;
+            var currentIndex = -1;
+            var layout = Layout;
+
+            for (int i = 0; i < count; i++)
+            {
+                var sb = siblings[i];
+
+                if (sb == layout)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            var expectedIndex = currentIndex;
+
+            if (current > prev)
+            {
+                for (int i = currentIndex + 1; i < count; i++)
+                {
+                    var sb = siblings[i].Data as IReactComponent;
+                    if (sb.CurrentOrder > current || (sb.CurrentOrder == current && sb.ParentIndex > ParentIndex)) break;
+                    expectedIndex = i;
+                }
+            }
+            else
+            {
+                for (int i = currentIndex - 1; i >= 0; i--)
+                {
+                    var sb = siblings[i].Data as IReactComponent;
+                    if (sb.CurrentOrder < current || (sb.CurrentOrder == current && sb.ParentIndex < ParentIndex)) break;
+                    expectedIndex = i;
+                }
+            }
+
+            if (expectedIndex != currentIndex)
+            {
+                siblings.RemoveAt(currentIndex);
+                siblings.Insert(expectedIndex, layout);
+            }
+        }
         #endregion
     }
 }

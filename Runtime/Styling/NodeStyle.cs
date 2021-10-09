@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
 
         #region Set/Get
 
+        public int order => GetStyleValue(LayoutProperties.Order);
         public float opacity => GetStyleValue(StyleProperties.opacity);
         public int zIndex => GetStyleValue(StyleProperties.zIndex);
         public bool visibility => GetStyleValue(StyleProperties.visibility);

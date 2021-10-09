@@ -26,6 +26,8 @@ namespace ReactUnity
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
 
+        public int ParentIndex { get; protected set; } = -1;
+        public int CurrentOrder { get; protected set; } = 0;
         public bool Entering { get; private set; }
         public bool Leaving { get; private set; }
         public bool Destroyed { get; private set; }
@@ -90,7 +92,11 @@ namespace ReactUnity
             Data.changed += DataChanged;
             ClassList = new ClassList(this);
 
-            if (context.CalculatesLayout) Layout = new YogaNode();
+            if (context.CalculatesLayout)
+            {
+                Layout = new YogaNode();
+                Layout.Data = this;
+            }
 
             StateStyles = new StateStyles(this);
             StateStyles.StartState("enter");
@@ -185,6 +191,7 @@ namespace ReactUnity
             {
                 Parent.UnregisterChild(this);
                 Parent.MarkStyleUpdateWithSiblings(true);
+                ParentIndex = -1;
             }
 
             Parent = newParent;
@@ -195,14 +202,20 @@ namespace ReactUnity
 
             if (relativeTo == null)
             {
+                ParentIndex = newParent.Children.Count;
                 newParent.RegisterChild(this);
             }
             else
             {
-                var ind = newParent.Children.IndexOf(relativeTo);
+                var ind = relativeTo.ParentIndex;
                 if (insertAfter) ind++;
-
                 newParent.RegisterChild(this, ind);
+
+                ParentIndex = ind;
+                for (int i = ind + 1; i < newParent.Children.Count; i++)
+                {
+                    if (newParent.Children[i] is BaseReactComponent<ContextType> br) br.ParentIndex++;
+                }
             }
 
             StyleState.SetParent(newParent.StyleState);
@@ -345,6 +358,7 @@ namespace ReactUnity
 
         protected abstract void ApplyStylesSelf();
         protected abstract void ApplyLayoutStylesSelf();
+        public abstract void UpdateOrder(int prev, int current);
 
         public void ApplyStyles()
         {
@@ -391,6 +405,11 @@ namespace ReactUnity
         public void ApplyLayoutStyles()
         {
             markedForLayoutApply = false;
+
+            var currentOrder = ComputedStyle.order;
+            if (CurrentOrder != currentOrder) UpdateOrder(CurrentOrder, currentOrder);
+            CurrentOrder = currentOrder;
+
             ApplyLayoutStylesSelf();
         }
 
