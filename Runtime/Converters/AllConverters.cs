@@ -30,6 +30,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter IterationCountConverter = new CountConverter();
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
+        static public IStyleConverter BoxShadowConverter = new BoxShadow.Converter();
         static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
         static public IStyleConverter ImageSourceConverter = new ImageReference.Converter(true);
         static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
@@ -38,7 +39,6 @@ namespace ReactUnity.Converters
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
         static public IStyleConverter TransitionPropertyConverter = new TransitionProperty.Converter();
         static public IStyleConverter CursorListConverter = new CursorList.Converter();
-        static public IStyleConverter BoxShadowListConverter = new BoxShadowList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
         static public IStyleConverter FontWeightConverter = new EnumConverter<TMPro.FontWeight>(false, false);
         static public IStyleConverter ImageDefinitionConverter = new ImageDefinition.Converter();
@@ -58,10 +58,10 @@ namespace ReactUnity.Converters
             { typeof(Color), ColorConverter },
             { typeof(bool), BoolConverter },
             { typeof(Url), UrlConverter },
+            { typeof(BoxShadow), BoxShadowConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(CursorList), CursorListConverter},
-            { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(TimingFunction), TimingFunctionConverter },
             { typeof(TMPro.FontWeight), FontWeightConverter },
             { typeof(TransitionProperty), TransitionPropertyConverter },

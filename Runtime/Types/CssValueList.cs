@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
@@ -8,7 +8,8 @@ namespace ReactUnity.Types
 {
     public interface ICssValueList<T>
     {
-        T Get(int index, T defaultValue = default);
+        T Get(int index);
+        T Get(int index, T defaultValue);
 
         int Count { get; }
         bool Any { get; }
@@ -16,28 +17,50 @@ namespace ReactUnity.Types
 
     public class CssValueList<T> : List<T>, ICssValueList<T>
     {
-        static public CssValueList<T> Empty = new CssValueList<T>();
+        public static CssValueList<T> Empty = new CssValueList<T>();
         public bool Any => Count > 0;
 
-        public CssValueList() { }
-        public CssValueList(T item) : base(new[] { item }) { }
-        public CssValueList(T[] items) : base(items ?? new T[0]) { }
+        public virtual T DefaultValue { get; }
 
-        public T Get(int index, T defaultValue = default) => Count == 0 ? defaultValue : this[index % Count];
+        public CssValueList() { }
+
+        public CssValueList(T item, T defaultValue = default) : base(new[] { item })
+        {
+            DefaultValue = defaultValue;
+        }
+
+        public CssValueList(T[] items, T defaultValue = default) : base(items ?? new T[0])
+        {
+            DefaultValue = defaultValue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int index) => Count == 0 ? DefaultValue : this[index % Count];
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int index, T defaultValue) => Count == 0 ? defaultValue : this[index % Count];
 
         public class Converter : IStyleParser, IStyleConverter
         {
             IStyleConverter BaseConverter;
 
+            CssValueList<T> DefaultList;
+
             public Converter(IStyleConverter baseConverter = null)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();
+                DefaultList = Empty;
+            }
+
+            public Converter(IStyleConverter baseConverter = null, T emptyValue = default)
+            {
+                BaseConverter = baseConverter ?? AllConverters.Get<T>();
+                DefaultList = new CssValueList<T>(new T[0], emptyValue);
             }
 
             public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
             public object Convert(object value)
             {
-                if (value == null || Equals(value, CssKeyword.None)) return Empty;
+                if (value == null || Equals(value, CssKeyword.None)) return DefaultList;
                 if (value is CssValueList<T>) return value;
 
                 if (!(value is string))
@@ -53,6 +76,8 @@ namespace ReactUnity.Types
             }
             public object Parse(string value)
             {
+                if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
+
                 var splits = ParserHelpers.Split(value, ',');
 
                 var items = new T[splits.Count];
@@ -92,9 +117,10 @@ namespace ReactUnity.Types
             Ratio = ratio;
         }
 
-        public T Get(int index, T defaultValue = default)
-        {
-            return Interpolater.ForceTypedInterpolate<T>(From.Get(index, defaultValue), To.Get(index, defaultValue), Ratio);
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int index) => Interpolater.ForceTypedInterpolate<T>(From.Get(index), To.Get(index), Ratio);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int index, T defaultValue) => Interpolater.ForceTypedInterpolate<T>(From.Get(index, defaultValue), To.Get(index, defaultValue), Ratio);
     }
 }

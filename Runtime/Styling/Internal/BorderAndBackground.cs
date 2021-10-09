@@ -186,9 +186,14 @@ namespace ReactUnity.Styling.Internal
 
         private void SetBackground(Color color, ICssValueList<ImageDefinition> images, ICssValueList<YogaValue2> positions, ICssValueList<YogaValue2> sizes)
         {
-            if (BackgroundGraphics == null) BackgroundGraphics = new List<BackgroundImage>();
-
             var validCount = images.Count;
+
+            if (BackgroundGraphics == null)
+            {
+                if (validCount > 0) BackgroundGraphics = new List<BackgroundImage>();
+                else return;
+            }
+
             var diff = BackgroundGraphics.Count - validCount;
 
             if (diff > 0)
@@ -210,34 +215,25 @@ namespace ReactUnity.Styling.Internal
             }
 
 
-            for (int i = 0; i < images.Count; i++)
+            var len = BackgroundGraphics.Count;
+            for (int i = 0; i < len; i++)
             {
-                var sd = BackgroundGraphics[images.Count - 1 - i];
+                var sd = BackgroundGraphics[len - 1 - i];
                 sd.SetBackgroundColorAndImage(color, images.Get(i), blendMode);
                 sd.BackgroundPosition = positions.Get(i, YogaValue2.Undefined);
                 sd.BackgroundSize = sizes.Get(i, YogaValue2.Undefined);
             }
         }
 
-        private void SetBoxShadow(BoxShadowList shadows)
+        private void SetBoxShadow(ICssValueList<BoxShadow> shadows)
         {
-            var validCount = 0;
-
-            if (shadows != null)
-            {
-                for (int i = 0; i < shadows.Items.Length; i++)
-                {
-                    var shadow = shadows.Items[i];
-                    if (shadow.Valid) validCount++;
-                }
-            }
+            var validCount = shadows.Count;
 
             if (ShadowGraphics == null)
             {
                 if (validCount > 0) ShadowGraphics = new List<BoxShadowImage>();
                 else return;
             }
-
 
             var diff = ShadowGraphics.Count - validCount;
 
@@ -259,18 +255,11 @@ namespace ReactUnity.Styling.Internal
                 }
             }
 
-            if (validCount == 0) return;
-
-            var gIndex = 0;
-            var len = shadows.Items.Length;
+            var len = ShadowGraphics.Count;
             for (int i = 0; i < len; i++)
             {
-                var shadow = shadows.Items[len - 1 - i];
-                if (!shadow.Valid) continue;
-
-                BoxShadowImage g = ShadowGraphics[gIndex];
-                gIndex++;
-
+                var shadow = shadows.Get(i);
+                var g = ShadowGraphics[len - 1 - i];
                 var rt = g.rectTransform;
 
                 g.Shadow = shadow;
