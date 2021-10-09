@@ -62,26 +62,26 @@ namespace ReactUnity.Styling
         public ObjectFit objectFit => GetStyleValue(StyleProperties.objectFit);
         public YogaValue2 objectPosition => GetStyleValue(StyleProperties.objectPosition);
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
-        public CssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
-        public CssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
-        public CssValueList<YogaValue2> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
+        public ICssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
+        public ICssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
+        public ICssValueList<YogaValue2> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
-        public CssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
-        public CssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
-        public CssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
-        public CssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
-        public CssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
-        public CssValueList<float> animationDelay => GetStyleValue(StyleProperties.animationDelay);
-        public CssValueList<AnimationDirection> animationDirection => GetStyleValue(StyleProperties.animationDirection);
-        public CssValueList<float> animationDuration => GetStyleValue(StyleProperties.animationDuration);
-        public CssValueList<AnimationFillMode> animationFillMode => GetStyleValue(StyleProperties.animationFillMode);
-        public CssValueList<int> animationIterationCount => GetStyleValue(StyleProperties.animationIterationCount);
-        public CssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
-        public CssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
-        public CssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
-        public CssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
-        public CssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
-        public CssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
+        public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
+        public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
+        public ICssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
+        public ICssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
+        public ICssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
+        public ICssValueList<float> animationDelay => GetStyleValue(StyleProperties.animationDelay);
+        public ICssValueList<AnimationDirection> animationDirection => GetStyleValue(StyleProperties.animationDirection);
+        public ICssValueList<float> animationDuration => GetStyleValue(StyleProperties.animationDuration);
+        public ICssValueList<AnimationFillMode> animationFillMode => GetStyleValue(StyleProperties.animationFillMode);
+        public ICssValueList<int> animationIterationCount => GetStyleValue(StyleProperties.animationIterationCount);
+        public ICssValueList<string> animationName => GetStyleValue(StyleProperties.animationName);
+        public ICssValueList<AnimationPlayState> animationPlayState => GetStyleValue(StyleProperties.animationPlayState);
+        public ICssValueList<TimingFunction> animationTimingFunction => GetStyleValue(StyleProperties.animationTimingFunction);
+        public ICssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
+        public ICssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
+        public ICssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
 
         #endregion
 

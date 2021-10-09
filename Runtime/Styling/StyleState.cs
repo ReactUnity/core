@@ -83,17 +83,17 @@ namespace ReactUnity.Styling
 
 
         private Dictionary<string, TransitionState> propertyTransitionStates;
-        private CssValueList<float> activeTransitions;
+        private ICssValueList<float> activeTransitions;
         private bool transitionRunning;
 
 
         private Dictionary<string, AnimationState> runningAnimations;
-        private CssValueList<string> activeAnimations;
+        private ICssValueList<string> activeAnimations;
         private bool animationRunning;
 
 
         private AudioState[] audioStates;
-        private CssValueList<AudioReference> activeAudioList;
+        private ICssValueList<AudioReference> activeAudioList;
         private bool audioRunning;
         private float audioStartTime;
 
@@ -118,8 +118,8 @@ namespace ReactUnity.Styling
             var transition = Current.transitionDuration;
             var animation = Current.animationName;
 
-            var hasTransition = Current != Previous && (transition != null && transition.Any() && transition.Get(0) > 0);
-            var hasAnimation = Current != Previous && (animation != null && animation.Any());
+            var hasTransition = Current != Previous && (transition != null && transition.Any && transition.Get(0) > 0);
+            var hasAnimation = Current != Previous && (animation != null && animation.Any);
 
             if (!hasTransition) StopTransitions(true);
             if (!hasAnimation) StopAnimations(true);
@@ -160,7 +160,7 @@ namespace ReactUnity.Styling
 
         #region Transitions
 
-        private void StartTransitions(CssValueList<float> transition)
+        private void StartTransitions(ICssValueList<float> transition)
         {
             StopTransitions(true);
             propertyTransitionStates = new Dictionary<string, TransitionState>();
@@ -348,7 +348,7 @@ namespace ReactUnity.Styling
 
         #region Animations
 
-        private void StartAnimations(CssValueList<string> animation)
+        private void StartAnimations(ICssValueList<string> animation)
         {
             StopAnimations(false);
             activeAnimations = animation;
@@ -377,8 +377,16 @@ namespace ReactUnity.Styling
             for (int i = anims.Count - 1; i >= 0; i--)
             {
                 var ra = anims[i];
+                var exists = false;
 
-                if (activeAnimations == null || !activeAnimations.Any(x => x == ra.Key))
+                if (activeAnimations != null)
+                {
+                    var count = activeAnimations.Count;
+                    for (int j = 0; j < count; j++)
+                        exists = exists || (activeAnimations.Get(j) == ra.Key);
+                }
+
+                if (!exists)
                 {
                     if (!ra.Value.Ended) OnEvent?.Invoke("onAnimationCancel", ra.Value.CreateEvent());
                     runningAnimations.Remove(ra.Key);
@@ -584,7 +592,7 @@ namespace ReactUnity.Styling
             else if (activeAudioList != audio) StartAudio(audio);
         }
 
-        private void StartAudio(CssValueList<AudioReference> audio)
+        private void StartAudio(ICssValueList<AudioReference> audio)
         {
             StopAudio(true);
             activeAudioList = audio;

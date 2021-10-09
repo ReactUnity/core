@@ -184,7 +184,7 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        private void SetBackground(Color color, CssValueList<ImageDefinition> images, CssValueList<YogaValue2> positions, CssValueList<YogaValue2> sizes)
+        private void SetBackground(Color color, ICssValueList<ImageDefinition> images, ICssValueList<YogaValue2> positions, ICssValueList<YogaValue2> sizes)
         {
             if (BackgroundGraphics == null) BackgroundGraphics = new List<BackgroundImage>();
 

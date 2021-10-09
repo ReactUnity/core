@@ -1,17 +1,29 @@
+using System;
 using System.Collections.Generic;
+using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
 
 namespace ReactUnity.Types
 {
-    public class CssValueList<T> : List<T>
+    public interface ICssValueList<T>
+    {
+        T Get(int index, T defaultValue = default);
+
+        int Count { get; }
+        bool Any { get; }
+    }
+
+    public class CssValueList<T> : List<T>, ICssValueList<T>
     {
         static public CssValueList<T> Empty = new CssValueList<T>();
-        public T Get(int index, T defaultValue = default) => Count == 0 ? defaultValue : this[index % Count];
+        public bool Any => Count > 0;
 
         public CssValueList() { }
         public CssValueList(T item) : base(new[] { item }) { }
         public CssValueList(T[] items) : base(items ?? new T[0]) { }
+
+        public T Get(int index, T defaultValue = default) => Count == 0 ? defaultValue : this[index % Count];
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -61,6 +73,28 @@ namespace ReactUnity.Types
 
                 return new CssValueList<T>(items);
             }
+        }
+    }
+
+    public struct CssValueListInterpolated<T> : ICssValueList<T>
+    {
+        public ICssValueList<T> From;
+        public ICssValueList<T> To;
+        public float Ratio;
+
+        public int Count => From.Count > To.Count ? From.Count : To.Count;
+        public bool Any => From.Any || To.Any;
+
+        public CssValueListInterpolated(ICssValueList<T> from, ICssValueList<T> to, float ratio)
+        {
+            From = from;
+            To = to;
+            Ratio = ratio;
+        }
+
+        public T Get(int index, T defaultValue = default)
+        {
+            return Interpolater.ForceTypedInterpolate<T>(From.Get(index, defaultValue), To.Get(index, defaultValue), Ratio);
         }
     }
 }

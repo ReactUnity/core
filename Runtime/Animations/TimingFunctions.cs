@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace ReactUnity.Animations
 
     public static class TimingFunctions
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Linear(float t, float start = 0, float end = 1) => t * (end - start) + start;
         public static readonly TimingFunction Ease = CubicBezier.Create(0.25f, 0.1f, 0.25f, 1f);
         public static readonly TimingFunction EaseIn = CubicBezier.Create(0.42f, 0f, 1f, 1f);
