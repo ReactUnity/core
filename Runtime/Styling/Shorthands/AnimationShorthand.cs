@@ -143,6 +143,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!nameSet) return null;
                 if (!countSet) iterations[ci] = 1;
+                if (!timingSet) easings[ci] = TimingFunctions.Default;
             }
 
             collection[StyleProperties.animationName] = new CssValueList<string>(names);

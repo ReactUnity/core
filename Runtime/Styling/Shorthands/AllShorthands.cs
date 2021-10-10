@@ -24,6 +24,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
         public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
+        public static readonly StyleShorthand Motion = new MotionShorthand("motion");
         public static readonly StyleShorthand Animation = new AnimationShorthand("animation");
         public static readonly StyleShorthand Audio = new AudioShorthand("audio");
 
@@ -48,6 +49,7 @@ namespace ReactUnity.Styling.Shorthands
             { "mask", Mask },
             { "textStroke", TextStroke },
             { "transition", Transition },
+            { "motion", Motion },
             { "animation", Animation },
             { "audio", Audio },
 

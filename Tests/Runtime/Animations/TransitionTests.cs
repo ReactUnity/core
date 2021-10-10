@@ -93,7 +93,7 @@ namespace ReactUnity.Tests
             Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
 
             yield return AdvanceTime(1f);
-            Assert.That(rt.rect.width, Is.EqualTo(500).Within(1));
+            Assert.AreEqual(rt.rect.width, 500f, 1);
         }
 
         [ReactInjectableTest(BaseScript, BaseStyle)]

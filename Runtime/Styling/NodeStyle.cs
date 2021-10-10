@@ -62,16 +62,23 @@ namespace ReactUnity.Styling
         public float stateDuration => GetStyleValue(StyleProperties.stateDuration);
         public ObjectFit objectFit => GetStyleValue(StyleProperties.objectFit);
         public YogaValue2 objectPosition => GetStyleValue(StyleProperties.objectPosition);
+
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
         public ICssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
         public ICssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
         public ICssValueList<YogaValue2> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
         public ICssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);
         public ICssValueList<float> transitionDelay => GetStyleValue(StyleProperties.transitionDelay);
         public ICssValueList<AnimationPlayState> transitionPlayState => GetStyleValue(StyleProperties.transitionPlayState);
+
+        public float motionDuration => GetStyleValue(StyleProperties.motionDuration);
+        public TimingFunction motionTimingFunction => GetStyleValue(StyleProperties.motionTimingFunction);
+        public float motionDelay => GetStyleValue(StyleProperties.motionDelay);
+
         public ICssValueList<float> animationDelay => GetStyleValue(StyleProperties.animationDelay);
         public ICssValueList<AnimationDirection> animationDirection => GetStyleValue(StyleProperties.animationDirection);
         public ICssValueList<float> animationDuration => GetStyleValue(StyleProperties.animationDuration);

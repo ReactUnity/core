@@ -62,21 +62,25 @@ namespace ReactUnity.Styling
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
         public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration");
-        public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction");
+        public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction", TimingFunctions.Default);
         public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transitionDelay");
         public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transitionPlayState");
+
+        public static readonly StyleProperty<float> motionDuration = new StyleProperty<float>("motionDuration", 0f, false);
+        public static readonly StyleProperty<TimingFunction> motionTimingFunction = new StyleProperty<TimingFunction>("motionTimingFunction", TimingFunctions.Default, false);
+        public static readonly StyleProperty<float> motionDelay = new StyleProperty<float>("motionDelay", 0f, false);
 
         public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animationDelay");
         public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animationDirection");
         public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animationDuration");
         public static readonly ValueListStyleProperty<AnimationFillMode> animationFillMode = new ValueListStyleProperty<AnimationFillMode>("animationFillMode");
-        public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animationIterationCount", baseConverter: AllConverters.IterationCountConverter);
+        public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animationIterationCount", 1, baseConverter: AllConverters.IterationCountConverter);
         public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animationName");
         public static readonly ValueListStyleProperty<AnimationPlayState> animationPlayState = new ValueListStyleProperty<AnimationPlayState>("animationPlayState");
-        public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction");
+        public static readonly ValueListStyleProperty<TimingFunction> animationTimingFunction = new ValueListStyleProperty<TimingFunction>("animationTimingFunction", TimingFunctions.Default);
 
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
-        public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount");
+        public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
         public static readonly ValueListStyleProperty<float> audioDelay = new ValueListStyleProperty<float>("audioDelay");
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
@@ -140,6 +144,14 @@ namespace ReactUnity.Styling
             { "transition-timing-function", transitionTimingFunction },
             { "transition-delay", transitionDelay },
             { "transition-play-state", transitionPlayState },
+
+            { "motionDuration", motionDuration },
+            { "motionTimingFunction", motionTimingFunction },
+            { "motionDelay", motionDelay },
+
+            { "motion-duration", motionDuration },
+            { "motion-timing-function", motionTimingFunction },
+            { "motion-delay", motionDelay },
 
             { "animationDelay", animationDelay },
             { "animationDirection", animationDirection },

@@ -1,4 +1,6 @@
+using System.Collections;
 using Facebook.Yoga;
+using ReactUnity.Animations;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -12,6 +14,9 @@ namespace ReactUnity.UGUI.Behaviours
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
         public UGUIComponent Component { get; internal set; }
+
+        private bool firstTime = true;
+        private Coroutine currentMotion;
 
         private bool hasPositionUpdate = true;
         private YogaValue2 position = YogaValue2.Center;
@@ -72,18 +77,14 @@ namespace ReactUnity.UGUI.Behaviours
                 var posX = x + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -y + pivotDiff.y * Layout.LayoutHeight;
 
-                rt.anchoredPosition = new Vector2(posX, posY) + tran;
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight));
             }
             else
             {
                 var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
 
-                rt.anchoredPosition = new Vector2(posX, posY) + tran;
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
-                rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight));
             }
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
@@ -92,6 +93,83 @@ namespace ReactUnity.UGUI.Behaviours
         private float CalculateYogaVal(YogaValue val, float size)
         {
             return val.Unit == YogaUnit.Percent ? size * val.Value / 100 : val.Value;
+        }
+
+        private void SetPositionAndSize(Vector2 pos, Vector2 size)
+        {
+            if (firstTime || Component?.ComputedStyle == null)
+            {
+                SetPositionAndSizeImmediate(pos, size);
+                return;
+            }
+
+            var duration = Component.ComputedStyle.motionDuration;
+            var delay = Component.ComputedStyle.motionDelay;
+
+            if (duration > 0 || delay > 0)
+            {
+                var timingFunction = Component.ComputedStyle.motionTimingFunction;
+
+                if (currentMotion != null) StopCoroutine(currentMotion);
+                currentMotion = StartCoroutine(StartMotion(pos, size, duration / 1000, delay / 1000, timingFunction));
+            }
+            else SetPositionAndSizeImmediate(pos, size);
+        }
+
+
+        private void SetPositionAndSizeImmediate(Vector2 pos, Vector2 size)
+        {
+            firstTime = false;
+            rt.anchoredPosition = pos;
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+        }
+
+
+        private IEnumerator StartMotion(Vector2 pos, Vector2 size, float duration, float delay, TimingFunction timingFunction)
+        {
+            var timer = Component.Context.Timer;
+            var st = timer.AnimationTime;
+
+            if (delay > 0)
+            {
+                yield return Wait(delay);
+                st = st + delay;
+            }
+
+            if (duration <= 0)
+            {
+                SetPositionAndSizeImmediate(pos, size);
+                yield break;
+            }
+
+            var end = st + duration;
+            var currentPos = rt.anchoredPosition;
+            var currentSize = rt.rect.size;
+
+            while (timer.AnimationTime < end)
+            {
+                var delta = Mathf.Clamp01((timer.AnimationTime - st) / duration);
+                var intPos = Interpolater.Interpolate(currentPos, pos, delta, timingFunction);
+                var intSize = Interpolater.Interpolate(currentSize, size, delta, timingFunction);
+                SetPositionAndSizeImmediate(intPos, intSize);
+                yield return null;
+            }
+            SetPositionAndSizeImmediate(pos, size);
+            currentMotion = null;
+        }
+
+        private IEnumerator Wait(float delay)
+        {
+            var timer = Component.Context.Timer;
+
+            var st = timer.AnimationTime;
+            var end = st + delay;
+
+            while (timer.AnimationTime < end)
+            {
+                yield return null;
+            }
         }
     }
 }

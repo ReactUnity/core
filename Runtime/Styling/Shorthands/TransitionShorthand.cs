@@ -105,6 +105,7 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (!nameSet) names[ci] = TransitionProperty.All;
+                if (!timingSet) easings[ci] = TimingFunctions.Default;
             }
 
             collection[StyleProperties.transitionProperty] = new CssValueList<TransitionProperty>(names);
