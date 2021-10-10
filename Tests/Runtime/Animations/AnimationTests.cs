@@ -57,13 +57,13 @@ namespace ReactUnity.Tests
             var st = view.ComputedStyle;
 
             Assert.AreEqual("growWidth", st.animationName.Get(0));
-            Assert.AreEqual(1000, st.animationDuration.Get(0));
-            Assert.AreEqual(400, st.animationDelay.Get(0));
+            Assert.AreEqual(1, st.animationDuration.Get(0));
+            Assert.AreEqual(0.4f, st.animationDelay.Get(0));
             Assert.AreEqual(AnimationFillMode.Both, st.animationFillMode.Get(0));
 
             Assert.AreEqual("shrinkWidth", st.animationName.Get(1));
-            Assert.AreEqual(1200, st.animationDuration.Get(1));
-            Assert.AreEqual(100, st.animationDelay.Get(1));
+            Assert.AreEqual(1.2f, st.animationDuration.Get(1));
+            Assert.AreEqual(0.1f, st.animationDelay.Get(1));
             Assert.AreEqual(AnimationFillMode.None, st.animationFillMode.Get(1));
 
 
@@ -191,7 +191,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.black, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.AreEqual(0.1f, text.color.grayscale);
+            Assert.AreEqual(0.1f, text.color.grayscale, 0.001f);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);
@@ -221,7 +221,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.black, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.AreEqual(0.1f, text.color.grayscale);
+            Assert.AreEqual(0.1f, text.color.grayscale, 0.001f);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);
@@ -283,7 +283,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.black, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.AreEqual(0.1f, text.color.grayscale);
+            Assert.AreEqual(0.1f, text.color.grayscale, 0.001f);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);

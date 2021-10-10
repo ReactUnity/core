@@ -45,12 +45,12 @@ namespace ReactUnity.Tests
             var st = view.ComputedStyle;
 
             Assert.AreEqual("color", st.transitionProperty.Get(0).Definition);
-            Assert.AreEqual(1000, st.transitionDuration.Get(0));
-            Assert.AreEqual(400, st.transitionDelay.Get(0));
+            Assert.AreEqual(1, st.transitionDuration.Get(0));
+            Assert.AreEqual(0.4f, st.transitionDelay.Get(0));
 
             Assert.AreEqual("width", st.transitionProperty.Get(1).Definition);
-            Assert.AreEqual(5000, st.transitionDuration.Get(1));
-            Assert.AreEqual(1200, st.transitionDelay.Get(1));
+            Assert.AreEqual(5, st.transitionDuration.Get(1));
+            Assert.AreEqual(1.2f, st.transitionDelay.Get(1));
 
 
             view.Style.Set("transition", "none");
@@ -129,7 +129,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.AreEqual(0.8f, text.color.grayscale);
+            Assert.AreEqual(0.8f, text.color.grayscale, 0.001f);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.black, text.color);
@@ -191,7 +191,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.AreEqual(0.8f, text.color.grayscale);
+            Assert.AreEqual(0.8f, text.color.grayscale, 0.001f);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.black, text.color);

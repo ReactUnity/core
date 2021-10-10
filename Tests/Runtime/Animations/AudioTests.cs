@@ -21,12 +21,12 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(AssetReferenceType.Resource, st.audioClip.Get(0).Type);
             Assert.AreEqual("click", st.audioClip.Get(0).Value);
-            Assert.AreEqual(3000, st.audioDelay.Get(0));
+            Assert.AreEqual(3, st.audioDelay.Get(0));
             Assert.AreEqual(5, st.audioIterationCount.Get(0));
 
             Assert.AreEqual(AssetReferenceType.Url, st.audioClip.Get(1).Type);
             Assert.AreEqual("https://example.com/file.ogg", st.audioClip.Get(1).Value);
-            Assert.AreEqual(2000, st.audioDelay.Get(1));
+            Assert.AreEqual(2, st.audioDelay.Get(1));
             Assert.AreEqual(-1, st.audioIterationCount.Get(1));
 
             Assert.AreEqual(AssetReferenceType.Resource, st.audioClip.Get(2).Type);

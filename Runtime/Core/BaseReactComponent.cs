@@ -382,7 +382,7 @@ namespace ReactUnity
 
             if (Leaving)
             {
-                var stateDuration = ComputedStyle.stateDuration / 1000f;
+                var stateDuration = ComputedStyle.stateDuration;
 
                 if (Context.Timer.AnimationTime >= stateUpdateTime + stateDuration)
                 {
@@ -393,7 +393,7 @@ namespace ReactUnity
             {
                 if (StateStyles.Subscribed.Contains("enter"))
                 {
-                    var stateDuration = ComputedStyle.stateDuration / 1000f;
+                    var stateDuration = ComputedStyle.stateDuration;
 
                     if (Context.Timer.AnimationTime >= stateUpdateTime + stateDuration)
                     {

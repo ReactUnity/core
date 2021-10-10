@@ -69,7 +69,7 @@ namespace ReactUnity.Styling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private float getTime() => Context.Timer.AnimationTime * 1000;
+        private float getTime() => Context.Timer.AnimationTime;
 
         public NodeStyle Previous { get; private set; }
         public NodeStyle Current { get; private set; }
@@ -670,7 +670,7 @@ namespace ReactUnity.Styling
                         continue;
                     }
 
-                    var clipLength = state.Clip.length * 1000;
+                    var clipLength = state.Clip.length;
                     var currentLoop = Mathf.FloorToInt(offsetTime / clipLength);
                     var canLoop = it < 0 || it > currentLoop;
 

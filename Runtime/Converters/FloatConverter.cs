@@ -178,8 +178,8 @@ namespace ReactUnity.Converters
     {
         public DurationConverter() : base(new Dictionary<string, float>
         {
-            { "ms", 1 },
-            { "s", 1000 },
+            { "ms", 0.001f },
+            { "s", 1 },
         }, null, false)
         { }
     }

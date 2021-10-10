@@ -41,22 +41,22 @@ namespace ReactUnity.Editor.Tests
 
             Assert.AreEqual("width", Property.Get(0).Definition);
             Assert.IsFalse(Property.Get(0).IsAll);
-            Assert.AreEqual(2000, Duration.Get(0));
+            Assert.AreEqual(2, Duration.Get(0));
             Assert.AreEqual(0, Delay.Get(0));
             AssertTimingFunction(TimingFunctions.Ease, TimingFunction.Get(0) ?? TimingFunctions.Default);
 
 
             Assert.AreEqual("height", Property.Get(1).Definition);
             Assert.IsFalse(Property.Get(1).IsAll);
-            Assert.AreEqual(400, Duration.Get(1));
+            Assert.AreEqual(0.4f, Duration.Get(1));
             Assert.AreEqual(0, Delay.Get(1));
             AssertTimingFunction(TimingFunctions.EaseInOut, TimingFunction.Get(1));
 
 
             Assert.AreEqual("all", Property.Get(2).Definition);
             Assert.IsTrue(Property.Get(2).IsAll);
-            Assert.AreEqual(500, Duration.Get(2));
-            Assert.AreEqual(300, Delay.Get(2));
+            Assert.AreEqual(0.5f, Duration.Get(2));
+            Assert.AreEqual(0.3f, Delay.Get(2));
             AssertTimingFunction(TimingFunctions.StepStart, TimingFunction.Get(2));
 
             Assert.IsFalse(Property.Get(3).IsAll);
@@ -68,8 +68,8 @@ namespace ReactUnity.Editor.Tests
 
             Assert.AreEqual("all", Property.Get(5).Definition);
             Assert.IsTrue(Property.Get(5).IsAll);
-            Assert.AreEqual(3000, Duration.Get(5));
-            Assert.AreEqual(400, Delay.Get(5));
+            Assert.AreEqual(3, Duration.Get(5));
+            Assert.AreEqual(0.4f, Delay.Get(5));
             AssertTimingFunction(TimingFunctions.Linear, TimingFunction.Get(5));
         }
 
@@ -93,15 +93,15 @@ namespace ReactUnity.Editor.Tests
             var TimingFunction = style.animationTimingFunction;
 
             Assert.AreEqual("roll", Name.Get(0));
-            Assert.AreEqual(3000, Duration.Get(0));
-            Assert.AreEqual(1000, Delay.Get(0));
+            Assert.AreEqual(3, Duration.Get(0));
+            Assert.AreEqual(1, Delay.Get(0));
             Assert.AreEqual(2, IterationCount.Get(0));
             Assert.AreEqual(AnimationFillMode.Both, FillMode.Get(0));
             Assert.AreEqual(AnimationDirection.Reverse, Direction.Get(0));
             AssertTimingFunction(TimingFunctions.EaseIn, TimingFunction.Get(0));
 
             Assert.AreEqual("slidein", Name.Get(1));
-            Assert.AreEqual(500, Duration.Get(1));
+            Assert.AreEqual(0.5f, Duration.Get(1));
             Assert.AreEqual(0, Delay.Get(1));
             Assert.AreEqual(1, IterationCount.Get(1));
             Assert.AreEqual(AnimationFillMode.None, FillMode.Get(1));
@@ -109,7 +109,7 @@ namespace ReactUnity.Editor.Tests
             AssertTimingFunction(TimingFunctions.Linear, TimingFunction.Get(1));
 
             Assert.AreEqual("slideout", Name.Get(2));
-            Assert.AreEqual(4000, Duration.Get(2));
+            Assert.AreEqual(4, Duration.Get(2));
             Assert.AreEqual(-1, IterationCount.Get(2));
             AssertTimingFunction(TimingFunctions.Ease, TimingFunction.Get(2) ?? TimingFunctions.Default);
         }
@@ -169,12 +169,12 @@ namespace ReactUnity.Editor.Tests
 
             Assert.AreEqual(AssetReferenceType.Resource, Clip.Get(0).Type);
             Assert.AreEqual("click", Clip.Get(0).Value);
-            Assert.AreEqual(3000, Delay.Get(0));
+            Assert.AreEqual(3, Delay.Get(0));
             Assert.AreEqual(5, IterationCount.Get(0));
 
             Assert.AreEqual(AssetReferenceType.Url, Clip.Get(1).Type);
             Assert.AreEqual("https://example.com", Clip.Get(1).Value);
-            Assert.AreEqual(2000, Delay.Get(1));
+            Assert.AreEqual(2, Delay.Get(1));
             Assert.AreEqual(-1, IterationCount.Get(1));
 
             Assert.AreEqual(AssetReferenceType.Resource, Clip.Get(2).Type);
@@ -187,9 +187,9 @@ namespace ReactUnity.Editor.Tests
         [TestCase("0", 0f)]
         [TestCase("0s", 0f)]
         [TestCase("0ms", 0f)]
-        [TestCase("400ms", 400f)]
-        [TestCase("1s", 1000f)]
-        [TestCase("2s", 2000f)]
+        [TestCase("400ms", 0.4f)]
+        [TestCase("1s", 1f)]
+        [TestCase("2s", 2f)]
         [TestCase("50ms1", CssKeyword.Invalid)]
         [TestCase("0a", CssKeyword.Invalid)]
         [TestCase("5as", CssKeyword.Invalid)]

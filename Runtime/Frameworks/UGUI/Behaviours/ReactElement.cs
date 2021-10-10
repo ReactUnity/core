@@ -111,7 +111,7 @@ namespace ReactUnity.UGUI.Behaviours
                 var timingFunction = Component.ComputedStyle.motionTimingFunction;
 
                 if (currentMotion != null) StopCoroutine(currentMotion);
-                currentMotion = StartCoroutine(StartMotion(pos, size, duration / 1000, delay / 1000, timingFunction));
+                currentMotion = StartCoroutine(StartMotion(pos, size, duration, delay, timingFunction));
             }
             else SetPositionAndSizeImmediate(pos, size);
         }
