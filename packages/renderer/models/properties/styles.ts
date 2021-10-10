@@ -4,8 +4,9 @@ import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
   opacity?: NumberAux;
-  zIndex?: number;
-  visibility?: Visibility | boolean;
+  zIndex?: number | string;
+  order?: number | string;
+  visibility?: Visibility | boolean | 'hidden' | 'visible';
   cursor?: CursorType | string;
   pointerEvents?: PointerEvents;
   content?: string;
@@ -15,6 +16,8 @@ export interface RenderStyle {
   backgroundBlendMode?: BackgroundBlendMode;
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
+  backgroundPosition?: YogaValue2Aux;
+  backgroundSize?: YogaValue2Aux;
   maskImage?: AssetReference;
 
   borderRadius?: NumberAux;
@@ -38,7 +41,7 @@ export interface RenderStyle {
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
 
-  stateDuration?: number;
+  stateDuration?: number | string;
 
   // Inherited styles
   color?: ColorAux;
@@ -51,16 +54,19 @@ export interface RenderStyle {
   whiteSpace?: WhiteSpace;
   textStrokeWidth?: NumberAux;
   textStrokeColor?: ColorAux;
-  lineHeight?: number;
-  letterSpacing?: number;
-  wordSpacing?: number;
-  maxLines?: number;
+  lineHeight?: number | string;
+  letterSpacing?: number | string;
+  wordSpacing?: number | string;
+  maxLines?: number | string;
 
   transitionProperty?: keyof RenderStyle | string;
   transitionDuration?: number | string;
   transitionTimingFunction?: TimingFunctionType | string;
   transitionDelay?: number | string;
   transitionPlayState?: AnimationPlayState | string;
+  motionDuration?: number | string;
+  motionTimingFunction?: TimingFunctionType | string;
+  motionDelay?: number | string;
   animationDelay?: number | string;
   animationDirection?: AnimationDirection | string;
   animationDuration?: number | string;
@@ -92,6 +98,7 @@ export interface RenderStyle {
   textStroke?: string;
   animation?: string;
   transition?: string;
+  motion?: string;
   audio?: string;
 
   // Custom CSS variables

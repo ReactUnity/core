@@ -12,7 +12,7 @@ export interface View<TSender = BaseCmp> extends Events<TSender> {
   tooltip?: string;
   viewDataKey?: string;
   tabIndex?: number;
-  style?: Style;
+  style?: Style | string;
   focusable?: boolean;
   bind?: UnityEditor.SerializedObject | UnityEditor.SerializedProperty;
 }

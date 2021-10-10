@@ -9,7 +9,7 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
   name?: string;
   className?: string;
   id?: string;
-  style?: Style;
+  style?: Style | string;
 }
 
 export interface Text extends View<ReactUnity.UGUI.TextComponent> {

@@ -7,7 +7,7 @@ import {
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
 import { DefaultView } from '../views/default-view';
-import { diffProperties, DiffResult } from './diffing';
+import { diffProperties, DiffResult, styleStringSymbol } from './diffing';
 
 const hostContext = {};
 const childContext = {};
@@ -53,7 +53,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon' || type === 'style') {
+      if (type === 'text' || type === 'icon' || type === 'style' || type === 'script') {
         UnityBridge.setText(instance, value ? ((Array.isArray(value) && value.join) ? value.join('') : value + '') : '');
       }
       continue;
@@ -61,15 +61,20 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
     if (attr === 'tag') continue;
-    if (!isAfterMount && attr === 'style') {
+    if (!isAfterMount && (attr === 'style' || attr === styleStringSymbol)) {
       updateAfterMount = true;
       continue;
     }
 
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
+        instance.MarkForStyleResolving(false);
       }
+      continue;
+    }
+
+    if (attr === styleStringSymbol) {
+      UnityBridge.setProperty(instance, 'style', value);
       continue;
     }
 
@@ -106,7 +111,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     hostContext,
     internalInstanceHandle,
   ) {
-    if (type === 'text' || type === 'icon' || type === 'style') {
+    if (type === 'text' || type === 'icon' || type === 'style' || type === 'script') {
       const text = props.children === true ? '' :
         Array.isArray(props.children) ? props.children.join('') :
           props.children?.toString() || '';
@@ -151,12 +156,16 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
   // Some attributes like style need to be changed only after mount
   commitMount(instance, type, newProps, internalInstanceHandle) {
     const props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
+    if ('style' in newProps) {
+      props.push('style', newProps.style);
+
+      if (typeof newProps.style === 'string') props.push(styleStringSymbol, newProps.style);
+    }
 
     applyUpdate(instance, props, true);
   },
 
-  shouldSetTextContent(type, props) { return type === 'text' || type === 'icon' || type === 'style'; },
+  shouldSetTextContent(type, props) { return type === 'text' || type === 'icon' || type === 'style' || type === 'script'; },
 
   shouldDeprioritizeSubtree(type, props) { return false; },
 

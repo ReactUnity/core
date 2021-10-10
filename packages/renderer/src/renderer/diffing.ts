@@ -1,16 +1,14 @@
 export type DiffResult = null | Array<string | any>;
 
+export const styleStringSymbol = '__style_as_string__';
 
 export function diffProperties(
-  lastRawProps: Record<string, any>,
-  nextRawProps: Record<string, any>,
+  lastProps: Record<string, any>,
+  nextProps: Record<string, any>,
   deepDiffing = 0,
 ): DiffResult {
-  if (lastRawProps === nextRawProps) return null;
+  if (lastProps === nextProps) return null;
   let updatePayload: DiffResult = null;
-
-  const lastProps = lastRawProps;
-  const nextProps = nextRawProps;
 
   let propKey;
   for (propKey in lastProps) {
@@ -23,6 +21,11 @@ export function diffProperties(
     }
 
     let prop = null;
+
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || []).push(styleStringSymbol, null);
+    }
+
     const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
     if (depth > 0) {
       prop = diffProperties(lastProps[propKey], null, depth - 1);
@@ -45,6 +48,11 @@ export function diffProperties(
     }
 
     let prop = nextProp;
+
+    if (propKey === 'style' && (typeof prop === 'string') !== (typeof lastProp === 'string')) {
+      (updatePayload = updatePayload || []).push(styleStringSymbol, typeof prop === 'string' ? prop : null);
+    }
+
     const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
     if (depth > 0) {
       prop = diffProperties(lastProp, nextProp, depth - 1);
