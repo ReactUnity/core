@@ -62,10 +62,9 @@ namespace ReactUnity.Editor.Renderer
 
         public EditorContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart = null,
+            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider, Action onRestart = null,
             ReactWindow window = null, ReactInspector inspector = null, ReactProperty property = null
-        ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart)
+        ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, onRestart)
         {
             Window = window;
             Inspector = inspector;

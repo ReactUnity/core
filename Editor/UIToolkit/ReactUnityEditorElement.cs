@@ -18,9 +18,9 @@ namespace ReactUnity.Editor.UIToolkit
         {
         }
 
-        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script)
         {
-            var ctx = new EditorContext(this, Globals, script, dispatcher, Timer ?? EditorTimer.Instance, MediaProvider, isDevServer, Restart, Window, Inspector, Property);
+            var ctx = new EditorContext(this, Globals, script, dispatcher, Timer ?? EditorTimer.Instance, MediaProvider, Restart, Window, Inspector, Property);
             ctx.Initialize();
             return ctx;
         }

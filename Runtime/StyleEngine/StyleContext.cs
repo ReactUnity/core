@@ -17,15 +17,15 @@ namespace ReactUnity.StyleEngine
         public StyleContext(ReactContext context)
         {
             Context = context;
-            Parser = Context.Parser;
+            Parser = Context.StyleParser;
             MediaProvider = Context.MediaProvider;
             StyleTree = new StyleTree(Parser);
         }
 
-        public void ResolveStyle()
+        public void ResolveStyle(IReactComponent scope = null)
         {
             if (!Context.IsDisposed)
-                Context.Host.ResolveStyle(true);
+                (scope ?? Context.Host).ResolveStyle(true);
         }
 
         public virtual void Insert(StyleSheet sheet)

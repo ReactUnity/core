@@ -86,8 +86,9 @@ namespace ReactUnity
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             runner = new ReactUnityRunner();
             MediaProvider = CreateMediaProvider();
+            Context = CreateContext(script);
+
             var watcherDisposable = script.GetScript((code, isDevServer) => {
-                Context = CreateContext(script, isDevServer);
                 runner.RunScript(code, Context, EngineType, Debug, AwaitDebugger, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 
@@ -101,7 +102,7 @@ namespace ReactUnity
             ScriptWatchDisposable = LoadAndRun(Script, false);
         }
 
-        protected abstract ReactContext CreateContext(ScriptSource script, bool isDevServer);
+        protected abstract ReactContext CreateContext(ScriptSource script);
         protected abstract IMediaProvider CreateMediaProvider();
     }
 }

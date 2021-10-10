@@ -59,8 +59,8 @@ namespace ReactUnity.UGUI
         public UGUIContext(
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart, List<IconSet> iconSets, IconSet defaultIconSet, CursorSet cursorSet
-        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, true)
+            Action onRestart, List<IconSet> iconSets, IconSet defaultIconSet, CursorSet cursorSet
+        ) : base(globals, script, dispatcher, timer, mediaProvider, onRestart, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);

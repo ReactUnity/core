@@ -44,9 +44,9 @@ namespace ReactUnity.UIToolkit
 
             runner = new ReactUnityRunner();
             dispatcher = CreateDispatcher();
+            context = CreateContext(src);
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
-                context = CreateContext(src, isDevServer);
                 runner.RunScript(sc, context, EngineType, Debug, AwaitDebugger);
             }, dispatcher, true, true);
         }
@@ -69,9 +69,9 @@ namespace ReactUnity.UIToolkit
             Run();
         }
 
-        protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
+        protected virtual ReactContext CreateContext(ScriptSource script)
         {
-            var ctx = new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
+            var ctx = new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, Restart);
             ctx.Initialize();
             return ctx;
         }

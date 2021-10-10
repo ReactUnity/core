@@ -27,7 +27,6 @@ namespace ReactUnity
         public bool CalculatesLayout { get; }
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
-        public bool IsDevServer { get; }
         public bool IsDisposed { get; private set; }
 
         public ScriptSource Script { get; }
@@ -37,25 +36,20 @@ namespace ReactUnity
         public Location Location { get; }
         public LocalStorage LocalStorage { get; }
         public IMediaProvider MediaProvider { get; }
-
-        public Action OnRestart;
-        public readonly StylesheetParser Parser;
-        public readonly StyleContext Style;
-
-        public List<IDisposable> Disposables = new List<IDisposable>();
-
+        public Action OnRestart { get; }
+        public StylesheetParser StyleParser { get; }
+        public StyleContext Style { get; }
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
+        public List<IDisposable> Disposables { get; } = new List<IDisposable>();
 
         public ReactContext(
             GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            ITimer timer, IMediaProvider mediaProvider, bool isDevServer,
-            Action onRestart, bool calculatesLayout
+            ITimer timer, IMediaProvider mediaProvider, Action onRestart, bool calculatesLayout
         )
         {
             Globals = globals;
             Script = script;
-            IsDevServer = isDevServer;
             Timer = timer;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
@@ -65,7 +59,7 @@ namespace ReactUnity
             CursorAPI = new CursorAPI(this);
             LocalStorage = new LocalStorage();
 
-            Parser = new StylesheetParser(true, true, true, true, true, false, true);
+            StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
             Style = new StyleContext(this);
 
             var updateVisitor = new UpdateVisitor();
@@ -122,11 +116,10 @@ namespace ReactUnity
 
         public virtual ScriptSource CreateStaticScript(string path)
         {
-            var src = new ScriptSource();
-            src.Type = IsDevServer ? ScriptSourceType.Url : Script.Type;
-            src.UseDevServer = IsDevServer;
+            var src = new ScriptSource(Script);
             src.SourcePath = ResolvePath(path);
-
+            src.Type = Script.EffectiveScriptSource;
+            src.UseDevServer = Script.IsDevServer;
             return src;
         }
 

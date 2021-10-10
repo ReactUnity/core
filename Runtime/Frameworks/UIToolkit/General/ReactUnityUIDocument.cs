@@ -18,10 +18,10 @@ namespace ReactUnity.UIToolkit
             Root?.Clear();
         }
 
-        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UIToolkitContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, PlayAudio);
+            return new UIToolkitContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, Render, PlayAudio);
         }
 
         public void PlayAudio(AudioClip clip)

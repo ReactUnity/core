@@ -21,10 +21,10 @@ namespace ReactUnity.UGUI
                 GameObject.DestroyImmediate(Root.GetChild(i).gameObject);
         }
 
-        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, IconSets, DefaultIconSet, CursorSet);
+            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, Render, IconSets, DefaultIconSet, CursorSet);
         }
 
         protected override IMediaProvider CreateMediaProvider()

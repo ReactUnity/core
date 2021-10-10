@@ -25,6 +25,7 @@ namespace ReactUnity
 
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
+        public StyleSheet InlineStylesheet { get; protected set; }
 
         public int ParentIndex { get; protected set; } = -1;
         public int CurrentOrder { get; protected set; } = 0;
@@ -181,6 +182,12 @@ namespace ReactUnity
                 RemoveBefore();
                 Children.Clear();
             }
+
+            if (InlineStylesheet != null)
+            {
+                Context.RemoveStyle(InlineStylesheet);
+                InlineStylesheet = null;
+            }
         }
 
         #region Setters
@@ -282,6 +289,20 @@ namespace ReactUnity
                     return;
                 case "className":
                     ClassName = value?.ToString();
+                    return;
+                case "style":
+                    if (InlineStylesheet != null)
+                    {
+                        Context.RemoveStyle(InlineStylesheet);
+                        InlineStylesheet = null;
+                    }
+
+                    if (value is string styleString && !string.IsNullOrWhiteSpace(styleString))
+                    {
+                        styleString = $":scope {{\n{styleString}\n}}";
+                        InlineStylesheet = new StyleSheet(Context.Style, styleString, 1, this);
+                        Context.InsertStyle(InlineStylesheet);
+                    }
                     return;
                 default:
 #if UNITY_EDITOR
@@ -433,28 +454,28 @@ namespace ReactUnity
 
         public bool Matches(string query)
         {
-            var tree = new RuleTree<string>(Context.Parser);
+            var tree = new RuleTree<string>(Context.StyleParser);
             tree.AddSelector(query);
             return tree.AnyMatches(this, Context.Host);
         }
 
         public IReactComponent Closest(string query)
         {
-            var tree = new RuleTree<string>(Context.Parser);
+            var tree = new RuleTree<string>(Context.StyleParser);
             tree.AddSelector(query);
             return tree.Closest(this, Context.Host);
         }
 
         public IReactComponent QuerySelector(string query)
         {
-            var tree = new RuleTree<string>(Context.Parser);
+            var tree = new RuleTree<string>(Context.StyleParser);
             tree.AddSelector(query);
             return tree.GetMatchingChild(this);
         }
 
         public List<IReactComponent> QuerySelectorAll(string query)
         {
-            var tree = new RuleTree<string>(Context.Parser);
+            var tree = new RuleTree<string>(Context.StyleParser);
             tree.AddSelector(query);
             return tree.GetMatchingChildren(this);
         }

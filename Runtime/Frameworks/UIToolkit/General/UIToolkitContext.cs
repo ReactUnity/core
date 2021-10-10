@@ -64,8 +64,8 @@ namespace ReactUnity.UIToolkit
         public UIToolkitContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null
-        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, false)
+            Action onRestart = null, Action<AudioClip> onAudioPlayback = null
+        ) : base(globals, script, dispatcher, timer, mediaProvider, onRestart, false)
         {
             OnAudioPlayback = onAudioPlayback;
             HostElement = hostElement;

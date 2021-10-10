@@ -21,7 +21,7 @@ namespace ReactUnity.Tests
                 </view>;
             }
 
-            Renderer.render(<GlobalsProvider children={<App />} />);
+            Renderer.render(<App />);
 ")]
         public IEnumerator InlineStylesCanBeSet()
         {
@@ -32,6 +32,58 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.red, tmp.color);
 
             Assert.AreEqual(23, tmp.fontSize);
+        }
+
+        [ReactInjectableTest(@"
+            function App() {
+                return <view id='test' style='font-size: 23px'>
+                    Hello world
+                </view>;
+            }
+
+            Renderer.render(<App />);
+")]
+        public IEnumerator InlineStylesCanBeSetAsText()
+        {
+            yield return null;
+
+            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            Assert.AreEqual(23, tmp.fontSize);
+        }
+
+
+
+        [ReactInjectableTest(@"
+            function App() {
+                var globals = useGlobals();
+
+                return <view id='test' style={globals.asObject ? { fontSize: 25, color: 'red' } : 'font-size: 23px; font-weight: bold;'}>
+                    Hello world
+                </view>;
+            }
+
+            Renderer.render(<App />);
+")]
+        public IEnumerator InlineStylesCanBeSwitchedBetweenTextAndObject()
+        {
+            yield return null;
+
+            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            Assert.AreEqual(23, tmp.fontSize);
+            Assert.AreNotEqual(Color.red, tmp.color);
+            Assert.AreEqual(TMPro.FontStyles.Bold, tmp.fontStyle);
+
+            Globals["asObject"] = true;
+            yield return null;
+            Assert.AreEqual(25, tmp.fontSize);
+            Assert.AreEqual(Color.red, tmp.color);
+            Assert.AreNotEqual(TMPro.FontStyles.Bold, tmp.fontStyle);
+
+            Globals["asObject"] = false;
+            yield return null;
+            Assert.AreEqual(23, tmp.fontSize);
+            Assert.AreNotEqual(Color.red, tmp.color);
+            Assert.AreEqual(TMPro.FontStyles.Bold, tmp.fontStyle);
         }
     }
 }

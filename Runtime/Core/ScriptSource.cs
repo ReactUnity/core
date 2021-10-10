@@ -10,6 +10,19 @@ namespace ReactUnity
     [Serializable]
     public class ScriptSource
     {
+        public ScriptSource() { }
+
+        public ScriptSource(ScriptSource source)
+        {
+            Type = source.Type;
+            SourceAsset = source.SourceAsset;
+            SourcePath = source.SourcePath;
+            SourceText = source.SourceText;
+            ResourcesPath = source.ResourcesPath;
+            UseDevServer = source.UseDevServer;
+            DevServer = source.DevServer;
+        }
+
         public static ScriptSource Resource(string path)
         {
             return new ScriptSource()
@@ -30,14 +43,11 @@ namespace ReactUnity
             };
         }
 
-        [FormerlySerializedAs("ScriptSource")]
         public ScriptSourceType Type = ScriptSourceType.TextAsset;
-
         public TextAsset SourceAsset;
         public string SourcePath;
         public string SourceText;
         public string ResourcesPath;
-
         public bool UseDevServer = true;
         public string DevServer = "http://localhost:3000";
         const string DevServerFilename = "/index.js";

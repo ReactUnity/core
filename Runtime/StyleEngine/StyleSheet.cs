@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Converters;
@@ -12,6 +13,7 @@ namespace ReactUnity.StyleEngine
     public class StyleSheet
     {
         public readonly StyleContext Context;
+        public readonly IReactComponent Scope;
         public readonly int ImportanceOffset;
         public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
@@ -21,6 +23,7 @@ namespace ReactUnity.StyleEngine
         public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null)
         {
             Context = context;
+            Scope = scope;
             ImportanceOffset = importanceOffset;
 
             Initialize(style, scope);
@@ -84,7 +87,7 @@ namespace ReactUnity.StyleEngine
         public void Enable()
         {
             foreach (var mql in MediaQueries)
-                mql.OnUpdate += Context.ResolveStyle;
+                mql.OnUpdate += ResolveStyle;
 
             Context.FontFamilies.Add(FontFamilies);
             Context.Keyframes.Add(Keyframes);
@@ -94,13 +97,13 @@ namespace ReactUnity.StyleEngine
                 dcl.Item1.Data.Rules.Add(dcl.Item2);
             }
 
-            Context.ResolveStyle();
+            ResolveStyle();
         }
 
         public void Disable()
         {
             foreach (var mql in MediaQueries)
-                mql.OnUpdate -= Context.ResolveStyle;
+                mql.OnUpdate -= ResolveStyle;
 
             Context.FontFamilies.Remove(FontFamilies);
             Context.Keyframes.Remove(Keyframes);
@@ -110,7 +113,10 @@ namespace ReactUnity.StyleEngine
                 dcl.Item1.Data.Rules.Remove(dcl.Item2);
             }
 
-            Context.ResolveStyle();
+            ResolveStyle();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ResolveStyle() => Context.ResolveStyle(Scope);
     }
 }
