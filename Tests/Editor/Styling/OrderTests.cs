@@ -2,9 +2,9 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 
-namespace ReactUnity.Tests
+namespace ReactUnity.Editor.Tests.Renderer
 {
-    public class OrderTests : TestBase
+    public class OrderTests : EditorTestBase
     {
         const string BaseScript = @"
             function App() {
@@ -33,22 +33,9 @@ namespace ReactUnity.Tests
 
         public OrderTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
-        public IEnumerator RectTransformsShouldHaveCorrectOrder()
-        {
-            Q("#test").Style["background"] = "red";
-            yield return null;
-            Globals["show8"] = true;
-            Globals["show9"] = true;
-            Globals["show0"] = true;
-            yield return null;
-            AssertRectTransformOrder(4, 2, 3, 9, 5, 6, 7, 8, 1);
-        }
-
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [EditorInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator OrderWorksCorrectly()
         {
-            Q("#test").Style["background"] = "red";
             yield return null;
             AssertOrder(4, 2, 3, 5, 6, 7, 1);
 
@@ -80,43 +67,20 @@ namespace ReactUnity.Tests
             Q("v3").Style["order"] = -4;
             yield return null;
             AssertOrder(3, 4, 0, 2, 9, 5, 6, 7, 8, 1);
-
-            Globals["show9"] = false;
-            yield return null;
-            Globals["show9"] = true;
-            yield return null;
-            AssertOrder(3, 4, 0, 2, 9, 5, 6, 7, 8, 1);
         }
 
         private void AssertOrder(params int[] expectedOrder)
         {
             var firstItem = Q("v" + expectedOrder[0]);
-            var min = firstItem.GetBoundingClientRect().y;
+            var min = firstItem.Element.layout.y;
 
             for (int i = 1; i < expectedOrder.Length; i++)
             {
                 var item = expectedOrder[i];
                 var itemCmp = Q("v" + item);
 
-                var top = itemCmp.GetBoundingClientRect().y;
+                var top = itemCmp.Element.layout.y;
                 Assert.Greater(top, min, $"Expected {item} to come after {expectedOrder[i - 1]}");
-                min = top;
-            }
-
-            AssertRectTransformOrder(expectedOrder);
-        }
-        private void AssertRectTransformOrder(params int[] expectedOrder)
-        {
-            var firstItem = Q("v" + expectedOrder[0]);
-            var min = firstItem.RectTransform.GetSiblingIndex();
-
-            for (int i = 1; i < expectedOrder.Length; i++)
-            {
-                var item = expectedOrder[i];
-                var itemCmp = Q("v" + item);
-
-                var top = itemCmp.RectTransform.GetSiblingIndex();
-                Assert.Greater(top, min, $"Expected {item} rect to come after {expectedOrder[i - 1]}");
                 min = top;
             }
         }

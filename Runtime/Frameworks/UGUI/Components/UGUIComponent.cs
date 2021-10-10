@@ -435,7 +435,14 @@ namespace ReactUnity.UGUI
             if (child is UGUIComponent u)
             {
                 u.RectTransform.SetParent(Container, false);
-                if (index >= 0) u.RectTransform.SetSiblingIndex(index);
+                if (index >= 0)
+                {
+                    if (Children.Count > index)
+                    {
+                        var siblingIndex = (Children[index] as UGUIComponent).RectTransform.GetSiblingIndex();
+                        u.RectTransform.SetSiblingIndex(siblingIndex);
+                    }
+                }
                 return true;
             }
             return false;
@@ -451,7 +458,7 @@ namespace ReactUnity.UGUI
             return false;
         }
 
-        public override void UpdateOrder(int prev, int current)
+        public override bool UpdateOrder(int prev, int current)
         {
             var siblings = Parent.Layout;
             var count = siblings.Count;
@@ -490,11 +497,53 @@ namespace ReactUnity.UGUI
                 }
             }
 
+            var hasUpdate = false;
+
             if (expectedIndex != currentIndex)
             {
                 siblings.RemoveAt(currentIndex);
                 siblings.Insert(expectedIndex, layout);
+                hasUpdate = true;
             }
+
+            if (siblings.Count > expectedIndex + 1)
+            {
+                var item = siblings[expectedIndex + 1];
+                var newInd = (item.Data as UGUIComponent).RectTransform.GetSiblingIndex();
+                var oldInd = RectTransform.GetSiblingIndex();
+                if (newInd > oldInd) newInd--;
+
+                if (newInd != oldInd)
+                {
+                    RectTransform.SetSiblingIndex(newInd);
+                    hasUpdate = true;
+                }
+            }
+            else
+            {
+                var oldInd = RectTransform.GetSiblingIndex();
+
+                if (AfterPseudo != null)
+                {
+                    var newInd = (AfterPseudo as UGUIComponent).RectTransform.GetSiblingIndex();
+
+                    if (newInd != oldInd)
+                    {
+                        RectTransform.SetSiblingIndex(newInd);
+                        hasUpdate = true;
+                    }
+                }
+                else
+                {
+                    if (oldInd != RectTransform.parent.childCount - 1)
+                    {
+                        RectTransform.SetAsLastSibling();
+                        hasUpdate = true;
+                    }
+                }
+            }
+
+            return hasUpdate;
         }
         #endregion
     }

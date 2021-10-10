@@ -13,15 +13,21 @@ using UnityEditor.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
+    public interface IUIToolkitComponent : IReactComponent
+    {
+        VisualElement Element { get; }
+    }
+
     public interface IUIToolkitComponent<out T> : IReactComponent where T : VisualElement, new()
     {
         T Element { get; }
         VisualElement TargetElement { get; }
     }
 
-    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent<T> where T : VisualElement, new()
+    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent, IUIToolkitComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
+        VisualElement IUIToolkitComponent.Element => Element;
         public virtual VisualElement TargetElement => Element;
         public override string Name
         {
@@ -39,7 +45,7 @@ namespace ReactUnity.UIToolkit
         {
             ClassList = new UITClassList(this);
             Element = element;
-            Element.userData = Data;
+            Element.userData = this;
             Name = null;
         }
 
@@ -47,7 +53,7 @@ namespace ReactUnity.UIToolkit
         {
             ClassList = new UITClassList(this);
             Element = new T();
-            Element.userData = Data;
+            Element.userData = this;
             Name = null;
         }
 
@@ -368,9 +374,52 @@ namespace ReactUnity.UIToolkit
             return MouseCaptureController.HasMouseCapture(TargetElement);
         }
 
-        public override void UpdateOrder(int prev, int current)
+        public override bool UpdateOrder(int prev, int current)
         {
-            // TODO: implement order
+            var siblings = (Parent as IUIToolkitComponent).Element;
+            var count = siblings.childCount;
+            var currentIndex = -1;
+            var layout = Element;
+
+            for (int i = 0; i < count; i++)
+            {
+                var sb = siblings[i];
+
+                if (sb == layout)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            var expectedIndex = currentIndex;
+
+            if (current > prev)
+            {
+                for (int i = currentIndex + 1; i < count; i++)
+                {
+                    var sb = siblings[i].userData as IReactComponent;
+                    if (sb.CurrentOrder > current || (sb.CurrentOrder == current && sb.ParentIndex > ParentIndex)) break;
+                    expectedIndex = i;
+                }
+            }
+            else
+            {
+                for (int i = currentIndex - 1; i >= 0; i--)
+                {
+                    var sb = siblings[i].userData as IReactComponent;
+                    if (sb.CurrentOrder < current || (sb.CurrentOrder == current && sb.ParentIndex < ParentIndex)) break;
+                    expectedIndex = i;
+                }
+            }
+
+            if (expectedIndex != currentIndex)
+            {
+                siblings.RemoveAt(currentIndex);
+                siblings.Insert(expectedIndex, layout);
+                return true;
+            }
+            return false;
         }
 
         public class UITClassList : ClassList

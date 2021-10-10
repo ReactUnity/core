@@ -72,7 +72,6 @@ namespace ReactUnity.UGUI.Behaviours
                 var posX = x + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -y + pivotDiff.y * Layout.LayoutHeight;
 
-                rt.localPosition = Vector2.zero;
                 rt.anchoredPosition = new Vector2(posX, posY) + tran;
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
@@ -81,7 +80,7 @@ namespace ReactUnity.UGUI.Behaviours
             {
                 var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
-                rt.localPosition = Vector2.zero;
+
                 rt.anchoredPosition = new Vector2(posX, posY) + tran;
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
                 rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);

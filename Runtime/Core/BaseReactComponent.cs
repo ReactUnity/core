@@ -189,6 +189,11 @@ namespace ReactUnity
         {
             if (Parent != null)
             {
+                for (int i = ParentIndex + 1; i < Parent.Children.Count; i++)
+                {
+                    if (Parent.Children[i] is BaseReactComponent<ContextType> br) br.ParentIndex--;
+                }
+
                 Parent.UnregisterChild(this);
                 Parent.MarkStyleUpdateWithSiblings(true);
                 ParentIndex = -1;
@@ -204,6 +209,7 @@ namespace ReactUnity
             {
                 ParentIndex = newParent.Children.Count;
                 newParent.RegisterChild(this);
+                UpdateOrder(int.MaxValue, CurrentOrder);
             }
             else
             {
@@ -216,6 +222,8 @@ namespace ReactUnity
                 {
                     if (newParent.Children[i] is BaseReactComponent<ContextType> br) br.ParentIndex++;
                 }
+                UpdateOrder(int.MaxValue, CurrentOrder);
+                UpdateOrder(int.MinValue, CurrentOrder);
             }
 
             StyleState.SetParent(newParent.StyleState);
@@ -358,7 +366,7 @@ namespace ReactUnity
 
         protected abstract void ApplyStylesSelf();
         protected abstract void ApplyLayoutStylesSelf();
-        public abstract void UpdateOrder(int prev, int current);
+        public abstract bool UpdateOrder(int prev, int current);
 
         public void ApplyStyles()
         {

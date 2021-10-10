@@ -149,7 +149,7 @@ namespace ReactUnity
 
         protected override bool InsertChild(IReactComponent child, int index) => false;
 
-        public override void UpdateOrder(int prev, int current) { }
+        public override bool UpdateOrder(int prev, int current) => false;
 
         #endregion
     }

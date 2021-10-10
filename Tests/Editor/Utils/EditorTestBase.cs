@@ -37,8 +37,8 @@ namespace ReactUnity.Editor.Tests
         public void Render() => Component.Run();
         public StyleSheet InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
         public void RemoveStyle(StyleSheet sheet) => Context.RemoveStyle(sheet);
-        public BaseReactComponent<UIToolkitContext> Q(string query, IReactComponent scope = null) =>
-            (scope ?? Host).QuerySelector(query) as BaseReactComponent<UIToolkitContext>;
+        public IUIToolkitComponent Q(string query, IReactComponent scope = null) =>
+            (scope ?? Host).QuerySelector(query) as IUIToolkitComponent;
         public List<BaseReactComponent<UIToolkitContext>> QA(string query, IReactComponent scope = null) =>
             (scope ?? Host).QuerySelectorAll(query).OfType<BaseReactComponent<UIToolkitContext>>().ToList();
         public IEnumerator AdvanceTime(float advanceBy)
