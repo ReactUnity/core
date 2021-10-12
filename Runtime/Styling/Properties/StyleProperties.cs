@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Animations;
 using ReactUnity.Converters;
+using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using TMPro;

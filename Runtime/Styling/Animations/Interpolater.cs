@@ -5,7 +5,7 @@ using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using UnityEngine;
 
-namespace ReactUnity.Animations
+namespace ReactUnity.Styling.Animations
 {
     public static class Interpolater
     {

@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ReactUnity.Converters;
-using ReactUnity.Styling;
 using UnityEngine;
 
-namespace ReactUnity.Animations
+namespace ReactUnity.Styling.Animations
 {
     public delegate float TimingFunction(float value, float start = 0, float end = 1);
 

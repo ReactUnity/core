@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using NUnit.Framework;
-using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
 using UnityEngine;
 

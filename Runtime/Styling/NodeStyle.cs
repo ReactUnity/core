@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ReactUnity.Animations;
+using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
 using TMPro;

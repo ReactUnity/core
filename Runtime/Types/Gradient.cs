@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Animations;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 using UnityEngine;
 
 namespace ReactUnity.Types

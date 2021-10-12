@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Helpers;
+using ReactUnity.Helpers.Visitors;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using ReactUnity.Scripting.DomProxies;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
-using ReactUnity.Visitors;
 using UnityEngine;
 
 namespace ReactUnity

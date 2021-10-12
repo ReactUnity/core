@@ -1,4 +1,4 @@
-namespace ReactUnity.Visitors
+namespace ReactUnity.Helpers.Visitors
 {
     public abstract class ReactComponentVisitor
     {

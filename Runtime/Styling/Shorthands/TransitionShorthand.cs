@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Animations;
 using ReactUnity.Converters;
+using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands

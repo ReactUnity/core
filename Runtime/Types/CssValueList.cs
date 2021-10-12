@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using ReactUnity.Animations;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 
 namespace ReactUnity.Types
 {

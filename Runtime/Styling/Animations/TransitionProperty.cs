@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using ReactUnity.Converters;
-using ReactUnity.Styling;
 using ReactUnity.Styling.Shorthands;
 
-namespace ReactUnity.Animations
+namespace ReactUnity.Styling.Animations
 {
     public class TransitionProperty
     {

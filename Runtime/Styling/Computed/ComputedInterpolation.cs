@@ -1,4 +1,4 @@
-using ReactUnity.Animations;
+using ReactUnity.Styling.Animations;
 
 namespace ReactUnity.Styling.Computed
 {

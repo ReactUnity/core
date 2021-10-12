@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using ReactUnity.Animations;
 using ReactUnity.Scripting;
+using ReactUnity.Styling.Animations;
 using UnityEngine;
 
 namespace ReactUnity.Tests

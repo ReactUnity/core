@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using ReactUnity.Animations;
+using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
 using Mathf = UnityEngine.Mathf;
 

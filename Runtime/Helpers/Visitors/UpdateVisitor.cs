@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace ReactUnity.Visitors
+namespace ReactUnity.Helpers.Visitors
 {
     internal class UpdateVisitor : ReactComponentVisitor
     {

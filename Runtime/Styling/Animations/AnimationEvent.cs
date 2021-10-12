@@ -1,4 +1,4 @@
-namespace ReactUnity.Animations
+namespace ReactUnity.Styling.Animations
 {
     public class AnimationEvent
     {
