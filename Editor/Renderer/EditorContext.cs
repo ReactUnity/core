@@ -13,6 +13,13 @@ namespace ReactUnity.Editor.Renderer
 {
     public class EditorContext : UIToolkitContext
     {
+        public new class Options : UIToolkitContext.Options
+        {
+            public ReactWindow Window;
+            public ReactInspector Inspector;
+            public ReactProperty Property;
+        }
+
         public static new Dictionary<string, Func<string, string, EditorContext, IUIToolkitComponent<VisualElement>>> ComponentCreators
             = new Dictionary<string, Func<string, string, EditorContext, IUIToolkitComponent<VisualElement>>>()
             {
@@ -60,15 +67,11 @@ namespace ReactUnity.Editor.Renderer
         private static TextAsset useragentStylesheet;
         public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/editor/useragent");
 
-        public EditorContext(
-            VisualElement hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider, Action onRestart = null,
-            ReactWindow window = null, ReactInspector inspector = null, ReactProperty property = null
-        ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, onRestart)
+        public EditorContext(Options options) : base(options)
         {
-            Window = window;
-            Inspector = inspector;
-            Property = property;
+            Window = options.Window;
+            Inspector = options.Inspector;
+            Property = options.Property;
         }
 
         public override void Initialize()

@@ -10,7 +10,6 @@ namespace ReactUnity.UIToolkit
     public class ReactUnityElement : VisualElement
     {
         protected IDisposable ScriptWatchDisposable;
-        public ReactUnityRunner runner { get; private set; }
         public ReactContext context { get; private set; }
         public IDispatcher dispatcher { get; private set; }
         public ITimer Timer { get; protected set; }
@@ -39,15 +38,14 @@ namespace ReactUnity.UIToolkit
 
         public virtual void Run()
         {
-            if (runner != null) throw new Exception("ReactUnity UIToolkit is already running");
+            if (context != null) throw new Exception("ReactUnity UIToolkit is already running");
             var src = Script;
 
-            runner = new ReactUnityRunner();
             dispatcher = CreateDispatcher();
             context = CreateContext(src);
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
-                runner.RunScript(sc, context, EngineType, Debug, AwaitDebugger);
+                context.Script.RunScript(sc);
             }, dispatcher, true, true);
         }
 
@@ -57,7 +55,6 @@ namespace ReactUnity.UIToolkit
             if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
             context?.Dispose();
             dispatcher?.Dispose();
-            runner = null;
             context = null;
             dispatcher = null;
             ScriptWatchDisposable = null;
@@ -71,7 +68,19 @@ namespace ReactUnity.UIToolkit
 
         protected virtual ReactContext CreateContext(ScriptSource script)
         {
-            var ctx = new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, Restart);
+            var ctx = new UIToolkitContext(new UIToolkitContext.Options
+            {
+                HostElement = this,
+                Globals = Globals,
+                Source = script,
+                Dispatcher = dispatcher,
+                Timer = Timer ?? UnityTimer.Instance,
+                MediaProvider = MediaProvider,
+                OnRestart = Restart,
+                Debug = Debug,
+                AwaitDebugger = AwaitDebugger,
+                EngineType = EngineType,
+            });
             ctx.Initialize();
             return ctx;
         }

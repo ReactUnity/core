@@ -63,7 +63,7 @@ namespace ReactUnity.DomProxies
             this.restart = ctx?.OnRestart;
         }
 
-        public Location(ReactContext ctx) : this(ctx.Script.GetResolvedSourceUrl(), ctx) { }
+        public Location(ReactContext ctx) : this(ctx.Source.GetResolvedSourceUrl(), ctx) { }
 
         public void reload()
         {

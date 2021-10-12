@@ -36,7 +36,7 @@ namespace ReactUnity.Editor
                 obj[prop.Key + "_exists"] = component.ComputedStyle.HasValue(prop.Value);
             }
 
-            return runner.engine.CreateNativeObject(obj);
+            return context.Script.Engine.CreateNativeObject(obj);
         }
 
         public Dictionary<string, object> CreateStyleDictionary() => new Dictionary<string, object>();

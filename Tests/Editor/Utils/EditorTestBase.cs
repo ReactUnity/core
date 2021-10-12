@@ -19,7 +19,6 @@ namespace ReactUnity.Editor.Tests
     {
         protected TestReactWindow Window => EditorWindow.GetWindow<TestReactWindow>();
         protected ReactUnityEditorElement Component => Window?.hostElement;
-        protected ReactUnityRunner Runner => Component?.runner;
         protected ReactContext Context => Component?.context;
         protected EditorContext EditorContext => Context as EditorContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;

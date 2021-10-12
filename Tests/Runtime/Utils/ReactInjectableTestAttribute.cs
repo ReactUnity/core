@@ -1,3 +1,4 @@
+using ReactUnity.Scripting;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -44,12 +45,12 @@ namespace ReactUnity.Tests
             };
         }
 
-        public override void AfterStart(ReactUnityRunner runner)
+        public override void AfterStart(ScriptContext ctx)
         {
-            base.AfterStart(runner);
+            base.AfterStart(ctx);
 
             if (!string.IsNullOrWhiteSpace(Style))
-                runner.context.InsertStyle(Style);
+                ctx.Context.InsertStyle(Style);
         }
     }
 }

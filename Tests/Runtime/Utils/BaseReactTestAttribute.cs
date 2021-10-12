@@ -101,21 +101,21 @@ namespace ReactUnity.Tests
         }
 
 
-        public virtual void BeforeStart(ReactUnityRunner runner)
+        public virtual void BeforeStart(ScriptContext ctx)
         {
-            runner.engine.SetValue("Assert", typeof(Assert));
-            runner.engine.SetValue("Has", typeof(Has));
-            runner.engine.SetValue("Is", typeof(Is));
-            runner.engine.SetValue("Iz", typeof(Iz));
-            runner.engine.SetValue("Contains", typeof(Contains));
-            runner.engine.SetValue("Does", typeof(Does));
-            runner.engine.SetValue("Assume", typeof(Assume));
-            runner.engine.SetValue("Throws", typeof(Throws));
-            runner.engine.SetValue("LogAssert", typeof(LogAssert));
+            ctx.Engine.SetValue("Assert", typeof(Assert));
+            ctx.Engine.SetValue("Has", typeof(Has));
+            ctx.Engine.SetValue("Is", typeof(Is));
+            ctx.Engine.SetValue("Iz", typeof(Iz));
+            ctx.Engine.SetValue("Contains", typeof(Contains));
+            ctx.Engine.SetValue("Does", typeof(Does));
+            ctx.Engine.SetValue("Assume", typeof(Assume));
+            ctx.Engine.SetValue("Throws", typeof(Throws));
+            ctx.Engine.SetValue("LogAssert", typeof(LogAssert));
         }
 
 
-        public virtual void AfterStart(ReactUnityRunner runner)
+        public virtual void AfterStart(ScriptContext runner)
         {
         }
 

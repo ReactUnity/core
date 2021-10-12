@@ -33,7 +33,7 @@ namespace ReactUnity.Scripting
 #endif
                     typeof(Vector3).Assembly,
                     typeof(Component).Assembly,
-                    typeof(ReactUnityRunner).Assembly
+                    typeof(ReactContext).Assembly
                 );
                 opt.CatchClrExceptions(ex => {
                     Debug.LogException(ex);

@@ -14,7 +14,6 @@ namespace ReactUnity.Editor.Renderer
     {
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
-        public ReactUnityRunner runner => hostElement?.runner;
         public ReactContext context => hostElement?.context;
         public IDispatcher dispatcher => hostElement?.dispatcher;
         public IMediaProvider mediaProvider => hostElement?.MediaProvider;

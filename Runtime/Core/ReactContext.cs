@@ -5,6 +5,7 @@ using ExCSS;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
+using ReactUnity.Scripting;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
@@ -14,11 +15,23 @@ namespace ReactUnity
 {
     public abstract class ReactContext : IDisposable
     {
-        public enum LayoutMergeMode
+        public class Options
         {
-            Both = 0,
-            LayoutOnly = 1,
-            CssOnly = 2,
+            public GlobalRecord Globals;
+            public ScriptSource Source;
+            public IDispatcher Dispatcher;
+            public ITimer Timer;
+            public IMediaProvider MediaProvider;
+            public Action OnRestart;
+            public JavascriptEngineType EngineType;
+            public bool Debug;
+            public bool AwaitDebugger;
+            public virtual bool CalculatesLayout { get; }
+
+            public Options()
+            {
+
+            }
         }
 
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
@@ -29,7 +42,8 @@ namespace ReactUnity
         public GlobalRecord Globals { get; private set; }
         public bool IsDisposed { get; private set; }
 
-        public ScriptSource Script { get; }
+        public Options options { get; }
+        public ScriptSource Source { get; }
         public ITimer Timer { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
@@ -39,33 +53,34 @@ namespace ReactUnity
         public Action OnRestart { get; }
         public StylesheetParser StyleParser { get; }
         public StyleContext Style { get; }
+        public ScriptContext Script { get; }
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
         public List<IDisposable> Disposables { get; } = new List<IDisposable>();
 
-        public ReactContext(
-            GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            ITimer timer, IMediaProvider mediaProvider, Action onRestart, bool calculatesLayout
-        )
+        public ReactContext(Options options)
         {
-            Globals = globals;
-            Script = script;
-            Timer = timer;
-            Dispatcher = dispatcher;
-            OnRestart = onRestart ?? (() => { });
-            CalculatesLayout = calculatesLayout;
+            this.options = options;
+            Globals = options.Globals;
+            Source = options.Source;
+            Timer = options.Timer;
+            Dispatcher = options.Dispatcher;
+            OnRestart = options.OnRestart ?? (() => { });
+            CalculatesLayout = options.CalculatesLayout;
             Location = new Location(this);
-            MediaProvider = mediaProvider;
+            MediaProvider = options.MediaProvider;
             CursorAPI = new CursorAPI(this);
             LocalStorage = new LocalStorage();
 
             StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
             Style = new StyleContext(this);
 
+            Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
+
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
 
-            if (CalculatesLayout) dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
+            if (CalculatesLayout) options.Dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
         }
 
         public virtual StyleSheet InsertStyle(string style) => InsertStyle(style, 0);
@@ -89,8 +104,8 @@ namespace ReactUnity
 
         public virtual string ResolvePath(string path)
         {
-            var source = Script.GetResolvedSourceUrl();
-            var type = Script.EffectiveScriptSource;
+            var source = Source.GetResolvedSourceUrl();
+            var type = Source.EffectiveScriptSource;
 
             if (type == ScriptSourceType.Url)
             {
@@ -116,10 +131,10 @@ namespace ReactUnity
 
         public virtual ScriptSource CreateStaticScript(string path)
         {
-            var src = new ScriptSource(Script);
+            var src = new ScriptSource(Source);
             src.SourcePath = ResolvePath(path);
-            src.Type = Script.EffectiveScriptSource;
-            src.UseDevServer = Script.IsDevServer;
+            src.Type = Source.EffectiveScriptSource;
+            src.UseDevServer = Source.IsDevServer;
             return src;
         }
 
@@ -142,6 +157,7 @@ namespace ReactUnity
             Host.Destroy(false);
             Dispatcher?.Dispose();
             Globals?.Dispose();
+            Script?.Dispose();
             foreach (var item in Disposables) item?.Dispose();
         }
     }

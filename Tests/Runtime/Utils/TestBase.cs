@@ -21,7 +21,6 @@ namespace ReactUnity.Tests
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
-        protected ReactUnityRunner Runner => Component?.runner;
         protected ReactContext Context => Component?.Context;
         protected UGUIContext UGUIContext => Context as UGUIContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;

@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Helpers;
-using ReactUnity.Scheduling;
-using ReactUnity.StyleEngine;
 using ReactUnity.UIToolkit.StateHandlers;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,6 +8,13 @@ namespace ReactUnity.UIToolkit
 {
     public class UIToolkitContext : ReactContext
     {
+        public new class Options : ReactContext.Options
+        {
+            public VisualElement HostElement;
+            public Action<AudioClip> OnAudioPlayback;
+            public override bool CalculatesLayout => false;
+        }
+
         public static Func<string, string, UIToolkitContext, IUIToolkitComponent<VisualElement>> defaultCreator =
             (tag, text, context) => new UIToolkitComponent<VisualElement>(context, tag);
 
@@ -61,14 +65,10 @@ namespace ReactUnity.UIToolkit
 
         public VisualElement HostElement { get; }
 
-        public UIToolkitContext(
-            VisualElement hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            Action onRestart = null, Action<AudioClip> onAudioPlayback = null
-        ) : base(globals, script, dispatcher, timer, mediaProvider, onRestart, false)
+        public UIToolkitContext(Options options) : base(options)
         {
-            OnAudioPlayback = onAudioPlayback;
-            HostElement = hostElement;
+            OnAudioPlayback = options.OnAudioPlayback;
+            HostElement = options.HostElement;
         }
 
         public virtual void Initialize()

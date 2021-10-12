@@ -24,7 +24,22 @@ namespace ReactUnity.UGUI
         protected override ReactContext CreateContext(ScriptSource script)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, Render, IconSets, DefaultIconSet, CursorSet);
+            return new UGUIContext(new UGUIContext.Options
+            {
+                HostElement = Root,
+                Globals = globals,
+                Source = script,
+                Dispatcher = dispatcher,
+                Timer = timer ?? UnityTimer.Instance,
+                MediaProvider = MediaProvider,
+                OnRestart = Render,
+                IconSets = IconSets,
+                DefaultIconSet = DefaultIconSet,
+                CursorSet = CursorSet,
+                Debug = Debug,
+                AwaitDebugger = AwaitDebugger,
+                EngineType = Scripting.JavascriptEngineType.Auto,
+            });
         }
 
         protected override IMediaProvider CreateMediaProvider()

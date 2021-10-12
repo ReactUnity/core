@@ -11,7 +11,7 @@ namespace ReactUnity
     public abstract class ReactUnityBase : MonoBehaviour
     {
         [Serializable]
-        public class ReactUnityRunnerEvent : UnityEvent<ReactUnityRunner> { }
+        public class ScriptContextEvent : UnityEvent<ScriptContext> { }
 
         public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
 
@@ -29,15 +29,14 @@ namespace ReactUnity
         private IDisposable ScriptWatchDisposable { get; set; }
         public IDispatcher dispatcher { get; private set; }
         public ITimer timer { get; set; }
-        public ReactUnityRunner runner { get; private set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
 
         #region Advanced Options
 
         [HideInInspector] public bool AutoRender = true;
-        [HideInInspector] public ReactUnityRunnerEvent BeforeStart = new ReactUnityRunnerEvent();
-        [HideInInspector] public ReactUnityRunnerEvent AfterStart = new ReactUnityRunnerEvent();
+        [HideInInspector] public ScriptContextEvent BeforeStart = new ScriptContextEvent();
+        [HideInInspector] public ScriptContextEvent AfterStart = new ScriptContextEvent();
 
         #endregion
 
@@ -58,10 +57,7 @@ namespace ReactUnity
 
         private void OnValidate()
         {
-            if (runner != null)
-            {
-                runner.context.Globals.UpdateStringObjectDictionary(Globals, true);
-            }
+            Context?.Globals.UpdateStringObjectDictionary(Globals, true);
         }
 
         protected virtual void Clean()
@@ -72,8 +68,6 @@ namespace ReactUnity
 
             Context?.Dispose();
             dispatcher?.Dispose();
-            runner?.Dispose();
-            runner = null;
             dispatcher = null;
             Context = null;
             ScriptWatchDisposable = null;
@@ -84,12 +78,11 @@ namespace ReactUnity
         private IDisposable LoadAndRun(ScriptSource script, bool disableWarnings = false)
         {
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
-            runner = new ReactUnityRunner();
             MediaProvider = CreateMediaProvider();
             Context = CreateContext(script);
 
             var watcherDisposable = script.GetScript((code, isDevServer) => {
-                runner.RunScript(code, Context, EngineType, Debug, AwaitDebugger, BeforeStart, AfterStart);
+                Context.Script.RunScript(code, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 
             return watcherDisposable;

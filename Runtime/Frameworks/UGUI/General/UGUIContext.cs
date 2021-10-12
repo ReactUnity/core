@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ReactUnity.Helpers;
-using ReactUnity.Scheduling;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
@@ -11,6 +9,15 @@ namespace ReactUnity.UGUI
 {
     public class UGUIContext : ReactContext
     {
+        public new class Options : ReactContext.Options
+        {
+            public RectTransform HostElement;
+            public List<IconSet> IconSets;
+            public IconSet DefaultIconSet;
+            public CursorSet CursorSet;
+            public override bool CalculatesLayout => true;
+        }
+
         static public Dictionary<string, Func<string, string, UGUIContext, IReactComponent>> ComponentCreators { get; }
             = new Dictionary<string, Func<string, string, UGUIContext, IReactComponent>>
             {
@@ -56,24 +63,20 @@ namespace ReactUnity.UGUI
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
-        public UGUIContext(
-            RectTransform hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
-            Action onRestart, List<IconSet> iconSets, IconSet defaultIconSet, CursorSet cursorSet
-        ) : base(globals, script, dispatcher, timer, mediaProvider, onRestart, true)
+        public UGUIContext(Options options) : base(options)
         {
-            Host = new HostComponent(hostElement, this);
+            Host = new HostComponent(options.HostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
-            if (iconSets != null)
+            if (options.IconSets != null)
             {
-                if (iconSets.Count > 0) IconSets["default"] = iconSets[0];
-                foreach (var ic in iconSets) IconSets[ic.Name] = ic;
+                if (options.IconSets.Count > 0) IconSets["default"] = options.IconSets[0];
+                foreach (var ic in options.IconSets) IconSets[ic.Name] = ic;
             }
 
-            CursorSet = cursorSet;
-            DefaultIconSet = defaultIconSet;
+            CursorSet = options.CursorSet;
+            DefaultIconSet = options.DefaultIconSet;
             if (DefaultIconSet == null)
             {
                 if (IconSets.TryGetValue("default", out var def)) DefaultIconSet = def;
