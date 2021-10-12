@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Animations;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using UnityEngine;
 
 namespace ReactUnity.Tests

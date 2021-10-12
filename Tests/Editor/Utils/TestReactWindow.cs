@@ -1,7 +1,7 @@
 using System;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using UnityEngine;
 
 namespace ReactUnity.Editor.Tests

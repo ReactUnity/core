@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using UnityEditor;
 using UnityEngine.TestTools;
 

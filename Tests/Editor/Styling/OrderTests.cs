@@ -1,6 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 
 namespace ReactUnity.Editor.Tests.Renderer
 {

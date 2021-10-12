@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using ReactUnity.StyleEngine;
 using UnityEngine.Events;
 

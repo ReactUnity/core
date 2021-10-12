@@ -10,7 +10,7 @@ using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
 using UnityEngine;
 
-namespace ReactUnity.ScriptEngine
+namespace ReactUnity.Scripting
 {
     public class ClearScriptEngine : IJavaScriptEngine, IDisposable
     {

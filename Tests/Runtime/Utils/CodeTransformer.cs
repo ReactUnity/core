@@ -1,4 +1,4 @@
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using UnityEngine;
 
 namespace ReactUnity.Tests

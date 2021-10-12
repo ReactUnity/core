@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ReactUnity.ScriptEngine
+namespace ReactUnity.Scripting
 {
     public enum JavascriptEngineType
     {

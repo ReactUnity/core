@@ -3,7 +3,6 @@ using System.Collections;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ReactUnity
 {

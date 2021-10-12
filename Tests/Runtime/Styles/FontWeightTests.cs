@@ -1,6 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using TMPro;
 
 namespace ReactUnity.Tests

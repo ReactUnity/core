@@ -6,7 +6,7 @@
 #define REACT_JINT
 #endif
 
-namespace ReactUnity.ScriptEngine
+namespace ReactUnity.Scripting
 {
     internal class JavascriptEngineHelpers
     {

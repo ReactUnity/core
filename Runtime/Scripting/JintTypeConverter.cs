@@ -10,7 +10,7 @@ using Jint.Native.Function;
 using Jint.Runtime.Interop;
 using ReactUnity.Helpers;
 
-namespace ReactUnity.ScriptEngine
+namespace ReactUnity.Scripting
 {
     public class JintTypeConverter : DefaultTypeConverter
     {

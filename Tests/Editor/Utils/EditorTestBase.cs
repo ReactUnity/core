@@ -6,7 +6,7 @@ using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using ReactUnity.StyleEngine;
 using ReactUnity.UIToolkit;
 using UnityEditor;

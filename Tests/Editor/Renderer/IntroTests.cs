@@ -1,6 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using ReactUnity.UIToolkit;
 using UnityEngine;
 using UnityEngine.UIElements;

@@ -14,7 +14,7 @@ using Jint.Runtime;
 using Jint.Runtime.Interop;
 using UnityEngine;
 
-namespace ReactUnity.ScriptEngine
+namespace ReactUnity.Scripting
 {
     public class JintEngine : IJavaScriptEngine
     {

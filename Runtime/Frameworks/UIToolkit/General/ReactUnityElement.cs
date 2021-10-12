@@ -1,7 +1,7 @@
 using System;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using ReactUnity.StyleEngine;
 using UnityEngine.UIElements;
 

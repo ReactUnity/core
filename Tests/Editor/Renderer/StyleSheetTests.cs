@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
-using ReactUnity.ScriptEngine;
+using ReactUnity.Scripting;
 using ReactUnity.UIToolkit;
 using UnityEngine;
 using UnityEngine.UIElements;
