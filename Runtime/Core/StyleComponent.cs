@@ -1,5 +1,5 @@
 using System;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 
 namespace ReactUnity
 {

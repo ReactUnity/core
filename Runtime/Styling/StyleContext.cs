@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using ExCSS;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling
 {
     public class StyleContext
     {

@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Converters;
-using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling
 {
     public class StyleSheet
     {

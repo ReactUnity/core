@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Converters
 {

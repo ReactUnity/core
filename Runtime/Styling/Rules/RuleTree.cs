@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     public class StyleData
     {

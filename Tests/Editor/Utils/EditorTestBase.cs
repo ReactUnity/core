@@ -7,7 +7,8 @@ using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.UIToolkit;
 using UnityEditor;
 

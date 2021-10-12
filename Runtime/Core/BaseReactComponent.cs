@@ -4,8 +4,8 @@ using System.Linq;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Visitors;
 using UnityEngine;
 

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
 using ReactUnity.Converters;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity
 {

@@ -2,7 +2,7 @@ using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Rules;
 using ReactUnity.UIToolkit;
 
 namespace ReactUnity.Editor.UIToolkit

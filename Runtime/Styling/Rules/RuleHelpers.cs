@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ExCSS;
-using ReactUnity.Styling;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     public static class RuleHelpers
     {

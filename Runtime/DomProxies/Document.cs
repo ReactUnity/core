@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ReactUnity.Helpers;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 
 namespace ReactUnity.DomProxies
 {

@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelection } from "src/context/selection";
 import style from './index.module.scss';
 
-const stylesheets: Record<string, ReactUnity.StyleEngine.StyleSheet> = {};
+const stylesheets: Record<string, ReactUnity.Styling.StyleSheet> = {};
 
 export function GlobalStyle() {
   const [show, setShow] = useState(false);

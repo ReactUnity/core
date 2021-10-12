@@ -1,6 +1,6 @@
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Rules;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Renderer

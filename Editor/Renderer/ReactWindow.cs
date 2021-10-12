@@ -3,7 +3,7 @@ using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Rules;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

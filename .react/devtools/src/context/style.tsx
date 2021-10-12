@@ -37,7 +37,7 @@ const findElementId = (state: State, el: Cmp) => {
 };
 
 const buildSheet = (state: ElementProps) => {
-  const sheet = new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style, '', 1, null);
+  const sheet = new Interop.ReactUnity.Styling.StyleSheet(state.element.Context.Style, '', 1, null);
 
   const style = state.styles;
 

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
 {

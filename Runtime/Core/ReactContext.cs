@@ -6,8 +6,8 @@ using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Rules;
 using ReactUnity.Visitors;
 using UnityEngine;
 

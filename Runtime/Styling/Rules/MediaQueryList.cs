@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     public class MediaQueryList
     {

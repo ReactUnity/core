@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using ReactUnity.Converters;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling
 {

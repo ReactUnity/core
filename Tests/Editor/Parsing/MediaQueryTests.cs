@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Editor.Tests
 {

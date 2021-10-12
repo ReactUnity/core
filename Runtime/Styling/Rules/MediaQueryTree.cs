@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     internal abstract class MediaNode
     {

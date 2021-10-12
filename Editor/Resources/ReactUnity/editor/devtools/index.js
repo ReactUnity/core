@@ -7218,7 +7218,7 @@ if (true) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7232,17 +7232,17 @@ if (true) {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -7255,7 +7255,7 @@ if (true) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -7267,12 +7267,12 @@ if (true) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -7281,7 +7281,7 @@ if (true) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -7829,7 +7829,7 @@ function _slicedToArray(arr, i) {
 ;// CONCATENATED MODULE: ./src/context/selection.tsx
 var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=Interop.UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}var ctx=/*#__PURE__*/react.createContext(undefined);function SelectionProvider(_ref){var children=_ref.children;var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/react.createElement(ctx.Provider,{value:selection},children);};function useSelection(){var context=react.useContext(ctx);if(context===undefined){throw new Error('useSelection must be used within a provider');}return context;}
 ;// CONCATENATED MODULE: ./src/context/style.tsx
-var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('devtools-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.StyleEngine.StyleSheet(state.element.Context.Style,'',1,null);var style=state.styles;var selector="[devtools-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
+var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('devtools-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.Styling.StyleSheet(state.element.Context.Style,'',1,null);var style=state.styles;var selector="[devtools-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(487);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -7852,15 +7852,15 @@ var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTrans
 var index_module = __webpack_require__(618);
 ;// CONCATENATED MODULE: ./src/main/classes/index.module.scss
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
 
 var options = {};
 
@@ -7868,7 +7868,7 @@ options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
 
       options.insert = insertBySelector_default().bind(null, "head");
-    
+
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7885,15 +7885,15 @@ var savedClasses={};function Classes(){var _useSelection;var selection=(_useSele
 var global_style_index_module = __webpack_require__(919);
 ;// CONCATENATED MODULE: ./src/main/global-style/index.module.scss
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
 
 var index_module_options = {};
 
@@ -7901,7 +7901,7 @@ index_module_options.styleTagTransform = (styleTagTransform_default());
 index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       index_module_options.insert = insertBySelector_default().bind(null, "head");
-    
+
 index_module_options.domAPI = (styleDomAPI_default());
 index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8066,15 +8066,15 @@ var _excluded=["arrangement","partTemplate"];var fourDirectionParts=['','top','r
 var grouped_styles_index_module = __webpack_require__(500);
 ;// CONCATENATED MODULE: ./src/main/grouped-styles/index.module.scss
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
 
 var grouped_styles_index_module_options = {};
 
@@ -8082,7 +8082,7 @@ grouped_styles_index_module_options.styleTagTransform = (styleTagTransform_defau
 grouped_styles_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       grouped_styles_index_module_options.insert = insertBySelector_default().bind(null, "head");
-    
+
 grouped_styles_index_module_options.domAPI = (styleDomAPI_default());
 grouped_styles_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8099,15 +8099,15 @@ function GroupedStyles(_ref){var showShowAll=_ref.showShowAll;var _useState=(0,r
 var main_index_module = __webpack_require__(521);
 ;// CONCATENATED MODULE: ./src/main/index.module.scss
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
 
 var main_index_module_options = {};
 
@@ -8115,7 +8115,7 @@ main_index_module_options.styleTagTransform = (styleTagTransform_default());
 main_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       main_index_module_options.insert = insertBySelector_default().bind(null, "head");
-    
+
 main_index_module_options.domAPI = (styleDomAPI_default());
 main_index_module_options.insertStyleElement = (insertStyleElement_default());
 

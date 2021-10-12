@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     public interface IMediaProvider
     {

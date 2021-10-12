@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Styling.Rules
 {
     public class RuleTreeNode<T> : IComparable<RuleTreeNode<T>>
     {
