@@ -1,7 +1,7 @@
 using System;
 using ReactUnity.Helpers;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class WebSocketProxy : IDisposable
     {

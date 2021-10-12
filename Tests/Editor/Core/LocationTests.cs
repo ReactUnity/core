@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using ReactUnity.DomProxies;
+using ReactUnity.Scripting.DomProxies;
 
 namespace ReactUnity.Editor.Tests
 {

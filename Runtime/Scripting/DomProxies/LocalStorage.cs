@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class LocalStorage
     {

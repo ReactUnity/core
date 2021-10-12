@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using ReactUnity.Helpers;
 using UnityEngine.Networking;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class XMLHttpRequest
     {

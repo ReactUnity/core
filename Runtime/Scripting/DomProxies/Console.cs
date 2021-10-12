@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class ConsoleProxy
     {

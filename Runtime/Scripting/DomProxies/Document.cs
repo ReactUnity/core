@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class DocumentProxy
     {

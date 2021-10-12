@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ExCSS;
-using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
+using ReactUnity.Scripting.DomProxies;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Visitors;
@@ -27,11 +27,6 @@ namespace ReactUnity
             public bool Debug;
             public bool AwaitDebugger;
             public virtual bool CalculatesLayout { get; }
-
-            public Options()
-            {
-
-            }
         }
 
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");

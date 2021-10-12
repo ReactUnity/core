@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     /// <summary>
     /// Handler for WebSocket Open event.

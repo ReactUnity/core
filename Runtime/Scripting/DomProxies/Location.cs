@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace ReactUnity.DomProxies
+namespace ReactUnity.Scripting.DomProxies
 {
     public class Location
     {
