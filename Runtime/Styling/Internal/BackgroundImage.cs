@@ -28,8 +28,8 @@ namespace ReactUnity.Styling.Internal
         public ReactContext Context;
         private BackgroundBlendMode BlendMode;
 
-        public YogaValue2 backgroundSize = YogaValue2.Full;
-        public YogaValue2 BackgroundSize
+        public BackgroundSize backgroundSize = BackgroundSize.Auto;
+        public BackgroundSize BackgroundSize
         {
             get => backgroundSize;
             set
@@ -73,12 +73,13 @@ namespace ReactUnity.Styling.Internal
             {
                 Material result = base.materialForRendering;
 
-                var sz = StylingUtils.GetRatioValue(backgroundSize, Size, 1, false);
+                // TODO: handle cover and contain
+                var sz = StylingUtils.GetRatioValue(backgroundSize.Value, Size, 1, false);
                 var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
                 result.SetVector(SizeProp, sz);
                 result.SetVector(PosProp, ps);
 
-                var pointSz = StylingUtils.GetPointValue(backgroundSize, Size, Size, false);
+                var pointSz = StylingUtils.GetPointValue(backgroundSize.Value, Size, Size, false);
                 Definition?.ModifyMaterial(Context, result, pointSz);
                 return result;
             }
@@ -135,7 +136,7 @@ namespace ReactUnity.Styling.Internal
 
             if (image != null)
             {
-                var sz = StylingUtils.GetPointValue(backgroundSize, Size, Size, false);
+                var sz = StylingUtils.GetPointValue(backgroundSize.Value, Size, Size, false);
 
                 image.GetTexture(Context, sz, (sp) => {
                     if (image != Definition) return;

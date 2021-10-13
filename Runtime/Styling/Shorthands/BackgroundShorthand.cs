@@ -13,6 +13,7 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.backgroundColor,
             StyleProperties.backgroundImage,
             StyleProperties.backgroundPosition,
+            StyleProperties.backgroundSize,
         };
 
         public BackgroundShorthand(string name) : base(name) { }
@@ -38,11 +39,12 @@ namespace ReactUnity.Styling.Shorthands
 
             var images = new ImageDefinition[count];
             var positions = new YogaValue2[count];
+            var sizes = new BackgroundSize[count];
 
             for (int ci = 0; ci < count; ci++)
             {
                 var comma = commas[ci];
-                var splits = ParserHelpers.SplitWhitespace(comma);
+                var splits = ParserHelpers.SplitShorthand(comma);
 
                 var isLast = ci == (count - 1);
 
@@ -51,6 +53,17 @@ namespace ReactUnity.Styling.Shorthands
                 var posYSet = false;
                 YogaValue posX = YogaValue.Undefined();
                 YogaValue posY = YogaValue.Undefined();
+
+                var sizeXSet = false;
+                var sizeYSet = false;
+                YogaValue sizeX = YogaValue.Auto();
+                YogaValue sizeY = YogaValue.Auto();
+
+                var sizeSetByKeyword = false;
+                BackgroundSize size = BackgroundSize.Auto;
+
+
+                var canSetSize = -1;
 
                 for (int i = 0; i < splits.Count; i++)
                 {
@@ -70,7 +83,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posXSet)
                     {
-                        var val = AllConverters.YogaValueConverter.Parse(split);
+                        var val = YogaValueConverter.Horizontal.Parse(split);
 
                         if (val is YogaValue v)
                         {
@@ -83,7 +96,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posYSet)
                     {
-                        var val = AllConverters.YogaValueConverter.Parse(split);
+                        var val = YogaValueConverter.Vertical.Parse(split);
 
                         if (val is YogaValue v)
                         {
@@ -93,18 +106,60 @@ namespace ReactUnity.Styling.Shorthands
                         }
                     }
 
-                    if (!posXSet && !posYSet)
+                    if (split == "/")
                     {
-                        var val = AllConverters.YogaValue2Converter.Parse(split);
-
-                        if (val is YogaValue2 v)
+                        if (posXSet)
                         {
-                            posX = v.X;
-                            posY = v.Y;
-                            posXSet = posYSet = true;
+                            posYSet = true;
+                            canSetSize = i + 1;
                             continue;
                         }
                     }
+
+                    if (canSetSize == i)
+                    {
+                        if (split == "cover")
+                        {
+                            sizeSetByKeyword = sizeXSet = sizeYSet = true;
+                            size = BackgroundSize.Cover;
+                            continue;
+                        }
+
+                        if (split == "contain")
+                        {
+                            sizeSetByKeyword = sizeXSet = sizeYSet = true;
+                            size = BackgroundSize.Contain;
+                            continue;
+                        }
+
+                        if (!sizeXSet)
+                        {
+                            var val = AllConverters.YogaValueConverter.Parse(split);
+
+                            if (val is YogaValue v)
+                            {
+                                sizeX = v;
+                                sizeXSet = true;
+                                canSetSize = i + 1;
+                                continue;
+                            }
+                        }
+
+                        if (!sizeYSet)
+                        {
+                            var val = AllConverters.YogaValueConverter.Parse(split);
+
+                            if (val is YogaValue v)
+                            {
+                                sizeY = v;
+                                sizeYSet = true;
+                                continue;
+                            }
+                        }
+
+                        if (!sizeXSet) return null;
+                    }
+
 
                     if (isLast && !colorSet)
                     {
@@ -122,11 +177,15 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (posXSet) positions[ci] = new YogaValue2(posX, posY);
+
+                if (sizeSetByKeyword) sizes[ci] = size;
+                else if (sizeXSet) sizes[ci] = new BackgroundSize(new YogaValue2(sizeX, sizeY));
             }
 
             collection[StyleProperties.backgroundColor] = color;
             collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(images);
             collection[StyleProperties.backgroundPosition] = new CssValueList<YogaValue2>(positions);
+            collection[StyleProperties.backgroundSize] = new CssValueList<BackgroundSize>(sizes);
             return ModifiedProperties;
         }
     }

@@ -38,7 +38,7 @@ namespace ReactUnity.UGUI
                 CursorSet = CursorSet,
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
-                EngineType = Scripting.JavascriptEngineType.Auto,
+                EngineType = EngineType,
             });
         }
 

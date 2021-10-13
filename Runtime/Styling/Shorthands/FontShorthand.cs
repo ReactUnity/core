@@ -29,7 +29,7 @@ namespace ReactUnity.Styling.Shorthands
             if (base.Modify(collection, value) != null) return ModifiedProperties;
 
             var str = value.ToString();
-            var splits = ParserHelpers.SplitWhitespace(str.Replace("/", " / "));
+            var splits = ParserHelpers.SplitShorthand(str);
 
             if (splits.Count == 0) return null;
 

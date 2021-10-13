@@ -184,7 +184,7 @@ namespace ReactUnity.Styling.Internal
             BorderGraphic.SetMaterialDirty();
         }
 
-        private void SetBackground(Color color, ICssValueList<ImageDefinition> images, ICssValueList<YogaValue2> positions, ICssValueList<YogaValue2> sizes)
+        private void SetBackground(Color color, ICssValueList<ImageDefinition> images, ICssValueList<YogaValue2> positions, ICssValueList<BackgroundSize> sizes)
         {
             var validCount = images.Count;
 
@@ -220,8 +220,8 @@ namespace ReactUnity.Styling.Internal
             {
                 var sd = BackgroundGraphics[len - 1 - i];
                 sd.SetBackgroundColorAndImage(color, images.Get(i), blendMode);
-                sd.BackgroundPosition = positions.Get(i, YogaValue2.Undefined);
-                sd.BackgroundSize = sizes.Get(i, YogaValue2.Undefined);
+                sd.BackgroundPosition = positions.Get(i);
+                sd.BackgroundSize = sizes.Get(i);
             }
         }
 

@@ -57,7 +57,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly ValueListStyleProperty<ImageDefinition> backgroundImage = new ValueListStyleProperty<ImageDefinition>("backgroundImage");
         public static readonly ValueListStyleProperty<YogaValue2> backgroundPosition = new ValueListStyleProperty<YogaValue2>("backgroundPosition");
-        public static readonly ValueListStyleProperty<YogaValue2> backgroundSize = new ValueListStyleProperty<YogaValue2>("backgroundSize");
+        public static readonly ValueListStyleProperty<BackgroundSize> backgroundSize = new ValueListStyleProperty<BackgroundSize>("backgroundSize", BackgroundSize.Auto);
         public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");

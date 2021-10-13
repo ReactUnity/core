@@ -66,7 +66,7 @@ namespace ReactUnity.Styling
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
         public ICssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
         public ICssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
-        public ICssValueList<YogaValue2> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
+        public ICssValueList<BackgroundSize> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
 
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);

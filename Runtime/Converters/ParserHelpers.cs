@@ -66,7 +66,10 @@ namespace ReactUnity.Converters
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitWhitespace(string val) => Split(val, ' ');
 
-        public static List<string> Split(string val, char separator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<string> SplitShorthand(string val) => Split(val, ' ', '/');
+
+        public static List<string> Split(string val, char separator, char isolateCharacter = default)
         {
             var acc = new StringBuilder();
             var spaces = new StringBuilder();
@@ -92,6 +95,13 @@ namespace ReactUnity.Converters
                 else if (parensStack == 0 && char.IsWhiteSpace(c))
                 {
                     if (acc.Length > 0) spaces.Append(c);
+                }
+                else if (parensStack == 0 && c == isolateCharacter)
+                {
+                    if (acc.Length > 0) list.Add(acc.ToString());
+                    acc.Clear();
+                    spaces.Clear();
+                    list.Add(c.ToString());
                 }
                 else
                 {
