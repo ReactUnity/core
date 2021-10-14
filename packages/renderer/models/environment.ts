@@ -21,14 +21,23 @@ declare global {
   const HostContainer: NativeContainerInstance;
   const UnityScheduler: ReactUnity.Scheduling.IScheduler;
   const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Helpers.Callback;
-  const location: ReactUnity.DomProxies.Location;
-  const localStorage: ReactUnity.DomProxies.LocalStorage;
+  const location: ReactUnity.Scripting.DomProxies.Location;
+  const localStorage: ReactUnity.Scripting.DomProxies.LocalStorage;
   const console: Console;
-  function matchMedia(query: string): ReactUnity.StyleEngine.MediaQueryList;
+  function matchMedia(query: string): ReactUnity.Styling.Rules.MediaQueryList;
 
   interface DefaultGlobals {
     [key: string]: any;
   }
 
   const Globals: ReactUnity.Helpers.WatchableRecord<any> & DefaultGlobals;
+
+  const setImmediate: (callback: () => void) => number;
+  const setTimeout: (callback: () => void, timeout: number) => number;
+  const setInterval: (callback: () => void, timeout: number) => number;
+  const requestAnimationFrame: (callback: () => void) => number;
+  const clearTimeout: (handle: number) => void;
+  const clearInterval: (handle: number) => void;
+  const clearImmediate: (handle: number) => void;
+  const cancelAnimationFrame: (handle: number) => void;
 }
