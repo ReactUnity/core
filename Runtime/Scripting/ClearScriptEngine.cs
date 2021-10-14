@@ -106,6 +106,11 @@ namespace ReactUnity.Scripting
         public void SetValue<T>(string key, T value)
         {
             if (value is Type t) Engine.AddHostType(key, t);
+            else if (value is Delegate d)
+            {
+                Engine.AddHostObject("___host___", d);
+                Engine.Execute(key + @" = ___host___.toFunction(); delete ___host___;");
+            }
             else Engine.AddHostObject(key, value);
         }
 
