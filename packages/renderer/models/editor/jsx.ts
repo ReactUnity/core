@@ -1,6 +1,6 @@
 
 import * as rc from 'react';
-import { StyleCmpDef, Textable } from '../base';
+import { BaseElements, Textable } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 import * as Components from '../uitoolkit/components';
 import * as EComponents from './components';
@@ -15,9 +15,8 @@ type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
 type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children<never>;
 type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
-export interface EditorElements {
-  [key: string]: BaseElement<any> | StyleCmpDef;
-  style: StyleCmpDef;
+export interface EditorElements extends BaseElements<BaseElement<any>> {
+  html: Components.Html & rc.RefAttributes<Cmp.HtmlComponent> & Children<never>;
   view: BaseElement & { tag?: string };
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;

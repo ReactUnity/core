@@ -1,3 +1,4 @@
+import { BaseCmpProps } from '../base';
 import { ReactUnity, UnityEditor, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference } from '../properties/values';
@@ -5,16 +6,18 @@ import { ActionCallback, Events } from './events';
 
 import Cmp = ReactUnity.UIToolkit;
 type BaseCmp = Cmp.UIToolkitComponent;
-export interface View<TSender = BaseCmp> extends Events<TSender> {
-  name?: string;
-  className?: string;
-  id?: string;
+export interface View<TSender = BaseCmp> extends Events<TSender>, BaseCmpProps {
   tooltip?: string;
   viewDataKey?: string;
   tabIndex?: number;
   style?: Style | string;
   focusable?: boolean;
   bind?: UnityEditor.SerializedObject | UnityEditor.SerializedProperty;
+}
+
+export interface Html extends View<ReactUnity.UIToolkit.HtmlComponent> {
+  content?: string;
+  source?: string;
 }
 
 export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {

@@ -1,6 +1,6 @@
 
 import * as rc from 'react';
-import { StyleCmpDef, Textable } from '../base';
+import { BaseElements, Textable } from '../base';
 import { ReactUnity } from '../generated';
 import * as Components from './components';
 
@@ -9,13 +9,9 @@ import Cmp = ReactUnity.UIToolkit;
 type Children<T = any> = { children?: T };
 
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
-type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
-type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children<never>;
-type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
-export interface UIToolkitElements {
-  [key: string]: BaseElement<any> | StyleCmpDef;
-  style: StyleCmpDef;
+export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
+  html: Components.Html & rc.RefAttributes<Cmp.HtmlComponent> & Children<never>;
   view: BaseElement & { tag?: string };
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;

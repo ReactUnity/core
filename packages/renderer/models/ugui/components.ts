@@ -1,15 +1,18 @@
+import { BaseCmpProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
 
-export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
+export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T>, BaseCmpProps {
   active?: boolean;
-  name?: string;
-  className?: string;
-  id?: string;
   style?: Style | string;
+}
+
+export interface Html extends View<ReactUnity.UGUI.HtmlComponent> {
+  content?: string;
+  source?: string;
 }
 
 export interface Text extends View<ReactUnity.UGUI.TextComponent> {

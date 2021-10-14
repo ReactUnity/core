@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 14/10/2021 01:03:41
+// Generated 15/10/2021 03:11:46
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -160,6 +160,74 @@ export declare namespace ReactUnity {
   export interface IStateHandler {
     ClearListeners(): void;
   }
+  export class MetaComponent {
+    constructor(ctx: ReactUnity.ReactContext, tag: string, isContainer?: boolean);
+    Name: string;
+    ClientWidth: number;
+    ClientHeight: number;
+    Context: ReactUnity.ReactContext;
+    Parent: ReactUnity.IContainerComponent;
+    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Layout: Facebook.Yoga.YogaNode;
+    ComputedStyle: ReactUnity.Styling.NodeStyle;
+    StyleState: ReactUnity.Styling.StyleState;
+    StateStyles: ReactUnity.Styling.StateStyles;
+    Style: InlineStyleRemap;
+    InlineStylesheet: ReactUnity.Styling.StyleSheet;
+    ParentIndex: number;
+    CurrentOrder: number;
+    Entering: boolean;
+    Leaving: boolean;
+    Destroyed: boolean;
+    IsPseudoElement: boolean;
+    Tag: string;
+    TextContent: string;
+    ClassName: string;
+    ClassList: ReactUnity.Helpers.ClassList;
+    Id: string;
+    IsContainer: boolean;
+    Children: ReactUnity.IReactComponent[];
+    BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+    AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+    BeforePseudo: ReactUnity.IReactComponent;
+    AfterPseudo: ReactUnity.IReactComponent;
+    ScrollLeft: number;
+    ScrollTop: number;
+    ScrollWidth: number;
+    ScrollHeight: number;
+    Update(): void;
+    AddComponent(type: System.Type): any;
+    GetComponent(type: System.Type): any;
+    UpdateOrder(prev: number, current: number): boolean;
+    MarkForStyleResolving(recursive: boolean): void;
+    Remove(): void;
+    Destroy(recursive?: boolean): void;
+    SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+    SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+    AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+    FireEvent(eventName: string, arg: any): void;
+    SetData(propertyName: string, value: any): void;
+    SetProperty(propertyName: string, value: any): void;
+    ResolveStyle(recursive?: boolean): void;
+    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    ApplyStyles(): void;
+    ApplyLayoutStyles(): void;
+    Matches(query: string): boolean;
+    Closest(query: string): ReactUnity.IReactComponent;
+    QuerySelector(query: string): ReactUnity.IReactComponent;
+    QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    AddBefore(): void;
+    RemoveBefore(): void;
+    AddAfter(): void;
+    RemoveAfter(): void;
+    RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+    UnregisterChild(child: ReactUnity.IReactComponent): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
   export class ReactContext {
     constructor(options: ReactUnity.ReactContext_Options);
     CalculatesLayout: boolean;
@@ -178,6 +246,7 @@ export declare namespace ReactUnity {
     StyleParser: any; // ExCSS.StylesheetParser
     Style: ReactUnity.Styling.StyleContext;
     Script: ReactUnity.Scripting.ScriptContext;
+    Html: ReactUnity.Html.HtmlContext;
     CursorSet: ReactUnity.Styling.CursorSet;
     CursorAPI: ReactUnity.Helpers.CursorAPI;
     Disposables: System.IDisposable[];
@@ -188,6 +257,7 @@ export declare namespace ReactUnity {
     ResolvePath(path: string): string;
     CreateStaticScript(path: string): ReactUnity.ScriptSource;
     CreateText(text: string): ReactUnity.ITextComponent;
+    CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
     CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
     CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
     PlayAudio(clip: UnityEngine.AudioClip): void;
@@ -295,6 +365,77 @@ export declare namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
+  export class ScriptComponent {
+    constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
+    Content: string;
+    Name: string;
+    ClientWidth: number;
+    ClientHeight: number;
+    Context: ReactUnity.ReactContext;
+    Parent: ReactUnity.IContainerComponent;
+    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Layout: Facebook.Yoga.YogaNode;
+    ComputedStyle: ReactUnity.Styling.NodeStyle;
+    StyleState: ReactUnity.Styling.StyleState;
+    StateStyles: ReactUnity.Styling.StateStyles;
+    Style: InlineStyleRemap;
+    InlineStylesheet: ReactUnity.Styling.StyleSheet;
+    ParentIndex: number;
+    CurrentOrder: number;
+    Entering: boolean;
+    Leaving: boolean;
+    Destroyed: boolean;
+    IsPseudoElement: boolean;
+    Tag: string;
+    TextContent: string;
+    ClassName: string;
+    ClassList: ReactUnity.Helpers.ClassList;
+    Id: string;
+    IsContainer: boolean;
+    Children: ReactUnity.IReactComponent[];
+    BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+    AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+    BeforePseudo: ReactUnity.IReactComponent;
+    AfterPseudo: ReactUnity.IReactComponent;
+    ScrollLeft: number;
+    ScrollTop: number;
+    ScrollWidth: number;
+    ScrollHeight: number;
+    SetText(text: string): void;
+    Execute(): void;
+    SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+    Update(): void;
+    AddComponent(type: System.Type): any;
+    GetComponent(type: System.Type): any;
+    UpdateOrder(prev: number, current: number): boolean;
+    MarkForStyleResolving(recursive: boolean): void;
+    Remove(): void;
+    Destroy(recursive?: boolean): void;
+    SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+    AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+    FireEvent(eventName: string, arg: any): void;
+    SetData(propertyName: string, value: any): void;
+    SetProperty(propertyName: string, value: any): void;
+    ResolveStyle(recursive?: boolean): void;
+    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    ApplyStyles(): void;
+    ApplyLayoutStyles(): void;
+    Matches(query: string): boolean;
+    Closest(query: string): ReactUnity.IReactComponent;
+    QuerySelector(query: string): ReactUnity.IReactComponent;
+    QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    AddBefore(): void;
+    RemoveBefore(): void;
+    AddAfter(): void;
+    RemoveAfter(): void;
+    RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+    UnregisterChild(child: ReactUnity.IReactComponent): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
   export class ScriptSource {
     constructor();
     constructor(source: ReactUnity.ScriptSource);
@@ -369,8 +510,8 @@ export declare namespace ReactUnity {
     GetScopeElement(): ReactUnity.IReactComponent;
     Refresh(): void;
     SetProperty(propertyName: string, value: any): void;
-    Update(): void;
     SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+    Update(): void;
     AddComponent(type: System.Type): any;
     GetComponent(type: System.Type): any;
     UpdateOrder(prev: number, current: number): boolean;
@@ -490,6 +631,7 @@ export declare namespace ReactUnity {
       static TimingFunctionConverter: ReactUnity.Converters.IStyleConverter;
       static FontWeightConverter: ReactUnity.Converters.IStyleConverter;
       static ImageDefinitionConverter: ReactUnity.Converters.IStyleConverter;
+      static BackgroundSizeConverter: ReactUnity.Converters.IStyleConverter;
       static Get(type: System.Type): ReactUnity.Converters.GeneralConverter;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -679,7 +821,9 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class YogaValueConverter {
-      constructor();
+      constructor(allowHorizontal?: boolean, allowVertical?: boolean);
+      static Horizontal: ReactUnity.Converters.YogaValueConverter;
+      static Vertical: ReactUnity.Converters.YogaValueConverter;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Parse(value: string): any;
       Convert(value: any): any;
@@ -993,6 +1137,7 @@ export declare namespace ReactUnity {
         StyleParser: any; // ExCSS.StylesheetParser
         Style: ReactUnity.Styling.StyleContext;
         Script: ReactUnity.Scripting.ScriptContext;
+        Html: ReactUnity.Html.HtmlContext;
         CursorSet: ReactUnity.Styling.CursorSet;
         CursorAPI: ReactUnity.Helpers.CursorAPI;
         Disposables: System.IDisposable[];
@@ -1001,6 +1146,7 @@ export declare namespace ReactUnity {
         CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
         PlayAudio(clip: UnityEngine.AudioClip): void;
         CreateText(text: string): ReactUnity.ITextComponent;
+        CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
         CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
         InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
         InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
@@ -2154,9 +2300,19 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Html {
-    export class HtmlParser {
+    export class HtmlContext {
       constructor(context: ReactUnity.ReactContext);
       Context: ReactUnity.ReactContext;
+      Parser: ReactUnity.Html.HtmlParser;
+      InsertHtml(html: string, root?: ReactUnity.IContainerComponent): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class HtmlParser {
+      constructor(context: ReactUnity.Html.HtmlContext);
+      Context: ReactUnity.Html.HtmlContext;
       Parse(html: string, root: ReactUnity.IContainerComponent): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -3047,7 +3203,7 @@ export declare namespace ReactUnity {
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
       backgroundPosition: ReactUnity.Types.ICssValueList<ReactUnity.Types.YogaValue2>;
-      backgroundSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.YogaValue2>;
+      backgroundSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       backgroundBlendMode: ReactUnity.Types.BackgroundBlendMode;
       transitionProperty: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TransitionProperty>;
       transitionDuration: ReactUnity.Types.ICssValueList<number>;
@@ -3214,7 +3370,7 @@ export declare namespace ReactUnity {
       static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static backgroundImage: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.ImageDefinition]
       static backgroundPosition: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.YogaValue2]
-      static backgroundSize: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.YogaValue2]
+      static backgroundSize: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundSize]
       static backgroundBlendMode: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BackgroundBlendMode]
       static transitionProperty: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.TransitionProperty]
       static transitionDuration: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
@@ -3410,6 +3566,7 @@ export declare namespace ReactUnity {
         static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number): UnityEngine.Quaternion;
         static Interpolate(from: Facebook.Yoga.YogaValue, to: Facebook.Yoga.YogaValue, t: number): Facebook.Yoga.YogaValue;
         static Interpolate(from: ReactUnity.Types.YogaValue2, to: ReactUnity.Types.YogaValue2, t: number): ReactUnity.Types.YogaValue2;
+        static Interpolate(from: ReactUnity.Types.BackgroundSize, to: ReactUnity.Types.BackgroundSize, t: number): ReactUnity.Types.BackgroundSize;
         static Interpolate(from: ReactUnity.Types.BoxShadow, to: ReactUnity.Types.BoxShadow, t: number): ReactUnity.Types.BoxShadow;
         static Interpolate(t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType, mirror?: boolean): number;
         static Interpolate(from: number, to: number, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): number;
@@ -3613,7 +3770,7 @@ export declare namespace ReactUnity {
       export class BackgroundImage {
         constructor();
         Definition: ReactUnity.Types.ImageDefinition;
-        BackgroundSize: ReactUnity.Types.YogaValue2;
+        BackgroundSize: ReactUnity.Types.BackgroundSize;
         BackgroundPosition: ReactUnity.Types.YogaValue2;
         materialForRendering: UnityEngine.Material;
         mainTexture: UnityEngine.Texture;
@@ -3658,7 +3815,7 @@ export declare namespace ReactUnity {
         Size: UnityEngine.Vector4;
         definition: ReactUnity.Types.ImageDefinition;
         Context: ReactUnity.ReactContext;
-        backgroundSize: ReactUnity.Types.YogaValue2;
+        backgroundSize: ReactUnity.Types.BackgroundSize;
         backgroundPosition: ReactUnity.Types.YogaValue2;
         GetDefaultMaterial(): UnityEngine.Material;
         SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode): void;
@@ -4849,6 +5006,43 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class BackgroundSize {
+      constructor(keyword: ReactUnity.Types.BackgroundSizeKeyword);
+      constructor(value: ReactUnity.Types.YogaValue2);
+      IsCustom: boolean;
+      static Auto: ReactUnity.Types.BackgroundSize;
+      static Contain: ReactUnity.Types.BackgroundSize;
+      static Cover: ReactUnity.Types.BackgroundSize;
+      Keyword: ReactUnity.Types.BackgroundSizeKeyword;
+      Value: ReactUnity.Types.YogaValue2;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum BackgroundSizeKeyword {
+      Custom = 0,
+      Cover = 1,
+      Contain = 2,
+    }
+    export enum BackgroundRepeat {
+      Repeat = 0,
+      Space = 1,
+      Round = 2,
+      NoRepeat = 3,
+      RepeatX = 1000,
+      RepeatY = 2000,
+    }
+    export enum BackgroundBox {
+      BorderBox = 0,
+      ContentBox = 1,
+      PaddingBox = 2,
+    }
+    export enum BackgroundAttachment {
+      Scroll = 0,
+      Fixed = 1,
+      Local = 2,
+    }
     export enum BackgroundBlendMode {
       Normal = 0,
       Color = 1,
@@ -5259,6 +5453,16 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class AudioReference_Converter {
+      constructor();
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): any;
+      Parse(value: string): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class BackgroundSize_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): any;
@@ -5817,6 +6021,87 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       SetProperty(propertyName: string, value: any): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class HtmlComponent {
+      constructor(ctx: ReactUnity.UGUI.UGUIContext, tag?: string);
+      Content: string;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.Styling.Internal.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.Internal.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetProperty(propertyName: string, value: any): void;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
       GetBoundingClientRect(): UnityEngine.Rect;
@@ -7422,10 +7707,12 @@ export declare namespace ReactUnity {
       StyleParser: any; // ExCSS.StylesheetParser
       Style: ReactUnity.Styling.StyleContext;
       Script: ReactUnity.Scripting.ScriptContext;
+      Html: ReactUnity.Html.HtmlContext;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: System.IDisposable[];
       static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUI.UGUIContext) => ReactUnity.UGUI.UGUIComponent);
       static textCreator: ((arg0: string, arg1: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
+      CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreateText(text: string): ReactUnity.ITextComponent;
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
@@ -10597,6 +10884,80 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class HtmlComponent {
+      constructor(ctx: ReactUnity.UIToolkit.UIToolkitContext, tag?: string);
+      Content: string;
+      Element: UnityEngine.UIElements.VisualElement;
+      TargetElement: UnityEngine.UIElements.VisualElement;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      Context: ReactUnity.UIToolkit.UIToolkitContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetProperty(propertyName: string, value: any): void;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      CaptureMouse(): void;
+      ReleaseMouse(): void;
+      HasMouseCapture(): boolean;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class ImageComponent {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Element: UnityEngine.UIElements.Image;
@@ -11359,6 +11720,7 @@ export declare namespace ReactUnity {
       StyleParser: any; // ExCSS.StylesheetParser
       Style: ReactUnity.Styling.StyleContext;
       Script: ReactUnity.Scripting.ScriptContext;
+      Html: ReactUnity.Html.HtmlContext;
       CursorSet: ReactUnity.Styling.CursorSet;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: System.IDisposable[];
@@ -11367,6 +11729,7 @@ export declare namespace ReactUnity {
       static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.IReactComponent]]
       Initialize(): void;
       CreateText(text: string): ReactUnity.ITextComponent;
+      CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
