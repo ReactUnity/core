@@ -9,10 +9,7 @@ namespace ReactUnity.Tests
     {
         public QuerySelectorTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        const string BaseScript = @"
-            function App() {
-                const globals = ReactUnity.useGlobals();
-                return <>
+        const string Elements = @"
 <view id='v1' className='v1class'>
     <view id='v1v1' className='vv1class'>
         <text id='v1v1t1' className='t1class'>t1content</text>
@@ -75,7 +72,25 @@ namespace ReactUnity.Tests
         <text id='v5v4t4' className='t4class'></text>
     </view>
 </view>
+";
+
+        const string BaseScript = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+" + Elements + @"
                 </>;
+            }
+
+            Renderer.render(<App />);
+        ";
+
+        const string HtmlScript = @"
+            const htmlContent = `" + Elements + @"`;
+
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <html content={htmlContent} />;
             }
 
             Renderer.render(<App />);
@@ -210,6 +225,30 @@ namespace ReactUnity.Tests
         public void Closest(string id, string query, string resultId)
         {
             Assert.AreEqual(resultId, Q("#" + id)?.Closest(query)?.Id);
+        }
+
+        [ReactInjectableTest(HtmlScript, BaseStyle, SkipIfExisting = true)]
+        [TestCase(null, "*")]
+        [TestCase("v1", "view")]
+        [TestCase("v1", ":scope > view")]
+        [TestCase("v1", "#v1")]
+        [TestCase("v1", ".v1class")]
+        [TestCase("v2", ":scope > view + view")]
+        [TestCase("v2", ":scope > * + *")]
+        [TestCase("v2", ":scope > * + view")]
+        [TestCase("v2", ":scope > view + *")]
+        [TestCase("v2", ":scope > view ~ view")]
+        [TestCase("v4", ":scope > #v3 ~ view")]
+        [TestCase("v5", ":scope > #v3 ~ view ~ view")]
+        [TestCase(null, ":scope > #v3 ~ view ~ view ~ view")]
+        [TestCase("v1v2", "view:empty")]
+        [TestCase("v1v1t4", "*:empty")]
+        [TestCase("v1v1t4", "text:empty")]
+        [TestCase("v1v4", "view:nth-child(4)")]
+        [TestCase("v1v1t4", "*:nth-child(4)")]
+        public void HtmlComponentCanRender(string id, string query)
+        {
+            Assert.AreEqual(id, Q(query, Q("html"))?.Id);
         }
     }
 }

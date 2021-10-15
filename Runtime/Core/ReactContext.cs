@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Html;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using ReactUnity.Scripting.DomProxies;
@@ -49,6 +50,7 @@ namespace ReactUnity
         public StylesheetParser StyleParser { get; }
         public StyleContext Style { get; }
         public ScriptContext Script { get; }
+        public HtmlContext Html { get; }
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
         public List<IDisposable> Disposables { get; } = new List<IDisposable>();
@@ -71,6 +73,8 @@ namespace ReactUnity
             Style = new StyleContext(this);
 
             Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
+
+            Html = new HtmlContext(this);
 
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
@@ -142,6 +146,7 @@ namespace ReactUnity
         }
 
         public abstract ITextComponent CreateText(string text);
+        public abstract IReactComponent CreateDefaultComponent(string tag, string text);
         public abstract IReactComponent CreateComponent(string tag, string text);
         public abstract IReactComponent CreatePseudoComponent(string tag);
         public abstract void PlayAudio(AudioClip clip);

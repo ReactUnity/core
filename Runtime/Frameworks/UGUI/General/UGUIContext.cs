@@ -39,6 +39,8 @@ namespace ReactUnity.UGUI
                 { "portal", (tag, text, context) => new PortalComponent(context) },
                 { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
                 { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
+                { "script", (tag, text, context) => new ScriptComponent(context, tag, text) },
+                { "html", (tag, text, context) => new HtmlComponent(context, tag) },
             };
 
 
@@ -83,13 +85,12 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override IReactComponent CreateDefaultComponent(string tag, string text) => defaultCreator(tag, text, this);
+
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            IReactComponent res = null;
-            if (ComponentCreators.TryGetValue(tag, out var creator))
-                res = creator(tag, text, this);
-            else res = defaultCreator(tag, text, this);
-            return res;
+            if (ComponentCreators.TryGetValue(tag, out var creator)) return creator(tag, text, this);
+            else return CreateDefaultComponent(tag, text);
         }
 
         public override ITextComponent CreateText(string text)

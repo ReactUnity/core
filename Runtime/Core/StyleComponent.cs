@@ -3,7 +3,7 @@ using ReactUnity.Styling;
 
 namespace ReactUnity
 {
-    public class StyleComponent : BaseReactComponent<ReactContext>, ITextComponent
+    public class StyleComponent : MetaComponent, ITextComponent
     {
         private object scope;
         public object Scope
@@ -55,15 +55,10 @@ namespace ReactUnity
         }
 
         public string Content { get; private set; }
-        public override string Name { get; set; }
 
-        public override float ClientWidth => 0;
-        public override float ClientHeight => 0;
-
-        public StyleComponent(ReactContext ctx, string tag = "style", string text = null) : base(ctx, tag, false)
+        public StyleComponent(ReactContext ctx, string tag = "style", string text = null) : base(ctx, tag)
         {
             SetText(text);
-            Name = DefaultName;
         }
 
         public void SetText(string text)
@@ -127,30 +122,10 @@ namespace ReactUnity
             }
         }
 
-        #region BaseReactComponent Implementation
-
-        public override void Update() { }
-
         public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
             base.SetParent(newParent, relativeTo, insertAfter);
             UpdateSheet();
         }
-
-        public override object AddComponent(Type type) { return null; }
-
-        public override object GetComponent(Type type) { return null; }
-
-        protected override void ApplyLayoutStylesSelf() { }
-
-        protected override void ApplyStylesSelf() { }
-
-        protected override bool DeleteChild(IReactComponent child) => false;
-
-        protected override bool InsertChild(IReactComponent child, int index) => false;
-
-        public override bool UpdateOrder(int prev, int current) => false;
-
-        #endregion
     }
 }
