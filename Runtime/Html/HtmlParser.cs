@@ -27,7 +27,7 @@ namespace ReactUnity.Html
         {
             IReactComponent nodeElement = null;
 
-            var isTextElement = node.Name == "text" || node.Name == "icon" || node.Name == "style" || node.Name == "script";
+            var isTextElement = node.Name == "text" || node.Name == "icon" || node.Name == "style" || node.Name == "script" || node.Name == "html";
 
             if (node.NodeType == XmlNodeType.Element || node.NodeType == XmlNodeType.Text)
             {
@@ -39,7 +39,10 @@ namespace ReactUnity.Html
                 {
                     foreach (XmlAttribute attr in node.Attributes)
                     {
-                        if (attr.Name.StartsWith("on")) nodeElement.SetEventListener(attr.Name, Callback.From(attr.Value, nodeElement.Context, nodeElement));
+                        if (attr.Name.StartsWith("on"))
+                            nodeElement.SetEventListener(attr.Name, Callback.From(attr.Value, nodeElement.Context, nodeElement));
+                        else if (attr.Name.StartsWith("data-"))
+                            nodeElement.SetData(attr.Name.Substring(5), attr.Value);
                         else nodeElement.SetProperty(attr.Name, attr.Value);
                     }
                 }

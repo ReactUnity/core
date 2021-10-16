@@ -121,32 +121,5 @@ namespace ReactUnity.Editor.Tests.Renderer
             yield return null;
             Assert.AreEqual(Color.clear, rt.style.color.value);
         }
-
-
-        [EditorInjectableTest(@"
-            const htmlContent = `
-                <style scope=':root'>#test { color: blue; }</style>
-
-                <view id='test'>
-                    Test text
-                </view>
-            `;
-
-            function App() {
-                const globals = ReactUnity.useGlobals();
-                return <html content={htmlContent} />;
-            }
-
-            Renderer.render(<App />);
-        ")]
-        public IEnumerator StyleTagShouldWorkInsideHtmlTag()
-        {
-            yield return null;
-            yield return null;
-            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
-            var rt = cmp.Element;
-
-            Assert.AreEqual(Color.blue, rt.style.color.value);
-        }
     }
 }

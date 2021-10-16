@@ -214,7 +214,7 @@ namespace ReactUnity.Scheduling
         public void Dispose()
         {
             StopAll();
-            if(gameObject) Destroy(gameObject);
+            if(this && gameObject) Destroy(gameObject);
         }
     }
 }

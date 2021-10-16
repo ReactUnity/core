@@ -87,6 +87,9 @@ namespace ReactUnity.Tests
             yield return null;
 
             list.AssertListExhaustive("click");
+
+            Button.Activate();
+            list.AssertListExhaustive("click");
         }
 
         [ReactInjectableTest(BaseScript)]
