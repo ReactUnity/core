@@ -4,44 +4,13 @@ using ReactUnity.Types;
 
 namespace ReactUnity
 {
-    public class MetaComponent : BaseReactComponent<ReactContext>
+    public abstract class SourceProxyComponent : ProxyComponent, ITextComponent
     {
-        public override string Name { get; set; }
-        public override float ClientWidth => 0;
-        public override float ClientHeight => 0;
-
-        public MetaComponent(ReactContext ctx, string tag, bool isContainer = false) : base(ctx, tag, isContainer)
-        {
-            Name = DefaultName;
-        }
-
-        #region BaseReactComponent Implementation
-
-        public override void Update() { }
-
-        public override object AddComponent(Type type) { return null; }
-
-        public override object GetComponent(Type type) { return null; }
-
-        protected override void ApplyLayoutStylesSelf() { }
-
-        protected override void ApplyStylesSelf() { }
-
-        protected override bool DeleteChild(IReactComponent child) => false;
-
-        protected override bool InsertChild(IReactComponent child, int index) => false;
-
-        public override bool UpdateOrder(int prev, int current) => false;
-
-        #endregion
-    }
-
-    public abstract class SourceMetaComponent : MetaComponent, ITextComponent
-    {
-        public SourceMetaComponent(ReactContext ctx, string tag, bool isContainer = false) : base(ctx, tag, isContainer) { }
+        public SourceProxyComponent(IContainerComponent cmp) : base(cmp) { }
+        public SourceProxyComponent(ReactContext ctx, string tag) : base(new NoopComponent(ctx, tag)) { }
 
         private string content;
-        public string Content
+        public override string Content
         {
             get => content;
             set
@@ -87,6 +56,9 @@ namespace ReactUnity
         {
             switch (propertyName)
             {
+                case "content":
+                    Content = value?.ToString();
+                    break;
                 case "source":
                     Source = value;
                     break;
@@ -95,8 +67,6 @@ namespace ReactUnity
                     break;
             }
         }
-
-        public void SetText(string text) => Content = text;
 
         private void SetSource(object value)
         {

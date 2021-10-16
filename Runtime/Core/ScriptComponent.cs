@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ReactUnity
 {
-    public class ScriptComponent : SourceMetaComponent
+    public class ScriptComponent : SourceProxyComponent
     {
         public ScriptComponent(ReactContext ctx, string tag = "script", string text = null) : base(ctx, tag)
         {

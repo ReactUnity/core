@@ -34,9 +34,9 @@ namespace ReactUnity.UIToolkit
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
                 { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
                 { "input", (tag, text, context) => new TextFieldComponent(context, tag) },
-                { "html", (tag, text, context) => new HtmlComponent(context, tag) },
                 { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
                 { "script", (tag, text, context) => new ScriptComponent(context, tag, text) },
+                { "html", (tag, text, context) => new Html.HtmlComponent(context, tag) },
 #if UNITY_2020_1_OR_NEWER
                 { "helpbox", (tag, text, context) => new UIToolkitComponent<HelpBox>(context, tag) }, // TODO
 #endif

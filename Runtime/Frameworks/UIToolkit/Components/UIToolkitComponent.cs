@@ -376,7 +376,8 @@ namespace ReactUnity.UIToolkit
 
         public override bool UpdateOrder(int prev, int current)
         {
-            var siblings = (Parent as IUIToolkitComponent).Element;
+            var parent = (Parent as IUIToolkitComponent) ?? (Parent as Html.HtmlComponent)?.Proxy as IUIToolkitComponent;
+            var siblings = parent.Element;
             var count = siblings.childCount;
             var currentIndex = -1;
             var layout = Element;

@@ -40,7 +40,7 @@ namespace ReactUnity.UGUI
                 { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
                 { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
                 { "script", (tag, text, context) => new ScriptComponent(context, tag, text) },
-                { "html", (tag, text, context) => new HtmlComponent(context, tag) },
+                { "html", (tag, text, context) => new Html.HtmlComponent(context, tag) },
             };
 
 

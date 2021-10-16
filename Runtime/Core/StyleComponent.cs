@@ -3,7 +3,7 @@ using ReactUnity.Styling;
 
 namespace ReactUnity
 {
-    public class StyleComponent : SourceMetaComponent
+    public class StyleComponent : SourceProxyComponent
     {
         private object scope;
         public object Scope
