@@ -79,16 +79,11 @@ namespace ReactUnity.Scripting
 
             Engine.Execute("globalThis = global = window = parent = self = this;");
             Engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
-
-            Engine.SetValue("Engine", Engine);
-            Engine.SetValue("Callback", typeof(Callback));
+            Engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
 
             Interop = new ReactInterop(Engine);
             Interop.InitializeDefault();
             Engine.SetValue("Interop", Interop);
-
-            Engine.SetValue("Unity", ReactUnityBridge.Instance);
-            Engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
         }
 
         void CreateConsole(IJavaScriptEngine engine)
@@ -120,7 +115,6 @@ namespace ReactUnity.Scripting
         void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
         {
             var scheduler = context.Dispatcher.Scheduler;
-            engine.SetValue("UnityScheduler", scheduler);
             engine.SetValue("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
             engine.SetValue("setInterval", new Func<object, double, int>(scheduler.setInterval));
             engine.SetValue("setImmediate", new Func<object, int>(scheduler.setImmediate));

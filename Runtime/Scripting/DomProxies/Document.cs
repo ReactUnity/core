@@ -44,13 +44,15 @@ namespace ReactUnity.Scripting.DomProxies
             return context.Host.QuerySelectorAll(query);
         }
 
-        public object getElementById(string query)
+        public object getElementById(string id)
         {
-            return null;
+            // TODO: handle efficiently
+            return context.Host.QuerySelector("#" + id);
         }
 
         public List<IDomElementProxy> getElementsByTagName(string tagName)
         {
+            // TODO: handle efficiently
             return new List<IDomElementProxy>();
         }
     }
