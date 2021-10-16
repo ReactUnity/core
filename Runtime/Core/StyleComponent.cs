@@ -3,7 +3,7 @@ using ReactUnity.Styling;
 
 namespace ReactUnity
 {
-    public class StyleComponent : MetaComponent, ITextComponent
+    public class StyleComponent : SourceMetaComponent
     {
         private object scope;
         public object Scope
@@ -12,7 +12,7 @@ namespace ReactUnity
             set
             {
                 scope = value;
-                UpdateSheet();
+                RefreshValue();
             }
         }
 
@@ -23,7 +23,7 @@ namespace ReactUnity
             set
             {
                 importance = value;
-                UpdateSheet();
+                RefreshValue();
             }
         }
 
@@ -54,30 +54,22 @@ namespace ReactUnity
             }
         }
 
-        public string Content { get; private set; }
-
         public StyleComponent(ReactContext ctx, string tag = "style", string text = null) : base(ctx, tag)
         {
             SetText(text);
         }
 
-        public void SetText(string text)
-        {
-            Content = text;
-            UpdateSheet();
-        }
-
-        private void UpdateSheet()
+        protected override void RefreshValue()
         {
             Sheet = null;
 
-            if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(Content))
+            if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(InnerContent))
             {
                 var scopeEl = GetScopeElement();
 
                 if (scopeEl != null)
                 {
-                    Sheet = new StyleSheet(Context.Style, Content, Importance, scopeEl);
+                    Sheet = new StyleSheet(Context.Style, InnerContent, Importance, scopeEl);
                 }
             }
         }
@@ -97,10 +89,7 @@ namespace ReactUnity
             return res;
         }
 
-        public void Refresh()
-        {
-            UpdateSheet();
-        }
+        public void Refresh() => RefreshValue();
 
         public override void SetProperty(string propertyName, object value)
         {
@@ -125,7 +114,7 @@ namespace ReactUnity
         public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
             base.SetParent(newParent, relativeTo, insertAfter);
-            UpdateSheet();
+            RefreshValue();
         }
     }
 }

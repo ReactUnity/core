@@ -33,6 +33,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter BoxShadowConverter = new BoxShadow.Converter();
         static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
         static public IStyleConverter ImageSourceConverter = new ImageReference.Converter(true);
+        static public IStyleConverter TextReferenceConverter = new TextReference.Converter(true);
         static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
         static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
         static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
@@ -61,6 +62,7 @@ namespace ReactUnity.Converters
             { typeof(Url), UrlConverter },
             { typeof(BoxShadow), BoxShadowConverter },
             { typeof(ImageReference), ImageReferenceConverter },
+            { typeof(TextReference), TextReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(CursorList), CursorListConverter},
             { typeof(TimingFunction), TimingFunctionConverter },

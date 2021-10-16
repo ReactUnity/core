@@ -1,3 +1,7 @@
+using System;
+using ReactUnity.Converters;
+using ReactUnity.Types;
+
 namespace ReactUnity.UGUI
 {
     public class HtmlComponent : UGUIComponent
@@ -8,11 +12,38 @@ namespace ReactUnity.UGUI
             get => content;
             set
             {
+                if (source != null && !string.IsNullOrWhiteSpace(value))
+                    throw new InvalidOperationException("Content cannot be set when source is already set");
                 if (content != value)
                 {
                     content = value;
-                    Clean();
-                    Create(content);
+                    if (source == null) InnerHtml = value;
+                }
+            }
+        }
+
+        private string innerHtml;
+        public string InnerHtml
+        {
+            get => innerHtml;
+            private set
+            {
+                innerHtml = value;
+                Clean();
+                Create(value);
+            }
+        }
+
+        private object source;
+        public object Source
+        {
+            get => source;
+            set
+            {
+                if (source != value)
+                {
+                    source = value;
+                    SetSource(value);
                 }
             }
         }
@@ -42,10 +73,24 @@ namespace ReactUnity.UGUI
                 case "content":
                     Content = value?.ToString();
                     break;
+                case "source":
+                    Source = value;
+                    break;
                 default:
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        private void SetSource(object value)
+        {
+            var reference = AllConverters.TextReferenceConverter.Convert(value) as TextReference;
+
+            if (reference == null) InnerHtml = Content;
+            else reference.Get(Context, text => {
+                if (value != Source) return;
+                InnerHtml = text.text;
+            });
         }
     }
 }

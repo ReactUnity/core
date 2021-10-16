@@ -3,22 +3,14 @@ using UnityEngine;
 
 namespace ReactUnity
 {
-    public class ScriptComponent : MetaComponent, ITextComponent
+    public class ScriptComponent : SourceMetaComponent
     {
-        public string Content { get; private set; }
-
         public ScriptComponent(ReactContext ctx, string tag = "script", string text = null) : base(ctx, tag)
         {
             SetText(text);
         }
 
-        public void SetText(string text)
-        {
-            Content = text;
-            UpdateScript();
-        }
-
-        private void UpdateScript()
+        protected override void RefreshValue()
         {
             if (Parent == null) return;
             Execute();
@@ -28,7 +20,7 @@ namespace ReactUnity
         {
             try
             {
-                Context.Script.ExecuteScript(Content, "script");
+                Context.Script.ExecuteScript(InnerContent, "script");
             }
             catch (Exception ex)
             {
@@ -41,7 +33,7 @@ namespace ReactUnity
             var previousParent = Parent;
             base.SetParent(newParent, relativeTo, insertAfter);
 
-            if (previousParent == null && newParent != null) UpdateScript();
+            if (previousParent == null && newParent != null) RefreshValue();
         }
     }
 }
