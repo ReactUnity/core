@@ -1,9 +1,7 @@
-/// <reference types="node" />
+/// <reference no-default-lib="true"/>
+/// <reference lib="es2021" />
 /// <reference types="react" />
-/// <reference types="mocha" />
-/// <reference types="chai" />
-
-declare var expect: Chai.ExpectStatic;
+/// <reference types="webpack-env" />
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -63,6 +61,11 @@ declare module '*.module.sass' {
 }
 
 declare module '*.txt' {
+  const value: string;
+  export default value;
+}
+
+declare module '*.html' {
   const value: string;
   export default value;
 }
