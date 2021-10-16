@@ -15,29 +15,38 @@ interface Console {
   warn(...data: any[]): void;
 }
 
+interface ReactUnityDocument {
+  querySelector: (query: string) => ReactUnity.IReactComponent;
+  querySelectorAll: (query: string) => ReactUnity.IReactComponent[];
+}
+
 declare global {
-  const UnityBridge: ReactUnity.ReactUnityBridge;
-  const Context: ReactUnity.ReactContext;
-  const HostContainer: NativeContainerInstance;
-  const UnityScheduler: ReactUnity.Scheduling.IScheduler;
-  const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Helpers.Callback;
-  const location: ReactUnity.Scripting.DomProxies.Location;
-  const localStorage: ReactUnity.Scripting.DomProxies.LocalStorage;
-  const console: Console;
+  // ReactUnity exclusive
+  var Context: ReactUnity.ReactContext;
+  var HostContainer: NativeContainerInstance;
+  var UnityBridge: ReactUnity.ReactUnityBridge;
+
+  // DOM-like
+  var document: ReactUnityDocument;
+  var location: ReactUnity.Scripting.DomProxies.Location;
+  var localStorage: ReactUnity.Scripting.DomProxies.LocalStorage;
+  var console: Console;
+  var global: typeof globalThis;
   function matchMedia(query: string): ReactUnity.Styling.Rules.MediaQueryList;
 
   interface DefaultGlobals {
     [key: string]: any;
   }
 
-  const Globals: ReactUnity.Helpers.WatchableRecord<any> & DefaultGlobals;
+  var Globals: ReactUnity.Helpers.WatchableRecord<any> & DefaultGlobals;
 
-  const setImmediate: (callback: () => void) => number;
-  const setTimeout: (callback: () => void, timeout: number) => number;
-  const setInterval: (callback: () => void, timeout: number) => number;
-  const requestAnimationFrame: (callback: () => void) => number;
-  const clearTimeout: (handle: number) => void;
-  const clearInterval: (handle: number) => void;
-  const clearImmediate: (handle: number) => void;
-  const cancelAnimationFrame: (handle: number) => void;
+  // Scheduling
+  var setImmediate: (callback: () => void) => number;
+  var setTimeout: (callback: () => void, timeout: number) => number;
+  var setInterval: (callback: () => void, timeout: number) => number;
+  var requestAnimationFrame: (callback: () => void) => number;
+  var clearTimeout: (handle: number) => void;
+  var clearInterval: (handle: number) => void;
+  var clearImmediate: (handle: number) => void;
+  var cancelAnimationFrame: (handle: number) => void;
 }

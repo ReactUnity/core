@@ -229,13 +229,13 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
   //     Scheduling
   // -------------------
 
-  scheduleDeferredCallback(callback, options) { return UnityScheduler.setTimeout(callback, options?.timeout || 0); },
-  cancelDeferredCallback(callBackID) { UnityScheduler.clearTimeout(callBackID); },
+  scheduleDeferredCallback(callback, options) { return setTimeout(callback, options?.timeout || 0); },
+  cancelDeferredCallback(callBackID) { clearTimeout(callBackID); },
 
   noTimeout: -1,
-  scheduleTimeout(callback, timeout) { return UnityScheduler.setTimeout(callback as any, timeout); },
-  cancelTimeout(handle) { UnityScheduler.clearTimeout(handle); },
-  queueMicrotask(callback) { return UnityScheduler.setTimeout(callback as any, 0); },
+  scheduleTimeout(callback, timeout) { return setTimeout(callback as any, timeout); },
+  cancelTimeout(handle) { clearTimeout(handle); },
+  queueMicrotask(callback) { return setTimeout(callback as any, 0); },
 };
 
 const ReactUnityReconciler = Reconciler(hostConfig);

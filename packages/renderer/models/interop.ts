@@ -20,5 +20,5 @@ declare global {
     Facebook: typeof Facebook;
   }
 
-  const Interop: ReactUnity.Helpers.ReactInterop & DefaultInterop;
+  var Interop: ReactUnity.Helpers.ReactInterop & DefaultInterop;
 }
