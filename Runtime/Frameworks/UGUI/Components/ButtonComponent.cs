@@ -31,7 +31,7 @@ namespace ReactUnity.UGUI
             switch (eventName)
             {
                 case "onClick":
-                    var listener = new UnityAction(() => callback.Call(this));
+                    var listener = new UnityAction(() => callback.Call(this, this));
                     Button.onClick.AddListener(listener);
                     return () => Button.onClick.RemoveListener(listener);
                 default:

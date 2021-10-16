@@ -27,7 +27,6 @@ namespace ReactUnity
         public IMediaProvider MediaProvider { get; private set; }
         public ReactContext Context { get; private set; }
         private IDisposable ScriptWatchDisposable { get; set; }
-        public IDispatcher dispatcher { get; private set; }
         public ITimer timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
@@ -67,8 +66,6 @@ namespace ReactUnity
             ClearRoot();
 
             Context?.Dispose();
-            dispatcher?.Dispose();
-            dispatcher = null;
             Context = null;
             ScriptWatchDisposable = null;
         }
@@ -77,13 +74,12 @@ namespace ReactUnity
 
         private IDisposable LoadAndRun(ScriptSource script, bool disableWarnings = false)
         {
-            dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             MediaProvider = CreateMediaProvider();
             Context = CreateContext(script);
 
             var watcherDisposable = script.GetScript((code, isDevServer) => {
                 Context.Script.RunScript(code, BeforeStart, AfterStart);
-            }, dispatcher, true, disableWarnings);
+            }, Context.Dispatcher, true, disableWarnings);
 
             return watcherDisposable;
         }

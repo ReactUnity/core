@@ -10,10 +10,11 @@ namespace ReactUnity.Scheduling
     {
         System.Threading.Thread mainThread;
 
-        public static RuntimeDispatcher Create()
+        public static RuntimeDispatcher Create(ReactContext ctx)
         {
             var go = new GameObject("React Unity Runtime Dispatcher");
             var dispatcher = go.AddComponent<RuntimeDispatcher>();
+            dispatcher.Scheduler = new DefaultScheduler(dispatcher, ctx);
             DontDestroyOnLoad(go);
             return dispatcher;
         }
@@ -22,12 +23,7 @@ namespace ReactUnity.Scheduling
         private List<Coroutine> Started = new List<Coroutine>();
         private HashSet<int> ToStop = new HashSet<int>();
         private List<Action> CallOnLateUpdate = new List<Action>();
-        public IScheduler Scheduler { get; }
-
-        public RuntimeDispatcher() : base()
-        {
-            Scheduler = new DefaultScheduler(this);
-        }
+        public IScheduler Scheduler { get; private set; }
 
         public int OnEveryLateUpdate(Action callback)
         {
@@ -218,6 +214,7 @@ namespace ReactUnity.Scheduling
         public void Dispose()
         {
             StopAll();
+            if(gameObject) Destroy(gameObject);
         }
     }
 }

@@ -24,28 +24,15 @@ namespace ReactUnity.Helpers
         public Engine Engine;
 #endif
 
-        public static Callback From(object value, bool checkCallable = false)
+        public static Callback From(object value, ReactContext context = null, object thisVal = null)
         {
             if (value == null) return null;
-
-#if UNITY_EDITOR
-            checkCallable = true;
-#endif
-            if (checkCallable)
+            if (value is string s)
             {
-                var callable =
-#if REACT_JINT
-                 (value as JsValue)?.As<FunctionInstance>() != null ||
-#endif
-#if REACT_CLEARSCRIPT
-                (value is Microsoft.ClearScript.ScriptObject so) ||
-#endif
-                (value is Delegate) ||
-                (value is Callback);
-
-                if (!callable) throw new Exception("Provided callback is not callable");
+                context.Script.Engine.SetValue("__thisArg", thisVal);
+                var fn = context.Script.EvaluateScript("const fn = (function(event, sender) {\n" + s + "\n}).bind(__thisArg); delete __thisArg; fn;");
+                return new Callback(fn);
             }
-
             if (value is Callback cb) return cb;
             return new Callback(value);
         }

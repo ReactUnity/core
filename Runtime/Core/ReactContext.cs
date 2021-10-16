@@ -18,9 +18,8 @@ namespace ReactUnity
     {
         public class Options
         {
-            public GlobalRecord Globals;
+            public SerializableDictionary Globals;
             public ScriptSource Source;
-            public IDispatcher Dispatcher;
             public ITimer Timer;
             public IMediaProvider MediaProvider;
             public Action OnRestart;
@@ -58,10 +57,10 @@ namespace ReactUnity
         public ReactContext(Options options)
         {
             this.options = options;
-            Globals = options.Globals;
             Source = options.Source;
             Timer = options.Timer;
-            Dispatcher = options.Dispatcher;
+            Dispatcher = CreateDispatcher();
+            Globals = GlobalRecord.BindSerializableDictionary(options.Globals, Dispatcher, false);
             OnRestart = options.OnRestart ?? (() => { });
             CalculatesLayout = options.CalculatesLayout;
             Location = new Location(this);
@@ -79,7 +78,7 @@ namespace ReactUnity
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
 
-            if (CalculatesLayout) options.Dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
+            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
         }
 
         public virtual StyleSheet InsertStyle(string style) => InsertStyle(style, 0);
@@ -160,5 +159,7 @@ namespace ReactUnity
             Script?.Dispose();
             foreach (var item in Disposables) item?.Dispose();
         }
+
+        protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);
     }
 }

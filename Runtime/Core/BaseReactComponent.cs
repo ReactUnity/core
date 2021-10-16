@@ -285,7 +285,7 @@ namespace ReactUnity
                     Id = value?.ToString();
                     return;
                 case "name":
-                    Name = value is string s ? s : null;
+                    Name = value?.ToString();
                     return;
                 case "class":
                 case "className":

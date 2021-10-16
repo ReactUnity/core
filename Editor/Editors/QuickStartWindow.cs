@@ -90,7 +90,7 @@ namespace ReactUnity.Editor
 
         public void GetNodeVersion(object callback)
         {
-            var cb = new Callback(callback);
+            var cb = Callback.From(callback, Context, this);
             GetNodeVersion(x => cb.Call(x));
         }
 
@@ -149,12 +149,12 @@ namespace ReactUnity.Editor
 
         public void CheckVersion(Action callback)
         {
-            dispatcher.StartDeferred(CheckVersionDelegate(callback));
+            Context.Dispatcher.StartDeferred(CheckVersionDelegate(callback));
         }
 
         public void CheckVersion(object callback)
         {
-            var cb = new Callback(callback);
+            var cb = Callback.From(callback);
             CheckVersion(() => cb.Call());
         }
 

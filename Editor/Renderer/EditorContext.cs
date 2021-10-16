@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ReactUnity.Editor.UIToolkit;
+using ReactUnity.Scheduling;
 using ReactUnity.UIToolkit;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -94,5 +95,7 @@ namespace ReactUnity.Editor.Renderer
         {
             EditorSFX.PlayClip(clip);
         }
+
+        protected override IDispatcher CreateDispatcher() => new EditorDispatcher(this);
     }
 }

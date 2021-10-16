@@ -31,9 +31,9 @@ namespace ReactUnity.Editor.Renderer
 
         protected abstract ScriptSource GetScript();
 
-        protected virtual GlobalRecord GetGlobals()
+        protected virtual SerializableDictionary GetGlobals()
         {
-            return new GlobalRecord()
+            return new SerializableDictionary()
             {
                 { "Inspector", this },
             };

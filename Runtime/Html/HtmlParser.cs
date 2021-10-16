@@ -1,5 +1,6 @@
 using System.IO;
 using System.Xml;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Html
 {
@@ -38,7 +39,8 @@ namespace ReactUnity.Html
                 {
                     foreach (XmlAttribute attr in node.Attributes)
                     {
-                        nodeElement.SetProperty(attr.Name, attr.Value);
+                        if (attr.Name.StartsWith("on")) nodeElement.SetEventListener(attr.Name, Callback.From(attr.Value, nodeElement.Context, nodeElement));
+                        else nodeElement.SetProperty(attr.Name, attr.Value);
                     }
                 }
 

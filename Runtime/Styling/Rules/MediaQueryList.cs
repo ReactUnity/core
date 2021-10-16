@@ -62,8 +62,8 @@ namespace ReactUnity.Styling.Rules
         {
             if (type != "change") return;
 
-            var callback = new Callback(listener);
-            Action action = () => callback.Call();
+            var callback = Callback.From(listener);
+            Action action = () => callback?.Call();
             EventListeners.Add(Tuple.Create(listener, action));
 
             OnUpdate += action;

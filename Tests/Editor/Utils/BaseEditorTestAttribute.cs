@@ -77,7 +77,7 @@ namespace ReactUnity.Editor.Tests
                 var style = GetStyle();
                 if (!string.IsNullOrWhiteSpace(style))
                 {
-                    window.context.InsertStyle(style);
+                    window.Context.InsertStyle(style);
                 }
 
                 yield return null;

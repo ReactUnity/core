@@ -37,9 +37,9 @@ namespace ReactUnity.Scripting
             var afterStartCallbacks = new List<Action<ScriptContext, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
 
             Engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
-                var callback = Callback.From(f);
+                var callback = Callback.From(f, Context);
                 if (e == "DOMContentLoaded")
-                    afterStartCallbacks.Add((runner, success) => callback.Call(runner));
+                    afterStartCallbacks.Add((ctx, success) => callback.Call(success, ctx));
             }));
 
             beforeStartCallbacks.ForEach(x => x?.Invoke(this));
@@ -73,6 +73,11 @@ namespace ReactUnity.Scripting
             Engine.Execute(code, fileName);
         }
 
+        public object EvaluateScript(string code, string fileName = null)
+        {
+            return Engine.Evaluate(code, fileName);
+        }
+
         void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
             Engine = EngineFactory.Create(Context, debug, awaitDebugger);
@@ -90,19 +95,23 @@ namespace ReactUnity.Scripting
         {
             var console = new ConsoleProxy(Context);
 
-            engine.SetValue("_console", console);
-            engine.Execute(@"console = {
-    log: (...args) => _console.log(...args),
-    info: (...args) => _console.info(...args),
-    debug: (...args) => _console.debug(...args),
-    trace: (...args) => _console.debug(...args),
-    warn: (...args) => _console.warn(...args),
-    error: (...args) => _console.error(...args),
-    exception: (...args) => _console.exception(...args),
-    dir: (...args) => _console.dir(...args),
-    clear: (...args) => _console.clear(...args),
-    assert: (...args) => _console.assert(...args),
-}");
+            engine.SetValue("__console", console);
+            engine.Execute(@"(function() {
+                var _console = __console;
+                console = {
+                    log: (...args) => _console.log(...args),
+                    info: (...args) => _console.info(...args),
+                    debug: (...args) => _console.debug(...args),
+                    trace: (...args) => _console.debug(...args),
+                    warn: (...args) => _console.warn(...args),
+                    error: (...args) => _console.error(...args),
+                    exception: (...args) => _console.exception(...args),
+                    dir: (...args) => _console.dir(...args),
+                    clear: (...args) => _console.clear(...args),
+                    assert: (...args) => _console.assert(...args),
+                };
+                delete __console;
+})()");
         }
 
         void CreatePolyfills(IJavaScriptEngine engine)

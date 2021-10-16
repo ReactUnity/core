@@ -104,9 +104,6 @@ namespace ReactUnity.UGUI
         {
             switch (propertyName)
             {
-                case "name":
-                    GameObject.name = value?.ToString();
-                    return;
                 case "active":
                     var active = Convert.ToBoolean(value);
                     GameObject.SetActive(active);

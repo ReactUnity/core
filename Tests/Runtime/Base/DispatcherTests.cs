@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_RunsOnEachUpdate()
         {
-            var dispatcher = RuntimeDispatcher.Create();
+            var dispatcher = RuntimeDispatcher.Create(null);
 
             var value = 0;
 
@@ -38,7 +38,7 @@ namespace ReactUnity.Tests
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_StopDoesNotFailUnderLoad()
         {
-            var dispatcher = RuntimeDispatcher.Create();
+            var dispatcher = RuntimeDispatcher.Create(null);
 
             var value = 0;
 

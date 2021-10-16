@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.UIToolkit
         public ReactInspector Inspector { get; internal set; }
         public ReactProperty Property { get; internal set; }
 
-        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = false)
+        public ReactUnityEditorElement(ScriptSource script, SerializableDictionary globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = false)
             : base(script, globals, timer, mediaProvider, engineType, debug, awaitDebugger, autorun)
         {
         }
@@ -25,7 +25,6 @@ namespace ReactUnity.Editor.UIToolkit
                 HostElement = this,
                 Globals = Globals,
                 Source = script,
-                Dispatcher = dispatcher,
                 Timer = Timer ?? EditorTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = Restart,
@@ -39,7 +38,5 @@ namespace ReactUnity.Editor.UIToolkit
             ctx.Initialize();
             return ctx;
         }
-
-        protected override IDispatcher CreateDispatcher() => new EditorDispatcher();
     }
 }

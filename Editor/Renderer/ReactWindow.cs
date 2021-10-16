@@ -14,10 +14,8 @@ namespace ReactUnity.Editor.Renderer
     {
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
-        public ReactContext context => hostElement?.context;
-        public IDispatcher dispatcher => hostElement?.dispatcher;
-        public IMediaProvider mediaProvider => hostElement?.MediaProvider;
-        public ReactUnityEditorElement hostElement { get; private set; }
+        public ReactContext Context => HostElement?.Context;
+        public ReactUnityEditorElement HostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
         public event Action<bool, ReactWindow> VisibilityChange;
@@ -89,20 +87,20 @@ namespace ReactUnity.Editor.Renderer
 
         public virtual void Run(VisualElement root = null)
         {
-            if (hostElement != null) OnDestroy();
-            hostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
+            if (HostElement != null) OnDestroy();
+            HostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
                 DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true),
                 EngineType, DebugEnabled, AwaitDebugger);
-            hostElement.Window = this;
-            hostElement.Run();
-            (root ?? rootVisualElement).Add(hostElement);
+            HostElement.Window = this;
+            HostElement.Run();
+            (root ?? rootVisualElement).Add(HostElement);
         }
 
         protected abstract ScriptSource GetScript();
 
-        protected virtual GlobalRecord GetGlobals()
+        protected virtual SerializableDictionary GetGlobals()
         {
-            return new GlobalRecord()
+            return new SerializableDictionary()
             {
                 { "Window", this },
             };
@@ -110,9 +108,9 @@ namespace ReactUnity.Editor.Renderer
 
         protected virtual void OnDestroy()
         {
-            hostElement?.RemoveFromHierarchy();
-            hostElement?.Destroy();
-            hostElement = null;
+            HostElement?.RemoveFromHierarchy();
+            HostElement?.Destroy();
+            HostElement = null;
         }
 
         public virtual void Restart(VisualElement root = null)
@@ -138,7 +136,7 @@ namespace ReactUnity.Editor.Renderer
 
         public Action AddSelectionChange(object cb)
         {
-            var cbObject = new Callback(cb);
+            var cbObject = Callback.From(cb, Context, this);
             var callback = new Action<ReactWindow>((arg1) => cbObject.Call(arg1));
             SelectionChange += callback;
             return () => SelectionChange -= callback;
@@ -146,7 +144,7 @@ namespace ReactUnity.Editor.Renderer
 
         public Action AddPlayModeStateChange(object cb)
         {
-            var cbObject = new Callback(cb);
+            var cbObject = Callback.From(cb, Context, this);
             var callback = new Action<PlayModeStateChange>(x => cbObject.Call(x, this));
             EditorApplication.playModeStateChanged += callback;
             return () => EditorApplication.playModeStateChanged -= callback;

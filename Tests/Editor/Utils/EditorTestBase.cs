@@ -19,8 +19,8 @@ namespace ReactUnity.Editor.Tests
     public abstract class EditorTestBase
     {
         protected TestReactWindow Window => EditorWindow.GetWindow<TestReactWindow>();
-        protected ReactUnityEditorElement Component => Window?.hostElement;
-        protected ReactContext Context => Component?.context;
+        protected ReactUnityEditorElement Component => Window?.HostElement;
+        protected ReactContext Context => Component?.Context;
         protected EditorContext EditorContext => Context as EditorContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;
         protected HostComponent Host => Context?.Host as HostComponent;

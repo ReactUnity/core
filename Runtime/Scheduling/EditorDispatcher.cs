@@ -23,9 +23,9 @@ namespace ReactUnity.Scheduling
 
         public IScheduler Scheduler { get; }
 
-        public EditorDispatcher()
+        public EditorDispatcher(ReactContext ctx)
         {
-            Scheduler = new DefaultScheduler(this);
+            Scheduler = new DefaultScheduler(this, ctx);
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.update += Update;
 

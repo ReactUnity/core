@@ -269,7 +269,7 @@ namespace ReactUnity.Helpers
 #if REACT_CLEARSCRIPT
         private readonly EnginePrototypeTable map = new EnginePrototypeTable();
 
-        public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
+        public void OnExposedToScriptCode(ScriptEngine engine)
         {
             var entry = map.GetOrCreateValue(engine);
             entry.ExposeObject<WatchableRecord<object>>(this, engine);
@@ -286,7 +286,7 @@ namespace ReactUnity.Helpers
         public object Prototype;
         public object ProxyHolder;
 
-        public void ExposeObject<T>(T obj, Microsoft.ClearScript.ScriptEngine engine)
+        public void ExposeObject<T>(T obj, ScriptEngine engine)
         {
             if (Prototype == null)
             {

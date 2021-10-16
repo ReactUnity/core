@@ -287,9 +287,6 @@ namespace ReactUnity.UIToolkit
         {
             switch (property)
             {
-                case "name":
-                    Element.name = value?.ToString();
-                    return;
                 case "focusable":
                     Element.focusable = Convert.ToBoolean(value);
                     return;

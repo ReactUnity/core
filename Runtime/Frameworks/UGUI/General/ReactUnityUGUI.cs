@@ -23,13 +23,11 @@ namespace ReactUnity.UGUI
 
         protected override ReactContext CreateContext(ScriptSource script)
         {
-            var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
             return new UGUIContext(new UGUIContext.Options
             {
                 HostElement = Root,
-                Globals = globals,
+                Globals = Globals,
                 Source = script,
-                Dispatcher = dispatcher,
                 Timer = timer ?? UnityTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = Render,
