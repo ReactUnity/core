@@ -1,4 +1,4 @@
-import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from './generated';
+import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from '../generated';
 
 export type NamespaceMap = {
   [key: string]: any;

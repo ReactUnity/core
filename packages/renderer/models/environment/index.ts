@@ -1,6 +1,7 @@
 
-import { ReactUnity } from './generated';
-import { NativeContainerInstance } from './renderer';
+import { ReactUnity } from '../generated';
+import { NativeContainerInstance } from '../renderer';
+export * from './interop';
 
 interface Console {
   assert(condition?: boolean, ...data: any[]): void;

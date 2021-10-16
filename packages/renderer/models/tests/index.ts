@@ -1,13 +1,13 @@
 import { NUnit, UnityEngine } from '../generated';
 
 declare global {
-  const Assert: NUnit.Framework.Assert;
-  const Has: NUnit.Framework.Has;
-  const Is: NUnit.Framework.Is;
-  const Iz: NUnit.Framework.Iz;
-  const Contains: NUnit.Framework.Contains;
-  const Does: NUnit.Framework.Does;
-  const Assume: NUnit.Framework.Assume;
-  const Throws: NUnit.Framework.Throws;
-  const LogAssert: UnityEngine.TestTools.LogAssert;
+  var Assert: NUnit.Framework.Assert;
+  var Has: NUnit.Framework.Has;
+  var Is: NUnit.Framework.Is;
+  var Iz: NUnit.Framework.Iz;
+  var Contains: NUnit.Framework.Contains;
+  var Does: NUnit.Framework.Does;
+  var Assume: NUnit.Framework.Assume;
+  var Throws: NUnit.Framework.Throws;
+  var LogAssert: UnityEngine.TestTools.LogAssert;
 }
