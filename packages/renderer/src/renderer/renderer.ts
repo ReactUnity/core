@@ -12,6 +12,14 @@ import { diffProperties, DiffResult, styleStringSymbol } from './diffing';
 const hostContext = {};
 const childContext = {};
 
+const textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true,
+  html: true,
+};
+
 function applyDiffedUpdate(writeTo: ReactUnity.Helpers.WatchableDictionary<any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
   if (!updatePayload) return false;
 
@@ -53,7 +61,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon' || type === 'style' || type === 'script') {
+      if (textTypes[type]) {
         UnityBridge.setText(instance, value ? ((Array.isArray(value) && value.join) ? value.join('') : value + '') : '');
       }
       continue;
@@ -111,7 +119,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     hostContext,
     internalInstanceHandle,
   ) {
-    if (type === 'text' || type === 'icon' || type === 'style' || type === 'script') {
+    if (textTypes[type]) {
       const text = props.children === true ? '' :
         Array.isArray(props.children) ? props.children.join('') :
           props.children?.toString() || '';
@@ -165,7 +173,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     applyUpdate(instance, props, true);
   },
 
-  shouldSetTextContent(type, props) { return type === 'text' || type === 'icon' || type === 'style' || type === 'script'; },
+  shouldSetTextContent(type, props) { return textTypes[type]; },
 
   shouldDeprioritizeSubtree(type, props) { return false; },
 
