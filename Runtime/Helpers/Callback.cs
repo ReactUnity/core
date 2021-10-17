@@ -30,7 +30,8 @@ namespace ReactUnity.Helpers
             if (value is string s)
             {
                 context.Script.Engine.SetValue("__thisArg", thisVal);
-                var fn = context.Script.EvaluateScript("const fn = (function(event, sender) {\n" + s + "\n}).bind(__thisArg); delete __thisArg; fn;");
+                var fn = context.Script.EvaluateScript(
+                    "(function(ts) { delete __thisArg; return (function(event, sender) {\n" + s + "\n}).bind(ts); })(__thisArg)");
                 return new Callback(fn);
             }
             if (value is Callback cb) return cb;
