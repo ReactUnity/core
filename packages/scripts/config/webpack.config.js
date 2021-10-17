@@ -31,6 +31,14 @@ const restrictedGlobals = require('confusing-browser-globals');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
+const baseEslintConfig = require('eslint-config-react-app');
+const baseEslintConfigRules = {};
+for (const key in baseEslintConfig.rules) {
+  if (Object.hasOwnProperty.call(baseEslintConfig.rules, key) && !key.startsWith('flowtype') && !key.startsWith('jsx-a11y')) {
+    baseEslintConfigRules[key] = baseEslintConfig.rules[key];
+  }
+}
+
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const sourceMapVar = process.env.GENERATE_SOURCEMAP;
 const shouldUseSourceMap = sourceMapVar !== 'false' && !!sourceMapVar;
@@ -601,31 +609,13 @@ module.exports = function (webpackEnv) {
         cwd: paths.appPath,
         resolvePluginsRelativeTo: __dirname,
         baseConfig: {
-          extends: [require.resolve('eslint-config-react-app')],
+          ...baseEslintConfig,
+          plugins: ['import', 'react-hooks'],
           rules: {
+            ...baseEslintConfigRules,
             ...(!hasJsxRuntime && {
               'react/react-in-jsx-scope': 'error',
             }),
-
-            // Disable jsx-ally as it is irrelevant for us
-            // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
-            'jsx-a11y/alt-text': 'off',
-            'jsx-a11y/anchor-has-content': 'off',
-            'jsx-a11y/anchor-is-valid': 'off',
-            'jsx-a11y/aria-activedescendant-has-tabindex': 'off',
-            'jsx-a11y/aria-props': 'off',
-            'jsx-a11y/aria-proptypes': 'off',
-            'jsx-a11y/aria-role': 'off',
-            'jsx-a11y/aria-unsupported-elements': 'off',
-            'jsx-a11y/heading-has-content': 'off',
-            'jsx-a11y/iframe-has-title': 'off',
-            'jsx-a11y/img-redundant-alt': 'off',
-            'jsx-a11y/no-access-key': 'off',
-            'jsx-a11y/no-distracting-elements': 'off',
-            'jsx-a11y/no-redundant-roles': 'off',
-            'jsx-a11y/role-has-required-aria-props': 'off',
-            'jsx-a11y/role-supports-aria-props': 'off',
-            'jsx-a11y/scope': 'off',
             'no-restricted-globals': ['error'].concat(restrictedGlobals.filter(x => x !== 'location')),
           },
         },
