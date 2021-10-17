@@ -350,6 +350,7 @@ namespace ReactUnity.Editor.Developer
                 $"// Types in assemblies: {string.Join(", ", Assemblies.Select(x => x.GetName().Name))}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
+                $"/* eslint-disable */{n}{n}" +
                 $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(y => y))} }} from '{x.Key}';"))}{n}" +
                 n +
                 sb;
