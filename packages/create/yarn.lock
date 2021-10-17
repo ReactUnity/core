@@ -12,12 +12,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cspotcode/source-map-support@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@cspotcode/source-map-support@npm:0.6.1"
+"@cspotcode/source-map-support@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@cspotcode/source-map-support@npm:0.7.0"
   dependencies:
     "@cspotcode/source-map-consumer": 0.8.0
-  checksum: da9fb4f6404ebd210537bfa8b2821a747407bf422d2d3d46f29bf85c7c3a68a126de1a9ec41398d57ca116c3bef56d58c2fb4def0800630b1ec82533ad2447c2
+  checksum: 9faddda7757cd778b5fd6812137b2cc265810043680d6399acc20441668fafcdc874053be9dccd0d9110087287bfad27eb3bf342f72bceca9aa9059f5d0c4be8
   languageName: node
   linkType: hard
 
@@ -25,13 +25,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reactunity/create@workspace:."
   dependencies:
-    "@types/fs-extra": ^9.0.12
-    "@types/node": ^16.7.10
+    "@types/fs-extra": ^9.0.13
+    "@types/node": ^16.11.1
     chalk: ^4.1.2
-    commander: ^8.1.0
+    commander: ^8.2.0
     fs-extra: ^10.0.0
-    ts-node: ^10.2.1
-    typescript: ^4.4.2
+    ts-node: ^10.3.0
+    typescript: ^4.4.4
   bin:
     create: index.js
   languageName: unknown
@@ -65,19 +65,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/fs-extra@npm:^9.0.12":
-  version: 9.0.12
-  resolution: "@types/fs-extra@npm:9.0.12"
+"@types/fs-extra@npm:^9.0.13":
+  version: 9.0.13
+  resolution: "@types/fs-extra@npm:9.0.13"
   dependencies:
     "@types/node": "*"
-  checksum: c63834f0be8d0993c55abcc0b2c90f3c095cf3aa9e827973472167bd93687df9da546bd5e0823ddc9e83e1651c9cfb09bbac99fa57a15ab28fd21280426e472c
+  checksum: add79e212acd5ac76b97b9045834e03a7996aef60a814185e0459088fd290519a3c1620865d588fa36c4498bf614210d2a703af5cf80aa1dbc125db78f6edac3
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^16.7.10":
+"@types/node@npm:*":
   version: 16.7.10
   resolution: "@types/node@npm:16.7.10"
   checksum: 0518803caa1a14f4070e770a280eda1c4b4581a425cbda481cdd54b1f34a7ea497ff067fd23b90e3d4f4fdcfba15c1316182875e9cf9f5b2e880de1e595de053
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.11.1":
+  version: 16.11.1
+  resolution: "@types/node@npm:16.11.1"
+  checksum: 22cea470b89292810733b8b9fc1b6a1873bc3ed4d4cdf2f25e777dc607994bd7c12e64166d1a66dd5924734192b0a891b6aeb6813aa935f731345f4086234375
   languageName: node
   linkType: hard
 
@@ -139,10 +146,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "commander@npm:8.1.0"
-  checksum: 75abce64ed13cc7703606dbe9e6cfcabe04f382c6c3404c3054ac4f3917064c40ddbf3eecd8917594426d547a85b4cacbc15e986d55a7723a11494ec19b570da
+"commander@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "commander@npm:8.2.0"
+  checksum: e868805bc266777f7a9c8a740e15b9e02b8148d8251f577ea9b9ef373ac0bdeb77b9b60cfc033592c9e1affea89993be08c13c623f0c619f9bf152c0e4d12cb0
   languageName: node
   linkType: hard
 
@@ -214,11 +221,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "ts-node@npm:10.2.1"
+"ts-node@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "ts-node@npm:10.3.0"
   dependencies:
-    "@cspotcode/source-map-support": 0.6.1
+    "@cspotcode/source-map-support": 0.7.0
     "@tsconfig/node10": ^1.0.7
     "@tsconfig/node12": ^1.0.7
     "@tsconfig/node14": ^1.0.0
@@ -246,27 +253,27 @@ __metadata:
     ts-node-script: dist/bin-script.js
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
-  checksum: f37d2827a583c51d012cdd3d9b96629fba7a5b5dfad2c26ca48c7c89f904118924689ca56f4b9b2136217194870a76f26aae06e3490ee613b0e960f02dc96bbe
+  checksum: aea1b9eac4d4c735c453a0e7efef6fd76c7b59db3be158eabe21abad9d35209d243b210a9a5ef39742ffbda542250c2e771fa387e3b4829e8cb699e82f3820c4
   languageName: node
   linkType: hard
 
-typescript@^4.4.2:
-  version: 4.4.2
-  resolution: "typescript@npm:4.4.2"
+typescript@^4.4.4:
+  version: 4.4.4
+  resolution: "typescript@npm:4.4.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 194e08e9d1971d667d6fd1a0554616b7022312a2319d70e81a64e502a265992061ee7817ed9a69b52bbabe7a9b85e7938cb8c11c433e40a516b277f8c4dacd51
+  checksum: 89ecb8436bb48ef5594d49289f5f89103071716b6e4844278f4fb3362856e31203e187a9c76d205c3f0b674d221a058fd28310dbcbcf5d95e9a57229bb5203f1
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.4.2#~builtin<compat/typescript>":
-  version: 4.4.2
-  resolution: "typescript@patch:typescript@npm%3A4.4.2#~builtin<compat/typescript>::version=4.4.2&hash=d8b4e7"
+"typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
+  version: 4.4.4
+  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=d8b4e7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 11d6ab6e868117908c388401e2ac06d503c5c8709115ab80ee69a1a6352c1f98471d1e595636bfe6a2d6b20b03a44df6bb2d3d198cea97c0c328968cd18d2b70
+  checksum: 4a639b6886be13616582ab82abdb4ffbbf5b0458069d13c10cd5d44fc1cafa33eab005e8ac8691ad8fae249fee85844bb7d523263c4568fe9a2ca31cd3c91c3d
   languageName: node
   linkType: hard
 
