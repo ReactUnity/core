@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
-    "build": "react-unity-scripts build"
+    "build": "react-unity-scripts build",
+    "lint": "react-unity-scripts lint"
   },
   "dependencies": {
     "@reactunity/renderer": "^0.6.0",
