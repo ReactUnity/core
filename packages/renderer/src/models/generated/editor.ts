@@ -2,6 +2,8 @@
 // Types in assemblies: UnityEditor.CoreModule
 // Generated 11/07/2021 17:47:12
 //
+/* eslint-disable */
+
 import { System } from './system';
 import { Unity, UnityEngine } from './unity';
 

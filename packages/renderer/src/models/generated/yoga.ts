@@ -2,6 +2,8 @@
 // Types in assemblies: Facebook.Yoga
 // Generated 18/09/2021 23:11:55
 //
+/* eslint-disable */
+
 import { System } from './system';
 
 export declare namespace Facebook {

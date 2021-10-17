@@ -2,6 +2,8 @@
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
 // Generated 17/10/2021 03:18:39
 //
+/* eslint-disable */
+
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
 import { UnityEngine } from './unity';

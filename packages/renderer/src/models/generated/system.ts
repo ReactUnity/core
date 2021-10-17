@@ -2,6 +2,8 @@
 // Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
 // Generated 11/07/2021 17:47:28
 //
+/* eslint-disable */
+
 
 
 export declare namespace System {

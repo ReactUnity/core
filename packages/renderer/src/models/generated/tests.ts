@@ -2,6 +2,8 @@
 // Types in assemblies: nunit.framework
 // Generated 11/07/2021 17:47:35
 //
+/* eslint-disable */
+
 import { System } from './system';
 
 export declare namespace NUnit {

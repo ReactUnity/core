@@ -2,6 +2,8 @@
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule, UnityEngine.XRModule, UnityEngine.PhysicsModule, UnityEngine.InputLegacyModule, UnityEngine.UI, Unity.InputSystem, Unity.InputSystem
 // Generated 11/07/2021 17:46:37
 //
+/* eslint-disable */
+
 import { System } from './system';
 
 export declare namespace Unity {
