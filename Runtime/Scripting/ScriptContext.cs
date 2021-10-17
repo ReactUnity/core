@@ -27,24 +27,24 @@ namespace ReactUnity.Scripting
             AwaitDebugger = awaitDebugger;
         }
 
-        public void RunScript(string script, UnityEvent<ScriptContext> beforeStart = null, UnityEvent<ScriptContext> afterStart = null)
+        public void RunScript(string script, Action beforeStart = null, Action afterStart = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
             Initialize();
 
-            var beforeStartCallbacks = new List<Action<ScriptContext>>() { (runner) => beforeStart?.Invoke(runner) };
-            var afterStartCallbacks = new List<Action<ScriptContext, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
+            var beforeStartCallbacks = new List<Action>() { beforeStart };
+            var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
 
             Engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
                 var callback = Callback.From(f, Context);
                 if (e == "DOMContentLoaded")
-                    afterStartCallbacks.Add((ctx, success) => callback.Call(success, ctx));
+                    afterStartCallbacks.Add((success) => callback.Call(success, this));
             }));
 
-            beforeStartCallbacks.ForEach(x => x?.Invoke(this));
+            beforeStartCallbacks.ForEach(x => x?.Invoke());
             var error = Engine.TryExecute(script, "ReactUnity");
-            afterStartCallbacks.ForEach(x => x?.Invoke(this, error));
+            afterStartCallbacks.ForEach(x => x?.Invoke(error));
         }
 
         public void Initialize()
@@ -137,7 +137,7 @@ namespace ReactUnity.Scripting
         void CreateLocation(IJavaScriptEngine engine)
         {
             engine.SetValue("location", Context.Location);
-            engine.SetValue("document", new DocumentProxy(Context, ExecuteScript, Context.Location.origin));
+            engine.SetValue("document", new DocumentProxy(Context, Context.Location.origin));
 
             engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");

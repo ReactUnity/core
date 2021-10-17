@@ -8,23 +8,21 @@ namespace ReactUnity.Scripting.DomProxies
     public class DocumentProxy
     {
         public HeadProxy head;
-        public string origin;
-        public Action<string, string> execute;
-        public ReactContext context;
+        public string Origin;
+        public ReactContext Context;
 
-        public DocumentProxy(ReactContext context, Action<string, string> execute, string origin)
+        public DocumentProxy(ReactContext context, string origin)
         {
             head = new HeadProxy();
-            this.execute = execute;
-            this.origin = origin;
-            this.context = context;
+            Origin = origin;
+            Context = context;
         }
 
         public object createElement(string type)
         {
             if (type == "script") return new ScriptProxy(this);
             if (type == "style") return new StyleProxy(this);
-            else return context.CreateComponent(type, "");
+            else return Context.CreateComponent(type, "");
         }
 
         public string createTextNode(string text)
@@ -35,19 +33,19 @@ namespace ReactUnity.Scripting.DomProxies
         public object querySelector(string query)
         {
             if (query == "head") return head;
-            return context.Host.QuerySelector(query);
+            return Context.Host.QuerySelector(query);
         }
 
         public object querySelectorAll(string query)
         {
             if (query == "head") return new List<object> { head };
-            return context.Host.QuerySelectorAll(query);
+            return Context.Host.QuerySelectorAll(query);
         }
 
         public object getElementById(string id)
         {
             // TODO: handle efficiently
-            return context.Host.QuerySelector("#" + id);
+            return Context.Host.QuerySelector("#" + id);
         }
 
         public List<IDomElementProxy> getElementsByTagName(string tagName)
@@ -134,13 +132,13 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void OnAppend()
         {
-            var script = document.context.CreateStaticScript(src);
-            var dispatcher = document.context.Dispatcher;
+            var script = document.Context.CreateStaticScript(src);
+            var dispatcher = document.Context.Dispatcher;
 
             Action<string> action = (sc) => {
                 string fileName = script.FileName;
 
-                document.execute(sc, fileName);
+                document.Context.Script.ExecuteScript(sc, fileName);
                 (onload as Action)?.Invoke();
             };
 
@@ -148,7 +146,7 @@ namespace ReactUnity.Scripting.DomProxies
                 dispatcher.OnceUpdate(() => action(sc));
             };
 
-            script.GetScript((sc, isDevServer) => callback(sc), dispatcher, false, true);
+            script.GetScript((sc, isDevServer) => callback(sc), dispatcher, false);
         }
 
         public void OnRemove()
@@ -196,7 +194,7 @@ namespace ReactUnity.Scripting.DomProxies
         {
             foreach (var sheet in Sheets)
             {
-                document.context.RemoveStyle(sheet.Value);
+                document.Context.RemoveStyle(sheet.Value);
             }
 
             Sheets.Clear();
@@ -221,7 +219,7 @@ namespace ReactUnity.Scripting.DomProxies
         void ProcessNodes()
         {
             pendingNodes.ForEach(x => {
-                var sheet = document.context.InsertStyle(x);
+                var sheet = document.Context.InsertStyle(x);
                 Sheets[x] = sheet;
             });
             pendingNodes.Clear();
@@ -229,7 +227,7 @@ namespace ReactUnity.Scripting.DomProxies
             pendingRemoval.ForEach(x => {
                 if (Sheets.TryGetValue(x, out var sheet))
                 {
-                    document.context.RemoveStyle(sheet);
+                    document.Context.RemoveStyle(sheet);
                     Sheets.Remove(x);
                 }
             });

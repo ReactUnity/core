@@ -36,6 +36,8 @@ namespace ReactUnity.UGUI
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
+                BeforeStart = BeforeStart.Invoke,
+                AfterStart = AfterStart.Invoke,
             });
         }
 

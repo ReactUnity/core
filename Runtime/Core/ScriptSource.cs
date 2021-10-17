@@ -141,7 +141,7 @@ namespace ReactUnity
             return url.Split('#')[0].Split('?')[0];
         }
 
-        public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true, bool disableWarnings = false)
+        public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true)
         {
 #if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
             if (useDevServer && IsDevServer)

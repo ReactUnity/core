@@ -9,7 +9,6 @@ namespace ReactUnity.UIToolkit
 {
     public class ReactUnityElement : VisualElement
     {
-        protected IDisposable ScriptWatchDisposable;
         public ReactContext Context { get; private set; }
         public ITimer Timer { get; protected set; }
         public IMediaProvider MediaProvider { get; private set; }
@@ -41,19 +40,14 @@ namespace ReactUnity.UIToolkit
             var src = Script;
 
             Context = CreateContext(src);
-
-            ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
-                Context.Script.RunScript(sc);
-            }, Context.Dispatcher, true, true);
+            Context.Start();
         }
 
         public void Destroy()
         {
             Clear();
-            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
             Context?.Dispose();
             Context = null;
-            ScriptWatchDisposable = null;
         }
 
         public virtual void Restart()

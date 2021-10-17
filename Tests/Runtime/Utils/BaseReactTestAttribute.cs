@@ -70,8 +70,8 @@ namespace ReactUnity.Tests
 
             var ru = CreateReactUnity(engineType, GetScript());
             ru.timer = RealTimer ? null : new ControlledTimer();
-            ru.BeforeStart.AddListener(BeforeStart);
-            ru.AfterStart.AddListener(AfterStart);
+            ru.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
+            ru.AfterStart.AddListener(() => AfterStart(ru.Context.Script));
             if (AutoRender) ru.Render();
         }
 

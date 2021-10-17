@@ -31,6 +31,8 @@ namespace ReactUnity.UIToolkit
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
+                BeforeStart = BeforeStart.Invoke,
+                AfterStart = AfterStart.Invoke,
             });
         }
 

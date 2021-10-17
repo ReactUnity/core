@@ -10,9 +10,6 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
-        [Serializable]
-        public class ScriptContextEvent : UnityEvent<ScriptContext> { }
-
         public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
 
         public bool Debug = false;
@@ -26,7 +23,6 @@ namespace ReactUnity
 
         public IMediaProvider MediaProvider { get; private set; }
         public ReactContext Context { get; private set; }
-        private IDisposable ScriptWatchDisposable { get; set; }
         public ITimer timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
@@ -34,8 +30,8 @@ namespace ReactUnity
         #region Advanced Options
 
         [HideInInspector] public bool AutoRender = true;
-        [HideInInspector] public ScriptContextEvent BeforeStart = new ScriptContextEvent();
-        [HideInInspector] public ScriptContextEvent AfterStart = new ScriptContextEvent();
+        [HideInInspector] public UnityEvent BeforeStart = new UnityEvent();
+        [HideInInspector] public UnityEvent AfterStart = new UnityEvent();
 
         #endregion
 
@@ -61,34 +57,25 @@ namespace ReactUnity
 
         protected virtual void Clean()
         {
-            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
-
             ClearRoot();
-
             Context?.Dispose();
             Context = null;
-            ScriptWatchDisposable = null;
         }
 
         protected abstract void ClearRoot();
 
-        private IDisposable LoadAndRun(ScriptSource script, bool disableWarnings = false)
+        private void LoadAndRun(ScriptSource script)
         {
             MediaProvider = CreateMediaProvider();
             Context = CreateContext(script);
-
-            var watcherDisposable = script.GetScript((code, isDevServer) => {
-                Context.Script.RunScript(code, BeforeStart, AfterStart);
-            }, Context.Dispatcher, true, disableWarnings);
-
-            return watcherDisposable;
+            Context.Start();
         }
 
         [ContextMenu("Restart")]
         public void Render()
         {
             Clean();
-            ScriptWatchDisposable = LoadAndRun(Script, false);
+            LoadAndRun(Script);
         }
 
         protected abstract ReactContext CreateContext(ScriptSource script);

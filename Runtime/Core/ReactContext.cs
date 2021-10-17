@@ -26,6 +26,9 @@ namespace ReactUnity
             public JavascriptEngineType EngineType;
             public bool Debug;
             public bool AwaitDebugger;
+            public Action BeforeStart;
+            public Action AfterStart;
+
             public virtual bool CalculatesLayout { get; }
         }
 
@@ -149,6 +152,15 @@ namespace ReactUnity
         public abstract IReactComponent CreateComponent(string tag, string text);
         public abstract IReactComponent CreatePseudoComponent(string tag);
         public abstract void PlayAudio(AudioClip clip);
+
+        public void Start()
+        {
+            var scriptJob = Source.GetScript((code, isDevServer) => {
+                Script.RunScript(code, options.BeforeStart, options.AfterStart);
+            }, Dispatcher, true);
+
+            Disposables.Add(scriptJob);
+        }
 
         public void Dispose()
         {
