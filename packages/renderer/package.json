@@ -39,7 +39,7 @@
     "build": "yarn build:clean && yarn build:base && yarn build:editor && yarn build:ugui && yarn build:uitoolkit",
     "prepare": "yarn build",
     "watch": "tsc --watch",
-    "lint": "eslint --ext js,ts,tsx src models",
+    "lint": "react-unity-scripts lint",
     "local": "yalc publish --push",
     "pack": "npm pack"
   },
@@ -62,10 +62,10 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
+    "@reactunity/scripts": "^0.6.1",
     "@types/react": "^17.0.30",
     "@types/react-reconciler": "^0.26.4",
     "@types/webpack-env": "^1.16.3",
-    "eslint": "^8.0.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.4"
   }
