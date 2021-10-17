@@ -19,6 +19,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const eslintConfig = require('./eslintConfig');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -31,13 +32,6 @@ const restrictedGlobals = require('confusing-browser-globals');
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
-const baseEslintConfig = require('eslint-config-react-app');
-const baseEslintConfigRules = {};
-for (const key in baseEslintConfig.rules) {
-  if (Object.hasOwnProperty.call(baseEslintConfig.rules, key) && !key.startsWith('flowtype') && !key.startsWith('jsx-a11y')) {
-    baseEslintConfigRules[key] = baseEslintConfig.rules[key];
-  }
-}
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const sourceMapVar = process.env.GENERATE_SOURCEMAP;
@@ -65,19 +59,6 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
-
-const hasJsxRuntime = (() => {
-  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
-    return false;
-  }
-
-  try {
-    require.resolve('react/jsx-runtime');
-    return true;
-  } catch (e) {
-    return false;
-  }
-})();
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -324,7 +305,7 @@ module.exports = function (webpackEnv) {
                   [
                     require.resolve('babel-preset-react-app'),
                     {
-                      runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                      runtime: modules.hasJsxRuntime ? 'automatic' : 'classic',
                       absoluteRuntime: false,
                     },
                   ],
@@ -594,31 +575,11 @@ module.exports = function (webpackEnv) {
       }),
       !disableESLintPlugin &&
       new ESLintPlugin({
-        // Plugin options
-        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
         formatter: require.resolve('react-dev-utils/eslintFormatter'),
         eslintPath: require.resolve('eslint'),
         failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
         context: paths.appSrc,
-        cache: true,
-        cacheLocation: path.resolve(
-          paths.appNodeModules,
-          '.cache/.eslintcache'
-        ),
-        // ESLint class options
-        cwd: paths.appPath,
-        resolvePluginsRelativeTo: __dirname,
-        baseConfig: {
-          ...baseEslintConfig,
-          plugins: ['import', 'react-hooks'],
-          rules: {
-            ...baseEslintConfigRules,
-            ...(!hasJsxRuntime && {
-              'react/react-in-jsx-scope': 'error',
-            }),
-            'no-restricted-globals': ['error'].concat(restrictedGlobals.filter(x => x !== 'location')),
-          },
-        },
+        ...eslintConfig,
       }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize

@@ -195,6 +195,7 @@ module.exports = function (
       build: 'react-unity-scripts build',
       test: 'react-unity-scripts test',
       eject: 'react-unity-scripts eject',
+      lint: 'react-unity-scripts lint',
     },
     templateScripts
   );
