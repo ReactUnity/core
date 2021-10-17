@@ -79,9 +79,8 @@ namespace ReactUnity
             Html = new HtmlContext(this);
 
             var updateVisitor = new UpdateVisitor();
-            Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
-
-            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
+            Dispatcher.OnEveryUpdate(() => Host?.Accept(updateVisitor));
+            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => Host?.Layout.CalculateLayout());
         }
 
         public virtual StyleSheet InsertStyle(string style) => InsertStyle(style, 0);
