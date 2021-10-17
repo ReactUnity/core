@@ -1,7 +1,9 @@
 name: Add latest tag to new release
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   run:
