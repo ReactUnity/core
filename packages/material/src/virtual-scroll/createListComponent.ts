@@ -1,5 +1,5 @@
 
-import { ReactUnity, UnityEngine } from '@reactunity/renderer';
+import { ReactUnity, Style, UnityEngine } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
 import { createElement, PureComponent } from 'react';
@@ -78,7 +78,8 @@ export type Props<T> = {
   overscanCount?: number;
   useIsScrolling?: boolean;
   width?: number | string;
-} & UGUIElements['scroll'];
+  style?: Style;
+} & Omit<UGUIElements['scroll'], 'style'>;
 
 type State = {
   instance: any;
