@@ -1,6 +1,5 @@
 import { ReactUnity as RU } from '@reactunity/renderer';
 import React from 'react';
-import { BoxShadowField } from '../components/box-shadow';
 import { enumComponent, flagsComponent, objectComponent, sliderComponent, sliderintComponent } from '../components/other';
 import { YogaValue2Field } from '../components/yogavalue2';
 import { convertFloatToLength, convertLengthToFloat, convertLengthToYoga, convertListToString, convertStringToList, convertYogaToLength, floatDefaultGetter } from './helpers';
@@ -74,11 +73,6 @@ export const styleProps: StylePropGroup[] = [
       { name: 'zIndex', component: sliderintComponent(), label: 'Z-Index' },
       { name: 'visibility', component: 'toggle', label: 'Visibility' },
     ]
-  },
-  {
-    props: [
-      { name: 'boxShadow', component: BoxShadowField, label: 'Box Shadow' },
-    ],
   },
   {
     label: 'Text',

@@ -50,7 +50,7 @@ namespace ReactUnity.Scripting.DomProxies
         {
             socket = WebSocketFactory.CreateInstance(url);
             this.context = context;
-            context.Disposables.Add(this);
+            context.Disposables.Add(Dispose);
             socket.Connect();
         }
 

@@ -55,7 +55,7 @@ namespace ReactUnity
         public HtmlContext Html { get; }
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
-        public List<IDisposable> Disposables { get; } = new List<IDisposable>();
+        public List<Action> Disposables { get; } = new List<Action>();
 
         public ReactContext(Options options)
         {
@@ -159,7 +159,7 @@ namespace ReactUnity
                 Script.RunScript(code, options.BeforeStart, options.AfterStart);
             }, Dispatcher, true);
 
-            Disposables.Add(scriptJob);
+            if (scriptJob != null) Disposables.Add(scriptJob.Dispose);
         }
 
         public void Dispose()
@@ -169,7 +169,7 @@ namespace ReactUnity
             Dispatcher?.Dispose();
             Globals?.Dispose();
             Script?.Dispose();
-            foreach (var item in Disposables) item?.Dispose();
+            foreach (var item in Disposables) item.Invoke();
         }
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);

@@ -139,7 +139,10 @@ namespace ReactUnity.Editor.Renderer
             var cbObject = Callback.From(cb, Context, this);
             var callback = new Action<ReactWindow>((arg1) => cbObject.Call(arg1));
             SelectionChange += callback;
-            return () => SelectionChange -= callback;
+
+            Action dispose = () => SelectionChange -= callback;
+            Context.Disposables.Add(dispose);
+            return dispose;
         }
 
         public Action AddPlayModeStateChange(object cb)
@@ -147,7 +150,10 @@ namespace ReactUnity.Editor.Renderer
             var cbObject = Callback.From(cb, Context, this);
             var callback = new Action<PlayModeStateChange>(x => cbObject.Call(x, this));
             EditorApplication.playModeStateChanged += callback;
-            return () => EditorApplication.playModeStateChanged -= callback;
+
+            Action dispose = () => EditorApplication.playModeStateChanged -= callback;
+            Context.Disposables.Add(dispose);
+            return dispose;
         }
 
         public Action AddVisibilityChange(object cb)
@@ -155,7 +161,10 @@ namespace ReactUnity.Editor.Renderer
             var cbObject = new Callback(cb);
             var callback = new Action<bool, ReactWindow>((arg1, arg2) => cbObject.Call(arg1, arg2));
             VisibilityChange += callback;
-            return () => VisibilityChange -= callback;
+
+            Action dispose = () => VisibilityChange -= callback;
+            Context.Disposables.Add(dispose);
+            return dispose;
         }
 
         public void AddItemsToMenu(GenericMenu menu)
