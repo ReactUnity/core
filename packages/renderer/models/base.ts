@@ -28,22 +28,25 @@ export interface BaseCmpProps {
   className?: string;
 }
 
-export interface StyleCmpProps extends BaseCmpProps {
+export interface ContentSrcProps extends BaseCmpProps {
+  content?: string;
   source?: string;
+}
+
+export interface StyleCmpProps extends ContentSrcProps {
   active?: boolean;
   scope?: string | BaseCmp;
   importance?: number;
 }
 
-export interface ScriptCmpProps extends BaseCmpProps {
-  source?: string;
-}
 
 export type StyleCmpDef = StyleCmpProps & RefAttributes<ReactUnity.StyleComponent> & { children?: Textable | Textable[] };
-export type ScriptCmpDef = ScriptCmpProps & RefAttributes<ReactUnity.ScriptComponent> & { children?: Textable | Textable[] };
+export type ScriptCmpDef = ContentSrcProps & RefAttributes<ReactUnity.ScriptComponent> & { children?: Textable | Textable[] };
+export type HtmlCmpDef = ContentSrcProps & RefAttributes<ReactUnity.Html.HtmlComponent> & { children?: Textable | Textable[] };
 
 export interface BaseElements<BaseCmpType> {
-  [key: string]: BaseCmpType | StyleCmpDef | ScriptCmpDef;
-  style: StyleCmpDef;
-  script: ScriptCmpDef;
-}
+  [key: string]: BaseCmpType;
+  style: BaseCmpType & StyleCmpDef;
+  script: BaseCmpType & ScriptCmpDef;
+  html: BaseCmpType & HtmlCmpDef;
+};

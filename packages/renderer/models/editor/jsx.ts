@@ -16,7 +16,6 @@ type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField
 type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
 export interface EditorElements extends BaseElements<BaseElement<any>> {
-  html: Components.Html & rc.RefAttributes<Cmp.HtmlComponent> & Children<never>;
   view: BaseElement & { tag?: string };
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;

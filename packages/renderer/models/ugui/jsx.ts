@@ -10,7 +10,6 @@ type Children<T = any> = { children?: T };
 type BaseCmp = Components.View<any> & RefAttributes<NS.UGUIComponent> & Children;
 
 export interface UGUIElements extends BaseElements<BaseCmp> {
-  html: Components.Html & RefAttributes<NS.HtmlComponent> & Children<never>;
   view: Components.View & RefAttributes<NS.ContainerComponent> & { tag?: string } & Children;
   anchor: Components.Anchor & RefAttributes<NS.AnchorComponent> & Children;
   text: Components.Text & RefAttributes<NS.TextComponent> & Children<Textable | Textable[]>;

@@ -11,7 +11,6 @@ type Children<T = any> = { children?: T };
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
 
 export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
-  html: Components.Html & rc.RefAttributes<Cmp.HtmlComponent> & Children<never>;
   view: BaseElement & { tag?: string };
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;

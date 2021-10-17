@@ -15,11 +15,6 @@ export interface View<TSender = BaseCmp> extends Events<TSender>, BaseCmpProps {
   bind?: UnityEditor.SerializedObject | UnityEditor.SerializedProperty;
 }
 
-export interface Html extends View<ReactUnity.UIToolkit.HtmlComponent> {
-  content?: string;
-  source?: string;
-}
-
 export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {
   richText?: boolean;
   displayTooltipWhenElided?: boolean;

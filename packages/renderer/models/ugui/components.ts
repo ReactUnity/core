@@ -10,11 +10,6 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T>, Base
   style?: Style | string;
 }
 
-export interface Html extends View<ReactUnity.UGUI.HtmlComponent> {
-  content?: string;
-  source?: string;
-}
-
 export interface Text extends View<ReactUnity.UGUI.TextComponent> {
   richText?: boolean;
 }
