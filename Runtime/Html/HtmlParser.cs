@@ -1,4 +1,3 @@
-using System.IO;
 using System.Xml;
 using ReactUnity.Helpers;
 

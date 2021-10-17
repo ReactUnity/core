@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ReactUnity.Html
 {
     public class HtmlContext
