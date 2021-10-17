@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "react-app"
-  ],
   "rules": {
     "quotes": [
       "error",
