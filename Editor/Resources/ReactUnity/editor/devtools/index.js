@@ -133,13 +133,13 @@ ___CSS_LOADER_EXPORT___.locals = {
 "use strict";
 
 
-var stylesInDom = [];
+var stylesInDOM = [];
 
 function getIndexByIdentifier(identifier) {
   var result = -1;
 
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
@@ -158,20 +158,24 @@ function modulesToDom(list, options) {
     var count = idCountMap[id] || 0;
     var identifier = "".concat(id, " ").concat(count);
     idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
+    var indexByIdentifier = getIndexByIdentifier(identifier);
     var obj = {
       css: item[1],
       media: item[2],
-      sourceMap: item[3]
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
     };
 
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
     } else {
-      stylesInDom.push({
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
         identifier: identifier,
-        updater: addStyle(obj, options),
+        updater: updater,
         references: 1
       });
     }
@@ -182,12 +186,13 @@ function modulesToDom(list, options) {
   return identifiers;
 }
 
-function addStyle(obj, options) {
+function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-  return function updateStyle(newObj) {
+
+  var updater = function updater(newObj) {
     if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
 
@@ -196,6 +201,8 @@ function addStyle(obj, options) {
       api.remove();
     }
   };
+
+  return updater;
 }
 
 module.exports = function (list, options) {
@@ -208,7 +215,7 @@ module.exports = function (list, options) {
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
+      stylesInDOM[index].references--;
     }
 
     var newLastIdentifiers = modulesToDom(newList, options);
@@ -218,10 +225,10 @@ module.exports = function (list, options) {
 
       var _index = getIndexByIdentifier(_identifier);
 
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
 
-        stylesInDom.splice(_index, 1);
+        stylesInDOM.splice(_index, 1);
       }
     }
 
@@ -285,10 +292,10 @@ module.exports = insertBySelector;
 
 /* istanbul ignore next  */
 function insertStyleElement(options) {
-  var style = document.createElement("style");
-  options.setAttributes(style, options.attributes);
-  options.insert(style);
-  return style;
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
 }
 
 module.exports = insertStyleElement;
@@ -302,11 +309,11 @@ module.exports = insertStyleElement;
 
 
 /* istanbul ignore next  */
-function setAttributesWithoutAttributes(style) {
+function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
 
   if (nonce) {
-    style.setAttribute("nonce", nonce);
+    styleElement.setAttribute("nonce", nonce);
   }
 }
 
@@ -321,16 +328,38 @@ module.exports = setAttributesWithoutAttributes;
 
 
 /* istanbul ignore next  */
-function apply(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
+function apply(styleElement, options, obj) {
+  var css = "";
 
-  if (media) {
-    style.setAttribute("media", media);
-  } else {
-    style.removeAttribute("media");
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
   }
+
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+
+  var needLayer = typeof obj.layer !== "undefined";
+
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+
+  css += obj.css;
+
+  if (needLayer) {
+    css += "}";
+  }
+
+  if (obj.media) {
+    css += "}";
+  }
+
+  if (obj.supports) {
+    css += "}";
+  }
+
+  var sourceMap = obj.sourceMap;
 
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
@@ -339,28 +368,28 @@ function apply(style, options, obj) {
   /* istanbul ignore if  */
 
 
-  options.styleTagTransform(css, style);
+  options.styleTagTransform(css, styleElement, options.options);
 }
 
-function removeStyleElement(style) {
+function removeStyleElement(styleElement) {
   // istanbul ignore if
-  if (style.parentNode === null) {
+  if (styleElement.parentNode === null) {
     return false;
   }
 
-  style.parentNode.removeChild(style);
+  styleElement.parentNode.removeChild(styleElement);
 }
 /* istanbul ignore next  */
 
 
 function domAPI(options) {
-  var style = options.insertStyleElement(options);
+  var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
-      apply(style, options, obj);
+      apply(styleElement, options, obj);
     },
     remove: function remove() {
-      removeStyleElement(style);
+      removeStyleElement(styleElement);
     }
   };
 }
@@ -376,15 +405,15 @@ module.exports = domAPI;
 
 
 /* istanbul ignore next  */
-function styleTagTransform(css, style) {
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
   } else {
-    while (style.firstChild) {
-      style.removeChild(style.firstChild);
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
     }
 
-    style.appendChild(document.createTextNode(css));
+    styleElement.appendChild(document.createTextNode(css));
   }
 }
 
@@ -7218,7 +7247,7 @@ if (true) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7232,17 +7261,17 @@ if (true) {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -7255,7 +7284,7 @@ if (true) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -7267,12 +7296,12 @@ if (true) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -7281,7 +7310,7 @@ if (true) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -7487,15 +7516,14 @@ function DefaultView(_a) {
   }, void 0);
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
+var styleStringSymbol = '__style_as_string__';
+function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
   }
 
-  if (lastRawProps === nextRawProps) return null;
+  if (lastProps === nextProps) return null;
   var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
   var propKey;
 
   for (propKey in lastProps) {
@@ -7504,6 +7532,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = null;
+
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || []).push(styleStringSymbol, null);
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -7525,6 +7558,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = nextProp;
+
+    if (propKey === 'style' && typeof prop === 'string' !== (typeof lastProp === 'string')) {
+      (updatePayload = updatePayload || []).push(styleStringSymbol, typeof prop === 'string' ? prop : null);
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -7544,6 +7582,13 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
 
 var hostContext = {};
 var childContext = {};
+var textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true,
+  html: true
+};
 
 function applyDiffedUpdate(writeTo, updatePayload, depth) {
   if (depth === void 0) {
@@ -7592,7 +7637,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr === 'children') {
-      if (type === 'text' || type === 'icon' || type === 'style') {
+      if (textTypes[type]) {
         UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
@@ -7603,16 +7648,21 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     if (attr === 'ref') continue;
     if (attr === 'tag') continue;
 
-    if (!isAfterMount && attr === 'style') {
+    if (!isAfterMount && (attr === 'style' || attr === styleStringSymbol)) {
       updateAfterMount = true;
       continue;
     }
 
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
+        instance.MarkForStyleResolving(false);
       }
 
+      continue;
+    }
+
+    if (attr === styleStringSymbol) {
+      UnityBridge.setProperty(instance, 'style', value);
       continue;
     }
 
@@ -7653,7 +7703,7 @@ var hostConfig = {
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
     var _a;
 
-    if (type === 'text' || type === 'icon' || type === 'style') {
+    if (textTypes[type]) {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
       return UnityBridge.createElement(type, text, rootContainerInstance);
     }
@@ -7681,11 +7731,16 @@ var hostConfig = {
   // Some attributes like style need to be changed only after mount
   commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
     var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
+
+    if ('style' in newProps) {
+      props.push('style', newProps.style);
+      if (typeof newProps.style === 'string') props.push(styleStringSymbol, newProps.style);
+    }
+
     applyUpdate(instance, props, true);
   },
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text' || type === 'icon' || type === 'style';
+    return textTypes[type];
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
@@ -7735,20 +7790,20 @@ var hostConfig = {
   //     Scheduling
   // -------------------
   scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
+    return setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
   },
   cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
+    clearTimeout(callBackID);
   },
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
+    return setTimeout(callback, timeout);
   },
   cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
+    clearTimeout(handle);
   },
   queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
+    return setTimeout(callback, 0);
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
@@ -7852,15 +7907,15 @@ var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTrans
 var index_module = __webpack_require__(618);
 ;// CONCATENATED MODULE: ./src/main/classes/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var options = {};
 
@@ -7868,7 +7923,7 @@ options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
 
       options.insert = insertBySelector_default().bind(null, "head");
-
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7885,15 +7940,15 @@ var savedClasses={};function Classes(){var _useSelection;var selection=(_useSele
 var global_style_index_module = __webpack_require__(919);
 ;// CONCATENATED MODULE: ./src/main/global-style/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var index_module_options = {};
 
@@ -7901,7 +7956,7 @@ index_module_options.styleTagTransform = (styleTagTransform_default());
 index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 index_module_options.domAPI = (styleDomAPI_default());
 index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8053,7 +8108,7 @@ function _objectWithoutProperties(source, excluded) {
   return target;
 }
 ;// CONCATENATED MODULE: ./src/components/box-shadow.tsx
-function BoxShadowField(_ref){var _value$Items;var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var insetRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var inset=insetRef.current.Element.value;var val=new Interop.ReactUnity.Types.BoxShadowList(new Interop.ReactUnity.Types.BoxShadow(offset,blur,spread,color,inset));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};var item=value===null||value===void 0?void 0:(_value$Items=value.Items)===null||_value$Items===void 0?void 0:_value$Items[0];return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:item===null||item===void 0?void 0:item.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Blur",value:item===null||item===void 0?void 0:item.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:item===null||item===void 0?void 0:item.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:item===null||item===void 0?void 0:item.spread,onChange:changed,ref:spreadRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Inset",value:item===null||item===void 0?void 0:item.inset,onChange:changed,ref:insetRef})]});}
+function BoxShadowField(_ref){var _value$Items;var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var insetRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var inset=insetRef.current.Element.value;var val=new Interop.ReactUnity.Types.CssValueList(new Interop.ReactUnity.Types.BoxShadow(offset,blur,spread,color,inset));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};var item=value===null||value===void 0?void 0:(_value$Items=value.Items)===null||_value$Items===void 0?void 0:_value$Items[0];return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:item===null||item===void 0?void 0:item.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Blur",value:item===null||item===void 0?void 0:item.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:item===null||item===void 0?void 0:item.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:item===null||item===void 0?void 0:item.spread,onChange:changed,ref:spreadRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Inset",value:item===null||item===void 0?void 0:item.inset,onChange:changed,ref:insetRef})]});}
 ;// CONCATENATED MODULE: ./src/components/other.tsx
 function sliderComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("slider",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function sliderintComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1000;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("sliderint",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function enumComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("enum",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function flagsComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("flags",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function objectComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("object",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}
 ;// CONCATENATED MODULE: ./src/common/helpers.ts
@@ -8066,15 +8121,15 @@ var _excluded=["arrangement","partTemplate"];var fourDirectionParts=['','top','r
 var grouped_styles_index_module = __webpack_require__(500);
 ;// CONCATENATED MODULE: ./src/main/grouped-styles/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var grouped_styles_index_module_options = {};
 
@@ -8082,7 +8137,7 @@ grouped_styles_index_module_options.styleTagTransform = (styleTagTransform_defau
 grouped_styles_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       grouped_styles_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 grouped_styles_index_module_options.domAPI = (styleDomAPI_default());
 grouped_styles_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8099,15 +8154,15 @@ function GroupedStyles(_ref){var showShowAll=_ref.showShowAll;var _useState=(0,r
 var main_index_module = __webpack_require__(521);
 ;// CONCATENATED MODULE: ./src/main/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var main_index_module_options = {};
 
@@ -8115,7 +8170,7 @@ main_index_module_options.styleTagTransform = (styleTagTransform_default());
 main_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       main_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 main_index_module_options.domAPI = (styleDomAPI_default());
 main_index_module_options.insertStyleElement = (insertStyleElement_default());
 

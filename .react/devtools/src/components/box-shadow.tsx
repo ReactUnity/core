@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useRef } from 'react';
 import type { StylePropComponentProps } from '../common/props';
 
-export function BoxShadowField({ className, label, onChange, value }: StylePropComponentProps<RU.Types.BoxShadowList>) {
+export function BoxShadowField({ className, label, onChange, value }: StylePropComponentProps<RU.Types.CssValueList<RU.Types.BoxShadow>>) {
   const blurRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
   const offsetRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
   const spreadRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
@@ -16,7 +16,7 @@ export function BoxShadowField({ className, label, onChange, value }: StylePropC
     const color = colorRef.current.Element.value;
     const offset = offsetRef.current.Element.value;
     const inset = insetRef.current.Element.value;
-    const val = new Interop.ReactUnity.Types.BoxShadowList(new Interop.ReactUnity.Types.BoxShadow(offset, blur, spread, color, inset));
+    const val = new Interop.ReactUnity.Types.CssValueList(new Interop.ReactUnity.Types.BoxShadow(offset, blur, spread, color, inset));
     onChange?.({ newValue: val });
   };
 
