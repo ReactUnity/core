@@ -1,1 +1,1 @@
-export * from './models/ugui';
+export * from './src/models/ugui';

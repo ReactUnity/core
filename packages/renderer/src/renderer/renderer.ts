@@ -1,11 +1,11 @@
 import type * as React from 'react';
 import { createElement } from 'react';
 import * as Reconciler from 'react-reconciler';
-import { ReactUnity } from '../../models/generated';
+import { ReactUnity } from '../models/generated';
 import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
-} from '../../models/renderer';
+} from '../models/renderer';
 import { DefaultView } from '../views/default-view';
 import { diffProperties, DiffResult, styleStringSymbol } from './diffing';
 

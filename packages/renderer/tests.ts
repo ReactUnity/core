@@ -1,1 +1,1 @@
-export * from './models/tests';
+export * from './src/models/tests';

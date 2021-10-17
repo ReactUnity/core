@@ -1,1 +1,1 @@
-export * from './models/uitoolkit';
+export * from './src/models/uitoolkit';

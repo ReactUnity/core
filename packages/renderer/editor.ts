@@ -1,1 +1,1 @@
-export * from './models/editor';
+export * from './src/models/editor';

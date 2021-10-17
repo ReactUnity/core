@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity } from '../../models/generated';
+import { ReactUnity } from '../models/generated';
 
 export interface DictionaryWatcher<T = Record<string, any>> {
   /** React Context that provides the value */
