@@ -84,7 +84,6 @@ namespace ReactUnity.Types
         public class Converter : IStyleParser, IStyleConverter
         {
             IStyleConverter YogaValueParser = AllConverters.YogaValueConverter;
-            char[] splitters = new char[] { ' ', ',' };
 
             public bool CanHandleKeyword(CssKeyword keyword) => false;
 
@@ -95,15 +94,15 @@ namespace ReactUnity.Types
                 var sp = ParseFromPositioningLiteral(value);
                 if (sp is YogaValue2 s) return s;
 
-                var values = value.Split(splitters);
+                var values = ParserHelpers.SplitWhitespace(value);
 
-                if (values.Length == 1)
+                if (values.Count == 1)
                 {
                     var pr = YogaValueParser.Parse(values[0]);
-                    if (pr is YogaValue fl) return new YogaValue2(fl, fl);
+                    if (pr is YogaValue fl) return new YogaValue2(fl, YogaValue.Undefined());
                 }
 
-                if (values.Length == 2)
+                if (values.Count == 2)
                 {
                     var pr1 = YogaValueParser.Parse(values[0]);
                     var pr2 = YogaValueParser.Parse(values[1]);
@@ -150,33 +149,51 @@ namespace ReactUnity.Types
             private object ParseFromPositioningLiteral(string str)
             {
                 float x, y;
+                var values = ParserHelpers.SplitWhitespace(str);
 
-                if (str.Contains("top"))
+                if (values.Count > 2) return CssKeyword.Invalid;
+
+                var hasDouble = values.Count == 2;
+
+                if (values.Contains("top"))
                 {
                     x = 0.5f;
                     y = 0;
-                    if (str.Contains("left")) x = 0;
-                    if (str.Contains("right")) x = 1;
+                    if (hasDouble)
+                    {
+                        if (values.Contains("left")) x = 0;
+                        else if (values.Contains("right")) x = 1;
+                        else if (values.Contains("center")) x = 0.5f;
+                        else return CssKeyword.Invalid;
+                    }
                 }
-                else if (str.Contains("bottom"))
+                else if (values.Contains("bottom"))
                 {
                     x = 0.5f;
                     y = 1;
-                    if (str.Contains("left")) x = 0;
-                    if (str.Contains("right")) x = 1;
+                    if (hasDouble)
+                    {
+                        if (values.Contains("left")) x = 0;
+                        else if (values.Contains("right")) x = 1;
+                        else if (values.Contains("center")) x = 0.5f;
+                        else return CssKeyword.Invalid;
+                    }
                 }
-                else if (str.Contains("left"))
+                else if (values.Contains("left"))
                 {
+                    if (hasDouble && !values.Contains("center")) return CssKeyword.Invalid;
                     x = 0;
                     y = 0.5f;
                 }
-                else if (str.Contains("right"))
+                else if (values.Contains("right"))
                 {
+                    if (hasDouble && !values.Contains("center")) return CssKeyword.Invalid;
                     x = 1;
                     y = 0.5f;
                 }
-                else if (str.Contains("center"))
+                else if (values.Contains("center"))
                 {
+                    if (hasDouble && values[0] != values[1]) return CssKeyword.Invalid;
                     x = 0.5f;
                     y = 0.5f;
                 }

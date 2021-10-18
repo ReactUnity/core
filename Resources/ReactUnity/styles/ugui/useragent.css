@@ -95,6 +95,8 @@ toggle:after {
   background-blend-mode: multiply;
   background-color: black;
   background-image: transparent;
+  background-size: contain;
+  background-position: center;
 }
 
 toggle:checked:after {

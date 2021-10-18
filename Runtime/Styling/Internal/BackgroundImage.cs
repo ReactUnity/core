@@ -179,7 +179,7 @@ namespace ReactUnity.Styling.Internal
             {
                 var val = size.Value;
                 var autoX = val.X.Unit == YogaUnit.Auto || val.X.Unit == YogaUnit.Undefined;
-                var autoY = val.X.Unit == YogaUnit.Auto || val.X.Unit == YogaUnit.Undefined;
+                var autoY = val.Y.Unit == YogaUnit.Auto || val.Y.Unit == YogaUnit.Undefined;
 
                 if (autoX)
                 {

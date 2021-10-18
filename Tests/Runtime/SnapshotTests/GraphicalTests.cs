@@ -300,23 +300,49 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
-        public IEnumerator BackgroundImageSnapshots()
+        public IEnumerator BackgroundBlendSnapshots()
         {
             View.Style["background"] = "url(res:star)";
             yield return null;
-            Assertions.Snapshot("backgrounds/star-colorless");
+            Assertions.Snapshot("backgrounds/blend/colorless");
 
             View.Style["background"] = "url(res:star) rgba(0, 0, 200, 0.4)";
             yield return null;
-            Assertions.Snapshot("backgrounds/star-normal-blend");
+            Assertions.Snapshot("backgrounds/blend/normal-blend");
 
             View.Style["background-blend-mode"] = "multiply";
             yield return null;
-            Assertions.Snapshot("backgrounds/star-multiply-blend");
+            Assertions.Snapshot("backgrounds/blend/multiply-blend");
 
             View.Style["background-blend-mode"] = "color";
             yield return null;
-            Assertions.Snapshot("backgrounds/star-color-blend");
+            Assertions.Snapshot("backgrounds/blend/color-blend");
+        }
+
+
+        protected static Tuple<string, string>[] backgrounds = new Tuple<string, string>[] {
+            Tuple.Create("01", "url(res:star)"),
+            Tuple.Create("02", "url(res:star) 100% 0"),
+            Tuple.Create("03", "url(res:star) 0 100%"),
+            Tuple.Create("04", "url(res:star) 0 0/cover"),
+            Tuple.Create("05", "url(res:star) center/cover"),
+            Tuple.Create("06", "url(res:star) center/contain"),
+            Tuple.Create("07", "url(res:star) bottom right / contain"),
+            Tuple.Create("08", "url(res:star) 0 0 / 10% 10%"),
+            Tuple.Create("09", "url(res:star) 0 0 / 10%"),
+            Tuple.Create("10", "url(res:star) 20% 90% / 500px 500px"),
+            Tuple.Create("11", "url(res:star) top /100px 20px"),
+        };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator BackgroundSnapshots([ValueSource("backgrounds")] Tuple<string, string> bg)
+        {
+            View.Style["width"] = "160px";
+            View.Style["height"] = "250px";
+            View.Style["background"] = bg.Item2;
+            View.Style["background-color"] = "blue";
+            yield return null;
+            Assertions.Snapshot("backgrounds/bg", bg.Item1);
         }
     }
 }
