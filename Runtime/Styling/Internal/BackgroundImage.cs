@@ -1,8 +1,10 @@
 using System.Runtime.CompilerServices;
+using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
+using static ReactUnity.Types.ImageDefinition;
 
 namespace ReactUnity.Styling.Internal
 {
@@ -11,7 +13,7 @@ namespace ReactUnity.Styling.Internal
         public static readonly int SizeProp = Shader.PropertyToID("_size");
         public static readonly int PosProp = Shader.PropertyToID("_pos");
 
-        public Vector4 Size;
+        public Vector2 Size;
 
         public ImageDefinition definition;
         public ImageDefinition Definition
@@ -53,6 +55,20 @@ namespace ReactUnity.Styling.Internal
 
         private Color TintColor;
 
+        private ResolvedImage resolved = ResolvedImage.Default;
+        private ResolvedImage Resolved
+        {
+            get => resolved;
+            set
+            {
+                if (resolved != value)
+                {
+                    resolved = value;
+                    texture = value.Texture;
+                    UpdateBlendMode();
+                }
+            }
+        }
 
         protected override void OnEnable()
         {
@@ -73,14 +89,14 @@ namespace ReactUnity.Styling.Internal
             {
                 Material result = base.materialForRendering;
 
-                // TODO: handle cover and contain
-                var sz = StylingUtils.GetRatioValue(backgroundSize.Value, Size, 1, false);
-                var ps = StylingUtils.GetRatioValue(backgroundPosition, Size, 0, false);
+                var szPoint = CalculateSize(Size, Resolved.IntrinsicSize, Resolved.IntrinsicProportions, backgroundSize);
+                var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
+                var psPoint = StylingUtils.GetPointValue(backgroundPosition, Size - szPoint, 0, false);
+                var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);
+
                 result.SetVector(SizeProp, sz);
                 result.SetVector(PosProp, ps);
-
-                var pointSz = StylingUtils.GetPointValue(backgroundSize.Value, Size, Size, false);
-                Definition?.ModifyMaterial(Context, result, pointSz);
+                Definition?.ModifyMaterial(Context, result, szPoint);
                 return result;
             }
         }
@@ -94,7 +110,7 @@ namespace ReactUnity.Styling.Internal
         private void RefreshSize()
         {
             var rect = ((RectTransform) transform).rect;
-            Size = new Vector4(rect.width, rect.height, 0, 0);
+            Size = new Vector2(rect.width, rect.height);
             SetMaterialDirty();
 
             var mask = GetComponent<Mask>();
@@ -138,10 +154,9 @@ namespace ReactUnity.Styling.Internal
             {
                 var sz = StylingUtils.GetPointValue(backgroundSize.Value, Size, Size, false);
 
-                image.GetTexture(Context, sz, (sp) => {
+                image.ResolveImage(Context, sz, (sp) => {
                     if (image != Definition) return;
-                    texture = sp;
-                    UpdateBlendMode();
+                    Resolved = sp;
                 });
             }
         }
@@ -149,6 +164,77 @@ namespace ReactUnity.Styling.Internal
         private void UpdateBlendMode()
         {
             color = BlendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : TintColor;
+        }
+
+        static private Vector2 CalculateSize(Vector2 containerSize, Vector2 intrinsicSize, float intinsicProportions, BackgroundSize size)
+        {
+            var ix = float.IsNaN(intrinsicSize.x);
+            var iy = float.IsNaN(intrinsicSize.y);
+            var ip = float.IsNaN(intinsicProportions);
+
+            var width = containerSize.x;
+            var height = containerSize.y;
+
+            if (size.IsCustom)
+            {
+                var val = size.Value;
+                var autoX = val.X.Unit == YogaUnit.Auto || val.X.Unit == YogaUnit.Undefined;
+                var autoY = val.X.Unit == YogaUnit.Auto || val.X.Unit == YogaUnit.Undefined;
+
+                if (autoX)
+                {
+                    if (autoY)
+                    {
+                        if (ix && iy)
+                        {
+                            if (ip) return containerSize;
+                            else return CalculateSize(containerSize, intrinsicSize, intinsicProportions, BackgroundSize.Contain);
+                        }
+                        if (ix) return new Vector2(width, intrinsicSize.y);
+                        if (iy) return new Vector2(intrinsicSize.x, height);
+                        return new Vector2(intrinsicSize.x, intrinsicSize.y);
+                    }
+                    else
+                    {
+                        var yVal = StylingUtils.GetPointValue(val.Y, containerSize.y, containerSize.y);
+                        var xVal = ip ? containerSize.x : yVal * intinsicProportions;
+                        return new Vector2(xVal, yVal);
+                    }
+                }
+                else if (autoY)
+                {
+                    var xVal = StylingUtils.GetPointValue(val.X, containerSize.x, containerSize.x);
+                    var yVal = ip ? containerSize.y : xVal / intinsicProportions;
+                    return new Vector2(xVal, yVal);
+                }
+                else
+                {
+                    return StylingUtils.GetPointValue(val, containerSize, containerSize, false);
+                }
+            }
+            else
+            {
+                var rw = ix ? containerSize.x : intrinsicSize.x;
+                var rh = iy ? containerSize.y : intrinsicSize.y;
+
+                if ((size.Keyword == BackgroundSizeKeyword.Cover && rw < width)
+                    || (size.Keyword == BackgroundSizeKeyword.Contain && rw != width))
+                {
+                    var scale = width / rw;
+                    rw = width;
+                    rh *= scale;
+                }
+
+                if ((size.Keyword == BackgroundSizeKeyword.Cover && rh < height)
+                    || (size.Keyword == BackgroundSizeKeyword.Contain && rh > height))
+                {
+                    var scale = height / rh;
+                    rh = height;
+                    rw *= scale;
+                }
+
+                return new Vector2(rw, rh);
+            }
         }
     }
 }

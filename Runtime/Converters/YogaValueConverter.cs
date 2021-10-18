@@ -36,7 +36,7 @@ namespace ReactUnity.Converters
                 if (AllowVertical && value == "bottom") return YogaValue.Percent(100);
             }
 
-            else if (value.EndsWith("%"))
+            if (value.EndsWith("%"))
             {
                 if (float.TryParse(value.Replace("%", ""), NumberStyles.Float, culture, out var parsedValue)) return YogaValue.Percent(parsedValue);
                 return CssKeyword.Invalid;

@@ -8,19 +8,24 @@ namespace ReactUnity.Types
 {
     public abstract class ImageDefinition
     {
+        public class ResolvedImage
+        {
+            public static ResolvedImage Default = new ResolvedImage();
+
+            public Texture2D Texture;
+            public Vector2 IntrinsicSize = new Vector2(float.NaN, float.NaN);
+            public float IntrinsicProportions = float.NaN;
+
+            private Sprite sprite;
+            public Sprite Sprite => Texture == null ? null :
+                (sprite = sprite ?? Sprite.Create(Texture, new Rect(0, 0, Texture.width, Texture.height), Vector2.one / 2));
+        }
+
         public static ImageDefinition None { get; } = UrlImageDefinition.None;
 
         public virtual bool SizeUpdatesGraphic => false;
 
-        internal virtual void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback) => callback(null);
-        internal virtual void GetSprite(ReactContext context, Vector2 size, Action<Sprite> callback)
-        {
-            GetTexture(context, size, texture => {
-                var sprite = texture == null ? null :
-                    Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
-                callback(sprite);
-            });
-        }
+        internal virtual void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback) => callback(ResolvedImage.Default);
 
         internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size) { }
 
@@ -75,9 +80,16 @@ namespace ReactUnity.Types
             Reference = reference;
         }
 
-        internal override void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback)
+        internal override void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback)
         {
-            Reference.Get(context, callback);
+            Reference.Get(context, tx => {
+                callback(new ResolvedImage
+                {
+                    Texture = tx,
+                    IntrinsicSize = new Vector2(tx.width, tx.height),
+                    IntrinsicProportions = tx.width / tx.height,
+                });
+            });
         }
     }
 
@@ -91,10 +103,13 @@ namespace ReactUnity.Types
             Gradient = gradient;
         }
 
-        internal override void GetTexture(ReactContext context, Vector2 size, Action<Texture2D> callback)
+        internal override void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback)
         {
             var calc = Gradient.GetRamp(size);
-            callback(calc.Texture);
+            callback(new ResolvedImage
+            {
+                Texture = calc.Texture,
+            });
         }
 
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size) => Gradient.ModifyMaterial(context, material, size);

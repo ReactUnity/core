@@ -88,8 +88,8 @@ namespace ReactUnity.Styling.Shorthands
                         if (val is YogaValue v)
                         {
                             posX = v;
-                            posY = YogaValue.Percent(50);
                             posXSet = true;
+                            if (!posYSet) posY = YogaValue.Percent(50);
                             continue;
                         }
                     }
@@ -102,6 +102,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             posY = v;
                             posYSet = true;
+                            if (!posXSet) posX = YogaValue.Percent(50);
                             continue;
                         }
                     }
@@ -114,6 +115,13 @@ namespace ReactUnity.Styling.Shorthands
                             canSetSize = i + 1;
                             continue;
                         }
+                        else if (posYSet)
+                        {
+                            posXSet = true;
+                            canSetSize = i + 1;
+                            continue;
+                        }
+                        return null;
                     }
 
                     if (canSetSize == i)
@@ -176,7 +184,7 @@ namespace ReactUnity.Styling.Shorthands
                     return null;
                 }
 
-                if (posXSet) positions[ci] = new YogaValue2(posX, posY);
+                if (posXSet || posYSet) positions[ci] = new YogaValue2(posX, posY);
 
                 if (sizeSetByKeyword) sizes[ci] = size;
                 else if (sizeXSet) sizes[ci] = new BackgroundSize(new YogaValue2(sizeX, sizeY));
