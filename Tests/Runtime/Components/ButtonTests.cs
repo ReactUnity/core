@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
             function App() {
                 const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
-                    <button {...globals} 
+                    <button {...globals}
                         onClick={() => addEvent('click')}
                     >
                         Button text content
@@ -37,7 +37,7 @@ namespace ReactUnity.Tests
             function App() {
                 const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
-                    <anchor {...globals} 
+                    <anchor {...globals}
                         onClick={() => addEvent('click')}
                     >
                         Anchor text content
@@ -51,7 +51,7 @@ namespace ReactUnity.Tests
         public ButtonComponent Button => Q("button") as ButtonComponent;
         public AnchorComponent Anchor => Q("anchor") as AnchorComponent;
 
-        public ButtonTests(JavascriptEngineType engineType) : base(engineType) { }
+        public ButtonTests(JavascriptEngineType engineType) : base(engineType, usesInput: true) { }
 
 
         [ReactInjectableTest(BaseScript)]
@@ -73,22 +73,19 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(BaseScript)]
         public IEnumerator ButtonClickEventWorks()
         {
-            var input = SetupInput();
-
             var list = new List<string>();
             Globals["list"] = list;
             yield return null;
 
             Assert.IsEmpty(list);
 
-            input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
-            input.Click(Mouse.leftButton);
-
-            yield return null;
-
+            Button.Activate();
             list.AssertListExhaustive("click");
 
-            Button.Activate();
+            Input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
+            Input.Click(Mouse.leftButton);
+
+            yield return null;
             list.AssertListExhaustive("click");
         }
 
@@ -96,27 +93,26 @@ namespace ReactUnity.Tests
         public IEnumerator ButtonShouldBeClickableWithoutBackground()
         {
             Button.Style["background"] = null;
-            var input = SetupInput();
 
             var list = new List<string>();
             Globals["list"] = list;
             yield return null;
             Assert.IsEmpty(list);
 
-            input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
-            input.Click(Mouse.leftButton);
+            Input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
+            Input.Click(Mouse.leftButton);
             yield return null;
             list.AssertListExhaustive("click");
 
             Button.Style["background-blend-mode"] = "multiply";
             yield return null;
-            input.Click(Mouse.leftButton);
+            Input.Click(Mouse.leftButton);
             yield return null;
             list.AssertListExhaustive("click");
 
             Button.Style["background-blend-mode"] = "color";
             yield return null;
-            input.Click(Mouse.leftButton);
+            Input.Click(Mouse.leftButton);
             yield return null;
             list.AssertListExhaustive("click");
         }

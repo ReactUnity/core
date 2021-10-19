@@ -14,10 +14,11 @@ namespace ReactUnity.Tests
 {
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
-    public abstract class TestBase
+    public abstract class TestBase : InputTestFixture
     {
-        protected InputTestFixture Input { get; private set; }
+        protected InputTestFixture Input => this;
         protected Mouse Mouse { get; private set; }
+        protected Keyboard Keyboard { get; private set; }
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
@@ -30,11 +31,13 @@ namespace ReactUnity.Tests
 
         public readonly JavascriptEngineType EngineType;
         public readonly RenderMode RenderMode;
+        public readonly bool UsesInput;
 
-        public TestBase(JavascriptEngineType engineType, RenderMode renderMode = RenderMode.ScreenSpaceCamera)
+        public TestBase(JavascriptEngineType engineType, RenderMode renderMode = RenderMode.ScreenSpaceCamera, bool usesInput = false)
         {
             EngineType = engineType;
             RenderMode = renderMode;
+            UsesInput = usesInput;
         }
 
         public void Render() => Component.Render();
@@ -62,10 +65,23 @@ namespace ReactUnity.Tests
             if (Context != null) GameObject.DestroyImmediate(Component);
         }
 
-        [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            if (UsesInput)
+            {
+                base.Setup();
+                Mouse = InputSystem.AddDevice<Mouse>();
+                Keyboard = InputSystem.AddDevice<Keyboard>();
+            }
             Canvas.GetComponent<Canvas>().renderMode = RenderMode;
+        }
+
+        public override void TearDown()
+        {
+            if (UsesInput)
+            {
+                base.TearDown();
+            }
         }
 
         public IEnumerator Pause()
@@ -77,31 +93,6 @@ namespace ReactUnity.Tests
         public IEnumerator WaitForEndOfFrame()
         {
             yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
-        }
-
-        public InputTestFixture SetupInput()
-        {
-            TeardownInput();
-            Input = new InputTestFixture();
-            Input.Setup();
-
-            Mouse = InputSystem.AddDevice<Mouse>();
-
-            return Input;
-        }
-
-        public void TeardownInput()
-        {
-            if (Mouse != null) InputSystem.RemoveDevice(Mouse);
-            Mouse = null;
-            Input?.TearDown();
-            Input = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            TeardownInput();
         }
     }
 }
