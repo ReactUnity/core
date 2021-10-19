@@ -28,40 +28,44 @@ namespace ReactUnity.Styling.Functions
 
                 if (sp == "at")
                 {
-                    i++;
-                    if (firstSplit.Count <= i) return null;
+                    sp = "";
+                    for (int j = i + 1; j < firstSplit.Count; j++)
+                    {
+                        if (firstSplit[j] == "from") break;
+                        sp += " " + firstSplit[j];
+                        i = j;
+                    }
 
-                    sp = firstSplit[i];
-
-                    var cAt = AllConverters.YogaValue2Converter.Parse(sp);
+                    var cAt = AllConverters.YogaValue2Converter.Parse(sp.Trim());
 
                     if (cAt is YogaValue2 cvAt)
                     {
                         at = cvAt;
+                        startIndex = 1;
+                        continue;
                     }
                     else return null;
-
-                    startIndex = 1;
-                    continue;
                 }
 
                 if (sp == "from")
                 {
-                    i++;
-                    if (firstSplit.Count <= i) return null;
+                    sp = "";
+                    for (int j = i + 1; j < firstSplit.Count; j++)
+                    {
+                        if (firstSplit[j] == "at") break;
+                        sp += " " + firstSplit[j];
+                        i = j;
+                    }
 
-                    sp = firstSplit[i];
-
-                    var cAt = AllConverters.AngleConverter.Parse(sp);
+                    var cAt = AllConverters.AngleConverter.Parse(sp.Trim());
 
                     if (cAt is float cvAt)
                     {
                         from = cvAt;
+                        startIndex = 1;
+                        continue;
                     }
                     else return null;
-
-                    startIndex = 1;
-                    continue;
                 }
             }
 

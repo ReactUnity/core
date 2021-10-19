@@ -119,7 +119,7 @@ namespace ReactUnity.Tests
             Assertions.Snapshot($"gradients/multi/repeating-linear-bg", bg.Item1);
 
 
-            var conicParts = new List<string> { "", "from 25deg at 10% 20%," };
+            var conicParts = new List<string> { "", "from 25deg at 10% 40%," };
             var conicCombined = bg.Item2.Select((x, i) => conicParts[i % conicParts.Count] + x);
 
             View.Style["background"] = string.Join(",", conicCombined.Select(x => $"repeating-conic-gradient({x})"));
