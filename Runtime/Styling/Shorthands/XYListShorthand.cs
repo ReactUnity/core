@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ReactUnity.Converters;
 using ReactUnity.Types;
@@ -42,24 +43,45 @@ namespace ReactUnity.Styling.Shorthands
             for (int ci = 0; ci < commas.Count; ci++)
             {
                 var comma = commas[ci];
-                var splits = ParserHelpers.SplitWhitespace(comma);
+                var vals = GetValues(comma);
 
-                if (splits.Count == 0) return null;
+                if (vals == null) return null;
 
-                var xVal = Converter.Parse(splits[0]);
-                var yVal = splits.Count > 1 ? Converter.Parse(splits[1]) : xVal;
-
-                if (xVal is T x && yVal is T y)
-                {
-                    xs[ci] = x;
-                    ys[ci] = y;
-                }
-                else return null;
+                xs[ci] = vals.Item1;
+                ys[ci] = vals.Item2;
             }
 
             collection[ModifiedProperties[0]] = new CssValueList<T>(xs);
             collection[ModifiedProperties[1]] = new CssValueList<T>(ys);
             return ModifiedProperties;
+        }
+
+        public virtual Tuple<T, T>? GetValues(string val)
+        {
+            var splits = ParserHelpers.SplitWhitespace(val);
+
+            if (splits.Count == 0) return null;
+
+            var xVal = Converter.Parse(splits[0]);
+            var yVal = splits.Count > 1 ? Converter.Parse(splits[1]) : xVal;
+
+            if (xVal is T x && yVal is T y) return Tuple.Create(x, y);
+            else return null;
+        }
+
+    }
+
+    public class BackgroundRepeatShorthand : XYListShorthand<BackgroundRepeat>
+    {
+        public BackgroundRepeatShorthand(string name) : base(name, StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY)
+        {
+        }
+
+        public override Tuple<BackgroundRepeat, BackgroundRepeat>? GetValues(string val)
+        {
+            if (val == "repeat-x") return Tuple.Create(BackgroundRepeat.Repeat, BackgroundRepeat.NoRepeat);
+            if (val == "repeat-y") return Tuple.Create(BackgroundRepeat.NoRepeat, BackgroundRepeat.Repeat);
+            return base.GetValues(val);
         }
     }
 }

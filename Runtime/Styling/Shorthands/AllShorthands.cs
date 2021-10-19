@@ -22,7 +22,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
         public static readonly StyleShorthand Font = new FontShorthand("font");
         public static readonly StyleShorthand Background = new BackgroundShorthand("background");
-        public static readonly StyleShorthand BackgroundRepeat = new XYListShorthand<BackgroundRepeat>("background-repeat", StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY);
+        public static readonly StyleShorthand BackgroundRepeat = new BackgroundRepeatShorthand("background-repeat");
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
         public static readonly StyleShorthand Transition = new TransitionShorthand("transition");

@@ -43,7 +43,6 @@ namespace ReactUnity.Tests
             Tuple.Create("06", "red, green, blue"),
             Tuple.Create("07", "red, green, yellow, white, blue"),
             Tuple.Create("08", "red, green, yellow 30% 60%, white, blue"),
-            Tuple.Create("08", "red, green, yellow 30% 60%, white, blue"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
@@ -332,6 +331,12 @@ namespace ReactUnity.Tests
             Tuple.Create("09", "url(res:star) 0 0 / 10%"),
             Tuple.Create("10", "url(res:star) 20% 90% / 500px 500px"),
             Tuple.Create("11", "url(res:star) top /100px 20px"),
+            Tuple.Create("12", "url(res:star) space round top / 35% 35%"),
+            Tuple.Create("13", "url(res:star) round space top / 35%"),
+            Tuple.Create("14", "url(res:star) repeat-y top / 35%"),
+            Tuple.Create("15", "url(res:star) repeat-x top / 35%"),
+            Tuple.Create("16", "url(res:star) space bottom right / cover"),
+            Tuple.Create("17", "url(res:star) space bottom right / contain"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]

@@ -16,6 +16,8 @@ namespace ReactUnity.Styling.Shorthands
             StyleProperties.backgroundImage,
             StyleProperties.backgroundPosition,
             StyleProperties.backgroundSize,
+            StyleProperties.backgroundRepeatX,
+            StyleProperties.backgroundRepeatY,
         };
 
         public BackgroundShorthand(string name) : base(name) { }
@@ -144,6 +146,7 @@ namespace ReactUnity.Styling.Shorthands
                         else if (!repeatYSet)
                         {
                             repeatYs[ci] = rpt;
+                            repeatYSet = true;
                             continue;
                         }
                         else return null;
@@ -236,6 +239,8 @@ namespace ReactUnity.Styling.Shorthands
             collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(images);
             collection[StyleProperties.backgroundPosition] = new CssValueList<YogaValue2>(positions);
             collection[StyleProperties.backgroundSize] = new CssValueList<BackgroundSize>(sizes);
+            collection[StyleProperties.backgroundRepeatX] = new CssValueList<BackgroundRepeat>(repeatXs);
+            collection[StyleProperties.backgroundRepeatY] = new CssValueList<BackgroundRepeat>(repeatYs);
             return ModifiedProperties;
         }
     }

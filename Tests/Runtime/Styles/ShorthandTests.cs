@@ -1,6 +1,7 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace ReactUnity.Tests
             padding-top: 42px;
           }
 ")]
-        public IEnumerator MarginAndPaddingAndInsetShorthandWorks()
+        public IEnumerator MarginAndPaddingAndInsetShorthand()
         {
             yield return null;
 
@@ -48,7 +49,7 @@ namespace ReactUnity.Tests
             font: bold italic 23px /33px monospace;
           }
 ")]
-        public IEnumerator FontShorthandWorks()
+        public IEnumerator FontShorthand()
         {
             yield return null;
 
@@ -69,9 +70,10 @@ namespace ReactUnity.Tests
             background: red url(res:star);
             background-blend-mode: color;
             mask: url(res:star);
+            background-repeat: space round, repeat-x, repeat-y, space, no-repeat;
           }
 ")]
-        public IEnumerator BackgroundAndMaskWorks()
+        public IEnumerator BackgroundAndMask()
         {
             yield return null;
 
@@ -85,6 +87,22 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.red, bgImage.color);
 
             Assert.AreEqual(typeof(Texture2D), mask.Image.sprite?.texture?.GetType());
+
+            var rptX = cmp.ComputedStyle.backgroundRepeatX;
+            var rptY = cmp.ComputedStyle.backgroundRepeatY;
+            Assert.AreEqual(5, rptX.Count);
+            Assert.AreEqual(5, rptY.Count);
+            Assert.AreEqual(BackgroundRepeat.Space, rptX.Get(0));
+            Assert.AreEqual(BackgroundRepeat.Repeat, rptX.Get(1));
+            Assert.AreEqual(BackgroundRepeat.NoRepeat, rptX.Get(2));
+            Assert.AreEqual(BackgroundRepeat.Space, rptX.Get(3));
+            Assert.AreEqual(BackgroundRepeat.NoRepeat, rptX.Get(4));
+
+            Assert.AreEqual(BackgroundRepeat.Round, rptY.Get(0));
+            Assert.AreEqual(BackgroundRepeat.NoRepeat, rptY.Get(1));
+            Assert.AreEqual(BackgroundRepeat.Repeat, rptY.Get(2));
+            Assert.AreEqual(BackgroundRepeat.Space, rptY.Get(3));
+            Assert.AreEqual(BackgroundRepeat.NoRepeat, rptY.Get(4));
         }
     }
 }
