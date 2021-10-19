@@ -25,10 +25,8 @@ namespace ReactUnity.Styling.Shorthands
 
         public AnimationShorthand(string name) : base(name) { }
 
-        public override List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
+        protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (base.Modify(collection, value) != null) return ModifiedProperties;
-
             var commas = ParserHelpers.SplitComma(value?.ToString());
             var cnt = commas.Count;
             var iterations = new int[cnt];

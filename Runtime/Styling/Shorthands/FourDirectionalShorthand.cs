@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands
@@ -94,11 +95,11 @@ namespace ReactUnity.Styling.Shorthands
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool CanHandleKeyword(CssKeyword keyword) => Converter.CanHandleKeyword(keyword);
 
-        public override List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
+        protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (base.Modify(collection, value) != null) return ModifiedProperties;
-
             if (!(value is string))
             {
                 var converted = Converter.Convert(value);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ReactUnity.Converters;
 using ReactUnity.Types;
 
@@ -20,10 +21,11 @@ namespace ReactUnity.Styling.Shorthands
             };
         }
 
-        public override List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
-        {
-            if (base.Modify(collection, value) != null) return ModifiedProperties;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool CanHandleKeyword(CssKeyword keyword) => Converter.CanHandleKeyword(keyword);
 
+        protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
+        {
             if (!(value is string))
             {
                 var converted = Converter.Convert(value);
@@ -56,7 +58,7 @@ namespace ReactUnity.Styling.Shorthands
             return ModifiedProperties;
         }
 
-        public virtual Tuple<T, T>? GetValues(string val)
+        public virtual Tuple<T, T> GetValues(string val)
         {
             var splits = ParserHelpers.SplitWhitespace(val);
 
@@ -77,7 +79,7 @@ namespace ReactUnity.Styling.Shorthands
         {
         }
 
-        public override Tuple<BackgroundRepeat, BackgroundRepeat>? GetValues(string val)
+        public override Tuple<BackgroundRepeat, BackgroundRepeat> GetValues(string val)
         {
             if (val == "repeat-x") return Tuple.Create(BackgroundRepeat.Repeat, BackgroundRepeat.NoRepeat);
             if (val == "repeat-y") return Tuple.Create(BackgroundRepeat.NoRepeat, BackgroundRepeat.Repeat);

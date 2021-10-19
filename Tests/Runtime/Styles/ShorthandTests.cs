@@ -1,6 +1,8 @@
 using System.Collections;
+using Facebook.Yoga;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
@@ -41,6 +43,20 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(125, tt.xMin, 1);
             Assert.AreEqual(95, tt.yMin, 1);
+
+            cmp.Style["margin"] = "10px auto";
+            yield return null;
+            Assert.AreEqual(YogaValue.Point(10), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginTop));
+            Assert.AreEqual(YogaValue.Point(10), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginBottom));
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginLeft));
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginRight));
+
+            cmp.Style["margin"] = "auto";
+            yield return null;
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginTop));
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginBottom));
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginLeft));
+            Assert.AreEqual(YogaValue.Auto(), cmp.ComputedStyle.GetStyleValue(LayoutProperties.MarginRight));
         }
 
 

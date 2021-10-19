@@ -15,10 +15,8 @@ namespace ReactUnity.Styling.Shorthands
 
         public MotionShorthand(string name) : base(name) { }
 
-        public override List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
+        protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (base.Modify(collection, value) != null) return ModifiedProperties;
-
             var duration = 0f;
             var easing = TimingFunctions.Default;
             var delay = 0f;

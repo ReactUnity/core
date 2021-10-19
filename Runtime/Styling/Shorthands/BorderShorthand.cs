@@ -72,10 +72,8 @@ namespace ReactUnity.Styling.Shorthands
             }
         }
 
-        public override List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
+        protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (base.Modify(collection, value) != null) return ModifiedProperties;
-
             var str = value.ToString();
             var splits = ParserHelpers.SplitWhitespace(str);
 
