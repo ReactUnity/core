@@ -85,7 +85,7 @@ namespace ReactUnity.Tests
           #test {
             background: red url(res:star);
             background-blend-mode: color;
-            mask: url(res:star);
+            mask: url(res:star) space round 50px 60px / cover, url(res:star) repeat-y top right / 50% 50%;
             background-repeat: space round, repeat-x, repeat-y, space, no-repeat;
           }
 ")]
@@ -95,14 +95,31 @@ namespace ReactUnity.Tests
 
             var cmp = Q("#test");
             var bg = cmp.BorderAndBackground;
-            var mask = cmp.MaskAndImage;
+            var mask = cmp.OverflowMask;
 
             var bgImage = bg.BgImage;
             Assert.AreEqual(typeof(Texture2D), bg.BackgroundGraphics[0].texture?.GetType());
             Assert.AreEqual(Color.red, bg.BackgroundGraphics[0].color);
             Assert.AreEqual(Color.red, bgImage.color);
 
-            Assert.AreEqual(typeof(Texture2D), mask.Image.sprite?.texture?.GetType());
+
+            var maskImage = cmp.ComputedStyle.maskImage;
+            var maskPosition = cmp.ComputedStyle.maskPosition;
+            var maskSize = cmp.ComputedStyle.maskSize;
+            var maskRepeatX = cmp.ComputedStyle.maskRepeatX;
+            var maskRepeatY = cmp.ComputedStyle.maskRepeatY;
+            Assert.AreEqual(2, maskImage.Count);
+            Assert.AreEqual(new YogaValue2(YogaValue.Point(50), YogaValue.Point(60)), maskPosition.Get(0));
+            Assert.AreEqual(new YogaValue2(YogaValue.Percent(100), YogaValue.Percent(0)), maskPosition.Get(1));
+
+            Assert.AreEqual(BackgroundSize.Cover, maskSize.Get(0));
+            Assert.AreEqual(new BackgroundSize(new YogaValue2(YogaValue.Percent(50), YogaValue.Percent(50))), maskSize.Get(1));
+
+            Assert.AreEqual(BackgroundRepeat.Space, maskRepeatX.Get(0));
+            Assert.AreEqual(BackgroundRepeat.NoRepeat, maskRepeatX.Get(1));
+
+            Assert.AreEqual(BackgroundRepeat.Round, maskRepeatY.Get(0));
+            Assert.AreEqual(BackgroundRepeat.Repeat, maskRepeatY.Get(1));
 
             var rptX = cmp.ComputedStyle.backgroundRepeatX;
             var rptY = cmp.ComputedStyle.backgroundRepeatY;

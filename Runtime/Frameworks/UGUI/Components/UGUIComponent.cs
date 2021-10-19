@@ -18,7 +18,7 @@ namespace ReactUnity.UGUI
         public RectTransform RectTransform { get; private set; }
         public ReactElement Component { get; private set; }
         public BorderAndBackground BorderAndBackground { get; protected set; }
-        public MaskAndImage MaskAndImage { get; protected set; }
+        public MaskAndImage OverflowMask { get; protected set; }
 
         private Selectable selectable;
         public Selectable Selectable
@@ -259,18 +259,14 @@ namespace ReactUnity.UGUI
         private void SetOverflow()
         {
             var computed = ComputedStyle;
-            var mask = MaskAndImage;
-            var maskImage = computed.maskImage;
-
-            var hasImage = maskImage != null && maskImage != ImageReference.None;
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) != YogaOverflow.Visible || hasImage;
+            var mask = OverflowMask;
+            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) != YogaOverflow.Visible;
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
 
-            if (mask == null) mask = MaskAndImage = MaskAndImage.Create(GameObject, Context);
+            if (mask == null) mask = OverflowMask = MaskAndImage.Create(GameObject, Context);
 
-            mask.SetMaskImage(maskImage);
             mask.SetEnabled(hasMask);
             mask.SetBorderRadius(computed.borderTopLeftRadius, computed.borderTopRightRadius, computed.borderBottomRightRadius, computed.borderBottomLeftRadius);
         }

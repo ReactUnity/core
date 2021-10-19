@@ -10,7 +10,6 @@ namespace ReactUnity.Styling.Internal
         public Mask Mask;
         public Graphic Graphic;
         public RoundedBorderMaskImage Image;
-        public ImageReference MaskImage;
         private bool Enabled;
 
         public static MaskAndImage Create(GameObject go, ReactContext ctx)
@@ -30,23 +29,6 @@ namespace ReactUnity.Styling.Internal
         {
             Enabled = enabled;
             MaskChanged();
-        }
-
-        internal void SetMaskImage(ImageReference img)
-        {
-            if (!Image) return;
-            if (MaskImage == img) return;
-            MaskImage = img;
-            if (img == null)
-            {
-                Image.sprite = null;
-                MaskChanged();
-            }
-            else img.Get(Context, res => {
-                var sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
-                Image.sprite = sprite;
-                MaskChanged();
-            });
         }
 
         internal void SetBorderRadius(float tl, float tr, float br, float bl)

@@ -28,7 +28,6 @@ namespace ReactUnity.Styling
         public PositionType position => GetStyleValue(StyleProperties.position);
         public CursorList cursor => GetStyleValue(StyleProperties.cursor);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
-        public ImageReference maskImage => GetStyleValue(StyleProperties.maskImage);
         public float borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
         public float borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
         public float borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
@@ -70,6 +69,12 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundRepeat> backgroundRepeatX => GetStyleValue(StyleProperties.backgroundRepeatX);
         public ICssValueList<BackgroundRepeat> backgroundRepeatY => GetStyleValue(StyleProperties.backgroundRepeatY);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
+
+        public ICssValueList<ImageDefinition> maskImage => GetStyleValue(StyleProperties.maskImage);
+        public ICssValueList<YogaValue2> maskPosition => GetStyleValue(StyleProperties.maskPosition);
+        public ICssValueList<BackgroundSize> maskSize => GetStyleValue(StyleProperties.maskSize);
+        public ICssValueList<BackgroundRepeat> maskRepeatX => GetStyleValue(StyleProperties.maskRepeatX);
+        public ICssValueList<BackgroundRepeat> maskRepeatY => GetStyleValue(StyleProperties.maskRepeatY);
 
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);

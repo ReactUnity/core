@@ -18,7 +18,6 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
         public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
-        public static readonly StyleProperty<ImageReference> maskImage = new StyleProperty<ImageReference>("maskImage", ImageReference.None);
         public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
@@ -62,6 +61,12 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
         public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
+        public static readonly ValueListStyleProperty<ImageDefinition> maskImage = new ValueListStyleProperty<ImageDefinition>("maskImage");
+        public static readonly ValueListStyleProperty<YogaValue2> maskPosition = new ValueListStyleProperty<YogaValue2>("maskPosition");
+        public static readonly ValueListStyleProperty<BackgroundSize> maskSize = new ValueListStyleProperty<BackgroundSize>("maskSize", BackgroundSize.Auto);
+        public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatX = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatX", BackgroundRepeat.Repeat);
+        public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
+
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
         public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration");
         public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction", TimingFunctions.Default);
@@ -93,7 +98,6 @@ namespace ReactUnity.Styling
             { "position", position },
             { "cursor", cursor },
             { "pointerEvents", pointerEvents },
-            { "maskImage", maskImage },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },
             { "borderBottomLeftRadius", borderBottomLeftRadius },
@@ -136,6 +140,12 @@ namespace ReactUnity.Styling
             { "backgroundRepeatX", backgroundRepeatX },
             { "backgroundRepeatY", backgroundRepeatY },
             { "backgroundBlendMode", backgroundBlendMode },
+
+            { "maskImage", maskImage },
+            { "maskPosition", maskPosition },
+            { "maskSize", maskSize },
+            { "maskRepeatX", maskRepeatX },
+            { "maskRepeatY", maskRepeatY },
 
             { "transitionProperty", transitionProperty },
             { "transitionDuration", transitionDuration },
@@ -193,6 +203,10 @@ namespace ReactUnity.Styling
             { "background-repeat-y", backgroundRepeatY },
             { "background-blend-mode", backgroundBlendMode },
             { "mask-image", maskImage },
+            { "mask-position", maskPosition },
+            { "mask-size", maskSize },
+            { "mask-repeat-x", maskRepeatX },
+            { "mask-repeat-y", maskRepeatY },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },
             { "border-bottom-left-radius", borderBottomLeftRadius },

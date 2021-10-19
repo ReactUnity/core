@@ -24,10 +24,10 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest()]
-        public IEnumerator ShouldNotGenerateMaskWhenNotNecessary()
+        public IEnumerator ShouldNotGenerateOverflowMaskWhenNotNecessary()
         {
             yield return null;
-            Assert.IsNull(View.MaskAndImage);
+            Assert.IsNull(View.OverflowMask);
         }
     }
 }
