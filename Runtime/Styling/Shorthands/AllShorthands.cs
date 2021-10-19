@@ -1,36 +1,35 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public static class AllShorthands
+    internal static class AllShorthands
     {
-        public static readonly StyleShorthand All = new AllShorthand("all");
-        public static readonly StyleShorthand Margin = new FourDirectionalShorthand("margin", FourDirectionalShorthand.PropertyType.Margin);
-        public static readonly StyleShorthand Padding = new FourDirectionalShorthand("padding", FourDirectionalShorthand.PropertyType.Padding);
-        public static readonly StyleShorthand Inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
-        public static readonly StyleShorthand BorderWidth = new FourDirectionalShorthand("border-width", FourDirectionalShorthand.PropertyType.BorderWidth);
-        public static readonly StyleShorthand BorderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
-        public static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
-        public static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
-        public static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
-        public static readonly StyleShorthand BorderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
-        public static readonly StyleShorthand BorderBottom = new BorderShorthand("border-bottom", BorderShorthand.BorderSide.Bottom);
-        public static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
-        public static readonly StyleShorthand Flex = new FlexShorthand("flex");
-        public static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
-        public static readonly StyleShorthand Font = new FontShorthand("font");
-        public static readonly StyleShorthand Background = new BackgroundShorthand("background");
-        public static readonly StyleShorthand BackgroundRepeat = new BackgroundRepeatShorthand("background-repeat");
-        public static readonly StyleShorthand Mask = new MaskShorthand("mask");
-        public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
-        public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
-        public static readonly StyleShorthand Motion = new MotionShorthand("motion");
-        public static readonly StyleShorthand Animation = new AnimationShorthand("animation");
-        public static readonly StyleShorthand Audio = new AudioShorthand("audio");
+        internal static readonly StyleShorthand All = new AllShorthand("all");
+        internal static readonly StyleShorthand Margin = new FourDirectionalShorthand("margin", FourDirectionalShorthand.PropertyType.Margin);
+        internal static readonly StyleShorthand Padding = new FourDirectionalShorthand("padding", FourDirectionalShorthand.PropertyType.Padding);
+        internal static readonly StyleShorthand Inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
+        internal static readonly StyleShorthand BorderWidth = new FourDirectionalShorthand("border-width", FourDirectionalShorthand.PropertyType.BorderWidth);
+        internal static readonly StyleShorthand BorderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
+        internal static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
+        internal static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
+        internal static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
+        internal static readonly StyleShorthand BorderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
+        internal static readonly StyleShorthand BorderBottom = new BorderShorthand("border-bottom", BorderShorthand.BorderSide.Bottom);
+        internal static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
+        internal static readonly StyleShorthand Flex = new FlexShorthand("flex");
+        internal static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
+        internal static readonly StyleShorthand Font = new FontShorthand("font");
+        internal static readonly StyleShorthand Background = new BackgroundShorthand("background");
+        internal static readonly StyleShorthand BackgroundRepeat = new BackgroundRepeatShorthand("background-repeat");
+        internal static readonly StyleShorthand Mask = new MaskShorthand("mask");
+        internal static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
+        internal static readonly StyleShorthand Transition = new TransitionShorthand("transition");
+        internal static readonly StyleShorthand Motion = new MotionShorthand("motion");
+        internal static readonly StyleShorthand Animation = new AnimationShorthand("animation");
+        internal static readonly StyleShorthand Audio = new AudioShorthand("audio");
 
-        public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
+        internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "all", All },
             { "margin", Margin },
@@ -68,7 +67,7 @@ namespace ReactUnity.Styling.Shorthands
             { "text-stroke", TextStroke },
         };
 
-        public static StyleShorthand GetShorthand(string name)
+        internal static StyleShorthand GetShorthand(string name)
         {
             Map.TryGetValue(name, out var style);
             return style;

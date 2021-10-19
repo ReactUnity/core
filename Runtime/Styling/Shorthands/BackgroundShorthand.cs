@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class BackgroundShorthand : StyleShorthand
+    internal class BackgroundShorthand : StyleShorthand
     {
         private static GeneralConverter RepeatConverter = AllConverters.Get<BackgroundRepeat>();
 

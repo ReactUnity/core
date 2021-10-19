@@ -5,7 +5,7 @@ using TMPro;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class FontShorthand : StyleShorthand
+    internal class FontShorthand : StyleShorthand
     {
         private static GeneralConverter WeightConverter = AllConverters.Get<FontWeight>();
         private static GeneralConverter StylesConverter = AllConverters.Get<FontStyles>();

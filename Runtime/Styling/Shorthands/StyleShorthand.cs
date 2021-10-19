@@ -4,7 +4,7 @@ using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public abstract class StyleShorthand : IStyleKey
+    internal abstract class StyleShorthand : IStyleKey
     {
         public string Name { get; }
         public abstract List<IStyleProperty> ModifiedProperties { get; }

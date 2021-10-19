@@ -6,7 +6,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class XYListShorthand<T> : StyleShorthand
+    internal class XYListShorthand<T> : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; }
         public IStyleConverter Converter { get; }
@@ -73,7 +73,7 @@ namespace ReactUnity.Styling.Shorthands
 
     }
 
-    public class BackgroundRepeatShorthand : XYListShorthand<BackgroundRepeat>
+    internal class BackgroundRepeatShorthand : XYListShorthand<BackgroundRepeat>
     {
         public BackgroundRepeatShorthand(string name) : base(name, StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY)
         {

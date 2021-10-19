@@ -5,7 +5,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class AnimationShorthand : StyleShorthand
+    internal class AnimationShorthand : StyleShorthand
     {
         private static GeneralConverter DirectionConverter = AllConverters.Get<AnimationDirection>();
         private static GeneralConverter FillModeConverter = AllConverters.Get<AnimationFillMode>();

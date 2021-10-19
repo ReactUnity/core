@@ -4,7 +4,7 @@ using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class FlexFlowShorthand : StyleShorthand
+    internal class FlexFlowShorthand : StyleShorthand
     {
         private static GeneralConverter DirectionConverter = AllConverters.Get<YogaFlexDirection>();
         private static GeneralConverter WrapConverter = AllConverters.Get<YogaWrap>();

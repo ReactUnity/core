@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class BorderShorthand : StyleShorthand
+    internal class BorderShorthand : StyleShorthand
     {
         private static GeneralConverter BorderStyleConverter = AllConverters.Get<BorderStyle>();
 

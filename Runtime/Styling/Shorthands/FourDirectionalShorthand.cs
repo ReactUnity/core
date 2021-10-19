@@ -4,7 +4,7 @@ using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class FourDirectionalShorthand : StyleShorthand
+    internal class FourDirectionalShorthand : StyleShorthand
     {
         public enum PropertyType
         {

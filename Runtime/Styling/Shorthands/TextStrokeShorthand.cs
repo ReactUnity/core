@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class TextStrokeShorthand : StyleShorthand
+    internal class TextStrokeShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; }
 

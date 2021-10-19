@@ -3,7 +3,7 @@ using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class AllShorthand : StyleShorthand
+    internal class AllShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; } = CssProperties.AllProperties;
 

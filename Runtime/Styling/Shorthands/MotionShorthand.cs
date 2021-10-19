@@ -4,7 +4,7 @@ using ReactUnity.Styling.Animations;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class MotionShorthand : StyleShorthand
+    internal class MotionShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {

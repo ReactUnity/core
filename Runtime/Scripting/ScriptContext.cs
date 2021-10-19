@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.Scripting.DomProxies;
 using ReactUnity.Styling.Rules;
-using UnityEngine.Events;
 
 namespace ReactUnity.Scripting
 {

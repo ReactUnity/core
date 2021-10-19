@@ -4,7 +4,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class AudioShorthand : StyleShorthand
+    internal class AudioShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {

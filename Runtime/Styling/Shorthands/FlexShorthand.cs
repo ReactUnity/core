@@ -4,7 +4,7 @@ using ReactUnity.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class FlexShorthand : StyleShorthand
+    internal class FlexShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; }
 

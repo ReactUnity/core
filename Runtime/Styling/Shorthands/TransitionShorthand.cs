@@ -5,7 +5,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class TransitionShorthand : StyleShorthand
+    internal class TransitionShorthand : StyleShorthand
     {
         private static GeneralConverter PlayStateConverter = AllConverters.Get<AnimationPlayState>();
 

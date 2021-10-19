@@ -4,7 +4,7 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public class MaskShorthand : StyleShorthand
+    internal class MaskShorthand : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
