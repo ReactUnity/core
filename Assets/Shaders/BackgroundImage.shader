@@ -14,6 +14,8 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
     [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
     [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
+    [Enum(ReactUnity.Types.BackgroundRepeat)] _repeatX("Repeat X", Int) = 0
+    [Enum(ReactUnity.Types.BackgroundRepeat)] _repeatY("Repeat Y", Int) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -25,75 +27,130 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
   }
 
-    SubShader{
-      Tags {
-        "Queue" = "Transparent"
-        "IgnoreProjector" = "True"
-        "RenderType" = "Transparent"
-        "PreviewType" = "Plane"
-        "CanUseSpriteAtlas" = "True"
-      }
+  SubShader{
+    Tags {
+      "Queue" = "Transparent"
+      "IgnoreProjector" = "True"
+      "RenderType" = "Transparent"
+      "PreviewType" = "Plane"
+      "CanUseSpriteAtlas" = "True"
+    }
 
-      Stencil {
-        Ref[_Stencil]
-        Comp[_StencilComp]
-        Pass[_StencilOp]
-        ReadMask[_StencilReadMask]
-        WriteMask[_StencilWriteMask]
-      }
-      Cull Off
-      Lighting Off
-      ZTest[unity_GUIZTestMode]
-      ColorMask[_ColorMask]
+    Stencil {
+      Ref[_Stencil]
+      Comp[_StencilComp]
+      Pass[_StencilOp]
+      ReadMask[_StencilReadMask]
+      WriteMask[_StencilWriteMask]
+    }
+    Cull Off
+    Lighting Off
+    ZTest[unity_GUIZTestMode]
+    ColorMask[_ColorMask]
 
-      Blend SrcAlpha OneMinusSrcAlpha
-      ZWrite Off
+    Blend SrcAlpha OneMinusSrcAlpha
+    ZWrite Off
 
-      Pass
+    Pass
+    {
+      CGPROGRAM
+
+      #include "UnityCG.cginc"
+      #include "UnityUI.cginc"
+      #include "CustomFunctions.hlsl"
+      #include "ShaderSetup.cginc"
+
+      #pragma vertex vert
+      #pragma fragment frag
+      #pragma target 2.0
+      #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
+      #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+
+      #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+      #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+      bool _repeating;
+      float _gradientType;
+      float _angle;
+      float _from;
+      float _offset;
+      float _length;
+      float _distance;
+      float _radius;
+      int _shape;
+      int _repeatX;
+      int _repeatY;
+      float2 _at;
+      float2 _pos;
+      float2 _size;
+      sampler2D _MainTex;
+      float4 _MainTex_ST;
+      float4 _ClipRect;
+
+      float calculateRepeat(float uv, float size, float pos, int repeat, out bool visible)
       {
-        CGPROGRAM
+        visible = true;
+        float countd = 1 / size;
 
-        #include "UnityCG.cginc"
-        #include "UnityUI.cginc"
-        #include "CustomFunctions.hlsl"
-        #include "ShaderSetup.cginc"
+        if(repeat == 0 || repeat == 3 || size >= 1 || (repeat == 1 && countd < 2)) {
+          float d = (uv - pos);
+          float dr = d / size;
+          if(repeat != 0 && (dr > 1 || dr < 0)) visible = false;
+          return dr - floor(dr);
+        }
+        else if (repeat == 1) {
+          // space
 
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma target 2.0
-        #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
-        #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
+          float count = floor(countd);
+          float cx = count - 1;
+          float totalSpace = (1 - count * size);
+          float spacing = cx == 0 ? totalSpace : totalSpace / cx;
+          float per = (1 - totalSpace) / count;
+          float persz = per + spacing;
 
-        #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
-        #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+          float cp = uv / persz;
+          float cpd = floor(cp);
 
-        bool _repeating;
-        float _gradientType;
-        float _angle;
-        float _from;
-        float _offset;
-        float _length;
-        float _distance;
-        float _radius;
-        int _shape;
-        float2 _at;
-        float2 _pos;
-        float2 _size;
-        sampler2D _MainTex;
-        float4 _MainTex_ST;
-        float4 _ClipRect;
+          float dr = (cp - cpd) / per * persz;
 
-        fixed4 frag(v2f i) : SV_Target
-        {
-          float aspectRatio = _size.x / _size.y;
+          if(dr > 1 || dr < 0) visible = false;
+          return dr;
+        }
+        else if(repeat == 2) {
+          // round
 
-          float uvx = (i.uv.x - _pos.x);
-          float uvy = ((1 - i.uv.y) - _pos.y);
+          float countd = 1 / size;
+          float count = round(countd);
+          float cx = count - 1;
+          float totalSpace = (repeat == 2) ? 0 : (1 - count * size);
+          float per = (1 - totalSpace) / count;
 
-          float uvxd = uvx / _size.x;
-          float uvyd = uvy / _size.y;
+          float cp = uv / per;
+          float cpd = floor(cp);
 
-          float2 uv = float2(uvxd - floor(uvxd), ceil(uvyd) - uvyd);
+          float dr = cp - cpd;
+
+          if(dr > 1 || dr < 0) visible = false;
+          return dr;
+        }
+        else return 0;
+      }
+
+      fixed4 frag(v2f i) : SV_Target
+      {
+        float aspectRatio = _size.x / _size.y;
+
+        bool visibleX, visibleY;
+        float tx = calculateRepeat(i.uv.x, _size.x, _pos.x, _repeatX, visibleX);
+        float ty = calculateRepeat(1 - i.uv.y, _size.y, _pos.y, _repeatY, visibleY);
+
+        fixed4 res;
+
+        if(!(visibleX && visibleY)) {
+          res = fixed4(0,0,0,0);
+        }
+        else {
+          float2 uv = float2(tx, 1 - ty);
           float2 txPos = uv;
 
           if (_gradientType == 1) {
@@ -122,7 +179,7 @@ Shader "ReactUnity/BackgroundImage"
               float2 D = float2(1 - zx, maxY - zy);
 
               ratioX = ((B.x*A.y - A.x*B.y) * (D.x - C.x) - (B.x - A.x) * (D.x * C.y - D.y * C.x))
-                / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
+              / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
 
               ratioX = (sa < 0) ? 1 - ratioX : ratioX;
             }
@@ -149,20 +206,21 @@ Shader "ReactUnity/BackgroundImage"
             txPos = float2(x, txPos.y);
           }
 
-          fixed4 res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
-
-#ifdef UNITY_UI_CLIP_RECT
-          res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
-#endif
-
-#ifdef UNITY_UI_ALPHACLIP
-          clip(res.a - 0.001);
-#endif
-
-          return res;
+          res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
         }
 
-        ENDCG
+        #ifdef UNITY_UI_CLIP_RECT
+          res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+        #endif
+
+        #ifdef UNITY_UI_ALPHACLIP
+          clip(res.a - 0.001);
+        #endif
+
+        return res;
       }
+
+      ENDCG
     }
+  }
 }

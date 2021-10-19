@@ -58,6 +58,8 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<ImageDefinition> backgroundImage = new ValueListStyleProperty<ImageDefinition>("backgroundImage");
         public static readonly ValueListStyleProperty<YogaValue2> backgroundPosition = new ValueListStyleProperty<YogaValue2>("backgroundPosition");
         public static readonly ValueListStyleProperty<BackgroundSize> backgroundSize = new ValueListStyleProperty<BackgroundSize>("backgroundSize", BackgroundSize.Auto);
+        public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatX = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatX", BackgroundRepeat.Repeat);
+        public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
         public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
@@ -131,6 +133,8 @@ namespace ReactUnity.Styling
             { "backgroundImage", backgroundImage },
             { "backgroundPosition", backgroundPosition },
             { "backgroundSize", backgroundSize },
+            { "backgroundRepeatX", backgroundRepeatX },
+            { "backgroundRepeatY", backgroundRepeatY },
             { "backgroundBlendMode", backgroundBlendMode },
 
             { "transitionProperty", transitionProperty },
@@ -185,6 +189,8 @@ namespace ReactUnity.Styling
             { "background-image", backgroundImage },
             { "background-position", backgroundPosition },
             { "background-size", backgroundSize },
+            { "background-repeat-x", backgroundRepeatX },
+            { "background-repeat-y", backgroundRepeatY },
             { "background-blend-mode", backgroundBlendMode },
             { "mask-image", maskImage },
             { "border-top-left-radius", borderTopLeftRadius },

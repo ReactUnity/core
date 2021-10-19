@@ -12,6 +12,8 @@ namespace ReactUnity.Styling.Internal
     {
         public static readonly int SizeProp = Shader.PropertyToID("_size");
         public static readonly int PosProp = Shader.PropertyToID("_pos");
+        public static readonly int RepeatXProp = Shader.PropertyToID("_repeatX");
+        public static readonly int RepeatYProp = Shader.PropertyToID("_repeatY");
 
         public Vector2 Size;
 
@@ -52,6 +54,9 @@ namespace ReactUnity.Styling.Internal
                 SetMaterialDirty();
             }
         }
+
+        public BackgroundRepeat BackgroundRepeatX;
+        public BackgroundRepeat BackgroundRepeatY;
 
         private Color TintColor;
 
@@ -96,6 +101,8 @@ namespace ReactUnity.Styling.Internal
 
                 result.SetVector(SizeProp, sz);
                 result.SetVector(PosProp, ps);
+                result.SetFloat(RepeatXProp, (int) BackgroundRepeatX);
+                result.SetFloat(RepeatYProp, (int) BackgroundRepeatY);
                 Definition?.ModifyMaterial(Context, result, szPoint);
                 return result;
             }

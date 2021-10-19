@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -21,6 +22,7 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
         public static readonly StyleShorthand Font = new FontShorthand("font");
         public static readonly StyleShorthand Background = new BackgroundShorthand("background");
+        public static readonly StyleShorthand BackgroundRepeat = new XYListShorthand<BackgroundRepeat>("background-repeat", StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY);
         public static readonly StyleShorthand Mask = new MaskShorthand("mask");
         public static readonly StyleShorthand TextStroke = new TextStrokeShorthand("text-stroke");
         public static readonly StyleShorthand Transition = new TransitionShorthand("transition");
@@ -46,6 +48,7 @@ namespace ReactUnity.Styling.Shorthands
             { "flexFlow", FlexFlow },
             { "font", Font },
             { "background", Background },
+            { "backgroundRepeat", BackgroundRepeat },
             { "mask", Mask },
             { "textStroke", TextStroke },
             { "transition", Transition },
@@ -61,6 +64,7 @@ namespace ReactUnity.Styling.Shorthands
             { "border-bottom", BorderBottom },
             { "border-left", BorderLeft },
             { "flex-flow", FlexFlow },
+            { "background-repeat", BackgroundRepeat },
             { "text-stroke", TextStroke },
         };
 

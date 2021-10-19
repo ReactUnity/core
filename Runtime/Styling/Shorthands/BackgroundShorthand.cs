@@ -8,6 +8,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     public class BackgroundShorthand : StyleShorthand
     {
+        private static GeneralConverter RepeatConverter = AllConverters.Get<BackgroundRepeat>();
+
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
             StyleProperties.backgroundColor,
@@ -40,6 +42,8 @@ namespace ReactUnity.Styling.Shorthands
             var images = new ImageDefinition[count];
             var positions = new YogaValue2[count];
             var sizes = new BackgroundSize[count];
+            var repeatXs = new BackgroundRepeat[count];
+            var repeatYs = new BackgroundRepeat[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -62,6 +66,8 @@ namespace ReactUnity.Styling.Shorthands
                 var sizeSetByKeyword = false;
                 BackgroundSize size = BackgroundSize.Auto;
 
+                var repeatXSet = false;
+                var repeatYSet = false;
 
                 var canSetSize = -1;
 
@@ -105,6 +111,42 @@ namespace ReactUnity.Styling.Shorthands
                             if (!posXSet) posX = YogaValue.Percent(50);
                             continue;
                         }
+                    }
+
+                    if (!repeatXSet && !repeatYSet)
+                    {
+                        if (split == "repeat-x")
+                        {
+                            repeatXSet = repeatYSet = true;
+                            repeatXs[ci] = BackgroundRepeat.Repeat;
+                            repeatYs[ci] = BackgroundRepeat.NoRepeat;
+                            continue;
+                        }
+                        else if (split == "repeat-y")
+                        {
+                            repeatXSet = repeatYSet = true;
+                            repeatXs[ci] = BackgroundRepeat.NoRepeat;
+                            repeatYs[ci] = BackgroundRepeat.Repeat;
+                            continue;
+                        }
+                    }
+
+                    var rptVal = RepeatConverter.Parse(split);
+
+                    if (rptVal is BackgroundRepeat rpt)
+                    {
+                        if (!repeatXSet)
+                        {
+                            repeatXs[ci] = repeatYs[ci] = rpt;
+                            repeatXSet = true;
+                            continue;
+                        }
+                        else if (!repeatYSet)
+                        {
+                            repeatYs[ci] = rpt;
+                            continue;
+                        }
+                        else return null;
                     }
 
                     if (split == "/")
