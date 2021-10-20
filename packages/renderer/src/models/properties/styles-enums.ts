@@ -33,3 +33,4 @@ export type TimingFunctionType = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'e
 export type AnimationFillMode = 'none' | 'both' | 'forwards' | 'backwards';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationPlayState = 'running' | 'paused';
+export type BackgroundSize = 'cover' | 'contain';

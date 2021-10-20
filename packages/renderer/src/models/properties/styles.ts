@@ -1,4 +1,4 @@
-import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
 import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -6,7 +6,7 @@ export interface RenderStyle {
   opacity?: NumberAux;
   zIndex?: number | string;
   order?: number | string;
-  visibility?: Visibility | boolean | 'hidden' | 'visible';
+  visibility?: Visibility | boolean;
   cursor?: CursorType | string;
   pointerEvents?: PointerEvents;
   content?: string;
@@ -16,9 +16,18 @@ export interface RenderStyle {
   backgroundBlendMode?: BackgroundBlendMode;
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
-  backgroundPosition?: YogaValue2Aux;
-  backgroundSize?: YogaValue2Aux;
+  backgroundPositionX?: YogaValueAux;
+  backgroundPositionY?: YogaValueAux;
+  backgroundSize?: BackgroundSize | YogaValue2Aux;
+  backgroundRepeatX?: YogaValueAux;
+  backgroundRepeatY?: YogaValueAux;
+
   maskImage?: AssetReference;
+  maskPositionX?: YogaValueAux;
+  maskPositionY?: YogaValueAux;
+  maskSize?: BackgroundSize | YogaValue2Aux;
+  maskRepeatX?: YogaValueAux;
+  maskRepeatY?: YogaValueAux;
 
   borderRadius?: NumberAux;
   borderTopLeftRadius?: NumberAux;
@@ -82,6 +91,8 @@ export interface RenderStyle {
   // Shorthands
   all?: string;
   background?: string;
+  backgroundPosition?: string;
+  backgroundRepeat?: string;
   border?: string;
   borderTop?: string;
   borderRight?: string;
@@ -90,6 +101,8 @@ export interface RenderStyle {
   borderWidth?: string;
   margin?: string;
   mask?: string;
+  maskPosition?: string;
+  maskRepeat?: string;
   padding?: string;
   inset?: string;
   flex?: string;
