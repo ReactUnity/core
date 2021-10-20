@@ -15,7 +15,7 @@ namespace ReactUnity.Types
         bool Any { get; }
     }
 
-    public class CssValueList<T> : List<T>, ICssValueList<T>
+    public class CssValueList<T> : List<T>, ICssValueList<T>, Interpolatable
     {
         public static CssValueList<T> Empty = new CssValueList<T>();
         public bool Any => Count > 0;
@@ -38,6 +38,13 @@ namespace ReactUnity.Types
         public T Get(int index) => Count == 0 ? DefaultValue : this[index % Count];
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Get(int index, T defaultValue) => Count == 0 ? defaultValue : this[index % Count];
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public object Interpolate(object to, float t)
+        {
+            if (to is ICssValueList<T> tto) return new CssValueListInterpolated<T>(this, tto, t);
+            return t > 0.5f ? to : this;
+        }
 
         public class Converter : IStyleParser, IStyleConverter
         {

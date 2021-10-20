@@ -1,9 +1,11 @@
+using System.Runtime.CompilerServices;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 
 namespace ReactUnity.Types
 {
-    public struct BackgroundSize
+    public struct BackgroundSize : Interpolatable
     {
         public static readonly BackgroundSize Auto = new BackgroundSize(YogaValue2.Auto);
         public static readonly BackgroundSize Contain = new BackgroundSize(BackgroundSizeKeyword.Contain);
@@ -24,6 +26,17 @@ namespace ReactUnity.Types
         {
             Keyword = BackgroundSizeKeyword.Custom;
             Value = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public object Interpolate(object to, float t)
+        {
+            if (to is BackgroundSize tto)
+            {
+                if (Keyword != tto.Keyword) return t > 0.5f ? to : this;
+                return new BackgroundSize((YogaValue2) Value.Interpolate(tto.Value, t));
+            }
+            return t > 0.5f ? to : this;
         }
 
         public class Converter : IStyleConverter

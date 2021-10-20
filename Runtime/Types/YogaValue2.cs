@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 using UnityEngine;
 
 namespace ReactUnity.Types
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct YogaValue2
+    public struct YogaValue2 : Interpolatable
     {
         public static YogaValue2 Zero = new YogaValue2(YogaValue.Point(0), YogaValue.Point(0));
         public static YogaValue2 Undefined = new YogaValue2(YogaValue.Undefined(), YogaValue.Undefined());
@@ -79,6 +81,14 @@ namespace ReactUnity.Types
         public static bool operator !=(YogaValue2 left, YogaValue2 right)
         {
             return !(left == right);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public object Interpolate(object to, float t)
+        {
+            if (to is YogaValue2 tto)
+                return new YogaValue2(Interpolater.Interpolate(X, tto.X, t), Interpolater.Interpolate(Y, tto.Y, t));
+            return t > 0.5f ? to : this;
         }
 
         public class Converter : IStyleParser, IStyleConverter

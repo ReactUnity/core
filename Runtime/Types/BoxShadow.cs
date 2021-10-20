@@ -1,11 +1,12 @@
 using System.Linq;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Animations;
 using UnityEngine;
 
 namespace ReactUnity.Types
 {
-    public class BoxShadow
+    public class BoxShadow : Interpolatable
     {
         public static ColorConverter ColorParser = new ColorConverter();
         public static FloatConverter FloatParser = new LengthConverter();
@@ -32,6 +33,26 @@ namespace ReactUnity.Types
             var spreadString = spread.x == spread.y ? $"{spread.x}px" : $"{spread.x}px {spread.y}px";
 
             Definition = $"{offset.x}px {offset.y}px {blurString} {spreadString} #{ColorUtility.ToHtmlStringRGBA(color)} {(inset ? "inset" : "")}";
+        }
+
+        public object Interpolate(object to, float t)
+        {
+            var tto = to as BoxShadow;
+            if (tto == null) return t > 0.5 ? tto : this;
+
+            if (inset != tto.inset && this != Default && tto != Default)
+            {
+                if (t < 0.5) return Interpolate(inset ? DefaultInset : Default, t * 2);
+                else return (tto.inset ? DefaultInset : Default).Interpolate(tto, (t - 0.5f) * 2);
+            }
+
+            return new BoxShadow(
+                Interpolater.Interpolate(offset, tto.offset, t),
+                Interpolater.Interpolate(blur, tto.blur, t),
+                Interpolater.Interpolate(spread, tto.spread, t),
+                Interpolater.Interpolate(color, tto.color, t),
+                this != Default ? inset : tto.inset
+            );
         }
 
         public class Converter : IStyleParser, IStyleConverter

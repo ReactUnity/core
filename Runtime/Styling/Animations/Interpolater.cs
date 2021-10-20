@@ -2,7 +2,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Styling.Computed;
-using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Animations
@@ -69,43 +68,6 @@ namespace ReactUnity.Styling.Animations
 
             if (unit == YogaUnit.Percent) return YogaValue.Percent(Interpolate(from.Value, to.Value, t));
             return YogaValue.Point(Interpolate(from.Value, to.Value, t));
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static YogaValue2 Interpolate(YogaValue2 from, YogaValue2 to, float t)
-        {
-            return new YogaValue2(Interpolate(from.X, to.X, t), Interpolate(from.Y, to.Y, t));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static BackgroundSize Interpolate(BackgroundSize from, BackgroundSize to, float t)
-        {
-            if (from.Keyword != to.Keyword) return t > 0.5f ? to : from;
-            return new BackgroundSize(Interpolate(from.Value, to.Value, t));
-        }
-
-        public static BoxShadow Interpolate(BoxShadow from, BoxShadow to, float t)
-        {
-            if (from == null || to == null) return t > 0.5 ? to : from;
-
-            if (from.inset != to.inset && from != BoxShadow.Default && to != BoxShadow.Default)
-            {
-                if (t < 0.5) return Interpolate(from, from.inset ? BoxShadow.DefaultInset : BoxShadow.Default, t * 2);
-                else return Interpolate(to.inset ? BoxShadow.DefaultInset : BoxShadow.Default, to, (t - 0.5f) * 2);
-            }
-
-            return new BoxShadow(
-                Interpolate(from.offset, to.offset, t),
-                Interpolate(from.blur, to.blur, t),
-                Interpolate(from.spread, to.spread, t),
-                Interpolate(from.color, to.color, t),
-                from != BoxShadow.Default ? from.inset : to.inset
-            );
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ICssValueList<T> Interpolate<T>(ICssValueList<T> from, ICssValueList<T> to, float t)
-        {
-            return new CssValueListInterpolated<T>(from, to, t);
         }
 
         #endregion
@@ -203,6 +165,8 @@ namespace ReactUnity.Styling.Animations
 
         public static object Interpolate(object from, object to, float t)
         {
+            if (from == null) return to;
+            if (to == null) return from;
             if (from is float f1 && to is float f2) return Interpolate(f1, f2, t);
             if (from is int i1 && to is int i2) return Interpolate(i1, i2, t);
             if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t);
@@ -211,13 +175,7 @@ namespace ReactUnity.Styling.Animations
             if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t);
             if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t);
             if (from is YogaValue b1 && to is YogaValue b2) return Interpolate(b1, b2, t);
-            if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t);
-            if (from is BackgroundSize bg1 && to is BackgroundSize bg2) return Interpolate(bg1, bg2, t);
-            if (from is BoxShadow s1 && to is BoxShadow s2) return Interpolate(s1, s2, t);
-            if (from is ICssValueList<YogaValue> cvs1 && to is ICssValueList<YogaValue> cvs2) return Interpolate(cvs1, cvs2, t);
-            if (from is ICssValueList<YogaValue2> cv1 && to is ICssValueList<YogaValue2> cv2) return Interpolate(cv1, cv2, t);
-            if (from is ICssValueList<BackgroundSize> sv1 && to is ICssValueList<BackgroundSize> sv2) return Interpolate(sv1, sv2, t);
-            if (from is ICssValueList<BoxShadow> bv1 && to is ICssValueList<BoxShadow> bv2) return Interpolate(bv1, bv2, t);
+            if (from is Interpolatable cvs1) return cvs1.Interpolate(to, t);
 
             if (from is IComputedValue d1)
             {
@@ -225,16 +183,14 @@ namespace ReactUnity.Styling.Animations
                 else return new ComputedInterpolation(d1, new ComputedConstant(to), t);
             }
             if (to is IComputedValue dt) return new ComputedInterpolation(new ComputedConstant(from), dt, t);
-
-            if (from == null) return to;
-            if (to == null) return from;
-
             return t > 0.5f ? to : from;
         }
 
         public static object Interpolate(object from, object to, float t, Type type)
         {
             if (type == null) return Interpolate(from, to, t);
+            else if (from == null) return to;
+            else if (to == null) return from;
             else if (type == typeof(float)) { if (from is float f1 && to is float f2) return Interpolate(f1, f2, t); }
             else if (type == typeof(int)) { if (from is int i1 && to is int i2) return Interpolate(i1, i2, t); }
             else if (type == typeof(Color)) { if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t); }
@@ -243,29 +199,7 @@ namespace ReactUnity.Styling.Animations
             else if (type == typeof(Vector4)) { if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t); }
             else if (type == typeof(Quaternion)) { if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t); }
             else if (type == typeof(YogaValue)) { if (from is YogaValue y1 && to is YogaValue y2) return Interpolate(y1, y2, t); }
-            else if (type == typeof(YogaValue2)) { if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t); }
-            else if (type == typeof(BoxShadow)) { if (from is BoxShadow s1 && to is BoxShadow s2) return Interpolate(s1, s2, t); }
-
-            else if (type == typeof(ICssValueList<YogaValue2>))
-            {
-                if (from is ICssValueList<YogaValue2> cv1 && to is ICssValueList<YogaValue2> cv2) return Interpolate(cv1, cv2, t);
-            }
-
-            else if (type == typeof(ICssValueList<YogaValue>))
-            {
-                if (from is ICssValueList<YogaValue> cv1 && to is ICssValueList<YogaValue> cv2) return Interpolate(cv1, cv2, t);
-            }
-
-            else if (type == typeof(ICssValueList<BackgroundSize>))
-            {
-                if (from is ICssValueList<BackgroundSize> cv1 && to is ICssValueList<BackgroundSize> cv2) return Interpolate(cv1, cv2, t);
-            }
-
-            else if (type == typeof(ICssValueList<BoxShadow>))
-            {
-                if (from is ICssValueList<BoxShadow> cv1 && to is ICssValueList<BoxShadow> cv2) return Interpolate(cv1, cv2, t);
-            }
-
+            else if (typeof(Interpolatable).IsAssignableFrom(type)) { if (from is Interpolatable f1) return f1.Interpolate(to, t); }
             return Interpolate(from, to, t);
         }
 
