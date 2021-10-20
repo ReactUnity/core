@@ -30,7 +30,8 @@ namespace ReactUnity.UGUI.Internal
         public List<BackgroundImage> BackgroundGraphics;
         public List<BackgroundImage> MaskGraphics;
         public BackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
-        public RectTransform Container => LastMask ? LastMask.rectTransform : Component.Container;
+
+        public RectTransform MaskRoot;
 
         private BackgroundBlendMode blendMode;
         public BackgroundBlendMode BlendMode
@@ -69,7 +70,7 @@ namespace ReactUnity.UGUI.Internal
             var cmp = go.GetComponent<BorderAndBackground>();
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
 
-            var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
+            var root = new GameObject("[GraphicRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
             var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
             var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(RawImage));
 
@@ -324,30 +325,15 @@ namespace ReactUnity.UGUI.Internal
 
             var diff = MaskGraphics.Count - validCount;
 
-            var previousParent = Container;
-
-            List<RectTransform> childrenToReparent = null;
-
             if (diff > 0)
             {
                 for (int i = diff - 1; i >= 0; i--)
                 {
-                    var sd = MaskGraphics[validCount + i];
-
-                    MaskGraphics.RemoveAt(validCount + i);
-
-                    if (sd.rectTransform == previousParent)
-                    {
-                        childrenToReparent = previousParent.OfType<RectTransform>().ToList();
-                        foreach (var item in childrenToReparent) item.SetParent(transform);
-                    }
-
-                    DestroyImmediate(sd.gameObject);
+                    DestroyLastMask();
                 }
             }
             else if (diff < 0)
             {
-                childrenToReparent = previousParent.OfType<RectTransform>().ToList();
 
                 for (int i = -diff - 1; i >= 0; i--)
                 {
@@ -365,25 +351,66 @@ namespace ReactUnity.UGUI.Internal
                 sd.BackgroundPosition = positions.Get(i);
                 sd.BackgroundSize = sizes.Get(i);
             }
-
-            if (childrenToReparent != null)
-            {
-                var newContainer = Container;
-                foreach (var item in childrenToReparent) item.SetParent(newContainer);
-            }
         }
 
         private void CreateMask()
         {
-            var container = Container;
-            var sd = new GameObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
-            var mask = sd.GetComponent<Mask>();
-            mask.showMaskGraphic = false;
-            var img = sd.GetComponent<BackgroundImage>();
-            img.color = Color.clear;
-            img.Context = Context;
-            FullStretch(sd.transform as RectTransform, container);
-            MaskGraphics.Add(img);
+            if (MaskGraphics.Count == 0)
+            {
+                if (MaskRoot == null)
+                {
+                    var mr = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                    MaskRoot = mr.transform as RectTransform;
+                    var children = Component.RectTransform.OfType<RectTransform>().ToList();
+                    FullStretch(MaskRoot, Component.RectTransform);
+                    foreach (var item in children) item.SetParent(MaskRoot);
+
+                    if (Component.RectTransform == Component.Container) SetContainer(MaskRoot);
+                }
+
+                var mask = MaskRoot.GetComponent<Mask>();
+                mask.showMaskGraphic = false;
+                var img = MaskRoot.GetComponent<BackgroundImage>();
+                img.color = Color.clear;
+                img.Context = Context;
+                mask.enabled = img.enabled = true;
+                MaskGraphics.Add(img);
+            }
+            else
+            {
+                var sd = new GameObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                var mask = sd.GetComponent<Mask>();
+                mask.showMaskGraphic = false;
+                var img = sd.GetComponent<BackgroundImage>();
+                img.color = Color.clear;
+                img.Context = Context;
+
+                var last = MaskGraphics[MaskGraphics.Count - 1];
+
+                FullStretch(sd.transform as RectTransform, last.rectTransform.parent as RectTransform);
+                FullStretch(last.rectTransform, sd.transform as RectTransform);
+                MaskGraphics.Add(img);
+            }
+        }
+
+        private void DestroyLastMask()
+        {
+            var i = MaskGraphics.Count - 1;
+            var sd = MaskGraphics[i];
+            MaskGraphics.RemoveAt(i);
+
+            if (i == 0)
+            {
+                var mask = MaskRoot.GetComponent<Mask>();
+                var img = MaskRoot.GetComponent<BackgroundImage>();
+                mask.enabled = img.enabled = false;
+            }
+            else
+            {
+                var child = MaskGraphics[i - 1];
+                child.rectTransform.SetParent(sd.transform.parent);
+                DestroyImmediate(sd.gameObject);
+            }
         }
 
         private void CreateShadow()

@@ -338,7 +338,6 @@ namespace ReactUnity.UGUI
             {
                 image.UpdateStyle(ComputedStyle);
             }
-            Container = image.Container;
 
             return image;
         }
