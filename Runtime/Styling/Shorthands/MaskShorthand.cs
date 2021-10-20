@@ -12,7 +12,8 @@ namespace ReactUnity.Styling.Shorthands
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
             StyleProperties.maskImage,
-            StyleProperties.maskPosition,
+            StyleProperties.maskPositionX,
+            StyleProperties.maskPositionY,
             StyleProperties.maskSize,
             StyleProperties.maskRepeatX,
             StyleProperties.maskRepeatY,
@@ -26,7 +27,8 @@ namespace ReactUnity.Styling.Shorthands
             var count = commas.Count;
 
             var images = new ImageDefinition[count];
-            var positions = new YogaValue2[count];
+            var positionsX = new YogaValue[count];
+            var positionsY = new YogaValue[count];
             var sizes = new BackgroundSize[count];
             var repeatXs = new BackgroundRepeat[count];
             var repeatYs = new BackgroundRepeat[count];
@@ -198,14 +200,19 @@ namespace ReactUnity.Styling.Shorthands
                     return null;
                 }
 
-                if (posXSet || posYSet) positions[ci] = new YogaValue2(posX, posY);
+                if (posXSet || posYSet)
+                {
+                    positionsX[ci] = posX;
+                    positionsY[ci] = posY;
+                }
 
                 if (sizeSetByKeyword) sizes[ci] = size;
                 else if (sizeXSet) sizes[ci] = new BackgroundSize(new YogaValue2(sizeX, sizeY));
             }
 
             collection[StyleProperties.maskImage] = new CssValueList<ImageDefinition>(images);
-            collection[StyleProperties.maskPosition] = new CssValueList<YogaValue2>(positions);
+            collection[StyleProperties.maskPositionX] = new CssValueList<YogaValue>(positionsX);
+            collection[StyleProperties.maskPositionY] = new CssValueList<YogaValue>(positionsY);
             collection[StyleProperties.maskSize] = new CssValueList<BackgroundSize>(sizes);
             collection[StyleProperties.maskRepeatX] = new CssValueList<BackgroundRepeat>(repeatXs);
             collection[StyleProperties.maskRepeatY] = new CssValueList<BackgroundRepeat>(repeatYs);

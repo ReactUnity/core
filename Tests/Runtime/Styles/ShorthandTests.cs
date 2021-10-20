@@ -103,13 +103,17 @@ namespace ReactUnity.Tests
 
 
             var maskImage = cmp.ComputedStyle.maskImage;
-            var maskPosition = cmp.ComputedStyle.maskPosition;
+            var maskPositionX = cmp.ComputedStyle.maskPositionX;
+            var maskPositionY = cmp.ComputedStyle.maskPositionY;
             var maskSize = cmp.ComputedStyle.maskSize;
             var maskRepeatX = cmp.ComputedStyle.maskRepeatX;
             var maskRepeatY = cmp.ComputedStyle.maskRepeatY;
             Assert.AreEqual(2, maskImage.Count);
-            Assert.AreEqual(new YogaValue2(YogaValue.Point(50), YogaValue.Point(60)), maskPosition.Get(0));
-            Assert.AreEqual(new YogaValue2(YogaValue.Percent(100), YogaValue.Percent(0)), maskPosition.Get(1));
+
+            Assert.AreEqual(YogaValue.Point(50), maskPositionX.Get(0));
+            Assert.AreEqual(YogaValue.Percent(100), maskPositionX.Get(1));
+            Assert.AreEqual(YogaValue.Point(60), maskPositionY.Get(0));
+            Assert.AreEqual(YogaValue.Percent(0), maskPositionY.Get(1));
 
             Assert.AreEqual(BackgroundSize.Cover, maskSize.Get(0));
             Assert.AreEqual(new BackgroundSize(new YogaValue2(YogaValue.Percent(50), YogaValue.Percent(50))), maskSize.Get(1));

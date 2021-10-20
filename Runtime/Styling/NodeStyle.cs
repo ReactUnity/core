@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Facebook.Yoga;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Types;
@@ -64,14 +65,16 @@ namespace ReactUnity.Styling
 
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
         public ICssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
-        public ICssValueList<YogaValue2> backgroundPosition => GetStyleValue(StyleProperties.backgroundPosition);
+        public ICssValueList<YogaValue> backgroundPositionX => GetStyleValue(StyleProperties.backgroundPositionX);
+        public ICssValueList<YogaValue> backgroundPositionY => GetStyleValue(StyleProperties.backgroundPositionY);
         public ICssValueList<BackgroundSize> backgroundSize => GetStyleValue(StyleProperties.backgroundSize);
         public ICssValueList<BackgroundRepeat> backgroundRepeatX => GetStyleValue(StyleProperties.backgroundRepeatX);
         public ICssValueList<BackgroundRepeat> backgroundRepeatY => GetStyleValue(StyleProperties.backgroundRepeatY);
         public BackgroundBlendMode backgroundBlendMode => GetStyleValue(StyleProperties.backgroundBlendMode);
 
         public ICssValueList<ImageDefinition> maskImage => GetStyleValue(StyleProperties.maskImage);
-        public ICssValueList<YogaValue2> maskPosition => GetStyleValue(StyleProperties.maskPosition);
+        public ICssValueList<YogaValue> maskPositionX => GetStyleValue(StyleProperties.maskPositionX);
+        public ICssValueList<YogaValue> maskPositionY => GetStyleValue(StyleProperties.maskPositionY);
         public ICssValueList<BackgroundSize> maskSize => GetStyleValue(StyleProperties.maskSize);
         public ICssValueList<BackgroundRepeat> maskRepeatX => GetStyleValue(StyleProperties.maskRepeatX);
         public ICssValueList<BackgroundRepeat> maskRepeatY => GetStyleValue(StyleProperties.maskRepeatY);

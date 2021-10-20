@@ -14,7 +14,8 @@ namespace ReactUnity.Styling.Shorthands
         {
             StyleProperties.backgroundColor,
             StyleProperties.backgroundImage,
-            StyleProperties.backgroundPosition,
+            StyleProperties.backgroundPositionX,
+            StyleProperties.backgroundPositionY,
             StyleProperties.backgroundSize,
             StyleProperties.backgroundRepeatX,
             StyleProperties.backgroundRepeatY,
@@ -40,7 +41,8 @@ namespace ReactUnity.Styling.Shorthands
             };
 
             var images = new ImageDefinition[count];
-            var positions = new YogaValue2[count];
+            var positionsX = new YogaValue[count];
+            var positionsY = new YogaValue[count];
             var sizes = new BackgroundSize[count];
             var repeatXs = new BackgroundRepeat[count];
             var repeatYs = new BackgroundRepeat[count];
@@ -227,7 +229,11 @@ namespace ReactUnity.Styling.Shorthands
                     return null;
                 }
 
-                if (posXSet || posYSet) positions[ci] = new YogaValue2(posX, posY);
+                if (posXSet || posYSet)
+                {
+                    positionsX[ci] = posX;
+                    positionsY[ci] = posY;
+                }
 
                 if (sizeSetByKeyword) sizes[ci] = size;
                 else if (sizeXSet) sizes[ci] = new BackgroundSize(new YogaValue2(sizeX, sizeY));
@@ -235,7 +241,8 @@ namespace ReactUnity.Styling.Shorthands
 
             collection[StyleProperties.backgroundColor] = color;
             collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(images);
-            collection[StyleProperties.backgroundPosition] = new CssValueList<YogaValue2>(positions);
+            collection[StyleProperties.backgroundPositionX] = new CssValueList<YogaValue>(positionsX);
+            collection[StyleProperties.backgroundPositionY] = new CssValueList<YogaValue>(positionsY);
             collection[StyleProperties.backgroundSize] = new CssValueList<BackgroundSize>(sizes);
             collection[StyleProperties.backgroundRepeatX] = new CssValueList<BackgroundRepeat>(repeatXs);
             collection[StyleProperties.backgroundRepeatY] = new CssValueList<BackgroundRepeat>(repeatYs);

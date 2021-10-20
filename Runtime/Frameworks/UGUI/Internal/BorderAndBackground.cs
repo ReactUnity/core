@@ -123,12 +123,12 @@ namespace ReactUnity.UGUI.Internal
             pointerEvents = style.pointerEvents;
             UpdateBgColor();
 
-            SetBackground(bgColor, style.backgroundImage, style.backgroundPosition, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
+            SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
             SetBoxShadow(style.boxShadow);
             SetBorderColor(style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor);
             SetBorderRadius(style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius);
 
-            SetMask(style.maskImage, style.maskPosition, style.maskSize, style.maskRepeatX, style.maskRepeatY);
+            SetMask(style.maskImage, style.maskPositionX, style.maskPositionY, style.maskSize, style.maskRepeatX, style.maskRepeatY);
         }
 
         public void UpdateLayout(YogaNode layout)
@@ -202,7 +202,8 @@ namespace ReactUnity.UGUI.Internal
         private void SetBackground(
             Color color,
             ICssValueList<ImageDefinition> images,
-            ICssValueList<YogaValue2> positions,
+            ICssValueList<YogaValue> positionsX,
+            ICssValueList<YogaValue> positionsY,
             ICssValueList<BackgroundSize> sizes,
             ICssValueList<BackgroundRepeat> repeatXs,
             ICssValueList<BackgroundRepeat> repeatYs
@@ -244,8 +245,9 @@ namespace ReactUnity.UGUI.Internal
                 sd.SetBackgroundColorAndImage(color, images.Get(i), blendMode);
                 sd.BackgroundRepeatX = repeatXs.Get(i);
                 sd.BackgroundRepeatY = repeatYs.Get(i);
-                sd.BackgroundPosition = positions.Get(i);
+                sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
                 sd.BackgroundSize = sizes.Get(i);
+                sd.SetMaterialDirty();
             }
         }
 
@@ -309,7 +311,8 @@ namespace ReactUnity.UGUI.Internal
 
         private void SetMask(
             ICssValueList<ImageDefinition> images,
-            ICssValueList<YogaValue2> positions,
+            ICssValueList<YogaValue> positionsX,
+            ICssValueList<YogaValue> positionsY,
             ICssValueList<BackgroundSize> sizes,
             ICssValueList<BackgroundRepeat> repeatXs,
             ICssValueList<BackgroundRepeat> repeatYs
@@ -348,8 +351,9 @@ namespace ReactUnity.UGUI.Internal
                 sd.SetBackgroundColorAndImage(Color.white, images.Get(i));
                 sd.BackgroundRepeatX = repeatXs.Get(i);
                 sd.BackgroundRepeatY = repeatYs.Get(i);
-                sd.BackgroundPosition = positions.Get(i);
+                sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
                 sd.BackgroundSize = sizes.Get(i);
+                sd.SetMaterialDirty();
             }
         }
 

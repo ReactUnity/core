@@ -41,21 +41,10 @@ namespace ReactUnity.UGUI.Internal
             {
                 backgroundSize = value;
                 RefreshSize();
-                SetMaterialDirty();
             }
         }
 
-        public YogaValue2 backgroundPosition = YogaValue2.Zero;
-        public YogaValue2 BackgroundPosition
-        {
-            get => backgroundPosition;
-            set
-            {
-                backgroundPosition = value;
-                SetMaterialDirty();
-            }
-        }
-
+        public YogaValue2 BackgroundPosition = YogaValue2.Zero;
         public BackgroundRepeat BackgroundRepeatX;
         public BackgroundRepeat BackgroundRepeatY;
 
@@ -97,7 +86,7 @@ namespace ReactUnity.UGUI.Internal
 
                 var szPoint = CalculateSize(Size, Resolved.IntrinsicSize, Resolved.IntrinsicProportions, backgroundSize);
                 var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
-                var psPoint = StylingUtils.GetPointValue(backgroundPosition, Size - szPoint, 0, false);
+                var psPoint = StylingUtils.GetPointValue(BackgroundPosition, Size - szPoint, 0, false);
                 var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);
 
                 result.SetVector(SizeProp, sz);

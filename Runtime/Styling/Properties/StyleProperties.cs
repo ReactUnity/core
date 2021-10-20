@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
@@ -55,14 +56,16 @@ namespace ReactUnity.Styling
 
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly ValueListStyleProperty<ImageDefinition> backgroundImage = new ValueListStyleProperty<ImageDefinition>("backgroundImage");
-        public static readonly ValueListStyleProperty<YogaValue2> backgroundPosition = new ValueListStyleProperty<YogaValue2>("backgroundPosition");
+        public static readonly ValueListStyleProperty<YogaValue> backgroundPositionX = new ValueListStyleProperty<YogaValue>("backgroundPositionX");
+        public static readonly ValueListStyleProperty<YogaValue> backgroundPositionY = new ValueListStyleProperty<YogaValue>("backgroundPositionY");
         public static readonly ValueListStyleProperty<BackgroundSize> backgroundSize = new ValueListStyleProperty<BackgroundSize>("backgroundSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatX = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> backgroundRepeatY = new ValueListStyleProperty<BackgroundRepeat>("backgroundRepeatY", BackgroundRepeat.Repeat);
         public static readonly StyleProperty<BackgroundBlendMode> backgroundBlendMode = new StyleProperty<BackgroundBlendMode>("backgroundBlendMode", BackgroundBlendMode.Normal);
 
         public static readonly ValueListStyleProperty<ImageDefinition> maskImage = new ValueListStyleProperty<ImageDefinition>("maskImage");
-        public static readonly ValueListStyleProperty<YogaValue2> maskPosition = new ValueListStyleProperty<YogaValue2>("maskPosition");
+        public static readonly ValueListStyleProperty<YogaValue> maskPositionX = new ValueListStyleProperty<YogaValue>("maskPositionX");
+        public static readonly ValueListStyleProperty<YogaValue> maskPositionY = new ValueListStyleProperty<YogaValue>("maskPositionY");
         public static readonly ValueListStyleProperty<BackgroundSize> maskSize = new ValueListStyleProperty<BackgroundSize>("maskSize", BackgroundSize.Auto);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatX = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
@@ -135,14 +138,16 @@ namespace ReactUnity.Styling
 
             { "backgroundColor", backgroundColor },
             { "backgroundImage", backgroundImage },
-            { "backgroundPosition", backgroundPosition },
+            { "backgroundPositionX", backgroundPositionX },
+            { "backgroundPositionY", backgroundPositionY },
             { "backgroundSize", backgroundSize },
             { "backgroundRepeatX", backgroundRepeatX },
             { "backgroundRepeatY", backgroundRepeatY },
             { "backgroundBlendMode", backgroundBlendMode },
 
             { "maskImage", maskImage },
-            { "maskPosition", maskPosition },
+            { "maskPositionX", maskPositionX },
+            { "maskPositionY", maskPositionY },
             { "maskSize", maskSize },
             { "maskRepeatX", maskRepeatX },
             { "maskRepeatY", maskRepeatY },
@@ -197,13 +202,15 @@ namespace ReactUnity.Styling
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },
-            { "background-position", backgroundPosition },
+            { "background-position-x", backgroundPositionX },
+            { "background-position-y", backgroundPositionY },
             { "background-size", backgroundSize },
             { "background-repeat-x", backgroundRepeatX },
             { "background-repeat-y", backgroundRepeatY },
             { "background-blend-mode", backgroundBlendMode },
             { "mask-image", maskImage },
-            { "mask-position", maskPosition },
+            { "mask-position-x", maskPositionX },
+            { "mask-position-y", maskPositionY },
             { "mask-size", maskSize },
             { "mask-repeat-x", maskRepeatX },
             { "mask-repeat-y", maskRepeatY },
