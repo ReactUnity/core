@@ -349,5 +349,38 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("backgrounds/bg", bg.Item1);
         }
+
+
+        protected static Tuple<string, string>[] masks = new Tuple<string, string>[] {
+            Tuple.Create("01", "url(res:star)"),
+            Tuple.Create("02", "url(res:star) 100% 0"),
+            Tuple.Create("03", "url(res:star) 0 100%"),
+            Tuple.Create("04", "url(res:star) 0 0/cover"),
+            Tuple.Create("05", "url(res:star) center/cover"),
+            Tuple.Create("06", "url(res:star) center/contain"),
+            Tuple.Create("07", "url(res:star) bottom right / contain"),
+            Tuple.Create("08", "url(res:star) 0 0 / 10% 10%"),
+            Tuple.Create("09", "url(res:star) 0 0 / 10%"),
+            Tuple.Create("10", "url(res:star) 20% 90% / 500px 500px"),
+            Tuple.Create("11", "url(res:star) top /100px 20px"),
+            Tuple.Create("12", "url(res:star) space round top / 35% 35%"),
+            Tuple.Create("13", "url(res:star) round space top / 35%"),
+            Tuple.Create("14", "url(res:star) repeat-y top / 35%"),
+            Tuple.Create("15", "url(res:star) repeat-x top / 35%"),
+            Tuple.Create("16", "url(res:star) space bottom right / cover"),
+            Tuple.Create("17", "url(res:star) space bottom right / contain"),
+            Tuple.Create("18", "url(res:star) no-repeat bottom right / 70%, url(res:star) no-repeat bottom left / 70%"),
+        };
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator MaskSnapshots([ValueSource("masks")] Tuple<string, string> bg)
+        {
+            View.Style["width"] = "160px";
+            View.Style["height"] = "250px";
+            View.Style["mask"] = bg.Item2;
+            View.Style["background-color"] = "blue";
+            yield return null;
+            Assertions.Snapshot("masks/mask", bg.Item1);
+        }
     }
 }
