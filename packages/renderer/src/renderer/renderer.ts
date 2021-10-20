@@ -17,7 +17,6 @@ const textTypes = {
   icon: true,
   style: true,
   script: true,
-  html: true,
 };
 
 function applyDiffedUpdate(writeTo: ReactUnity.Helpers.WatchableDictionary<any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
