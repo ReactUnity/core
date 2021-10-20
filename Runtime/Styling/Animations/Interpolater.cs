@@ -214,6 +214,7 @@ namespace ReactUnity.Styling.Animations
             if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t);
             if (from is BackgroundSize bg1 && to is BackgroundSize bg2) return Interpolate(bg1, bg2, t);
             if (from is BoxShadow s1 && to is BoxShadow s2) return Interpolate(s1, s2, t);
+            if (from is ICssValueList<YogaValue> cvs1 && to is ICssValueList<YogaValue> cvs2) return Interpolate(cvs1, cvs2, t);
             if (from is ICssValueList<YogaValue2> cv1 && to is ICssValueList<YogaValue2> cv2) return Interpolate(cv1, cv2, t);
             if (from is ICssValueList<BackgroundSize> sv1 && to is ICssValueList<BackgroundSize> sv2) return Interpolate(sv1, sv2, t);
             if (from is ICssValueList<BoxShadow> bv1 && to is ICssValueList<BoxShadow> bv2) return Interpolate(bv1, bv2, t);
@@ -248,6 +249,11 @@ namespace ReactUnity.Styling.Animations
             else if (type == typeof(ICssValueList<YogaValue2>))
             {
                 if (from is ICssValueList<YogaValue2> cv1 && to is ICssValueList<YogaValue2> cv2) return Interpolate(cv1, cv2, t);
+            }
+
+            else if (type == typeof(ICssValueList<YogaValue>))
+            {
+                if (from is ICssValueList<YogaValue> cv1 && to is ICssValueList<YogaValue> cv2) return Interpolate(cv1, cv2, t);
             }
 
             else if (type == typeof(ICssValueList<BackgroundSize>))

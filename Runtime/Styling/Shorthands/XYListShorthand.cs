@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Types;
 
@@ -83,6 +84,20 @@ namespace ReactUnity.Styling.Shorthands
         {
             if (val == "repeat-x") return Tuple.Create(BackgroundRepeat.Repeat, BackgroundRepeat.NoRepeat);
             if (val == "repeat-y") return Tuple.Create(BackgroundRepeat.NoRepeat, BackgroundRepeat.Repeat);
+            return base.GetValues(val);
+        }
+    }
+
+    internal class BackgroundPositionShorthand : XYListShorthand<YogaValue>
+    {
+        public BackgroundPositionShorthand(string name, StyleProperty<ICssValueList<YogaValue>> xProperty, StyleProperty<ICssValueList<YogaValue>> yProperty) : base(name, xProperty, yProperty)
+        {
+        }
+
+        public override Tuple<YogaValue, YogaValue> GetValues(string val)
+        {
+            var ygv = AllConverters.YogaValue2Converter.Parse(val);
+            if (ygv is YogaValue2 yv) return Tuple.Create(yv.X, yv.Y);
             return base.GetValues(val);
         }
     }

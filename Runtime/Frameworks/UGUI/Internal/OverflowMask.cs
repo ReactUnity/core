@@ -1,4 +1,3 @@
-using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
