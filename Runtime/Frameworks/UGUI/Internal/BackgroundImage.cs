@@ -1,12 +1,13 @@
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 using static ReactUnity.Types.ImageDefinition;
 
-namespace ReactUnity.Styling.Internal
+namespace ReactUnity.UGUI.Internal
 {
     public class BackgroundImage : RawImage
     {

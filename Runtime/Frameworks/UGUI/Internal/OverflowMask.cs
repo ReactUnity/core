@@ -2,7 +2,7 @@ using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.Styling.Internal
+namespace ReactUnity.UGUI.Internal
 {
     public class MaskAndImage : MonoBehaviour
     {

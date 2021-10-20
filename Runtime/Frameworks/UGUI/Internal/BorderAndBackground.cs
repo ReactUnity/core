@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Facebook.Yoga;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.Styling.Internal
+namespace ReactUnity.UGUI.Internal
 {
     public class BorderAndBackground : MonoBehaviour
     {
@@ -13,7 +16,9 @@ namespace ReactUnity.Styling.Internal
         public RectTransform BackgroundRoot { get; private set; }
         public RectTransform ShadowRoot { get; private set; }
 
+        private UGUIComponent Component;
         private ReactContext Context;
+        private Action<RectTransform> SetContainer;
         internal RawImage BgImage;
 
         public RoundedBorderMaskImage RootGraphic;
@@ -23,6 +28,9 @@ namespace ReactUnity.Styling.Internal
 
         public List<BoxShadowImage> ShadowGraphics;
         public List<BackgroundImage> BackgroundGraphics;
+        public List<BackgroundImage> MaskGraphics;
+        public BackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
+        public RectTransform Container => LastMask ? LastMask.rectTransform : Component.Container;
 
         private BackgroundBlendMode blendMode;
         public BackgroundBlendMode BlendMode
@@ -37,6 +45,7 @@ namespace ReactUnity.Styling.Internal
         private Color bgColor;
         public Color BgColor
         {
+            get => bgColor;
             set
             {
                 bgColor = value;
@@ -54,7 +63,8 @@ namespace ReactUnity.Styling.Internal
             }
         }
 
-        public static BorderAndBackground Create(GameObject go, ReactContext ctx)
+
+        public static BorderAndBackground Create(GameObject go, UGUIComponent comp, Action<RectTransform> setContainer)
         {
             var cmp = go.GetComponent<BorderAndBackground>();
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
@@ -67,9 +77,11 @@ namespace ReactUnity.Styling.Internal
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
             cmp.RootGraphic.raycastTarget = false;
 
-            cmp.Context = ctx;
+            cmp.Component = comp;
+            cmp.Context = comp.Context;
             cmp.RootMask = root.AddComponent<Mask>();
             cmp.RootMask.showMaskGraphic = false;
+            cmp.SetContainer = setContainer;
 
             cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
 
@@ -114,6 +126,8 @@ namespace ReactUnity.Styling.Internal
             SetBoxShadow(style.boxShadow);
             SetBorderColor(style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor);
             SetBorderRadius(style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius);
+
+            SetMask(style.maskImage, style.maskPosition, style.maskSize, style.maskRepeatX, style.maskRepeatY);
         }
 
         public void UpdateLayout(YogaNode layout)
@@ -290,6 +304,86 @@ namespace ReactUnity.Styling.Internal
                 g.color = shadow.color;
                 g.SetMaterialDirty();
             }
+        }
+
+        private void SetMask(
+            ICssValueList<ImageDefinition> images,
+            ICssValueList<YogaValue2> positions,
+            ICssValueList<BackgroundSize> sizes,
+            ICssValueList<BackgroundRepeat> repeatXs,
+            ICssValueList<BackgroundRepeat> repeatYs
+        )
+        {
+            var validCount = images.Count;
+
+            if (MaskGraphics == null)
+            {
+                if (validCount > 0) MaskGraphics = new List<BackgroundImage>();
+                else return;
+            }
+
+            var diff = MaskGraphics.Count - validCount;
+
+            var previousParent = Container;
+
+            List<RectTransform> childrenToReparent = null;
+
+            if (diff > 0)
+            {
+                for (int i = diff - 1; i >= 0; i--)
+                {
+                    var sd = MaskGraphics[validCount + i];
+
+                    MaskGraphics.RemoveAt(validCount + i);
+
+                    if (sd.rectTransform == previousParent)
+                    {
+                        childrenToReparent = previousParent.OfType<RectTransform>().ToList();
+                        foreach (var item in childrenToReparent) item.SetParent(transform);
+                    }
+
+                    DestroyImmediate(sd.gameObject);
+                }
+            }
+            else if (diff < 0)
+            {
+                childrenToReparent = previousParent.OfType<RectTransform>().ToList();
+
+                for (int i = -diff - 1; i >= 0; i--)
+                {
+                    CreateMask();
+                }
+            }
+
+            var len = MaskGraphics.Count;
+            for (int i = 0; i < len; i++)
+            {
+                var sd = MaskGraphics[len - 1 - i];
+                sd.SetBackgroundColorAndImage(Color.white, images.Get(i));
+                sd.BackgroundRepeatX = repeatXs.Get(i);
+                sd.BackgroundRepeatY = repeatYs.Get(i);
+                sd.BackgroundPosition = positions.Get(i);
+                sd.BackgroundSize = sizes.Get(i);
+            }
+
+            if (childrenToReparent != null)
+            {
+                var newContainer = Container;
+                foreach (var item in childrenToReparent) item.SetParent(newContainer);
+            }
+        }
+
+        private void CreateMask()
+        {
+            var container = Container;
+            var sd = new GameObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+            var mask = sd.GetComponent<Mask>();
+            mask.showMaskGraphic = false;
+            var img = sd.GetComponent<BackgroundImage>();
+            img.color = Color.clear;
+            img.Context = Context;
+            FullStretch(sd.transform as RectTransform, container);
+            MaskGraphics.Add(img);
         }
 
         private void CreateShadow()

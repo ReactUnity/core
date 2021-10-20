@@ -2,9 +2,9 @@ using System;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Internal;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Internal;
 using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -300,6 +300,7 @@ namespace ReactUnity.UGUI
 
             if (ComputedStyle.backgroundColor.a > 0) return true;
             if (ComputedStyle.HasValue(StyleProperties.backgroundImage)) return true;
+            if (ComputedStyle.HasValue(StyleProperties.maskImage)) return true;
             if (ComputedStyle.HasValue(StyleProperties.boxShadow)) return true;
             if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
                 ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;
@@ -337,13 +338,14 @@ namespace ReactUnity.UGUI
             {
                 image.UpdateStyle(ComputedStyle);
             }
+            Container = image.Container;
 
             return image;
         }
 
         protected BorderAndBackground CreateBorderAndBackground()
         {
-            var image = BorderAndBackground.Create(GameObject, Context);
+            var image = BorderAndBackground.Create(GameObject, this, (x => Container = x));
             if (Selectable && Selectable.targetGraphic == null)
                 Selectable.targetGraphic = image.BgImage;
             return BorderAndBackground = image;

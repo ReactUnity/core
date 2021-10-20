@@ -2,7 +2,7 @@ using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.Styling.Internal
+namespace ReactUnity.UGUI.Internal
 {
     public class RoundedBorderMaskImage : Image
     {

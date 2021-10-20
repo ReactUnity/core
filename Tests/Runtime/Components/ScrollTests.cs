@@ -149,8 +149,8 @@ namespace ReactUnity.Tests
             var hbar = Q("scroll _scrollbar[horizontal]") as ScrollbarComponent;
 
             Assert.AreEqual(Scroll.ScrollRect.horizontalScrollbar, hbar.Scrollbar);
-            Assert.AreEqual(Color.red, hbar.BorderAndBackground.BgImage.color);
-            Assert.AreEqual(Color.blue, hbar.Thumb.BorderAndBackground.BgImage.color);
+            Assert.AreEqual(Color.red, hbar.BorderAndBackground.BgColor);
+            Assert.AreEqual(Color.blue, hbar.Thumb.BorderAndBackground.BgColor);
         }
 
 
