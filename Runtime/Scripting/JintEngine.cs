@@ -142,6 +142,8 @@ namespace ReactUnity.Scripting
 
     public class JintEngineFactory : IJavaScriptEngineFactory
     {
+        public JavascriptEngineType EngineType => JavascriptEngineType.Jint;
+
         public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger)
         {
             return new JintEngine(context, debug, awaitDebugger);

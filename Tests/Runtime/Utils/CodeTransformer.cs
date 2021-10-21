@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
         public IJavaScriptEngine Engine;
         private IJavaScriptEngineFactory EngineFactory;
 
-        public CodeTransformer(JavascriptEngineType type = JavascriptEngineType.ClearScript)
+        public CodeTransformer(JavascriptEngineType type = JavascriptEngineType.Auto)
         {
             EngineFactory = JavascriptEngineHelpers.GetEngineFactory(type);
             Engine = EngineFactory.Create(null, false, false);

@@ -62,16 +62,19 @@ namespace ReactUnity.Tests
 
             yield return base.BeforeTest(test);
 
-            JavascriptEngineType engineType = JavascriptEngineType.Auto;
-            // TODO: find out why is Fixture null
-            var testBase = test.Fixture as TestBase;
-            if (testBase != null) engineType = testBase.EngineType;
-            else engineType = test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : JavascriptEngineType.ClearScript;
+            var engineType = GetEngineType(test);
 
             var ru = CreateReactUnity(engineType, GetScript());
             ru.timer = RealTimer ? null : new ControlledTimer();
             ru.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
-            ru.AfterStart.AddListener(() => AfterStart(ru.Context.Script));
+            ru.AfterStart.AddListener(() => {
+                if (engineType != JavascriptEngineType.Auto && ru.Context.Script.EngineFactory.EngineType != engineType)
+                {
+                    throw new Exception($"{engineType} not supported on this platform");
+                }
+
+                AfterStart(ru.Context.Script);
+            });
             if (AutoRender) ru.Render();
         }
 
@@ -120,5 +123,18 @@ namespace ReactUnity.Tests
         }
 
         public abstract ScriptSource GetScript();
+
+        static JavascriptEngineType GetEngineType(ITest test)
+        {
+            var parent = test;
+            while (parent != null)
+            {
+                var fixture = test.Fixture as TestBase;
+                if (fixture != null) return fixture.EngineType;
+                parent = parent.Parent;
+            }
+
+            return test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : test.FullName.Contains("(ClearScript)") ? JavascriptEngineType.ClearScript : JavascriptEngineType.Auto;
+        }
     }
 }

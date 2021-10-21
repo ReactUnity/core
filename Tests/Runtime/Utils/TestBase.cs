@@ -1,3 +1,7 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#define REACT_CLEARSCRIPT
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +17,9 @@ using UnityEngine.InputSystem;
 namespace ReactUnity.Tests
 {
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
+#if REACT_CLEARSCRIPT
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
+#endif
     public abstract class TestBase : InputTestFixture
     {
         protected InputTestFixture Input => this;

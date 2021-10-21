@@ -44,6 +44,7 @@ namespace ReactUnity.Scripting
 
     public interface IJavaScriptEngineFactory
     {
+        JavascriptEngineType EngineType { get; }
         IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger);
     }
 }

@@ -148,6 +148,8 @@ namespace ReactUnity.Scripting
 
     public class ClearScriptEngineFactory : IJavaScriptEngineFactory
     {
+        public JavascriptEngineType EngineType => JavascriptEngineType.ClearScript;
+
         public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger)
         {
             return new ClearScriptEngine(context, debug, awaitDebugger);

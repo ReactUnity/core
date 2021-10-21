@@ -10,6 +10,13 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
+        [ReactInjectableTest()]
+        public IEnumerator EnsureCorrectEngineIsUsed()
+        {
+            yield return null;
+            Assert.AreEqual(EngineType, Context.Script.EngineType);
+        }
+
         [ReactInjectableTest(style: @"
             view { color: red; }
             view.blueClass { color: blue; }
