@@ -1,7 +1,6 @@
 using System;
-using ReactUnity.Styling;
 
-namespace ReactUnity
+namespace ReactUnity.Styling
 {
     public class StyleComponent : SourceProxyComponent
     {

@@ -39,7 +39,7 @@ namespace ReactUnity.UGUI
                 { "portal", (tag, text, context) => new PortalComponent(context) },
                 { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
                 { "style", (tag, text, context) => new StyleComponent(context, tag, text) },
-                { "script", (tag, text, context) => new ScriptComponent(context, tag, text) },
+                { "script", (tag, text, context) => new Scripting.ScriptComponent(context, tag, text) },
                 { "html", (tag, text, context) => new Html.HtmlComponent(context, tag) },
             };
 

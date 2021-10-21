@@ -8,6 +8,9 @@ using ReactUnity.UGUI;
 
 namespace ReactUnity.Tests
 {
+#if !UNITY_EDITOR
+    [Ignore("Snapshot tests are only supported in editor")]
+#endif
     [TestFixture(JavascriptEngineType.Auto, Category = "Snapshot")]
     public class GraphicalTests : TestBase
     {

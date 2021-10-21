@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ReactUnity
+namespace ReactUnity.Scripting
 {
     public class ScriptComponent : SourceProxyComponent
     {
