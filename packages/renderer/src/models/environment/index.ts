@@ -1,6 +1,5 @@
 
 import { ReactUnity } from '../generated';
-import { NativeContainerInstance } from '../renderer';
 export * from './interop';
 
 interface Console {
@@ -24,7 +23,7 @@ interface ReactUnityDocument {
 declare global {
   // ReactUnity exclusive
   var Context: ReactUnity.ReactContext;
-  var HostContainer: NativeContainerInstance;
+  var HostContainer: ReactUnity.IContainerComponent;
   var UnityBridge: ReactUnity.ReactUnityBridge;
 
   // DOM-like
