@@ -102,5 +102,17 @@ namespace ReactUnity.Editor.Tests.Renderer
             var another = Q("another") as IReactComponent;
             Assert.AreEqual("No never", another.TextContent);
         }
+
+        [EditorInjectableTest(@"
+            <button onCustomEvent='Globals.value = 5'>Click here</button>
+        ", html: true)]
+        public IEnumerator HtmlRendererWorks()
+        {
+            yield return null;
+            var button = Q("button") as ButtonComponent<Button>;
+            button.FireEvent("onCustomEvent", null);
+            yield return null;
+            Assert.AreEqual(5, Globals["value"]);
+        }
     }
 }
