@@ -11,7 +11,7 @@ namespace ReactUnity
     public abstract class ReactUnityBase : MonoBehaviour
     {
         [FormerlySerializedAs("Script")]
-        public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
+        public ScriptSource Source = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
 
         public bool Debug = false;
 
@@ -76,7 +76,7 @@ namespace ReactUnity
         public void Render()
         {
             Clean();
-            LoadAndRun(Script);
+            LoadAndRun(Source);
         }
 
         protected abstract ReactContext CreateContext(ScriptSource script);

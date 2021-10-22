@@ -85,7 +85,7 @@ namespace ReactUnity.Tests
             var ru = canvas.GetComponentInChildren<ReactUnityUGUI>();
 
             ru.EngineType = engineType;
-            ru.Script = script;
+            ru.Source = script;
             ru.AutoRender = false;
             ru.enabled = true;
 
