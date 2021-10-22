@@ -80,6 +80,7 @@ namespace ReactUnity
 
         void RegisterChild(IReactComponent child, int index = -1);
         void UnregisterChild(IReactComponent child);
+        void Clear();
     }
 
     [TypescriptListInterfaces]

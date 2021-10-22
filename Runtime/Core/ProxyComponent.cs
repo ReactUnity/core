@@ -154,5 +154,10 @@ namespace ReactUnity
         public void UnregisterChild(IReactComponent child) => Proxy.UnregisterChild(child);
 
         public void SetText(string text) => Content = text;
+
+        public void Clear()
+        {
+            for (int i = Children.Count - 1; i >= 0; i--) Children[i].Remove();
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Styling;
 using ReactUnity.UIToolkit.StateHandlers;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -79,8 +80,14 @@ namespace ReactUnity.UIToolkit
             HostElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
 
             Host = new HostComponent(HostElement, this);
-            InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
+        }
+
+        protected override StyleContext CreateStyleContext()
+        {
+            var ctx = base.CreateStyleContext();
+            ctx.Insert(new Styling.StyleSheet(ctx, ResourcesHelper.UseragentStylesheet?.text, -1));
+            return ctx;
         }
 
         public override ITextComponent CreateText(string text)

@@ -4,12 +4,14 @@ using ReactUnity.Scripting;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
-        public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
+        [FormerlySerializedAs("Script")]
+        public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
 
         public bool Debug = false;
 

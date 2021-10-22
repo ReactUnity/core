@@ -565,6 +565,11 @@ namespace ReactUnity
         protected abstract bool InsertChild(IReactComponent child, int index);
         protected abstract bool DeleteChild(IReactComponent child);
 
+        public void Clear()
+        {
+            for (int i = Children.Count - 1; i >= 0; i--) Children[i].Remove();
+        }
+
         #endregion
 
         #region Add/Get Component Utilities

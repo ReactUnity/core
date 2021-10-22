@@ -68,7 +68,6 @@ namespace ReactUnity.UGUI
         public UGUIContext(Options options) : base(options)
         {
             Host = new HostComponent(options.HostElement, this);
-            InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
             if (options.IconSets != null)
@@ -83,6 +82,13 @@ namespace ReactUnity.UGUI
             {
                 if (IconSets.TryGetValue("default", out var def)) DefaultIconSet = def;
             }
+        }
+
+        protected override StyleContext CreateStyleContext()
+        {
+            var ctx = base.CreateStyleContext();
+            ctx.Insert(new StyleSheet(ctx, ResourcesHelper.UseragentStylesheet?.text, -1));
+            return ctx;
         }
 
         public override IReactComponent CreateDefaultComponent(string tag, string text) => defaultCreator(tag, text, this);

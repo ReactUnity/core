@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Scheduling;
+using ReactUnity.Styling;
 using ReactUnity.UIToolkit;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -75,12 +76,17 @@ namespace ReactUnity.Editor.Renderer
         public override void Initialize()
         {
             if (Host != null) throw new Exception("Context was already initialized");
-            HostElement.styleSheets.Add(ReactUnity.UIToolkit.ResourcesHelper.UtilityStylesheet);
+            HostElement.styleSheets.Add(ResourcesHelper.UtilityStylesheet);
 
             Host = new EditorHostComponent(HostElement, this);
-            InsertStyle(ReactUnity.UIToolkit.ResourcesHelper.UseragentStylesheet?.text, -1);
-            InsertStyle(UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
+        }
+
+        protected override StyleContext CreateStyleContext()
+        {
+            var ctx = base.CreateStyleContext();
+            ctx.Insert(new Styling.StyleSheet(ctx, UseragentStylesheet?.text, -1));
+            return ctx;
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

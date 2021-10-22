@@ -50,7 +50,7 @@ namespace ReactUnity
         public IMediaProvider MediaProvider { get; }
         public Action OnRestart { get; }
         public StylesheetParser StyleParser { get; }
-        public StyleContext Style { get; }
+        public StyleContext Style { get; private set; }
         public ScriptContext Script { get; }
         public HtmlContext Html { get; }
         public virtual CursorSet CursorSet { get; }
@@ -72,8 +72,7 @@ namespace ReactUnity
             LocalStorage = new LocalStorage();
 
             StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
-            Style = new StyleContext(this);
-
+            Style = CreateStyleContext();
             Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
 
             Html = new HtmlContext(this);
@@ -82,6 +81,8 @@ namespace ReactUnity
             Dispatcher.OnEveryUpdate(() => Host?.Accept(updateVisitor));
             if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => Host?.Layout.CalculateLayout());
         }
+
+        protected virtual StyleContext CreateStyleContext() => new StyleContext(this);
 
         public virtual StyleSheet InsertStyle(string style) => InsertStyle(style, 0);
 
@@ -154,8 +155,26 @@ namespace ReactUnity
 
         public void Start()
         {
-            var scriptJob = Source.GetScript((code, isDevServer) => {
-                Script.RunScript(code, options.BeforeStart, options.AfterStart);
+            var renderCount = 0;
+
+            var scriptJob = Source.GetScript((code) => {
+                if (renderCount > 0)
+                {
+                    Style = CreateStyleContext();
+                }
+
+                renderCount++;
+
+                if (Source.Language == ScriptSourceLanguage.Html)
+                {
+                    options.BeforeStart?.Invoke();
+                    Html.InsertHtml(code, Host, true);
+                    options.AfterStart?.Invoke();
+                }
+                else
+                {
+                    Script.RunScript(code, options.BeforeStart, options.AfterStart);
+                }
             }, Dispatcher, true);
 
             if (scriptJob != null) Disposables.Add(scriptJob.Dispose);

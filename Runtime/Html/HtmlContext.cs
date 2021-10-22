@@ -11,9 +11,11 @@ namespace ReactUnity.Html
             Parser = new HtmlParser(this);
         }
 
-        public void InsertHtml(string html, IContainerComponent root = null)
+        public void InsertHtml(string html, IContainerComponent root = null, bool clearContent = false)
         {
-            Parser.Parse(html, root ?? Context.Host);
+            var parent = root ?? Context.Host;
+            if (clearContent) root?.Clear();
+            Parser.Parse(html, parent);
         }
     }
 }

@@ -11,7 +11,15 @@ namespace ReactUnity.Scripting
         public readonly ReactContext Context;
         public readonly JavascriptEngineType EngineType;
         public readonly IJavaScriptEngineFactory EngineFactory;
-        public IJavaScriptEngine Engine { get; private set; }
+        private IJavaScriptEngine engine;
+        public IJavaScriptEngine Engine
+        {
+            get
+            {
+                if (!Initialized) Initialize();
+                return engine;
+            }
+        }
         public ReactInterop Interop { get; private set; }
         public bool Initialized { get; private set; }
         public bool Debug { get; set; }
@@ -35,14 +43,14 @@ namespace ReactUnity.Scripting
             var beforeStartCallbacks = new List<Action>() { beforeStart };
             var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
 
-            Engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
+            engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
                 var callback = Callback.From(f, Context);
                 if (e == "DOMContentLoaded")
                     afterStartCallbacks.Add((success) => callback.Call(success, this));
             }));
 
             beforeStartCallbacks.ForEach(x => x?.Invoke());
-            var error = Engine.TryExecute(script, "ReactUnity");
+            var error = engine.TryExecute(script, "ReactUnity");
             afterStartCallbacks.ForEach(x => x?.Invoke(error));
         }
 
@@ -50,19 +58,19 @@ namespace ReactUnity.Scripting
         {
             if (Initialized) return;
 
-            if (Engine == null) CreateBaseEngine(Debug, AwaitDebugger);
-            Engine.SetValue("Context", Context);
-            Engine.SetValue("HostContainer", Context.Host);
-            Engine.SetValue("Globals", Context.Globals);
-            Engine.SetValue("localStorage", Context.LocalStorage);
-            CreateLocation(Engine);
-            CreateConsole(Engine);
-            CreateScheduler(Engine, Context);
-            CreatePolyfills(Engine);
+            if (engine == null) CreateBaseEngine(Debug, AwaitDebugger);
+            engine.SetValue("Context", Context);
+            engine.SetValue("HostContainer", Context.Host);
+            engine.SetValue("Globals", Context.Globals);
+            engine.SetValue("localStorage", Context.LocalStorage);
+            CreateLocation(engine);
+            CreateConsole(engine);
+            CreateScheduler(engine, Context);
+            CreatePolyfills(engine);
 
-            Context.MediaProvider.SetValue("engine", Engine.Key);
+            Context.MediaProvider.SetValue("engine", engine.Key);
 
-            Engine.Execute("postMessage = function() {}");
+            engine.Execute("postMessage = function() {}");
 
             Initialized = true;
         }
@@ -79,15 +87,15 @@ namespace ReactUnity.Scripting
 
         void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
-            Engine = EngineFactory.Create(Context, debug, awaitDebugger);
+            engine = EngineFactory.Create(Context, debug, awaitDebugger);
 
-            Engine.Execute("globalThis = global = window = parent = self = this;");
-            Engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
-            Engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
+            engine.Execute("globalThis = global = window = parent = self = this;");
+            engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
+            engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
 
-            Interop = new ReactInterop(Engine);
+            Interop = new ReactInterop(engine);
             Interop.InitializeDefault();
-            Engine.SetValue("Interop", Interop);
+            engine.SetValue("Interop", Interop);
         }
 
         void CreateConsole(IJavaScriptEngine engine)
@@ -146,8 +154,8 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
-            Engine?.Dispose();
-            Engine = null;
+            engine?.Dispose();
+            engine = null;
             Interop = null;
         }
     }

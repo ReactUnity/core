@@ -146,7 +146,7 @@ namespace ReactUnity.Scripting.DomProxies
                 dispatcher.OnceUpdate(() => action(sc));
             };
 
-            script.GetScript((sc, isDevServer) => callback(sc), dispatcher, false);
+            script.GetScript((sc) => callback(sc), dispatcher, false);
         }
 
         public void OnRemove()

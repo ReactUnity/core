@@ -60,6 +60,7 @@ namespace ReactUnity
         public void MarkForStyleResolving(bool recursive) { }
         public void MarkStyleUpdateWithSiblings(bool recursive) { }
         public void Remove() { }
+        public void Clear() { }
         public void Destroy(bool recursive = true) => Destroyed = true;
         public void RegisterChild(IReactComponent child, int index = -1) { }
         public void UnregisterChild(IReactComponent child) { }

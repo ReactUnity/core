@@ -164,7 +164,7 @@ namespace ReactUnity.Scripting.DomProxies
             //req.ContentType = options["mimeType"];
         }
 
-        private void responseCallback(string result, bool devServer)
+        private void responseCallback(string result)
         {
             responseText = result;
             status = 200;

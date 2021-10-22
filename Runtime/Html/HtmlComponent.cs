@@ -7,18 +7,9 @@ namespace ReactUnity.Html
             SetText(text);
         }
 
-        private void Clean()
-        {
-            for (int i = Children.Count - 1; i >= 0; i--)
-            {
-                var child = Children[i];
-                child.Remove();
-            }
-        }
-
         protected override void RefreshValue()
         {
-            Clean();
+            Clear();
             Context.Html.InsertHtml(InnerContent, this);
         }
     }
