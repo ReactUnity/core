@@ -175,6 +175,8 @@ namespace ReactUnity
                 {
                     Script.RunScript(code, options.BeforeStart, options.AfterStart);
                 }
+
+                Style.ResolveStyle();
             }, Dispatcher, true);
 
             if (scriptJob != null) Disposables.Add(scriptJob.Dispose);

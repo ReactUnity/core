@@ -20,7 +20,6 @@ namespace ReactUnity.Tests
             var handle = dispatcher.OnEveryUpdate(() => value++);
 
             yield return null;
-            yield return null;
             Assert.AreEqual(1, value);
 
             yield return null;
@@ -62,15 +61,16 @@ namespace ReactUnity.Tests
                 othersToStop.Add(dispatcher.OnEveryUpdate(() => { }));
 
             yield return null;
-            stopRandom();
-
-            yield return null;
             Assert.AreEqual(1, value);
-
             stopRandom();
 
             yield return null;
             Assert.AreEqual(2, value);
+
+            stopRandom();
+
+            yield return null;
+            Assert.AreEqual(3, value);
 
             stopRandom();
             dispatcher.StopDeferred(handle);
@@ -83,7 +83,7 @@ namespace ReactUnity.Tests
             stopRandom();
 
             yield return null;
-            Assert.AreEqual(2, value, "Deferred failed to stop");
+            Assert.AreEqual(3, value, "Deferred failed to stop");
         }
     }
 }

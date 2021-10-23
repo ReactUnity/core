@@ -25,42 +25,49 @@ namespace ReactUnity.Scheduling
         private List<Action> CallOnLateUpdate = new List<Action>();
         public IScheduler Scheduler { get; private set; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryLateUpdate(Action callback)
         {
             CallOnLateUpdate.Add(callback);
             return -1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnEveryUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnceUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnceLateUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Timeout(Action callback, float timeSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int AnimationFrame(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Interval(Action callback, float intervalSeconds)
         {
             var handle = GetNextHandle();
@@ -81,11 +88,13 @@ namespace ReactUnity.Scheduling
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsMainThread()
         {
             return mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int StartDeferred(IEnumerator cr)
         {
             var handle = GetNextHandle();
@@ -93,12 +102,14 @@ namespace ReactUnity.Scheduling
             return handle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int StartDeferred(IEnumerator cr, int handle)
         {
             ToStart.Add(cr);
             return handle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void StopDeferred(int cr)
         {
             if (cr >= 0) ToStop.Add(cr);
@@ -132,7 +143,13 @@ namespace ReactUnity.Scheduling
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
-                if (cr != null && this) Started.Add(StartCoroutine(cr));
+                if (cr != null && this)
+                {
+                    Started.Add(StartCoroutine(cr));
+
+                    // We are already in Update so move Coroutine forward if it is waiting for next Update
+                    if(cr.Current == null) cr.MoveNext();
+                }
                 else Started.Add(null);
             }
             ToStart.Clear();

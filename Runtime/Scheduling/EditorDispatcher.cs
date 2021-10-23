@@ -36,54 +36,63 @@ namespace ReactUnity.Scheduling
 #endif
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryUpdate(Action call)
         {
             CallOnUpdate.Add(call);
             return -1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryLateUpdate(Action call)
         {
             CallOnLateUpdate.Add(call);
             return -1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnceUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnceLateUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Timeout(Action callback, float timeSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int AnimationFrame(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Interval(Action callback, float intervalSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Immediate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int StartDeferred(IEnumerator cr)
         {
             var handle = GetNextHandle();
@@ -91,16 +100,15 @@ namespace ReactUnity.Scheduling
             return handle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int StartDeferred(IEnumerator cr, int handle)
         {
             ToStart.Add(cr);
             return handle;
         }
 
-        public void StopDeferred(int cr)
-        {
-            ToStop.Add(cr);
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void StopDeferred(int cr) => ToStop.Add(cr);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetNextHandle()
@@ -130,7 +138,13 @@ namespace ReactUnity.Scheduling
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
-                if (cr != null) Started.Add(StartCoroutine(cr));
+                if (cr != null)
+                {
+                    Started.Add(StartCoroutine(cr));
+
+                    // We are already in Update so move Coroutine forward if it is waiting for next Update
+                    if (cr.Current == null) cr.MoveNext();
+                }
                 else Started.Add(null);
             }
             ToStart.Clear();
@@ -164,15 +178,14 @@ namespace ReactUnity.Scheduling
         }
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-        EditorCoroutine StartCoroutine(IEnumerator cr)
-        {
-            return EditorCoroutineUtility.StartCoroutine(cr, cr);
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        EditorCoroutine StartCoroutine(IEnumerator cr) => EditorCoroutineUtility.StartCoroutine(cr, cr);
 
         static System.Reflection.FieldInfo mOwnerField = typeof(EditorCoroutine)
             .GetField("m_Owner", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         static WeakReference DeadRef = new WeakReference(null);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void StopCoroutine(EditorCoroutine cr)
         {
             EditorCoroutineUtility.StopCoroutine(cr);
@@ -180,13 +193,14 @@ namespace ReactUnity.Scheduling
             mOwnerField?.SetValue(cr, DeadRef);
         }
 #else
-         object StartCoroutine(IEnumerator cr)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        object StartCoroutine(IEnumerator cr)
         {
             return null;
         }
 
-
-         void StopCoroutine(object cr)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        void StopCoroutine(object cr)
         {
         }
 #endif
