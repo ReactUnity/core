@@ -37,8 +37,8 @@ namespace ReactUnity.Styling
 
         public virtual void Remove(StyleSheet sheet)
         {
-            sheet.Disable();
             StyleSheets.Remove(sheet);
+            sheet.Disable();
         }
 
         public FontReference GetFontFamily(string name)

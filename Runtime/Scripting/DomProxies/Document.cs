@@ -143,7 +143,7 @@ namespace ReactUnity.Scripting.DomProxies
             };
 
             Action<string> callback = (sc) => {
-                dispatcher.OnceUpdate(() => action(sc));
+                dispatcher.Immediate(() => action(sc));
             };
 
             script.GetScript((sc) => callback(sc), dispatcher, false);
@@ -166,12 +166,10 @@ namespace ReactUnity.Scripting.DomProxies
 
     public class StyleProxy : DomElementProxyBase, IDomElementProxy
     {
-        private List<string> pendingNodes = new List<string>();
-        private List<string> pendingRemoval = new List<string>();
         public List<string> childNodes = new List<string>();
         public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
 
-        public Dictionary<string, StyleSheet> Sheets = new Dictionary<string, StyleSheet>();
+        public StyleSheet Sheet = null;
 
         public bool enabled;
 
@@ -192,17 +190,12 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void OnRemove()
         {
-            foreach (var sheet in Sheets)
-            {
-                document.Context.RemoveStyle(sheet.Value);
-            }
-
-            Sheets.Clear();
+            if (Sheet != null) document.Context.RemoveStyle(Sheet);
+            Sheet = null;
         }
 
         public void appendChild(string text)
         {
-            pendingNodes.Add(text);
             childNodes.Add(text);
 
             if (enabled) ProcessNodes();
@@ -210,7 +203,6 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void removeChild(string text)
         {
-            pendingRemoval.Add(text);
             childNodes.Remove(text);
 
             if (enabled) ProcessNodes();
@@ -218,20 +210,8 @@ namespace ReactUnity.Scripting.DomProxies
 
         void ProcessNodes()
         {
-            pendingNodes.ForEach(x => {
-                var sheet = document.Context.InsertStyle(x);
-                Sheets[x] = sheet;
-            });
-            pendingNodes.Clear();
-
-            pendingRemoval.ForEach(x => {
-                if (Sheets.TryGetValue(x, out var sheet))
-                {
-                    document.Context.RemoveStyle(sheet);
-                    Sheets.Remove(x);
-                }
-            });
-            pendingRemoval.Clear();
+            if (Sheet != null) document.Context.RemoveStyle(Sheet);
+            Sheet = document.Context.InsertStyle(string.Join("\n", childNodes));
         }
     }
 }
