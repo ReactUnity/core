@@ -55,6 +55,30 @@ namespace ReactUnity.Scripting
             Engine.EnableNullResultWrapping = false;
 
             SetValue("host", new ExtendedHostFunctions());
+
+#if UNITY_EDITOR
+            if (debug && awaitDebugger)
+            {
+                bool connected = false;
+                var timer = new System.Threading.Timer(_ => {
+                    if (!connected) Engine.Interrupt();
+                }, null, 10000, System.Threading.Timeout.Infinite);
+
+                using (timer)
+                {
+                    try
+                    {
+                        Engine.Execute("void 0;");
+                        connected = true;
+                    }
+                    catch (ScriptInterruptedException)
+                    {
+                        if (!connected)
+                            Debug.LogWarning("Debugger connection timed out after 10 seconds. You can uncheck AwaitDebugger if you are not planning to connect a debugger.");
+                    }
+                }
+            }
+#endif
         }
 
         public object Evaluate(string code, string fileName = null)

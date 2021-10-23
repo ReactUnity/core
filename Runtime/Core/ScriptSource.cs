@@ -222,7 +222,7 @@ namespace ReactUnity
             }
 
 #if REACT_SHOULD_WATCH
-            if (Watch && watchFile && !string.IsNullOrWhiteSpace(filePath))
+            if (Language == ScriptSourceLanguage.Html && Watch && watchFile && !string.IsNullOrWhiteSpace(filePath))
             {
                 Debug.Log("Watching file for changes: " + filePath);
                 return WatchFileSystem(filePath, x => {

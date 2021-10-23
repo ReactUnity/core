@@ -13,11 +13,8 @@ namespace ReactUnity
         [FormerlySerializedAs("Script")]
         public ScriptSource Source = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
 
+        [Tooltip("Serve debugging protocol on port 9222")]
         public bool Debug = false;
-
-#if !REACT_UNITY_DEVELOPER
-        [HideInInspector]
-#endif
         public bool AwaitDebugger = false;
 
         public JavascriptEngineType EngineType = JavascriptEngineType.Auto;
