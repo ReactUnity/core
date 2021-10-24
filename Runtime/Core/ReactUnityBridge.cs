@@ -115,7 +115,9 @@ namespace ReactUnity
         [Preserve]
         public void applyUpdate(object instance, object payload, string type)
         {
-            if (instance is not IReactComponent cmp) return;
+            var cmp = instance as IReactComponent;
+            if (cmp == null) return;
+
             var updatePayload = cmp.Context.Script.Engine.TraverseScriptObject(payload);
 
             if (updatePayload == null) return;
@@ -139,7 +141,7 @@ namespace ReactUnity
                 }
                 else if (attr == "style")
                 {
-                    if (value is not string)
+                    if (!(value is string))
                     {
                         var stylePayload = cmp.Context.Script.Engine.TraverseScriptObject(value);
                         var st = cmp.Style;
