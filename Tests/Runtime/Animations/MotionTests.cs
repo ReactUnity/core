@@ -68,5 +68,36 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(500, rt.rect.width);
         }
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator MotionShouldTransitionImmedialyFromDisplayNone()
+        {
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+
+            Assert.AreEqual(100, rt.rect.width);
+
+            cmp.Style["width"] = 500;
+            yield return null;
+            yield return null;
+            yield return AdvanceTime(0.4f);
+            Assert.AreEqual(100, rt.rect.width);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(300, rt.rect.width);
+
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(500, rt.rect.width);
+
+            cmp.Style["display"] = "none";
+            yield return AdvanceTime(0.1f);
+            Assert.AreEqual(0, rt.rect.width);
+
+
+            cmp.Style["display"] = "flex";
+            yield return AdvanceTime(0.1f);
+            Assert.AreEqual(500, rt.rect.width);
+        }
     }
 }

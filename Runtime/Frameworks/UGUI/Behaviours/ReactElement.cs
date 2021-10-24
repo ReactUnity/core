@@ -15,10 +15,11 @@ namespace ReactUnity.UGUI.Behaviours
         public YogaNode Layout { get; internal set; }
         public UGUIComponent Component { get; internal set; }
 
+        private bool IsVisible = false;
         private bool firstTime = true;
         private Coroutine currentMotion;
 
-        private bool hasPositionUpdate = true;
+        private bool hasPositionUpdate = false;
         private YogaValue2 position = YogaValue2.Center;
         private PositionType positionType = PositionType.Relative;
         public YogaValue2 Translate
@@ -67,6 +68,7 @@ namespace ReactUnity.UGUI.Behaviours
 
 
             var tran = new Vector2(CalculateYogaVal(translate.X, Layout.LayoutWidth), -CalculateYogaVal(translate.Y, Layout.LayoutHeight));
+            var visible = Layout.Display != YogaDisplay.None;
 
             if (positionType == PositionType.Static)
             {
@@ -77,14 +79,14 @@ namespace ReactUnity.UGUI.Behaviours
                 var posX = x + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -y + pivotDiff.y * Layout.LayoutHeight;
 
-                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight));
+                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), visible);
             }
             else
             {
                 var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
                 var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
 
-                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight));
+                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), visible);
             }
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
@@ -95,25 +97,28 @@ namespace ReactUnity.UGUI.Behaviours
             return val.Unit == YogaUnit.Percent ? size * val.Value / 100 : val.Value;
         }
 
-        private void SetPositionAndSize(Vector2 pos, Vector2 size)
+        private void SetPositionAndSize(Vector2 pos, Vector2 size, bool visible)
         {
-            if (firstTime || Component?.ComputedStyle == null)
+            var immediate = !IsVisible || (visible != IsVisible);
+            IsVisible = visible;
+            if (immediate || firstTime || Component?.ComputedStyle == null)
             {
                 SetPositionAndSizeImmediate(pos, size);
-                return;
             }
-
-            var duration = Component.ComputedStyle.motionDuration;
-            var delay = Component.ComputedStyle.motionDelay;
-
-            if (duration > 0 || delay > 0)
+            else
             {
-                var timingFunction = Component.ComputedStyle.motionTimingFunction;
+                var duration = Component.ComputedStyle.motionDuration;
+                var delay = Component.ComputedStyle.motionDelay;
 
-                if (currentMotion != null) StopCoroutine(currentMotion);
-                currentMotion = StartCoroutine(StartMotion(pos, size, duration, delay, timingFunction));
+                if (duration > 0 || delay > 0)
+                {
+                    var timingFunction = Component.ComputedStyle.motionTimingFunction;
+
+                    if (currentMotion != null) StopCoroutine(currentMotion);
+                    currentMotion = StartCoroutine(StartMotion(pos, size, duration, delay, timingFunction));
+                }
+                else SetPositionAndSizeImmediate(pos, size);
             }
-            else SetPositionAndSizeImmediate(pos, size);
         }
 
 
@@ -140,6 +145,7 @@ namespace ReactUnity.UGUI.Behaviours
             if (duration <= 0)
             {
                 SetPositionAndSizeImmediate(pos, size);
+                currentMotion = null;
                 yield break;
             }
 
