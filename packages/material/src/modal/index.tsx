@@ -21,6 +21,7 @@ export function Modal({ open, children, className, onClickBackdrop, onEscape, on
 
   const portalRef = useRef<ReactUnity.UGUI.PortalComponent>();
   const initialOpen = useRef(open);
+  const openedOnce = useRef(open);
 
   const click: Events['onPointerClick'] = (ev, sender) => {
     if (!ev.used) onClickBackdrop?.();
@@ -41,11 +42,12 @@ export function Modal({ open, children, className, onClickBackdrop, onEscape, on
   };
 
   useEffect(() => {
+    openedOnce.current = openedOnce.current || open;
     if (open && portalRef.current)
       portalRef.current.SetProperty('active', !!open);
   }, [open]);
 
-  return <portal className={clsx(style.host, 'mat-modal', className, open ? style.opened : style.closed)}
+  return <portal className={clsx(style.host, 'mat-modal', className, open && style.opened, !open && openedOnce.current && style.closed)}
     onPointerClick={onClickBackdrop ? click : null} onKeyDown={onEscape ? keyup : null} active={initialOpen.current}
     onAnimationEnd={onAnimationEnd} ref={portalRef}>
     <view className={clsx(style.content, 'mat-modal-content')} onPointerClick={clickContent}>
