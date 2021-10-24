@@ -124,7 +124,8 @@ namespace ReactUnity
 
             while (updatePayload.MoveNext())
             {
-                var (attr, value) = updatePayload.Current;
+                var attr = updatePayload.Current.Key;
+                var value = updatePayload.Current.Value;
                 var isEvent = attr.StartsWith("on");
 
                 if (isEvent)
@@ -148,7 +149,8 @@ namespace ReactUnity
 
                         while (stylePayload.MoveNext())
                         {
-                            var (stKey, stVal) = stylePayload.Current;
+                            var stKey = stylePayload.Current.Key;
+                            var stVal = stylePayload.Current.Value;
                             st.SetWithoutNotify(stKey, stVal);
                         }
                         cmp.MarkForStyleResolving(false);
