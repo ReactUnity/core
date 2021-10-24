@@ -8,7 +8,7 @@ using ReactUnity.Styling.Rules;
 
 namespace ReactUnity
 {
-    public class NoopComponent : IContainerComponent
+    public class NoopComponent : IContainerComponent, IHostComponent, ITextComponent
     {
         public NoopComponent(ReactContext ctx, string tag)
         {
@@ -25,7 +25,7 @@ namespace ReactUnity
         public YogaNode Layout { get; }
         public StyleState StyleState { get; }
         public NodeStyle ComputedStyle { get; }
-        public InlineStyles Style { get; }
+        public InlineStyles Style { get; } = new InlineStyles();
         public StyleSheet InlineStylesheet { get; }
         public string Id { get; set; }
         public string Name { get; set; }
@@ -34,7 +34,7 @@ namespace ReactUnity
         public string ClassName { get; set; }
         public ClassList ClassList { get; }
         public StateStyles StateStyles { get; }
-        public WatchableObjectRecord Data { get; }
+        public WatchableObjectRecord Data { get; } = new WatchableObjectRecord();
         public int ParentIndex { get; }
         public int CurrentOrder { get; }
         public float ScrollLeft { get; set; }
@@ -43,11 +43,14 @@ namespace ReactUnity
         public float ScrollHeight { get; }
         public float ClientWidth { get; }
         public float ClientHeight { get; }
+        public float Width { get; }
+        public float Height { get; }
         public List<IReactComponent> Children { get; }
         public IReactComponent BeforePseudo { get; }
         public IReactComponent AfterPseudo { get; }
         public List<RuleTreeNode<StyleData>> BeforeRules { get; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; }
+        public string Content { get; }
         public void ApplyLayoutStyles() { }
         public void ResolveStyle(bool recursive = false) { }
         public void Update() { }
@@ -71,5 +74,6 @@ namespace ReactUnity
         public IReactComponent Closest(string query) => null;
         public IReactComponent QuerySelector(string query) => null;
         public List<IReactComponent> QuerySelectorAll(string query) => new List<IReactComponent>();
+        public void SetText(string text) { }
     }
 }

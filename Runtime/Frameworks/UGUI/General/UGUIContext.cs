@@ -21,9 +21,9 @@ namespace ReactUnity.UGUI
         static public Dictionary<string, Func<string, string, UGUIContext, IReactComponent>> ComponentCreators { get; }
             = new Dictionary<string, Func<string, string, UGUIContext, IReactComponent>>
             {
+                { "view", (tag, text, context) => new ContainerComponent(context, tag) },
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
-                { "view", (tag, text, context) => new ContainerComponent(context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent(context) },
                 { "toggle", (tag, text, context) => new ToggleComponent(context) },
                 { "label", (tag, text, context) => new LabelComponent(context, tag) },
