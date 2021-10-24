@@ -20,6 +20,7 @@ namespace ReactUnity.Scripting
     {
         public string Key { get; } = "jint";
         public Engine Engine { get; }
+        public object NativeEngine => Engine;
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
@@ -137,6 +138,22 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)
+        {
+            if (obj is ObjectInstance jv)
+            {
+                var keys = jv.GetOwnPropertyKeys(Jint.Runtime.Types.String);
+                foreach (var key in keys)
+                {
+                    yield return new KeyValuePair<string, object>(key.AsString(), jv.Get(key));
+                }
+            }
+            else if (obj is IEnumerable<KeyValuePair<string, object>> eo)
+            {
+                foreach (var kv in eo) yield return kv;
+            }
         }
     }
 

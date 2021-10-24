@@ -30,6 +30,7 @@ namespace ReactUnity.Scripting
     public interface IJavaScriptEngine : IDisposable
     {
         string Key { get; }
+        object NativeEngine { get; }
         void Execute(string code, string fileName = null);
         Exception TryExecute(string code, string fileName = null);
         object Evaluate(string code, string fileName = null);
@@ -40,6 +41,7 @@ namespace ReactUnity.Scripting
 
         object CreateTypeReference(Type type);
         object CreateNamespaceReference(string ns, params Assembly[] assemblies);
+        public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj);
     }
 
     public interface IJavaScriptEngineFactory

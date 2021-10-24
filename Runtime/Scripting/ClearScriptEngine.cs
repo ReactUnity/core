@@ -19,6 +19,7 @@ namespace ReactUnity.Scripting
         private const string tempKey = "__$__temp_key__$__";
 
         public V8ScriptEngine Engine { get; }
+        public object NativeEngine => Engine;
 
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
@@ -167,6 +168,18 @@ namespace ReactUnity.Scripting
         public void Dispose()
         {
             Engine.Dispose();
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)
+        {
+            if (obj is ScriptObject jv)
+            {
+                var keys = jv.PropertyNames;
+                foreach (var key in keys)
+                {
+                    yield return new KeyValuePair<string, object>(key, jv.GetProperty(key));
+                }
+            }
         }
     }
 

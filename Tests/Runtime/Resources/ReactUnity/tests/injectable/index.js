@@ -8221,6 +8221,7 @@ function Modal(_a) {
   useRootClass(open && [src_modal_index_module.body, 'mat-modal-open']);
   var portalRef = (0,react.useRef)();
   var initialOpen = (0,react.useRef)(open);
+  var openedOnce = (0,react.useRef)(open);
 
   var click = function click(ev, sender) {
     if (!ev.used) onClickBackdrop === null || onClickBackdrop === void 0 ? void 0 : onClickBackdrop();
@@ -8241,10 +8242,11 @@ function Modal(_a) {
   };
 
   (0,react.useEffect)(function () {
+    openedOnce.current = openedOnce.current || open;
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", modal_assign({
-    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
+    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
@@ -10128,7 +10130,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
     var prop = null;
 
     if (propKey === 'style' && typeof lastProps.style === 'string') {
-      (updatePayload = updatePayload || []).push(styleStringSymbol, null);
+      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
     }
 
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
@@ -10140,7 +10142,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
     // the whitelist in the commit phase instead.
 
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   for (propKey in nextProps) {
@@ -10154,7 +10156,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
     var prop = nextProp;
 
     if (propKey === 'style' && typeof prop === 'string' !== (typeof lastProp === 'string')) {
-      (updatePayload = updatePayload || []).push(styleStringSymbol, typeof prop === 'string' ? prop : null);
+      (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
     }
 
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
@@ -10164,12 +10166,25 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
       if (!prop) continue;
     }
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   return updatePayload;
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
+var renderer_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
 
 
 
@@ -10180,95 +10195,22 @@ var textTypes = {
   text: true,
   icon: true,
   style: true,
-  script: true,
-  html: true
+  script: true
 };
 
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
+function getAllowedProps(props, type) {
+  var children = props.children,
+      tag = props.tag,
+      ref = props.ref,
+      key = props.key,
+      rest = renderer_rest(props, ["children", "tag", "ref", "key"]);
+
+  if (textTypes[type]) {
+    rest.children = Array.isArray(children) ? children.join('') : (children === null || children === void 0 ? void 0 : children.toString()) || '';
   }
 
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-
-    return true;
-  }
-}
-
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
-  }
-
-  var updateAfterMount = false;
-
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
-
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      UnityBridge.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (textTypes[type]) {
-        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && (attr === 'style' || attr === styleStringSymbol)) {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.MarkForStyleResolving(false);
-      }
-
-      continue;
-    }
-
-    if (attr === styleStringSymbol) {
-      UnityBridge.setProperty(instance, 'style', value);
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      UnityBridge.setData(instance, attr.substring(5), value);
-    } else {
-      UnityBridge.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
+  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
+  return rest;
 }
 
 var hostConfig = {
@@ -10295,14 +10237,12 @@ var hostConfig = {
   supportsPersistence: false,
   isPrimaryRenderer: true,
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
-
     if (textTypes[type]) {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return UnityBridge.createElement(type, text, rootContainerInstance);
+      var rprops = getAllowedProps(props, type);
+      return UnityBridge.createElement(type, rprops.children, rootContainerInstance, rprops);
     }
 
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
+    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance, getAllowedProps(props, type));
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -10311,28 +10251,9 @@ var hostConfig = {
     UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
-
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
+    return false;
   },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-
-    if ('style' in newProps) {
-      props.push('style', newProps.style);
-      if (typeof newProps.style === 'string') props.push(styleStringSymbol, newProps.style);
-    }
-
-    applyUpdate(instance, props, true);
-  },
+  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {},
   shouldSetTextContent: function shouldSetTextContent(type, props) {
     return textTypes[type];
   },
@@ -10347,7 +10268,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');

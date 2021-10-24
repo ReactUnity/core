@@ -35,6 +35,9 @@ namespace ReactUnity.Helpers
                 return new Callback(fn);
             }
             if (value is Callback cb) return cb;
+#if REACT_JINT
+            if (value is Func<JsValue, JsValue[], JsValue> jv) return new Callback(jv, context.Script.Engine.NativeEngine as Engine);
+#endif
             return new Callback(value);
         }
 
