@@ -83,7 +83,7 @@ namespace ReactUnity.Styling
 
 
         private Dictionary<string, TransitionState> propertyTransitionStates;
-        private ICssValueList<float> activeTransitions;
+        private ICssValueList<TransitionProperty> activeTransitions;
         private bool transitionRunning;
 
 
@@ -115,10 +115,10 @@ namespace ReactUnity.Styling
 
         private void RecalculateActive()
         {
-            var transition = Current.transitionDuration;
+            var transition = Current.transitionProperty;
             var animation = Current.animationName;
 
-            var hasTransition = Current != Previous && (transition != null && transition.Any && transition.Get(0) > 0);
+            var hasTransition = Current != Previous && (transition != null && transition.Any && transition.Get(0).Properties.Count > 0);
             var hasAnimation = Current != Previous && (animation != null && animation.Any);
 
             if (!hasTransition) StopTransitions(true);
@@ -160,7 +160,7 @@ namespace ReactUnity.Styling
 
         #region Transitions
 
-        private void StartTransitions(ICssValueList<float> transition)
+        private void StartTransitions(ICssValueList<TransitionProperty> transition)
         {
             StopTransitions(true);
             propertyTransitionStates = new Dictionary<string, TransitionState>();
@@ -192,23 +192,24 @@ namespace ReactUnity.Styling
 
         private bool UpdateTransitions()
         {
-            if (activeTransitions == null) return true;
+            if (activeTransitions == null || activeTransitions.Count == 0) return true;
+
+            // If there is not a previous state, no need to continue anymore
+            // But transitions may not be finished so return false
+            if (Previous == null) return false;
 
             var updated = false;
             var finished = true;
             var hasLayout = false;
-
             var currentTime = getTime();
+            var prop = activeTransitions;
 
-            var duration = Current.GetStyleValue(StyleProperties.transitionDuration);
-            var delay = Current.GetStyleValue(StyleProperties.transitionDelay);
-            var easing = Current.GetStyleValue(StyleProperties.transitionTimingFunction);
-            var prop = Current.GetStyleValue(StyleProperties.transitionProperty);
-            var playState = Current.GetStyleValue(StyleProperties.transitionPlayState);
+            ICssValueList<float> duration = null;
+            ICssValueList<float> delay = null;
+            ICssValueList<TimingFunction> easing = null;
+            ICssValueList<AnimationPlayState> playState = null;
 
-            var maxLength = Mathf.Max(prop.Count, duration.Count, easing.Count, delay.Count, playState.Count);
-
-            for (int i = 0; i < maxLength; i++)
+            for (int i = 0; i < prop.Count; i++)
             {
                 IEnumerable<IStyleProperty> properties = prop.Get(i)?.Properties;
                 if (properties == null) continue;
@@ -216,11 +217,16 @@ namespace ReactUnity.Styling
                 foreach (var sp in properties)
                 {
                     if (sp == null) continue;
-                    finished = false;
 
-                    // If there is not a previous state, no need to continue anymore
-                    // But transitions may not be finished so return false
-                    if (Previous == null) return false;
+                    // Use this condition to fetch values of duration etc.
+                    if (finished)
+                    {
+                        duration = Current.GetStyleValue(StyleProperties.transitionDuration);
+                        delay = Current.GetStyleValue(StyleProperties.transitionDelay);
+                        easing = Current.GetStyleValue(StyleProperties.transitionTimingFunction);
+                        playState = Current.GetStyleValue(StyleProperties.transitionPlayState);
+                        finished = false;
+                    }
 
                     var prevValue = Previous.GetRawStyleValue(sp);
                     var curValue = Current.GetRawStyleValue(sp);
@@ -397,20 +403,18 @@ namespace ReactUnity.Styling
 
         private bool UpdateAnimations()
         {
-            if (activeAnimations == null ||
-                activeAnimations.Count == 0) return true;
+            if (activeAnimations == null || activeAnimations.Count == 0) return true;
 
+            var name = activeAnimations;
             var delay = Current.animationDelay;
             var direction = Current.animationDirection;
             var duration = Current.animationDuration;
             var fillMode = Current.animationFillMode;
             var iterationCount = Current.animationIterationCount;
-            var name = Current.animationName;
             var playState = Current.animationPlayState;
             var timingFunction = Current.animationTimingFunction;
 
-            var maxLength = Mathf.Max(delay.Count, direction.Count, duration.Count, fillMode.Count,
-                iterationCount.Count, name.Count, playState.Count, timingFunction.Count);
+            var length = name.Count;
 
             var updated = false;
             var finished = true;
@@ -418,7 +422,7 @@ namespace ReactUnity.Styling
 
             var currentTime = getTime();
 
-            for (int ind = 0; ind < maxLength; ind++)
+            for (int ind = 0; ind < length; ind++)
             {
                 var nm = name.Get(ind);
                 var dr = duration.Get(ind);
