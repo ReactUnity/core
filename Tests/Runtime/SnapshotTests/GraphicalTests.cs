@@ -251,6 +251,10 @@ namespace ReactUnity.Tests
             yield return null;
 
             Assertions.Snapshot($"gradients/advanced/" + bg.Item1);
+
+            Q("#test").Style["height"] = 200;
+            yield return null;
+            Assertions.Snapshot($"gradients/advanced/short", bg.Item1);
         }
 
         protected static Tuple<string, string>[] boxShadows = new Tuple<string, string>[] {

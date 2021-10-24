@@ -9,6 +9,7 @@ Shader "ReactUnity/BackgroundImage"
     _offset("Offset", Float) = 0
     _length("Length", Float) = 1
     _distance("Distance", Float) = 0
+    _aspect("Aspect Ratio", Float) = 1
     _at("At", Vector) = (0.5, 0.5, 1, 1)
     _radius("Radius", Float) = 1
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
@@ -77,6 +78,7 @@ Shader "ReactUnity/BackgroundImage"
       float _length;
       float _distance;
       float _radius;
+      float _aspect;
       int _shape;
       int _repeatX;
       int _repeatY;
@@ -138,8 +140,6 @@ Shader "ReactUnity/BackgroundImage"
 
       fixed4 frag(v2f i) : SV_Target
       {
-        float aspectRatio = _size.x / _size.y;
-
         bool visibleX, visibleY;
         float tx = calculateRepeat(i.uv.x, _size.x, _pos.x, _repeatX, visibleX);
         float ty = calculateRepeat(1 - i.uv.y, _size.y, _pos.y, _repeatY, visibleY);
@@ -154,7 +154,7 @@ Shader "ReactUnity/BackgroundImage"
           float2 txPos = uv;
 
           if (_gradientType == 1) {
-            float maxY = 1 / aspectRatio;
+            float maxY = 1 / _aspect;
             float y = uv.y;
             float x = uv.x;
 
@@ -172,7 +172,7 @@ Shader "ReactUnity/BackgroundImage"
               float zx = sa < 0 ? 1 : 0;
               float zy = ca < 0 ? maxY : 0;
 
-              float2 A = float2(x, y / aspectRatio);
+              float2 A = float2(x, y / _aspect);
               float2 B = A + float2(ca, -sa);
 
               float2 C = float2(zx, zy);
@@ -190,7 +190,7 @@ Shader "ReactUnity/BackgroundImage"
             float2 r2 = uv - _at;
 
             if (_shape == 1) {
-              r2 = float2(r2.x, r2.y / aspectRatio);
+              r2 = float2(r2.x, r2.y / _aspect);
             }
 
             txPos = float2(length(r2) / _radius, 0);

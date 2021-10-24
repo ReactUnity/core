@@ -15,6 +15,7 @@ namespace ReactUnity.UGUI.Internal
         public static readonly int PosProp = Shader.PropertyToID("_pos");
         public static readonly int RepeatXProp = Shader.PropertyToID("_repeatX");
         public static readonly int RepeatYProp = Shader.PropertyToID("_repeatY");
+        public static readonly int AspectProp = Shader.PropertyToID("_aspect");
 
         public Vector2 Size;
 
@@ -93,6 +94,7 @@ namespace ReactUnity.UGUI.Internal
                 result.SetVector(PosProp, ps);
                 result.SetFloat(RepeatXProp, (int) BackgroundRepeatX);
                 result.SetFloat(RepeatYProp, (int) BackgroundRepeatY);
+                result.SetFloat(AspectProp, szPoint.x / szPoint.y);
                 Definition?.ModifyMaterial(Context, result, szPoint);
                 return result;
             }
