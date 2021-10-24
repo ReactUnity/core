@@ -1,4 +1,4 @@
-export type DiffResult = null | Array<string | any>;
+export type DiffResult = null | Record<string, any>;
 
 export const styleStringSymbol = '__style_as_string__';
 
@@ -23,7 +23,7 @@ export function diffProperties(
     let prop = null;
 
     if (propKey === 'style' && typeof lastProps.style === 'string') {
-      (updatePayload = updatePayload || []).push(styleStringSymbol, null);
+      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
     }
 
     const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
@@ -34,7 +34,7 @@ export function diffProperties(
 
     // For all other deleted properties we add it to the queue. We use
     // the whitelist in the commit phase instead.
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
   for (propKey in nextProps) {
     const nextProp = nextProps[propKey];
@@ -50,7 +50,7 @@ export function diffProperties(
     let prop = nextProp;
 
     if (propKey === 'style' && (typeof prop === 'string') !== (typeof lastProp === 'string')) {
-      (updatePayload = updatePayload || []).push(styleStringSymbol, typeof prop === 'string' ? prop : null);
+      (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
     }
 
     const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
@@ -59,7 +59,7 @@ export function diffProperties(
       if (!prop) continue;
     }
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   return updatePayload;

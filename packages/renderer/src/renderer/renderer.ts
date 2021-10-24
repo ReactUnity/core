@@ -1,13 +1,12 @@
 import type * as React from 'react';
 import { createElement } from 'react';
 import * as Reconciler from 'react-reconciler';
-import { ReactUnity } from '../models/generated';
 import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../models/renderer';
 import { DefaultView } from '../views/default-view';
-import { diffProperties, DiffResult, styleStringSymbol } from './diffing';
+import { diffProperties, styleStringSymbol } from './diffing';
 
 const hostContext = {};
 const childContext = {};
@@ -19,85 +18,19 @@ const textTypes = {
   script: true,
 };
 
-function applyDiffedUpdate(writeTo: ReactUnity.Helpers.WatchableDictionary<any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-
-    for (let index = 0; index < updatePayload.length; index += 2) {
-      const attr = updatePayload[index];
-      const value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);
-      else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  }
-  else {
-    for (const attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        const value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-    return true;
-  }
-}
-
-function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean, type?: string, pre = true) {
-  let updateAfterMount = false;
-  for (let index = 0; index < updatePayload.length; index += 2) {
-    const attr = updatePayload[index];
-    const value = updatePayload[index + 1];
-    const isEvent = attr.substring(0, 2) === 'on';
-
-    // Register events before other properties
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      UnityBridge.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (textTypes[type]) {
-        UnityBridge.setText(instance, value ? ((Array.isArray(value) && value.join) ? value.join('') : value + '') : '');
-      }
-      continue;
-    }
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-    if (!isAfterMount && (attr === 'style' || attr === styleStringSymbol)) {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.MarkForStyleResolving(false);
-      }
-      continue;
-    }
-
-    if (attr === styleStringSymbol) {
-      UnityBridge.setProperty(instance, 'style', value);
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      UnityBridge.setData(instance, attr.substring(5), value);
-    } else {
-      UnityBridge.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-
-  return updateAfterMount;
-}
-
 type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
+
+function getAllowedProps(props, type) {
+  const { children, tag, ref, key, ...rest } = props;
+
+  if (textTypes[type]) {
+    rest.children = Array.isArray(children) ? children.join('') : children?.toString() || '';
+  }
+
+  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
+
+  return rest;
+}
 
 const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any } = {
   getRootHostContext(rootContainerInstance) { return hostContext; },
@@ -119,14 +52,11 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     internalInstanceHandle,
   ) {
     if (textTypes[type]) {
-      const text = props.children === true ? '' :
-        Array.isArray(props.children) ? props.children.join('') :
-          props.children?.toString() || '';
-
-      return UnityBridge.createElement(type, text, rootContainerInstance);
+      const rprops = getAllowedProps(props, type);
+      return UnityBridge.createElement(type, rprops.children, rootContainerInstance, rprops);
     }
 
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
+    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance, getAllowedProps(props, type));
   },
 
   createTextInstance(
@@ -147,30 +77,10 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     rootContainerInstance,
     hostContext,
   ) {
-    const propsToUpdate = [];
-    const keys = Object.keys(props);
-
-    for (let index = 0; index < keys.length; index++) {
-      const key = keys[index];
-      const value = props[key];
-
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
+    return false;
   },
 
-  // Some attributes like style need to be changed only after mount
-  commitMount(instance, type, newProps, internalInstanceHandle) {
-    const props = [];
-    if ('style' in newProps) {
-      props.push('style', newProps.style);
-
-      if (typeof newProps.style === 'string') props.push(styleStringSymbol, newProps.style);
-    }
-
-    applyUpdate(instance, props, true);
-  },
+  commitMount(instance, type, newProps, internalInstanceHandle) { },
 
   shouldSetTextContent(type, props) { return textTypes[type]; },
 
@@ -201,7 +111,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     newProps,
     internalInstanceHandle,
   ) {
-    applyUpdate(instance, updatePayload as any, true, type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
 
   resetTextContent(instance) { console.log('resetTextContent'); },

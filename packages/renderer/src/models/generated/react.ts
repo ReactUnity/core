@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 21/10/2021 21:12:18
+// Generated 24/10/2021 22:18:53
 //
 /* eslint-disable */
 
@@ -70,6 +70,7 @@ export declare namespace ReactUnity {
     RemoveAfter(): void;
     RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
     UnregisterChild(child: ReactUnity.IReactComponent): void;
+    Clear(): void;
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
     Equals(obj: any): boolean;
@@ -134,6 +135,7 @@ export declare namespace ReactUnity {
     AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
     RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
     UnregisterChild(child: ReactUnity.IReactComponent): void;
+    Clear(): void;
   }
   export interface ITextComponent extends ReactUnity.IReactComponent {
     Content: string;
@@ -191,11 +193,14 @@ export declare namespace ReactUnity {
     ScrollHeight: number;
     ClientWidth: number;
     ClientHeight: number;
+    Width: number;
+    Height: number;
     Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
     BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
     AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+    Content: string;
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
@@ -208,6 +213,7 @@ export declare namespace ReactUnity {
     MarkForStyleResolving(recursive: boolean): void;
     MarkStyleUpdateWithSiblings(recursive: boolean): void;
     Remove(): void;
+    Clear(): void;
     Destroy(recursive?: boolean): void;
     RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
     UnregisterChild(child: ReactUnity.IReactComponent): void;
@@ -218,6 +224,7 @@ export declare namespace ReactUnity {
     Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
     QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+    SetText(text: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -282,6 +289,7 @@ export declare namespace ReactUnity {
     RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
     UnregisterChild(child: ReactUnity.IReactComponent): void;
     SetText(text: string): void;
+    Clear(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -353,7 +361,7 @@ export declare namespace ReactUnity {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    Script: ReactUnity.ScriptSource;
+    Source: ReactUnity.ScriptSource;
     Debug: boolean;
     AwaitDebugger: boolean;
     EngineType: ReactUnity.Scripting.JavascriptEngineType;
@@ -382,6 +390,7 @@ export declare namespace ReactUnity {
     GetComponentInChildren(t: System.Type): UnityEngine.Component;
     GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
     GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
     GetComponentInParent(t: System.Type): UnityEngine.Component;
     GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
     GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -409,7 +418,7 @@ export declare namespace ReactUnity {
   export class ReactUnityBridge {
     static Instance: ReactUnity.ReactUnityBridge;
     createText(text: string, host: ReactUnity.IReactComponent): ReactUnity.ITextComponent;
-    createElement(tag: string, text: string, host: ReactUnity.IReactComponent): ReactUnity.IReactComponent;
+    createElement(tag: string, text: string, host: ReactUnity.IReactComponent, props?: any): ReactUnity.IReactComponent;
     appendChild(parent: any, child: any): void;
     appendChildToContainer(parent: any, child: any): void;
     insertBefore(parent: any, child: any, beforeChild: any): void;
@@ -419,6 +428,7 @@ export declare namespace ReactUnity {
     setData(element: any, property: string, value: any): void;
     setEventListener(element: any, eventType: string, value: any): void;
     addEventListener(element: any, eventType: string, value: any): (() => void);
+    applyUpdate(instance: any, payload: any, type: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -432,7 +442,9 @@ export declare namespace ReactUnity {
     IsDevServer: boolean;
     EffectiveScriptSource: ReactUnity.ScriptSourceType;
     Type: ReactUnity.ScriptSourceType;
+    Language: ReactUnity.ScriptSourceLanguage;
     SourceAsset: UnityEngine.TextAsset;
+    Watch: boolean;
     SourcePath: string;
     SourceText: string;
     ResourcesPath: string;
@@ -441,7 +453,8 @@ export declare namespace ReactUnity {
     static Resource(path: string): ReactUnity.ScriptSource;
     static Text(path: string): ReactUnity.ScriptSource;
     GetResolvedSourceUrl(useDevServer?: boolean): string;
-    GetScript(callback: ((arg0: string, arg1: boolean) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
+    GetScript(callback: ((arg0: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
+    static WatchFileSystem(path: string, callback: ((arg0: string) => void)): System.IDisposable;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -453,6 +466,10 @@ export declare namespace ReactUnity {
     Url = 2,
     Resource = 3,
     Raw = 4,
+  }
+  export enum ScriptSourceLanguage {
+    JavaScript = 0,
+    Html = 1,
   }
   export class SourceProxyComponent {
     constructor(cmp: ReactUnity.IContainerComponent);
@@ -516,6 +533,7 @@ export declare namespace ReactUnity {
     RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
     UnregisterChild(child: ReactUnity.IReactComponent): void;
     SetText(text: string): void;
+    Clear(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -913,6 +931,7 @@ export declare namespace ReactUnity {
       ShowAuxWindow(): void;
       ShowModal(): void;
       SaveChanges(): void;
+      DiscardChanges(): void;
       Close(): void;
       Repaint(): void;
       SendEvent(e: UnityEngine.Event): boolean;
@@ -994,6 +1013,7 @@ export declare namespace ReactUnity {
       ShowAuxWindow(): void;
       ShowModal(): void;
       SaveChanges(): void;
+      DiscardChanges(): void;
       Close(): void;
       Repaint(): void;
       SendEvent(e: UnityEngine.Event): boolean;
@@ -1182,6 +1202,7 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
+        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -1287,6 +1308,7 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
+        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -1393,6 +1415,7 @@ export declare namespace ReactUnity {
         RemoveAfter(): void;
         RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
         UnregisterChild(child: ReactUnity.IReactComponent): void;
+        Clear(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1445,6 +1468,7 @@ export declare namespace ReactUnity {
         ShowAuxWindow(): void;
         ShowModal(): void;
         SaveChanges(): void;
+        DiscardChanges(): void;
         Close(): void;
         Repaint(): void;
         SendEvent(e: UnityEngine.Event): boolean;
@@ -1488,6 +1512,7 @@ export declare namespace ReactUnity {
         cacheAsBitmap: boolean;
         parent: UnityEngine.UIElements.VisualElement;
         panel: UnityEngine.UIElements.IPanel;
+        visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
@@ -1616,6 +1641,7 @@ export declare namespace ReactUnity {
         RemoveAfter(): void;
         RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
         UnregisterChild(child: ReactUnity.IReactComponent): void;
+        Clear(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1696,6 +1722,7 @@ export declare namespace ReactUnity {
         RemoveAfter(): void;
         RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
         UnregisterChild(child: ReactUnity.IReactComponent): void;
+        Clear(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1776,6 +1803,7 @@ export declare namespace ReactUnity {
         RemoveAfter(): void;
         RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
         UnregisterChild(child: ReactUnity.IReactComponent): void;
+        Clear(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1816,6 +1844,7 @@ export declare namespace ReactUnity {
         parent: UnityEngine.UIElements.VisualElement;
         panel: UnityEngine.UIElements.IPanel;
         contentContainer: UnityEngine.UIElements.VisualElement;
+        visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
@@ -1940,6 +1969,7 @@ export declare namespace ReactUnity {
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
       SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
       RemoveAllListeners(): void;
       ToString(): string;
       Equals(obj: any): boolean;
@@ -1955,6 +1985,7 @@ export declare namespace ReactUnity {
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
       SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
       RemoveAllListeners(): void;
       ToString(): string;
       Equals(obj: any): boolean;
@@ -2013,6 +2044,9 @@ export declare namespace ReactUnity {
       OnDeserialization(sender: any): void;
       Remove(key: string): boolean;
       TryAdd(key: string, value: any): boolean;
+      EnsureCapacity(capacity: number): number;
+      TrimExcess(): void;
+      TrimExcess(capacity: number): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2320,6 +2354,7 @@ export declare namespace ReactUnity {
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
       SetText(text: string): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2329,7 +2364,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.ReactContext);
       Context: ReactUnity.ReactContext;
       Parser: ReactUnity.Html.HtmlParser;
-      InsertHtml(html: string, root?: ReactUnity.IContainerComponent): void;
+      InsertHtml(html: string, root?: ReactUnity.IContainerComponent, clearContent?: boolean): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2495,6 +2530,7 @@ export declare namespace ReactUnity {
       GetComponentInChildren(t: System.Type): UnityEngine.Component;
       GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
       GetComponentInParent(t: System.Type): UnityEngine.Component;
       GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -2534,6 +2570,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
       Key: string;
       Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
+      NativeEngine: any; // System.Object
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
@@ -2542,6 +2579,7 @@ export declare namespace ReactUnity {
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
       Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2549,6 +2587,7 @@ export declare namespace ReactUnity {
     }
     export class ClearScriptEngineFactory {
       constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -2562,6 +2601,7 @@ export declare namespace ReactUnity {
     }
     export interface IJavaScriptEngine {
       Key: string;
+      NativeEngine: any; // System.Object
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       Evaluate(code: string, fileName?: string): any;
@@ -2569,14 +2609,17 @@ export declare namespace ReactUnity {
       CreateNativeObject(props: Record<string, any>): any;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
     }
     export interface IJavaScriptEngineFactory {
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
     }
     export class JintEngine {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
       Key: string;
       Engine: any; // Jint.Engine
+      NativeEngine: any; // System.Object
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
@@ -2585,6 +2628,7 @@ export declare namespace ReactUnity {
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
       Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2592,6 +2636,7 @@ export declare namespace ReactUnity {
     }
     export class JintEngineFactory {
       constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -2668,6 +2713,7 @@ export declare namespace ReactUnity {
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
       SetText(text: string): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2798,7 +2844,7 @@ export declare namespace ReactUnity {
         nodeType: number;
         nextSibling: any; // System.Object
         childNodes: string[];
-        Sheets: Record<string, ReactUnity.Styling.StyleSheet>;
+        Sheet: ReactUnity.Styling.StyleSheet;
         enabled: boolean;
         document: ReactUnity.Scripting.DomProxies.DocumentProxy;
         parentNode: ReactUnity.Scripting.DomProxies.HeadProxy;
@@ -3643,6 +3689,7 @@ export declare namespace ReactUnity {
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
       SetText(text: string): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4449,9 +4496,11 @@ export declare namespace ReactUnity {
       constructor(other: ReactUnity.Types.FontSource);
       constructor(font: UnityEngine.Font);
       constructor(font: any);
+      constructor(font: UnityEngine.TextCore.Text.FontAsset);
       Valid: boolean;
       Font: UnityEngine.Font;
       TmpFontAsset: any; // TMPro.TMP_FontAsset
+      TextCoreFontAsset: UnityEngine.TextCore.Text.FontAsset;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4894,6 +4943,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4978,6 +5028,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5064,6 +5115,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5147,6 +5199,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5227,6 +5280,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5310,6 +5364,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5399,6 +5454,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5484,6 +5540,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5573,6 +5630,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5654,6 +5712,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5740,6 +5799,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5821,6 +5881,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5902,6 +5963,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5987,6 +6049,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6073,6 +6136,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6156,6 +6220,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6236,6 +6301,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6322,6 +6388,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6407,6 +6474,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6498,6 +6566,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6585,6 +6654,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6664,6 +6734,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6751,6 +6822,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6797,7 +6869,7 @@ export declare namespace ReactUnity {
       CursorSet: ReactUnity.Styling.CursorSet;
       DefaultIconSet: ReactUnity.Styling.IconSet;
       IconSets: ReactUnity.Styling.IconSet[];
-      Script: ReactUnity.ScriptSource;
+      Source: ReactUnity.ScriptSource;
       Debug: boolean;
       AwaitDebugger: boolean;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
@@ -6826,6 +6898,7 @@ export declare namespace ReactUnity {
       GetComponentInChildren(t: System.Type): UnityEngine.Component;
       GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
       GetComponentInParent(t: System.Type): UnityEngine.Component;
       GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
       GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -6982,6 +7055,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7052,6 +7126,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7131,6 +7206,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7209,6 +7285,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7279,6 +7356,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7350,6 +7428,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7421,6 +7500,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7497,6 +7577,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7617,6 +7698,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7688,6 +7770,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7721,6 +7804,7 @@ export declare namespace ReactUnity {
         GetPersistentTarget(index: number): UnityEngine.Object;
         GetPersistentMethodName(index: number): string;
         SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+        GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
         RemoveAllListeners(): void;
         ToString(): string;
         Equals(obj: any): boolean;
@@ -7775,6 +7859,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7845,6 +7930,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7915,6 +8001,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -7985,6 +8072,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8055,6 +8143,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8125,6 +8214,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8196,6 +8286,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8283,6 +8374,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8353,6 +8445,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8423,6 +8516,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8493,6 +8587,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8563,6 +8658,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8633,6 +8729,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8703,6 +8800,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8774,6 +8872,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8856,6 +8955,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8926,6 +9026,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -8996,6 +9097,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9066,6 +9168,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9138,6 +9241,7 @@ export declare namespace ReactUnity {
         static PosProp: number;
         static RepeatXProp: number;
         static RepeatYProp: number;
+        static AspectProp: number;
         Size: UnityEngine.Vector2;
         definition: ReactUnity.Types.ImageDefinition;
         Context: ReactUnity.ReactContext;
@@ -9198,6 +9302,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9347,6 +9452,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9433,6 +9539,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9580,6 +9687,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9652,6 +9760,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9796,6 +9905,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9869,6 +9979,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -9942,6 +10053,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -10013,6 +10125,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -10084,6 +10197,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -10153,6 +10267,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -10224,6 +10339,7 @@ export declare namespace ReactUnity {
         GetComponentInChildren(t: System.Type): UnityEngine.Component;
         GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
         GetComponentInParent(t: System.Type): UnityEngine.Component;
         GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
         GetComponentsInParent(t: System.Type): UnityEngine.Component[];
@@ -10320,6 +10436,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10400,6 +10517,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10483,6 +10601,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10568,6 +10687,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10641,6 +10761,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10714,6 +10835,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10789,6 +10911,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10862,6 +10985,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10937,6 +11061,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11017,6 +11142,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11097,6 +11223,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11172,6 +11299,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11253,6 +11381,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11330,6 +11459,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11409,6 +11539,7 @@ export declare namespace ReactUnity {
       RemoveAfter(): void;
       RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
       UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11454,6 +11585,7 @@ export declare namespace ReactUnity {
       parent: UnityEngine.UIElements.VisualElement;
       panel: UnityEngine.UIElements.IPanel;
       contentContainer: UnityEngine.UIElements.VisualElement;
+      visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
       childCount: number;
       schedule: UnityEngine.UIElements.IVisualElementScheduler;
       style: UnityEngine.UIElements.IStyle;
@@ -11506,6 +11638,89 @@ export declare namespace ReactUnity {
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class ReactUnityUIDocument {
+      constructor();
+      Root: UnityEngine.UIElements.VisualElement;
+      MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
+      Context: ReactUnity.ReactContext;
+      timer: ReactUnity.Scheduling.ITimer;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Source: ReactUnity.ScriptSource;
+      Debug: boolean;
+      AwaitDebugger: boolean;
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Globals: ReactUnity.Helpers.SerializableDictionary;
+      AutoRender: boolean;
+      BeforeStart: UnityEngine.Events.UnityEvent;
+      AfterStart: UnityEngine.Events.UnityEvent;
+      PlayAudio(clip: UnityEngine.AudioClip): void;
+      Render(): void;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: any): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: any): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
       GetType(): System.Type;
     }
     export class ResourcesHelper {
