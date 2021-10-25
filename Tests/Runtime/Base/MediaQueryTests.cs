@@ -13,11 +13,11 @@ namespace ReactUnity.Tests
         public IEnumerator Injectable_HelloWorld()
         {
             yield return null;
+            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            Assert.AreEqual(Color.white, tmp.color);
 
             MediaProvider.SetNumber("asd", 600);
-
-            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            Assert.AreEqual("Hello world", tmp.text);
+            yield return null;
             Assert.AreEqual(Color.red, tmp.color);
         }
     }

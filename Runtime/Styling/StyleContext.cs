@@ -26,7 +26,7 @@ namespace ReactUnity.Styling
         public void ResolveStyle(IReactComponent scope = null)
         {
             if (!Context.IsDisposed)
-                (scope ?? Context.Host)?.ResolveStyle(true);
+                (scope ?? Context.Host)?.MarkForStyleResolving(true);
         }
 
         public virtual void Insert(StyleSheet sheet)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
@@ -111,30 +112,37 @@ namespace ReactUnity
 
         public virtual void Update()
         {
-            ApplyEnterLeave();
             if (Destroyed) return;
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            ApplyEnterLeave();
+            if (Destroyed) return;
+
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();
             if (markedForLayoutApply) ApplyLayoutStyles();
+            ComputedStyle.MarkChangesSeen();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void DataChanged(string key, object value, WatchableDictionary<string, object> style)
         {
             MarkStyleUpdateWithSiblings(true);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void StyleChanged(IStyleProperty key, object value, WatchableDictionary<IStyleProperty, object> style)
         {
             MarkForStyleResolving(key == null || key.inherited);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void MarkForStyleResolving(bool recursive)
         {
             markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
             markedStyleResolve = true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void MarkForStyleApply(bool hasLayout)
         {
             markedForStyleApply = true;
@@ -152,7 +160,7 @@ namespace ReactUnity
                 Entering = false;
                 Leaving = true;
                 stateUpdateTime = Context.Timer.AnimationTime;
-                ResolveStyle(true);
+                MarkForStyleResolving(true);
             }
             else
             {
@@ -338,9 +346,7 @@ namespace ReactUnity
             var resolvedStyle = new NodeStyle(Context, null, cssStyles);
 
             StyleState.SetCurrent(resolvedStyle);
-            ApplyStyles();
-            ApplyLayoutStyles();
-            resolvedStyle.MarkChangesSeen();
+            MarkForStyleApply(true);
 
             if (IsContainer)
             {
@@ -577,11 +583,13 @@ namespace ReactUnity
         public abstract object GetComponent(Type type);
         public abstract object AddComponent(Type type);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CType GetComponent<CType>() where CType : Component
         {
             return GetComponent(typeof(CType)) as CType;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CType AddComponent<CType>() where CType : Component
         {
             return AddComponent(typeof(CType)) as CType;
