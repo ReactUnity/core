@@ -808,8 +808,8 @@ module.exports = function (cssWithMappingToString) {
     var alreadyImportedModules = {};
 
     if (dedupe) {
-      for (var _i = 0; _i < this.length; _i++) {
-        var id = this[_i][0];
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
 
         if (id != null) {
           alreadyImportedModules[id] = true;
@@ -817,8 +817,8 @@ module.exports = function (cssWithMappingToString) {
       }
     }
 
-    for (var _i2 = 0; _i2 < modules.length; _i2++) {
-      var item = [].concat(modules[_i2]);
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
 
       if (dedupe && alreadyImportedModules[item[0]]) {
         continue;
@@ -10198,14 +10198,12 @@ var textTypes = {
   script: true
 };
 
-function getAllowedProps(props, type) {
+function getAllowedProps(props, type, includeChildren) {
   var children = props.children,
       tag = props.tag,
-      ref = props.ref,
-      key = props.key,
-      rest = renderer_rest(props, ["children", "tag", "ref", "key"]);
+      rest = renderer_rest(props, ["children", "tag"]);
 
-  if (textTypes[type]) {
+  if (includeChildren && textTypes[type]) {
     rest.children = Array.isArray(children) ? children.join('') : (children === null || children === void 0 ? void 0 : children.toString()) || '';
   }
 
@@ -10237,12 +10235,9 @@ var hostConfig = {
   supportsPersistence: false,
   isPrimaryRenderer: true,
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    if (textTypes[type]) {
-      var rprops = getAllowedProps(props, type);
-      return UnityBridge.createElement(type, rprops.children, rootContainerInstance, rprops);
-    }
-
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance, getAllowedProps(props, type));
+    var aProps = getAllowedProps(props, type, false);
+    var children = textTypes[type] && aProps.children || null;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -10268,7 +10263,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type, true), type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');

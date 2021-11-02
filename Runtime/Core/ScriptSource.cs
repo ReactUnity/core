@@ -1,10 +1,10 @@
 #if UNITY_EDITOR || (REACT_WATCH_OUTSIDE_EDITOR && !REACT_DISABLE_FILE)
 #define REACT_SHOULD_WATCH
-using System.IO;
 #endif
 
 using System;
 using System.Collections;
+using System.IO;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using UnityEngine;
