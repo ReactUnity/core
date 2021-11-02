@@ -10198,13 +10198,13 @@ var textTypes = {
   script: true
 };
 
-function getAllowedProps(props, type, includeChildren) {
+function getAllowedProps(props, type) {
   var children = props.children,
       tag = props.tag,
       rest = renderer_rest(props, ["children", "tag"]);
 
-  if (includeChildren && textTypes[type]) {
-    rest.children = Array.isArray(children) ? children.join('') : (children === null || children === void 0 ? void 0 : children.toString()) || '';
+  if (textTypes[type]) {
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
   if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
@@ -10235,8 +10235,9 @@ var hostConfig = {
   supportsPersistence: false,
   isPrimaryRenderer: true,
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var aProps = getAllowedProps(props, type, false);
-    var children = textTypes[type] && aProps.children || null;
+    var aProps = getAllowedProps(props, type);
+    var children = aProps.children || null;
+    delete aProps.children;
     return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
@@ -10263,7 +10264,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type, true), type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');

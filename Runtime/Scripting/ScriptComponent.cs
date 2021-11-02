@@ -18,6 +18,7 @@ namespace ReactUnity.Scripting
 
         public void Execute()
         {
+            if (string.IsNullOrWhiteSpace(InnerContent)) return;
             try
             {
                 Context.Script.ExecuteScript(InnerContent, "script");
