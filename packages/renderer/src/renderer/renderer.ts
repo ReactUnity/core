@@ -21,10 +21,10 @@ const textTypes = {
 type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
 
 function getAllowedProps(props, type) {
-  const { children, tag, ref, key, ...rest } = props;
+  const { children, tag, ...rest } = props;
 
   if (textTypes[type]) {
-    rest.children = Array.isArray(children) ? children.join('') : children?.toString() || '';
+    rest.children = (!children || typeof children === 'boolean') ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
   if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
@@ -51,12 +51,10 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     hostContext,
     internalInstanceHandle,
   ) {
-    if (textTypes[type]) {
-      const rprops = getAllowedProps(props, type);
-      return UnityBridge.createElement(type, rprops.children, rootContainerInstance, rprops);
-    }
-
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance, getAllowedProps(props, type));
+    const aProps = getAllowedProps(props, type);
+    const children = aProps.children || null;
+    delete aProps.children;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
 
   createTextInstance(
