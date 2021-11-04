@@ -57,13 +57,11 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "memoize-one": "^5.2.1"
+    "memoize-one": "^6.0.0"
   },
   "devDependencies": {
     "@reactunity/renderer": "^0.7.0",
     "@reactunity/scripts": "^0.7.0",
-    "@types/react": "^17.0.30",
-    "@types/webpack-env": "^1.16.3",
     "concurrently": "^6.3.0",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
