@@ -47,21 +47,21 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@babel/core": "7.15.8",
+    "@babel/core": "7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.1",
-    "@types/react": "^17.0.30",
+    "@types/react": "^17.0.33",
     "@types/webpack-env": "1.16.3",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.2.3",
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-react-app": "^10.0.0",
     "bfj": "^7.0.2",
     "camelcase": "^6.2.0",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
     "confusing-browser-globals": "^1.0.10",
-    "css-loader": "6.4.0",
+    "css-loader": "6.5.0",
     "dotenv": "10.0.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^7.32.0",
@@ -70,7 +70,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^4.12.4",
-    "eslint-webpack-plugin": "^3.0.1",
+    "eslint-webpack-plugin": "^3.1.0",
     "file-loader": "6.2.0",
     "fs-extra": "^10.0.0",
     "identity-obj-proxy": "3.0.0",
@@ -83,14 +83,14 @@
     "react-refresh": "^0.10.0",
     "resolve": "1.20.0",
     "resolve-url-loader": "^4.0.0",
-    "sass-loader": "^12.2.0",
+    "sass-loader": "^12.3.0",
     "semver": "7.3.5",
-    "style-loader": "3.3.0",
+    "style-loader": "3.3.1",
     "terser-webpack-plugin": "5.2.4",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "webpack": "5.58.2",
-    "webpack-dev-server": "4.3.1"
+    "webpack": "5.61.0",
+    "webpack-dev-server": "4.4.0"
   },
   "devDependencies": {
     "react": "^17.0.2",
@@ -98,10 +98,10 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2",
-    "sass": "^1.43.2"
+    "sass": "^1.43.4"
   },
   "peerDependencies": {
-    "@reactunity/renderer": "^0.7.0",
+    "@reactunity/renderer": "^0.8.0",
     "typescript": "^4.4.4"
   },
   "peerDependenciesMeta": {
