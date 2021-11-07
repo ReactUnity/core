@@ -9069,7 +9069,9 @@ function PromptDialog(_a) {
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/selection.js
 ;
 
-var SelectionState = function () {
+var SelectionState =
+/** @class */
+function () {
   function SelectionState(allowMultiple, initialValue) {
     this.allowMultiple = allowMultiple;
     this.initialValue = initialValue;
@@ -10045,7 +10047,9 @@ var error_boundary_assign = undefined && undefined.__assign || function () {
 
 
 
-var ErrorBoundary = function (_super) {
+var ErrorBoundary =
+/** @class */
+function (_super) {
   __extends(ErrorBoundary, _super);
 
   function ErrorBoundary(props) {

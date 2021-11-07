@@ -11,12 +11,12 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.7.0",
+    "@reactunity/renderer": "^0.8.0",
     "clsx": "^1.1.1",
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.7.0",
+    "@reactunity/scripts": "^0.8.0",
     "typescript": "^4.4.4"
   }
 }
