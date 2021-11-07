@@ -6,16 +6,10 @@ const folder = '../../Tests/Runtime/Resources/ReactUnity/tests/injectable';
 const replaceStart = `/*INJECTABLE_START*/`;
 const replaceEnd = `/*INJECTABLE_END*/`;
 
-const replaceWith = `
-var React = react;
-var ReactUnityRenderer = ReactUnity.Renderer;
-var Renderer = ReactUnity.Renderer;
-
-/*INJECT_CODE*/
-`;
+const replacePath =  path.resolve(process.cwd(), 'scripts', 'injected-code.js');
+const replaceWith = fs.readFileSync(replacePath, { encoding: 'utf8' });
 
 const filePath = path.resolve(process.cwd(), folder, 'index.js');
-
 const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' });
 
 const startIndex = fileContent.indexOf(replaceStart) + replaceStart.length;
