@@ -25,7 +25,6 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "types": [
       "@reactunity/scripts/main",
       "@reactunity/scripts/ugui"
