@@ -70,7 +70,7 @@
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
-    "@reactunity/renderer": "^0.7.0",
+    "@reactunity/renderer": "^0.8.0",
     "react": "^17.0.2"
   }
 }
