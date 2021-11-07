@@ -2,7 +2,7 @@
   "name": "com.reactunity.core",
   "author": "Gokhan Kurt",
   "displayName": "React Unity",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "unity": "2019.4",
   "description": "React renderer for Unity",
   "keywords": [
