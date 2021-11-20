@@ -218,7 +218,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 630:
+/***/ 910:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7667,6 +7667,8 @@ __webpack_require__.d(dist_namespaceObject, {
   "Button": () => (Button),
   "Card": () => (Card),
   "ConfirmDialog": () => (ConfirmDialog),
+  "FixedSizeGrid": () => (FixedSizeGrid),
+  "FixedSizeList": () => (FixedSizeList),
   "InputField": () => (InputField),
   "Modal": () => (Modal),
   "Paper": () => (Paper),
@@ -7676,9 +7678,13 @@ __webpack_require__.d(dist_namespaceObject, {
   "TextField": () => (TextField),
   "Toggle": () => (Toggle),
   "ToggleGroup": () => (ToggleGroup),
+  "VariableSizeGrid": () => (VariableSizeGrid),
+  "VariableSizeList": () => (VariableSizeList),
   "_Option": () => (_Option),
   "_Select": () => (_Select),
   "addRipple": () => (addRipple),
+  "areEqual": () => (areEqual),
+  "shouldComponentUpdate": () => (shouldComponentUpdate),
   "useDataTooltip": () => (useDataTooltip),
   "useRipple": () => (useRipple),
   "useTooltip": () => (useTooltip)
@@ -8720,7 +8726,7 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
   }), void 0);
 });
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/paper/index.module.scss
-var paper_index_module = __webpack_require__(630);
+var paper_index_module = __webpack_require__(910);
 ;// CONCATENATED MODULE: ../../../material/dist/src/paper/index.module.scss
 
       
@@ -10500,7 +10506,2027 @@ function propsProxy(data) {
     }
   });
 }
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/shallowDiffers.js
+// Pulled from react-compat
+// https://github.com/developit/preact-compat/blob/7c5de00e7c85e2ffd011bf3af02899b63f699d3a/src/index.js#L349
+function shallowDiffers(prev, next) {
+  for (var attribute in prev) {
+    if (!(attribute in next)) {
+      return true;
+    }
+  }
+
+  for (var attribute in next) {
+    if (prev[attribute] !== next[attribute]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/areEqual.js
+var areEqual_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+ // Custom comparison function for React.memo().
+// It knows to compare individual style props and ignore the wrapper object.
+// See https://reactjs.org/docs/react-api.html#reactmemo
+
+function areEqual(prevProps, nextProps) {
+  var prevStyle = prevProps.style,
+      prevRest = areEqual_rest(prevProps, ["style"]);
+
+  var nextStyle = nextProps.style,
+      nextRest = areEqual_rest(nextProps, ["style"]);
+
+  return !shallowDiffers(prevStyle, nextStyle) && !shallowDiffers(prevRest, nextRest);
+}
+;// CONCATENATED MODULE: ../../../node_modules/memoize-one/dist/memoize-one.esm.js
+var safeIsNaN = Number.isNaN || function ponyfill(value) {
+  return typeof value === 'number' && value !== value;
+};
+
+function isEqual(first, second) {
+  if (first === second) {
+    return true;
+  }
+
+  if (safeIsNaN(first) && safeIsNaN(second)) {
+    return true;
+  }
+
+  return false;
+}
+
+function areInputsEqual(newInputs, lastInputs) {
+  if (newInputs.length !== lastInputs.length) {
+    return false;
+  }
+
+  for (var i = 0; i < newInputs.length; i++) {
+    if (!isEqual(newInputs[i], lastInputs[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function memoizeOne(resultFn, isEqual) {
+  if (isEqual === void 0) {
+    isEqual = areInputsEqual;
+  }
+
+  var cache = null;
+
+  function memoized() {
+    var newArgs = [];
+
+    for (var _i = 0; _i < arguments.length; _i++) {
+      newArgs[_i] = arguments[_i];
+    }
+
+    if (cache && cache.lastThis === this && isEqual(newArgs, cache.lastArgs)) {
+      return cache.lastResult;
+    }
+
+    var lastResult = resultFn.apply(this, newArgs);
+    cache = {
+      lastResult: lastResult,
+      lastArgs: newArgs,
+      lastThis: this
+    };
+    return lastResult;
+  }
+
+  memoized.clear = function clear() {
+    cache = null;
+  };
+
+  return memoized;
+}
+
+
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/domHelpers.js
+function getScrollbarSize(el) {
+  return {
+    verticalWidth: el.VerticalScrollbar.Thumb.ClientWidth,
+    horizontalHeight: el.HorizontalScrollbar.Thumb.ClientHeight
+  };
+}
+function getRTLOffsetType() {
+  return 'positive-ascending';
+}
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/timer.js
+function cancelTimeout(timeoutID) {
+  clearTimeout(timeoutID.id);
+}
+function requestTimeout(callback, delay) {
+  return {
+    id: setTimeout(callback, delay)
+  };
+}
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/createGridComponent.js
+var createGridComponent_extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var createGridComponent_assign = undefined && undefined.__assign || function () {
+  createGridComponent_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return createGridComponent_assign.apply(this, arguments);
+};
+
+var createGridComponent_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+var IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
+
+var defaultItemKey = function defaultItemKey(_a) {
+  var columnIndex = _a.columnIndex,
+      data = _a.data,
+      rowIndex = _a.rowIndex;
+  return rowIndex + ":" + columnIndex;
+};
+
+function createGridComponent(_a) {
+  var _b;
+
+  var getColumnOffset = _a.getColumnOffset,
+      getColumnStartIndexForOffset = _a.getColumnStartIndexForOffset,
+      getColumnStopIndexForStartIndex = _a.getColumnStopIndexForStartIndex,
+      getColumnWidth = _a.getColumnWidth,
+      getEstimatedTotalHeight = _a.getEstimatedTotalHeight,
+      getEstimatedTotalWidth = _a.getEstimatedTotalWidth,
+      getOffsetForColumnAndAlignment = _a.getOffsetForColumnAndAlignment,
+      getOffsetForRowAndAlignment = _a.getOffsetForRowAndAlignment,
+      getRowHeight = _a.getRowHeight,
+      getRowOffset = _a.getRowOffset,
+      getRowStartIndexForOffset = _a.getRowStartIndexForOffset,
+      getRowStopIndexForStartIndex = _a.getRowStopIndexForStartIndex,
+      initInstanceProps = _a.initInstanceProps,
+      shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
+      validateProps = _a.validateProps;
+  return _b =
+  /** @class */
+  function (_super) {
+    createGridComponent_extends(Grid, _super); // Always use explicit constructor for React components.
+    // It produces less code after transpilation. (#26)
+    // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
+
+
+    function Grid(props) {
+      var _this = _super.call(this, props) || this;
+
+      _this._instanceProps = initInstanceProps(_this.props, _this);
+      _this._resetIsScrollingTimeoutId = null;
+      _this.state = {
+        instance: _this,
+        isScrolling: false,
+        horizontalScrollDirection: 'forward',
+        scrollLeft: typeof _this.props.initialScrollLeft === 'number' ? _this.props.initialScrollLeft : 0,
+        scrollTop: typeof _this.props.initialScrollTop === 'number' ? _this.props.initialScrollTop : 0,
+        scrollUpdateWasRequested: false,
+        verticalScrollDirection: 'forward'
+      };
+      _this._callOnItemsRendered = memoizeOne(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
+        return _this.props.onItemsRendered({
+          overscanColumnStartIndex: overscanColumnStartIndex,
+          overscanColumnStopIndex: overscanColumnStopIndex,
+          overscanRowStartIndex: overscanRowStartIndex,
+          overscanRowStopIndex: overscanRowStopIndex,
+          visibleColumnStartIndex: visibleColumnStartIndex,
+          visibleColumnStopIndex: visibleColumnStopIndex,
+          visibleRowStartIndex: visibleRowStartIndex,
+          visibleRowStopIndex: visibleRowStopIndex
+        });
+      });
+      _this._callOnScroll = memoizeOne(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
+        return _this.props.onScroll({
+          horizontalScrollDirection: horizontalScrollDirection,
+          scrollLeft: scrollLeft,
+          scrollTop: scrollTop,
+          verticalScrollDirection: verticalScrollDirection,
+          scrollUpdateWasRequested: scrollUpdateWasRequested
+        });
+      }); // Lazily create and cache item styles while scrolling,
+      // So that pure component sCU will prevent re-renders.
+      // We maintain this cache, and pass a style prop rather than index,
+      // So that List can clear cached styles and force item re-render if necessary.
+
+      _this._getItemStyle = function (rowIndex, columnIndex) {
+        var _a = _this.props,
+            columnWidth = _a.columnWidth,
+            direction = _a.direction,
+            rowHeight = _a.rowHeight;
+
+        var itemStyleCache = _this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && columnWidth, shouldResetStyleCacheOnItemSizeChange && direction, shouldResetStyleCacheOnItemSizeChange && rowHeight);
+
+        var key = rowIndex + ":" + columnIndex;
+        var style;
+
+        if (itemStyleCache.hasOwnProperty(key)) {
+          style = itemStyleCache[key];
+        } else {
+          var offset = getColumnOffset(_this.props, columnIndex, _this._instanceProps);
+          var isRtl = direction === 'rtl';
+          itemStyleCache[key] = style = {
+            position: 'absolute',
+            left: isRtl ? undefined : offset,
+            right: isRtl ? offset : undefined,
+            top: getRowOffset(_this.props, rowIndex, _this._instanceProps),
+            height: getRowHeight(_this.props, rowIndex, _this._instanceProps),
+            width: getColumnWidth(_this.props, columnIndex, _this._instanceProps)
+          };
+        }
+
+        return style;
+      };
+
+      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
+        return {};
+      });
+
+      _this._onScroll = function (event, sender) {
+        var clientHeight = sender.ClientHeight;
+        var clientWidth = sender.ClientWidth;
+        var scrollLeft = sender.ScrollLeft;
+        var scrollTop = sender.ScrollTop;
+        var scrollHeight = sender.ScrollHeight;
+        var scrollWidth = sender.ScrollWidth;
+
+        _this.setState(function (prevState) {
+          if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) {
+            // Scroll position may have been updated by cDM/cDU,
+            // In which case we don't need to trigger another render,
+            // And we don't want to update state.isScrolling.
+            return null;
+          }
+
+          var direction = _this.props.direction; // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
+          // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
+          // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
+          // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
+
+          var calculatedScrollLeft = scrollLeft;
+
+          if (direction === 'rtl') {
+            switch (getRTLOffsetType()) {
+              case 'negative':
+                calculatedScrollLeft = -scrollLeft;
+                break;
+
+              case 'positive-descending':
+                calculatedScrollLeft = scrollWidth - clientWidth - scrollLeft;
+                break;
+            }
+          } // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
+
+
+          calculatedScrollLeft = Math.max(0, Math.min(calculatedScrollLeft, scrollWidth - clientWidth));
+          var calculatedScrollTop = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
+          return {
+            isScrolling: true,
+            horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? 'forward' : 'backward',
+            scrollLeft: calculatedScrollLeft,
+            scrollTop: calculatedScrollTop,
+            verticalScrollDirection: prevState.scrollTop < scrollTop ? 'forward' : 'backward',
+            scrollUpdateWasRequested: false
+          };
+        }, _this._resetIsScrollingDebounced);
+      };
+
+      _this._outerRefSetter = function (ref) {
+        var outerRef = _this.props.outerRef;
+        _this._outerRef = ref;
+
+        if (typeof outerRef === 'function') {
+          outerRef(ref);
+        } else if (outerRef != null && typeof outerRef === 'object' && outerRef.hasOwnProperty('current')) {
+          outerRef.current = ref;
+        }
+      };
+
+      _this._resetIsScrollingDebounced = function () {
+        if (_this._resetIsScrollingTimeoutId !== null) {
+          cancelTimeout(_this._resetIsScrollingTimeoutId);
+        }
+
+        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, IS_SCROLLING_DEBOUNCE_INTERVAL);
+      };
+
+      _this._resetIsScrolling = function () {
+        _this._resetIsScrollingTimeoutId = null;
+
+        _this.setState({
+          isScrolling: false
+        }, function () {
+          // Clear style cache after state update has been committed.
+          // This way we don't break pure sCU for items that don't use isScrolling param.
+          _this._getItemStyleCache(-1);
+        });
+      };
+
+      return _this;
+    }
+
+    Grid.getDerivedStateFromProps = function (nextProps, prevState) {
+      validateSharedProps(nextProps, prevState);
+      validateProps(nextProps);
+      return null;
+    };
+
+    Grid.prototype.scrollTo = function (_a) {
+      var scrollLeft = _a.scrollLeft,
+          scrollTop = _a.scrollTop;
+
+      if (scrollLeft !== undefined) {
+        scrollLeft = Math.max(0, scrollLeft);
+      }
+
+      if (scrollTop !== undefined) {
+        scrollTop = Math.max(0, scrollTop);
+      }
+
+      this.setState(function (prevState) {
+        if (scrollLeft === undefined) {
+          scrollLeft = prevState.scrollLeft;
+        }
+
+        if (scrollTop === undefined) {
+          scrollTop = prevState.scrollTop;
+        }
+
+        if (prevState.scrollLeft === scrollLeft && prevState.scrollTop === scrollTop) {
+          return null;
+        }
+
+        return {
+          horizontalScrollDirection: prevState.scrollLeft < scrollLeft ? 'forward' : 'backward',
+          scrollLeft: scrollLeft,
+          scrollTop: scrollTop,
+          scrollUpdateWasRequested: true,
+          verticalScrollDirection: prevState.scrollTop < scrollTop ? 'forward' : 'backward'
+        };
+      }, this._resetIsScrollingDebounced);
+    };
+
+    Grid.prototype.scrollToItem = function (_a) {
+      var _b = _a.align,
+          align = _b === void 0 ? 'auto' : _b,
+          columnIndex = _a.columnIndex,
+          rowIndex = _a.rowIndex;
+      var _c = this.props,
+          columnCount = _c.columnCount,
+          height = _c.height,
+          rowCount = _c.rowCount,
+          width = _c.width;
+      var _d = this.state,
+          scrollLeft = _d.scrollLeft,
+          scrollTop = _d.scrollTop;
+      var sizes = getScrollbarSize(this._outerRef);
+
+      if (columnIndex !== undefined) {
+        columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
+      }
+
+      if (rowIndex !== undefined) {
+        rowIndex = Math.max(0, Math.min(rowIndex, rowCount - 1));
+      }
+
+      var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+      var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps); // The scrollbar size should be considered when scrolling an item into view,
+      // to ensure it's fully visible.
+      // But we only need to account for its size when it's actually visible.
+
+      var horizontalScrollbarSize = estimatedTotalWidth > width ? sizes.horizontalHeight : 0;
+      var verticalScrollbarSize = estimatedTotalHeight > height ? sizes.verticalWidth : 0;
+      this.scrollTo({
+        scrollLeft: columnIndex !== undefined ? getOffsetForColumnAndAlignment(this.props, columnIndex, align, scrollLeft, this._instanceProps, verticalScrollbarSize) : scrollLeft,
+        scrollTop: rowIndex !== undefined ? getOffsetForRowAndAlignment(this.props, rowIndex, align, scrollTop, this._instanceProps, horizontalScrollbarSize) : scrollTop
+      });
+    };
+
+    Grid.prototype.componentDidMount = function () {
+      var _a = this.props,
+          initialScrollLeft = _a.initialScrollLeft,
+          initialScrollTop = _a.initialScrollTop;
+
+      if (this._outerRef != null) {
+        var outerRef = this._outerRef;
+
+        if (typeof initialScrollLeft === 'number') {
+          outerRef.ScrollLeft = initialScrollLeft;
+        }
+
+        if (typeof initialScrollTop === 'number') {
+          outerRef.ScrollTop = initialScrollTop;
+        }
+      }
+
+      this._callPropsCallbacks();
+    };
+
+    Grid.prototype.componentDidUpdate = function () {
+      var direction = this.props.direction;
+      var _a = this.state,
+          scrollLeft = _a.scrollLeft,
+          scrollTop = _a.scrollTop,
+          scrollUpdateWasRequested = _a.scrollUpdateWasRequested;
+
+      if (scrollUpdateWasRequested && this._outerRef != null) {
+        // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
+        // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
+        // So we need to determine which browser behavior we're dealing with, and mimic it.
+        var outerRef = this._outerRef;
+
+        if (direction === 'rtl') {
+          switch (getRTLOffsetType()) {
+            case 'negative':
+              outerRef.ScrollLeft = -scrollLeft;
+              break;
+
+            case 'positive-ascending':
+              outerRef.ScrollLeft = scrollLeft;
+              break;
+
+            default:
+              var clientWidth = outerRef.ClientWidth;
+              var scrollWidth = outerRef.ScrollWidth;
+              outerRef.ScrollLeft = scrollWidth - clientWidth - scrollLeft;
+              break;
+          }
+        } else {
+          outerRef.ScrollLeft = Math.max(0, scrollLeft);
+        }
+
+        outerRef.ScrollTop = Math.max(0, scrollTop);
+      }
+
+      this._callPropsCallbacks();
+    };
+
+    Grid.prototype.componentWillUnmount = function () {
+      if (this._resetIsScrollingTimeoutId !== null) {
+        cancelTimeout(this._resetIsScrollingTimeoutId);
+      }
+    };
+
+    Grid.prototype.render = function () {
+      var _a = this.props,
+          children = _a.children,
+          className = _a.className,
+          columnCount = _a.columnCount,
+          direction = _a.direction,
+          height = _a.height,
+          innerRef = _a.innerRef,
+          innerElementType = _a.innerElementType,
+          itemData = _a.itemData,
+          _b = _a.itemKey,
+          itemKey = _b === void 0 ? defaultItemKey : _b,
+          outerElementType = _a.outerElementType,
+          rowCount = _a.rowCount,
+          style = _a.style,
+          useIsScrolling = _a.useIsScrolling,
+          width = _a.width,
+          // Unused
+      columnWidth = _a.columnWidth,
+          initialScrollLeft = _a.initialScrollLeft,
+          initialScrollTop = _a.initialScrollTop,
+          onItemsRendered = _a.onItemsRendered,
+          onScroll = _a.onScroll,
+          outerRef = _a.outerRef,
+          overscanColumnCount = _a.overscanColumnCount,
+          overscanRowCount = _a.overscanRowCount,
+          rowHeight = _a.rowHeight,
+          rest = createGridComponent_rest(_a, ["children", "className", "columnCount", "direction", "height", "innerRef", "innerElementType", "itemData", "itemKey", "outerElementType", "rowCount", "style", "useIsScrolling", "width", "columnWidth", "initialScrollLeft", "initialScrollTop", "onItemsRendered", "onScroll", "outerRef", "overscanColumnCount", "overscanRowCount", "rowHeight"]);
+
+      var isScrolling = this.state.isScrolling;
+
+      var _c = this._getHorizontalRangeToRender(),
+          columnStartIndex = _c[0],
+          columnStopIndex = _c[1];
+
+      var _d = this._getVerticalRangeToRender(),
+          rowStartIndex = _d[0],
+          rowStopIndex = _d[1];
+
+      var items = [];
+
+      if (columnCount > 0 && rowCount) {
+        for (var rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) {
+          for (var columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) {
+            items.push((0,react.createElement)(children, {
+              columnIndex: columnIndex,
+              data: itemData,
+              isScrolling: useIsScrolling ? isScrolling : undefined,
+              key: itemKey({
+                columnIndex: columnIndex,
+                data: itemData,
+                rowIndex: rowIndex
+              }),
+              rowIndex: rowIndex,
+              style: this._getItemStyle(rowIndex, columnIndex)
+            }));
+          }
+        }
+      } // Read this value AFTER items have been created,
+      // So their actual sizes (if variable) are taken into consideration.
+
+
+      var estimatedTotalHeight = getEstimatedTotalHeight(this.props, this._instanceProps);
+      var estimatedTotalWidth = getEstimatedTotalWidth(this.props, this._instanceProps);
+      return (0,react.createElement)(outerElementType || 'scroll', createGridComponent_assign(createGridComponent_assign({}, rest), {
+        className: className,
+        onValueChanged: this._onScroll,
+        ref: this._outerRefSetter,
+        style: createGridComponent_assign({
+          position: 'relative',
+          height: height,
+          width: width,
+          direction: direction
+        }, style)
+      }), (0,react.createElement)(innerElementType || 'view', {
+        children: items,
+        ref: innerRef,
+        style: {
+          height: estimatedTotalHeight,
+          pointerEvents: isScrolling ? 'none' : undefined,
+          width: estimatedTotalWidth
+        }
+      }));
+    };
+
+    Grid.prototype._callPropsCallbacks = function () {
+      var _a = this.props,
+          columnCount = _a.columnCount,
+          onItemsRendered = _a.onItemsRendered,
+          onScroll = _a.onScroll,
+          rowCount = _a.rowCount;
+
+      if (typeof onItemsRendered === 'function') {
+        if (columnCount > 0 && rowCount > 0) {
+          var _b = this._getHorizontalRangeToRender(),
+              overscanColumnStartIndex = _b[0],
+              overscanColumnStopIndex = _b[1],
+              visibleColumnStartIndex = _b[2],
+              visibleColumnStopIndex = _b[3];
+
+          var _c = this._getVerticalRangeToRender(),
+              overscanRowStartIndex = _c[0],
+              overscanRowStopIndex = _c[1],
+              visibleRowStartIndex = _c[2],
+              visibleRowStopIndex = _c[3];
+
+          this._callOnItemsRendered(overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex);
+        }
+      }
+
+      if (typeof onScroll === 'function') {
+        var _d = this.state,
+            horizontalScrollDirection = _d.horizontalScrollDirection,
+            scrollLeft = _d.scrollLeft,
+            scrollTop = _d.scrollTop,
+            scrollUpdateWasRequested = _d.scrollUpdateWasRequested,
+            verticalScrollDirection = _d.verticalScrollDirection;
+
+        this._callOnScroll(scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested);
+      }
+    };
+
+    Grid.prototype._getHorizontalRangeToRender = function () {
+      var _a = this.props,
+          columnCount = _a.columnCount,
+          overscanColumnCount = _a.overscanColumnCount,
+          rowCount = _a.rowCount;
+      var _b = this.state,
+          horizontalScrollDirection = _b.horizontalScrollDirection,
+          isScrolling = _b.isScrolling,
+          scrollLeft = _b.scrollLeft;
+      var overscanCountResolved = overscanColumnCount || 1;
+
+      if (columnCount === 0 || rowCount === 0) {
+        return [0, 0, 0, 0];
+      }
+
+      var startIndex = getColumnStartIndexForOffset(this.props, scrollLeft, this._instanceProps);
+      var stopIndex = getColumnStopIndexForStartIndex(this.props, startIndex, scrollLeft, this._instanceProps); // Overscan by one item in each direction so that tab/focus works.
+      // If there isn't at least one extra item, tab loops back around.
+
+      var overscanBackward = !isScrolling || horizontalScrollDirection === 'backward' ? Math.max(1, overscanCountResolved) : 1;
+      var overscanForward = !isScrolling || horizontalScrollDirection === 'forward' ? Math.max(1, overscanCountResolved) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(columnCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    };
+
+    Grid.prototype._getVerticalRangeToRender = function () {
+      var _a = this.props,
+          columnCount = _a.columnCount,
+          overscanRowCount = _a.overscanRowCount,
+          rowCount = _a.rowCount;
+      var _b = this.state,
+          isScrolling = _b.isScrolling,
+          verticalScrollDirection = _b.verticalScrollDirection,
+          scrollTop = _b.scrollTop;
+      var overscanCountResolved = overscanRowCount || 1;
+
+      if (columnCount === 0 || rowCount === 0) {
+        return [0, 0, 0, 0];
+      }
+
+      var startIndex = getRowStartIndexForOffset(this.props, scrollTop, this._instanceProps);
+      var stopIndex = getRowStopIndexForStartIndex(this.props, startIndex, scrollTop, this._instanceProps); // Overscan by one item in each direction so that tab/focus works.
+      // If there isn't at least one extra item, tab loops back around.
+
+      var overscanBackward = !isScrolling || verticalScrollDirection === 'backward' ? Math.max(1, overscanCountResolved) : 1;
+      var overscanForward = !isScrolling || verticalScrollDirection === 'forward' ? Math.max(1, overscanCountResolved) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(rowCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    };
+
+    return Grid;
+  }(react.PureComponent), _b.defaultProps = {
+    direction: 'ltr',
+    itemData: undefined,
+    useIsScrolling: false
+  }, _b;
+}
+
+var validateSharedProps = function validateSharedProps(_a, _b) {
+  var children = _a.children,
+      direction = _a.direction,
+      height = _a.height,
+      width = _a.width;
+  var instance = _b.instance;
+
+  if (false) {}
+};
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/FixedSizeGrid.js
+
+var FixedSizeGrid = createGridComponent({
+  getColumnOffset: function getColumnOffset(_a, index) {
+    var columnWidth = _a.columnWidth;
+    return index * columnWidth;
+  },
+  getColumnWidth: function getColumnWidth(_a, index) {
+    var columnWidth = _a.columnWidth;
+    return columnWidth;
+  },
+  getRowOffset: function getRowOffset(_a, index) {
+    var rowHeight = _a.rowHeight;
+    return index * rowHeight;
+  },
+  getRowHeight: function getRowHeight(_a, index) {
+    var rowHeight = _a.rowHeight;
+    return rowHeight;
+  },
+  getEstimatedTotalHeight: function getEstimatedTotalHeight(_a) {
+    var rowCount = _a.rowCount,
+        rowHeight = _a.rowHeight;
+    return rowHeight * rowCount;
+  },
+  getEstimatedTotalWidth: function getEstimatedTotalWidth(_a) {
+    var columnCount = _a.columnCount,
+        columnWidth = _a.columnWidth;
+    return columnWidth * columnCount;
+  },
+  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(_a, columnIndex, align, scrollLeft, instanceProps, scrollbarSize) {
+    var columnCount = _a.columnCount,
+        columnWidth = _a.columnWidth,
+        width = _a.width;
+    var lastColumnOffset = Math.max(0, columnCount * columnWidth - width);
+    var maxOffset = Math.min(lastColumnOffset, columnIndex * columnWidth);
+    var minOffset = Math.max(0, columnIndex * columnWidth - width + scrollbarSize + columnWidth);
+
+    if (align === 'smart') {
+      if (scrollLeft >= minOffset - width && scrollLeft <= maxOffset + width) {
+        align = 'auto';
+      } else {
+        align = 'center';
+      }
+    }
+
+    switch (align) {
+      case 'start':
+        return maxOffset;
+
+      case 'end':
+        return minOffset;
+
+      case 'center':
+        // "Centered" offset is usually the average of the min and max.
+        // But near the edges of the list, this doesn't hold true.
+        var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+
+        if (middleOffset < Math.ceil(width / 2)) {
+          return 0; // near the beginning
+        } else if (middleOffset > lastColumnOffset + Math.floor(width / 2)) {
+          return lastColumnOffset; // near the end
+        } else {
+          return middleOffset;
+        }
+
+      case 'auto':
+      default:
+        if (scrollLeft >= minOffset && scrollLeft <= maxOffset) {
+          return scrollLeft;
+        } else if (minOffset > maxOffset) {
+          // Because we only take into account the scrollbar size when calculating minOffset
+          // this value can be larger than maxOffset when at the end of the list
+          return minOffset;
+        } else if (scrollLeft < minOffset) {
+          return minOffset;
+        } else {
+          return maxOffset;
+        }
+
+    }
+  },
+  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(_a, rowIndex, align, scrollTop, instanceProps, scrollbarSize) {
+    var rowHeight = _a.rowHeight,
+        height = _a.height,
+        rowCount = _a.rowCount;
+    var lastRowOffset = Math.max(0, rowCount * rowHeight - height);
+    var maxOffset = Math.min(lastRowOffset, rowIndex * rowHeight);
+    var minOffset = Math.max(0, rowIndex * rowHeight - height + scrollbarSize + rowHeight);
+
+    if (align === 'smart') {
+      if (scrollTop >= minOffset - height && scrollTop <= maxOffset + height) {
+        align = 'auto';
+      } else {
+        align = 'center';
+      }
+    }
+
+    switch (align) {
+      case 'start':
+        return maxOffset;
+
+      case 'end':
+        return minOffset;
+
+      case 'center':
+        // "Centered" offset is usually the average of the min and max.
+        // But near the edges of the list, this doesn't hold true.
+        var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+
+        if (middleOffset < Math.ceil(height / 2)) {
+          return 0; // near the beginning
+        } else if (middleOffset > lastRowOffset + Math.floor(height / 2)) {
+          return lastRowOffset; // near the end
+        } else {
+          return middleOffset;
+        }
+
+      case 'auto':
+      default:
+        if (scrollTop >= minOffset && scrollTop <= maxOffset) {
+          return scrollTop;
+        } else if (minOffset > maxOffset) {
+          // Because we only take into account the scrollbar size when calculating minOffset
+          // this value can be larger than maxOffset when at the end of the list
+          return minOffset;
+        } else if (scrollTop < minOffset) {
+          return minOffset;
+        } else {
+          return maxOffset;
+        }
+
+    }
+  },
+  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(_a, scrollLeft) {
+    var columnWidth = _a.columnWidth,
+        columnCount = _a.columnCount;
+    return Math.max(0, Math.min(columnCount - 1, Math.floor(scrollLeft / columnWidth)));
+  },
+  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(_a, startIndex, scrollLeft) {
+    var columnWidth = _a.columnWidth,
+        columnCount = _a.columnCount,
+        width = _a.width;
+    var left = startIndex * columnWidth;
+    var numVisibleColumns = Math.ceil((width + scrollLeft - left) / columnWidth);
+    return Math.max(0, Math.min(columnCount - 1, startIndex + numVisibleColumns - 1 // -1 is because stop index is inclusive
+    ));
+  },
+  getRowStartIndexForOffset: function getRowStartIndexForOffset(_a, scrollTop) {
+    var rowHeight = _a.rowHeight,
+        rowCount = _a.rowCount;
+    return Math.max(0, Math.min(rowCount - 1, Math.floor(scrollTop / rowHeight)));
+  },
+  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(_a, startIndex, scrollTop) {
+    var rowHeight = _a.rowHeight,
+        rowCount = _a.rowCount,
+        height = _a.height;
+    var top = startIndex * rowHeight;
+    var numVisibleRows = Math.ceil((height + scrollTop - top) / rowHeight);
+    return Math.max(0, Math.min(rowCount - 1, startIndex + numVisibleRows - 1 // -1 is because stop index is inclusive
+    ));
+  },
+  initInstanceProps: function initInstanceProps(props) {// Noop
+  },
+  shouldResetStyleCacheOnItemSizeChange: true,
+  validateProps: function validateProps(_a) {
+    var columnWidth = _a.columnWidth,
+        rowHeight = _a.rowHeight;
+
+    if (false) {}
+  }
+});
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/createListComponent.js
+var createListComponent_extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var createListComponent_assign = undefined && undefined.__assign || function () {
+  createListComponent_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return createListComponent_assign.apply(this, arguments);
+};
+
+var createListComponent_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+
+var createListComponent_IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
+
+var createListComponent_defaultItemKey = function defaultItemKey(index, data) {
+  return index;
+};
+
+function createListComponent(_a) {
+  var _b;
+
+  var getItemOffset = _a.getItemOffset,
+      getEstimatedTotalSize = _a.getEstimatedTotalSize,
+      getItemSize = _a.getItemSize,
+      getOffsetForIndexAndAlignment = _a.getOffsetForIndexAndAlignment,
+      getStartIndexForOffset = _a.getStartIndexForOffset,
+      getStopIndexForStartIndex = _a.getStopIndexForStartIndex,
+      initInstanceProps = _a.initInstanceProps,
+      shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
+      validateProps = _a.validateProps;
+  return _b =
+  /** @class */
+  function (_super) {
+    createListComponent_extends(List, _super); // Always use explicit constructor for React components.
+    // It produces less code after transpilation. (#26)
+    // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
+
+
+    function List(props) {
+      var _this = _super.call(this, props) || this;
+
+      _this._instanceProps = initInstanceProps(_this.props, _this);
+      _this._resetIsScrollingTimeoutId = null;
+      _this.state = {
+        instance: _this,
+        isScrolling: false,
+        scrollDirection: 'forward',
+        scrollOffset: typeof _this.props.initialScrollOffset === 'number' ? _this.props.initialScrollOffset : 0,
+        scrollUpdateWasRequested: false
+      };
+      _this._callOnItemsRendered = memoizeOne(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
+        return _this.props.onItemsRendered({
+          overscanStartIndex: overscanStartIndex,
+          overscanStopIndex: overscanStopIndex,
+          visibleStartIndex: visibleStartIndex,
+          visibleStopIndex: visibleStopIndex
+        });
+      });
+      _this._callOnScroll = memoizeOne(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
+        return _this.props.onScroll({
+          scrollDirection: scrollDirection,
+          scrollOffset: scrollOffset,
+          scrollUpdateWasRequested: scrollUpdateWasRequested
+        });
+      }); // Lazily create and cache item styles while scrolling,
+      // So that pure component sCU will prevent re-renders.
+      // We maintain this cache, and pass a style prop rather than index,
+      // So that List can clear cached styles and force item re-render if necessary.
+
+      _this._getItemStyle = function (index) {
+        var _a = _this.props,
+            direction = _a.direction,
+            itemSize = _a.itemSize,
+            layout = _a.layout;
+
+        var itemStyleCache = _this._getItemStyleCache(shouldResetStyleCacheOnItemSizeChange && itemSize, shouldResetStyleCacheOnItemSizeChange && layout, shouldResetStyleCacheOnItemSizeChange && direction);
+
+        var style;
+
+        if (itemStyleCache.hasOwnProperty(index)) {
+          style = itemStyleCache[index];
+        } else {
+          var offset = getItemOffset(_this.props, index, _this._instanceProps);
+          var size = getItemSize(_this.props, index, _this._instanceProps);
+          var isHorizontal = layout === 'horizontal';
+          var isRtl = direction === 'rtl';
+          var offsetHorizontal = isHorizontal ? offset : 0;
+          itemStyleCache[index] = style = {
+            position: 'absolute',
+            left: isRtl ? undefined : offsetHorizontal,
+            right: isRtl ? offsetHorizontal : undefined,
+            top: !isHorizontal ? offset : 0,
+            height: !isHorizontal ? size : '100%',
+            width: isHorizontal ? size : '100%'
+          };
+        }
+
+        return style;
+      };
+
+      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
+        return {};
+      });
+
+      _this._onScrollHorizontal = function (event, sender) {
+        var clientWidth = sender.ClientWidth;
+        var scrollWidth = sender.ScrollWidth;
+        var scrollLeft = sender.ScrollLeft;
+
+        _this.setState(function (prevState) {
+          if (prevState.scrollOffset === scrollLeft) {
+            // Scroll position may have been updated by cDM/cDU,
+            // In which case we don't need to trigger another render,
+            // And we don't want to update state.isScrolling.
+            return null;
+          }
+
+          var direction = _this.props.direction;
+          var scrollOffset = scrollLeft;
+
+          if (direction === 'rtl') {
+            // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
+            // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
+            // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
+            // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
+            switch (getRTLOffsetType()) {
+              case 'negative':
+                scrollOffset = -scrollLeft;
+                break;
+
+              case 'positive-descending':
+                scrollOffset = scrollWidth - clientWidth - scrollLeft;
+                break;
+            }
+          } // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
+
+
+          scrollOffset = Math.max(0, Math.min(scrollOffset, scrollWidth - clientWidth));
+          return {
+            isScrolling: true,
+            scrollDirection: prevState.scrollOffset < scrollLeft ? 'forward' : 'backward',
+            scrollOffset: scrollOffset,
+            scrollUpdateWasRequested: false
+          };
+        }, _this._resetIsScrollingDebounced);
+      };
+
+      _this._onScrollVertical = function (event, sender) {
+        var clientHeight = sender.ClientHeight;
+        var scrollHeight = sender.ScrollHeight;
+        var scrollTop = sender.ScrollTop;
+
+        _this.setState(function (prevState) {
+          if (prevState.scrollOffset === scrollTop) {
+            // Scroll position may have been updated by cDM/cDU,
+            // In which case we don't need to trigger another render,
+            // And we don't want to update state.isScrolling.
+            return null;
+          } // Prevent Safari's elastic scrolling from causing visual shaking when scrolling past bounds.
+
+
+          var scrollOffset = Math.max(0, Math.min(scrollTop, scrollHeight - clientHeight));
+          return {
+            isScrolling: true,
+            scrollDirection: prevState.scrollOffset < scrollOffset ? 'forward' : 'backward',
+            scrollOffset: scrollOffset,
+            scrollUpdateWasRequested: false
+          };
+        }, _this._resetIsScrollingDebounced);
+      };
+
+      _this._outerRefSetter = function (ref) {
+        var outerRef = _this.props.outerRef;
+        _this._outerRef = ref;
+
+        if (typeof outerRef === 'function') {
+          outerRef(ref);
+        } else if (outerRef != null && typeof outerRef === 'object' && outerRef.hasOwnProperty('current')) {
+          outerRef.current = ref;
+        }
+      };
+
+      _this._resetIsScrollingDebounced = function () {
+        if (_this._resetIsScrollingTimeoutId !== null) {
+          cancelTimeout(_this._resetIsScrollingTimeoutId);
+        }
+
+        _this._resetIsScrollingTimeoutId = requestTimeout(_this._resetIsScrolling, createListComponent_IS_SCROLLING_DEBOUNCE_INTERVAL);
+      };
+
+      _this._resetIsScrolling = function () {
+        _this._resetIsScrollingTimeoutId = null;
+
+        _this.setState({
+          isScrolling: false
+        }, function () {
+          // Clear style cache after state update has been committed.
+          // This way we don't break pure sCU for items that don't use isScrolling param.
+          _this._getItemStyleCache(-1, null);
+        });
+      };
+
+      return _this;
+    }
+
+    List.getDerivedStateFromProps = function (nextProps, prevState) {
+      createListComponent_validateSharedProps(nextProps, prevState);
+      validateProps(nextProps);
+      return null;
+    };
+
+    List.prototype.scrollTo = function (scrollOffset) {
+      scrollOffset = Math.max(0, scrollOffset);
+      this.setState(function (prevState) {
+        if (prevState.scrollOffset === scrollOffset) {
+          return null;
+        }
+
+        return {
+          scrollDirection: prevState.scrollOffset < scrollOffset ? 'forward' : 'backward',
+          scrollOffset: scrollOffset,
+          scrollUpdateWasRequested: true
+        };
+      }, this._resetIsScrollingDebounced);
+    };
+
+    List.prototype.scrollToItem = function (index, align) {
+      if (align === void 0) {
+        align = 'auto';
+      }
+
+      var itemCount = this.props.itemCount;
+      var scrollOffset = this.state.scrollOffset;
+      index = Math.max(0, Math.min(index, itemCount - 1));
+      this.scrollTo(getOffsetForIndexAndAlignment(this.props, index, align, scrollOffset, this._instanceProps));
+    };
+
+    List.prototype.componentDidMount = function () {
+      var _a = this.props,
+          initialScrollOffset = _a.initialScrollOffset,
+          layout = _a.layout;
+
+      if (typeof initialScrollOffset === 'number' && this._outerRef != null) {
+        var outerRef = this._outerRef;
+
+        if (layout === 'horizontal') {
+          outerRef.ScrollLeft = initialScrollOffset;
+        } else {
+          outerRef.ScrollTop = initialScrollOffset;
+        }
+      }
+
+      this._callPropsCallbacks();
+    };
+
+    List.prototype.componentDidUpdate = function () {
+      var _a = this.props,
+          direction = _a.direction,
+          layout = _a.layout;
+      var _b = this.state,
+          scrollOffset = _b.scrollOffset,
+          scrollUpdateWasRequested = _b.scrollUpdateWasRequested;
+
+      if (scrollUpdateWasRequested && this._outerRef != null) {
+        var outerRef = this._outerRef;
+
+        if (layout === 'horizontal') {
+          if (direction === 'rtl') {
+            // TRICKY According to the spec, ScrollLeft should be negative for RTL aligned elements.
+            // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
+            // So we need to determine which browser behavior we're dealing with, and mimic it.
+            switch (getRTLOffsetType()) {
+              case 'negative':
+                outerRef.ScrollLeft = -scrollOffset;
+                break;
+
+              case 'positive-ascending':
+                outerRef.ScrollLeft = scrollOffset;
+                break;
+
+              default:
+                var scrollWidth = outerRef.ScrollWidth;
+                var clientWidth = outerRef.ClientWidth;
+                outerRef.ScrollLeft = scrollWidth - clientWidth - scrollOffset;
+                break;
+            }
+          } else {
+            outerRef.ScrollLeft = scrollOffset;
+          }
+        } else {
+          outerRef.ScrollTop = scrollOffset;
+        }
+      }
+
+      this._callPropsCallbacks();
+    };
+
+    List.prototype.componentWillUnmount = function () {
+      if (this._resetIsScrollingTimeoutId !== null) {
+        cancelTimeout(this._resetIsScrollingTimeoutId);
+      }
+    };
+
+    List.prototype.render = function () {
+      var _a = this.props,
+          children = _a.children,
+          className = _a.className,
+          direction = _a.direction,
+          height = _a.height,
+          innerRef = _a.innerRef,
+          innerElementType = _a.innerElementType,
+          itemCount = _a.itemCount,
+          itemData = _a.itemData,
+          _b = _a.itemKey,
+          itemKey = _b === void 0 ? createListComponent_defaultItemKey : _b,
+          layout = _a.layout,
+          outerElementType = _a.outerElementType,
+          style = _a.style,
+          useIsScrolling = _a.useIsScrolling,
+          width = _a.width,
+          // Unused
+      initialScrollOffset = _a.initialScrollOffset,
+          itemSize = _a.itemSize,
+          onItemsRendered = _a.onItemsRendered,
+          _ = _a.onScroll,
+          outerRef = _a.outerRef,
+          overscanCount = _a.overscanCount,
+          rest = createListComponent_rest(_a, ["children", "className", "direction", "height", "innerRef", "innerElementType", "itemCount", "itemData", "itemKey", "layout", "outerElementType", "style", "useIsScrolling", "width", "initialScrollOffset", "itemSize", "onItemsRendered", "onScroll", "outerRef", "overscanCount"]);
+
+      var isScrolling = this.state.isScrolling;
+      var isHorizontal = layout === 'horizontal';
+      var onScroll = isHorizontal ? this._onScrollHorizontal : this._onScrollVertical;
+
+      var _c = this._getRangeToRender(),
+          startIndex = _c[0],
+          stopIndex = _c[1];
+
+      var items = [];
+
+      if (itemCount > 0) {
+        for (var index = startIndex; index <= stopIndex; index++) {
+          items.push((0,react.createElement)(children, {
+            data: itemData,
+            key: itemKey(index, itemData),
+            index: index,
+            isScrolling: useIsScrolling ? isScrolling : undefined,
+            style: this._getItemStyle(index)
+          }));
+        }
+      } // Read this value AFTER items have been created,
+      // So their actual sizes (if variable) are taken into consideration.
+
+
+      var estimatedTotalSize = getEstimatedTotalSize(this.props, this._instanceProps);
+      return (0,react.createElement)(outerElementType || 'scroll', createListComponent_assign(createListComponent_assign({}, rest), {
+        className: className,
+        onValueChanged: onScroll,
+        ref: this._outerRefSetter,
+        style: createListComponent_assign({
+          position: 'relative',
+          height: height,
+          width: width,
+          direction: direction
+        }, style)
+      }), (0,react.createElement)(innerElementType || 'view', {
+        children: items,
+        ref: innerRef,
+        style: {
+          height: isHorizontal ? '100%' : estimatedTotalSize,
+          pointerEvents: isScrolling ? 'none' : undefined,
+          width: isHorizontal ? estimatedTotalSize : '100%'
+        }
+      }));
+    };
+
+    List.prototype._callPropsCallbacks = function () {
+      if (typeof this.props.onItemsRendered === 'function') {
+        var itemCount = this.props.itemCount;
+
+        if (itemCount > 0) {
+          var _a = this._getRangeToRender(),
+              overscanStartIndex = _a[0],
+              overscanStopIndex = _a[1],
+              visibleStartIndex = _a[2],
+              visibleStopIndex = _a[3];
+
+          this._callOnItemsRendered(overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex);
+        }
+      }
+
+      if (typeof this.props.onScroll === 'function') {
+        var _b = this.state,
+            scrollDirection = _b.scrollDirection,
+            scrollOffset = _b.scrollOffset,
+            scrollUpdateWasRequested = _b.scrollUpdateWasRequested;
+
+        this._callOnScroll(scrollDirection, scrollOffset, scrollUpdateWasRequested);
+      }
+    };
+
+    List.prototype._getRangeToRender = function () {
+      var _a = this.props,
+          itemCount = _a.itemCount,
+          overscanCount = _a.overscanCount;
+      var _b = this.state,
+          isScrolling = _b.isScrolling,
+          scrollDirection = _b.scrollDirection,
+          scrollOffset = _b.scrollOffset;
+
+      if (itemCount === 0) {
+        return [0, 0, 0, 0];
+      }
+
+      var startIndex = getStartIndexForOffset(this.props, scrollOffset, this._instanceProps);
+      var stopIndex = getStopIndexForStartIndex(this.props, startIndex, scrollOffset, this._instanceProps); // Overscan by one item in each direction so that tab/focus works.
+      // If there isn't at least one extra item, tab loops back around.
+
+      var overscanBackward = !isScrolling || scrollDirection === 'backward' ? Math.max(1, overscanCount) : 1;
+      var overscanForward = !isScrolling || scrollDirection === 'forward' ? Math.max(1, overscanCount) : 1;
+      return [Math.max(0, startIndex - overscanBackward), Math.max(0, Math.min(itemCount - 1, stopIndex + overscanForward)), startIndex, stopIndex];
+    };
+
+    return List;
+  }(react.PureComponent), _b.defaultProps = {
+    direction: 'ltr',
+    itemData: undefined,
+    layout: 'vertical',
+    overscanCount: 2,
+    useIsScrolling: false
+  }, _b;
+} // NOTE: I considered further wrapping individual items with a pure ListItem component.
+// This would avoid ever calling the render function for the same index more than once,
+// But it would also add the overhead of a lot of components/fibers.
+// I assume people already do this (render function returning a class component),
+// So my doing it would just unnecessarily double the wrappers.
+
+var createListComponent_validateSharedProps = function validateSharedProps(_a, _b) {
+  var children = _a.children,
+      direction = _a.direction,
+      height = _a.height,
+      layout = _a.layout,
+      width = _a.width;
+  var instance = _b.instance;
+
+  if (false) { var isHorizontal; }
+};
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/FixedSizeList.js
+
+var FixedSizeList = createListComponent({
+  getItemOffset: function getItemOffset(_a, index) {
+    var itemSize = _a.itemSize;
+    return index * itemSize;
+  },
+  getItemSize: function getItemSize(_a, index) {
+    var itemSize = _a.itemSize;
+    return itemSize;
+  },
+  getEstimatedTotalSize: function getEstimatedTotalSize(_a) {
+    var itemCount = _a.itemCount,
+        itemSize = _a.itemSize;
+    return itemSize * itemCount;
+  },
+  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(_a, index, align, scrollOffset) {
+    var direction = _a.direction,
+        height = _a.height,
+        itemCount = _a.itemCount,
+        itemSize = _a.itemSize,
+        layout = _a.layout,
+        width = _a.width;
+    var isHorizontal = layout === 'horizontal';
+    var size = isHorizontal ? width : height;
+    var lastItemOffset = Math.max(0, itemCount * itemSize - size);
+    var maxOffset = Math.min(lastItemOffset, index * itemSize);
+    var minOffset = Math.max(0, index * itemSize - size + itemSize);
+
+    if (align === 'smart') {
+      if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
+        align = 'auto';
+      } else {
+        align = 'center';
+      }
+    }
+
+    switch (align) {
+      case 'start':
+        return maxOffset;
+
+      case 'end':
+        return minOffset;
+
+      case 'center':
+        {
+          // "Centered" offset is usually the average of the min and max.
+          // But near the edges of the list, this doesn't hold true.
+          var middleOffset = Math.round(minOffset + (maxOffset - minOffset) / 2);
+
+          if (middleOffset < Math.ceil(size / 2)) {
+            return 0; // near the beginning
+          } else if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
+            return lastItemOffset; // near the end
+          } else {
+            return middleOffset;
+          }
+        }
+
+      case 'auto':
+      default:
+        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
+          return scrollOffset;
+        } else if (scrollOffset < minOffset) {
+          return minOffset;
+        } else {
+          return maxOffset;
+        }
+
+    }
+  },
+  getStartIndexForOffset: function getStartIndexForOffset(_a, offset) {
+    var itemCount = _a.itemCount,
+        itemSize = _a.itemSize;
+    return Math.max(0, Math.min(itemCount - 1, Math.floor(offset / itemSize)));
+  },
+  getStopIndexForStartIndex: function getStopIndexForStartIndex(_a, startIndex, scrollOffset) {
+    var direction = _a.direction,
+        height = _a.height,
+        itemCount = _a.itemCount,
+        itemSize = _a.itemSize,
+        layout = _a.layout,
+        width = _a.width;
+    var isHorizontal = layout === 'horizontal';
+    var offset = startIndex * itemSize;
+    var size = isHorizontal ? width : height;
+    var numVisibleItems = Math.ceil((size + scrollOffset - offset) / itemSize);
+    return Math.max(0, Math.min(itemCount - 1, startIndex + numVisibleItems - 1 // -1 is because stop index is inclusive
+    ));
+  },
+  initInstanceProps: function initInstanceProps(props) {// Noop
+  },
+  shouldResetStyleCacheOnItemSizeChange: true,
+  validateProps: function validateProps(_a) {
+    var itemSize = _a.itemSize;
+
+    if (false) {}
+  }
+});
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/shouldComponentUpdate.js
+
+ // Custom shouldComponentUpdate for class components.
+// It knows to compare individual style props and ignore the wrapper object.
+// See https://reactjs.org/docs/react-component.html#shouldcomponentupdate
+
+function shouldComponentUpdate(nextProps, nextState) {
+  return !areEqual(this.props, nextProps) || shallowDiffers(this.state, nextState);
+}
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/VariableSizeGrid.js
+
+var DEFAULT_ESTIMATED_ITEM_SIZE = 50;
+
+var getEstimatedTotalHeight = function getEstimatedTotalHeight(_a, _b) {
+  var rowCount = _a.rowCount;
+  var rowMetadataMap = _b.rowMetadataMap,
+      estimatedRowHeight = _b.estimatedRowHeight,
+      lastMeasuredRowIndex = _b.lastMeasuredRowIndex;
+  var totalSizeOfMeasuredRows = 0; // Edge case check for when the number of items decreases while a scroll is in progress.
+  // https://github.com/bvaughn/react-window/pull/138
+
+  if (lastMeasuredRowIndex >= rowCount) {
+    lastMeasuredRowIndex = rowCount - 1;
+  }
+
+  if (lastMeasuredRowIndex >= 0) {
+    var itemMetadata = rowMetadataMap[lastMeasuredRowIndex];
+    totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
+  }
+
+  var numUnmeasuredItems = rowCount - lastMeasuredRowIndex - 1;
+  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedRowHeight;
+  return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
+};
+
+var getEstimatedTotalWidth = function getEstimatedTotalWidth(_a, _b) {
+  var columnCount = _a.columnCount;
+  var columnMetadataMap = _b.columnMetadataMap,
+      estimatedColumnWidth = _b.estimatedColumnWidth,
+      lastMeasuredColumnIndex = _b.lastMeasuredColumnIndex;
+  var totalSizeOfMeasuredRows = 0; // Edge case check for when the number of items decreases while a scroll is in progress.
+  // https://github.com/bvaughn/react-window/pull/138
+
+  if (lastMeasuredColumnIndex >= columnCount) {
+    lastMeasuredColumnIndex = columnCount - 1;
+  }
+
+  if (lastMeasuredColumnIndex >= 0) {
+    var itemMetadata = columnMetadataMap[lastMeasuredColumnIndex];
+    totalSizeOfMeasuredRows = itemMetadata.offset + itemMetadata.size;
+  }
+
+  var numUnmeasuredItems = columnCount - lastMeasuredColumnIndex - 1;
+  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedColumnWidth;
+  return totalSizeOfMeasuredRows + totalSizeOfUnmeasuredItems;
+};
+
+var getItemMetadata = function getItemMetadata(itemType, props, index, instanceProps) {
+  var itemMetadataMap, itemSize, lastMeasuredIndex;
+
+  if (itemType === 'column') {
+    itemMetadataMap = instanceProps.columnMetadataMap;
+    itemSize = props.columnWidth;
+    lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
+  } else {
+    itemMetadataMap = instanceProps.rowMetadataMap;
+    itemSize = props.rowHeight;
+    lastMeasuredIndex = instanceProps.lastMeasuredRowIndex;
+  }
+
+  if (index > lastMeasuredIndex) {
+    var offset = 0;
+
+    if (lastMeasuredIndex >= 0) {
+      var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+      offset = itemMetadata.offset + itemMetadata.size;
+    }
+
+    for (var i = lastMeasuredIndex + 1; i <= index; i++) {
+      var size = itemSize(i);
+      itemMetadataMap[i] = {
+        offset: offset,
+        size: size
+      };
+      offset += size;
+    }
+
+    if (itemType === 'column') {
+      instanceProps.lastMeasuredColumnIndex = index;
+    } else {
+      instanceProps.lastMeasuredRowIndex = index;
+    }
+  }
+
+  return itemMetadataMap[index];
+};
+
+var findNearestItem = function findNearestItem(itemType, props, instanceProps, offset) {
+  var itemMetadataMap, lastMeasuredIndex;
+
+  if (itemType === 'column') {
+    itemMetadataMap = instanceProps.columnMetadataMap;
+    lastMeasuredIndex = instanceProps.lastMeasuredColumnIndex;
+  } else {
+    itemMetadataMap = instanceProps.rowMetadataMap;
+    lastMeasuredIndex = instanceProps.lastMeasuredRowIndex;
+  }
+
+  var lastMeasuredItemOffset = lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0;
+
+  if (lastMeasuredItemOffset >= offset) {
+    // If we've already measured items within this range just use a binary search as it's faster.
+    return findNearestItemBinarySearch(itemType, props, instanceProps, lastMeasuredIndex, 0, offset);
+  } else {
+    // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
+    // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
+    // The overall complexity for this approach is O(log n).
+    return findNearestItemExponentialSearch(itemType, props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
+  }
+};
+
+var findNearestItemBinarySearch = function findNearestItemBinarySearch(itemType, props, instanceProps, high, low, offset) {
+  while (low <= high) {
+    var middle = low + Math.floor((high - low) / 2);
+    var currentOffset = getItemMetadata(itemType, props, middle, instanceProps).offset;
+
+    if (currentOffset === offset) {
+      return middle;
+    } else if (currentOffset < offset) {
+      low = middle + 1;
+    } else if (currentOffset > offset) {
+      high = middle - 1;
+    }
+  }
+
+  if (low > 0) {
+    return low - 1;
+  } else {
+    return 0;
+  }
+};
+
+var findNearestItemExponentialSearch = function findNearestItemExponentialSearch(itemType, props, instanceProps, index, offset) {
+  var itemCount = itemType === 'column' ? props.columnCount : props.rowCount;
+  var interval = 1;
+
+  while (index < itemCount && getItemMetadata(itemType, props, index, instanceProps).offset < offset) {
+    index += interval;
+    interval *= 2;
+  }
+
+  return findNearestItemBinarySearch(itemType, props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
+};
+
+var getOffsetForIndexAndAlignment = function getOffsetForIndexAndAlignment(itemType, props, index, align, scrollOffset, instanceProps, scrollbarSize) {
+  var size = itemType === 'column' ? props.width : props.height;
+  var itemMetadata = getItemMetadata(itemType, props, index, instanceProps); // Get estimated total size after ItemMetadata is computed,
+  // To ensure it reflects actual measurements instead of just estimates.
+
+  var estimatedTotalSize = itemType === 'column' ? getEstimatedTotalWidth(props, instanceProps) : getEstimatedTotalHeight(props, instanceProps);
+  var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
+  var minOffset = Math.max(0, itemMetadata.offset - size + scrollbarSize + itemMetadata.size);
+
+  if (align === 'smart') {
+    if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
+      align = 'auto';
+    } else {
+      align = 'center';
+    }
+  }
+
+  switch (align) {
+    case 'start':
+      return maxOffset;
+
+    case 'end':
+      return minOffset;
+
+    case 'center':
+      return Math.round(minOffset + (maxOffset - minOffset) / 2);
+
+    case 'auto':
+    default:
+      if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
+        return scrollOffset;
+      } else if (minOffset > maxOffset) {
+        // Because we only take into account the scrollbar size when calculating minOffset
+        // this value can be larger than maxOffset when at the end of the list
+        return minOffset;
+      } else if (scrollOffset < minOffset) {
+        return minOffset;
+      } else {
+        return maxOffset;
+      }
+
+  }
+};
+
+var VariableSizeGrid = createGridComponent({
+  getColumnOffset: function getColumnOffset(props, index, instanceProps) {
+    return getItemMetadata('column', props, index, instanceProps).offset;
+  },
+  getColumnStartIndexForOffset: function getColumnStartIndexForOffset(props, scrollLeft, instanceProps) {
+    return findNearestItem('column', props, instanceProps, scrollLeft);
+  },
+  getColumnStopIndexForStartIndex: function getColumnStopIndexForStartIndex(props, startIndex, scrollLeft, instanceProps) {
+    var columnCount = props.columnCount,
+        width = props.width;
+    var itemMetadata = getItemMetadata('column', props, startIndex, instanceProps);
+    var maxOffset = scrollLeft + width;
+    var offset = itemMetadata.offset + itemMetadata.size;
+    var stopIndex = startIndex;
+
+    while (stopIndex < columnCount - 1 && offset < maxOffset) {
+      stopIndex++;
+      offset += getItemMetadata('column', props, stopIndex, instanceProps).size;
+    }
+
+    return stopIndex;
+  },
+  getColumnWidth: function getColumnWidth(props, index, instanceProps) {
+    return instanceProps.columnMetadataMap[index].size;
+  },
+  getEstimatedTotalHeight: getEstimatedTotalHeight,
+  getEstimatedTotalWidth: getEstimatedTotalWidth,
+  getOffsetForColumnAndAlignment: function getOffsetForColumnAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
+    return getOffsetForIndexAndAlignment('column', props, index, align, scrollOffset, instanceProps, scrollbarSize);
+  },
+  getOffsetForRowAndAlignment: function getOffsetForRowAndAlignment(props, index, align, scrollOffset, instanceProps, scrollbarSize) {
+    return getOffsetForIndexAndAlignment('row', props, index, align, scrollOffset, instanceProps, scrollbarSize);
+  },
+  getRowOffset: function getRowOffset(props, index, instanceProps) {
+    return getItemMetadata('row', props, index, instanceProps).offset;
+  },
+  getRowHeight: function getRowHeight(props, index, instanceProps) {
+    return instanceProps.rowMetadataMap[index].size;
+  },
+  getRowStartIndexForOffset: function getRowStartIndexForOffset(props, scrollTop, instanceProps) {
+    return findNearestItem('row', props, instanceProps, scrollTop);
+  },
+  getRowStopIndexForStartIndex: function getRowStopIndexForStartIndex(props, startIndex, scrollTop, instanceProps) {
+    var rowCount = props.rowCount,
+        height = props.height;
+    var itemMetadata = getItemMetadata('row', props, startIndex, instanceProps);
+    var maxOffset = scrollTop + height;
+    var offset = itemMetadata.offset + itemMetadata.size;
+    var stopIndex = startIndex;
+
+    while (stopIndex < rowCount - 1 && offset < maxOffset) {
+      stopIndex++;
+      offset += getItemMetadata('row', props, stopIndex, instanceProps).size;
+    }
+
+    return stopIndex;
+  },
+  initInstanceProps: function initInstanceProps(props, instance) {
+    var _a = props,
+        estimatedColumnWidth = _a.estimatedColumnWidth,
+        estimatedRowHeight = _a.estimatedRowHeight;
+    var instanceProps = {
+      columnMetadataMap: {},
+      estimatedColumnWidth: estimatedColumnWidth || DEFAULT_ESTIMATED_ITEM_SIZE,
+      estimatedRowHeight: estimatedRowHeight || DEFAULT_ESTIMATED_ITEM_SIZE,
+      lastMeasuredColumnIndex: -1,
+      lastMeasuredRowIndex: -1,
+      rowMetadataMap: {}
+    };
+
+    instance.resetAfterColumnIndex = function (columnIndex, shouldForceUpdate) {
+      if (shouldForceUpdate === void 0) {
+        shouldForceUpdate = true;
+      }
+
+      instance.resetAfterIndices({
+        columnIndex: columnIndex,
+        shouldForceUpdate: shouldForceUpdate
+      });
+    };
+
+    instance.resetAfterRowIndex = function (rowIndex, shouldForceUpdate) {
+      if (shouldForceUpdate === void 0) {
+        shouldForceUpdate = true;
+      }
+
+      instance.resetAfterIndices({
+        rowIndex: rowIndex,
+        shouldForceUpdate: shouldForceUpdate
+      });
+    };
+
+    instance.resetAfterIndices = function (_a) {
+      var columnIndex = _a.columnIndex,
+          rowIndex = _a.rowIndex,
+          _b = _a.shouldForceUpdate,
+          shouldForceUpdate = _b === void 0 ? true : _b;
+
+      if (typeof columnIndex === 'number') {
+        instanceProps.lastMeasuredColumnIndex = Math.min(instanceProps.lastMeasuredColumnIndex, columnIndex - 1);
+      }
+
+      if (typeof rowIndex === 'number') {
+        instanceProps.lastMeasuredRowIndex = Math.min(instanceProps.lastMeasuredRowIndex, rowIndex - 1);
+      } // We could potentially optimize further by only evicting styles after this index,
+      // But since styles are only cached while scrolling is in progress-
+      // It seems an unnecessary optimization.
+      // It's unlikely that resetAfterIndex() will be called while a user is scrolling.
+
+
+      instance._getItemStyleCache(-1);
+
+      if (shouldForceUpdate) {
+        instance.forceUpdate();
+      }
+    };
+
+    return instanceProps;
+  },
+  shouldResetStyleCacheOnItemSizeChange: false,
+  validateProps: function validateProps(_a) {
+    var columnWidth = _a.columnWidth,
+        rowHeight = _a.rowHeight;
+
+    if (false) {}
+  }
+});
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/VariableSizeList.js
+
+var VariableSizeList_DEFAULT_ESTIMATED_ITEM_SIZE = 50;
+
+var VariableSizeList_getItemMetadata = function getItemMetadata(props, index, instanceProps) {
+  var itemSize = props.itemSize;
+  var itemMetadataMap = instanceProps.itemMetadataMap,
+      lastMeasuredIndex = instanceProps.lastMeasuredIndex;
+
+  if (index > lastMeasuredIndex) {
+    var offset = 0;
+
+    if (lastMeasuredIndex >= 0) {
+      var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+      offset = itemMetadata.offset + itemMetadata.size;
+    }
+
+    for (var i = lastMeasuredIndex + 1; i <= index; i++) {
+      var size = itemSize(i);
+      itemMetadataMap[i] = {
+        offset: offset,
+        size: size
+      };
+      offset += size;
+    }
+
+    instanceProps.lastMeasuredIndex = index;
+  }
+
+  return itemMetadataMap[index];
+};
+
+var VariableSizeList_findNearestItem = function findNearestItem(props, instanceProps, offset) {
+  var itemMetadataMap = instanceProps.itemMetadataMap,
+      lastMeasuredIndex = instanceProps.lastMeasuredIndex;
+  var lastMeasuredItemOffset = lastMeasuredIndex > 0 ? itemMetadataMap[lastMeasuredIndex].offset : 0;
+
+  if (lastMeasuredItemOffset >= offset) {
+    // If we've already measured items within this range just use a binary search as it's faster.
+    return VariableSizeList_findNearestItemBinarySearch(props, instanceProps, lastMeasuredIndex, 0, offset);
+  } else {
+    // If we haven't yet measured this high, fallback to an exponential search with an inner binary search.
+    // The exponential search avoids pre-computing sizes for the full set of items as a binary search would.
+    // The overall complexity for this approach is O(log n).
+    return VariableSizeList_findNearestItemExponentialSearch(props, instanceProps, Math.max(0, lastMeasuredIndex), offset);
+  }
+};
+
+var VariableSizeList_findNearestItemBinarySearch = function findNearestItemBinarySearch(props, instanceProps, high, low, offset) {
+  while (low <= high) {
+    var middle = low + Math.floor((high - low) / 2);
+    var currentOffset = VariableSizeList_getItemMetadata(props, middle, instanceProps).offset;
+
+    if (currentOffset === offset) {
+      return middle;
+    } else if (currentOffset < offset) {
+      low = middle + 1;
+    } else if (currentOffset > offset) {
+      high = middle - 1;
+    }
+  }
+
+  if (low > 0) {
+    return low - 1;
+  } else {
+    return 0;
+  }
+};
+
+var VariableSizeList_findNearestItemExponentialSearch = function findNearestItemExponentialSearch(props, instanceProps, index, offset) {
+  var itemCount = props.itemCount;
+  var interval = 1;
+
+  while (index < itemCount && VariableSizeList_getItemMetadata(props, index, instanceProps).offset < offset) {
+    index += interval;
+    interval *= 2;
+  }
+
+  return VariableSizeList_findNearestItemBinarySearch(props, instanceProps, Math.min(index, itemCount - 1), Math.floor(index / 2), offset);
+};
+
+var getEstimatedTotalSize = function getEstimatedTotalSize(_a, _b) {
+  var itemCount = _a.itemCount;
+  var itemMetadataMap = _b.itemMetadataMap,
+      estimatedItemSize = _b.estimatedItemSize,
+      lastMeasuredIndex = _b.lastMeasuredIndex;
+  var totalSizeOfMeasuredItems = 0; // Edge case check for when the number of items decreases while a scroll is in progress.
+  // https://github.com/bvaughn/react-window/pull/138
+
+  if (lastMeasuredIndex >= itemCount) {
+    lastMeasuredIndex = itemCount - 1;
+  }
+
+  if (lastMeasuredIndex >= 0) {
+    var itemMetadata = itemMetadataMap[lastMeasuredIndex];
+    totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.size;
+  }
+
+  var numUnmeasuredItems = itemCount - lastMeasuredIndex - 1;
+  var totalSizeOfUnmeasuredItems = numUnmeasuredItems * estimatedItemSize;
+  return totalSizeOfMeasuredItems + totalSizeOfUnmeasuredItems;
+};
+
+var VariableSizeList = createListComponent({
+  getItemOffset: function getItemOffset(props, index, instanceProps) {
+    return VariableSizeList_getItemMetadata(props, index, instanceProps).offset;
+  },
+  getItemSize: function getItemSize(props, index, instanceProps) {
+    return instanceProps.itemMetadataMap[index].size;
+  },
+  getEstimatedTotalSize: getEstimatedTotalSize,
+  getOffsetForIndexAndAlignment: function getOffsetForIndexAndAlignment(props, index, align, scrollOffset, instanceProps) {
+    var height = props.height,
+        layout = props.layout,
+        width = props.width;
+    var isHorizontal = layout === 'horizontal';
+    var size = isHorizontal ? width : height;
+    var itemMetadata = VariableSizeList_getItemMetadata(props, index, instanceProps); // Get estimated total size after ItemMetadata is computed,
+    // To ensure it reflects actual measurements instead of just estimates.
+
+    var estimatedTotalSize = getEstimatedTotalSize(props, instanceProps);
+    var maxOffset = Math.max(0, Math.min(estimatedTotalSize - size, itemMetadata.offset));
+    var minOffset = Math.max(0, itemMetadata.offset - size + itemMetadata.size);
+
+    if (align === 'smart') {
+      if (scrollOffset >= minOffset - size && scrollOffset <= maxOffset + size) {
+        align = 'auto';
+      } else {
+        align = 'center';
+      }
+    }
+
+    switch (align) {
+      case 'start':
+        return maxOffset;
+
+      case 'end':
+        return minOffset;
+
+      case 'center':
+        return Math.round(minOffset + (maxOffset - minOffset) / 2);
+
+      case 'auto':
+      default:
+        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
+          return scrollOffset;
+        } else if (scrollOffset < minOffset) {
+          return minOffset;
+        } else {
+          return maxOffset;
+        }
+
+    }
+  },
+  getStartIndexForOffset: function getStartIndexForOffset(props, offset, instanceProps) {
+    return VariableSizeList_findNearestItem(props, instanceProps, offset);
+  },
+  getStopIndexForStartIndex: function getStopIndexForStartIndex(props, startIndex, scrollOffset, instanceProps) {
+    var height = props.height,
+        itemCount = props.itemCount,
+        layout = props.layout,
+        width = props.width;
+    var isHorizontal = layout === 'horizontal';
+    var size = isHorizontal ? width : height;
+    var itemMetadata = VariableSizeList_getItemMetadata(props, startIndex, instanceProps);
+    var maxOffset = scrollOffset + size;
+    var offset = itemMetadata.offset + itemMetadata.size;
+    var stopIndex = startIndex;
+
+    while (stopIndex < itemCount - 1 && offset < maxOffset) {
+      stopIndex++;
+      offset += VariableSizeList_getItemMetadata(props, stopIndex, instanceProps).size;
+    }
+
+    return stopIndex;
+  },
+  initInstanceProps: function initInstanceProps(props, instance) {
+    var estimatedItemSize = props.estimatedItemSize;
+    var instanceProps = {
+      itemMetadataMap: {},
+      estimatedItemSize: estimatedItemSize || VariableSizeList_DEFAULT_ESTIMATED_ITEM_SIZE,
+      lastMeasuredIndex: -1
+    };
+
+    instance.resetAfterIndex = function (index, shouldForceUpdate) {
+      if (shouldForceUpdate === void 0) {
+        shouldForceUpdate = true;
+      }
+
+      instanceProps.lastMeasuredIndex = Math.min(instanceProps.lastMeasuredIndex, index - 1); // We could potentially optimize further by only evicting styles after this index,
+      // But since styles are only cached while scrolling is in progress-
+      // It seems an unnecessary optimization.
+      // It's unlikely that resetAfterIndex() will be called while a user is scrolling.
+
+      instance._getItemStyleCache(-1);
+
+      if (shouldForceUpdate) {
+        instance.forceUpdate();
+      }
+    };
+
+    return instanceProps;
+  },
+  shouldResetStyleCacheOnItemSizeChange: false,
+  validateProps: function validateProps(_a) {
+    var itemSize = _a.itemSize;
+
+    if (false) {}
+  }
+});
+;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/index.js
+
+
+
+
+
+
 ;// CONCATENATED MODULE: ../../../material/dist/src/index.js
+
 
 
 
@@ -10544,15 +12570,8 @@ function insertStyledComponentsSheet(sheet) {
 
 ;// CONCATENATED MODULE: ./src/app.tsx
 var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/*INJECTABLE_START*/
-(function (react, ReactUnity) {
-  var React = react;
+(function (react, ReactUnity, Material) {
   var __originalRender = ReactUnity.Renderer.render;
-  ReactUnity = Object.assign({}, ReactUnity, { Renderer: { render: render } });
-  var ReactUnityRenderer = ReactUnity.Renderer;
-  var Renderer = ReactUnity.Renderer;
-
-  var exports = {};
-  var module = { exports: exports };
 
   var renderCalled = false;
   function render() {
@@ -10560,10 +12579,24 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/
     __originalRender.apply(ReactUnity.Renderer, arguments);
   }
 
-  let result = (function (module, exports, render) {
+  ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
+  var ReactUnityRenderer = ReactUnity.Renderer;
+  var Renderer = ReactUnity.Renderer;
+  var React = react;
+
+  var exports = {};
+  var module = { exports: exports };
+
+  var require = function (module) {
+    if (module === 'react') return react;
+    if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === '@reactunity/material') return Material;
+  };
+
+  let result = (function (module, exports, render, require) {
 
     /*INJECT_CODE*/
-  })(module, exports, render);
+  })(module, exports, render, require);
 
 
   if (renderCalled) {
@@ -10579,7 +12612,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/
   } else {
     console.error('Nothing was rendered');
   }
-})(react, ReactUnity);
+})(react, ReactUnity, Material);
 
 /*INJECTABLE_END*/
 ;// CONCATENATED MODULE: ./src/index.ts

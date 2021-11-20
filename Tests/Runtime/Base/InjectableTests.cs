@@ -80,5 +80,44 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual("Hello world", Host.TextContent);
         }
+
+        [ReactInjectableTest(@"
+            import { useGlobals } from '@reactunity/renderer';
+
+            export default function App() {
+                return <view>{useGlobals ? 'yes' : 'no'}</view>;
+            }
+        ")]
+        public IEnumerator CanImportFromRenderer()
+        {
+            yield return null;
+            Assert.AreEqual("yes", Host.TextContent);
+        }
+
+        [ReactInjectableTest(@"
+            import { Button } from '@reactunity/material';
+
+            export default function App() {
+                return <view>{Button ? 'yes' : 'no'}</view>;
+            }
+        ")]
+        public IEnumerator CanImportFromMaterial()
+        {
+            yield return null;
+            Assert.AreEqual("yes", Host.TextContent);
+        }
+
+        [ReactInjectableTest(@"
+            import { FixedSizeList } from '@reactunity/material';
+
+            export default function App() {
+                return <view>{FixedSizeList ? 'yes' : 'no'}</view>;
+            }
+        ")]
+        public IEnumerator CanImportVirtualScroll()
+        {
+            yield return null;
+            Assert.AreEqual("yes", Host.TextContent);
+        }
     }
 }

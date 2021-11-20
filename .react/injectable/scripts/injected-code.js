@@ -1,12 +1,5 @@
-(function (react, ReactUnity) {
-  var React = react;
+(function (react, ReactUnity, Material) {
   var __originalRender = ReactUnity.Renderer.render;
-  ReactUnity = Object.assign({}, ReactUnity, { Renderer: { render: render } });
-  var ReactUnityRenderer = ReactUnity.Renderer;
-  var Renderer = ReactUnity.Renderer;
-
-  var exports = {};
-  var module = { exports: exports };
 
   var renderCalled = false;
   function render() {
@@ -14,10 +7,24 @@
     __originalRender.apply(ReactUnity.Renderer, arguments);
   }
 
-  let result = (function (module, exports, render) {
+  ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
+  var ReactUnityRenderer = ReactUnity.Renderer;
+  var Renderer = ReactUnity.Renderer;
+  var React = react;
+
+  var exports = {};
+  var module = { exports: exports };
+
+  var require = function (module) {
+    if (module === 'react') return react;
+    if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === '@reactunity/material') return Material;
+  };
+
+  let result = (function (module, exports, render, require) {
 
     /*INJECT_CODE*/
-  })(module, exports, render);
+  })(module, exports, render, require);
 
 
   if (renderCalled) {
@@ -33,4 +40,4 @@
   } else {
     console.error('Nothing was rendered');
   }
-})(react, ReactUnity);
+})(react, ReactUnity, Material);
