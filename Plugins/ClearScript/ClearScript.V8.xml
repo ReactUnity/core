@@ -1090,6 +1090,14 @@
             A separate V8 runtime is created for the new script engine instance.
             </remarks>
         </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CancelAwaitDebugger">
+            <summary>
+            Resumes script execution if the script engine is waiting for a debugger connection.
+            </summary>
+            <remarks>
+            This method can be called safely from any thread.
+            </remarks>
+        </member>
         <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeHeapSize">
             <summary>
             Gets or sets a soft limit for the size of the V8 runtime's heap.
