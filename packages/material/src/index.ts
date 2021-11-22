@@ -13,4 +13,5 @@ export * from './slider';
 export * from './text';
 export * from './toggle';
 export * from './tooltip';
+export * from './virtual-scroll';
 

@@ -43,7 +43,7 @@ export type SelectProps<T = any> = {
   })
   & UGUIElements['button'];
 
-export function _Select<T = any>({
+function _Select<T = any>({
   keepOpen = 'auto', onChange, name, children, initialValue, multiple, separator, chips,
   variant, placeholder, float, className, hideCaret, ...otherProps }: SelectProps<T>): React.ReactElement {
   const init = useRef(initialValue);
@@ -122,7 +122,7 @@ export interface OptionProps {
   showToggle?: boolean | 'auto';
 }
 
-export function _Option({ className, children, value, triggerTemplate, showToggle = 'auto' }: OptionProps) {
+function _Option({ className, children, value, triggerTemplate, showToggle = 'auto' }: OptionProps) {
   const ctx = useContext(SelectContext);
 
   const [selected, setSelected] = useState(false);
