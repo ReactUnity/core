@@ -2550,7 +2550,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.5.2":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.2":
   version: 3.5.2
   resolution: "chokidar@npm:3.5.2"
   dependencies:
@@ -7328,6 +7328,7 @@ __metadata:
     retext-smartypants: ^4.0.0
     rss: ^1.2.2
     rxjs: ^7.4.0
+    sass: ^1.43.5
     scroll-into-view-if-needed: ^2.2.28
     tailwindcss: ^2.2.19
     typescript: ^4.5.2
@@ -7799,6 +7800,17 @@ __metadata:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.43.5":
+  version: 1.43.5
+  resolution: "sass@npm:1.43.5"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+  bin:
+    sass: sass.js
+  checksum: 4dc71400a6e21e0aa841ba69f536ba242b956229fea88acc3faafa44114ca59496a4b153704175c36ac835e33934059dc8d843638c8952f4f1220adbef54c988
   languageName: node
   linkType: hard
 
