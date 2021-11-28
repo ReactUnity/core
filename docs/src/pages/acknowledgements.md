@@ -15,4 +15,4 @@ Developers of ReactUnity are not affiliated with the React development team, Fac
 ## License
 
 ReactUnity is distributed under [MIT license](https://github.com/ReactUnity/core/blob/main/LICENSE).
-This website and its contents are under [CC-BY-4.0 license](https://github.com/ReactUnity/reactunity.github.io/blob/main/LICENSE)..
+This website and its contents are under [CC-BY-4.0 license](https://github.com/ReactUnity/reactunity.github.io/blob/main/LICENSE).

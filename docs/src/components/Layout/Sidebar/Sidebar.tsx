@@ -76,7 +76,7 @@ export function Sidebar({ isMobileOnly }: { isMobileOnly?: boolean }) {
       </nav>
       <div className="px-5 py-3 sticky bottom-0 lg:px-5 w-full hidden lg:flex items-center bg-gradient-to-t from-wash dark:from-wash-dark">
         <ExternalLink
-          href="https://github.com/ReactUnity/core/discussions/30"
+          href="https://github.com/ReactUnity/core/discussions/"
           className="w-full text-center justify-center">
           <Button className="w-full text-center justify-center">
             {feedbackIcon} Feedback
