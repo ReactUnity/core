@@ -1,0 +1,21 @@
+{
+  "title": "Home",
+  "heading": true,
+  "path": "/",
+  "routes": [
+    {
+      "heading": true,
+      "path": "",
+      "routes": [
+        {
+          "title": "Overview",
+          "path": "/"
+        },
+        {
+          "title": "Acknowledgements",
+          "path": "/acknowledgements"
+        }
+      ]
+    }
+  ]
+}
