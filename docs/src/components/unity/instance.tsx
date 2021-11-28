@@ -1,5 +1,5 @@
 
-import clsx from 'clsx';
+import cn from 'classnames';
 import Head from 'next/head';
 import React, { LegacyRef, useCallback, useEffect, useState } from 'react';
 import style from './index.module.scss';
@@ -75,7 +75,7 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
       <script src="/Unity/injectable/Build/WebInjectable.loader.js" async />
     </Head>
 
-    <div className={clsx(className, style.host, 'unity')} ref={innerRef}>
+    <div className={cn(className, style.host, 'unity')} ref={innerRef}>
       <canvas className={style.canvas} ref={setCanvasRef} tabIndex={-1} />
 
       {progress < 1 &&

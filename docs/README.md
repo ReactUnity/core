@@ -8,4 +8,4 @@ This website was built by forking the source code of the React documentation web
 We are thankful to all of the people who helped create React and the documentation website as mentioned in [the original website](https://beta.reactjs.org/community/acknowledgements).
 
 ## License
-Contents in this repo is CC-BY-4.0 licensed, as found in the [LICENSE.md](https://github.com/ReactUnity/reactunity.github.io/blob/main/LICENSE) file.
+Contents in this repo is CC-BY-4.0 licensed, as found in the [LICENSE.md](https://github.com/ReactUnity/reactunity.github.io/blob/main/LICENSE.md) file.
