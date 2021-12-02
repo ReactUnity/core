@@ -8,9 +8,9 @@ export const siteConfig = {
   repoUrl: 'https://github.com/ReactUnity/website',
   twitterUrl: 'https://github.com/ReactUnity',
   algolia: {
-    appId: '1WJPI6S16W',
-    apiKey: 'f4206e113e70353fb720e25960a3a2d8',
-    indexName: 'documentation',
+    appId: 'BH4D9OD16A',
+    apiKey: '668e32338379c284bd9c9e7f1d9b691c',
+    indexName: 'reactunity',
   },
   headerIdConfig: {
     className: 'anchor',
