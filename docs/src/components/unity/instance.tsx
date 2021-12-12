@@ -1,7 +1,8 @@
 
 import cn from 'classnames';
 import Head from 'next/head';
-import React, { LegacyRef, useCallback, useEffect, useState } from 'react';
+import React, { LegacyRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import style from './index.module.scss';
 import { defaultUnityInstanceName, isLoaderScriptLoaded, UnityAPI, UnityInstance } from './types';
 
@@ -16,6 +17,12 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
   const [progress, setProgress] = useState(0);
   const [scriptLoaded, setScriptLoaded] = useState(isLoaderScriptLoaded());
   const [unityInstance, setUnityInstance] = useState<UnityAPI>();
+
+  const id = useMemo(() => `unity-canvas-ref-${Math.round(Math.random() * 10000)}`, []);
+
+  const portal = useMemo(() => {
+    return createPortal(<div style={{ width: 0, height: 0 }} id={id} />, document.body, id);
+  }, [id])
 
   const setCanvasRef = useCallback(async canvas => {
     if (!canvas || !scriptLoaded) { return; }
@@ -76,7 +83,7 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
     </Head>
 
     <div className={cn(className, style.host, 'unity')} ref={innerRef}>
-      <canvas className={style.canvas} ref={setCanvasRef} tabIndex={-1} />
+      <canvas id={id} className={style.canvas} ref={setCanvasRef} tabIndex={-1} />
 
       {progress < 1 &&
         <div className={style.progress}>
@@ -84,5 +91,7 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
           <div className={style.progressBar} style={{ paddingRight: ((1 - progress) * 80) + '%' }}></div>
         </div>}
     </div>
+
+    {portal}
   </>;
 }

@@ -35,10 +35,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     }
   }, []);
   return (
-    <AppShell>
-      <GlobalUnityProvider>
+    <GlobalUnityProvider>
+      <AppShell>
         <Component {...pageProps} />
-      </GlobalUnityProvider>
-    </AppShell>
+      </AppShell>
+    </GlobalUnityProvider>
   );
 }

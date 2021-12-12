@@ -7,9 +7,7 @@ import { defaultUnityInstanceName, UnityAPI } from './types';
 export interface UnityContextType {
   instance?: UnityAPI;
   component: React.ReactElement | null;
-  loadedId?: string;
-  loadUnity: (id?: string, className?: string) => void;
-  unloadUnity: () => void;
+  setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   insertTo: (el: HTMLElement | undefined) => void;
   insertedTo?: HTMLElement;
   insertedToRef: MutableRefObject<HTMLElement | undefined>;
@@ -17,33 +15,22 @@ export interface UnityContextType {
 
 const UnityContext = React.createContext<UnityContextType>({
   component: null,
-  loadUnity: () => null,
-  unloadUnity: () => null,
+  setLoaded: () => null,
   insertTo: () => null,
   insertedToRef: { current: undefined },
 });
 
-export function GlobalUnityProvider({ children }: { children?: React.ReactNode }) {
-  const [loadedId, setLoadedId] = React.useState<string | undefined>();
-  const [className, setClassName] = React.useState<string | undefined>();
+export function GlobalUnityProvider(
+  { children, instanceClassName = '', loadedId = defaultUnityInstanceName }:
+    { children?: React.ReactNode, loadedId?: string, instanceClassName?: string }) {
   const [instance, setInstance] = React.useState<UnityAPI>();
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const [insertedTo, setInsertedTo] = React.useState<HTMLElement>();
   const insertedToRef = React.useRef<HTMLElement>();
 
-  const loadUnity = useCallback((id?: string, className?: string) => {
-    setLoadedId(id || defaultUnityInstanceName);
-    setClassName(className);
-  }, [setLoadedId, setClassName]);
-
-  const unloadUnity = useCallback(() => {
-    setLoadedId(undefined);
-    setClassName(undefined);
-  }, [setLoadedId, setClassName]);
-
-  const component = React.useMemo(() => loadedId == null ? null :
-    <Unity unityRef={setInstance} sampleName={loadedId} className={className} />,
-    [setInstance, loadedId, className]);
-
+  const component = React.useMemo(() => !loaded ? null :
+    <Unity unityRef={setInstance} sampleName={loadedId} className={instanceClassName} />,
+    [setInstance, instanceClassName, loadedId, loaded]);
 
   const container = React.useMemo<HTMLDivElement>(() => {
     const el = typeof document !== 'undefined' && document.createElement('div');
@@ -52,18 +39,18 @@ export function GlobalUnityProvider({ children }: { children?: React.ReactNode }
   }, []);
 
   useEffect(() => {
-    return () => container?.remove();
-  }, [container]);
-
-  useEffect(() => {
     if (!container) return;
-    if (insertedTo) insertedTo.appendChild(container);
-    else container.remove();
-
-    return () => container.remove();
+    if (insertedTo) {
+      insertedTo.appendChild(container);
+      container.style.display = '';
+    }
+    else {
+      container.style.display = 'none';
+      document.body.appendChild(container);
+    }
   }, [container, insertedTo]);
 
-  const unityPortal = !!container && createPortal(component, container, 'unity-instance');
+  const unityPortal = useMemo(() => !!container && !!component && createPortal(component, container, 'unity-instance'), [container, component]);
 
   const insertTo = useCallback((el?: HTMLElement) => {
     insertedToRef.current = el;
@@ -71,8 +58,8 @@ export function GlobalUnityProvider({ children }: { children?: React.ReactNode }
   }, [insertedToRef, setInsertedTo]);
 
   const value = useMemo(() =>
-    ({ loadedId, component, instance, loadUnity, unloadUnity, insertedTo, insertTo, insertedToRef }),
-    [loadedId, component, instance, loadUnity, unloadUnity, insertedTo, insertTo, insertedToRef]);
+    ({ component, instance, insertedTo, insertTo, insertedToRef, setLoaded }),
+    [component, instance, insertedTo, insertTo, insertedToRef, setLoaded]);
 
   return <>
     {unityPortal}

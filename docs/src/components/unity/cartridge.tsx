@@ -27,8 +27,8 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
     const setRef = useCallback((el) => {
       if (el) unityContainer.current = el;
     }, [unityContainer]);
-    const { loadUnity, instance, insertTo, insertedToRef } = useGlobalUnity();
-    useEffect(() => loadUnity(undefined), [loadUnity]);
+    const { instance, insertTo, insertedToRef, setLoaded } = useGlobalUnity();
+    useEffect(() => setLoaded(true), [setLoaded]);
 
     const instanceRef = useLatest(instance);
 
