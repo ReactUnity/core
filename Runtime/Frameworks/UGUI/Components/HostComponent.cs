@@ -17,7 +17,10 @@ namespace ReactUnity.UGUI
 
         public HostComponent(RectTransform host, UGUIContext context) : base(host, context, "_root", true)
         {
-            var responsive = GetOrAddComponent<ResponsiveElement>();
+            var existingResponsive = GetComponent<ResponsiveElement>();
+            if (existingResponsive) GameObject.DestroyImmediate(existingResponsive);
+
+            var responsive = AddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
             responsive.Restart();

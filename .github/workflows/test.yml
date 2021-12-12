@@ -31,11 +31,11 @@ jobs:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false }
         include:
           - unityVersion: 2021.2.6f1
-            suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
-            targetPlatform: StandaloneWindows64
-          - unityVersion: 2021.2.6f1
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true }
             targetPlatform: StandaloneWindows64
+          # - unityVersion: 2021.2.6f1
+          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
+          #   targetPlatform: StandaloneWindows64
     steps:
       - name: Checkout core library
         uses: actions/checkout@v2
@@ -80,7 +80,7 @@ jobs:
 
       - name: Commit Snapshots
         if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.suite.main
-        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        uses: EndBug/add-and-commit@v7
         with:
           add: 'Tests/.snapshots'
           cwd: './core'
