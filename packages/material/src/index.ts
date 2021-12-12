@@ -10,7 +10,6 @@ export * from './prompt';
 export * from './ripple';
 export * from './select';
 export * from './slider';
-export * as Styles from './styles';
 export * from './text';
 export * from './toggle';
 export * from './tooltip';
