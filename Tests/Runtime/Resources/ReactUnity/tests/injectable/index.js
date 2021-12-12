@@ -774,6 +774,67 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ 606:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(487);
+var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleDomAPI.js
+var styleDomAPI = __webpack_require__(631);
+var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(52);
+var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(10);
+var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertStyleElement.js
+var insertStyleElement = __webpack_require__(469);
+var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(329);
+var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!../../../material/dist/src/styles/globals.scss
+var globals = __webpack_require__(374);
+;// CONCATENATED MODULE: ../../../material/dist/src/styles/globals.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (styleTagTransform_default());
+options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      options.insert = insertBySelector_default().bind(null, "head");
+    
+options.domAPI = (styleDomAPI_default());
+options.insertStyleElement = (insertStyleElement_default());
+
+var update = injectStylesIntoStyleTag_default()(globals/* default */.Z, options);
+
+
+
+
+       /* harmony default export */ const styles_globals = (globals/* default */.Z && globals/* default.locals */.Z.locals ? globals/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../../material/dist/src/styles/index.js
+
+
+/***/ }),
+
 /***/ 408:
 /***/ ((module) => {
 
@@ -7681,10 +7742,6 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-// NAMESPACE OBJECT: ../../../material/dist/src/styles/index.js
-var styles_namespaceObject = {};
-__webpack_require__.r(styles_namespaceObject);
-
 // NAMESPACE OBJECT: ../../../material/dist/index.js
 var dist_namespaceObject = {};
 __webpack_require__.r(dist_namespaceObject);
@@ -7702,7 +7759,6 @@ __webpack_require__.d(dist_namespaceObject, {
   "PromptDialog": () => (PromptDialog),
   "Select": () => (Select),
   "Slider": () => (Slider),
-  "Styles": () => (styles_namespaceObject),
   "TextField": () => (TextField),
   "Toggle": () => (Toggle),
   "ToggleGroup": () => (ToggleGroup),
@@ -9952,39 +10008,6 @@ function _Slider(_a) {
 }
 
 var Slider = react.memo(_Slider);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!../../../material/dist/src/styles/globals.scss
-var globals = __webpack_require__(374);
-;// CONCATENATED MODULE: ../../../material/dist/src/styles/globals.scss
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var globals_options = {};
-
-globals_options.styleTagTransform = (styleTagTransform_default());
-globals_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      globals_options.insert = insertBySelector_default().bind(null, "head");
-    
-globals_options.domAPI = (styleDomAPI_default());
-globals_options.insertStyleElement = (insertStyleElement_default());
-
-var globals_update = injectStylesIntoStyleTag_default()(globals/* default */.Z, globals_options);
-
-
-
-
-       /* harmony default export */ const styles_globals = (globals/* default */.Z && globals/* default.locals */.Z.locals ? globals/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ../../../material/dist/src/styles/index.js
-
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
@@ -12546,8 +12569,6 @@ var VariableSizeList = createListComponent({
 
 
 
-
-
 ;// CONCATENATED MODULE: ../../../material/dist/index.js
 
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/styled-components-helper.js
@@ -12575,8 +12596,8 @@ function insertStyledComponentsSheet(sheet) {
 
 
 ;// CONCATENATED MODULE: ./src/app.tsx
-var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/*INJECTABLE_START*/
-(function (react, ReactUnity, Material) {
+var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__(606);};/*INJECTABLE_START*/
+(function (react, ReactUnity, Material, MaterialStyles) {
   var __originalRender = ReactUnity.Renderer.render;
 
   var renderCalled = false;
@@ -12596,6 +12617,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/
   var require = function (module) {
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === '@reactunity/material/styles') return MaterialStyles();
     if (module === '@reactunity/material') return Material;
     if (module.startsWith('@reactunity/material/')) return Material;
   };
@@ -12619,7 +12641,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/
   } else {
     console.error('Nothing was rendered');
   }
-})(react, ReactUnity, Material);
+})(react, ReactUnity, Material, MaterialStyles);
 
 /*INJECTABLE_END*/
 ;// CONCATENATED MODULE: ./src/index.ts

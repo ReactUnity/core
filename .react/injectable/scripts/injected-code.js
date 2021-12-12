@@ -1,4 +1,4 @@
-(function (react, ReactUnity, Material) {
+(function (react, ReactUnity, Material, MaterialStyles) {
   var __originalRender = ReactUnity.Renderer.render;
 
   var renderCalled = false;
@@ -18,6 +18,7 @@
   var require = function (module) {
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === '@reactunity/material/styles') return MaterialStyles();
     if (module === '@reactunity/material') return Material;
     if (module.startsWith('@reactunity/material/')) return Material;
   };
@@ -41,4 +42,4 @@
   } else {
     console.error('Nothing was rendered');
   }
-})(react, ReactUnity, Material);
+})(react, ReactUnity, Material, MaterialStyles);
