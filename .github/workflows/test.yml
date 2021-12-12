@@ -22,6 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         unityVersion:
+          - 2021.1.16f1
           - 2020.3.9f1
           - 2019.4.29f1
         targetPlatform:
@@ -29,10 +30,10 @@ jobs:
         suite:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false }
         include:
-          - unityVersion: 2021.1.16f1
+          - unityVersion: 2021.2.6f1
             suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
             targetPlatform: StandaloneWindows64
-          - unityVersion: 2021.1.16f1
+          - unityVersion: 2021.2.6f1
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true }
             targetPlatform: StandaloneWindows64
     steps:
@@ -40,11 +41,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: core
+
       - name: Checkout test project
         uses: actions/checkout@v2
         with:
           ref: tests
           path: tests
+
       - name: Cache Unity Library
         uses: actions/cache@v2
         with:
@@ -52,13 +55,17 @@ jobs:
           key: Library-${{ matrix.targetPlatform }}-${{ matrix.unityVersion }}
           restore-keys: |
             Library-
+
       - name: Clear React Unity package lock
         run: echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
+
       - name: Install local React Unity package
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
+
       - name: Install TMP v2
         if: startsWith(matrix.unityVersion, '2019')
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
+
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
         id: testRunner
@@ -80,18 +87,21 @@ jobs:
           default_author: github_actions
           message: 'Update snapshots'
           pull: 'NO-PULL'
+
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
         if: always() && matrix.suite.main
         with:
           name: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
           path: ${{ steps.testRunner.outputs.artifactsPath }}
+
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
         if: always() && matrix.suite.coverage && matrix.suite.main
         with:
           name: ${{ matrix.suite.name }} coverage
           path: tests/CodeCoverage
+
       - name: Upload Coverage to codecov
         if: always() && matrix.suite.coverage && matrix.suite.main
         uses: codecov/codecov-action@v2

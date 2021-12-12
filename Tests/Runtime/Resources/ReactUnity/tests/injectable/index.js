@@ -1,6 +1,29 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 374:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(608);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(408);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".mat-elevation-0{box-shadow:none}.mat-elevation-1{box-shadow:0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-2{box-shadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2),0px 2px 2px 0px rgba(0, 0, 0, 0.14),0px 1px 5px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-3{box-shadow:0px 3px 3px -2px rgba(0, 0, 0, 0.2),0px 3px 4px 0px rgba(0, 0, 0, 0.14),0px 1px 8px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-4{box-shadow:0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14),0px 1px 10px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-5{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 5px 8px 0px rgba(0, 0, 0, 0.14),0px 1px 14px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-6{box-shadow:0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14),0px 1px 18px 0px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-7{box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2),0px 7px 10px 1px rgba(0, 0, 0, 0.14),0px 2px 16px 1px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-8{box-shadow:0px 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-9{box-shadow:0px 5px 6px -3px rgba(0, 0, 0, 0.2),0px 9px 12px 1px rgba(0, 0, 0, 0.14),0px 3px 16px 2px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-10{box-shadow:0px 6px 6px -3px rgba(0, 0, 0, 0.2),0px 10px 14px 1px rgba(0, 0, 0, 0.14),0px 4px 18px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-11{box-shadow:0px 6px 7px -4px rgba(0, 0, 0, 0.2),0px 11px 15px 1px rgba(0, 0, 0, 0.14),0px 4px 20px 3px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-12{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 12px 17px 2px rgba(0, 0, 0, 0.14),0px 5px 22px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-13{box-shadow:0px 7px 8px -4px rgba(0, 0, 0, 0.2),0px 13px 19px 2px rgba(0, 0, 0, 0.14),0px 5px 24px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-14{box-shadow:0px 7px 9px -4px rgba(0, 0, 0, 0.2),0px 14px 21px 2px rgba(0, 0, 0, 0.14),0px 5px 26px 4px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-15{box-shadow:0px 8px 9px -5px rgba(0, 0, 0, 0.2),0px 15px 22px 2px rgba(0, 0, 0, 0.14),0px 6px 28px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-16{box-shadow:0px 8px 10px -5px rgba(0, 0, 0, 0.2),0px 16px 24px 2px rgba(0, 0, 0, 0.14),0px 6px 30px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-17{box-shadow:0px 8px 11px -5px rgba(0, 0, 0, 0.2),0px 17px 26px 2px rgba(0, 0, 0, 0.14),0px 6px 32px 5px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-18{box-shadow:0px 9px 11px -5px rgba(0, 0, 0, 0.2),0px 18px 28px 2px rgba(0, 0, 0, 0.14),0px 7px 34px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-19{box-shadow:0px 9px 12px -6px rgba(0, 0, 0, 0.2),0px 19px 29px 2px rgba(0, 0, 0, 0.14),0px 7px 36px 6px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-20{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 20px 31px 3px rgba(0, 0, 0, 0.14),0px 8px 38px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-21{box-shadow:0px 10px 13px -6px rgba(0, 0, 0, 0.2),0px 21px 33px 3px rgba(0, 0, 0, 0.14),0px 8px 40px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-22{box-shadow:0px 10px 14px -6px rgba(0, 0, 0, 0.2),0px 22px 35px 3px rgba(0, 0, 0, 0.14),0px 8px 42px 7px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}.mat-elevation-23{box-shadow:0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0,0,0,.12);transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms}:root{font-size:16px}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ 218:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -7658,6 +7681,10 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
+// NAMESPACE OBJECT: ../../../material/dist/src/styles/index.js
+var styles_namespaceObject = {};
+__webpack_require__.r(styles_namespaceObject);
+
 // NAMESPACE OBJECT: ../../../material/dist/index.js
 var dist_namespaceObject = {};
 __webpack_require__.r(dist_namespaceObject);
@@ -7675,16 +7702,13 @@ __webpack_require__.d(dist_namespaceObject, {
   "PromptDialog": () => (PromptDialog),
   "Select": () => (Select),
   "Slider": () => (Slider),
+  "Styles": () => (styles_namespaceObject),
   "TextField": () => (TextField),
   "Toggle": () => (Toggle),
   "ToggleGroup": () => (ToggleGroup),
   "VariableSizeGrid": () => (VariableSizeGrid),
   "VariableSizeList": () => (VariableSizeList),
-  "_Option": () => (_Option),
-  "_Select": () => (_Select),
   "addRipple": () => (addRipple),
-  "areEqual": () => (areEqual),
-  "shouldComponentUpdate": () => (shouldComponentUpdate),
   "useDataTooltip": () => (useDataTooltip),
   "useRipple": () => (useRipple),
   "useTooltip": () => (useTooltip)
@@ -9495,6 +9519,7 @@ var select_rest = undefined && undefined.__rest || function (s, e) {
 
 
 var SelectContext = react.createContext(null);
+
 function _Select(_a) {
   var _b = _a.keepOpen,
       keepOpen = _b === void 0 ? 'auto' : _b,
@@ -9621,6 +9646,7 @@ function _Select(_a) {
     }), void 0)]
   }), void 0);
 }
+
 function _Option(_a) {
   var className = _a.className,
       children = _a.children,
@@ -9706,6 +9732,7 @@ function _Option(_a) {
     }, void 0), children]
   }), void 0);
 }
+
 var Select = react.memo(_Select);
 Select.Option = _Option;
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!../../../material/dist/src/slider/index.module.scss
@@ -9925,6 +9952,39 @@ function _Slider(_a) {
 }
 
 var Slider = react.memo(_Slider);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[5].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[3]!../../../material/dist/src/styles/globals.scss
+var globals = __webpack_require__(374);
+;// CONCATENATED MODULE: ../../../material/dist/src/styles/globals.scss
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var globals_options = {};
+
+globals_options.styleTagTransform = (styleTagTransform_default());
+globals_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      globals_options.insert = insertBySelector_default().bind(null, "head");
+    
+globals_options.domAPI = (styleDomAPI_default());
+globals_options.insertStyleElement = (insertStyleElement_default());
+
+var globals_update = injectStylesIntoStyleTag_default()(globals/* default */.Z, globals_options);
+
+
+
+
+       /* harmony default export */ const styles_globals = (globals/* default */.Z && globals/* default.locals */.Z.locals ? globals/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ../../../material/dist/src/styles/index.js
+
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(502);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
@@ -10505,51 +10565,6 @@ function propsProxy(data) {
       return data['tooltip-' + prop];
     }
   });
-}
-;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/shallowDiffers.js
-// Pulled from react-compat
-// https://github.com/developit/preact-compat/blob/7c5de00e7c85e2ffd011bf3af02899b63f699d3a/src/index.js#L349
-function shallowDiffers(prev, next) {
-  for (var attribute in prev) {
-    if (!(attribute in next)) {
-      return true;
-    }
-  }
-
-  for (var attribute in next) {
-    if (prev[attribute] !== next[attribute]) {
-      return true;
-    }
-  }
-
-  return false;
-}
-;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/areEqual.js
-var areEqual_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
- // Custom comparison function for React.memo().
-// It knows to compare individual style props and ignore the wrapper object.
-// See https://reactjs.org/docs/react-api.html#reactmemo
-
-function areEqual(prevProps, nextProps) {
-  var prevStyle = prevProps.style,
-      prevRest = areEqual_rest(prevProps, ["style"]);
-
-  var nextStyle = nextProps.style,
-      nextRest = areEqual_rest(nextProps, ["style"]);
-
-  return !shallowDiffers(prevStyle, nextStyle) && !shallowDiffers(prevRest, nextRest);
 }
 ;// CONCATENATED MODULE: ../../../node_modules/memoize-one/dist/memoize-one.esm.js
 var safeIsNaN = Number.isNaN || function ponyfill(value) {
@@ -11983,15 +11998,6 @@ var FixedSizeList = createListComponent({
     if (false) {}
   }
 });
-;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/shouldComponentUpdate.js
-
- // Custom shouldComponentUpdate for class components.
-// It knows to compare individual style props and ignore the wrapper object.
-// See https://reactjs.org/docs/react-component.html#shouldcomponentupdate
-
-function shouldComponentUpdate(nextProps, nextState) {
-  return !areEqual(this.props, nextProps) || shallowDiffers(this.state, nextState);
-}
 ;// CONCATENATED MODULE: ../../../material/dist/src/virtual-scroll/VariableSizeGrid.js
 
 var DEFAULT_ESTIMATED_ITEM_SIZE = 50;
@@ -12523,9 +12529,9 @@ var VariableSizeList = createListComponent({
 
 
 
-
-
 ;// CONCATENATED MODULE: ../../../material/dist/src/index.js
+
+
 
 
 
@@ -12591,6 +12597,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;/
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
     if (module === '@reactunity/material') return Material;
+    if (module.startsWith('@reactunity/material/')) return Material;
   };
 
   let result = (function (module, exports, render, require) {

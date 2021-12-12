@@ -62,7 +62,7 @@ namespace ReactUnity.Scripting
             {
                 bool connected = false;
                 var timer = new System.Threading.Timer(_ => {
-                    if (!connected) Engine.Interrupt();
+                    if (!connected) Engine.CancelAwaitDebugger();
                 }, null, 10000, System.Threading.Timeout.Infinite);
 
                 using (timer)

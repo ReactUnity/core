@@ -19,6 +19,7 @@
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
     if (module === '@reactunity/material') return Material;
+    if (module.startsWith('@reactunity/material/')) return Material;
   };
 
   let result = (function (module, exports, render, require) {
