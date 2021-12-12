@@ -21,6 +21,9 @@ yarn add @reactunity/material
 </TerminalBlock>
 
 ```js
+// Global styles is needed to be imported at least once for correct styling
+import '@reactunity/material/styles';
+
 // Importing a specific component:
 import { Button } from '@reactunity/material';
 

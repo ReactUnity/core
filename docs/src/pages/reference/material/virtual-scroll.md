@@ -7,6 +7,7 @@ layout: API
 
 ```js App.js active
 import { FixedSizeList } from '@reactunity/material';
+import '@reactunity/material/styles';
 
 const Row = (props) =>
   <text style={props.style}>Row {props.index}</text>;

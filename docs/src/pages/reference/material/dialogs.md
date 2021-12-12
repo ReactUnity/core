@@ -7,6 +7,7 @@ layout: API
 
 ```js App.js active
 import { Button, AlertDialog, ConfirmDialog, PromptDialog } from '@reactunity/material';
+import '@reactunity/material/styles';
 
 export default function App() {
   const [dlOpen, setDlOpen] = React.useState(0);

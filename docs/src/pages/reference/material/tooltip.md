@@ -7,6 +7,7 @@ layout: API
 
 ```js App.js active
 import { useDataTooltip } from '@reactunity/material';
+import '@reactunity/material/styles';
 
 export default function App() {
   const ttHover = useDataTooltip('hover');

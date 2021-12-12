@@ -7,6 +7,7 @@ layout: API
 
 ```js App.js active
 import { Toggle, ToggleGroup } from '@reactunity/material';
+import '@reactunity/material/styles';
 
 export default function App() {
   return <scroll class="main">

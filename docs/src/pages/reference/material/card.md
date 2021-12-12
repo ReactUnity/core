@@ -1,5 +1,5 @@
 ---
-title: Paper
+title: Card
 layout: API
 ---
 
@@ -7,6 +7,7 @@ layout: API
 
 ```js App.js active
 import { Card } from '@reactunity/material';
+import '@reactunity/material/styles';
 
 export default function App() {
   return <scroll class="main">
