@@ -51,7 +51,7 @@ namespace ReactUnity.Tests
         public ButtonComponent Button => Q("button") as ButtonComponent;
         public AnchorComponent Anchor => Q("anchor") as AnchorComponent;
 
-        public ButtonTests(JavascriptEngineType engineType) : base(engineType, usesInput: true) { }
+        public ButtonTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
         [ReactInjectableTest(BaseScript)]

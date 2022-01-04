@@ -144,7 +144,6 @@ namespace ReactUnity.Editor.Tests.Renderer
         [EditorInjectableTest(BaseScript, BaseStyle, RealTimer = true)]
         public IEnumerator ZeroLeaveDoesNotCauseCrash()
         {
-            Assert.IsNull(View);
             InsertStyle(@"
                 #test { state-duration: 0s !important; }
             ");

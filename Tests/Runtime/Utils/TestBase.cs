@@ -23,8 +23,12 @@ namespace ReactUnity.Tests
     public abstract class TestBase : InputTestFixture
     {
         protected InputTestFixture Input => this;
-        protected Mouse Mouse { get; private set; }
-        protected Keyboard Keyboard { get; private set; }
+
+        private Mouse mouse;
+        protected Mouse Mouse => mouse ?? (mouse = InputSystem.AddDevice<Mouse>());
+
+        private Keyboard keyboard;
+        protected Keyboard Keyboard => keyboard ?? (keyboard = InputSystem.AddDevice<Keyboard>());
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
@@ -73,21 +77,15 @@ namespace ReactUnity.Tests
 
         public override void Setup()
         {
-            if (UsesInput)
-            {
-                base.Setup();
-                Mouse = InputSystem.AddDevice<Mouse>();
-                Keyboard = InputSystem.AddDevice<Keyboard>();
-            }
+            if (UsesInput) base.Setup();
             Canvas.GetComponent<Canvas>().renderMode = RenderMode;
         }
 
         public override void TearDown()
         {
-            if (UsesInput)
-            {
-                base.TearDown();
-            }
+            if (UsesInput) base.TearDown();
+            if (mouse != null) mouse = null;
+            if (keyboard != null) keyboard = null;
         }
 
         public IEnumerator Pause()

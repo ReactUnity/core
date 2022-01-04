@@ -7,8 +7,7 @@
   "scripts": {
     "start": "react-unity-scripts start",
     "build": "react-unity-scripts build",
-    "postyalc": "yarn",
-    "preinstall": "npx only-allow@1.0.0 yarn"
+    "postyalc": "yarn"
   },
   "dependencies": {
     "@reactunity/renderer": "^0.8.0",
