@@ -22,14 +22,16 @@ jobs:
       fail-fast: false
       matrix:
         unityVersion:
-          - 2021.1.16f1
+          # - 2021.1.16f1
           - 2020.3.9f1
           - 2019.4.29f1
         suite:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false, testBranch: "tests" }
         include:
-          - unityVersion: 2021.2.7f1
-            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests_2021_2" }
+          - unityVersion: 2021.1.16f1
+            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests" }
+          # - unityVersion: 2021.2.7f1
+          #   suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests_2021_2" }
           # - unityVersion: 2021.2.7f1
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false, testBranch: "tests_2021_2" }
     steps:
