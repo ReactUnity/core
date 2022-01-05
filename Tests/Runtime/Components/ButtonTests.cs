@@ -71,7 +71,6 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(BaseScript)]
-        [Ignore("Input simulation not working correctly in all Unity versions")]
         public IEnumerator ButtonClickEventWorks()
         {
             var list = new List<string>();
@@ -91,7 +90,6 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(BaseScript)]
-        [Ignore("Input simulation not working correctly in all Unity versions")]
         public IEnumerator ButtonShouldBeClickableWithoutBackground()
         {
             Button.Style["background"] = null;
