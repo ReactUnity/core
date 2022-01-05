@@ -55,6 +55,8 @@ namespace ReactUnity.UGUI
 
         void Attach()
         {
+            if (Parent == null) return;
+
             if (Container.parent != currentTarget)
             {
                 Container.SetParent(currentTarget ? currentTarget : null, false);
