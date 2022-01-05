@@ -6,19 +6,19 @@ Creates the Typescript project for React Unity. See [core library](https://githu
 
 If you want to add ReactUnity to an existing Unity project:
 
-`npm init @reactunity`
+`npx @reactunity/create`
 
 If you want to create full Unity app from scratch:
 
-`npm init @reactunity -- -u`
+`npx @reactunity/create -u`
 
 Create the React project in a custom folder:
 
-`npm init @reactunity custom/folder/path`
+`npx @reactunity/create custom/folder/path`
 
 ### Options
 
-Options can be used like: `npm init @reactunity -- <options>`
+Options can be used like: `npx @reactunity/create <options>`
 
 ```
   -u, --unity                Creates Unity project from scratch and adds React project into it
