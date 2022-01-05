@@ -1,14 +1,14 @@
 name: Trigger tests
 on:
-  push:
-    branches:
-      - '**'
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.vscode/**'
-  pull_request:
-    branches: [ main ]
+  # push:
+  #   branches:
+  #     - '**'
+  #   paths-ignore:
+  #     - 'docs/**'
+  #     - '**.md'
+  #     - '.vscode/**'
+  # pull_request:
+  #   branches: [ main ]
   workflow_dispatch:
 
 jobs:
