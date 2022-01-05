@@ -25,17 +25,13 @@ jobs:
           - 2021.1.16f1
           - 2020.3.9f1
           - 2019.4.29f1
-        targetPlatform:
-          - StandaloneWindows64
         suite:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false, testBranch: "tests" }
         include:
           - unityVersion: 2021.2.7f1
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests_2021_2" }
-            targetPlatform: StandaloneWindows64
           # - unityVersion: 2021.2.7f1
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false, testBranch: "tests_2021_2" }
-          #   targetPlatform: StandaloneWindows64
     steps:
       - name: Checkout core library
         uses: actions/checkout@v2
@@ -52,7 +48,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: tests/Library
-          key: Library-${{ matrix.targetPlatform }}-${{ matrix.unityVersion }}
+          key: Library-${{ matrix.unityVersion }}
           restore-keys: |
             Library-
 
