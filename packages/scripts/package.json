@@ -43,9 +43,6 @@
       ]
     }
   },
-  "scripts": {
-    "preinstall": "npx only-allow@1.0.0 yarn"
-  },
   "dependencies": {
     "@babel/core": "7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.1",
