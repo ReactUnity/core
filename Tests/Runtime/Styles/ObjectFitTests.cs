@@ -137,6 +137,14 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, Rect.x, 1);
             Assert.AreEqual(50, Rect.y, 1);
 
+            Image.Style.Set("object-fit", "scale-down");
+            Image.Style.Set("object-position", "50%");
+            yield return null;
+            Assert.AreEqual(100, img.rectTransform.rect.width);
+            Assert.AreEqual(100, img.rectTransform.rect.height);
+            Assert.AreEqual(100, Rect.x, 1);
+            Assert.AreEqual(50, Rect.y, 1);
+
             Image.Style.Set("width", 80);
             Image.Style.Set("height", 50);
             Image.Style.Set("object-position", "center");

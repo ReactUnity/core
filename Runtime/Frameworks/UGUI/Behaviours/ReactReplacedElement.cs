@@ -39,35 +39,43 @@ namespace ReactUnity.UGUI.Behaviours
 
         private void LateUpdate()
         {
-            var translate = position;
             if (!Layout.HasNewLayout && !hasPositionUpdate) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
 
-            var xPer = translate.X.Unit == YogaUnit.Percent;
-            var yPer = translate.Y.Unit == YogaUnit.Percent;
+            var px = position.X.Unit == YogaUnit.Auto || position.X.Unit == YogaUnit.Undefined ? YogaValue2.Center.X : position.X;
+            var py = position.Y.Unit == YogaUnit.Auto || position.Y.Unit == YogaUnit.Undefined ? YogaValue2.Center.Y : position.Y;
 
-            var xVal = xPer ? translate.X.Value / 100 : translate.X.Value;
-            var yVal = yPer ? (1 - translate.Y.Value / 100) : -translate.Y.Value;
+            var xIsPercentage = px.Unit == YogaUnit.Percent;
+            var yIsPercentage = py.Unit == YogaUnit.Percent;
 
-            var pivotX = xPer ? xVal : 0;
-            var pivotY = yPer ? yVal : 1;
+            var tx = px.Value;
+            var ty = py.Value;
 
-            var anX = xPer ? 0 : xVal;
-            var anY = yPer ? 0 : yVal;
+            if (float.IsNaN(tx)) tx = 0;
+            if (float.IsNaN(ty)) ty = 0;
 
-            var parMinX = xPer ? xVal : 0;
-            var parMaxX = xPer ? xVal : 1;
+            var xVal = xIsPercentage ? tx / 100 : tx;
+            var yVal = yIsPercentage ? (1 - ty / 100) : -ty;
 
-            var parMinY = yPer ? yVal : 0;
-            var parMaxY = yPer ? yVal : 1;
+            var pivotX = xIsPercentage ? xVal : 0;
+            var pivotY = yIsPercentage ? yVal : 1;
+
+            var offsetX = xIsPercentage ? 0 : xVal;
+            var offsetY = yIsPercentage ? 0 : yVal;
+
+            var anchorMinX = xIsPercentage ? xVal : 0;
+            var anchorMaxX = xIsPercentage ? xVal : 1;
+
+            var anchorMinY = yIsPercentage ? yVal : 0;
+            var anchorMaxY = yIsPercentage ? yVal : 1;
 
 
             rt.pivot = new Vector2(pivotX, pivotY);
             rt.localPosition = Vector2.zero;
 
-            rt.anchorMin = new Vector2(parMinX, parMinY);
-            rt.anchorMax = new Vector2(parMaxX, parMaxY);
-            rt.anchoredPosition = new Vector2(anX, anY);
+            rt.anchorMin = new Vector2(anchorMinX, anchorMinY);
+            rt.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
+            rt.anchoredPosition = new Vector2(offsetX, offsetY);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
 
