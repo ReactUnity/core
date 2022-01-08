@@ -35,11 +35,11 @@ namespace ReactUnity.UGUI
             set => ScrollRect.ScrollTop = value;
         }
 
-        public ScrollComponent(UGUIContext Context) : base(Context, "scroll")
+        public ScrollComponent(UGUIContext ctx) : base(ctx, "scroll")
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
 
-            var viewport = new GameObject("[ScrollViewport]").AddComponent<RectTransform>();
+            var viewport = ctx.CreateNativeObject("[ScrollViewport]").AddComponent<RectTransform>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;
@@ -52,7 +52,7 @@ namespace ReactUnity.UGUI
             vpImage.color = Color.clear;
 
 
-            var content = new GameObject("[ScrollContent]").AddComponent<RectTransform>();
+            var content = ctx.CreateNativeObject("[ScrollContent]").AddComponent<RectTransform>();
             Container = content;
             content.SetParent(viewport, false);
 

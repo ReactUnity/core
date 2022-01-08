@@ -545,6 +545,7 @@ namespace ReactUnity
             var accepted = IsContainer && InsertChild(child, index);
             if (accepted)
             {
+                if (child.Layout?.Parent != null) child.Layout.Parent.RemoveChild(child.Layout);
                 if (index >= 0)
                 {
                     Children.Insert(index, child);

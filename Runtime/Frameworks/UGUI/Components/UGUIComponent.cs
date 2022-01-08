@@ -52,7 +52,7 @@ namespace ReactUnity.UGUI
 
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
-            GameObject = new GameObject();
+            GameObject = context.CreateNativeObject(DefaultName);
             RectTransform = AddComponent<RectTransform>();
 
             RectTransform.anchorMin = Vector2.up;
@@ -64,7 +64,6 @@ namespace ReactUnity.UGUI
             Component.Component = this;
 
             Container = RectTransform;
-            Name = null;
         }
 
         protected UGUIComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)

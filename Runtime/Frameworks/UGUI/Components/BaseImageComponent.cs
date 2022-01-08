@@ -16,8 +16,7 @@ namespace ReactUnity.UGUI
 
         public BaseImageComponent(UGUIContext context, string tag) : base(context, tag)
         {
-            ImageContainer = new GameObject();
-            ImageContainer.name = "[ImageContent]";
+            ImageContainer = context.CreateNativeObject("[ImageContent]");
 
             var replacedElementLayout = new YogaNode();
             Layout.AddChild(replacedElementLayout);

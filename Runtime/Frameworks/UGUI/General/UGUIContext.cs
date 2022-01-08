@@ -117,5 +117,12 @@ namespace ReactUnity.UGUI
             var source = (Host as HostComponent).GetOrAddComponent<AudioSource>();
             source.PlayOneShot(clip);
         }
+
+        internal GameObject CreateNativeObject(string name, params Type[] components)
+        {
+            var go = new GameObject(name, components);
+            go.layer = (Host as HostComponent).GameObject.layer;
+            return go;
+        }
     }
 }

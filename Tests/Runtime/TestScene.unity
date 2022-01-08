@@ -189,6 +189,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2066305897}
   m_Father: {fileID: 0}
@@ -278,6 +279,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -364,6 +366,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -378,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066305897}
   - component: {fileID: 2066305898}
-  m_Layer: 5
+  m_Layer: 4
   m_Name: REACT_ROOT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,6 +398,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 681522766}
   m_RootOrder: 0
@@ -416,9 +420,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Script:
+  Source:
     Type: 3
+    Language: 0
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
+    Watch: 1
     SourcePath: react/index#material
     SourceText: 
     ResourcesPath: 

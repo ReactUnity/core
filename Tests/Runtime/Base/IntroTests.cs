@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.Scripting;
@@ -171,6 +173,20 @@ namespace ReactUnity.Tests
 
             Host.Name = null;
             Assert.AreEqual("REACT_ROOT", Host.GameObject.name);
+        }
+
+        [ReactInjectableTest]
+        public IEnumerator ElementsAreRenderedInTheSameLayerAsHost()
+        {
+            yield return null;
+            System.Func<Transform, IEnumerable<Transform>> selectAllChildren = null;
+            selectAllChildren = (Transform x) => x.OfType<Transform>().SelectMany(x => selectAllChildren(x)).Concat(new List<Transform>() { x });
+            var elements = selectAllChildren(Host.RectTransform);
+
+            foreach (var item in elements)
+            {
+                Assert.AreEqual(Host.GameObject.layer, item.gameObject.layer);
+            }
         }
     }
 }

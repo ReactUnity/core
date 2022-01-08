@@ -17,7 +17,7 @@ namespace ReactUnity.UGUI.Internal
         public RectTransform ShadowRoot { get; private set; }
 
         private UGUIComponent Component;
-        private ReactContext Context;
+        private UGUIContext Context;
         private Action<RectTransform> SetContainer;
         internal RawImage BgImage;
 
@@ -70,16 +70,17 @@ namespace ReactUnity.UGUI.Internal
             var cmp = go.GetComponent<BorderAndBackground>();
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
 
-            var root = new GameObject("[GraphicRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
-            var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
-            var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(RawImage));
+            var context = comp.Context;
+            var root = context.CreateNativeObject("[GraphicRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
+            var border = context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
+            var bg = context.CreateNativeObject("[BackgroundImage]", typeof(RectTransform), typeof(RawImage));
 
 
             cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
             cmp.RootGraphic.raycastTarget = false;
 
             cmp.Component = comp;
-            cmp.Context = comp.Context;
+            cmp.Context = context;
             cmp.RootMask = root.AddComponent<Mask>();
             cmp.RootMask.showMaskGraphic = false;
             cmp.SetContainer = setContainer;
@@ -90,7 +91,7 @@ namespace ReactUnity.UGUI.Internal
             cmp.BgImage = bgImage;
             bgImage.color = Color.clear;
 
-            var sr = new GameObject("[Shadows]", typeof(RectTransform));
+            var sr = context.CreateNativeObject("[Shadows]", typeof(RectTransform));
 
             cmp.Root = root.transform as RectTransform;
             cmp.ShadowRoot = sr.transform as RectTransform;
@@ -363,7 +364,7 @@ namespace ReactUnity.UGUI.Internal
             {
                 if (MaskRoot == null)
                 {
-                    var mr = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                    var mr = Context.CreateNativeObject("[MaskRoot]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
                     MaskRoot = mr.transform as RectTransform;
                     var children = Component.RectTransform.OfType<RectTransform>().ToList();
                     FullStretch(MaskRoot, Component.RectTransform);
@@ -382,7 +383,7 @@ namespace ReactUnity.UGUI.Internal
             }
             else
             {
-                var sd = new GameObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                var sd = Context.CreateNativeObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
                 var mask = sd.GetComponent<Mask>();
                 mask.showMaskGraphic = false;
                 var img = sd.GetComponent<BackgroundImage>();
@@ -419,7 +420,7 @@ namespace ReactUnity.UGUI.Internal
 
         private void CreateShadow()
         {
-            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
+            var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
             var img = sd.GetComponent<BoxShadowImage>();
             img.MaskRoot = transform;
             img.raycastTarget = false;
@@ -429,7 +430,7 @@ namespace ReactUnity.UGUI.Internal
 
         private void CreateBackgroundImage()
         {
-            var sd = new GameObject("[Background]", typeof(RectTransform), typeof(BackgroundImage));
+            var sd = Context.CreateNativeObject("[Background]", typeof(RectTransform), typeof(BackgroundImage));
             var img = sd.GetComponent<BackgroundImage>();
             img.color = Color.clear;
             img.Context = Context;
