@@ -6,7 +6,7 @@ namespace ReactUnity.Converters
 {
     public class UrlConverter : IStyleParser, IStyleConverter
     {
-        private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
+        private static HashSet<string> AllowedFunctions = new HashSet<string> { "url", "resource" };
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 

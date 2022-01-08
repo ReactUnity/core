@@ -10,6 +10,7 @@ namespace ReactUnity.Styling
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
+        public static ICssFunction Resource = new UrlFunction() { DefaultProtocol = Types.UrlProtocol.Resource };
         public static ICssFunction Rgba = new RgbaFunction();
         public static ICssFunction Hsla = new HslaFunction();
         public static ICssFunction Var = new VarFunction();
@@ -28,6 +29,7 @@ namespace ReactUnity.Styling
             { "steps", Steps },
             { "cubic-bezier", CubicBezier },
             { "url", Url },
+            { "resource", Resource },
             { "rgba", Rgba },
             { "hsla", Hsla },
             { "var", Var },

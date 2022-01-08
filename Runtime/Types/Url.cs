@@ -14,7 +14,7 @@ namespace ReactUnity.Types
 
         public bool HasKnownProtocol => Protocol != UrlProtocol.Contextual && Protocol != UrlProtocol.None;
 
-        public Url(string fullUrl)
+        public Url(string fullUrl, UrlProtocol defaultProtocol = UrlProtocol.Contextual)
         {
             fullUrl = AllConverters.StringConverter.Parse(fullUrl) as string;
 
@@ -30,7 +30,7 @@ namespace ReactUnity.Types
             var splits = fullUrl.Split(new char[] { ':' }, 2);
             if (splits.Length == 1)
             {
-                Protocol = UrlProtocol.Contextual;
+                Protocol = defaultProtocol;
                 NormalizedUrl = fullUrl;
                 return;
             }
@@ -65,7 +65,7 @@ namespace ReactUnity.Types
             }
             else
             {
-                Protocol = UrlProtocol.Contextual;
+                Protocol = defaultProtocol;
                 NormalizedUrl = fullUrl;
             }
         }

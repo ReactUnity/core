@@ -113,7 +113,6 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
             IStyleConverter StringConverter = AllConverters.StringConverter;
 
             public bool CanHandleKeyword(CssKeyword keyword) => false;
@@ -134,13 +133,9 @@ namespace ReactUnity.Types
 
             public object Parse(string value)
             {
-                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
-                {
-                    if (result is Url u) return new FontReference(u);
-                }
+                if (AllConverters.UrlConverter.Convert(value) is Url u) return new FontReference(u);
 
                 value = StringConverter.Convert(value) as string;
-
                 return new FontReference(AssetReferenceType.Procedural, value);
             }
         }

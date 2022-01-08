@@ -13,6 +13,11 @@ namespace ReactUnity.Converters
 
         public object Parse(string value)
         {
+            return Normalize(value);
+        }
+
+        public static string Normalize(string value)
+        {
             if (string.IsNullOrWhiteSpace(value)) return value;
             if ((value.StartsWith("\"") && value.EndsWith("\""))
                 || (value.StartsWith("'") && value.EndsWith("'"))

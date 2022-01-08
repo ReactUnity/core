@@ -76,7 +76,6 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
             public bool AllowWithoutUrl { get; }
 
             public Converter(bool allowWithoutUrl = false)
@@ -97,10 +96,7 @@ namespace ReactUnity.Types
 
             public object Parse(string value)
             {
-                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
-                {
-                    if (result is Url u) return new TextReference(u);
-                }
+                if (AllConverters.UrlConverter.Convert(value) is Url u) return new TextReference(u);
 
                 if (AllowWithoutUrl) return new TextReference(new Url(value));
                 return CssKeyword.Invalid;

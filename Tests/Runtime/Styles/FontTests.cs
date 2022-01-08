@@ -21,7 +21,7 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(style: @"
     @font-face {
       font-family: ""Test Font Name"";
-      src: url(resource:ReactUnity/fonts/monospace);
+      src: resource(""ReactUnity/fonts/monospace"");
     }
 
 

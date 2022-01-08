@@ -58,8 +58,6 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
-
             public bool CanHandleKeyword(CssKeyword keyword) => false;
 
             public object Convert(object value)
@@ -73,11 +71,7 @@ namespace ReactUnity.Types
 
             public object Parse(string value)
             {
-                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
-                {
-                    if (result is Url u) return new VideoReference(u);
-                }
-
+                if (AllConverters.UrlConverter.Convert(value) is Url u) return new VideoReference(u);
                 return new VideoReference(new Url(value));
             }
         }
