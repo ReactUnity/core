@@ -34,9 +34,7 @@ namespace ReactUnity.Scripting
 
                 (debug ? (
                     V8ScriptEngineFlags.EnableDebugging |
-#if REACT_UNITY_DEVELOPER
                     (awaitDebugger ? V8ScriptEngineFlags.AwaitDebuggerAndPauseOnStart : V8ScriptEngineFlags.None) |
-#endif
                     V8ScriptEngineFlags.None)
                     : V8ScriptEngineFlags.None),
                 9222
@@ -62,7 +60,11 @@ namespace ReactUnity.Scripting
             {
                 bool connected = false;
                 var timer = new System.Threading.Timer(_ => {
-                    if (!connected) Engine.CancelAwaitDebugger();
+                    if (!connected)
+                    {
+                        Engine.CancelAwaitDebugger();
+                        Debug.LogWarning("Debugger connection timed out after 10 seconds. You can uncheck AwaitDebugger if you are not planning to connect a debugger.");
+                    }
                 }, null, 10000, System.Threading.Timeout.Infinite);
 
                 using (timer)
