@@ -22,20 +22,22 @@ jobs:
       matrix:
         platform:
           - ubuntu-20.04
-        unityVersion:
-          # - 2021.1.16f1
-          - 2020.3.9f1
-          - 2019.4.29f1
+        unity:
+          # - { version: "2021.1.16f1" }
+          - { version: "2020.3.9f1" }
+          - { version: "2019.4.29f1" }
         suite:
-          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false, testBranch: "tests" }
+          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
         include:
-          - unityVersion: 2021.1.16f1
-            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests" }
-          # - unityVersion: 2021.2.7f1
-          #   suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests_2021_2" }
-          # - unityVersion: 2021.2.7f1
-          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false, testBranch: "tests_2021_2" }
-    runs-on: ${{ matrix.platform }}
+          - main: true
+            coverage: true
+            unity: { version: "2021.1.16f1" }
+            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
+          # unity: { version: "2021.2.7f1", license: "UNITY_LICENSE_2021_2" }
+          # suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
+          # - unity: { version: "2021.2.7f1" }
+          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", testBranch: "tests_2021_2" }
+    runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
       - name: Checkout core library
         uses: actions/checkout@v2
@@ -52,7 +54,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: tests/Library
-          key: Library-${{ matrix.unityVersion }}
+          key: Library-${{ matrix.unity.version }}
           restore-keys: |
             Library-
 
@@ -63,23 +65,23 @@ jobs:
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
 
       - name: Install TMP v2
-        if: startsWith(matrix.unityVersion, '2019')
+        if: startsWith(matrix.unity.version, '2019')
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
 
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
         id: testRunner
         env:
-          UNITY_LICENSE: ${{ matrix.platform.license }}
+          UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
         with:
-          unityVersion: ${{ matrix.unityVersion }}
+          unityVersion: ${{ matrix.unity.version }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
-          checkName: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
+          customParameters: ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
+          checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           projectPath: tests
 
       - name: Commit Snapshots
-        if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.suite.main
+        if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
         uses: EndBug/add-and-commit@v7
         with:
           add: 'Tests/.snapshots'
@@ -90,20 +92,20 @@ jobs:
 
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
-        if: always() && matrix.suite.main
+        if: always() && matrix.main
         with:
-          name: ${{ matrix.suite.name }} ${{ matrix.unityVersion }}
+          name: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
-        if: always() && matrix.suite.coverage && matrix.suite.main
+        if: always() && matrix.coverage && matrix.main
         with:
           name: ${{ matrix.suite.name }} coverage
           path: tests/CodeCoverage
 
       - name: Upload Coverage to codecov
-        if: always() && matrix.suite.coverage && matrix.suite.main
+        if: always() && matrix.coverage && matrix.main
         uses: codecov/codecov-action@v2
         with:
           working-directory: ./core
