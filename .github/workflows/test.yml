@@ -32,7 +32,7 @@ jobs:
           - main: true
             coverage: true
             unity: { version: "2021.2.7f1", license: "UNITY_LICENSE_2021_2" }
-            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
+            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests_2021_2" }
           # - unity: { version: "2021.2.7f1" }
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", testBranch: "tests_2021_2" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
