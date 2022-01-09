@@ -1,0 +1,63 @@
+.host {
+  h1 {
+    font-size: 36px;
+    font-style: smallcaps, bold;
+    color: #582a9c;
+    margin-bottom: 12px;
+    transition: border 1s;
+    border-color: yellow;
+
+    &:hover {
+      border: 20px solid red;
+    }
+  }
+
+  h2 {
+    font-size: 30px;
+    font-style: smallcaps;
+    color: #fb2f8e;
+    margin-bottom: 8px;
+  }
+
+  section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  column {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  image {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    object-fit: scale-down;
+    object-position: 50%;
+    transition: object-position 2s;
+    align-self: stretch;
+  }
+
+  object {
+    border-width: 1px;
+    border-radius: 20px;
+    border-color: black;
+    margin: 5px;
+    background-color: hsla(152deg, 37%, 59%, 0.745);
+    object-fit: none;
+  }
+
+  render,
+  video {
+    object-fit: scale-down;
+    object-position: left;
+  }
+}

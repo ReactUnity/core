@@ -1,0 +1,45 @@
+.host {
+  align-items: center;
+
+  catwalk {
+    width: 399px;
+    height: 200px;
+    margin: auto;
+    background: transparent url(res:catwalk);
+    animation: sprite 800ms steps(11) infinite;
+  }
+
+  ryu {
+    width: 435px;
+    height: 267px;
+    margin: auto;
+    background: url(res:ryu);
+    animation: sprite 3.5s steps(45) infinite;
+  }
+
+  pulsar {
+    cursor: pointer;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    animation: pulsate 6s linear infinite;
+    box-shadow: 0 0 20px #fff, -20px 0 80px #f0f, 20px 0 80px #0ff, inset 0 0 50px #fff, inset 50px 0 80px #f0f,
+      inset -50px 0 80px #0ff, inset 50px 0 300px #f0f, inset -50px 0 300px #0ff;
+  }
+
+  @keyframes sprite {
+    from {
+      background-position: 0 0%;
+    }
+    to {
+      background-position: 0 100%;
+    }
+  }
+
+  @keyframes pulsate {
+    50% {
+      box-shadow: 0 0 20px #fff, 20px 0 80px #f0f, -20px 0 80px #0ff, inset 0 0 50px #fff, inset -50px 0 80px #f0f,
+        inset 50px 0 80px #0ff, inset -50px 0 300px #f0f, inset 50px 0 300px #0ff;
+    }
+  }
+}

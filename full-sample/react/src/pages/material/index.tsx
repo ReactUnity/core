@@ -11,19 +11,18 @@ import '@reactunity/material/styles';
 import { TextField } from '@reactunity/material/text';
 import { Toggle, ToggleGroup } from '@reactunity/material/toggle';
 import { useDataTooltip } from '@reactunity/material/tooltip';
-import { Renderer } from '@reactunity/renderer';
 import React from 'react';
 import style from './index.module.scss';
 import { VirtualScrolls } from './virtual-scrolls';
 
-export function App() {
+export function MaterialPage() {
   const [dlOpen, setDlOpen] = React.useState(0);
 
   const ttHover = useDataTooltip('hover');
   const ttPress = useDataTooltip('press');
   const ttClick = useDataTooltip('click');
 
-  return <scroll className={style.app}>
+  return <view className={style.app}>
     <h1>Material Showcase 😎</h1>
 
     <Paper elevation={2}>
@@ -195,7 +194,7 @@ export function App() {
       <Toggle value="val2">Option 2</Toggle>
       <Toggle value="val3">Option 3</Toggle>
     </ToggleGroup>
-  </scroll>;
+  </view>;
 };
 
-Renderer.render(<App />);
+export default MaterialPage;

@@ -1,0 +1,36 @@
+.host {
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  overflow: hidden;
+  background-color: white;
+}
+
+.sidepanel {
+  padding: 20px;
+  width: 200px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #dedede;
+
+  > button {
+    margin-bottom: 12px;
+  }
+}
+
+.scroll {
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+.content {
+  padding: 40px;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
