@@ -1,7 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import React, { ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { ReactNode, useCallback, useContext, useImperativeHandle, useMemo, useRef } from 'react';
 import { useRipple } from '../ripple';
 import { SelectionElement, SelectionState } from '../util/selection';
 import { MdInteractible } from '../util/types';
@@ -46,14 +46,11 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
       if (typeof ref === 'function') ref(val);
       else if (ref) ref.current = val;
 
-      if (ctx) ctx.register(selectionRef);
+      if (ctx) {
+        if (val) ctx.register(selectionRef);
+        else ctx.unregister(selectionRef);
+      }
     }, [ctx, ref, selectionRef]);
-
-    useEffect(() => {
-      return () => {
-        if (ctx) ctx.unregister(selectionRef);
-      };
-    }, [ctx, selectionRef]);
 
     return <label className={clsx(className, style.label, 'mat-toggle-label', style[type], 'mat-toggle-' + type, 'mat-variant-' + variant)} {...ripple}>
       <toggle name="<Toggle>" ref={innerRef}

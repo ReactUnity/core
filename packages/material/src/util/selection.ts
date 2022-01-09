@@ -110,8 +110,8 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
   unregister(el: ElementType) {
     const ind = this.elements.findIndex(x => x.el === el);
     if (ind >= 0) {
-      this.elements.splice(ind, 1);
       const item = this.elements[ind];
+      this.elements.splice(ind, 1);
       if (item.listener) item.listener();
     }
 
