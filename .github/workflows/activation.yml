@@ -3,7 +3,12 @@ on: [workflow_dispatch]
 jobs:
   activation:
     name: Request manual activation file 🔑
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - windows-2022
+          - ubuntu-20.04
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Request manual activation file
         id: getManualLicenseFile
