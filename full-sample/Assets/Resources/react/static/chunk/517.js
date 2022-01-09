@@ -351,8 +351,8 @@ module.exports = function (cssWithMappingToString) {
     var alreadyImportedModules = {};
 
     if (dedupe) {
-      for (var _i = 0; _i < this.length; _i++) {
-        var id = this[_i][0];
+      for (var k = 0; k < this.length; k++) {
+        var id = this[k][0];
 
         if (id != null) {
           alreadyImportedModules[id] = true;
@@ -360,8 +360,8 @@ module.exports = function (cssWithMappingToString) {
       }
     }
 
-    for (var _i2 = 0; _i2 < modules.length; _i2++) {
-      var item = [].concat(modules[_i2]);
+    for (var _k = 0; _k < modules.length; _k++) {
+      var item = [].concat(modules[_k]);
 
       if (dedupe && alreadyImportedModules[item[0]]) {
         continue;

@@ -41,8 +41,60 @@ export function App() {
   return <scroll>
     <view className={style.app}>
       <h1>React Unity Showcase</h1>
+{/*
+      <catwalk />
+      <ryu />
+
+      <star />
+
+      <starMask /> */}
+
+      {/* <html source={htmlContent} /> */}
 
       {/* <pulsar /> */}
+
+      <button onClick={() => console.log('here')}
+        style={{ background: 'none' }}>
+        Heello</button>
+
+      <view>
+        <h2>Background Images</h2>
+
+        <view className={style.backgrounds}>
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+          <bg />
+        </view>
+      </view>
 
       <section>
         <h2>Input</h2>

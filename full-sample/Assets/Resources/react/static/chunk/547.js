@@ -1027,6 +1027,7 @@ function Modal(_a) {
   useRootClass(open && [src_modal_index_module.body, 'mat-modal-open']);
   var portalRef = (0,react.useRef)();
   var initialOpen = (0,react.useRef)(open);
+  var openedOnce = (0,react.useRef)(open);
 
   var click = function click(ev, sender) {
     if (!ev.used) onClickBackdrop === null || onClickBackdrop === void 0 ? void 0 : onClickBackdrop();
@@ -1047,10 +1048,11 @@ function Modal(_a) {
   };
 
   (0,react.useEffect)(function () {
+    openedOnce.current = openedOnce.current || open;
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", modal_assign({
-    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open ? src_modal_index_module.opened : src_modal_index_module.closed),
+    className: clsx_m(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
@@ -1873,7 +1875,9 @@ function PromptDialog(_a) {
 ;// CONCATENATED MODULE: ../../material/dist/src/util/selection.js
 ;
 
-var SelectionState = function () {
+var SelectionState =
+/** @class */
+function () {
   function SelectionState(allowMultiple, initialValue) {
     this.allowMultiple = allowMultiple;
     this.initialValue = initialValue;
@@ -2993,10 +2997,7 @@ function memoizeOne(resultFn, isEqual) {
     isEqual = areInputsEqual;
   }
 
-  var lastThis;
-  var lastArgs = [];
-  var lastResult;
-  var calledOnce = false;
+  var cache = null;
 
   function memoized() {
     var newArgs = [];
@@ -3005,21 +3006,27 @@ function memoizeOne(resultFn, isEqual) {
       newArgs[_i] = arguments[_i];
     }
 
-    if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
-      return lastResult;
+    if (cache && cache.lastThis === this && isEqual(newArgs, cache.lastArgs)) {
+      return cache.lastResult;
     }
 
-    lastResult = resultFn.apply(this, newArgs);
-    calledOnce = true;
-    lastThis = this;
-    lastArgs = newArgs;
+    var lastResult = resultFn.apply(this, newArgs);
+    cache = {
+      lastResult: lastResult,
+      lastArgs: newArgs,
+      lastThis: this
+    };
     return lastResult;
   }
+
+  memoized.clear = function clear() {
+    cache = null;
+  };
 
   return memoized;
 }
 
-/* harmony default export */ const memoize_one_esm = (memoizeOne);
+
 ;// CONCATENATED MODULE: ../../material/dist/src/virtual-scroll/domHelpers.js
 function getScrollbarSize(el) {
   return {
@@ -3101,7 +3108,6 @@ var createGridComponent_rest = undefined && undefined.__rest || function (s, e) 
 
 
 
-;
 var IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
 
 var defaultItemKey = function defaultItemKey(_a) {
@@ -3129,7 +3135,9 @@ function createGridComponent(_a) {
       initInstanceProps = _a.initInstanceProps,
       shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
       validateProps = _a.validateProps;
-  return _b = function (_super) {
+  return _b =
+  /** @class */
+  function (_super) {
     __extends(Grid, _super); // Always use explicit constructor for React components.
     // It produces less code after transpilation. (#26)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
@@ -3149,7 +3157,7 @@ function createGridComponent(_a) {
         scrollUpdateWasRequested: false,
         verticalScrollDirection: 'forward'
       };
-      _this._callOnItemsRendered = memoize_one_esm(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
+      _this._callOnItemsRendered = memoizeOne(function (overscanColumnStartIndex, overscanColumnStopIndex, overscanRowStartIndex, overscanRowStopIndex, visibleColumnStartIndex, visibleColumnStopIndex, visibleRowStartIndex, visibleRowStopIndex) {
         return _this.props.onItemsRendered({
           overscanColumnStartIndex: overscanColumnStartIndex,
           overscanColumnStopIndex: overscanColumnStopIndex,
@@ -3161,7 +3169,7 @@ function createGridComponent(_a) {
           visibleRowStopIndex: visibleRowStopIndex
         });
       });
-      _this._callOnScroll = memoize_one_esm(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
+      _this._callOnScroll = memoizeOne(function (scrollLeft, scrollTop, horizontalScrollDirection, verticalScrollDirection, scrollUpdateWasRequested) {
         return _this.props.onScroll({
           horizontalScrollDirection: horizontalScrollDirection,
           scrollLeft: scrollLeft,
@@ -3203,7 +3211,7 @@ function createGridComponent(_a) {
         return style;
       };
 
-      _this._getItemStyleCache = memoize_one_esm(function (_, __, ___) {
+      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
         return {};
       });
 
@@ -3870,7 +3878,9 @@ function createListComponent(_a) {
       initInstanceProps = _a.initInstanceProps,
       shouldResetStyleCacheOnItemSizeChange = _a.shouldResetStyleCacheOnItemSizeChange,
       validateProps = _a.validateProps;
-  return _b = function (_super) {
+  return _b =
+  /** @class */
+  function (_super) {
     createListComponent_extends(List, _super); // Always use explicit constructor for React components.
     // It produces less code after transpilation. (#26)
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-useless-constructor
@@ -3888,7 +3898,7 @@ function createListComponent(_a) {
         scrollOffset: typeof _this.props.initialScrollOffset === 'number' ? _this.props.initialScrollOffset : 0,
         scrollUpdateWasRequested: false
       };
-      _this._callOnItemsRendered = memoize_one_esm(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
+      _this._callOnItemsRendered = memoizeOne(function (overscanStartIndex, overscanStopIndex, visibleStartIndex, visibleStopIndex) {
         return _this.props.onItemsRendered({
           overscanStartIndex: overscanStartIndex,
           overscanStopIndex: overscanStopIndex,
@@ -3896,7 +3906,7 @@ function createListComponent(_a) {
           visibleStopIndex: visibleStopIndex
         });
       });
-      _this._callOnScroll = memoize_one_esm(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
+      _this._callOnScroll = memoizeOne(function (scrollDirection, scrollOffset, scrollUpdateWasRequested) {
         return _this.props.onScroll({
           scrollDirection: scrollDirection,
           scrollOffset: scrollOffset,
@@ -3938,7 +3948,7 @@ function createListComponent(_a) {
         return style;
       };
 
-      _this._getItemStyleCache = memoize_one_esm(function (_, __, ___) {
+      _this._getItemStyleCache = memoizeOne(function (_, __, ___) {
         return {};
       });
 
@@ -4756,7 +4766,9 @@ var __assign = undefined && undefined.__assign || function () {
 
 
 
-var ErrorBoundary = function (_super) {
+var ErrorBoundary =
+/** @class */
+function (_super) {
   __extends(ErrorBoundary, _super);
 
   function ErrorBoundary(props) {
@@ -4823,15 +4835,14 @@ function DefaultView(_a) {
   }, void 0);
 }
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/diffing.js
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
+var styleStringSymbol = '__style_as_string__';
+function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
   }
 
-  if (lastRawProps === nextRawProps) return null;
+  if (lastProps === nextProps) return null;
   var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
   var propKey;
 
   for (propKey in lastProps) {
@@ -4840,6 +4851,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = null;
+
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -4849,7 +4865,7 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     // the whitelist in the commit phase instead.
 
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   for (propKey in nextProps) {
@@ -4861,6 +4877,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = nextProp;
+
+    if (propKey === 'style' && typeof prop === 'string' !== (typeof lastProp === 'string')) {
+      (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -4868,99 +4889,49 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
       if (!prop) continue;
     }
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   return updatePayload;
 }
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/renderer.js
+var __rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
 
 
 
 
 var hostContext = {};
 var childContext = {};
+var textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true
+};
 
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
+function getAllowedProps(props, type) {
+  var children = props.children,
+      tag = props.tag,
+      rest = __rest(props, ["children", "tag"]);
+
+  if (textTypes[type]) {
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-
-    return true;
-  }
-}
-
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
-  }
-
-  var updateAfterMount = false;
-
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
-
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      UnityBridge.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (type === 'text' || type === 'icon' || type === 'style') {
-        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && attr === 'style') {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
-      }
-
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      UnityBridge.setData(instance, attr.substring(5), value);
-    } else {
-      UnityBridge.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
+  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
+  return rest;
 }
 
 var hostConfig = {
@@ -4987,14 +4958,10 @@ var hostConfig = {
   supportsPersistence: false,
   isPrimaryRenderer: true,
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
-
-    if (type === 'text' || type === 'icon' || type === 'style') {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return UnityBridge.createElement(type, text, rootContainerInstance);
-    }
-
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
+    var aProps = getAllowedProps(props, type);
+    var children = aProps.children || null;
+    delete aProps.children;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -5003,25 +4970,11 @@ var hostConfig = {
     UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
-
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
+    return false;
   },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
-    applyUpdate(instance, props, true);
-  },
+  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {},
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text' || type === 'icon' || type === 'style';
+    return textTypes[type];
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
@@ -5034,7 +4987,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');
@@ -5071,20 +5024,20 @@ var hostConfig = {
   //     Scheduling
   // -------------------
   scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
+    return setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
   },
   cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
+    clearTimeout(callBackID);
   },
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
+    return setTimeout(callback, timeout);
   },
   cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
+    clearTimeout(handle);
   },
   queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
+    return setTimeout(callback, 0);
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);

@@ -16,12 +16,16 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root{font-size:24px;background-color:#fafafa}.showcase_app__17mEE{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__17mEE anchor{align-self:flex-start}.showcase_app__17mEE h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px;transition:border 1s;border-color:#ff0}.showcase_app__17mEE h1:hover{border:20px solid red}.showcase_app__17mEE h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__17mEE section{margin-top:10px;margin-bottom:10px}.showcase_app__17mEE row{flex-direction:row;align-items:center}.showcase_app__17mEE column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__17mEE slider{margin:10px}.showcase_app__17mEE image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.showcase_app__17mEE object{border-width:1px;border-radius:20px;border-color:#000;margin:5px;background-color:rgba(112,189,153,.745);object-fit:none}.showcase_app__17mEE render,.showcase_app__17mEE video{object-fit:scale-down;object-position:left}pulsar{cursor:pointer;width:300px;height:300px;border-radius:50%;animation:showcase_pulsate__2Dk7X 6s linear infinite;box-shadow:0 0 20px #fff,-20px 0 80px #f0f,20px 0 80px aqua,inset 0 0 50px #fff,inset 50px 0 80px #f0f,inset -50px 0 80px aqua,inset 50px 0 300px #f0f,inset -50px 0 300px aqua}@keyframes showcase_pulsate__2Dk7X{50%{box-shadow:0 0 20px #fff,20px 0 80px #f0f,-20px 0 80px aqua,inset 0 0 50px #fff,inset -50px 0 80px #f0f,inset 50px 0 80px aqua,inset -50px 0 300px #f0f,inset 50px 0 300px aqua}}lorem{color:red;font:20px/40px}#showcase_my-button__2kHmu{box-shadow:0 0 4px 15px 3px -5px #000}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root{font-size:24px;background-color:#fafafa}catwalk{width:399px;height:200px;margin:auto;background:transparent url(res:catwalk);animation:showcase_sprite__32XRd 800ms steps(11) infinite}ryu{width:435px;height:267px;margin:auto;background:url(res:ryu);animation:showcase_sprite__32XRd 3.5s steps(45) infinite}star{background:url(res:star) space bottom right/contain;width:160px;height:250px;background-color:gray;margin:5px;border-radius:50%}starMask{width:160px;height:250px;margin:5px;border-radius:50%;animation:showcase_try__3O-C1 20s infinite alternate;background:red;overflow:hidden}starMask:after{position:absolute;inset:0;background:red}@keyframes showcase_try__3O-C1{from{mask:url(res:star) space bottom right/contain}50%{mask:none}to{mask:url(res:star) space bottom right/contain,url(res:star) space bottom left,url(res:star) space bottom right}}@keyframes showcase_sprite__32XRd{from{background-position:0 0%}to{background-position:0 100%}}.showcase_app__17mEE{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__17mEE anchor{align-self:flex-start}.showcase_app__17mEE h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px;transition:border 1s;border-color:#ff0}.showcase_app__17mEE h1:hover{border:20px solid red}.showcase_app__17mEE h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__17mEE section{margin-top:10px;margin-bottom:10px}.showcase_app__17mEE row{flex-direction:row;align-items:center}.showcase_app__17mEE column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__17mEE slider{margin:10px}.showcase_app__17mEE image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.showcase_app__17mEE object{border-width:1px;border-radius:20px;border-color:#000;margin:5px;background-color:rgba(112,189,153,.745);object-fit:none}.showcase_app__17mEE render,.showcase_app__17mEE video{object-fit:scale-down;object-position:left}pulsar{cursor:pointer;width:300px;height:300px;border-radius:50%;animation:showcase_pulsate__2Dk7X 6s linear infinite;box-shadow:0 0 20px #fff,-20px 0 80px #f0f,20px 0 80px aqua,inset 0 0 50px #fff,inset 50px 0 80px #f0f,inset -50px 0 80px aqua,inset 50px 0 300px #f0f,inset -50px 0 300px aqua}@keyframes showcase_pulsate__2Dk7X{50%{box-shadow:0 0 20px #fff,20px 0 80px #f0f,-20px 0 80px aqua,inset 0 0 50px #fff,inset -50px 0 80px #f0f,inset 50px 0 80px aqua,inset -50px 0 300px #f0f,inset 50px 0 300px aqua}}lorem{color:red;font:20px/40px}#showcase_my-button__2kHmu{box-shadow:0 0 4px 15px 3px -5px #000}.showcase_backgrounds__297YK{flex-direction:row;flex-wrap:wrap}bg{width:200px;height:100px;align-self:center;margin:5px;width:400px;height:500px;motion:1000ms}bg:nth-child(1){background:linear-gradient(45deg, #92baac 45px, transparent 45px) 64px 64px,linear-gradient(45deg, #92baac 45px, transparent 45px, transparent 91px, #e1ebbd 91px, #e1ebbd 135px, transparent 135px),linear-gradient(-45deg, #92baac 23px, transparent 23px, transparent 68px, #92baac 68px, #92baac 113px, transparent 113px, transparent 158px, #92baac 158px);background-color:#e1ebbd;background-size:128px 128px}bg:nth-child(2){background-image:linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);background-size:50px 50px;background-position:0 0,25px 25px;animation:showcase_aaa__15CKW 1s infinite alternate both}@keyframes showcase_aaa__15CKW{from{background-size:50px 50px;background-position:0 0,25px 25px}to{background-size:100px 100px;background-position:0 0,50px 50px}}bg:nth-child(3){background-color:#fff;background-image:radial-gradient(midnightblue 9px, transparent 10px),repeating-radial-gradient(midnightblue 0, midnightblue 4px, transparent 5px, transparent 20px, midnightblue 21px, midnightblue 25px, transparent 26px, transparent 50px);background-size:30px 30px,90px 90px;background-position:0 0}bg:nth-child(4){background-color:#ff7d9d;background-size:58px 58px;background-position:0px 2px,4px 35px,29px 31px,33px 6px,0px 36px,4px 2px,29px 6px,33px 30px;background-image:linear-gradient(335deg, #c90032 23px, transparent 23px),linear-gradient(155deg, #c90032 23px, transparent 23px),linear-gradient(335deg, #c90032 23px, transparent 23px),linear-gradient(155deg, #c90032 23px, transparent 23px),linear-gradient(335deg, #c90032 10px, transparent 10px),linear-gradient(155deg, #c90032 10px, transparent 10px),linear-gradient(335deg, #c90032 10px, transparent 10px),linear-gradient(155deg, #c90032 10px, transparent 10px)}bg:nth-child(5){background:radial-gradient(#8a0000 4%, #5c0000 9%, rgba(102, 0, 0, 0) 9%) 0 0,radial-gradient(#8a0000 4%, #5c0000 8%, rgba(102, 0, 0, 0) 10%) 50px 50px,radial-gradient(rgba(153, 0, 0, 0.8) 20%, rgba(102, 0, 0, 0)) 50px 0,radial-gradient(rgba(153, 0, 0, 0.8) 20%, rgba(102, 0, 0, 0)) 0 50px,radial-gradient(#660000 35%, rgba(102, 0, 0, 0) 60%) 50px 0,radial-gradient(#660000 35%, rgba(102, 0, 0, 0) 60%) 100px 50px,radial-gradient(rgba(77, 0, 0, 0.7), rgba(102, 0, 0, 0)) 0 0,radial-gradient(rgba(77, 0, 0, 0.7), rgba(102, 0, 0, 0)) 50px 50px,linear-gradient(45deg, rgba(102, 0, 0, 0) 49%, black 50%, rgba(102, 0, 0, 0) 70%) 0 0,linear-gradient(-45deg, rgba(102, 0, 0, 0) 49%, black 50%, rgba(102, 0, 0, 0) 70%) 0 0;background-color:#300;background-size:100px 100px}bg:nth-child(6){background:radial-gradient(circle at 100% 50%, transparent 20%, rgba(255, 255, 255, 0.3) 21%, rgba(255, 255, 255, 0.3) 34%, transparent 35%, transparent) 0 0,radial-gradient(circle at 0% 50%, transparent 20%, rgba(255, 255, 255, 0.3) 21%, rgba(255, 255, 255, 0.3) 34%, transparent 35%, transparent) 0 -50px;background-color:#708090;background-size:75px 100px;background-position:0 0,0 -50px}bg:nth-child(7){background:linear-gradient(135deg, #eceddc 25%, transparent 25%),linear-gradient(225deg, #eceddc 25%, transparent 25%),linear-gradient(315deg, #eceddc 25%, transparent 25%),linear-gradient(45deg, #eceddc 25%, transparent 25%);background-size:100px 100px;background-color:#ec173a;background-position:-50px 0,-50px 0,0 0,0 0}bg:nth-child(8){background-color:#a0302c;background-image:repeating-linear-gradient(transparent, transparent 50px, rgba(0, 0, 0, 0.4) 50px, rgba(0, 0, 0, 0.4) 53px, transparent 53px, transparent 63px, rgba(0, 0, 0, 0.4) 63px, rgba(0, 0, 0, 0.4) 66px, transparent 66px, transparent 116px, rgba(0, 0, 0, 0.5) 116px, rgba(0, 0, 0, 0.5) 166px, rgba(255, 255, 255, 0.2) 166px, rgba(255, 255, 255, 0.2) 169px, rgba(0, 0, 0, 0.5) 169px, rgba(0, 0, 0, 0.5) 179px, rgba(255, 255, 255, 0.2) 179px, rgba(255, 255, 255, 0.2) 182px, rgba(0, 0, 0, 0.5) 182px, rgba(0, 0, 0, 0.5) 232px, transparent 232px),repeating-linear-gradient(270deg, transparent, transparent 50px, rgba(0, 0, 0, 0.4) 50px, rgba(0, 0, 0, 0.4) 53px, transparent 53px, transparent 63px, rgba(0, 0, 0, 0.4) 63px, rgba(0, 0, 0, 0.4) 66px, transparent 66px, transparent 116px, rgba(0, 0, 0, 0.5) 116px, rgba(0, 0, 0, 0.5) 166px, rgba(255, 255, 255, 0.2) 166px, rgba(255, 255, 255, 0.2) 169px, rgba(0, 0, 0, 0.5) 169px, rgba(0, 0, 0, 0.5) 179px, rgba(255, 255, 255, 0.2) 179px, rgba(255, 255, 255, 0.2) 182px, rgba(0, 0, 0, 0.5) 182px, rgba(0, 0, 0, 0.5) 232px, transparent 232px),repeating-linear-gradient(125deg, transparent, transparent 2px, rgba(0, 0, 0, 0.2) 2px, rgba(0, 0, 0, 0.2) 3px, transparent 3px, transparent 5px, rgba(0, 0, 0, 0.2) 5px)}bg:nth-child(9){background:radial-gradient(circle at 50% 59%, #d2caab 3%, #364e27 4%, #364e27 11%, rgba(54, 78, 39, 0) 12%, rgba(54, 78, 39, 0)) 50px 0,radial-gradient(circle at 50% 41%, #364e27 3%, #d2caab 4%, #d2caab 11%, rgba(210, 202, 171, 0) 12%, rgba(210, 202, 171, 0)) 50px 0,radial-gradient(circle at 50% 59%, #d2caab 3%, #364e27 4%, #364e27 11%, rgba(54, 78, 39, 0) 12%, rgba(54, 78, 39, 0)) 0 50px,radial-gradient(circle at 50% 41%, #364e27 3%, #d2caab 4%, #d2caab 11%, rgba(210, 202, 171, 0) 12%, rgba(210, 202, 171, 0)) 0 50px,radial-gradient(circle at 100% 50%, #d2caab 16%, rgba(210, 202, 171, 0) 17%),radial-gradient(circle at 0% 50%, #364e27 16%, rgba(54, 78, 39, 0) 17%),radial-gradient(circle at 100% 50%, #d2caab 16%, rgba(210, 202, 171, 0) 17%) 50px 50px,radial-gradient(circle at 0% 50%, #364e27 16%, rgba(54, 78, 39, 0) 17%) 50px 50px;background-color:#63773f;background-size:100px 100px}bg:nth-child(10){background:linear-gradient(135deg, #708090 21px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px),linear-gradient(225deg, #708090 21px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px) 0 64px;background-color:#708090;background-size:64px 128px}bg:nth-child(11){background:radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.3) 32%, rgba(255, 255, 255, 0) 33%) 0 0,radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.1) 11%, rgba(255, 255, 255, 0.3) 13%, rgba(255, 255, 255, 0) 14%) 0 0,radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 17%, rgba(255, 255, 255, 0.43) 19%, rgba(255, 255, 255, 0) 20%) 0 110px,radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 11%, rgba(255, 255, 255, 0.4) 13%, rgba(255, 255, 255, 0) 14%) -130px -170px,radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 11%, rgba(255, 255, 255, 0.4) 13%, rgba(255, 255, 255, 0) 14%) 130px 370px,radial-gradient(rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.1) 11%, rgba(255, 255, 255, 0.2) 13%, rgba(255, 255, 255, 0) 14%) 0 0,linear-gradient(45deg, #343702 0%, #184500 20%, #187546 30%, #006782 40%, #0b1284 50%, #760ea1 60%, #83096e 70%, #840b2a 80%, #b13e12 90%, #e27412 100%);background-size:470px 470px,970px 970px,410px 410px,610px 610px,530px 530px,730px 730px,100% 100%;background-color:#840b2a}bg:nth-child(12){background-color:#000;background-image:radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px),radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px),radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px);background-size:550px 550px,350px 350px,250px 250px,150px 150px;background-position:0 0,40px 60px,130px 270px,70px 100px}bg:nth-child(13){background-image:radial-gradient(closest-side, transparent 0%, transparent 75%, #b6cc66 76%, #b6cc66 85%, #edffdb 86%, #edffdb 94%, #ffffff 95%, #ffffff 103%, #d9e6a7 104%, #d9e6a7 112%, #798b3c 113%, #798b3c 121%, #ffffff 122%, #ffffff 130%, #e0ead7 131%, #e0ead7 140%),radial-gradient(closest-side, transparent 0%, transparent 75%, #b6cc66 76%, #b6cc66 85%, #edffdb 86%, #edffdb 94%, #ffffff 95%, #ffffff 103%, #d9e6a7 104%, #d9e6a7 112%, #798b3c 113%, #798b3c 121%, #ffffff 122%, #ffffff 130%, #e0ead7 131%, #e0ead7 140%);background-size:110px 110px;background-color:#c8d3a7;background-position:0 0,55px 55px}bg:nth-child(14){background-color:#6d695c;background-image:repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 60px),repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 60px),linear-gradient(60deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1)),linear-gradient(120deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1));background-size:70px 120px}bg:nth-child(15){background-color:#fff;background-image:linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),linear-gradient(#eee 2px, transparent 2px);background-size:100% 24px}bg:nth-child(16){background:radial-gradient(circle farthest-side at 0% 50%, #fb1 23.5%, rgba(240, 166, 17, 0) 0) 21px 30px,radial-gradient(circle farthest-side at 0% 50%, #b71 24%, rgba(240, 166, 17, 0) 0) 19px 30px,linear-gradient(#fb1 14%, rgba(240, 166, 17, 0) 0, rgba(240, 166, 17, 0) 85%, #fb1 0) 0 0,linear-gradient(150deg, #fb1 24%, #b71 0, #b71 26%, rgba(240, 166, 17, 0) 0, rgba(240, 166, 17, 0) 74%, #b71 0, #b71 76%, #fb1 0) 0 0,linear-gradient(30deg, #fb1 24%, #b71 0, #b71 26%, rgba(240, 166, 17, 0) 0, rgba(240, 166, 17, 0) 74%, #b71 0, #b71 76%, #fb1 0) 0 0,linear-gradient(90deg, #b71 2%, #fb1 0, #fb1 98%, #b71 0%) 0 0;background-color:#fb1;background-size:40px 60px}bg:nth-child(17){background:linear-gradient(45deg, #dca 12%, transparent 0, transparent 88%, #dca 0),linear-gradient(135deg, transparent 37%, #a85 0, #a85 63%, transparent 0),linear-gradient(45deg, transparent 37%, #dca 0, #dca 63%, transparent 0) #753;background-size:25px 25px}bg:nth-child(18){background:radial-gradient(black 3px, transparent 4px),radial-gradient(black 3px, transparent 4px),linear-gradient(#fff 4px, transparent 0),linear-gradient(45deg, transparent 74px, transparent 75px, #a4a4a4 75px, #a4a4a4 76px, transparent 77px, transparent 109px),linear-gradient(-45deg, transparent 75px, transparent 76px, #a4a4a4 76px, #a4a4a4 77px, transparent 78px, transparent 109px),#fff;background-size:109px 109px,109px 109px,100% 6px,109px 109px,109px 109px;background-position:54px 55px,0px 0px,0px 0px,0px 0px,0px 0px}bg:nth-child(19){background:radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0px 10px,radial-gradient(at 100% 100%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px),#8a3;background-size:20px 20px}bg:nth-child(20){background:linear-gradient(324deg, #232927 4%, transparent 4%) -70px 43px,linear-gradient(36deg, #232927 4%, transparent 4%) 30px 43px,linear-gradient(72deg, #e3d7bf 8.5%, transparent 8.5%) 30px 43px,linear-gradient(288deg, #e3d7bf 8.5%, transparent 8.5%) -70px 43px,linear-gradient(216deg, #e3d7bf 7.5%, transparent 7.5%) -70px 23px,linear-gradient(144deg, #e3d7bf 7.5%, transparent 7.5%) 30px 23px,linear-gradient(324deg, #232927 4%, transparent 4%) -20px 93px,linear-gradient(36deg, #232927 4%, transparent 4%) 80px 93px,linear-gradient(72deg, #e3d7bf 8.5%, transparent 8.5%) 80px 93px,linear-gradient(288deg, #e3d7bf 8.5%, transparent 8.5%) -20px 93px,linear-gradient(216deg, #e3d7bf 7.5%, transparent 7.5%) -20px 73px,linear-gradient(144deg, #e3d7bf 7.5%, transparent 7.5%) 80px 73px;background-color:#232927;background-size:100px 100px}bg:nth-child(21){background:radial-gradient(circle closest-side at 60% 43%, #b03 26%, rgba(187, 0, 51, 0) 27%),radial-gradient(circle closest-side at 40% 43%, #b03 26%, rgba(187, 0, 51, 0) 27%),radial-gradient(circle closest-side at 40% 22%, #d35 45%, rgba(221, 51, 85, 0) 46%),radial-gradient(circle closest-side at 60% 22%, #d35 45%, rgba(221, 51, 85, 0) 46%),radial-gradient(circle closest-side at 50% 35%, #d35 30%, rgba(221, 51, 85, 0) 31%),radial-gradient(circle closest-side at 60% 43%, #b03 26%, rgba(187, 0, 51, 0) 27%) 50px 50px,radial-gradient(circle closest-side at 40% 43%, #b03 26%, rgba(187, 0, 51, 0) 27%) 50px 50px,radial-gradient(circle closest-side at 40% 22%, #d35 45%, rgba(221, 51, 85, 0) 46%) 50px 50px,radial-gradient(circle closest-side at 60% 22%, #d35 45%, rgba(221, 51, 85, 0) 46%) 50px 50px,radial-gradient(circle closest-side at 50% 35%, #d35 30%, rgba(221, 51, 85, 0) 31%) 50px 50px;background-color:#b03;background-size:100px 100px}bg:nth-child(22){background:radial-gradient(circle, transparent 20%, slategray 20%, slategray 80%, transparent 80%, transparent),radial-gradient(circle, transparent 20%, slategray 20%, slategray 80%, transparent 80%, transparent) 50px 50px,linear-gradient(#a8b1bb 8px, transparent 8px) 0 -4px,linear-gradient(90deg, #a8b1bb 8px, transparent 8px) -4px 0;background-color:#708090;background-size:100px 100px,100px 100px,50px 50px,50px 50px}bg:nth-child(23){background-color:#def;background-image:radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, 0.3) 99%),radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, 0.3) 99%);background-size:80px 80px;background-position:0 0,40px 40px}bg:nth-child(24){background-color:silver;background-image:linear-gradient(335deg, #b00 23px, transparent 23px),linear-gradient(155deg, #d00 23px, transparent 23px),linear-gradient(335deg, #b00 23px, transparent 23px),linear-gradient(155deg, #d00 23px, transparent 23px);background-size:58px 58px;background-position:0px 2px,4px 35px,29px 31px,34px 6px}bg:nth-child(25){background-color:silver;background-image:radial-gradient(circle at 100% 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent),radial-gradient(circle at 0 150%, silver 24%, white 24%, white 28%, silver 28%, silver 36%, white 36%, white 40%, transparent 40%, transparent),radial-gradient(circle at 50% 100%, white 10%, silver 10%, silver 23%, white 23%, white 30%, silver 30%, silver 43%, white 43%, white 50%, silver 50%, silver 63%, white 63%, white 71%, transparent 71%, transparent),radial-gradient(circle at 100% 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent),radial-gradient(circle at 0 50%, white 5%, silver 5%, silver 15%, white 15%, white 20%, silver 20%, silver 29%, white 29%, white 34%, silver 34%, silver 44%, white 44%, white 49%, transparent 49%, transparent);background-size:100px 50px}bg:nth-child(26){background-color:#556;background-image:linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445),linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a),linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a);background-size:80px 140px;background-position:0 0,0 0,40px 70px,40px 70px,0 0,40px 70px}bg:nth-child(27){background-color:#269;background-image:linear-gradient(white 2px, transparent 2px),linear-gradient(90deg, white 2px, transparent 2px),linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px;background-position:-2px -2px,-2px -2px,-1px -1px,-1px -1px}bg:nth-child(28){background:linear-gradient(#ffffff 50%, rgba(255, 255, 255, 0) 0) 0 0,radial-gradient(circle closest-side, #ffffff 53%, rgba(255, 255, 255, 0) 0) 0 0,radial-gradient(circle closest-side, #ffffff 50%, rgba(255, 255, 255, 0) 0) 55px 0 #48b;background-size:110px 200px;background-repeat:repeat-x}bg:nth-child(29){background-color:#eee;background-image:linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),linear-gradient(-45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);background-size:60px 60px}bg:nth-child(30){background:linear-gradient(315deg, transparent 75%, #d45d55 0) -10px 0,linear-gradient(45deg, transparent 75%, #d45d55 0) -10px 0,linear-gradient(135deg, #a7332b 50%, transparent 0) 0 0,linear-gradient(45deg, #6a201b 50%, #561a16 0) 0 0 #561a16;background-size:20px 20px}bg:nth-child(31){background-color:#026873;background-image:linear-gradient(90deg, rgba(255, 255, 255, 0.07) 50%, transparent 50%),linear-gradient(90deg, rgba(255, 255, 255, 0.13) 50%, transparent 50%),linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.17) 50%),linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.19) 50%);background-size:13px,29px,37px,53px}bg:nth-child(32){background:linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,linear-gradient(90deg, #1b1b1b 10px, transparent 10px),linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);background-color:#131313;background-size:20px 20px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
+	"sprite": "showcase_sprite__32XRd",
+	"try": "showcase_try__3O-C1",
 	"app": "showcase_app__17mEE",
 	"pulsate": "showcase_pulsate__2Dk7X",
-	"my-button": "showcase_my-button__2kHmu"
+	"my-button": "showcase_my-button__2kHmu",
+	"backgrounds": "showcase_backgrounds__297YK",
+	"aaa": "showcase_aaa__15CKW"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -124,7 +128,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(139);
 ;// CONCATENATED MODULE: ./src/showcase/index.tsx
-var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';var RenderObject=/*#__PURE__*/react.memo(function RenderObject(_ref){var object=_ref.object;return/*#__PURE__*/(0,jsx_runtime.jsx)("object",{width:300,height:400,style:{flexGrow:0},onDrag:function onDrag(ev){Globals.camera2root.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.camera2.transform.Translate(0,0,Math.fround(ev.scrollDelta.y/10),Interop.UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.camera2,target:object});});function App(){var _useState=(0,react.useState)(),_useState2=(0,slicedToArray/* default */.Z)(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];var Globals=dictionary_watcher/* globalsWatcher.useContext */.Qc.useContext();(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:bg/* default */.Z}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:base64Image/* default */.Z}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:webImage})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Prefab"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("prefab",{target:Globals.customPrefab})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,Math.fround(ev.scrollDelta.y/10),Interop.UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]})]})});};renderer/* Renderer.render */.T.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';var RenderObject=/*#__PURE__*/react.memo(function RenderObject(_ref){var object=_ref.object;return/*#__PURE__*/(0,jsx_runtime.jsx)("object",{width:300,height:400,style:{flexGrow:0},onDrag:function onDrag(ev){Globals.camera2root.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.camera2.transform.Translate(0,0,Math.fround(ev.scrollDelta.y/10),Interop.UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.camera2,target:object});});function App(){var _useState=(0,react.useState)(),_useState2=(0,slicedToArray/* default */.Z)(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];var Globals=dictionary_watcher/* globalsWatcher.useContext */.Qc.useContext();var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return console.log('here');},style:{background:'none'},children:"Heello"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Background Images"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.backgrounds,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("bg",{})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:bg/* default */.Z}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:base64Image/* default */.Z}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:webImage})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Prefab"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("prefab",{target:Globals.customPrefab})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,Math.fround(ev.scrollDelta.y/10),Interop.UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]})]})});};renderer/* Renderer.render */.T.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 
 /***/ }),
 
@@ -282,7 +286,9 @@ var __assign = undefined && undefined.__assign || function () {
 
 
 
-var ErrorBoundary = function (_super) {
+var ErrorBoundary =
+/** @class */
+function (_super) {
   __extends(ErrorBoundary, _super);
 
   function ErrorBoundary(props) {
@@ -349,15 +355,14 @@ function DefaultView(_a) {
   }, void 0);
 }
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/diffing.js
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
+var styleStringSymbol = '__style_as_string__';
+function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
   }
 
-  if (lastRawProps === nextRawProps) return null;
+  if (lastProps === nextProps) return null;
   var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
   var propKey;
 
   for (propKey in lastProps) {
@@ -366,6 +371,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = null;
+
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -375,7 +385,7 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     // the whitelist in the commit phase instead.
 
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   for (propKey in nextProps) {
@@ -387,6 +397,11 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = nextProp;
+
+    if (propKey === 'style' && typeof prop === 'string' !== (typeof lastProp === 'string')) {
+      (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
+    }
+
     var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
@@ -394,99 +409,49 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
       if (!prop) continue;
     }
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
+    (updatePayload = updatePayload || {})[propKey] = prop;
   }
 
   return updatePayload;
 }
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/renderer.js
+var __rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
 
 
 
 
 var hostContext = {};
 var childContext = {};
+var textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true
+};
 
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
+function getAllowedProps(props, type) {
+  var children = props.children,
+      tag = props.tag,
+      rest = __rest(props, ["children", "tag"]);
+
+  if (textTypes[type]) {
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-
-    return true;
-  }
-}
-
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
-  }
-
-  var updateAfterMount = false;
-
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
-
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      UnityBridge.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (type === 'text' || type === 'icon' || type === 'style') {
-        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && attr === 'style') {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
-      }
-
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      UnityBridge.setData(instance, attr.substring(5), value);
-    } else {
-      UnityBridge.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
+  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
+  return rest;
 }
 
 var hostConfig = {
@@ -513,14 +478,10 @@ var hostConfig = {
   supportsPersistence: false,
   isPrimaryRenderer: true,
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
-
-    if (type === 'text' || type === 'icon' || type === 'style') {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return UnityBridge.createElement(type, text, rootContainerInstance);
-    }
-
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
+    var aProps = getAllowedProps(props, type);
+    var children = aProps.children || null;
+    delete aProps.children;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -529,25 +490,11 @@ var hostConfig = {
     UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
-
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
+    return false;
   },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
-    applyUpdate(instance, props, true);
-  },
+  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {},
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text' || type === 'icon' || type === 'style';
+    return textTypes[type];
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
@@ -560,7 +507,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
+    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');
@@ -597,20 +544,20 @@ var hostConfig = {
   //     Scheduling
   // -------------------
   scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
+    return setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
   },
   cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
+    clearTimeout(callBackID);
   },
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
+    return setTimeout(callback, timeout);
   },
   cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
+    clearTimeout(handle);
   },
   queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
+    return setTimeout(callback, 0);
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);

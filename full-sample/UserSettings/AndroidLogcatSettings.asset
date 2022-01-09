@@ -2,47 +2,47 @@
     "m_SelectedDeviceId": "531fdeec",
     "m_SelectedPackage": {
         "deviceId": "531fdeec",
-        "name": "com.miui.home",
-        "processId": 5314,
+        "name": "com.UnityTestRunner.UnityTestRunner",
+        "processId": 8783,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "531fdeec",
-            "name": "com.miui.home",
-            "processId": 5314,
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 27921,
+            "exited": true
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 28547,
+            "exited": true
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 31590,
+            "exited": true
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 633,
+            "exited": true
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 3966,
+            "exited": true
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.UnityTestRunner.UnityTestRunner",
+            "processId": 8783,
             "exited": false
-        },
-        {
-            "deviceId": "531fdeec",
-            "name": "com.reactunity.devsample",
-            "processId": 7396,
-            "exited": true
-        },
-        {
-            "deviceId": "531fdeec",
-            "name": "com.reactunity.devsample",
-            "processId": 32336,
-            "exited": true
-        },
-        {
-            "deviceId": "531fdeec",
-            "name": "com.reactunity.devsample",
-            "processId": 2168,
-            "exited": true
-        },
-        {
-            "deviceId": "531fdeec",
-            "name": "com.reactunity.devsample",
-            "processId": 4906,
-            "exited": true
-        },
-        {
-            "deviceId": "531fdeec",
-            "name": "com.reactunity.devsample",
-            "processId": 7054,
-            "exited": true
         }
     ],
     "m_Tags": {

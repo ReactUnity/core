@@ -9,26 +9,24 @@
   "scripts": {
     "start": "react-unity-scripts start",
     "build": "react-unity-scripts build",
-    "lint": "eslint --ext js,ts,tsx src",
-    "preinstall": "npx only-allow@1.0.0 yarn",
+    "lint": "react-unity-scripts lint",
     "postyalc": "yarn",
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {
-    "@reactunity/material": "^0.6.0",
-    "@reactunity/renderer": "^0.6.0",
-    "@reduxjs/toolkit": "^1.6.1",
+    "@reactunity/material": "^0.8.1",
+    "@reactunity/renderer": "^0.8.1",
+    "@reduxjs/toolkit": "^1.7.1",
     "clsx": "^1.1.1",
-    "history": "^5.0.1",
+    "history": "^5.2.0",
     "react": "^17.0.2",
-    "react-redux": "^7.2.5",
-    "react-router": "^6.0.0-beta.0",
+    "react-redux": "^7.2.6",
+    "react-router": "^6.2.1",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.6.0",
-    "@types/react-redux": "^7.1.18",
-    "eslint": "^7.32.0",
-    "typescript": "^4.4.3"
+    "@reactunity/scripts": "^0.8.1",
+    "@types/react-redux": "^7.1.21",
+    "typescript": "^4.5.4"
   }
 }

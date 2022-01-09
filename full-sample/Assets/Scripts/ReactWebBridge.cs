@@ -1,4 +1,4 @@
-using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,7 +37,7 @@ public class ReactWebBridge : MonoBehaviour
         var text = InjectableScript.text;
 
         var injectedScript = text.Replace("/*INJECT_CODE*/", script);
-        ReactCanvas.Script = ReactUnity.ScriptSource.Text(injectedScript);
+        ReactCanvas.Source = ReactUnity.ScriptSource.Text(injectedScript);
     }
 
     public void SetCSS(string script)
