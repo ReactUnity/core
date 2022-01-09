@@ -16,14 +16,14 @@ on:
 
 jobs:
   tests:
-    name: ${{ matrix.suite.name }} - Unity ${{ matrix.unityVersion }}
+    name: ${{ matrix.suite.name }} - Unity ${{ matrix.unity.version }}
     strategy:
       fail-fast: false
       matrix:
         platform:
           - ubuntu-20.04
         unity:
-          # - { version: "2021.1.16f1" }
+          - { version: "2021.1.16f1" }
           - { version: "2020.3.9f1" }
           - { version: "2019.4.29f1" }
         suite:
@@ -31,10 +31,8 @@ jobs:
         include:
           - main: true
             coverage: true
-            unity: { version: "2021.1.16f1" }
+            unity: { version: "2021.2.7f1", license: "UNITY_LICENSE_2021_2" }
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
-          # unity: { version: "2021.2.7f1", license: "UNITY_LICENSE_2021_2" }
-          # suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", testBranch: "tests" }
           # - unity: { version: "2021.2.7f1" }
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", testBranch: "tests_2021_2" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
