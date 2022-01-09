@@ -21,8 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - { os: "windows-2022", license: secrets.UNITY_LICENSE }
-          # - { os: "ubuntu-20.04", license: secrets.UNITY_LICENSE_UBUNTU }
+          - { os: "ubuntu-20.04", license: secrets.UNITY_LICENSE }
         unityVersion:
           # - 2021.1.16f1
           - 2020.3.9f1
