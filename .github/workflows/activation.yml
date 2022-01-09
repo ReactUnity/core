@@ -15,6 +15,8 @@ jobs:
       - name: Request manual activation file
         id: getManualLicenseFile
         uses: game-ci/unity-request-activation-file@v2
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
       - name: Expose as artifact
         uses: actions/upload-artifact@v1
         with:
