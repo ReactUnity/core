@@ -191,7 +191,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
             System.Func<Transform, IEnumerable<Transform>> selectAllChildren = null;
-            selectAllChildren = (Transform x) => x.OfType<Transform>().SelectMany(x => selectAllChildren(x)).Concat(new List<Transform>() { x });
+            selectAllChildren = (Transform tr) => tr.OfType<Transform>().SelectMany(x => selectAllChildren(x)).Concat(new List<Transform>() { tr });
             var elements = selectAllChildren(Host.RectTransform);
 
             foreach (var item in elements)
