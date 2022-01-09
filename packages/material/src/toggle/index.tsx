@@ -23,7 +23,8 @@ type Props = Omit<UGUIElements['toggle'], 'children'>
 const _Toggle = React.forwardRef<ToggleEl, Props>(
   function _Toggle({ children, className, noRipple, onPointerDown, onPointerUp, type, variant, independent, ...props }, ref) {
     const toggleRef = useRef<ToggleEl>();
-    const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: true, target: toggleRef });
+    const ringRef = useRef<ReactUnity.UGUI.UGUIComponent>();
+    const ripple = useRipple({ onPointerDown, onPointerUp, noRipple, centered: true, target: ringRef });
 
     let ctx = useContext(ToggleGroupContext);
     if (independent) ctx = null;
@@ -52,10 +53,14 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
       }
     }, [ctx, ref, selectionRef]);
 
+    const NativeToggle = 'toggle' as any;
+
     return <label className={clsx(className, style.label, 'mat-toggle-label', style[type], 'mat-toggle-' + type, 'mat-variant-' + variant)} {...ripple}>
-      <toggle name="<Toggle>" ref={innerRef}
+      <NativeToggle name="<Toggle>" ref={innerRef} {...ripple}
         className={clsx(style.toggle, 'mat-toggle')}
-        {...props}  {...ripple} />
+        {...props}>
+        <view className={clsx(style.ring, 'mat-toggle-ring')} ref={ringRef} />
+      </NativeToggle>
 
       {!!children && <view className={clsx(style.labelContent, 'mat-toggle-label-content')}>{children}</view>}
     </label>;
