@@ -66,6 +66,17 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(@"
+            Renderer.render(<view>Hello world</view>);
+            Renderer.render(<view>Hello world 2</view>);
+        ")]
+        public IEnumerator RerenderOfRootElementWorks()
+        {
+            yield return null;
+
+            Assert.AreEqual("Hello world 2", Host.TextContent);
+        }
+
+        [ReactInjectableTest(@"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image active={globals.active} />;
