@@ -28,7 +28,11 @@ namespace ReactUnity.Tests
                 var dir = Path.GetDirectoryName(filePath);
                 var fileName = Path.GetFileName(filePath);
 
-                if (!string.IsNullOrWhiteSpace(namePrefix)) fileName = namePrefix + "-" + fileName;
+                if (!string.IsNullOrWhiteSpace(namePrefix))
+                {
+                    fileName = namePrefix + "-" + fileName;
+                    name = namePrefix + "-" + name;
+                }
                 filePath = Path.Combine(dir, fileName);
 
                 var lockfile = Path.Combine(basePath, "snapshots.lock");

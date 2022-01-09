@@ -6,7 +6,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "rgba";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             float[] vals;
             if (args.Length == 1) vals = ParserHelpers.ParseSpaceSeparatedColor(args[0]);

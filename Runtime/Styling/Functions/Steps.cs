@@ -9,7 +9,7 @@ namespace ReactUnity.Styling.Functions
 
         public string Name { get; } = "steps";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             var a1 = AllConverters.IntConverter.Parse(args[0]);
             var a2 = args.Length > 1 ? StepConverter.Parse(args[1]) : StepsJumpMode.End;

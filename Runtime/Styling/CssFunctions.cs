@@ -50,7 +50,7 @@ namespace ReactUnity.Styling
                 return false;
             }
 
-            var (name, splits) = ParserHelpers.ParseFunction(expression);
+            var (name, splits, argsCombined) = ParserHelpers.ParseFunction(expression);
 
             if (splits == null || splits.Length == 0)
             {
@@ -62,7 +62,7 @@ namespace ReactUnity.Styling
                 && Functions.TryGetValue(name, out var fun)
                 && fun.CanHandleArguments(splits.Length, name, splits))
             {
-                result = fun.Call(name, splits);
+                result = fun.Call(name, splits, argsCombined);
                 return true;
             }
 
@@ -75,6 +75,6 @@ namespace ReactUnity.Styling
     {
         string Name { get; }
         bool CanHandleArguments(int count, string name, string[] args);
-        object Call(string name, string[] args);
+        object Call(string name, string[] args, string argsCombined);
     }
 }

@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "hsla";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             string[] parsedArgs;
             if (args.Length == 1) parsedArgs = ParserHelpers.ParseSpaceSeparatedColorArguments(args[0]).ToArray();

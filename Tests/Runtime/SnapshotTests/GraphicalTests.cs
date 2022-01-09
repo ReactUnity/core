@@ -32,6 +32,8 @@ namespace ReactUnity.Tests
             }
         ";
 
+        const string DataUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJElEQVQoU2P8z8DwnwEJMKLwGBhAfForYGD4j24rI4qbaK8AAClEFAHkdZU1AAAAAElFTkSuQmCC";
+
         private UGUIComponent View => Q("#test");
 
         public GraphicalTests(JavascriptEngineType engineType) : base(engineType) { }
@@ -344,6 +346,8 @@ namespace ReactUnity.Tests
             Tuple.Create("15", "url(res:star) repeat-x top / 35%"),
             Tuple.Create("16", "url(res:star) space bottom right / cover"),
             Tuple.Create("17", "url(res:star) space bottom right / contain"),
+            Tuple.Create("18", $"url({DataUrl})"),
+            Tuple.Create("19", $"url(\"{DataUrl}\")"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]

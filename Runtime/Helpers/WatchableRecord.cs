@@ -146,7 +146,7 @@ namespace ReactUnity.Helpers
 
         void TriggerChange()
         {
-            changed?.Invoke(null, default, this);
+            changed?.Invoke(default, default, this);
         }
 
         protected virtual T RetrieveValue(TKey key)

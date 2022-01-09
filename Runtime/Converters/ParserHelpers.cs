@@ -9,7 +9,7 @@ namespace ReactUnity.Converters
     {
         public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`\(\)-]*)\)$", RegexOptions.IgnoreCase);
 
-        public static (string, string[]) ParseFunction(string val)
+        public static (string, string[], string) ParseFunction(string val)
         {
             if (string.IsNullOrWhiteSpace(val)) return default;
             val = val.Trim();
@@ -41,7 +41,7 @@ namespace ReactUnity.Converters
                     else
                     {
                         if (i == len - 1) break;
-                        else return (null, null);
+                        else return (null, null, null);
                     }
                 }
                 else if (parensStack == 0)
@@ -54,10 +54,11 @@ namespace ReactUnity.Converters
 
             if (!hasParens) return default;
 
-            var splits = SplitComma(args.ToString());
+            var argsCombined = args.ToString();
+            var splits = SplitComma(argsCombined);
 
-            if (splits.Count == 1 && splits[0] == "") return (name.ToString(), new string[] { });
-            else return (name.ToString(), splits.ToArray());
+            if (splits.Count == 1 && splits[0] == "") return (name.ToString(), new string[] { }, argsCombined);
+            else return (name.ToString(), splits.ToArray(), argsCombined);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

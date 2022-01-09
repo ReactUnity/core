@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "cubic-bezier";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             var a1 = AllConverters.FloatConverter.Parse(args[0]);
             var a2 = AllConverters.FloatConverter.Parse(args[1]);

@@ -8,7 +8,7 @@ namespace ReactUnity.Styling.Functions
         static HashSet<string> Allowed = new HashSet<string> { "var" };
         public string Name { get; } = "var";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             if (args.Length < 1) return null;
 

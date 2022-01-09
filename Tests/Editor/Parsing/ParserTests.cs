@@ -32,7 +32,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("url(data:image/png; base64,iRxVB0)", "url", new[] { "data:image/png; base64", "iRxVB0" })]
         public void ParseFunction(string input, string expectedName, string[] expectedArgs)
         {
-            var (name, args) = ParserHelpers.ParseFunction(input);
+            var (name, args, argsCombined) = ParserHelpers.ParseFunction(input);
             Assert.AreEqual(expectedName, name);
             Assert.AreEqual(expectedArgs, args);
         }

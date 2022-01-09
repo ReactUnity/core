@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "vector3";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             var x = args.Length > 0 ? AllConverters.FloatConverter.Parse(args[0]) : null;
             var y = args.Length > 1 ? AllConverters.FloatConverter.Parse(args[1]) : null;

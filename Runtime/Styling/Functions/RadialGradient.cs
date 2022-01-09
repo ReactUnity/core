@@ -12,7 +12,7 @@ namespace ReactUnity.Styling.Functions
 
         public string Name { get; } = "radial-gradient";
 
-        public object Call(string name, string[] args)
+        public object Call(string name, string[] args, string argsCombined)
         {
             if (args.Length < 2) return null;
 
