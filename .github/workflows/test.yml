@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - { os: "ubuntu-20.04", license: secrets.UNITY_LICENSE }
+          - ubuntu-20.04
         unityVersion:
           # - 2021.1.16f1
           - 2020.3.9f1
@@ -35,7 +35,7 @@ jobs:
           #   suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true, testBranch: "tests_2021_2" }
           # - unityVersion: 2021.2.7f1
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false, testBranch: "tests_2021_2" }
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout core library
         uses: actions/checkout@v2

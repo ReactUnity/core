@@ -7,6 +7,9 @@ jobs:
       matrix:
         platform:
           - ubuntu-20.04
+        unityVersion:
+          - 2021.2.7f1
+          - 2019.4.29f1
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Request manual activation file
