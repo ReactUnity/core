@@ -30,7 +30,6 @@
     }
   },
   "scripts": {
-    "preinstall": "npx only-allow@1.0.0 yarn",
     "build:clean": "rimraf dist",
     "build:base": "tsc",
     "build:editor": "tsc -p tsconfig.editor.json",

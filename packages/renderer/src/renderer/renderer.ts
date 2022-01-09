@@ -155,6 +155,8 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
 
 const ReactUnityReconciler = Reconciler(hostConfig);
 
+const containerMap = new Map<NativeContainerInstance, any>();
+
 export const Renderer = {
   render(
     element: React.ReactNode,
@@ -162,7 +164,9 @@ export const Renderer = {
     renderWithoutHelpers?: boolean,
   ): number {
     if (!hostContainer) hostContainer = HostContainer;
-    const hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
+
+    let hostRoot = containerMap.get(hostContainer);
+    if (!hostRoot) containerMap.set(hostContainer, hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {}));
 
     if (!renderWithoutHelpers) element = createElement(DefaultView, null, element);
     return ReactUnityReconciler.updateContainer(element, hostRoot, null);
