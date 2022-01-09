@@ -60,7 +60,7 @@ namespace ReactUnity.UGUI.Internal
                 if (resolved != value)
                 {
                     resolved = value;
-                    texture = value.Texture;
+                    texture = value?.Texture;
                     UpdateBlendMode();
                 }
             }
@@ -85,7 +85,7 @@ namespace ReactUnity.UGUI.Internal
             {
                 Material result = base.materialForRendering;
 
-                var szPoint = CalculateSize(Size, Resolved.IntrinsicSize, Resolved.IntrinsicProportions, backgroundSize);
+                var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
                 var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
                 var psPoint = StylingUtils.GetPointValue(BackgroundPosition, Size - szPoint, 0, false);
                 var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);

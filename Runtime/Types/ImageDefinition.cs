@@ -83,7 +83,7 @@ namespace ReactUnity.Types
         internal override void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback)
         {
             Reference.Get(context, tx => {
-                callback(new ResolvedImage
+                callback(tx == null ? null : new ResolvedImage
                 {
                     Texture = tx,
                     IntrinsicSize = new Vector2(tx.width, tx.height),
