@@ -43,7 +43,6 @@
     }
   },
   "scripts": {
-    "preinstall": "npx only-allow@1.0.0 yarn",
     "prebuild": "yarn clean",
     "build": "tsc -d && yarn copy-files",
     "copy-files": "copyfiles -u 1 src/**/*.scss dist/src",
