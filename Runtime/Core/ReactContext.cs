@@ -37,6 +37,7 @@ namespace ReactUnity
 
         public bool CalculatesLayout { get; }
         public IHostComponent Host { get; protected set; }
+        public HashSet<IReactComponent> DetachedRoots { get; protected set; } = new HashSet<IReactComponent>();
         public GlobalRecord Globals { get; private set; }
         public bool IsDisposed { get; private set; }
 
@@ -79,7 +80,10 @@ namespace ReactUnity
 
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host?.Accept(updateVisitor));
-            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => Host?.Layout.CalculateLayout());
+            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => {
+                Host?.Layout.CalculateLayout();
+                foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
+            });
         }
 
         protected virtual StyleContext CreateStyleContext() => new StyleContext(this);
@@ -186,6 +190,7 @@ namespace ReactUnity
         {
             IsDisposed = true;
             Host.Destroy(false);
+            foreach (var dr in DetachedRoots) dr.Destroy(false);
             Dispatcher?.Dispose();
             Globals?.Dispose();
             Script?.Dispose();

@@ -100,5 +100,22 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(Color.blue, portalText.color, "Color should change after parent changes");
         }
+
+        [ReactInjectableTest(BaseScript)]
+        public IEnumerator PortalIsUnmountedAfterDestroy()
+        {
+            yield return null;
+            var portal = Portal;
+
+            var target1 = new GameObject("portalTarget1", typeof(RectTransform));
+            Globals["portalTarget"] = target1;
+            Assert.AreEqual(null, portal.ShadowParent);
+            Assert.AreEqual(target1.transform, portal.RectTransform.parent);
+
+            Context.Dispose();
+            yield return null;
+            Assert.IsFalse(portal.Component);
+            Assert.AreEqual(0, target1.transform.childCount);
+        }
     }
 }

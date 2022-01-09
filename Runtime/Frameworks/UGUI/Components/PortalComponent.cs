@@ -1,3 +1,4 @@
+using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -62,20 +63,28 @@ namespace ReactUnity.UGUI
                 Container.SetParent(currentTarget ? currentTarget : null, false);
 
                 Layout.Parent?.RemoveChild(Layout);
-                (ShadowParent ?? Context.Host).Layout.AddChild(Layout);
+                if (ShadowParent != null)
+                {
+                    ShadowParent.Layout.AddChild(Layout);
+                    Context.DetachedRoots.Remove(this);
+                }
+                else
+                {
+                    Context.DetachedRoots.Add(this);
+                }
 
                 ResolveStyle(true);
             }
         }
 
-        RectTransform FindTarget(object value)
+        (RectTransform, IReactComponent) FindTarget(object value)
         {
-            if (value == null) return null;
-            if (value is Transform t && t) return t.transform as RectTransform;
-            if (value is GameObject g && g) return g.transform as RectTransform;
-            if (value is Component c && c) return c.transform as RectTransform;
-            if (value is UGUIComponent u) return u.Container;
-            return null;
+            if (value == null) return (null, null);
+            if (value is Transform t && t) return (t.transform as RectTransform, t.GetComponentInParent<ReactElement>()?.Component);
+            if (value is GameObject g && g) return (g.transform as RectTransform, g.GetComponentInParent<ReactElement>()?.Component);
+            if (value is Component c && c) return (c.transform as RectTransform, c.GetComponentInParent<ReactElement>()?.Component);
+            if (value is UGUIComponent u) return (u.Container, u);
+            return (null, null);
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -83,7 +92,8 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "target":
-                    SetTarget(FindTarget(value), value as IReactComponent);
+                    var tg = FindTarget(value);
+                    SetTarget(tg.Item1, tg.Item2?.Context == Context ? tg.Item2 : null);
                     break;
                 default:
                     base.SetProperty(propertyName, value);
