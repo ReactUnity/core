@@ -9,7 +9,8 @@
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
-process.env.BABEL_ENV = process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
+process.env.BABEL_ENV =
+  process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Makes the script crash on unhandled rejections instead of silently
@@ -26,14 +27,14 @@ const paths = require('../config/paths');
 const eslintConfig = require('../config/eslintConfig');
 const formatter = require('react-dev-utils/eslintFormatter');
 
-const { ESLint } = require("eslint");
+const { ESLint } = require('eslint');
 
 (async function main() {
   const eslint = new ESLint(eslintConfig);
   const results = await eslint.lintFiles([paths.appSrc]);
   const resultText = formatter(results);
   console.log(resultText);
-})().catch((error) => {
+})().catch(error => {
   process.exitCode = 1;
   console.error(error);
 });

@@ -29,17 +29,14 @@ const baseConfig = {
     ...(!modules.hasJsxRuntime && {
       'react/react-in-jsx-scope': 'error',
     }),
-    'no-restricted-globals': ['error'].concat(restrictedGlobals.filter(x => x !== 'location')),
+    'no-restricted-globals': ['error'].concat(restrictedGlobals),
   },
 };
 
 module.exports = {
   extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
   cache: true,
-  cacheLocation: path.resolve(
-    paths.appNodeModules,
-    '.cache/.eslintcache'
-  ),
+  cacheLocation: path.resolve(paths.appNodeModules, '.cache/.eslintcache'),
   cwd: paths.appPath,
   resolvePluginsRelativeTo: __dirname,
   baseConfig,

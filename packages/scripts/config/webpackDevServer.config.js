@@ -9,20 +9,23 @@
 'use strict';
 
 const fs = require('fs');
-const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
+const path = require('path');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware');
 const paths = require('./paths');
 const getHttpsConfig = require('./getHttpsConfig');
-const path = require('path');
+const { registerUnityMiddleware } = require('./unityMiddleware');
 
+const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
-const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
+const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
-module.exports = function (proxy, allowedHost, host, port) {
+module.exports = function (proxy, allowedHost) {
+  const disableFirewall =
+    !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -40,26 +43,16 @@ module.exports = function (proxy, allowedHost, host, port) {
     // So we will disable the host check normally, but enable it if you have
     // specified the `proxy` setting. Finally, we let you override it if you
     // really know what you're doing with a special environment variable.
-    allowedHosts: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true' ? 'all' : allowedHost,
+    // Note: ["localhost", ".localhost"] will support subdomains - but we might
+    // want to allow setting the allowedHosts manually for more complex setups
+    allowedHosts: disableFirewall ? 'all' : [allowedHost],
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
+    },
     // Enable gzip compression of generated files.
     compress: true,
-    // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
-    // for the WebpackDevServer client so it can learn when the files were
-    // updated. The WebpackDevServer client is included as an entry point
-    // in the webpack development configuration. Note that only changes
-    // to CSS are currently hot reloaded. JS changes will refresh the browser.
-    hot: true,
-    // Use 'ws' instead of 'sockjs-node' on server since we're using native
-    // websockets in `webpackHotDevClient`.
-    webSocketServer: 'ws',
-    devMiddleware: {
-      index: 'index.html',
-      // It is important to tell WebpackDevServer to use the same "publicPath" path as
-      // we specified in the webpack config. When homepage is '.', default to serving
-      // from the root.
-      // remove last slash so user can land on `/test` instead of `/test/`
-      publicPath: paths.publicUrlOrPath.slice(0, -1),
-    },
     static: [
       // Serve React Unity Web Inspector as the index page
       { directory: path.join(__dirname, 'web-inspector'), },
@@ -79,29 +72,19 @@ module.exports = function (proxy, allowedHost, host, port) {
         // for some reason broken when imported through webpack. If you just want to
         // use an image, put it in `src` and `import` it from JavaScript instead.
         directory: paths.appPublic,
-        publicPath: paths.publicUrlOrPath,
-        serveIndex: true,
-        staticOptions: {},
-        // Reportedly, this avoids CPU overload on some systems.
-        // https://github.com/facebook/create-react-app/issues/293
-        // src/node_modules is not ignored to support absolute imports
-        // https://github.com/facebook/create-react-app/issues/1065
+        publicPath: [paths.publicUrlOrPath],
+        // By default files from `contentBase` will not trigger a page reload.
         watch: {
+          // Reportedly, this avoids CPU overload on some systems.
+          // https://github.com/facebook/create-react-app/issues/293
+          // src/node_modules is not ignored to support absolute imports
+          // https://github.com/facebook/create-react-app/issues/1065
           ignored: ignoredFiles(paths.appSrc),
         },
       },
     ],
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-    https: getHttpsConfig(),
-    host,
-    port,
+
     client: {
-      overlay: false,
-      // Silence WebpackDevServer's own logs since they're generally not useful.
-      // It will still show compile warnings and errors with this setting.
-      logging: 'none',
       webSocketURL: {
         // Enable custom sockjs pathname for websocket connection to hot reloading server.
         // Enable custom sockjs hostname, pathname and port for websocket connection
@@ -110,7 +93,21 @@ module.exports = function (proxy, allowedHost, host, port) {
         pathname: sockPath,
         port: sockPort,
       },
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
     },
+    devMiddleware: {
+      // It is important to tell WebpackDevServer to use the same "publicPath" path as
+      // we specified in the webpack config. When homepage is '.', default to serving
+      // from the root.
+      // remove last slash so user can land on `/test` instead of `/test/`
+      publicPath: paths.publicUrlOrPath.slice(0, -1),
+    },
+
+    https: getHttpsConfig(),
+    host,
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.
@@ -120,56 +117,28 @@ module.exports = function (proxy, allowedHost, host, port) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     onBeforeSetupMiddleware(devServer) {
-      const app = devServer.app;
-
-      // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
+      // Keep `evalSourceMapMiddleware`
       // middlewares before `redirectServedPath` otherwise will not have any effect
       // This lets us fetch source contents from webpack for the error overlay
-      app.use(evalSourceMapMiddleware(devServer));
-      // This lets us open files from the runtime error overlay.
-      app.use(errorOverlayMiddleware());
+      devServer.app.use(evalSourceMapMiddleware(devServer));
 
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
-        require(paths.proxySetup)(app);
+        require(paths.proxySetup)(devServer.app);
       }
 
-      // Allow serving Unity builds
-      function contentEncodingShorthand(pattern, encoding) {
-        app.get(pattern, function (req, res, next) {
-          res.set('Content-Encoding', encoding);
-          next();
-        });
-      }
-
-      function contentTypeShorthand(pattern, type) {
-        app.get(pattern, function (req, res, next) {
-          res.set('Content-Type', type);
-          next();
-        });
-      }
-
-      contentEncodingShorthand('*.unityweb', 'gzip');
-      contentEncodingShorthand('*.gz', 'gzip');
-      contentEncodingShorthand('*.br', 'br');
-      contentTypeShorthand('*.js.gz', 'application/javascript');
-      contentTypeShorthand('*.js.br', 'application/javascript');
-      contentTypeShorthand('*.wasm', 'application/wasm');
-      contentTypeShorthand('*.wasm.gz', 'application/wasm');
-      contentTypeShorthand('*.wasm.br', 'application/wasm');
+      registerUnityMiddleware(devServer.app);
     },
     onAfterSetupMiddleware(devServer) {
-      const app = devServer.app;
-
       // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
-      app.use(redirectServedPath(paths.publicUrlOrPath));
+      devServer.app.use(redirectServedPath(paths.publicUrlOrPath));
 
       // This service worker file is effectively a 'no-op' that will reset any
       // previous service worker registered for the same host:port combination.
       // We do this in development to avoid hitting the production cache if
       // it used the same host and port.
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
-      app.use(noopServiceWorkerMiddleware(paths.publicUrlOrPath));
+      devServer.app.use(noopServiceWorkerMiddleware(paths.publicUrlOrPath));
     },
   };
 };

@@ -10,6 +10,11 @@ declare namespace NodeJS {
   }
 }
 
+declare module '*.avif' {
+  const src: string;
+  export default src;
+}
+
 declare module '*.bmp' {
   const src: string;
   export default src;
@@ -41,8 +46,14 @@ declare module '*.webp' {
 }
 
 declare module '*.svg' {
-  const sizes: { readonly [key: string]: string };
-  export default sizes;
+  import * as React from 'react';
+
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<
+    SVGSVGElement
+  > & { title?: string }>;
+
+  const src: string;
+  export default src;
 }
 
 declare module '*.module.css' {
