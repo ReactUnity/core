@@ -18,7 +18,7 @@ namespace ReactUnity.Styling.Rules
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
             (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
         {
-            var added = AddSelector(rule.SelectorText, importanceOffset, mql, scope);
+            var added = AddSelector(rule.Selector.StylesheetText.Text, importanceOffset, mql, scope);
             var pairs = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
             foreach (var leaf in added)

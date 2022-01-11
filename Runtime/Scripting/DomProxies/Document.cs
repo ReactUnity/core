@@ -71,6 +71,7 @@ namespace ReactUnity.Scripting.DomProxies
     {
         public int nodeType => 1;
         public object nextSibling => null;
+        public string id = "";
 
         Dictionary<string, object> attributes = new Dictionary<string, object>();
 
@@ -119,7 +120,6 @@ namespace ReactUnity.Scripting.DomProxies
             set { onerrorCallback = new Callback(value); }
             get => new Action(() => onerrorCallback.Call());
         }
-
 
         public DocumentProxy document;
         public HeadProxy parentNode;

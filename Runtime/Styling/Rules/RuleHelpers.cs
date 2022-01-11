@@ -177,9 +177,46 @@ namespace ReactUnity.Styling.Rules
 
         public static string NormalizeSelector(string selector)
         {
-            return NthChildRegex.Replace(
-                SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Replace("::", " ::").Trim(), " "),
-                "($1+$2)");
+            var spaced = new StringBuilder();
+            var count = selector.Length;
+
+            var prev = ' ';
+            for (int i = 0; i < count; i++)
+            {
+                var ch = selector[i];
+
+                if (ch == '\\')
+                {
+                    prev = ch;
+                    continue;
+                }
+
+                if (prev != '\\')
+                {
+                    switch (ch)
+                    {
+                        case '>':
+                        case '+':
+                        case '~':
+                            spaced.Append(' ');
+                            spaced.Append(ch);
+                            spaced.Append(' ');
+                            break;
+                        default:
+                            spaced.Append(ch);
+                            break;
+                    }
+                }
+                else
+                {
+                    if (prev == ':' && ch == ':') spaced.Append(" ::");
+                    else spaced.Append(ch);
+                }
+
+                prev = ch;
+            }
+
+            return NthChildRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), "($1+$2)");
         }
 
         public static CssKeyword GetCssKeyword(string value)
