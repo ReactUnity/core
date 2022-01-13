@@ -21,7 +21,8 @@ namespace ReactUnity.Scripting.DomProxies
         public object createElement(string type)
         {
             if (type == "script") return new ScriptProxy(this);
-            if (type == "style") return new StyleProxy(this);
+            else if (type == "style") return new StyleProxy(this);
+            else if (type == "link") return new LinkProxy(this);
             else return Context.CreateComponent(type, "");
         }
 
@@ -50,13 +51,14 @@ namespace ReactUnity.Scripting.DomProxies
 
         public List<IDomElementProxy> getElementsByTagName(string tagName)
         {
-            // TODO: handle efficiently
-            return new List<IDomElementProxy>();
+            return head.Children.FindAll(x => x.tagName == tagName);
         }
     }
 
     public interface IDomElementProxy
     {
+        public abstract string tagName { get; }
+
         void OnAppend();
         void OnRemove();
 
@@ -69,6 +71,7 @@ namespace ReactUnity.Scripting.DomProxies
 
     public abstract class DomElementProxyBase
     {
+        public abstract string tagName { get; }
         public int nodeType => 1;
         public object nextSibling => null;
         public string id = "";
@@ -83,24 +86,33 @@ namespace ReactUnity.Scripting.DomProxies
 
     public class HeadProxy : DomElementProxyBase
     {
+        public override string tagName { get; } = "head";
+        public List<IDomElementProxy> Children { get; } = new List<IDomElementProxy>();
+
         public void appendChild(IDomElementProxy child)
         {
             child.OnAppend();
+            Children.Add(child);
         }
 
         public void removeChild(IDomElementProxy child)
         {
             child.OnRemove();
+            Children.Remove(child);
         }
 
         public void insertBefore(IDomElementProxy child, object before)
         {
             child.OnAppend();
+            var ind = before is IDomElementProxy ip ? Children.IndexOf(ip) : -1;
+            if (ind >= 0) Children.Insert(ind, child);
+            else Children.Add(child);
         }
     }
 
     public class ScriptProxy : DomElementProxyBase, IDomElementProxy
     {
+        public override string tagName { get; } = "script";
         public string src { get; set; }
         public string charset { get; set; }
         public string crossOrigin { get; set; }
@@ -108,6 +120,7 @@ namespace ReactUnity.Scripting.DomProxies
 
         private Callback onloadCallback { get; set; }
         private Callback onerrorCallback { get; set; }
+        private IReactComponent component;
 
         public object onload
         {
@@ -132,25 +145,17 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void OnAppend()
         {
-            var script = document.Context.CreateStaticScript(src);
-            var dispatcher = document.Context.Dispatcher;
-
-            Action<string> action = (sc) => {
-                string fileName = script.FileName;
-
-                document.Context.Script.ExecuteScript(sc, fileName);
-                (onload as Action)?.Invoke();
-            };
-
-            Action<string> callback = (sc) => {
-                dispatcher.Immediate(() => action(sc));
-            };
-
-            script.GetScript((sc) => callback(sc), dispatcher, false);
+            var script = document.Context.CreateComponent("script", "");
+            script.AddEventListener("onLoad", onloadCallback);
+            script.AddEventListener("onError", onerrorCallback);
+            script.SetParent(document.Context.Host);
+            script.SetProperty("source", src);
         }
 
         public void OnRemove()
         {
+            component?.Remove();
+            component = null;
         }
 
         public void appendChild(string text)
@@ -166,10 +171,32 @@ namespace ReactUnity.Scripting.DomProxies
 
     public class StyleProxy : DomElementProxyBase, IDomElementProxy
     {
+        public class StyleSheetProxy
+        {
+            StyleProxy Proxy;
+
+            public string cssText
+            {
+                set
+                {
+                    Proxy.childNodes.Clear();
+                    Proxy.childNodes.Add(value);
+                    Proxy.ProcessNodes();
+                }
+            }
+
+            public StyleSheetProxy(StyleProxy pr)
+            {
+                Proxy = pr;
+            }
+        }
+
+        public override string tagName { get; } = "style";
         public List<string> childNodes = new List<string>();
         public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
 
         public StyleSheet Sheet = null;
+        public StyleSheetProxy styleSheet;
 
         public bool enabled;
 
@@ -180,6 +207,7 @@ namespace ReactUnity.Scripting.DomProxies
         {
             this.document = document;
             parentNode = document.head;
+            styleSheet = new StyleSheetProxy(this);
         }
 
         public void OnAppend()
@@ -213,5 +241,70 @@ namespace ReactUnity.Scripting.DomProxies
             if (Sheet != null) document.Context.RemoveStyle(Sheet);
             Sheet = document.Context.InsertStyle(string.Join("\n", childNodes));
         }
+    }
+
+    public class LinkProxy : DomElementProxyBase, IDomElementProxy
+    {
+        public override string tagName { get; } = "link";
+        public DocumentProxy document;
+        public HeadProxy parentNode;
+        private IReactComponent component;
+
+        public string rel = "";
+
+        public string type;
+
+        public string href;
+
+
+        private Callback onloadCallback { get; set; }
+        private Callback onerrorCallback { get; set; }
+
+        public object onload
+        {
+            set { onloadCallback = new Callback(value); }
+            get => new Action(() => onloadCallback.Call());
+        }
+
+        public object onerror
+        {
+            set { onerrorCallback = new Callback(value); }
+            get => new Action(() => onerrorCallback.Call());
+        }
+
+
+        public LinkProxy(DocumentProxy document)
+        {
+            this.document = document;
+            parentNode = document.head;
+        }
+
+        public void OnAppend()
+        {
+            var tag = "";
+
+            if (type == "text/css") tag = "style";
+            else if (type == "text/javascript") tag = "script";
+
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                var cmp = component = document.Context.CreateComponent(tag, "") as SourceProxyComponent;
+                cmp.AddEventListener("onLoad", onloadCallback);
+                cmp.AddEventListener("onError", onerrorCallback);
+                if (type == "text/css") cmp.SetProperty("scope", ":root");
+                cmp.SetParent(document.Context.Host);
+                cmp.SetProperty("source", href);
+            }
+        }
+
+        public void OnRemove()
+        {
+            component?.Remove();
+            component = null;
+        }
+
+        public void appendChild(string text) { }
+
+        public void removeChild(string text) { }
     }
 }

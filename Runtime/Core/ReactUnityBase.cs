@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
@@ -24,6 +25,7 @@ namespace ReactUnity
         public ITimer timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
+        public List<TextAsset> Stylesheets = new List<TextAsset>();
 
         #region Advanced Options
 
@@ -66,6 +68,11 @@ namespace ReactUnity
         {
             MediaProvider = CreateMediaProvider();
             Context = CreateContext(script);
+
+            foreach (var sheet in Stylesheets)
+            {
+                if (sheet) Context.InsertStyle(sheet.text);
+            }
             Context.Start();
         }
 

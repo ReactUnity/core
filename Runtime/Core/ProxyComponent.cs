@@ -121,7 +121,7 @@ namespace ReactUnity
 
         public void SetEventListener(string eventType, Callback callback) => Proxy.SetEventListener(eventType, callback);
 
-        public Action AddEventListener(string eventType, Callback callback) => Proxy.AddEventListener(eventType, callback);
+        public virtual Action AddEventListener(string eventType, Callback callback) => Proxy.AddEventListener(eventType, callback);
 
         public void FireEvent(string eventName, object arg) => Proxy.FireEvent(eventName, arg);
 

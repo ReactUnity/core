@@ -90,7 +90,7 @@ namespace ReactUnity.Styling.Rules
                             nm = splits[0].Trim();
                             if (nm.StartsWith("data-")) nm = nm.Substring(5);
 
-                            parameter = splits.Length > 1 ? splits[1].Trim().Trim('"') : null;
+                            parameter = splits.Length > 1 ? splits[1].Trim().Trim('"').Trim('\'') : null;
                         }
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
                     }
@@ -185,6 +185,13 @@ namespace ReactUnity.Styling.Rules
             {
                 var ch = selector[i];
 
+                if (prev == '\\')
+                {
+                    spaced.Append(ch);
+                    prev = '\0';
+                    continue;
+                }
+
                 if (ch == '\\')
                 {
                     prev = ch;
@@ -203,7 +210,8 @@ namespace ReactUnity.Styling.Rules
                             spaced.Append(' ');
                             break;
                         default:
-                            spaced.Append(ch);
+                            if (prev == ':' && ch == ':') spaced.Append(" ::");
+                            else spaced.Append(ch);
                             break;
                     }
                 }

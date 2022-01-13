@@ -10,6 +10,9 @@ namespace ReactUnity
 {
     public class NoopComponent : IContainerComponent, IHostComponent, ITextComponent
     {
+        protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
+        protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
+
         public NoopComponent(ReactContext ctx, string tag)
         {
             Context = ctx;
@@ -58,8 +61,6 @@ namespace ReactUnity
         public void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false) => Parent = parent;
         public void SetProperty(string property, object value) { }
         public void SetData(string property, object value) { }
-        public void SetEventListener(string eventType, Callback callback) { }
-        public void FireEvent(string eventName, object arg) { }
         public void MarkForStyleResolving(bool recursive) { }
         public void MarkStyleUpdateWithSiblings(bool recursive) { }
         public void Remove() { }
@@ -67,7 +68,6 @@ namespace ReactUnity
         public void Destroy(bool recursive = true) => Destroyed = true;
         public void RegisterChild(IReactComponent child, int index = -1) { }
         public void UnregisterChild(IReactComponent child) { }
-        public Action AddEventListener(string eventType, Callback callback) => () => { };
         public object GetComponent(Type type) => null;
         public object AddComponent(Type type) => null;
         public bool Matches(string query) => false;
@@ -75,5 +75,40 @@ namespace ReactUnity
         public IReactComponent QuerySelector(string query) => null;
         public List<IReactComponent> QuerySelectorAll(string query) => new List<IReactComponent>();
         public void SetText(string text) { }
+
+
+        public void SetEventListener(string eventName, Callback fun)
+        {
+            if (EventHandlerRemovers.TryGetValue(eventName, out var remover))
+            {
+                remover?.Invoke();
+                EventHandlerRemovers[eventName] = null;
+            }
+
+            if (fun != null)
+            {
+                var newRemover = AddEventListener(eventName, fun);
+                EventHandlerRemovers[eventName] = newRemover;
+            }
+        }
+
+        public Action AddEventListener(string eventName, Callback fun)
+        {
+            List<Callback> list;
+            if (!BaseEventHandlers.TryGetValue(eventName, out list))
+                BaseEventHandlers[eventName] = list = new List<Callback>();
+            list.Add(fun);
+
+            return () => list.Remove(fun);
+        }
+
+        public void FireEvent(string eventName, object arg)
+        {
+            if (BaseEventHandlers.TryGetValue(eventName, out var existingHandlers))
+            {
+                foreach (var handler in existingHandlers)
+                    handler?.Call(arg, this);
+            }
+        }
     }
 }

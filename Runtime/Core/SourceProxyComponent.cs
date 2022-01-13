@@ -76,6 +76,7 @@ namespace ReactUnity
             else reference?.Get(Context, text => {
                 if (value != Source) return;
                 InnerContent = text.text;
+                FireEvent("onLoad", new { type = "load" });
             });
         }
     }
