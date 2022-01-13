@@ -39,7 +39,7 @@ namespace ReactUnity.Styling
             {
                 if (child is IMediaRule media)
                 {
-                    var mediaRegex = new Regex(@"@media ([^\{]*){.*");
+                    var mediaRegex = new Regex(@"@media\s*([^\{]*){.*");
                     var match = mediaRegex.Match(media.StylesheetText.Text);
 
                     if (match.Groups.Count < 2) continue;

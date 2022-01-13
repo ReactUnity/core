@@ -9,7 +9,7 @@ namespace ReactUnity.Tests
     {
         public MediaQueryTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(style: "view { color: white; } @media (min-asd: 600px) { view { color: red; } }")]
+        [ReactInjectableTest(style: "view { color: white; } @media(min-asd: 600px) { view { color: red; } } @media (min-asd: 600px) { view { font-size: 13; } }")]
         public IEnumerator Injectable_HelloWorld()
         {
             yield return null;
@@ -19,6 +19,7 @@ namespace ReactUnity.Tests
             MediaProvider.SetNumber("asd", 600);
             yield return null;
             Assert.AreEqual(Color.red, tmp.color);
+            Assert.AreEqual(13, tmp.fontSize);
         }
     }
 }
