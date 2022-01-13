@@ -57,7 +57,7 @@ namespace ReactUnity.Scripting.DomProxies
 
     public interface IDomElementProxy
     {
-        public abstract string tagName { get; }
+        string tagName { get; }
 
         void OnAppend();
         void OnRemove();
