@@ -9,27 +9,15 @@
 'use strict';
 
 const path = require('path');
-const baseEslintConfig = require('eslint-config-react-app');
-const restrictedGlobals = require('confusing-browser-globals');
 const paths = require('./paths');
 const modules = require('./modules');
 
-const baseEslintConfigRules = {};
-for (const key in baseEslintConfig.rules) {
-  if (Object.hasOwnProperty.call(baseEslintConfig.rules, key) && !key.startsWith('flowtype') && !key.startsWith('jsx-a11y')) {
-    baseEslintConfigRules[key] = baseEslintConfig.rules[key];
-  }
-}
-
 const baseConfig = {
-  ...baseEslintConfig,
-  plugins: ['import', 'react-hooks'],
+  extends: [require.resolve('./eslint/config')],
   rules: {
-    ...baseEslintConfigRules,
     ...(!modules.hasJsxRuntime && {
       'react/react-in-jsx-scope': 'error',
     }),
-    'no-restricted-globals': ['error'].concat(restrictedGlobals),
   },
 };
 
