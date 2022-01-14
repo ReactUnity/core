@@ -4,6 +4,8 @@ export type FontWeight = 'thin' | 100 | 'extra-light' | 200 | 'light' | 300 | 'r
 export type FontStyles = 'normal' | 'bold' | 'italic' | 'underline' | 'lowercase' | 'uppercase'
   | 'smallcaps' | 'strikethrough' | 'superscript' | 'subscript' | 'highlight';
 
+export type TextTransform = 'none' | 'lowercase' | 'uppercase' | 'smallcaps' | 'capitalize';
+
 export type TextOverflowModes = 'overflow' | 'ellipsis' | 'masking' | 'truncate' | 'scroll-rect' | 'page' | 'linked';
 export type PointerEvents = 'auto' | 'visible' | 'all' | 'none';
 export type Visibility = 'visible' | 'hidden';

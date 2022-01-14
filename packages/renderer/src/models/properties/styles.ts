@@ -1,4 +1,4 @@
-import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
 import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -47,6 +47,7 @@ export interface RenderStyle {
 
   transformOrigin?: Vector2Aux;
   translate?: YogaValue2Aux;
+  translateZ?: YogaValueAux;
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
 
@@ -57,6 +58,7 @@ export interface RenderStyle {
   fontFamily?: AssetReference;
   fontWeight?: FontWeight;
   fontStyle?: FontStyles;
+  textTransform?: TextTransform;
   fontSize?: YogaValueAux;
   textOverflow?: TextOverflowModes;
   textAlign?: TextAlign;
