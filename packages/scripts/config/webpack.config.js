@@ -60,6 +60,7 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK === 'true';
 const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
 const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
 const extractCss = process.env.EXTRACT_CSS === 'true';
+const generateManifest = process.env.GENERATE_MANIFEST !== 'false';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '0'
@@ -557,6 +558,7 @@ module.exports = function (webpackEnv) {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
+      generateManifest &&
       new WebpackManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: paths.publicUrlOrPath,
