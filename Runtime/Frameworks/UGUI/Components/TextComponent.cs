@@ -129,7 +129,6 @@ namespace ReactUnity.UGUI
 
             TextCapitalized = style.textTransform == TextTransform.Capitalize;
             if (TextCapitalized) finalText = TextInfo.ToTitleCase(finalText);
-            else finalText = TextInside;
 
             if (Text.text != finalText) Text.text = finalText;
 

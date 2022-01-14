@@ -6,7 +6,7 @@ namespace ReactUnity.Helpers
     {
         T Value { get; }
         void Change();
-        public Action AddListener(object cb);
+        Action AddListener(object cb);
     }
 
 
