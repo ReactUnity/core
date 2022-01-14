@@ -648,7 +648,7 @@ MonoBehaviour:
     ResourcesPath: 
     UseDevServer: 1
     DevServer: http://localhost:3100
-  Debug: 0
+  Debug: 1
   AwaitDebugger: 0
   EngineType: 2
   Globals:
@@ -671,6 +671,7 @@ MonoBehaviour:
       Value: {fileID: 139628652}
     - Key: portalRoot
       Value: {fileID: 0}
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -807,6 +808,7 @@ MonoBehaviour:
       Value: {fileID: 139628652}
     - Key: portalRoot
       Value: {fileID: 0}
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -1736,6 +1738,7 @@ MonoBehaviour:
       Value: {fileID: 139628652}
     - Key: portalRoot
       Value: {fileID: 0}
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:

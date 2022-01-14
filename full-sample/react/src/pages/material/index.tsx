@@ -23,7 +23,7 @@ export function MaterialPage() {
   const ttClick = useDataTooltip('click');
 
   return <view className={style.app}>
-    <h1>Material Showcase 😎</h1>
+    <h1 style={{ color: 'red' }}>Material Showcase 😎</h1>
 
     <Paper elevation={2}>
       <Button onClick={() => setDlOpen(1)}>Open Alert With Text Only</Button>
