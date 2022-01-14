@@ -20,7 +20,7 @@ namespace ReactUnity.Styling
         public NodeStyle Parent;
         Dictionary<IStyleProperty, object> Cache;
 
-        #region Set/Get
+        #region Getters
 
         public int order => GetStyleValue(LayoutProperties.Order);
         public float opacity => GetStyleValue(StyleProperties.opacity);
@@ -40,12 +40,14 @@ namespace ReactUnity.Styling
         public ICssValueList<BoxShadow> boxShadow => GetStyleValue(StyleProperties.boxShadow);
         public YogaValue2 transformOrigin => GetStyleValue(StyleProperties.transformOrigin);
         public YogaValue2 translate => GetStyleValue(StyleProperties.translate);
+        public YogaValue translateZ => GetStyleValue(StyleProperties.translateZ);
         public Vector2 scale => GetStyleValue(StyleProperties.scale);
         public Vector3 rotate => GetStyleValue(StyleProperties.rotate);
         public FontReference fontFamily => GetStyleValue(StyleProperties.fontFamily);
         public Color color => GetStyleValue(StyleProperties.color);
         public FontWeight fontWeight => GetStyleValue(StyleProperties.fontWeight);
         public FontStyles fontStyle => GetStyleValue(StyleProperties.fontStyle);
+        public TextTransform textTransform => GetStyleValue(StyleProperties.textTransform);
         public float fontSize => GetStyleValue(StyleProperties.fontSize);
         public float lineHeight => GetStyleValue(StyleProperties.lineHeight);
         public float letterSpacing => GetStyleValue(StyleProperties.letterSpacing);

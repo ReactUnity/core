@@ -29,12 +29,14 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> borderBottomColor = new StyleProperty<Color>("borderBottomColor", Color.black, true);
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
+        public static readonly StyleProperty<YogaValue> translateZ = new StyleProperty<YogaValue>("translateZ", YogaValue.Point(0), true);
         public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
         public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: AllConverters.RotateConverter);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
         public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
+        public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true);
         public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", ComputedFontSize.Default, true, false, AllConverters.LengthConverter);
         public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", ComputedFontSize.Default, true, true, AllConverters.LengthConverter);
         public static readonly StyleProperty<float> letterSpacing = new StyleProperty<float>("letterSpacing", 0f, true, true, AllConverters.LengthConverter);
@@ -112,6 +114,7 @@ namespace ReactUnity.Styling
             { "boxShadow", boxShadow },
             { "transformOrigin", transformOrigin },
             { "translate", translate },
+            { "translateZ", translateZ },
             { "scale", scale },
             { "rotate", rotate },
             { "fontFamily", fontFamily },
@@ -224,10 +227,12 @@ namespace ReactUnity.Styling
             { "border-bottom-color", borderBottomColor },
             { "box-shadow", boxShadow },
             { "transform-origin", transformOrigin },
+            { "translate-z", translateZ },
             { "font-family", fontFamily },
             { "font-weight", fontWeight },
             { "font-style", fontStyle },
             { "text-decoration", fontStyle },
+            { "text-transform", textTransform },
             { "font-size", fontSize },
             { "line-height", lineHeight },
             { "letter-spacing", letterSpacing },

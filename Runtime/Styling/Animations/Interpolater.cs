@@ -123,7 +123,7 @@ namespace ReactUnity.Styling.Animations
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(float from, float to, float t, TimingFunction timingFunction)
         {
-            return timingFunction(from, to, t);
+            return timingFunction(t, from, to);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color Interpolate(Color from, Color to, float t, TimingFunction timingFunction)

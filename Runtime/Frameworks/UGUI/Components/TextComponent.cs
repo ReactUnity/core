@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Facebook.Yoga;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
@@ -10,6 +11,9 @@ namespace ReactUnity.UGUI
 {
     public class TextComponent : UGUIComponent, ITextComponent
     {
+        static TextInfo TextInfo = new CultureInfo("en-US", false).TextInfo;
+        static FontStyles ResetTextTransform = ~(FontStyles.UpperCase | FontStyles.LowerCase | FontStyles.SmallCaps);
+
         public TextMeshProUGUI Text { get; private set; }
 
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
@@ -22,6 +26,7 @@ namespace ReactUnity.UGUI
 
         private string TextInside;
         private bool TextSetByStyle = false;
+        private bool TextCapitalized = false;
 
         private FontReference font;
         public FontReference Font
@@ -40,15 +45,14 @@ namespace ReactUnity.UGUI
                         {
                             var asset = ft.TmpFontAsset;
                             Text.font = asset;
-                            RecalculateFontStyleAndWeight();
+                            var style = ComputedStyle;
+                            RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
                         }
                     });
                 }
             }
         }
 
-        public FontStyles FontStyles { get; set; }
-        public FontWeight FontWeight { get; set; }
 
         public TextComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
@@ -73,7 +77,7 @@ namespace ReactUnity.UGUI
 
         public void SetText(string text)
         {
-            if (!TextSetByStyle) Text.text = text;
+            if (!TextSetByStyle) Text.text = TextCapitalized ? TextInfo.ToTitleCase(text) : text;
             TextInside = text;
         }
 
@@ -108,9 +112,7 @@ namespace ReactUnity.UGUI
             Text.outlineColor = style.textStrokeColor;
 
             Font = style.fontFamily;
-            Text.fontStyle = FontStyles = style.fontStyle;
-            Text.fontWeight = FontWeight = style.fontWeight;
-            RecalculateFontStyleAndWeight();
+            RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
 
             var lineHeight = style.lineHeight;
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
@@ -118,16 +120,19 @@ namespace ReactUnity.UGUI
             Text.wordSpacing = style.wordSpacing * 100;
             Text.maxVisibleLines = style.maxLines;
 
-            if (style.content != null)
-            {
-                Text.text = style.content;
-                TextSetByStyle = true;
-            }
-            else if (TextSetByStyle)
-            {
-                Text.text = TextInside;
-                TextSetByStyle = false;
-            }
+
+            string finalText;
+
+            TextSetByStyle = style.content != null;
+            if (TextSetByStyle) finalText = style.content;
+            else finalText = TextInside;
+
+            TextCapitalized = style.textTransform == TextTransform.Capitalize;
+            if (TextCapitalized) finalText = TextInfo.ToTitleCase(finalText);
+            else finalText = TextInside;
+
+            if (Text.text != finalText) Text.text = finalText;
+
 
             var isLinked = style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
@@ -151,28 +156,36 @@ namespace ReactUnity.UGUI
                 LinkedTextWatcher.LinkedText.Destroy(false);
         }
 
-        private void RecalculateFontStyleAndWeight()
+        private void RecalculateFontStyleAndWeight(FontStyles styles = FontStyles.Normal, FontWeight weight = FontWeight.Regular, TextTransform transform = TextTransform.None)
         {
+            styles = styles & ResetTextTransform;
+            Text.fontStyle = styles;
+            Text.fontWeight = weight;
+
             if (!Text.font) return;
 
-            if (FontWeight == FontWeight.Bold)
+            if (weight == FontWeight.Bold)
             {
                 var boldWeight = Text.font.fontWeightTable[6];
 
-                var isItalic = FontStyles.HasFlag(FontStyles.Italic);
+                var isItalic = styles.HasFlag(FontStyles.Italic);
                 var wg = isItalic ? boldWeight.italicTypeface : boldWeight.regularTypeface;
 
                 if (wg)
                 {
-                    Text.fontWeight = FontWeight;
-                    Text.fontStyle = FontStyles;
+                    Text.fontWeight = weight;
+                    Text.fontStyle = styles;
                 }
                 else
                 {
                     Text.fontWeight = FontWeight.Regular;
-                    Text.fontStyle = FontStyles | FontStyles.Bold;
+                    Text.fontStyle = styles | FontStyles.Bold;
                 }
             }
+
+            if (transform == TextTransform.UpperCase) Text.fontStyle = styles | FontStyles.UpperCase;
+            else if (transform == TextTransform.LowerCase) Text.fontStyle = styles | FontStyles.LowerCase;
+            else if (transform == TextTransform.SmallCaps) Text.fontStyle = styles | FontStyles.SmallCaps;
         }
     }
 }

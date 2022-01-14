@@ -198,6 +198,7 @@ namespace ReactUnity.UGUI
             if (Component)
             {
                 Component.Translate = style.translate;
+                Component.TranslateZ = style.translateZ;
                 Component.PositionType = style.position;
             }
 

@@ -57,16 +57,20 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
             cmp.Style["width"] = 500;
+            cmp.Style["translate-z"] = 10;
             yield return null;
             yield return null;
             yield return AdvanceTime(0.1f);
             Assert.AreEqual(100, rt.rect.width);
+            Assert.AreEqual(0, rt.localPosition.z);
 
             yield return AdvanceTime(0.5f);
             Assert.AreEqual(180, rt.rect.width);
+            Assert.AreEqual(2, rt.localPosition.z, 0.1);
 
             yield return AdvanceTime(1f);
             Assert.AreEqual(500, rt.rect.width);
+            Assert.AreEqual(10, rt.localPosition.z);
         }
 
 
