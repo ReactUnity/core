@@ -80,5 +80,26 @@ namespace ReactUnity.Editor.Tests.Renderer
             Assert.IsNull(rt);
             Assert.AreEqual(Color.blue, cmp2.Element.resolvedStyle.backgroundColor);
         }
+
+        [EditorInjectableTest(@"
+            export default function App() {
+                const globals = useGlobals();
+                return <>
+                    <view className='class+1'>
+                        Hey
+                    </view>
+                </>;
+            }
+        ", @"
+            .class\+1 { color: red; }
+        ")]
+        public IEnumerator EscapedCharactersCanBeParsedCorrect()
+        {
+            yield return null;
+
+            var cmp = Q(".class\\+1") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Children.FirstOrDefault() as TextComponent<TextElement>;
+            Assert.AreEqual(Color.red, rt.Element.resolvedStyle.color);
+        }
     }
 }
