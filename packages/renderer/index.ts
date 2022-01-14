@@ -1,5 +1,6 @@
 export * from './src/helpers/dictionary-watcher';
 export * from './src/helpers/styled-components-helper';
+export * from './src/helpers/watcher';
 export * from './src/models/environment';
 export * from './src/models/generated';
 export * from './src/models/properties';

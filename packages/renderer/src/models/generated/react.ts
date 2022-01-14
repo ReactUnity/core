@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/01/2022 00:56:37
+// Generated 15/01/2022 01:23:51
 //
 /* eslint-disable */
 
@@ -2081,6 +2081,22 @@ export declare namespace ReactUnity {
       AddListener(cb: any): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface IWatchable<T = any> {
+      Value: T;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+    }
+    export class Watchable<T = any> {
+      constructor();
+      constructor(value: T);
+      Value: T;
+      Change(): void;
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
