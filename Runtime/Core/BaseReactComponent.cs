@@ -461,28 +461,28 @@ namespace ReactUnity
 
         public bool Matches(string query)
         {
-            var tree = new RuleTree<string>(Context.StyleParser);
+            var tree = new RuleTree<string>();
             tree.AddSelector(query);
             return tree.AnyMatches(this, Context.Host);
         }
 
         public IReactComponent Closest(string query)
         {
-            var tree = new RuleTree<string>(Context.StyleParser);
+            var tree = new RuleTree<string>();
             tree.AddSelector(query);
             return tree.Closest(this, Context.Host);
         }
 
         public IReactComponent QuerySelector(string query)
         {
-            var tree = new RuleTree<string>(Context.StyleParser);
+            var tree = new RuleTree<string>();
             tree.AddSelector(query);
             return tree.GetMatchingChild(this);
         }
 
         public List<IReactComponent> QuerySelectorAll(string query)
         {
-            var tree = new RuleTree<string>(Context.StyleParser);
+            var tree = new RuleTree<string>();
             tree.AddSelector(query);
             return tree.GetMatchingChildren(this);
         }

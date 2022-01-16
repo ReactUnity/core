@@ -20,7 +20,7 @@ namespace ReactUnity.Styling
             Context = context;
             Parser = Context.StyleParser;
             MediaProvider = Context.MediaProvider;
-            StyleTree = new StyleTree(Parser);
+            StyleTree = new StyleTree();
         }
 
         public void ResolveStyle(IReactComponent scope = null)

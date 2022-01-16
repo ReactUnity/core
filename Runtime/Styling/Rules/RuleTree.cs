@@ -13,8 +13,6 @@ namespace ReactUnity.Styling.Rules
 
     public class StyleTree : RuleTree<StyleData>
     {
-        public StyleTree(StylesheetParser parser) : base(parser) { }
-
         public List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> AddStyle
             (StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null, IReactComponent scope = null)
         {
@@ -86,13 +84,6 @@ namespace ReactUnity.Styling.Rules
         public List<RuleTreeNode<T>> LeafNodes = new List<RuleTreeNode<T>>();
         public List<RuleTreeNode<T>> BeforeNodes = new List<RuleTreeNode<T>>();
         public List<RuleTreeNode<T>> AfterNodes = new List<RuleTreeNode<T>>();
-        public StylesheetParser Parser { get; private set; }
-
-        public RuleTree(StylesheetParser parser)
-        {
-            Parser = parser;
-            Tree = this;
-        }
 
         public IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
         {
@@ -186,11 +177,13 @@ namespace ReactUnity.Styling.Rules
                 var selector = RuleHelpers.NormalizeSelector(split);
                 var leaf = AddChildCascading("** " + selector, mql, scope, importanceOffset);
 
+                if (leaf == null) continue;
+
                 added.Add(leaf);
 
                 var list = LeafNodes;
-                if (selector.EndsWith(":before")) list = BeforeNodes;
-                if (selector.EndsWith(":after")) list = AfterNodes;
+                if (leaf.PseudoType == RulePseudoType.Before) list = BeforeNodes;
+                else if (leaf.PseudoType == RulePseudoType.After) list = AfterNodes;
 
                 list.InsertIntoSortedList(leaf);
             }

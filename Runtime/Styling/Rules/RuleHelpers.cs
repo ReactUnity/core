@@ -77,8 +77,8 @@ namespace ReactUnity.Styling.Rules
                     }
                     else if (type == RuleSelectorPartType.Tag)
                     {
-                        if (nm == "_after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
-                        else if (nm == "_before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
+                        if (nm == "_after") list.Add(RuleSelectorPart.After);
+                        else if (nm == "_before") list.Add(RuleSelectorPart.Before);
                         else list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated });
                     }
                     else
@@ -95,7 +95,7 @@ namespace ReactUnity.Styling.Rules
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
                     }
                 }
-                else if (acc.Length == 0 && type == RuleSelectorPartType.Special)
+                else if (acc.Length == 0 && type == RuleSelectorPartType.Special && nextType == RuleSelectorPartType.Special)
                 {
                     acc.Append("_");
                     type = RuleSelectorPartType.Tag;
@@ -191,37 +191,34 @@ namespace ReactUnity.Styling.Rules
                     prev = '\0';
                     continue;
                 }
-
-                if (ch == '\\')
+                else if (ch == '\\')
                 {
                     prev = ch;
                     continue;
                 }
-
-                if (prev != '\\')
+                else if (ch == '>' || ch == '+' || ch == '~')
                 {
-                    switch (ch)
-                    {
-                        case '>':
-                        case '+':
-                        case '~':
-                            spaced.Append(' ');
-                            spaced.Append(ch);
-                            spaced.Append(' ');
-                            break;
-                        default:
-                            if (prev == ':' && ch == ':') spaced.Append(" ::");
-                            else spaced.Append(ch);
-                            break;
-                    }
+                    spaced.Append(' ');
+                    spaced.Append(ch);
+                    spaced.Append(' ');
+                    prev = '\0';
+                    continue;
+                }
+                else if (prev == ':' && ch == ':')
+                {
+                    spaced.Append(" ::");
+                    prev = '\0';
+                }
+                else if (ch == ':')
+                {
+                    prev = ch;
                 }
                 else
                 {
-                    if (prev == ':' && ch == ':') spaced.Append(" ::");
-                    else spaced.Append(ch);
+                    if (prev == ':') spaced.Append(prev);
+                    spaced.Append(ch);
+                    prev = ch;
                 }
-
-                prev = ch;
             }
 
             return NthChildRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), "($1+$2)");

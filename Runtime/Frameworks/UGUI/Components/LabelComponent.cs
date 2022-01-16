@@ -45,7 +45,7 @@ namespace ReactUnity.UGUI
                 if (forQuery is IReactComponent cmp) target = cmp;
                 else
                 {
-                    var tree = new RuleTree<string>(Context.StyleParser);
+                    var tree = new RuleTree<string>();
                     tree.AddSelector(Convert.ToString(forQuery));
                     target = tree.GetMatchingChild(Context.Host, this);
                 }

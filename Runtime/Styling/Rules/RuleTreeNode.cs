@@ -5,7 +5,6 @@ namespace ReactUnity.Styling.Rules
 {
     public class RuleTreeNode<T> : IComparable<RuleTreeNode<T>>
     {
-        public RuleTree<T> Tree;
         public RuleTreeNode<T> Parent;
         public string Selector;
         public List<RuleSelectorPart> ParsedSelector;
@@ -19,6 +18,33 @@ namespace ReactUnity.Styling.Rules
         public IReactComponent Scope { get; private set; }
         private int RawSpecifity { get; set; } = 0;
         public int Specifity { get; private set; }
+
+        static RuleTreeNode<T> CreateChildNode(RuleTreeNode<T> parent, MediaQueryList mq, IReactComponent scope, RulePseudoType pseudo)
+        {
+            if (parent.Children == null) parent.Children = new LinkedList<RuleTreeNode<T>>();
+
+            var child = new RuleTreeNode<T>();
+            child.Parent = parent;
+            child.MediaQuery = mq;
+            child.Scope = scope;
+            child.PseudoType = pseudo;
+
+            if (pseudo == RulePseudoType.Before)
+            {
+                child.RelationType = RuleRelationType.Pseudo;
+                child.Selector = "::before";
+                child.ParsedSelector = new List<RuleSelectorPart> { RuleSelectorPart.Before };
+            }
+            else if (pseudo == RulePseudoType.After)
+            {
+                child.RelationType = RuleRelationType.Pseudo;
+                child.Selector = "::after";
+                child.ParsedSelector = new List<RuleSelectorPart> { RuleSelectorPart.After };
+            }
+
+            parent.Children.AddLast(child);
+            return child;
+        }
 
         private void RecalculateSpecificity(int importanceOffset, bool important)
         {
@@ -110,6 +136,8 @@ namespace ReactUnity.Styling.Rules
                     RuleRelationType.Parent;
             }
 
+            var pseudoType = RulePseudoType.None;
+
             if (!(string.IsNullOrWhiteSpace(selectorSelf) || selectorSelf == "**"))
             {
                 Selector = selectorSelf;
@@ -122,9 +150,8 @@ namespace ReactUnity.Styling.Rules
                         var sel = ParsedSelector[i];
                         if (sel.Type == RuleSelectorPartType.After || sel.Type == RuleSelectorPartType.Before)
                         {
-                            RelationType = RuleRelationType.Pseudo;
-                            if (sel.Type == RuleSelectorPartType.After) PseudoType = RulePseudoType.After;
-                            else if (sel.Type == RuleSelectorPartType.Before) PseudoType = RulePseudoType.Before;
+                            if (sel.Type == RuleSelectorPartType.After) pseudoType = RulePseudoType.After;
+                            else if (sel.Type == RuleSelectorPartType.Before) pseudoType = RulePseudoType.Before;
                             break;
                         }
                     }
@@ -134,17 +161,29 @@ namespace ReactUnity.Styling.Rules
 
             if (!hasChild)
             {
+                if (pseudoType != RulePseudoType.None)
+                {
+
+                    if (ParsedSelector.Count > 1)
+                    {
+                        var pseudoChild = CreateChildNode(this, mq, scope, pseudoType);
+                        pseudoChild.RecalculateSpecificity(importanceOffset, important);
+                        return pseudoChild;
+                    }
+                    else
+                    {
+                        PseudoType = pseudoType;
+                        return this;
+                    }
+                }
+
+
                 return this;
             }
             else
             {
-                if (Children == null) Children = new LinkedList<RuleTreeNode<T>>();
-
-                var child = new RuleTreeNode<T>();
-                Children.AddLast(child);
-                child.Parent = this;
-                child.MediaQuery = mq;
-                child.Scope = scope;
+                if (pseudoType != RulePseudoType.None) return null;
+                var child = CreateChildNode(this, mq, scope, RulePseudoType.None);
                 return child.AddChildCascading(selectorOther, mq, scope, importanceOffset);
             }
         }
@@ -305,6 +344,8 @@ namespace ReactUnity.Styling.Rules
     public class RuleSelectorPart : IComparable<RuleSelectorPart>
     {
         public static RuleSelectorPart Important = new RuleSelectorPart { Type = RuleSelectorPartType.Important };
+        public static RuleSelectorPart Before = new RuleSelectorPart { Type = RuleSelectorPartType.Before };
+        public static RuleSelectorPart After = new RuleSelectorPart { Type = RuleSelectorPartType.After };
 
         public bool Negated = false;
         public RuleSelectorPartType Type = RuleSelectorPartType.None;
