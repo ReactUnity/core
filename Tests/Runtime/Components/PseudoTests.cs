@@ -35,16 +35,16 @@ namespace ReactUnity.Tests
             yield return null;
 
             Context.InsertStyle(@"
-                .byy .hey:before {
-                    content: 'foo';
-                }
-
                 .byy .hey::before {
                     color: red;
                 }
 
                 .byy .hey:after {
                     color: blue;
+                }
+
+                .byy .hey:before {
+                    content: 'foo';
                 }
 
                 .byy .hey::after {

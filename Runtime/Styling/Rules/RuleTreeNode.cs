@@ -173,6 +173,7 @@ namespace ReactUnity.Styling.Rules
                     else
                     {
                         PseudoType = pseudoType;
+                        RelationType = RuleRelationType.Pseudo;
                         return this;
                     }
                 }
