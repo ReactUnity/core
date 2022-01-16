@@ -1,3 +1,7 @@
+#if UNITY_WEBGL && !UNITY_EDITOR
+#define REACT_WEBCURSOR
+#endif
+
 using System.Collections.Generic;
 using ReactUnity.Types;
 using UnityEngine;
@@ -6,6 +10,48 @@ namespace ReactUnity.Helpers
 {
     public class CursorAPI
     {
+#if REACT_WEBCURSOR
+        static HashSet<string> WebGLCursorNames = new HashSet<string>()
+        {
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing",
+        };
+#endif
+
         CursorList Current;
         ReactContext Context;
         List<IReactComponent> Components = new List<IReactComponent>();
@@ -48,7 +94,7 @@ namespace ReactUnity.Helpers
             if (Current == cursor) return;
             Current = cursor;
             UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if REACT_WEBCURSOR
             setWebGLCursor("");
 #endif
             TrySetCursor(cursor, 0);
@@ -68,7 +114,7 @@ namespace ReactUnity.Helpers
                     if (Current != cursor) return;
 
                     if (tx) UnityEngine.Cursor.SetCursor(tx, item.Offset, CursorMode.Auto);
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if REACT_WEBCURSOR
                     else if (item.Image.Type == AssetReferenceType.Url) setWebGLCursor(item.Definition);
 #endif
                     else TrySetCursor(cursor, ind + 1);
@@ -76,13 +122,20 @@ namespace ReactUnity.Helpers
             }
             else if (!string.IsNullOrWhiteSpace(item.Name))
             {
+#if REACT_WEBCURSOR
+                if (WebGLCursorNames.Contains(item.Name)) {
+                    setWebGLCursor(item.Name);
+                    return;
+                }
+#endif
+
                 var set = Context.CursorSet;
                 var ct = set.Cursors?.GetValueOrDefault(item.Name);
 
                 if (ct != null) UnityEngine.Cursor.SetCursor(ct.Cursor, ct.Hotspot, CursorMode.Auto);
                 else
                 {
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if REACT_WEBCURSOR
                     setWebGLCursor(item.Name);
 #else
                     TrySetCursor(cursor, ind + 1);
@@ -92,7 +145,7 @@ namespace ReactUnity.Helpers
             else TrySetCursor(cursor, ind + 1);
         }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if REACT_WEBCURSOR
         [System.Runtime.InteropServices.DllImport("__Internal")]
         private static extern void setWebGLCursor(string cursor);
 #endif
