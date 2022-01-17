@@ -38,6 +38,7 @@ const packageJsonPath = path.join(reactDir, 'package.json');
 
 const unityScaffold = path.join(__dirname, 'scaffold');
 const reactScaffold = path.join(__dirname, 'scaffold/react');
+const reactScaffoldNodeModules = path.join(reactScaffold, 'node_modules');
 
 async function isDirEmpty(dirname) {
   const files = await fse.readdir(dirname);
@@ -54,7 +55,7 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
   }
 
   // Copy project template
-  await fse.copy(scaffoldDir, targetDir, { recursive: true, filter: src => !src.includes('node_modules') });
+  await fse.copy(scaffoldDir, targetDir, { recursive: true, filter: src => !src.includes(reactScaffoldNodeModules) });
 }
 
 async function runOpenUPM() {
