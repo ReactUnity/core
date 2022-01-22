@@ -386,6 +386,19 @@
             Gets or sets the V8 runtime's document settings.
             </summary>
         </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.EnableInterruptPropagation">
+            <summary>
+            Enables or disables interrupt propagation in the V8 runtime.
+            </summary>
+            <remarks>
+            By default, when nested script execution is interrupted via
+            <see cref="M:Microsoft.ClearScript.ScriptEngine.Interrupt"/>, an instance of
+            <see cref="T:Microsoft.ClearScript.ScriptInterruptedException"/>, if not handled by the host, is wrapped and
+            delivered to the parent script frame as a normal exception that JavaScript code can
+            catch. Setting this property to <c>true</c> causes the V8 runtime to remain in the
+            interrupted state until its outermost script frame has been processed.
+            </remarks>
+        </member>
         <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine">
             <summary>
             Creates a new V8 script engine instance.
@@ -1184,6 +1197,18 @@
             </para>
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.EnableRuntimeInterruptPropagation">
+            <summary>
+            Enables or disables interrupt propagation in the V8 runtime.
+            </summary>
+            <remarks>
+            By default, when nested script execution is interrupted via <see cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Interrupt"/>, an
+            instance of <see cref="T:Microsoft.ClearScript.ScriptInterruptedException"/>, if not handled by the host, is
+            wrapped and delivered to the parent script frame as a normal exception that JavaScript
+            code can catch. Setting this property to <c>true</c> causes the V8 runtime to remain in
+            the interrupted state until its outermost script frame has been processed.
+            </remarks>
+        </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String)">
             <summary>
             Creates a compiled script.
@@ -1431,6 +1456,15 @@
             when the result value is not needed.
             </remarks>
         </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CancelInterrupt">
+            <summary>
+            Cancels any pending request to interrupt script execution.
+            </summary>
+            <remarks>
+            This method can be called safely from any thread.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Interrupt"/>
+        </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.GetRuntimeHeapInfo">
             <summary>
             Returns memory usage information for the V8 runtime.
@@ -1501,12 +1535,23 @@
         </member>
         <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.Script">
             <summary>
-            Allows the host to access script resources directly.
+            Allows the host to access script resources dynamically.
             </summary>
             <remarks>
             The value of this property is an object that is bound to the script engine's root
             namespace. It dynamically supports properties and methods that correspond to global
             script objects and functions.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.Global">
+            <summary>
+            Allows the host to access script resources.
+            </summary>
+            <remarks>
+            The value of this property is an object that is bound to the script engine's root
+            namespace. It allows you to access global script resources via the
+            <see cref="T:Microsoft.ClearScript.ScriptObject"/> class interface. Doing so is likely to perform better than
+            dynamic access via <see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.Script"/>.
             </remarks>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.ExecuteCommand(System.String)">
@@ -1546,6 +1591,7 @@
             <remarks>
             This method can be called safely from any thread.
             </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.CancelInterrupt"/>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CollectGarbage(System.Boolean)">
             <summary>

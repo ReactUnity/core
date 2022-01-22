@@ -2720,12 +2720,23 @@
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.Script">
             <summary>
-            Allows the host to access script resources directly.
+            Allows the host to access script resources dynamically.
             </summary>
             <remarks>
             The value of this property is an object that is bound to the script engine's root
             namespace. It dynamically supports properties and methods that correspond to global
             script objects and functions.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.Global">
+            <summary>
+            Allows the host to access script resources.
+            </summary>
+            <remarks>
+            The value of this property is an object that is bound to the script engine's root
+            namespace. It allows you to access global script resources via the
+            <see cref="T:Microsoft.ClearScript.ScriptObject"/> class interface. Doing so is likely to perform better than
+            dynamic access via <see cref="P:Microsoft.ClearScript.ScriptEngine.Script"/>.
             </remarks>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.DocumentSettings">
