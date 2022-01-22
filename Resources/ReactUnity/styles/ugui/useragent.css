@@ -56,19 +56,23 @@ input {
   pointer-events: all;
 }
 
+input::placeholder {
+  opacity: 0.6;
+}
+
 scroll {
   overflow: scroll;
   flex-shrink: 1;
 }
 
-scroll _scrollbar {
+scroll::scrollbar {
   background-color: rgb(210, 210, 210);
   appearance: button;
   width: 12px;
   height: 12px;
 }
 
-scroll _scrollbar-thumb {
+scroll::scrollbar-thumb {
   background-color: rgba(170, 170, 170);
 }
 

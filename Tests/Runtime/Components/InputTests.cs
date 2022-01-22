@@ -107,5 +107,24 @@ namespace ReactUnity.Tests
             // yield return null;
             // list.AssertListExhaustive("return");
         }
+
+
+
+        [ReactInjectableTest(BaseScript)]
+        public IEnumerator PlaceholderWorks()
+        {
+            yield return null;
+            var placeholder = InputEl.PlaceholderComponent;
+            Assert.IsEmpty(placeholder.TextContent);
+
+            InputEl.SetProperty("placeholder", "test_ph");
+            Assert.AreEqual("test_ph", placeholder.TextContent);
+
+            InsertStyle("input::placeholder { color: red; content: 'ph_test'; }");
+            yield return null;
+
+            Assert.AreEqual("ph_test", placeholder.TextContent);
+            Assert.AreEqual(Color.red, placeholder.Text.color);
+        }
     }
 }

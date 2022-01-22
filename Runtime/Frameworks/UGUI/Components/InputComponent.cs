@@ -49,6 +49,7 @@ namespace ReactUnity.UGUI
             set
             {
                 placeholder = value;
+                PlaceholderComponent.SetText(placeholder);
                 MarkStyleUpdateWithSiblings(true);
             }
         }
@@ -56,9 +57,9 @@ namespace ReactUnity.UGUI
         public bool PlaceholderShown => string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Placeholder);
 
         public TMP_InputField InputField { get; private set; }
-        private ContainerComponent TextViewport { get; set; }
-        private TextComponent TextComponent { get; set; }
-        private TextComponent PlaceholderCmp { get; set; }
+        public ContainerComponent TextViewport { get; set; }
+        public TextComponent TextComponent { get; set; }
+        public TextComponent PlaceholderComponent { get; set; }
 
         public InputComponent(string text, UGUIContext context) : base(context, "input")
         {
@@ -76,11 +77,20 @@ namespace ReactUnity.UGUI
             TextViewport.AddComponent<RectMask2D>();
 
 
-            PlaceholderCmp = new TextComponent("", context, "_placeholder");
-            PlaceholderCmp.IsPseudoElement = true;
-            PlaceholderCmp.GameObject.name = "[Placeholder]";
-            PlaceholderCmp.Layout.PositionType = YogaPositionType.Absolute;
-            PlaceholderCmp.SetParent(TextViewport);
+            PlaceholderComponent = new TextComponent("", context, "_placeholder");
+            PlaceholderComponent.IsPseudoElement = true;
+            PlaceholderComponent.GameObject.name = "[Placeholder]";
+            PlaceholderComponent.Layout.PositionType = YogaPositionType.Absolute;
+            PlaceholderComponent.SetParent(TextViewport);
+            PlaceholderComponent.Component.enabled = false;
+            var phRect = PlaceholderComponent.RectTransform;
+            phRect.pivot = Vector2.one / 2;
+            phRect.anchorMin = Vector2.zero;
+            phRect.anchorMax = Vector2.one;
+            phRect.sizeDelta = Vector2.zero;
+            phRect.offsetMin = Vector2.zero;
+            phRect.offsetMax = Vector2.zero;
+
 
 
             TextComponent = new TextComponent(text, context, "_value");
@@ -99,7 +109,7 @@ namespace ReactUnity.UGUI
 
             InputField.textViewport = TextViewport.RectTransform;
             InputField.textComponent = TextComponent.Text;
-            InputField.placeholder = PlaceholderCmp.Text;
+            InputField.placeholder = PlaceholderComponent.Text;
             InputField.fontAsset = TextComponent.Text.font;
 
             GameObject.SetActive(true);
@@ -115,16 +125,6 @@ namespace ReactUnity.UGUI
         {
             base.ApplyLayoutStylesSelf();
             TextComponent.Measurer.enabled = Layout.Width.Unit == YogaUnit.Auto;
-        }
-
-        public override void ResolveStyle(bool recursive = false)
-        {
-            if (Destroyed) return;
-            base.ResolveStyle(recursive);
-
-            var c = TextComponent.ComputedStyle.color;
-            PlaceholderCmp.Style["color"] = new Color(c.r, c.g, c.b, c.a * 0.5f);
-            PlaceholderCmp.ResolveStyle();
         }
 
         protected override void ApplyStylesSelf()
