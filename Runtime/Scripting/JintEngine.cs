@@ -26,7 +26,7 @@ namespace ReactUnity.Scripting
         {
             Engine = new Engine(opt => {
                 opt.AllowClr(
-                    typeof(Convert).Assembly,
+                    typeof(object).Assembly,
 #if UNITY_EDITOR
                     typeof(UnityEditor.EditorWindow).Assembly,
                     typeof(GUILayout).Assembly,
@@ -42,6 +42,8 @@ namespace ReactUnity.Scripting
                 });
 
                 opt.DebugMode(debug);
+                opt.Interop.AllowGetType = true;
+                opt.Interop.AllowSystemReflection = true;
 
                 opt.SetTypeConverter(e => new JintTypeConverter(e));
             });

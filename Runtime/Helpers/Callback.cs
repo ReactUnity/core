@@ -13,6 +13,7 @@ using System.Linq;
 using Jint;
 using Jint.Native;
 using Jint.Native.Function;
+using Jint.Native.Object;
 #endif
 
 namespace ReactUnity.Helpers
@@ -29,14 +30,12 @@ namespace ReactUnity.Helpers
             if (value == null) return null;
             if (value is string s)
             {
-                context.Script.Engine.SetValue("__thisArg", thisVal);
-                var fn = context.Script.EvaluateScript(
-                    "(function(ts) { delete __thisArg; return (function(event, sender) {\n" + s + "\n}).bind(ts); })(__thisArg)");
-                return new Callback(fn);
+                return context.Script.CreateEventCallback(s, thisVal);
             }
             if (value is Callback cb) return cb;
 #if REACT_JINT
             if (value is Func<JsValue, JsValue[], JsValue> jv) return new Callback(jv, context.Script.Engine.NativeEngine as Engine);
+            if (value is ObjectInstance v) return new Callback(v);
 #endif
             return new Callback(value);
         }
@@ -48,9 +47,10 @@ namespace ReactUnity.Helpers
             this.Engine = engine;
         }
 
-        public Callback(FunctionInstance callback)
+        public Callback(ObjectInstance callback)
         {
             this.callback = callback;
+            this.Engine = callback.Engine;
         }
 #endif
 
@@ -74,10 +74,10 @@ namespace ReactUnity.Helpers
                 return c.Call(args);
             }
 #if REACT_JINT
-            else if (callback is JsValue v)
+            else if (callback is ObjectInstance v)
             {
-                var fi = v.As<FunctionInstance>();
-                return fi.Invoke(args.Select(x => JsValue.FromObject(fi.Engine, x)).ToArray());
+                if (v.IsNull() || v.IsUndefined()) return null;
+                return Engine.Invoke(v, args);
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
             {

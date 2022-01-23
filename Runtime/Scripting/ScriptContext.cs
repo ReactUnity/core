@@ -85,6 +85,15 @@ namespace ReactUnity.Scripting
             return Engine.Evaluate(code, fileName);
         }
 
+        public Callback CreateEventCallback(string code, object thisVal)
+        {
+            Engine.SetValue("__thisArg", thisVal);
+            var fn = EvaluateScript(
+                "(function(ts) { delete __thisArg; return (function(event, sender) {\n" + code + "\n}).bind(ts); })(__thisArg)");
+
+            return Callback.From(fn, Context, thisVal);
+        }
+
         void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
             engine = EngineFactory.Create(Context, debug, awaitDebugger);

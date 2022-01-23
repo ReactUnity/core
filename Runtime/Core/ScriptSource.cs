@@ -167,7 +167,9 @@ namespace ReactUnity
             }
 #endif
 
+#if REACT_SHOULD_WATCH
             var watchFile = false;
+#endif
             var filePath = "";
 
             switch (Type)
@@ -185,7 +187,9 @@ namespace ReactUnity
                     break;
                 case ScriptSourceType.File:
 #if UNITY_EDITOR || !REACT_DISABLE_FILE
+#if REACT_SHOULD_WATCH
                     watchFile = true;
+#endif
                     filePath = StripHashAndSearch(SourcePath);
                     callback(File.ReadAllText(filePath));
                     break;
