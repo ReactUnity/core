@@ -55,7 +55,6 @@ namespace ReactUnity.Scripting
 
             SetValue("host", new ExtendedHostFunctions());
 
-#if UNITY_EDITOR
             if (debug && awaitDebugger)
             {
                 bool connected = false;
@@ -81,7 +80,6 @@ namespace ReactUnity.Scripting
                     }
                 }
             }
-#endif
         }
 
         public object Evaluate(string code, string fileName = null)
