@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2c3fc96e30a7a04db6f3ed78dd2e4d7
+guid: c5aaba4fb210f6247935ae466f89b5ce
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -9,7 +9,7 @@ PluginImporter:
   - '!REACT_DISABLE_JINT'
   isPreloaded: 0
   isOverridable: 1
-  isExplicitlyReferenced: 0
+  isExplicitlyReferenced: 1
   validateReferences: 1
   platformData:
   - first:
@@ -28,7 +28,8 @@ PluginImporter:
       Android: Android
     second:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: ARMv7
   - first:
       Any: 
     second:
@@ -39,27 +40,33 @@ PluginImporter:
     second:
       enabled: 1
       settings:
+        CPU: AnyCPU
         DefaultValueInitialized: true
+        OS: AnyOS
   - first:
       Standalone: Linux64
     second:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: AnyCPU
   - first:
       Standalone: OSXUniversal
     second:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: AnyCPU
   - first:
       Standalone: Win
     second:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: x86
   - first:
       Standalone: Win64
     second:
       enabled: 1
-      settings: {}
+      settings:
+        CPU: x86_64
   - first:
       WebGL: WebGL
     second:

@@ -11,8 +11,19 @@
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ClearScript.Core.dll",
+        "ClearScript.V8.dll",
+        "Esprima.dll",
+        "ExCSS.dll",
+        "Jint.dll",
+        "websocket-sharp.dll",
+        "RU.System.Buffers.dll",
+        "RU.System.Numerics.Vectors.dll",
+        "RU.System.Runtime.CompilerServices.Unsafe.dll",
+        "RU.System.Memory.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [
