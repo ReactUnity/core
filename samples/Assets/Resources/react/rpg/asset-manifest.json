@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/index.js",
+    "static/media/bowie-knife.png": "/static/media/bowie-knife.png",
+    "static/media/stiletto.png": "/static/media/stiletto.png",
+    "static/media/ak47.png": "/static/media/ak47.png",
+    "static/media/glock.png": "/static/media/glock.png"
+  },
+  "entrypoints": [
+    "index.js"
+  ]
+}
