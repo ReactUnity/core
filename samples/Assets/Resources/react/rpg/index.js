@@ -8302,7 +8302,7 @@ module.exports = __webpack_require__.p + "static/media/stiletto.png";
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -8316,17 +8316,17 @@ module.exports = __webpack_require__.p + "static/media/stiletto.png";
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -8339,7 +8339,7 @@ module.exports = __webpack_require__.p + "static/media/stiletto.png";
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -8351,12 +8351,12 @@ module.exports = __webpack_require__.p + "static/media/stiletto.png";
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -8365,12 +8365,12 @@ module.exports = __webpack_require__.p + "static/media/stiletto.png";
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
 /******/ 		__webpack_require__.p = "/";
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -8816,15 +8816,15 @@ var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTrans
 var cjs_ruleSet_1_rules_0_oneOf_5_use_3_src = __webpack_require__(196);
 ;// CONCATENATED MODULE: ./src/index.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var options = {};
 
@@ -8832,7 +8832,7 @@ options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
 
       options.insert = insertBySelector_default().bind(null, "head");
-
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -9598,7 +9598,7 @@ var connect_excluded = (/* unused pure expression or super */ null && (["pure", 
   selectorFactory, which has the signature:
 
     (dispatch, options) => (nextState, nextOwnProps) => nextFinalProps
-
+  
   connect passes its args to connectAdvanced as options, which will in turn pass them to
   selectorFactory each time a Connect component instance is instantiated or hot reloaded.
 
@@ -13801,7 +13801,7 @@ function autoMergeLevel1_defineProperty(obj, key, value) {
   return obj;
 }
 /*
-  autoMergeLevel1:
+  autoMergeLevel1: 
     - merges 1 level of substate
     - skips substate if already modified
 */
@@ -14250,15 +14250,15 @@ var defaultItems=[{image:glock,slot:4},{image:stiletto,slot:0},{image:ak47,slot:
 var index_module = __webpack_require__(301);
 ;// CONCATENATED MODULE: ./src/inventory/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var index_module_options = {};
 
@@ -14266,7 +14266,7 @@ index_module_options.styleTagTransform = (styleTagTransform_default());
 index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 index_module_options.domAPI = (styleDomAPI_default());
 index_module_options.insertStyleElement = (insertStyleElement_default());
 
