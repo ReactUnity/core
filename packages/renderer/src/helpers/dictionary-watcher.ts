@@ -43,7 +43,7 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
   const ctx = React.createContext<RecordType>(undefined);
   if (displayName) ctx.displayName = displayName;
 
-  const Provider = function Provider({ children }: { children?: React.ReactNode }) {
+  const Provider = function GlobalsProvider({ children }: { children?: React.ReactNode }) {
     const [render, setRender] = React.useState(0);
 
     React.useLayoutEffect(() => {
