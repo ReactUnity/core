@@ -657,6 +657,8 @@ module.exports = function (webpackEnv) {
   if (fs.existsSync(paths.webpackSetup)) {
     const customSetup = require(paths.webpackSetup);
 
+    console.log(`Using custom webpack config found in '${paths.webpackSetup}'`);
+
     if (typeof customSetup !== 'function') {
       throw new Error('Custom webpack config file must export a function that accepts `env` as first parameter and `defaultConfig` as second');
     }

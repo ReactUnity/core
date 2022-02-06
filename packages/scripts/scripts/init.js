@@ -312,13 +312,13 @@ module.exports = function (
     );
   }
 
-  // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-unity-scripts
+  // Install react and @reactunity/renderer for backward compatibility with old CRA cli
+  // which doesn't install react and @reactunity/renderer along with react-unity-scripts
   if (!isReactInstalled(appPackage)) {
-    args = args.concat(['react', 'react-dom']);
+    args = args.concat(['react', '@reactunity/renderer']);
   }
 
-  // Install template dependencies, and react and react-dom if missing.
+  // Install template dependencies, and react and @reactunity/renderer if missing.
   if ((!isReactInstalled(appPackage) || templateName) && args.length > 1) {
     console.log();
     console.log(`Installing template dependencies using ${command}...`);
@@ -412,6 +412,6 @@ function isReactInstalled(appPackage) {
 
   return (
     typeof dependencies.react !== 'undefined' &&
-    typeof dependencies['react-dom'] !== 'undefined'
+    typeof dependencies['@reactunity/renderer'] !== 'undefined'
   );
 }
