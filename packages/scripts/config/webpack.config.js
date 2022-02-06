@@ -82,7 +82,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv) {
+const baseConfigFactory = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const shouldExtractCss = isEnvProduction && extractCss;
@@ -649,4 +649,20 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
+};
+
+module.exports = function (webpackEnv) {
+  const baseConfig = baseConfigFactory(webpackEnv);
+
+  if (fs.existsSync(paths.webpackSetup)) {
+    const customSetup = require(paths.webpackSetup);
+
+    if (typeof customSetup !== 'function') {
+      throw new Error('Custom webpack config file must export a function that accepts `env` as first parameter and `defaultConfig` as second');
+    }
+
+    return customSetup(webpackEnv, baseConfig);
+  }
+
+  return baseConfig;
 };
