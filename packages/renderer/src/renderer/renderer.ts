@@ -1,4 +1,4 @@
-import type * as React from 'react';
+import * as React from 'react';
 import { createElement } from 'react';
 import * as Reconciler from 'react-reconciler';
 import {
@@ -8,8 +8,20 @@ import {
 import { DefaultView } from '../views/default-view';
 import { diffProperties, styleStringSymbol } from './diffing';
 
+const LegacyRoot = 1;
+const ConcurrentRoot = 1;
+
 const hostContext = {};
 const childContext = {};
+const DiscreteEventPriority = 0b00001;
+const ContinuousEventPriority = 0b00100;
+const DefaultEventPriority = 0b10000;
+
+const eventPriorities = {
+  discrete: DiscreteEventPriority,
+  continuous: ContinuousEventPriority,
+  default: DefaultEventPriority,
+};
 
 const textTypes = {
   text: true,
@@ -32,87 +44,56 @@ function getAllowedProps(props, type) {
   return rest;
 }
 
-const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any } = {
-  getRootHostContext(rootContainerInstance) { return hostContext; },
-  getChildHostContext(parentHostContext, type, rootContainerInstance) { return childContext; },
-  getPublicInstance(instance: NativeInstance | NativeTextInstance) { return instance; },
-  prepareForCommit(containerInfo) { return null; },
-  resetAfterCommit(containerInfo) { return null; },
-  clearContainer() { return null; },
+const hostConfig: Config & { [key: string]: any } = {
+  getRootHostContext: () => hostContext,
+  getChildHostContext: () => childContext,
+  getPublicInstance: (instance: NativeInstance | NativeTextInstance) => instance,
+
   now: Date.now,
+
+  supportsMutation: true,
   supportsHydration: false,
   supportsPersistence: false,
-  isPrimaryRenderer: true,
+  supportsMicrotasks: false,
+  supportsTestSelectors: false,
 
-  createInstance(
-    type,
-    props,
-    rootContainerInstance,
-    hostContext,
-    internalInstanceHandle,
-  ) {
+  isPrimaryRenderer: true,
+  warnsIfNotActing: true,
+
+  prepareForCommit: () => null,
+  resetAfterCommit: () => { },
+  clearContainer: () => { },
+  shouldDeprioritizeSubtree: () => false,
+
+  createInstance(type, props, rootContainerInstance) {
     const aProps = getAllowedProps(props, type);
     const children = aProps.children || null;
     delete aProps.children;
     return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
 
-  createTextInstance(
-    text,
-    rootContainerInstance,
-    hostContext,
-    internalInstanceHandle,
-  ) {
+  createTextInstance(text, rootContainerInstance) {
     return UnityBridge.createText(text, rootContainerInstance);
   },
 
   appendInitialChild(parent, child) { UnityBridge.appendChild(parent, child); },
-
-  finalizeInitialChildren(
-    instance,
-    type,
-    props,
-    rootContainerInstance,
-    hostContext,
-  ) {
-    return false;
-  },
-
-  commitMount(instance, type, newProps, internalInstanceHandle) { },
-
-  shouldSetTextContent(type, props) { return textTypes[type]; },
-
-  shouldDeprioritizeSubtree(type, props) { return false; },
+  finalizeInitialChildren: () => false,
+  commitMount: () => { },
+  shouldSetTextContent(type) { return textTypes[type]; },
 
   // -------------------
   //     Mutation
   // -------------------
 
-  supportsMutation: true,
-
-  prepareUpdate(
-    instance,
-    type,
-    oldProps,
-    newProps,
-    rootContainerInstance,
-    hostContext,
-  ) {
+  prepareUpdate(instance, type, oldProps, newProps) {
     return diffProperties(oldProps, newProps) as any;
   },
 
-  commitUpdate(
-    instance,
-    updatePayload,
-    type,
-    oldProps,
-    newProps,
-    internalInstanceHandle,
-  ) {
+  commitUpdate(instance, updatePayload, type) {
     UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
 
-  resetTextContent(instance) { console.log('resetTextContent'); },
+  resetTextContent: () => console.log('resetTextContent'),
 
   commitTextUpdate(textInstance, oldText, newText) { UnityBridge.setText(textInstance, newText); },
 
@@ -126,34 +107,25 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
   // Required for Suspense
   // TODO: implement
 
-  preparePortalMount() { },
-
-  hideInstance(instance) {
-  },
-
-  hideTextInstance(textInstance) {
-  },
-
-  unhideInstance(instance, props) {
-  },
-
-  unhideTextInstance(textInstance, text) {
-  },
+  preparePortalMount: () => { },
+  hideInstance: () => { },
+  hideTextInstance: () => { },
+  unhideInstance: () => { },
+  unhideTextInstance: () => { },
+  detachDeletedInstance: () => { },
 
   // -------------------
   //     Scheduling
   // -------------------
 
-  scheduleDeferredCallback(callback, options) { return setTimeout(callback, options?.timeout || 0); },
-  cancelDeferredCallback(callBackID) { clearTimeout(callBackID); },
+  getCurrentEventPriority: () => eventPriorities.default,
 
   noTimeout: -1,
-  scheduleTimeout(callback, timeout) { return setTimeout(callback as any, timeout); },
-  cancelTimeout(handle) { clearTimeout(handle); },
-  queueMicrotask(callback) { return setTimeout(callback as any, 0); },
+  scheduleTimeout: (callback, timeout) => setTimeout(callback as any, timeout),
+  cancelTimeout: (handle) => clearTimeout(handle),
 };
 
-const ReactUnityReconciler = Reconciler(hostConfig);
+const reconciler = Reconciler(hostConfig);
 
 const containerMap = new Map<NativeContainerInstance, any>();
 
@@ -162,13 +134,17 @@ export const Renderer = {
     element: React.ReactNode,
     hostContainer?: NativeContainerInstance,
     renderWithoutHelpers?: boolean,
-  ): number {
+  ) {
     if (!hostContainer) hostContainer = HostContainer;
 
     let hostRoot = containerMap.get(hostContainer);
-    if (!hostRoot) containerMap.set(hostContainer, hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {}));
+    if (!hostRoot) {
+      hostRoot = reconciler.createContainer(hostContainer, LegacyRoot, false, null)
+      containerMap.set(hostContainer, hostRoot);
+    }
 
     if (!renderWithoutHelpers) element = createElement(DefaultView, null, element);
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null);
+
+    reconciler.updateContainer(element, hostRoot, null);
   },
 };
