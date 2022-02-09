@@ -148,3 +148,6 @@ export const Renderer = {
     reconciler.updateContainer(element, hostRoot, null);
   },
 };
+
+export const batchedUpdates = reconciler.batchedUpdates;
+export const flushSync = reconciler.flushSync;

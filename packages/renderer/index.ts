@@ -5,5 +5,11 @@ export * from './src/models/environment';
 export * from './src/models/generated';
 export * from './src/models/properties';
 export * from './src/models/renderer';
-export { Renderer } from './src/renderer/renderer';
+export {
+  batchedUpdates,
+  batchedUpdates as unstable_batchedUpdates,
+  flushSync,
+  Renderer
+} from './src/renderer/renderer';
+
 
