@@ -17,5 +17,4 @@ yarn-error.log*
 .yalc
 yalc.lock
 
-# TODO: remove this file in the future
 !temp/*.tgz

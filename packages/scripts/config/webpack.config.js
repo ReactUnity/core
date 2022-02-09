@@ -282,6 +282,9 @@ const baseConfigFactory = function (webpackEnv) {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
+        // Allows replacing react-dom with @reactunity/renderer to support some functionality like `unstable_batchedUpdates`
+        'react-dom': '@reactunity/renderer',
+
         ...(modules.webpackAliases || {}),
       },
       plugins: [
