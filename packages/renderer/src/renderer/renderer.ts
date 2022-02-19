@@ -8,7 +8,7 @@ import {
 import { DefaultView } from '../views/default-view';
 import { diffProperties, styleStringSymbol } from './diffing';
 
-const LegacyRoot = 1;
+const LegacyRoot = 0;
 const ConcurrentRoot = 1;
 
 const hostContext = {};
@@ -129,21 +129,31 @@ const reconciler = Reconciler(hostConfig);
 
 const containerMap = new Map<NativeContainerInstance, any>();
 
+interface RenderOptions {
+  /* Unity element to render React on. It is the element `ReactUnityUGUI` is attached to by default. */
+  hostContainer?: NativeContainerInstance;
+
+  /* Skips rendering some useful wrappers like `ErrorBoundary` and `GlobalsProvider`. */
+  disableHelpers?: boolean;
+
+  /* Allows rendering in `legacy` mode if needed. The default rendering mode is `concurrent`. */
+  mode?: 'legacy' | 'concurrent';
+}
+
 export const Renderer = {
   render(
     element: React.ReactNode,
-    hostContainer?: NativeContainerInstance,
-    renderWithoutHelpers?: boolean,
+    options: RenderOptions = {},
   ) {
-    if (!hostContainer) hostContainer = HostContainer;
+    const hostContainer = options?.hostContainer || HostContainer;
 
     let hostRoot = containerMap.get(hostContainer);
     if (!hostRoot) {
-      hostRoot = reconciler.createContainer(hostContainer, LegacyRoot, false, null)
+      hostRoot = reconciler.createContainer(hostContainer, options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot, false, null)
       containerMap.set(hostContainer, hostRoot);
     }
 
-    if (!renderWithoutHelpers) element = createElement(DefaultView, null, element);
+    if (!options?.disableHelpers) element = createElement(DefaultView, null, element);
 
     reconciler.updateContainer(element, hostRoot, null);
   },
