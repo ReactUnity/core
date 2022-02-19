@@ -25,8 +25,6 @@ namespace ReactUnity.Tests
                     </button>
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         const string AnchorScript = @"
@@ -44,8 +42,6 @@ namespace ReactUnity.Tests
                     </anchor>
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         public ButtonComponent Button => Q("button") as ButtonComponent;

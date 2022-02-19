@@ -25,12 +25,10 @@ namespace ReactUnity.Editor.Tests.Renderer
                 </view>
             `;
 
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <html content={htmlContent} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator StyleTagShouldWorkInsideHtmlTag()
         {
@@ -47,12 +45,10 @@ namespace ReactUnity.Editor.Tests.Renderer
                 <script>Globals.value = 5</script>
             `;
 
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <html content={htmlContent} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator ScriptTagShouldWorkInsideHtmlTag()
         {
@@ -65,12 +61,10 @@ namespace ReactUnity.Editor.Tests.Renderer
                 <button onCustomEvent='Globals.value = 5'>Click here</button>
             `;
 
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <html content={htmlContent} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator EventsShouldWorkInsideHtmlTag()
         {
@@ -82,12 +76,10 @@ namespace ReactUnity.Editor.Tests.Renderer
         }
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <html source={globals.htmlSource} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator HtmlCanBeSetFromSource()
         {

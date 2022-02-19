@@ -81,8 +81,6 @@ namespace ReactUnity.Tests
 " + Elements + @"
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         const string HtmlScript = @"
@@ -92,8 +90,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <html content={htmlContent} />;
             }
-
-            Renderer.render(<App />);
         ";
 
         const string BaseStyle = @"";

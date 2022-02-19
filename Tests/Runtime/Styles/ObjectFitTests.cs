@@ -14,8 +14,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <image source='resource(star)' />;
             }
-
-            Renderer.render(<App />);
 ";
 
         public ImageComponent Image => Q("image") as ImageComponent;

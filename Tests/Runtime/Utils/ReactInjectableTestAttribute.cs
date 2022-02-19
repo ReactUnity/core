@@ -12,8 +12,6 @@ namespace ReactUnity.Tests
                     Hello world
                 </view>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
 ";
 
         protected string OriginalCode;

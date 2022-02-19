@@ -23,8 +23,6 @@ namespace ReactUnity.Tests
                     </scroll>
                 </>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
         ";
 
         const string BaseStyle = @"

@@ -14,8 +14,6 @@ namespace ReactUnity.Tests
                     <view><view>Hello world</view></view>
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         public FontWeightTests(JavascriptEngineType engineType) : base(engineType) { }
@@ -35,8 +33,6 @@ namespace ReactUnity.Tests
                     <view style={{ fontWeight: 'bold', fontStyle: 'italic' }}>View content 7</view>
                 </>;
             }
-
-            Renderer.render(<App />);
 ", @"
             view:nth-child(1) {
                 font-weight: bold;

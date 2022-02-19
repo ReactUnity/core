@@ -20,8 +20,6 @@ namespace ReactUnity.Tests
                     Hello world
                 </view>;
             }
-
-            Renderer.render(<App />);
 ")]
         public IEnumerator InlineStylesCanBeSet()
         {
@@ -40,8 +38,6 @@ namespace ReactUnity.Tests
                     Hello world
                 </view>;
             }
-
-            Renderer.render(<App />);
 ")]
         public IEnumerator InlineStylesCanBeSetAsText()
         {
@@ -61,8 +57,6 @@ namespace ReactUnity.Tests
                     Hello world
                 </view>;
             }
-
-            Renderer.render(<App />);
 ")]
         public IEnumerator InlineStylesCanBeSwitchedBetweenTextAndObject()
         {

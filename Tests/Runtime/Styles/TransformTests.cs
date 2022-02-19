@@ -13,8 +13,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <view />;
             }
-
-            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"

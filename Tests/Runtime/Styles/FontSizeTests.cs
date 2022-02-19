@@ -13,8 +13,6 @@ namespace ReactUnity.Tests
                     <view><view>Hello world</view></view>
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         public FontSizeTests(JavascriptEngineType engineType) : base(engineType) { }

@@ -11,7 +11,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         public ScriptComponentTests(JavascriptEngineType engineType) : base(engineType) { }
 
         const string BaseScript = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     <script>
@@ -19,8 +19,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     </script>
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         [EditorInjectableTest(BaseScript)]

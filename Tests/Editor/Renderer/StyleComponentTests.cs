@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.Tests.Renderer
 
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     {!globals.disable && <style scope=':root'>{'#test { color: blue; }'}</style>}
@@ -22,8 +22,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     </view>
                 </>;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator StyleTagShouldStyleComponents()
         {
@@ -40,7 +38,7 @@ namespace ReactUnity.Editor.Tests.Renderer
 
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     <view id='testScope'>
@@ -51,8 +49,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                         <style scope='#testScope'>{':scope view { color: blue; }'}</style>}
                 </>;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator StyleTagShouldRespectScope()
         {
@@ -69,7 +65,7 @@ namespace ReactUnity.Editor.Tests.Renderer
 
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     <view id='testScope'>
@@ -80,8 +76,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     <view id='non-test'>Test text</view>
                 </>;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator ParentScopedStyleTagShouldAffectParentOnly()
         {
@@ -97,7 +91,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         }
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     <style active={!globals.disable} scope=':root'>{'#test { color: blue; }'}</style>
@@ -106,8 +100,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     </view>
                 </>;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator ActivePropertyShouldWorkForStyleTag()
         {

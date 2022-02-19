@@ -14,8 +14,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <prefab target={globals.prefab} />;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
         ";
 
         const string PrefabBaseStyle = @"

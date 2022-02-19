@@ -13,8 +13,6 @@ namespace ReactUnity.Tests
                     Test text
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"

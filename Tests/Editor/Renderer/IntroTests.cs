@@ -12,7 +12,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [EditorInjectableTest(@"
-            Renderer.render(
+            const App = () => (
                 <view>
                     Hello world
                     <view>Hello again</view>
@@ -44,7 +44,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         }
 
         [EditorInjectableTest(@"
-            Renderer.render(
+            const App = () => (
                 <view style={{ color: Interop.UnityEngine.Color.red }}>
                     Hello world
                 </view>

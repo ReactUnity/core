@@ -18,8 +18,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator TestGlobalsChange()
         {
@@ -39,8 +37,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
             }
-
-            Renderer.render(<App />);
         ")]
         public IEnumerator TestGlobalsChangeOnComponent()
         {
@@ -61,7 +57,7 @@ namespace ReactUnity.Tests
                 return <image source={globals.image} />;
             }
 
-            Renderer.render(
+            render(
                 <watcher.Provider>
                     <App />
                 </watcher.Provider>

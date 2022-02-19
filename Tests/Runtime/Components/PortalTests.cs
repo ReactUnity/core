@@ -20,8 +20,6 @@ namespace ReactUnity.Tests
                     </portal>
                 </>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
         ";
 
         const string BaseStyle = @"

@@ -11,14 +11,12 @@ namespace ReactUnity.Editor.Tests.Renderer
         public DialogTests(JavascriptEngineType engineType) : base(engineType) { }
 
         public const string BaseScript = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <dialog show={globals.show} title={globals.title} id='test'>
                     Test text
                 </dialog>;
             }
-
-            Renderer.render(<App />);
 ";
 
 

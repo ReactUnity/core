@@ -14,8 +14,6 @@ namespace ReactUnity.Tests
                     <icon>{globals.icon}</icon>
                 </>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
         ";
 
         const string BaseStyle = @"

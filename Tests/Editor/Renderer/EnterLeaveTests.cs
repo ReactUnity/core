@@ -10,7 +10,7 @@ namespace ReactUnity.Editor.Tests.Renderer
     public class EnterLeaveTests : EditorTestBase
     {
         const string BaseScript = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
                     {!!globals.show &&
@@ -19,8 +19,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                         </view>}
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         const string BaseStyle = @"

@@ -36,7 +36,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         }
 
         [EditorInjectableTest(@"
-            function App() {
+            export default function App() {
                 const globals = useGlobals();
                 return <>
                     <view id='test'>
@@ -45,7 +45,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     <view id='test2' />
                 </>;
             }
-            Renderer.render(<App />);
         ", @"
             view { background-color: black; color: white; }
             view:empty { background-color: red; color: blue; }

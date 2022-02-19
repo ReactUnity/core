@@ -15,8 +15,6 @@ namespace ReactUnity.Tests
                     <view><view>Hello world</view></view>
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"

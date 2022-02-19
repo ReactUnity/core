@@ -7778,9 +7778,12 @@ __webpack_require__.r(renderer_dist_namespaceObject);
 __webpack_require__.d(renderer_dist_namespaceObject, {
   "GlobalsProvider": () => (GlobalsProvider),
   "Renderer": () => (Renderer),
+  "batchedUpdates": () => (batchedUpdates),
   "createDictionaryWatcher": () => (createDictionaryWatcher),
+  "flushSync": () => (flushSync),
   "globalsWatcher": () => (globalsWatcher),
   "insertStyledComponentsSheet": () => (insertStyledComponentsSheet),
+  "unstable_batchedUpdates": () => (batchedUpdates),
   "useGlobals": () => (useGlobals),
   "useWatchable": () => (useWatchable)
 });
@@ -10047,7 +10050,7 @@ function createDictionaryWatcher(dictionary, displayName) {
   var ctx = react.createContext(undefined);
   if (displayName) ctx.displayName = displayName;
 
-  var Provider = function Provider(_a) {
+  var Provider = function GlobalsProvider(_a) {
     var children = _a.children;
 
     var _b = react.useState(0),
@@ -10291,8 +10294,18 @@ var renderer_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
+var LegacyRoot = 0;
+var ConcurrentRoot = 1;
 var hostContext = {};
 var childContext = {};
+var DiscreteEventPriority = 1;
+var ContinuousEventPriority = 4;
+var DefaultEventPriority = 16;
+var eventPriorities = {
+  discrete: DiscreteEventPriority,
+  continuous: ContinuousEventPriority,
+  "default": DefaultEventPriority
+};
 var textTypes = {
   text: true,
   icon: true,
@@ -10314,62 +10327,61 @@ function getAllowedProps(props, type) {
 }
 
 var hostConfig = {
-  getRootHostContext: function getRootHostContext(rootContainerInstance) {
+  getRootHostContext: function getRootHostContext() {
     return hostContext;
   },
-  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
+  getChildHostContext: function getChildHostContext() {
     return childContext;
   },
   getPublicInstance: function getPublicInstance(instance) {
     return instance;
   },
-  prepareForCommit: function prepareForCommit(containerInfo) {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit(containerInfo) {
-    return null;
-  },
-  clearContainer: function clearContainer() {
-    return null;
-  },
   now: Date.now,
+  supportsMutation: true,
   supportsHydration: false,
   supportsPersistence: false,
+  supportsMicrotasks: false,
+  supportsTestSelectors: false,
   isPrimaryRenderer: true,
-  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
+  warnsIfNotActing: true,
+  prepareForCommit: function prepareForCommit() {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit() {},
+  clearContainer: function clearContainer() {},
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
+    return false;
+  },
+  createInstance: function createInstance(type, props, rootContainerInstance) {
     var aProps = getAllowedProps(props, type);
     var children = aProps.children || null;
     delete aProps.children;
     return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
   },
-  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
+  createTextInstance: function createTextInstance(text, rootContainerInstance) {
     return UnityBridge.createText(text, rootContainerInstance);
   },
   appendInitialChild: function appendInitialChild(parent, child) {
     UnityBridge.appendChild(parent, child);
   },
-  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
+  finalizeInitialChildren: function finalizeInitialChildren() {
     return false;
   },
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {},
-  shouldSetTextContent: function shouldSetTextContent(type, props) {
+  commitMount: function commitMount() {},
+  shouldSetTextContent: function shouldSetTextContent(type) {
     return textTypes[type];
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
-    return false;
   },
   // -------------------
   //     Mutation
   // -------------------
-  supportsMutation: true,
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
     return diffProperties(oldProps, newProps);
   },
-  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
+  commitUpdate: function commitUpdate(instance, updatePayload, type) {
     UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
-  resetTextContent: function resetTextContent(instance) {
-    console.log('resetTextContent');
+  resetTextContent: function resetTextContent() {
+    return console.log('resetTextContent');
   },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
     UnityBridge.setText(textInstance, newText);
@@ -10395,41 +10407,47 @@ var hostConfig = {
   // Required for Suspense
   // TODO: implement
   preparePortalMount: function preparePortalMount() {},
-  hideInstance: function hideInstance(instance) {},
-  hideTextInstance: function hideTextInstance(textInstance) {},
-  unhideInstance: function unhideInstance(instance, props) {},
-  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
+  hideInstance: function hideInstance() {},
+  hideTextInstance: function hideTextInstance() {},
+  unhideInstance: function unhideInstance() {},
+  unhideTextInstance: function unhideTextInstance() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
   // -------------------
   //     Scheduling
   // -------------------
-  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
-  },
-  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    clearTimeout(callBackID);
+  getCurrentEventPriority: function getCurrentEventPriority() {
+    return eventPriorities["default"];
   },
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, timeout) {
     return setTimeout(callback, timeout);
   },
   cancelTimeout: function cancelTimeout(handle) {
-    clearTimeout(handle);
-  },
-  queueMicrotask: function queueMicrotask(callback) {
-    return setTimeout(callback, 0);
+    return clearTimeout(handle);
   }
 };
-var ReactUnityReconciler = react_reconciler(hostConfig);
+var reconciler = react_reconciler(hostConfig);
 var containerMap = new Map();
 var Renderer = {
-  render: function render(element, hostContainer, renderWithoutHelpers) {
-    if (!hostContainer) hostContainer = HostContainer;
+  render: function render(element, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
     var hostRoot = containerMap.get(hostContainer);
-    if (!hostRoot) containerMap.set(hostContainer, hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {}));
-    if (!renderWithoutHelpers) element = (0,react.createElement)(DefaultView, null, element);
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null);
+
+    if (!hostRoot) {
+      hostRoot = reconciler.createContainer(hostContainer, (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? LegacyRoot : ConcurrentRoot, false, null);
+      containerMap.set(hostContainer, hostRoot);
+    }
+
+    if (!(options === null || options === void 0 ? void 0 : options.disableHelpers)) element = (0,react.createElement)(DefaultView, null, element);
+    reconciler.updateContainer(element, hostRoot, null);
   }
 };
+var batchedUpdates = reconciler.batchedUpdates;
+var flushSync = reconciler.flushSync;
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/tooltip/index.module.scss
 var tooltip_index_module = __webpack_require__(138);
 ;// CONCATENATED MODULE: ../../../material/dist/src/tooltip/index.module.scss
@@ -12635,9 +12653,9 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
   var __originalRender = ReactUnity.Renderer.render;
 
   var renderCalled = false;
-  function render() {
+  function render(element, options) {
     renderCalled = true;
-    __originalRender.apply(ReactUnity.Renderer, arguments);
+    __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
   ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
@@ -12656,9 +12674,14 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
     if (module.startsWith('@reactunity/material/')) return Material;
   };
 
+  var defaultComponent;
+
   let result = (function (module, exports, render, require) {
 
     /*INJECT_CODE*/
+
+    if(typeof App === 'function') defaultComponent = App;
+    else if(typeof Example === 'function') defaultComponent = Example;
   })(module, exports, render, require);
 
 
@@ -12672,6 +12695,8 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
     render(react.createElement(exports.App));
   } else if (exports.Example) {
     render(react.createElement(exports.Example));
+  } else if (defaultComponent) {
+    render(react.createElement(defaultComponent));
   } else {
     console.error('Nothing was rendered');
   }

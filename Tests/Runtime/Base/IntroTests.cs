@@ -47,7 +47,7 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(@"
-            Renderer.render(
+            render(
                 <view>
                     Hello world
                     <view>Hello again</view>
@@ -66,8 +66,8 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(@"
-            Renderer.render(<view>Hello world</view>);
-            Renderer.render(<view>Hello world 2</view>);
+            render(<view>Hello world</view>);
+            render(<view>Hello world 2</view>);
         ")]
         public IEnumerator RerenderOfRootElementWorks()
         {
@@ -81,12 +81,6 @@ namespace ReactUnity.Tests
                 const globals = ReactUnity.useGlobals();
                 return <image active={globals.active} />;
             }
-
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
         ")]
         public IEnumerator ActivePropertyShouldSetGameObjectActive()
         {

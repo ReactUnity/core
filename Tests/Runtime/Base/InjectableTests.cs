@@ -82,6 +82,28 @@ namespace ReactUnity.Tests
         }
 
         [ReactInjectableTest(@"
+            function App() {
+                return <view>Hello world</view>;
+            }
+        ")]
+        public IEnumerator ImplicitAppFunction()
+        {
+            yield return null;
+            Assert.AreEqual("Hello world", Host.TextContent);
+        }
+
+        [ReactInjectableTest(@"
+            function Example() {
+                return <view>Hello world</view>;
+            }
+        ")]
+        public IEnumerator ImplicitExampleFunction()
+        {
+            yield return null;
+            Assert.AreEqual("Hello world", Host.TextContent);
+        }
+
+        [ReactInjectableTest(@"
             import { useGlobals } from '@reactunity/renderer';
 
             export default function App() {

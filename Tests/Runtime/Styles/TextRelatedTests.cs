@@ -17,8 +17,6 @@ namespace ReactUnity.Tests
                     </view>
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         public TextRelatedTests(JavascriptEngineType engineType) : base(engineType) { }

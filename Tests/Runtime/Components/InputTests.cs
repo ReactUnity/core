@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
             function App() {
                 const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
-                    <input {...globals} 
+                    <input {...globals}
                         onEndEdit={() => addEvent('endEdit')}
                         onReturn={() => addEvent('return')}
                         onChange={() => addEvent('change')}
@@ -27,8 +27,6 @@ namespace ReactUnity.Tests
                     />
                 </>;
             }
-
-            Renderer.render(<App />);
         ";
 
         public InputComponent InputEl => Q("input") as InputComponent;

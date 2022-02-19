@@ -6,14 +6,12 @@ namespace ReactUnity.Editor.Tests
     public class EditorInjectableTestAttribute : BaseEditorTestAttribute
     {
         public const string DefaultCode = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>
                     Hello world
                 </view>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
 ";
 
         protected string OriginalCode;

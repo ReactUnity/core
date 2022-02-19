@@ -18,8 +18,6 @@ namespace ReactUnity.Tests
                     </view>
                 </>;
             }
-
-            Renderer.render(<GlobalsProvider children={<App />} />);
         ";
 
         const string BaseStyle = @"";

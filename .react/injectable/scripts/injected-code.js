@@ -2,9 +2,9 @@
   var __originalRender = ReactUnity.Renderer.render;
 
   var renderCalled = false;
-  function render() {
+  function render(element, options) {
     renderCalled = true;
-    __originalRender.apply(ReactUnity.Renderer, arguments);
+    __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
   ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
@@ -23,9 +23,14 @@
     if (module.startsWith('@reactunity/material/')) return Material;
   };
 
+  var defaultComponent;
+
   let result = (function (module, exports, render, require) {
 
     /*INJECT_CODE*/
+
+    if(typeof App === 'function') defaultComponent = App;
+    else if(typeof Example === 'function') defaultComponent = Example;
   })(module, exports, render, require);
 
 
@@ -39,6 +44,8 @@
     render(react.createElement(exports.App));
   } else if (exports.Example) {
     render(react.createElement(exports.Example));
+  } else if (defaultComponent) {
+    render(react.createElement(defaultComponent));
   } else {
     console.error('Nothing was rendered');
   }

@@ -278,11 +278,6 @@ namespace ReactUnity.Types
             if (c == 0 || s == 1) return size.x;
             if (s == 0 || c == 1) return size.y;
 
-            // TODO: remove unnecessary code
-            //var tan = s / c;
-            //if (tan == 0) return size.y;
-            //return Mathf.Abs(size.x / s) - Mathf.Abs((Mathf.Abs(size.x / tan) - size.y) * c);
-
             var slope = Mathf.Tan(Mathf.PI / 2 - angle);
 
             if (slope == 0) return size.x;

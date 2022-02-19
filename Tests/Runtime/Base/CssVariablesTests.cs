@@ -14,12 +14,6 @@ namespace ReactUnity.Tests
                     Test text
                 </view>;
             }
-
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
 ";
 
         public CssVariablesTests(JavascriptEngineType engineType) : base(engineType) { }

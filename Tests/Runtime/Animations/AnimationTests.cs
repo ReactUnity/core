@@ -10,13 +10,11 @@ namespace ReactUnity.Tests
     public class AnimationTests : TestBase
     {
         const string BaseScript = @"
-            function App() {
+            export default function App() {
                 return <view id='test'>
                     Test text
                 </view>;
             }
-
-            Renderer.render(<App />);
         ";
 
         const string BaseStyle = @"
@@ -306,8 +304,6 @@ namespace ReactUnity.Tests
                     Test text
                 </view>;
             }
-
-            Renderer.render(<App />);
 ")]
         public IEnumerator EventsAreFiredCorrectly()
         {

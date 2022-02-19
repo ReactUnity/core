@@ -61,8 +61,6 @@ namespace ReactUnity.Tests
                     {globals.myObject?.GetText()} {globals.myComponent?.GetText()}
                 </text>;
             }
-
-            Renderer.render(<App />);
         ", autoRender: false)]
         public IEnumerator GlobalsGetUpdatedWhenChangedOnSameFrameAsRender()
         {

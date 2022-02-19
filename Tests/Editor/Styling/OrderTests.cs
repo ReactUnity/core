@@ -7,7 +7,7 @@ namespace ReactUnity.Editor.Tests.Renderer
     public class OrderTests : EditorTestBase
     {
         const string BaseScript = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>
                     {!!globals.show0 && <v0>0</v0>}
@@ -22,8 +22,6 @@ namespace ReactUnity.Editor.Tests.Renderer
                     {!!globals.show8 && <v8>8</v8>}
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"

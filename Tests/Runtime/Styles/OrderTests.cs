@@ -22,8 +22,6 @@ namespace ReactUnity.Tests
                     {!!globals.show8 && <v8>8</v8>}
                 </view>;
             }
-
-            Renderer.render(<App />);
 ";
 
         const string BaseStyle = @"

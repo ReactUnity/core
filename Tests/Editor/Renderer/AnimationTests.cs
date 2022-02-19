@@ -9,18 +9,12 @@ namespace ReactUnity.Editor.Tests.Renderer
     public class AnimationTests : EditorTestBase
     {
         const string BaseScript = @"
-            function App() {
+            export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>
                     Test text
                 </view>;
             }
-
-            Renderer.render(
-                <GlobalsProvider>
-                    <App />
-                </GlobalsProvider>
-            );
         ";
 
         const string BaseStyle = @"
