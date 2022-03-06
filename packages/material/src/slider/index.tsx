@@ -59,7 +59,10 @@ function _Slider({
     val = Math.max(min, Math.min(max, val));
     innerValue.current = val;
     if (step > 0) val = Math.round(val / step) * step;
+
+    const oldValue = curValue.current;
     curValue.current = val;
+    if (oldValue !== val) onChange?.(val);
 
     if (fillRef.current) {
       const ratio = (curValue.current - min) / range;
