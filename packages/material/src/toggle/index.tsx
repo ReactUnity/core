@@ -1,7 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import React, { ReactNode, useCallback, useContext, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { ReactNode, useCallback, useContext, useImperativeHandle, useLayoutEffect, useMemo, useRef } from 'react';
 import { useRipple } from '../ripple';
 import { SelectionElement, SelectionState } from '../util/selection';
 import { MdInteractible } from '../util/types';
@@ -92,13 +92,16 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
     const selectAllRef = useRef<ToggleEl>();
 
     const state = useMemo(() => new SelectionState(multiple, init.current), [multiple, init]);
-    state.onChange = useCallback((val, all, any) => {
-      onChange?.(val, all, any);
 
-      if (selectAllRef.current) {
-        selectAllRef.current.Indeterminate = !!any && !all;
-        selectAllRef.current.Checked = !!all;
-      }
+    useLayoutEffect(() => {
+      state.onChange = (val, all, any) => {
+        onChange?.(val, all, any);
+
+        if (selectAllRef.current) {
+          selectAllRef.current.Indeterminate = !!any && !all;
+          selectAllRef.current.Checked = !!all;
+        }
+      };
     }, [onChange]);
 
     const selectAllCallback: UGUIElements['toggle']['onChange'] = useCallback((checked, sender) => {

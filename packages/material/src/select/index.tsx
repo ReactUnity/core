@@ -2,12 +2,12 @@ import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import * as React from 'react';
-import { ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Toggle } from '..';
 import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
 import { getElevationClass } from '../util/helpers';
-import useAutoRef from '../util/hooks/use-auto-ref';
+import { useAutoRef } from '../util/hooks/use-auto-ref';
 import { SelectionElement, SelectionState } from '../util/selection';
 import style from './index.module.scss';
 
@@ -45,32 +45,37 @@ export type SelectProps<T = any> = {
 
 function _Select<T = any>({
   keepOpen = 'auto', onChange, name, children, initialValue, multiple, separator, chips,
-  variant, placeholder, float, className, hideCaret, ...otherProps }: SelectProps<T>): React.ReactElement {
+  variant, placeholder, float, className, hideCaret, ...otherProps
+}: SelectProps<T>): React.ReactElement {
   const init = useRef(initialValue);
   const selectAllRef = useRef<ToggleEl>();
   const fieldRef = useRef<InputFieldRef>();
   const shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
 
   const state = useMemo(() => new SelectionState<T, SelectSelectionElement>(!!multiple, init.current), [multiple, init]);
-  state.onChange = useCallback((val, all, any) => {
-    onChange?.(val as any, all, any);
-
-    if (selectAllRef.current) {
-      selectAllRef.current.Indeterminate = !!any && !all;
-      selectAllRef.current.Checked = !!all;
-    }
-
-    if (!shouldKeepOpen) {
-      setOpened(false);
-    }
-
-    fieldRef.current?.setEmpty(!any);
-  }, [onChange, shouldKeepOpen]);
-
   const [selectedElements, setSelectedElements] = useState(state.getSelectedElements());
 
-  state.onUpdate = useCallback((st) => {
-    setSelectedElements(st.getSelectedElements());
+  useLayoutEffect(() => {
+    state.onChange = (val, all, any) => {
+      onChange?.(val as any, all, any);
+
+      if (selectAllRef.current) {
+        selectAllRef.current.Indeterminate = !!any && !all;
+        selectAllRef.current.Checked = !!all;
+      }
+
+      if (!shouldKeepOpen) {
+        setOpened(false);
+      }
+
+      fieldRef.current?.setEmpty(!any);
+    };
+  }, [onChange, shouldKeepOpen]);
+
+  useLayoutEffect(() => {
+    state.onUpdate = (st) => {
+      setSelectedElements(st.getSelectedElements());
+    };
   }, []);
 
   const [opened, setOpened] = useState(false);
@@ -130,11 +135,9 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
 
   const onChangeRef = useRef<(() => void)[]>([]);
   const getTemplateRef = useRef<() => ReactNode>(() => triggerTemplate ?? children);
-  const childRef = useRef(children);
+  const childRef = useAutoRef(children);
 
   const shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
-
-  useEffect(() => { childRef.current = children; }, [children]);
 
   useEffect(() => {
     getTemplateRef.current = () => triggerTemplate ?? childRef.current;

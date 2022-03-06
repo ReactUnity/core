@@ -1,7 +1,7 @@
 import { ReactUnity, Renderer, YogaValue2Aux } from '@reactunity/renderer';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useRef } from 'react';
-import useAutoRef from '../util/hooks/use-auto-ref';
+import { useAutoRef } from '../util/hooks/use-auto-ref';
 import style from './index.module.scss';
 
 export type TooltipTrigger = 'hover' | 'press' | 'click';
