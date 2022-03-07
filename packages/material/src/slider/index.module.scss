@@ -106,4 +106,12 @@
   &:active .thumb {
     background-color: hsl(0deg, 0%, 86%);
   }
+
+  &[readonly] {
+    cursor: default;
+
+    .thumb {
+      background-color: hsl(0deg, 0%, 92%);
+    }
+  }
 }
