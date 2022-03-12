@@ -8,7 +8,12 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    [ScriptedImporter(1, new string[] { "css" })]
+    [ScriptedImporter(1, new string[] {
+        "css",
+#if UNITY_2021_2_OR_NEWER
+        "js",
+#endif
+    })]
     class ReactUnityTextAssetsImporter : ScriptedImporter
     {
         public override void OnImportAsset(AssetImportContext ctx)
