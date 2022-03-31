@@ -48,6 +48,25 @@ namespace ReactUnity.Tests
         }
 
 
+        [ReactInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <icon onPointerClick={() => null}>search</icon>
+                </>;
+            }
+        ")]
+        public IEnumerator RerenderingIconsKeepsTheTextContent()
+        {
+            Assert.AreEqual("\ue8b6", Icon.TextContent);
+
+            Globals["test"] = "something";
+            yield return null;
+
+            Assert.AreEqual("\ue8b6", Icon.TextContent);
+        }
+
+
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator OverflowAndMaskDoesNotBreakIcon()
         {

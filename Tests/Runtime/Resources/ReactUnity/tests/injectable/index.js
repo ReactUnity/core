@@ -7290,7 +7290,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__QngDt{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__QngDt[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__QngDt .slider_track__LWAGS{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__QngDt[orientation=vertical] .slider_track__LWAGS{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__QngDt[direction=horizontal-reverse] .slider_track__LWAGS,.slider_host__QngDt[direction=vertical-reverse] .slider_track__LWAGS{justify-content:flex-end}.slider_host__QngDt .slider_fill__2De\\+O{background-color:#ebebeb;width:100%;height:100%}.slider_host__QngDt .slider_thumbContainer__28Lbu{background-color:transparent;position:absolute;width:0;height:0}.slider_host__QngDt[direction=horizontal] .slider_thumbContainer__28Lbu{top:50%;right:0}.slider_host__QngDt[direction=horizontal-reverse] .slider_thumbContainer__28Lbu{top:50%;left:0}.slider_host__QngDt[direction=vertical] .slider_thumbContainer__28Lbu{left:50%;top:0}.slider_host__QngDt[direction=vertical-reverse] .slider_thumbContainer__28Lbu{left:50%;bottom:0}.slider_host__QngDt .slider_thumb__HCBio{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__QngDt[orientation=horizontal] .slider_thumb__HCBio{flex-direction:column}.slider_host__QngDt[orientation=vertical] .slider_thumb__HCBio{flex-direction:row}.slider_host__QngDt:hover .slider_thumb__HCBio{background-color:#ebebeb}.slider_host__QngDt:focus .slider_thumb__HCBio{background-color:#fafafa}.slider_host__QngDt:active .slider_thumb__HCBio{background-color:#dbdbdb}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__QngDt{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__QngDt[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__QngDt .slider_track__LWAGS{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__QngDt[orientation=vertical] .slider_track__LWAGS{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__QngDt[direction=horizontal-reverse] .slider_track__LWAGS,.slider_host__QngDt[direction=vertical-reverse] .slider_track__LWAGS{justify-content:flex-end}.slider_host__QngDt .slider_fill__2De\\+O{background-color:#ebebeb;width:100%;height:100%}.slider_host__QngDt .slider_thumbContainer__28Lbu{background-color:transparent;position:absolute;width:0;height:0}.slider_host__QngDt[direction=horizontal] .slider_thumbContainer__28Lbu{top:50%;right:0}.slider_host__QngDt[direction=horizontal-reverse] .slider_thumbContainer__28Lbu{top:50%;left:0}.slider_host__QngDt[direction=vertical] .slider_thumbContainer__28Lbu{left:50%;top:0}.slider_host__QngDt[direction=vertical-reverse] .slider_thumbContainer__28Lbu{left:50%;bottom:0}.slider_host__QngDt .slider_thumb__HCBio{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__QngDt[orientation=horizontal] .slider_thumb__HCBio{flex-direction:column}.slider_host__QngDt[orientation=vertical] .slider_thumb__HCBio{flex-direction:row}.slider_host__QngDt:hover .slider_thumb__HCBio{background-color:#ebebeb}.slider_host__QngDt:focus .slider_thumb__HCBio{background-color:#fafafa}.slider_host__QngDt:active .slider_thumb__HCBio{background-color:#dbdbdb}.slider_host__QngDt[readonly]{cursor:default}.slider_host__QngDt[readonly] .slider_thumb__HCBio{background-color:#ebebeb}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "slider_host__QngDt",
@@ -9500,13 +9500,15 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
   var state = (0,react.useMemo)(function () {
     return new SelectionState(multiple, init.current);
   }, [multiple, init]);
-  state.onChange = (0,react.useCallback)(function (val, all, any) {
-    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+  (0,react.useLayoutEffect)(function () {
+    state.onChange = function (val, all, any) {
+      onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
 
-    if (selectAllRef.current) {
-      selectAllRef.current.Indeterminate = !!any && !all;
-      selectAllRef.current.Checked = !!all;
-    }
+      if (selectAllRef.current) {
+        selectAllRef.current.Indeterminate = !!any && !all;
+        selectAllRef.current.Checked = !!all;
+      }
+    };
   }, [onChange]);
   var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
     state.setAll(checked);
@@ -9536,9 +9538,11 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
 var ToggleGroup = react.memo(_ToggleGroup);
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-auto-ref.js
 
-function useAutoRef(val) {
-  var ref = (0,react.useRef)(val);
-  ref.current = val;
+function useAutoRef(value) {
+  var ref = (0,react.useRef)(value);
+  (0,react.useLayoutEffect)(function () {
+    ref.current = value;
+  });
   return ref;
 }
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/select/index.module.scss
@@ -9639,29 +9643,33 @@ function _Select(_a) {
   var state = (0,react.useMemo)(function () {
     return new SelectionState(!!multiple, init.current);
   }, [multiple, init]);
-  state.onChange = (0,react.useCallback)(function (val, all, any) {
-    var _a;
-
-    onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
-
-    if (selectAllRef.current) {
-      selectAllRef.current.Indeterminate = !!any && !all;
-      selectAllRef.current.Checked = !!all;
-    }
-
-    if (!shouldKeepOpen) {
-      setOpened(false);
-    }
-
-    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!any);
-  }, [onChange, shouldKeepOpen]);
 
   var _c = (0,react.useState)(state.getSelectedElements()),
       selectedElements = _c[0],
       setSelectedElements = _c[1];
 
-  state.onUpdate = (0,react.useCallback)(function (st) {
-    setSelectedElements(st.getSelectedElements());
+  (0,react.useLayoutEffect)(function () {
+    state.onChange = function (val, all, any) {
+      var _a;
+
+      onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+
+      if (selectAllRef.current) {
+        selectAllRef.current.Indeterminate = !!any && !all;
+        selectAllRef.current.Checked = !!all;
+      }
+
+      if (!shouldKeepOpen) {
+        setOpened(false);
+      }
+
+      (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!any);
+    };
+  }, [onChange, shouldKeepOpen]);
+  (0,react.useLayoutEffect)(function () {
+    state.onUpdate = function (st) {
+      setSelectedElements(st.getSelectedElements());
+    };
   }, []);
 
   var _d = (0,react.useState)(false),
@@ -9760,11 +9768,8 @@ function _Option(_a) {
   var getTemplateRef = (0,react.useRef)(function () {
     return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : children;
   });
-  var childRef = (0,react.useRef)(children);
+  var childRef = useAutoRef(children);
   var shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
-  (0,react.useEffect)(function () {
-    childRef.current = children;
-  }, [children]);
   (0,react.useEffect)(function () {
     getTemplateRef.current = function () {
       return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
@@ -9830,6 +9835,44 @@ function _Option(_a) {
 
 var Select = react.memo(_Select);
 Select.Option = _Option;
+;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-control-check.js
+
+var error1 = 'A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components';
+var error2 = 'You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.';
+var error3 = 'App contains an input element with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://reactjs.org/link/controlled-components';
+var error4 = 'A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://reactjs.org/link/controlled-components';
+function useControlCheck(_a) {
+  var value = _a.value,
+      defaultValue = _a.defaultValue,
+      onChange = _a.onChange,
+      readOnly = _a.readOnly;
+  var valueInit = (0,react.useRef)(value);
+  var warned = (0,react.useRef)(0);
+  (0,react.useEffect)(function () {
+    if (typeof value !== 'undefined') {
+      if ((warned.current & 1) === 0 && typeof valueInit.current === 'undefined') {
+        warned.current |= 1;
+        console.error(error1);
+      }
+
+      if ((warned.current & 2) === 0 && typeof onChange === 'undefined' && typeof readOnly === 'undefined') {
+        warned.current |= 2;
+        console.warn(error2);
+      }
+
+      if ((warned.current & 4) === 0 && typeof defaultValue !== 'undefined') {
+        warned.current |= 4;
+        console.error(error3);
+      }
+    } else {
+      if ((warned.current & 8) === 0 && typeof valueInit.current !== 'undefined') {
+        warned.current |= 8;
+        console.error(error4);
+      }
+    }
+  }, [value, defaultValue, onChange, readOnly]);
+  return typeof valueInit.current !== 'undefined';
+}
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/slider/index.module.scss
 var slider_index_module = __webpack_require__(868);
 ;// CONCATENATED MODULE: ../../../material/dist/src/slider/index.module.scss
@@ -9895,11 +9938,13 @@ var slider_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
+
+
 var SliderChild = (0,react.forwardRef)(function _SliderChild(_a, ref) {
   var callback = _a.callback,
-      initialValue = _a.initialValue;
+      defaultValue = _a.defaultValue;
 
-  var _b = (0,react.useState)(initialValue),
+  var _b = (0,react.useState)(defaultValue),
       st = _b[0],
       setSt = _b[1];
 
@@ -9911,7 +9956,7 @@ var SliderChild = (0,react.forwardRef)(function _SliderChild(_a, ref) {
   }, void 0);
 });
 
-function _Slider(_a) {
+var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
   var _b;
 
   var _c;
@@ -9920,7 +9965,7 @@ function _Slider(_a) {
       onScroll = _a.onScroll,
       name = _a.name,
       children = _a.children,
-      initialValue = _a.initialValue,
+      defaultValue = _a.defaultValue,
       value = _a.value,
       _d = _a.direction,
       direction = _d === void 0 ? 'horizontal' : _d,
@@ -9938,36 +9983,54 @@ function _Slider(_a) {
       allowScroll = _k === void 0 ? false : _k,
       _l = _a.scrollMultiplier,
       scrollMultiplier = _l === void 0 ? 1 / 6 : _l,
-      otherProps = slider_rest(_a, ["onChange", "onScroll", "name", "children", "initialValue", "value", "direction", "mode", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier"]);
+      readOnly = _a.readOnly,
+      otherProps = slider_rest(_a, ["onChange", "onScroll", "name", "children", "defaultValue", "value", "direction", "mode", "min", "max", "step", "keyStep", "allowScroll", "scrollMultiplier", "readOnly"]);
 
-  var curValue = (0,react.useRef)((_c = initialValue !== null && initialValue !== void 0 ? initialValue : value) !== null && _c !== void 0 ? _c : min);
-  var innerValue = (0,react.useRef)(curValue.current);
+  var isControlled = useControlCheck({
+    value: value,
+    defaultValue: defaultValue,
+    onChange: onChange,
+    readOnly: readOnly
+  });
+  var init = (_c = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value) !== null && _c !== void 0 ? _c : min;
+  var curValue = (0,react.useRef)(init);
+  var innerValue = (0,react.useRef)(init);
+  var onChangeRef = useAutoRef(onChange);
   var orientation = direction === 'vertical' || direction === 'vertical-reverse' ? 'vertical' : 'horizontal';
   var isReverse = direction === 'vertical-reverse' || direction === 'horizontal-reverse';
   var sizeProp = orientation === 'horizontal' ? 'width' : 'height';
   var coordProp = orientation === 'horizontal' ? 'x' : 'y';
   var crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
   var range = max - min;
-  var ref = (0,react.useRef)();
+  var elementRef = (0,react.useRef)();
   var fillRef = (0,react.useRef)();
   var childRef = (0,react.useRef)();
   var moveStep = keyStep || step || range / 10;
-  var setValWithStep = (0,react.useCallback)(function (val) {
-    var _a;
+  var setValWithStep = (0,react.useCallback)(function (val, skipNotify, skipControl) {
+    var _a, _b;
 
-    val = Math.max(min, Math.min(max, val));
-    innerValue.current = val;
-    if (step > 0) val = Math.round(val / step) * step;
-    curValue.current = val;
+    var clampedVal = Math.max(min, Math.min(max, val));
+    var steppedVal = step > 0 ? Math.round(clampedVal / step) * step : clampedVal;
+    var oldValue = curValue.current;
 
-    if (fillRef.current) {
-      var ratio = (curValue.current - min) / range;
-      fillRef.current.Style.Set(sizeProp === 'width' ? 'height' : 'width', null);
-      fillRef.current.Style.Set(sizeProp, ratio * 100 + '%');
+    if (!isControlled && !readOnly || skipControl) {
+      innerValue.current = clampedVal;
+      curValue.current = steppedVal;
+
+      if (fillRef.current) {
+        var ratio = (curValue.current - min) / range;
+        fillRef.current.Style.Set(sizeProp === 'width' ? 'height' : 'width', null);
+        fillRef.current.Style.Set(sizeProp, ratio * 100 + '%');
+      }
+
+      (_a = childRef.current) === null || _a === void 0 ? void 0 : _a.call(childRef, steppedVal);
     }
 
-    (_a = childRef.current) === null || _a === void 0 ? void 0 : _a.call(childRef, val);
-  }, [min, max, step, sizeProp, range]);
+    if (!skipNotify && !readOnly && oldValue !== steppedVal) (_b = onChangeRef.current) === null || _b === void 0 ? void 0 : _b.call(onChangeRef, steppedVal);
+  }, [min, max, step, sizeProp, range, isControlled, readOnly]);
+  (0,react.useLayoutEffect)(function () {
+    if (isControlled) setValWithStep(value, true, true);
+  }, [value, isControlled]);
   var dragCallback = (0,react.useCallback)(function (ev) {
     var mul = isReverse ? -1 : 1;
     var val = innerValue.current;
@@ -9980,8 +10043,8 @@ function _Slider(_a) {
         val += mul * diff / (yDiff * yDiff);
       } else val += mul * diff;
     } else {
-      var relPos = ref.current.GetRelativePosition(ev.position.x, ev.position.y);
-      var relRatio = relPos[coordProp] / ref.current.RectTransform.rect[sizeProp];
+      var relPos = elementRef.current.GetRelativePosition(ev.position.x, ev.position.y);
+      var relRatio = relPos[coordProp] / elementRef.current.RectTransform.rect[sizeProp];
       if (coordProp === 'x' && isReverse || coordProp === 'y' && !isReverse) relRatio = 1 - relRatio;
       val = relRatio * range + min;
     }
@@ -10003,12 +10066,26 @@ function _Slider(_a) {
 
     onScroll === null || onScroll === void 0 ? void 0 : onScroll(ev, sender);
   }, [moveStep, isReverse, setValWithStep, onScroll, allowScroll, scrollMultiplier]);
+  (0,react.useImperativeHandle)(ref, function () {
+    return {
+      getValue: function getValue() {
+        return curValue.current;
+      },
+      setValue: setValWithStep,
+
+      get root() {
+        return elementRef.current;
+      }
+
+    };
+  }, [elementRef, curValue, setValWithStep]);
   return (0,jsx_runtime.jsx)("view", slider_assign({
     name: name || '<Slider>'
   }, otherProps, {
-    ref: ref,
+    ref: elementRef,
     "data-direction": direction,
     "data-orientation": orientation,
+    "data-readonly": readOnly ? true : undefined,
     onDrag: dragCallback,
     onPointerClick: dragCallback,
     onPotentialDrag: dragCallback,
@@ -10024,7 +10101,7 @@ function _Slider(_a) {
         name: "<Slider-Fill>",
         className: clsx_m(src_slider_index_module.fill, 'mat-slider-fill'),
         ref: fillRef,
-        style: (_b = {}, _b[sizeProp] = (curValue.current - min) / range, _b)
+        style: (_b = {}, _b[sizeProp] = 100 * (curValue.current - min) / range + '%', _b)
       }, {
         children: (0,jsx_runtime.jsx)("view", slider_assign({
           name: "<Slider-Thumb-Container>",
@@ -10035,7 +10112,7 @@ function _Slider(_a) {
             className: clsx_m(src_slider_index_module.thumb, 'mat-slider-thumb')
           }, {
             children: typeof children === 'function' ? (0,jsx_runtime.jsx)(SliderChild, {
-              initialValue: curValue.current,
+              defaultValue: curValue.current,
               callback: children,
               ref: childRef
             }, void 0) : children
@@ -10044,7 +10121,7 @@ function _Slider(_a) {
       }), void 0)
     }), void 0)
   }), void 0);
-}
+});
 
 var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
@@ -10345,7 +10422,7 @@ function getAllowedProps(props, type) {
       tag = props.tag,
       rest = renderer_rest(props, ["children", "tag"]);
 
-  if (textTypes[type]) {
+  if (textTypes[type] && 'children' in props) {
     rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
