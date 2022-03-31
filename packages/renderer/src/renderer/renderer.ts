@@ -35,7 +35,7 @@ type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance,
 function getAllowedProps(props, type) {
   const { children, tag, ...rest } = props;
 
-  if (textTypes[type]) {
+  if (textTypes[type] && 'children' in props) {
     rest.children = (!children || typeof children === 'boolean') ? null : Array.isArray(children) ? children.join('') : children + '';
   }
 
