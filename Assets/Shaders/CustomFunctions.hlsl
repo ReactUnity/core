@@ -49,11 +49,10 @@ void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float
 {
   color = 0;
 
+  // UV position (vertically inverted)
   float2 pos = float2(uv.x, 1 - uv.y);
 
-  float x = pos.x;
-  float y = pos.y;
-
+  // Border sizes - Top, right, bottom, left
   float t = sizes.x;
   float r = sizes.y;
   float b = sizes.z;
@@ -62,22 +61,29 @@ void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float
   // Does not work well with rounded borders
   // if((x > l) && (x < (1 - r)) && (y > t) && (y < (1 - b))) return;
 
-  float bx = l + r;
-  float by = t + b;
+  // Total border sizes in height and width
+  float hs = t + b;
+  float ws = l + r;
 
+  // Total available space - Height, width
   float h = 1;
   float w = 1;
 
-  float hi = h - by;
-  float wi = w - bx;
+  // Remaining content space - Height, width
+  float hc = h - hs;
+  float wc = w - ws;
 
-  float ld = l + (l * hi / by);
-  float rd = r + (r * hi / by);
-  float td = t + (t * wi / bx);
-  float bd = b + (b * wi / bx);
+  // Ratio of border to content
+  float hr = hs == 0 ? 0 : hc / hs;
+  float wr = ws == 0 ? 0 : wc / ws;
 
-  if (by <= 0 || ld + rd > 1) {
-    if (bx <= 0 || td + bd > 1.05) return;
+  float ld = l + (l * hr);
+  float rd = r + (r * hr);
+  float td = t + (t * wr);
+  float bd = b + (b * wr);
+
+  if (hs <= 0 || ld + rd > 1) {
+    if (ws <= 0 || td + bd > 1.05) return;
     // Vertical trapezoid
 
     float m = (ld / (ld + rd));
@@ -88,7 +94,7 @@ void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float
     else color = left;
   }
   else {
-    if (by <= 0 || ld + rd > 1.05) return;
+    if (hs <= 0 || ld + rd > 1.05) return;
     // Horizontal trapezoid
 
     float m = (td / (td + bd));

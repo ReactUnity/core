@@ -290,6 +290,13 @@ namespace ReactUnity.Tests
             Tuple.Create("04", "0 5px 10px 20px", "5px 10px 15px", "red blue lime"),
             Tuple.Create("05", "0 5px 10px 20px", "5px 10px 15px 22px", "red blue lime purple"),
             Tuple.Create("06", "6px", "0 0 20px 10px", "black red black black"),
+            Tuple.Create("side_t", "0", "10px 0 0 0", "red blue lime purple"),
+            Tuple.Create("side_r", "0", "0 10px 0 0", "red blue lime purple"),
+            Tuple.Create("side_b", "0", "0 0 10px 0", "red blue lime purple"),
+            Tuple.Create("side_l", "0", "0 0 0 10px", "red blue lime purple"),
+            Tuple.Create("side_tl", "0", "10px 0 0 10px", "red blue lime purple"),
+            Tuple.Create("side_tr", "0", "10px 10px 0 0", "red blue lime purple"),
+            Tuple.Create("side_rb", "0", "0 10px 10px 0", "red blue lime purple"),
         };
 
         [ReactInjectableTest(BaseScript, BaseStyle)]
