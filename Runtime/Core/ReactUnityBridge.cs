@@ -70,6 +70,13 @@ namespace ReactUnity
                 c.Remove();
         }
 
+        [Preserve]
+        public void clearContainer(object parent)
+        {
+            if (parent is IContainerComponent c)
+                c.Clear();
+        }
+
         #endregion
 
 

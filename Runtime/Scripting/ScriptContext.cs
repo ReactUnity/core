@@ -125,6 +125,7 @@ namespace ReactUnity.Scripting
                     dir: (...args) => _console.dir(...args),
                     clear: (...args) => _console.clear(...args),
                     assert: (...args) => _console.assert(...args),
+                    count: (name) => _console.count(name),
                 };
                 delete __console;
 })()");

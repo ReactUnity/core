@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace ReactUnity.Scripting.DomProxies
         static Regex replaceRegex = new Regex("%[dso]");
 
         ReactContext ctx;
+
+        private Dictionary<string, int> Counters = new Dictionary<string, int>();
 
         public ConsoleProxy(ReactContext ctx)
         {
@@ -89,6 +92,20 @@ namespace ReactUnity.Scripting.DomProxies
         public void dir(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
+        }
+
+        public int count(object msg = null)
+        {
+            string name = msg?.ToString() ?? "default";
+            if (!Counters.TryGetValue(name, out var count))
+            {
+                count = 1;
+            }
+            Counters[name] = count + 1;
+
+
+            Debug.Log($"{name}: {count}");
+            return count;
         }
 
         public void clear()
