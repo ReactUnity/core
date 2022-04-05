@@ -90,7 +90,7 @@ namespace ReactUnity.UGUI
             }
             InstanceTransform = Instance.transform as RectTransform;
 
-            TargetHandler = currentTarget.GetComponent<IPrefabTarget>();
+            TargetHandler = Instance.GetComponent<IPrefabTarget>();
         }
 
         GameObject FindTarget(object value)
