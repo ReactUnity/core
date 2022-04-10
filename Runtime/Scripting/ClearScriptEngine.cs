@@ -5,6 +5,7 @@
 #if REACT_CLEARSCRIPT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
@@ -21,11 +22,28 @@ namespace ReactUnity.Scripting
         public V8ScriptEngine Engine { get; }
         public object NativeEngine => Engine;
 
+        static string GetPluginFolder()
+        {
+            if (SystemInfo.processorType.IndexOf("ARM", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            {
+                if (Environment.Is64BitProcess) return "arm64";
+                else return "arm";
+            }
+            else
+            {
+                if (Environment.Is64BitProcess) return "x86_64";
+                else return "x86";
+            }
+        }
+
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             HostSettings.IsAndroid = true;
 #endif
+            HostSettings.AuxiliarySearchPath =
+                Application.dataPath + ";" +
+                Application.dataPath + $"/Plugins/{GetPluginFolder()}";
 
             Engine = new V8ScriptEngine(
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |

@@ -2,8 +2,6 @@
 #define REACT_CLEARSCRIPT
 #endif
 
-using System.IO;
-using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
@@ -19,39 +17,32 @@ namespace ReactUnity.Editor
 
         public void OnPostprocessBuild(BuildReport report)
         {
-#if REACT_CLEARSCRIPT
-            if (report.summary.platformGroup == BuildTargetGroup.Standalone)
+#if REACT_CLEARSCRIPT && REACT_CLEARSCRIPT_ICU
+            if (report.summary.platformGroup == UnityEditor.BuildTargetGroup.Standalone)
             {
-                var buildDir = Path.GetDirectoryName(report.summary.outputPath);
+                var buildDir = System.IO.Path.GetDirectoryName(report.summary.outputPath);
 
-                string dllPath;
-                var osx64 = "osx-x64.dylib";
-                var win32 = "win-x86.dll";
-                var win64 = "win-x64.dll";
-                var linux64 = "linux-x64.dll";
+                string filePath;
+                var icuData = "ICU.dat";
 
                 var fileBaseName = "ClearScriptV8.";
 
                 switch (report.summary.platform)
                 {
-                    case BuildTarget.StandaloneOSX:
-                        dllPath = string.Format(ClearScriptDllPathTemplate, osx64);
-                        File.Copy(dllPath, Path.Combine(buildDir, fileBaseName + osx64), true);
-                        break;
-                    case BuildTarget.StandaloneWindows:
-                    case BuildTarget.StandaloneWindows64:
-                        dllPath = string.Format(ClearScriptDllPathTemplate, win32);
-                        File.Copy(dllPath, Path.Combine(buildDir, fileBaseName + win32), true);
-
-                        dllPath = string.Format(ClearScriptDllPathTemplate, win64);
-                        File.Copy(dllPath, Path.Combine(buildDir, fileBaseName + win64), true);
-                        break;
-                    case BuildTarget.StandaloneLinux64:
-                        dllPath = string.Format(ClearScriptDllPathTemplate, linux64);
-                        File.Copy(dllPath, Path.Combine(buildDir, fileBaseName + linux64), true);
+                    case UnityEditor.BuildTarget.StandaloneOSX:
+                    case UnityEditor.BuildTarget.StandaloneWindows:
+                    case UnityEditor.BuildTarget.StandaloneWindows64:
+                    case UnityEditor.BuildTarget.StandaloneLinux64:
+                        filePath = string.Format(ClearScriptDllPathTemplate, icuData);
+                        System.IO.File.Copy(filePath, System.IO.Path.Combine(buildDir, fileBaseName + icuData), true);
                         break;
                     default:
                         break;
+                }
+
+                if(report.summary.platform == UnityEditor.BuildTarget.StandaloneOSX)
+                {
+                    UnityEngine.Debug.LogWarning("For MacOS builds, ClearScriptV8.ICU.dat file must be manually copied to Contents folder.");
                 }
             }
 #endif
