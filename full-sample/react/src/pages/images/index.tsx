@@ -1,4 +1,4 @@
-import { globalsWatcher, ReactUnity as ReactUnityNS, UnityEngine as UE } from '@reactunity/renderer';
+import { globalsWatcher, ReactUnity, UnityEngine } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -8,7 +8,7 @@ const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/google
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function ImagesPage() {
-  const [videoRef, setVideoRef] = useState<ReactUnityNS.UGUI.VideoComponent>();
+  const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
   const Globals = globalsWatcher.useContext();
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function ImagesPage() {
           onDrag={(ev) => {
             Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
           }}
-          onScroll={(ev: UE.EventSystems.PointerEventData) => {
+          onScroll={(ev: UnityEngine.EventSystems.PointerEventData) => {
             Globals.renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), Interop.UnityEngine.Space.Self);
           }}
           onMount={ev => ev.gameObject.SetActive(true)}

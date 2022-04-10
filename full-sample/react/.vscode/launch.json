@@ -13,8 +13,6 @@
       "pauseForSourceMap": true,
       "localRoot": "${workspaceFolder}",
       "cwd": "${workspaceFolder}",
-      "continueOnAttach": true,
-      "trace": true,
       "skipFiles": [
         "<node_internals>/**",
         "node_modules/**"

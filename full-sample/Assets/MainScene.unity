@@ -369,27 +369,15 @@ MonoBehaviour:
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnUnmount:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 139628652}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnUnmount:
+    m_PersistentCalls:
+      m_Calls: []
   OnSetProperty:
     m_PersistentCalls:
       m_Calls: []
@@ -647,8 +635,8 @@ MonoBehaviour:
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3100
-  Debug: 1
+    DevServer: http://192.168.1.50:3100
+  Debug: 0
   AwaitDebugger: 0
   EngineType: 2
   Globals:

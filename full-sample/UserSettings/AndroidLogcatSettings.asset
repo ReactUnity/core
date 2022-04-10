@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "531fdeec",
     "m_SelectedPackage": {
         "deviceId": "531fdeec",
-        "name": "com.UnityTestRunner.UnityTestRunner",
-        "processId": 8783,
+        "name": "com.reactunity.devsample",
+        "processId": 7610,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,54 @@
             "deviceId": "531fdeec",
             "name": "com.UnityTestRunner.UnityTestRunner",
             "processId": 8783,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 3816,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 23548,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 25079,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 25358,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 25701,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 26130,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 26885,
+            "exited": false
+        },
+        {
+            "deviceId": "531fdeec",
+            "name": "com.reactunity.devsample",
+            "processId": 7610,
             "exited": false
         }
     ],

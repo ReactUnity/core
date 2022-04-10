@@ -11,7 +11,7 @@ import '@reactunity/material/styles';
 import { TextField } from '@reactunity/material/text';
 import { Toggle, ToggleGroup } from '@reactunity/material/toggle';
 import { useDataTooltip } from '@reactunity/material/tooltip';
-import React from 'react';
+import React, { useState } from 'react';
 import style from './index.module.scss';
 import { VirtualScrolls } from './virtual-scrolls';
 
@@ -21,6 +21,8 @@ export function MaterialPage() {
   const ttHover = useDataTooltip('hover');
   const ttPress = useDataTooltip('press');
   const ttClick = useDataTooltip('click');
+
+  const [sliderVal, setSliderVal] = useState(60);
 
   return <view className={style.app}>
     <h1 style={{ color: 'red' }}>Material Showcase 😎</h1>
@@ -125,9 +127,12 @@ export function MaterialPage() {
       <h2>Slider</h2>
 
       <Slider allowScroll direction="horizontal" mode="normal" max={100} step={20}>{(val) => val * val}</Slider>
-      <Slider allowScroll direction="horizontal" mode="diff" max={100} step={20}>{(val) => val * val}</Slider>
-      <Slider allowScroll direction="horizontal-reverse" mode="normal" max={100} step={20}>asdf</Slider>
-      <Slider allowScroll direction="horizontal-reverse" mode="diff" max={100} step={20}>asdf</Slider>
+      <Slider allowScroll direction="horizontal" mode="diff" defaultValue={20} max={100} step={20}>{(val) => val * val}</Slider>
+      <Slider allowScroll direction="horizontal-reverse" mode="normal" defaultValue={40} max={100} step={20}>asdf</Slider>
+      <Slider onChange={x => console.log(x)} allowScroll direction="horizontal-reverse" mode="diff" max={100} step={20}>asdf</Slider>
+
+      <Slider allowScroll direction="horizontal" mode="normal" value={sliderVal} onChange={setSliderVal} max={100} step={20}>{(val) => val * val}</Slider>
+      <Slider allowScroll direction="horizontal" mode="normal" value={sliderVal} readOnly onChange={setSliderVal} max={100} step={20}>{(val) => val * val}</Slider>
     </section>
 
     <section>
