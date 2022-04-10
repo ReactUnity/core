@@ -11,7 +11,7 @@ namespace ReactUnity.Editor
     {
         public int callbackOrder => 0;
 
-#if REACT_CLEARSCRIPT
+#if REACT_CLEARSCRIPT && REACT_CLEARSCRIPT_ICU
         private static string ClearScriptDllPathTemplate = "Packages/com.reactunity.core/Plugins/ClearScript/ClearScriptV8.{0}";
 #endif
 
