@@ -14,8 +14,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ../../node_modules/react/index.js
 var react = __webpack_require__(3792);
-// EXTERNAL MODULE: ../../node_modules/react-router/index.js + 1 modules
-var react_router = __webpack_require__(2994);
+// EXTERNAL MODULE: ../../node_modules/react-router/index.js + 2 modules
+var react_router = __webpack_require__(6945);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(6062);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -80,7 +80,7 @@ function Lazy(){var nav=(0,react_router/* useNavigate */.s0)();return/*#__PURE__
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9367);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7897);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7989);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 

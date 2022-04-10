@@ -63,8 +63,7 @@ crashlytics-build.properties
 BuildReports*
 debug.log
 
-QuickSearch.settings
-Search.settings
+UserSettings
 
 /[Cc]ode[Cc]overage/
 TestResults-*.xml

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "0.9.6",
+      "version": "0.9.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -153,7 +153,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.8",
+      "version": "2.1.9",
       "depth": 1,
       "source": "registry",
       "dependencies": {
