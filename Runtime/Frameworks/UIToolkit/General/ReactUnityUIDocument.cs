@@ -19,7 +19,7 @@ namespace ReactUnity.UIToolkit
 
         protected override ReactContext CreateContext(ScriptSource script)
         {
-            return new UIToolkitContext(new UIToolkitContext.Options
+            var ctx = new UIToolkitContext(new UIToolkitContext.Options
             {
                 HostElement = Root,
                 Globals = Globals,
@@ -34,6 +34,8 @@ namespace ReactUnity.UIToolkit
                 BeforeStart = BeforeStart.Invoke,
                 AfterStart = AfterStart.Invoke,
             });
+            ctx.Initialize();
+            return ctx;
         }
 
         public void PlayAudio(AudioClip clip)
