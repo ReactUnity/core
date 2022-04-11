@@ -43,6 +43,7 @@ namespace ReactUnity.Scripting
 #endif
             HostSettings.AuxiliarySearchPath =
                 Application.dataPath + ";" +
+                Application.dataPath + "/Plugins;" +
                 Application.dataPath + $"/Plugins/{GetPluginFolder()}";
 
             Engine = new V8ScriptEngine(
