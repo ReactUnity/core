@@ -1,36 +1,13 @@
 #ifndef CUSTOM_FUNCTIONS_INCLUDED
 #define CUSTOM_FUNCTIONS_INCLUDED
 
-void CalculateBorderRadius_float(float4 br, float2 uv, float2 size, out bool visible)
-{
-  visible = true;
-
-  float r = uv.x > 0.5 ? (uv.y > 0.5 ? br.y : br.z) : (uv.y > 0.5 ? br.x : br.w);
-
-  float rx = r < 1 ? r : r / size.x;
-  float ry = r < 1 ? r : r / size.y;
-
-  rx = rx > 0.5 ? 0.5 : rx;
-  ry = ry > 0.5 ? 0.5 : ry;
-
-  float dx = uv.x > 0.5 ? 1 - uv.x : uv.x;
-  float dy = uv.y > 0.5 ? 1 - uv.y : uv.y;
-
-  if (dx >= rx || dy >= ry) return;
-
-  float drx = rx - dx;
-  float dry = ry - dy;
-
-  visible = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) <= 1;
-}
-
-float CalculateBorderRadius(float4 br, float2 uv, float2 size)
-{
-  if (uv.x < 0 || uv.x > 1 || uv.y < 0 || uv.y > 1) return 0;
-
-  bool visible;
-  CalculateBorderRadius_float(br, uv, size, visible);
-  return visible ? 1 : 0;
+// Returns a positive value if the points a, b, and c occur in counterclockwise order (c lies to the left of the directed line defined by points a and b).
+// Returns a negative value if they occur in clockwise order (c lies to the right of the directed line ab).
+// Returns zero if they are collinear.
+// The result is also an approximation of twice the signed area of the triangle defined by the three points.
+// See also: https://github.com/mourner/robust-predicates
+float orient2dfast(float2 p, float2 a, float2 b) {
+    return (a.y - p.y) * (b.x - p.x) - (a.x - p.x) * (b.y - p.y);
 }
 
 bool ptInTriangle(float2 p, float2 p0, float2 p1, float2 p2) {
@@ -43,6 +20,50 @@ bool ptInTriangle(float2 p, float2 p0, float2 p1, float2 p2) {
   float t = (p2.y - p0.y) * dX + (p0.x - p2.x) * dY;
   if (D < 0) return s <= 0 && t <= 0 && s + t >= D;
   return s >= 0 && t >= 0 && s + t <= D;
+}
+
+void CalculateBorderRadius_float(float4 brx, float4 bry, float4 cuts, float2 uv, float2 size, out bool visible, out bool err)
+{
+  visible = true;
+  err = false;
+
+  bool topright = uv.y > cuts.y && uv.x > cuts.x && orient2dfast(uv, float2(1, cuts.y), float2(cuts.x, 1)) >= 0;
+  bool topleft = uv.y > cuts.w && uv.x < cuts.x && orient2dfast(uv, float2(0, cuts.w), float2(cuts.x, 1)) <= 0;
+  bool bottomright = uv.y < cuts.y && uv.x > cuts.z && orient2dfast(uv, float2(1, cuts.y), float2(cuts.z, 0)) <= 0;
+  bool bottomleft = uv.y < cuts.w && uv.x < cuts.z && orient2dfast(uv, float2(0, cuts.w), float2(cuts.z, 0)) >= 0;
+
+  bool top = topright || topleft;
+  bool right = topright || bottomright;
+  bool bottom = bottomright || bottomleft;
+  bool left = topleft || bottomleft;
+
+  // if(bottomleft) {
+  //   visible = false;
+  //   err = true;
+  //   return;
+  // }
+
+  if(!((right || left) && (top || bottom))) return;
+
+  // TODO: remove error checking
+  if((right && left) || (top && bottom)) {
+    visible = false;
+    err = true;
+    return;
+  }
+
+  float rx = right ? (top ? brx.y : brx.z) : (top ? brx.x : brx.w);
+  float ry = right ? (top ? bry.y : bry.z) : (top ? bry.x : bry.w);
+
+  float dx = right ? 1 - uv.x : uv.x;
+  float dy = top ? 1 - uv.y : uv.y;
+
+  if (dx >= rx || dy >= ry) return;
+
+  float drx = rx - dx;
+  float dry = ry - dy;
+
+  visible = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) <= 1;
 }
 
 void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
@@ -107,12 +128,10 @@ void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float
 }
 
 
-float DistanceToBox(float4 br, float2 uv, float2 size)
+float DistanceToBox(float4 brx, float4 bry, float2 uv, float2 size)
 {
-  float r = uv.x > 0.5 ? (uv.y > 0.5 ? br.y : br.z) : (uv.y > 0.5 ? br.x : br.w);
-
-  float rx = r < 1 ? r : r / size.x;
-  float ry = r < 1 ? r : r / size.y;
+  float rx = uv.x > 0.5 ? (uv.y > 0.5 ? brx.y : brx.z) : (uv.y > 0.5 ? brx.x : brx.w);
+  float ry = uv.x > 0.5 ? (uv.y > 0.5 ? bry.y : bry.z) : (uv.y > 0.5 ? bry.x : bry.w);
 
   rx = min(0.5, rx);
   ry = min(0.5, ry);

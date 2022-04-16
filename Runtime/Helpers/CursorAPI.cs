@@ -130,7 +130,7 @@ namespace ReactUnity.Helpers
 #endif
 
                 var set = Context.CursorSet;
-                var ct = set.Cursors?.GetValueOrDefault(item.Name);
+                var ct = set?.Cursors?.GetValueOrDefault(item.Name);
 
                 if (ct != null) UnityEngine.Cursor.SetCursor(ct.Cursor, ct.Hotspot, CursorMode.Auto);
                 else

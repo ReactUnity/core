@@ -33,7 +33,7 @@ namespace ReactUnity.UGUI.Internal
         internal void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             if (!Image) return;
-            Image.BorderRadius = new Vector4(tl, tr, br, bl);
+            Image.BorderRadiusX = Image.BorderRadiusY = new Vector4(tl, tr, br, bl);
             MaskChanged();
             Image.SetMaterialDirty();
             if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);

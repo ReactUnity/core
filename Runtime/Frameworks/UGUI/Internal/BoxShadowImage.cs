@@ -11,8 +11,6 @@ namespace ReactUnity.UGUI.Internal
         public Transform MaskRoot;
         public BoxShadow Shadow;
 
-        public Vector4 BorderSize;
-
         public override Material GetDefaultMaterial()
         {
             return Instantiate(ResourcesHelper.BoxShadowMaterial);

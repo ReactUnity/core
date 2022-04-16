@@ -2,7 +2,9 @@ Shader "ReactUnity/RoundedBorder"
 {
   Properties{
     _MainTex("Texture", 2D) = "white" {}
-    _borderRadius("borderRadius", Vector) = (0,0,0,0)
+    _borderRadiusX("borderRadiusX", Vector) = (0,0,0,0)
+    _borderRadiusY("borderRadiusY", Vector) = (0,0,0,0)
+    _borderRadiusCuts("borderRadiusCuts", Vector) = (0.5,0.5,0.5,0.5)
     _size("size", Vector) = (1,1,1,1)
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
@@ -57,7 +59,9 @@ Shader "ReactUnity/RoundedBorder"
         #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
         #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
 
-        float4 _borderRadius;
+        float4 _borderRadiusX;
+        float4 _borderRadiusY;
+        float4 _borderRadiusCuts;
         float2 _size;
         sampler2D _MainTex;
         float4 _MainTex_ST;
@@ -66,8 +70,9 @@ Shader "ReactUnity/RoundedBorder"
         fixed4 frag(v2f i) : SV_Target
         {
           bool visible;
-          CalculateBorderRadius_float(_borderRadius, i.uv, _size, visible);
-          float alpha = visible ? 1 : 0;
+          bool err;
+          CalculateBorderRadius_float(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size, visible, err);
+          float alpha = visible && !err ? 1 : 0;
 
           fixed4 res = mixAlpha(tex2D(_MainTex, i.uv), i.color, alpha);
 

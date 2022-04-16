@@ -86,6 +86,7 @@ namespace ReactUnity.UGUI.Internal
             cmp.SetContainer = setContainer;
 
             cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
+            cmp.BorderGraphic.InsetBorder = cmp.RootGraphic;
 
             var bgImage = bg.GetComponent<RawImage>();
             cmp.BgImage = bgImage;
@@ -163,21 +164,26 @@ namespace ReactUnity.UGUI.Internal
             ShadowRoot.offsetMin = min;
             ShadowRoot.offsetMax = max;
 
+
+            var borderSize = new Vector4(borderTop, borderRight, borderBottom, borderLeft);
             BorderGraphic.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
-            BorderGraphic.BorderSize = new Vector4(borderTop, borderRight, borderBottom, borderLeft);
+            BorderGraphic.BorderSize = borderSize;
             BorderGraphic.SetMaterialDirty();
+            BorderGraphic.RefreshInsetBorder();
+
+            RootGraphic.SetMaterialDirty();
         }
 
         private void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             var v = new Vector4(tl, tr, br, bl);
 
-            RootGraphic.BorderRadius = v;
             RootGraphic.SetMaterialDirty();
             MaskUtilities.NotifyStencilStateChanged(RootMask);
 
-            BorderGraphic.BorderRadius = v;
+            BorderGraphic.BorderRadiusX = BorderGraphic.BorderRadiusY = v;
             BorderGraphic.SetMaterialDirty();
+            BorderGraphic.RefreshInsetBorder();
 
             if (ShadowGraphics != null)
             {
@@ -185,7 +191,7 @@ namespace ReactUnity.UGUI.Internal
                 {
                     var g = ShadowGraphics[i];
 
-                    g.BorderRadius = v;
+                    g.BorderRadiusX = g.BorderRadiusY = v;
                     g.SetMaterialDirty();
                 }
             }
