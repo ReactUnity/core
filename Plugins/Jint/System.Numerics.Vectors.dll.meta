@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c705a1d7613f4d64abc4f0c2a98f6050
+guid: e2c3fc96e30a7a04db6f3ed78dd2e4d7
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -7,6 +7,8 @@ PluginImporter:
   executionOrder: {}
   defineConstraints:
   - '!REACT_DISABLE_JINT'
+  - '!NET_STANDARD_2_1'
+  - NET_STANDARD_2_0
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 1
