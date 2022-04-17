@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.Tests.Renderer
         public StyleSheetTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [EditorInjectableTest()]
+        [EditorInjectableTest(style: ":root { color: black !important; }")]
         public IEnumerator StyleSheetsCanBeInsertedAndRemoved()
         {
             yield return null;

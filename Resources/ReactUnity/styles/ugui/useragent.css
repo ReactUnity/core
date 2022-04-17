@@ -1,3 +1,8 @@
+// Required for Suspense to work correctly in renderer
+.react-unity__renderer__hidden {
+  display: none !important;
+}
+
 @font-face {
   font-family: sans-serif;
   src: url(resource:ReactUnity/fonts/sans-serif);
