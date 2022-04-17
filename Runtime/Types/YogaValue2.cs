@@ -29,9 +29,24 @@ namespace ReactUnity.Types
             Y = y;
         }
 
-        public UnityEngine.Vector2 AsVector()
+        public static YogaValue2 Point(float x, float y)
         {
-            return new UnityEngine.Vector2(X.Value, Y.Value);
+            return new YogaValue2(YogaValue.Point(x), YogaValue.Point(y));
+        }
+
+        public static YogaValue2 Percent(float x, float y)
+        {
+            return new YogaValue2(YogaValue.Percent(x), YogaValue.Percent(y));
+        }
+
+        public Vector2 AsVector()
+        {
+            return new Vector2(X.Value, Y.Value);
+        }
+
+        public bool IsZero()
+        {
+            return X.Value == 0 && Y.Value == 0;
         }
 
         public override bool Equals(object obj)
@@ -95,21 +110,36 @@ namespace ReactUnity.Types
         {
             IStyleConverter YogaValueParser = AllConverters.YogaValueConverter;
 
+            private bool AllowLiterals = true;
+            private bool SingleValueAssignsBoth = false;
+            private char Separator = ' ';
+
+            public Converter(bool allowLiterals = true, char separator = ' ', bool singleValueAssignsBoth = false)
+            {
+                AllowLiterals = allowLiterals;
+                Separator = separator;
+                SingleValueAssignsBoth = singleValueAssignsBoth;
+            }
+
             public bool CanHandleKeyword(CssKeyword keyword) => false;
 
             public object Parse(string value)
             {
                 if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
 
-                var sp = ParseFromPositioningLiteral(value);
-                if (sp is YogaValue2 s) return s;
+                if (AllowLiterals)
+                {
+                    var sp = ParseFromPositioningLiteral(value);
+                    if (sp is YogaValue2 s) return s;
+                }
 
-                var values = ParserHelpers.SplitWhitespace(value);
+                var values = ParserHelpers.Split(value, Separator);
 
                 if (values.Count == 1)
                 {
                     var pr = YogaValueParser.Parse(values[0]);
-                    if (pr is YogaValue fl) return new YogaValue2(fl, YogaValue.Undefined());
+                    if (pr is YogaValue fl)
+                        return new YogaValue2(fl, SingleValueAssignsBoth ? fl : YogaValue.Undefined());
                 }
 
                 if (values.Count == 2)

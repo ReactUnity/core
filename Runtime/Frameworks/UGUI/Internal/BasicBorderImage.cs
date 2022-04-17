@@ -1,4 +1,6 @@
+using Facebook.Yoga;
 using ReactUnity.Helpers;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -51,21 +53,20 @@ namespace ReactUnity.UGUI.Internal
             if (InsetBorder != null)
             {
 
-                var brx = BorderRadiusX;
-                var bry = BorderRadiusY;
+                var br = BorderRadius;
                 var sz = Size;
-                brx = new Vector4(
-                    Mathf.Max(0, brx.x < 1 ? brx.x * sz.x : brx.x),
-                    Mathf.Max(0, brx.y < 1 ? brx.y * sz.x : brx.y),
-                    Mathf.Max(0, brx.z < 1 ? brx.z * sz.x : brx.z),
-                    Mathf.Max(0, brx.w < 1 ? brx.w * sz.x : brx.w)
+                var brx = new Vector4(
+                    Mathf.Max(0, br[0].X.Unit == YogaUnit.Percent ? br[0].X.Value * sz.x / 100 : br[0].X.Value),
+                    Mathf.Max(0, br[1].X.Unit == YogaUnit.Percent ? br[1].X.Value * sz.x / 100 : br[1].X.Value),
+                    Mathf.Max(0, br[2].X.Unit == YogaUnit.Percent ? br[2].X.Value * sz.x / 100 : br[2].X.Value),
+                    Mathf.Max(0, br[3].X.Unit == YogaUnit.Percent ? br[3].X.Value * sz.x / 100 : br[3].X.Value)
                 );
 
-                bry = new Vector4(
-                    Mathf.Max(0, bry.x < 1 ? bry.x * sz.y : bry.x),
-                    Mathf.Max(0, bry.y < 1 ? bry.y * sz.y : bry.y),
-                    Mathf.Max(0, bry.z < 1 ? bry.z * sz.y : bry.z),
-                    Mathf.Max(0, bry.w < 1 ? bry.w * sz.y : bry.w)
+                var bry = new Vector4(
+                    Mathf.Max(0, br[0].Y.Unit == YogaUnit.Percent ? br[0].Y.Value * sz.y / 100 : br[0].Y.Value),
+                    Mathf.Max(0, br[1].Y.Unit == YogaUnit.Percent ? br[1].Y.Value * sz.y / 100 : br[1].Y.Value),
+                    Mathf.Max(0, br[2].Y.Unit == YogaUnit.Percent ? br[2].Y.Value * sz.y / 100 : br[2].Y.Value),
+                    Mathf.Max(0, br[3].Y.Unit == YogaUnit.Percent ? br[3].Y.Value * sz.y / 100 : br[3].Y.Value)
                 );
 
                 brx = new Vector4(
@@ -82,8 +83,12 @@ namespace ReactUnity.UGUI.Internal
                     Mathf.Ceil(bry.w - BorderSize.z)
                 );
 
-                InsetBorder.BorderRadiusX = brx;
-                InsetBorder.BorderRadiusY = bry;
+                InsetBorder.BorderRadius = new YogaValue2[4] {
+                    YogaValue2.Point(brx.x, bry.x),
+                    YogaValue2.Point(brx.y, bry.y),
+                    YogaValue2.Point(brx.z, bry.z),
+                    YogaValue2.Point(brx.w, bry.w),
+                };
                 InsetBorder.SetMaterialDirty();
                 var mask = InsetBorder.GetComponent<Mask>();
                 if (mask) MaskUtilities.NotifyStencilStateChanged(mask);

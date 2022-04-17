@@ -88,7 +88,7 @@ namespace ReactUnity.Styling.Shorthands
                         StyleProperties.borderBottomRightRadius,
                         StyleProperties.borderBottomLeftRadius,
                     };
-                    Converter = AllConverters.LengthConverter;
+                    Converter = AllConverters.BorderRadiusConverter;
                     break;
                 default:
                     break;
@@ -112,7 +112,40 @@ namespace ReactUnity.Styling.Shorthands
             }
 
             var str = value.ToString();
-            var splits = ParserHelpers.SplitWhitespace(str);
+            var isBorderRadius = Type == PropertyType.BorderRadius;
+            var splits = ParserHelpers.SplitWhitespace(str, isBorderRadius ? '/' : default);
+
+            if (isBorderRadius)
+            {
+                var sepIndex = splits.IndexOf("/");
+                if (sepIndex >= 1 && splits.Count > sepIndex + 1)
+                {
+                    var splitsLhs = new string[sepIndex];
+                    var splitsRhs = new string[splits.Count - sepIndex - 1];
+                    splits.CopyTo(0, splitsLhs, 0, sepIndex);
+                    splits.CopyTo(sepIndex + 1, splitsRhs, 0, splitsRhs.Length);
+
+                    var topLhs = splitsLhs[0];
+                    var rightLhs = splitsLhs.Length > 1 ? splitsLhs[1] : topLhs;
+                    var bottomLhs = splitsLhs.Length > 2 ? splitsLhs[2] : topLhs;
+                    var leftLhs = splitsLhs.Length > 3 ? splitsLhs[3] : rightLhs;
+
+
+                    var topRhs = splitsRhs[0];
+                    var rightRhs = splitsRhs.Length > 1 ? splitsRhs[1] : topRhs;
+                    var bottomRhs = splitsRhs.Length > 2 ? splitsRhs[2] : topRhs;
+                    var leftRhs = splitsRhs.Length > 3 ? splitsRhs[3] : rightRhs;
+
+                    splits = new List<string>()
+                    {
+                        topLhs + " " + topRhs,
+                        rightLhs + " " + rightRhs,
+                        bottomLhs + " " + bottomRhs,
+                        leftLhs + " " + leftRhs,
+                    };
+
+                }
+            }
 
             if (splits.Count == 0) return null;
 

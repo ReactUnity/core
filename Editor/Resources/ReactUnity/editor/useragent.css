@@ -1,3 +1,9 @@
+@media (skin: dark) {
+  :root {
+    color: white;
+  }
+}
+
 dialog {
   flex-grow: 1;
   flex-shrink: 1;

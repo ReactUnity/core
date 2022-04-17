@@ -302,8 +302,8 @@ namespace ReactUnity.UGUI
             if (ComputedStyle.HasValue(StyleProperties.backgroundImage)) return true;
             if (ComputedStyle.HasValue(StyleProperties.maskImage)) return true;
             if (ComputedStyle.HasValue(StyleProperties.boxShadow)) return true;
-            if (ComputedStyle.borderTopLeftRadius > 0 || ComputedStyle.borderTopRightRadius > 0 ||
-                ComputedStyle.borderBottomRightRadius > 0 || ComputedStyle.borderBottomLeftRadius > 0) return true;
+            if (!(ComputedStyle.borderTopLeftRadius.IsZero() && ComputedStyle.borderTopRightRadius.IsZero() &&
+                ComputedStyle.borderBottomRightRadius.IsZero() && ComputedStyle.borderBottomLeftRadius.IsZero())) return true;
 
             return false;
         }

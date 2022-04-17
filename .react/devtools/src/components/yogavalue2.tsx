@@ -7,8 +7,8 @@ import type { StylePropComponentProps } from '../common/props';
 const YogaValue2 = Interop.ReactUnity.Types.YogaValue2;
 
 export function YogaValue2Field({ className, label, onChange, value }: StylePropComponentProps<RU.Types.YogaValue2>) {
-  const x = convertYogaToLength(value.X);
-  const y = convertYogaToLength(value.Y);
+  const x = convertYogaToLength(value?.X);
+  const y = convertYogaToLength(value?.Y);
 
   const xRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
   const yRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
@@ -24,9 +24,9 @@ export function YogaValue2Field({ className, label, onChange, value }: StyleProp
     <text className={clsx('unity-base-field__label', 'unity-composite-field__label')}>{label}</text>
 
     <view className={clsx('unity-base-field__input', 'unity-composite-field__input')}>
-      <length label="X" value={x} onChange={changed} ref={xRef}
+      <length label="X" value={x} onChange={changed} ref={xRef} style={{ minWidth: 60 }}
         className={clsx('react-unity_field_no-grow', 'react-unity__field__inline', 'unity-composite-field__field', 'unity-composite-field__field--first')} />
-      <length label="Y" value={y} onChange={changed} ref={yRef}
+      <length label="Y" value={y} onChange={changed} ref={yRef} style={{ minWidth: 60 }}
         className={clsx('react-unity_field_no-grow', 'react-unity__field__inline', 'unity-composite-field__field')} />
       <view className="unity-composite-field__field-spacer"></view>
     </view>

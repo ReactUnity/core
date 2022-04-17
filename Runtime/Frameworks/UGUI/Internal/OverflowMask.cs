@@ -1,3 +1,4 @@
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,10 +31,10 @@ namespace ReactUnity.UGUI.Internal
             MaskChanged();
         }
 
-        internal void SetBorderRadius(float tl, float tr, float br, float bl)
+        internal void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
             if (!Image) return;
-            Image.BorderRadiusX = Image.BorderRadiusY = new Vector4(tl, tr, br, bl);
+            Image.BorderRadius = new YogaValue2[4] { tl, tr, br, bl };
             MaskChanged();
             Image.SetMaterialDirty();
             if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);

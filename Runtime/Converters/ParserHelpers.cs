@@ -65,7 +65,7 @@ namespace ReactUnity.Converters
         public static List<string> SplitComma(string val) => Split(val, ',');
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static List<string> SplitWhitespace(string val) => Split(val, ' ');
+        public static List<string> SplitWhitespace(string val, char isolateCharacter = default) => Split(val, ' ', isolateCharacter);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitShorthand(string val) => Split(val, ' ', '/');

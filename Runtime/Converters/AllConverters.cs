@@ -24,6 +24,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter GeneralConverter = new GeneralConverter();
         static public IStyleConverter YogaValueConverter = new YogaValueConverter();
         static public IStyleConverter YogaValue2Converter = new YogaValue2.Converter();
+        static public IStyleConverter BorderRadiusConverter = new YogaValue2.Converter(false, ' ', true);
         static public IStyleConverter Vector2Converter = new Vector2Converter();
         static public IStyleConverter Vector3Converter = new Vector3Converter();
         static public IStyleConverter IntConverter = new IntConverter();

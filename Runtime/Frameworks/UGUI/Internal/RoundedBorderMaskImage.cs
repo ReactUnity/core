@@ -1,13 +1,14 @@
 using ReactUnity.Helpers;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
+using Facebook.Yoga;
 
 namespace ReactUnity.UGUI.Internal
 {
     public class RoundedBorderMaskImage : Image
     {
-        public Vector4 BorderRadiusX;
-        public Vector4 BorderRadiusY;
+        public YogaValue2[] BorderRadius = new YogaValue2[4];
         public Vector4 Size;
 
         protected override void OnEnable()
@@ -29,21 +30,20 @@ namespace ReactUnity.UGUI.Internal
             {
                 Material result = base.materialForRendering;
 
-                var brx = BorderRadiusX;
-                var bry = BorderRadiusY;
+                var br = BorderRadius;
                 var sz = Size;
-                brx = new Vector4(
-                    Mathf.Max(0, brx.x < 1 ? brx.x : (brx.x / sz.x)),
-                    Mathf.Max(0, brx.y < 1 ? brx.y : (brx.y / sz.x)),
-                    Mathf.Max(0, brx.z < 1 ? brx.z : (brx.z / sz.x)),
-                    Mathf.Max(0, brx.w < 1 ? brx.w : (brx.w / sz.x))
+                var brx = new Vector4(
+                    Mathf.Max(0, br[0].X.Unit == YogaUnit.Percent ? br[0].X.Value / 100 : (br[0].X.Value / sz.x)),
+                    Mathf.Max(0, br[1].X.Unit == YogaUnit.Percent ? br[1].X.Value / 100 : (br[1].X.Value / sz.x)),
+                    Mathf.Max(0, br[2].X.Unit == YogaUnit.Percent ? br[2].X.Value / 100 : (br[2].X.Value / sz.x)),
+                    Mathf.Max(0, br[3].X.Unit == YogaUnit.Percent ? br[3].X.Value / 100 : (br[3].X.Value / sz.x))
                 );
 
-                bry = new Vector4(
-                    Mathf.Max(0, bry.x < 1 ? bry.x : (bry.x / sz.y)),
-                    Mathf.Max(0, bry.y < 1 ? bry.y : (bry.y / sz.y)),
-                    Mathf.Max(0, bry.z < 1 ? bry.z : (bry.z / sz.y)),
-                    Mathf.Max(0, bry.w < 1 ? bry.w : (bry.w / sz.y))
+                var bry = new Vector4(
+                    Mathf.Max(0, br[0].Y.Unit == YogaUnit.Percent ? br[0].Y.Value / 100 : (br[0].Y.Value / sz.y)),
+                    Mathf.Max(0, br[1].Y.Unit == YogaUnit.Percent ? br[1].Y.Value / 100 : (br[1].Y.Value / sz.y)),
+                    Mathf.Max(0, br[2].Y.Unit == YogaUnit.Percent ? br[2].Y.Value / 100 : (br[2].Y.Value / sz.y)),
+                    Mathf.Max(0, br[3].Y.Unit == YogaUnit.Percent ? br[3].Y.Value / 100 : (br[3].Y.Value / sz.y))
                 );
 
                 var sums = new Vector4(

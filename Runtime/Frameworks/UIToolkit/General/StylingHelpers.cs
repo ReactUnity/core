@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -143,9 +144,9 @@ namespace ReactUnity.UIToolkit
             else return StyleKeyword.Null;
         }
 
-        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<float> prop)
+        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<YogaValue2> prop)
         {
-            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue2>(prop).X);
             else return StyleKeyword.Null;
         }
 

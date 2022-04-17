@@ -174,14 +174,14 @@ namespace ReactUnity.UGUI.Internal
             RootGraphic.SetMaterialDirty();
         }
 
-        private void SetBorderRadius(float tl, float tr, float br, float bl)
+        private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
-            var v = new Vector4(tl, tr, br, bl);
+            var v = new YogaValue2[4] { tl, tr, br, bl };
 
             RootGraphic.SetMaterialDirty();
             MaskUtilities.NotifyStencilStateChanged(RootMask);
 
-            BorderGraphic.BorderRadiusX = BorderGraphic.BorderRadiusY = v;
+            BorderGraphic.BorderRadius = v;
             BorderGraphic.SetMaterialDirty();
             BorderGraphic.RefreshInsetBorder();
 
@@ -191,7 +191,7 @@ namespace ReactUnity.UGUI.Internal
                 {
                     var g = ShadowGraphics[i];
 
-                    g.BorderRadiusX = g.BorderRadiusY = v;
+                    g.BorderRadius = v;
                     g.SetMaterialDirty();
                 }
             }

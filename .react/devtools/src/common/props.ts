@@ -2,7 +2,7 @@ import { ReactUnity as RU } from '@reactunity/renderer';
 import React from 'react';
 import { enumComponent, flagsComponent, objectComponent, sliderComponent, sliderintComponent } from '../components/other';
 import { YogaValue2Field } from '../components/yogavalue2';
-import { convertFloatToLength, convertLengthToFloat, convertLengthToYoga, convertListToString, convertStringToList, convertYogaToLength, floatDefaultGetter } from './helpers';
+import { convertLengthToYoga, convertListToString, convertStringToList, convertYogaToLength, floatDefaultGetter } from './helpers';
 
 export interface StylePropComponentProps<T = any> {
   className?: string;
@@ -60,7 +60,7 @@ export const PartCapitalize = {
 
 const lengthField = { component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga };
 const commaSeparatedListField = { component: 'input', getter: convertListToString, setter: convertStringToList };
-const borderRadiusField = { component: 'length', getter: convertFloatToLength, setter: convertLengthToFloat };
+const borderRadiusField = { component: YogaValue2Field };
 
 export const styleProps: StylePropGroup[] = [
   {

@@ -42,6 +42,9 @@ namespace ReactUnity.Styling.Rules
             return new DefaultMediaProvider(type, null,
                 new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
                     { "framework", framework },
+#if UNITY_EDITOR
+                    { "skin", UnityEditor.EditorGUIUtility.isProSkin ? "dark" : "light" },
+#endif
                 },
                 new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
                 {

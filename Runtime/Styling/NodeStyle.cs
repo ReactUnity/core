@@ -29,10 +29,10 @@ namespace ReactUnity.Styling
         public PositionType position => GetStyleValue(StyleProperties.position);
         public CursorList cursor => GetStyleValue(StyleProperties.cursor);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
-        public float borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
-        public float borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
-        public float borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
-        public float borderBottomRightRadius => GetStyleValue(StyleProperties.borderBottomRightRadius);
+        public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
+        public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
+        public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
+        public YogaValue2 borderBottomRightRadius => GetStyleValue(StyleProperties.borderBottomRightRadius);
         public Color borderLeftColor => GetStyleValue(StyleProperties.borderLeftColor);
         public Color borderRightColor => GetStyleValue(StyleProperties.borderRightColor);
         public Color borderTopColor => GetStyleValue(StyleProperties.borderTopColor);

@@ -271,9 +271,9 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator BoxShadowSnapshots([ValueSource("boxShadows")] Tuple<string, string> bg)
         {
-            View.Style["margin"] = 50;
-            View.Style["width"] = 150;
-            View.Style["height"] = 70;
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
             View.Style["box-shadow"] = bg.Item2;
             View.Style["border-radius"] = "0 5px 10px 20px";
             yield return null;
@@ -291,6 +291,10 @@ namespace ReactUnity.Tests
             Tuple.Create("05", "0 5px 10px 20px", "5px 10px 15px 22px", "red blue lime purple"),
             Tuple.Create("06", "6px", "0 0 20px 10px", "black red black black"),
             Tuple.Create("07", "6px 90% 40% 6px", "12px 40px", "black red black black"),
+            Tuple.Create("08", "10% / 50%", "4px", "black red blue lime"),
+            Tuple.Create("09", "10px 50px / 60px", "4px", "black red blue lime"),
+            Tuple.Create("10", "50% 20% / 10% 40%", "4px", "black red blue lime"),
+            Tuple.Create("11", "10px 5px 20px / 20px 25px 30%", "4px", "black red blue lime"),
             Tuple.Create("side_t", "0", "10px 0 0 0", "red blue lime purple"),
             Tuple.Create("side_r", "0", "0 10px 0 0", "red blue lime purple"),
             Tuple.Create("side_b", "0", "0 0 10px 0", "red blue lime purple"),
@@ -303,9 +307,9 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator BorderSnapshots([ValueSource("borders")] Tuple<string, string, string, string> bg)
         {
-            View.Style["margin"] = 50;
-            View.Style["width"] = 150;
-            View.Style["height"] = 70;
+            View.Style["margin"] = 40;
+            View.Style["width"] = 216;
+            View.Style["height"] = 128;
             View.Style["border-radius"] = bg.Item2;
             View.Style["border-width"] = bg.Item3;
             View.Style["border-color"] = bg.Item4;

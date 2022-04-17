@@ -6023,20 +6023,10 @@ if (true) {
  */
 
 
-__webpack_require__(280);
-
 var f = __webpack_require__(68),
-    g = 60103;
-
-exports.Fragment = 60107;
-
-if ("function" === typeof Symbol && Symbol["for"]) {
-  var h = Symbol["for"];
-  g = h("react.element");
-  exports.Fragment = h("react.fragment");
-}
-
-var m = Object.prototype.hasOwnProperty,
+    k = Symbol["for"]("react.element"),
+    l = Symbol["for"]("react.fragment"),
+    m = Object.prototype.hasOwnProperty,
     n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,
     p = {
   key: !0,
@@ -6045,14 +6035,14 @@ var m = Object.prototype.hasOwnProperty,
   __source: !0
 };
 
-function q(c, a, k) {
+function q(c, a, g) {
   var b,
       d = {},
       e = null,
-      l = null;
-  void 0 !== k && (e = "" + k);
+      h = null;
+  void 0 !== g && (e = "" + g);
   void 0 !== a.key && (e = "" + a.key);
-  void 0 !== a.ref && (l = a.ref);
+  void 0 !== a.ref && (h = a.ref);
 
   for (b in a) {
     m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
@@ -6062,22 +6052,23 @@ function q(c, a, k) {
     void 0 === d[b] && (d[b] = a[b]);
   }
   return {
-    $$typeof: g,
+    $$typeof: k,
     type: c,
     key: e,
-    ref: l,
+    ref: h,
     props: d,
     _owner: n.current
   };
 }
 
+exports.Fragment = l;
 exports.jsx = q;
 exports.jsxs = q;
 
 /***/ }),
 
 /***/ 715:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 /**
@@ -6091,44 +6082,26 @@ exports.jsxs = q;
  */
 
 
-var l = __webpack_require__(280),
-    m = 60103,
-    p = 60106;
+var l = Symbol["for"]("react.element"),
+    n = Symbol["for"]("react.portal"),
+    p = Symbol["for"]("react.fragment"),
+    q = Symbol["for"]("react.strict_mode"),
+    r = Symbol["for"]("react.profiler"),
+    t = Symbol["for"]("react.provider"),
+    u = Symbol["for"]("react.context"),
+    v = Symbol["for"]("react.forward_ref"),
+    w = Symbol["for"]("react.suspense"),
+    x = Symbol["for"]("react.memo"),
+    y = Symbol["for"]("react.lazy"),
+    z = Symbol.iterator;
 
-exports.Fragment = 60107;
-exports.StrictMode = 60108;
-exports.Profiler = 60114;
-var q = 60109,
-    r = 60110,
-    t = 60112;
-exports.Suspense = 60113;
-var u = 60115,
-    v = 60116;
-
-if ("function" === typeof Symbol && Symbol["for"]) {
-  var w = Symbol["for"];
-  m = w("react.element");
-  p = w("react.portal");
-  exports.Fragment = w("react.fragment");
-  exports.StrictMode = w("react.strict_mode");
-  exports.Profiler = w("react.profiler");
-  q = w("react.provider");
-  r = w("react.context");
-  t = w("react.forward_ref");
-  exports.Suspense = w("react.suspense");
-  u = w("react.memo");
-  v = w("react.lazy");
-}
-
-var x = "function" === typeof Symbol && Symbol.iterator;
-
-function y(a) {
+function A(a) {
   if (null === a || "object" !== typeof a) return null;
-  a = x && a[x] || a["@@iterator"];
+  a = z && a[z] || a["@@iterator"];
   return "function" === typeof a ? a : null;
 }
 
-var z = {
+var B = {
   isMounted: function isMounted() {
     return !1;
   },
@@ -6136,65 +6109,66 @@ var z = {
   enqueueReplaceState: function enqueueReplaceState() {},
   enqueueSetState: function enqueueSetState() {}
 },
-    A = {};
+    C = Object.assign,
+    D = {};
 
-function B(a, b, e) {
+function E(a, b, e) {
   this.props = a;
   this.context = b;
-  this.refs = A;
-  this.updater = e || z;
+  this.refs = D;
+  this.updater = e || B;
 }
 
-B.prototype.isReactComponent = {};
+E.prototype.isReactComponent = {};
 
-B.prototype.setState = function (a, b) {
+E.prototype.setState = function (a, b) {
   if ("object" !== typeof a && "function" !== typeof a && null != a) throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
   this.updater.enqueueSetState(this, a, b, "setState");
 };
 
-B.prototype.forceUpdate = function (a) {
+E.prototype.forceUpdate = function (a) {
   this.updater.enqueueForceUpdate(this, a, "forceUpdate");
 };
 
-function C() {}
+function F() {}
 
-C.prototype = B.prototype;
+F.prototype = E.prototype;
 
-function D(a, b, e) {
+function G(a, b, e) {
   this.props = a;
   this.context = b;
-  this.refs = A;
-  this.updater = e || z;
+  this.refs = D;
+  this.updater = e || B;
 }
 
-var E = D.prototype = new C();
-E.constructor = D;
-l(E, B.prototype);
-E.isPureReactComponent = !0;
-var F = Array.isArray,
-    G = Object.prototype.hasOwnProperty,
-    H = {
+var H = G.prototype = new F();
+H.constructor = G;
+C(H, E.prototype);
+H.isPureReactComponent = !0;
+var I = Array.isArray,
+    J = Object.prototype.hasOwnProperty,
+    K = {
   current: null
 },
-    I = {
+    L = {
   key: !0,
   ref: !0,
   __self: !0,
   __source: !0
 };
 
-function J(a, b, e) {
+function M(a, b, e) {
   var d,
       c = {},
       k = null,
       h = null;
   if (null != b) for (d in void 0 !== b.ref && (h = b.ref), void 0 !== b.key && (k = "" + b.key), b) {
-    G.call(b, d) && !I.hasOwnProperty(d) && (c[d] = b[d]);
+    J.call(b, d) && !L.hasOwnProperty(d) && (c[d] = b[d]);
   }
   var g = arguments.length - 2;
   if (1 === g) c.children = e;else if (1 < g) {
-    for (var f = Array(g), n = 0; n < g; n++) {
-      f[n] = arguments[n + 2];
+    for (var f = Array(g), m = 0; m < g; m++) {
+      f[m] = arguments[m + 2];
     }
 
     c.children = f;
@@ -6203,18 +6177,18 @@ function J(a, b, e) {
     void 0 === c[d] && (c[d] = g[d]);
   }
   return {
-    $$typeof: m,
+    $$typeof: l,
     type: a,
     key: k,
     ref: h,
     props: c,
-    _owner: H.current
+    _owner: K.current
   };
 }
 
-function K(a, b) {
+function N(a, b) {
   return {
-    $$typeof: m,
+    $$typeof: l,
     type: a.type,
     key: b,
     ref: a.ref,
@@ -6223,8 +6197,8 @@ function K(a, b) {
   };
 }
 
-function L(a) {
-  return "object" === typeof a && null !== a && a.$$typeof === m;
+function O(a) {
+  return "object" === typeof a && null !== a && a.$$typeof === l;
 }
 
 function escape(a) {
@@ -6237,13 +6211,13 @@ function escape(a) {
   });
 }
 
-var M = /\/+/g;
+var P = /\/+/g;
 
-function N(a, b) {
+function Q(a, b) {
   return "object" === typeof a && null !== a && null != a.key ? escape("" + a.key) : b.toString(36);
 }
 
-function O(a, b, e, d, c) {
+function R(a, b, e, d, c) {
   var k = typeof a;
   if ("undefined" === k || "boolean" === k) a = null;
   var h = !1;
@@ -6255,38 +6229,38 @@ function O(a, b, e, d, c) {
 
     case "object":
       switch (a.$$typeof) {
-        case m:
-        case p:
+        case l:
+        case n:
           h = !0;
       }
 
   }
-  if (h) return h = a, c = c(h), a = "" === d ? "." + N(h, 0) : d, F(c) ? (e = "", null != a && (e = a.replace(M, "$&/") + "/"), O(c, b, e, "", function (a) {
+  if (h) return h = a, c = c(h), a = "" === d ? "." + Q(h, 0) : d, I(c) ? (e = "", null != a && (e = a.replace(P, "$&/") + "/"), R(c, b, e, "", function (a) {
     return a;
-  })) : null != c && (L(c) && (c = K(c, e + (!c.key || h && h.key === c.key ? "" : ("" + c.key).replace(M, "$&/") + "/") + a)), b.push(c)), 1;
+  })) : null != c && (O(c) && (c = N(c, e + (!c.key || h && h.key === c.key ? "" : ("" + c.key).replace(P, "$&/") + "/") + a)), b.push(c)), 1;
   h = 0;
   d = "" === d ? "." : d + ":";
-  if (F(a)) for (var g = 0; g < a.length; g++) {
+  if (I(a)) for (var g = 0; g < a.length; g++) {
     k = a[g];
-    var f = d + N(k, g);
-    h += O(k, b, e, f, c);
-  } else if (f = y(a), "function" === typeof f) for (a = f.call(a), g = 0; !(k = a.next()).done;) {
-    k = k.value, f = d + N(k, g++), h += O(k, b, e, f, c);
+    var f = d + Q(k, g);
+    h += R(k, b, e, f, c);
+  } else if (f = A(a), "function" === typeof f) for (a = f.call(a), g = 0; !(k = a.next()).done;) {
+    k = k.value, f = d + Q(k, g++), h += R(k, b, e, f, c);
   } else if ("object" === k) throw b = String(a), Error("Objects are not valid as a React child (found: " + ("[object Object]" === b ? "object with keys {" + Object.keys(a).join(", ") + "}" : b) + "). If you meant to render a collection of children, use an array instead.");
   return h;
 }
 
-function P(a, b, e) {
+function S(a, b, e) {
   if (null == a) return a;
   var d = [],
       c = 0;
-  O(a, d, "", "", function (a) {
+  R(a, d, "", "", function (a) {
     return b.call(e, a, c++);
   });
   return d;
 }
 
-function Q(a) {
+function T(a) {
   if (-1 === a._status) {
     var b = a._result;
     b = b();
@@ -6302,60 +6276,63 @@ function Q(a) {
   throw a._result;
 }
 
-var R = {
+var U = {
   current: null
 },
-    S = {
-  transition: 0
+    V = {
+  transition: null
 },
-    T = {
-  ReactCurrentDispatcher: R,
-  ReactCurrentBatchConfig: S,
-  ReactCurrentOwner: H,
-  assign: l
+    W = {
+  ReactCurrentDispatcher: U,
+  ReactCurrentBatchConfig: V,
+  ReactCurrentOwner: K
 };
 exports.Children = {
-  map: P,
+  map: S,
   forEach: function forEach(a, b, e) {
-    P(a, function () {
+    S(a, function () {
       b.apply(this, arguments);
     }, e);
   },
   count: function count(a) {
     var b = 0;
-    P(a, function () {
+    S(a, function () {
       b++;
     });
     return b;
   },
   toArray: function toArray(a) {
-    return P(a, function (a) {
+    return S(a, function (a) {
       return a;
     }) || [];
   },
   only: function only(a) {
-    if (!L(a)) throw Error("React.Children.only expected to receive a single React element child.");
+    if (!O(a)) throw Error("React.Children.only expected to receive a single React element child.");
     return a;
   }
 };
-exports.Component = B;
-exports.PureComponent = D;
-exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = T;
+exports.Component = E;
+exports.Fragment = p;
+exports.Profiler = r;
+exports.PureComponent = G;
+exports.StrictMode = q;
+exports.Suspense = w;
+exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W;
 
 exports.cloneElement = function (a, b, e) {
   if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
-  var d = l({}, a.props),
+  var d = C({}, a.props),
       c = a.key,
       k = a.ref,
       h = a._owner;
 
   if (null != b) {
-    void 0 !== b.ref && (k = b.ref, h = H.current);
+    void 0 !== b.ref && (k = b.ref, h = K.current);
     void 0 !== b.key && (c = "" + b.key);
     if (a.type && a.type.defaultProps) var g = a.type.defaultProps;
 
     for (f in b) {
-      G.call(b, f) && !I.hasOwnProperty(f) && (d[f] = void 0 === b[f] && void 0 !== g ? g[f] : b[f]);
+      J.call(b, f) && !L.hasOwnProperty(f) && (d[f] = void 0 === b[f] && void 0 !== g ? g[f] : b[f]);
     }
   }
 
@@ -6363,14 +6340,14 @@ exports.cloneElement = function (a, b, e) {
   if (1 === f) d.children = e;else if (1 < f) {
     g = Array(f);
 
-    for (var n = 0; n < f; n++) {
-      g[n] = arguments[n + 2];
+    for (var m = 0; m < f; m++) {
+      g[m] = arguments[m + 2];
     }
 
     d.children = g;
   }
   return {
-    $$typeof: m,
+    $$typeof: l,
     type: a.type,
     key: c,
     ref: k,
@@ -6381,24 +6358,26 @@ exports.cloneElement = function (a, b, e) {
 
 exports.createContext = function (a) {
   a = {
-    $$typeof: r,
+    $$typeof: u,
     _currentValue: a,
     _currentValue2: a,
     _threadCount: 0,
     Provider: null,
-    Consumer: null
+    Consumer: null,
+    _defaultValue: null,
+    _globalName: null
   };
   a.Provider = {
-    $$typeof: q,
+    $$typeof: t,
     _context: a
   };
   return a.Consumer = a;
 };
 
-exports.createElement = J;
+exports.createElement = M;
 
 exports.createFactory = function (a) {
-  var b = J.bind(null, a);
+  var b = M.bind(null, a);
   b.type = a;
   return b;
 };
@@ -6411,40 +6390,40 @@ exports.createRef = function () {
 
 exports.forwardRef = function (a) {
   return {
-    $$typeof: t,
+    $$typeof: v,
     render: a
   };
 };
 
-exports.isValidElement = L;
+exports.isValidElement = O;
 
 exports.lazy = function (a) {
   return {
-    $$typeof: v,
+    $$typeof: y,
     _payload: {
       _status: -1,
       _result: a
     },
-    _init: Q
+    _init: T
   };
 };
 
 exports.memo = function (a, b) {
   return {
-    $$typeof: u,
+    $$typeof: x,
     type: a,
     compare: void 0 === b ? null : b
   };
 };
 
 exports.startTransition = function (a) {
-  var b = S.transition;
-  S.transition = 1;
+  var b = V.transition;
+  V.transition = {};
 
   try {
     a();
   } finally {
-    S.transition = b;
+    V.transition = b;
   }
 };
 
@@ -6452,74 +6431,65 @@ exports.unstable_act = function () {
   throw Error("act(...) is not supported in production builds of React.");
 };
 
-exports.unstable_createMutableSource = function (a, b) {
-  return {
-    _getVersion: b,
-    _source: a,
-    _workInProgressVersionPrimary: null,
-    _workInProgressVersionSecondary: null
-  };
-};
-
 exports.useCallback = function (a, b) {
-  return R.current.useCallback(a, b);
+  return U.current.useCallback(a, b);
 };
 
 exports.useContext = function (a) {
-  return R.current.useContext(a);
+  return U.current.useContext(a);
 };
 
 exports.useDebugValue = function () {};
 
 exports.useDeferredValue = function (a) {
-  return R.current.useDeferredValue(a);
+  return U.current.useDeferredValue(a);
 };
 
 exports.useEffect = function (a, b) {
-  return R.current.useEffect(a, b);
+  return U.current.useEffect(a, b);
 };
 
 exports.useId = function () {
-  return R.current.useId();
+  return U.current.useId();
 };
 
 exports.useImperativeHandle = function (a, b, e) {
-  return R.current.useImperativeHandle(a, b, e);
+  return U.current.useImperativeHandle(a, b, e);
 };
 
 exports.useInsertionEffect = function (a, b) {
-  return R.current.useInsertionEffect(a, b);
+  return U.current.useInsertionEffect(a, b);
 };
 
 exports.useLayoutEffect = function (a, b) {
-  return R.current.useLayoutEffect(a, b);
+  return U.current.useLayoutEffect(a, b);
 };
 
 exports.useMemo = function (a, b) {
-  return R.current.useMemo(a, b);
+  return U.current.useMemo(a, b);
 };
 
 exports.useReducer = function (a, b, e) {
-  return R.current.useReducer(a, b, e);
+  return U.current.useReducer(a, b, e);
 };
 
 exports.useRef = function (a) {
-  return R.current.useRef(a);
+  return U.current.useRef(a);
 };
 
 exports.useState = function (a) {
-  return R.current.useState(a);
+  return U.current.useState(a);
 };
 
 exports.useSyncExternalStore = function (a, b, e) {
-  return R.current.useSyncExternalStore(a, b, e);
+  return U.current.useSyncExternalStore(a, b, e);
 };
 
 exports.useTransition = function () {
-  return R.current.useTransition();
+  return U.current.useTransition();
 };
 
-exports.version = "18.0.0-rc.0-fe905f152-20220107";
+exports.version = "18.0.0-fc46dba67-20220329";
 
 /***/ }),
 
@@ -7251,7 +7221,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".select_host__I4Iat.select_chips__ETidb .select_triggerPart__Mhm7Z{font-size:.8125rem;margin:4px 4px 2px 4px;height:24px;background-color:rgba(0,0,0,.12);border-radius:12px;padding:4px 8px;text-align:center}.select_host__I4Iat.select_chips__ETidb .select_triggerContent__Fobc3{margin-left:-4px}.select_triggerContent__Fobc3{flex-direction:row;align-items:center;justify-content:flex-start}.select_trigger__1ni6-{font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px;border:none;appearance:none;background-color:none;border-radius:0;pointer-events:all;flex-direction:row;align-items:center;justify-content:flex-start}.select_menuRoot__sx32T{position:absolute;left:0;right:0;bottom:-1px;height:0;z-index:10000;translate:0 -20px;opacity:0;display:none;transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-end;pointer-events:none}.select_menuRoot__sx32T.select_opened__3n-3-{transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-start;display:flex;translate:0 0;opacity:1;pointer-events:auto}.select_backdrop__8IwS1{position:absolute;top:-5000px;right:-5000px;bottom:-5000px;left:-5000px;background-color:transparent;cursor:default;pointer-events:all}.select_menu__7u0ws{position:absolute;top:100%;left:0;minwidth:100%;background-color:#fff;max-height:60vh}.select_option__WJfAF{border-radius:0;text-align:left;flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px}.select_option__WJfAF.select_selected__8VEDK{background-color:rgba(0,0,0,.06)}.select_option__WJfAF .select_toggle__UScLL{pointer-events:none}.select_caret__zd8yA{pointer-events:none;align-items:center;justify-content:center;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;width:36px;height:36px;line-height:20px;transition:rotate 300ms}.select_host__I4Iat.select_opened__3n-3- .select_caret__zd8yA{rotate:180deg}.select_defaultSeparator__3VaZB{margin-right:.4em}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".select_host__I4Iat.select_chips__ETidb .select_triggerPart__Mhm7Z{font-size:.8125rem;margin:4px 4px 2px 4px;height:24px;background-color:rgba(0,0,0,.12);border-radius:12px;padding:4px 8px;text-align:center}.select_host__I4Iat.select_chips__ETidb .select_triggerContent__Fobc3{margin-left:-4px}.select_triggerContent__Fobc3{flex-direction:row;align-items:center;justify-content:flex-start}.select_trigger__1ni6-{font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px;border:none;appearance:none;background-color:none;border-radius:0;pointer-events:all;flex-direction:row;align-items:center;justify-content:flex-start}.select_menuRoot__sx32T{position:absolute;left:0;right:0;bottom:-1px;height:0;z-index:10000;translate:0 -20px;opacity:0;display:none;transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-end;pointer-events:none}.select_menuRoot__sx32T.select_opened__3n-3-{transition:translate 300ms ease-out,opacity 300ms ease-out,display 300ms step-start;display:flex;translate:0 0;opacity:1;pointer-events:auto}.select_backdrop__8IwS1{position:absolute;top:-5000px;right:-5000px;bottom:-5000px;left:-5000px;background-color:rgba(0,0,0,0);cursor:default;pointer-events:all}.select_menu__7u0ws{position:absolute;top:100%;left:0;minwidth:100%;background-color:#fff;max-height:60vh}.select_option__WJfAF{border-radius:0;text-align:left;flex-direction:row;align-items:center;justify-content:flex-start;min-height:48px}.select_option__WJfAF.select_selected__8VEDK{background-color:rgba(0,0,0,.06)}.select_option__WJfAF .select_toggle__UScLL{pointer-events:none}.select_caret__zd8yA{pointer-events:none;align-items:center;justify-content:center;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;width:36px;height:36px;line-height:20px;transition:rotate 300ms}.select_host__I4Iat.select_opened__3n-3- .select_caret__zd8yA{rotate:180deg}.select_defaultSeparator__3VaZB{margin-right:.4em}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "select_host__I4Iat",
@@ -7290,7 +7260,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__QngDt{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__QngDt[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__QngDt .slider_track__LWAGS{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__QngDt[orientation=vertical] .slider_track__LWAGS{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__QngDt[direction=horizontal-reverse] .slider_track__LWAGS,.slider_host__QngDt[direction=vertical-reverse] .slider_track__LWAGS{justify-content:flex-end}.slider_host__QngDt .slider_fill__2De\\+O{background-color:#ebebeb;width:100%;height:100%}.slider_host__QngDt .slider_thumbContainer__28Lbu{background-color:transparent;position:absolute;width:0;height:0}.slider_host__QngDt[direction=horizontal] .slider_thumbContainer__28Lbu{top:50%;right:0}.slider_host__QngDt[direction=horizontal-reverse] .slider_thumbContainer__28Lbu{top:50%;left:0}.slider_host__QngDt[direction=vertical] .slider_thumbContainer__28Lbu{left:50%;top:0}.slider_host__QngDt[direction=vertical-reverse] .slider_thumbContainer__28Lbu{left:50%;bottom:0}.slider_host__QngDt .slider_thumb__HCBio{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__QngDt[orientation=horizontal] .slider_thumb__HCBio{flex-direction:column}.slider_host__QngDt[orientation=vertical] .slider_thumb__HCBio{flex-direction:row}.slider_host__QngDt:hover .slider_thumb__HCBio{background-color:#ebebeb}.slider_host__QngDt:focus .slider_thumb__HCBio{background-color:#fafafa}.slider_host__QngDt:active .slider_thumb__HCBio{background-color:#dbdbdb}.slider_host__QngDt[readonly]{cursor:default}.slider_host__QngDt[readonly] .slider_thumb__HCBio{background-color:#ebebeb}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root{--mat-slider-color: cornflowerblue}.slider_host__QngDt{height:20px;width:200px;margin:20px;transform-origin:50% 50%;navigation:vertical;cursor:pointer}.slider_host__QngDt[orientation=vertical]{width:20px;height:200px;navigation:horizontal}.slider_host__QngDt .slider_track__LWAGS{position:absolute;left:0;right:0;top:25%;bottom:25%;background-color:#c7c7c7;border-radius:4px;border-width:1px;flex-direction:row}.slider_host__QngDt[orientation=vertical] .slider_track__LWAGS{left:25%;right:25%;top:0;bottom:0;flex-direction:column-reverse}.slider_host__QngDt[direction=horizontal-reverse] .slider_track__LWAGS,.slider_host__QngDt[direction=vertical-reverse] .slider_track__LWAGS{justify-content:flex-end}.slider_host__QngDt .slider_fill__2De\\+O{background-color:#ebebeb;width:100%;height:100%}.slider_host__QngDt .slider_thumbContainer__28Lbu{background-color:rgba(0,0,0,0);position:absolute;width:0;height:0}.slider_host__QngDt[direction=horizontal] .slider_thumbContainer__28Lbu{top:50%;right:0}.slider_host__QngDt[direction=horizontal-reverse] .slider_thumbContainer__28Lbu{top:50%;left:0}.slider_host__QngDt[direction=vertical] .slider_thumbContainer__28Lbu{left:50%;top:0}.slider_host__QngDt[direction=vertical-reverse] .slider_thumbContainer__28Lbu{left:50%;bottom:0}.slider_host__QngDt .slider_thumb__HCBio{align-items:center;border-radius:20px;height:20px;width:20px;position:absolute;transform-origin:center;translate:-50% -50%;border-width:1px;border-color:var(--mat-slider-color);background-color:#ebebeb}.slider_host__QngDt[orientation=horizontal] .slider_thumb__HCBio{flex-direction:column}.slider_host__QngDt[orientation=vertical] .slider_thumb__HCBio{flex-direction:row}.slider_host__QngDt:hover .slider_thumb__HCBio{background-color:#ebebeb}.slider_host__QngDt:focus .slider_thumb__HCBio{background-color:#fafafa}.slider_host__QngDt:active .slider_thumb__HCBio{background-color:#dbdbdb}.slider_host__QngDt[readonly]{cursor:default}.slider_host__QngDt[readonly] .slider_thumb__HCBio{background-color:#ebebeb}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "slider_host__QngDt",
@@ -7320,7 +7290,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".text_host__2bD3M .text_input__kdaVY{border:none;appearance:none;background-color:none;font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px}.text_host__2bD3M.text_filled__gaJ8r .text_input__kdaVY{border:none;margin:0}.text_passwordToggle__10unI{align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex:0 0 auto;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;background-color:transparent;box-shadow:none}.text_passwordToggle__10unI icon{width:20px;height:20px;line-height:20px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".text_host__2bD3M .text_input__kdaVY{border:none;appearance:none;background-color:none;font-size:1em;flex:1 1 0;overflow:hidden;text-align:left;padding:0 12px}.text_host__2bD3M.text_filled__gaJ8r .text_input__kdaVY{border:none;margin:0}.text_passwordToggle__10unI{align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex:0 0 auto;padding:8px;position:absolute;right:12px;top:50%;translate:0 -50%;background-color:rgba(0,0,0,0);box-shadow:none}.text_passwordToggle__10unI icon{width:20px;height:20px;line-height:20px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "text_host__2bD3M",
@@ -7349,7 +7319,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".toggle_label__L4aQK{flex-direction:row;align-items:center}.toggle_label__L4aQK:hover .toggle_toggle__1OFgA .toggle_ring__T7w-Z{scale:1}.toggle_toggle__1OFgA{appearance:none;overflow:visible;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);color:#000;border:2px #000;background-color:transparent;box-shadow:none;width:20px}.toggle_toggle__1OFgA .toggle_ring__T7w-Z{position:absolute;border-radius:50%;inset:-70%;background-color:rgba(0,0,0,.08);scale:0;transition:scale .16s;overflow:hidden}.toggle_selectAllToggle__Y0Yxx{margin-bottom:4px}.toggle_label__L4aQK.toggle_radio__5UgPC .toggle_toggle__1OFgA{border-radius:50%}.toggle_label__L4aQK.toggle_radio__5UgPC .toggle_toggle__1OFgA:checked:not(:indeterminate):after{background-image:url(res:ReactUnity/sprites/radio)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".toggle_label__L4aQK{flex-direction:row;align-items:center}.toggle_label__L4aQK:hover .toggle_toggle__1OFgA .toggle_ring__T7w-Z{scale:1}.toggle_toggle__1OFgA{appearance:none;overflow:visible;border-radius:4px;transition:box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);color:#000;border:2px #000;background-color:rgba(0,0,0,0);box-shadow:none;width:20px}.toggle_toggle__1OFgA .toggle_ring__T7w-Z{position:absolute;border-radius:50%;inset:-70%;background-color:rgba(0,0,0,.08);scale:0;transition:scale .16s;overflow:hidden}.toggle_selectAllToggle__Y0Yxx{margin-bottom:4px}.toggle_label__L4aQK.toggle_radio__5UgPC .toggle_toggle__1OFgA{border-radius:50%}.toggle_label__L4aQK.toggle_radio__5UgPC .toggle_toggle__1OFgA:checked:not(:indeterminate):after{background-image:url(res:ReactUnity/sprites/radio)}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"label": "toggle_label__L4aQK",
@@ -8014,8 +7984,8 @@ function _Accordion(_a) {
     }, {
       children: [summary, (0,jsx_runtime.jsx)("icon", {
         children: "expand_more"
-      }, void 0)]
-    }), void 0), (0,jsx_runtime.jsx)("view", __assign({
+      })]
+    })), (0,jsx_runtime.jsx)("view", __assign({
       className: clsx_m(accordion_index_module.expander, 'mat-accordion-expander'),
       ref: expanderRef,
       style: expanderBaseStyle
@@ -8026,9 +7996,9 @@ function _Accordion(_a) {
         className: accordion_index_module.contentWrapper
       }, {
         children: content
-      }), void 0)
-    }), void 0)]
-  }), void 0);
+      }))
+    }))]
+  }));
 }
 
 function _Summary(_a) {
@@ -8038,7 +8008,7 @@ function _Summary(_a) {
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Summary>",
     className: clsx_m(className, accordion_index_module.summary, 'mat-accordion-summary')
-  }, props), void 0);
+  }, props));
 }
 
 function _Content(_a) {
@@ -8048,7 +8018,7 @@ function _Content(_a) {
   return (0,jsx_runtime.jsx)("view", __assign({
     name: "<Accordion.Content>",
     className: clsx_m(className, accordion_index_module.content, 'mat-accordion-content')
-  }, props), void 0);
+  }, props));
 }
 
 var Accordion = react.memo(_Accordion);
@@ -8248,7 +8218,7 @@ var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
     className: clsx_m(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant)
   }, {
     children: children
-  }), void 0);
+  }));
 });
 
 var Button = react.memo(_Button);
@@ -8382,10 +8352,10 @@ function Modal(_a) {
       }, {
         children: (0,jsx_runtime.jsx)("icon", {
           children: "close"
-        }, void 0)
-      }), void 0)]
-    }), void 0)
-  }), void 0);
+        })
+      }))]
+    }))
+  }));
 }
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/alert/index.module.scss
 var alert_index_module = __webpack_require__(924);
@@ -8476,11 +8446,11 @@ function AlertDialog(_a) {
       className: clsx_m('mat-alert-dialog-title', src_alert_index_module.title)
     }, {
       children: title
-    }), void 0), text && (0,jsx_runtime.jsx)("div", alert_assign({
+    })), text && (0,jsx_runtime.jsx)("div", alert_assign({
       className: clsx_m('mat-alert-dialog-text', src_alert_index_module.text)
     }, {
       children: text
-    }), void 0), button && (0,jsx_runtime.jsx)("div", alert_assign({
+    })), button && (0,jsx_runtime.jsx)("div", alert_assign({
       className: clsx_m('mat-alert-dialog-buttons', src_alert_index_module.buttons)
     }, {
       children: (0,jsx_runtime.jsx)(Button, alert_assign({
@@ -8490,9 +8460,9 @@ function AlertDialog(_a) {
         }
       }, {
         children: button
-      }), void 0)
-    }), void 0)]
-  }), void 0);
+      }))
+    }))]
+  }));
 }
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/card/index.module.scss
 var card_index_module = __webpack_require__(876);
@@ -8573,7 +8543,7 @@ function _Card(_a) {
     className: clsx_m(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
   }, props, {
     children: children
-  }), void 0);
+  }));
 }
 
 function card_Content(_a) {
@@ -8583,7 +8553,7 @@ function card_Content(_a) {
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card.Content>",
     className: clsx_m(className, src_card_index_module.content, 'mat-card-content')
-  }, props), void 0);
+  }, props));
 }
 
 var Card = react.memo(_Card);
@@ -8693,15 +8663,15 @@ function ConfirmDialog(_a) {
       className: clsx_m('mat-confirm-dialog-title', src_confirm_index_module.title)
     }, {
       children: title
-    }), void 0), text && (0,jsx_runtime.jsx)("div", confirm_assign({
+    })), text && (0,jsx_runtime.jsx)("div", confirm_assign({
       className: clsx_m('mat-confirm-dialog-text', src_confirm_index_module.text)
     }, {
       children: text
-    }), void 0), error && (0,jsx_runtime.jsx)("div", confirm_assign({
+    })), error && (0,jsx_runtime.jsx)("div", confirm_assign({
       className: clsx_m('mat-modal-dialog-error', src_confirm_index_module.error)
     }, {
       children: error
-    }), void 0), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", confirm_assign({
+    })), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", confirm_assign({
       className: clsx_m('mat-confirm-dialog-buttons', src_confirm_index_module.buttons)
     }, {
       children: buttons.map(function (btn, ind) {
@@ -8715,8 +8685,8 @@ function ConfirmDialog(_a) {
           children: btn.text
         }), ind);
       })
-    }), void 0)]
-  }), void 0);
+    }))]
+  }));
 }
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/input/index.module.scss
 var input_index_module = __webpack_require__(69);
@@ -8817,26 +8787,26 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
       className: clsx_m(src_input_index_module.content, 'mat-input-content')
     }, {
       children: children
-    }), void 0), variant === 'outlined' && (0,jsx_runtime.jsx)("view", {
+    })), variant === 'outlined' && (0,jsx_runtime.jsx)("view", {
       className: clsx_m(src_input_index_module.inputFrame, 'mat-input-frame')
-    }, void 0), !!placeholder && (0,jsx_runtime.jsxs)("view", input_assign({
+    }), !!placeholder && (0,jsx_runtime.jsxs)("view", input_assign({
       className: clsx_m(src_input_index_module.placeholder, 'mat-input-placeholder')
     }, {
       children: [(0,jsx_runtime.jsx)("view", input_assign({
         className: clsx_m(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost')
       }, {
         children: placeholder
-      }), void 0), (0,jsx_runtime.jsx)("view", input_assign({
+      })), (0,jsx_runtime.jsx)("view", input_assign({
         className: clsx_m(src_input_index_module.placeholderContent, 'mat-input-placeholder-content')
       }, {
         children: (0,jsx_runtime.jsx)("view", input_assign({
           className: clsx_m(src_input_index_module.placeholderText, 'mat-input-placeholder-text')
         }, {
           children: placeholder
-        }), void 0)
-      }), void 0)]
-    }), void 0)]
-  }), void 0);
+        }))
+      }))]
+    }))]
+  }));
 });
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/paper/index.module.scss
 var paper_index_module = __webpack_require__(765);
@@ -8916,7 +8886,7 @@ function _Paper(_a) {
     className: clsx_m(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
   }, props, {
     children: children
-  }), void 0);
+  }));
 }
 
 var Paper = react.memo(_Paper);
@@ -9039,7 +9009,7 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
       placeholder: ' ',
       onSelect: focusHandler,
       onChange: change
-    }, inputProps), void 0), isPassword && (0,jsx_runtime.jsx)(Button, text_assign({
+    }, inputProps)), isPassword && (0,jsx_runtime.jsx)(Button, text_assign({
       variant: "icon",
       onClick: function onClick() {
         return setPasswordShown(function (st) {
@@ -9050,9 +9020,9 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
     }, {
       children: (0,jsx_runtime.jsx)("icon", {
         children: passwordShown ? 'visibility' : 'visibility_off'
-      }, void 0)
-    }), void 0)]
-  }), void 0);
+      })
+    }))]
+  }));
 });
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/prompt/index.module.scss
 var prompt_index_module = __webpack_require__(554);
@@ -9153,19 +9123,19 @@ function PromptDialog(_a) {
       className: clsx_m('mat-prompt-dialog-title', src_prompt_index_module.title)
     }, {
       children: title
-    }), void 0), text && (0,jsx_runtime.jsx)("div", prompt_assign({
+    })), text && (0,jsx_runtime.jsx)("div", prompt_assign({
       className: clsx_m('mat-prompt-dialog-text', src_prompt_index_module.text)
     }, {
       children: text
-    }), void 0), (0,jsx_runtime.jsx)(TextField, prompt_assign({
+    })), (0,jsx_runtime.jsx)(TextField, prompt_assign({
       className: clsx_m('mat-prompt-dialog-input', src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
-    }, inputProps), void 0), error && (0,jsx_runtime.jsx)("div", prompt_assign({
+    }, inputProps)), error && (0,jsx_runtime.jsx)("div", prompt_assign({
       className: clsx_m('mat-prompt-dialog-error', src_prompt_index_module.error)
     }, {
       children: error
-    }), void 0), (0,jsx_runtime.jsxs)("div", prompt_assign({
+    })), (0,jsx_runtime.jsxs)("div", prompt_assign({
       className: clsx_m('mat-prompt-dialog-buttons', src_prompt_index_module.buttons)
     }, {
       children: [(0,jsx_runtime.jsx)(Button, prompt_assign({
@@ -9174,16 +9144,16 @@ function PromptDialog(_a) {
         }
       }, {
         children: cancel || 'Cancel'
-      }), void 0), (0,jsx_runtime.jsx)(Button, prompt_assign({
+      })), (0,jsx_runtime.jsx)(Button, prompt_assign({
         onClick: function onClick() {
           return onClose(inputRef.current.Value, true);
         },
         "data-temp-disabled": submitting
       }, {
         children: submit || 'Submit'
-      }), void 0)]
-    }), void 0)]
-  }), void 0);
+      }))]
+    }))]
+  }));
 }
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/selection.js
 ;
@@ -9476,13 +9446,13 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
       children: (0,jsx_runtime.jsx)("view", {
         className: clsx_m(src_toggle_index_module.ring, 'mat-toggle-ring'),
         ref: ringRef
-      }, void 0)
-    }), void 0), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
+      })
+    })), !!children && (0,jsx_runtime.jsx)("view", toggle_assign({
       className: clsx_m(src_toggle_index_module.labelContent, 'mat-toggle-label-content')
     }, {
       children: children
-    }), void 0)]
-  }), void 0);
+    }))]
+  }));
 });
 
 var Toggle = react.memo(_Toggle);
@@ -9530,9 +9500,9 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
         className: clsx_m('mat-toggle-select-all', src_toggle_index_module.selectAllToggle)
       }, {
         children: selectAllLabel || 'Select All'
-      }), void 0), children]
-    }), void 0)
-  }), void 0);
+      })), children]
+    }))
+  }));
 });
 
 var ToggleGroup = react.memo(_ToggleGroup);
@@ -9640,6 +9610,8 @@ function _Select(_a) {
   var selectAllRef = (0,react.useRef)();
   var fieldRef = (0,react.useRef)();
   var shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
+  var onChangeRef = useAutoRef(onChange);
+  var shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
   var state = (0,react.useMemo)(function () {
     return new SelectionState(!!multiple, init.current);
   }, [multiple, init]);
@@ -9650,23 +9622,22 @@ function _Select(_a) {
 
   (0,react.useLayoutEffect)(function () {
     state.onChange = function (val, all, any) {
-      var _a;
+      var _a, _b;
 
-      onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+      (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, val, all, any);
 
       if (selectAllRef.current) {
         selectAllRef.current.Indeterminate = !!any && !all;
         selectAllRef.current.Checked = !!all;
       }
 
-      if (!shouldKeepOpen) {
+      if (!shouldKeepOpenRef.current) {
         setOpened(false);
       }
 
-      (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(!any);
+      (_b = fieldRef.current) === null || _b === void 0 ? void 0 : _b.setEmpty(!any);
     };
-  }, [onChange, shouldKeepOpen]);
-  (0,react.useLayoutEffect)(function () {
+
     state.onUpdate = function (st) {
       setSelectedElements(st.getSelectedElements());
     };
@@ -9690,7 +9661,7 @@ function _Select(_a) {
       className: src_select_index_module.defaultSeparator
     }, {
       children: ","
-    }), void 0);
+    }));
   }
 
   var setFieldRef = (0,react.useCallback)(function (val) {
@@ -9721,17 +9692,17 @@ function _Select(_a) {
               className: src_select_index_module.triggerPart
             }, {
               children: x.getTemplate()
-            }), void 0)]
+            }))]
           }, i);
         })
-      }), void 0), (0,jsx_runtime.jsxs)("view", select_assign({
+      })), (0,jsx_runtime.jsxs)("view", select_assign({
         className: clsx_m(src_select_index_module.menuRoot, opened && src_select_index_module.opened)
       }, {
         children: [(0,jsx_runtime.jsx)("button", {
           name: "<SelectBackdrop>",
           onClick: close,
           className: clsx_m(src_select_index_module.backdrop)
-        }, void 0), (0,jsx_runtime.jsx)(SelectContext.Provider, select_assign({
+        }), (0,jsx_runtime.jsx)(SelectContext.Provider, select_assign({
           value: state
         }, {
           children: (0,jsx_runtime.jsx)("scroll", select_assign({
@@ -9739,15 +9710,15 @@ function _Select(_a) {
             className: clsx_m(src_select_index_module.menu, getElevationClass(4))
           }, {
             children: children
-          }), void 0)
-        }), void 0)]
-      }), void 0)]
-    }), void 0), !hideCaret && (0,jsx_runtime.jsx)("icon", select_assign({
+          }))
+        }))]
+      }))]
+    })), !hideCaret && (0,jsx_runtime.jsx)("icon", select_assign({
       className: clsx_m(src_select_index_module.caret, 'mat-select-caret')
     }, {
       children: 'keyboard_arrow_down'
-    }), void 0)]
-  }), void 0);
+    }))]
+  }));
 }
 
 function _Option(_a) {
@@ -9801,7 +9772,7 @@ function _Option(_a) {
       }
     };
   }, [value, setSelected, selectedRef]);
-  (0,react.useEffect)(function () {
+  (0,react.useLayoutEffect)(function () {
     if (ctx) {
       ctx.register(selectionRef);
       return function () {
@@ -9829,8 +9800,8 @@ function _Option(_a) {
       type: ctx.allowMultiple ? 'checkbox' : 'radio',
       checked: selected,
       independent: true
-    }, void 0), children]
-  }), void 0);
+    }), children]
+  }));
 }
 
 var Select = react.memo(_Select);
@@ -9953,7 +9924,7 @@ var SliderChild = (0,react.forwardRef)(function _SliderChild(_a, ref) {
   });
   return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: callback(st)
-  }, void 0);
+  });
 });
 
 var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
@@ -10115,12 +10086,12 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
               defaultValue: curValue.current,
               callback: children,
               ref: childRef
-            }, void 0) : children
-          }), void 0)
-        }), void 0)
-      }), void 0)
-    }), void 0)
-  }), void 0);
+            }) : children
+          }))
+        }))
+      }))
+    }))
+  }));
 });
 
 var Slider = react.memo(_Slider);
@@ -10295,10 +10266,10 @@ function (_super) {
           }
         }, {
           children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
-        }), void 0), (0,jsx_runtime.jsx)("view", {
+        })), (0,jsx_runtime.jsx)("view", {
           children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
-        }, void 0)]
-      }), void 0);
+        })]
+      }));
     }
 
     return this.props.children;
@@ -10317,8 +10288,8 @@ function DefaultView(_a) {
   return (0,jsx_runtime.jsx)(ErrorBoundary, {
     children: (0,jsx_runtime.jsx)(GlobalsProvider, {
       children: children
-    }, void 0)
-  }, void 0);
+    })
+  });
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
@@ -10444,7 +10415,7 @@ var hostConfig = {
   supportsMutation: true,
   supportsHydration: false,
   supportsPersistence: false,
-  supportsMicrotasks: false,
+  supportsMicrotasks: true,
   supportsTestSelectors: false,
   isPrimaryRenderer: true,
   warnsIfNotActing: true,
@@ -10452,7 +10423,9 @@ var hostConfig = {
     return null;
   },
   resetAfterCommit: function resetAfterCommit() {},
-  clearContainer: function clearContainer() {},
+  clearContainer: function clearContainer(container) {
+    return UnityBridge.clearContainer(container);
+  },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
     return false;
   },
@@ -10484,9 +10457,6 @@ var hostConfig = {
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
-  resetTextContent: function resetTextContent() {
-    return console.log('resetTextContent');
-  },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
     UnityBridge.setText(textInstance, newText);
   },
@@ -10508,23 +10478,31 @@ var hostConfig = {
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
     return UnityBridge.removeChild(parent, child);
   },
+  resetTextContent: function resetTextContent() {},
+  preparePortalMount: function preparePortalMount() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   // TODO: implement
-  preparePortalMount: function preparePortalMount() {},
   hideInstance: function hideInstance() {},
   hideTextInstance: function hideTextInstance() {},
   unhideInstance: function unhideInstance() {},
   unhideTextInstance: function unhideTextInstance() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
   // -------------------
   //     Scheduling
   // -------------------
   getCurrentEventPriority: function getCurrentEventPriority() {
-    return eventPriorities["default"];
+    return eventPriorities.discrete;
   },
   noTimeout: -1,
   scheduleTimeout: function scheduleTimeout(callback, timeout) {
     return setTimeout(callback, timeout);
+  },
+  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
+    return Promise.resolve(null).then(callback)["catch"](function (error) {
+      return setTimeout(function () {
+        throw error;
+      }, 0);
+    });
   },
   cancelTimeout: function cancelTimeout(handle) {
     return clearTimeout(handle);
@@ -10638,7 +10616,10 @@ function addTooltip(target, props, withBackdrop, hide) {
   }
 
   UnityBridge.appendChild(anchor, tooltip);
-  Renderer.render(props.content, tooltip, true);
+  Renderer.render(props.content, {
+    disableHelpers: true,
+    hostContainer: tooltip
+  });
   return anchor;
 }
 
