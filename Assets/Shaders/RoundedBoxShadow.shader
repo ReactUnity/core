@@ -4,6 +4,7 @@ Shader "ReactUnity/RoundedBoxShadow"
     _MainTex("Texture", 2D) = "white" {}
     _borderRadiusX("borderRadiusX", Vector) = (0,0,0,0)
     _borderRadiusY("borderRadiusY", Vector) = (0,0,0,0)
+    _borderRadiusCuts("borderRadiusCuts", Vector) = (0.5,0.5,0.5,0.5)
     _size("size", Vector) = (1,1,1,1)
     _blurRadius("blurRadius", Vector) = (0,0,0,0)
     _spread("spread", Vector) = (0,0,0,0)
@@ -64,6 +65,7 @@ Shader "ReactUnity/RoundedBoxShadow"
 
         float4 _borderRadiusX;
         float4 _borderRadiusY;
+        float4 _borderRadiusCuts;
         float2 _size;
         float2 _blurRadius;
         float2 _spread;
@@ -82,7 +84,7 @@ Shader "ReactUnity/RoundedBoxShadow"
           float2 uv = float2((i.uv.x - blur.x - spread.x - offset.x) / innerSize.x, (i.uv.y - blur.y - spread.y + offset.y) / innerSize.y);
 
 
-          float d = DistanceToBox(_borderRadiusX, _borderRadiusY, uv, _size);
+          float d = DistanceToBox(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, uv, _size);
           float rad = min(100, max(3, round(blur.x * _size.x)));
           float sigma = ConvertRadiusToSigma(rad);
 

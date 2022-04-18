@@ -68,10 +68,10 @@ namespace ReactUnity.UGUI.Internal
                 );
 
                 var cutPoints = new Vector4(
-                    brx.x,
+                    1 - brx.y,
                     bry.z,
                     brx.w,
-                    bry.w
+                    1 - bry.x
                 );
 
                 result.SetVector(ShaderHelpers.BorderRadiusXProp, brx);

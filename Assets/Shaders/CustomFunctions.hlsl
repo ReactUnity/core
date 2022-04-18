@@ -1,6 +1,20 @@
 #ifndef CUSTOM_FUNCTIONS_INCLUDED
 #define CUSTOM_FUNCTIONS_INCLUDED
 
+static const float pi = 3.14159265;
+static const float hpi = pi / 2;
+static const float pi2 = 2 * pi;
+static const float e = 2.71828183;
+
+float ConvertRadiusToSigma(float radius) {
+  return radius * 0.57735 + 0.5;
+}
+
+float gaussian(float x, float mu, float sigma) {
+  float a = (x - mu) / sigma;
+  return exp(-0.5 * a * a);
+}
+
 // Returns a positive value if the points a, b, and c occur in counterclockwise order (c lies to the left of the directed line defined by points a and b).
 // Returns a negative value if they occur in clockwise order (c lies to the right of the directed line ab).
 // Returns zero if they are collinear.
@@ -22,11 +36,8 @@ bool ptInTriangle(float2 p, float2 p0, float2 p1, float2 p2) {
   return s >= 0 && t >= 0 && s + t <= D;
 }
 
-void CalculateBorderRadius_float(float4 brx, float4 bry, float4 cuts, float2 uv, float2 size, out bool visible, out bool err)
+float CalculateBorderRadius_float(float4 brx, float4 bry, float4 cuts, float2 uv, float2 size)
 {
-  visible = true;
-  err = false;
-
   bool topright = uv.y > cuts.y && uv.x > cuts.x && orient2dfast(uv, float2(1, cuts.y), float2(cuts.x, 1)) >= 0;
   bool topleft = uv.y > cuts.w && uv.x < cuts.x && orient2dfast(uv, float2(0, cuts.w), float2(cuts.x, 1)) <= 0;
   bool bottomright = uv.y < cuts.y && uv.x > cuts.z && orient2dfast(uv, float2(1, cuts.y), float2(cuts.z, 0)) <= 0;
@@ -37,20 +48,7 @@ void CalculateBorderRadius_float(float4 brx, float4 bry, float4 cuts, float2 uv,
   bool bottom = bottomright || bottomleft;
   bool left = topleft || bottomleft;
 
-  // if(bottomleft) {
-  //   visible = false;
-  //   err = true;
-  //   return;
-  // }
-
-  if(!((right || left) && (top || bottom))) return;
-
-  // TODO: remove error checking
-  if((right && left) || (top && bottom)) {
-    visible = false;
-    err = true;
-    return;
-  }
+  if(!((right || left) && (top || bottom))) return 0;
 
   float rx = right ? (top ? brx.y : brx.z) : (top ? brx.x : brx.w);
   float ry = right ? (top ? bry.y : bry.z) : (top ? bry.x : bry.w);
@@ -58,12 +56,12 @@ void CalculateBorderRadius_float(float4 brx, float4 bry, float4 cuts, float2 uv,
   float dx = right ? 1 - uv.x : uv.x;
   float dy = top ? 1 - uv.y : uv.y;
 
-  if (dx >= rx || dy >= ry) return;
+  if (dx >= rx || dy >= ry) return 0;
 
   float drx = rx - dx;
   float dry = ry - dy;
 
-  visible = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) <= 1;
+  return (drx * drx / (rx * rx) + dry * dry / (ry * ry));
 }
 
 void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
@@ -128,38 +126,61 @@ void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float
 }
 
 
-float DistanceToBox(float4 brx, float4 bry, float2 uv, float2 size)
+float DistanceToBox(float4 brx, float4 bry, float4 cuts, float2 uv, float2 size)
 {
-  float rx = uv.x > 0.5 ? (uv.y > 0.5 ? brx.y : brx.z) : (uv.y > 0.5 ? brx.x : brx.w);
-  float ry = uv.x > 0.5 ? (uv.y > 0.5 ? bry.y : bry.z) : (uv.y > 0.5 ? bry.x : bry.w);
+  // TODO: hanlde improved border radius logic
+  // bool topright = uv.y > cuts.y && uv.x > cuts.x && orient2dfast(uv, float2(1, cuts.y), float2(cuts.x, 1)) >= 0;
+  // bool topleft = uv.y > cuts.w && uv.x < cuts.x && orient2dfast(uv, float2(0, cuts.w), float2(cuts.x, 1)) <= 0;
+  // bool bottomright = uv.y < cuts.y && uv.x > cuts.z && orient2dfast(uv, float2(1, cuts.y), float2(cuts.z, 0)) <= 0;
+  // bool bottomleft = uv.y < cuts.w && uv.x < cuts.z && orient2dfast(uv, float2(0, cuts.w), float2(cuts.z, 0)) >= 0;
 
-  rx = min(0.5, rx);
-  ry = min(0.5, ry);
+  // bool top = topright || topleft;
+  // bool right = topright || bottomright;
+  // bool bottom = bottomright || bottomleft;
+  // bool left = topleft || bottomleft;
 
-  float dx = abs(uv.x - 0.5);
-  float dy = abs(uv.y - 0.5);
+  // bool sq = !((right || left) && (top || bottom));
 
-  float cx = abs(0.5 - rx);
-  float cy = abs(0.5 - ry);
+  // if(sq) {
+  //   float xx = size.x * (uv.x > 0.5 ? 1 - uv.x : uv.x);
+  //   float yy = size.y * (uv.y > 0.5 ? 1 - uv.y : uv.y);
 
-  if (dy < cy) {
-    float fx = dx - 0.5;
-    if (dx < cx) {
-      float fy = dy - 0.5;
+  //   return -min(xx, yy);
+  // }
+
+  bool top = uv.y > 0.5;
+  bool right = uv.x > 0.5;
+
+  // Distance of ellipse center to edge
+  float rx = right ? (top ? brx.y : brx.z) : (top ? brx.x : brx.w);
+  float ry = right ? (top ? bry.y : bry.z) : (top ? bry.x : bry.w);
+
+  // Distance of point to edge
+  float dx = (right ? 1 - uv.x : uv.x);
+  float dy = (top ? 1 - uv.y : uv.y);
+
+  // Absolute position of ellipse center
+  float cx = right ? 1 - rx : rx;
+  float cy = top ? 1 - ry : ry;
+
+  if (dy >= ry) {
+    float fx = dx;
+    if (dx >= rx) {
+      float fy = dy;
 
       float kx = fx * size.x;
       float ky = fy * size.y;
 
-      return kx < 0 ? max(kx, ky) : min(kx, ky);
+      return kx < 0 ? -max(kx, ky) : -min(kx, ky);
     }
-    else return fx * size.x;
+    else return -fx * size.x;
   }
-  else if (dx < cx) {
-    return (dy - 0.5) * size.y;
+  else if (dx >= rx) {
+    return -dy * size.y;
   }
 
-  float ox = (dx - cx) * size.x;
-  float oy = (dy - cy) * size.y;
+  float ox = (uv.x - cx) * size.x;
+  float oy = (uv.y - cy) * size.y;
   float oc = sqrt(ox * ox + oy * oy);
 
   float st = ox / oc;
@@ -172,20 +193,5 @@ float DistanceToBox(float4 brx, float4 bry, float2 uv, float2 size)
   float rr = rx * ry / sqrt(ry * ry * st * st + rx * rx * ct * ct);
   return oc - rr;
 }
-
-float ConvertRadiusToSigma(float radius) {
-  return radius * 0.57735 + 0.5;
-}
-
-
-float gaussian(float x, float mu, float sigma) {
-  float a = (x - mu) / sigma;
-  return exp(-0.5 * a * a);
-}
-
-static const float pi = 3.14159265;
-static const float hpi = pi / 2;
-static const float pi2 = 2 * pi;
-static const float e = 2.71828183;
 
 #endif // CUSTOM_FUNCTIONS_INCLUDED

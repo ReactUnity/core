@@ -21,6 +21,7 @@ Shader "ReactUnity/RoundedColoredBorder"
     _ColorMask("Color Mask", Float) = 15
     [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
     [Toggle(UNITY_UI_CLIP_RECT)] _UseUIClipRect("Use Clip Rect", Float) = 1
+    [KeywordEnum(Low, Medium)] _Quality ("Quality", Float) = 0
   }
 
     SubShader{
@@ -64,6 +65,8 @@ Shader "ReactUnity/RoundedColoredBorder"
 
         #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
         #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+        #pragma multi_compile_local_fragment _QUALITY_LOW _QUALITY_MEDIUM _QUALITY_HIGH _QUALITY_ULTRA
+
 
         float4 _borderRadiusX;
         float4 _borderRadiusY;
@@ -82,26 +85,37 @@ Shader "ReactUnity/RoundedColoredBorder"
 
         fixed4 frag(v2f i) : SV_Target
         {
-          bool visible;
-          bool err = false;
-          CalculateBorderRadius_float(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size, visible, err);
-          float alpha = visible || err ? 1 : 0;
+#ifdef UNITY_UI_CLIP_RECT
+          float alpha = UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
+#else
+          float alpha = 1;
+#endif
+
+          if(alpha > 0.001) {
+            #if _QUALITY_LOW
+              float dist = CalculateBorderRadius_float(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size);
+            #else
+              float dist = DistanceToBox(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size);
+            #endif
+
+            #if _QUALITY_MEDIUM
+              // fwidth, 1 pixel linear edge
+              float pwidth = fwidth(dist);
+              alpha *= saturate(-dist / pwidth);
+            #else // _QUALITY_LOW
+              alpha *= step(dist, 1);
+            #endif
+          }
 
           float4 borderSizeScaled = float4(_borderSize.x / _size.y, _borderSize.y / _size.x, _borderSize.z / _size.y, _borderSize.w / _size.x);
 
           float4 borderColor = 0;
-
-#ifdef UNITY_UI_CLIP_RECT
-          alpha *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
-#endif
 
 #ifdef UNITY_UI_ALPHACLIP
           clip(alpha - 0.001);
 #endif
 
           if (alpha > 0.001) PickBorderColorTrapezoidal_float(i.uv, borderSizeScaled, _topColor, _rightColor, _bottomColor, _leftColor, borderColor);
-
-          if(err) return float4(1, 0, 0, 1);
 
           return mixAlpha(borderColor, i.color, alpha);
         }

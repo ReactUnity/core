@@ -69,10 +69,8 @@ Shader "ReactUnity/RoundedBorder"
 
         fixed4 frag(v2f i) : SV_Target
         {
-          bool visible;
-          bool err;
-          CalculateBorderRadius_float(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size, visible, err);
-          float alpha = visible && !err ? 1 : 0;
+          float dist = CalculateBorderRadius_float(_borderRadiusX, _borderRadiusY, _borderRadiusCuts, i.uv, _size);
+          float alpha = dist <= 1 ? 1 : 0;
 
           fixed4 res = mixAlpha(tex2D(_MainTex, i.uv), i.color, alpha);
 
