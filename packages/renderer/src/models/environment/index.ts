@@ -13,6 +13,7 @@ interface Console {
   log(...data: any[]): void;
   trace(...data: any[]): void;
   warn(...data: any[]): void;
+  count(name?: string): number;
 }
 
 interface ReactUnityDocument {

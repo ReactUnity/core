@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/01/2022 01:23:51
+// Generated 03/04/2022 18:27:46
 //
 /* eslint-disable */
 
@@ -424,6 +424,7 @@ export declare namespace ReactUnity {
     appendChildToContainer(parent: any, child: any): void;
     insertBefore(parent: any, child: any, beforeChild: any): void;
     removeChild(parent: any, child: any): void;
+    clearContainer(parent: any): void;
     setText(instance: any, text: string): void;
     setProperty(element: any, property: string, value: any): void;
     setData(element: any, property: string, value: any): void;
@@ -2736,6 +2737,7 @@ export declare namespace ReactUnity {
       Initialize(): void;
       ExecuteScript(code: string, fileName?: string): void;
       EvaluateScript(code: string, fileName?: string): any;
+      CreateEventCallback(code: string, thisVal: any): ReactUnity.Helpers.Callback;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -2757,6 +2759,7 @@ export declare namespace ReactUnity {
         error(msg: any, ...subs: any[]): void;
         dir(msg: any): void;
         dir(msg: any, ...subs: any[]): void;
+        count(msg?: any): number;
         clear(): void;
         assert(val: boolean): void;
         Equals(obj: any): boolean;
@@ -4108,15 +4111,13 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class StyleTree {
-        constructor(parser: any);
-        Parser: any; // ExCSS.StylesheetParser
+        constructor();
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
         Specifity: number;
         LeafNodes: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
         BeforeNodes: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
         AfterNodes: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-        Tree: ReactUnity.Styling.Rules.RuleTree<ReactUnity.Styling.Rules.StyleData>;
         Parent: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>;
         Selector: string;
         ParsedSelector: ReactUnity.Styling.Rules.RuleSelectorPart[];
@@ -4144,15 +4145,13 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class RuleTree<T = any> {
-        constructor(parser: any);
-        Parser: any; // ExCSS.StylesheetParser
+        constructor();
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
         Specifity: number;
         LeafNodes: ReactUnity.Styling.Rules.RuleTreeNode<T>[];
         BeforeNodes: ReactUnity.Styling.Rules.RuleTreeNode<T>[];
         AfterNodes: ReactUnity.Styling.Rules.RuleTreeNode<T>[];
-        Tree: ReactUnity.Styling.Rules.RuleTree<T>;
         Parent: ReactUnity.Styling.Rules.RuleTreeNode<T>;
         Selector: string;
         ParsedSelector: ReactUnity.Styling.Rules.RuleSelectorPart[];
@@ -4182,7 +4181,6 @@ export declare namespace ReactUnity {
         MediaQuery: ReactUnity.Styling.Rules.MediaQueryList;
         Scope: ReactUnity.IReactComponent;
         Specifity: number;
-        Tree: ReactUnity.Styling.Rules.RuleTree<T>;
         Parent: ReactUnity.Styling.Rules.RuleTreeNode<T>;
         Selector: string;
         ParsedSelector: ReactUnity.Styling.Rules.RuleSelectorPart[];
@@ -4260,6 +4258,8 @@ export declare namespace ReactUnity {
       export class RuleSelectorPart {
         constructor();
         static Important: ReactUnity.Styling.Rules.RuleSelectorPart;
+        static Before: ReactUnity.Styling.Rules.RuleSelectorPart;
+        static After: ReactUnity.Styling.Rules.RuleSelectorPart;
         Negated: boolean;
         Type: ReactUnity.Styling.Rules.RuleSelectorPartType;
         Name: string;
@@ -5612,6 +5612,9 @@ export declare namespace ReactUnity {
       Placeholder: string;
       PlaceholderShown: boolean;
       InputField: any; // TMPro.TMP_InputField
+      TextViewport: ReactUnity.UGUI.ContainerComponent;
+      TextComponent: ReactUnity.UGUI.TextComponent;
+      PlaceholderComponent: ReactUnity.UGUI.TextComponent;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -5655,7 +5658,6 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       SetText(text: string): void;
-      ResolveStyle(recursive?: boolean): void;
       Focus(): void;
       Activate(): void;
       AddEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -5674,6 +5676,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
       MarkStyleUpdateWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;

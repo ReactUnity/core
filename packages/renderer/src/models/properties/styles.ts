@@ -1,5 +1,5 @@
 import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
-import { AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
+import { Array2Aux, AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
@@ -29,11 +29,11 @@ export interface RenderStyle {
   maskRepeatX?: YogaValueAux;
   maskRepeatY?: YogaValueAux;
 
-  borderRadius?: NumberAux;
-  borderTopLeftRadius?: NumberAux;
-  borderTopRightRadius?: NumberAux;
-  borderBottomRightRadius?: NumberAux;
-  borderBottomLeftRadius?: NumberAux;
+  borderRadius?: Array2Aux<YogaValueAux> | string;
+  borderTopLeftRadius?: Array2Aux<YogaValueAux>;
+  borderTopRightRadius?: Array2Aux<YogaValueAux>;
+  borderBottomRightRadius?: Array2Aux<YogaValueAux>;
+  borderBottomLeftRadius?: Array2Aux<YogaValueAux>;
 
   borderColor?: ColorAux;
   borderTopColor?: ColorAux;
