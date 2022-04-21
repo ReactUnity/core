@@ -52,27 +52,28 @@ function _Select<T = any>({
   const fieldRef = useRef<InputFieldRef>();
   const shouldKeepOpen = keepOpen === 'auto' ? multiple : !!keepOpen;
 
+  const onChangeRef = useAutoRef(onChange);
+  const shouldKeepOpenRef = useAutoRef(shouldKeepOpen);
+
   const state = useMemo(() => new SelectionState<T, SelectSelectionElement>(!!multiple, init.current), [multiple, init]);
   const [selectedElements, setSelectedElements] = useState(state.getSelectedElements());
 
   useLayoutEffect(() => {
     state.onChange = (val, all, any) => {
-      onChange?.(val as any, all, any);
+      onChangeRef.current?.(val as any, all, any);
 
       if (selectAllRef.current) {
         selectAllRef.current.Indeterminate = !!any && !all;
         selectAllRef.current.Checked = !!all;
       }
 
-      if (!shouldKeepOpen) {
+      if (!shouldKeepOpenRef.current) {
         setOpened(false);
       }
 
       fieldRef.current?.setEmpty(!any);
     };
-  }, [onChange, shouldKeepOpen]);
 
-  useLayoutEffect(() => {
     state.onUpdate = (st) => {
       setSelectedElements(st.getSelectedElements());
     };
@@ -161,7 +162,7 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
     },
   }), [value, setSelected, selectedRef]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ctx) {
       ctx.register(selectionRef);
       return () => { ctx.unregister(selectionRef); };

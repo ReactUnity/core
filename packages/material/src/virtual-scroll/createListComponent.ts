@@ -2,7 +2,7 @@
 import { ReactUnity, Style, UnityEngine } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
-import { createElement, PureComponent } from 'react';
+import { createElement, PureComponent, ReactNode } from 'react';
 import { getRTLOffsetType } from './domHelpers';
 import { cancelTimeout, requestTimeout, TimeoutID } from './timer';
 
@@ -79,7 +79,7 @@ export type Props<T> = {
   useIsScrolling?: boolean;
   width?: number | string;
   style?: Style;
-} & Omit<UGUIElements['scroll'], 'style'>;
+} & Omit<UGUIElements['scroll'], 'style' | 'children'>;
 
 type State = {
   instance: any;
@@ -630,7 +630,7 @@ export function createListComponent({
         this._getItemStyleCache(-1, null);
       });
     };
-  };
+  } as unknown as (<T>(props: Props<T>) => ReactNode);
 }
 
 // NOTE: I considered further wrapping individual items with a pure ListItem component.

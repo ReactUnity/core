@@ -59,7 +59,7 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
   }
 
   UnityBridge.appendChild(anchor, tooltip);
-  Renderer.render(props.content, tooltip, true);
+  Renderer.render(props.content, { disableHelpers: true, hostContainer: tooltip });
   return anchor;
 }
 

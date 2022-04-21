@@ -1,7 +1,7 @@
 import { ReactUnity, Style, UnityEngine } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import memoizeOne from 'memoize-one';
-import { createElement, PureComponent } from 'react';
+import { createElement, PureComponent, ReactNode } from 'react';
 import { getRTLOffsetType, getScrollbarSize } from './domHelpers';
 import { cancelTimeout, requestTimeout, TimeoutID } from './timer';
 
@@ -84,7 +84,7 @@ export type Props<T> = {
   style?: Style;
   useIsScrolling?: boolean;
   width: number;
-} & Omit<UGUIElements['scroll'], 'style'>;
+} & Omit<UGUIElements['scroll'], 'style' | 'children'>;
 
 type State = {
   instance: any;
@@ -808,7 +808,7 @@ export function createGridComponent({
       });
     };
 
-  };
+  } as unknown as (<T>(props: Props<T>) => ReactNode);
 }
 
 const validateSharedProps = (
