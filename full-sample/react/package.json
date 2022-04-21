@@ -14,20 +14,20 @@
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {
-    "@reactunity/material": "^0.9.2",
+    "@reactunity/material": "^0.9.3",
     "@reactunity/renderer": "^0.9.2",
     "@reduxjs/toolkit": "^1.8.1",
     "clsx": "^1.1.1",
     "history": "^5.3.0",
     "markdown-to-jsx": "^7.1.7",
     "react": "^18.0.0",
-    "react-redux": "^8.0.0-beta.3",
+    "react-redux": "^8.0.1",
     "react-router": "^6.3.0",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.9.1",
-    "@types/react-redux": "^7.1.23",
+    "@types/react-redux": "^7.1.24",
     "typescript": "^4.6.3"
   }
 }
