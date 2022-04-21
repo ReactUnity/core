@@ -8,19 +8,23 @@ import {
 import { DefaultView } from '../views/default-view';
 import { diffProperties, styleStringSymbol } from './diffing';
 
-const LegacyRoot = 0;
-const ConcurrentRoot = 1;
+declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
 
 const hostContext = {};
 const childContext = {};
+
 const DiscreteEventPriority = 0b00001;
 const ContinuousEventPriority = 0b00100;
 const DefaultEventPriority = 0b10000;
+const IdleEventPriority = 0b0100000000000000000000000000000;
+const LegacyRoot = 0;
+const ConcurrentRoot = 1;
 
 const eventPriorities = {
   discrete: DiscreteEventPriority,
   continuous: ContinuousEventPriority,
   default: DefaultEventPriority,
+  idle: IdleEventPriority,
 };
 
 const textTypes = {
@@ -54,7 +58,7 @@ const hostConfig: Config & { [key: string]: any } = {
   supportsMutation: true,
   supportsHydration: false,
   supportsPersistence: false,
-  supportsMicrotasks: false,
+  supportsMicrotasks: true,
   supportsTestSelectors: false,
 
   isPrimaryRenderer: true,
@@ -62,7 +66,7 @@ const hostConfig: Config & { [key: string]: any } = {
 
   prepareForCommit: () => null,
   resetAfterCommit: () => { },
-  clearContainer: () => { },
+  clearContainer: (container) => UnityBridge.clearContainer(container),
   shouldDeprioritizeSubtree: () => false,
 
   createInstance(type, props, rootContainerInstance) {
@@ -93,7 +97,6 @@ const hostConfig: Config & { [key: string]: any } = {
     UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
   },
 
-  resetTextContent: () => console.log('resetTextContent'),
 
   commitTextUpdate(textInstance, oldText, newText) { UnityBridge.setText(textInstance, newText); },
 
@@ -104,24 +107,28 @@ const hostConfig: Config & { [key: string]: any } = {
   removeChild(parent, child) { return UnityBridge.removeChild(parent, child); },
   removeChildFromContainer(parent, child) { return UnityBridge.removeChild(parent, child); },
 
-  // Required for Suspense
-  // TODO: implement
-
+  resetTextContent: () => { },
   preparePortalMount: () => { },
-  hideInstance: () => { },
-  hideTextInstance: () => { },
-  unhideInstance: () => { },
-  unhideTextInstance: () => { },
   detachDeletedInstance: () => { },
+
+  // Required for Suspense
+
+  hideInstance: (instance) => { instance.ClassList.Add('react-unity__renderer__hidden'); },
+  hideTextInstance: (instance) => { instance.ClassList.Add('react-unity__renderer__hidden'); },
+  unhideInstance: (instance) => { instance.ClassList.Remove('react-unity__renderer__hidden'); },
+  unhideTextInstance: (instance) => { instance.ClassList.Remove('react-unity__renderer__hidden'); },
 
   // -------------------
   //     Scheduling
   // -------------------
 
-  getCurrentEventPriority: () => eventPriorities.default,
+  getCurrentEventPriority: () => eventPriorities.discrete,
 
   noTimeout: -1,
-  scheduleTimeout: (callback, timeout) => setTimeout(callback as any, timeout),
+  scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
+  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask :
+    callback => Promise.resolve(null).then(callback)
+      .catch((error) => setTimeout(() => { throw error; }, 0)),
   cancelTimeout: (handle) => clearTimeout(handle),
 };
 
