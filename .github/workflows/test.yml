@@ -23,18 +23,18 @@ jobs:
         platform:
           - ubuntu-20.04
         unity:
-          # - { version: "2021.1.16f1" }
-          - { version: "2020.3.9f1" }
-          - { version: "2019.4.29f1" }
+          - { version: "2021.2.19f1" }
+          - { version: "2021.1.28f1" }
+          - { version: "2020.3.33f1" }
+          - { version: "2019.4.38f1" }
         suite:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests" }
         include:
           - main: true
             coverage: true
-            unity: { version: "2021.1.16f1" }
-          # unity: { version: "2021.2.7f1", license: "UNITY_LICENSE_2021_2" }
+            unity: { version: "2021.3.1f1" }
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests" }
-          # - unity: { version: "2021.2.7f1" }
+          # - unity: { version: "2021.3.1f1" }
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", testBranch: "tests_2021_2" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
