@@ -6,47 +6,15 @@ import {
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../models/renderer';
 import { DefaultView } from '../views/default-view';
-import { diffProperties, styleStringSymbol } from './diffing';
+import { ConcurrentRoot, eventPriorities, getAllowedProps, hideClass, LegacyRoot, textTypes } from './constants';
+import { diffProperties } from './diffing';
 
 declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
 
-const hostContext = {};
-const childContext = {};
-
-const DiscreteEventPriority = 0b00001;
-const ContinuousEventPriority = 0b00100;
-const DefaultEventPriority = 0b10000;
-const IdleEventPriority = 0b0100000000000000000000000000000;
-const LegacyRoot = 0;
-const ConcurrentRoot = 1;
-
-const eventPriorities = {
-  discrete: DiscreteEventPriority,
-  continuous: ContinuousEventPriority,
-  default: DefaultEventPriority,
-  idle: IdleEventPriority,
-};
-
-const textTypes = {
-  text: true,
-  icon: true,
-  style: true,
-  script: true,
-};
-
 type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
 
-function getAllowedProps(props, type) {
-  const { children, tag, ...rest } = props;
-
-  if (textTypes[type] && 'children' in props) {
-    rest.children = (!children || typeof children === 'boolean') ? null : Array.isArray(children) ? children.join('') : children + '';
-  }
-
-  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
-
-  return rest;
-}
+const hostContext = {};
+const childContext = {};
 
 const hostConfig: Config & { [key: string]: any } = {
   getRootHostContext: () => hostContext,
@@ -113,10 +81,10 @@ const hostConfig: Config & { [key: string]: any } = {
 
   // Required for Suspense
 
-  hideInstance: (instance) => { instance.ClassList.Add('react-unity__renderer__hidden'); },
-  hideTextInstance: (instance) => { instance.ClassList.Add('react-unity__renderer__hidden'); },
-  unhideInstance: (instance) => { instance.ClassList.Remove('react-unity__renderer__hidden'); },
-  unhideTextInstance: (instance) => { instance.ClassList.Remove('react-unity__renderer__hidden'); },
+  hideInstance: (instance) => { instance.ClassList.Add(hideClass); },
+  hideTextInstance: (instance) => { instance.ClassList.Add(hideClass); },
+  unhideInstance: (instance) => { instance.ClassList.Remove(hideClass); },
+  unhideTextInstance: (instance) => { instance.ClassList.Remove(hideClass); },
 
   // -------------------
   //     Scheduling
@@ -152,17 +120,18 @@ export const Renderer = {
     element: React.ReactNode,
     options: RenderOptions = {},
   ) {
+    const rc = reconciler;
     const hostContainer = options?.hostContainer || HostContainer;
 
     let hostRoot = containerMap.get(hostContainer);
     if (!hostRoot) {
-      hostRoot = reconciler.createContainer(hostContainer, options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot, false, null)
+      hostRoot = rc.createContainer(hostContainer, options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot, false, null)
       containerMap.set(hostContainer, hostRoot);
     }
 
     if (!options?.disableHelpers) element = createElement(DefaultView, null, element);
 
-    reconciler.updateContainer(element, hostRoot, null);
+    rc.updateContainer(element, hostRoot, null);
   },
 };
 

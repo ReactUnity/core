@@ -55,7 +55,7 @@
     "unity3d"
   ],
   "dependencies": {
-    "react-reconciler": "^0.26.2"
+    "react-reconciler": "^0.27.0"
   },
   "peerDependencies": {
     "react": ">=17"
