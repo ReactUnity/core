@@ -186,6 +186,8 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
+            Engine.Interrupt();
+            Engine.CollectGarbage(true);
             Engine.Dispose();
         }
 

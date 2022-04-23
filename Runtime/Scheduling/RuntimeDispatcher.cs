@@ -148,7 +148,7 @@ namespace ReactUnity.Scheduling
                     Started.Add(StartCoroutine(cr));
 
                     // We are already in Update so move Coroutine forward if it is waiting for next Update
-                    if(cr.Current == null) cr.MoveNext();
+                    if (cr.Current == null) cr.MoveNext();
                 }
                 else Started.Add(null);
             }
@@ -231,7 +231,7 @@ namespace ReactUnity.Scheduling
         public void Dispose()
         {
             StopAll();
-            if (this && gameObject) Destroy(gameObject);
+            if (this && gameObject) DestroyImmediate(gameObject);
         }
     }
 }

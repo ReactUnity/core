@@ -78,7 +78,7 @@ namespace ReactUnity.Tests
         public override void Setup()
         {
             if (UsesInput) base.Setup();
-            Canvas.GetComponent<Canvas>().renderMode = RenderMode;
+            if (Canvas) Canvas.GetComponent<Canvas>().renderMode = RenderMode;
         }
 
         public override void TearDown()
