@@ -22,7 +22,8 @@
         "RU.System.Buffers.dll",
         "RU.System.Numerics.Vectors.dll",
         "RU.System.Runtime.CompilerServices.Unsafe.dll",
-        "RU.System.Memory.dll"
+        "RU.System.Memory.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

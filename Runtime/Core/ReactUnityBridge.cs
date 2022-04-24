@@ -22,7 +22,8 @@ namespace ReactUnity
         [Preserve]
         public ITextComponent createText(string text, IReactComponent host)
         {
-            return host.Context.CreateText(text);
+            var el = host.Context.CreateText(text);
+            return el;
         }
 
         [Preserve]
@@ -124,8 +125,12 @@ namespace ReactUnity
         {
             var cmp = instance as IReactComponent;
             if (cmp == null) return;
+            if (payload == null) return;
 
-            var updatePayload = cmp.Context.Script.Engine.TraverseScriptObject(payload);
+            var updatePayload =
+                typeof(IEnumerator<KeyValuePair<string, object>>).IsAssignableFrom(payload.GetType()) ?
+                ((IEnumerator<KeyValuePair<string, object>>) payload) :
+                cmp.Context.Script.Engine.TraverseScriptObject(payload);
 
             if (updatePayload == null) return;
 
@@ -151,7 +156,10 @@ namespace ReactUnity
                 {
                     if (!(value is string))
                     {
-                        var stylePayload = cmp.Context.Script.Engine.TraverseScriptObject(value);
+                        var stylePayload =
+                            typeof(IEnumerator<KeyValuePair<string, object>>).IsAssignableFrom(value.GetType()) ?
+                            ((IEnumerator<KeyValuePair<string, object>>) value) :
+                            cmp.Context.Script.Engine.TraverseScriptObject(value);
                         var st = cmp.Style;
 
                         while (stylePayload.MoveNext())

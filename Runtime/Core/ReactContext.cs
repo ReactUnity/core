@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ExCSS;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.Visitors;
 using ReactUnity.Html;
@@ -57,6 +59,11 @@ namespace ReactUnity
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
         public List<Action> Disposables { get; } = new List<Action>();
+
+        protected Dictionary<int, IReactComponent> Refs = new Dictionary<int, IReactComponent>();
+        internal Callback CommandsCallback;
+        internal Callback FireEventByRefCallback;
+        internal Callback GetObjectCallback;
 
         public ReactContext(Options options)
         {
@@ -159,6 +166,7 @@ namespace ReactUnity
 
         public void Start()
         {
+            SetRef(0, Host);
             var renderCount = 0;
 
             var scriptJob = Source.GetScript((code) => {
@@ -198,5 +206,190 @@ namespace ReactUnity
         }
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);
+
+        internal void SetRef(int refId, IReactComponent cmp)
+        {
+            Refs[refId] = cmp;
+            //Refs.Add(refId, cmp);
+        }
+
+        public IReactComponent GetRef(int refId)
+        {
+            Refs.TryGetValue(refId, out var cmp);
+            return cmp;
+        }
+
+        public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback)
+        {
+            CommandsCallback = new Callback(commandsObject);
+            FireEventByRefCallback = new Callback(callbacksObject);
+            GetObjectCallback = new Callback(getObjectCallback);
+        }
+
+
+        IEnumerator<KeyValuePair<string, object>> PropsEnumerator(JToken props)
+        {
+            foreach (JProperty child in props)
+            {
+                var val = child.Value;
+                object value = null;
+
+                if (child.Name == "style") value = PropsEnumerator(val);
+                else
+                {
+                    switch (val.Type)
+                    {
+                        case JTokenType.Integer:
+                            value = val.Value<int>();
+                            break;
+                        case JTokenType.Float:
+                            value = val.Value<float>();
+                            break;
+                        case JTokenType.Boolean:
+                            value = val.Value<bool>();
+                            break;
+                        case JTokenType.TimeSpan:
+                        case JTokenType.Guid:
+                        case JTokenType.Date:
+                        case JTokenType.Uri:
+                        case JTokenType.String:
+                            value = val.ToString();
+                            break;
+                        case JTokenType.Null:
+                        case JTokenType.Undefined:
+                        case JTokenType.Raw:
+                        case JTokenType.Bytes:
+                        case JTokenType.None:
+                        case JTokenType.Object:
+                        case JTokenType.Array:
+                        case JTokenType.Constructor:
+                        case JTokenType.Property:
+                        case JTokenType.Comment:
+                        default:
+                            break;
+                    }
+                }
+
+                yield return new KeyValuePair<string, object>(child.Name, value);
+            }
+        }
+
+        IEnumerator<KeyValuePair<string, object>> EventsEnumerator(JToken events)
+        {
+            foreach (JProperty child in events)
+            {
+                var ind = child.Value.Value<int>();
+                var callback = ind > 0 ? Callback.From(ind, this) : null;
+                yield return new KeyValuePair<string, object>(child.Name, callback);
+            }
+        }
+
+        IEnumerator<KeyValuePair<string, object>> ObjectsEnumerator(JToken objs)
+        {
+            foreach (JProperty child in objs)
+            {
+                var ind = child.Value.Value<int>();
+                var callback = ind > 0 ? GetObjectCallback.Call(ind) : null;
+                yield return new KeyValuePair<string, object>(child.Name, callback);
+            }
+        }
+
+        public void FlushCommands()
+        {
+            if (CommandsCallback == null) return;
+
+            var cmds = CommandsCallback.Call().ToString();
+            var jo = JArray.Parse(cmds);
+
+            for (int i = 0; i < jo.Count; i++)
+            {
+                var cmd = jo[i];
+
+                var key = cmd[0].ToString();
+                var val = cmd[1];
+
+                if (key == "c")
+                {
+                    var refId = val["r"].Value<int>();
+                    var type = val["t"].ToString();
+                    var props = val["p"];
+
+                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, PropsEnumerator(props));
+                    if (refId > 0) SetRef(refId, el);
+
+                    var objs = val["o"];
+                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(objs), type);
+
+                    var events = val["e"];
+                    ReactUnityBridge.Instance.applyUpdate(el, EventsEnumerator(events), type);
+                }
+                else if (key == "t")
+                {
+                    var refId = val["r"].Value<int>();
+                    var children = val["c"].ToString();
+                    var el = ReactUnityBridge.Instance.createText(children, Host);
+                    if (refId > 0) SetRef(refId, el);
+                }
+                else if (key == "a")
+                {
+                    var parentRef = val["p"].Value<int>();
+                    var childRef = val["c"].Value<int>();
+                    var parent = GetRef(parentRef);
+                    var child = GetRef(childRef);
+                    ReactUnityBridge.Instance.appendChild(parent, child);
+                }
+                else if (key == "r")
+                {
+                    var parentRef = val["p"].Value<int>();
+                    var childRef = val["c"].Value<int>();
+                    var parent = GetRef(parentRef);
+                    var child = GetRef(childRef);
+                    ReactUnityBridge.Instance.removeChild(parent, child);
+                }
+                else if (key == "i")
+                {
+                    var parentRef = val["p"].Value<int>();
+                    var childRef = val["c"].Value<int>();
+                    var insertRef = val["i"].Value<int>();
+                    var parent = GetRef(parentRef);
+                    var child = GetRef(childRef);
+                    var insert = GetRef(insertRef);
+                    ReactUnityBridge.Instance.insertBefore(parent, child, insert);
+                }
+                else if (key == "u")
+                {
+                    var refId = val["r"].Value<int>();
+                    var el = GetRef(refId);
+                    var type = val["t"].ToString();
+
+                    var props = val["p"];
+                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(props), type);
+
+                    var objs = val["o"];
+                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(objs), type);
+
+                    var events = val["e"];
+                    ReactUnityBridge.Instance.applyUpdate(el, EventsEnumerator(events), type);
+                }
+                else if (key == "x")
+                {
+                    var elRef = val["r"].Value<int>();
+                    var el = GetRef(elRef);
+                    var text = val["t"]?.ToString();
+                    ReactUnityBridge.Instance.setText(el, text);
+                }
+                else if (key == "h")
+                {
+                    var elRef = val["r"].Value<int>();
+                    var el = GetRef(elRef);
+                    var hidden = val["h"].Value<bool>();
+                    el?.ClassList.ToggleWithoutNotify("react-unity__renderer__hidden", hidden);
+                }
+                else if (key == "o")
+                {
+                    ReactUnityBridge.Instance.clearContainer(Host);
+                }
+            }
+        }
     }
 }

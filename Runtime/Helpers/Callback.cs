@@ -21,6 +21,7 @@ namespace ReactUnity.Helpers
     public class Callback
     {
         public object callback;
+        private ReactContext context;
 #if REACT_JINT
         public Engine Engine;
 #endif
@@ -33,6 +34,7 @@ namespace ReactUnity.Helpers
                 return context.Script.CreateEventCallback(s, thisVal);
             }
             if (value is Callback cb) return cb;
+            if (value is int cbi) return new Callback(cbi, context);
 #if REACT_JINT
             if (value is Func<JsValue, JsValue[], JsValue> jv) return new Callback(jv, context.Script.Engine.NativeEngine as Engine);
             if (value is ObjectInstance v) return new Callback(v);
@@ -57,6 +59,12 @@ namespace ReactUnity.Helpers
         public Callback(object callback)
         {
             this.callback = callback;
+        }
+
+        public Callback(int index, ReactContext context)
+        {
+            this.context = context;
+            this.callback = index;
         }
 
         public object Call()
@@ -92,6 +100,10 @@ namespace ReactUnity.Helpers
                 if (args.Length < argCount) args = args.Concat(new object[argCount - args.Length]).ToArray();
                 if (args.Length > argCount) args = args.Take(argCount).ToArray();
                 return d.DynamicInvoke(args);
+            }
+            else if (callback is int i)
+            {
+                return context.FireEventByRefCallback.Call(i, args);
             }
 #if REACT_CLEARSCRIPT
             else if (callback is Microsoft.ClearScript.ScriptObject so)
