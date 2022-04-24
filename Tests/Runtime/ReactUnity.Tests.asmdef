@@ -23,10 +23,18 @@
         "Jint.dll",
         "ExCSS.dll"
     ],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
+        "UNITY_INCLUDE_TESTS",
+        "ENABLE_INPUT_SYSTEM",
+        "REACT_INPUT_SYSTEM"
     ],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "REACT_INPUT_SYSTEM"
+        }
+    ],
     "noEngineReferences": false
 }
