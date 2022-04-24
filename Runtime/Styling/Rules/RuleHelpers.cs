@@ -111,11 +111,18 @@ namespace ReactUnity.Styling.Rules
                 type = nextType;
             }
 
+            var prevIsEscape = false;
             for (int i = 0; i < length; i++)
             {
                 var ch = selector[i];
+                if (!prevIsEscape && ch == '\\')
+                {
+                    prevIsEscape = true;
+                    continue;
+                }
 
-                if (ch == '(')
+                if (prevIsEscape) acc.Append(ch);
+                else if (ch == '(')
                 {
                     paranCount++;
                     if (paranCount > 1) paranContent.Append(ch);
@@ -139,6 +146,8 @@ namespace ReactUnity.Styling.Rules
                 else if (ch == ']') end(RuleSelectorPartType.Tag);
                 else if (ch == ':') end(RuleSelectorPartType.Special);
                 else acc.Append(ch);
+
+                prevIsEscape = false;
             }
             end(RuleSelectorPartType.None);
 
@@ -187,6 +196,7 @@ namespace ReactUnity.Styling.Rules
 
                 if (prev == '\\')
                 {
+                    spaced.Append('\\');
                     spaced.Append(ch);
                     prev = '\0';
                     continue;

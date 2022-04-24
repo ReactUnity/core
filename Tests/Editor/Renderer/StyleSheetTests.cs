@@ -87,10 +87,17 @@ namespace ReactUnity.Editor.Tests.Renderer
                     <view className='class+1'>
                         Hey
                     </view>
+                    <view className='hover:button'>
+                        Hey
+                    </view>
                 </>;
             }
         ", @"
             .class\+1 { color: red; }
+
+            .hover\:button {
+                color: blue;
+            }
         ")]
         public IEnumerator EscapedCharactersCanBeParsedCorrect()
         {
@@ -99,6 +106,10 @@ namespace ReactUnity.Editor.Tests.Renderer
             var cmp = Q(".class\\+1") as UIToolkitComponent<VisualElement>;
             var rt = cmp.Children.FirstOrDefault() as TextComponent<TextElement>;
             Assert.AreEqual(Color.red, rt.Element.resolvedStyle.color);
+
+            cmp = Q(".hover\\:button") as UIToolkitComponent<VisualElement>;
+            rt = cmp.Children.FirstOrDefault() as TextComponent<TextElement>;
+            Assert.AreEqual(Color.blue, rt.Element.resolvedStyle.color);
         }
     }
 }
