@@ -36,7 +36,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!sizeSet)
                 {
-                    var val = AllConverters.LengthConverter.Parse(split);
+                    var val = AllConverters.FontSizeConverter.Parse(split);
 
                     if (val is float v)
                     {

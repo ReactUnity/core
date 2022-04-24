@@ -16,6 +16,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter FloatConverter = new FloatConverter();
         static public IStyleConverter AngleConverter = new AngleConverter();
         static public IStyleConverter LengthConverter = new LengthConverter();
+        static public IStyleConverter FontSizeConverter = new FontSizeConverter();
         static public IStyleConverter DurationConverter = new DurationConverter();
         static public IStyleConverter PercentageConverter = new PercentageConverter();
         static public IStyleConverter ColorValueConverter = new ColorValueConverter();

@@ -77,7 +77,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var slashSplit = split.Split('/');
 
-                    var val = AllConverters.LengthConverter.Parse(slashSplit[0]);
+                    var val = AllConverters.FontSizeConverter.Parse(slashSplit[0]);
 
                     if (!Equals(val, CssKeyword.Invalid))
                     {
@@ -98,7 +98,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            var lh = AllConverters.LengthConverter.Parse(lineSplit);
+                            var lh = AllConverters.FontSizeConverter.Parse(lineSplit);
 
                             if (!Equals(lh, CssKeyword.Invalid))
                             {

@@ -32,6 +32,26 @@ namespace ReactUnity.Tests
 
         [ReactInjectableTest(style: @"
             #test {
+                font-size: 100%;
+            }
+")]
+        public IEnumerator PercentageIsRelativeToFontSize()
+        {
+            yield return null;
+
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+            var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual(24, text.fontSize);
+
+            cmp.Style["font-size"] = "150%";
+            yield return null;
+            Assert.AreEqual(36, text.fontSize);
+        }
+
+        [ReactInjectableTest(style: @"
+            #test {
                 font-size: 1.5rem;
             }
 ")]

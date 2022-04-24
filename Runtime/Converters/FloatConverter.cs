@@ -145,6 +145,36 @@ namespace ReactUnity.Converters
         { }
     }
 
+    public class FontSizeConverter : FloatConverter
+    {
+        public FontSizeConverter() : base(
+            new Dictionary<string, float>
+            {
+                { "px", 1 },
+                { "pt", 96f / 72f },
+                { "pc", 16 },
+                { "in", 96 },
+                { "cm", 38 },
+                { "mm", 3.8f },
+                { "Q", 38f / 40f },
+            },
+            new Dictionary<string, Func<float, object>>
+            {
+                { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
+                { "vw", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Width) },
+                { "vh", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Height) },
+                { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
+                { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
+                { "em", x => new ComputedFontSize(x) },
+                { "%", x => new ComputedFontSize(x / 100f) },
+                //{ "lh", x => new DynamicFontSizeValue(x) },
+                //{ "ex", x => new DynamicFontSizeValue(x / 2) },
+                //{ "ch", x => new DynamicFontSizeValue(x / 2) }
+            }
+        )
+        { }
+    }
+
     public class AngleConverter : FloatConverter
     {
         public AngleConverter() : base(new Dictionary<string, float>
