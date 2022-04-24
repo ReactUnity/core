@@ -137,7 +137,7 @@ namespace ReactUnity.Converters
             if (vals.Length == 4)
             {
                 if (AllConverters.PercentageConverter.Parse(vals[3]) is float alpha) list[3] = alpha;
-                else return null;
+                else list[3] = 1; // TODO: return null when variables in rgba are handled
             }
 
             return list;

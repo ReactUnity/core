@@ -259,6 +259,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("rgba(112 189 153 / 74.5%)", "70bd99be")]
         [TestCase("hsv(240, 51%, 72%, 74.5%)", "5a5ab8be")]
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
+        [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", "70bd99ff")] // TODO: handle variables
         public void ColorConverter(object input, object expected)
         {
             var converted = AllConverters.ColorConverter.Convert(input);
