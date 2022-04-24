@@ -22,7 +22,11 @@ function NotSelectedView() {
   return <view>
     <image source="url(resource:ReactUnity/editor/logo)" className={style.logo}></image>
 
-    <view>Select an element in the scene to edit its styles</view>
+    <view>
+      Select an element in the scene to edit its styles
+    </view>
+    <span>Only works for UGUI, for UI Document use builtin UI Toolkit Editor</span>
+
   </view>;
 }
 
