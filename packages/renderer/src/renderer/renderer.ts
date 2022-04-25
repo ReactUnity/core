@@ -1,106 +1,10 @@
 import * as React from 'react';
 import { createElement } from 'react';
-import * as Reconciler from 'react-reconciler';
-import {
-  ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
-  NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
-} from '../models/renderer';
+import { NativeContainerInstance } from '../models/renderer';
 import { DefaultView } from '../views/default-view';
-import { ConcurrentRoot, eventPriorities, getAllowedProps, hideClass, LegacyRoot, textTypes } from './constants';
-import { diffProperties } from './diffing';
-
-declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
-
-type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
-
-const hostContext = {};
-const childContext = {};
-
-const hostConfig: Config & { [key: string]: any } = {
-  getRootHostContext: () => hostContext,
-  getChildHostContext: () => childContext,
-  getPublicInstance: (instance: NativeInstance | NativeTextInstance) => instance,
-
-  now: Date.now,
-
-  supportsMutation: true,
-  supportsHydration: false,
-  supportsPersistence: false,
-  supportsMicrotasks: true,
-  supportsTestSelectors: false,
-
-  isPrimaryRenderer: true,
-  warnsIfNotActing: true,
-
-  prepareForCommit: () => null,
-  resetAfterCommit: () => { },
-  clearContainer: (container) => UnityBridge.clearContainer(container),
-  shouldDeprioritizeSubtree: () => false,
-
-  createInstance(type, props, rootContainerInstance) {
-    const aProps = getAllowedProps(props, type);
-    const children = aProps.children || null;
-    delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
-  },
-
-  createTextInstance(text, rootContainerInstance) {
-    return UnityBridge.createText(text, rootContainerInstance);
-  },
-
-  appendInitialChild(parent, child) { UnityBridge.appendChild(parent, child); },
-  finalizeInitialChildren: () => false,
-  commitMount: () => { },
-  shouldSetTextContent(type) { return textTypes[type]; },
-
-  // -------------------
-  //     Mutation
-  // -------------------
-
-  prepareUpdate(instance, type, oldProps, newProps) {
-    return diffProperties(oldProps, newProps) as any;
-  },
-
-  commitUpdate(instance, updatePayload, type) {
-    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
-  },
-
-
-  commitTextUpdate(textInstance, oldText, newText) { UnityBridge.setText(textInstance, newText); },
-
-  appendChild(parent, child) { return UnityBridge.appendChild(parent, child); },
-  appendChildToContainer(parent, child) { return UnityBridge.appendChildToContainer(parent, child); },
-  insertBefore(parent, child, beforeChild) { return UnityBridge.insertBefore(parent, child, beforeChild); },
-  insertInContainerBefore(parent, child, beforeChild) { return UnityBridge.insertBefore(parent, child, beforeChild); },
-  removeChild(parent, child) { return UnityBridge.removeChild(parent, child); },
-  removeChildFromContainer(parent, child) { return UnityBridge.removeChild(parent, child); },
-
-  resetTextContent: () => { },
-  preparePortalMount: () => { },
-  detachDeletedInstance: () => { },
-
-  // Required for Suspense
-
-  hideInstance: (instance) => { instance.ClassList.Add(hideClass); },
-  hideTextInstance: (instance) => { instance.ClassList.Add(hideClass); },
-  unhideInstance: (instance) => { instance.ClassList.Remove(hideClass); },
-  unhideTextInstance: (instance) => { instance.ClassList.Remove(hideClass); },
-
-  // -------------------
-  //     Scheduling
-  // -------------------
-
-  getCurrentEventPriority: () => eventPriorities.discrete,
-
-  noTimeout: -1,
-  scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
-  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask :
-    callback => Promise.resolve(null).then(callback)
-      .catch((error) => setTimeout(() => { throw error; }, 0)),
-  cancelTimeout: (handle) => clearTimeout(handle),
-};
-
-const reconciler = Reconciler(hostConfig);
+import { asyncReconciler } from './async/reconciler';
+import { ConcurrentRoot, LegacyRoot } from './constants';
+import { syncReconciler } from './sync/reconciler';
 
 const containerMap = new Map<NativeContainerInstance, any>();
 
@@ -113,6 +17,9 @@ interface RenderOptions {
 
   /* Allows rendering in `legacy` mode if needed. The default rendering mode is `concurrent`. */
   mode?: 'legacy' | 'concurrent';
+
+  /* Render using the sync reconciler instead of the async (batch) rendering */
+  sync?: boolean;
 }
 
 export const Renderer = {
@@ -120,12 +27,29 @@ export const Renderer = {
     element: React.ReactNode,
     options: RenderOptions = {},
   ) {
-    const rc = reconciler;
     const hostContainer = options?.hostContainer || HostContainer;
+
+    // For Jint engine, sync is default
+    // For other engines (ClearScript), async is default
+    const isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? options?.sync === false : !options?.sync;
+
+    const rc = isAsync ? asyncReconciler : syncReconciler;
 
     let hostRoot = containerMap.get(hostContainer);
     if (!hostRoot) {
-      hostRoot = rc.createContainer(hostContainer, options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot, false, null)
+      const mode = options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot;
+
+      if (isAsync) {
+        const hostContainerInstance = {
+          component: hostContainer,
+          context: hostContainer.Context,
+          refId: hostContainer.RefId,
+        };
+        hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, false, null)
+      }
+      else {
+        hostRoot = syncReconciler.createContainer(hostContainer, mode, false, null)
+      }
       containerMap.set(hostContainer, hostRoot);
     }
 
@@ -135,5 +59,5 @@ export const Renderer = {
   },
 };
 
-export const batchedUpdates = reconciler.batchedUpdates;
-export const flushSync = reconciler.flushSync;
+export const batchedUpdates = syncReconciler.batchedUpdates;
+export const flushSync = syncReconciler.flushSync;

@@ -1,3 +1,5 @@
+import * as Reconciler from 'react-reconciler';
+import { NoTimeout, TimeoutHandle } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
 export const hideClass = 'react-unity__renderer__hidden';
@@ -34,3 +36,24 @@ export function getAllowedProps(props, type) {
 
   return rest;
 }
+
+declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
+
+
+type CommonConfig = Reconciler.HostConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, TimeoutHandle, NoTimeout>;
+
+export const commonReconciler = {
+  // -------------------
+  //     Scheduling
+  // -------------------
+
+  now: Date.now,
+  getCurrentEventPriority: () => eventPriorities.discrete,
+
+  noTimeout: -1 as const,
+  scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
+  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask :
+    callback => Promise.resolve(null).then(callback)
+      .catch((error) => setTimeout(() => { throw error; }, 0)),
+  cancelTimeout: (handle) => clearTimeout(handle),
+};
