@@ -300,20 +300,31 @@ namespace ReactUnity.Editor.Developer
                             sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
                     }
 
-                    var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
+                    var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
                                     x.GetIndexParameters().Length == 0 &&
-                                    !x.PropertyType.IsPointer)
+                                    !x.PropertyType.IsPointer &&
+                                    (x.GetCustomAttribute<TypescriptExclude>() == null) &&
+                                    ((x.GetCustomAttribute<TypescriptInclude>() != null) || (x.GetGetMethod()?.IsPublic ?? false) || (x.GetSetMethod()?.IsPublic ?? false))
+                                    )
                         .GroupBy(x => x.Name)
                         .Select(g => g.First());
-                    var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
+
+                    var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
-                                    !x.FieldType.IsPointer);
-                    var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
+                                    !x.FieldType.IsPointer &&
+                                    (x.GetCustomAttribute<TypescriptExclude>() == null) &&
+                                    ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
+                                    );
+
+                    var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
                                     !(x.ReturnType.IsByRef || x.ReturnType.IsPointer) &&
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer) &&
-                                    !x.IsGenericMethod);
+                                    !x.IsGenericMethod &&
+                                    (x.GetCustomAttribute<TypescriptExclude>() == null) &&
+                                    ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
+                                    );
 
                     var indexer = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .FirstOrDefault(x => x.GetIndexParameters().Length == 1);

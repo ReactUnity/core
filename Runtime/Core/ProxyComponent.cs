@@ -48,6 +48,12 @@ namespace ReactUnity
 
         public string TextContent => Proxy.TextContent;
 
+        public int RefId
+        {
+            get => Proxy.RefId;
+            set => Proxy.RefId = value;
+        }
+
         public string ClassName
         {
             get => Proxy.ClassName;

@@ -1,4 +1,3 @@
-// Required for Suspense to work correctly in renderer
 .react-unity__renderer__hidden {
   display: none !important;
 }

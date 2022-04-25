@@ -33,6 +33,7 @@ namespace ReactUnity
         WatchableObjectRecord Data { get; }
         int ParentIndex { get; }
         int CurrentOrder { get; }
+        int RefId { get; set; }
 
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);

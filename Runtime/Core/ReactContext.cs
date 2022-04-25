@@ -5,6 +5,7 @@ using ExCSS;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactUnity.Helpers;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
 using ReactUnity.Html;
 using ReactUnity.Scheduling;
@@ -60,7 +61,7 @@ namespace ReactUnity
         public CursorAPI CursorAPI { get; }
         public List<Action> Disposables { get; } = new List<Action>();
 
-        protected Dictionary<int, IReactComponent> Refs = new Dictionary<int, IReactComponent>();
+        protected Dictionary<int, WeakReference<IReactComponent>> Refs = new Dictionary<int, WeakReference<IReactComponent>>();
         internal Callback CommandsCallback;
         internal Callback FireEventByRefCallback;
         internal Callback GetObjectCallback;
@@ -207,16 +208,21 @@ namespace ReactUnity
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);
 
+        [TypescriptInclude]
         internal void SetRef(int refId, IReactComponent cmp)
         {
-            Refs[refId] = cmp;
-            //Refs.Add(refId, cmp);
+            cmp.RefId = refId;
+            Refs.Add(refId, new WeakReference<IReactComponent>(cmp));
         }
 
         public IReactComponent GetRef(int refId)
         {
+            // Ensure the actualy object is created before getting the ref
+            FlushCommands();
+
             Refs.TryGetValue(refId, out var cmp);
-            return cmp;
+            if (cmp.TryGetTarget(out var target)) return target;
+            return null;
         }
 
         public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback)
@@ -294,12 +300,27 @@ namespace ReactUnity
             }
         }
 
-        public void FlushCommands()
+        IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken props, JToken objs, JToken events)
         {
-            if (CommandsCallback == null) return;
+            var ee = EventsEnumerator(events);
+            while (ee.MoveNext()) yield return ee.Current;
 
-            var cmds = CommandsCallback.Call().ToString();
-            var jo = JArray.Parse(cmds);
+            var pe = PropsEnumerator(props);
+            while (pe.MoveNext()) yield return pe.Current;
+
+            var oe = ObjectsEnumerator(objs);
+            while (oe.MoveNext()) yield return oe.Current;
+        }
+
+        public void FlushCommands(string serializedCommands = null)
+        {
+            if (serializedCommands == null)
+            {
+                if (CommandsCallback == null) return;
+
+                serializedCommands = CommandsCallback.Call().ToString();
+            }
+            var jo = JArray.Parse(serializedCommands);
 
             for (int i = 0; i < jo.Count; i++)
             {
@@ -312,16 +333,13 @@ namespace ReactUnity
                 {
                     var refId = val["r"].Value<int>();
                     var type = val["t"].ToString();
+
                     var props = val["p"];
-
-                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, PropsEnumerator(props));
-                    if (refId > 0) SetRef(refId, el);
-
                     var objs = val["o"];
-                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(objs), type);
-
                     var events = val["e"];
-                    ReactUnityBridge.Instance.applyUpdate(el, EventsEnumerator(events), type);
+
+                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props, objs, events));
+                    if (refId > 0) SetRef(refId, el);
                 }
                 else if (key == "t")
                 {
@@ -363,19 +381,16 @@ namespace ReactUnity
                     var type = val["t"].ToString();
 
                     var props = val["p"];
-                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(props), type);
-
                     var objs = val["o"];
-                    ReactUnityBridge.Instance.applyUpdate(el, PropsEnumerator(objs), type);
-
                     var events = val["e"];
-                    ReactUnityBridge.Instance.applyUpdate(el, EventsEnumerator(events), type);
+
+                    ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(props, objs, events), type);
                 }
                 else if (key == "x")
                 {
                     var elRef = val["r"].Value<int>();
                     var el = GetRef(elRef);
-                    var text = val["t"]?.ToString();
+                    var text = val["c"]?.ToString();
                     ReactUnityBridge.Instance.setText(el, text);
                 }
                 else if (key == "h")
@@ -383,7 +398,7 @@ namespace ReactUnity
                     var elRef = val["r"].Value<int>();
                     var el = GetRef(elRef);
                     var hidden = val["h"].Value<bool>();
-                    el?.ClassList.ToggleWithoutNotify("react-unity__renderer__hidden", hidden);
+                    el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
                 }
                 else if (key == "o")
                 {

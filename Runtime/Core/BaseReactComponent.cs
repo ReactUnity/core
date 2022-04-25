@@ -57,6 +57,18 @@ namespace ReactUnity
         }
         public abstract string Name { get; set; }
 
+        private int refId = -1;
+        public int RefId
+        {
+            get => refId;
+            set
+            {
+                if (refId >= 0) throw new InvalidOperationException("RefId cannot be assigned to. It is read-only.");
+                refId = value;
+            }
+        }
+
+
         #region Container Properties
         public bool IsContainer { get; }
         public List<IReactComponent> Children { get; private set; }
