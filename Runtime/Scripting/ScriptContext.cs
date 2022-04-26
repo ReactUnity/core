@@ -141,14 +141,18 @@ namespace ReactUnity.Scripting
         void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
         {
             var scheduler = context.Dispatcher.Scheduler;
+
             engine.SetValue("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
-            engine.SetValue("setInterval", new Func<object, double, int>(scheduler.setInterval));
-            engine.SetValue("setImmediate", new Func<object, int>(scheduler.setImmediate));
-            engine.SetValue("requestAnimationFrame", new Func<object, int>(scheduler.requestAnimationFrame));
             engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
+
+            engine.SetValue("setInterval", new Func<object, double, int>(scheduler.setInterval));
             engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
-            engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
+
+            engine.SetValue("requestAnimationFrame", new Func<object, int>(scheduler.requestAnimationFrame));
             engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
+
+            engine.SetValue("setImmediate", new Func<object, int>(scheduler.setImmediate));
+            engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
         }
 
         void CreateLocation(IJavaScriptEngine engine)

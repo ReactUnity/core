@@ -76,16 +76,8 @@ namespace ReactUnity.Scheduling
 
         public int Immediate(Action callback)
         {
-            if (IsMainThread())
-            {
-                callback();
-                return -1;
-            }
-            else
-            {
-                var handle = GetNextHandle();
-                return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
-            }
+            var handle = GetNextHandle();
+            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
