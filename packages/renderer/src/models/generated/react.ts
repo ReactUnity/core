@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 25/04/2022 04:34:42
+// Generated 26/04/2022 05:29:45
 //
 /* eslint-disable */
 
@@ -338,7 +338,7 @@ export declare namespace ReactUnity {
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
     GetRef(refId: number): ReactUnity.IReactComponent;
     BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
-    FlushCommands(): void;
+    FlushCommands(serializedCommands?: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -1167,7 +1167,7 @@ export declare namespace ReactUnity {
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
         GetRef(refId: number): ReactUnity.IReactComponent;
         BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
-        FlushCommands(): void;
+        FlushCommands(serializedCommands?: string): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -7118,7 +7118,7 @@ export declare namespace ReactUnity {
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number): ReactUnity.IReactComponent;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
-      FlushCommands(): void;
+      FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11955,7 +11955,7 @@ export declare namespace ReactUnity {
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number): ReactUnity.IReactComponent;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
-      FlushCommands(): void;
+      FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

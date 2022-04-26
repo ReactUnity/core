@@ -58,7 +58,7 @@
     "react-reconciler": "^0.27.0"
   },
   "peerDependencies": {
-    "react": ">=17"
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.9.1",

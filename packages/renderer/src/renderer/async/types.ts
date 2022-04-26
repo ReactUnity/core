@@ -14,7 +14,7 @@ type AsyncNativeInstance = AsyncHostContext & {
   refId: number;
 };
 
-type AsyncContainerInstance = Omit<AsyncNativeInstance, 'commands'> & {
+type AsyncContainerInstance = AsyncNativeInstance & {
   component: ReactUnity.IReactComponent;
 };
 

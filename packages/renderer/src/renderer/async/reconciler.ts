@@ -1,22 +1,13 @@
 import * as Reconciler from 'react-reconciler';
-import { ReactUnity } from '../../models/generated';
 import { commonReconciler, getAllowedProps, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
 import { CallbacksRepo } from './callbacks';
-import { BatchCommand } from './commands';
 import { ObjectsRepo } from './objects';
 import { AsyncHostContext, AsyncReconcilerConfig } from './types';
 
 let refId = 0;
 const callbacks = new CallbacksRepo();
 const objects = new ObjectsRepo();
-
-function flushJob(ctx: ReactUnity.ReactContext) {
-  Promise.resolve().then(() => {
-    ctx.FlushCommands();
-    setTimeout(() => flushJob(ctx), 0);
-  });
-}
 
 function bisectCallbacks(props: any) {
   const regularProps = {};
@@ -64,7 +55,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     const existing = ctxMap.get(context);
     if (existing) return existing;
 
-    const commands = [] as BatchCommand[];
+    const commands = rootContainer.commands;
 
     const flushCommands = () => {
       const serialized = JSON.stringify(commands);
@@ -81,7 +72,6 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     };
 
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef);
-    flushJob(context);
 
     const ctx: AsyncHostContext = {
       context,

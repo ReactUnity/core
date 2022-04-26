@@ -6,7 +6,7 @@ import { asyncReconciler } from './async/reconciler';
 import { ConcurrentRoot, LegacyRoot } from './constants';
 import { syncReconciler } from './sync/reconciler';
 
-const containerMap = new Map<NativeContainerInstance, any>();
+const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();
 
 interface RenderOptions {
   /* Unity element to render React on. It is the element `ReactUnityUGUI` is attached to by default. */
@@ -18,7 +18,7 @@ interface RenderOptions {
   /* Allows rendering in `legacy` mode if needed. The default rendering mode is `concurrent`. */
   mode?: 'legacy' | 'concurrent';
 
-  /* Render using the sync reconciler instead of the async (batch) rendering */
+  /* Render using the sync reconciler instead of the async (batch) rendering. It is not recommended to change this value. */
   sync?: boolean;
 }
 
@@ -32,29 +32,44 @@ export const Renderer = {
     // For Jint engine, sync is default
     // For other engines (ClearScript), async is default
     const isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? options?.sync === false : !options?.sync;
+    let { hostRoot, asyncJobCallback } = containerMap.get(hostContainer) || {};
 
-    const rc = isAsync ? asyncReconciler : syncReconciler;
-
-    let hostRoot = containerMap.get(hostContainer);
     if (!hostRoot) {
       const mode = options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot;
 
       if (isAsync) {
+        const commands = [];
         const hostContainerInstance = {
+          commands,
           component: hostContainer,
           context: hostContainer.Context,
           refId: hostContainer.RefId,
         };
+        asyncJobCallback = () => {
+          if (!commands.length) return;
+
+          const serialized = JSON.stringify(commands);
+          commands.length = 0;
+          hostContainer.Context.FlushCommands(serialized);
+        };
+
         hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, false, null)
       }
       else {
         hostRoot = syncReconciler.createContainer(hostContainer, mode, false, null)
       }
-      containerMap.set(hostContainer, hostRoot);
+      containerMap.set(hostContainer, { hostRoot, asyncJobCallback });
     }
 
-    if (!options?.disableHelpers) element = createElement(DefaultView, null, element);
+    const viewWrapperProps: React.ComponentProps<typeof DefaultView> = {
+      withHelpers: !options?.disableHelpers,
+      withAsyncJob: isAsync,
+      asyncJobCallback,
+      context: hostContainer.Context,
+    };
+    element = createElement(DefaultView, viewWrapperProps, element);
 
+    const rc = isAsync ? asyncReconciler : syncReconciler;
     rc.updateContainer(element, hostRoot, null);
   },
 };
