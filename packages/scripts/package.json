@@ -113,13 +113,5 @@
     "typescript": {
       "optional": true
     }
-  },
-  "bundledDependencies": [
-    "@typescript-eslint/eslint-plugin",
-    "eslint-plugin-import",
-    "eslint-plugin-jest",
-    "eslint-plugin-react",
-    "eslint-plugin-react-hooks",
-    "eslint-plugin-testing-library"
-  ]
+  }
 }
