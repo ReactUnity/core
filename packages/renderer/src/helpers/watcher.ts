@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { ReactUnity } from '../models/generated';
 
 export function useWatchable<T>(obj: ReactUnity.Helpers.IWatchable<T>) {
-  const isWatchable = obj && typeof obj === 'object' && ('Value' in obj);
+  const isWatchable = useMemo(() => obj && typeof obj === 'object' && ('Value' in obj), [obj]);
 
-  const [state, setState] = useState(isWatchable ? obj.Value : undefined);
-
-  useEffect(() => {
-    if (!isWatchable) {
-      setState(undefined);
-      return;
+  const subscribe = useCallback((onStoreChange: () => void) => {
+    if (isWatchable && 'AddListener' in obj) {
+      const unsub = obj.AddListener(() => onStoreChange());
+      return () => unsub?.();
     }
-
-    setState(obj.Value);
-
-    if ('AddListener' in obj) return obj.AddListener((val) => setState(val));
+    return () => { };
   }, [obj, isWatchable]);
 
-  return state;
+  const getSnapshot = useCallback(() => isWatchable ? obj.Value : undefined, [obj, isWatchable]);
+
+  return useSyncExternalStore(subscribe, getSnapshot);
 }

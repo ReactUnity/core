@@ -54,7 +54,8 @@
     "unity3d"
   ],
   "dependencies": {
-    "react-reconciler": "^0.28.0"
+    "react-reconciler": "^0.28.0",
+    "use-sync-external-store": "^1.1.0"
   },
   "peerDependencies": {
     "react": "^18.0.0"

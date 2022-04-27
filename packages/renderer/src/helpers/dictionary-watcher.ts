@@ -1,4 +1,6 @@
-import * as React from 'react';
+import { createContext, createElement, useContext } from 'react';
+import { useSyncExternalStore } from 'use-sync-external-store/shim';
+import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
 import { ReactUnity } from '../models/generated';
 
 export interface DictionaryWatcher<T = Record<string, any>> {
@@ -31,6 +33,20 @@ export interface DictionaryWatcher<T = Record<string, any>> {
    * ```
    */
   useContext: () => T;
+
+  /**
+   * React Hook for getting a partial value from Context
+   *
+   *  Usage:
+   *
+   * ```tsx
+   * function App() {
+   *   const values = watcher.useSelector(st => st.count);
+   *   ...
+   * }
+   * ```
+   */
+  useSelector<Res>(selector: (store: T) => Res): Res
 }
 
 /**
@@ -40,33 +56,40 @@ export interface DictionaryWatcher<T = Record<string, any>> {
  */
 export function createDictionaryWatcher<ValueType = any, RecordType = Record<string, ValueType>>
   (dictionary: ReactUnity.Helpers.WatchableRecord<ValueType>, displayName?: string): DictionaryWatcher<RecordType> {
-  const ctx = React.createContext<RecordType>(undefined);
+  const ctx = createContext<RecordType>(undefined);
   if (displayName) ctx.displayName = displayName;
 
-  const Provider = function GlobalsProvider({ children }: { children?: React.ReactNode }) {
-    const [render, setRender] = React.useState(0);
+  let snapshot: RecordType = ({ ...dictionary }) as any;
 
-    React.useLayoutEffect(() => {
-      const remove = dictionary?.AddListener((key, value, dic) => {
-        setRender(x => x + 1);
-      });
+  const subscribe = (onStoreChange: () => void) => {
+    snapshot = ({ ...dictionary }) as any;
 
-      if (!remove) {
-        if (displayName) console.warn(`${displayName} dictionary does not provide a change listener`);
-        else console.warn('The dictionary does not provide a change listener');
-      }
+    const remove = dictionary?.AddListener((key, value, dic) => {
+      snapshot = ({ ...dictionary }) as any;
+      onStoreChange();
+    });
 
-      return () => remove?.();
-    }, []);
+    if (!remove) {
+      if (displayName) console.warn(`${displayName} dictionary does not provide a change listener`);
+      else console.warn('The dictionary does not provide a change listener');
+    }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const value: any = React.useMemo(() => ({ ...dictionary }), [render]);
-
-    return React.createElement(ctx.Provider, { value }, children);
+    return () => remove?.();
   };
 
-  function useContext() {
-    const context = React.useContext(ctx);
+  const getSnapshot = () => snapshot;
+
+  const Provider = function GlobalsProvider({ children }: { children?: React.ReactNode }) {
+    const value: any = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+    return createElement(ctx.Provider, { value }, children);
+  };
+
+  function useSelector<Res>(selector: (store: RecordType) => Res) {
+    return useSyncExternalStoreWithSelector(subscribe, getSnapshot, getSnapshot, selector);
+  }
+
+  function useDictionaryContext() {
+    const context = useContext(ctx);
     if (context === undefined) {
       if (displayName) throw new Error(`${displayName}.useContext must be used within a ${displayName}.Provider`);
       else throw new Error('useContext must be used within a provider');
@@ -74,7 +97,7 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
     return context;
   }
 
-  return { context: ctx, Provider, useContext };
+  return { context: ctx, Provider, useContext: useDictionaryContext, useSelector };
 }
 
 export const globalsWatcher = createDictionaryWatcher<any, DefaultGlobals>(Globals, 'globalsContext');
