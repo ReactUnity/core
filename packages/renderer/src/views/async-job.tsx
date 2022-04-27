@@ -15,7 +15,6 @@ export function AsyncJobRunner({ context, asyncJobCallback }: Props) {
   });
 
   useLayoutEffect(() => {
-
     setInterval(() => {
       setSt(x => !x);
     }, 0);
