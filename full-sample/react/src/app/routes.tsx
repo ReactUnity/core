@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
 import AnimationsPage from "src/pages/animations";
 import BgPatternsPage from "src/pages/bg-patterns";
@@ -6,7 +6,10 @@ import HomePage from "src/pages/home";
 import ImagesPage from "src/pages/images";
 import MaterialPage from "src/pages/material";
 
-const Lazy = React.lazy(() => import('src/pages/lazy').then(x => ({ default: x.Lazy })));
+const Lazy = React.lazy(() =>
+  new Promise<any>((resolve) =>
+    // Delay loading by 2 seconds
+    setTimeout(() => import('src/pages/lazy').then(x => ({ default: x.Lazy })).then(resolve), 2000)));
 
 export function AppRoutes() {
   return <Routes>
@@ -15,6 +18,12 @@ export function AppRoutes() {
     <Route path={'animations'} element={<AnimationsPage />} />
     <Route path={'images'} element={<ImagesPage />} />
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
-    <Route path={'lazy'} element={<Lazy />} />
+    <Route path={'lazy'} element={
+      <Suspense fallback={<>
+        Loading
+      </>}>
+        <Lazy />
+      </Suspense>
+    } />
   </Routes>;
 }

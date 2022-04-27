@@ -70,3 +70,16 @@ build/
 # Yalc
 yalc.lock
 .yalc
+
+# yarn v2
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# For zero installs:
+# !.yarn/cache
+# !.pnp.*
