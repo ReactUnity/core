@@ -85,14 +85,15 @@ namespace ReactUnity.Tests
         public IEnumerator ActivePropertyShouldSetGameObjectActive()
         {
             yield return null;
-
             var cmp = (Q("image") as UGUI.ImageComponent).GameObject;
             Assert.AreEqual(false, cmp.activeSelf);
 
-            Component.Globals.Set("active", true);
+            Globals.Set("active", true);
+            yield return null;
             Assert.AreEqual(true, cmp.activeSelf);
 
-            Component.Globals.Set("active", 0);
+            Globals.Set("active", 0);
+            yield return null;
             Assert.AreEqual(false, cmp.activeSelf);
         }
 

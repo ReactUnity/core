@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace ReactUnity.Scheduling
 {
+    [DefaultExecutionOrder(-50)]
     public class RuntimeDispatcher : MonoBehaviour, IDispatcher, IDisposable
     {
         System.Threading.Thread mainThread;
@@ -16,6 +17,11 @@ namespace ReactUnity.Scheduling
             var dispatcher = go.AddComponent<RuntimeDispatcher>();
             dispatcher.Scheduler = new DefaultScheduler(dispatcher, ctx);
             DontDestroyOnLoad(go);
+
+#if REACT_UNITY_DEVELOPER
+            dispatcher.CurrentLifecycle = go.AddComponent<CurrentLifecycle>();
+#endif
+
             return dispatcher;
         }
 
@@ -24,6 +30,9 @@ namespace ReactUnity.Scheduling
         private HashSet<int> ToStop = new HashSet<int>();
         private List<Action> CallOnLateUpdate = new List<Action>();
         public IScheduler Scheduler { get; private set; }
+#if REACT_UNITY_DEVELOPER
+        public CurrentLifecycle CurrentLifecycle { get; private set; }
+#endif
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryLateUpdate(Action callback)
@@ -216,7 +225,7 @@ namespace ReactUnity.Scheduling
 
         private IEnumerator AnimationFrameCoroutine(Action callback, int handle)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
             if (!ToStop.Contains(handle)) callback();
         }
 

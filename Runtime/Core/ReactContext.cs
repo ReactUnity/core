@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ExCSS;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
@@ -215,10 +214,9 @@ namespace ReactUnity
             Refs.Add(refId, new WeakReference<IReactComponent>(cmp));
         }
 
-        public IReactComponent GetRef(int refId)
+        public IReactComponent GetRef(int refId, bool ensureUpdate = false)
         {
-            // Ensure the actualy object is created before getting the ref
-            FlushCommands();
+            if (ensureUpdate) FlushCommands();
 
             Refs.TryGetValue(refId, out var cmp);
             if (cmp.TryGetTarget(out var target)) return target;
@@ -302,14 +300,23 @@ namespace ReactUnity
 
         IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken props, JToken objs, JToken events)
         {
-            var ee = EventsEnumerator(events);
-            while (ee.MoveNext()) yield return ee.Current;
+            if (events != null)
+            {
+                var ee = EventsEnumerator(events);
+                while (ee.MoveNext()) yield return ee.Current;
+            }
 
-            var pe = PropsEnumerator(props);
-            while (pe.MoveNext()) yield return pe.Current;
+            if (props != null)
+            {
+                var pe = PropsEnumerator(props);
+                while (pe.MoveNext()) yield return pe.Current;
+            }
 
-            var oe = ObjectsEnumerator(objs);
-            while (oe.MoveNext()) yield return oe.Current;
+            if (objs != null)
+            {
+                var oe = ObjectsEnumerator(objs);
+                while (oe.MoveNext()) yield return oe.Current;
+            }
         }
 
         public void FlushCommands(string serializedCommands = null)

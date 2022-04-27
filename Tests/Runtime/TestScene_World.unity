@@ -334,7 +334,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -517,14 +516,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066305896}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Script:
+  Source:
     Type: 3
+    Language: 0
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
+    Watch: 1
     SourcePath: react/index#material
     SourceText: 
     ResourcesPath: 
@@ -535,6 +536,7 @@ MonoBehaviour:
   EngineType: 0
   Globals:
     Entries: []
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
