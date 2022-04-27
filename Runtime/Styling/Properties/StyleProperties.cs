@@ -73,18 +73,18 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
 
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
-        public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration");
+        public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction", TimingFunctions.Default);
-        public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transitionDelay");
+        public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transitionDelay", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transitionPlayState");
 
         public static readonly StyleProperty<float> motionDuration = new StyleProperty<float>("motionDuration", 0f, false);
         public static readonly StyleProperty<TimingFunction> motionTimingFunction = new StyleProperty<TimingFunction>("motionTimingFunction", TimingFunctions.Default, false);
         public static readonly StyleProperty<float> motionDelay = new StyleProperty<float>("motionDelay", 0f, false);
 
-        public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animationDelay");
+        public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animationDelay", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animationDirection");
-        public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animationDuration");
+        public static readonly ValueListStyleProperty<float> animationDuration = new ValueListStyleProperty<float>("animationDuration", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<AnimationFillMode> animationFillMode = new ValueListStyleProperty<AnimationFillMode>("animationFillMode");
         public static readonly ValueListStyleProperty<int> animationIterationCount = new ValueListStyleProperty<int>("animationIterationCount", 1, baseConverter: AllConverters.IterationCountConverter);
         public static readonly ValueListStyleProperty<string> animationName = new ValueListStyleProperty<string>("animationName");
