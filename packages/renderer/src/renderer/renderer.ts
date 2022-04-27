@@ -2,9 +2,12 @@ import * as React from 'react';
 import { createElement } from 'react';
 import { ConcurrentRoot, LegacyRoot } from 'react-reconciler/constants';
 import { NativeContainerInstance } from '../models/renderer';
+import { version } from '../version';
 import { DefaultView } from '../views/default-view';
 import { asyncReconciler } from './async/reconciler';
 import { syncReconciler } from './sync/reconciler';
+
+declare const process;
 
 const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();
 
@@ -71,6 +74,13 @@ export const Renderer = {
 
     const rc = isAsync ? asyncReconciler : syncReconciler;
     rc.updateContainer(element, hostRoot, null);
+
+    rc.injectIntoDevTools({
+      bundleType: process.env.NODE_ENV === 'development' ? 1 : 0,
+      version,
+      rendererPackageName: '@reactunity/renderer',
+      rendererConfig: { isAsync },
+    });
   },
 };
 

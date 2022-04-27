@@ -39,8 +39,7 @@
     "prepare": "yarn build",
     "watch": "tsc --watch",
     "lint": "react-unity-scripts lint",
-    "local": "yalc publish --push",
-    "pack": "npm pack"
+    "version": "node version.js && git add src/version.ts"
   },
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "license": "MIT",
