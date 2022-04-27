@@ -106,18 +106,23 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     UnityBridge.clearContainer(container);
   },
 
-  createInstance(type, props, rootContainer, ctx) {
+  createInstance(type, props, rootContainer, ctx, internalHandle) {
     refId++;
     const aProps = getAllowedProps(props, type);
     const [p, e, o] = bisectCallbacks(aProps);
     ctx.commands.push(['c', { t: type, r: refId, p, e, o }]);
 
+    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+
     return { ...ctx, refId };
   },
 
-  createTextInstance(text, rootContainer, ctx) {
+  createTextInstance(text, rootContainer, ctx, internalHandle) {
     refId++;
     ctx.commands.push(['t', { r: refId, c: text }]);
+
+    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+
     return { ...ctx, refId };
   },
 

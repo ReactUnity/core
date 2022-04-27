@@ -4,18 +4,20 @@ import {
   ChildSet, HydratableInstance, InstanceTag, NoTimeout, Props, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
 import { BatchCommand } from './commands';
+import { ObjectsRepo } from './objects';
 
 export type AsyncHostContext = {
   context: ReactUnity.ReactContext;
   commands: BatchCommand[];
 };
 
-type AsyncNativeInstance = AsyncHostContext & {
+export type AsyncNativeInstance = AsyncHostContext & {
   refId: number;
 };
 
 type AsyncContainerInstance = AsyncNativeInstance & {
   component: ReactUnity.IReactComponent;
+  fiberCache: ObjectsRepo | null;
 };
 
 type AsyncPublicInstance = ReactUnity.IReactComponent;

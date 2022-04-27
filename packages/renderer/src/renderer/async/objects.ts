@@ -7,19 +7,28 @@ export class ObjectsRepo<T = any> {
   constructor() {
   }
 
-  addObject = (cb: T) => {
-    if (!cb) return 0;
+  setObject = (index: number, item: T) => {
+    let it = this.indices[index];
+    if (!it) {
+      it = this.indices[index] = {};
+    }
+    this.objects.set(it, item);
+  };
+
+  addObject = (item: T) => {
+    if (!item) return -1;
 
     const it = {};
     const ind = this.indices.length;
     this.indices.push(it);
-    this.objects.set(it, cb);
+    this.objects.set(it, item);
 
     return ind;
   };
 
-  getObject = (ind: number) => {
-    const it = this.indices[ind];
+  getObject = (index: number) => {
+    if (index < 0) return undefined;
+    const it = this.indices[index];
     return this.objects.get(it);
   };
 }

@@ -4,10 +4,12 @@ import { ConcurrentRoot, LegacyRoot } from 'react-reconciler/constants';
 import { NativeContainerInstance } from '../models/renderer';
 import { version } from '../version';
 import { DefaultView } from '../views/default-view';
+import { ObjectsRepo } from './async/objects';
 import { asyncReconciler } from './async/reconciler';
+import { AsyncNativeInstance } from './async/types';
+import { isDevelopment } from './constants';
 import { syncReconciler } from './sync/reconciler';
 
-declare const process;
 
 const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();
 
@@ -37,16 +39,25 @@ export const Renderer = {
     const isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? options?.sync === false : !options?.sync;
     let { hostRoot, asyncJobCallback } = containerMap.get(hostContainer) || {};
 
+    let findFiberByHostInstance: any = () => null;
+
     if (!hostRoot) {
       const mode = options?.mode === 'legacy' ? LegacyRoot : ConcurrentRoot;
 
       if (isAsync) {
+        const fiberCache = isDevelopment ? new ObjectsRepo() : null;
+
+        if (isDevelopment) {
+          findFiberByHostInstance = (instance: AsyncNativeInstance) => !instance ? null : fiberCache.getObject(instance.refId);
+        }
+
         const commands = [];
         const hostContainerInstance = {
           commands,
           component: hostContainer,
           context: hostContainer.Context,
           refId: hostContainer.RefId,
+          fiberCache,
         };
         asyncJobCallback = () => {
           if (!commands.length) return;
@@ -76,10 +87,11 @@ export const Renderer = {
     rc.updateContainer(element, hostRoot, null);
 
     rc.injectIntoDevTools({
-      bundleType: process.env.NODE_ENV === 'development' ? 1 : 0,
+      bundleType: isDevelopment ? 1 : 0,
       version,
       rendererPackageName: '@reactunity/renderer',
       rendererConfig: { isAsync },
+      findFiberByHostInstance,
     });
   },
 };

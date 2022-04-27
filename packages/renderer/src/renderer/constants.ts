@@ -3,6 +3,8 @@ import { ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, I
 import { NoTimeout, TimeoutHandle } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
+declare const process;
+
 export const hideClass = 'react-unity__renderer__hidden';
 
 export const eventPriorities = {
@@ -51,3 +53,5 @@ export const commonReconciler = {
       .catch((error) => setTimeout(() => { throw error; }, 0)),
   cancelTimeout: (handle) => clearTimeout(handle),
 };
+
+export const isDevelopment = process.env.NODE_ENV === 'development';
