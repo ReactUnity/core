@@ -6,6 +6,7 @@ namespace ReactUnity.UGUI.Behaviours
 {
     [ExecuteInEditMode]
     [AddComponentMenu("")]
+    [DefaultExecutionOrder(-20)]
     public class ReactReplacedElement : MonoBehaviour
     {
         private RectTransform rt;

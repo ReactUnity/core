@@ -12,6 +12,7 @@ namespace ReactUnity.UGUI.Behaviours
     /// is true.
     /// </summary>
     /// <see cref="https://forum.unity.com/threads/child-objects-blocking-scrollrect-from-scrolling.311555/#post-6894200"/>
+    [DefaultExecutionOrder(100)]
     public class ScrollEventBubbling : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IScrollHandler
     {
         [Tooltip("Should the scroll and drag events be forwarded (bubble up) to the parent?")]

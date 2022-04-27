@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ReactUnity.UGUI.Behaviours
 {
+    [DefaultExecutionOrder(-30)]
     public class ScrollContentResizer : MonoBehaviour
     {
         private RectTransform rt;

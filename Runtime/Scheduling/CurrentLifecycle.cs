@@ -186,11 +186,6 @@ namespace ReactUnity.Scheduling
             State = "OnPostRender";
             StateID = 67;
         }
-        void OnRenderImage()
-        {
-            State = "OnRenderImage";
-            StateID = 68;
-        }
         void OnDrawGizmos()
         {
             State = "OnDrawGizmos";

@@ -9,6 +9,7 @@ namespace ReactUnity.UGUI.Behaviours
     [SelectionBase]
     [ExecuteInEditMode]
     [AddComponentMenu("")]
+    [DefaultExecutionOrder(-10)]
     public class ReactElement : MonoBehaviour
     {
         private RectTransform rt;
