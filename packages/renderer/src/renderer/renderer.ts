@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { createElement } from 'react';
+import { ConcurrentRoot, LegacyRoot } from 'react-reconciler/constants';
 import { NativeContainerInstance } from '../models/renderer';
 import { DefaultView } from '../views/default-view';
 import { asyncReconciler } from './async/reconciler';
-import { ConcurrentRoot, LegacyRoot } from './constants';
 import { syncReconciler } from './sync/reconciler';
 
 const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();

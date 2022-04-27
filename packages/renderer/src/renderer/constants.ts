@@ -1,15 +1,9 @@
 import * as Reconciler from 'react-reconciler';
+import { ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, IdleEventPriority } from 'react-reconciler/constants';
 import { NoTimeout, TimeoutHandle } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
 export const hideClass = 'react-unity__renderer__hidden';
-
-const DiscreteEventPriority = 0b00001;
-const ContinuousEventPriority = 0b00100;
-const DefaultEventPriority = 0b10000;
-const IdleEventPriority = 0b0100000000000000000000000000000;
-export const LegacyRoot = 0;
-export const ConcurrentRoot = 1;
 
 export const eventPriorities = {
   discrete: DiscreteEventPriority,
@@ -48,7 +42,7 @@ export const commonReconciler = {
   // -------------------
 
   now: Date.now,
-  getCurrentEventPriority: () => eventPriorities.discrete,
+  getCurrentEventPriority: () => eventPriorities.default,
 
   noTimeout: -1 as const,
   scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
