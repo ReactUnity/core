@@ -17,7 +17,10 @@ function partitionProps(props: any) {
     if (Object.prototype.hasOwnProperty.call(props, key)) {
       const value = props[key];
 
-      if (key === 'style' || value == null) {
+      if (value == null) {
+        (res.p || (res.p = {}))[key] = null;
+      }
+      else if (key === 'style') {
         (res.p || (res.p = {}))[key] = value;
       }
       else if (typeof value === 'function') {
@@ -85,7 +88,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     return parentCtx;
   },
   getPublicInstance: (instance) => {
-    return instance.context.GetRef(instance.refId);
+    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
   },
 
   supportsMutation: true,

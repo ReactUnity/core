@@ -336,7 +336,7 @@ export declare namespace ReactUnity {
     Start(): void;
     Dispose(): void;
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-    GetRef(refId: number): ReactUnity.IReactComponent;
+    GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
     BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
     FlushCommands(serializedCommands?: string): void;
     Equals(obj: any): boolean;
@@ -1165,7 +1165,7 @@ export declare namespace ReactUnity {
         Start(): void;
         Dispose(): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-        GetRef(refId: number): ReactUnity.IReactComponent;
+        GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
         BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
         FlushCommands(serializedCommands?: string): void;
         Equals(obj: any): boolean;
@@ -7116,7 +7116,7 @@ export declare namespace ReactUnity {
       Start(): void;
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-      GetRef(refId: number): ReactUnity.IReactComponent;
+      GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
@@ -11953,7 +11953,7 @@ export declare namespace ReactUnity {
       Start(): void;
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-      GetRef(refId: number): ReactUnity.IReactComponent;
+      GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
