@@ -9,36 +9,32 @@ let refId = 0;
 const callbacks = new CallbacksRepo();
 const objects = new ObjectsRepo();
 
-function bisectCallbacks(props: any) {
-  const regularProps = {};
-  const callbackProps = {};
-  const objectProps = {};
+// Separates properties in 3 categories: regular props, callbacks and non-serializable objects
+function partitionProps(props: any) {
+  const res: { p: any, o: any, e: any } = {} as any;
 
   for (const key in props) {
     if (Object.prototype.hasOwnProperty.call(props, key)) {
       const value = props[key];
 
-      if (key === 'style') {
-        regularProps[key] = value;
-      }
-      else if (value == null) {
-        regularProps[key] = value;
+      if (key === 'style' || value == null) {
+        (res.p || (res.p = {}))[key] = value;
       }
       else if (typeof value === 'function') {
         const ind = callbacks.addObject(value);
-        callbackProps[key] = ind;
+        (res.e || (res.e = {}))[key] = ind;
       }
       else if (typeof value === 'object') {
         const ind = objects.addObject(value);
-        objectProps[key] = ind;
+        (res.o || (res.o = {}))[key] = ind;
       }
       else {
-        regularProps[key] = value;
+        (res.p || (res.p = {}))[key] = value;
       }
     }
   }
 
-  return [regularProps, callbackProps, objectProps];
+  return res;
 }
 
 const ctxMap = new Map<object, AsyncHostContext>();
@@ -112,8 +108,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   createInstance(type, props, rootContainer, ctx, internalHandle) {
     refId++;
     const aProps = getAllowedProps(props, type);
-    const [p, e, o] = bisectCallbacks(aProps);
-    ctx.commands.push(['c', { t: type, r: refId, p, e, o }]);
+    ctx.commands.push(['c', { t: type, r: refId, ...partitionProps(aProps) }]);
 
     if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -146,8 +141,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
   commitUpdate(instance, updatePayload, type) {
     const props = getAllowedProps(updatePayload, type);
-    const [p, e, o] = bisectCallbacks(props);
-    instance.commands.push(['u', { r: instance.refId, t: type, p, e, o }]);
+    instance.commands.push(['u', { r: instance.refId, t: type, ...partitionProps(props) }]);
   },
 
 
