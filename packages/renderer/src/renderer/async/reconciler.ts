@@ -21,6 +21,9 @@ function bisectCallbacks(props: any) {
       if (key === 'style') {
         regularProps[key] = value;
       }
+      else if (value == null) {
+        regularProps[key] = value;
+      }
       else if (typeof value === 'function') {
         const ind = callbacks.addObject(value);
         callbackProps[key] = ind;
