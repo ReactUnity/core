@@ -75,13 +75,14 @@ export const Renderer = {
       containerMap.set(hostContainer, { hostRoot, asyncJobCallback });
     }
 
-    const viewWrapperProps: React.ComponentProps<typeof DefaultView> = {
-      withHelpers: !options?.disableHelpers,
-      withAsyncJob: isAsync,
-      asyncJobCallback,
-      context: hostContainer.Context,
-    };
-    element = createElement(DefaultView, viewWrapperProps, element);
+    const shouldWrapWithHelpers = !options?.disableHelpers;
+
+    if (shouldWrapWithHelpers) {
+      const viewWrapperProps: React.ComponentProps<typeof DefaultView> = {
+        withHelpers: !options?.disableHelpers,
+      };
+      element = createElement(DefaultView, viewWrapperProps, element);
+    }
 
     const rc = isAsync ? asyncReconciler : syncReconciler;
     rc.updateContainer(element, hostRoot, null);
@@ -93,6 +94,11 @@ export const Renderer = {
       rendererConfig: { isAsync },
       findFiberByHostInstance,
     });
+
+    if (asyncJobCallback) {
+      rc.flushControlled(() => asyncJobCallback());
+      setInterval(() => rc.flushControlled(() => asyncJobCallback()), 0);
+    }
   },
 };
 
