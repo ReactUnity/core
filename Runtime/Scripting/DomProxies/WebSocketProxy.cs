@@ -18,7 +18,7 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onmessage
         {
-            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData) })); }
+            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') })); }
             get => null;
         }
 

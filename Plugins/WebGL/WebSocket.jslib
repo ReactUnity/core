@@ -31,7 +31,7 @@ var LibraryWebSocket = {
     /* Debug mode */
     debug: false,
     stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
-    dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(Runtime !== 'undefined' ? Runtime : undefined, arguments); },
+    dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
   },
 
   /**
