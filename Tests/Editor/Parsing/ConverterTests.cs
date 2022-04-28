@@ -24,14 +24,65 @@ namespace ReactUnity.Editor.Tests
         }
 
         [Test]
-        public void TransitionConverter()
+        public void TransitionShorthandConverter()
         {
-
             var collection = new InlineStyles();
             var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
 
             collection["transition"] =
                 "width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear";
+
+            var Duration = style.transitionDuration;
+            var Delay = style.transitionDelay;
+            var TimingFunction = style.transitionTimingFunction;
+            var Property = style.transitionProperty;
+            var PlayState = style.transitionPlayState;
+
+            Assert.AreEqual("width", Property.Get(0).Definition);
+            Assert.IsFalse(Property.Get(0).IsAll);
+            Assert.AreEqual(2, Duration.Get(0));
+            Assert.AreEqual(0, Delay.Get(0));
+            AssertTimingFunction(TimingFunctions.Ease, TimingFunction.Get(0) ?? TimingFunctions.Default);
+
+
+            Assert.AreEqual("height", Property.Get(1).Definition);
+            Assert.IsFalse(Property.Get(1).IsAll);
+            Assert.AreEqual(0.4f, Duration.Get(1));
+            Assert.AreEqual(0, Delay.Get(1));
+            AssertTimingFunction(TimingFunctions.EaseInOut, TimingFunction.Get(1));
+
+
+            Assert.AreEqual("all", Property.Get(2).Definition);
+            Assert.IsTrue(Property.Get(2).IsAll);
+            Assert.AreEqual(0.5f, Duration.Get(2));
+            Assert.AreEqual(0.3f, Delay.Get(2));
+            AssertTimingFunction(TimingFunctions.StepStart, TimingFunction.Get(2));
+
+            Assert.IsFalse(Property.Get(3).IsAll);
+            Assert.AreEqual("bbb", Property.Get(3).Definition);
+
+            Assert.AreEqual("bg", Property.Get(4).Definition);
+            Assert.IsFalse(Property.Get(4).IsAll);
+            Assert.AreEqual(AnimationPlayState.Paused, PlayState.Get(4));
+
+            Assert.AreEqual("all", Property.Get(5).Definition);
+            Assert.IsTrue(Property.Get(5).IsAll);
+            Assert.AreEqual(3, Duration.Get(5));
+            Assert.AreEqual(0.4f, Delay.Get(5));
+            AssertTimingFunction(TimingFunctions.Linear, TimingFunction.Get(5));
+        }
+
+        [Test]
+        public void TransitionConverter()
+        {
+            var collection = new InlineStyles();
+            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+
+            collection["transition-property"] = "width, height, all, bbb, bg, all";
+            collection["transition-duration"] = "2s, 400ms, 500ms, 0, 0, 3s";
+            collection["transition-delay"] = "0, 0, 300ms, 0, 0, 400ms";
+            collection["transition-play-state"] = "running, running, running, running, paused, running";
+            collection["transition-timing-function"] = "ease, ease-in-out, step-start, ease, ease, linear";
 
             var Duration = style.transitionDuration;
             var Delay = style.transitionDelay;

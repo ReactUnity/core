@@ -40,6 +40,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
         static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
+        static public IStyleConverter ScaleConverter = new Vector3Converter(null, null, 1);
         static public IStyleConverter TransitionPropertyConverter = new TransitionProperty.Converter();
         static public IStyleConverter CursorListConverter = new CursorList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();

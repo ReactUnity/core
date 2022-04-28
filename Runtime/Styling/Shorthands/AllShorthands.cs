@@ -31,6 +31,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Motion = new MotionShorthand("motion");
         internal static readonly StyleShorthand Animation = new AnimationShorthand("animation");
         internal static readonly StyleShorthand Audio = new AudioShorthand("audio");
+        internal static readonly StyleShorthand Transform = new TransformShorthand("transform");
 
         internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -60,6 +61,7 @@ namespace ReactUnity.Styling.Shorthands
             { "motion", Motion },
             { "animation", Animation },
             { "audio", Audio },
+            { "transform", Transform },
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },

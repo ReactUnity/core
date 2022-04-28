@@ -30,7 +30,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<YogaValue> translateZ = new StyleProperty<YogaValue>("translateZ", YogaValue.Point(0), true);
-        public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
+        public static readonly StyleProperty<Vector3> scale = new StyleProperty<Vector3>("scale", Vector3.one, true, false, AllConverters.ScaleConverter);
         public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: AllConverters.RotateConverter);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);

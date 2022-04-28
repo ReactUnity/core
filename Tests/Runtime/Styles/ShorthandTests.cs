@@ -140,5 +140,34 @@ namespace ReactUnity.Tests
             Assert.AreEqual(BackgroundRepeat.Space, rptY.Get(3));
             Assert.AreEqual(BackgroundRepeat.NoRepeat, rptY.Get(4));
         }
+
+
+        [ReactInjectableTest]
+        public IEnumerator TransformShorthand()
+        {
+
+            var cmp = Q("#test");
+
+
+            cmp.Style["transform"] = "translate(100px, 50px) translateX(20px) translateY(40px) translateZ(10px) translate3d(1px, 2px, 3px)"
+                + " scale(2, 3) scale3d(2, 3, 4) scaleX(2) scaleY(3) scaleZ(4)"
+                + " rotate(40deg) rotate3d(20deg, 30deg, 40deg) rotateX(20deg) rotateY(30deg) rotateZ(40deg)";
+            yield return null;
+
+            var translate = cmp.ComputedStyle.translate;
+            var translateZ = cmp.ComputedStyle.translateZ;
+            var rotate = cmp.ComputedStyle.rotate;
+            var scale = cmp.ComputedStyle.scale;
+
+            Assert.AreEqual(121, translate.X.Value);
+            Assert.AreEqual(92, translate.Y.Value);
+            Assert.AreEqual(13, translateZ.Value);
+
+            Assert.AreEqual(new Vector3(8, 27, 16), scale);
+
+            var expectedRotation = Quaternion.identity * Quaternion.Euler(0, 0, 40) * Quaternion.Euler(20, 30, 40) *
+                Quaternion.Euler(20, 0, 0) * Quaternion.Euler(0, 30, 0) * Quaternion.Euler(0, 0, 40);
+            Assert.AreEqual(expectedRotation.eulerAngles, rotate);
+        }
     }
 }

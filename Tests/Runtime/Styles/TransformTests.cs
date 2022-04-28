@@ -76,5 +76,20 @@ namespace ReactUnity.Tests
             Assert.AreEqual(-132, rt.rect.x, 1);
             Assert.AreEqual(-68, rt.rect.y, 1);
         }
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator DefaultScaleZIsIdentity()
+        {
+            yield return null;
+
+            var rt = View.RectTransform;
+
+            View.Style.Set("scale", "1.2 1.4");
+            yield return null;
+            Assert.AreEqual(1.2f, rt.localScale.x);
+            Assert.AreEqual(1.4f, rt.localScale.y);
+            Assert.AreEqual(1, rt.localScale.z);
+        }
     }
 }

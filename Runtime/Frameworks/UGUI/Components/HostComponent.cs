@@ -73,8 +73,7 @@ namespace ReactUnity.UGUI
             // Restore rotation and scale
             if (style.HasValue(StyleProperties.scale))
             {
-                var scale = style.scale;
-                RectTransform.localScale = new Vector3(scale.x, scale.y, 1);
+                RectTransform.localScale = style.scale;
             }
 
             if (style.HasValue(StyleProperties.rotate))

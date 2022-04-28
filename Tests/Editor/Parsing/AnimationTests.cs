@@ -33,10 +33,10 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(kfs.From, kfs.Steps[0]);
             Assert.AreEqual(kfs.To, kfs.Steps[1]);
             Assert.AreEqual(0, kfs.From.Rules[StyleProperties.opacity]);
-            Assert.AreEqual(new Vector2(0.8f, 0.8f), kfs.From.Rules[StyleProperties.scale]);
+            Assert.AreEqual(new Vector3(0.8f, 0.8f, 1), kfs.From.Rules[StyleProperties.scale]);
 
             Assert.AreEqual(1, kfs.To.Rules[StyleProperties.opacity]);
-            Assert.AreEqual(new Vector2(1, 1), kfs.To.Rules[StyleProperties.scale]);
+            Assert.AreEqual(new Vector3(1, 1, 1), kfs.To.Rules[StyleProperties.scale]);
         }
     }
 }

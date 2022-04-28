@@ -202,7 +202,7 @@ namespace ReactUnity.UIToolkit
 
             // Transforms
 
-            if (computed.HasValue(StyleProperties.scale)) TargetElement.transform.scale = new Vector3(computed.scale.x, computed.scale.y, 1);
+            if (computed.HasValue(StyleProperties.scale)) TargetElement.transform.scale = computed.scale;
             else TargetElement.transform.scale = Vector3.one;
 
             if (computed.HasValue(StyleProperties.rotate)) TargetElement.transform.rotation = Quaternion.Euler(computed.rotate);

@@ -12,14 +12,17 @@ namespace ReactUnity.Converters
         char[] splitters = new char[] { ' ', ',' };
 
         private Func<float, Vector3> SingleValueMode;
+        private float DefaultZValue = 0;
 
         public bool CanHandleKeyword(CssKeyword keyword) => false;
 
-        public Vector3Converter(Func<float, Vector3> singleValueMode = null, IStyleConverter floatParser = null)
+        public Vector3Converter(Func<float, Vector3> singleValueMode = null, IStyleConverter floatParser = null, float defaultZValue = 0)
         {
             SingleValueMode = singleValueMode ?? ((float v) => new Vector3(v, v, v));
 
             if (floatParser != null) FloatParser = floatParser;
+
+            DefaultZValue = defaultZValue;
         }
 
         public object Parse(string value)
@@ -40,7 +43,7 @@ namespace ReactUnity.Converters
                 var pr2 = FloatParser.Parse(values[1]);
                 if (pr1 is float fl1)
                     if (pr2 is float fl2)
-                        return new Vector3(fl1, fl2, 0);
+                        return new Vector3(fl1, fl2, DefaultZValue);
             }
 
             if (values.Length == 3)

@@ -41,7 +41,7 @@ namespace ReactUnity.Styling
         public YogaValue2 transformOrigin => GetStyleValue(StyleProperties.transformOrigin);
         public YogaValue2 translate => GetStyleValue(StyleProperties.translate);
         public YogaValue translateZ => GetStyleValue(StyleProperties.translateZ);
-        public Vector2 scale => GetStyleValue(StyleProperties.scale);
+        public Vector3 scale => GetStyleValue(StyleProperties.scale);
         public Vector3 rotate => GetStyleValue(StyleProperties.rotate);
         public FontReference fontFamily => GetStyleValue(StyleProperties.fontFamily);
         public Color color => GetStyleValue(StyleProperties.color);
