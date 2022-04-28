@@ -51,7 +51,18 @@ export const Renderer = {
           findFiberByHostInstance = (instance: AsyncNativeInstance) => !instance ? null : fiberCache.getObject(instance.refId);
         }
 
+        let scheduled = false;
         const commands = [];
+        commands.push = (...args) => {
+          if (!scheduled) {
+            Promise.resolve().then(() => {
+              asyncJobCallback();
+              scheduled = false;
+            });
+          }
+          return Array.prototype.push.apply(commands, args);
+        };
+
         const hostContainerInstance = {
           commands,
           component: hostContainer,
@@ -94,11 +105,6 @@ export const Renderer = {
       rendererConfig: { isAsync },
       findFiberByHostInstance,
     });
-
-    if (asyncJobCallback) {
-      rc.flushControlled(() => asyncJobCallback());
-      setInterval(() => rc.flushControlled(() => asyncJobCallback()), 0);
-    }
   },
 };
 

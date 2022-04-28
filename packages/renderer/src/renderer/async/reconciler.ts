@@ -21,7 +21,7 @@ function partitionProps(props: any) {
         (res.p || (res.p = {}))[key] = null;
       }
       else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = value;
+        (res.p || (res.p = {}))[key] = partitionProps(value);
       }
       else if (typeof value === 'function') {
         const ind = callbacks.addObject(value);
@@ -73,7 +73,11 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
       return objects.getObject(ind);
     };
 
-    context.BindCommands(flushCommands, fireEventByRef, getObjectRef);
+    const getEventAsObjectRef = (ind: number) => {
+      return callbacks.getObject(ind);
+    };
+
+    context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
 
     const ctx: AsyncHostContext = {
       context,

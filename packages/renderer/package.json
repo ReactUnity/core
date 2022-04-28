@@ -41,7 +41,7 @@
     "lint": "react-unity-scripts lint",
     "version": "node version.js && git add src/version.ts"
   },
-  "author": "Gokhan Kurt <krtgkn@gmail.com>",
+  "author": "Gokhan Kurt <krtgkn@gmail.com> (https://github.com/KurtGokhan)",
   "license": "MIT",
   "repository": {
     "type": "git",
