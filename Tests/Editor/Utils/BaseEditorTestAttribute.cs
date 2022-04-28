@@ -64,11 +64,8 @@ namespace ReactUnity.Editor.Tests
             window.Timer = RealTimer ? null : new ControlledTimer();
             window.Globals["test"] = test;
 
-            if (IsDebugEnabled)
-            {
-                window.DebugEnabled = true;
-                window.AwaitDebugger = true;
-            }
+            window.DebugEnabled = IsDebugEnabled;
+            window.AwaitDebugger = IsDebugEnabled;
 
             if (AutoRender)
             {

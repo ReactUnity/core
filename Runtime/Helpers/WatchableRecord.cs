@@ -144,11 +144,6 @@ namespace ReactUnity.Helpers
             changed?.Invoke(key, value, this);
         }
 
-        void TriggerChange()
-        {
-            changed?.Invoke(default, default, this);
-        }
-
         protected virtual T RetrieveValue(TKey key)
         {
             if (collection.TryGetValue(key, out var val)) return val;

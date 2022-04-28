@@ -89,11 +89,8 @@ namespace ReactUnity.Tests
             ru.AutoRender = false;
             ru.enabled = true;
 
-            if (IsDebugEnabled)
-            {
-                ru.Debug = true;
-                ru.AwaitDebugger = true;
-            }
+            ru.Debug = IsDebugEnabled;
+            ru.AwaitDebugger = IsDebugEnabled;
 
             return ru;
         }

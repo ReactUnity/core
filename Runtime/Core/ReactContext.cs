@@ -64,6 +64,7 @@ namespace ReactUnity
         internal Callback CommandsCallback;
         internal Callback FireEventByRefCallback;
         internal Callback GetObjectCallback;
+        internal Callback GetEventAsObjectCallback;
 
         public ReactContext(Options options)
         {
@@ -223,11 +224,12 @@ namespace ReactUnity
             return null;
         }
 
-        public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback)
+        public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback, object getEventAsObjectCallback)
         {
             CommandsCallback = new Callback(commandsObject);
             FireEventByRefCallback = new Callback(callbacksObject);
             GetObjectCallback = new Callback(getObjectCallback);
+            GetEventAsObjectCallback = new Callback(getEventAsObjectCallback);
         }
 
 
@@ -238,7 +240,7 @@ namespace ReactUnity
                 var val = child.Value;
                 object value = null;
 
-                if (child.Name == "style") value = PropsEnumerator(val);
+                if (child.Name == "style") value = MultiEnumerator(val, true);
                 else
                 {
                     switch (val.Type)
@@ -278,12 +280,13 @@ namespace ReactUnity
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> EventsEnumerator(JToken events)
+        IEnumerator<KeyValuePair<string, object>> EventsEnumerator(JToken events, bool eventsAsObjects = false)
         {
             foreach (JProperty child in events)
             {
                 var ind = child.Value.Value<int>();
-                var callback = ind > 0 ? Callback.From(ind, this) : null;
+                var callback = ind <= 0 ? null :
+                    (eventsAsObjects ? GetEventAsObjectCallback.Call(ind) : Callback.From(ind, this));
                 yield return new KeyValuePair<string, object>(child.Name, callback);
             }
         }
@@ -293,16 +296,22 @@ namespace ReactUnity
             foreach (JProperty child in objs)
             {
                 var ind = child.Value.Value<int>();
-                var callback = ind > 0 ? GetObjectCallback.Call(ind) : null;
+                var callback = ind <= 0 ? null : GetObjectCallback.Call(ind);
                 yield return new KeyValuePair<string, object>(child.Name, callback);
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken props, JToken objs, JToken events)
+        IEnumerator<KeyValuePair<string, object>> MultiEnumerator(JToken val, bool eventsAsObjects = false)
         {
+            if (val == null) yield break;
+
+            var props = val["p"];
+            var objs = val["o"];
+            var events = val["e"];
+
             if (events != null)
             {
-                var ee = EventsEnumerator(events);
+                var ee = EventsEnumerator(events, eventsAsObjects);
                 while (ee.MoveNext()) yield return ee.Current;
             }
 
@@ -340,12 +349,7 @@ namespace ReactUnity
                 {
                     var refId = val["r"].Value<int>();
                     var type = val["t"].ToString();
-
-                    var props = val["p"];
-                    var objs = val["o"];
-                    var events = val["e"];
-
-                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props, objs, events));
+                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val));
                     if (refId > 0) SetRef(refId, el);
                 }
                 else if (key == "t")
@@ -387,11 +391,7 @@ namespace ReactUnity
                     var el = GetRef(refId);
                     var type = val["t"].ToString();
 
-                    var props = val["p"];
-                    var objs = val["o"];
-                    var events = val["e"];
-
-                    ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(props, objs, events), type);
+                    ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(val), type);
                 }
                 else if (key == "x")
                 {
