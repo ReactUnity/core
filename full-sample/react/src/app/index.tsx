@@ -4,7 +4,6 @@ import { MemoryRouter, useNavigate } from 'react-router';
 import styles from './index.module.scss';
 import { AppRoutes } from './routes';
 
-
 function App() {
   const nav = useNavigate();
 
@@ -16,6 +15,7 @@ function App() {
       <button onClick={() => nav('images')}>Images</button>
       <button onClick={() => nav('bg-patterns')}>Background Patterns</button>
       <button onClick={() => nav('lazy')}>Lazy loading</button>
+      <button onClick={() => nav('tailwind')}>Tailwind</button>
     </view>
 
     <scroll className={styles.scroll}>

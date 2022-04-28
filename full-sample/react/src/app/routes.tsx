@@ -11,6 +11,8 @@ const Lazy = React.lazy(() =>
     // Delay loading by 2 seconds
     setTimeout(() => import('src/pages/lazy').then(x => ({ default: x.Lazy })).then(resolve), 2000)));
 
+const TailwindPage = React.lazy(() => import('src/pages/tailwind'));
+
 export function AppRoutes() {
   return <Routes>
     <Route path={''} element={<HomePage />} />
@@ -18,6 +20,7 @@ export function AppRoutes() {
     <Route path={'animations'} element={<AnimationsPage />} />
     <Route path={'images'} element={<ImagesPage />} />
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
+
     <Route path={'lazy'} element={
       <Suspense fallback={<>
         Loading
@@ -25,5 +28,7 @@ export function AppRoutes() {
         <Lazy />
       </Suspense>
     } />
+
+    <Route path={'tailwind'} element={<TailwindPage />} />
   </Routes>;
 }

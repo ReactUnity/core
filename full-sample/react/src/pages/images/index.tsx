@@ -1,4 +1,4 @@
-import { globalsWatcher, ReactUnity, UnityEngine } from '@reactunity/renderer';
+import { ReactUnity, UnityEngine, useGlobals } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -9,7 +9,7 @@ const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function ImagesPage() {
   const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
-  const Globals = globalsWatcher.useContext();
+  const Globals = useGlobals();
 
   useEffect(() => {
     if (videoRef) {
