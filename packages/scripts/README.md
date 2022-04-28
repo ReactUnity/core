@@ -34,6 +34,6 @@ Custom environment variables are also possible as in [CRA](https://create-react-
 
 ## WebGL Inspector
 
-When dev server is started with the `start` script, a web server is launched at the selected port (e.g. http://localhost:3000). This server serves the javascript and asset files that are used by ReactUnity. If you visit this link in browser, you will see a prebuilt Unity application that renders your React code. This application can be used to quickly test the React code without even launching Unity. It also reacts to the changes in code by utilizing HMR.
+When dev server is started with the `start` script, a web server is launched at the selected port (e.g. http://localhost:3000). This server serves the javascript and asset files that are used by ReactUnity. If you visit this link in browser, you will see a page explaining how to setup the web previewer. The previewer can be used to quickly test the React code without even launching Unity. It also reacts to the changes in code by utilizing HMR.
 
 Note that this web inspector has very limited capabilities. Naturally, it may not work for all cases. However it is a useful tool for when starting a new ReactUnity project. As an advanced feature, you can override the web inspector by placing your custom web inspector in `public` folder under your React project.

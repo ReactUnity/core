@@ -25,7 +25,7 @@ const sockPort = process.env.WDS_SOCKET_PORT;
 
 function servePreviewerIfExists() {
   try {
-    const previewerPath = require.resolve('@reactunity/previewer');
+    const previewerPath = path.dirname(require.resolve('@reactunity/previewer', { paths: [paths.appPath] }));
     console.log('Using @reactunity/previewer');
     return [{ directory: path.join(previewerPath, 'public') }];
   } catch (err) { }
