@@ -115,16 +115,16 @@ namespace ReactUnity.Scripting
             engine.Execute(@"(function() {
                 var _console = __console;
                 console = {
-                    log: (...args) => _console.log(...args),
-                    info: (...args) => _console.info(...args),
-                    debug: (...args) => _console.debug(...args),
-                    trace: (...args) => _console.debug(...args),
-                    warn: (...args) => _console.warn(...args),
-                    error: (...args) => _console.error(...args),
-                    exception: (...args) => _console.exception(...args),
-                    dir: (...args) => _console.dir(...args),
-                    clear: (...args) => _console.clear(...args),
-                    assert: (...args) => _console.assert(...args),
+                    log: (...args) => { _console.log(...args) },
+                    info: (...args) => { _console.info(...args) },
+                    debug: (...args) => { _console.debug(...args) },
+                    trace: (...args) => { _console.debug(...args) },
+                    warn: (...args) => { _console.warn(...args) },
+                    error: (...args) => { _console.error(...args) },
+                    exception: (...args) => { _console.exception(...args) },
+                    dir: (...args) => { _console.dir(...args) },
+                    clear: (...args) => { _console.clear(...args) },
+                    assert: (...args) => { _console.assert(...args) },
                     count: (name) => _console.count(name),
                 };
                 delete __console;

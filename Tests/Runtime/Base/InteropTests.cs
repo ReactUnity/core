@@ -66,6 +66,11 @@ namespace ReactUnity.Tests
         {
             var types = new string[] { "start_before", "start_after", "update_before", "update_after" };
 
+            // start_before: Render in start, then set Globals in start
+            // start_after: set Globals in start, then render in start
+            // update_before: Render in start, then set Globals in Update
+            // update_after: set Globals in Start, then render in Update
+
             foreach (var type in types)
             {
                 var cmp = Component.gameObject.AddComponent<MyComponent>();
@@ -77,6 +82,22 @@ namespace ReactUnity.Tests
                 Component.AutoRender = false;
                 Component.enabled = true;
             }
+        }
+
+
+        [ReactInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <text>
+                    SomeLogTest{console.log('Test')}
+                </text>;
+            }
+        ")]
+        public IEnumerator ConsoleLogShouldNotBreakUIWhenItsReturnValueIsPassedAsChildren()
+        {
+            yield return null;
+            var text = Q("text").TextContent;
+            Assert.AreEqual("SomeLogTest", text);
         }
     }
 }
