@@ -74,6 +74,20 @@ const useTailwind = fs.existsSync(
   path.join(paths.appPath, 'tailwind.config.js')
 );
 
+const warnedAboutPlugin = {};
+const usePostcssPluginIfExists = (name, options = {}) => {
+  try {
+    if (require.resolve(name)) {
+      if (!warnedAboutPlugin[name]) {
+        console.log('Using plugin ' + name);
+        warnedAboutPlugin[name] = true;
+      }
+      return { [name]: options };
+    }
+  } catch (err) { }
+  return {};
+};
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -127,7 +141,13 @@ const baseConfigFactory = function (webpackEnv) {
             // https://github.com/facebook/create-react-app/issues/2677
             ident: 'postcss',
             config: false,
-            plugins: ['tailwindcss'],
+            plugins: {
+              ...usePostcssPluginIfExists('postcss-import'),
+              'tailwindcss': {},
+              ...usePostcssPluginIfExists('postcss-nesting'),
+              ...usePostcssPluginIfExists('postcss-custom-properties'),
+              ...usePostcssPluginIfExists('postcss-css-variables'),
+            },
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
