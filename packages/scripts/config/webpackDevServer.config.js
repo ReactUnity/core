@@ -23,6 +23,15 @@ const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
 
+function servePreviewerIfExists() {
+  try {
+    const previewerPath = require.resolve('@reactunity/previewer');
+    console.log('Using @reactunity/previewer');
+    return [{ directory: path.join(previewerPath, 'public') }];
+  } catch (err) { }
+  return [];
+}
+
 module.exports = function (proxy, allowedHost) {
   const disableFirewall =
     !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
@@ -54,8 +63,6 @@ module.exports = function (proxy, allowedHost) {
     // Enable gzip compression of generated files.
     compress: true,
     static: [
-      // Serve React Unity Web Inspector as the index page
-      { directory: path.join(__dirname, 'web-inspector'), },
       {
         // By default WebpackDevServer serves physical files from current directory
         // in addition to all the virtual build products that it serves from memory.
@@ -82,6 +89,12 @@ module.exports = function (proxy, allowedHost) {
           ignored: ignoredFiles(paths.appSrc),
         },
       },
+
+      // If installed, serve the ReactUnity Web Previewer
+      ...servePreviewerIfExists(),
+
+      // Serve the fallback of web previewer as the index page
+      { directory: path.join(__dirname, 'public'), },
     ],
 
     client: {
