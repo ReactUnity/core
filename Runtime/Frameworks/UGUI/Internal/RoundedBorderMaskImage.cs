@@ -32,39 +32,53 @@ namespace ReactUnity.UGUI.Internal
 
                 var br = BorderRadius;
                 var sz = Size;
+
+                // Horizontal border radii in pixel - tl,tr,br,bl
                 var brx = new Vector4(
-                    Mathf.Max(0, br[0].X.Unit == YogaUnit.Percent ? br[0].X.Value / 100 : (br[0].X.Value / sz.x)),
-                    Mathf.Max(0, br[1].X.Unit == YogaUnit.Percent ? br[1].X.Value / 100 : (br[1].X.Value / sz.x)),
-                    Mathf.Max(0, br[2].X.Unit == YogaUnit.Percent ? br[2].X.Value / 100 : (br[2].X.Value / sz.x)),
-                    Mathf.Max(0, br[3].X.Unit == YogaUnit.Percent ? br[3].X.Value / 100 : (br[3].X.Value / sz.x))
+                    Mathf.Max(0, br[0].X.Unit == YogaUnit.Percent ? sz.x * br[0].X.Value / 100 : (br[0].X.Value)),
+                    Mathf.Max(0, br[1].X.Unit == YogaUnit.Percent ? sz.x * br[1].X.Value / 100 : (br[1].X.Value)),
+                    Mathf.Max(0, br[2].X.Unit == YogaUnit.Percent ? sz.x * br[2].X.Value / 100 : (br[2].X.Value)),
+                    Mathf.Max(0, br[3].X.Unit == YogaUnit.Percent ? sz.x * br[3].X.Value / 100 : (br[3].X.Value))
                 );
 
+                // Vertical border radii in pixel - tl,tr,br,bl
                 var bry = new Vector4(
-                    Mathf.Max(0, br[0].Y.Unit == YogaUnit.Percent ? br[0].Y.Value / 100 : (br[0].Y.Value / sz.y)),
-                    Mathf.Max(0, br[1].Y.Unit == YogaUnit.Percent ? br[1].Y.Value / 100 : (br[1].Y.Value / sz.y)),
-                    Mathf.Max(0, br[2].Y.Unit == YogaUnit.Percent ? br[2].Y.Value / 100 : (br[2].Y.Value / sz.y)),
-                    Mathf.Max(0, br[3].Y.Unit == YogaUnit.Percent ? br[3].Y.Value / 100 : (br[3].Y.Value / sz.y))
+                    Mathf.Max(0, br[0].Y.Unit == YogaUnit.Percent ? sz.y * br[0].Y.Value / 100 : (br[0].Y.Value)),
+                    Mathf.Max(0, br[1].Y.Unit == YogaUnit.Percent ? sz.y * br[1].Y.Value / 100 : (br[1].Y.Value)),
+                    Mathf.Max(0, br[2].Y.Unit == YogaUnit.Percent ? sz.y * br[2].Y.Value / 100 : (br[2].Y.Value)),
+                    Mathf.Max(0, br[3].Y.Unit == YogaUnit.Percent ? sz.y * br[3].Y.Value / 100 : (br[3].Y.Value))
                 );
 
+                // Total border radius in each edge - top, right, bottom, left
                 var sums = new Vector4(
-                    Mathf.Max(1, brx.x + brx.y),
-                    Mathf.Max(1, bry.y + bry.z),
-                    Mathf.Max(1, brx.z + brx.w),
-                    Mathf.Max(1, bry.w + bry.x)
+                    Mathf.Max(sz.x, brx.x + brx.y),
+                    Mathf.Max(sz.y, bry.y + bry.z),
+                    Mathf.Max(sz.x, brx.z + brx.w),
+                    Mathf.Max(sz.y, bry.w + bry.x)
                 );
+
+                // Pixel unit of each corner - tl,tr,br,bl
+                var pixelUnits = new Vector4(
+                    Mathf.Min(sz.x / sums.x, sz.y / sums.w),
+                    Mathf.Min(sz.x / sums.x, sz.y / sums.y),
+                    Mathf.Min(sz.x / sums.z, sz.y / sums.y),
+                    Mathf.Min(sz.x / sums.z, sz.y / sums.w)
+                );
+
+
 
                 brx = new Vector4(
-                    brx.x / sums.x,
-                    brx.y / sums.x,
-                    brx.z / sums.z,
-                    brx.w / sums.z
+                    brx.x * pixelUnits.x / sz.x,
+                    brx.y * pixelUnits.y / sz.x,
+                    brx.z * pixelUnits.z / sz.x,
+                    brx.w * pixelUnits.w / sz.x
                 );
 
                 bry = new Vector4(
-                    bry.x / sums.w,
-                    bry.y / sums.y,
-                    bry.z / sums.y,
-                    bry.w / sums.w
+                    bry.x * pixelUnits.x / sz.y,
+                    bry.y * pixelUnits.y / sz.y,
+                    bry.z * pixelUnits.z / sz.y,
+                    bry.w * pixelUnits.w / sz.y
                 );
 
                 var cutPoints = new Vector4(
