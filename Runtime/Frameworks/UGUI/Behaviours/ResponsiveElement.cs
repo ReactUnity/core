@@ -25,6 +25,7 @@ namespace ReactUnity.UGUI.Behaviours
                 CurrentWidth = rt.rect.width;
                 CurrentHeight = rt.rect.height;
                 Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
+                Context.Host?.MarkForStyleResolving(true);
             }
             else
             {
@@ -47,6 +48,7 @@ namespace ReactUnity.UGUI.Behaviours
                 Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
                 Layout.Width = width;
                 Layout.Height = height;
+                Context.Host.MarkForStyleResolving(true);
             }
         }
     }

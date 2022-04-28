@@ -93,5 +93,24 @@ namespace ReactUnity.Tests
             Assert.AreEqual(initialHeight, rt.rect.height);
         }
 
+        [ReactInjectableTest()]
+        public IEnumerator RootRelativeUnitsShouldBeRecalculatedWhenSizeChanges()
+        {
+            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);
+
+            var view = Q("view") as UGUI.UGUIComponent;
+            view.Style["width"] = "10vw";
+
+            yield return null;
+            Assert.AreEqual(30, view.ClientWidth);
+
+            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 200);
+            yield return null;
+            Assert.AreEqual(20, view.ClientWidth);
+
+            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);
+            yield return null;
+            Assert.AreEqual(30, view.ClientWidth);
+        }
     }
 }

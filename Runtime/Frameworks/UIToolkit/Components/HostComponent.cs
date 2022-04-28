@@ -35,6 +35,7 @@ namespace ReactUnity.UIToolkit
                 Width = width;
                 Height = height;
                 Context.MediaProvider.SetDimensions(width, height);
+                Context.Host.MarkForStyleResolving(true);
             }
         }
     }
