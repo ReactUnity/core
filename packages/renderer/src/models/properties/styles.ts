@@ -101,12 +101,12 @@ export interface RenderStyle {
   borderBottom?: string;
   borderLeft?: string;
   borderWidth?: string;
-  margin?: string;
+  margin?: string | number;
   mask?: string;
   maskPosition?: string;
   maskRepeat?: string;
-  padding?: string;
-  inset?: string;
+  padding?: string | number;
+  inset?: string | number;
   flex?: string;
   flexFlow?: string;
   font?: string;
@@ -115,6 +115,7 @@ export interface RenderStyle {
   transition?: string;
   motion?: string;
   audio?: string;
+  transform?: string;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;
