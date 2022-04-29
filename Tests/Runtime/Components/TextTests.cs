@@ -11,17 +11,24 @@ namespace ReactUnity.Tests
         const string BaseScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
-                return <>
-                    <text richText={globals.richText}>
-                        {globals.textContent || 'this is default text content'}
+                return <view id='root'>
+                    <text richText={globals.richText} id='text'>
+                        {globals.textContent ?? 'this is default text content'}
                     </text>
-                </>;
+                </view>;
             }
         ";
 
-        const string BaseStyle = @"";
+        const string BaseStyle = @"
+            #root {
+                align-self: flex-start;
+                width: auto;
+                height: auto;
+            }
+        ";
 
-        public TextComponent Text => Q("text") as TextComponent;
+        public UGUIComponent Cmp => Q("#root");
+        public TextComponent Text => Q("#text") as TextComponent;
 
         public TextTests(JavascriptEngineType engineType) : base(engineType) { }
 
@@ -97,6 +104,44 @@ namespace ReactUnity.Tests
             Text.Style["text-overflow"] = null;
             yield return null;
             Assert.IsNull(Text.LinkedTextWatcher?.LinkedText);
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator EmptyTextShouldHaveZeroSize()
+        {
+            Globals["textContent"] = "";
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(0, Cmp.ClientHeight);
+
+            InsertStyle(@"
+                #root::before {
+                    content: '';
+                }
+            ");
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(0, Cmp.ClientHeight);
+
+
+            Globals["textContent"] = "some text";
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(29, Cmp.ClientHeight);
+
+
+            InsertStyle(@"
+                #root::before {
+                    content: 'some before';
+                }
+            ");
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(58, Cmp.ClientHeight);
         }
     }
 }

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
+using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using ReactUnity.UGUI;
 using UnityEngine;
@@ -52,7 +53,7 @@ namespace ReactUnity.Tests
         }
 
         public void Render() => Component.Render();
-        public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
+        public StyleSheet InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
         public UGUIComponent Q(string query, IReactComponent scope = null) =>
             (scope ?? Host).QuerySelector(query) as UGUIComponent;
         public List<UGUIComponent> QA(string query, IReactComponent scope = null) =>
