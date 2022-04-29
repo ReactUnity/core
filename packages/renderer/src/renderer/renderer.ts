@@ -55,6 +55,7 @@ export const Renderer = {
         const commands = [];
         commands.push = (...args) => {
           if (!scheduled) {
+            scheduled = true;
             Promise.resolve().then(() => {
               asyncJobCallback();
               scheduled = false;
