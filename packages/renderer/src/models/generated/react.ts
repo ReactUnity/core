@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 27/04/2022 23:16:54
+// Generated 29/04/2022 17:32:51
 //
 /* eslint-disable */
 
@@ -162,6 +162,13 @@ export declare namespace ReactUnity {
     Value: string;
     ReadOnly: boolean;
     PlaceholderShown: boolean;
+  }
+  export enum EventPriority {
+    Unknown = 0,
+    Discrete = 1,
+    Continuous = 4,
+    Default = 16,
+    Idle = 536870912,
   }
   export interface IStateHandler {
     ClearListeners(): void;
@@ -427,6 +434,8 @@ export declare namespace ReactUnity {
   }
   export class ReactUnityBridge {
     static Instance: ReactUnity.ReactUnityBridge;
+    CurrentEventPriority: number;
+    SetCurrentEventPriority(priority: ReactUnity.EventPriority): void;
     createText(text: string, host: ReactUnity.IReactComponent): ReactUnity.ITextComponent;
     createElement(tag: string, text: string, host: ReactUnity.IReactComponent, props?: any): ReactUnity.IReactComponent;
     appendChild(parent: any, child: any): void;
@@ -624,6 +633,7 @@ export declare namespace ReactUnity {
       static VideoReferenceConverter: ReactUnity.Converters.IStyleConverter;
       static FontReferenceConverter: ReactUnity.Converters.IStyleConverter;
       static RotateConverter: ReactUnity.Converters.IStyleConverter;
+      static ScaleConverter: ReactUnity.Converters.IStyleConverter;
       static TransitionPropertyConverter: ReactUnity.Converters.IStyleConverter;
       static CursorListConverter: ReactUnity.Converters.IStyleConverter;
       static TimingFunctionConverter: ReactUnity.Converters.IStyleConverter;
@@ -820,7 +830,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class Vector3Converter {
-      constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Converters.IStyleConverter);
+      constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Converters.IStyleConverter, defaultZValue?: number);
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Parse(value: string): any;
       Convert(value: any): any;
@@ -1166,7 +1176,7 @@ export declare namespace ReactUnity {
         Dispose(): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
         GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-        BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
+        BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
         FlushCommands(serializedCommands?: string): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -1946,6 +1956,7 @@ export declare namespace ReactUnity {
       static From(value: any, context?: ReactUnity.ReactContext, thisVal?: any): ReactUnity.Helpers.Callback;
       Call(): any;
       Call(...args: any[]): any;
+      CallWithPriority(priority: ReactUnity.EventPriority, ...args: any[]): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3489,7 +3500,7 @@ export declare namespace ReactUnity {
       transformOrigin: ReactUnity.Types.YogaValue2;
       translate: ReactUnity.Types.YogaValue2;
       translateZ: Facebook.Yoga.YogaValue;
-      scale: UnityEngine.Vector2;
+      scale: UnityEngine.Vector3;
       rotate: UnityEngine.Vector3;
       fontFamily: ReactUnity.Types.FontReference;
       color: UnityEngine.Color;
@@ -3665,7 +3676,7 @@ export declare namespace ReactUnity {
       static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translateZ: any; // ReactUnity.Styling.StyleProperty`1[Facebook.Yoga.YogaValue]
-      static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector2]
+      static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector3]
       static rotate: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector3]
       static fontFamily: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.FontReference]
       static color: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
@@ -7189,7 +7200,7 @@ export declare namespace ReactUnity {
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
+      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -12026,7 +12037,7 @@ export declare namespace ReactUnity {
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any): void;
+      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;

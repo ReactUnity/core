@@ -44,7 +44,7 @@ export const commonReconciler = {
   // -------------------
 
   now: Date.now,
-  getCurrentEventPriority: () => eventPriorities.default,
+  getCurrentEventPriority: () => UnityBridge.CurrentEventPriority || eventPriorities.default,
 
   noTimeout: -1 as const,
   scheduleTimeout: (callback, delay) => setTimeout(callback as any, delay),
