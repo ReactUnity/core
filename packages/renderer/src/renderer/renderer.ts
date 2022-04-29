@@ -105,8 +105,13 @@ export const Renderer = {
       rendererConfig: { isAsync },
       findFiberByHostInstance,
     });
+
+    return rc;
   },
 };
 
-export const batchedUpdates = syncReconciler.batchedUpdates;
-export const flushSync = syncReconciler.flushSync;
+const isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
+const defaultReconciler = isSyncByDefault ? syncReconciler : asyncReconciler;
+
+export const batchedUpdates = defaultReconciler.batchedUpdates;
+export const flushSync = defaultReconciler.flushSync;
