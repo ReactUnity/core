@@ -46,7 +46,7 @@ namespace ReactUnity.Scripting
             engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
                 var callback = Callback.From(f, Context);
                 if (e == "DOMContentLoaded")
-                    afterStartCallbacks.Add((success) => callback.Call(success, this));
+                    afterStartCallbacks.Add((success) => callback.CallWithPriority(EventPriority.Discrete, success, this));
             }));
 
             beforeStartCallbacks.ForEach(x => x?.Invoke());

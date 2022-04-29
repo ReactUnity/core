@@ -62,7 +62,7 @@ namespace ReactUnity.UGUI
             switch (eventName)
             {
                 case "onChange":
-                    var listener = new UnityAction<bool>((x) => callback.Call(x, this));
+                    var listener = new UnityAction<bool>((x) => callback.CallWithPriority(EventPriority.Discrete, x, this));
                     Toggle.onValueChanged.AddListener(listener);
                     return () => Toggle.onValueChanged.RemoveListener(listener);
                 default:

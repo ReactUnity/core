@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     public class PointerUpHandler : MonoBehaviour, IPointerUpHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

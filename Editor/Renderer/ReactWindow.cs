@@ -137,7 +137,7 @@ namespace ReactUnity.Editor.Renderer
         public Action AddSelectionChange(object cb)
         {
             var cbObject = Callback.From(cb, Context, this);
-            var callback = new Action<ReactWindow>((arg1) => cbObject.Call(arg1));
+            var callback = new Action<ReactWindow>((arg1) => cbObject.CallWithPriority(EventPriority.Discrete, arg1));
             SelectionChange += callback;
 
             Action dispose = () => SelectionChange -= callback;
@@ -148,7 +148,7 @@ namespace ReactUnity.Editor.Renderer
         public Action AddPlayModeStateChange(object cb)
         {
             var cbObject = Callback.From(cb, Context, this);
-            var callback = new Action<PlayModeStateChange>(x => cbObject.Call(x, this));
+            var callback = new Action<PlayModeStateChange>(x => cbObject.CallWithPriority(EventPriority.Discrete, x, this));
             EditorApplication.playModeStateChanged += callback;
 
             Action dispose = () => EditorApplication.playModeStateChanged -= callback;
@@ -159,7 +159,7 @@ namespace ReactUnity.Editor.Renderer
         public Action AddVisibilityChange(object cb)
         {
             var cbObject = new Callback(cb);
-            var callback = new Action<bool, ReactWindow>((arg1, arg2) => cbObject.Call(arg1, arg2));
+            var callback = new Action<bool, ReactWindow>((arg1, arg2) => cbObject.CallWithPriority(EventPriority.Discrete, arg1, arg2));
             VisibilityChange += callback;
 
             Action dispose = () => VisibilityChange -= callback;

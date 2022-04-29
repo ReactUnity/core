@@ -148,23 +148,23 @@ namespace ReactUnity.UGUI
             switch (eventName)
             {
                 case "onEndEdit":
-                    var l1 = new UnityAction<string>(x => callback.Call(x, this));
+                    var l1 = new UnityAction<string>(x => callback.CallWithPriority(EventPriority.Discrete, x, this));
                     InputField.onEndEdit.AddListener(l1);
                     return () => InputField.onEndEdit.RemoveListener(l1);
                 case "onReturn":
-                    var l2 = new UnityAction<string>(x => callback.Call(x, this));
+                    var l2 = new UnityAction<string>(x => callback.CallWithPriority(EventPriority.Discrete, x, this));
                     InputField.onSubmit.AddListener(l2);
                     return () => InputField.onSubmit.RemoveListener(l2);
                 case "onChange":
-                    var l3 = new UnityAction<string>(x => callback.Call(x, this));
+                    var l3 = new UnityAction<string>(x => callback.CallWithPriority(EventPriority.Discrete, x, this));
                     InputField.onValueChanged.AddListener(l3);
                     return () => InputField.onValueChanged.RemoveListener(l3);
                 case "onTextSelection":
-                    var l4 = new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this));
+                    var l4 = new UnityAction<string, int, int>((x, i, j) => callback.CallWithPriority(EventPriority.Discrete, x, i, j, this));
                     InputField.onTextSelection.AddListener(l4);
                     return () => InputField.onTextSelection.RemoveListener(l4);
                 case "onEndTextSelection":
-                    var l5 = new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this));
+                    var l5 = new UnityAction<string, int, int>((x, i, j) => callback.CallWithPriority(EventPriority.Discrete, x, i, j, this));
                     InputField.onEndTextSelection.AddListener(l5);
                     return () => InputField.onEndTextSelection.RemoveListener(l5);
                 default:

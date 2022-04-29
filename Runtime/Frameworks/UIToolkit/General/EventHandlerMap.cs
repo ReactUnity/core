@@ -66,6 +66,62 @@ namespace ReactUnity.UIToolkit
             { "onTooltip", typeof(TooltipEvent) },
         };
 
+        static Dictionary<string, EventPriority> EventPriorityMap = new Dictionary<string, EventPriority>
+        {
+            { "onClick", EventPriority.Discrete },
+            { "onPointerUp", EventPriority.Discrete },
+            { "onPointerDown", EventPriority.Discrete },
+            { "onPointerEnter", EventPriority.Continuous },
+            { "onPointerLeave", EventPriority.Continuous },
+            { "onPointerCancel", EventPriority.Discrete },
+            { "onPointerMove", EventPriority.Continuous },
+            { "onPointerOut", EventPriority.Continuous },
+            { "onPointerOver", EventPriority.Continuous },
+            { "onPointerCapture", EventPriority.Discrete },
+            { "onPointerCaptureOut", EventPriority.Discrete },
+            { "onPointerStationary", EventPriority.Discrete },
+
+            { "onMouseUp", EventPriority.Discrete },
+            { "onMouseDown", EventPriority.Discrete },
+            { "onMouseEnter", EventPriority.Continuous },
+            { "onMouseLeave", EventPriority.Continuous },
+            { "onMouseMove", EventPriority.Continuous },
+            { "onMouseOut", EventPriority.Continuous },
+            { "onMouseOver", EventPriority.Continuous },
+            { "onMouseCapture", EventPriority.Discrete },
+            { "onMouseCaptureOut", EventPriority.Discrete },
+
+            { "onMouseEnterWindow", EventPriority.Continuous },
+            { "onMouseLeaveWindow", EventPriority.Continuous },
+            { "onContextClick", EventPriority.Discrete },
+
+            { "onFocus", EventPriority.Discrete },
+            { "onFocusIn", EventPriority.Discrete },
+            { "onBlur", EventPriority.Discrete },
+            { "onFocusOut", EventPriority.Discrete },
+            { "onWheel", EventPriority.Continuous },
+            { "onKeyDown", EventPriority.Discrete },
+            { "onKeyUp", EventPriority.Discrete },
+            { "onInput", EventPriority.Discrete },
+
+            { "onDragEnter", EventPriority.Continuous },
+            { "onDragLeave", EventPriority.Continuous },
+            { "onDragExited", EventPriority.Discrete },
+            { "onDragPerform", EventPriority.Discrete },
+            { "onDragUpdated", EventPriority.Continuous },
+
+            { "onAttachToPanel", EventPriority.Discrete },
+            { "onDetachFromPanel", EventPriority.Discrete },
+            { "onCustomStyleResolved", EventPriority.Discrete },
+            { "onExecuteCommand", EventPriority.Discrete },
+            { "onValidateCommand", EventPriority.Discrete },
+            { "onGeometryChanged", EventPriority.Discrete },
+            { "onIMGUI", EventPriority.Discrete },
+            { "onTooltip", EventPriority.Discrete },
+        };
+
+        static readonly Dictionary<string, (MethodInfo, MethodInfo, EventPriority)> CachedEvents = new Dictionary<string, (MethodInfo, MethodInfo, EventPriority)>();
+
         static MethodInfo RegisterMethod;
         static MethodInfo UnregisterMethod;
 
@@ -75,10 +131,12 @@ namespace ReactUnity.UIToolkit
             return null;
         }
 
-        public static (MethodInfo, MethodInfo) GetEventMethods(string eventName)
+        public static (MethodInfo, MethodInfo, EventPriority) GetEventMethods(string eventName)
         {
+            if (CachedEvents.TryGetValue(eventName, out var res)) return res;
+
             var eventType = GetEventType(eventName);
-            if (eventType == null) return (null, null);
+            if (eventType == null) return (null, null, EventPriority.Unknown);
 
             var register = RegisterMethod = RegisterMethod ?? typeof(CallbackEventHandler).GetMethods()
                 .First(x => x.Name == nameof(CallbackEventHandler.RegisterCallback) && x.GetParameters().Length == 2);
@@ -86,7 +144,11 @@ namespace ReactUnity.UIToolkit
             var unregister = UnregisterMethod = UnregisterMethod ?? typeof(CallbackEventHandler).GetMethods()
                 .First(x => x.Name == nameof(CallbackEventHandler.UnregisterCallback) && x.GetParameters().Length == 2);
 
-            return (register.MakeGenericMethod(eventType), unregister.MakeGenericMethod(eventType));
+            if (!EventPriorityMap.TryGetValue(eventName, out var priority)) priority = EventPriority.Unknown;
+
+            res = (register.MakeGenericMethod(eventType), unregister.MakeGenericMethod(eventType), priority);
+            CachedEvents[eventName] = res;
+            return res;
         }
     }
 }

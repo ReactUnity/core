@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     public class SelectHandler : MonoBehaviour, ISelectHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

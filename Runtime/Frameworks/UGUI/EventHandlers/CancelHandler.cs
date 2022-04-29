@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     [RequireComponent(typeof(Selectable))]
     public class CancelHandler : MonoBehaviour, ICancelHandler, IEventHandler
     {

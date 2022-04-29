@@ -13,7 +13,7 @@ namespace ReactUnity.UIToolkit
             switch (eventName)
             {
                 case "onButtonClick":
-                    Action listener = () => callback.Call(this, this);
+                    Action listener = () => callback.CallWithPriority(EventPriority.Discrete, this, this);
                     Element.clicked += listener;
                     return () => Element.clicked -= listener;
                 default:

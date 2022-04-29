@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Continuous)]
     public class DragHandler : MonoBehaviour, IDragHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

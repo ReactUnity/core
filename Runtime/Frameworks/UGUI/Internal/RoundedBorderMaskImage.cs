@@ -65,8 +65,7 @@ namespace ReactUnity.UGUI.Internal
                     Mathf.Min(sz.x / sums.z, sz.y / sums.w)
                 );
 
-
-
+                // Final sizes of corner border radii (horizontal)
                 brx = new Vector4(
                     brx.x * pixelUnits.x / sz.x,
                     brx.y * pixelUnits.y / sz.x,
@@ -74,6 +73,7 @@ namespace ReactUnity.UGUI.Internal
                     brx.w * pixelUnits.w / sz.x
                 );
 
+                // Final sizes of corner border radii (vertical)
                 bry = new Vector4(
                     bry.x * pixelUnits.x / sz.y,
                     bry.y * pixelUnits.y / sz.y,
@@ -81,6 +81,7 @@ namespace ReactUnity.UGUI.Internal
                     bry.w * pixelUnits.w / sz.y
                 );
 
+                // Ratio at which the region of the next corner begins - top, right, bottom, left
                 var cutPoints = new Vector4(
                     1 - brx.y,
                     bry.z,

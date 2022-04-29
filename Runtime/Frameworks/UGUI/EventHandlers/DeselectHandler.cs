@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     public class DeselectHandler : MonoBehaviour, IDeselectHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

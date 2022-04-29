@@ -116,5 +116,13 @@ namespace ReactUnity.Helpers
                 return null;
             }
         }
+
+        public object CallWithPriority(EventPriority priority, params object[] args)
+        {
+            ReactUnityBridge.Instance.SetCurrentEventPriority(priority);
+            var res = Call(args);
+            ReactUnityBridge.Instance.SetCurrentEventPriority(EventPriority.Unknown);
+            return res;
+        }
     }
 }

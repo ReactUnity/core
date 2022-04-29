@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     public class DropHandler : MonoBehaviour, IDropHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

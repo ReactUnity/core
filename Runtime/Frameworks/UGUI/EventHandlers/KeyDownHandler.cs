@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Discrete)]
     [RequireComponent(typeof(Selectable))]
     public class KeyDownHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IEventHandler
     {

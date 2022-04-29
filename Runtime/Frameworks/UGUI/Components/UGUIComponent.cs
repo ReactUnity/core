@@ -90,10 +90,13 @@ namespace ReactUnity.UGUI
                 return base.AddEventListener(eventName, fun);
             }
 
+            var priorityAttribute = eventType.GetCustomAttributes(typeof(EventHandlerPriorityAttribute), true)[0];
+            var priority = priorityAttribute != null ? (priorityAttribute as EventHandlerPriorityAttribute).Priority : EventPriority.Default;
+
             var handler = GetComponent(eventType) as IEventHandler;
             if (handler == null) handler = AddComponent(eventType) as IEventHandler;
 
-            Action<BaseEventData> callAction = (e) => fun.Call(e, this);
+            Action<BaseEventData> callAction = (e) => fun.CallWithPriority(priority, e, this);
             handler.OnEvent += callAction;
 
             return () => handler.OnEvent -= callAction;

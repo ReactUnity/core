@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.EventHandlers
 {
+    [EventHandlerPriority(EventPriority.Continuous)]
     public class PointerExitHandler : MonoBehaviour, IPointerExitHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;

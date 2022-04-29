@@ -129,7 +129,7 @@ namespace ReactUnity.UGUI
         {
             if (eventName == "onValueChanged")
             {
-                var listener = new UnityAction<Vector2>((e) => fun.Call(e, this));
+                var listener = new UnityAction<Vector2>((e) => fun.CallWithPriority(EventPriority.Continuous, e, this));
                 ScrollRect.onValueChanged.AddListener(listener);
                 return () => ScrollRect.onValueChanged.RemoveListener(listener);
             }

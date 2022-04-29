@@ -270,14 +270,14 @@ namespace ReactUnity.UIToolkit
 
         public override Action AddEventListener(string eventName, Callback fun)
         {
-            var (register, unregister) = EventHandlerMap.GetEventMethods(eventName);
+            var (register, unregister, priority) = EventHandlerMap.GetEventMethods(eventName);
 
             if (register == null)
             {
                 return base.AddEventListener(eventName, fun);
             }
 
-            EventCallback<EventBase> callAction = (e) => fun.Call(e, this);
+            EventCallback<EventBase> callAction = (e) => fun.CallWithPriority(priority, e, this);
 
             register.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
             return () => unregister.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });

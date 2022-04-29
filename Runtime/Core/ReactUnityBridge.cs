@@ -15,6 +15,17 @@ namespace ReactUnity
         private static ReactUnityBridge instance;
         public static ReactUnityBridge Instance => instance = instance ?? new ReactUnityBridge();
 
+        #region Priority
+
+        public int CurrentEventPriority { get; private set; }
+
+        public void SetCurrentEventPriority(EventPriority priority)
+        {
+            CurrentEventPriority = (int) priority;
+        }
+
+        #endregion
+
         private ReactUnityBridge() { }
 
         #region Creation

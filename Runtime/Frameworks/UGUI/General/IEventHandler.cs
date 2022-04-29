@@ -9,4 +9,16 @@ namespace ReactUnity.UGUI
 
         void ClearListeners();
     }
+
+    [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
+    sealed class EventHandlerPriorityAttribute : Attribute
+    {
+        public EventPriority Priority { get; }
+
+        // This is a positional argument
+        public EventHandlerPriorityAttribute(EventPriority priority)
+        {
+            Priority = priority;
+        }
+    }
 }

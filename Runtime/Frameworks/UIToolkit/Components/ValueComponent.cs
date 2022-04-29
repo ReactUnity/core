@@ -27,7 +27,7 @@ namespace ReactUnity.UIToolkit
             switch (eventName)
             {
                 case "onChange":
-                    EventCallback<ChangeEvent<TValueType>> listener = (ev) => callback.Call(ev, this);
+                    EventCallback<ChangeEvent<TValueType>> listener = (ev) => callback.CallWithPriority(EventPriority.Discrete, ev, this);
                     Element.RegisterValueChangedCallback(listener);
                     return () => Element.UnregisterValueChangedCallback(listener);
                 default:
