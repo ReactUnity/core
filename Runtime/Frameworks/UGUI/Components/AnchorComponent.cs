@@ -65,11 +65,8 @@ namespace ReactUnity.UGUI
         public void OpenUrl(bool openInNewTab)
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            if(openInNewTab) {
-                openWindow(Url);
-            } else {
-                Application.OpenURL(Url);
-            }
+            if (openInNewTab) openWindow(Url);
+            else Application.OpenURL(Url);
 #else
             Application.OpenURL(Url);
 #endif

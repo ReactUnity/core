@@ -1,8 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.Helpers;
 using ReactUnity.Scripting;
-using UnityEngine;
 
 namespace ReactUnity.Tests
 {

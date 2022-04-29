@@ -18,7 +18,7 @@ namespace ReactUnity.Scheduling
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         private List<EditorCoroutine> Started = new List<EditorCoroutine>();
 #else
-        private  List<object> Started = new List<object>();
+        private List<object> Started = new List<object>();
 #endif
 
         public IScheduler Scheduler { get; }

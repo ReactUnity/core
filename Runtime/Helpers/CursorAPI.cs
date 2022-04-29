@@ -123,7 +123,8 @@ namespace ReactUnity.Helpers
             else if (!string.IsNullOrWhiteSpace(item.Name))
             {
 #if REACT_WEBCURSOR
-                if (WebGLCursorNames.Contains(item.Name)) {
+                if (WebGLCursorNames.Contains(item.Name))
+                {
                     setWebGLCursor(item.Name);
                     return;
                 }

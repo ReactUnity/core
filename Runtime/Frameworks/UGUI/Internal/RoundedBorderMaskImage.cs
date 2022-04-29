@@ -1,8 +1,8 @@
+using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
-using Facebook.Yoga;
 
 namespace ReactUnity.UGUI.Internal
 {

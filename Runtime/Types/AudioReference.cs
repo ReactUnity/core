@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using ReactUnity.Converters;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;

@@ -6,7 +6,6 @@
 using System;
 using Jint;
 using Jint.Native;
-using Jint.Native.Function;
 using Jint.Native.Object;
 using Jint.Runtime.Interop;
 using ReactUnity.Helpers;

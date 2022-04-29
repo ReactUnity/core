@@ -233,7 +233,7 @@ namespace ReactUnity.Scripting.DomProxies
     /// <summary>
     /// WebSocket class bound to JSLIB.
     /// </summary>
-    public class WebSocket: IWebSocket
+    public class WebSocket : IWebSocket
     {
 
         /* WebSocket JSLIB functions */
@@ -327,7 +327,7 @@ namespace ReactUnity.Scripting.DomProxies
         public void Close(WebSocketCloseCode code = WebSocketCloseCode.Normal, string reason = null)
         {
 
-            int ret = WebSocketClose(this.instanceId, (int)code, reason);
+            int ret = WebSocketClose(this.instanceId, (int) code, reason);
 
             if (ret < 0)
                 throw WebSocketHelpers.GetErrorMessageFromCode(ret, null);

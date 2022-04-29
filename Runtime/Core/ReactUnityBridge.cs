@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine.Scripting;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
+using UnityEngine.Scripting;
 
 namespace ReactUnity
 {

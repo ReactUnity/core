@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Converters;
-using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
 using UnityEngine;
 
