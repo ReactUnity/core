@@ -161,7 +161,7 @@ namespace ReactUnity
                     dispatcher.StartDeferred(
                         WatchWebRequest(request, callback, err => {
                             DevServerFailed = true;
-                            Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
+                            Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script. If this is unexpected, make sure the DevServer is running at " + DevServer);
                             GetScript(callback, dispatcher, false);
                         })));
             }

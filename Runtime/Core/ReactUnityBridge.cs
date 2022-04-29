@@ -17,6 +17,7 @@ namespace ReactUnity
 
         #region Priority
 
+        [Preserve]
         public int CurrentEventPriority { get; private set; }
 
         public void SetCurrentEventPriority(EventPriority priority)
