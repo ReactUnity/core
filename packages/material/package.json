@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/material",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "description": "Material Design components and utilities for React Unity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
