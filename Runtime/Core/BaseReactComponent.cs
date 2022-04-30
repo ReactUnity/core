@@ -554,6 +554,7 @@ namespace ReactUnity
 
         public void RegisterChild(IReactComponent child, int index = -1)
         {
+            if (index == Children.Count) index = -1;
             var accepted = IsContainer && InsertChild(child, index);
             if (accepted)
             {
