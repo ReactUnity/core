@@ -1874,22 +1874,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reactunity/quick-start@workspace:."
   dependencies:
-    "@reactunity/renderer": ^0.10.0
+    "@reactunity/renderer": ^0.10.1
     "@reactunity/scripts": ^0.10.0
     react: ^18.1.0
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
 
-"@reactunity/renderer@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "@reactunity/renderer@npm:0.10.0"
+"@reactunity/renderer@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "@reactunity/renderer@npm:0.10.1"
   dependencies:
     react-reconciler: ^0.28.0
     use-sync-external-store: ^1.1.0
   peerDependencies:
     react: ^18.0.0
-  checksum: ae95fc8572c451607fd483b99bfc9a7f8ef770cbb402aa30ded0acde53ed675046dc6968a521ce220b39c50f702ef62b403a365628e4795ccdba36f0a6ff3546
+  checksum: 7780b7bff503bc7c98cc480491687974a88e0124bdab39f5494acec97b967e66fe8ee27f1d783d50bf98699c99e682ccbc0e0f878b2b52fc151e6956dbc5e371
   languageName: node
   linkType: hard
 

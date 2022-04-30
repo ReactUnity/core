@@ -8022,7 +8022,7 @@ var react = __webpack_require__(914);
 // EXTERNAL MODULE: ./node_modules/react-reconciler/constants.js
 var constants = __webpack_require__(327);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/version.js
-var version = '0.10.0';
+var version = '0.10.1';
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(552);
 // EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
@@ -8486,6 +8486,37 @@ function (_super) {
 }(ObjectsRepo);
 
 
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js
+
+
+var callbacksRepo = new CallbacksRepo();
+var objectsRepo = new ObjectsRepo(); // Separates properties in 3 categories: regular props, callbacks and non-serializable objects
+
+function convertPropsToSerializable(props) {
+  var res = {};
+
+  for (var key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      var value = props[key];
+
+      if (value == null) {
+        (res.p || (res.p = {}))[key] = null;
+      } else if (key === 'style') {
+        (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);
+      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
+        var ind = callbacksRepo.addObject(value);
+        (res.e || (res.e = {}))[key] = ind;
+      } else if (typeof value === 'object' || typeof value === 'function') {
+        var ind = objectsRepo.addObject(value);
+        (res.o || (res.o = {}))[key] = ind;
+      } else {
+        (res.p || (res.p = {}))[key] = value;
+      }
+    }
+  }
+
+  return res;
+}
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
@@ -8507,37 +8538,7 @@ var reconciler_assign = undefined && undefined.__assign || function () {
 
 
 
-
 var refId = 0;
-var callbacks = new CallbacksRepo();
-var objects = new ObjectsRepo(); // Separates properties in 3 categories: regular props, callbacks and non-serializable objects
-
-function partitionProps(props) {
-  var res = {};
-
-  for (var key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      var value = props[key];
-
-      if (value == null) {
-        (res.p || (res.p = {}))[key] = null;
-      } else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = partitionProps(value);
-      } else if (typeof value === 'function') {
-        var ind = callbacks.addObject(value);
-        (res.e || (res.e = {}))[key] = ind;
-      } else if (typeof value === 'object') {
-        var ind = objects.addObject(value);
-        (res.o || (res.o = {}))[key] = ind;
-      } else {
-        (res.p || (res.p = {}))[key] = value;
-      }
-    }
-  }
-
-  return res;
-}
-
 var ctxMap = new Map();
 
 var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
@@ -8561,15 +8562,15 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     };
 
     var fireEventByRef = function fireEventByRef(ind, args) {
-      return callbacks.call(ind, args);
+      return callbacksRepo.call(ind, args);
     };
 
     var getObjectRef = function getObjectRef(ind) {
-      return objects.getObject(ind);
+      return objectsRepo.getObject(ind);
     };
 
     var getEventAsObjectRef = function getEventAsObjectRef(ind) {
-      return callbacks.getObject(ind);
+      return callbacksRepo.getObject(ind);
     };
 
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
@@ -8609,7 +8610,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     ctx.commands.push(['c', reconciler_assign({
       t: type,
       r: refId
-    }, partitionProps(aProps))]);
+    }, convertPropsToSerializable(aProps))]);
     if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
     return reconciler_assign(reconciler_assign({}, ctx), {
       refId: refId
@@ -8650,7 +8651,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     instance.commands.push(['u', reconciler_assign({
       r: instance.refId,
       t: type
-    }, partitionProps(props))]);
+    }, convertPropsToSerializable(props))]);
   },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
     textInstance.commands.push(['x', {
@@ -8897,6 +8898,7 @@ var Renderer = {
           }
 
           if (!scheduled_1) {
+            scheduled_1 = true;
             Promise.resolve().then(function () {
               asyncJobCallback();
               scheduled_1 = false;

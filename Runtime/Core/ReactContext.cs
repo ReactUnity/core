@@ -220,9 +220,9 @@ namespace ReactUnity
         {
             if (ensureUpdate) FlushCommands();
 
-            Refs.TryGetValue(refId, out var cmp);
-            if (cmp.TryGetTarget(out var target)) return target;
-            return null;
+            if (!Refs.TryGetValue(refId, out var cmp)) return null;
+            if (!cmp.TryGetTarget(out var target)) return null;
+            return target;
         }
 
         public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback, object getEventAsObjectCallback)

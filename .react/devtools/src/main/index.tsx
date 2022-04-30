@@ -3,6 +3,7 @@ import { SelectionProvider, useSelection } from '../context/selection';
 import { StyleContext } from '../context/style';
 import { Classes } from './classes';
 import { GlobalStyle } from './global-style';
+import { GroupedStyles } from './grouped-styles';
 import style from './index.module.scss';
 
 function App() {
@@ -11,12 +12,7 @@ function App() {
     {selection ? <>
       <GlobalStyle />
       <Classes />
-
-      {/* <GroupedStyles /> */}
-
-      <view style={{ padding: '40px', textAlign: 'center' }}>
-        Style editing is disabled in this version of ReactUnity. Please revert to v0.9.9 or check back in new versions.
-      </view>
+      <GroupedStyles />
     </> :
       <NotSelectedView />}
   </view>;

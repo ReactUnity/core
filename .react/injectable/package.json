@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@reactunity/material": "^0.9.3",
-    "@reactunity/renderer": "^0.10.0",
+    "@reactunity/renderer": "^0.10.1",
     "react": "^18.1.0"
   },
   "devDependencies": {
