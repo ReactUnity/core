@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --tw-shadow-color: black;
-  --tw-bg-opacity: 1;
+@layer base {
+  :root {
+    --tw-shadow-color: black;
+    --tw-bg-opacity: 1;
+  }
 }

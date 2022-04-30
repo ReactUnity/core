@@ -957,7 +957,7 @@ function history_parsePath(path) {
   return parsedPath;
 }
 
-
+ //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../node_modules/react/index.js
 var react = __webpack_require__(3792);
 ;// CONCATENATED MODULE: ../../node_modules/react-router/index.js
@@ -1939,7 +1939,7 @@ function renderMatches(matches) {
   return _renderMatches(matches);
 }
 
-
+ //# sourceMappingURL=index.js.map
 
 /***/ }),
 

@@ -1,11 +1,13 @@
 {
   "files": {
     "main.js": "/index.js",
-    "static/js/249.chunk.js": "/static/js/249.chunk.js",
-    "static/js/828.chunk.js": "/static/js/828.chunk.js",
-    "static/js/599.chunk.js": "/static/js/599.chunk.js",
-    "static/js/24.chunk.js": "/static/js/24.chunk.js",
+    "static/js/212.chunk.js": "/static/js/212.chunk.js",
+    "static/js/508.chunk.js": "/static/js/508.chunk.js",
+    "static/js/9.chunk.js": "/static/js/9.chunk.js",
+    "static/js/968.chunk.js": "/static/js/968.chunk.js",
+    "static/js/945.chunk.js": "/static/js/945.chunk.js",
     "static/js/73.chunk.js": "/static/js/73.chunk.js",
+    "static/js/813.chunk.js": "/static/js/813.chunk.js",
     "static/media/bg.png": "/static/media/bg.png"
   },
   "entrypoints": [

@@ -1,7 +1,7 @@
 "use strict";
-(self["webpackChunkreactunity_sample"] = self["webpackChunkreactunity_sample"] || []).push([[599],{
+(self["webpackChunkreactunity_sample"] = self["webpackChunkreactunity_sample"] || []).push([[9],{
 
-/***/ 6599:
+/***/ 9:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -34,8 +34,8 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(2464);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/pages/lazy/index.module.scss
-var index_module = __webpack_require__(6962);
+// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[4]!./src/pages/lazy/index.module.scss
+var index_module = __webpack_require__(6416);
 ;// CONCATENATED MODULE: ./src/pages/lazy/index.module.scss
 
       
@@ -72,7 +72,7 @@ function Lazy(){var nav=(0,react_router/* useNavigate */.s0)();return/*#__PURE__
 
 /***/ }),
 
-/***/ 6962:
+/***/ 6416:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {

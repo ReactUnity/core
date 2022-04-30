@@ -1,11 +1,12 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "0.9.9",
+      "version": "0.10.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0"
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
       "url": "https://package.openupm.com"
     },
@@ -30,7 +31,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.14",
+      "version": "2.0.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -57,6 +58,13 @@
     "com.unity.mobile.android-logcat": {
       "version": "1.2.3",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.0.2",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -110,7 +118,7 @@
       }
     },
     "com.unity.vectorgraphics": {
-      "version": "2.0.0-preview.18",
+      "version": "2.0.0-preview.19",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -153,7 +161,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.8",
+      "version": "2.1.9",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -185,7 +193,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.oculus": {
-      "version": "3.0.0-pre.2",
+      "version": "3.0.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
