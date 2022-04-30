@@ -1,44 +1,10 @@
 import * as Reconciler from 'react-reconciler';
 import { commonReconciler, getAllowedProps, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
-import { CallbacksRepo } from './callbacks';
-import { ObjectsRepo } from './objects';
+import { callbacksRepo, convertPropsToSerializable, objectsRepo } from './serializer';
 import { AsyncHostContext, AsyncReconcilerConfig } from './types';
 
 let refId = 0;
-const callbacks = new CallbacksRepo();
-const objects = new ObjectsRepo();
-
-// Separates properties in 3 categories: regular props, callbacks and non-serializable objects
-function partitionProps(props: any) {
-  const res: { p: any, o: any, e: any } = {} as any;
-
-  for (const key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      const value = props[key];
-
-      if (value == null) {
-        (res.p || (res.p = {}))[key] = null;
-      }
-      else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = partitionProps(value);
-      }
-      else if (typeof value === 'function') {
-        const ind = callbacks.addObject(value);
-        (res.e || (res.e = {}))[key] = ind;
-      }
-      else if (typeof value === 'object') {
-        const ind = objects.addObject(value);
-        (res.o || (res.o = {}))[key] = ind;
-      }
-      else {
-        (res.p || (res.p = {}))[key] = value;
-      }
-    }
-  }
-
-  return res;
-}
 
 const ctxMap = new Map<object, AsyncHostContext>();
 
@@ -66,15 +32,15 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     };
 
     const fireEventByRef = (ind: number, args: any[]) => {
-      return callbacks.call(ind, args);
+      return callbacksRepo.call(ind, args);
     };
 
     const getObjectRef = (ind: number) => {
-      return objects.getObject(ind);
+      return objectsRepo.getObject(ind);
     };
 
     const getEventAsObjectRef = (ind: number) => {
-      return callbacks.getObject(ind);
+      return callbacksRepo.getObject(ind);
     };
 
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
@@ -115,7 +81,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   createInstance(type, props, rootContainer, ctx, internalHandle) {
     refId++;
     const aProps = getAllowedProps(props, type);
-    ctx.commands.push(['c', { t: type, r: refId, ...partitionProps(aProps) }]);
+    ctx.commands.push(['c', { t: type, r: refId, ...convertPropsToSerializable(aProps) }]);
 
     if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -148,7 +114,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
   commitUpdate(instance, updatePayload, type) {
     const props = getAllowedProps(updatePayload, type);
-    instance.commands.push(['u', { r: instance.refId, t: type, ...partitionProps(props) }]);
+    instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
   },
 
 
