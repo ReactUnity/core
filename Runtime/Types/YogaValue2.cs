@@ -7,6 +7,7 @@ using Facebook.Yoga;
 using ReactUnity.Converters;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -140,6 +141,8 @@ namespace ReactUnity.Types
                     var pr = YogaValueParser.Parse(values[0]);
                     if (pr is YogaValue fl)
                         return new YogaValue2(fl, SingleValueAssignsBoth ? fl : YogaValue.Undefined());
+                    else if (pr is IComputedValue cv)
+                        return cv;
                 }
 
                 if (values.Count == 2)

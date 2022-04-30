@@ -212,7 +212,8 @@ namespace ReactUnity
         internal void SetRef(int refId, IReactComponent cmp)
         {
             cmp.RefId = refId;
-            Refs.Add(refId, new WeakReference<IReactComponent>(cmp));
+            if (cmp == null) Refs.Remove(refId);
+            else Refs[refId] = new WeakReference<IReactComponent>(cmp);
         }
 
         public IReactComponent GetRef(int refId, bool ensureUpdate = false)
