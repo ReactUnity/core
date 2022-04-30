@@ -38,7 +38,7 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.MarginBottom,
                         LayoutProperties.MarginLeft,
                     };
-                    Converter = new GeneralConverter(AllConverters.YogaValueConverter);
+                    Converter = AllConverters.YogaValueConverter;
                     break;
                 case PropertyType.Padding:
                     ModifiedProperties = new List<IStyleProperty>
@@ -48,7 +48,7 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.PaddingBottom,
                         LayoutProperties.PaddingLeft,
                     };
-                    Converter = new GeneralConverter(AllConverters.YogaValueConverter);
+                    Converter = AllConverters.YogaValueConverter;
                     break;
                 case PropertyType.Inset:
                     ModifiedProperties = new List<IStyleProperty>
@@ -58,7 +58,7 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.Bottom,
                         LayoutProperties.Left,
                     };
-                    Converter = new GeneralConverter(AllConverters.YogaValueConverter);
+                    Converter = AllConverters.YogaValueConverter;
                     break;
                 case PropertyType.BorderWidth:
                     ModifiedProperties = new List<IStyleProperty>
@@ -68,7 +68,7 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.BorderBottomWidth,
                         LayoutProperties.BorderLeftWidth,
                     };
-                    Converter = new GeneralConverter(AllConverters.LengthConverter);
+                    Converter = AllConverters.LengthConverter;
                     break;
                 case PropertyType.BorderColor:
                     ModifiedProperties = new List<IStyleProperty>
@@ -78,7 +78,7 @@ namespace ReactUnity.Styling.Shorthands
                         StyleProperties.borderBottomColor,
                         StyleProperties.borderLeftColor,
                     };
-                    Converter = new GeneralConverter(AllConverters.ColorConverter);
+                    Converter = AllConverters.ColorConverter;
                     break;
                 case PropertyType.BorderRadius:
                     ModifiedProperties = new List<IStyleProperty>
@@ -88,7 +88,7 @@ namespace ReactUnity.Styling.Shorthands
                         StyleProperties.borderBottomRightRadius,
                         StyleProperties.borderBottomLeftRadius,
                     };
-                    Converter = new GeneralConverter(AllConverters.BorderRadiusConverter);
+                    Converter = AllConverters.BorderRadiusConverter;
                     break;
                 default:
                     break;
