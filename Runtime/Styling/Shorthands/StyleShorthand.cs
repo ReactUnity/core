@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
@@ -50,7 +51,7 @@ namespace ReactUnity.Styling.Shorthands
             if (value == null) return ClearValues(collection);
 
             var keyword = CssKeyword.NoKeyword;
-            if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
+            if (value is string s) ParserHelpers.TryParseKeyword(s, out keyword);
             else if (value is CssKeyword k) keyword = k;
 
             if (keyword != CssKeyword.NoKeyword && !CanHandleKeyword(keyword))

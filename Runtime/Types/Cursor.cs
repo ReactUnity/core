@@ -8,42 +8,7 @@ using UnityEngine;
 
 namespace ReactUnity.Types
 {
-    public class CursorList : CommaSeparatedList<Cursor>
-    {
-        public static readonly CursorList Default = new CursorList(Cursor.Default);
-        public static readonly CursorList None = new CursorList(Cursor.None);
-        public static readonly CursorList Pointer = new CursorList(Cursor.Pointer);
-        public static readonly CursorList Text = new CursorList(Cursor.Text);
-
-        public CursorList(string definition) : base(definition) { }
-        public CursorList(Cursor item) : base(item) { }
-        public CursorList(Cursor[] items) : base(items) { }
-
-        protected override Cursor CreateItem(string definition)
-        {
-            return new Cursor(definition);
-        }
-
-        public string GetWebGLDefinition()
-        {
-            return string.Join(", ", Items.Where(x => x.Image == null || x.Image.Type == AssetReferenceType.Url).Select(x => x.Definition));
-        }
-
-        public class Converter : CommaSeparatedListConverter<CursorList, Cursor>
-        {
-            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
-
-            protected override StyleConverterBase SingleConverter { get; } = new Cursor.Converter();
-
-            protected override CursorList CreateItems(params Cursor[] items)
-            {
-                if (items.Length == 0) return None;
-                return new CursorList(items);
-            }
-        }
-    }
-
-    public class Cursor : ICommaSeparatedListItem
+    public class Cursor
     {
         public static readonly Cursor Default = new Cursor("default");
         public static readonly Cursor None = new Cursor("none");
@@ -70,7 +35,7 @@ namespace ReactUnity.Types
         public Cursor(ImageReference image, Vector2 offset)
         {
             if (image.Type == AssetReferenceType.None) Name = Definition = "none";
-            if (image.Type == AssetReferenceType.Auto) Name = Definition = "default";
+            else if (image.Type == AssetReferenceType.Auto) Name = Definition = "default";
             else
             {
                 Image = image;
@@ -82,7 +47,13 @@ namespace ReactUnity.Types
 
         public class Converter : TypedStyleConverterBase<Cursor>
         {
-            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                if (keyword == CssKeyword.Default) return Constant(Default, out result);
+
+                return base.HandleKeyword(keyword, out result);
+            }
 
             protected override bool ParseInternal(string definition, out IComputedValue result)
             {
@@ -117,7 +88,7 @@ namespace ReactUnity.Types
                     return true;
                 }
 
-                var rest = string.Join(" ", splits, 1, splits.Count - 1);
+                var rest = string.Join(" ", splits.ToArray(), 1, splits.Count - 1);
 
                 return ComputedCompound.Create(out result,
                     new List<object> { splits[0], rest },

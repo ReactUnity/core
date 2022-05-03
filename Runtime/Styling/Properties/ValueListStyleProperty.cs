@@ -21,7 +21,7 @@ namespace ReactUnity.Styling
         }
 
         public ValueListStyleProperty(string name, T emptyValue, bool transitionable = false, bool inherited = false, StyleConverterBase baseConverter = null) :
-            this(name, new CssValueList<T>(new T[0], emptyValue), transitionable, inherited, new CssValueList<T>.Converter(baseConverter, emptyValue))
+            this(name, new CssValueList<T>(new T[0], emptyValue) as object, transitionable, inherited, new CssValueList<T>.Converter(baseConverter, emptyValue))
         {
         }
     }

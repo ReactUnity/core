@@ -50,7 +50,27 @@ namespace ReactUnity.Types
 
         public class Converter : TypedStyleConverterBase<CssValueList<T>>
         {
-            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (BaseConverter.HandleKeyword(keyword, out var itemRes))
+                {
+                    if(!(itemRes is ComputedKeyword)) {
+                        return ComputedMapper.Create(out result, itemRes, BaseConverter,
+                            (object resolvedValue, out IComputedValue rs) => {
+                                if (resolvedValue is T t) return Constant(new CssValueList<T>(t), out rs);
+                                return Fail(out rs);
+                            });
+                    }
+                }
+
+                if (keyword == CssKeyword.None)
+                {
+                    result = new ComputedConstant(DefaultList);
+                    return true;
+                }
+
+                return base.HandleKeyword(keyword, out result);
+            }
 
             StyleConverterBase BaseConverter;
 
@@ -80,8 +100,6 @@ namespace ReactUnity.Types
 
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (value == "none") return Constant(DefaultList, out result);
-
                 var splits = ParserHelpers.Split(value, ',');
 
                 return ComputedList.Create(out result, splits.OfType<object>().ToList(), BaseConverter,
@@ -95,7 +113,7 @@ namespace ReactUnity.Types
                 return new ComputedList(list, BaseConverter,
                     (List<object> resolvedValues, out IComputedValue rs) => {
                         return Constant(new CssValueList<T>(resolvedValues.OfType<T>().ToArray()), out rs);
-                    });
+                    }, true);
             }
         }
     }

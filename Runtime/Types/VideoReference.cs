@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using UnityEngine.Video;
@@ -58,6 +59,12 @@ namespace ReactUnity.Types
         public class Converter : TypedStyleConverterBase<VideoReference>
         {
             public bool AllowWithoutUrl { get; }
+
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                return base.HandleKeyword(keyword, out result);
+            }
 
             public Converter(bool allowWithoutUrl = true)
             {

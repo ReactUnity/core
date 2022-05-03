@@ -9,8 +9,8 @@ namespace ReactUnity.UGUI.StateHandlers
         public ReactContext Context;
         public IReactComponent Component;
 
-        private CursorList cursor;
-        public CursorList Cursor
+        private ICssValueList<Types.Cursor> cursor;
+        public ICssValueList<Types.Cursor> Cursor
         {
             set
             {

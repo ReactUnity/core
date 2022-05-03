@@ -24,11 +24,17 @@ namespace ReactUnity.Editor.Tests
             }
         }
 
-        [Test]
-        public void TransitionShorthandConverter()
+        private (InlineStyles, NodeStyle) CreateStyle()
         {
             var collection = new InlineStyles();
             var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+            return (collection, style);
+        }
+
+        [Test]
+        public void TransitionShorthandConverter()
+        {
+            var (collection, style) = CreateStyle();
 
             collection["transition"] =
                 "width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear";
@@ -76,8 +82,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+            var (collection, style) = CreateStyle();
 
             collection["transition-property"] = "width, height, all, bbb, bg, all";
             collection["transition-duration"] = "2s, 400ms, 500ms, 0, 0, 3s";
@@ -128,8 +133,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AnimationConverter()
         {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+            var (collection, style) = CreateStyle();
 
             collection["animation"] =
                 "roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite";
@@ -169,10 +173,12 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void CursorConverter()
         {
-            var converted = AllConverters.CursorListConverter.Convert(
-                "url(res:cursors/hand) 5 5, pointer, default, url(https://google.com), asdf 10 20") as CursorList;
+            var (collection, style) = CreateStyle();
 
-            var url0 = converted.Items[0];
+            collection["cursor"] = "url(res:cursors/hand) 5 5, pointer, default, url(https://google.com)";
+            var converted = style.cursor;
+
+            var url0 = converted.Get(0);
             Assert.IsTrue(url0.Valid);
             Assert.AreEqual(null, url0.Name);
             Assert.AreEqual(AssetReferenceType.Resource, url0.Image?.Type);
@@ -180,37 +186,33 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(5, url0.Offset.x);
             Assert.AreEqual(5, url0.Offset.y);
 
-            var url1 = converted.Items[1];
+            var url1 = converted.Get(1);
             Assert.IsTrue(url1.Valid);
             Assert.AreEqual("pointer", url1.Name);
             Assert.AreEqual(null, url1.Image);
             Assert.AreEqual(0, url1.Offset.x);
             Assert.AreEqual(0, url1.Offset.y);
 
-            var url2 = converted.Items[2];
+            var url2 = converted.Get(2);
             Assert.IsTrue(url2.Valid);
             Assert.AreEqual("default", url2.Name);
             Assert.AreEqual(null, url2.Image);
             Assert.AreEqual(0, url2.Offset.x);
             Assert.AreEqual(0, url2.Offset.y);
 
-            var url3 = converted.Items[3];
+            var url3 = converted.Get(3);
             Assert.IsTrue(url3.Valid);
             Assert.AreEqual(null, url3.Name);
             Assert.AreEqual(AssetReferenceType.Url, url3.Image?.Type);
             Assert.AreEqual("https://google.com", url3.Image?.Value);
             Assert.AreEqual(0, url3.Offset.x);
             Assert.AreEqual(0, url3.Offset.y);
-
-            var url4 = converted.Items[4];
-            Assert.IsFalse(url4.Valid);
         }
 
         [Test]
         public void AudioConverter()
         {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+            var (collection, style) = CreateStyle();
 
             collection["audio"] =
                 "url(res:click) 3s 5, url(https://example.com) infinite 2s, url(res:something)";
@@ -311,7 +313,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("rgba(112 189 153 / 74.5%)", "70bd99be")]
         [TestCase("hsv(240, 51%, 72%, 74.5%)", "5a5ab8be")]
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
-        [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", "70bd99ff")] // TODO: handle variables
+        [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", null)]
         public void ColorConverter(object input, object expected)
         {
             var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
@@ -324,12 +326,23 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void NoneAndDefaultWorksForSupportingTypes()
         {
-            Assert.AreEqual(YogaDisplay.None, LayoutProperties.Display.Convert("none"));
-            Assert.AreEqual(PointerEvents.None, StyleProperties.pointerEvents.Convert("none"));
-            Assert.AreEqual(Appearance.None, StyleProperties.appearance.Convert("none"));
-            Assert.AreEqual(ObjectFit.None, StyleProperties.objectFit.Convert("none"));
-            Assert.AreEqual(CursorList.None, StyleProperties.cursor.Convert("none"));
-            Assert.AreEqual(CursorList.Default, StyleProperties.cursor.Convert("default"));
+            var (collection, style) = CreateStyle();
+
+            collection["display"] = "none";
+            collection["pointer-events"] = "none";
+            collection["appearance"] = "none";
+            collection["object-fit"] = "none";
+            collection["cursor"] = "none";
+
+            Assert.AreEqual(YogaDisplay.None, style.GetStyleValue(LayoutProperties.Display));
+            Assert.AreEqual(PointerEvents.None, style.pointerEvents);
+            Assert.AreEqual(Appearance.None, style.appearance);
+            Assert.AreEqual(ObjectFit.None, style.objectFit);
+            Assert.AreEqual(Types.Cursor.None, style.cursor?.Get(0));
+
+            (collection, style) = CreateStyle();
+            collection["cursor"] = "default";
+            Assert.AreEqual(Types.Cursor.Default, style.cursor?.Get(0));
         }
     }
 }

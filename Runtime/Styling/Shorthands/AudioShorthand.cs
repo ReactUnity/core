@@ -74,6 +74,7 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (!clipSet) return null;
+                if (!delaySet) delays[ci] = new ComputedConstant(0f);
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
             }
 

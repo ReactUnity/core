@@ -79,6 +79,12 @@ namespace ReactUnity.Types
         {
             public bool AllowWithoutUrl { get; }
 
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                return base.HandleKeyword(keyword, out result);
+            }
+
             public Converter(bool allowWithoutUrl = false)
             {
                 AllowWithoutUrl = allowWithoutUrl;

@@ -21,8 +21,7 @@ namespace ReactUnity.Styling.Animations
             {
                 var key = CssProperties.GetKey(definition);
                 Properties = key?.ModifiedProperties ?? PropertiesEmpty;
-                // TODO:
-                //IsAll = key == AllShorthands.All;
+                IsAll = key == AllShorthands.All;
             }
         }
 
@@ -31,6 +30,7 @@ namespace ReactUnity.Styling.Animations
         {
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
+                if (value == "all") return Constant(All, out result);
                 return Constant(new TransitionProperty(value), out result);
             }
         }

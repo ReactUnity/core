@@ -8,6 +8,7 @@ using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
+using Cursor = ReactUnity.Types.Cursor;
 using NavigationMode = UnityEngine.UI.Navigation.Mode;
 
 namespace ReactUnity.Styling
@@ -18,7 +19,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
-        public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false);
+        public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);

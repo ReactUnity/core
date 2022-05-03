@@ -42,7 +42,11 @@ namespace ReactUnity.Types
             };
             private static StyleConverterBase ImageConverter = AllConverters.ImageReferenceConverter;
 
-            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                return base.HandleKeyword(keyword, out result);
+            }
 
             protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 

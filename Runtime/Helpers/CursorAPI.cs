@@ -52,7 +52,7 @@ namespace ReactUnity.Helpers
         };
 #endif
 
-        CursorList Current;
+        ICssValueList<Types.Cursor> Current;
         ReactContext Context;
         List<IReactComponent> Components = new List<IReactComponent>();
 
@@ -89,7 +89,7 @@ namespace ReactUnity.Helpers
             SetCursor(cmp?.ComputedStyle?.cursor);
         }
 
-        void SetCursor(CursorList cursor)
+        void SetCursor(ICssValueList<Types.Cursor> cursor)
         {
             if (Current == cursor) return;
             Current = cursor;
@@ -100,13 +100,13 @@ namespace ReactUnity.Helpers
             TrySetCursor(cursor, 0);
         }
 
-        private void TrySetCursor(CursorList cursor, int ind)
+        private void TrySetCursor(ICssValueList<Types.Cursor> cursor, int ind)
         {
-            if (cursor?.Items == null || cursor.Items.Length <= ind) return;
+            if (cursor == null || !cursor.Any || cursor.Count <= ind) return;
             if (Current != cursor) return;
             if (Context == null) return;
 
-            var item = cursor.Items[ind];
+            var item = cursor.Get(ind);
 
             if (item.Image != null)
             {

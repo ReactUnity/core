@@ -18,21 +18,15 @@ namespace ReactUnity.Styling.Converters
 
         protected virtual Type TargetType => null;
 
-        public virtual bool CanHandleKeyword(CssKeyword keyword) => false;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+        public virtual bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
         {
-            if (keyword == CssKeyword.NoKeyword)
-            {
-                result = null;
-                return false;
-            }
-
-            if (CanHandleKeyword(keyword)) return TryParse(keyword.ToString().ToLower(), out result);
-
             result = new ComputedKeyword(keyword);
             return true;
+        }
+
+        public bool CanHandleKeyword(CssKeyword keyword)
+        {
+            return HandleKeyword(keyword, out var result) && !(result is ComputedKeyword);
         }
 
         public bool TryConvert(object value, out IComputedValue result)
@@ -80,8 +74,7 @@ namespace ReactUnity.Styling.Converters
             var fns = AllowedFunctions;
             if (fns.Count > 0 && CssFunctions.TryCall(value, out var fnResult, fns)) return TryConvert(fnResult, out result);
 
-            var k = RuleHelpers.GetCssKeyword(value);
-            if (k != CssKeyword.NoKeyword && !CanHandleKeyword(k)) return HandleKeyword(k, out result);
+            if (ParserHelpers.TryParseKeyword(value, out var k)) return HandleKeyword(k, out result);
 
             // TODO: interpolate vars
 

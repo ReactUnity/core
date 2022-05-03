@@ -10,9 +10,7 @@ namespace ReactUnity.Styling.Converters
         private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
-        private static StyleConverterBase floatDs = AllConverters.FloatConverter;
-
-        protected override System.Type TargetType => typeof(Color);
+        protected override Type TargetType => typeof(Color);
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
             { "aliceblue", "#f0f8ff" },

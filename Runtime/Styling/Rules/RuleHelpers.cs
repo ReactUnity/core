@@ -233,14 +233,5 @@ namespace ReactUnity.Styling.Rules
 
             return NthChildRegex.Replace(SplitSelectorRegex.Replace(spaced.ToString().Trim(), " "), "($1+$2)");
         }
-
-        public static CssKeyword GetCssKeyword(string value)
-        {
-            if (value == null || int.TryParse(value, out _)) return CssKeyword.NoKeyword;
-
-            var parsed = Enum.TryParse<CssKeyword>(value, true, out var res);
-            if (parsed && Enum.IsDefined(typeof(CssKeyword), res)) return res;
-            return CssKeyword.NoKeyword;
-        }
     }
 }

@@ -11,7 +11,16 @@ namespace ReactUnity.Styling.Converters
 
         protected override Type TargetType => typeof(YogaValue);
 
-        public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.Auto;
+        public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+        {
+            if (keyword == CssKeyword.Auto)
+            {
+                result = new ComputedConstant(YogaValue.Auto());
+                return true;
+            }
+
+            return base.HandleKeyword(keyword, out result);
+        }
 
         public static readonly YogaValueConverter Horizontal = new YogaValueConverter(true, false);
         public static readonly YogaValueConverter Vertical = new YogaValueConverter(false, true);
@@ -27,12 +36,6 @@ namespace ReactUnity.Styling.Converters
 
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
-            if (value == "auto")
-            {
-                result = new ComputedConstant(YogaValue.Auto());
-                return true;
-            }
-
             if (AllowHorizontal || AllowVertical)
             {
                 if (value == "center")

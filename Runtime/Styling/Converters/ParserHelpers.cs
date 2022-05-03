@@ -168,5 +168,22 @@ namespace ReactUnity.Styling.Converters
             if (alphaSplit.Length > 1) vals.Add(alphaSplit[1].Trim());
             return vals;
         }
+
+
+        public static bool TryParseKeyword(string value, out CssKeyword keyword)
+        {
+            if (value == null || int.TryParse(value, out _))
+            {
+                keyword = CssKeyword.NoKeyword;
+                return false;
+            }
+
+            var parsed = Enum.TryParse(value, true, out keyword);
+            if (parsed && Enum.IsDefined(typeof(CssKeyword), keyword) && keyword != CssKeyword.NoKeyword)
+                return true;
+
+            keyword = CssKeyword.NoKeyword;
+            return false;
+        }
     }
 }

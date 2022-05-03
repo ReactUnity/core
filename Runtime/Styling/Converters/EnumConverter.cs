@@ -12,7 +12,13 @@ namespace ReactUnity.Styling.Converters
 
         protected override Type TargetType => EnumType;
 
-        public override bool CanHandleKeyword(CssKeyword keyword) => Enum.IsDefined(EnumType, keyword.ToString());
+        public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+        {
+            if (Enum.IsDefined(EnumType, keyword.ToString()))
+                return ParseInternal(keyword.ToString().ToLower(), out result);
+
+            return base.HandleKeyword(keyword, out result);
+        }
 
 
         public EnumConverter(Type enumType, bool keywordOnly)
@@ -54,7 +60,7 @@ namespace ReactUnity.Styling.Converters
                 {
                     var split = splits[i];
 
-                    var parsed = Enum.TryParse(type, split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
+                    var parsed = TryParseEnum(type, split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
 
                     if (parsed &&
                         (!keywordOnly || !int.TryParse(value, out _)) &&
@@ -73,7 +79,7 @@ namespace ReactUnity.Styling.Converters
 
 
             if ((!keywordOnly || !int.TryParse(value, out _)) &&
-                Enum.TryParse(type, value.Replace("-", "").ToLowerInvariant(), true, out var res) &&
+                TryParseEnum(type, value.Replace("-", "").ToLowerInvariant(), true, out var res) &&
                 Enum.IsDefined(type, res))
             {
                 result = new ComputedConstant(res);
@@ -92,6 +98,21 @@ namespace ReactUnity.Styling.Converters
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
             return FromString(EnumType, value, AllowFlags, KeywordOnly, out result);
+        }
+
+        private static bool TryParseEnum(Type enumType, string value, bool ignoreCase, out object result)
+        {
+            try
+            {
+                var res = Enum.Parse(enumType, value, ignoreCase);
+                result = Enum.ToObject(enumType, res);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
     }
 

@@ -278,7 +278,7 @@ namespace ReactUnity.UGUI
             var cursor = ComputedStyle.cursor;
             var handler = GetComponent<CursorHandler>();
 
-            if (cursor == null && handler == null) return;
+            if ((cursor == null || !cursor.Any) && handler == null) return;
             if (!handler)
             {
                 handler = AddComponent<CursorHandler>();

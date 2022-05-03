@@ -14,12 +14,14 @@ namespace ReactUnity.Styling.Computed
         public CompoundCallback Callback;
         public IList<IComputedValue> Values;
         public StyleConverterBase Converter;
+        public bool Defaults;
 
-        public ComputedList(IList<IComputedValue> values, StyleConverterBase converter, CompoundCallback callback)
+        public ComputedList(IList<IComputedValue> values, StyleConverterBase converter, CompoundCallback callback, bool defaults = false)
         {
             Values = values;
             Converter = converter;
             Callback = callback;
+            Defaults = defaults;
         }
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
@@ -31,9 +33,14 @@ namespace ReactUnity.Styling.Computed
             {
                 var value = Values[i];
 
+                if (value == null) return null;
                 var computed = value.ResolveValue(prop, style, converter);
 
-                if (computed == null) return null;
+                if (computed == null)
+                {
+                    if (Defaults) computed = prop.defaultValue;
+                    else return null;
+                }
                 results.Add(computed);
             }
 

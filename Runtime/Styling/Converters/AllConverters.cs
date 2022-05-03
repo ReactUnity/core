@@ -42,7 +42,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
         static public StyleConverterBase ScaleConverter = new Vector3Converter(null, null, 1);
         static public StyleConverterBase TransitionPropertyConverter = new TransitionProperty.Converter();
-        static public StyleConverterBase CursorListConverter = new CursorList.Converter();
+        static public StyleConverterBase CursorConverter = new Types.Cursor.Converter();
         static public StyleConverterBase TimingFunctionConverter = new TimingFunctions.Converter();
         static public StyleConverterBase FontWeightConverter = new EnumConverter<TMPro.FontWeight>(false, false);
         static public StyleConverterBase ImageDefinitionConverter = new ImageDefinition.Converter();
@@ -67,7 +67,7 @@ namespace ReactUnity.Styling.Converters
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(TextReference), TextReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
-            { typeof(CursorList), CursorListConverter},
+            { typeof(Types.Cursor), CursorConverter},
             { typeof(TimingFunction), TimingFunctionConverter },
             { typeof(TMPro.FontWeight), FontWeightConverter },
             { typeof(TransitionProperty), TransitionPropertyConverter },

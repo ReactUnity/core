@@ -179,7 +179,7 @@ namespace ReactUnity.UIToolkit
 
             if (computed.HasValue(StyleProperties.cursor))
             {
-                var cursor = ResourcesHelper.UtilityCursorClassPrefix + computed.cursor?.Definition;
+                var cursor = ResourcesHelper.UtilityCursorClassPrefix + computed.cursor?.Get(0)?.Definition;
                 if (currentCursor != cursor)
                 {
                     if (currentCursor != null)

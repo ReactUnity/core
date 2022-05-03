@@ -67,6 +67,12 @@ namespace ReactUnity.Types
         {
             protected override Type TargetType => typeof(AudioReference);
 
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                return base.HandleKeyword(keyword, out result);
+            }
+
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
                 if (value is AudioClip c) return Constant(new AudioReference(AssetReferenceType.Object, c), out result);

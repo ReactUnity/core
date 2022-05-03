@@ -9,14 +9,14 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            ParserHelpers.ColorCallback cb = name == "hsv" || name == "hsva" ? HsvCallback : HslCallback;
+            var cb = name == "hsv" || name == "hsva" ? (ParserHelpers.ColorCallback) HsvCallback : (ParserHelpers.ColorCallback) HslCallback;
             if (args.Length == 1)
             {
-                if (ParserHelpers.ParseSpaceSeparatedColor(args[0], cb, false, out var rs)) return rs;
+                if (ParserHelpers.ParseSpaceSeparatedColor(args[0], cb, true, out var rs)) return rs;
             }
             else if (args.Length == 3 || args.Length == 4)
             {
-                if (ParserHelpers.ParseCommaSeparatedColor(args, cb, false, out var rs)) return rs;
+                if (ParserHelpers.ParseCommaSeparatedColor(args, cb, true, out var rs)) return rs;
             }
 
             return null;

@@ -114,7 +114,11 @@ namespace ReactUnity.Types
 
         public class Converter : TypedStyleConverterBase<FontReference>
         {
-            StyleConverterBase StringConverter = AllConverters.StringConverter;
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(None, out result);
+                return base.HandleKeyword(keyword, out result);
+            }
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
