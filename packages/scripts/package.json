@@ -44,14 +44,14 @@
     }
   },
   "dependencies": {
-    "@babel/core": "^7.17.9",
+    "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
     "@types/react": "^18.0.8",
     "@types/webpack-env": "^1.16.4",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "babel-jest": "^28.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "babel-jest": "^28.0.3",
     "babel-loader": "^8.2.5",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
@@ -72,12 +72,12 @@
     "file-loader": "^6.2.0",
     "fs-extra": "^10.1.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^28.0.2",
-    "jest-resolve": "^28.0.2",
+    "jest": "^28.0.3",
+    "jest-resolve": "^28.0.3",
     "jest-watch-typeahead": "^1.1.0",
     "mini-css-extract-plugin": "^2.6.0",
     "null-loader": "^4.0.1",
-    "postcss": "^8.4.12",
+    "postcss": "^8.4.13",
     "postcss-loader": "^6.2.1",
     "prompts": "^2.4.2",
     "raw-loader": "^4.0.2",
@@ -99,7 +99,7 @@
     "webpack-manifest-plugin": "^5.0.0"
   },
   "devDependencies": {
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
@@ -108,7 +108,7 @@
     "@reactunity/previewer": "*",
     "@reactunity/renderer": "^0.10.0",
     "react": "^18.0.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   },
   "peerDependenciesMeta": {
     "@reactunity/previewer": {

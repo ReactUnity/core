@@ -94,6 +94,19 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+
+// Treat files under `src/entry` as separate entry points
+const appDirectory = fs.realpathSync(process.cwd());
+const entryDirectory = path.join(appDirectory, 'src/entry');
+const entries = !fs.existsSync(entryDirectory) ? [] :
+  fs.readdirSync(entryDirectory, { withFileTypes: true })
+    .filter(x => x.isFile())
+    .filter(x => /\.(js|mjs|jsx|ts|tsx)$/.test(x.name))
+    .map(x => path.resolve(entryDirectory, x.name));
+const entryObj = {};
+for (const entry of entries) entryObj[path.basename(entry, path.extname(entry))] = entry;
+
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 const baseConfigFactory = function (webpackEnv) {
@@ -184,15 +197,18 @@ const baseConfigFactory = function (webpackEnv) {
       : isEnvDevelopment && (sourceMapType || 'eval-source-map'),
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: paths.appIndexJs,
+    entry: {
+      index: paths.appIndexJs,
+      ...entryObj,
+    },
     output: {
       // The build folder.
       path: paths.appBuild,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
-      // There will be one main bundle, and one file per asynchronous chunk.
+      // There can be multiple entry bundles, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvDevelopment ? 'index.js' : process.env.FILENAME || 'index.js',
+      filename: isEnvDevelopment ? '[name].js' : process.env.FILENAME || '[name].js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].chunk.js'
@@ -590,7 +606,7 @@ const baseConfigFactory = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          const entrypointFiles = entrypoints.main.filter(
+          const entrypointFiles = entrypoints.index.filter(
             fileName => !fileName.endsWith('.map')
           );
 
