@@ -10,7 +10,7 @@ namespace ReactUnity.Styling.Computed
     /// </summary>
     public struct ComputedCompound : IComputedValue
     {
-        public delegate bool CompoundCallback(List<object> values, out IComputedValue result);
+        public delegate object CompoundCallback(List<object> values);
 
         public CompoundCallback Callback;
         public List<IComputedValue> Values;
@@ -39,8 +39,7 @@ namespace ReactUnity.Styling.Computed
                 results.Add(computed);
             }
 
-            if (Callback(results, out var res)) return res;
-            return null;
+            return Callback(results);
         }
 
         public static bool Create(out IComputedValue result, List<object> values, List<StyleConverterBase> converters, CompoundCallback callback)
@@ -65,12 +64,13 @@ namespace ReactUnity.Styling.Computed
 
             if (allConstants)
             {
-                if (callback(resultValues.OfType<ComputedConstant>().Select(x => x.Value).ToList(), out var constantResult))
+                var res = callback(resultValues.OfType<ComputedConstant>().Select(x => x.Value).ToList());
+
+                if (res != null)
                 {
-                    result = new ComputedConstant(constantResult);
+                    result = new ComputedConstant(res);
                     return true;
                 }
-
                 result = null;
                 return false;
             }

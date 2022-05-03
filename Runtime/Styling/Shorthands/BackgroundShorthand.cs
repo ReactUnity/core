@@ -224,15 +224,9 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (sizeSetByKeyword) sizes[ci] = new ComputedConstant(size);
                 else if (sizeXSet) sizes[ci] = new ComputedList(new List<IComputedValue> { sizeX, sizeY }, AllConverters.YogaValueConverter,
-                    (List<object> resolved, out IComputedValue rs) => {
-                        if (resolved[0] is YogaValue xv && resolved[1] is YogaValue yv)
-                        {
-                            rs = new ComputedConstant(new BackgroundSize(new YogaValue2(xv, yv)));
-                            return true;
-                        }
-
-                        rs = null;
-                        return false;
+                    (resolved) => {
+                        if (resolved[0] is YogaValue xv && resolved[1] is YogaValue yv) return new BackgroundSize(new YogaValue2(xv, yv));
+                        return null;
                     });
             }
 

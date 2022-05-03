@@ -110,23 +110,13 @@ namespace ReactUnity.Styling.Shorthands
             if (AllConverters.YogaValue2Converter.TryParse(val, out var yv))
             {
                 return Tuple.Create<IComputedValue, IComputedValue>(
-                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (object resolved, out IComputedValue rs) => {
-                        if (resolved is YogaValue2 t)
-                        {
-                            rs = new ComputedConstant(t.X);
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (resolved) => {
+                        if (resolved is YogaValue2 t) return t.X;
+                        return null;
                     }),
-                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (object resolved, out IComputedValue rs) => {
-                        if (resolved is YogaValue2 t)
-                        {
-                            rs = new ComputedConstant(t.Y);
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (resolved) => {
+                        if (resolved is YogaValue2 t) return t.Y;
+                        return null;
                     })
                 );
             }

@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Computed
     /// </summary>
     public struct ComputedMapper : IComputedValue
     {
-        public delegate bool MapCallback(object value, out IComputedValue result);
+        public delegate object MapCallback(object value);
 
         public MapCallback Callback;
         public IComputedValue Value;
@@ -26,8 +26,7 @@ namespace ReactUnity.Styling.Computed
 
             if (computed == null) return null;
 
-            if (Callback(computed, out var res)) return res;
-            return null;
+            return Callback(computed);
         }
 
         public static bool Create(out IComputedValue result, object value, StyleConverterBase converter, MapCallback callback)
@@ -40,12 +39,13 @@ namespace ReactUnity.Styling.Computed
 
             if (partResult is ComputedConstant cc)
             {
-                if (callback(cc.Value, out var connstantResult))
+                var res = callback(cc.Value);
+
+                if (res != null)
                 {
-                    result = new ComputedConstant(connstantResult);
+                    result = new ComputedConstant(res);
                     return true;
                 }
-
                 result = null;
                 return false;
             }

@@ -100,7 +100,10 @@ namespace ReactUnity.Types
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (object u, out IComputedValue rs) => Constant(new TextReference(u as Url), out rs)))
+                    (u) => {
+                        if (u is Url uu) return new TextReference(uu);
+                        return null;
+                    }))
                     return true;
 
                 if (AllowWithoutUrl) return Constant(new TextReference(new Url(value)), out result);

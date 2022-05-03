@@ -53,9 +53,9 @@ namespace ReactUnity.Types
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, ImageConverter,
-                    (object resolved, out IComputedValue rs) => {
-                        if (resolved is ImageReference irr) return Constant(new UrlImageDefinition(irr), out rs);
-                        return Fail(out rs);
+                    (resolved) => {
+                        if (resolved is ImageReference irr) return new UrlImageDefinition(irr);
+                        return null;
                     });
             }
 
@@ -68,9 +68,9 @@ namespace ReactUnity.Types
                 }
 
                 return ComputedMapper.Create(out result, value, ImageConverter,
-                    (object resolved, out IComputedValue rs) => {
-                        if (resolved is ImageReference irr) return Constant(new UrlImageDefinition(irr), out rs);
-                        return Fail(out rs);
+                    (resolved) => {
+                        if (resolved is ImageReference irr) return new UrlImageDefinition(irr);
+                        return null;
                     });
             }
         }

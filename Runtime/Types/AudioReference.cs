@@ -85,10 +85,9 @@ namespace ReactUnity.Types
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is Url u) return Constant(new AudioReference(u), out rs);
-                        rs = null;
-                        return false;
+                    (resolvedValue) => {
+                        if (resolvedValue is Url u) return new AudioReference(u);
+                        return null;
                     });
             }
         }

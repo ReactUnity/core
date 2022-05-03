@@ -129,11 +129,6 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (!nameSet) return null;
-                if (!durationSet) durations[ci] = new ComputedConstant(0f);
-                if (!delaySet) delays[ci] = new ComputedConstant(0f);
-                if (!fillModeSet) fillModes[ci] = new ComputedConstant(AnimationFillMode.None);
-                if (!directionSet) directions[ci] = new ComputedConstant(AnimationDirection.Normal);
-                if (!playStateSet) states[ci] = new ComputedConstant(AnimationPlayState.Running);
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
                 if (!timingSet) easings[ci] = new ComputedConstant(TimingFunctions.Default);
             }

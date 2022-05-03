@@ -81,7 +81,10 @@ namespace ReactUnity.Types
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (object u, out IComputedValue rs) => Constant(new VideoReference(u as Url), out rs)))
+                    (u) => {
+                        if (u is Url uu) return new VideoReference(uu);
+                        return null;
+                    }))
                     return true;
 
                 if (AllowWithoutUrl) return Constant(new VideoReference(new Url(value)), out result);

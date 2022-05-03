@@ -14,21 +14,18 @@ namespace ReactUnity.Styling.Functions
         public object Call(string name, string[] args, string argsCombined)
         {
             if (ComputedList.Create(out var result, args.OfType<object>().ToList(), AllConverters.FloatConverter,
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (resolved.Count > 1 && resolved[0] is float xf && resolved[1] is float yf)
                     {
                         if (resolved.Count > 2 && resolved[2] is float zf)
                         {
-                            rs = new ComputedConstant(new Vector3(xf, yf, zf));
-                            return true;
+                            return new Vector3(xf, yf, zf);
                         }
 
-                        rs = new ComputedConstant(new Vector3(xf, yf, 0));
-                        return true;
+                        return new Vector3(xf, yf, 0);
                     }
 
-                    rs = null;
-                    return false;
+                    return null;
                 })) return result;
             return null;
         }

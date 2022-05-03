@@ -54,11 +54,12 @@ namespace ReactUnity.Types
             {
                 if (BaseConverter.HandleKeyword(keyword, out var itemRes))
                 {
-                    if(!(itemRes is ComputedKeyword)) {
+                    if (!(itemRes is ComputedKeyword))
+                    {
                         return ComputedMapper.Create(out result, itemRes, BaseConverter,
-                            (object resolvedValue, out IComputedValue rs) => {
-                                if (resolvedValue is T t) return Constant(new CssValueList<T>(t), out rs);
-                                return Fail(out rs);
+                            (resolvedValue) => {
+                                if (resolvedValue is T t) return new CssValueList<T>(t);
+                                return null;
                             });
                     }
                 }
@@ -92,9 +93,9 @@ namespace ReactUnity.Types
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, BaseConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is T t) return Constant(new CssValueList<T>(t), out rs);
-                        return Fail(out rs);
+                    (resolvedValue) => {
+                        if (resolvedValue is T t) return new CssValueList<T>(t);
+                        return null;
                     });
             }
 
@@ -103,17 +104,17 @@ namespace ReactUnity.Types
                 var splits = ParserHelpers.Split(value, ',');
 
                 return ComputedList.Create(out result, splits.OfType<object>().ToList(), BaseConverter,
-                    (List<object> resolvedValues, out IComputedValue rs) => {
-                        return Constant(new CssValueList<T>(resolvedValues.OfType<T>().ToArray()), out rs);
+                    (resolvedValues) => {
+                        return new CssValueList<T>(resolvedValues.OfType<T>().ToArray());
                     });
             }
 
-            public IComputedValue FromList(IList<IComputedValue> list)
+            public IComputedValue FromList(IList<IComputedValue> list, T defaultValue = default)
             {
                 return new ComputedList(list, BaseConverter,
-                    (List<object> resolvedValues, out IComputedValue rs) => {
-                        return Constant(new CssValueList<T>(resolvedValues.OfType<T>().ToArray()), out rs);
-                    }, true);
+                    (resolvedValues) => {
+                        return new CssValueList<T>(resolvedValues.OfType<T>().ToArray());
+                    }, defaultValue);
             }
         }
     }

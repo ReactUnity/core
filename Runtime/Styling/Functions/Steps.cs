@@ -18,26 +18,18 @@ namespace ReactUnity.Styling.Functions
             if (ComputedCompound.Create(out var result,
                 args.OfType<object>().ToList(),
                 new List<StyleConverterBase> { AllConverters.IntConverter, StepConverter },
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
 
                     if (resolved[0] is int f1)
                     {
                         if (resolved.Count > 1)
                         {
                             if (resolved[1] is StepsJumpMode sj)
-                            {
-                                rs = new ComputedConstant(TimingFunctions.Steps(f1, sj));
-                                return true;
-                            }
+                                return TimingFunctions.Steps(f1, sj);
                         }
-                        else
-                        {
-                            rs = new ComputedConstant(TimingFunctions.Steps(f1, StepsJumpMode.End));
-                            return true;
-                        }
+                        else return TimingFunctions.Steps(f1, StepsJumpMode.End);
                     }
-                    rs = null;
-                    return false;
+                    return null;
                 })) return result;
 
             return null;

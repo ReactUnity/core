@@ -86,13 +86,13 @@ namespace ReactUnity.Types
                 return ComputedCompound.Create(out result,
                     new List<object> { colorValue }.Concat(splits).ToList(),
                     new List<StyleConverterBase> { ColorParser, FloatParser, FloatParser, FloatParser, FloatParser, FloatParser, FloatParser },
-                    (List<object> resolvedValues, out IComputedValue rs) => {
+                    (resolvedValues) => {
 
-                        if (!(resolvedValues[0] is Color c)) return Fail(out rs);
+                        if (!(resolvedValues[0] is Color c)) return null;
 
                         var lengths = resolvedValues.Skip(1).Select(x => x is float f ? f : float.NaN).ToList();
 
-                        if (lengths.Count != resolvedValues.Count - 1) return Fail(out rs);
+                        if (lengths.Count != resolvedValues.Count - 1) return null;
 
                         var dx = lengths[0];
                         var dy = lengths[1];
@@ -109,7 +109,7 @@ namespace ReactUnity.Types
                         var offset = new Vector2(dx, dy);
                         var spread = new Vector2(spreadx, spready);
                         var blur = new Vector2(blurx, blury);
-                        return Constant(new BoxShadow(offset, blur, spread, c, isInset), out rs);
+                        return new BoxShadow(offset, blur, spread, c, isInset);
                     }
                 );
             }

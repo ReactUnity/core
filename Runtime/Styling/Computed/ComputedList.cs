@@ -9,19 +9,19 @@ namespace ReactUnity.Styling.Computed
     /// </summary>
     public struct ComputedList : IComputedValue
     {
-        public delegate bool CompoundCallback(List<object> values, out IComputedValue result);
+        public delegate object CompoundCallback(List<object> values);
 
         public CompoundCallback Callback;
         public IList<IComputedValue> Values;
         public StyleConverterBase Converter;
-        public bool Defaults;
+        public object DefaultValue;
 
-        public ComputedList(IList<IComputedValue> values, StyleConverterBase converter, CompoundCallback callback, bool defaults = false)
+        public ComputedList(IList<IComputedValue> values, StyleConverterBase converter, CompoundCallback callback, object defaultValue = null)
         {
             Values = values;
             Converter = converter;
             Callback = callback;
-            Defaults = defaults;
+            DefaultValue = defaultValue;
         }
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
@@ -33,19 +33,13 @@ namespace ReactUnity.Styling.Computed
             {
                 var value = Values[i];
 
-                if (value == null) return null;
-                var computed = value.ResolveValue(prop, style, converter);
+                var computed = value == null ? DefaultValue : value.ResolveValue(prop, style, converter);
 
-                if (computed == null)
-                {
-                    if (Defaults) computed = prop.defaultValue;
-                    else return null;
-                }
+                if (computed == null) return null;
                 results.Add(computed);
             }
 
-            if (Callback(results, out var res)) return res;
-            return null;
+            return Callback(results);
         }
 
         public static bool Create(out IComputedValue result, List<object> values, StyleConverterBase converter, CompoundCallback callback)
@@ -69,12 +63,13 @@ namespace ReactUnity.Styling.Computed
 
             if (allConstants)
             {
-                if (callback(resultValues.OfType<ComputedConstant>().Select(x => x.Value).ToList(), out var constantResult))
+                var res = callback(resultValues.OfType<ComputedConstant>().Select(x => x.Value).ToList());
+
+                if (res != null)
                 {
-                    result = new ComputedConstant(constantResult);
+                    result = new ComputedConstant(res);
                     return true;
                 }
-
                 result = null;
                 return false;
             }

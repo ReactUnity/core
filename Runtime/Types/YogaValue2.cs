@@ -225,14 +225,10 @@ namespace ReactUnity.Types
                 return ComputedCompound.Create(out result,
                     new List<object> { pos1 },
                     new List<StyleConverterBase> { YogaValueParser },
-                    (List<object> resolvedValues, out IComputedValue rs) => {
+                    (resolvedValues) => {
                         if (resolvedValues[0] is YogaValue fl1)
-                        {
-                            rs = new ComputedConstant(new YogaValue2(fl1, SingleValueAssignsBoth ? fl1 : YogaValue.Undefined()));
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                            return new YogaValue2(fl1, SingleValueAssignsBoth ? fl1 : YogaValue.Undefined());
+                        return null;
                     });
             }
 
@@ -241,14 +237,10 @@ namespace ReactUnity.Types
                 return ComputedCompound.Create(out result,
                     new List<object> { pos1, pos2 },
                     new List<StyleConverterBase> { YogaValueParser, YogaValueParser },
-                    (List<object> resolvedValues, out IComputedValue rs) => {
+                    (resolvedValues) => {
                         if (resolvedValues[0] is YogaValue fl1 && resolvedValues[1] is YogaValue fl2)
-                        {
-                            rs = new ComputedConstant(new YogaValue2(fl1, fl2));
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                            return new YogaValue2(fl1, fl2);
+                        return null;
                     });
             }
         }

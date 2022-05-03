@@ -142,15 +142,13 @@ namespace ReactUnity.Styling.Converters
                 out result,
                 vals.OfType<object>().ToList(),
                 hsl ? new List<StyleConverterBase> { cv, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (resolved[0] is float r && resolved[1] is float g && resolved[2] is float b)
                     {
                         if (!(resolved.Count > 3 && resolved[3] is float a)) a = 1;
-                        rs = new ComputedConstant(callback(r, g, b, a));
-                        return true;
+                        return callback(r, g, b, a);
                     }
-                    rs = null;
-                    return false;
+                    return null;
                 });
         }
 

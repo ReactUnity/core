@@ -15,18 +15,14 @@ namespace ReactUnity.Styling.Functions
             if (ComputedList.Create(out var result,
                 args.OfType<object>().ToList(),
                 AllConverters.FloatConverter,
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (resolved[0] is float f1 &&
                         resolved[1] is float f2 &&
                         resolved[2] is float f3 &&
                         resolved[3] is float f4)
-                    {
-                        rs = new ComputedConstant(TimingFunctions.CubicBezier.Create(f1, f2, f3, f4));
-                        return true;
-                    }
+                        return TimingFunctions.CubicBezier.Create(f1, f2, f3, f4);
 
-                    rs = null;
-                    return false;
+                    return null;
                 })) return result;
 
             return null;

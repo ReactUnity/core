@@ -135,18 +135,16 @@ namespace ReactUnity.Types
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is Url u) return Constant(new FontReference(u), out rs);
-                        rs = null;
-                        return false;
+                    (resolvedValue) => {
+                        if (resolvedValue is Url u) return new FontReference(u);
+                        return null;
                     })) return true;
 
 
                 return ComputedMapper.Create(out result, value, AllConverters.StringConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is string u) return Constant(new FontReference(AssetReferenceType.Procedural, u), out rs);
-                        rs = null;
-                        return false;
+                    (resolvedValue) => {
+                        if (resolvedValue is string u) return new FontReference(AssetReferenceType.Procedural, u);
+                        return null;
                     });
             }
         }

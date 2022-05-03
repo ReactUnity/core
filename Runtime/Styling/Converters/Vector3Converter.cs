@@ -70,14 +70,9 @@ namespace ReactUnity.Styling.Converters
             return ComputedMapper.Create(out result,
                 pos1,
                 FloatParser,
-                (object resolvedValue, out IComputedValue rs) => {
-                    if (resolvedValue is float fl)
-                    {
-                        rs = new ComputedConstant(SingleValueMode(fl));
-                        return true;
-                    }
-                    rs = null;
-                    return false;
+                (resolvedValue) => {
+                    if (resolvedValue is float fl) return SingleValueMode(fl);
+                    return null;
                 });
         }
 
@@ -86,14 +81,10 @@ namespace ReactUnity.Styling.Converters
             return ComputedList.Create(out result,
                 new List<object> { pos1, pos2 },
                 FloatParser,
-                (List<object> resolvedValues, out IComputedValue rs) => {
+                (resolvedValues) => {
                     if (resolvedValues[0] is float fl1 && resolvedValues[1] is float fl2)
-                    {
-                        rs = new ComputedConstant(new Vector3(fl1, fl2, DefaultZValue));
-                        return true;
-                    }
-                    rs = null;
-                    return false;
+                        return new Vector3(fl1, fl2, DefaultZValue);
+                    return null;
                 });
 
         }
@@ -103,14 +94,10 @@ namespace ReactUnity.Styling.Converters
             return ComputedList.Create(out result,
                 new List<object> { pos1, pos2, pos3 },
                 FloatParser,
-                (List<object> resolvedValues, out IComputedValue rs) => {
+                (resolvedValues) => {
                     if (resolvedValues[0] is float fl1 && resolvedValues[1] is float fl2 && resolvedValues[2] is float fl3)
-                    {
-                        rs = new ComputedConstant(new Vector3(fl1, fl2, fl3));
-                        return true;
-                    }
-                    rs = null;
-                    return false;
+                        return new Vector3(fl1, fl2, fl3);
+                    return null;
                 });
         }
     }

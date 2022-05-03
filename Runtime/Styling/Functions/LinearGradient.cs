@@ -33,19 +33,14 @@ namespace ReactUnity.Styling.Functions
             return new ComputedCompound(
                 new List<IComputedValue> { colors, angle },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.AngleConverter },
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (
                         resolved[0] is List<BaseGradient.ColorKey> colors &&
                         resolved[1] is float angle
                     )
-                    {
-                        var res = new LinearGradient(colors, isRepeating, angle * Mathf.Deg2Rad);
-                        rs = new ComputedConstant(res);
-                        return res.Valid;
-                    }
+                        return new LinearGradient(colors, isRepeating, angle * Mathf.Deg2Rad);
 
-                    rs = null;
-                    return false;
+                    return null;
                 });
         }
 
@@ -56,16 +51,9 @@ namespace ReactUnity.Styling.Functions
             if (angular)
             {
                 return ComputedMapper.Create(out result, val, AllConverters.AngleConverter,
-                    (object resolved, out IComputedValue rs) => {
-                        if (resolved is float f)
-                        {
-                            rs = new ComputedConstant(YogaValue.Percent(f * 100f / 360f));
-                            return true;
-                        }
-
-                        rs = null;
-                        return false;
-
+                    (resolved) => {
+                        if (resolved is float f) return YogaValue.Percent(f * 100f / 360f);
+                        return null;
                     });
             }
 
@@ -120,17 +108,17 @@ namespace ReactUnity.Styling.Functions
                     if (parts.Count != 1) return null;
                     if (ConvertOffset(p0, angular, out var f))
                     {
-                        dcolors.Add(f);
-                        doffsets.Add(new ComputedConstant(YogaValue.Undefined()));
+                        dcolors.Add(new ComputedConstant(null));
+                        doffsets.Add(f);
                     }
                     else return null;
                 }
             }
 
             return new ComputedList(dcolors, AllConverters.ColorConverter,
-                (List<object> resolved, out IComputedValue rs) => {
-                    rs = new ComputedList(doffsets, AllConverters.YogaValueConverter,
-                        (List<object> resolved2, out IComputedValue rs2) => {
+                (resolved) => {
+                    return new ComputedList(doffsets, AllConverters.YogaValueConverter,
+                        (resolved2) => {
                             var colors = new List<BaseGradient.ColorKey>();
 
                             for (int i = 0; i < resolved.Count; i++)
@@ -138,22 +126,16 @@ namespace ReactUnity.Styling.Functions
                                 var c = resolved[i];
                                 var o = resolved2[i];
 
-                                if (c is Color cc && o is YogaValue oo)
+                                if (o is YogaValue oo)
                                 {
-                                    colors.Add(new BaseGradient.ColorKey { Color = cc, Offset = oo });
+                                    if (c is Color cc) colors.Add(new BaseGradient.ColorKey { Color = cc, Offset = oo });
+                                    else colors.Add(new BaseGradient.ColorKey { Color = null, Offset = oo });
                                 }
-                                else
-                                {
-                                    rs2 = null;
-                                    return false;
-                                }
+                                else return null;
                             }
 
-                            rs2 = new ComputedConstant(colors);
-                            return true;
+                            return colors;
                         });
-
-                    return true;
                 });
         }
     }

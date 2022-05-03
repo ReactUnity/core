@@ -62,14 +62,9 @@ namespace ReactUnity.Types
             private bool SingleValue(object value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, ValueConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is YogaValue2 fl1)
-                        {
-                            rs = new ComputedConstant(new BackgroundSize(fl1));
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                    (resolvedValue) => {
+                        if (resolvedValue is YogaValue2 fl1) return new BackgroundSize(fl1);
+                        return null;
                     });
             }
         }

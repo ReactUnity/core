@@ -79,9 +79,9 @@ namespace ReactUnity.Styling.Converters
             }
 
             return ComputedMapper.Create(out result, value, AllConverters.LengthConverter,
-                (object resolved, out IComputedValue rs) => {
-                    if (resolved is float f) return Constant(YogaValue.Point(f), out rs);
-                    return Fail(out rs);
+                (resolved) => {
+                    if (resolved is float f) return YogaValue.Point(f);
+                    return null;
                 });
         }
 

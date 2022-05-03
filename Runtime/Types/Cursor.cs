@@ -69,17 +69,15 @@ namespace ReactUnity.Types
                     if (AllConverters.ImageReferenceConverter.TryParse(splits[0], out var imageResult))
                     {
                         result = new ComputedMapper(imageResult, AllConverters.ImageReferenceConverter,
-                            (object value, out IComputedValue res) => {
+                            (value) => {
                                 if (value is ImageReference iref)
                                 {
                                     if (iref.Type == AssetReferenceType.Auto || iref.Type == AssetReferenceType.None)
-                                        res = new ComputedConstant(new Cursor(splits[0]));
-                                    else res = new ComputedConstant(new Cursor(iref, Vector2.zero));
-                                    return true;
+                                        return new Cursor(splits[0]);
+                                    return new Cursor(iref, Vector2.zero);
                                 }
 
-                                res = null;
-                                return false;
+                                return null;
                             });
                         return true;
                     }
@@ -93,15 +91,10 @@ namespace ReactUnity.Types
                 return ComputedCompound.Create(out result,
                     new List<object> { splits[0], rest },
                     new List<StyleConverterBase> { AllConverters.ImageReferenceConverter, AllConverters.Vector2Converter },
-                    (List<object> resolvedValues, out IComputedValue res) => {
+                    (resolvedValues) => {
                         if (resolvedValues[0] is ImageReference iref && resolvedValues[1] is Vector2 v)
-                        {
-                            res = new ComputedConstant(new Cursor(iref, v));
-                            return true;
-                        }
-
-                        res = null;
-                        return false;
+                            return new Cursor(iref, v);
+                        return null;
                     });
             }
         }

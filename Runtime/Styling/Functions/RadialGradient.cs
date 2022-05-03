@@ -77,7 +77,7 @@ namespace ReactUnity.Styling.Functions
             return new ComputedCompound(
                 new List<IComputedValue> { colors, at, radius, sizeHint, shape },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.YogaValueConverter, SizeHintConverter, ShapeConverter },
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (
                         resolved[0] is List<BaseGradient.ColorKey> colors &&
                         resolved[1] is YogaValue2 at &&
@@ -85,14 +85,8 @@ namespace ReactUnity.Styling.Functions
                         resolved[3] is RadialGradientSizeHint sizeHint &&
                         resolved[4] is RadialGradientShape shape
                     )
-                    {
-                        var res = new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
-                        rs = new ComputedConstant(res);
-                        return res.Valid;
-                    }
-
-                    rs = null;
-                    return false;
+                        return new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
+                    return null;
                 });
         }
 

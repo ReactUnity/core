@@ -72,20 +72,14 @@ namespace ReactUnity.Styling.Functions
             return new ComputedCompound(
                 new List<IComputedValue> { colors, at, from },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.AngleConverter },
-                (List<object> resolved, out IComputedValue rs) => {
+                (resolved) => {
                     if (
                         resolved[0] is List<BaseGradient.ColorKey> colors &&
                         resolved[1] is YogaValue2 at &&
                         resolved[2] is float from
                     )
-                    {
-                        var res = new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
-                        rs = new ComputedConstant(res);
-                        return res.Valid;
-                    }
-
-                    rs = null;
-                    return false;
+                        return new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
+                    return null;
                 });
         }
 

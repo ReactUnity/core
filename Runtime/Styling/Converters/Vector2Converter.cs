@@ -55,14 +55,9 @@ namespace ReactUnity.Styling.Converters
                 result = new ComputedCompound(
                     new List<IComputedValue> { res },
                     new List<StyleConverterBase> { FloatParser },
-                    (List<object> resolvedValues, out IComputedValue rs) => {
-                        if (resolvedValues[0] is float fl)
-                        {
-                            rs = new ComputedConstant(new Vector2(fl, fl));
-                            return true;
-                        }
-                        rs = null;
-                        return false;
+                    (resolvedValues) => {
+                        if (resolvedValues[0] is float fl) return new Vector2(fl, fl);
+                        return null;
                     });
 
                 return true;
@@ -77,14 +72,10 @@ namespace ReactUnity.Styling.Converters
             return ComputedList.Create(out result,
                 new List<object> { pos1, pos2 },
                 FloatParser,
-                (List<object> resolvedValues, out IComputedValue rs) => {
+                (resolvedValues) => {
                     if (resolvedValues[0] is float fl1 && resolvedValues[1] is float fl2)
-                    {
-                        rs = new ComputedConstant(new Vector2(fl1, fl2));
-                        return true;
-                    }
-                    rs = null;
-                    return false;
+                        return new Vector2(fl1, fl2);
+                    return null;
                 });
         }
 

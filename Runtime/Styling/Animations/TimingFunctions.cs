@@ -197,9 +197,9 @@ namespace ReactUnity.Styling.Animations
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, TypeConverter,
-                    (object resolvedValue, out IComputedValue rs) => {
-                        if (resolvedValue is TimingFunctionType tt) return Constant(Get(tt), out rs);
-                        return Fail(out rs);
+                    (resolvedValue) => {
+                        if (resolvedValue is TimingFunctionType tt) return Get(tt);
+                        return null;
                     });
             }
         }

@@ -108,7 +108,10 @@ namespace ReactUnity.Types
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (object u, out IComputedValue rs) => Constant(new ImageReference(u as Url), out rs)))
+                    (u) => {
+                        if (u is Url uu) return new ImageReference(uu);
+                        return null;
+                    }))
                     return true;
 
                 if (AllowWithoutUrl) return Constant(new ImageReference(new Url(value)), out result);
