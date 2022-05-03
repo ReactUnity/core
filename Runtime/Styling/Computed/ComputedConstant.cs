@@ -2,9 +2,11 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Computed
 {
-    public struct ComputedConstant : IComputedValue
+    public struct ComputedConstant : IComputedValue, IComputedConstant
     {
         public object Value { get; }
+        public object ConstantValue => Value;
+
         public ComputedConstant(object value)
         {
             if (value is ComputedConstant cs) Value = cs.Value;

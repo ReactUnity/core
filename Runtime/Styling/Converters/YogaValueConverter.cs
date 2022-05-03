@@ -5,11 +5,9 @@ using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class YogaValueConverter : StyleConverterBase
+    public class YogaValueConverter : TypedStyleConverterBase<YogaValue>
     {
         static CultureInfo culture = new CultureInfo("en-US");
-
-        protected override Type TargetType => typeof(YogaValue);
 
         public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
         {
@@ -100,7 +98,7 @@ namespace ReactUnity.Styling.Converters
                 case TypeCode.Decimal:
                 case TypeCode.Single:
                 case TypeCode.Double:
-                    result = new ComputedConstant(YogaValue.Point((float) value));
+                    result = new ComputedConstant(YogaValue.Point(System.Convert.ToSingle(value)));
                     return true;
                 default:
                     break;

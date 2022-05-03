@@ -75,7 +75,7 @@ namespace ReactUnity.Styling.Shorthands
             {
                 if (splits.Count > 1)
                 {
-                    if (Converter.TryParse(splits[0], out var y)) return Tuple.Create(x, y);
+                    if (Converter.TryParse(splits[1], out var y)) return Tuple.Create(x, y);
                     return null;
                 }
                 return Tuple.Create(x, x);

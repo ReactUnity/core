@@ -37,9 +37,9 @@ namespace ReactUnity.Styling.Computed
                 return false;
             }
 
-            if (partResult is ComputedConstant cc)
+            if (StylingUtils.UnboxConstant(partResult, out var cc))
             {
-                var res = callback(cc.Value);
+                var res = callback(cc);
 
                 if (res != null)
                 {

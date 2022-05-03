@@ -41,16 +41,17 @@ namespace ReactUnity.Tests
             yield return null;
 
             Globals["readonly"] = true;
-            Globals["keyboardType"] = "social";
             Globals["richText"] = true;
             Globals["lineType"] = "multiline-submit";
-            Globals["validation"] = "integer";
             Globals["placeholder"] = "some placeholder";
             Globals["value"] = "some value";
             Globals["disabled"] = true;
             Globals["characterLimit"] = 50;
             Globals["lineLimit"] = 5;
             Globals["contentType"] = TMP_InputField.ContentType.Custom;
+            Globals["keyboardType"] = "social";
+            Globals["validation"] = "integer";
+            yield return null;
             yield return null;
 
             Assert.AreEqual(true, InputEl.InputField.readOnly);

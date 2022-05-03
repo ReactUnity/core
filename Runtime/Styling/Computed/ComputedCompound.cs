@@ -59,12 +59,12 @@ namespace ReactUnity.Styling.Computed
                 }
 
                 resultValues.Add(partResult);
-                allConstants &= partResult is ComputedConstant;
+                allConstants &= partResult is IComputedConstant;
             }
 
             if (allConstants)
             {
-                var res = callback(resultValues.OfType<ComputedConstant>().Select(x => x.Value).ToList());
+                var res = callback(resultValues.OfType<IComputedConstant>().Select(x => x.ConstantValue).ToList());
 
                 if (res != null)
                 {

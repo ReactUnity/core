@@ -15,6 +15,11 @@ namespace ReactUnity.Styling.Computed
         object GetValue(IStyleProperty targetProp, NodeStyle targetStyle, IStyleConverter converter);
     }
 
+    public interface IComputedConstant
+    {
+        object ConstantValue { get; }
+    }
+
     public static class ComputedValueExtensions
     {
         static public object ResolveValue(this IComputedValue cv, IStyleProperty targetProp, NodeStyle targetStyle, IStyleConverter converter)

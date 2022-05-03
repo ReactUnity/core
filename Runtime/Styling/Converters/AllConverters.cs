@@ -86,11 +86,5 @@ namespace ReactUnity.Styling.Converters
 
             return Map[type] = converter;
         }
-
-        public static T TryGetConstantValue<T>(IComputedValue value, T defaultValue = default)
-        {
-            if (value != null && value is ComputedConstant cc && cc.Value is T t) return t;
-            return defaultValue;
-        }
     }
 }

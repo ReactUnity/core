@@ -107,10 +107,8 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
-        public class Converter : StyleConverterBase
+        public class Converter : TypedStyleConverterBase<YogaValue2>
         {
-            protected override Type TargetType => typeof(YogaValue2);
-
             StyleConverterBase YogaValueParser = AllConverters.YogaValueConverter;
 
             private bool AllowLiterals = true;

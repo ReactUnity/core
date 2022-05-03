@@ -9,14 +9,17 @@ namespace ReactUnity.Editor.Tests.Renderer
     {
         public FontSizeTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [EditorInjectableTest(style: @"view { width: 10rem; }")]
+        [EditorInjectableTest()]
         public IEnumerator LayoutChangesBasedOnFontSize()
         {
+            var view = Q("#test") as ReactUnity.UIToolkit.UIToolkitComponent<VisualElement>;
+
+            view.Style["width"] = "10rem";
+
             yield return null;
             yield return null;
             yield return null;
 
-            var view = Q("#test") as ReactUnity.UIToolkit.UIToolkitComponent<VisualElement>;
 
             Assert.AreEqual(120, view.Element.layout.width, 0.5f);
 

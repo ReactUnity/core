@@ -18,7 +18,7 @@ namespace ReactUnity.Styling.Functions
             var first = args[0];
             var startIndex = 0;
 
-            IComputedValue angle = new ComputedConstant(180f);
+            IComputedValue angle;
             var isRepeating = name.StartsWith("repeating-");
 
             if (AllConverters.AngleConverter.TryParse(first, out angle))
@@ -31,7 +31,7 @@ namespace ReactUnity.Styling.Functions
             var colors = GetColorKeys(args, startIndex, false);
 
             return new ComputedCompound(
-                new List<IComputedValue> { colors, angle },
+                new List<IComputedValue> { colors, angle ?? new ComputedConstant(100f) },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.AngleConverter },
                 (resolved) => {
                     if (
@@ -108,8 +108,10 @@ namespace ReactUnity.Styling.Functions
                     if (parts.Count != 1) return null;
                     if (ConvertOffset(p0, angular, out var f))
                     {
-                        dcolors.Add(new ComputedConstant(null));
                         doffsets.Add(f);
+
+                        // HACK: add 0 so that it cannot be detected as color, but still passes the validation
+                        dcolors.Add(new ComputedConstant(0)); 
                     }
                     else return null;
                 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class FloatConverter : StyleConverterBase
+    public class FloatConverter : TypedStyleConverterBase<float>
     {
         static CultureInfo culture = new CultureInfo("en-US");
 
@@ -16,9 +16,6 @@ namespace ReactUnity.Styling.Converters
         bool AllowSuffixless;
 
         protected virtual Dictionary<string, float> SpecialValues { get; set; }
-
-        protected override Type TargetType => typeof(float);
-
 
         public FloatConverter()
         {
@@ -62,7 +59,7 @@ namespace ReactUnity.Styling.Converters
                 case TypeCode.Int64:
                 case TypeCode.Decimal:
                 case TypeCode.Double:
-                    result = new ComputedConstant((float) value);
+                    result = new ComputedConstant(System.Convert.ToSingle(value));
                     return true;
                 default:
                     break;
@@ -101,7 +98,7 @@ namespace ReactUnity.Styling.Converters
                 {
                     if (SuffixMapper.TryGetValue(suffix, out var mapper))
                     {
-                        result = new ComputedConstant(mapper(res));
+                        result = StylingUtils.CreateComputed(mapper(res));
                         return true;
                     }
                     if (!SuffixMap.TryGetValue(suffix, out multiplier))

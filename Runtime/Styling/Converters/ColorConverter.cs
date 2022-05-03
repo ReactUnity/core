@@ -5,12 +5,10 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class ColorConverter : StyleConverterBase
+    public class ColorConverter : TypedStyleConverterBase<Color>
     {
         private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
-
-        protected override Type TargetType => typeof(Color);
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
             { "aliceblue", "#f0f8ff" },

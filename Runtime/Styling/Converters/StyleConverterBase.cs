@@ -117,7 +117,7 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
-            if (resolved != null && resolved is ComputedConstant cc && cc.Value is T t)
+            if (StylingUtils.UnboxConstant(resolved, out var cv) && cv is T t)
             {
                 result = t;
                 return true;
@@ -131,7 +131,7 @@ namespace ReactUnity.Styling.Converters
         public T TryGetConstantValue<T>(object value, T defaultValue = default)
         {
             if (!TryConvert(value, out var resolved)) return defaultValue;
-            if (resolved != null && resolved is ComputedConstant cc && cc.Value is T t) return t;
+            if (StylingUtils.UnboxConstant(resolved, out var cv) && cv is T t) return t;
             return defaultValue;
         }
     }

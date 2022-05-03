@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class IntConverter : StyleConverterBase
+    public class IntConverter : TypedStyleConverterBase<int>
     {
-        protected override Type TargetType => typeof(int);
-
         public StyleConverterBase FloatConverter = new FloatConverter(null, null, true);
 
         public bool AllowFloats { get; set; } = false;

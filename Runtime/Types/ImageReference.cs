@@ -54,11 +54,10 @@ namespace ReactUnity.Types
             }
             else if (realType == AssetReferenceType.Procedural)
             {
-                if (AllConverters.ColorConverter.TryConvert(realValue, out var color))
+                if (AllConverters.ColorConverter.TryGetConstantValue<Color>(realValue, out var color))
                 {
-                    var c = AllConverters.TryGetConstantValue(color, Color.clear);
                     var t = new Texture2D(1, 1);
-                    t.SetPixel(0, 0, c);
+                    t.SetPixel(0, 0, color);
                     t.Apply();
                     callback(t);
                 }

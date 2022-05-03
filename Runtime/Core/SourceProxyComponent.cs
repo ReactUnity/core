@@ -70,11 +70,10 @@ namespace ReactUnity
 
         private void SetSource(object value)
         {
-            if (!AllConverters.TextReferenceConverter.TryConvert(value, out var reference)) InnerContent = Content;
+            if (!AllConverters.TextReferenceConverter.TryGetConstantValue<TextReference>(value, out var reference)) InnerContent = Content;
             else
             {
-                var rf = AllConverters.TryGetConstantValue(reference, TextReference.None);
-                rf?.Get(Context, text => {
+                reference?.Get(Context, text => {
                     if (value != Source) return;
                     InnerContent = text.text;
                     FireEvent("onLoad", new { type = "load" });

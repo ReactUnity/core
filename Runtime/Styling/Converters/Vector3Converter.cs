@@ -8,12 +8,10 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class Vector3Converter : StyleConverterBase
+    public class Vector3Converter : TypedStyleConverterBase<Vector3>
     {
         private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "vector3" };
         protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
-
-        protected override Type TargetType => typeof(Vector3);
 
         private StyleConverterBase FloatParser = AllConverters.FloatConverter;
         private Func<float, Vector3> SingleValueMode;

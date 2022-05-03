@@ -63,10 +63,8 @@ namespace ReactUnity.Types
         }
 
 
-        public class Converter : StyleConverterBase
+        public class Converter : TypedStyleConverterBase<AudioReference>
         {
-            protected override Type TargetType => typeof(AudioReference);
-
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
                 if (keyword == CssKeyword.None) return Constant(None, out result);

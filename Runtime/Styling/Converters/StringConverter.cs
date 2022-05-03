@@ -3,10 +3,8 @@ using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class StringConverter : StyleConverterBase
+    public class StringConverter : TypedStyleConverterBase<string>
     {
-        protected override Type TargetType => typeof(string);
-
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
             value = Normalize(value);

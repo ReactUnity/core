@@ -23,10 +23,10 @@ namespace ReactUnity.Styling.Functions
 
             var isRepeating = name.StartsWith("repeating-");
 
-            IComputedValue shape = new ComputedConstant(RadialGradientShape.Ellipse);
-            IComputedValue sizeHint = new ComputedConstant(RadialGradientSizeHint.FarthestCorner);
-            IComputedValue at = new ComputedConstant(YogaValue2.Center);
-            IComputedValue radius = new ComputedConstant(YogaValue.Undefined());
+            IComputedValue shape = null;
+            IComputedValue sizeHint = null;
+            IComputedValue at = null;
+            IComputedValue radius = null;
 
 
             var firstSplit = ParserHelpers.SplitWhitespace(first);
@@ -75,7 +75,13 @@ namespace ReactUnity.Styling.Functions
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
             return new ComputedCompound(
-                new List<IComputedValue> { colors, at, radius, sizeHint, shape },
+                new List<IComputedValue> {
+                    colors,
+                    at ?? new ComputedConstant(YogaValue2.Center),
+                    radius ?? new ComputedConstant(YogaValue.Undefined()),
+                    sizeHint ?? new ComputedConstant(RadialGradientSizeHint.FarthestCorner),
+                    shape ?? new ComputedConstant(RadialGradientShape.Ellipse),
+                },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.YogaValueConverter, SizeHintConverter, ShapeConverter },
                 (resolved) => {
                     if (

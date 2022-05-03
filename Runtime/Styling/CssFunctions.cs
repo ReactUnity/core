@@ -58,7 +58,7 @@ namespace ReactUnity.Styling
                 return false;
             }
 
-            if ((allowed == null || allowed.Contains(name))
+            if ((allowed == null || allowed.Contains(name) || name == "var")
                 && Functions.TryGetValue(name, out var fun)
                 && fun.CanHandleArguments(splits.Length, name, splits))
             {

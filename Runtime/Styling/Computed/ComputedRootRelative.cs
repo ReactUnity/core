@@ -53,9 +53,7 @@ namespace ReactUnity.Styling.Computed
             }
 
             size *= Ratio;
-
-            var val = prop.Convert(size);
-            return val;
+            return size;
         }
     }
 }

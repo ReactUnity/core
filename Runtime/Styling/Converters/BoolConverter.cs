@@ -4,12 +4,10 @@ using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
 {
-    public class BoolConverter : StyleConverterBase
+    public class BoolConverter : TypedStyleConverterBase<bool>
     {
         HashSet<string> truthyValues;
         HashSet<string> falsyValues;
-
-        protected override Type TargetType => typeof(bool);
 
         public BoolConverter(string[] truthyValues, string[] falsyValues)
         {

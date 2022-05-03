@@ -17,8 +17,8 @@ namespace ReactUnity.Styling.Functions
             var first = args[0];
             var startIndex = 0;
 
-            IComputedValue from = new ComputedConstant(0f);
-            IComputedValue at = new ComputedConstant(YogaValue2.Center);
+            IComputedValue from = null;
+            IComputedValue at = null;
             var isRepeating = name.StartsWith("repeating-");
 
 
@@ -70,7 +70,7 @@ namespace ReactUnity.Styling.Functions
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
             return new ComputedCompound(
-                new List<IComputedValue> { colors, at, from },
+                new List<IComputedValue> { colors, at ?? new ComputedConstant(YogaValue2.Center), from ?? new ComputedConstant(0f) },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.AngleConverter },
                 (resolved) => {
                     if (

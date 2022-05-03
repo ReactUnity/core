@@ -32,7 +32,7 @@ namespace ReactUnity.Types
 
         public class Converter : TypedStyleConverterBase<ImageDefinition>
         {
-            private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> {
+            private static HashSet<string> GradientFunctions = new HashSet<string> {
                 "linear-gradient",
                 "repeating-linear-gradient",
                 "radial-gradient",
@@ -40,6 +40,7 @@ namespace ReactUnity.Types
                 "conic-gradient",
                 "repeating-conic-gradient",
             };
+
             private static StyleConverterBase ImageConverter = AllConverters.ImageReferenceConverter;
 
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
@@ -48,7 +49,6 @@ namespace ReactUnity.Types
                 return base.HandleKeyword(keyword, out result);
             }
 
-            protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
@@ -61,10 +61,13 @@ namespace ReactUnity.Types
 
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (value == "none") return Constant(None, out result);
-                if (CssFunctions.TryCall(value, out var gd, AllowedFunctions))
+                if (CssFunctions.TryCall(value, out var gd, GradientFunctions))
                 {
-                    if (gd is BaseGradient u) return Constant(new GradientImageDefinition(u), out result);
+                    return ComputedMapper.Create(out result, gd, new TypedStyleConverterBase<BaseGradient>(),
+                        (rs) => {
+                            if (rs is BaseGradient u) return new GradientImageDefinition(u);
+                            return null;
+                        });
                 }
 
                 return ComputedMapper.Create(out result, value, ImageConverter,
