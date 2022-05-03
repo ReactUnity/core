@@ -1,6 +1,6 @@
 using System;
-using ReactUnity.Converters;
-using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine.Video;
 
 namespace ReactUnity.Types
@@ -55,23 +55,31 @@ namespace ReactUnity.Types
             }
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<VideoReference>
         {
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
+            public bool AllowWithoutUrl { get; }
 
-            public object Convert(object value)
+            public Converter(bool allowWithoutUrl = true)
             {
-                if (value == null) return None;
-                if (value is VideoReference b) return b;
-                if (value is VideoClip v) return new VideoReference(AssetReferenceType.Object, v);
-                if (value is UnityEngine.Object o) return new VideoReference(AssetReferenceType.Object, o);
-                return Parse(value?.ToString());
+                AllowWithoutUrl = allowWithoutUrl;
             }
 
-            public object Parse(string value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (AllConverters.UrlConverter.Convert(value) is Url u) return new VideoReference(u);
-                return new VideoReference(new Url(value));
+                if (value is VideoClip s) return Constant(new VideoReference(AssetReferenceType.Object, s), out result);
+                if (value is UnityEngine.Object o) return Constant(new VideoReference(AssetReferenceType.Object, o), out result);
+                return base.ConvertInternal(value, out result);
+            }
+
+            protected override bool ParseInternal(string value, out IComputedValue result)
+            {
+                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (object u, out IComputedValue rs) => Constant(new VideoReference(u as Url), out rs)))
+                    return true;
+
+                if (AllowWithoutUrl) return Constant(new VideoReference(new Url(value)), out result);
+                result = null;
+                return false;
             }
         }
     }

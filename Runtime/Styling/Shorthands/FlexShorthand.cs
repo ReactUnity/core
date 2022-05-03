@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -29,9 +30,9 @@ namespace ReactUnity.Styling.Shorthands
             var shrinkSet = false;
             var basisSet = false;
 
-            var grow = 0f;
-            var shrink = 0f;
-            var basis = YogaValue.Undefined();
+            IComputedValue grow = new ComputedConstant(0f);
+            IComputedValue shrink = new ComputedConstant(0f);
+            IComputedValue basis = new ComputedConstant(YogaValue.Undefined());
 
             for (int i = 0; i < splits.Count; i++)
             {
@@ -39,9 +40,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!growSet)
                 {
-                    var val = AllConverters.FloatConverter.Parse(split);
-
-                    if (val is float v)
+                    if (AllConverters.FloatConverter.TryParse(split, out var v))
                     {
                         grow = v;
                         growSet = true;
@@ -51,9 +50,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!shrinkSet)
                 {
-                    var val = AllConverters.FloatConverter.Parse(split);
-
-                    if (val is float v)
+                    if (AllConverters.FloatConverter.TryParse(split, out var v))
                     {
                         shrink = v;
                         shrinkSet = true;
@@ -63,9 +60,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!basisSet)
                 {
-                    var val = AllConverters.YogaValueConverter.Parse(split);
-
-                    if (val is YogaValue v)
+                    if (AllConverters.YogaValueConverter.TryParse(split, out var v))
                     {
                         basis = v;
                         basisSet = true;

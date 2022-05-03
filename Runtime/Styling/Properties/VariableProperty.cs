@@ -23,7 +23,7 @@ namespace ReactUnity.Styling
             ModifiedProperties = new List<IStyleProperty>(1) { this };
         }
 
-        public object Convert(object value)
+        public IComputedValue Convert(object value)
         {
             return value is IComputedValue d ? d : new ComputedDynamic(value);
         }

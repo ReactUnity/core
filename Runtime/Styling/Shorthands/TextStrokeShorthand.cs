@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Shorthands
@@ -27,8 +28,8 @@ namespace ReactUnity.Styling.Shorthands
             var sizeSet = false;
             var colorSet = false;
 
-            var size = 0f;
-            var color = Color.clear;
+            IComputedValue size = new ComputedConstant(0f);
+            IComputedValue color = new ComputedConstant(Color.clear);
 
             for (int i = 0; i < splits.Count; i++)
             {
@@ -36,9 +37,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!sizeSet)
                 {
-                    var val = AllConverters.FontSizeConverter.Parse(split);
-
-                    if (val is float v)
+                    if (AllConverters.FontSizeConverter.TryParse(split, out var v))
                     {
                         size = v;
                         sizeSet = true;
@@ -48,9 +47,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!colorSet)
                 {
-                    var val = AllConverters.ColorConverter.Parse(split);
-
-                    if (val is Color v)
+                    if (AllConverters.ColorConverter.TryParse(split, out var v))
                     {
                         color = v;
                         colorSet = true;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using TMPro;
 
@@ -7,8 +8,8 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class FontShorthand : StyleShorthand
     {
-        private static GeneralConverter WeightConverter = AllConverters.Get<FontWeight>();
-        private static GeneralConverter StylesConverter = AllConverters.Get<FontStyles>();
+        private static StyleConverterBase WeightConverter = AllConverters.Get<FontWeight>();
+        private static StyleConverterBase StylesConverter = AllConverters.Get<FontStyles>();
 
         public override List<IStyleProperty> ModifiedProperties { get; }
 
@@ -37,11 +38,11 @@ namespace ReactUnity.Styling.Shorthands
             var lineHeightSet = false;
             var familySet = false;
 
-            var style = FontStyles.Normal;
-            var weight = FontWeight.Regular;
-            object size = null;
-            object lineHeight = null;
-            var family = FontReference.None;
+            IComputedValue style = new ComputedConstant(FontStyles.Normal);
+            IComputedValue weight = new ComputedConstant(FontWeight.Regular);
+            IComputedValue size = null;
+            IComputedValue lineHeight = null;
+            IComputedValue family = new ComputedConstant(FontReference.None);
 
             for (int i = 0; i < splits.Count; i++)
             {
@@ -51,9 +52,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!weightSet)
                 {
-                    var val = WeightConverter.Parse(split);
-
-                    if (val is FontWeight v)
+                    if (WeightConverter.TryParse(split, out var v))
                     {
                         weight = v;
                         weightSet = true;
@@ -63,9 +62,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!styleSet)
                 {
-                    var val = StylesConverter.Parse(split);
-
-                    if (val is FontStyles v)
+                    if (StylesConverter.TryParse(split, out var v))
                     {
                         style = v;
                         styleSet = true;
@@ -77,9 +74,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var slashSplit = split.Split('/');
 
-                    var val = AllConverters.FontSizeConverter.Parse(slashSplit[0]);
-
-                    if (!Equals(val, CssKeyword.Invalid))
+                    if (AllConverters.FontSizeConverter.TryParse(slashSplit[0], out var val))
                     {
                         size = val;
                         sizeSet = true;
@@ -98,9 +93,7 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             if (lineHeightSet) return null;
 
-                            var lh = AllConverters.FontSizeConverter.Parse(lineSplit);
-
-                            if (!Equals(lh, CssKeyword.Invalid))
+                            if (AllConverters.FontSizeConverter.TryParse(lineSplit, out var lh))
                             {
                                 lineHeight = lh;
                                 lineHeightSet = true;
@@ -114,9 +107,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!familySet)
                 {
-                    var val = AllConverters.FontReferenceConverter.Parse(split);
-
-                    if (val is FontReference v)
+                    if (AllConverters.FontReferenceConverter.TryParse(split, out var v))
                     {
                         family = v;
                         familySet = true;

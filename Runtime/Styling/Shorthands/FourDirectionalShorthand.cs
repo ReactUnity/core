@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -20,7 +21,7 @@ namespace ReactUnity.Styling.Shorthands
 
         public override List<IStyleProperty> ModifiedProperties { get; }
         public PropertyType Type { get; }
-        public IStyleConverter Converter { get; }
+        public StyleConverterBase Converter { get; }
 
         public FourDirectionalShorthand(string name, PropertyType propertyType) : base(name)
         {
@@ -102,8 +103,7 @@ namespace ReactUnity.Styling.Shorthands
         {
             if (!(value is string))
             {
-                var converted = Converter.Convert(value);
-                if (!Equals(converted, CssKeyword.Invalid))
+                if (Converter.TryConvert(value, out var converted))
                 {
                     collection[ModifiedProperties[0]] = collection[ModifiedProperties[1]] =
                         collection[ModifiedProperties[2]] = collection[ModifiedProperties[3]] = converted;
@@ -149,10 +149,12 @@ namespace ReactUnity.Styling.Shorthands
 
             if (splits.Count == 0) return null;
 
-            var top = Converter.Parse(splits[0]);
-            var right = splits.Count > 1 ? Converter.Parse(splits[1]) : top;
-            var bottom = splits.Count > 2 ? Converter.Parse(splits[2]) : top;
-            var left = splits.Count > 3 ? Converter.Parse(splits[3]) : right;
+            IComputedValue top, right, bottom, left;
+
+            Converter.TryParse(splits[0], out top);
+            if (!(splits.Count > 1 && Converter.TryParse(splits[1], out right))) right = top;
+            if (!(splits.Count > 2 && Converter.TryParse(splits[2], out bottom))) bottom = top;
+            if (!(splits.Count > 3 && Converter.TryParse(splits[3], out left))) left = right;
 
             collection[ModifiedProperties[0]] = top;
             collection[ModifiedProperties[1]] = right;

@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
-using ReactUnity.Converters;
-using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
@@ -39,28 +39,38 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
-        public class Converter : IStyleConverter
+        public class Converter : StyleConverterBase
         {
-            IStyleConverter ValueConverter = AllConverters.YogaValue2Converter;
+            StyleConverterBase ValueConverter = AllConverters.YogaValue2Converter;
 
-            public bool CanHandleKeyword(CssKeyword keyword) => ValueConverter.CanHandleKeyword(keyword);
+            protected override System.Type TargetType => typeof(BackgroundSize);
 
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is string s) return Parse(s);
-                if (value is BackgroundSize) return value;
-                return CssKeyword.Invalid;
+                return SingleValue(value, out result);
+
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (value == "cover") return Cover;
-                if (value == "contain") return Contain;
+                if (value == "cover") return Constant(Cover, out result);
+                if (value == "contain") return Constant(Contain, out result);
 
-                var val = ValueConverter.Parse(value);
-                if (val is YogaValue2 v) return new BackgroundSize(v);
+                return SingleValue(value, out result);
+            }
 
-                return CssKeyword.Invalid;
+            private bool SingleValue(object value, out IComputedValue result)
+            {
+                return ComputedMapper.Create(out result, value, ValueConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is YogaValue2 fl1)
+                        {
+                            rs = new ComputedConstant(new BackgroundSize(fl1));
+                            return true;
+                        }
+                        rs = null;
+                        return false;
+                    });
             }
         }
     }

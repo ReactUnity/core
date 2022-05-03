@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
     internal class TransitionShorthand : StyleShorthand
     {
-        private static GeneralConverter PlayStateConverter = AllConverters.Get<AnimationPlayState>();
+        private static StyleConverterBase PlayStateConverter = AllConverters.Get<AnimationPlayState>();
 
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
@@ -24,11 +26,11 @@ namespace ReactUnity.Styling.Shorthands
         {
             var commas = ParserHelpers.SplitComma(value?.ToString());
             var count = commas.Count;
-            var names = new TransitionProperty[count];
-            var states = new AnimationPlayState[count];
-            var durations = new float[count];
-            var easings = new TimingFunction[count];
-            var delays = new float[count];
+            var names = new IComputedValue[count];
+            var states = new IComputedValue[count];
+            var durations = new IComputedValue[count];
+            var easings = new IComputedValue[count];
+            var delays = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -47,9 +49,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var dur = AllConverters.DurationConverter.Parse(split);
-
-                    if (dur is float f)
+                    if (AllConverters.DurationConverter.TryParse(split, out var f))
                     {
                         if (!durationSet)
                         {
@@ -68,18 +68,14 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var ps = !playStateSet ? PlayStateConverter.Parse(split) : null;
-
-                    if (ps is AnimationPlayState psd)
+                    if (!playStateSet && PlayStateConverter.TryParse(split, out var psd))
                     {
                         states[ci] = psd;
                         playStateSet = true;
                         continue;
                     }
 
-                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Parse(split) : null;
-
-                    if (tm is TimingFunction tmf)
+                    if (!timingSet && AllConverters.TimingFunctionConverter.TryParse(split, out var tmf))
                     {
                         easings[ci] = tmf;
                         timingSet = true;
@@ -89,9 +85,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!nameSet)
                     {
-                        var nm = AllConverters.TransitionPropertyConverter.Parse(split);
-
-                        if (nm is TransitionProperty tp)
+                        if (AllConverters.TransitionPropertyConverter.TryParse(split, out var tp))
                         {
                             names[ci] = tp;
                             nameSet = true;
@@ -102,15 +96,15 @@ namespace ReactUnity.Styling.Shorthands
                     else return null;
                 }
 
-                if (!nameSet) names[ci] = TransitionProperty.All;
-                if (!timingSet) easings[ci] = TimingFunctions.Default;
+                if (!nameSet) names[ci] = new ComputedConstant(TransitionProperty.All);
+                if (!timingSet) easings[ci] = new ComputedConstant(TimingFunctions.Default);
             }
 
-            collection[StyleProperties.transitionProperty] = new CssValueList<TransitionProperty>(names);
-            collection[StyleProperties.transitionDuration] = new CssValueList<float>(durations);
-            collection[StyleProperties.transitionTimingFunction] = new CssValueList<TimingFunction>(easings);
-            collection[StyleProperties.transitionDelay] = new CssValueList<float>(delays);
-            collection[StyleProperties.transitionPlayState] = new CssValueList<AnimationPlayState>(states);
+            collection[StyleProperties.transitionProperty] = StyleProperties.transitionProperty.Converter.FromList(names);
+            collection[StyleProperties.transitionDuration] = StyleProperties.transitionDuration.Converter.FromList(durations);
+            collection[StyleProperties.transitionTimingFunction] = StyleProperties.transitionTimingFunction.Converter.FromList(easings);
+            collection[StyleProperties.transitionDelay] = StyleProperties.transitionDelay.Converter.FromList(delays);
+            collection[StyleProperties.transitionPlayState] = StyleProperties.transitionPlayState.Converter.FromList(states);
 
             return ModifiedProperties;
         }

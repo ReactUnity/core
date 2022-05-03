@@ -1,6 +1,7 @@
 using System;
-using ReactUnity.Converters;
+
 using ReactUnity.Helpers;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
@@ -90,34 +91,29 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "elasticity":
-                    var el = AllConverters.FloatConverter.Convert(value);
-                    var elas = el is float f ? f : 0;
-                    ScrollRect.movementType = elas > 0 ? MovementType.Elastic : MovementType.Clamped;
-                    ScrollRect.elasticity = elas;
+                    var el = AllConverters.FloatConverter.TryGetConstantValue(value, 0f);
+                    ScrollRect.movementType = el > 0 ? MovementType.Elastic : MovementType.Clamped;
+                    ScrollRect.elasticity = el;
                     break;
                 case "smoothness":
-                    var sm = AllConverters.FloatConverter.Convert(value);
-                    if (sm is float f2) ScrollRect.Smoothness = f2;
-                    else ScrollRect.Smoothness = 0.12f;
+                    var sm = AllConverters.FloatConverter.TryGetConstantValue(value, 0.12f);
+                    ScrollRect.Smoothness = sm;
                     break;
                 case "direction":
-                    var dirs = AllConverters.Get<ScrollDirection>().Convert(value);
-                    var dir = dirs is ScrollDirection s ? s : ScrollDirection.Both;
+                    var dir = AllConverters.Get<ScrollDirection>().TryGetConstantValue(value, ScrollDirection.Both);
                     ScrollRect.horizontal = dir.HasFlag(ScrollDirection.Horizontal);
                     ScrollRect.vertical = dir.HasFlag(ScrollDirection.Vertical);
                     ContentResizer.Direction = dir;
                     ScrollRect.WheelDirectionTransposed = dir == ScrollDirection.Horizontal;
                     break;
                 case "alwaysShow":
-                    var dirs2 = AllConverters.Get<ScrollDirection>().Convert(value);
-                    var dir2 = dirs2 is ScrollDirection s2 ? s2 : ScrollDirection.None;
+                    var dir2 = AllConverters.Get<ScrollDirection>().TryGetConstantValue(value, ScrollDirection.None);
                     ScrollRect.horizontalScrollbarVisibility = dir2.HasFlag(ScrollDirection.Horizontal) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
                     ScrollRect.verticalScrollbarVisibility = dir2.HasFlag(ScrollDirection.Vertical) ? ScrollbarVisibility.Permanent : ScrollbarVisibility.AutoHide;
                     break;
                 case "sensitivity":
-                    var fl = AllConverters.FloatConverter.Convert(value);
-                    if (fl is float f3) ScrollRect.scrollSensitivity = f3;
-                    else ScrollRect.scrollSensitivity = 50;
+                    var fl = AllConverters.FloatConverter.TryGetConstantValue(value, 50f);
+                    ScrollRect.scrollSensitivity = fl;
                     break;
                 default:
                     base.SetProperty(propertyName, value);

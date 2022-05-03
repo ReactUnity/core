@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
@@ -19,9 +20,9 @@ namespace ReactUnity.Styling.Shorthands
         {
             var commas = ParserHelpers.SplitComma(value?.ToString());
             var count = commas.Count;
-            var clips = new AudioReference[count];
-            var delays = new float[count];
-            var iterations = new int[count];
+            var clips = new IComputedValue[count];
+            var delays = new IComputedValue[count];
+            var iterations = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -38,9 +39,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var it = AllConverters.IterationCountConverter.Parse(split);
-
-                    if (it is int fcount)
+                    if (AllConverters.IterationCountConverter.TryParse(split, out var fcount))
                     {
                         if (!countSet)
                         {
@@ -51,9 +50,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var dur = AllConverters.DurationConverter.Parse(split);
-
-                    if (dur is float f)
+                    if (AllConverters.DurationConverter.TryParse(split, out var f))
                     {
                         if (!delaySet)
                         {
@@ -67,9 +64,9 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    if (!clipSet)
+                    if (!clipSet && AllConverters.AudioReferenceConverter.TryParse(split, out var cl))
                     {
-                        clips[ci] = AllConverters.AudioReferenceConverter.Parse(split) as AudioReference;
+                        clips[ci] = cl;
                         clipSet = true;
                         continue;
                     }
@@ -77,12 +74,12 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (!clipSet) return null;
-                if (!countSet) iterations[ci] = 1;
+                if (!countSet) iterations[ci] = new ComputedConstant(1);
             }
 
-            collection[StyleProperties.audioClip] = new CssValueList<AudioReference>(clips);
-            collection[StyleProperties.audioDelay] = new CssValueList<float>(delays);
-            collection[StyleProperties.audioIterationCount] = new CssValueList<int>(iterations);
+            collection[StyleProperties.audioClip] = StyleProperties.audioClip.Converter.FromList(clips);
+            collection[StyleProperties.audioDelay] = StyleProperties.audioDelay.Converter.FromList(delays);
+            collection[StyleProperties.audioIterationCount] = StyleProperties.audioIterationCount.Converter.FromList(iterations);
 
             return ModifiedProperties;
         }

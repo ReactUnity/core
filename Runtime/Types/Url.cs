@@ -1,6 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
@@ -16,7 +16,7 @@ namespace ReactUnity.Types
 
         public Url(string fullUrl, UrlProtocol defaultProtocol = UrlProtocol.Contextual)
         {
-            fullUrl = AllConverters.StringConverter.Parse(fullUrl) as string;
+            fullUrl = StringConverter.Normalize(fullUrl);
 
             FullUrl = fullUrl;
 

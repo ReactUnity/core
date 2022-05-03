@@ -1,4 +1,6 @@
-using ReactUnity.Converters;
+using System.Collections.Generic;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -15,8 +17,8 @@ namespace ReactUnity.Styling.Functions
             var first = args[0];
             var startIndex = 0;
 
-            var from = 0f;
-            var at = YogaValue2.Center;
+            IComputedValue from = new ComputedConstant(0f);
+            IComputedValue at = new ComputedConstant(YogaValue2.Center);
             var isRepeating = name.StartsWith("repeating-");
 
 
@@ -36,11 +38,8 @@ namespace ReactUnity.Styling.Functions
                         i = j;
                     }
 
-                    var cAt = AllConverters.YogaValue2Converter.Parse(sp.Trim());
-
-                    if (cAt is YogaValue2 cvAt)
+                    if (AllConverters.YogaValue2Converter.TryParse(sp.Trim(), out at))
                     {
-                        at = cvAt;
                         startIndex = 1;
                         continue;
                     }
@@ -57,11 +56,8 @@ namespace ReactUnity.Styling.Functions
                         i = j;
                     }
 
-                    var cAt = AllConverters.AngleConverter.Parse(sp.Trim());
-
-                    if (cAt is float cvAt)
+                    if (AllConverters.AngleConverter.TryParse(sp.Trim(), out from))
                     {
-                        from = cvAt;
                         startIndex = 1;
                         continue;
                     }
@@ -73,8 +69,24 @@ namespace ReactUnity.Styling.Functions
 
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
-            var def = new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
-            return def.Valid ? def : null;
+            return new ComputedCompound(
+                new List<IComputedValue> { colors, at, from },
+                new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.AngleConverter },
+                (List<object> resolved, out IComputedValue rs) => {
+                    if (
+                        resolved[0] is List<BaseGradient.ColorKey> colors &&
+                        resolved[1] is YogaValue2 at &&
+                        resolved[2] is float from
+                    )
+                    {
+                        var res = new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
+                        rs = new ComputedConstant(res);
+                        return res.Valid;
+                    }
+
+                    rs = null;
+                    return false;
+                });
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 2;

@@ -376,7 +376,7 @@ namespace ReactUnity.Styling.Rules
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:
                     return component.Data.TryGetValue(Name, out var val) &&
-                        (Parameter == null ? Converters.BoolConverter.IsTruthy(val) : Equals(val, Parameter));
+                        (Parameter == null ? IsTruthy(val) : Equals(val, Parameter));
                 case RuleSelectorPartType.DirectDescendant:
                 case RuleSelectorPartType.AdjacentSibling:
                 case RuleSelectorPartType.Sibling:
@@ -444,6 +444,26 @@ namespace ReactUnity.Styling.Rules
             }
 
             return false;
+        }
+
+        private static bool IsTruthy(object obj)
+        {
+            if (obj == null || obj is DBNull)
+                return false;
+
+            var str = obj as string;
+            if (str != null)
+                return !string.IsNullOrWhiteSpace(str) &&
+                    !str.Trim().Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase);
+
+            try
+            {
+                if (System.Convert.ToDecimal(obj) == 0)
+                    return false;
+            }
+            catch { }
+
+            return true;
         }
     }
 

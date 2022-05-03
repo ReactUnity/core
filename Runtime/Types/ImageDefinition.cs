@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -29,9 +30,9 @@ namespace ReactUnity.Types
 
         internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size) { }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<ImageDefinition>
         {
-            private static HashSet<string> AllowedFunctions = new HashSet<string> {
+            private static HashSet<string> DefaultAllowedFunctions = new HashSet<string> {
                 "linear-gradient",
                 "repeating-linear-gradient",
                 "radial-gradient",
@@ -39,33 +40,34 @@ namespace ReactUnity.Types
                 "conic-gradient",
                 "repeating-conic-gradient",
             };
-            private static IStyleConverter ImageConverter = AllConverters.ImageReferenceConverter;
+            private static StyleConverterBase ImageConverter = AllConverters.ImageReferenceConverter;
 
-            public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
+            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
 
-            public object Convert(object value)
+            protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
+
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is string s) return Parse(value?.ToString());
-
-                if (value == null || Equals(value, CssKeyword.None)) return None;
-
-                var ir = ImageConverter.Convert(value);
-                if (ir is ImageReference irr) return new UrlImageDefinition(irr);
-
-                return Parse(value?.ToString());
+                return ComputedMapper.Create(out result, value, ImageConverter,
+                    (object resolved, out IComputedValue rs) => {
+                        if (resolved is ImageReference irr) return Constant(new UrlImageDefinition(irr), out rs);
+                        return Fail(out rs);
+                    });
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
+                if (value == "none") return Constant(None, out result);
+                if (CssFunctions.TryCall(value, out var gd, AllowedFunctions))
                 {
-                    if (result is BaseGradient u) return new GradientImageDefinition(u);
+                    if (gd is BaseGradient u) return Constant(new GradientImageDefinition(u), out result);
                 }
 
-                var ir = ImageConverter.Parse(value);
-                if (ir is ImageReference irr) return new UrlImageDefinition(irr);
-
-                return CssKeyword.Invalid;
+                return ComputedMapper.Create(out result, value, ImageConverter,
+                    (object resolved, out IComputedValue rs) => {
+                        if (resolved is ImageReference irr) return Constant(new UrlImageDefinition(irr), out rs);
+                        return Fail(out rs);
+                    });
             }
         }
     }

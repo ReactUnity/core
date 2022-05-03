@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -11,19 +12,14 @@ namespace ReactUnity.Styling.Shorthands
 
         protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            var str = value.ToString();
-            var splits = ParserHelpers.SplitWhitespace(str);
+            var str = value?.ToString();
+            var k = RuleHelpers.GetCssKeyword(str);
 
-            if (splits.Count != 1) return null;
-
-            var val = splits[0];
-            var converted = AllConverters.GeneralConverter.Parse(val);
-
-            if (converted is CssKeyword k && k != CssKeyword.Invalid)
+            if (k != CssKeyword.NoKeyword)
             {
                 foreach (var item in ModifiedProperties)
                 {
-                    collection[item] = k;
+                    collection[item] = new ComputedKeyword(k);
                 }
                 return ModifiedProperties;
             }

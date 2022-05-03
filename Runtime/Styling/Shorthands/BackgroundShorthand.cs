@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace ReactUnity.Styling.Shorthands
 {
     internal class BackgroundShorthand : StyleShorthand
     {
-        private static GeneralConverter RepeatConverter = AllConverters.Get<BackgroundRepeat>();
+        private static StyleConverterBase RepeatConverter = AllConverters.Get<BackgroundRepeat>();
 
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
@@ -29,23 +30,23 @@ namespace ReactUnity.Styling.Shorthands
             var count = commas.Count;
 
             var colorSet = false;
-            var color = Color.clear;
+            IComputedValue color = new ComputedConstant(Color.clear);
 
             var last = commas[count - 1];
 
-            if (AllConverters.ColorConverter.Parse(last) is Color cv)
+            if (AllConverters.ColorConverter.TryParse(last, out var cv))
             {
                 color = cv;
                 colorSet = true;
                 count -= 1;
             };
 
-            var images = new ImageDefinition[count];
-            var positionsX = new YogaValue[count];
-            var positionsY = new YogaValue[count];
-            var sizes = new BackgroundSize[count];
-            var repeatXs = new BackgroundRepeat[count];
-            var repeatYs = new BackgroundRepeat[count];
+            var images = new IComputedValue[count];
+            var positionsX = new IComputedValue[count];
+            var positionsY = new IComputedValue[count];
+            var sizes = new IComputedValue[count];
+            var repeatXs = new IComputedValue[count];
+            var repeatYs = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -57,16 +58,16 @@ namespace ReactUnity.Styling.Shorthands
                 var imageSet = false;
                 var posXSet = false;
                 var posYSet = false;
-                YogaValue posX = YogaValue.Undefined();
-                YogaValue posY = YogaValue.Undefined();
+                IComputedValue posX = new ComputedConstant(YogaValue.Undefined());
+                IComputedValue posY = new ComputedConstant(YogaValue.Undefined());
 
                 var sizeXSet = false;
                 var sizeYSet = false;
-                YogaValue sizeX = YogaValue.Auto();
-                YogaValue sizeY = YogaValue.Auto();
+                IComputedValue sizeX = new ComputedConstant(YogaValue.Auto());
+                IComputedValue sizeY = new ComputedConstant(YogaValue.Auto());
 
                 var sizeSetByKeyword = false;
-                BackgroundSize size = BackgroundSize.Auto;
+                IComputedValue size = new ComputedConstant(BackgroundSize.Auto);
 
                 var repeatXSet = false;
                 var repeatYSet = false;
@@ -79,9 +80,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!imageSet)
                     {
-                        var val = AllConverters.ImageDefinitionConverter.Parse(split);
-
-                        if (val is ImageDefinition v)
+                        if (AllConverters.ImageDefinitionConverter.TryParse(split, out var v))
                         {
                             images[ci] = v;
                             imageSet = true;
@@ -91,26 +90,22 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (!posXSet)
                     {
-                        var val = YogaValueConverter.Horizontal.Parse(split);
-
-                        if (val is YogaValue v)
+                        if (YogaValueConverter.Horizontal.TryParse(split, out var v))
                         {
                             posX = v;
                             posXSet = true;
-                            if (!posYSet) posY = YogaValue.Percent(50);
+                            if (!posYSet) posY = new ComputedConstant(YogaValue.Percent(50));
                             continue;
                         }
                     }
 
                     if (!posYSet)
                     {
-                        var val = YogaValueConverter.Vertical.Parse(split);
-
-                        if (val is YogaValue v)
+                        if (YogaValueConverter.Vertical.TryParse(split, out var v))
                         {
                             posY = v;
                             posYSet = true;
-                            if (!posXSet) posX = YogaValue.Percent(50);
+                            if (!posXSet) posX = new ComputedConstant(YogaValue.Percent(50));
                             continue;
                         }
                     }
@@ -120,22 +115,20 @@ namespace ReactUnity.Styling.Shorthands
                         if (split == "repeat-x")
                         {
                             repeatXSet = repeatYSet = true;
-                            repeatXs[ci] = BackgroundRepeat.Repeat;
-                            repeatYs[ci] = BackgroundRepeat.NoRepeat;
+                            repeatXs[ci] = new ComputedConstant(BackgroundRepeat.Repeat);
+                            repeatYs[ci] = new ComputedConstant(BackgroundRepeat.NoRepeat);
                             continue;
                         }
                         else if (split == "repeat-y")
                         {
                             repeatXSet = repeatYSet = true;
-                            repeatXs[ci] = BackgroundRepeat.NoRepeat;
-                            repeatYs[ci] = BackgroundRepeat.Repeat;
+                            repeatXs[ci] = new ComputedConstant(BackgroundRepeat.NoRepeat);
+                            repeatYs[ci] = new ComputedConstant(BackgroundRepeat.Repeat);
                             continue;
                         }
                     }
 
-                    var rptVal = RepeatConverter.Parse(split);
-
-                    if (rptVal is BackgroundRepeat rpt)
+                    if (RepeatConverter.TryParse(split, out var rpt))
                     {
                         if (!repeatXSet)
                         {
@@ -174,22 +167,20 @@ namespace ReactUnity.Styling.Shorthands
                         if (split == "cover")
                         {
                             sizeSetByKeyword = sizeXSet = sizeYSet = true;
-                            size = BackgroundSize.Cover;
+                            size = new ComputedConstant(BackgroundSize.Cover);
                             continue;
                         }
 
                         if (split == "contain")
                         {
                             sizeSetByKeyword = sizeXSet = sizeYSet = true;
-                            size = BackgroundSize.Contain;
+                            size = new ComputedConstant(BackgroundSize.Contain);
                             continue;
                         }
 
                         if (!sizeXSet)
                         {
-                            var val = AllConverters.YogaValueConverter.Parse(split);
-
-                            if (val is YogaValue v)
+                            if (AllConverters.YogaValueConverter.TryParse(split, out var v))
                             {
                                 sizeX = v;
                                 sizeXSet = true;
@@ -200,9 +191,7 @@ namespace ReactUnity.Styling.Shorthands
 
                         if (!sizeYSet)
                         {
-                            var val = AllConverters.YogaValueConverter.Parse(split);
-
-                            if (val is YogaValue v)
+                            if (AllConverters.YogaValueConverter.TryParse(split, out var v))
                             {
                                 sizeY = v;
                                 sizeYSet = true;
@@ -216,9 +205,7 @@ namespace ReactUnity.Styling.Shorthands
 
                     if (isLast && !colorSet)
                     {
-                        var val = AllConverters.ColorConverter.Parse(split);
-
-                        if (val is Color c)
+                        if (AllConverters.ColorConverter.TryParse(split, out var c))
                         {
                             color = c;
                             colorSet = true;
@@ -231,21 +218,31 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (posXSet || posYSet)
                 {
-                    positionsX[ci] = posX;
-                    positionsY[ci] = posY;
+                    positionsX[ci] = new ComputedConstant(posX);
+                    positionsY[ci] = new ComputedConstant(posY);
                 }
 
-                if (sizeSetByKeyword) sizes[ci] = size;
-                else if (sizeXSet) sizes[ci] = new BackgroundSize(new YogaValue2(sizeX, sizeY));
+                if (sizeSetByKeyword) sizes[ci] = new ComputedConstant(size);
+                else if (sizeXSet) sizes[ci] = new ComputedList(new List<IComputedValue> { sizeX, sizeY }, AllConverters.YogaValueConverter,
+                    (List<object> resolved, out IComputedValue rs) => {
+                        if (resolved[0] is YogaValue xv && resolved[1] is YogaValue yv)
+                        {
+                            rs = new ComputedConstant(new BackgroundSize(new YogaValue2(xv, yv)));
+                            return true;
+                        }
+
+                        rs = null;
+                        return false;
+                    });
             }
 
             collection[StyleProperties.backgroundColor] = color;
-            collection[StyleProperties.backgroundImage] = new CssValueList<ImageDefinition>(images);
-            collection[StyleProperties.backgroundPositionX] = new CssValueList<YogaValue>(positionsX);
-            collection[StyleProperties.backgroundPositionY] = new CssValueList<YogaValue>(positionsY);
-            collection[StyleProperties.backgroundSize] = new CssValueList<BackgroundSize>(sizes);
-            collection[StyleProperties.backgroundRepeatX] = new CssValueList<BackgroundRepeat>(repeatXs);
-            collection[StyleProperties.backgroundRepeatY] = new CssValueList<BackgroundRepeat>(repeatYs);
+            collection[StyleProperties.backgroundImage] = StyleProperties.backgroundImage.Converter.FromList(images);
+            collection[StyleProperties.backgroundPositionX] = StyleProperties.backgroundPositionX.Converter.FromList(positionsX);
+            collection[StyleProperties.backgroundPositionY] = StyleProperties.backgroundPositionY.Converter.FromList(positionsY);
+            collection[StyleProperties.backgroundSize] = StyleProperties.backgroundSize.Converter.FromList(sizes);
+            collection[StyleProperties.backgroundRepeatX] = StyleProperties.backgroundRepeatX.Converter.FromList(repeatXs);
+            collection[StyleProperties.backgroundRepeatY] = StyleProperties.backgroundRepeatY.Converter.FromList(repeatYs);
             return ModifiedProperties;
         }
     }

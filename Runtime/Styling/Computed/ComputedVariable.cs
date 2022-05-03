@@ -1,3 +1,5 @@
+using ReactUnity.Styling.Converters;
+
 namespace ReactUnity.Styling.Computed
 {
     public struct ComputedVariable : IComputedValue
@@ -11,15 +13,15 @@ namespace ReactUnity.Styling.Computed
             FallbackValue = fallbackValue;
         }
 
-        public object GetValue(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
             var val = style.GetRawStyleValue(Property, false);
 
             if (val == null) val = FallbackValue ?? prop.defaultValue;
 
-            if (val is IComputedValue d) val = d.GetValue(prop, style);
+            if (val is IComputedValue d) val = d.ResolveValue(prop, style, converter);
 
-            return prop.Convert(val);
+            return converter.Convert(val);
         }
     }
 }

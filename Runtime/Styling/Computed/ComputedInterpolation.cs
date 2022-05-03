@@ -1,4 +1,5 @@
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Computed
 {
@@ -15,10 +16,10 @@ namespace ReactUnity.Styling.Computed
             Ratio = ratio;
         }
 
-        public object GetValue(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
-            var from = From.GetValue(prop, style);
-            var to = To.GetValue(prop, style);
+            var from = From.ResolveValue(prop, style, converter);
+            var to = To.ResolveValue(prop, style, converter);
 
             return Interpolater.Interpolate(from, to, Ratio);
         }

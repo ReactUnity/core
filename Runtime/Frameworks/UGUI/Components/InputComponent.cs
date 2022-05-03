@@ -1,7 +1,8 @@
 using System;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+
 using ReactUnity.Helpers;
+using ReactUnity.Styling.Converters;
 using ReactUnity.UGUI.Behaviours;
 using TMPro;
 using UnityEngine;
@@ -198,25 +199,21 @@ namespace ReactUnity.UGUI
                     InputField.richText = Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    var val = AllConverters.Get<TMP_InputField.ContentType>().Convert(value);
-                    if (val is TMP_InputField.ContentType ct) InputField.contentType = ct;
-                    else InputField.contentType = TMP_InputField.ContentType.Standard;
+                    var val = AllConverters.Get<TMP_InputField.ContentType>().TryGetConstantValue(value, TMP_InputField.ContentType.Standard);
+                    InputField.contentType = val;
                     Value = Value; // Workaround to fix password switching bug
                     return;
                 case "keyboardType":
-                    var val2 = AllConverters.Get<TouchScreenKeyboardType>().Convert(value);
-                    if (val2 is TouchScreenKeyboardType ct2) InputField.keyboardType = ct2;
-                    else InputField.keyboardType = TouchScreenKeyboardType.Default;
+                    var val2 = AllConverters.Get<TouchScreenKeyboardType>().TryGetConstantValue(value, TouchScreenKeyboardType.Default);
+                    InputField.keyboardType = val2;
                     return;
                 case "lineType":
-                    var val3 = AllConverters.Get<TMP_InputField.LineType>().Convert(value);
-                    if (val3 is TMP_InputField.LineType lt) InputField.lineType = lt;
-                    else InputField.lineType = TMP_InputField.LineType.SingleLine;
+                    var val3 = AllConverters.Get<TMP_InputField.LineType>().TryGetConstantValue(value, TMP_InputField.LineType.SingleLine);
+                    InputField.lineType = val3;
                     return;
                 case "validation":
-                    var val4 = AllConverters.Get<TMP_InputField.CharacterValidation>().Convert(value);
-                    if (val4 is TMP_InputField.CharacterValidation cv) InputField.characterValidation = cv;
-                    else InputField.characterValidation = TMP_InputField.CharacterValidation.None;
+                    var val4 = AllConverters.Get<TMP_InputField.CharacterValidation>().TryGetConstantValue(value, TMP_InputField.CharacterValidation.None);
+                    InputField.characterValidation = val4;
                     return;
                 default:
                     base.SetProperty(propertyName, value);

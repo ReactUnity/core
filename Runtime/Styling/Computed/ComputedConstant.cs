@@ -1,3 +1,5 @@
+using ReactUnity.Styling.Converters;
+
 namespace ReactUnity.Styling.Computed
 {
     public struct ComputedConstant : IComputedValue
@@ -7,9 +9,15 @@ namespace ReactUnity.Styling.Computed
         {
             Value = value;
         }
-        public object GetValue(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
             return Value;
+        }
+
+        public override string ToString()
+        {
+            if (Value == null) return "null";
+            return Value.ToString();
         }
     }
 }

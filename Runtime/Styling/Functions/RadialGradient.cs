@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Functions
 {
     internal class RadialGradientFunction : ICssFunction
     {
-        static IStyleConverter ShapeConverter = AllConverters.Get<RadialGradientShape>();
-        static IStyleConverter SizeHintConverter = AllConverters.Get<RadialGradientSizeHint>();
-        static IStyleConverter YogaValueConverter = AllConverters.YogaValueConverter;
+        static StyleConverterBase ShapeConverter = AllConverters.Get<RadialGradientShape>();
+        static StyleConverterBase SizeHintConverter = AllConverters.Get<RadialGradientSizeHint>();
+        static StyleConverterBase YogaValueConverter = AllConverters.YogaValueConverter;
 
         public string Name { get; } = "radial-gradient";
 
@@ -19,11 +21,12 @@ namespace ReactUnity.Styling.Functions
             var first = args[0];
             var startIndex = 0;
 
-            var shape = RadialGradientShape.Ellipse;
-            var sizeHint = RadialGradientSizeHint.FarthestCorner;
-            var at = YogaValue2.Center;
-            var radius = YogaValue.Undefined();
             var isRepeating = name.StartsWith("repeating-");
+
+            IComputedValue shape = new ComputedConstant(RadialGradientShape.Ellipse);
+            IComputedValue sizeHint = new ComputedConstant(RadialGradientSizeHint.FarthestCorner);
+            IComputedValue at = new ComputedConstant(YogaValue2.Center);
+            IComputedValue radius = new ComputedConstant(YogaValue.Undefined());
 
 
             var firstSplit = ParserHelpers.SplitWhitespace(first);
@@ -39,42 +42,27 @@ namespace ReactUnity.Styling.Functions
 
                     sp = string.Join(" ", firstSplit.ToArray(), i, firstSplit.Count - i);
 
-                    var cAt = AllConverters.YogaValue2Converter.Parse(sp);
-
-                    if (cAt is YogaValue2 cvAt)
-                    {
-                        at = cvAt;
-                    }
-                    else return null;
+                    if (!AllConverters.YogaValue2Converter.TryParse(sp, out at)) return null;
 
                     startIndex = 1;
                     break;
                 }
 
-                var shp = ShapeConverter.Parse(sp);
-
-                if (shp is RadialGradientShape shpv)
+                if (ShapeConverter.TryParse(sp, out shape))
                 {
-                    shape = shpv;
                     startIndex = 1;
                     continue;
                 }
 
-                var sz = SizeHintConverter.Parse(sp);
-
-                if (sz is RadialGradientSizeHint szv)
+                if (SizeHintConverter.TryParse(sp, out sizeHint))
                 {
-                    sizeHint = szv;
                     startIndex = 1;
                     continue;
                 }
 
-                var rd = YogaValueConverter.Parse(sp);
-
-                if (rd is YogaValue rdv)
+                if (YogaValueConverter.TryParse(sp, out radius))
                 {
-                    radius = rdv;
-                    sizeHint = RadialGradientSizeHint.Custom;
+                    sizeHint = new ComputedConstant(RadialGradientSizeHint.Custom);
                     startIndex = 1;
                     continue;
                 }
@@ -86,8 +74,26 @@ namespace ReactUnity.Styling.Functions
 
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
-            var def = new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
-            return def.Valid ? def : null;
+            return new ComputedCompound(
+                new List<IComputedValue> { colors, at, radius, sizeHint, shape },
+                new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.YogaValueConverter, SizeHintConverter, ShapeConverter },
+                (List<object> resolved, out IComputedValue rs) => {
+                    if (
+                        resolved[0] is List<BaseGradient.ColorKey> colors &&
+                        resolved[1] is YogaValue2 at &&
+                        resolved[2] is YogaValue radius &&
+                        resolved[3] is RadialGradientSizeHint sizeHint &&
+                        resolved[4] is RadialGradientShape shape
+                    )
+                    {
+                        var res = new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
+                        rs = new ComputedConstant(res);
+                        return res.Valid;
+                    }
+
+                    rs = null;
+                    return false;
+                });
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count >= 2;

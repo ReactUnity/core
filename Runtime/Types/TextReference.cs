@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.IO;
-using ReactUnity.Converters;
+
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,7 +13,7 @@ namespace ReactUnity.Types
 {
     public class TextReference : AssetReference<TextAsset>
     {
-        static public new ImageReference None = new ImageReference(AssetReferenceType.None, null);
+        static public new TextReference None = new TextReference(AssetReferenceType.None, null);
 
         private DisposableHandle webDeferred;
 
@@ -73,7 +75,7 @@ namespace ReactUnity.Types
             if (webDeferred != null) webDeferred.Dispose();
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<TextReference>
         {
             public bool AllowWithoutUrl { get; }
 
@@ -82,23 +84,22 @@ namespace ReactUnity.Types
                 AllowWithoutUrl = allowWithoutUrl;
             }
 
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
-
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value == null) return None;
-                if (value is TextReference ir) return ir;
-                if (value is TextAsset t) return new TextReference(AssetReferenceType.Object, t);
-                if (value is UnityEngine.Object o) return new TextReference(AssetReferenceType.Object, o);
-                return Parse(value?.ToString());
+                if (value is TextAsset t) return Constant(new TextReference(AssetReferenceType.Object, t), out result);
+                if (value is UnityEngine.Object o) return Constant(new TextReference(AssetReferenceType.Object, o), out result);
+                return base.ConvertInternal(value, out result);
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (AllConverters.UrlConverter.Convert(value) is Url u) return new TextReference(u);
+                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (object u, out IComputedValue rs) => Constant(new TextReference(u as Url), out rs)))
+                    return true;
 
-                if (AllowWithoutUrl) return new TextReference(new Url(value));
-                return CssKeyword.Invalid;
+                if (AllowWithoutUrl) return Constant(new TextReference(new Url(value)), out result);
+                result = null;
+                return false;
             }
         }
     }

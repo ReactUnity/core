@@ -2,6 +2,7 @@ using System.Linq;
 using ExCSS;
 using NUnit.Framework;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
 using UnityEngine;
 
 namespace ReactUnity.Editor.Tests
@@ -32,11 +33,11 @@ namespace ReactUnity.Editor.Tests
             Assert.True(kfs.Valid);
             Assert.AreEqual(kfs.From, kfs.Steps[0]);
             Assert.AreEqual(kfs.To, kfs.Steps[1]);
-            Assert.AreEqual(0, kfs.From.Rules[StyleProperties.opacity]);
-            Assert.AreEqual(new Vector3(0.8f, 0.8f, 1), kfs.From.Rules[StyleProperties.scale]);
+            Assert.AreEqual(new ComputedConstant(0f), kfs.From.Rules[StyleProperties.opacity]);
+            Assert.AreEqual(new ComputedConstant(new Vector3(0.8f, 0.8f, 1)), kfs.From.Rules[StyleProperties.scale]);
 
-            Assert.AreEqual(1, kfs.To.Rules[StyleProperties.opacity]);
-            Assert.AreEqual(new Vector3(1, 1, 1), kfs.To.Rules[StyleProperties.scale]);
+            Assert.AreEqual(new ComputedConstant(1f), kfs.To.Rules[StyleProperties.opacity]);
+            Assert.AreEqual(new ComputedConstant(new Vector3(1, 1, 1)), kfs.To.Rules[StyleProperties.scale]);
         }
     }
 }

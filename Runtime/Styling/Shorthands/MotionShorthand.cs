@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -17,9 +19,9 @@ namespace ReactUnity.Styling.Shorthands
 
         protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
-            var duration = 0f;
-            var easing = TimingFunctions.Default;
-            var delay = 0f;
+            IComputedValue duration = new ComputedConstant(0f);
+            IComputedValue easing = new ComputedConstant(TimingFunctions.Default);
+            IComputedValue delay = new ComputedConstant(0f);
 
             var splits = ParserHelpers.SplitWhitespace(value?.ToString());
 
@@ -33,9 +35,7 @@ namespace ReactUnity.Styling.Shorthands
             {
                 var split = splits[i];
 
-                var dur = AllConverters.DurationConverter.Parse(split);
-
-                if (dur is float f)
+                if (AllConverters.DurationConverter.TryParse(split, out var f))
                 {
                     if (!durationSet)
                     {
@@ -54,9 +54,7 @@ namespace ReactUnity.Styling.Shorthands
                     continue;
                 }
 
-                var tm = !timingSet ? AllConverters.TimingFunctionConverter.Parse(split) : null;
-
-                if (tm is TimingFunction tmf)
+                if (!timingSet && AllConverters.TimingFunctionConverter.TryParse(split, out var tmf))
                 {
                     easing = tmf;
                     timingSet = true;

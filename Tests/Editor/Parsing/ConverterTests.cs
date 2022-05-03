@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
 using NUnit.Framework;
-using ReactUnity.Converters;
+
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -241,13 +242,13 @@ namespace ReactUnity.Editor.Tests
         [TestCase("400ms", 0.4f)]
         [TestCase("1s", 1f)]
         [TestCase("2s", 2f)]
-        [TestCase("50ms1", CssKeyword.Invalid)]
-        [TestCase("0a", CssKeyword.Invalid)]
-        [TestCase("5as", CssKeyword.Invalid)]
-        [TestCase("100", CssKeyword.Invalid)]
+        [TestCase("50ms1", float.NaN)]
+        [TestCase("0a", float.NaN)]
+        [TestCase("5as", float.NaN)]
+        [TestCase("100", float.NaN)]
         public void DurationConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, AllConverters.DurationConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.DurationConverter.TryGetConstantValue(input, float.NaN));
         }
 
         [TestCase("0", 0f)]
@@ -259,12 +260,12 @@ namespace ReactUnity.Editor.Tests
         [TestCase("1turn", 360f)]
         [TestCase("4turn", 360f * 4)]
         [TestCase("0.1turn", 36f)]
-        [TestCase("50ms1", CssKeyword.Invalid)]
-        [TestCase("0a", CssKeyword.Invalid)]
-        [TestCase("5as", CssKeyword.Invalid)]
+        [TestCase("50ms1", float.NaN)]
+        [TestCase("0a", float.NaN)]
+        [TestCase("5as", float.NaN)]
         public void AngleConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, AllConverters.AngleConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.AngleConverter.TryGetConstantValue(input, float.NaN));
         }
 
         [TestCase("0", 0f)]
@@ -272,24 +273,24 @@ namespace ReactUnity.Editor.Tests
         [TestCase("72pt", 96)]
         [TestCase("172px", 172)]
         [TestCase("172%", 172f * (1f / 100))]
-        [TestCase("50ms1", CssKeyword.Invalid)]
-        [TestCase("0a", CssKeyword.Invalid)]
-        [TestCase("5as", CssKeyword.Invalid)]
+        [TestCase("50ms1", float.NaN)]
+        [TestCase("0a", float.NaN)]
+        [TestCase("5as", float.NaN)]
         public void LengthConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, AllConverters.LengthConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.LengthConverter.TryGetConstantValue(input, float.NaN));
         }
 
         [TestCase("0", 0f)]
         [TestCase("2", 2f)]
         [TestCase("172%", 172f * (1f / 100))]
-        [TestCase("50px", CssKeyword.Invalid)]
-        [TestCase("50ms1", CssKeyword.Invalid)]
-        [TestCase("0a", CssKeyword.Invalid)]
-        [TestCase("5as", CssKeyword.Invalid)]
+        [TestCase("50px", float.NaN)]
+        [TestCase("50ms1", float.NaN)]
+        [TestCase("0a", float.NaN)]
+        [TestCase("5as", float.NaN)]
         public void PercentageConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, AllConverters.PercentageConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.PercentageConverter.TryGetConstantValue(input, float.NaN));
         }
 
 
@@ -313,10 +314,10 @@ namespace ReactUnity.Editor.Tests
         [TestCase("rgba(112 189 153 / var(--tw-bg-opacity))", "70bd99ff")] // TODO: handle variables
         public void ColorConverter(object input, object expected)
         {
-            var converted = AllConverters.ColorConverter.Convert(input);
+            var converted = AllConverters.ColorConverter.TryGetConstantValue<Color>(input, out var c);
 
-            if (converted is Color c) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
-            else Assert.AreEqual(expected, converted);
+            if (converted) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+            else Assert.AreEqual(expected, null);
         }
 
 

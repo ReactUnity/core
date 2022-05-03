@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Animations
@@ -180,27 +181,26 @@ namespace ReactUnity.Styling.Animations
         }
 
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<TimingFunction>
         {
-            static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
-            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(true);
+            static private HashSet<string> DefaultAllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
+            static private StyleConverterBase TypeConverter = new EnumConverter<TimingFunctionType>(true);
 
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
+            protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
 
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is TimingFunction f) return f;
-                var type = TypeConverter.Convert(value);
-                if (type is TimingFunctionType tt) return Get(tt);
-                return CssKeyword.Invalid;
+                if (value is TimingFunctionType tt) return Constant(Get(tt), out result);
+                return base.ConvertInternal(value, out result);
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
-                var type = TypeConverter.Parse(value);
-                if (type is TimingFunctionType tt) return Get(tt);
-                return CssKeyword.Invalid;
+                return ComputedMapper.Create(out result, value, TypeConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is TimingFunctionType tt) return Constant(Get(tt), out rs);
+                        return Fail(out rs);
+                    });
             }
         }
     }

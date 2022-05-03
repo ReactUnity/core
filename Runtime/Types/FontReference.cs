@@ -1,6 +1,8 @@
 using System;
-using ReactUnity.Converters;
+
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -110,32 +112,38 @@ namespace ReactUnity.Types
             };
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<FontReference>
         {
-            IStyleConverter StringConverter = AllConverters.StringConverter;
+            StyleConverterBase StringConverter = AllConverters.StringConverter;
 
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
-
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value == null) return None;
-                if (value is FontReference b) return b;
-                if (value is Font v) return new FontReference(AssetReferenceType.Object, v);
+                if (value is Font v) return Constant(new FontReference(AssetReferenceType.Object, v), out result);
 #if REACT_TMP
-                if (value is TMPro.TMP_FontAsset t) return new FontReference(AssetReferenceType.Object, t);
+                if (value is TMPro.TMP_FontAsset t) return Constant(new FontReference(AssetReferenceType.Object, t), out result);
 #endif
 #if REACT_TEXTCORE
-                if (value is UnityEngine.TextCore.Text.FontAsset fa) return new FontReference(AssetReferenceType.Object, fa);
+                if (value is UnityEngine.TextCore.Text.FontAsset fa) return Constant(new FontReference(AssetReferenceType.Object, fa), out result);
 #endif
-                return Parse(value?.ToString());
+                return base.ConvertInternal(value, out result);
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (AllConverters.UrlConverter.Convert(value) is Url u) return new FontReference(u);
+                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is Url u) return Constant(new FontReference(u), out rs);
+                        rs = null;
+                        return false;
+                    })) return true;
 
-                value = StringConverter.Convert(value) as string;
-                return new FontReference(AssetReferenceType.Procedural, value);
+
+                return ComputedMapper.Create(out result, value, AllConverters.StringConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is string u) return Constant(new FontReference(AssetReferenceType.Procedural, u), out rs);
+                        rs = null;
+                        return false;
+                    });
             }
         }
     }

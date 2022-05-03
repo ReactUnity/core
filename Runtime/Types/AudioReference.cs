@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
-using ReactUnity.Converters;
+
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -61,23 +63,27 @@ namespace ReactUnity.Types
         }
 
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : StyleConverterBase
         {
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
+            protected override Type TargetType => typeof(AudioReference);
 
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value == null) return None;
-                if (value is AudioReference a) return a;
-                if (value is AudioClip c) return new AudioReference(AssetReferenceType.Object, c);
-                if (value is UnityEngine.Object o) return new AudioReference(AssetReferenceType.Object, o);
-                return Parse(value?.ToString());
+                if (value is AudioClip c) return Constant(new AudioReference(AssetReferenceType.Object, c), out result);
+                if (value is UnityEngine.Object o) return Constant(new AudioReference(AssetReferenceType.Object, o), out result);
+                if (value is Url u) return Constant(new AudioReference(u), out result);
+
+                return base.ConvertInternal(value, out result);
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (AllConverters.UrlConverter.Convert(value) is Url u) return new AudioReference(u);
-                return CssKeyword.Invalid;
+                return ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is Url u) return Constant(new AudioReference(u), out rs);
+                        rs = null;
+                        return false;
+                    });
             }
         }
     }

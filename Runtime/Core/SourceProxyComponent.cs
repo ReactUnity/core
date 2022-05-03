@@ -1,5 +1,5 @@
 using System;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity
@@ -70,14 +70,16 @@ namespace ReactUnity
 
         private void SetSource(object value)
         {
-            var reference = AllConverters.TextReferenceConverter.Convert(value) as TextReference;
-
-            if (reference == null) InnerContent = Content;
-            else reference?.Get(Context, text => {
-                if (value != Source) return;
-                InnerContent = text.text;
-                FireEvent("onLoad", new { type = "load" });
-            });
+            if (!AllConverters.TextReferenceConverter.TryConvert(value, out var reference)) InnerContent = Content;
+            else
+            {
+                var rf = AllConverters.TryGetConstantValue(reference, TextReference.None);
+                rf?.Get(Context, text => {
+                    if (value != Source) return;
+                    InnerContent = text.text;
+                    FireEvent("onLoad", new { type = "load" });
+                });
+            }
         }
     }
 }

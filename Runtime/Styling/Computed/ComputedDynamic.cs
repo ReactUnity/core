@@ -1,3 +1,5 @@
+using ReactUnity.Styling.Converters;
+
 namespace ReactUnity.Styling.Computed
 {
     public struct ComputedDynamic : IComputedValue
@@ -8,9 +10,9 @@ namespace ReactUnity.Styling.Computed
             if (value is IComputedValue) throw new System.Exception("Dynamic value cannot wrap another dynamic value");
             Value = value;
         }
-        public object GetValue(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
-            return prop.Convert(Value);
+            return converter.Convert(Value);
         }
     }
 }

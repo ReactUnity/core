@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Shorthands
 {
     internal class FlexFlowShorthand : StyleShorthand
     {
-        private static GeneralConverter DirectionConverter = AllConverters.Get<YogaFlexDirection>();
-        private static GeneralConverter WrapConverter = AllConverters.Get<YogaWrap>();
+        private static StyleConverterBase DirectionConverter = AllConverters.Get<YogaFlexDirection>();
+        private static StyleConverterBase WrapConverter = AllConverters.Get<YogaWrap>();
         public override List<IStyleProperty> ModifiedProperties { get; }
 
         public FlexFlowShorthand(string name) : base(name)
@@ -29,8 +30,8 @@ namespace ReactUnity.Styling.Shorthands
             var dirSet = false;
             var wrapSet = false;
 
-            var dir = YogaFlexDirection.Row;
-            var wrap = YogaWrap.NoWrap;
+            IComputedValue dir = new ComputedConstant(YogaFlexDirection.Row);
+            IComputedValue wrap = new ComputedConstant(YogaWrap.NoWrap);
 
             for (int i = 0; i < splits.Count; i++)
             {
@@ -38,9 +39,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!dirSet)
                 {
-                    var val = DirectionConverter.Parse(split);
-
-                    if (val is YogaFlexDirection v)
+                    if (DirectionConverter.TryParse(split, out var v))
                     {
                         dir = v;
                         dirSet = true;
@@ -50,9 +49,7 @@ namespace ReactUnity.Styling.Shorthands
 
                 if (!wrapSet)
                 {
-                    var val = WrapConverter.Parse(split);
-
-                    if (val is YogaWrap v)
+                    if (WrapConverter.TryParse(split, out var v))
                     {
                         wrap = v;
                         wrapSet = true;

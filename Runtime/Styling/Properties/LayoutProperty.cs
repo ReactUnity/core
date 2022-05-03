@@ -1,4 +1,4 @@
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling
 {
@@ -8,7 +8,7 @@ namespace ReactUnity.Styling
     {
         public override bool affectsLayout => true;
 
-        public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) :
+        public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, StyleConverterBase converter = null) :
             base(name, defaultValue, transitionable, false, converter)
         { }
     }

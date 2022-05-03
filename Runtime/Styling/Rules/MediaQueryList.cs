@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ReactUnity.Converters;
 using ReactUnity.Helpers;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Rules
 {
     public class MediaQueryList
     {
-        private static IStyleConverter NumberConverter = AllConverters.LengthConverter;
+        private static LengthConverter NumberConverter = new LengthConverter();
 
         public static MediaQueryList Create(IMediaProvider provider, string media)
         {
@@ -168,9 +168,7 @@ namespace ReactUnity.Styling.Rules
 
                 if (separator == ":")
                 {
-                    var number = NumberConverter.Parse(splits[2]);
-
-                    if (number is float f)
+                    if (NumberConverter.TryGetConstantValue<float>(splits[2], out var f))
                     {
                         if (splits[0].StartsWith("min-")) return RangeMediaNode.MinQuery(splits[0].Replace("min-", ""), f, true);
                         if (splits[0].StartsWith("max-")) return RangeMediaNode.MaxQuery(splits[0].Replace("max-", ""), f, true);
@@ -181,23 +179,19 @@ namespace ReactUnity.Styling.Rules
 
                 if (separator.StartsWith("$"))
                 {
-                    var number0 = NumberConverter.Parse(splits[0]);
-                    var number2 = NumberConverter.Parse(splits[2]);
                     var reversed = false;
 
                     string prop;
                     float val;
 
-                    if (number0 is float f0)
+                    if (NumberConverter.TryGetConstantValue(splits[0], out val))
                     {
                         prop = splits[2];
-                        val = f0;
                         reversed = true;
                     }
-                    else if (number2 is float f2)
+                    else if (NumberConverter.TryGetConstantValue(splits[2], out val))
                     {
                         prop = splits[0];
-                        val = f2;
                     }
                     else return ConstantMediaNode.Never;
 
@@ -224,12 +218,9 @@ namespace ReactUnity.Styling.Rules
 
                 if (separator1.StartsWith("$") && separator3.StartsWith("$"))
                 {
-
-                    var number0 = NumberConverter.Parse(splits[0]);
-                    var number4 = NumberConverter.Parse(splits[4]);
                     var prop = splits[2];
 
-                    if (number0 is float f0 && number4 is float f4)
+                    if (NumberConverter.TryGetConstantValue<float>(splits[0], out var f0) && NumberConverter.TryGetConstantValue<float>(splits[4], out var f4))
                     {
                         if (separator1.StartsWith("$lt") && separator3.StartsWith("$lt"))
                             return new RangeMediaNode(prop, f0, separator1 == "$lte", f4, separator3 == "$lte");

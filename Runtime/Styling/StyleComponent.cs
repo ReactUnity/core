@@ -1,4 +1,6 @@
 using System;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling
 {
@@ -102,7 +104,7 @@ namespace ReactUnity.Styling
                     Active = Convert.ToBoolean(value);
                     break;
                 case "importance":
-                    Importance = Convert.ToInt32(Converters.AllConverters.IntConverter.Convert(value ?? "0"));
+                    Importance = AllConverters.IntConverter.TryGetConstantValue(value, 0);
                     break;
                 default:
                     base.SetProperty(propertyName, value);

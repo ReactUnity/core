@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
@@ -10,9 +11,12 @@ namespace ReactUnity.Styling.Shorthands
     internal class XYListShorthand<T> : StyleShorthand
     {
         public override List<IStyleProperty> ModifiedProperties { get; }
-        public IStyleConverter Converter { get; }
+        public StyleConverterBase Converter { get; }
 
-        public XYListShorthand(string name, StyleProperty<ICssValueList<T>> xProperty, StyleProperty<ICssValueList<T>> yProperty) : base(name)
+        public ValueListStyleProperty<T> XProperty { get; }
+        public ValueListStyleProperty<T> YProperty { get; }
+
+        public XYListShorthand(string name, ValueListStyleProperty<T> xProperty, ValueListStyleProperty<T> yProperty) : base(name)
         {
             Converter = AllConverters.Get<T>();
             ModifiedProperties = new List<IStyleProperty>
@@ -20,6 +24,9 @@ namespace ReactUnity.Styling.Shorthands
                 xProperty,
                 yProperty,
             };
+
+            XProperty = xProperty;
+            YProperty = yProperty;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -29,8 +36,7 @@ namespace ReactUnity.Styling.Shorthands
         {
             if (!(value is string))
             {
-                var converted = Converter.Convert(value);
-                if (!Equals(converted, CssKeyword.Invalid))
+                if (Converter.TryConvert(value, out var converted))
                 {
                     collection[ModifiedProperties[0]] = collection[ModifiedProperties[1]] = converted;
                     return ModifiedProperties;
@@ -40,8 +46,8 @@ namespace ReactUnity.Styling.Shorthands
             var str = value.ToString();
             var commas = ParserHelpers.SplitComma(str);
             var count = commas.Count;
-            var xs = new T[count];
-            var ys = new T[count];
+            var xs = new IComputedValue[count];
+            var ys = new IComputedValue[count];
 
             for (int ci = 0; ci < commas.Count; ci++)
             {
@@ -54,22 +60,27 @@ namespace ReactUnity.Styling.Shorthands
                 ys[ci] = vals.Item2;
             }
 
-            collection[ModifiedProperties[0]] = new CssValueList<T>(xs);
-            collection[ModifiedProperties[1]] = new CssValueList<T>(ys);
+            collection[ModifiedProperties[0]] = XProperty.Converter.FromList(xs);
+            collection[ModifiedProperties[1]] = YProperty.Converter.FromList(ys);
             return ModifiedProperties;
         }
 
-        public virtual Tuple<T, T> GetValues(string val)
+        public virtual Tuple<IComputedValue, IComputedValue> GetValues(string val)
         {
             var splits = ParserHelpers.SplitWhitespace(val);
 
             if (splits.Count == 0) return null;
 
-            var xVal = Converter.Parse(splits[0]);
-            var yVal = splits.Count > 1 ? Converter.Parse(splits[1]) : xVal;
-
-            if (xVal is T x && yVal is T y) return Tuple.Create(x, y);
-            else return null;
+            if (Converter.TryParse(splits[0], out var x))
+            {
+                if (splits.Count > 1)
+                {
+                    if (Converter.TryParse(splits[0], out var y)) return Tuple.Create(x, y);
+                    return null;
+                }
+                return Tuple.Create(x, x);
+            }
+            return null;
         }
 
     }
@@ -80,24 +91,46 @@ namespace ReactUnity.Styling.Shorthands
         {
         }
 
-        public override Tuple<BackgroundRepeat, BackgroundRepeat> GetValues(string val)
+        public override Tuple<IComputedValue, IComputedValue> GetValues(string val)
         {
-            if (val == "repeat-x") return Tuple.Create(BackgroundRepeat.Repeat, BackgroundRepeat.NoRepeat);
-            if (val == "repeat-y") return Tuple.Create(BackgroundRepeat.NoRepeat, BackgroundRepeat.Repeat);
+            if (val == "repeat-x") return Tuple.Create<IComputedValue, IComputedValue>(new ComputedConstant(BackgroundRepeat.Repeat), new ComputedConstant(BackgroundRepeat.NoRepeat));
+            if (val == "repeat-y") return Tuple.Create<IComputedValue, IComputedValue>(new ComputedConstant(BackgroundRepeat.NoRepeat), new ComputedConstant(BackgroundRepeat.Repeat));
             return base.GetValues(val);
         }
     }
 
     internal class BackgroundPositionShorthand : XYListShorthand<YogaValue>
     {
-        public BackgroundPositionShorthand(string name, StyleProperty<ICssValueList<YogaValue>> xProperty, StyleProperty<ICssValueList<YogaValue>> yProperty) : base(name, xProperty, yProperty)
+        public BackgroundPositionShorthand(string name, ValueListStyleProperty<YogaValue> xProperty, ValueListStyleProperty<YogaValue> yProperty) : base(name, xProperty, yProperty)
         {
         }
 
-        public override Tuple<YogaValue, YogaValue> GetValues(string val)
+        public override Tuple<IComputedValue, IComputedValue> GetValues(string val)
         {
-            var ygv = AllConverters.YogaValue2Converter.Parse(val);
-            if (ygv is YogaValue2 yv) return Tuple.Create(yv.X, yv.Y);
+            if (AllConverters.YogaValue2Converter.TryParse(val, out var yv))
+            {
+                return Tuple.Create<IComputedValue, IComputedValue>(
+                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (object resolved, out IComputedValue rs) => {
+                        if (resolved is YogaValue2 t)
+                        {
+                            rs = new ComputedConstant(t.X);
+                            return true;
+                        }
+                        rs = null;
+                        return false;
+                    }),
+                    new ComputedMapper(yv, AllConverters.YogaValue2Converter, (object resolved, out IComputedValue rs) => {
+                        if (resolved is YogaValue2 t)
+                        {
+                            rs = new ComputedConstant(t.Y);
+                            return true;
+                        }
+                        rs = null;
+                        return false;
+                    })
+                );
+            }
+
             return base.GetValues(val);
         }
     }

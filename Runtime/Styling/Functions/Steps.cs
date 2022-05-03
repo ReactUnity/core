@@ -1,23 +1,44 @@
-using ReactUnity.Converters;
+
+using System.Collections.Generic;
+using System.Linq;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Functions
 {
     internal class StepsFunction : ICssFunction
     {
-        static private IStyleConverter StepConverter = new EnumConverter<StepsJumpMode>(true);
+        static private StyleConverterBase StepConverter = new EnumConverter<StepsJumpMode>(true);
 
         public string Name { get; } = "steps";
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            var a1 = AllConverters.IntConverter.Parse(args[0]);
-            var a2 = args.Length > 1 ? StepConverter.Parse(args[1]) : StepsJumpMode.End;
+            if (ComputedCompound.Create(out var result,
+                args.OfType<object>().ToList(),
+                new List<StyleConverterBase> { AllConverters.IntConverter, StepConverter },
+                (List<object> resolved, out IComputedValue rs) => {
 
-            var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
-
-            if (a1 is int f1)
-                return TimingFunctions.Steps(f1, stepMode);
+                    if (resolved[0] is int f1)
+                    {
+                        if (resolved.Count > 1)
+                        {
+                            if (resolved[1] is StepsJumpMode sj)
+                            {
+                                rs = new ComputedConstant(TimingFunctions.Steps(f1, sj));
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            rs = new ComputedConstant(TimingFunctions.Steps(f1, StepsJumpMode.End));
+                            return true;
+                        }
+                    }
+                    rs = null;
+                    return false;
+                })) return result;
 
             return null;
         }

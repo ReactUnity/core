@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExCSS;
-using ReactUnity.Converters;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Rules;
 
 namespace ReactUnity
@@ -76,8 +76,7 @@ namespace ReactUnity
                 else if (split == "to") offsets.Add(1);
                 else
                 {
-                    var offset = AllConverters.PercentageConverter.Parse(split);
-                    if (offset is float f) offsets.Add(f);
+                    if (AllConverters.PercentageConverter.TryGetConstantValue<float>(split, out var f)) offsets.Add(f);
                     else offsets.Add(-1);
                 }
             }

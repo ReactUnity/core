@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling
 {

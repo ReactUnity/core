@@ -1,6 +1,7 @@
 using System;
-using ReactUnity.Converters;
+
 using ReactUnity.Editor.Renderer;
+using ReactUnity.Styling.Converters;
 using ReactUnity.UIToolkit;
 using UnityEditor;
 using UnityEngine;
@@ -44,9 +45,8 @@ namespace ReactUnity.Editor.UIToolkit
             else if (property == "maximized") Element.Maximized = Convert.ToBoolean(value);
             else if (property == "type")
             {
-                var cv = AllConverters.Get<DialogType>().Convert(value);
-                if (cv is DialogType t) Element.Type = t;
-                else Element.Type = default;
+                var cv = AllConverters.Get<DialogType>().TryGetConstantValue(value, DialogType.Default);
+                Element.Type = cv;
             }
             else base.SetProperty(property, value);
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Shorthands;
 
 namespace ReactUnity.Styling.Animations
@@ -20,16 +21,18 @@ namespace ReactUnity.Styling.Animations
             {
                 var key = CssProperties.GetKey(definition);
                 Properties = key?.ModifiedProperties ?? PropertiesEmpty;
-                IsAll = key == AllShorthands.All;
+                // TODO:
+                //IsAll = key == AllShorthands.All;
             }
         }
 
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<TransitionProperty>
         {
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
-            public object Convert(object value) => Parse(value?.ToString());
-            public object Parse(string value) => new TransitionProperty(value);
+            protected override bool ParseInternal(string value, out IComputedValue result)
+            {
+                return Constant(new TransitionProperty(value), out result);
+            }
         }
     }
 }

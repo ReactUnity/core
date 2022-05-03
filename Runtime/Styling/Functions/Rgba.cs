@@ -1,4 +1,4 @@
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Functions
 {
@@ -8,16 +8,21 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            float[] vals;
-            if (args.Length == 1) vals = ParserHelpers.ParseSpaceSeparatedColor(args[0]);
-            else if (args.Length == 3 || args.Length == 4) vals = ParserHelpers.ParseCommaSeparatedColor(args);
-            else return null;
+            if (args.Length == 1)
+            {
+                if (ParserHelpers.ParseSpaceSeparatedColor(args[0], ColorCallback, false, out var rs)) return rs;
+            }
+            else if (args.Length == 3 || args.Length == 4)
+            {
+                if (ParserHelpers.ParseCommaSeparatedColor(args, ColorCallback, false, out var rs)) return rs;
+            }
 
-            if (vals == null) return null;
-            return new UnityEngine.Color(vals[0] / 255f, vals[1] / 255f, vals[2] / 255f, vals.Length > 3 ? vals[3] : 1);
+            return null;
         }
 
         public bool CanHandleArguments(int count, string name, string[] args) => count == 1 || count == 3 || count == 4;
+
+        private object ColorCallback(float r, float g, float b, float a) => new UnityEngine.Color(r / 255f, g / 255f, b / 255f, a);
     }
 
 }

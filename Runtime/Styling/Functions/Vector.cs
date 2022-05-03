@@ -1,4 +1,8 @@
-using ReactUnity.Converters;
+
+using System.Collections.Generic;
+using System.Linq;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Functions
@@ -9,19 +13,23 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            var x = args.Length > 0 ? AllConverters.FloatConverter.Parse(args[0]) : null;
-            var y = args.Length > 1 ? AllConverters.FloatConverter.Parse(args[1]) : null;
-            var z = args.Length > 2 ? AllConverters.FloatConverter.Parse(args[2]) : null;
+            if (ComputedList.Create(out var result, args.OfType<object>().ToList(), AllConverters.FloatConverter,
+                (List<object> resolved, out IComputedValue rs) => {
+                    if (resolved.Count > 1 && resolved[0] is float xf && resolved[1] is float yf)
+                    {
+                        if (resolved.Count > 2 && resolved[2] is float zf)
+                        {
+                            rs = new ComputedConstant(new Vector3(xf, yf, zf));
+                            return true;
+                        }
 
-            if (x is float xf)
-            {
-                if (y is float yf)
-                {
-                    if (z is float zf) return new Vector3(xf, yf, zf);
-                    return new Vector3(xf, yf, 0);
-                }
-                return null;
-            }
+                        rs = new ComputedConstant(new Vector3(xf, yf, 0));
+                        return true;
+                    }
+
+                    rs = null;
+                    return false;
+                })) return result;
             return null;
         }
 

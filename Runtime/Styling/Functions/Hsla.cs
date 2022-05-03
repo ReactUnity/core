@@ -1,4 +1,4 @@
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Functions
@@ -9,36 +9,28 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            string[] parsedArgs;
-            if (args.Length == 1) parsedArgs = ParserHelpers.ParseSpaceSeparatedColorArguments(args[0]).ToArray();
-            else if (args.Length == 3 || args.Length == 4) parsedArgs = args;
-            else return null;
-
-            var vals = new float[parsedArgs.Length];
-
-            if (AllConverters.AngleConverter.Parse(parsedArgs[0]) is float h) vals[0] = h;
-            else return null;
-
-            if (AllConverters.PercentageConverter.Parse(parsedArgs[1]) is float s) vals[1] = s;
-            else return null;
-
-            if (AllConverters.PercentageConverter.Parse(parsedArgs[2]) is float l) vals[2] = l;
-            else return null;
-
-            if (parsedArgs.Length == 4)
+            ParserHelpers.ColorCallback cb = name == "hsv" || name == "hsva" ? HsvCallback : HslCallback;
+            if (args.Length == 1)
             {
-                if (AllConverters.PercentageConverter.Parse(parsedArgs[3]) is float alpha) vals[3] = alpha;
-                else return null;
+                if (ParserHelpers.ParseSpaceSeparatedColor(args[0], cb, false, out var rs)) return rs;
+            }
+            else if (args.Length == 3 || args.Length == 4)
+            {
+                if (ParserHelpers.ParseCommaSeparatedColor(args, cb, false, out var rs)) return rs;
             }
 
-            if (name == "hsv" || name == "hsva")
-            {
-                var col = Color.HSVToRGB(vals[0] / 360f, vals[1], vals[2]);
-                if (vals.Length > 3) col.a = vals[3];
-                return col;
-            }
-            return HslToRgb(vals[0] / 360f, vals[1], vals[2], vals.Length > 3 ? vals[3] : 1);
+            return null;
         }
+
+        private object HsvCallback(float v1, float v2, float v3, float v4)
+        {
+            var col = Color.HSVToRGB(v1 / 360f, v2, v3);
+            col.a = v4;
+            return col;
+        }
+
+        private object HslCallback(float v1, float v2, float v3, float v4) => HslToRgb(v1 / 360f, v2, v3, v4);
+
 
         private Color HslToRgb(float h, float s, float l, float a)
         {

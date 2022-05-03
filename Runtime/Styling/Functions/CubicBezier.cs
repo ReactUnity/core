@@ -1,5 +1,8 @@
-using ReactUnity.Converters;
+using System.Collections.Generic;
+using System.Linq;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Functions
 {
@@ -9,16 +12,22 @@ namespace ReactUnity.Styling.Functions
 
         public object Call(string name, string[] args, string argsCombined)
         {
-            var a1 = AllConverters.FloatConverter.Parse(args[0]);
-            var a2 = AllConverters.FloatConverter.Parse(args[1]);
-            var a3 = AllConverters.FloatConverter.Parse(args[2]);
-            var a4 = AllConverters.FloatConverter.Parse(args[3]);
+            if (ComputedList.Create(out var result,
+                args.OfType<object>().ToList(),
+                AllConverters.FloatConverter,
+                (List<object> resolved, out IComputedValue rs) => {
+                    if (resolved[0] is float f1 &&
+                        resolved[1] is float f2 &&
+                        resolved[2] is float f3 &&
+                        resolved[3] is float f4)
+                    {
+                        rs = new ComputedConstant(TimingFunctions.CubicBezier.Create(f1, f2, f3, f4));
+                        return true;
+                    }
 
-            if (a1 is float f1 &&
-                a2 is float f2 &&
-                a3 is float f3 &&
-                a4 is float f4)
-                return TimingFunctions.CubicBezier.Create(f1, f2, f3, f4);
+                    rs = null;
+                    return false;
+                })) return result;
 
             return null;
         }

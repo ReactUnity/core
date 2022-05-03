@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Functions;
 
 namespace ReactUnity.Styling

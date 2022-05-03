@@ -1,4 +1,5 @@
-using ReactUnity.Converters;
+
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.Video;
@@ -30,7 +31,9 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "source":
-                    SetSource(AllConverters.VideoReferenceConverter.Convert(value) as VideoReference);
+                    if (!AllConverters.VideoReferenceConverter.TryGetConstantValue<VideoReference>(value, out var source))
+                        source = VideoReference.None;
+                    SetSource(source);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.IO;
-using ReactUnity.Converters;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -54,10 +54,9 @@ namespace ReactUnity.Types
             }
             else if (realType == AssetReferenceType.Procedural)
             {
-                var color = AllConverters.ColorConverter.Convert(realValue);
-
-                if (color is Color c)
+                if (AllConverters.ColorConverter.TryConvert(realValue, out var color))
                 {
+                    var c = AllConverters.TryGetConstantValue(color, Color.clear);
                     var t = new Texture2D(1, 1);
                     t.SetPixel(0, 0, c);
                     t.Apply();
@@ -89,7 +88,7 @@ namespace ReactUnity.Types
             if (webDeferred != null) webDeferred.Dispose();
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<ImageReference>
         {
             public bool AllowWithoutUrl { get; }
 
@@ -98,24 +97,23 @@ namespace ReactUnity.Types
                 AllowWithoutUrl = allowWithoutUrl;
             }
 
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
-
-            public object Convert(object value)
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value == null) return None;
-                if (value is ImageReference ir) return ir;
-                if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
-                if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
-                if (value is UnityEngine.Object o) return new ImageReference(AssetReferenceType.Object, o);
-                return Parse(value?.ToString());
+                if (value is Texture2D t) return Constant(new ImageReference(AssetReferenceType.Object, t), out result);
+                if (value is Sprite s) return Constant(new ImageReference(AssetReferenceType.Object, s.texture), out result);
+                if (value is UnityEngine.Object o) return Constant(new ImageReference(AssetReferenceType.Object, o), out result);
+                return base.ConvertInternal(value, out result);
             }
 
-            public object Parse(string value)
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (AllConverters.UrlConverter.Convert(value) is Url u) return new ImageReference(u);
+                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (object u, out IComputedValue rs) => Constant(new ImageReference(u as Url), out rs)))
+                    return true;
 
-                if (AllowWithoutUrl) return new ImageReference(new Url(value));
-                return CssKeyword.Invalid;
+                if (AllowWithoutUrl) return Constant(new ImageReference(new Url(value)), out result);
+                result = null;
+                return false;
             }
         }
     }

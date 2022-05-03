@@ -153,7 +153,7 @@ namespace ReactUnity.Styling
             if (value == null) return null;
             if (value is CssKeyword ck)
             {
-                if (ck == CssKeyword.Invalid || ck == CssKeyword.NoKeyword || ck == CssKeyword.Invalid) return null;
+                if (ck == CssKeyword.NoKeyword) return null;
                 else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop, true);
                 else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Unset || ck == CssKeyword.Default)
                     return prop?.defaultValue;
@@ -165,7 +165,9 @@ namespace ReactUnity.Styling
         public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
         {
             var value = GetRawStyleValue(prop);
-            if (value is IComputedValue d) value = d.GetValue(prop, this);
+
+            if (value is IComputedValue d) value = d.ResolveValue(prop, this, prop);
+
             if (value == null) return default;
             if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 

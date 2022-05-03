@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ExCSS;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
 
@@ -60,8 +60,8 @@ namespace ReactUnity.Styling
                 }
                 else if (child is IFontFaceRule ffr)
                 {
-                    FontFamilies[AllConverters.StringConverter.Parse(ffr.Family) as string] =
-                        AllConverters.FontReferenceConverter.Parse(ffr.Source) as FontReference;
+                    FontFamilies[StringConverter.Normalize(ffr.Family)] =
+                        AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
                 }
                 else if (child is StyleRule str)
                 {

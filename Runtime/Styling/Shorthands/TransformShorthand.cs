@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Converters;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -29,6 +29,8 @@ namespace ReactUnity.Styling.Shorthands
 
         protected override List<IStyleProperty> ModifyInternal(IDictionary<IStyleProperty, object> collection, object value)
         {
+            // TODO: handle computed variables
+
             var calls = ParserHelpers.SplitWhitespace(value?.ToString());
             var count = calls.Count;
 

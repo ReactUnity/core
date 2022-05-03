@@ -1,15 +1,16 @@
 using System.Collections.Generic;
-using ReactUnity.Converters;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
     internal class AnimationShorthand : StyleShorthand
     {
-        private static GeneralConverter DirectionConverter = AllConverters.Get<AnimationDirection>();
-        private static GeneralConverter FillModeConverter = AllConverters.Get<AnimationFillMode>();
-        private static GeneralConverter PlayStateConverter = AllConverters.Get<AnimationPlayState>();
+        private static StyleConverterBase DirectionConverter = AllConverters.Get<AnimationDirection>();
+        private static StyleConverterBase FillModeConverter = AllConverters.Get<AnimationFillMode>();
+        private static StyleConverterBase PlayStateConverter = AllConverters.Get<AnimationPlayState>();
 
         public override List<IStyleProperty> ModifiedProperties { get; } = new List<IStyleProperty>
         {
@@ -29,14 +30,14 @@ namespace ReactUnity.Styling.Shorthands
         {
             var commas = ParserHelpers.SplitComma(value?.ToString());
             var cnt = commas.Count;
-            var iterations = new int[cnt];
-            var names = new string[cnt];
-            var directions = new AnimationDirection[cnt];
-            var fillModes = new AnimationFillMode[cnt];
-            var states = new AnimationPlayState[cnt];
-            var durations = new float[cnt];
-            var easings = new TimingFunction[cnt];
-            var delays = new float[cnt];
+            var iterations = new IComputedValue[cnt];
+            var names = new IComputedValue[cnt];
+            var directions = new IComputedValue[cnt];
+            var fillModes = new IComputedValue[cnt];
+            var states = new IComputedValue[cnt];
+            var durations = new IComputedValue[cnt];
+            var easings = new IComputedValue[cnt];
+            var delays = new IComputedValue[cnt];
 
             for (int ci = 0; ci < cnt; ci++)
             {
@@ -58,9 +59,7 @@ namespace ReactUnity.Styling.Shorthands
                 {
                     var split = splits[i];
 
-                    var dur = AllConverters.DurationConverter.Parse(split);
-
-                    if (dur is float f)
+                    if (AllConverters.DurationConverter.TryParse(split, out var f))
                     {
                         if (!durationSet)
                         {
@@ -79,9 +78,7 @@ namespace ReactUnity.Styling.Shorthands
                         continue;
                     }
 
-                    var count = AllConverters.IterationCountConverter.Parse(split);
-
-                    if (count is int fcount)
+                    if (AllConverters.IterationCountConverter.TryParse(split, out var fcount))
                     {
                         if (!countSet)
                         {
@@ -93,36 +90,28 @@ namespace ReactUnity.Styling.Shorthands
                     }
 
 
-                    var dir = !directionSet ? DirectionConverter.Parse(split) : null;
-
-                    if (dir is AnimationDirection d)
+                    if (!directionSet && DirectionConverter.TryParse(split, out var d))
                     {
                         directions[ci] = d;
                         directionSet = true;
                         continue;
                     }
 
-                    var fm = !fillModeSet ? FillModeConverter.Parse(split) : null;
-
-                    if (fm is AnimationFillMode fmd)
+                    if (!fillModeSet && FillModeConverter.TryParse(split, out var fmd))
                     {
                         fillModes[ci] = fmd;
                         fillModeSet = true;
                         continue;
                     }
 
-                    var ps = !playStateSet ? PlayStateConverter.Parse(split) : null;
-
-                    if (ps is AnimationPlayState psd)
+                    if (!playStateSet && PlayStateConverter.TryParse(split, out var psd))
                     {
                         states[ci] = psd;
                         playStateSet = true;
                         continue;
                     }
 
-                    var tm = !timingSet ? AllConverters.TimingFunctionConverter.Parse(split) : null;
-
-                    if (tm is TimingFunction tmf)
+                    if (!timingSet && AllConverters.TimingFunctionConverter.TryParse(split, out var tmf))
                     {
                         easings[ci] = tmf;
                         timingSet = true;
@@ -130,9 +119,9 @@ namespace ReactUnity.Styling.Shorthands
                     }
 
 
-                    if (!nameSet)
+                    if (!nameSet && AllConverters.StringConverter.TryParse(split, out var ss))
                     {
-                        names[ci] = split;
+                        names[ci] = ss;
                         nameSet = true;
                         continue;
                     }
@@ -140,18 +129,18 @@ namespace ReactUnity.Styling.Shorthands
                 }
 
                 if (!nameSet) return null;
-                if (!countSet) iterations[ci] = 1;
-                if (!timingSet) easings[ci] = TimingFunctions.Default;
+                if (!countSet) iterations[ci] = new ComputedConstant(1);
+                if (!timingSet) easings[ci] = new ComputedConstant(TimingFunctions.Default);
             }
 
-            collection[StyleProperties.animationName] = new CssValueList<string>(names);
-            collection[StyleProperties.animationDuration] = new CssValueList<float>(durations);
-            collection[StyleProperties.animationTimingFunction] = new CssValueList<TimingFunction>(easings);
-            collection[StyleProperties.animationDelay] = new CssValueList<float>(delays);
-            collection[StyleProperties.animationPlayState] = new CssValueList<AnimationPlayState>(states);
-            collection[StyleProperties.animationIterationCount] = new CssValueList<int>(iterations);
-            collection[StyleProperties.animationFillMode] = new CssValueList<AnimationFillMode>(fillModes);
-            collection[StyleProperties.animationDirection] = new CssValueList<AnimationDirection>(directions);
+            collection[StyleProperties.animationName] = StyleProperties.animationName.Converter.FromList(names);
+            collection[StyleProperties.animationDuration] = StyleProperties.animationDuration.Converter.FromList(durations);
+            collection[StyleProperties.animationTimingFunction] = StyleProperties.animationTimingFunction.Converter.FromList(easings);
+            collection[StyleProperties.animationDelay] = StyleProperties.animationDelay.Converter.FromList(delays);
+            collection[StyleProperties.animationPlayState] = StyleProperties.animationPlayState.Converter.FromList(states);
+            collection[StyleProperties.animationIterationCount] = StyleProperties.animationIterationCount.Converter.FromList(iterations);
+            collection[StyleProperties.animationFillMode] = StyleProperties.animationFillMode.Converter.FromList(fillModes);
+            collection[StyleProperties.animationDirection] = StyleProperties.animationDirection.Converter.FromList(directions);
 
             return ModifiedProperties;
         }

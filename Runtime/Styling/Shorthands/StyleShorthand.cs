@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
@@ -46,20 +47,14 @@ namespace ReactUnity.Styling.Shorthands
 
         public virtual List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
+            if (value == null) return ClearValues(collection);
 
             var keyword = CssKeyword.NoKeyword;
             if (value is string s) keyword = RuleHelpers.GetCssKeyword(s);
             else if (value is CssKeyword k) keyword = k;
 
-            if (!CanHandleKeyword(keyword))
-            {
-                if (keyword == CssKeyword.Initial || keyword == CssKeyword.Default || keyword == CssKeyword.None || keyword == CssKeyword.Unset || keyword == CssKeyword.Auto)
-                    return SetAllValuesDefault(collection);
-                else if (keyword != CssKeyword.CurrentColor && keyword != CssKeyword.Invalid && keyword != CssKeyword.NoKeyword) value = keyword;
-
-                if (value is CssKeyword) return SetAllValues(collection, value);
-                if (value == null) return ClearValues(collection);
-            }
+            if (keyword != CssKeyword.NoKeyword && !CanHandleKeyword(keyword))
+                return SetAllValues(collection, new ComputedKeyword(keyword));
 
             return ModifyInternal(collection, value);
         }

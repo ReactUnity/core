@@ -1,16 +1,15 @@
+using System.Collections.Generic;
 using System.Linq;
-using ReactUnity.Converters;
-using ReactUnity.Styling;
+
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Types
 {
     public class BoxShadow : Interpolatable
     {
-        public static ColorConverter ColorParser = new ColorConverter();
-        public static FloatConverter FloatParser = new LengthConverter();
-
         public static BoxShadow Default = new BoxShadow(Vector2.zero, Vector2.zero, Vector2.zero, Color.clear, false);
         public static BoxShadow DefaultInset = new BoxShadow(Vector2.zero, Vector2.zero, Vector2.zero, Color.clear, true);
 
@@ -55,11 +54,14 @@ namespace ReactUnity.Types
             );
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : StyleConverterBase
         {
-            public bool CanHandleKeyword(CssKeyword keyword) => false;
+            public static StyleConverterBase ColorParser = new ColorConverter();
+            public static StyleConverterBase FloatParser = new LengthConverter();
 
-            public object Parse(string value)
+            protected override System.Type TargetType => typeof(BoxShadow);
+
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
                 // Example:
                 // <xOffset> <yOffset> [blur] [spread] [color] [inset]
@@ -67,7 +69,7 @@ namespace ReactUnity.Types
                 // 1px 1px 3px 4px -2px -4px black inset
 
                 var splits = ParserHelpers.SplitWhitespace(value);
-                if (splits.Count < 1) return CssKeyword.Invalid;
+                if (splits.Count < 1) return Fail(out result);
 
                 var insetIndex = splits.IndexOf("inset");
                 var isInset = insetIndex >= 0;
@@ -75,45 +77,41 @@ namespace ReactUnity.Types
 
                 var last = splits[splits.Count - 1];
                 var lastSegmentFirstChar = last.FirstOrDefault();
-                var lastIsNumber = char.IsDigit(lastSegmentFirstChar) || lastSegmentFirstChar == '-';
-                Color color;
 
-                if (lastIsNumber) color = Color.black;
-                else if (ColorParser.Parse(last) is Color c) color = c;
-                else color = Color.black;
+                if (ColorParser.TryParse(last, out var colorValue)) splits.RemoveAt(splits.Count - 1);
+                else colorValue = new ComputedConstant(Color.black);
 
-                if (!lastIsNumber) splits.RemoveAt(splits.Count - 1);
+                if (splits.Count < 2 || splits.Count > 6 || splits.Count == 5) return Fail(out result);
 
-                var lengths = splits.Select(x => FloatParser.Parse(x)).ToList();
+                return ComputedCompound.Create(out result,
+                    new List<object> { colorValue }.Concat(splits).ToList(),
+                    new List<StyleConverterBase> { ColorParser, FloatParser, FloatParser, FloatParser, FloatParser, FloatParser, FloatParser },
+                    (List<object> resolvedValues, out IComputedValue rs) => {
 
-                if (lengths.Count < 2 || lengths.Count > 6 || lengths.Count == 5 || lengths.Any(x => x.Equals(CssKeyword.Invalid)))
-                    return CssKeyword.Invalid;
+                        if (!(resolvedValues[0] is Color c)) return Fail(out rs);
 
-                var sizes = lengths.OfType<float>().ToList();
+                        var lengths = resolvedValues.Skip(1).Select(x => x is float f ? f : float.NaN).ToList();
 
-                var dx = sizes[0];
-                var dy = sizes[1];
-                var blurx = sizes.ElementAtOrDefault(2);
-                var blury = sizes.ElementAtOrDefault(3);
-                var spreadx = sizes.ElementAtOrDefault(4);
-                var spready = sizes.ElementAtOrDefault(5);
-                if (sizes.Count < 5)
-                {
-                    spready = spreadx = blury;
-                    blury = blurx;
-                }
+                        if (lengths.Count != resolvedValues.Count - 1) return Fail(out rs);
 
-                var offset = new Vector2(dx, dy);
-                var spread = new Vector2(spreadx, spready);
-                var blur = new Vector2(blurx, blury);
-                return new BoxShadow(offset, blur, spread, color, isInset);
-            }
+                        var dx = lengths[0];
+                        var dy = lengths[1];
+                        var blurx = lengths.ElementAtOrDefault(2);
+                        var blury = lengths.ElementAtOrDefault(3);
+                        var spreadx = lengths.ElementAtOrDefault(4);
+                        var spready = lengths.ElementAtOrDefault(5);
+                        if (lengths.Count < 5)
+                        {
+                            spready = spreadx = blury;
+                            blury = blurx;
+                        }
 
-            public object Convert(object value)
-            {
-                if (value is string s) return Parse(s);
-                if (value is BoxShadow b) return b;
-                return CssKeyword.Invalid;
+                        var offset = new Vector2(dx, dy);
+                        var spread = new Vector2(spreadx, spready);
+                        var blur = new Vector2(blurx, blury);
+                        return Constant(new BoxShadow(offset, blur, spread, c, isInset), out rs);
+                    }
+                );
             }
         }
     }

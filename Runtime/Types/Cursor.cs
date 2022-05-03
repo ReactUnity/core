@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
-using ReactUnity.Converters;
+
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -26,23 +29,16 @@ namespace ReactUnity.Types
             return string.Join(", ", Items.Where(x => x.Image == null || x.Image.Type == AssetReferenceType.Url).Select(x => x.Definition));
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : CommaSeparatedListConverter<CursorList, Cursor>
         {
-            public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
+            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
 
-            public object Convert(object value)
-            {
-                if (value is CursorList f) return f;
-                if (value is Cursor t) return new CursorList(t);
-                if (Equals(value, CssKeyword.Default)) return Default;
-                if (Equals(value, CssKeyword.None)) return None;
-                return Parse(value?.ToString());
-            }
+            protected override StyleConverterBase SingleConverter { get; } = new Cursor.Converter();
 
-            public object Parse(string value)
+            protected override CursorList CreateItems(params Cursor[] items)
             {
-                if (string.IsNullOrWhiteSpace(value)) return null;
-                return new CursorList(value);
+                if (items.Length == 0) return None;
+                return new CursorList(items);
             }
         }
     }
@@ -60,52 +56,82 @@ namespace ReactUnity.Types
         public string Definition { get; }
         public bool Valid { get; } = true;
 
+        // Example:
+        // url(res:cursors/game)
+        // url(res:cursors/hand) 5 5
+        // default
+        // pointer
 
-        public Cursor(string definition)
+        public Cursor(string name)
         {
-            Definition = definition;
+            Name = Definition = name;
+        }
 
-            // Example:
-            // url(res:cursors/game)
-            // url(res:cursors/hand) 5 5
-            // default
-            // pointer
-
-            var splits = ParserHelpers.SplitWhitespace(definition);
-            if (splits.Count != 1 && splits.Count != 3)
-            {
-                Valid = false;
-                return;
-            }
-
-            if (splits.Count == 1)
-            {
-                Image = AllConverters.ImageReferenceConverter.Parse(splits[0]) as ImageReference;
-                if (Image == null || Image.Type == AssetReferenceType.Auto)
-                {
-                    Image = null;
-                    Name = splits[0];
-                }
-            }
-            else if (splits.Count == 3)
-            {
-                Image = AllConverters.ImageReferenceConverter.Parse(splits[0]) as ImageReference;
-
-                if (Image == null || Image.Type == AssetReferenceType.Auto)
-                {
-                    Valid = false;
-                    return;
-                }
-
-                var x = AllConverters.FloatConverter.Parse(splits[1]);
-                var y = AllConverters.FloatConverter.Parse(splits[2]);
-
-                if (x is float hx && y is float hy) Offset = new Vector2(hx, hy);
-                else Valid = false;
-            }
+        public Cursor(ImageReference image, Vector2 offset)
+        {
+            if (image.Type == AssetReferenceType.None) Name = Definition = "none";
+            if (image.Type == AssetReferenceType.Auto) Name = Definition = "default";
             else
             {
-                Valid = false;
+                Image = image;
+                Offset = offset;
+                Definition = "";
+            }
+        }
+
+
+        public class Converter : TypedStyleConverterBase<Cursor>
+        {
+            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None || keyword == CssKeyword.Default;
+
+            protected override bool ParseInternal(string definition, out IComputedValue result)
+            {
+                var splits = ParserHelpers.SplitWhitespace(definition);
+                if (splits.Count == 0)
+                {
+                    result = null;
+                    return false;
+                }
+
+                if (splits.Count == 1)
+                {
+                    if (AllConverters.ImageReferenceConverter.TryParse(splits[0], out var imageResult))
+                    {
+                        result = new ComputedMapper(imageResult, AllConverters.ImageReferenceConverter,
+                            (object value, out IComputedValue res) => {
+                                if (value is ImageReference iref)
+                                {
+                                    if (iref.Type == AssetReferenceType.Auto || iref.Type == AssetReferenceType.None)
+                                        res = new ComputedConstant(new Cursor(splits[0]));
+                                    else res = new ComputedConstant(new Cursor(iref, Vector2.zero));
+                                    return true;
+                                }
+
+                                res = null;
+                                return false;
+                            });
+                        return true;
+                    }
+
+                    result = new ComputedConstant(new Cursor(splits[0]));
+                    return true;
+                }
+
+                var rest = string.Join(" ", splits, 1, splits.Count - 1);
+
+                return ComputedCompound.Create(out result,
+                    new List<object> { splits[0], rest },
+                    new List<StyleConverterBase> { AllConverters.ImageReferenceConverter, AllConverters.Vector2Converter },
+                    (List<object> resolvedValues, out IComputedValue res) => {
+                        if (resolvedValues[0] is ImageReference iref && resolvedValues[1] is Vector2 v)
+                        {
+                            res = new ComputedConstant(new Cursor(iref, v));
+                            return true;
+                        }
+
+                        res = null;
+                        return false;
+                    });
             }
         }
     }

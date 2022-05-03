@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using ReactUnity.Converters;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
@@ -46,64 +48,54 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
-        public class Converter : IStyleParser, IStyleConverter
+        public class Converter : TypedStyleConverterBase<CssValueList<T>>
         {
-            IStyleConverter BaseConverter;
+            public override bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
+
+            StyleConverterBase BaseConverter;
 
             CssValueList<T> DefaultList;
 
-            public Converter(IStyleConverter baseConverter = null)
+            public Converter(StyleConverterBase baseConverter = null)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();
                 DefaultList = Empty;
             }
 
-            public Converter(IStyleConverter baseConverter = null, T emptyValue = default)
+            public Converter(StyleConverterBase baseConverter = null, T emptyValue = default)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();
                 DefaultList = new CssValueList<T>(new T[0], emptyValue);
             }
 
-            public bool CanHandleKeyword(CssKeyword keyword) => keyword == CssKeyword.None;
-            public object Convert(object value)
+
+            protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value == null || Equals(value, CssKeyword.None)) return DefaultList;
-                if (value is CssValueList<T>) return value;
-
-                if (!(value is string))
-                {
-                    var converted = BaseConverter.Convert(value);
-
-                    if (converted is T t)
-                    {
-                        return new CssValueList<T>(t);
-                    }
-                }
-                return Parse(value?.ToString());
+                return ComputedMapper.Create(out result, value, BaseConverter,
+                    (object resolvedValue, out IComputedValue rs) => {
+                        if (resolvedValue is T t) return Constant(new CssValueList<T>(t), out rs);
+                        return Fail(out rs);
+                    });
             }
-            public object Parse(string value)
+
+            protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
+                if (value == "none") return Constant(DefaultList, out result);
 
                 var splits = ParserHelpers.Split(value, ',');
 
-                var items = new T[splits.Count];
+                return ComputedList.Create(out result, splits.OfType<object>().ToList(), BaseConverter,
+                    (List<object> resolvedValues, out IComputedValue rs) => {
+                        return Constant(new CssValueList<T>(resolvedValues.OfType<T>().ToArray()), out rs);
+                    });
+            }
 
-                for (int i = 0; i < splits.Count; i++)
-                {
-                    var split = splits[i];
-                    var item = BaseConverter.Parse(split);
-                    if (item is T it)
-                    {
-                        items[i] = it;
-                    }
-                    else
-                    {
-                        return CssKeyword.Invalid;
-                    }
-                }
-
-                return new CssValueList<T>(items);
+            public IComputedValue FromList(IList<IComputedValue> list)
+            {
+                return new ComputedList(list, BaseConverter,
+                    (List<object> resolvedValues, out IComputedValue rs) => {
+                        return Constant(new CssValueList<T>(resolvedValues.OfType<T>().ToArray()), out rs);
+                    });
             }
         }
     }

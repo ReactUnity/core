@@ -1,3 +1,4 @@
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Computed
@@ -23,7 +24,7 @@ namespace ReactUnity.Styling.Computed
             Type = type;
         }
 
-        public object GetValue(IStyleProperty prop, NodeStyle style)
+        public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
             var size = 0f;
 
