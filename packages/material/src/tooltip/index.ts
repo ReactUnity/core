@@ -1,4 +1,4 @@
-import { ReactUnity, Renderer, YogaValue2Aux } from '@reactunity/renderer';
+import { PositioningLiteral, ReactUnity, Renderer, YogaValue2Aux } from '@reactunity/renderer';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useRef } from 'react';
 import { useAutoRef } from '../util/hooks/use-auto-ref';
@@ -6,8 +6,10 @@ import style from './index.module.scss';
 
 export type TooltipTrigger = 'hover' | 'press' | 'click';
 export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom' | 'center';
+type Position = PositioningLiteral | [number | string, number | string] | string;
+type NormalizedPosition = readonly [string, string];
 
-const positions: Record<TooltipPosition, { anchor?: YogaValue2Aux, pivot?: YogaValue2Aux }> = {
+const positions: Record<TooltipPosition, { anchor?: YogaValue2Aux, pivot?: Position }> = {
   left: { anchor: 'left', pivot: 'right' },
   right: { anchor: 'right', pivot: 'left' },
   top: { anchor: 'top', pivot: 'bottom' },
@@ -20,12 +22,109 @@ export type TooltipProps = {
   target?: React.RefObject<ReactUnity.UGUI.UGUIComponent>;
   className?: string;
   anchor?: YogaValue2Aux;
-  pivot?: YogaValue2Aux;
+  pivot?: Position;
   offset?: number;
   position?: TooltipPosition;
   interactive?: boolean;
 };
 export type TooltipPropsCallback = ((el: ReactUnity.UGUI.UGUIComponent) => TooltipProps);
+
+
+function parseFromPositioningLiteral(str: string) {
+  let x: number;
+  let y: number;
+  var values = str.split(' ');
+
+  if (values.length > 2) return;
+
+  var hasDouble = values.length === 2;
+
+  if (values.includes('top')) {
+    x = 0.5;
+    y = 0;
+    if (hasDouble) {
+      if (values.includes('left')) x = 0;
+      else if (values.includes('right')) x = 1;
+      else if (values.includes('center')) x = 0.5;
+      else return;
+    }
+  }
+  else if (values.includes('bottom')) {
+    x = 0.5;
+    y = 1;
+    if (hasDouble) {
+      if (values.includes('left')) x = 0;
+      else if (values.includes('right')) x = 1;
+      else if (values.includes('center')) x = 0.5;
+      else return;
+    }
+  }
+  else if (values.includes('left')) {
+    if (hasDouble && !values.includes('center')) return;
+    x = 0;
+    y = 0.5;
+  }
+  else if (values.includes('right')) {
+    if (hasDouble && !values.includes('center')) return;
+    x = 1;
+    y = 0.5;
+  }
+  else if (values.includes('center')) {
+    if (hasDouble && values[0] !== values[1]) return;
+    x = 0.5;
+    y = 0.5;
+  }
+  else {
+    return;
+  }
+
+  return [(x * 100) + '%', (y * 100) + '%'] as const;
+}
+
+
+function convert2DValue(val: Position): NormalizedPosition | undefined {
+  if (!val) return;
+  if (typeof val === 'string') {
+    val = val.trim();
+    if (!val) return;
+
+    var sp = parseFromPositioningLiteral(val);
+    if (sp) return sp;
+
+    var values = val.split(' ');
+
+    if (values.length === 2) {
+      return values as unknown as NormalizedPosition;
+    }
+
+    return;
+  }
+
+  if (Array.isArray(val)) {
+    if (!val.length) return;
+
+    var v0 = val[0];
+    var v1 = val[1];
+
+    var v0f = typeof v0 === 'number' ? v0 + 'px' : v0;
+    var v1f = typeof v1 === 'number' ? v1 + 'px' : v1;
+
+    return [v0f, v1f] as const;
+  }
+
+  return;
+}
+
+function convertToTransform(val: Position, negate = false): string {
+  const converted = convert2DValue(val);
+  if (!converted) return '';
+
+  const cx = negate ? (converted[0].startsWith('-') ? converted[0].substring(1) : '-' + converted[0]) : converted[0];
+  const cy = negate ? (converted[1].startsWith('-') ? converted[1].substring(1) : '-' + converted[1]) : converted[1];
+
+  return `${cx} ${cy}`;
+}
+
 
 function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, withBackdrop: boolean, hide: (() => void)) {
   target = props.target ? props.target.current : target;
@@ -44,9 +143,8 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
   anchor.Style.Set('translate', props.anchor || pos?.anchor || 'bottom');
   anchor.Style.Set('inset', -(props.offset || 5));
 
-  const pivot = Interop.ReactUnity.Converters.AllConverters.YogaValue2Converter.Convert(props.pivot || pos?.pivot || 'top') as ReactUnity.Types.YogaValue2;
-  const realPivot = pivot.GetType().ToString() === 'ReactUnity.Types.YogaValue2' ? pivot : Interop.ReactUnity.Types.YogaValue2.Center;
-  tooltip.Style.Set('translate', realPivot.Negate());
+  const pivotOriginal = props.pivot || pos?.pivot || 'top';
+  tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
 
   UnityBridge.appendChild(target, anchor);
 
