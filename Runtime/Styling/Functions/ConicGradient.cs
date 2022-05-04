@@ -74,11 +74,11 @@ namespace ReactUnity.Styling.Functions
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.AngleConverter },
                 (resolved) => {
                     if (
-                        resolved[0] is List<BaseGradient.ColorKey> colors &&
-                        resolved[1] is YogaValue2 at &&
-                        resolved[2] is float from
+                        resolved[0] is List<BaseGradient.ColorKey> colorsRs &&
+                        resolved[1] is YogaValue2 atRs &&
+                        resolved[2] is float fromRs
                     )
-                        return new ConicGradient(colors, isRepeating, at, from * Mathf.Deg2Rad);
+                        return new ConicGradient(colorsRs, isRepeating, atRs, fromRs * Mathf.Deg2Rad);
                     return null;
                 });
         }

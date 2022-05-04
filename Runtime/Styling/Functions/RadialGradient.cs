@@ -85,13 +85,13 @@ namespace ReactUnity.Styling.Functions
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.YogaValueConverter, SizeHintConverter, ShapeConverter },
                 (resolved) => {
                     if (
-                        resolved[0] is List<BaseGradient.ColorKey> colors &&
-                        resolved[1] is YogaValue2 at &&
-                        resolved[2] is YogaValue radius &&
-                        resolved[3] is RadialGradientSizeHint sizeHint &&
-                        resolved[4] is RadialGradientShape shape
+                        resolved[0] is List<BaseGradient.ColorKey> colorsRs &&
+                        resolved[1] is YogaValue2 atRs &&
+                        resolved[2] is YogaValue radiusRs &&
+                        resolved[3] is RadialGradientSizeHint sizeHintRs &&
+                        resolved[4] is RadialGradientShape shapeRs
                     )
-                        return new RadialGradient(colors, isRepeating, at, radius, sizeHint, shape);
+                        return new RadialGradient(colorsRs, isRepeating, atRs, radiusRs, sizeHintRs, shapeRs);
                     return null;
                 });
         }

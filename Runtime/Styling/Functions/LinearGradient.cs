@@ -35,10 +35,10 @@ namespace ReactUnity.Styling.Functions
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.AngleConverter },
                 (resolved) => {
                     if (
-                        resolved[0] is List<BaseGradient.ColorKey> colors &&
-                        resolved[1] is float angle
+                        resolved[0] is List<BaseGradient.ColorKey> colorsRs &&
+                        resolved[1] is float angleRs
                     )
-                        return new LinearGradient(colors, isRepeating, angle * Mathf.Deg2Rad);
+                        return new LinearGradient(colorsRs, isRepeating, angleRs * Mathf.Deg2Rad);
 
                     return null;
                 });
