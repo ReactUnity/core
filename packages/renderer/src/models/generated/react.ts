@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 29/04/2022 17:32:51
+// Generated 08/05/2022 05:16:15
 //
 /* eslint-disable */
 
@@ -601,256 +601,6 @@ export declare namespace ReactUnity {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
-  }
-  export namespace Converters {
-    export class AllConverters {
-      constructor();
-      static DefaultConverter: ReactUnity.Converters.IStyleConverter;
-      static StringConverter: ReactUnity.Converters.IStyleConverter;
-      static FloatConverter: ReactUnity.Converters.IStyleConverter;
-      static AngleConverter: ReactUnity.Converters.IStyleConverter;
-      static LengthConverter: ReactUnity.Converters.IStyleConverter;
-      static FontSizeConverter: ReactUnity.Converters.IStyleConverter;
-      static DurationConverter: ReactUnity.Converters.IStyleConverter;
-      static PercentageConverter: ReactUnity.Converters.IStyleConverter;
-      static ColorValueConverter: ReactUnity.Converters.IStyleConverter;
-      static UrlConverter: ReactUnity.Converters.IStyleConverter;
-      static GeneralConverter: ReactUnity.Converters.IStyleConverter;
-      static YogaValueConverter: ReactUnity.Converters.IStyleConverter;
-      static YogaValue2Converter: ReactUnity.Converters.IStyleConverter;
-      static BorderRadiusConverter: ReactUnity.Converters.IStyleConverter;
-      static Vector2Converter: ReactUnity.Converters.IStyleConverter;
-      static Vector3Converter: ReactUnity.Converters.IStyleConverter;
-      static IntConverter: ReactUnity.Converters.IStyleConverter;
-      static IterationCountConverter: ReactUnity.Converters.IStyleConverter;
-      static BoolConverter: ReactUnity.Converters.IStyleConverter;
-      static ColorConverter: ReactUnity.Converters.IStyleConverter;
-      static BoxShadowConverter: ReactUnity.Converters.IStyleConverter;
-      static ImageReferenceConverter: ReactUnity.Converters.IStyleConverter;
-      static ImageSourceConverter: ReactUnity.Converters.IStyleConverter;
-      static TextReferenceConverter: ReactUnity.Converters.IStyleConverter;
-      static AudioReferenceConverter: ReactUnity.Converters.IStyleConverter;
-      static VideoReferenceConverter: ReactUnity.Converters.IStyleConverter;
-      static FontReferenceConverter: ReactUnity.Converters.IStyleConverter;
-      static RotateConverter: ReactUnity.Converters.IStyleConverter;
-      static ScaleConverter: ReactUnity.Converters.IStyleConverter;
-      static TransitionPropertyConverter: ReactUnity.Converters.IStyleConverter;
-      static CursorListConverter: ReactUnity.Converters.IStyleConverter;
-      static TimingFunctionConverter: ReactUnity.Converters.IStyleConverter;
-      static FontWeightConverter: ReactUnity.Converters.IStyleConverter;
-      static ImageDefinitionConverter: ReactUnity.Converters.IStyleConverter;
-      static BackgroundSizeConverter: ReactUnity.Converters.IStyleConverter;
-      static Get(type: System.Type): ReactUnity.Converters.GeneralConverter;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class BoolConverter {
-      constructor(truthyValues: string[], falsyValues: string[]);
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
-      static IsTruthy(obj: any): boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ColorConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class CountConverter {
-      constructor();
-      AllowFloats: boolean;
-      AllowInfinite: boolean;
-      InfiniteValue: number;
-      Min: number;
-      Max: number;
-      FloatConverter: ReactUnity.Converters.FloatConverter;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Validate(value: number): any;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class EnumConverter<T = any> {
-      constructor(allowFlags: boolean, keywordOnly: boolean);
-      constructor(keywordOnly: boolean);
-      EnumType: System.Type;
-      AllowFlags: boolean;
-      KeywordOnly: boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class FloatConverter {
-      constructor();
-      constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg0: number) => any)>, allowSuffixless?: boolean);
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class PercentageConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ColorValueConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class LengthConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class FontSizeConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class AngleConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class DurationConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class GeneralConverter {
-      constructor(baseConverter?: ReactUnity.Converters.IStyleConverter);
-      static Wrap(baseConverter: ReactUnity.Converters.IStyleConverter): ReactUnity.Converters.GeneralConverter;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class IntConverter {
-      constructor();
-      FloatParser: ReactUnity.Converters.FloatConverter;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export interface IStyleParser {
-      Parse(value: string): any;
-    }
-    export interface IStyleConverter {
-      Convert(value: any): any;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-    }
-    export class StringConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
-      static Normalize(value: string): string;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class UrlConverter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class Vector2Converter {
-      constructor();
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class Vector3Converter {
-      constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Converters.IStyleConverter, defaultZValue?: number);
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class YogaValueConverter {
-      constructor(allowHorizontal?: boolean, allowVertical?: boolean);
-      static Horizontal: ReactUnity.Converters.YogaValueConverter;
-      static Vertical: ReactUnity.Converters.YogaValueConverter;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
   }
   export namespace Editor {
     export class ReactElementDrawer {
@@ -2710,6 +2460,7 @@ export declare namespace ReactUnity {
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       GetValue(key: string): any;
+      ClearValue(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
@@ -2740,6 +2491,7 @@ export declare namespace ReactUnity {
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       Evaluate(code: string, fileName?: string): any;
+      ClearValue(key: string): void;
       GetValue(key: string): any;
       CreateNativeObject(props: Record<string, any>): any;
       CreateTypeReference(type: System.Type): any;
@@ -2759,6 +2511,7 @@ export declare namespace ReactUnity {
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       GetValue(key: string): any;
+      ClearValue(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateNativeObject(props: Record<string, any>): any;
@@ -2879,17 +2632,11 @@ export declare namespace ReactUnity {
     export namespace DomProxies {
       export class ConsoleProxy {
         constructor(ctx: ReactUnity.ReactContext);
-        log(msg: any): void;
         log(msg: any, ...subs: any[]): void;
-        info(msg: any): void;
         info(msg: any, ...subs: any[]): void;
-        debug(msg: any): void;
         debug(msg: any, ...subs: any[]): void;
-        warn(msg: any): void;
         warn(msg: any, ...subs: any[]): void;
-        error(msg: any): void;
         error(msg: any, ...subs: any[]): void;
-        dir(msg: any): void;
         dir(msg: any, ...subs: any[]): void;
         count(msg?: any): number;
         clear(): void;
@@ -3327,6 +3074,7 @@ export declare namespace ReactUnity {
   }
   export namespace Styling {
     export class CssFunctions {
+      static Calc: ReactUnity.Styling.ICssFunction;
       static Steps: ReactUnity.Styling.ICssFunction;
       static CubicBezier: ReactUnity.Styling.ICssFunction;
       static Url: ReactUnity.Styling.ICssFunction;
@@ -3346,18 +3094,16 @@ export declare namespace ReactUnity {
     export interface ICssFunction {
       Name: string;
       CanHandleArguments(count: number, name: string, args: string[]): boolean;
-      Call(name: string, args: string[], argsCombined: string): any;
+      Call(name: string, args: string[], argsCombined: string, converter: ReactUnity.Styling.Converters.StyleConverterBase): any;
     }
     export enum CssKeyword {
       NoKeyword = 0,
-      Invalid = 1,
       Initial = 2,
       Inherit = 3,
       Auto = 4,
       None = 5,
       Unset = 6,
       Default = 7,
-      CurrentColor = 8,
     }
     export class CssProperties {
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
@@ -3486,7 +3232,7 @@ export declare namespace ReactUnity {
       zIndex: number;
       visibility: boolean;
       position: ReactUnity.Types.PositionType;
-      cursor: ReactUnity.Types.CursorList;
+      cursor: ReactUnity.Types.ICssValueList<ReactUnity.Types.Cursor>;
       pointerEvents: ReactUnity.Types.PointerEvents;
       borderTopLeftRadius: ReactUnity.Types.YogaValue2;
       borderTopRightRadius: ReactUnity.Types.YogaValue2;
@@ -3576,7 +3322,6 @@ export declare namespace ReactUnity {
       inherited: boolean;
       affectsLayout: boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
-      Convert(value: any): any;
     }
     export class LayoutProperties {
       static StyleDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDirection]
@@ -3639,7 +3384,7 @@ export declare namespace ReactUnity {
     export interface ILayoutProperty {
     }
     export class LayoutProperty<T = any> {
-      constructor(name: string, transitionable?: boolean, defaultValue?: T, converter?: ReactUnity.Converters.IStyleConverter);
+      constructor(name: string, transitionable?: boolean, defaultValue?: T, converter?: ReactUnity.Styling.Converters.StyleConverterBase);
       affectsLayout: boolean;
       name: string;
       type: System.Type;
@@ -3647,10 +3392,9 @@ export declare namespace ReactUnity {
       transitionable: boolean;
       inherited: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
-      converter: ReactUnity.Converters.GeneralConverter;
-      Convert(value: any): any;
+      converter: ReactUnity.Styling.Converters.StyleConverterBase;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
@@ -3663,7 +3407,7 @@ export declare namespace ReactUnity {
       static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
       static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
       static position: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.PositionType]
-      static cursor: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.CursorList]
+      static cursor: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.Cursor]
       static pointerEvents: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.PointerEvents]
       static borderTopLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static borderTopRightRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
@@ -3740,7 +3484,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class StyleProperty<T = any> {
-      constructor(name: string, initialValue?: any, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Converters.IStyleConverter);
+      constructor(name: string, initialValue?: any, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Styling.Converters.StyleConverterBase);
       name: string;
       type: System.Type;
       defaultValue: any; // System.Object
@@ -3748,10 +3492,9 @@ export declare namespace ReactUnity {
       inherited: boolean;
       affectsLayout: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
-      converter: ReactUnity.Converters.GeneralConverter;
-      Convert(value: any): any;
+      converter: ReactUnity.Styling.Converters.StyleConverterBase;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
@@ -3760,8 +3503,10 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class ValueListStyleProperty<T = any> {
-      constructor(name: string, initialValue?: any, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Converters.IStyleConverter, baseConverter?: ReactUnity.Converters.IStyleConverter);
-      constructor(name: string, emptyValue: T, transitionable?: boolean, inherited?: boolean, converter?: ReactUnity.Converters.IStyleConverter, baseConverter?: ReactUnity.Converters.IStyleConverter);
+      constructor(name: string, initialValue: any, transitionable: boolean, inherited: boolean, converter: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(name: string, initialValue?: T[], transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(name: string, emptyValue: T, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      Converter: ReactUnity.Types.CssValueList<T>;
       name: string;
       type: System.Type;
       defaultValue: any; // System.Object
@@ -3769,10 +3514,9 @@ export declare namespace ReactUnity {
       inherited: boolean;
       affectsLayout: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
-      converter: ReactUnity.Converters.GeneralConverter;
-      Convert(value: any): any;
+      converter: ReactUnity.Styling.Converters.StyleConverterBase;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
@@ -3790,7 +3534,7 @@ export declare namespace ReactUnity {
       noneValue: any; // System.Object
       affectsLayout: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
-      Convert(value: any): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
@@ -3999,11 +3743,7 @@ export declare namespace ReactUnity {
         static Interpolate(from: UnityEngine.Vector4, to: UnityEngine.Vector4, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Vector4;
         static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Quaternion;
         static Interpolate(from: any, to: any, t: number): any;
-        static Interpolate(from: any, to: any, t: number, type: System.Type): any;
         static Interpolate(from: any, to: any, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): any;
-        static Interpolate(from: any, to: any, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction, type: System.Type): any;
-        static Interpolate(from: any, to: any, t: number, timingFunctionType: ReactUnity.Styling.Animations.TimingFunctionType): any;
-        static Interpolate(from: any, to: any, t: number, timingFunctionType: ReactUnity.Styling.Animations.TimingFunctionType, type: System.Type): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4084,8 +3824,7 @@ export declare namespace ReactUnity {
       export class TimingFunctions_Converter {
         constructor();
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-        Convert(value: any): any;
-        Parse(value: string): any;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4094,8 +3833,7 @@ export declare namespace ReactUnity {
       export class TransitionProperty_Converter {
         constructor();
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-        Convert(value: any): any;
-        Parse(value: string): any;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4103,18 +3841,44 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Computed {
-      export class ComputedConstant {
-        constructor(value: any);
-        Value: any; // System.Object
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+      export class ComputedCalc {
+        constructor(values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>, operators: System.Collections.Generic.IList<ReactUnity.Styling.Computed.ComputedCalc_CalcOperator>, converter: ReactUnity.Styling.Converters.StyleConverterBase);
+        Values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>;
+        Operators: System.Collections.Generic.IList<ReactUnity.Styling.Computed.ComputedCalc_CalcOperator>;
+        Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        AllowUnitless: boolean;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Create(values: any, operators: any, converter: ReactUnity.Styling.Converters.StyleConverterBase, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ComputedCompound {
+        constructor(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback);
+        Callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback;
+        Values: ReactUnity.Styling.Computed.IComputedValue[];
+        Converters: ReactUnity.Styling.Converters.StyleConverterBase[];
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Create(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedConstant {
+        constructor(value: any);
+        Value: any; // System.Object
+        ConstantValue: any; // System.Object
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        ToString(): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
       export class ComputedCurrentColor {
         static Instance: ReactUnity.Styling.Computed.ComputedCurrentColor;
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4123,7 +3887,7 @@ export declare namespace ReactUnity {
       export class ComputedDynamic {
         constructor(value: any);
         Value: any; // System.Object
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4133,7 +3897,7 @@ export declare namespace ReactUnity {
         constructor(ratio: number);
         static Default: ReactUnity.Styling.Computed.ComputedFontSize;
         Ratio: number;
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4144,7 +3908,51 @@ export declare namespace ReactUnity {
         From: ReactUnity.Styling.Computed.IComputedValue;
         To: ReactUnity.Styling.Computed.IComputedValue;
         Ratio: number;
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Create(from: ReactUnity.Styling.Computed.IComputedValue, to: ReactUnity.Styling.Computed.IComputedValue, ratio: number): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedKeyword {
+        constructor(keyword: ReactUnity.Styling.CssKeyword);
+        Keyword: ReactUnity.Styling.CssKeyword;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedList {
+        constructor(values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback, defaultValue?: any);
+        Callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback;
+        Values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>;
+        Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        DefaultValue: any; // System.Object
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Create(values: any, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback, defaultValue?: any, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedMapper {
+        constructor(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback);
+        Callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback;
+        Value: ReactUnity.Styling.Computed.IComputedValue;
+        Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        static Create(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedPercentage {
+        constructor(value: number);
+        Value: number;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4154,7 +3962,17 @@ export declare namespace ReactUnity {
         constructor(ratio: number, type: ReactUnity.Styling.Computed.ComputedRootRelative_RootValueType);
         Ratio: number;
         Type: ReactUnity.Styling.Computed.ComputedRootRelative_RootValueType;
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedStringTemplate {
+        constructor(template: System.Collections.Generic.IList<string>, variables: System.Collections.Generic.IList<ReactUnity.Styling.Computed.ComputedVariable>);
+        Template: System.Collections.Generic.IList<string>;
+        Variables: System.Collections.Generic.IList<ReactUnity.Styling.Computed.ComputedVariable>;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4164,14 +3982,87 @@ export declare namespace ReactUnity {
         constructor(prop: ReactUnity.Styling.VariableProperty, fallbackValue: any);
         Property: ReactUnity.Styling.VariableProperty;
         FallbackValue: any; // System.Object
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle): any;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
       export interface IComputedValue {
-        GetValue(targetProp: ReactUnity.Styling.IStyleProperty, targetStyle: ReactUnity.Styling.NodeStyle): any;
+        GetValue(targetProp: ReactUnity.Styling.IStyleProperty, targetStyle: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+      }
+      export interface IComputedConstant {
+        ConstantValue: any; // System.Object
+      }
+      export class ComputedValueExtensions {
+        static ResolveValue(cv: ReactUnity.Styling.Computed.IComputedValue, targetProp: ReactUnity.Styling.IStyleProperty, targetStyle: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum ComputedCalc_CalcOperator {
+        None = 0,
+        Add = 1,
+        Subtract = 2,
+        Multiply = 3,
+        Divide = 4,
+      }
+      export class ComputedCalc_CalcValue {
+        Value: number;
+        HasUnit: boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedCompound_CompoundCallback {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(values: any[]): any;
+        BeginInvoke(values: any[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): any;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ComputedList_CompoundCallback {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(values: any[]): any;
+        BeginInvoke(values: any[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): any;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ComputedMapper_MapCallback {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(value: any): any;
+        BeginInvoke(value: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): any;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
       }
       export enum ComputedRootRelative_RootValueType {
         None = 0,
@@ -4180,6 +4071,271 @@ export declare namespace ReactUnity {
         Min = 3,
         Max = 4,
         Rem = 5,
+      }
+    }
+    export namespace Converters {
+      export class AllConverters {
+        constructor();
+        static DefaultConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static StringConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static AngleConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static LengthConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static FontSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static DurationConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static PercentageConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ColorValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static UrlConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static YogaValueConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static YogaValue2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static BorderRadiusConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static Vector2Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static Vector3Converter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static IntConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static IterationCountConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static BoolConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ColorConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static BoxShadowConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ImageReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ImageSourceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TextReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static AudioReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static VideoReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static FontReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static RotateConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ScaleConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TransitionPropertyConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static CursorConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static TimingFunctionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static FontWeightConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static ImageDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static BackgroundSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class BoolConverter {
+        constructor(truthyValues: string[], falsyValues: string[]);
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ColorConverter {
+        constructor();
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class EnumConverter<T = any> {
+        constructor(allowFlags: boolean, keywordOnly: boolean);
+        constructor(keywordOnly: boolean);
+        EnumType: System.Type;
+        AllowFlags: boolean;
+        KeywordOnly: boolean;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FloatConverter {
+        constructor();
+        constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg0: number) => any)>, allowSuffixless?: boolean);
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class PercentageConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ColorValueConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class LengthConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FontSizeConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class AngleConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class DurationConverter {
+        constructor();
+        AllowSuffixless: boolean;
+        CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class CalcConverter {
+        constructor(baseConverter: ReactUnity.Styling.Converters.FloatConverter);
+        BaseConverter: ReactUnity.Styling.Converters.FloatConverter;
+        BasePercentage: boolean;
+        AllowsUnitless: boolean;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class IntConverter {
+        constructor();
+        AllowFloats: boolean;
+        AllowInfinite: boolean;
+        InfiniteValue: number;
+        Min: number;
+        Max: number;
+        FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class CountConverter {
+        constructor();
+        AllowFloats: boolean;
+        AllowInfinite: boolean;
+        InfiniteValue: number;
+        Min: number;
+        Max: number;
+        FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class StringConverter {
+        constructor();
+        static Normalize(value: string): string;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export interface IStyleConverter {
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      }
+      export class StyleConverterBase {
+        constructor();
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TypedStyleConverterBase<T = any> {
+        constructor();
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class UrlConverter {
+        constructor();
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector2Converter {
+        constructor(allowLiterals?: boolean);
+        AllowLiterals: boolean;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector3Converter {
+        constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Styling.Converters.StyleConverterBase, defaultZValue?: number);
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class YogaValueConverter {
+        constructor(allowHorizontal?: boolean, allowVertical?: boolean);
+        static Horizontal: ReactUnity.Styling.Converters.YogaValueConverter;
+        static Vertical: ReactUnity.Styling.Converters.YogaValueConverter;
+        CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
       }
     }
     export namespace Rules {
@@ -4229,7 +4385,6 @@ export declare namespace ReactUnity {
         static ConvertStyleDeclarationToRecord(rule: any, important: boolean): any;
         static ConvertStyleDeclarationToRecord(dc: any): any;
         static NormalizeSelector(selector: string): string;
-        static GetCssKeyword(value: string): ReactUnity.Styling.CssKeyword;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4535,8 +4690,6 @@ export declare namespace ReactUnity {
       blur: UnityEngine.Vector2;
       inset: boolean;
       Definition: string;
-      static ColorParser: ReactUnity.Converters.ColorConverter;
-      static FloatParser: ReactUnity.Converters.FloatConverter;
       static Default: ReactUnity.Types.BoxShadow;
       static DefaultInset: ReactUnity.Types.BoxShadow;
       Interpolate(to: any, t: number): any;
@@ -4544,22 +4697,6 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
-    }
-    export interface ICommaSeparatedListItem {
-      Definition: string;
-      Valid: boolean;
-    }
-    export class CommaSeparatedList<T = any> {
-      constructor(item: T);
-      constructor(items: T[]);
-      constructor(definition: string);
-      Definition: string;
-      Items: T[];
-      Any: boolean;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      ToString(): string;
-      GetType(): System.Type;
     }
     export interface ICssValueList<T = any> {
       Count: number;
@@ -4644,25 +4781,9 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class CursorList {
-      constructor(definition: string);
-      constructor(item: ReactUnity.Types.Cursor);
-      constructor(items: ReactUnity.Types.Cursor[]);
-      Definition: string;
-      Items: ReactUnity.Types.Cursor[];
-      Any: boolean;
-      static Default: ReactUnity.Types.CursorList;
-      static None: ReactUnity.Types.CursorList;
-      static Pointer: ReactUnity.Types.CursorList;
-      static Text: ReactUnity.Types.CursorList;
-      GetWebGLDefinition(): string;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      ToString(): string;
-      GetType(): System.Type;
-    }
     export class Cursor {
-      constructor(definition: string);
+      constructor(name: string);
+      constructor(image: ReactUnity.Types.ImageReference, offset: UnityEngine.Vector2);
       Offset: UnityEngine.Vector2;
       Name: string;
       Image: ReactUnity.Types.ImageReference;
@@ -4852,7 +4973,7 @@ export declare namespace ReactUnity {
       constructor(url: ReactUnity.Types.Url);
       Type: ReactUnity.Types.AssetReferenceType;
       Value: any; // System.Object
-      static None: ReactUnity.Types.ImageReference;
+      static None: ReactUnity.Types.TextReference;
       Dispose(): void;
       Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.TextAsset) => void)): void;
       Equals(obj: any): boolean;
@@ -4937,8 +5058,7 @@ export declare namespace ReactUnity {
     export class AudioReference_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4947,8 +5067,7 @@ export declare namespace ReactUnity {
     export class BackgroundSize_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4956,19 +5075,19 @@ export declare namespace ReactUnity {
     }
     export class BoxShadow_Converter {
       constructor();
+      static ColorParser: ReactUnity.Styling.Converters.StyleConverterBase;
+      static FloatParser: ReactUnity.Styling.Converters.StyleConverterBase;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export class CursorList_Converter {
+    export class Cursor_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4977,8 +5096,7 @@ export declare namespace ReactUnity {
     export class FontReference_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5008,8 +5126,7 @@ export declare namespace ReactUnity {
     export class ImageDefinition_Converter {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5019,8 +5136,7 @@ export declare namespace ReactUnity {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5030,18 +5146,17 @@ export declare namespace ReactUnity {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class VideoReference_Converter {
-      constructor();
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): any;
-      Parse(value: string): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5050,8 +5165,7 @@ export declare namespace ReactUnity {
     export class YogaValue2_Converter {
       constructor(allowLiterals?: boolean, separator?: System.Char, singleValueAssignsBoth?: boolean);
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Parse(value: string): any;
-      Convert(value: any): any;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10233,7 +10347,7 @@ export declare namespace ReactUnity {
       }
       export class CursorHandler {
         constructor();
-        Cursor: ReactUnity.Types.CursorList;
+        Cursor: ReactUnity.Types.ICssValueList<ReactUnity.Types.Cursor>;
         useGUILayout: boolean;
         runInEditMode: boolean;
         enabled: boolean;

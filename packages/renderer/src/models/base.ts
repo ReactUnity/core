@@ -13,10 +13,10 @@ export interface BaseEvents<T = BaseCmp> {
   onAnimationCancel?: AnimationCallback<T>;
   onAnimationEnd?: AnimationCallback<T>;
 
-  onTransitionRun?: AnimationCallback<T>;
-  onTransitionStart?: AnimationCallback<T>;
-  onTransitionCancel?: AnimationCallback<T>;
-  onTransitionEnd?: AnimationCallback<T>;
+  onTransitionRun?: TransitionCallback<T>;
+  onTransitionStart?: TransitionCallback<T>;
+  onTransitionCancel?: TransitionCallback<T>;
+  onTransitionEnd?: TransitionCallback<T>;
 }
 
 export type Textable = string | number | boolean | null | undefined;
