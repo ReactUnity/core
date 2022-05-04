@@ -1,8 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import * as React from 'react';
-import { ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { createContext, Fragment, memo, ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Toggle } from '..';
 import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
@@ -15,7 +14,7 @@ interface SelectSelectionElement extends SelectionElement {
   getTemplate(): ReactNode;
 }
 
-const SelectContext = React.createContext<SelectionState<any, SelectSelectionElement>>(null);
+const SelectContext = createContext<SelectionState<any, SelectSelectionElement>>(null);
 
 type ToggleEl = ReactUnity.UGUI.ToggleComponent;
 
@@ -75,7 +74,8 @@ function _Select<T = any>({
     };
 
     state.onUpdate = (st) => {
-      setSelectedElements(st.getSelectedElements());
+      const sel = st.getSelectedElements();
+      setSelectedElements(sel);
     };
   }, []);
 
@@ -90,7 +90,7 @@ function _Select<T = any>({
 
   const setFieldRef: ((val: InputFieldRef) => void) = useCallback((val) => {
     fieldRef.current = val;
-    fieldRef.current?.setEmpty(multiple ? (init.current as T[]).length === 0 : typeof init.current === 'undefined');
+    fieldRef.current?.setEmpty(multiple ? (init.current as T[])?.length === 0 : typeof init.current === 'undefined');
   }, [multiple]);
 
   return <InputField className={clsx(className, style.host, 'mat-select-field', style[variant], chips && style.chips, opened && [style.opened, 'mat-select-opened'])}
@@ -98,10 +98,10 @@ function _Select<T = any>({
 
     <button name="<Select>" onClick={toggle} className={clsx(style.trigger, 'mat-input-field-target')} {...otherProps}>
       <view className={style.triggerContent}>
-        {selectedElements.map((x, i) => <React.Fragment key={i}>
+        {selectedElements.map((x, i) => <Fragment key={i}>
           {i > 0 && separator}
           <view className={style.triggerPart}>{x.getTemplate()}</view>
-        </React.Fragment>)}
+        </Fragment>)}
       </view>
 
       <view className={clsx(style.menuRoot, opened && style.opened)}>
@@ -135,19 +135,22 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
   const selectedRef = useAutoRef(selected);
 
   const onChangeRef = useRef<(() => void)[]>([]);
-  const getTemplateRef = useRef<() => ReactNode>(() => triggerTemplate ?? children);
   const childRef = useAutoRef(children);
+  const getTemplateRef = useRef<() => ReactNode>(() => triggerTemplate ?? childRef.current ?? children);
 
-  const shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
+  const shouldShowToggle = showToggle === 'auto' ? !!ctx?.allowMultiple : !!showToggle;
 
   useEffect(() => {
     getTemplateRef.current = () => triggerTemplate ?? childRef.current;
-    ctx.triggerUpdate();
+    ctx?.triggerUpdate();
   }, [triggerTemplate, ctx]);
 
-  const selectionRef = React.useMemo<SelectSelectionElement>(() => ({
+  const selectionRef = useMemo<SelectSelectionElement>(() => ({
     get selected() { return selectedRef.current; },
-    set selected(val: boolean) { setSelected(val); },
+    set selected(val: boolean) {
+      selectedRef.current = val;
+      setSelected(val);
+    },
     value,
     addOnChange: (callback) => {
       if (!callback) return;
@@ -163,14 +166,13 @@ function _Option({ className, children, value, triggerTemplate, showToggle = 'au
   }), [value, setSelected, selectedRef]);
 
   useLayoutEffect(() => {
-    if (ctx) {
-      ctx.register(selectionRef);
-      return () => { ctx.unregister(selectionRef); };
-    }
+    return ctx?.register(selectionRef);
   }, [ctx, selectionRef]);
 
   const onClick = useCallback<UGUIElements['button']['onClick']>(() => {
-    setSelected(x => !x);
+    const newValue = !selectedRef.current;
+    selectedRef.current = newValue;
+    setSelected(newValue);
 
     for (let index = 0; index < onChangeRef.current.length; index++) {
       const cb = onChangeRef.current[index];
@@ -189,5 +191,5 @@ type SelectType = typeof _Select & {
   Option: typeof _Option;
 };
 
-export const Select = React.memo(_Select) as unknown as SelectType;
+export const Select = memo(_Select) as unknown as SelectType;
 Select.Option = _Option;

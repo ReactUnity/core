@@ -3,6 +3,7 @@ import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useContext, useImperativeHandle, useLayoutEffect, useMemo, useRef } from 'react';
 import { useRipple } from '../ripple';
+import { useAutoRef } from '../util/hooks/use-auto-ref';
 import { SelectionElement, SelectionState } from '../util/selection';
 import { MdInteractible } from '../util/types';
 import style from './index.module.scss';
@@ -46,12 +47,11 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
 
       if (typeof ref === 'function') ref(val);
       else if (ref) ref.current = val;
-
-      if (ctx) {
-        if (val) ctx.register(selectionRef);
-        else ctx.unregister(selectionRef);
-      }
     }, [ctx, ref, selectionRef]);
+
+    useLayoutEffect(() => {
+      return ctx?.register(selectionRef);
+    }, [ctx, selectionRef]);
 
     const NativeToggle = 'toggle' as any;
 
@@ -90,19 +90,25 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
   function _ToggleGroup({ children, multiple, showSelectAll, selectAllLabel, onChange, initialValue }, ref) {
     const init = useRef(initialValue);
     const selectAllRef = useRef<ToggleEl>();
+    const onChangeRef = useAutoRef(onChange);
 
     const state = useMemo(() => new SelectionState(multiple, init.current), [multiple, init]);
 
     useLayoutEffect(() => {
       state.onChange = (val, all, any) => {
-        onChange?.(val, all, any);
+        onChangeRef.current?.(val, all, any);
 
         if (selectAllRef.current) {
           selectAllRef.current.Indeterminate = !!any && !all;
           selectAllRef.current.Checked = !!all;
         }
       };
-    }, [onChange]);
+
+      if (selectAllRef.current) {
+        selectAllRef.current.Indeterminate = !!state.any && !state.all;
+        selectAllRef.current.Checked = !!state.all;
+      }
+    }, [onChangeRef]);
 
     const selectAllCallback: UGUIElements['toggle']['onChange'] = useCallback((checked, sender) => {
       state.setAll(checked);

@@ -12,7 +12,11 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
   value: T | T[];
   any: boolean;
   all: boolean;
+
+  // Fired when there is a change to the selected state
   onChange: (val: T | T[], all: boolean, any: boolean) => void;
+
+  // Fired when there is a change to the registered elements or their selected state
   onUpdate: (state: this) => void;
 
   constructor(
@@ -20,7 +24,13 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
     public readonly initialValue: any | any[],
   ) {
     this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
+
+    if (this.allowMultiple) {
+      if (!Array.isArray(this.value)) this.value = [this.value];
+      this.any = this.all = this.value.length > 0;
+    } else {
+      this.any = this.all = !!this.value;
+    }
   }
 
   private changed(sender?: ElementType): T | T[] {
@@ -105,6 +115,10 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
     }
 
     this.triggerUpdate();
+
+    return () => {
+      this.unregister(el);
+    };
   }
 
   unregister(el: ElementType) {
