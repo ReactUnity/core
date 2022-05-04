@@ -31,7 +31,7 @@ namespace ReactUnity.Styling.Functions
             var colors = GetColorKeys(args, startIndex, false);
 
             return ComputedCompound.Create(
-                new List<IComputedValue> { colors, angle ?? new ComputedConstant(100f) },
+                new List<IComputedValue> { colors, angle ?? new ComputedConstant(180f) },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.AngleConverter },
                 (resolved) => {
                     if (

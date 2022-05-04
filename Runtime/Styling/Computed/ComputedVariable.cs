@@ -17,7 +17,7 @@ namespace ReactUnity.Styling.Computed
         {
             var val = style.GetRawStyleValue(Property, false);
 
-            if (val == null) val = FallbackValue ?? prop.defaultValue;
+            if (val == null) val = FallbackValue ?? Property.defaultValue;
 
             if (val is IComputedValue d) val = d.ResolveValue(prop, style, converter);
 

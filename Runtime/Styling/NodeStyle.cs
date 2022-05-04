@@ -168,8 +168,8 @@ namespace ReactUnity.Styling
 
             if (value is IComputedValue d) value = d.ResolveValue(prop, this, prop);
 
-            if (value == null) return default;
-            if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
+            if (value == null) value = prop.defaultValue;
+            else if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
 
 #if UNITY_EDITOR
             if (value != null && !typeof(T).IsAssignableFrom(value.GetType()) && !typeof(T).IsEnum)

@@ -216,7 +216,7 @@ namespace ReactUnity.UGUI.Internal
             ICssValueList<BackgroundRepeat> repeatYs
         )
         {
-            var validCount = images.Count;
+            var validCount = images?.Count ?? 0;
 
             if (BackgroundGraphics == null)
             {
@@ -249,7 +249,7 @@ namespace ReactUnity.UGUI.Internal
             for (int i = 0; i < len; i++)
             {
                 var sd = BackgroundGraphics[len - 1 - i];
-                sd.SetBackgroundColorAndImage(color, images.Get(i), blendMode);
+                sd.SetBackgroundColorAndImage(color, images?.Get(i), blendMode);
                 sd.BackgroundRepeatX = repeatXs.Get(i);
                 sd.BackgroundRepeatY = repeatYs.Get(i);
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));

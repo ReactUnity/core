@@ -141,7 +141,7 @@ namespace ReactUnity.Styling.Converters
             return ComputedCompound.Create(
                 out result,
                 vals.OfType<object>().ToList(),
-                hsl ? new List<StyleConverterBase> { cv, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
+                hsl ? new List<StyleConverterBase> { AllConverters.AngleConverter, pc, pc, pc } : new List<StyleConverterBase> { cv, cv, cv, pc },
                 (resolved) => {
                     if (resolved[0] is float r && resolved[1] is float g && resolved[2] is float b)
                     {
