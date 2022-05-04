@@ -9,6 +9,9 @@ namespace ReactUnity.Styling.Converters
 {
     public class FloatConverter : TypedStyleConverterBase<float>
     {
+        private static HashSet<string> DefaultAllowedFunctions = new HashSet<string>() { "calc" };
+        protected override HashSet<string> AllowedFunctions => DefaultAllowedFunctions;
+
         static CultureInfo culture = new CultureInfo("en-US");
 
         Dictionary<string, float> SuffixMap;

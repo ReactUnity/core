@@ -33,7 +33,7 @@ namespace ReactUnity.Styling.Computed
                 var value = Values[i];
                 var cv = Converters[i];
 
-                var computed = value.ResolveValue(prop, style, cv);
+                var computed = value?.ResolveValue(prop, style, cv);
 
                 if (computed == null) return null;
                 results.Add(computed);
