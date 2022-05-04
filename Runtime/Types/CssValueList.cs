@@ -111,7 +111,7 @@ namespace ReactUnity.Types
 
             public IComputedValue FromList(IList<IComputedValue> list, T defaultValue = default)
             {
-                return new ComputedList(list, BaseConverter,
+                return ComputedList.Create(list, BaseConverter,
                     (resolvedValues) => {
                         return new CssValueList<T>(resolvedValues.OfType<T>().ToArray());
                     }, defaultValue);

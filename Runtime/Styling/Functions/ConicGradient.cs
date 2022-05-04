@@ -69,7 +69,7 @@ namespace ReactUnity.Styling.Functions
 
             var colors = LinearGradientFunction.GetColorKeys(args, startIndex, false);
 
-            return new ComputedCompound(
+            return ComputedCompound.Create(
                 new List<IComputedValue> { colors, at ?? new ComputedConstant(YogaValue2.Center), from ?? new ComputedConstant(0f) },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.YogaValue2Converter, AllConverters.AngleConverter },
                 (resolved) => {

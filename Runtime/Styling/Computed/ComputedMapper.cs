@@ -37,21 +37,24 @@ namespace ReactUnity.Styling.Computed
                 return false;
             }
 
-            if (StylingUtils.UnboxConstant(partResult, out var cc))
+            result = Create(partResult, converter, callback);
+            return result != null;
+        }
+
+        public static IComputedValue Create(IComputedValue value, StyleConverterBase converter, MapCallback callback)
+        {
+            if (StylingUtils.UnboxConstant(value, out var cc))
             {
                 var res = callback(cc);
 
                 if (res != null)
                 {
-                    result = new ComputedConstant(res);
-                    return true;
+                    return new ComputedConstant(res);
                 }
-                result = null;
-                return false;
+                return null;
             }
 
-            result = new ComputedMapper(partResult, converter, callback);
-            return true;
+            return new ComputedMapper(value, converter, callback);
         }
     }
 }

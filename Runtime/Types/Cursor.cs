@@ -68,7 +68,7 @@ namespace ReactUnity.Types
                 {
                     if (AllConverters.ImageReferenceConverter.TryParse(splits[0], out var imageResult))
                     {
-                        result = new ComputedMapper(imageResult, AllConverters.ImageReferenceConverter,
+                        result = ComputedMapper.Create(imageResult, AllConverters.ImageReferenceConverter,
                             (value) => {
                                 if (value is ImageReference iref)
                                 {

@@ -42,7 +42,7 @@ namespace ReactUnity.Styling.Computed
             return Callback(results);
         }
 
-        public static bool Create(out IComputedValue result, List<object> values, StyleConverterBase converter, CompoundCallback callback)
+        public static bool Create(out IComputedValue result, List<object> values, StyleConverterBase converter, CompoundCallback callback, object defaultValue = null)
         {
             var resultValues = new List<IComputedValue>();
             var allConstants = true;
@@ -61,21 +61,26 @@ namespace ReactUnity.Styling.Computed
                 allConstants &= partResult is IComputedConstant;
             }
 
-            if (allConstants)
+            result = Create(resultValues, converter, callback, defaultValue, allConstants);
+            return result != null;
+        }
+
+        public static IComputedValue Create(IList<IComputedValue> values, StyleConverterBase converter, CompoundCallback callback, object defaultValue = null, bool? allConstants = null)
+        {
+            if (!allConstants.HasValue) allConstants = values.All(x => x is IComputedConstant);
+
+            if (allConstants.Value)
             {
-                var res = callback(resultValues.OfType<IComputedConstant>().Select(x => x.ConstantValue).ToList());
+                var res = callback(values.OfType<IComputedConstant>().Select(x => x.ConstantValue ?? defaultValue).ToList());
 
                 if (res != null)
                 {
-                    result = new ComputedConstant(res);
-                    return true;
+                    return new ComputedConstant(res);
                 }
-                result = null;
-                return false;
+                return null;
             }
 
-            result = new ComputedList(resultValues, converter, callback);
-            return true;
+            return new ComputedList(values, converter, callback, defaultValue);
         }
     }
 }

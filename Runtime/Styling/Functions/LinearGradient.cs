@@ -30,7 +30,7 @@ namespace ReactUnity.Styling.Functions
 
             var colors = GetColorKeys(args, startIndex, false);
 
-            return new ComputedCompound(
+            return ComputedCompound.Create(
                 new List<IComputedValue> { colors, angle ?? new ComputedConstant(100f) },
                 new List<StyleConverterBase> { new TypedStyleConverterBase<List<BaseGradient.ColorKey>>(), AllConverters.AngleConverter },
                 (resolved) => {
@@ -117,9 +117,9 @@ namespace ReactUnity.Styling.Functions
                 }
             }
 
-            return new ComputedList(dcolors, AllConverters.ColorConverter,
+            return ComputedList.Create(dcolors, AllConverters.ColorConverter,
                 (resolved) => {
-                    return new ComputedList(doffsets, AllConverters.YogaValueConverter,
+                    return ComputedList.Create(doffsets, AllConverters.YogaValueConverter,
                         (resolved2) => {
                             var colors = new List<BaseGradient.ColorKey>();
 
