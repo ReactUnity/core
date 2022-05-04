@@ -23,5 +23,15 @@ namespace ReactUnity.Styling.Computed
 
             return Interpolater.Interpolate(from, to, Ratio);
         }
+
+        public static IComputedValue Create(IComputedValue from, IComputedValue to, float ratio)
+        {
+            if (StylingUtils.UnboxConstant(from, out var cFrom) && StylingUtils.UnboxConstant(to, out var cTo))
+            {
+                return StylingUtils.CreateComputed(Interpolater.Interpolate(cFrom, cTo, ratio));
+            }
+
+            return new ComputedInterpolation(from, to, ratio);
+        }
     }
 }

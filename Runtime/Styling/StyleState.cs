@@ -329,7 +329,7 @@ namespace ReactUnity.Styling
 
                     if (shouldRun && ratio < 1)
                     {
-                        activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default, sp.type);
+                        activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, easing.Get(i) ?? TimingFunctions.Default);
                     }
 
                     updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
@@ -557,7 +557,7 @@ namespace ReactUnity.Styling
 
                         if (lowValue != highValue)
                         {
-                            activeValue = Interpolater.Interpolate(lowValue, highValue, t, timingFunction.Get(ind) ?? TimingFunctions.Default, sp.type);
+                            activeValue = Interpolater.Interpolate(lowValue, highValue, t, timingFunction.Get(ind) ?? TimingFunctions.Default);
                         }
                         else activeValue = highValue;
                     }

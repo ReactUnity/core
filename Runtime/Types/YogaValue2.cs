@@ -220,11 +220,11 @@ namespace ReactUnity.Types
 
             private bool SinglePositional(object pos1, out IComputedValue result)
             {
-                return ComputedCompound.Create(out result,
-                    new List<object> { pos1 },
-                    new List<StyleConverterBase> { YogaValueParser },
-                    (resolvedValues) => {
-                        if (resolvedValues[0] is YogaValue fl1)
+                return ComputedMapper.Create(out result,
+                    pos1,
+                    YogaValueParser,
+                    (resolvedValue) => {
+                        if (resolvedValue is YogaValue fl1)
                             return new YogaValue2(fl1, SingleValueAssignsBoth ? fl1 : YogaValue.Undefined());
                         return null;
                     });
@@ -232,9 +232,9 @@ namespace ReactUnity.Types
 
             private bool TwoPositional(object pos1, object pos2, out IComputedValue result)
             {
-                return ComputedCompound.Create(out result,
+                return ComputedList.Create(out result,
                     new List<object> { pos1, pos2 },
-                    new List<StyleConverterBase> { YogaValueParser, YogaValueParser },
+                    YogaValueParser,
                     (resolvedValues) => {
                         if (resolvedValues[0] is YogaValue fl1 && resolvedValues[1] is YogaValue fl2)
                             return new YogaValue2(fl1, fl2);

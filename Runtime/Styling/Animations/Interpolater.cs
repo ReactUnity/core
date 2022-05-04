@@ -167,6 +167,14 @@ namespace ReactUnity.Styling.Animations
         {
             if (from == null) return to;
             if (to == null) return from;
+
+            if (from is IComputedValue d1)
+            {
+                if (to is IComputedValue d2) return ComputedInterpolation.Create(d1, d2, t);
+                else return ComputedInterpolation.Create(d1, new ComputedConstant(to), t);
+            }
+            if (to is IComputedValue dt) return ComputedInterpolation.Create(new ComputedConstant(from), dt, t);
+
             if (from is float f1 && to is float f2) return Interpolate(f1, f2, t);
             if (from is int i1 && to is int i2) return Interpolate(i1, i2, t);
             if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t);
@@ -177,54 +185,13 @@ namespace ReactUnity.Styling.Animations
             if (from is YogaValue b1 && to is YogaValue b2) return Interpolate(b1, b2, t);
             if (from is Interpolatable cvs1) return cvs1.Interpolate(to, t);
 
-            if (from is IComputedValue d1)
-            {
-                if (to is IComputedValue d2) return new ComputedInterpolation(d1, d2, t);
-                else return new ComputedInterpolation(d1, new ComputedConstant(to), t);
-            }
-            if (to is IComputedValue dt) return new ComputedInterpolation(new ComputedConstant(from), dt, t);
             return t > 0.5f ? to : from;
-        }
-
-        public static object Interpolate(object from, object to, float t, Type type)
-        {
-            if (type == null) return Interpolate(from, to, t);
-            else if (from == null) return to;
-            else if (to == null) return from;
-            else if (type == typeof(float)) { if (from is float f1 && to is float f2) return Interpolate(f1, f2, t); }
-            else if (type == typeof(int)) { if (from is int i1 && to is int i2) return Interpolate(i1, i2, t); }
-            else if (type == typeof(Color)) { if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t); }
-            else if (type == typeof(Vector2)) { if (from is Vector2 x1 && to is Vector2 x2) return Interpolate(x1, x2, t); }
-            else if (type == typeof(Vector3)) { if (from is Vector3 y1 && to is Vector3 y2) return Interpolate(y1, y2, t); }
-            else if (type == typeof(Vector4)) { if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t); }
-            else if (type == typeof(Quaternion)) { if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t); }
-            else if (type == typeof(YogaValue)) { if (from is YogaValue y1 && to is YogaValue y2) return Interpolate(y1, y2, t); }
-            else if (typeof(Interpolatable).IsAssignableFrom(type)) { if (from is Interpolatable f1) return f1.Interpolate(to, t); }
-            return Interpolate(from, to, t);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object Interpolate(object from, object to, float t, TimingFunction timingFunction)
         {
             return Interpolate(from, to, timingFunction(t));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static object Interpolate(object from, object to, float t, TimingFunction timingFunction, Type type)
-        {
-            return Interpolate(from, to, timingFunction(t), type);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType)
-        {
-            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType, Type type)
-        {
-            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t), type);
         }
         #endregion
 
