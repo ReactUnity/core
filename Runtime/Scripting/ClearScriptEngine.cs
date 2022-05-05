@@ -157,6 +157,11 @@ namespace ReactUnity.Scripting
             else Engine.AddHostObject(key, value);
         }
 
+        public void ClearValue(string key)
+        {
+            Engine.Execute("delete " + key);
+        }
+
         public object CreateTypeReference(Type type)
         {
             Engine.AddHostType(tempKey, type);

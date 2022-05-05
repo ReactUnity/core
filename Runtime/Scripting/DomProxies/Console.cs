@@ -40,55 +40,31 @@ namespace ReactUnity.Scripting.DomProxies
             baseCaller(aStringBuilder.ToString());
         }
 
-        public void log(object msg)
-        {
-            GenericLog(msg, Debug.Log);
-        }
         public void log(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void info(object msg)
-        {
-            GenericLog(msg, Debug.Log);
-        }
         public void info(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void debug(object msg)
-        {
-            GenericLog(msg, Debug.Log);
-        }
         public void debug(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void warn(object msg)
-        {
-            GenericLog(msg, Debug.LogWarning);
-        }
         public void warn(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.LogWarning, subs);
         }
 
-        public void error(object msg)
-        {
-            GenericLog(msg, Debug.LogError);
-        }
         public void error(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.LogError, subs);
         }
 
-        public void dir(object msg)
-        {
-            GenericLog(msg, Debug.Log);
-        }
         public void dir(object msg, params object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);

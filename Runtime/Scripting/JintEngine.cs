@@ -110,6 +110,11 @@ namespace ReactUnity.Scripting
             Engine.SetValue(key, CreateValue(value));
         }
 
+        public void ClearValue(string key)
+        {
+            Engine.SetValue(key, JsValue.Undefined);
+        }
+
         private JsValue CreateValue(object value)
         {
             if (value is Type t) return TypeReference.CreateTypeReference(Engine, t);

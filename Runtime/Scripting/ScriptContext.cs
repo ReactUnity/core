@@ -89,7 +89,8 @@ namespace ReactUnity.Scripting
         {
             Engine.SetValue("__thisArg", thisVal);
             var fn = EvaluateScript(
-                "(function(ts) { delete __thisArg; return (function(event, sender) {\n" + code + "\n}).bind(ts); })(__thisArg)");
+                "(function(ts) { return (function(event, sender) {\n" + code + "\n}).bind(ts); })(__thisArg)");
+            Engine.ClearValue("__thisArg");
 
             return Callback.From(fn, Context, thisVal);
         }
@@ -115,20 +116,20 @@ namespace ReactUnity.Scripting
             engine.Execute(@"(function() {
                 var _console = __console;
                 console = {
-                    log: (...args) => { _console.log(...args) },
-                    info: (...args) => { _console.info(...args) },
-                    debug: (...args) => { _console.debug(...args) },
-                    trace: (...args) => { _console.debug(...args) },
-                    warn: (...args) => { _console.warn(...args) },
-                    error: (...args) => { _console.error(...args) },
-                    exception: (...args) => { _console.exception(...args) },
-                    dir: (...args) => { _console.dir(...args) },
-                    clear: (...args) => { _console.clear(...args) },
-                    assert: (...args) => { _console.assert(...args) },
-                    count: (name) => _console.count(name),
+                    log:       function log       (arg) { _console.log(arg)           },
+                    info:      function info      (arg) { _console.info(arg)          },
+                    debug:     function debug     (arg) { _console.debug(arg)         },
+                    trace:     function trace     (arg) { _console.debug(arg)         },
+                    warn:      function warn      (arg) { _console.warn(arg)          },
+                    error:     function error     (arg) { _console.error(arg)         },
+                    exception: function exception (arg) { _console.exception(arg)     },
+                    dir:       function dir       (arg) { _console.dir(arg)           },
+                    clear:     function clear     (arg) { _console.clear(arg)         },
+                    assert:    function assert    (arg) { _console.assert(arg)        },
+                    count:     function count    (name) { return _console.count(name) },
                 };
-                delete __console;
 })()");
+            engine.ClearValue("__console");
         }
 
         void CreatePolyfills(IJavaScriptEngine engine)
