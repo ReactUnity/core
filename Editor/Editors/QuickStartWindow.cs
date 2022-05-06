@@ -62,7 +62,7 @@ namespace ReactUnity.Editor
 
         public void CreateProject()
         {
-            RunCommand("npm", "init @reactunity");
+            RunCommand("npx", "@reactunity/create");
         }
 
         public void GetNodeVersion(Action<int> callback = null)
