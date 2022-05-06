@@ -6,11 +6,12 @@ PluginImporter:
   iconMap: {}
   executionOrder: {}
   defineConstraints:
+  - '!REACT_EXCLUDE_CLEARSCRIPT_CORE'
   - '!REACT_DISABLE_CLEARSCRIPT'
   - '!ENABLE_IL2CPP'
   isPreloaded: 0
   isOverridable: 1
-  isExplicitlyReferenced: 0
+  isExplicitlyReferenced: 1
   validateReferences: 1
   platformData:
   - first:

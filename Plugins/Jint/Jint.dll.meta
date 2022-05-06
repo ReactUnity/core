@@ -7,9 +7,10 @@ PluginImporter:
   executionOrder: {}
   defineConstraints:
   - '!REACT_DISABLE_JINT'
+  - '!REACT_EXCLUDE_JINT'
   isPreloaded: 0
   isOverridable: 1
-  isExplicitlyReferenced: 0
+  isExplicitlyReferenced: 1
   validateReferences: 1
   platformData:
   - first:

@@ -9,6 +9,9 @@ PluginImporter:
   - '!REACT_DISABLE_JINT'
   - '!NET_STANDARD_2_1'
   - NET_STANDARD_2_0
+  - UNITY_2019 || UNITY_2020 || UNITY_2021_1
+  - '!REACT_EXCLUDE_SYSTEM'
+  - '!REACT_EXCLUDE_SYSTEM_MEMORY'
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 1

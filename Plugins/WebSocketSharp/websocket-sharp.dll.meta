@@ -5,7 +5,8 @@ PluginImporter:
   serializedVersion: 2
   iconMap: {}
   executionOrder: {}
-  defineConstraints: []
+  defineConstraints:
+  - '!REACT_EXCLUDE_WEBSOCKET_SHARP'
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 1

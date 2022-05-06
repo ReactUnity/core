@@ -19,10 +19,6 @@
         "ExCSS.dll",
         "Jint.dll",
         "websocket-sharp.dll",
-        "RU.System.Buffers.dll",
-        "RU.System.Numerics.Vectors.dll",
-        "RU.System.Runtime.CompilerServices.Unsafe.dll",
-        "RU.System.Memory.dll",
         "Newtonsoft.Json.dll",
         "YantraJS.Core.dll",
         "Jurassic.dll"

@@ -8,9 +8,10 @@ PluginImporter:
   defineConstraints:
   - '!REACT_DISABLE_CLEARSCRIPT'
   - '!ENABLE_IL2CPP'
+  - '!REACT_EXCLUDE_CLEARSCRIPT_V8'
   isPreloaded: 0
   isOverridable: 1
-  isExplicitlyReferenced: 0
+  isExplicitlyReferenced: 1
   validateReferences: 1
   platformData:
   - first:
