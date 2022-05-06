@@ -52,7 +52,7 @@ namespace ReactUnity.UGUI
         private void OnClick(BaseEventData ev)
         {
             if (Disabled) return;
-            // TODO: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
+            // BUG: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
             if (ev.used) return;
             if (string.IsNullOrWhiteSpace(Url)) return;
 
