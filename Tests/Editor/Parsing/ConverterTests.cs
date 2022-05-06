@@ -264,11 +264,15 @@ namespace ReactUnity.Tests.Editor
 
         [TestCase("0", 0f)]
         [TestCase("172", 172)]
+        [TestCase(" 172", 172)]
+        [TestCase(" 172 ", 172)]
+        [TestCase("172 ", 172)]
         [TestCase("72pt", 96)]
         [TestCase("172px", 172)]
         [TestCase("50ms1", float.NaN)]
         [TestCase("0a", float.NaN)]
         [TestCase("5as", float.NaN)]
+        [TestCase("172 12", float.NaN)]
         public void LengthConverter(object input, object expected)
         {
             Assert.AreEqual(expected, AllConverters.LengthConverter.TryGetConstantValue(input, float.NaN));

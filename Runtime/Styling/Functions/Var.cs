@@ -17,7 +17,8 @@ namespace ReactUnity.Styling.Functions
             string fallback = null;
             if (args.Length > 1)
             {
-                fallback = string.Join(", ", args, 1);
+                var split = argsCombined.Split(",", 2);
+                if(split.Length > 1) fallback = split[1];
             }
 
             var isProperty = CssFunctions.TryCall(fallback, out var res, Allowed, null);

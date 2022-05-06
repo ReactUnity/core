@@ -80,7 +80,7 @@ namespace ReactUnity.Styling.Converters
             while (i < value.Length)
             {
                 var c = value[i];
-                if (!numberEnded && (char.IsDigit(c) || c == '.' || c == '+' || c == '-')) numberPart.Append(c);
+                if (!numberEnded && (char.IsDigit(c) || c == '.' || c == '+' || c == '-' || char.IsWhiteSpace(c))) numberPart.Append(c);
                 else
                 {
                     numberEnded = true;
