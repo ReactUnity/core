@@ -6,7 +6,7 @@ using NUnit.Framework;
 using ReactUnity.Editor.Developer;
 #endif
 
-namespace ReactUnity.Editor.Tests.Developer
+namespace ReactUnity.Tests.Editor.Developer
 {
     [ExcludeFromCodeCoverage]
     public static class TestTypescriptModels

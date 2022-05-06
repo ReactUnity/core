@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using ReactUnity.Editor;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
@@ -12,7 +13,7 @@ using ReactUnity.Styling.Rules;
 using ReactUnity.UIToolkit;
 using UnityEditor;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]

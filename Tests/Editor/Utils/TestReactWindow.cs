@@ -4,7 +4,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Scripting;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     public class TestReactWindow : ReactWindow
     {

@@ -5,7 +5,7 @@ using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class AnimationTests

@@ -6,7 +6,7 @@ using ReactUnity.Scripting;
 using UnityEditor;
 using UnityEngine.TestTools;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseEditorTestAttribute : UnityTestAttribute, IOuterUnityTestAction

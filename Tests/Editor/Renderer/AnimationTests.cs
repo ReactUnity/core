@@ -4,7 +4,7 @@ using ReactUnity.Scripting;
 using ReactUnity.UIToolkit;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Tests.Renderer
+namespace ReactUnity.Tests.Editor.Renderer
 {
     public class AnimationTests : EditorTestBase
     {

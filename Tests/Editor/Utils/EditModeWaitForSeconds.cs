@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine.TestTools;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     public class EditModeWaitForSeconds : IEditModeTestYieldInstruction
     {

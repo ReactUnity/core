@@ -2,7 +2,7 @@ using NUnit.Framework;
 using ReactUnity.Helpers;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class WatchableRecordTests

@@ -3,8 +3,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.TestTools;
 
-[assembly: TestPlayerBuildModifier(typeof(ReactUnity.Editor.Tests.TestPlayerBuildModifier))]
-namespace ReactUnity.Editor.Tests
+[assembly: TestPlayerBuildModifier(typeof(ReactUnity.Tests.Editor.TestPlayerBuildModifier))]
+namespace ReactUnity.Tests.Editor
 {
     public class TestPlayerBuildModifier : ITestPlayerBuildModifier
     {

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using ReactUnity.Styling.Rules;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture(TestOf = typeof(MediaQueryList))]
     public class MediaQueryTests

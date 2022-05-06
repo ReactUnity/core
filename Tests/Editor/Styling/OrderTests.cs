@@ -2,7 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 
-namespace ReactUnity.Editor.Tests.Renderer
+namespace ReactUnity.Tests.Editor.Renderer
 {
     public class OrderTests : EditorTestBase
     {

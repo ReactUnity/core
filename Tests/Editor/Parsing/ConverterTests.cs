@@ -8,7 +8,7 @@ using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class ConverterTests
@@ -24,17 +24,10 @@ namespace ReactUnity.Editor.Tests
             }
         }
 
-        private (InlineStyles, NodeStyle) CreateStyle()
-        {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
-            return (collection, style);
-        }
-
         [Test]
         public void TransitionShorthandConverter()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["transition"] =
                 "width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear";
@@ -82,7 +75,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["transition-property"] = "width, height, all, bbb, bg, all";
             collection["transition-duration"] = "2s, 400ms, 500ms, 0, 0, 3s";
@@ -133,7 +126,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AnimationConverter()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["animation"] =
                 "roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite";
@@ -173,7 +166,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void CursorConverter()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["cursor"] = "url(res:cursors/hand) 5 5, pointer, default, url(https://google.com)";
             var converted = style.cursor;
@@ -212,7 +205,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["audio"] =
                 "url(res:click) 3s 5, url(https://example.com) infinite 2s, url(res:something)";
@@ -323,7 +316,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void NoneAndDefaultWorksForSupportingTypes()
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["display"] = "none";
             collection["pointer-events"] = "none";
@@ -337,7 +330,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(ObjectFit.None, style.objectFit);
             Assert.AreEqual(Types.Cursor.None, style.cursor?.Get(0));
 
-            (collection, style) = CreateStyle();
+            (collection, style) = TestHelpers.CreateStyle();
             collection["cursor"] = "default";
             Assert.AreEqual(Types.Cursor.Default, style.cursor?.Get(0));
         }

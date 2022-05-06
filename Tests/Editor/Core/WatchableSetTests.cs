@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using ReactUnity.Helpers;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class WatchableSetTests

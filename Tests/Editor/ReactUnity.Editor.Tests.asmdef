@@ -1,6 +1,6 @@
 {
-    "name": "ReactUnity.Editor.Tests",
-    "rootNamespace": "ReactUnity.Editor.Tests",
+    "name": "ReactUnity.Tests.Editor",
+    "rootNamespace": "ReactUnity.Tests.Editor",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

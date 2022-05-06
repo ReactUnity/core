@@ -4,7 +4,7 @@ using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class GradientTests
@@ -19,8 +19,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("red, green, yellow 30% 60%, white, blue", "54ab53af32aa0c82fb114244681efada", 0, 1, "54ab53af32aa0c82fb114244681efada")]
         public void BasicGradient(string def, string nHash, float rOffset, float rSize, string rHash)
         {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["background"] = $"linear-gradient({def})";
             style.UpdateParent(null);

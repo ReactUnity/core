@@ -4,7 +4,7 @@ using NUnit.Framework;
 using ReactUnity.Scripting;
 using UnityEngine.TestTools;
 
-namespace ReactUnity.Editor.Tests.Renderer
+namespace ReactUnity.Tests.Editor.Renderer
 {
     public class ScriptComponentTests : EditorTestBase
     {

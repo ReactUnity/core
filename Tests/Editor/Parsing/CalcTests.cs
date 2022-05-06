@@ -1,20 +1,11 @@
-using System.Collections.Generic;
 using NUnit.Framework;
-using ReactUnity.Styling;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
     public class CalcTests
     {
-        private (InlineStyles, NodeStyle) CreateStyle()
-        {
-            var collection = new InlineStyles();
-            var style = new NodeStyle(null, null, new List<IDictionary<IStyleProperty, object>> { collection });
-            return (collection, style);
-        }
-
         [TestCase("rgb(calc(112), 189, 153)", "70bd99ff")]
         [TestCase("rgb(calc(100 + 12), 189, 153)", "70bd99ff")]
         [TestCase("rgb(calc(100 + var(--aa)), 189, 153)", "70bd99ff")]
@@ -27,7 +18,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("rgb(100px), 189, 153)", "000000ff")]
         public void ColorWithCalc(object input, object expected)
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["--aa"] = "12";
             collection["color"] = input;
@@ -50,7 +41,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("calc(100 / 5 * 1ms)", 0.02)]
         public void DurationWithCalc(object input, double expected)
         {
-            var (collection, style) = CreateStyle();
+            var (collection, style) = TestHelpers.CreateStyle();
 
             collection["--aa"] = "12";
             collection["animation-duration"] = input;
