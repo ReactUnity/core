@@ -90,6 +90,13 @@ module.exports = function (proxy, allowedHost) {
         },
       },
 
+      // Serve previewer from local previewer directory
+      {
+        directory: paths.appPreviewer,
+        publicPath: [paths.publicUrlOrPath],
+        watch: { ignored: ignoredFiles(paths.appSrc) },
+      },
+
       // If installed, serve the ReactUnity Web Previewer
       ...servePreviewerIfExists(),
 

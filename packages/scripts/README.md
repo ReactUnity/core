@@ -34,10 +34,10 @@ Custom environment variables are also possible as in [CRA](https://create-react-
 
 ## Multiple Entry Points
 
-In addition to `src/index` file, there can be other entry points. Every file under `src/entry/` folder will be detected and configured as an entry point. For example, if there is a file `src/entry/menu.tsx`, Webpack will detect that and create an entrypoint named `menu` with output `menu.js`.
+In addition to `src/index` file, there can be other entry points. Every file under `src/entry/` folder will be detected and configured as an entry point. For example, if there is a file `src/entry/menu.tsx`, Webpack will detect that and create an entrypoint named `menu` with output `menu.js` in addition to the default entrypoint `index.js`.
 
 ## WebGL Inspector
 
 When dev server is started with the `start` script, a web server is launched at the selected port (e.g. http://localhost:3000). This server serves the javascript and asset files that are used by ReactUnity. If you visit this link in browser, you will see a page explaining how to setup the web previewer. The previewer can be used to quickly test the React code without even launching Unity. It also reacts to the changes in code by utilizing HMR.
 
-Note that this web inspector has very limited capabilities. Naturally, it may not work for all cases. However it is a useful tool for when starting a new ReactUnity project. As an advanced feature, you can override the web inspector by placing your custom web inspector in `public` folder under your React project.
+Note that this web inspector has very limited capabilities. Naturally, it may not work for all cases. However it is a useful tool for when starting a new ReactUnity project. As an advanced feature, you can override the web inspector by placing your custom web inspector in `previewer` folder under your React project.
