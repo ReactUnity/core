@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Styling.Computed;

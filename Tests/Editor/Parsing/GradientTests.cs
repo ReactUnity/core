@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using NUnit.Framework;
-using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 

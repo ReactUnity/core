@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
-using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {

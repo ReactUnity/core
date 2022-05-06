@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ReactUnity.Styling.Computed;
-using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Converters
 {

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;

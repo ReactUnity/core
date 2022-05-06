@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
-using ReactUnity.Styling.Rules;
 
 namespace ReactUnity.Styling.Shorthands
 {

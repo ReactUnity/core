@@ -1,5 +1,4 @@
 using ReactUnity.Styling.Converters;
-using UnityEngine;
 
 namespace ReactUnity.Styling.Computed
 {

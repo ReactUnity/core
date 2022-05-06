@@ -1,4 +1,3 @@
-using System;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters

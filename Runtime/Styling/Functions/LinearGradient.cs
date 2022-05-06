@@ -111,7 +111,7 @@ namespace ReactUnity.Styling.Functions
                         doffsets.Add(f);
 
                         // HACK: add 0 so that it cannot be detected as color, but still passes the validation
-                        dcolors.Add(new ComputedConstant(0)); 
+                        dcolors.Add(new ComputedConstant(0));
                     }
                     else return null;
                 }
