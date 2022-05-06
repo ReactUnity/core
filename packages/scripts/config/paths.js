@@ -30,6 +30,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
 );
 
 const buildPath = process.env.BUILD_PATH || '../Assets/Resources/react';
+const manifestPath = path.join(buildPath, 'asset-manifest.json');
 
 const moduleFileExtensions = [
   'web.mjs',
@@ -63,6 +64,7 @@ module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
   appBuild: resolveApp(buildPath),
+  appManifest: resolveApp(manifestPath),
   appPublic: resolveApp('public'),
   appPublicAlt: resolveApp('previewer'),
   appHtml: resolveApp('public/index.html'),
@@ -90,6 +92,7 @@ module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
   appBuild: resolveApp(buildPath),
+  appManifest: resolveApp(manifestPath),
   appPublic: resolveApp('public'),
   appPublicAlt: resolveApp('previewer'),
   appHtml: resolveApp('public/index.html'),
@@ -130,6 +133,7 @@ if (
     dotenv: resolveOwn(`${templatePath}/.env`),
     appPath: resolveApp('.'),
     appBuild: resolveOwn(path.join('../..', buildPath)),
+    appManifest: resolveOwn(path.join('../..', manifestPath)),
     appPublic: resolveOwn(`${templatePath}/public`),
     appPreviewer: resolveOwn(`${templatePath}/previewer`),
     appHtml: resolveOwn(`${templatePath}/public/index.html`),
