@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "hsla";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             var cb = name == "hsv" || name == "hsva" ? (ParserHelpers.ColorCallback) HsvCallback : (ParserHelpers.ColorCallback) HslCallback;
             if (args.Length == 1)

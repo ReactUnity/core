@@ -20,6 +20,19 @@ namespace ReactUnity.Styling.Computed
                 size = style.Parent.GetStyleValue(LayoutProperties.Width);
             else if (ReferenceEquals(prop, LayoutProperties.Height) || ReferenceEquals(prop, LayoutProperties.MaxHeight) || ReferenceEquals(prop, LayoutProperties.MinHeight))
                 size = style.Parent.GetStyleValue(LayoutProperties.Height);
+            else if (
+                ReferenceEquals(prop, LayoutProperties.BorderWidth) ||
+                ReferenceEquals(prop, LayoutProperties.BorderLeftWidth) ||
+                ReferenceEquals(prop, LayoutProperties.BorderRightWidth) ||
+                ReferenceEquals(prop, LayoutProperties.BorderStartWidth) ||
+                ReferenceEquals(prop, LayoutProperties.BorderEndWidth)
+            )
+                size = style.GetStyleValue(LayoutProperties.Width);
+            else if (
+                ReferenceEquals(prop, LayoutProperties.BorderTopWidth) ||
+                ReferenceEquals(prop, LayoutProperties.BorderBottomWidth)
+            )
+                size = style.GetStyleValue(LayoutProperties.Height);
             else return null;
 
             if (size.Unit != YogaUnit.Point) return null;

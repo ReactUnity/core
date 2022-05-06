@@ -61,7 +61,7 @@ namespace ReactUnity.Types
 
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                if (CssFunctions.TryCall(value, out var gd, GradientFunctions))
+                if (CssFunctions.TryCall(value, out var gd, GradientFunctions, this))
                 {
                     return ComputedMapper.Create(out result, gd, new TypedStyleConverterBase<BaseGradient>(),
                         (rs) => {

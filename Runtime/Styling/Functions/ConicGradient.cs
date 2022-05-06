@@ -10,7 +10,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "conic-gradient";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (args.Length < 2) return null;
 

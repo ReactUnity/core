@@ -1,3 +1,4 @@
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Functions
@@ -8,7 +9,7 @@ namespace ReactUnity.Styling.Functions
 
         public UrlProtocol DefaultProtocol = UrlProtocol.Contextual;
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (args.Length < 1) return null;
             return new Url(Converters.StringConverter.Normalize(argsCombined), DefaultProtocol);

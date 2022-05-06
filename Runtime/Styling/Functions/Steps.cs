@@ -13,7 +13,7 @@ namespace ReactUnity.Styling.Functions
 
         public string Name { get; } = "steps";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (ComputedCompound.Create(out var result,
                 args.OfType<object>().ToList(),

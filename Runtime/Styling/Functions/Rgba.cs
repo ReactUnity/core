@@ -6,7 +6,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "rgba";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (args.Length == 1)
             {

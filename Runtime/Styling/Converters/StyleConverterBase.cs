@@ -41,7 +41,7 @@ namespace ReactUnity.Styling.Converters
 
             if (TargetType != null && TargetType.IsAssignableFrom(value.GetType()))
             {
-                result = new ComputedConstant(value);
+                result = StylingUtils.CreateComputed(value);
                 return true;
             }
 
@@ -72,7 +72,7 @@ namespace ReactUnity.Styling.Converters
             }
 
             var fns = AllowedFunctions;
-            if (fns.Count > 0 && CssFunctions.TryCall(value, out var fnResult, fns)) return TryConvert(fnResult, out result);
+            if (fns.Count > 0 && CssFunctions.TryCall(value, out var fnResult, fns, this)) return TryConvert(fnResult, out result);
 
             if (ParserHelpers.TryParseKeyword(value, out var k)) return HandleKeyword(k, out result);
 

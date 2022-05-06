@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Functions
 {
@@ -8,7 +9,7 @@ namespace ReactUnity.Styling.Functions
         static HashSet<string> Allowed = new HashSet<string> { "var" };
         public string Name { get; } = "var";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (args.Length < 1) return null;
 
@@ -19,7 +20,7 @@ namespace ReactUnity.Styling.Functions
                 fallback = string.Join(", ", args, 1);
             }
 
-            var isProperty = CssFunctions.TryCall(fallback, out var res, Allowed);
+            var isProperty = CssFunctions.TryCall(fallback, out var res, Allowed, null);
             var resFallback = isProperty ? res : fallback;
 
             return new ComputedVariable(new VariableProperty(varName), resFallback);

@@ -15,15 +15,37 @@ namespace ReactUnity.Styling.Computed
             Divide = 4,
         }
 
+        public struct CalcValue
+        {
+            public float Value;
+            public bool HasUnit;
+        }
+
         public IList<IComputedValue> Values;
         public IList<CalcOperator> Operators;
         public StyleConverterBase Converter;
+        public bool AllowUnitless;
 
         public ComputedCalc(IList<IComputedValue> values, IList<CalcOperator> operators, StyleConverterBase converter)
         {
             Values = values;
-            Converter = converter;
             Operators = operators;
+
+            if (converter is FloatConverter ff)
+            {
+                Converter = ff.CalcConverter;
+                AllowUnitless = ff.AllowSuffixless;
+            }
+            else if (converter is CalcConverter cc)
+            {
+                Converter = converter;
+                AllowUnitless = cc.AllowsUnitless;
+            }
+            else
+            {
+                Converter = converter;
+                AllowUnitless = true;
+            }
         }
 
         public object GetValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
@@ -39,7 +61,7 @@ namespace ReactUnity.Styling.Computed
                 results.Add(computed);
             }
 
-            var res = Evaluate(results, Operators);
+            var res = Evaluate(results, Operators, AllowUnitless, true);
             if (res.HasValue) return res.Value;
             return null;
         }
@@ -48,6 +70,8 @@ namespace ReactUnity.Styling.Computed
         {
             var resultValues = new List<IComputedValue>();
             var allConstants = true;
+
+            if (converter is FloatConverter fc) converter = fc.CalcConverter;
 
             for (int i = 0; i < values.Count; i++)
             {
@@ -75,7 +99,12 @@ namespace ReactUnity.Styling.Computed
             {
                 var constants = values.OfType<IComputedConstant>().Select(x => x.ConstantValue).ToArray();
 
-                var res = Evaluate(constants, operators);
+                var allowUnitless = true;
+                if (converter is FloatConverter ff) allowUnitless = ff.AllowSuffixless;
+                else if (converter is CalcConverter cc) allowUnitless = cc.AllowsUnitless;
+                else allowUnitless = true;
+
+                var res = Evaluate(constants, operators, allowUnitless, true);
                 if (res.HasValue) return new ComputedConstant(res.Value);
                 return null;
             }
@@ -83,13 +112,24 @@ namespace ReactUnity.Styling.Computed
             return new ComputedCalc(values, operators, converter);
         }
 
-        private static float? Evaluate(IList<object> values, IList<CalcOperator> operators, bool multiplyPass = true)
+        private static float? Evaluate(IList<object> values, IList<CalcOperator> operators, bool allowUnitless, bool multiplyPass)
         {
             if (values.Count == 0) return null;
 
-            if (!(values[0] is float f)) return null;
+            bool hasUnit;
+            float value;
 
-            var value = f;
+            if (values[0] is float f)
+            {
+                value = f;
+                hasUnit = false;
+            }
+            else if (values[0] is CalcValue cv)
+            {
+                value = cv.Value;
+                hasUnit = cv.HasUnit;
+            }
+            else return null;
 
             var nextObjects = new List<object>();
             var nextOps = new List<CalcOperator>();
@@ -98,18 +138,35 @@ namespace ReactUnity.Styling.Computed
             {
                 var cur = values[i];
                 var op = operators[i - 1];
+                bool curHasUnit;
+                float curValue;
 
-                if (!(cur is float c)) return null;
+                if (cur is float ff)
+                {
+                    curValue = ff;
+                    curHasUnit = false;
+                }
+                else if (cur is CalcValue cvv)
+                {
+                    curValue = cvv.Value;
+                    curHasUnit = cvv.HasUnit;
+                }
+                else return null;
+
 
                 if (!multiplyPass)
                 {
                     switch (op)
                     {
                         case CalcOperator.Add:
-                            value += c;
+                            value += curValue;
+                            if (!allowUnitless && (hasUnit != curHasUnit)) return null;
+                            hasUnit = hasUnit && curHasUnit;
                             break;
                         case CalcOperator.Subtract:
-                            value -= c;
+                            value -= curValue;
+                            if (!allowUnitless && (hasUnit != curHasUnit)) return null;
+                            hasUnit = hasUnit && curHasUnit;
                             break;
                         case CalcOperator.None:
                         default:
@@ -122,17 +179,25 @@ namespace ReactUnity.Styling.Computed
                     switch (op)
                     {
                         case CalcOperator.Multiply:
-                            value *= c;
+                            value *= curValue;
+                            if (!allowUnitless && hasUnit && curHasUnit) return null;
+                            hasUnit = hasUnit || curHasUnit;
                             break;
                         case CalcOperator.Divide:
-                            if (c == 0) return null;
-                            value /= c;
+                            if (curValue == 0) return null;
+                            value /= curValue;
+                            if (curHasUnit) return null;
+                            hasUnit = hasUnit || curHasUnit;
                             break;
                         case CalcOperator.Add:
                         case CalcOperator.Subtract:
-                            nextObjects.Add(value);
+                            nextObjects.Add(new CalcValue
+                            {
+                                Value = value,
+                                HasUnit = hasUnit,
+                            });
                             nextOps.Add(op);
-                            value = c;
+                            value = curValue;
                             break;
                         case CalcOperator.None:
                         default:
@@ -143,9 +208,15 @@ namespace ReactUnity.Styling.Computed
 
             if (multiplyPass)
             {
-                nextObjects.Add(value);
-                return Evaluate(nextObjects, nextOps, false);
+                nextObjects.Add(new CalcValue
+                {
+                    Value = value,
+                    HasUnit = hasUnit,
+                });
+                return Evaluate(nextObjects, nextOps, allowUnitless, false);
             }
+
+            if (!allowUnitless && !hasUnit) return null;
 
             return value;
         }

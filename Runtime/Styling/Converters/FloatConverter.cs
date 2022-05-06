@@ -14,18 +14,15 @@ namespace ReactUnity.Styling.Converters
 
         static CultureInfo culture = new CultureInfo("en-US");
 
-        Dictionary<string, float> SuffixMap;
-        Dictionary<string, Func<float, object>> SuffixMapper;
-        bool AllowSuffixless;
+        internal Dictionary<string, float> SuffixMap;
+        internal Dictionary<string, Func<float, object>> SuffixMapper;
+        public bool AllowSuffixless { get; }
 
         protected virtual Dictionary<string, float> SpecialValues { get; set; }
 
-        public FloatConverter()
-        {
-            SuffixMap = new Dictionary<string, float>();
-            SuffixMapper = new Dictionary<string, Func<float, object>>();
-            AllowSuffixless = true;
-        }
+        public CalcConverter CalcConverter { get; }
+
+        public FloatConverter() : this(null, null, true) { }
 
         public FloatConverter(
             Dictionary<string, float> suffixMap,
@@ -36,6 +33,7 @@ namespace ReactUnity.Styling.Converters
             SuffixMap = suffixMap ?? new Dictionary<string, float>();
             SuffixMapper = suffixMapper ?? new Dictionary<string, Func<float, object>>();
             AllowSuffixless = allowSuffixless;
+            CalcConverter = new CalcConverter(this);
         }
 
         protected override bool ParseInternal(string value, out IComputedValue result)
@@ -155,7 +153,6 @@ namespace ReactUnity.Styling.Converters
                 { "cm", 38 },
                 { "mm", 3.8f },
                 { "Q", 38f / 40f },
-                { "%", 0.01f },
             },
             new Dictionary<string, Func<float, object>>
             {
@@ -165,6 +162,7 @@ namespace ReactUnity.Styling.Converters
                 { "vmin", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Min) },
                 { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
+                { "%", x => new ComputedPercentage(x) },
                 //{ "lh", x => new DynamicFontSizeValue(x) },
                 //{ "ex", x => new DynamicFontSizeValue(x / 2) },
                 //{ "ch", x => new DynamicFontSizeValue(x / 2) }
@@ -240,5 +238,56 @@ namespace ReactUnity.Styling.Converters
             { "s", 1 },
         }, null, false)
         { }
+    }
+
+    public class CalcConverter : TypedStyleConverterBase<ComputedCalc.CalcValue>
+    {
+        public FloatConverter BaseConverter { get; }
+
+        public bool BasePercentage { get; }
+        public bool AllowsUnitless { get; }
+
+        public CalcConverter(FloatConverter baseConverter)
+        {
+            BaseConverter = baseConverter;
+            AllowsUnitless = BaseConverter.AllowSuffixless;
+        }
+
+        protected override bool ConvertInternal(object value, out IComputedValue result)
+        {
+            if (BaseConverter.TryConvert(value, out var floatResult))
+            {
+                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
+                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
+                    return null;
+                });
+                return true;
+            }
+
+            return base.ConvertInternal(value, out result);
+        }
+
+        protected override bool ParseInternal(string value, out IComputedValue result)
+        {
+            if (BaseConverter.TryConvert(value, out var floatResult))
+            {
+                result = ComputedMapper.Create(floatResult, BaseConverter, (res) => {
+                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = true };
+                    return null;
+                });
+                return true;
+            }
+
+            if (!AllowsUnitless && AllConverters.FloatConverter.TryConvert(value, out var floatResultUnitless))
+            {
+                result = ComputedMapper.Create(floatResultUnitless, AllConverters.FloatConverter, (res) => {
+                    if (res is float f) return new ComputedCalc.CalcValue { Value = f, HasUnit = false };
+                    return null;
+                });
+                return true;
+            }
+
+            return base.ParseInternal(value, out result);
+        }
     }
 }

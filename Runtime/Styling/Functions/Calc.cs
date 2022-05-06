@@ -8,14 +8,14 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "calc";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (string.IsNullOrWhiteSpace(argsCombined)) return null;
 
-            return Parse(argsCombined.Trim());
+            return Parse(argsCombined.Trim(), converter);
         }
 
-        private object Parse(string expression)
+        private object Parse(string expression, StyleConverterBase converter)
         {
             var len = expression.Length;
 
@@ -43,7 +43,7 @@ namespace ReactUnity.Styling.Functions
                     {
                         if (parenStart == 0 && i == len - 1)
                         {
-                            return Parse(expression.Substring(parenStart + 1, len - 2));
+                            return Parse(expression.Substring(parenStart + 1, len - 2), converter);
                         }
                     }
                 }
@@ -83,10 +83,10 @@ namespace ReactUnity.Styling.Functions
                 var item = items[i];
 
                 if (item is string s && s.StartsWith("(") && s.EndsWith(")"))
-                    items[i] = Parse(s);
+                    items[i] = Parse(s, converter);
             }
 
-            if (ComputedCalc.Create(out var result, items, ops, AllConverters.LengthConverter)) return result;
+            if (ComputedCalc.Create(out var result, items, ops, converter)) return result;
             return null;
         }
 

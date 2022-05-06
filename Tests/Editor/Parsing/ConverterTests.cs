@@ -274,7 +274,6 @@ namespace ReactUnity.Editor.Tests
         [TestCase("172", 172)]
         [TestCase("72pt", 96)]
         [TestCase("172px", 172)]
-        [TestCase("172%", 172f * (1f / 100))]
         [TestCase("50ms1", float.NaN)]
         [TestCase("0a", float.NaN)]
         [TestCase("5as", float.NaN)]

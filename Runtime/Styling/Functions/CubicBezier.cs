@@ -10,7 +10,7 @@ namespace ReactUnity.Styling.Functions
     {
         public string Name { get; } = "cubic-bezier";
 
-        public object Call(string name, string[] args, string argsCombined)
+        public object Call(string name, string[] args, string argsCombined, StyleConverterBase converter)
         {
             if (ComputedList.Create(out var result,
                 args.OfType<object>().ToList(),

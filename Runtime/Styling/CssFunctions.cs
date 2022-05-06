@@ -44,7 +44,7 @@ namespace ReactUnity.Styling
             { "repeating-conic-gradient", ConicGradient },
         };
 
-        public static bool TryCall(string expression, out object result, HashSet<string> allowed = null)
+        public static bool TryCall(string expression, out object result, HashSet<string> allowed = null, StyleConverterBase converter = null)
         {
             if (string.IsNullOrWhiteSpace(expression))
             {
@@ -64,7 +64,7 @@ namespace ReactUnity.Styling
                 && Functions.TryGetValue(name, out var fun)
                 && fun.CanHandleArguments(splits.Length, name, splits))
             {
-                result = fun.Call(name, splits, argsCombined);
+                result = fun.Call(name, splits, argsCombined, converter);
                 return true;
             }
 
@@ -77,6 +77,6 @@ namespace ReactUnity.Styling
     {
         string Name { get; }
         bool CanHandleArguments(int count, string name, string[] args);
-        object Call(string name, string[] args, string argsCombined);
+        object Call(string name, string[] args, string argsCombined, StyleConverterBase converter);
     }
 }
