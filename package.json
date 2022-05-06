@@ -1,6 +1,10 @@
 {
   "name": "com.reactunity.core",
-  "author": "Gokhan Kurt",
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com",
+    "url": "https://github.com/KurtGokhan"
+  },
   "displayName": "React Unity",
   "version": "0.10.1",
   "unity": "2019.4",
@@ -9,10 +13,13 @@
     "React",
     "Framework",
     "UI",
-    "UGUI"
+    "UGUI",
+    "UIToolkit"
   ],
   "category": "UI",
   "type": "library",
+  "documentationUrl": "https://reactunity.github.io/",
+  "license": "MIT",
   "samples": [],
   "dependencies": {
     "com.unity.editorcoroutines": "1.0.0",
