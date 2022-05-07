@@ -23,5 +23,23 @@ namespace ReactUnity.Tests.Editor
             var c = style.color;
             Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
         }
+
+
+        [TestCase("rgb(var(--aa), 153)", "70bd99ff")]
+        [TestCase("rgb(var(--aa, 112 189), 153)", "70bd99ff")]
+        [TestCase("rgb(var(--cc, 112, 189), 153)", "70bd99ff")]
+        [TestCase("rgb(var(--cc, 112 189), 153)", "000000ff")]
+        [TestCase("rgb(calc(var(--bb) * 2), 189, 153)", "000000ff")]
+        public void VariableMultiWordTests(object input, object expected)
+        {
+            var (collection, style) = TestHelpers.CreateStyle();
+
+            collection["--bb"] = "56 189";
+            collection["--aa"] = "112, 189";
+            collection["color"] = input;
+
+            var c = style.color;
+            Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+        }
     }
 }

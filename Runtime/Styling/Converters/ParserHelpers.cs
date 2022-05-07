@@ -10,6 +10,7 @@ namespace ReactUnity.Styling.Converters
 {
     internal static class ParserHelpers
     {
+        public static HashSet<string> AllowedFunctionsVariables = new HashSet<string> { "var" };
         public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`\(\)-]*)\)$", RegexOptions.IgnoreCase);
 
         public static (string, string[], string) ParseFunction(string val)
@@ -62,6 +63,102 @@ namespace ReactUnity.Styling.Converters
 
             if (splits.Count == 1 && splits[0] == "") return (name.ToString(), new string[] { }, argsCombined);
             else return (name.ToString(), splits.ToArray(), argsCombined);
+        }
+
+
+        public static bool TryParseVariables(string val, out IComputedValue result)
+        {
+            result = null;
+            if (string.IsNullOrWhiteSpace(val)) return false;
+
+            val = val.Trim();
+
+            var isWholeVariable = CssFunctions.TryCall(val, out var wholeParseResult, AllowedFunctionsVariables);
+            if (isWholeVariable && wholeParseResult is ComputedVariable wholeVr)
+            {
+                result = wholeVr;
+                return true;
+            }
+
+            var acc = new StringBuilder();
+            var name = new StringBuilder();
+            var args = new StringBuilder();
+            var len = val.Length;
+            var parensStack = 0;
+            var hasParens = false;
+            var isVariable = false;
+
+            var templates = new List<string>();
+            var variables = new List<ComputedVariable>();
+
+            for (int i = 0; i < len; i++)
+            {
+                var c = val[i];
+
+                if (c == '(')
+                {
+                    if (parensStack > 1) args.Append(c);
+                    else if (name.ToString() == "var")
+                    {
+                        isVariable = true;
+                        hasParens = true;
+
+                        parensStack++;
+
+                        templates.Add(acc.ToString());
+                        acc.Clear();
+                        acc.Append(name);
+                        acc.Append(c);
+                        name.Clear();
+                    }
+                    else
+                    {
+                        acc.Append(name.ToString());
+                        acc.Append(c);
+                        name.Clear();
+                    }
+                }
+                else if (isVariable && c == ')')
+                {
+                    parensStack--;
+
+                    if (parensStack < 0) return false;
+                    else if (parensStack > 0) args.Append(c);
+                    else
+                    {
+                        isVariable = false;
+
+                        acc.Append(args);
+                        acc.Append(c);
+                        var parsed = CssFunctions.TryCall(acc.ToString(), out var parseResult, AllowedFunctionsVariables);
+                        if (parsed && parseResult is ComputedVariable vr) variables.Add(vr);
+                        else return false;
+
+                        acc.Clear();
+                        args.Clear();
+                    }
+                }
+                else if (parensStack == 0)
+                {
+                    if (!char.IsLetter(c))
+                    {
+                        acc.Append(name.ToString());
+                        acc.Append(c);
+                        name.Clear();
+                    }
+                    else name.Append(c);
+                }
+                else args.Append(c);
+            }
+
+            acc.Append(name.ToString());
+
+            templates.Add(acc.ToString());
+
+            if (!hasParens || isVariable || parensStack > 0) return false;
+
+            result = new ComputedStringTemplate(templates, variables);
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -70,12 +70,12 @@ namespace ReactUnity.Styling.Converters
                 return false;
             }
 
+            if (ParserHelpers.TryParseVariables(value, out result)) return true;
+
             var fns = AllowedFunctions;
             if (fns.Count > 0 && CssFunctions.TryCall(value, out var fnResult, fns, this)) return TryConvert(fnResult, out result);
 
             if (ParserHelpers.TryParseKeyword(value, out var k)) return HandleKeyword(k, out result);
-
-            // TODO: interpolate vars
 
             return ParseInternal(value, out result);
         }
