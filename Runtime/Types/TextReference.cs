@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
-
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
-using ReactUnity.Styling.Computed;
-using ReactUnity.Styling.Converters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -24,7 +20,7 @@ namespace ReactUnity.Types
         {
             if (realType == AssetReferenceType.Url || realType == AssetReferenceType.Auto)
             {
-                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetTextAsset(realValue as string, callback)));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetTextAsset(context, realType, realValue as string, callback)));
             }
             else if (realType == AssetReferenceType.Data)
             {
@@ -60,9 +56,11 @@ namespace ReactUnity.Types
             }
         }
 
-        IEnumerator GetTextAsset(string realValue, Action<TextAsset> callback)
+        protected override UnityWebRequest CreateWebRequest(string url) => UnityWebRequest.Get(url);
+
+        IEnumerator GetTextAsset(ReactContext context, AssetReferenceType realType, string realValue, Action<TextAsset> callback)
         {
-            var www = UnityWebRequest.Get(realValue);
+            var www = GetWebRequest(context, realType, realValue);
             yield return www.SendWebRequest();
 
             var resultString = www.downloadHandler.text;

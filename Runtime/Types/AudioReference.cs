@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
-using ReactUnity.Styling.Converters;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -26,15 +23,15 @@ namespace ReactUnity.Types
 
             if (realType == AssetReferenceType.Url)
             {
-                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip(urlString, callback)));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip(context, realType, realValue, callback)));
             }
             else if (realType == AssetReferenceType.Data)
             {
-                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip("data:," + urlString, callback)));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip(context, realType, "data:," + urlString, callback)));
             }
             else if (realType == AssetReferenceType.File)
             {
-                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip("file:," + urlString, callback)));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetClip(context, realType, "file:," + urlString, callback)));
             }
             else
             {
@@ -42,9 +39,11 @@ namespace ReactUnity.Types
             }
         }
 
-        IEnumerator GetClip(string url, Action<AudioClip> callback)
+        protected override UnityWebRequest CreateWebRequest(string url) => UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
+
+        IEnumerator GetClip(ReactContext context, AssetReferenceType realType, object realValue, Action<AudioClip> callback)
         {
-            var www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN);
+            var www = GetWebRequest(context, realType, realValue);
             yield return www.SendWebRequest();
 
             AudioClip result = null;

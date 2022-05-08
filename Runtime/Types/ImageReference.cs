@@ -22,7 +22,7 @@ namespace ReactUnity.Types
         {
             if (realType == AssetReferenceType.Url || realType == AssetReferenceType.Auto)
             {
-                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetTexture(realValue as string, callback)));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetTexture(context, realType, realValue as string, callback)));
             }
             else if (realType == AssetReferenceType.Data)
             {
@@ -72,10 +72,11 @@ namespace ReactUnity.Types
             }
         }
 
-        IEnumerator GetTexture(string realValue, Action<Texture2D> callback)
-        {
-            var www = UnityWebRequestTexture.GetTexture(realValue);
+        protected override UnityWebRequest CreateWebRequest(string url) => UnityWebRequestTexture.GetTexture(url);
 
+        IEnumerator GetTexture(ReactContext context, AssetReferenceType realType, string realValue, Action<Texture2D> callback)
+        {
+            var www = GetWebRequest(context, realType, realValue);
             yield return www.SendWebRequest();
 
             var resultTexture = DownloadHandlerTexture.GetContent(www);

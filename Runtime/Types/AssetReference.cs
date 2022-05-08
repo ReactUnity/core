@@ -1,10 +1,12 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ReactUnity.Types
 {
@@ -97,7 +99,7 @@ namespace ReactUnity.Types
 
             var isHttpSource = false;
 
-            if (realType == AssetReferenceType.Auto && context.Script.Engine.IsScriptObject(Value))
+            if ((realType == AssetReferenceType.Auto || realType == AssetReferenceType.Url) && context.Script.Engine.IsScriptObject(Value))
             {
                 var props = context.Script.Engine.TraverseScriptObject(Value);
 
@@ -108,6 +110,8 @@ namespace ReactUnity.Types
                     if (prop.Key == "url")
                     {
                         isHttpSource = true;
+                        realType = AssetReferenceType.Url;
+                        break;
                     }
                 }
             }
@@ -170,6 +174,57 @@ namespace ReactUnity.Types
         {
             var res = Get<AssetType>(context, realType, realValue);
             callback(res);
+        }
+
+        protected UnityWebRequest GetWebRequest(ReactContext context, AssetReferenceType realType, object realValue)
+        {
+            var url = realValue as string;
+
+            var www = CreateWebRequest(url);
+
+            if (context.Script.Engine.IsScriptObject(Value))
+            {
+                var props = context.Script.Engine.TraverseScriptObject(Value);
+
+                while (props.MoveNext())
+                {
+                    var prop = props.Current;
+
+                    if (prop.Key == "url")
+                    {
+                        var value = prop.Value?.ToString();
+                        if (value != null) www.url = value;
+                    }
+                    else if (prop.Key == "headers")
+                    {
+                        var headers = context.Script.Engine.TraverseScriptObject(prop.Value);
+
+                        while (headers.MoveNext())
+                        {
+                            var header = headers.Current;
+                            var value = header.Value?.ToString();
+                            if (value != null) www.SetRequestHeader(header.Key, value);
+                        }
+                    }
+                    else if (prop.Key == "body")
+                    {
+                        var value = prop.Value?.ToString();
+                        if (value != null) www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(value));
+                    }
+                    else if (prop.Key == "method")
+                    {
+                        var value = prop.Value?.ToString();
+                        if (value != null) www.method = value;
+                    }
+                }
+            }
+
+            return www;
+        }
+
+        protected virtual UnityWebRequest CreateWebRequest(string url)
+        {
+            return new UnityWebRequest(url);
         }
 
         public virtual void Dispose()
