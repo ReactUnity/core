@@ -97,7 +97,11 @@ namespace ReactUnity.Styling.Converters
 
                 if (c == '(')
                 {
-                    if (parensStack > 1) args.Append(c);
+                    if (parensStack >= 1)
+                    {
+                        args.Append(c);
+                        parensStack++;
+                    }
                     else if (name.ToString() == "var")
                     {
                         isVariable = true;

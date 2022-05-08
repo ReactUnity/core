@@ -6,7 +6,7 @@ namespace ReactUnity.Styling.Computed
 {
     public struct ComputedStringTemplate : IComputedValue
     {
-        private class VariableDummyConverter : IStyleConverter
+        private class CustomVariableStringConverter : IStyleConverter
         {
             public IComputedValue Convert(object value)
             {
@@ -15,7 +15,7 @@ namespace ReactUnity.Styling.Computed
             }
         }
 
-        static VariableDummyConverter DummyConverter = new VariableDummyConverter();
+        private static CustomVariableStringConverter VariableStringConverter = new CustomVariableStringConverter();
 
         public IList<string> Template { get; }
         public IList<ComputedVariable> Variables { get; }
@@ -37,7 +37,7 @@ namespace ReactUnity.Styling.Computed
                 var tmp = Template[i];
                 var variable = Variables[i];
 
-                var varValue = variable.ResolveValue(prop, style, DummyConverter) as string;
+                var varValue = variable.ResolveValue(prop, style, VariableStringConverter) as string;
 
                 if (varValue == null) return null;
 
