@@ -56,41 +56,19 @@ namespace ReactUnity.Types
             }
         }
 
-        public class Converter : TypedStyleConverterBase<VideoReference>
+
+        public class Converter : BaseConverter<VideoReference>
         {
-            public bool AllowWithoutUrl { get; }
-
-            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
-            {
-                if (keyword == CssKeyword.None) return Constant(None, out result);
-                return base.HandleKeyword(keyword, out result);
-            }
-
-            public Converter(bool allowWithoutUrl = true)
-            {
-                AllowWithoutUrl = allowWithoutUrl;
-            }
+            public Converter(bool allowWithoutUrl = true) : base(allowWithoutUrl) { }
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is VideoClip s) return Constant(new VideoReference(AssetReferenceType.Object, s), out result);
-                if (value is UnityEngine.Object o) return Constant(new VideoReference(AssetReferenceType.Object, o), out result);
+                if (value is VideoClip v) return Constant(FromObject(AssetReferenceType.Object, v), out result);
                 return base.ConvertInternal(value, out result);
             }
 
-            protected override bool ParseInternal(string value, out IComputedValue result)
-            {
-                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (u) => {
-                        if (u is Url uu) return new VideoReference(uu);
-                        return null;
-                    }))
-                    return true;
-
-                if (AllowWithoutUrl) return Constant(new VideoReference(new Url(value)), out result);
-                result = null;
-                return false;
-            }
+            protected override object FromObject(AssetReferenceType type, object obj) => new VideoReference(type, obj);
+            protected override object FromUrl(Url url) => new VideoReference(url);
         }
     }
 }

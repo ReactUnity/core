@@ -131,7 +131,7 @@ namespace ReactUnity.Scripting
             return new NamespaceReference(Engine, ns);
         }
 
-        public object CreateNativeObject(Dictionary<string, object> props)
+        public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             var obj = new ObjectInstance(Engine);
 
@@ -161,6 +161,11 @@ namespace ReactUnity.Scripting
             {
                 foreach (var kv in eo) yield return kv;
             }
+        }
+
+        public bool IsScriptObject(object obj)
+        {
+            return obj is ObjectInstance;
         }
     }
 

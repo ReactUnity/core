@@ -297,8 +297,8 @@ namespace ReactUnity
             foreach (JProperty child in objs)
             {
                 var ind = child.Value.Value<int>();
-                var callback = ind <= 0 ? null : GetObjectCallback.Call(ind);
-                yield return new KeyValuePair<string, object>(child.Name, callback);
+                var obj = ind <= 0 ? null : GetObjectCallback.Call(ind);
+                yield return new KeyValuePair<string, object>(child.Name, obj);
             }
         }
 

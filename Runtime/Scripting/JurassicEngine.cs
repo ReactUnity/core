@@ -85,7 +85,7 @@ namespace ReactUnity.Scripting
             return Undefined.Value;
         }
 
-        public object CreateNativeObject(Dictionary<string, object> props)
+        public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             return props;
         }
@@ -111,6 +111,11 @@ namespace ReactUnity.Scripting
             {
                 foreach (var kv in eo) yield return kv;
             }
+        }
+        
+        public bool IsScriptObject(object obj)
+        {
+            return obj is ObjectInstance;
         }
     }
 

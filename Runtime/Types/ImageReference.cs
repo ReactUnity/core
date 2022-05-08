@@ -75,6 +75,7 @@ namespace ReactUnity.Types
         IEnumerator GetTexture(string realValue, Action<Texture2D> callback)
         {
             var www = UnityWebRequestTexture.GetTexture(realValue);
+
             yield return www.SendWebRequest();
 
             var resultTexture = DownloadHandlerTexture.GetContent(www);
@@ -87,36 +88,18 @@ namespace ReactUnity.Types
             if (webDeferred != null) webDeferred.Dispose();
         }
 
-        public class Converter : TypedStyleConverterBase<ImageReference>
+        public class Converter : BaseConverter<ImageReference>
         {
-            public bool AllowWithoutUrl { get; }
-
-            public Converter(bool allowWithoutUrl = false)
-            {
-                AllowWithoutUrl = allowWithoutUrl;
-            }
+            public Converter(bool allowWithoutUrl = false) : base(allowWithoutUrl) { }
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is Texture2D t) return Constant(new ImageReference(AssetReferenceType.Object, t), out result);
                 if (value is Sprite s) return Constant(new ImageReference(AssetReferenceType.Object, s.texture), out result);
-                if (value is UnityEngine.Object o) return Constant(new ImageReference(AssetReferenceType.Object, o), out result);
                 return base.ConvertInternal(value, out result);
             }
 
-            protected override bool ParseInternal(string value, out IComputedValue result)
-            {
-                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (u) => {
-                        if (u is Url uu) return new ImageReference(uu);
-                        return null;
-                    }))
-                    return true;
-
-                if (AllowWithoutUrl) return Constant(new ImageReference(new Url(value)), out result);
-                result = null;
-                return false;
-            }
+            protected override object FromObject(AssetReferenceType type, object obj) => new ImageReference(type, obj);
+            protected override object FromUrl(Url url) => new ImageReference(url);
         }
     }
 }

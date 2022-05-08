@@ -63,31 +63,18 @@ namespace ReactUnity.Types
         }
 
 
-        public class Converter : TypedStyleConverterBase<AudioReference>
+        public class Converter : BaseConverter<AudioReference>
         {
-            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
-            {
-                if (keyword == CssKeyword.None) return Constant(None, out result);
-                return base.HandleKeyword(keyword, out result);
-            }
+            public Converter(bool allowWithoutUrl = false) : base(allowWithoutUrl) { }
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                if (value is AudioClip c) return Constant(new AudioReference(AssetReferenceType.Object, c), out result);
-                if (value is UnityEngine.Object o) return Constant(new AudioReference(AssetReferenceType.Object, o), out result);
-                if (value is Url u) return Constant(new AudioReference(u), out result);
-
+                if (value is AudioClip s) return Constant(FromObject(AssetReferenceType.Object, s), out result);
                 return base.ConvertInternal(value, out result);
             }
 
-            protected override bool ParseInternal(string value, out IComputedValue result)
-            {
-                return ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (resolvedValue) => {
-                        if (resolvedValue is Url u) return new AudioReference(u);
-                        return null;
-                    });
-            }
+            protected override object FromObject(AssetReferenceType type, object obj) => new AudioReference(type, obj);
+            protected override object FromUrl(Url url) => new AudioReference(url);
         }
     }
 }

@@ -59,8 +59,9 @@ namespace ReactUnity.Scripting
         void SetValue<T>(string key, T value);
         void ClearValue(string key);
         object GetValue(string key);
-        object CreateNativeObject(Dictionary<string, object> props);
+        object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props);
         void SetProperty<T>(object obj, string key, T value);
+        bool IsScriptObject(object obj);
 
         object CreateTypeReference(Type type);
         object CreateNamespaceReference(string ns, params Assembly[] assemblies);

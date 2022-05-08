@@ -176,7 +176,7 @@ namespace ReactUnity.Scripting
             else return new HostTypeCollection().GetNamespaceNode(ns);
         }
 
-        public object CreateNativeObject(Dictionary<string, object> props)
+        public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             var obj = new PropertyBag();
 
@@ -205,6 +205,15 @@ namespace ReactUnity.Scripting
                     yield return new KeyValuePair<string, object>(key, jv.GetProperty(key));
                 }
             }
+            else if (obj is IEnumerable<KeyValuePair<string, object>> eo)
+            {
+                foreach (var kv in eo) yield return kv;
+            }
+        }
+
+        public bool IsScriptObject(object obj)
+        {
+            return obj is ScriptObject;
         }
     }
 

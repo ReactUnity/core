@@ -46,9 +46,9 @@ namespace ReactUnity.UGUI
             source?.Get(Context, (res) => {
                 if (res == null)
                 {
+                    VideoPlayer.source = VideoSource.VideoClip;
                     VideoPlayer.clip = null;
                     VideoPlayer.url = null;
-                    VideoPlayer.source = VideoSource.Url;
                 }
                 else
                 {

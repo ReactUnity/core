@@ -112,13 +112,10 @@ namespace ReactUnity.Types
             };
         }
 
-        public class Converter : TypedStyleConverterBase<FontReference>
+
+        public class Converter : BaseConverter<FontReference>
         {
-            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
-            {
-                if (keyword == CssKeyword.None) return Constant(None, out result);
-                return base.HandleKeyword(keyword, out result);
-            }
+            public Converter(bool allowWithoutUrl = false) : base(allowWithoutUrl) { }
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
@@ -132,15 +129,11 @@ namespace ReactUnity.Types
                 return base.ConvertInternal(value, out result);
             }
 
-            protected override bool ParseInternal(string value, out IComputedValue result)
+            protected override object FromObject(AssetReferenceType type, object obj) => new FontReference(type, obj);
+            protected override object FromUrl(Url url) => new FontReference(url);
+
+            protected override bool ParseFallback(string value, out IComputedValue result)
             {
-                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (resolvedValue) => {
-                        if (resolvedValue is Url u) return new FontReference(u);
-                        return null;
-                    })) return true;
-
-
                 return ComputedMapper.Create(out result, value, AllConverters.StringConverter,
                     (resolvedValue) => {
                         if (resolvedValue is string u) return new FontReference(AssetReferenceType.Procedural, u);

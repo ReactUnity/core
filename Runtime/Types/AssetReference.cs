@@ -1,5 +1,9 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -88,27 +92,47 @@ namespace ReactUnity.Types
                 return;
             }
 
-
             var realType = Type;
             var realValue = Value;
-            if (realType == AssetReferenceType.Auto || realType == AssetReferenceType.Path)
+
+            var isHttpSource = false;
+
+            if (realType == AssetReferenceType.Auto && context.Script.Engine.IsScriptObject(Value))
             {
-                var path = context.ResolvePath(realValue as string);
-                if (path == null) realType = AssetReferenceType.None;
-                else if (HttpRegex.IsMatch(path))
+                var props = context.Script.Engine.TraverseScriptObject(Value);
+
+                while (props.MoveNext())
                 {
-                    realType = AssetReferenceType.Url;
-                    realValue = path;
+                    var prop = props.Current;
+
+                    if (prop.Key == "url")
+                    {
+                        isHttpSource = true;
+                    }
                 }
-                else if (FileRegex.IsMatch(path))
+            }
+
+            if (!isHttpSource)
+            {
+                if (realType == AssetReferenceType.Auto || realType == AssetReferenceType.Path)
                 {
-                    realType = AssetReferenceType.File;
-                    realValue = path;
-                }
-                else
-                {
-                    realType = context.Source.Type == ScriptSourceType.File ? AssetReferenceType.File : AssetReferenceType.Resource;
-                    realValue = path;
+                    var path = context.ResolvePath(realValue as string);
+                    if (path == null) realType = AssetReferenceType.None;
+                    else if (HttpRegex.IsMatch(path))
+                    {
+                        realType = AssetReferenceType.Url;
+                        realValue = path;
+                    }
+                    else if (FileRegex.IsMatch(path))
+                    {
+                        realType = AssetReferenceType.File;
+                        realValue = path;
+                    }
+                    else
+                    {
+                        realType = context.Source.Type == ScriptSourceType.File ? AssetReferenceType.File : AssetReferenceType.Resource;
+                        realValue = path;
+                    }
                 }
             }
 
@@ -150,6 +174,56 @@ namespace ReactUnity.Types
 
         public virtual void Dispose()
         {
+        }
+
+        public abstract class BaseConverter<T> : TypedStyleConverterBase<T> where T : AssetReference<AssetType>
+        {
+            public bool AllowWithoutUrl { get; }
+
+            public BaseConverter(bool allowWithoutUrl = false)
+            {
+                AllowWithoutUrl = allowWithoutUrl;
+            }
+
+            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
+            {
+                if (keyword == CssKeyword.None) return Constant(FromObject(AssetReferenceType.None, null), out result);
+                return base.HandleKeyword(keyword, out result);
+            }
+
+            protected abstract object FromObject(AssetReferenceType type, object obj);
+            protected abstract object FromUrl(Url url);
+
+            protected override bool ConvertInternal(object value, out IComputedValue result)
+            {
+                if (value is Url u) return Constant(FromUrl(u), out result);
+                if (value is AssetType t) return Constant(FromObject(AssetReferenceType.Object, t), out result);
+                if (value is UnityEngine.Object o) return Constant(FromObject(AssetReferenceType.Object, o), out result);
+                return Constant(FromObject(AssetReferenceType.Auto, value), out result);
+            }
+
+            protected override bool ParseInternal(string value, out IComputedValue result)
+            {
+                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
+                    (u) => {
+                        if (u is Url uu) return FromUrl(uu);
+                        return null;
+                    }))
+                    return true;
+
+                if (ParseFallback(value, out result)) return true;
+
+                if (AllowWithoutUrl) return Constant(FromUrl(new Url(value)), out result);
+                result = null;
+                return false;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            protected virtual bool ParseFallback(string value, out IComputedValue result)
+            {
+                result = null;
+                return false;
+            }
         }
     }
 }

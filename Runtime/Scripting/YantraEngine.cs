@@ -84,7 +84,7 @@ namespace ReactUnity.Scripting
             return JSNull.Value;
         }
 
-        public object CreateNativeObject(Dictionary<string, object> props)
+        public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             return new JSObject(props.Select(x => new JSProperty(x.Key, CreateValue(x.Value), JSPropertyAttributes.ReadonlyValue)));
         }
@@ -111,6 +111,11 @@ namespace ReactUnity.Scripting
             {
                 foreach (var kv in eo) yield return kv;
             }
+        }
+        
+        public bool IsScriptObject(object obj)
+        {
+            return obj is JSObject;
         }
     }
 

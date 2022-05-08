@@ -75,41 +75,13 @@ namespace ReactUnity.Types
             if (webDeferred != null) webDeferred.Dispose();
         }
 
-        public class Converter : TypedStyleConverterBase<TextReference>
+
+        public class Converter : BaseConverter<TextReference>
         {
-            public bool AllowWithoutUrl { get; }
+            public Converter(bool allowWithoutUrl = false) : base(allowWithoutUrl) { }
 
-            public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
-            {
-                if (keyword == CssKeyword.None) return Constant(None, out result);
-                return base.HandleKeyword(keyword, out result);
-            }
-
-            public Converter(bool allowWithoutUrl = false)
-            {
-                AllowWithoutUrl = allowWithoutUrl;
-            }
-
-            protected override bool ConvertInternal(object value, out IComputedValue result)
-            {
-                if (value is TextAsset t) return Constant(new TextReference(AssetReferenceType.Object, t), out result);
-                if (value is UnityEngine.Object o) return Constant(new TextReference(AssetReferenceType.Object, o), out result);
-                return base.ConvertInternal(value, out result);
-            }
-
-            protected override bool ParseInternal(string value, out IComputedValue result)
-            {
-                if (ComputedMapper.Create(out result, value, AllConverters.UrlConverter,
-                    (u) => {
-                        if (u is Url uu) return new TextReference(uu);
-                        return null;
-                    }))
-                    return true;
-
-                if (AllowWithoutUrl) return Constant(new TextReference(new Url(value)), out result);
-                result = null;
-                return false;
-            }
+            protected override object FromObject(AssetReferenceType type, object obj) => new TextReference(type, obj);
+            protected override object FromUrl(Url url) => new TextReference(url);
         }
     }
 }
