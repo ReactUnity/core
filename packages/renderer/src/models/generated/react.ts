@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 08/05/2022 05:16:15
+// Generated 09/05/2022 01:23:35
 //
 /* eslint-disable */
 
@@ -2463,9 +2463,10 @@ export declare namespace ReactUnity {
       ClearValue(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateNativeObject(props: Record<string, any>): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
       Dispose(): void;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2493,7 +2494,8 @@ export declare namespace ReactUnity {
       Evaluate(code: string, fileName?: string): any;
       ClearValue(key: string): void;
       GetValue(key: string): any;
-      CreateNativeObject(props: Record<string, any>): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      IsScriptObject(obj: any): boolean;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
@@ -2514,9 +2516,10 @@ export declare namespace ReactUnity {
       ClearValue(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateNativeObject(props: Record<string, any>): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
       Dispose(): void;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4590,14 +4593,11 @@ export declare namespace ReactUnity {
       Data = 8,
       Path = 9,
     }
-    export class AssetReference<AssetType = any> {
-      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
-      constructor(url: ReactUnity.Types.Url);
-      Type: ReactUnity.Types.AssetReferenceType;
-      Value: any; // System.Object
-      static None: any; // ReactUnity.Types.AssetReference`1[AssetType]
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: AssetType) => void)): void;
-      Dispose(): void;
+    export class BaseConverter<AssetType = any, T = any> {
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5056,7 +5056,8 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class AudioReference_Converter {
-      constructor();
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;
@@ -5094,7 +5095,8 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class FontReference_Converter {
-      constructor();
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Equals(obj: any): boolean;

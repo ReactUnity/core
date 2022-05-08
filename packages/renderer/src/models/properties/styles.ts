@@ -1,5 +1,5 @@
 import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, Visibility, WhiteSpace } from './styles-enums';
-import { Array2Aux, AssetReference, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
+import { Array2Aux, AssetReference, AssetReferenceOrHttp, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
@@ -15,14 +15,14 @@ export interface RenderStyle {
 
   backgroundBlendMode?: BackgroundBlendMode;
   backgroundColor?: ColorAux;
-  backgroundImage?: AssetReference;
+  backgroundImage?: AssetReferenceOrHttp;
   backgroundPositionX?: YogaValueAux;
   backgroundPositionY?: YogaValueAux;
   backgroundSize?: BackgroundSize | YogaValue2Aux;
   backgroundRepeatX?: YogaValueAux;
   backgroundRepeatY?: YogaValueAux;
 
-  maskImage?: AssetReference;
+  maskImage?: AssetReferenceOrHttp;
   maskPositionX?: YogaValueAux;
   maskPositionY?: YogaValueAux;
   maskSize?: BackgroundSize | YogaValue2Aux;
@@ -86,7 +86,7 @@ export interface RenderStyle {
   animationName?: string | string;
   animationPlayState?: AnimationPlayState | string;
   animationTimingFunction?: TimingFunctionType | string;
-  audioClip?: AssetReference;
+  audioClip?: AssetReferenceOrHttp;
   audioIterationCount?: number | string;
   audioDelay?: number | string;
 

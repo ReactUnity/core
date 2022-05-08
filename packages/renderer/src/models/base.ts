@@ -1,5 +1,6 @@
 import { RefAttributes } from 'react';
 import { ReactUnity } from './generated';
+import { HttpSource } from './properties';
 
 type BaseCmp = ReactUnity.IReactComponent;
 
@@ -30,7 +31,7 @@ export interface BaseCmpProps {
 
 export interface ContentSrcProps extends BaseCmpProps {
   content?: string;
-  source?: string;
+  source?: string | HttpSource;
 }
 
 export interface StyleCmpProps extends ContentSrcProps {

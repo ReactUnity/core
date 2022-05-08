@@ -1,7 +1,7 @@
 import { BaseCmpProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 import { Style } from '../properties';
-import { AssetReference } from '../properties/values';
+import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
 
@@ -57,11 +57,13 @@ export interface BaseImage<T = ReactUnity.UGUI.ImageComponent> extends View<T> {
 }
 
 export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> {
-  source?: AssetReference;
+  source?: AssetReferenceOrHttp;
 }
 
 export interface RawImage extends Image<ReactUnity.UGUI.RawImageComponent> { }
-export interface Video extends Image<ReactUnity.UGUI.VideoComponent> { }
+export interface Video extends Image<ReactUnity.UGUI.VideoComponent> {
+  source?: AssetReference;
+}
 export interface SvgImage extends Image<ReactUnity.UGUI.SvgComponent> {
   preserveAspect?: boolean;
 }

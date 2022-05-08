@@ -29,4 +29,11 @@ export type NumberAux = string | number;
 
 // Other
 
+export type HttpSource = {
+  url: string;
+  body?: string;
+  headers?: Record<string, string>;
+  method?: string;
+};
 export type AssetReference = string | UnityEngine.Object;
+export type AssetReferenceOrHttp = AssetReference | HttpSource;
