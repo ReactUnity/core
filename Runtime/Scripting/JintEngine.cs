@@ -165,7 +165,7 @@ namespace ReactUnity.Scripting
 
         public bool IsScriptObject(object obj)
         {
-            return obj is ObjectInstance;
+            return obj is ObjectInstance || obj is System.Dynamic.ExpandoObject;
         }
     }
 
