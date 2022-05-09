@@ -8499,15 +8499,15 @@ __webpack_require__.d(dist_namespaceObject, {
 var renderer_dist_namespaceObject = {};
 __webpack_require__.r(renderer_dist_namespaceObject);
 __webpack_require__.d(renderer_dist_namespaceObject, {
-  "GlobalsProvider": () => (GlobalsProvider),
-  "Renderer": () => (Renderer),
-  "batchedUpdates": () => (batchedUpdates),
-  "createDictionaryWatcher": () => (createDictionaryWatcher),
-  "flushSync": () => (flushSync),
-  "globalsWatcher": () => (globalsWatcher),
+  "GlobalsProvider": () => (dictionary_watcher_GlobalsProvider),
+  "Renderer": () => (renderer_Renderer),
+  "batchedUpdates": () => (renderer_batchedUpdates),
+  "createDictionaryWatcher": () => (dictionary_watcher_createDictionaryWatcher),
+  "flushSync": () => (renderer_flushSync),
+  "globalsWatcher": () => (dictionary_watcher_globalsWatcher),
   "insertStyledComponentsSheet": () => (insertStyledComponentsSheet),
-  "unstable_batchedUpdates": () => (batchedUpdates),
-  "useGlobals": () => (useGlobals),
+  "unstable_batchedUpdates": () => (renderer_batchedUpdates),
+  "useGlobals": () => (dictionary_watcher_useGlobals),
   "useWatchable": () => (useWatchable)
 });
 
@@ -9881,6 +9881,15 @@ function PromptDialog(_a) {
     }))]
   }));
 } //# sourceMappingURL=index.js.map
+;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-auto-ref.js
+
+function useAutoRef(value) {
+  var ref = (0,react.useRef)(value);
+  (0,react.useLayoutEffect)(function () {
+    ref.current = value;
+  });
+  return ref;
+} //# sourceMappingURL=use-auto-ref.js.map
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/selection.js
 ;
 
@@ -9892,7 +9901,13 @@ function () {
     this.initialValue = initialValue;
     this.elements = [];
     this.value = initialValue || (allowMultiple ? [] : undefined);
-    if (this.allowMultiple && !Array.isArray(this.value)) this.value = [this.value];
+
+    if (this.allowMultiple) {
+      if (!Array.isArray(this.value)) this.value = [this.value];
+      this.any = this.all = this.value.length > 0;
+    } else {
+      this.any = this.all = !!this.value;
+    }
   }
 
   SelectionState.prototype.changed = function (sender) {
@@ -9988,6 +10003,9 @@ function () {
     }
 
     this.triggerUpdate();
+    return function () {
+      _this.unregister(el);
+    };
   };
 
   SelectionState.prototype.unregister = function (el) {
@@ -10107,6 +10125,8 @@ var toggle_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
+var ToggleGroupContext = react.createContext(null);
+
 var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   var children = _a.children,
       className = _a.className,
@@ -10133,15 +10153,19 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   var selectionRef = (0,react.useMemo)(function () {
     return {
       get selected() {
-        return toggleRef.current.Checked;
+        var _a;
+
+        return (_a = toggleRef.current) === null || _a === void 0 ? void 0 : _a.Checked;
       },
 
       set selected(val) {
-        toggleRef.current.Checked = val;
+        if (toggleRef.current) toggleRef.current.Checked = val;
       },
 
       get value() {
-        return toggleRef.current.Value;
+        var _a;
+
+        return (_a = toggleRef.current) === null || _a === void 0 ? void 0 : _a.Value;
       },
 
       addOnChange: function addOnChange(callback) {
@@ -10154,11 +10178,10 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   var innerRef = (0,react.useCallback)(function (val) {
     toggleRef.current = val;
     if (typeof ref === 'function') ref(val);else if (ref) ref.current = val;
-
-    if (ctx) {
-      if (val) ctx.register(selectionRef);else ctx.unregister(selectionRef);
-    }
-  }, [ctx, ref, selectionRef]);
+  }, [ctx, ref]);
+  (0,react.useLayoutEffect)(function () {
+    return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
+  }, [ctx, selectionRef]);
   var NativeToggle = 'toggle';
   return (0,jsx_runtime.jsxs)("label", toggle_assign({
     className: clsx_m(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
@@ -10182,7 +10205,6 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
 });
 
 var Toggle = react.memo(_Toggle);
-var ToggleGroupContext = react.createContext(null);
 
 var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
   var children = _a.children,
@@ -10193,19 +10215,27 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
       initialValue = _a.initialValue;
   var init = (0,react.useRef)(initialValue);
   var selectAllRef = (0,react.useRef)();
+  var onChangeRef = useAutoRef(onChange);
   var state = (0,react.useMemo)(function () {
     return new SelectionState(multiple, init.current);
   }, [multiple, init]);
   (0,react.useLayoutEffect)(function () {
     state.onChange = function (val, all, any) {
-      onChange === null || onChange === void 0 ? void 0 : onChange(val, all, any);
+      var _a;
+
+      (_a = onChangeRef.current) === null || _a === void 0 ? void 0 : _a.call(onChangeRef, val, all, any);
 
       if (selectAllRef.current) {
         selectAllRef.current.Indeterminate = !!any && !all;
         selectAllRef.current.Checked = !!all;
       }
     };
-  }, [onChange]);
+
+    if (selectAllRef.current) {
+      selectAllRef.current.Indeterminate = !!state.any && !state.all;
+      selectAllRef.current.Checked = !!state.all;
+    }
+  }, [onChangeRef]);
   var selectAllCallback = (0,react.useCallback)(function (checked, sender) {
     state.setAll(checked);
   }, [state]);
@@ -10232,15 +10262,6 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroup(_a, ref) {
 });
 
 var ToggleGroup = react.memo(_ToggleGroup); //# sourceMappingURL=index.js.map
-;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-auto-ref.js
-
-function useAutoRef(value) {
-  var ref = (0,react.useRef)(value);
-  (0,react.useLayoutEffect)(function () {
-    ref.current = value;
-  });
-  return ref;
-} //# sourceMappingURL=use-auto-ref.js.map
 // EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/select/index.module.scss
 var select_index_module = __webpack_require__(131);
 ;// CONCATENATED MODULE: ../../../material/dist/src/select/index.module.scss
@@ -10312,8 +10333,7 @@ var select_rest = undefined && undefined.__rest || function (s, e) {
 
 
 
-
-var SelectContext = react.createContext(null);
+var SelectContext = (0,react.createContext)(null);
 
 function _Select(_a) {
   var _b = _a.keepOpen,
@@ -10365,7 +10385,8 @@ function _Select(_a) {
     };
 
     state.onUpdate = function (st) {
-      setSelectedElements(st.getSelectedElements());
+      var sel = st.getSelectedElements();
+      setSelectedElements(sel);
     };
   }, []);
 
@@ -10391,10 +10412,10 @@ function _Select(_a) {
   }
 
   var setFieldRef = (0,react.useCallback)(function (val) {
-    var _a;
+    var _a, _b;
 
     fieldRef.current = val;
-    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? init.current.length === 0 : typeof init.current === 'undefined');
+    (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? ((_b = init.current) === null || _b === void 0 ? void 0 : _b.length) === 0 : typeof init.current === 'undefined');
   }, [multiple]);
   return (0,jsx_runtime.jsxs)(InputField, select_assign({
     className: clsx_m(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
@@ -10462,25 +10483,28 @@ function _Option(_a) {
 
   var selectedRef = useAutoRef(selected);
   var onChangeRef = (0,react.useRef)([]);
-  var getTemplateRef = (0,react.useRef)(function () {
-    return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : children;
-  });
   var childRef = useAutoRef(children);
-  var shouldShowToggle = showToggle === 'auto' ? ctx.allowMultiple : !!showToggle;
+  var getTemplateRef = (0,react.useRef)(function () {
+    var _a;
+
+    return (_a = triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current) !== null && _a !== void 0 ? _a : children;
+  });
+  var shouldShowToggle = showToggle === 'auto' ? !!(ctx === null || ctx === void 0 ? void 0 : ctx.allowMultiple) : !!showToggle;
   (0,react.useEffect)(function () {
     getTemplateRef.current = function () {
       return triggerTemplate !== null && triggerTemplate !== void 0 ? triggerTemplate : childRef.current;
     };
 
-    ctx.triggerUpdate();
+    ctx === null || ctx === void 0 ? void 0 : ctx.triggerUpdate();
   }, [triggerTemplate, ctx]);
-  var selectionRef = react.useMemo(function () {
+  var selectionRef = (0,react.useMemo)(function () {
     return {
       get selected() {
         return selectedRef.current;
       },
 
       set selected(val) {
+        selectedRef.current = val;
         setSelected(val);
       },
 
@@ -10499,17 +10523,12 @@ function _Option(_a) {
     };
   }, [value, setSelected, selectedRef]);
   (0,react.useLayoutEffect)(function () {
-    if (ctx) {
-      ctx.register(selectionRef);
-      return function () {
-        ctx.unregister(selectionRef);
-      };
-    }
+    return ctx === null || ctx === void 0 ? void 0 : ctx.register(selectionRef);
   }, [ctx, selectionRef]);
   var onClick = (0,react.useCallback)(function () {
-    setSelected(function (x) {
-      return !x;
-    });
+    var newValue = !selectedRef.current;
+    selectedRef.current = newValue;
+    setSelected(newValue);
 
     for (var index = 0; index < onChangeRef.current.length; index++) {
       var cb = onChangeRef.current[index];
@@ -10530,7 +10549,7 @@ function _Option(_a) {
   }));
 }
 
-var Select = react.memo(_Select);
+var Select = (0,react.memo)(_Select);
 Select.Option = _Option; //# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/hooks/use-control-check.js
 
@@ -10823,13 +10842,13 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
 var Slider = react.memo(_Slider); //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__(258);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/version.js
 var version = '0.10.1';
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
 var shim = __webpack_require__(925);
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
 var with_selector = __webpack_require__(167);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js
 var dictionary_watcher_assign = undefined && undefined.__assign || function () {
   dictionary_watcher_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -10913,7 +10932,7 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -11017,7 +11036,7 @@ function (_super) {
 }(react.Component);
 
 
-;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/views/default-view.js
 
 
 
@@ -11032,7 +11051,7 @@ function DefaultView(_a) {
     })
   });
 }
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js
 var ObjectsRepo =
 /** @class */
 function () {
@@ -11077,7 +11096,7 @@ function () {
 
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(633);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -11157,7 +11176,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
 
   return updatePayload;
 }
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/constants.js
 var constants_rest = undefined && undefined.__rest || function (s, e) {
   var t = {};
 
@@ -11222,7 +11241,7 @@ var commonReconciler = {
   }
 };
 var isDevelopment = "production" === 'development';
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -11286,7 +11305,7 @@ function (_super) {
 }(ObjectsRepo);
 
 
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js
 
 
 var callbacksRepo = new CallbacksRepo();
@@ -11317,7 +11336,7 @@ function convertPropsToSerializable(props) {
 
   return res;
 }
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11528,7 +11547,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
 });
 
 var asyncReconciler = react_reconciler(hostConfig);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js
 var sync_reconciler_assign = undefined && undefined.__assign || function () {
   sync_reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11646,7 +11665,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, co
 });
 
 var syncReconciler = react_reconciler(reconciler_hostConfig);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
+;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
 
 
 
@@ -11821,6 +11840,87 @@ var positions = {
   }
 };
 
+function parseFromPositioningLiteral(str) {
+  var x;
+  var y;
+  var values = str.split(' ');
+  if (values.length > 2) return;
+  var hasDouble = values.length === 2;
+
+  if (values.includes('top')) {
+    x = 0.5;
+    y = 0;
+
+    if (hasDouble) {
+      if (values.includes('left')) x = 0;else if (values.includes('right')) x = 1;else if (values.includes('center')) x = 0.5;else return;
+    }
+  } else if (values.includes('bottom')) {
+    x = 0.5;
+    y = 1;
+
+    if (hasDouble) {
+      if (values.includes('left')) x = 0;else if (values.includes('right')) x = 1;else if (values.includes('center')) x = 0.5;else return;
+    }
+  } else if (values.includes('left')) {
+    if (hasDouble && !values.includes('center')) return;
+    x = 0;
+    y = 0.5;
+  } else if (values.includes('right')) {
+    if (hasDouble && !values.includes('center')) return;
+    x = 1;
+    y = 0.5;
+  } else if (values.includes('center')) {
+    if (hasDouble && values[0] !== values[1]) return;
+    x = 0.5;
+    y = 0.5;
+  } else {
+    return;
+  }
+
+  return [x * 100 + '%', y * 100 + '%'];
+}
+
+function convert2DValue(val) {
+  if (!val) return;
+
+  if (typeof val === 'string') {
+    val = val.trim();
+    if (!val) return;
+    var sp = parseFromPositioningLiteral(val);
+    if (sp) return sp;
+    var values = val.split(' ');
+
+    if (values.length === 2) {
+      return values;
+    }
+
+    return;
+  }
+
+  if (Array.isArray(val)) {
+    if (!val.length) return;
+    var v0 = val[0];
+    var v1 = val[1];
+    var v0f = typeof v0 === 'number' ? v0 + 'px' : v0;
+    var v1f = typeof v1 === 'number' ? v1 + 'px' : v1;
+    return [v0f, v1f];
+  }
+
+  return;
+}
+
+function convertToTransform(val, negate) {
+  if (negate === void 0) {
+    negate = false;
+  }
+
+  var converted = convert2DValue(val);
+  if (!converted) return '';
+  var cx = negate ? converted[0].startsWith('-') ? converted[0].substring(1) : '-' + converted[0] : converted[0];
+  var cy = negate ? converted[1].startsWith('-') ? converted[1].substring(1) : '-' + converted[1] : converted[1];
+  return "".concat(cx, " ").concat(cy);
+}
+
 function addTooltip(target, props, withBackdrop, hide) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
@@ -11833,9 +11933,8 @@ function addTooltip(target, props, withBackdrop, hide) {
   var pos = positions[props.position];
   anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
   anchor.Style.Set('inset', -(props.offset || 5));
-  var pivot = Interop.ReactUnity.Converters.AllConverters.YogaValue2Converter.Convert(props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top');
-  var realPivot = pivot.GetType().ToString() === 'ReactUnity.Types.YogaValue2' ? pivot : Interop.ReactUnity.Types.YogaValue2.Center;
-  tooltip.Style.Set('translate', realPivot.Negate());
+  var pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top';
+  tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
   UnityBridge.appendChild(target, anchor);
 
   if (withBackdrop) {
@@ -13916,6 +14015,90 @@ var VariableSizeList = createListComponent({
  //# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ../../../material/dist/index.js
  //# sourceMappingURL=index.js.map
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
+var helpers_dictionary_watcher_assign = undefined && undefined.__assign || function () {
+  helpers_dictionary_watcher_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return helpers_dictionary_watcher_assign.apply(this, arguments);
+};
+
+
+
+
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
+
+function dictionary_watcher_createDictionaryWatcher(dictionary, displayName) {
+  var ctx = (0,react.createContext)(undefined);
+  if (displayName) ctx.displayName = displayName;
+
+  var snapshot = helpers_dictionary_watcher_assign({}, dictionary);
+
+  var subscribe = function subscribe(onStoreChange) {
+    snapshot = helpers_dictionary_watcher_assign({}, dictionary);
+    var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+      snapshot = helpers_dictionary_watcher_assign({}, dictionary);
+      onStoreChange();
+    });
+
+    if (!remove) {
+      if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
+    }
+
+    return function () {
+      return remove === null || remove === void 0 ? void 0 : remove();
+    };
+  };
+
+  var getSnapshot = function getSnapshot() {
+    return snapshot;
+  };
+
+  var Provider = function GlobalsProvider(_a) {
+    var children = _a.children;
+    var value = (0,shim.useSyncExternalStore)(subscribe, getSnapshot, getSnapshot);
+    return (0,react.createElement)(ctx.Provider, {
+      value: value
+    }, children);
+  };
+
+  function useSelector(selector) {
+    return (0,with_selector.useSyncExternalStoreWithSelector)(subscribe, getSnapshot, getSnapshot, selector);
+  }
+
+  function useDictionaryContext() {
+    var context = (0,react.useContext)(ctx);
+
+    if (context === undefined) {
+      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
+    }
+
+    return context;
+  }
+
+  return {
+    context: ctx,
+    Provider: Provider,
+    useContext: useDictionaryContext,
+    useSelector: useSelector
+  };
+}
+var dictionary_watcher_globalsWatcher = dictionary_watcher_createDictionaryWatcher(Globals, 'globalsContext');
+var dictionary_watcher_useGlobals = dictionary_watcher_globalsWatcher.useContext;
+var dictionary_watcher_GlobalsProvider = dictionary_watcher_globalsWatcher.Provider;
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/styled-components-helper.js
 function insertStyledComponentsSheet(sheet) {
   try {
@@ -13956,6 +14139,854 @@ function useWatchable(obj) {
   }, [obj, isWatchable]);
   return (0,shim.useSyncExternalStore)(subscribe, getSnapshot);
 }
+;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
+var version_version = '0.11.0';
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
+var error_boundary_extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var views_error_boundary_assign = undefined && undefined.__assign || function () {
+  views_error_boundary_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return views_error_boundary_assign.apply(this, arguments);
+};
+
+
+
+
+var error_boundary_ErrorBoundary =
+/** @class */
+function (_super) {
+  error_boundary_extends(ErrorBoundary, _super);
+
+  function ErrorBoundary(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {
+      hasError: false,
+      error: null
+    };
+    return _this;
+  }
+
+  ErrorBoundary.getDerivedStateFromError = function (error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      error: error
+    };
+  };
+
+  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {// You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo);
+  };
+
+  ErrorBoundary.prototype.render = function () {
+    var _a, _b;
+
+    if (this.state.hasError) {
+      return (0,jsx_runtime.jsxs)("view", views_error_boundary_assign({
+        style: {
+          color: 'crimson',
+          padding: 20
+        }
+      }, {
+        children: [(0,jsx_runtime.jsx)("view", views_error_boundary_assign({
+          style: {
+            marginBottom: '12px'
+          }
+        }, {
+          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
+        })), (0,jsx_runtime.jsx)("view", {
+          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
+        })]
+      }));
+    }
+
+    return this.props.children;
+  };
+
+  return ErrorBoundary;
+}(react.Component);
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
+
+
+
+function default_view_DefaultView(_a) {
+  var children = _a.children,
+      withHelpers = _a.withHelpers;
+  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+    children: !withHelpers ? children : (0,jsx_runtime.jsx)(error_boundary_ErrorBoundary, {
+      children: (0,jsx_runtime.jsx)(dictionary_watcher_GlobalsProvider, {
+        children: children
+      })
+    })
+  });
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
+var objects_ObjectsRepo =
+/** @class */
+function () {
+  function ObjectsRepo() {
+    var _this = this;
+
+    this.indices = [{}];
+    this.objects = new WeakMap();
+
+    this.setObject = function (index, item) {
+      var it = _this.indices[index];
+
+      if (!it) {
+        it = _this.indices[index] = {};
+      }
+
+      _this.objects.set(it, item);
+    };
+
+    this.addObject = function (item) {
+      if (!item) return -1;
+      var it = {};
+      var ind = _this.indices.length;
+
+      _this.indices.push(it);
+
+      _this.objects.set(it, item);
+
+      return ind;
+    };
+
+    this.getObject = function (index) {
+      if (index < 0) return undefined;
+      var it = _this.indices[index];
+      return _this.objects.get(it);
+    };
+  }
+
+  return ObjectsRepo;
+}();
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
+var diffing_styleStringSymbol = '__style_as_string__';
+function diffing_diffProperties(lastProps, nextProps, deepDiffing) {
+  if (deepDiffing === void 0) {
+    deepDiffing = 0;
+  }
+
+  if (lastProps === nextProps) return null;
+  var updatePayload = null;
+  var propKey;
+
+  for (propKey in lastProps) {
+    // This loop is for removing properties that existed in the previous properties, but not on current
+    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
+      continue;
+    }
+
+    var prop = null; // If style existed in the previous properties as string, set it to null
+
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || {})[diffing_styleStringSymbol] = null;
+    } else {
+      var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
+
+      if (depth > 0) {
+        prop = diffing_diffProperties(lastProps[propKey], null, depth - 1);
+        if (!prop) continue;
+      } // For all other deleted properties we add it to the queue. We use
+      // the whitelist in the commit phase instead.
+
+
+      (updatePayload = updatePayload || {})[propKey] = prop;
+    }
+  }
+
+  for (propKey in nextProps) {
+    // This loop is for finding difference between current properties and previous properties
+    var nextProp = nextProps[propKey];
+    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
+
+    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
+      continue;
+    }
+
+    var prop = nextProp;
+
+    if (propKey === 'style') {
+      var prevWasString = typeof lastProp === 'string';
+      var curIsString = typeof prop === 'string';
+
+      if (prevWasString !== curIsString) {
+        (updatePayload = updatePayload || {})[diffing_styleStringSymbol] = typeof prop === 'string' ? prop : null;
+
+        if (curIsString) {
+          // Current style is string while previous is object, so revert all changes from the previous one
+          prop = diffing_diffProperties(lastProp, {}, 0);
+          if (!prop) continue;
+        }
+      } else {
+        if (curIsString) {
+          // Both styles are string, style does not need changing
+          continue;
+        } else {
+          // Both styles are object, take the difference
+          prop = diffing_diffProperties(lastProp, nextProp, 0);
+          if (!prop) continue;
+        }
+      }
+    }
+
+    if (deepDiffing > 0) {
+      prop = diffing_diffProperties(lastProp, nextProp, deepDiffing - 1);
+      if (!prop) continue;
+    }
+
+    (updatePayload = updatePayload || {})[propKey] = prop;
+  }
+
+  return updatePayload;
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
+var renderer_constants_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+var constants_hideClass = 'react-unity__renderer__hidden';
+var constants_eventPriorities = {
+  discrete: constants.DiscreteEventPriority,
+  continuous: constants.ContinuousEventPriority,
+  "default": constants.DefaultEventPriority,
+  idle: constants.IdleEventPriority
+};
+var constants_textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true
+};
+function constants_getAllowedProps(props, type) {
+  var children = props.children,
+      tag = props.tag,
+      rest = renderer_constants_rest(props, ["children", "tag"]);
+
+  if (constants_textTypes[type] && 'children' in props) {
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
+  }
+
+  if (typeof props.style === 'string') rest[diffing_styleStringSymbol] = props.style;
+  return rest;
+}
+var constants_commonReconciler = {
+  // -------------------
+  //     Scheduling
+  // -------------------
+  now: Date.now,
+  getCurrentEventPriority: function getCurrentEventPriority() {
+    return UnityBridge.CurrentEventPriority || constants_eventPriorities["default"];
+  },
+  noTimeout: -1,
+  scheduleTimeout: function scheduleTimeout(callback, delay) {
+    return setTimeout(callback, delay);
+  },
+  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
+    return Promise.resolve(null).then(callback)["catch"](function (error) {
+      return setTimeout(function () {
+        throw error;
+      }, 0);
+    });
+  },
+  cancelTimeout: function cancelTimeout(handle) {
+    return clearTimeout(handle);
+  }
+};
+var constants_isDevelopment = "production" === 'development';
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
+var async_callbacks_extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+
+
+var callbacks_CallbacksRepo =
+/** @class */
+function (_super) {
+  async_callbacks_extends(CallbacksRepo, _super);
+
+  function CallbacksRepo() {
+    var _this = _super.call(this) || this;
+
+    _this.call = function (ind, args) {
+      var cb = _this.getObject(ind);
+
+      if ('Length' in args) {
+        var newArgs = [];
+        var length = args['Length'];
+
+        for (var index = 0; index < length; index++) {
+          var element = args[index];
+          newArgs.push(element);
+        }
+
+        args = newArgs;
+      }
+
+      return cb.apply(null, args);
+    };
+
+    return _this;
+  }
+
+  return CallbacksRepo;
+}(objects_ObjectsRepo);
+
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
+
+
+var serializer_callbacksRepo = new callbacks_CallbacksRepo();
+var serializer_objectsRepo = new objects_ObjectsRepo(); // Separates properties in 3 categories: regular props, callbacks and non-serializable objects
+
+function serializer_convertPropsToSerializable(props) {
+  var res = {};
+
+  for (var key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      var value = props[key];
+
+      if (value == null) {
+        (res.p || (res.p = {}))[key] = null;
+      } else if (key === 'style') {
+        (res.p || (res.p = {}))[key] = serializer_convertPropsToSerializable(value);
+      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
+        var ind = serializer_callbacksRepo.addObject(value);
+        (res.e || (res.e = {}))[key] = ind;
+      } else if (typeof value === 'object' || typeof value === 'function') {
+        var ind = serializer_objectsRepo.addObject(value);
+        (res.o || (res.o = {}))[key] = ind;
+      } else {
+        (res.p || (res.p = {}))[key] = value;
+      }
+    }
+  }
+
+  return res;
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
+var async_reconciler_assign = undefined && undefined.__assign || function () {
+  async_reconciler_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return async_reconciler_assign.apply(this, arguments);
+};
+
+
+
+
+
+var reconciler_refId = 0;
+var reconciler_ctxMap = new Map();
+
+var async_reconciler_hostConfig = async_reconciler_assign(async_reconciler_assign({}, constants_commonReconciler), {
+  getRootHostContext: function getRootHostContext(rootContainer) {
+    var context = rootContainer.context;
+
+    if (rootContainer.refId < 0) {
+      reconciler_refId++;
+      rootContainer.context.SetRef(reconciler_refId, rootContainer.component);
+      rootContainer.refId = reconciler_refId;
+    }
+
+    var existing = reconciler_ctxMap.get(context);
+    if (existing) return existing;
+    var commands = rootContainer.commands;
+
+    var flushCommands = function flushCommands() {
+      var serialized = JSON.stringify(commands);
+      commands.length = 0;
+      return serialized;
+    };
+
+    var fireEventByRef = function fireEventByRef(ind, args) {
+      return serializer_callbacksRepo.call(ind, args);
+    };
+
+    var getObjectRef = function getObjectRef(ind) {
+      return serializer_objectsRepo.getObject(ind);
+    };
+
+    var getEventAsObjectRef = function getEventAsObjectRef(ind) {
+      return serializer_callbacksRepo.getObject(ind);
+    };
+
+    context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
+    var ctx = {
+      context: context,
+      commands: commands
+    };
+    reconciler_ctxMap.set(context, ctx);
+    return ctx;
+  },
+  getChildHostContext: function getChildHostContext(parentCtx) {
+    return parentCtx;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+  },
+  supportsMutation: true,
+  supportsHydration: false,
+  supportsPersistence: false,
+  supportsMicrotasks: true,
+  supportsTestSelectors: false,
+  isPrimaryRenderer: true,
+  warnsIfNotActing: true,
+  prepareForCommit: function prepareForCommit() {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit() {},
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
+    return false;
+  },
+  clearContainer: function clearContainer(container) {
+    UnityBridge.clearContainer(container);
+  },
+  createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
+    reconciler_refId++;
+    var aProps = constants_getAllowedProps(props, type);
+    ctx.commands.push(['c', async_reconciler_assign({
+      t: type,
+      r: reconciler_refId
+    }, serializer_convertPropsToSerializable(aProps))]);
+    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(reconciler_refId, internalHandle);
+    return async_reconciler_assign(async_reconciler_assign({}, ctx), {
+      refId: reconciler_refId
+    });
+  },
+  createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
+    reconciler_refId++;
+    ctx.commands.push(['t', {
+      r: reconciler_refId,
+      c: text
+    }]);
+    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(reconciler_refId, internalHandle);
+    return async_reconciler_assign(async_reconciler_assign({}, ctx), {
+      refId: reconciler_refId
+    });
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    parent.commands.push(['a', {
+      p: parent.refId,
+      c: child.refId
+    }]);
+  },
+  finalizeInitialChildren: function finalizeInitialChildren() {
+    return false;
+  },
+  commitMount: function commitMount(instance) {},
+  shouldSetTextContent: function shouldSetTextContent(type) {
+    return constants_textTypes[type];
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+    return diffing_diffProperties(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type) {
+    var props = constants_getAllowedProps(updatePayload, type);
+    instance.commands.push(['u', async_reconciler_assign({
+      r: instance.refId,
+      t: type
+    }, serializer_convertPropsToSerializable(props))]);
+  },
+  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+    textInstance.commands.push(['x', {
+      r: textInstance.refId,
+      c: newText
+    }]);
+  },
+  appendChild: function appendChild(parent, child) {
+    child.commands.push(['a', {
+      p: parent.refId,
+      c: child.refId
+    }]);
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    child.commands.push(['a', {
+      p: parent.refId,
+      c: child.refId
+    }]);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    child.commands.push(['i', {
+      p: parent.refId,
+      c: child.refId,
+      i: beforeChild.refId
+    }]);
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    child.commands.push(['i', {
+      p: parent.refId,
+      c: child.refId,
+      i: beforeChild.refId
+    }]);
+  },
+  removeChild: function removeChild(parent, child) {
+    child.commands.push(['r', {
+      p: parent.refId,
+      c: child.refId
+    }]);
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    child.commands.push(['r', {
+      p: parent.refId,
+      c: child.refId
+    }]);
+  },
+  resetTextContent: function resetTextContent() {},
+  preparePortalMount: function preparePortalMount() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
+  // Required for Suspense
+  hideInstance: function hideInstance(instance) {
+    instance.commands.push(['h', {
+      r: instance.refId,
+      h: true
+    }]);
+  },
+  hideTextInstance: function hideTextInstance(instance) {
+    instance.commands.push(['h', {
+      r: instance.refId,
+      h: true
+    }]);
+  },
+  unhideInstance: function unhideInstance(instance) {
+    instance.commands.push(['h', {
+      r: instance.refId,
+      h: false
+    }]);
+  },
+  unhideTextInstance: function unhideTextInstance(instance) {
+    instance.commands.push(['h', {
+      r: instance.refId,
+      h: false
+    }]);
+  }
+});
+
+var reconciler_asyncReconciler = react_reconciler(async_reconciler_hostConfig);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
+var renderer_sync_reconciler_assign = undefined && undefined.__assign || function () {
+  renderer_sync_reconciler_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return renderer_sync_reconciler_assign.apply(this, arguments);
+};
+
+
+
+
+var reconciler_hostContext = {};
+var reconciler_childContext = {};
+
+var sync_reconciler_hostConfig = renderer_sync_reconciler_assign(renderer_sync_reconciler_assign({}, constants_commonReconciler), {
+  getRootHostContext: function getRootHostContext() {
+    return reconciler_hostContext;
+  },
+  getChildHostContext: function getChildHostContext() {
+    return reconciler_childContext;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    return instance;
+  },
+  supportsMutation: true,
+  supportsHydration: false,
+  supportsPersistence: false,
+  supportsMicrotasks: true,
+  supportsTestSelectors: false,
+  isPrimaryRenderer: true,
+  warnsIfNotActing: true,
+  prepareForCommit: function prepareForCommit() {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit() {},
+  clearContainer: function clearContainer(container) {
+    return UnityBridge.clearContainer(container);
+  },
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
+    return false;
+  },
+  createInstance: function createInstance(type, props, rootContainerInstance) {
+    var aProps = constants_getAllowedProps(props, type);
+    var children = aProps.children || null;
+    delete aProps.children;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
+  },
+  createTextInstance: function createTextInstance(text, rootContainerInstance) {
+    return UnityBridge.createText(text, rootContainerInstance);
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    UnityBridge.appendChild(parent, child);
+  },
+  finalizeInitialChildren: function finalizeInitialChildren() {
+    return false;
+  },
+  commitMount: function commitMount() {},
+  shouldSetTextContent: function shouldSetTextContent(type) {
+    return constants_textTypes[type];
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+    return diffing_diffProperties(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type) {
+    UnityBridge.applyUpdate(instance, constants_getAllowedProps(updatePayload, type), type);
+  },
+  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+    UnityBridge.setText(textInstance, newText);
+  },
+  appendChild: function appendChild(parent, child) {
+    return UnityBridge.appendChild(parent, child);
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    return UnityBridge.appendChildToContainer(parent, child);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    return UnityBridge.insertBefore(parent, child, beforeChild);
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    return UnityBridge.insertBefore(parent, child, beforeChild);
+  },
+  removeChild: function removeChild(parent, child) {
+    return UnityBridge.removeChild(parent, child);
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    return UnityBridge.removeChild(parent, child);
+  },
+  resetTextContent: function resetTextContent() {},
+  preparePortalMount: function preparePortalMount() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
+  // Required for Suspense
+  hideInstance: function hideInstance(instance) {
+    instance.ClassList.Add(constants_hideClass);
+  },
+  hideTextInstance: function hideTextInstance(instance) {
+    instance.ClassList.Add(constants_hideClass);
+  },
+  unhideInstance: function unhideInstance(instance) {
+    instance.ClassList.Remove(constants_hideClass);
+  },
+  unhideTextInstance: function unhideTextInstance(instance) {
+    instance.ClassList.Remove(constants_hideClass);
+  }
+});
+
+var reconciler_syncReconciler = react_reconciler(sync_reconciler_hostConfig);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
+
+
+
+
+
+
+
+
+var renderer_containerMap = new Map();
+var renderer_Renderer = {
+  render: function render(element, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer; // For Jint engine, sync is default
+    // For other engines (ClearScript), async is default
+
+    var isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? (options === null || options === void 0 ? void 0 : options.sync) === false : !(options === null || options === void 0 ? void 0 : options.sync);
+
+    var _a = renderer_containerMap.get(hostContainer) || {},
+        hostRoot = _a.hostRoot,
+        asyncJobCallback = _a.asyncJobCallback;
+
+    var findFiberByHostInstance = function findFiberByHostInstance() {
+      return null;
+    };
+
+    if (!hostRoot) {
+      var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
+
+      if (isAsync) {
+        var fiberCache_1 = constants_isDevelopment ? new objects_ObjectsRepo() : null;
+
+        if (constants_isDevelopment) {
+          findFiberByHostInstance = function findFiberByHostInstance(instance) {
+            return !instance ? null : fiberCache_1.getObject(instance.refId);
+          };
+        }
+
+        var scheduled_1 = false;
+        var commands_1 = [];
+
+        commands_1.push = function () {
+          var args = [];
+
+          for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+          }
+
+          if (!scheduled_1) {
+            scheduled_1 = true;
+            Promise.resolve().then(function () {
+              asyncJobCallback();
+              scheduled_1 = false;
+            });
+          }
+
+          return Array.prototype.push.apply(commands_1, args);
+        };
+
+        var hostContainerInstance = {
+          commands: commands_1,
+          component: hostContainer,
+          context: hostContainer.Context,
+          refId: hostContainer.RefId,
+          fiberCache: fiberCache_1
+        };
+
+        asyncJobCallback = function asyncJobCallback() {
+          if (!commands_1.length) return;
+          var serialized = JSON.stringify(commands_1);
+          commands_1.length = 0;
+          hostContainer.Context.FlushCommands(serialized);
+        };
+
+        hostRoot = reconciler_asyncReconciler.createContainer(hostContainerInstance, mode, false, null);
+      } else {
+        hostRoot = reconciler_syncReconciler.createContainer(hostContainer, mode, false, null);
+      }
+
+      renderer_containerMap.set(hostContainer, {
+        hostRoot: hostRoot,
+        asyncJobCallback: asyncJobCallback
+      });
+    }
+
+    var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
+
+    if (shouldWrapWithHelpers) {
+      var viewWrapperProps = {
+        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers)
+      };
+      element = (0,react.createElement)(default_view_DefaultView, viewWrapperProps, element);
+    }
+
+    var rc = isAsync ? reconciler_asyncReconciler : reconciler_syncReconciler;
+    rc.updateContainer(element, hostRoot, null);
+    rc.injectIntoDevTools({
+      bundleType: constants_isDevelopment ? 1 : 0,
+      version: version_version,
+      rendererPackageName: '@reactunity/renderer',
+      rendererConfig: {
+        isAsync: isAsync
+      },
+      findFiberByHostInstance: findFiberByHostInstance
+    });
+    return rc;
+  }
+};
+var renderer_isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
+var renderer_defaultReconciler = renderer_isSyncByDefault ? reconciler_syncReconciler : reconciler_asyncReconciler;
+var renderer_batchedUpdates = renderer_defaultReconciler.batchedUpdates;
+var renderer_flushSync = renderer_defaultReconciler.flushSync;
 ;// CONCATENATED MODULE: ../../../renderer/dist/index.js
 
 

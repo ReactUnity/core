@@ -1,4 +1,4 @@
-import { Facebook as FB, ReactUnity, UnityEngine as UE } from '@reactunity/renderer';
+import { Facebook as FB, UnityEngine as UE } from '@reactunity/renderer';
 
 const StyleLength = Interop.UnityEngine.UIElements.StyleLength;
 const StyleKeyword = Interop.UnityEngine.UIElements.StyleKeyword;
@@ -55,13 +55,4 @@ export function convertFloatToLength(value: number): UE.UIElements.StyleLength {
 
 export function floatDefaultGetter(value: number) {
   return value || 0;
-}
-
-
-export function convertStringToList(value: string): ReactUnity.Types.CommaSeparatedList {
-  return value as any;
-}
-
-export function convertListToString(value: ReactUnity.Types.CommaSeparatedList): string {
-  return value?.Definition || "";
 }
