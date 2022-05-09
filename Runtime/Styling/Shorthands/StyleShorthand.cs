@@ -50,7 +50,14 @@ namespace ReactUnity.Styling.Shorthands
             if (value == null) return ClearValues(collection);
 
             var keyword = CssKeyword.NoKeyword;
-            if (value is string s) ParserHelpers.TryParseKeyword(s, out keyword);
+
+            if (value is string s)
+            {
+                if (ParserHelpers.TryParseVariables(s, out var variable))
+                    return SetAllValues(collection, new ComputedShorthandVariable(variable, this));
+
+                ParserHelpers.TryParseKeyword(s, out keyword);
+            }
             else if (value is CssKeyword k) keyword = k;
 
             if (keyword != CssKeyword.NoKeyword && !CanHandleKeyword(keyword))
