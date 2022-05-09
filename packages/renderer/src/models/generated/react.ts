@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 09/05/2022 01:23:35
+// Generated 09/05/2022 16:59:32
 //
 /* eslint-disable */
 
@@ -3965,6 +3965,14 @@ export declare namespace ReactUnity {
         constructor(ratio: number, type: ReactUnity.Styling.Computed.ComputedRootRelative_RootValueType);
         Ratio: number;
         Type: ReactUnity.Styling.Computed.ComputedRootRelative_RootValueType;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedShorthandVariable {
+        Variable: ReactUnity.Styling.Computed.IComputedValue;
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
