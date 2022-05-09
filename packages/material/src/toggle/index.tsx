@@ -8,6 +8,8 @@ import { SelectionElement, SelectionState } from '../util/selection';
 import { MdInteractible } from '../util/types';
 import style from './index.module.scss';
 
+const ToggleGroupContext = React.createContext<SelectionState>(null);
+
 type ToggleEl = ReactUnity.UGUI.ToggleComponent;
 
 export type ToggleType = 'checkbox' | 'radio';
@@ -32,9 +34,9 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
     type = type || (ctx && !ctx.allowMultiple ? 'radio' : 'checkbox');
 
     const selectionRef = useMemo<SelectionElement>(() => ({
-      get selected() { return toggleRef.current.Checked; },
-      set selected(val: boolean) { toggleRef.current.Checked = val; },
-      get value() { return toggleRef.current.Value; },
+      get selected() { return toggleRef.current?.Checked; },
+      set selected(val: boolean) { if (toggleRef.current) toggleRef.current.Checked = val; },
+      get value() { return toggleRef.current?.Value; },
       addOnChange: (callback) => {
         return UnityBridge.addEventListener(toggleRef.current, 'onChange', () => {
           callback?.();
@@ -47,7 +49,7 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
 
       if (typeof ref === 'function') ref(val);
       else if (ref) ref.current = val;
-    }, [ctx, ref, selectionRef]);
+    }, [ctx, ref]);
 
     useLayoutEffect(() => {
       return ctx?.register(selectionRef);
@@ -67,9 +69,6 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
   });
 
 export const Toggle = React.memo(_Toggle);
-
-
-const ToggleGroupContext = React.createContext<SelectionState>(null);
 
 type ToggleGroupProps<T = any> = { children?: ReactNode } &
   ({
