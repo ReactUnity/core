@@ -37,7 +37,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
         [EditorInjectableTest(@"
             export default function App() {
-                const globals = useGlobals();
+                const globals = ReactUnity.useGlobals();
                 return <>
                     <view id='test'>
                         {globals.show && <text></text>}
@@ -82,7 +82,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
         [EditorInjectableTest(@"
             export default function App() {
-                const globals = useGlobals();
+                const globals = ReactUnity.useGlobals();
                 return <>
                     <view className='class+1'>
                         Hey

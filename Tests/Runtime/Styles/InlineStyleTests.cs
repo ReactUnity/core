@@ -50,8 +50,8 @@ namespace ReactUnity.Tests
 
 
         [ReactInjectableTest(@"
-            function App() {
-                var globals = useGlobals();
+            export default function App() {
+                var globals = ReactUnity.useGlobals();
 
                 return <view id='test' style={globals.asObject ? { fontSize: 25, color: 'red' } : 'font-size: 23px; font-weight: bold;'}>
                     Hello world
