@@ -138,7 +138,7 @@ namespace ReactUnity.UIToolkit
                 TargetElement.style.backgroundImage = null;
                 bg?.ResolveImage(Context, TargetElement.layout.size, tx => {
                     if (bg != ComputedStyle.backgroundImage?.Get(0)) return;
-                    TargetElement.style.backgroundImage = tx.Texture;
+                    TargetElement.style.backgroundImage = tx?.Texture;
                 });
             }
             else TargetElement.style.backgroundImage = StyleKeyword.Null;

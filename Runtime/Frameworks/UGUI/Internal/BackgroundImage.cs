@@ -5,7 +5,6 @@ using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
-using static ReactUnity.Types.ImageDefinition;
 
 namespace ReactUnity.UGUI.Internal
 {
@@ -51,8 +50,8 @@ namespace ReactUnity.UGUI.Internal
 
         private Color TintColor;
 
-        private ResolvedImage resolved = ResolvedImage.Default;
-        private ResolvedImage Resolved
+        private ImageDefinition.ResolvedImage resolved = ImageDefinition.ResolvedImage.Default;
+        private ImageDefinition.ResolvedImage Resolved
         {
             get => resolved;
             set
@@ -127,7 +126,7 @@ namespace ReactUnity.UGUI.Internal
             {
                 Definition = image;
 
-                if (image != null && image != ImageDefinition.None)
+                if (image != null && image != ImageDefinition.NoImage)
                 {
                     texture = null;
                     color = Color.clear;

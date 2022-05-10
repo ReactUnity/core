@@ -22,7 +22,7 @@ namespace ReactUnity.Types
                 (sprite = sprite ?? Sprite.Create(Texture, new Rect(0, 0, Texture.width, Texture.height), Vector2.one / 2));
         }
 
-        public static ImageDefinition None { get; } = UrlImageDefinition.None;
+        public static ImageDefinition NoImage => UrlImageDefinition.None;
 
         public virtual bool SizeUpdatesGraphic => false;
 
@@ -45,7 +45,7 @@ namespace ReactUnity.Types
 
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
-                if (keyword == CssKeyword.None) return Constant(None, out result);
+                if (keyword == CssKeyword.None) return Constant(NoImage, out result);
                 return base.HandleKeyword(keyword, out result);
             }
 
@@ -81,7 +81,7 @@ namespace ReactUnity.Types
 
     public class UrlImageDefinition : ImageDefinition
     {
-        public static new UrlImageDefinition None { get; } = new UrlImageDefinition(ImageReference.None);
+        public static UrlImageDefinition None { get; } = new UrlImageDefinition(ImageReference.None);
         public ImageReference Reference { get; }
 
         public UrlImageDefinition(ImageReference reference)
