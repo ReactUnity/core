@@ -85,5 +85,24 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(3, value, "Deferred failed to stop");
         }
+
+
+        [UnityTest]
+        public IEnumerator RuntimeDispatcher_CanStopDeferredAsResultOfAnotherDeferred()
+        {
+            var dispatcher = RuntimeDispatcher.Create(null);
+
+            int handle = 0;
+            handle = dispatcher.OnceUpdate(() => {
+                handle = dispatcher.OnceUpdate(() => {
+                    handle = dispatcher.OnceUpdate(() => {
+                        dispatcher.StopDeferred(handle);
+                    });
+                });
+            });
+
+            yield return null;
+            Assert.True(true);
+        }
     }
 }

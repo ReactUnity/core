@@ -134,20 +134,25 @@ namespace ReactUnity.Scheduling
             }
             ToStop.Clear();
 
-
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
+            var newStarts = new List<EditorCoroutine>();
+#else
+            var newStarts = new List<object>();
+#endif
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
                 if (cr != null)
                 {
-                    Started.Add(StartCoroutine(cr));
+                    newStarts.Add(StartCoroutine(cr));
 
                     // We are already in Update so move Coroutine forward if it is waiting for next Update
                     if (cr.Current == null) cr.MoveNext();
                 }
-                else Started.Add(null);
+                else newStarts.Add(null);
             }
             ToStart.Clear();
+            Started.AddRange(newStarts);
         }
 
         public void StopAll()
@@ -164,7 +169,7 @@ namespace ReactUnity.Scheduling
             CallOnLateUpdate.Clear();
         }
 
-        void Update()
+        protected void Update()
         {
             StartAndStopDeferreds();
 
