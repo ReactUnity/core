@@ -1,13 +1,9 @@
 {
   "files": {
-    "main.js": "/index.js",
-    "static/js/212.chunk.js": "/static/js/212.chunk.js",
-    "static/js/508.chunk.js": "/static/js/508.chunk.js",
+    "index.js": "/index.js",
+    "uitoolkit.js": "/uitoolkit.js",
     "static/js/9.chunk.js": "/static/js/9.chunk.js",
     "static/js/968.chunk.js": "/static/js/968.chunk.js",
-    "static/js/945.chunk.js": "/static/js/945.chunk.js",
-    "static/js/73.chunk.js": "/static/js/73.chunk.js",
-    "static/js/813.chunk.js": "/static/js/813.chunk.js",
     "static/media/bg.png": "/static/media/bg.png"
   },
   "entrypoints": [

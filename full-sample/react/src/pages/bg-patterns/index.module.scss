@@ -90,7 +90,7 @@
         linear-gradient(155deg, #c90032 10px, transparent 10px);
     }
 
-    // Tartan
+    //
     &:nth-child(5) {
       background: radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 9%, hsla(0, 100%, 20%, 0) 9%) 0 0,
         radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 8%, hsla(0, 100%, 20%, 0) 10%) 50px 50px,
@@ -141,7 +141,7 @@
       background-position: -50px 0, -50px 0, 0 0, 0 0;
     }
 
-    //
+    // Tartan
     &:nth-child(8) {
       background-color: hsl(2, 57%, 40%);
       background-image: repeating-linear-gradient(

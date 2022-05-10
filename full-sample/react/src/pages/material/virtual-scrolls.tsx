@@ -1,3 +1,4 @@
+import { Paper } from '@reactunity/material/paper';
 import { FixedSizeGrid, FixedSizeList, VariableSizeList } from '@reactunity/material/virtual-scroll';
 
 const Row = ({ index, style }: any) => (
@@ -56,9 +57,12 @@ const VariableSizeExample = () => (
 
 
 export function VirtualScrolls() {
-  return <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-    <FixedSizeExample />
-    <VariableSizeExample />
-    <FixedGridExample />
-  </view>;
+  return <Paper elevation={2}>
+    Virtual Scrolls:
+    <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <FixedSizeExample />
+      <VariableSizeExample />
+      <FixedGridExample />
+    </view>
+  </Paper>;
 }

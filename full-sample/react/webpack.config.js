@@ -1,4 +1,5 @@
 module.exports = function (env, originalConfig) {
-  // Do some modifications on originalConfig object and return it to customize your webpack config
+  // originalConfig.target = 'es5';
+  // originalConfig.output.chunkFormat = 'commonjs';
   return originalConfig;
 }
