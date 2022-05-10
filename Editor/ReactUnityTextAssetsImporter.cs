@@ -1,4 +1,5 @@
 using System.IO;
+using UnityEditor;
 #if UNITY_2020_1_OR_NEWER
 using UnityEditor.AssetImporters;
 #else
@@ -8,13 +9,13 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    [ScriptedImporter(1, new string[] {
+    [ScriptedImporter(2, new string[] {
         "css",
-#if UNITY_2021_2_OR_NEWER
+#if UNITY_2021_2 || UNITY_2021_3 || UNITY_2021_4
         "js",
 #endif
     })]
-    class ReactUnityTextAssetsImporter : ScriptedImporter
+    internal class ReactUnityTextAssetsImporter : ScriptedImporter
     {
         public override void OnImportAsset(AssetImportContext ctx)
         {
@@ -22,5 +23,12 @@ namespace ReactUnity.Editor
             ctx.AddObjectToAsset("text", asset);
             ctx.SetMainObject(asset);
         }
+    }
+
+    [CustomEditor(typeof(ReactUnityTextAssetsImporter))]
+    internal class ReactUnityTextAssetsImporterEditor : AssetImporterEditor
+    {
+        protected override bool needsApplyRevert => false;
+        public override void OnInspectorGUI() { }
     }
 }
