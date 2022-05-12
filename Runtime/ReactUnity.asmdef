@@ -64,6 +64,11 @@
             "name": "Unity",
             "expression": "",
             "define": "REACT_DISABLE_YANTRA"
+        },
+        {
+            "name": "Unity",
+            "expression": "2021.2.0a",
+            "define": "REACT_UITOOLKIT"
         }
     ],
     "noEngineReferences": false

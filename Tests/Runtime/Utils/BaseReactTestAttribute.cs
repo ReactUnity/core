@@ -4,7 +4,6 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
-using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -13,8 +12,11 @@ namespace ReactUnity.Tests
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-        public const string DefaultSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
+        public const string DefaultUGUISceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
+        public const string DefaultUIToolkitSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene_UIToolkit.unity";
         public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene_World.unity";
+
+        public override string DefaultSceneName => DefaultUGUISceneName;
 
 #if UNITY_EDITOR
         #region Test Debug Toggle
@@ -47,7 +49,7 @@ namespace ReactUnity.Tests
         public bool RealTimer;
 
         public BaseReactTestAttribute(string customScene = null, bool autoRender = true, bool skipIfExisting = false, bool realTimer = false) :
-            base(customScene ?? DefaultSceneName)
+            base(customScene)
         {
             AutoRender = autoRender;
             SkipIfExisting = skipIfExisting;
@@ -57,7 +59,7 @@ namespace ReactUnity.Tests
         public override IEnumerator BeforeTest(ITest test)
         {
             var canvas = GameObject.Find("REACT_CANVAS");
-            var cmp = canvas?.GetComponentInChildren<ReactUnityUGUI>();
+            var cmp = canvas?.GetComponentInChildren<ReactUnityBase>();
             if (cmp?.Context != null && SkipIfExisting) yield break;
 
             yield return base.BeforeTest(test);
@@ -78,11 +80,11 @@ namespace ReactUnity.Tests
             if (AutoRender) ru.Render();
         }
 
-        static public ReactUnityUGUI CreateReactUnity(JavascriptEngineType engineType, ScriptSource script)
+        static public ReactUnityBase CreateReactUnity(JavascriptEngineType engineType, ScriptSource script)
         {
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
-            var ru = canvas.GetComponentInChildren<ReactUnityUGUI>();
+            var ru = canvas.GetComponentInChildren<ReactUnityBase>();
 
             ru.EngineType = engineType;
             ru.Source = script;

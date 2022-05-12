@@ -176,6 +176,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -425,16 +426,17 @@ MonoBehaviour:
     Language: 0
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
     Watch: 1
-    SourcePath: react/index#material
+    SourcePath: react/index
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3100#material
+    DevServer: http://localhost:3100
   Debug: 0
   AwaitDebugger: 0
   EngineType: 0
   Globals:
     Entries: []
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:

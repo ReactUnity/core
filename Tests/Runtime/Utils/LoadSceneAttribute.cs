@@ -8,9 +8,11 @@ namespace ReactUnity.Tests
 {
     public class LoadSceneAttribute : UnityTestAttribute, IOuterUnityTestAction
     {
+        public virtual string DefaultSceneName => null;
+
         protected string SceneName;
 
-        public LoadSceneAttribute(string scene) => this.SceneName = scene;
+        public LoadSceneAttribute(string scene) => this.SceneName = scene ?? DefaultSceneName;
 
         public virtual IEnumerator BeforeTest(ITest test)
         {
