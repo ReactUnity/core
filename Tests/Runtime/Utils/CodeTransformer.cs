@@ -14,7 +14,7 @@ namespace ReactUnity.Tests
         public CodeTransformer(JavascriptEngineType type = JavascriptEngineType.Auto)
         {
             EngineFactory = JavascriptEngineHelpers.GetEngineFactory(type);
-            Engine = EngineFactory.Create(null, false, false);
+            Engine = EngineFactory.Create(null, false, false, (res) => { });
             Engine.Execute(Resources.Load<TextAsset>("ReactUnity/tests/scripts/babel-standalone").text);
         }
 

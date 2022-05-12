@@ -158,7 +158,7 @@ namespace ReactUnity.Editor.Renderer
 
         public Action AddVisibilityChange(object cb)
         {
-            var cbObject = new Callback(cb);
+            var cbObject = Callback.From(cb, Context);
             var callback = new Action<bool, ReactWindow>((arg1, arg2) => cbObject.CallWithPriority(EventPriority.Discrete, arg1, arg2));
             VisibilityChange += callback;
 

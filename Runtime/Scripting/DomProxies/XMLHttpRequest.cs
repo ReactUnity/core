@@ -172,8 +172,8 @@ namespace ReactUnity.Scripting.DomProxies
             //responseHeaders += header + ": " + response.Headers[header] + "\r\n";
 
 
-            if (onload != null) new Callback(onload).Call();
-            if (onreadystatechange != null) new Callback(onreadystatechange).Call();
+            if (onload != null) Callback.From(onload, context).Call();
+            if (onreadystatechange != null) Callback.From(onreadystatechange, context).Call();
         }
 
         private void errorCallback(string result)
@@ -182,8 +182,8 @@ namespace ReactUnity.Scripting.DomProxies
             status = 400;
             statusText = "error";
 
-            if (onerror != null) new Callback(onerror).Call();
-            if (onreadystatechange != null) new Callback(onreadystatechange).Call();
+            if (onerror != null) Callback.From(onerror, context).Call();
+            if (onreadystatechange != null) Callback.From(onreadystatechange, context).Call();
         }
 
         public string getAllResponseHeaders()

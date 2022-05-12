@@ -154,7 +154,7 @@ namespace ReactUnity.Editor
 
         public void CheckVersion(object callback)
         {
-            var cb = Callback.From(callback);
+            var cb = Callback.From(callback, Context);
             CheckVersion(() => cb.Call());
         }
 

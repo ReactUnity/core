@@ -221,9 +221,11 @@ namespace ReactUnity.Scripting
     {
         public JavascriptEngineType EngineType => JavascriptEngineType.ClearScript;
 
-        public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger)
+        public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
-            return new ClearScriptEngine(context, debug, awaitDebugger);
+            var res = new ClearScriptEngine(context, debug, awaitDebugger);
+            onInitialize?.Invoke(res);
+            return res;
         }
     }
 }

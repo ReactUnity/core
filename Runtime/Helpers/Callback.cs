@@ -25,9 +25,11 @@ namespace ReactUnity.Helpers
         public Engine Engine;
 #endif
 
+        public static Callback Noop = new Callback(null, null);
+
         public static Callback From(object value, ReactContext context = null, object thisVal = null)
         {
-            if (value == null) return null;
+            if (value == null) return Noop;
             if (value is string s)
             {
                 return context.Script.CreateEventCallback(s, thisVal);
@@ -38,7 +40,7 @@ namespace ReactUnity.Helpers
             if (value is Func<JsValue, JsValue[], JsValue> jv) return new Callback(jv, context.Script.Engine.NativeEngine as Engine);
             if (value is ObjectInstance v) return new Callback(v);
 #endif
-            return new Callback(value);
+            return new Callback(value, context);
         }
 
 #if REACT_JINT
@@ -55,9 +57,10 @@ namespace ReactUnity.Helpers
         }
 #endif
 
-        public Callback(object callback)
+        public Callback(object callback, ReactContext context = null)
         {
             this.callback = callback;
+            this.context = context;
         }
 
         public Callback(int index, ReactContext context)

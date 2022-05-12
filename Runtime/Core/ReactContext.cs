@@ -42,6 +42,7 @@ namespace ReactUnity
         public HashSet<IReactComponent> DetachedRoots { get; protected set; } = new HashSet<IReactComponent>();
         public GlobalRecord Globals { get; private set; }
         public bool IsDisposed { get; private set; }
+        public virtual bool IsEditorContext => false;
 
         public Options options { get; }
         public ScriptSource Source { get; }
@@ -227,12 +228,11 @@ namespace ReactUnity
 
         public void BindCommands(object commandsObject, object callbacksObject, object getObjectCallback, object getEventAsObjectCallback)
         {
-            CommandsCallback = new Callback(commandsObject);
-            FireEventByRefCallback = new Callback(callbacksObject);
-            GetObjectCallback = new Callback(getObjectCallback);
-            GetEventAsObjectCallback = new Callback(getEventAsObjectCallback);
+            CommandsCallback = Callback.From(commandsObject, this);
+            FireEventByRefCallback = Callback.From(callbacksObject, this);
+            GetObjectCallback = Callback.From(getObjectCallback, this);
+            GetEventAsObjectCallback = Callback.From(getEventAsObjectCallback, this);
         }
-
 
         IEnumerator<KeyValuePair<string, object>> PropsEnumerator(JToken props)
         {

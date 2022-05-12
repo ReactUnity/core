@@ -124,13 +124,13 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onload
         {
-            set { onloadCallback = new Callback(value); }
+            set { onloadCallback = Callback.From(value, document.Context); }
             get => new Action(() => onloadCallback.Call());
         }
 
         public object onerror
         {
-            set { onerrorCallback = new Callback(value); }
+            set { onerrorCallback = Callback.From(value, document.Context); }
             get => new Action(() => onerrorCallback.Call());
         }
 
@@ -262,13 +262,13 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onload
         {
-            set { onloadCallback = new Callback(value); }
+            set { onloadCallback = Callback.From(value, document.Context); }
             get => new Action(() => onloadCallback.Call());
         }
 
         public object onerror
         {
-            set { onerrorCallback = new Callback(value); }
+            set { onerrorCallback = Callback.From(value, document.Context); }
             get => new Action(() => onerrorCallback.Call());
         }
 

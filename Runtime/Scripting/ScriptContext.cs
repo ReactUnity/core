@@ -16,12 +16,13 @@ namespace ReactUnity.Scripting
         {
             get
             {
-                if (!Initialized) Initialize();
+                if (!Initialized) Initialize(null);
                 return engine;
             }
         }
         public ReactInterop Interop { get; private set; }
         public bool Initialized { get; private set; }
+        public bool EngineInitialized { get; private set; }
         public bool Debug { get; set; }
         public bool AwaitDebugger { get; set; }
 
@@ -38,41 +39,49 @@ namespace ReactUnity.Scripting
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
-            Initialize();
+            Initialize(() => {
+                var beforeStartCallbacks = new List<Action>() { beforeStart };
+                var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
 
-            var beforeStartCallbacks = new List<Action>() { beforeStart };
-            var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
+                engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
+                    var callback = Callback.From(f, Context);
+                    if (e == "DOMContentLoaded")
+                        afterStartCallbacks.Add((success) => callback.CallWithPriority(EventPriority.Discrete, success, this));
+                }));
 
-            engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
-                var callback = Callback.From(f, Context);
-                if (e == "DOMContentLoaded")
-                    afterStartCallbacks.Add((success) => callback.CallWithPriority(EventPriority.Discrete, success, this));
-            }));
-
-            beforeStartCallbacks.ForEach(x => x?.Invoke());
-            var error = engine.TryExecute(script, "ReactUnity");
-            afterStartCallbacks.ForEach(x => x?.Invoke(error));
+                beforeStartCallbacks.ForEach(x => x?.Invoke());
+                var error = engine.TryExecute(script, "ReactUnity");
+                afterStartCallbacks.ForEach(x => x?.Invoke(error));
+            });
         }
 
-        public void Initialize()
+        public void Initialize(Action callback)
         {
             if (Initialized) return;
 
-            if (engine == null) CreateBaseEngine(Debug, AwaitDebugger);
-            engine.SetValue("Context", Context);
-            engine.SetValue("HostContainer", Context.Host);
-            engine.SetValue("Globals", Context.Globals);
-            engine.SetValue("localStorage", Context.LocalStorage);
-            CreateLocation(engine);
-            CreateConsole(engine);
-            CreateScheduler(engine, Context);
-            CreatePolyfills(engine);
-
-            Context.MediaProvider.SetValue("engine", engine.Key);
-
-            engine.Execute("postMessage = function() {}");
-
             Initialized = true;
+            if (engine == null)
+            {
+                CreateBaseEngine(Debug, AwaitDebugger, () => {
+                    engine.SetValue("Context", Context);
+                    engine.SetValue("HostContainer", Context.Host);
+                    engine.SetValue("Globals", Context.Globals);
+                    engine.SetValue("localStorage", Context.LocalStorage);
+                    CreateLocation(engine);
+                    CreateConsole(engine);
+                    CreateScheduler(engine, Context);
+                    CreatePolyfills(engine);
+
+                    Context.MediaProvider.SetValue("engine", engine.Key);
+
+                    engine.Execute("global.postMessage = function() {}");
+
+                    EngineInitialized = true;
+
+                    callback?.Invoke();
+                });
+            }
+            else callback?.Invoke();
         }
 
         public void ExecuteScript(string code, string fileName = null)
@@ -95,17 +104,20 @@ namespace ReactUnity.Scripting
             return Callback.From(fn, Context, thisVal);
         }
 
-        void CreateBaseEngine(bool debug, bool awaitDebugger)
+        void CreateBaseEngine(bool debug, bool awaitDebugger, Action onInitialize)
         {
-            engine = EngineFactory.Create(Context, debug, awaitDebugger);
+            EngineFactory.Create(Context, debug, awaitDebugger, (_engine) => {
+                engine = _engine;
+                _engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this;");
+                _engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
+                _engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
 
-            engine.Execute("globalThis = global = window = parent = self = this;");
-            engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
-            engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
+                Interop = new ReactInterop(_engine);
+                Interop.InitializeDefault();
+                _engine.SetValue("Interop", Interop);
 
-            Interop = new ReactInterop(engine);
-            Interop.InitializeDefault();
-            engine.SetValue("Interop", Interop);
+                onInitialize?.Invoke();
+            });
         }
 
         void CreateConsole(IJavaScriptEngine engine)
@@ -161,8 +173,8 @@ namespace ReactUnity.Scripting
             engine.SetValue("location", Context.Location);
             engine.SetValue("document", new DocumentProxy(Context, Context.Location.origin));
 
-            engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
-            engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
+            engine.Execute(@"global.WebSocket = function(url) { return new WebSocket.original(Context, url); }");
+            engine.Execute(@"global.XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
             engine.SetProperty(engine.GetValue("WebSocket"), "original", typeof(WebSocketProxy));
             engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
         }

@@ -66,6 +66,8 @@ namespace ReactUnity.Editor.Renderer
         private static TextAsset useragentStylesheet;
         public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ?? Resources.Load<TextAsset>("ReactUnity/editor/useragent");
 
+        public override bool IsEditorContext => true;
+
         public EditorContext(Options options) : base(options)
         {
             Window = options.Window;

@@ -173,9 +173,11 @@ namespace ReactUnity.Scripting
     {
         public JavascriptEngineType EngineType => JavascriptEngineType.Jint;
 
-        public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger)
+        public IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
-            return new JintEngine(context, debug, awaitDebugger);
+            var res = new JintEngine(context, debug, awaitDebugger);
+            onInitialize?.Invoke(res);
+            return res;
         }
     }
 }

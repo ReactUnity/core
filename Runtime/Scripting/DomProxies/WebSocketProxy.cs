@@ -18,7 +18,7 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onmessage
         {
-            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') })); }
+            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') })); }
             get => null;
         }
 
@@ -28,7 +28,7 @@ namespace ReactUnity.Scripting.DomProxies
             {
                 socket.OnClose += (code, reason) => {
                     if (context.IsDisposed) return;
-                    context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { code, reason }));
+                    context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { code, reason }));
                 };
             }
             get => null;
@@ -36,13 +36,13 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onopen
         {
-            set { socket.OnOpen += () => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call()); }
+            set { socket.OnOpen += () => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call()); }
             get => null;
         }
 
         public object onerror
         {
-            set { socket.OnError += (message) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { message })); }
+            set { socket.OnError += (message) => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { message })); }
             get => null;
         }
 

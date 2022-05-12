@@ -14,6 +14,10 @@
 #define REACT_JURASSIC
 #endif
 
+#if !REACT_DISABLE_QUICKJS
+#define REACT_QUICKJS
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -47,6 +51,15 @@ namespace ReactUnity.Scripting
 #endif
         Jurassic = 4,
 #endif
+
+#if REACT_QUICKJS
+#if !REACT_QUICKJS
+        [UnityEngine.InspectorName("QuickJS (Disabled)")]
+#else
+        [UnityEngine.InspectorName("QuickJS")]
+#endif
+        QuickJS = 5,
+#endif
     }
 
     public interface IJavaScriptEngine : IDisposable
@@ -71,6 +84,6 @@ namespace ReactUnity.Scripting
     public interface IJavaScriptEngineFactory
     {
         JavascriptEngineType EngineType { get; }
-        IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger);
+        IJavaScriptEngine Create(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize);
     }
 }
