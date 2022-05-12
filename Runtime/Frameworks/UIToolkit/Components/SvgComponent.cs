@@ -94,7 +94,7 @@ namespace ReactUnity.UIToolkit
 
         protected void RefreshValue()
         {
-#if REACT_VECTOR_GRAPHICS
+#if !REACT_VECTOR_GRAPHICS
             Debug.LogError(
                 "UnityEngine.VectorGraphics is not enabled, enable this package through REACT_VECTOR_GRAPHICS to allow for svg");
 #else
