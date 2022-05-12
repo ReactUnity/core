@@ -4,7 +4,10 @@
     "references": [
         "GUID:ed4a920eac98dc342ba18a6baa202849",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:9a66a2efedc711946b7428ea9b41cc0d"
+        "GUID:9a66a2efedc711946b7428ea9b41cc0d",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:68550284b645f4b9894995579f34290a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -26,6 +29,11 @@
             "name": "com.unity.textmeshpro",
             "expression": "",
             "define": "REACT_TMP"
+        },
+        {
+          "name": "com.unity.vectorgraphics",
+          "expression": "",
+          "define": "REACT_VECTOR_GRAPHICS"
         }
     ],
     "noEngineReferences": false
