@@ -51,7 +51,7 @@ namespace ReactUnity.UIToolkit
         ///     Get cacheable type of Unity.VectorGraphics.VectorImageUtils
         /// </summary>
         private static Type VectorImageUtilsType =>
-            _vectorImageUtilsType ??= typeof(VectorUtils).Assembly.GetType("Unity.VectorGraphics.VectorImageUtils");
+            _vectorImageUtilsType = _vectorImageUtilsType ?? typeof(VectorUtils).Assembly.GetType("Unity.VectorGraphics.VectorImageUtils");
 
         /// <summary>
         ///     Get cacheable method info of Unity.VectorGraphics.VectorImageUtils.MakeVectorImageAsset(...);
@@ -60,14 +60,14 @@ namespace ReactUnity.UIToolkit
         ///     Keep all flags just to make sure this call stays relevant even if unity decides someday to expose this method :/
         /// </remarks>
         private static MethodInfo MakeVectorImageAssetMethodInfo =>
-            _makeVectorImageAsset ??= VectorImageUtilsType.GetMethod("MakeVectorImageAsset",
+            _makeVectorImageAsset = _makeVectorImageAsset ?? VectorImageUtilsType.GetMethod("MakeVectorImageAsset",
                 BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
 #if !UNITY_WEBGL && !UNITY_IOS && !UNITY_IPHONE && !UNITY_WSA && !UNITY_WSA_10_0
         /// <summary>
         ///     Speedup reflection execution by wrapping method inside a delegate
         /// </summary>
-        private static MakeVectorDelegate MakeVectorHook => _makeVectorHook ??=
+        private static MakeVectorDelegate MakeVectorHook => _makeVectorHook = _makeVectorHook ??
             (MakeVectorDelegate) Delegate.CreateDelegate(typeof(MakeVectorDelegate), MakeVectorImageAssetMethodInfo);
 #endif
 #endif
