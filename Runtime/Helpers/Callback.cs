@@ -6,6 +6,10 @@
 #define REACT_JINT
 #endif
 
+#if !REACT_DISABLE_QUICKJS
+#define REACT_QUICKJS
+#endif
+
 using System;
 using System.Linq;
 
@@ -111,6 +115,14 @@ namespace ReactUnity.Helpers
             else if (callback is Microsoft.ClearScript.ScriptObject so)
             {
                 return so.Invoke(false, args);
+            }
+#endif
+#if REACT_QUICKJS
+            else if (callback is QuickJS.Native.JSValue qf)
+            {
+                var eg = (context?.Script.Engine as Scripting.QuickJSEngine);
+                if (eg == null) return null;
+                return new QuickJS.ScriptFunction(eg.MainContext, qf, eg.Global).Invoke<object>(args);
             }
 #endif
             else

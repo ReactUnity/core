@@ -14,6 +14,10 @@
 #define REACT_JURASSIC
 #endif
 
+#if !REACT_DISABLE_QUICKJS
+#define REACT_QUICKJS
+#endif
+
 namespace ReactUnity.Scripting
 {
     internal class JavascriptEngineHelpers
@@ -34,6 +38,10 @@ namespace ReactUnity.Scripting
                 case JavascriptEngineType.Jurassic:
                     return new JurassicEngineFactory();
 #endif
+#if REACT_QUICKJS
+                case JavascriptEngineType.QuickJS:
+                    return new QuickJSEngineFactory();
+#endif
 #if REACT_CLEARSCRIPT
                 case JavascriptEngineType.Auto:
                 case JavascriptEngineType.ClearScript:
@@ -48,6 +56,8 @@ namespace ReactUnity.Scripting
                     return new YantraEngineFactory();
 #elif REACT_JURASSIC
                     return new JurassicEngineFactory();
+#elif REACT_QUICKJS
+                    return new QuickJSEngineFactory();
 #else
                     throw new System.Exception("Could not find a valid scripting engine.");
 #endif

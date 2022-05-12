@@ -6,11 +6,15 @@
         "GUID:68550284b645f4b9894995579f34290a",
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:478a2357cc57436488a56e564b08d223",
-        "GUID:9a66a2efedc711946b7428ea9b41cc0d"
+        "GUID:9a66a2efedc711946b7428ea9b41cc0d",
+        "GUID:118b4ca3a1852354bac065cf952c1e85",
+        "GUID:ac4126d60783f3d4a98aee6be9a997aa",
+        "GUID:eda0539582471264796e5affb41fe082",
+        "GUID:2746379d15af6e84cbeb433df77dd384"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": true,
     "precompiledReferences": [
         "ClearScript.Core.dll",
