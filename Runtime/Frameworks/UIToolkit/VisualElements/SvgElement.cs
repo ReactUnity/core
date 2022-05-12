@@ -14,8 +14,8 @@ namespace ReactUnity.UIToolkit
 {
     public class SvgElement : Image
     {
-        private static readonly string styleName = "TabButtonStyles";
-        private static readonly string UxmlName = "Svg";
+        protected static readonly string styleName = "TabButtonStyles";
+        protected static readonly string UxmlName = "Svg";
 
         private static Type _vectorImageUtilsType;
         private static MethodInfo _makeVectorImageAsset;
