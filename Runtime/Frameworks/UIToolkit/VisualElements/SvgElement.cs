@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
+
+#if REACT_VECTOR_GRAPHICS
+using Unity.VectorGraphics;
+#endif
 
 namespace ReactUnity.UIToolkit
 {

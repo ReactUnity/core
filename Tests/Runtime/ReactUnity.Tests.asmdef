@@ -35,6 +35,16 @@
             "name": "com.unity.inputsystem",
             "expression": "",
             "define": "REACT_INPUT_SYSTEM"
+        },
+        {
+            "name": "Unity",
+            "expression": "2021.2.0a",
+            "define": "REACT_UITOOLKIT"
+        },
+        {
+            "name": "com.unity.vectorgraphics",
+            "expression": "",
+            "define": "REACT_VECTOR_GRAPHICS"
         }
     ],
     "noEngineReferences": false
