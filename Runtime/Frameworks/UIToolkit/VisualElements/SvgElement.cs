@@ -188,7 +188,7 @@ namespace ReactUnity.UIToolkit
 
         new internal class UxmlTraits : VisualElement.UxmlTraits
         {
-            private readonly UxmlStringAttributeDescription Svg = new() { name = "svg" };
+            private readonly UxmlStringAttributeDescription Svg = new UxmlStringAttributeDescription { name = "svg" };
 
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
