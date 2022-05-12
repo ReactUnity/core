@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -65,7 +65,7 @@ namespace ReactUnity.UIToolkit
         ///     Speedup reflection execution by wrapping method inside a delegate
         /// </summary>
         private static MakeVectorDelegate MakeVectorHook => _makeVectorHook ??=
-            (MakeVectorDelegate)Delegate.CreateDelegate(typeof(MakeVectorDelegate), MakeVectorImageAssetMethodInfo);
+            (MakeVectorDelegate) Delegate.CreateDelegate(typeof(MakeVectorDelegate), MakeVectorImageAssetMethodInfo);
 #endif
 #endif
 
@@ -116,8 +116,8 @@ namespace ReactUnity.UIToolkit
             vectorImage = GenerateVectorImageAsset(geometry);
             sourceRect = sceneInfo.SceneViewport;
 #else
-        Debug.LogError(
-            "Unity.VectorGraphics module is required to use SVG components");
+            Debug.LogError(
+                "Unity.VectorGraphics module is required to use SVG components");
 #endif
         }
 
@@ -166,10 +166,10 @@ namespace ReactUnity.UIToolkit
 #if !UNITY_WEBGL && !UNITY_IOS && !UNITY_IPHONE && !UNITY_WSA && !UNITY_WSA_10_0
             MakeVectorHook(geometry, gradientResolution, out var asset, out _);
 #else
-        object[] vParams = { geometry, gradientResolution, null, null };
-        MakeVectorImageAssetMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, vParams, null);
+            object[] vParams = { geometry, gradientResolution, null, null };
+            MakeVectorImageAssetMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, vParams, null);
 
-        var asset = vParams[2];
+            var asset = vParams[2];
 #endif
 
             if (asset == null)
