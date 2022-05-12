@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 using Unity.VectorGraphics;
 #endif
 
-public class SvgElement : VisualElement
+public class SvgElement : Image
 {
     private static readonly string styleName = "TabButtonStyles";
     private static readonly string UxmlName = "Svg";
@@ -117,7 +117,7 @@ public class SvgElement : VisualElement
 
         var geometry = VectorUtils.TessellateScene(sceneInfo.Scene, tessOptions, sceneInfo.NodeOpacity);
 
-        style.backgroundImage = new StyleBackground(GenerateVectorImageAsset(geometry));
+        vectorImage = GenerateVectorImageAsset(geometry);
 #else
         Debug.LogError(
             "UnityEngine.VectorGraphics is not enabled, enable this package through REACT_VECTOR_GRAPHICS to allow for svg");

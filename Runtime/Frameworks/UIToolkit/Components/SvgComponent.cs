@@ -3,6 +3,7 @@ using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
@@ -107,9 +108,9 @@ namespace ReactUnity.UIToolkit
         {
             base.ApplyStylesSelf();
 
-            Element.style.backgroundColor = ComputedStyle.HasValue(StyleProperties.color)
+            Element.tintColor = ComputedStyle.HasValue(StyleProperties.color)
                 ? ComputedStyle.color
-                : Color.black;
+                : Color.white;
         }
     }
 }
