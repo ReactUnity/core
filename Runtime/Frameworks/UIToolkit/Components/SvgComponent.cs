@@ -2,6 +2,7 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
+using ReactUnity.UIToolkit;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,10 +22,7 @@ namespace ReactUnity.UIToolkit
 
         public string Content
         {
-            get
-            {
-                return content;
-            }
+            get => content;
             set
             {
                 if (source != null && !string.IsNullOrWhiteSpace(value))
@@ -38,10 +36,7 @@ namespace ReactUnity.UIToolkit
 
         public string InnerContent
         {
-            get
-            {
-                return innerContent;
-            }
+            get => innerContent;
             private set
             {
                 innerContent = value;
@@ -51,17 +46,12 @@ namespace ReactUnity.UIToolkit
 
         public object Source
         {
-            get
-            {
-                return source;
-            }
+            get => source;
             set
             {
-                if (source != value)
-                {
-                    source = value;
-                    SetSource(value);
-                }
+                if (source == value) return;
+                source = value;
+                SetSource(value);
             }
         }
 
