@@ -27,7 +27,6 @@
     "autoReferenced": false,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS",
-        "ENABLE_INPUT_SYSTEM",
         "REACT_INPUT_SYSTEM"
     ],
     "versionDefines": [
