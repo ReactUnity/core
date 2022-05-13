@@ -76,7 +76,6 @@ jobs:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
         with:
           unityVersion: ${{ matrix.unity.version }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           projectPath: tests
@@ -118,6 +117,7 @@ jobs:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: "${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
           reporter: java-junit
+          working-directory: core
 
 
       - name: Upload Test Result Artifacts
