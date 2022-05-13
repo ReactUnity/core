@@ -249,7 +249,7 @@ namespace ReactUnity.Helpers
 #if REACT_CLEARSCRIPT
         private readonly EnginePrototypeTable map = new EnginePrototypeTable();
 
-        public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
+        public void OnExposedToScriptCode(ScriptEngine engine)
         {
             var entry = map.GetOrCreateValue(engine);
             entry.ExposeObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);

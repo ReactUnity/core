@@ -24,7 +24,7 @@ namespace ReactUnity.Scripting
 
         public ScriptRuntime Runtime { get; private set; }
         public QuickJS.ScriptContext MainContext { get; private set; }
-        public JSValue Global { get; private set; }
+        public ScriptValue Global { get; private set; }
         public TypeRegister TypeRegister { get; private set; }
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
@@ -55,14 +55,16 @@ namespace ReactUnity.Scripting
         private void Runtime_OnInitialized(ScriptRuntime obj)
         {
             MainContext = Runtime.GetMainContext();
-            Global = MainContext.GetGlobalObject();
             TypeRegister = MainContext.CreateTypeRegister();
             TypeDB = MainContext.GetTypeDB();
             ObjectCache = MainContext.GetObjectCache();
             Context?.Dispatcher.OnEveryUpdate(() => {
                 Runtime.Update((int) (Time.deltaTime * 1000));
-                Runtime.ExecutePendingJob();
             });
+
+            var global = MainContext.GetGlobalObject();
+            Global = new ScriptValue(MainContext, global);
+            Runtime.FreeValue(Global);
 
             OnInitialize?.Invoke(this);
         }
@@ -93,13 +95,15 @@ namespace ReactUnity.Scripting
 
         public object GetValue(string key)
         {
-            return JSApi.JS_GetProperty(MainContext, Global, MainContext.GetAtom(key));
+            return Global.GetProperty<object>(key);
         }
 
         public void SetProperty<T>(object obj, string key, T value)
         {
-            if (obj is JSValue v && v.IsObject())
-                JSApi.JS_SetProperty(MainContext, v, MainContext.GetAtom(key), CreateNativeValue(value));
+            if (obj is ScriptValue sv)
+            {
+                sv.SetProperty(key, value);
+            }
         }
 
         public void SetValue<T>(string key, T value)
@@ -110,15 +114,6 @@ namespace ReactUnity.Scripting
         public void ClearValue(string key)
         {
             SetProperty<object>(Global, key, null);
-        }
-
-        public JSValue CreateNativeValue(object value)
-        {
-            if (value is Type t) return (JSValue) CreateTypeReference(t);
-            if (value is Delegate d) return TypeDB.NewDynamicDelegate(MainContext.GetAtom("dynamicFunction"), d);
-            if (value is Array) return Values.PushArray(MainContext, value);
-            if (value is object[]) return Values.PushArray(MainContext, value);
-            return Values.js_push_var(MainContext, value);
         }
 
         public object CreateTypeReference(Type type)
@@ -134,41 +129,42 @@ namespace ReactUnity.Scripting
         public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             var obj = JSApi.JS_NewObject(MainContext);
+            var sv = new ScriptValue(MainContext, obj);
 
-            foreach (var item in props)
-            {
-                SetProperty(obj, item.Key, item.Value);
-            }
+            foreach (var item in props) SetProperty(sv, item.Key, item.Value);
 
-            return obj;
+            Runtime.FreeValue(obj);
+            return sv;
         }
 
         public void Dispose()
         {
+            Global = null;
+            TypeDB = null;
+            MainContext = null;
+            TypeRegister = null;
+            ObjectCache = null;
+            Context = null;
+
             Runtime.Shutdown();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            Runtime = null;
         }
 
         public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)
         {
-            if (obj is JSValue jv)
-            {
-                //var keys = jv;
-                //foreach (var key in keys)
-                //{
-                //    yield return new KeyValuePair<string, object>(key.AsString(), jv.Get(key));
-                //}
-            }
-            else if (obj is IEnumerable<KeyValuePair<string, object>> eo)
+            if (obj is IEnumerable<KeyValuePair<string, object>> eo)
             {
                 foreach (var kv in eo) yield return kv;
+            }
+            else if (obj is ScriptValue jv)
+            {
+                Debug.LogError("Can't traverse script object in QuickJS");
             }
         }
 
         public bool IsScriptObject(object obj)
         {
-            return obj is JSValue jv && jv.IsObject();
+            return obj is ScriptValue jv;
         }
     }
 
