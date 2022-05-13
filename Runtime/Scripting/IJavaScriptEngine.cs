@@ -1,20 +1,20 @@
-#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT) && REACT_CLEARSCRIPT_AVAILABLE
 #define REACT_CLEARSCRIPT
 #endif
 
-#if !REACT_DISABLE_JINT
+#if !REACT_DISABLE_JINT && REACT_JINT_AVAILABLE
 #define REACT_JINT
 #endif
 
-#if !REACT_DISABLE_YANTRA
+#if !REACT_DISABLE_YANTRA && REACT_YANTRA_AVAILABLE
 #define REACT_YANTRA
 #endif
 
-#if !REACT_DISABLE_JURASSIC
+#if !REACT_DISABLE_JURASSIC && REACT_JURASSIC_AVAILABLE
 #define REACT_JURASSIC
 #endif
 
-#if !REACT_DISABLE_QUICKJS
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
 #define REACT_QUICKJS
 #endif
 
@@ -28,37 +28,43 @@ namespace ReactUnity.Scripting
     {
         Auto = 0,
 
-#if !REACT_JINT
+#if REACT_DISABLE_JINT
         [UnityEngine.InspectorName("Jint (Disabled)")]
+#elif !REACT_JINT_AVAILABLE
+        [UnityEngine.InspectorName("Jint (Unavailable)")]
 #endif
         Jint = 1,
 
-#if !REACT_CLEARSCRIPT
+#if REACT_DISABLE_CLEARSCRIPT
         [UnityEngine.InspectorName("ClearScript (Disabled)")]
+#elif !REACT_CLEARSCRIPT_AVAILABLE
+        [UnityEngine.InspectorName("ClearScript (Unavailable)")]
+#else
+        [UnityEngine.InspectorName("ClearScript")]
 #endif
         ClearScript = 2,
 
-#if REACT_YANTRA
-#if !REACT_YANTRA
-        [UnityEngine.InspectorName("Yantra (Disabled)")]
-#endif
-        Yantra = 3,
-#endif
-
-#if REACT_JURASSIC
-#if !REACT_JURASSIC
-        [UnityEngine.InspectorName("Jurassic (Disabled)")]
-#endif
-        Jurassic = 4,
-#endif
-
-#if REACT_QUICKJS
-#if !REACT_QUICKJS
+#if REACT_DISABLE_QUICKJS
         [UnityEngine.InspectorName("QuickJS (Disabled)")]
+#elif !REACT_QUICKJS_AVAILABLE
+        [UnityEngine.InspectorName("QuickJS (Unavailable)")]
 #else
         [UnityEngine.InspectorName("QuickJS")]
 #endif
-        QuickJS = 5,
+        QuickJS = 3,
+
+#if REACT_YANTRA_AVAILABLE
+#if !REACT_YANTRA
+        [UnityEngine.InspectorName("Yantra (Disabled)")]
+#endif
+        Yantra = 4,
+#endif
+
+#if REACT_JURASSIC_AVAILABLE
+#if !REACT_JURASSIC
+        [UnityEngine.InspectorName("Jurassic (Disabled)")]
+#endif
+        Jurassic = 5,
 #endif
     }
 

@@ -1,20 +1,20 @@
-#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT) && REACT_CLEARSCRIPT_AVAILABLE
 #define REACT_CLEARSCRIPT
 #endif
 
-#if !REACT_DISABLE_JINT
+#if !REACT_DISABLE_JINT && REACT_JINT_AVAILABLE
 #define REACT_JINT
 #endif
 
-#if !REACT_DISABLE_YANTRA
+#if !REACT_DISABLE_YANTRA && REACT_YANTRA_AVAILABLE
 #define REACT_YANTRA
 #endif
 
-#if !REACT_DISABLE_JURASSIC
+#if !REACT_DISABLE_JURASSIC && REACT_JURASSIC_AVAILABLE
 #define REACT_JURASSIC
 #endif
 
-#if !REACT_DISABLE_QUICKJS
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
 #define REACT_QUICKJS
 #endif
 
@@ -52,12 +52,12 @@ namespace ReactUnity.Scripting
                     return new JintEngineFactory();
 #elif REACT_CLEARSCRIPT
                     return new ClearScriptEngineFactory();
+#elif REACT_QUICKJS
+                    return new QuickJSEngineFactory();
 #elif REACT_YANTRA
                     return new YantraEngineFactory();
 #elif REACT_JURASSIC
                     return new JurassicEngineFactory();
-#elif REACT_QUICKJS
-                    return new QuickJSEngineFactory();
 #else
                     throw new System.Exception("Could not find a valid scripting engine.");
 #endif

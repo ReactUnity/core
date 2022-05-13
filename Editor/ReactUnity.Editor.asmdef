@@ -38,6 +38,21 @@
             "name": "com.unity.editorcoroutines",
             "expression": "",
             "define": "REACT_EDITOR_COROUTINES"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "REACT_CLEARSCRIPT_AVAILABLE"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "REACT_JINT_AVAILABLE"
+        },
+        {
+            "name": "cc.starlessnight.unity-jsb",
+            "expression": "",
+            "define": "REACT_QUICKJS_AVAILABLE"
         }
     ],
     "noEngineReferences": false

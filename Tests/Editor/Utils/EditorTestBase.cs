@@ -1,3 +1,7 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT) && REACT_CLEARSCRIPT_AVAILABLE
+#define REACT_CLEARSCRIPT
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +20,9 @@ using UnityEditor;
 namespace ReactUnity.Tests.Editor
 {
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
+#if REACT_CLEARSCRIPT
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
+#endif
     public abstract class EditorTestBase
     {
         protected TestReactWindow Window => EditorWindow.GetWindow<TestReactWindow>();

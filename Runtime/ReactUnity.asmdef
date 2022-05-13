@@ -56,17 +56,22 @@
         {
             "name": "Unity",
             "expression": "",
-            "define": "REACT_DISABLE_JURASSIC"
+            "define": "REACT_JINT_AVAILABLE"
         },
         {
             "name": "Unity",
             "expression": "",
-            "define": "REACT_DISABLE_YANTRA"
+            "define": "REACT_CLEARSCRIPT_AVAILABLE"
         },
         {
             "name": "Unity",
             "expression": "2021.2.0a",
             "define": "REACT_UITOOLKIT"
+        },
+        {
+            "name": "cc.starlessnight.unity-jsb",
+            "expression": "",
+            "define": "REACT_QUICKJS_AVAILABLE"
         }
     ],
     "noEngineReferences": false

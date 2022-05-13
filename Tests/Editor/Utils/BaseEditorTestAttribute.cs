@@ -40,7 +40,7 @@ namespace ReactUnity.Tests.Editor
 
         public IEnumerator BeforeTest(ITest test)
         {
-            var engineType = GetEngineType(test);
+            var engineType = TestHelpers.GetEngineTypeOfTest(test);
 
             if (EditorWindow.HasOpenInstances<TestReactWindow>())
             {
@@ -91,18 +91,5 @@ namespace ReactUnity.Tests.Editor
 
         public abstract ScriptSource GetScript();
         public virtual string GetStyle() => null;
-
-        static JavascriptEngineType GetEngineType(ITest test)
-        {
-            var parent = test;
-            while (parent != null)
-            {
-                var fixture = test.Fixture as EditorTestBase;
-                if (fixture != null) return fixture.EngineType;
-                parent = parent.Parent;
-            }
-
-            return test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : test.FullName.Contains("(ClearScript)") ? JavascriptEngineType.ClearScript : JavascriptEngineType.Auto;
-        }
     }
 }

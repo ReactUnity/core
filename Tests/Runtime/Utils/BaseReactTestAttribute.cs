@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
 
             yield return base.BeforeTest(test);
 
-            var engineType = GetEngineType(test);
+            var engineType = TestHelpers.GetEngineTypeOfTest(test);
 
             var ru = CreateReactUnity(engineType, GetScript());
             ru.timer = RealTimer ? null : new ControlledTimer();
@@ -122,18 +122,5 @@ namespace ReactUnity.Tests
         }
 
         public abstract ScriptSource GetScript();
-
-        static JavascriptEngineType GetEngineType(ITest test)
-        {
-            var parent = test;
-            while (parent != null)
-            {
-                var fixture = test.Fixture as TestBase;
-                if (fixture != null) return fixture.EngineType;
-                parent = parent.Parent;
-            }
-
-            return test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : test.FullName.Contains("(ClearScript)") ? JavascriptEngineType.ClearScript : JavascriptEngineType.Auto;
-        }
     }
 }

@@ -44,6 +44,21 @@
             "name": "com.unity.vectorgraphics",
             "expression": "",
             "define": "REACT_VECTOR_GRAPHICS"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "REACT_JINT_AVAILABLE"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "REACT_CLEARSCRIPT_AVAILABLE"
+        },
+        {
+            "name": "cc.starlessnight.unity-jsb",
+            "expression": "",
+            "define": "REACT_QUICKJS_AVAILABLE"
         }
     ],
     "noEngineReferences": false
