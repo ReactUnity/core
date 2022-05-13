@@ -42,7 +42,7 @@ namespace ReactUnity.Scripting
             {
                 withDebugServer = debug,
                 waitingForDebugger = awaitDebugger,
-                fileSystem = new ResourcesFileSystem(logger),
+                fileSystem = GetFileSystem(context, logger),
                 asyncManager = new DefaultAsyncManager(),
                 logger = logger,
                 binder = DefaultBinder.GetBinder(true),
@@ -50,6 +50,27 @@ namespace ReactUnity.Scripting
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
             });
+        }
+
+        private IFileSystem GetFileSystem(ReactContext ctx, IScriptLogger logger)
+        {
+#if JSB_UNITYLESS
+            return new DefaultFileSystem(logger);
+#else
+            if (ctx.Source.IsDevServer) return new DefaultFileSystem(logger);
+
+            switch (ctx.Source.Type)
+            {
+                case ScriptSourceType.TextAsset:
+                case ScriptSourceType.File:
+                    return new DefaultFileSystem(logger);
+                case ScriptSourceType.Url:
+                case ScriptSourceType.Resource:
+                case ScriptSourceType.Raw:
+                default:
+                    return new ResourcesFileSystem(logger);
+            }
+#endif
         }
 
         private void Runtime_OnInitialized(ScriptRuntime obj)
@@ -97,7 +118,7 @@ namespace ReactUnity.Scripting
         {
             if (obj is ScriptValue sv)
             {
-                sv.SetProperty(key, value);
+                sv.SetProperty(key, CreateNativeValue(value));
             }
         }
 
@@ -114,6 +135,12 @@ namespace ReactUnity.Scripting
         public void DeleteGlobal(string key)
         {
             SetProperty<object>(Global, key, null);
+        }
+
+        public object CreateNativeValue(object v)
+        {
+            if (v is Type t) return CreateTypeReference(t);
+            return v;
         }
 
         public object CreateTypeReference(Type type)

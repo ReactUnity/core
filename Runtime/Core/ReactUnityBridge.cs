@@ -128,7 +128,7 @@ namespace ReactUnity
         {
             if (value == null) return null;
             if (element is IReactComponent c)
-                return c.AddEventListener(eventType, Callback.From(value, c.Context, value));
+                return c.AddEventListener(eventType, Callback.From(value, c.Context));
             return null;
         }
 

@@ -127,7 +127,7 @@ namespace ReactUnity.Scripting
             engine.SetGlobal("__console", console);
             engine.Execute(@"(function() {
                 var _console = __console;
-                console = {
+                global.console = {
                     log:       function log       (arg) { _console.log(arg)           },
                     info:      function info      (arg) { _console.info(arg)          },
                     debug:     function debug     (arg) { _console.debug(arg)         },

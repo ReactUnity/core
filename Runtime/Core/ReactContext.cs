@@ -209,8 +209,7 @@ namespace ReactUnity
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);
 
-        [TypescriptInclude]
-        internal void SetRef(int refId, IReactComponent cmp)
+        public void SetRef(int refId, IReactComponent cmp)
         {
             cmp.RefId = refId;
             if (cmp == null) Refs.Remove(refId);
