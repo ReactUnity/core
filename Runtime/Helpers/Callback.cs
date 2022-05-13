@@ -118,11 +118,19 @@ namespace ReactUnity.Helpers
             }
 #endif
 #if REACT_QUICKJS
+            else if (callback is QuickJS.ScriptFunction sf)
+            {
+                return sf.Invoke<object>(args);
+            }
+            else if (callback is QuickJS.ScriptValue sv)
+            {
+                return new QuickJS.ScriptFunction(QuickJS.ScriptEngine.GetContext(sv.ctx), sv).Invoke<object>(args);
+            }
             else if (callback is QuickJS.Native.JSValue qf)
             {
                 var eg = (context?.Script.Engine as Scripting.QuickJSEngine);
                 if (eg == null) return null;
-                return new QuickJS.ScriptFunction(eg.MainContext, qf, eg.Global).Invoke<object>(args);
+                return new QuickJS.ScriptFunction(eg.MainContext, qf).Invoke<object>(args);
             }
 #endif
             else
