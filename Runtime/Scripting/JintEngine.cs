@@ -94,7 +94,7 @@ namespace ReactUnity.Scripting
             return null;
         }
 
-        public object GetValue(string key)
+        public object GetGlobal(string key)
         {
             return Engine.Evaluate(key);
         }
@@ -105,12 +105,12 @@ namespace ReactUnity.Scripting
                 so.FastAddProperty(key, CreateValue(value), true, false, true);
         }
 
-        public void SetValue<T>(string key, T value)
+        public void SetGlobal<T>(string key, T value)
         {
             Engine.SetValue(key, CreateValue(value));
         }
 
-        public void ClearValue(string key)
+        public void DeleteGlobal(string key)
         {
             Engine.SetValue(key, JsValue.Undefined);
         }

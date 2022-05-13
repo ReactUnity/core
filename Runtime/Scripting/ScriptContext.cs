@@ -43,7 +43,7 @@ namespace ReactUnity.Scripting
                 var beforeStartCallbacks = new List<Action>() { beforeStart };
                 var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
 
-                engine.SetValue("addEventListener", new Action<string, object>((e, f) => {
+                engine.SetGlobal("addEventListener", new Action<string, object>((e, f) => {
                     var callback = Callback.From(f, Context);
                     if (e == "DOMContentLoaded")
                         afterStartCallbacks.Add((success) => callback.CallWithPriority(EventPriority.Discrete, success, this));
@@ -63,10 +63,10 @@ namespace ReactUnity.Scripting
             if (engine == null)
             {
                 CreateBaseEngine(Debug, AwaitDebugger, () => {
-                    engine.SetValue("Context", Context);
-                    engine.SetValue("HostContainer", Context.Host);
-                    engine.SetValue("Globals", Context.Globals);
-                    engine.SetValue("localStorage", Context.LocalStorage);
+                    engine.SetGlobal("Context", Context);
+                    engine.SetGlobal("HostContainer", Context.Host);
+                    engine.SetGlobal("Globals", Context.Globals);
+                    engine.SetGlobal("localStorage", Context.LocalStorage);
                     CreateLocation(engine);
                     CreateConsole(engine);
                     CreateScheduler(engine, Context);
@@ -96,10 +96,10 @@ namespace ReactUnity.Scripting
 
         public Callback CreateEventCallback(string code, object thisVal)
         {
-            Engine.SetValue("__thisArg", thisVal);
+            Engine.SetGlobal("__thisArg", thisVal);
             var fn = EvaluateScript(
                 "(function(ts) { return (function(event, sender) {\n" + code + "\n}).bind(ts); })(__thisArg)");
-            Engine.ClearValue("__thisArg");
+            Engine.DeleteGlobal("__thisArg");
 
             return Callback.From(fn, Context, thisVal);
         }
@@ -109,12 +109,12 @@ namespace ReactUnity.Scripting
             EngineFactory.Create(Context, debug, awaitDebugger, (_engine) => {
                 engine = _engine;
                 _engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this;");
-                _engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
-                _engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
+                _engine.SetGlobal("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
+                _engine.SetGlobal("UnityBridge", ReactUnityBridge.Instance);
 
                 Interop = new ReactInterop(_engine);
                 Interop.InitializeDefault();
-                _engine.SetValue("Interop", Interop);
+                _engine.SetGlobal("Interop", Interop);
 
                 onInitialize?.Invoke();
             });
@@ -124,7 +124,7 @@ namespace ReactUnity.Scripting
         {
             var console = new ConsoleProxy(Context);
 
-            engine.SetValue("__console", console);
+            engine.SetGlobal("__console", console);
             engine.Execute(@"(function() {
                 var _console = __console;
                 console = {
@@ -141,7 +141,7 @@ namespace ReactUnity.Scripting
                     count:     function count    (name) { return _console.count(name) },
                 };
 })()");
-            engine.ClearValue("__console");
+            engine.DeleteGlobal("__console");
         }
 
         void CreatePolyfills(IJavaScriptEngine engine)
@@ -155,28 +155,28 @@ namespace ReactUnity.Scripting
         {
             var scheduler = context.Dispatcher.Scheduler;
 
-            engine.SetValue("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
-            engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
+            engine.SetGlobal("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
+            engine.SetGlobal("clearTimeout", new Action<int?>(scheduler.clearTimeout));
 
-            engine.SetValue("setInterval", new Func<object, double, int>(scheduler.setInterval));
-            engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
+            engine.SetGlobal("setInterval", new Func<object, double, int>(scheduler.setInterval));
+            engine.SetGlobal("clearInterval", new Action<int?>(scheduler.clearInterval));
 
-            engine.SetValue("requestAnimationFrame", new Func<object, int>(scheduler.requestAnimationFrame));
-            engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
+            engine.SetGlobal("requestAnimationFrame", new Func<object, int>(scheduler.requestAnimationFrame));
+            engine.SetGlobal("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
 
-            engine.SetValue("setImmediate", new Func<object, int>(scheduler.setImmediate));
-            engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
+            engine.SetGlobal("setImmediate", new Func<object, int>(scheduler.setImmediate));
+            engine.SetGlobal("clearImmediate", new Action<int?>(scheduler.clearImmediate));
         }
 
         void CreateLocation(IJavaScriptEngine engine)
         {
-            engine.SetValue("location", Context.Location);
-            engine.SetValue("document", new DocumentProxy(Context, Context.Location.origin));
+            engine.SetGlobal("location", Context.Location);
+            engine.SetGlobal("document", new DocumentProxy(Context, Context.Location.origin));
 
             engine.Execute(@"global.WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"global.XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
-            engine.SetProperty(engine.GetValue("WebSocket"), "original", typeof(WebSocketProxy));
-            engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
+            engine.SetProperty(engine.GetGlobal("WebSocket"), "original", typeof(WebSocketProxy));
+            engine.SetProperty(engine.GetGlobal("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
         }
 
         public void Dispose()

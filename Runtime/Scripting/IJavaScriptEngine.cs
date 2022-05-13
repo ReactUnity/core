@@ -66,14 +66,17 @@ namespace ReactUnity.Scripting
     {
         string Key { get; }
         object NativeEngine { get; }
+
         void Execute(string code, string fileName = null);
         Exception TryExecute(string code, string fileName = null);
         object Evaluate(string code, string fileName = null);
-        void SetValue<T>(string key, T value);
-        void ClearValue(string key);
-        object GetValue(string key);
-        object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props);
+
+        object GetGlobal(string key);
+        void SetGlobal<T>(string key, T value);
+        void DeleteGlobal(string key);
+
         void SetProperty<T>(object obj, string key, T value);
+        object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props);
         bool IsScriptObject(object obj);
 
         object CreateTypeReference(Type type);

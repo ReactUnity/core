@@ -25,7 +25,7 @@ namespace ReactUnity.Tests
 
         public string Transform(string code)
         {
-            Engine.SetValue("_codeToTransform", new { code });
+            Engine.SetGlobal("_codeToTransform", new { code });
             return Engine.Evaluate("Babel.transform(_codeToTransform.code, { presets: ['es2015', 'react'], parserOpts: { allowReturnOutsideFunction: true } }).code")?.ToString();
         }
     }

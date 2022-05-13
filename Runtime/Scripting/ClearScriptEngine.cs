@@ -71,7 +71,7 @@ namespace ReactUnity.Scripting
             Engine.EnableAutoHostVariables = true;
             Engine.EnableNullResultWrapping = false;
 
-            SetValue("host", new ExtendedHostFunctions());
+            SetGlobal("host", new ExtendedHostFunctions());
 
             if (debug && awaitDebugger)
             {
@@ -124,7 +124,7 @@ namespace ReactUnity.Scripting
             return null;
         }
 
-        public object GetValue(string key)
+        public object GetGlobal(string key)
         {
             return Engine.Evaluate(null, true, key);
         }
@@ -133,8 +133,8 @@ namespace ReactUnity.Scripting
         {
             if (obj is ScriptObject so)
             {
-                SetValue("___val___", value);
-                so.SetProperty(key, GetValue("___val___"));
+                SetGlobal("___val___", value);
+                so.SetProperty(key, GetGlobal("___val___"));
                 Engine.Execute(null, true, "delete ___val___");
             }
             else
@@ -146,7 +146,7 @@ namespace ReactUnity.Scripting
             }
         }
 
-        public void SetValue<T>(string key, T value)
+        public void SetGlobal<T>(string key, T value)
         {
             if (value is Type t) Engine.AddHostType(key, t);
             else if (value is Delegate d)
@@ -157,7 +157,7 @@ namespace ReactUnity.Scripting
             else Engine.AddHostObject(key, value);
         }
 
-        public void ClearValue(string key)
+        public void DeleteGlobal(string key)
         {
             Engine.Execute("delete " + key);
         }

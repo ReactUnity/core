@@ -93,11 +93,6 @@ namespace ReactUnity.Scripting
             return null;
         }
 
-        public object GetValue(string key)
-        {
-            return Global.GetProperty<object>(key);
-        }
-
         public void SetProperty<T>(object obj, string key, T value)
         {
             if (obj is ScriptValue sv)
@@ -106,12 +101,17 @@ namespace ReactUnity.Scripting
             }
         }
 
-        public void SetValue<T>(string key, T value)
+        public object GetGlobal(string key)
+        {
+            return Global.GetProperty<object>(key);
+        }
+
+        public void SetGlobal<T>(string key, T value)
         {
             SetProperty(Global, key, value);
         }
 
-        public void ClearValue(string key)
+        public void DeleteGlobal(string key)
         {
             SetProperty<object>(Global, key, null);
         }

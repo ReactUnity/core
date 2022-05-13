@@ -105,15 +105,15 @@ namespace ReactUnity.Tests
 
         public virtual void BeforeStart(ScriptContext ctx)
         {
-            ctx.Engine.SetValue("Assert", typeof(Assert));
-            ctx.Engine.SetValue("Has", typeof(Has));
-            ctx.Engine.SetValue("Is", typeof(Is));
-            ctx.Engine.SetValue("Iz", typeof(Iz));
-            ctx.Engine.SetValue("Contains", typeof(Contains));
-            ctx.Engine.SetValue("Does", typeof(Does));
-            ctx.Engine.SetValue("Assume", typeof(Assume));
-            ctx.Engine.SetValue("Throws", typeof(Throws));
-            ctx.Engine.SetValue("LogAssert", typeof(LogAssert));
+            ctx.Engine.SetGlobal("Assert", typeof(Assert));
+            ctx.Engine.SetGlobal("Has", typeof(Has));
+            ctx.Engine.SetGlobal("Is", typeof(Is));
+            ctx.Engine.SetGlobal("Iz", typeof(Iz));
+            ctx.Engine.SetGlobal("Contains", typeof(Contains));
+            ctx.Engine.SetGlobal("Does", typeof(Does));
+            ctx.Engine.SetGlobal("Assume", typeof(Assume));
+            ctx.Engine.SetGlobal("Throws", typeof(Throws));
+            ctx.Engine.SetGlobal("LogAssert", typeof(LogAssert));
         }
 
 
