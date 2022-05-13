@@ -71,6 +71,7 @@ jobs:
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
         id: testRunner
+        continue-on-error: true
         env:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
         with:
@@ -90,22 +91,51 @@ jobs:
           message: 'Update snapshots'
           pull: 'NO-PULL'
 
+
+      # Workaround for NUnit XML (see https://github.com/dorny/test-reporter/issues/98#issuecomment-867106931)
+      - name: Install NUnit
+        run: |
+          nuget install NUnit.Console -Version 3.12.0
+
+      - name: Fetch transform code
+        run: |
+          wget https://raw.githubusercontent.com/nunit/nunit-transforms/master/nunit3-junit/nunit3-junit.xslt
+        shell: bash
+
+      - name: Transform NUnit3 to JUnit
+        run: |
+          Get-ChildItem . -Filter ${{ steps.testRunner.outputs.artifactsPath }}/*.xml | Foreach-Object {
+            $xml = Resolve-Path $_.FullName
+            $output = Join-Path ($pwd) ($_.BaseName + '_junit.xml')
+            $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
+            $xslt.Load("nunit3-junit.xslt");
+            $xslt.Transform($xml, $output);
+          }
+        shell: pwsh
+
+      - uses: dorny/test-reporter@v1
+        with:
+          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
+          path: "${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
+          reporter: java-junit
+
+
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
-        if: always() && matrix.main
+        if: matrix.main
         with:
-          name: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
+          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
-        if: always() && matrix.coverage && matrix.main
+        if: matrix.coverage && matrix.main
         with:
           name: ${{ matrix.suite.name }} coverage
           path: tests/CodeCoverage
 
       - name: Upload Coverage to codecov
-        if: always() && matrix.coverage && matrix.main
+        if: matrix.coverage && matrix.main
         uses: codecov/codecov-action@v2
         with:
           working-directory: ./core
