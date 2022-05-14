@@ -11,14 +11,14 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator EnsureCorrectEngineIsUsed()
         {
             yield return null;
             Assert.AreEqual(EngineType, Context.Script.EngineType);
         }
 
-        [ReactInjectableTest(Style = @"
+        [UGUITest(Style = @"
             view { color: red; }
             view.blueClass { color: blue; }
             view.greenClass { color: magenta; }
@@ -45,7 +45,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, tmp.color);
         }
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             render(
                 <view>
                     Hello world
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             render(<view>Hello world</view>);
             render(<view>Hello world 2</view>);
         ")]
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world 2", Host.TextContent);
         }
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image active={globals.active} />;
@@ -96,7 +96,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(false, cmp.activeSelf);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator HostNameCanBeChanged()
         {
             yield return null;
@@ -109,7 +109,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("REACT_ROOT", Host.GameObject.name);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator ElementsAreRenderedInTheSameLayerAsHost()
         {
             yield return null;

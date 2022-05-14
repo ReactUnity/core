@@ -26,7 +26,7 @@ namespace ReactUnity.Tests
 
         public MotionTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator MotionShouldWorkWithRealTimer()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -46,7 +46,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(rt.rect.width, 500f, 1f);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator MotionShouldWork()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -72,7 +72,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator MotionShouldTransitionImmedialyFromDisplayNone()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;

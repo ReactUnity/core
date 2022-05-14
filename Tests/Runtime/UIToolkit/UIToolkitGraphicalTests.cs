@@ -56,7 +56,7 @@ namespace ReactUnity.Tests.UIToolkit
 #if !REACT_VECTOR_GRAPHICS
         [Ignore("Unity.VectorGraphics is not enabled")]
 #endif
-        [UIToolkitInjectableTest(Code = @"
+        [UIToolkitTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>

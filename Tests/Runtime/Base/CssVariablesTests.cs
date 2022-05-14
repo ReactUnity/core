@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
 
         public CssVariablesTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             :root {
                 --my-color: red;
             }
@@ -37,7 +37,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.red, text.color);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             :root {
                 color: red;
             }
@@ -56,7 +56,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.red, text.color);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             :root {
                 --my-color: red;
                 --my-other-color: magenta;

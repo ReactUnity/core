@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
         public LabelTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(Code = "render(<label><toggle checked={false} /></label>)")]
+        [UGUITest(Code = "render(<label><toggle checked={false} /></label>)")]
         public IEnumerator ClickingLabelActivatesChildComponent()
         {
             yield return null;
@@ -21,7 +21,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(true, Toggle.Checked);
         }
 
-        [ReactInjectableTest(Code = "render(<><toggle id='myToggle' /><label for='#myToggle'>hey</label></>)")]
+        [UGUITest(Code = "render(<><toggle id='myToggle' /><label for='#myToggle'>hey</label></>)")]
         public IEnumerator ClickingLabelActivatesWithForQuery()
         {
             yield return null;
@@ -29,7 +29,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(true, Toggle.Checked);
         }
 
-        [ReactInjectableTest(Code = "render(<><label for=':scope + *'>hey</label><toggle/></>)")]
+        [UGUITest(Code = "render(<><label for=':scope + *'>hey</label><toggle/></>)")]
         public IEnumerator ScopedLabelForQueryWorks()
         {
             yield return null;

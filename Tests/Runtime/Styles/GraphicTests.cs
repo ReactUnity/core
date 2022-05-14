@@ -28,7 +28,7 @@ namespace ReactUnity.Tests
         public GraphicTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator BoxShadowWorks()
         {
             View.Style["box-shadow"] = "2px 6px 10px -5px red";

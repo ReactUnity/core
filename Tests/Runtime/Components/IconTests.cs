@@ -25,7 +25,7 @@ namespace ReactUnity.Tests
 
         public IconTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator IconHasCorrectCharacter()
         {
             Assert.AreEqual(string.Empty, Icon.TextContent);
@@ -39,7 +39,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("\ue7fc", Icon.TextContent);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator IconShouldBeEmptyForIncorrectIcon()
         {
             Globals["icon"] = "searchss";
@@ -48,7 +48,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -67,7 +67,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator OverflowAndMaskDoesNotBreakIcon()
         {
             InsertStyle(@"icon {

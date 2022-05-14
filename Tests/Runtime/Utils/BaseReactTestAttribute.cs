@@ -12,8 +12,6 @@ namespace ReactUnity.Tests
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-        public override string DefaultSceneName => TestHelpers.UGUISceneName;
-
 #if UNITY_EDITOR
         #region Test Debug Toggle
         const string MenuName = "React/Tests/Debug Tests";

@@ -12,7 +12,7 @@ namespace ReactUnity.Tests
 
         #region Tree modification
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator removeChild_ShouldRemoveElement()
         {
             yield return null;
@@ -25,7 +25,7 @@ namespace ReactUnity.Tests
             Assert.Null(tmp);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator appendChild_ShouldAddElement()
         {
             yield return null;
@@ -40,7 +40,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(str, tmp.text);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator appendChildToContainer_ShouldAddElementAlsoWhenNotHost()
         {
             yield return null;
@@ -56,7 +56,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator appendChildToContainer_WhenHost_ShouldAddElement()
         {
             yield return null;
@@ -71,7 +71,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("bogus", tmp.text);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator insertBefore_ShouldAddElementBeforeOther()
         {
             yield return null;
@@ -92,7 +92,7 @@ namespace ReactUnity.Tests
 
         #region Property modification
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator setText_ShouldSetTextOfExistingComponent()
         {
             yield return null;
@@ -106,7 +106,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("bogus", tmp.text);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator setProperty_whenClassName_ShouldUpdateClassList()
         {
             yield return null;
@@ -121,7 +121,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(string.Join(" ", expectedClassList), view.ClassName);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator setData_ShouldUpdateDataCollection()
         {
             yield return null;
@@ -139,7 +139,7 @@ namespace ReactUnity.Tests
 
         #region Creation
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator createText_ShouldCreateATextComponent()
         {
             yield return null;
@@ -151,7 +151,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("_text", text.Tag);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator createElement_whenTagIsView_ShouldCreateABasicReactComponent()
         {
             yield return null;
@@ -160,7 +160,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("view", view.Tag);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator createElement_whenTagIsText_ShouldCreateATextComponentWithTagText()
         {
             yield return null;
@@ -172,7 +172,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("text", text.Tag);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator createElement_whenTagIsCustom_ShouldCreateABasicReactComponentWithThatTag()
         {
             yield return null;

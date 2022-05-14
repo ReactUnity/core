@@ -8,7 +8,7 @@ namespace ReactUnity.Tests
     {
         public DomLikeTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator SizeAndScrollPropertiesWork()
         {
             var view = Q("view");

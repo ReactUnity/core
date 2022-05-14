@@ -9,7 +9,7 @@ namespace ReactUnity.Tests
     {
         public AudioTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator ParsingWorksCorrectly()
         {
             var view = Q("#test");

@@ -54,7 +54,7 @@ namespace ReactUnity.Tests
             public string GetText() => "myobj";
         }
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>
@@ -85,7 +85,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>

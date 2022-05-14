@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
         public FontSizeTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(Code = MultipleLevelsScript)]
+        [UGUITest(Code = MultipleLevelsScript)]
         public IEnumerator DefaultFontSizeWorks()
         {
             yield return null;
@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(24, text.fontSize);
         }
 
-        [ReactInjectableTest(Style = @"
+        [UGUITest(Style = @"
             #test {
                 font-size: 100%;
             }
@@ -50,7 +50,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(36, text.fontSize);
         }
 
-        [ReactInjectableTest(Style = @"
+        [UGUITest(Style = @"
             #test {
                 font-size: 1.5rem;
             }
@@ -66,7 +66,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(36, text.fontSize);
         }
 
-        [ReactInjectableTest(Style = @"
+        [UGUITest(Style = @"
             #test {
                 font-size: 23px;
                 font-size: bogus-value;
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(23, text.fontSize);
         }
 
-        [ReactInjectableTest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Code = MultipleLevelsScript, Style = @"
             view {
                 font-size: 1.5em;
             }
@@ -95,7 +95,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(81, text.fontSize);
         }
 
-        [ReactInjectableTest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Code = MultipleLevelsScript, Style = @"
             #test {
                 font-size: 2rem;
             }
@@ -114,7 +114,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(108, text.fontSize);
         }
 
-        [ReactInjectableTest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Code = MultipleLevelsScript, Style = @"
             #test {
                 font-size: 2rem;
                 width: 20rem;

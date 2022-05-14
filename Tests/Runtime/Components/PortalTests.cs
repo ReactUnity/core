@@ -31,7 +31,7 @@ namespace ReactUnity.Tests
 
         public PortalTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator PortalIsMountedToCorrectParent()
         {
             yield return null;
@@ -66,7 +66,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(view.Container, portal.RectTransform.parent);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator PortalHasCorrectTextContent()
         {
             yield return null;
@@ -74,7 +74,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Portal Inner Text", Portal.TextContent);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             :root :deep text {
                 color: red;
             }
@@ -99,7 +99,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.blue, portalText.color, "Color should change after parent changes");
         }
 
-        [ReactInjectableTest(Code = BaseScript)]
+        [UGUITest(Code = BaseScript)]
         public IEnumerator PortalIsUnmountedAfterDestroy()
         {
             yield return null;

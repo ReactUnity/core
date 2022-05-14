@@ -32,7 +32,7 @@ namespace ReactUnity.Tests
 
         public TransitionTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator ParsingWorksCorrectly()
         {
             var view = Q("#test");
@@ -74,7 +74,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(0, st.transitionDelay.Get(0));
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator TransitionShouldWorkWithRealTimer()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -94,7 +94,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(rt.rect.width, 500f, 1);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator TransitionShouldWorkOnLayoutStyles()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -114,7 +114,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(500, rt.rect.width);
         }
 
-        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator TransitionShouldWorkOnVisualStyles()
         {
             var text = (Q("#test") as UGUI.ContainerComponent).GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
@@ -134,7 +134,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             #test {
                 transition: color 1s 400ms linear, width 1s 400ms linear;
                 background-color: red;
@@ -166,7 +166,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(Code = BaseScript, Style = @"
+        [UGUITest(Code = BaseScript, Style = @"
             #test {
                 transition: --my-color 1s 400ms linear;
                 background-color: red;
@@ -195,7 +195,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.black, text.color);
         }
 
-        [ReactInjectableTest(Code = @"
+        [UGUITest(Code = @"
             function addEvent(eventName) {
                 Globals.list.Add(eventName);
             }

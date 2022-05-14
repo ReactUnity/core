@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
     {
         public BoundingClientRectTests(JavascriptEngineType engineType, RenderMode renderMode) : base(engineType, renderMode) { }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator BasicRect()
         {
             var view = Q("view");
@@ -27,7 +27,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(200, rect.height, 1);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator ScaledRect()
         {
             var view = Q("view");
@@ -44,7 +44,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(300, rect.height, 1);
         }
 
-        [ReactInjectableTest]
+        [UGUITest]
         public IEnumerator RectWithZIndex()
         {
             var view = Q("view");

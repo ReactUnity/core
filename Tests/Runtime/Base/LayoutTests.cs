@@ -8,7 +8,7 @@ namespace ReactUnity.Tests
     {
         public LayoutTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest()]
+        [UGUITest()]
         public IEnumerator WidthAndHeightPropertiesCanBeSetToUndefined()
         {
             var view = Q("view") as UGUI.UGUIComponent;
@@ -93,7 +93,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(initialHeight, rt.rect.height);
         }
 
-        [ReactInjectableTest()]
+        [UGUITest()]
         public IEnumerator RootRelativeUnitsShouldBeRecalculatedWhenSizeChanges()
         {
             RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);

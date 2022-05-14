@@ -8,11 +8,11 @@ namespace ReactUnity.Tests
 {
     public class WorldCanvasTests : TestBase
     {
-        public UGUIComponent View => Q("view") as UGUIComponent;
+        public UGUIComponent View => Q("view");
 
         public WorldCanvasTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(SceneName = TestHelpers.WorldSceneName, AutoRender = false)]
+        [WorldTest(AutoRender = false)]
         public IEnumerator PositionZIsZeroOnRotatedRoot()
         {
 
