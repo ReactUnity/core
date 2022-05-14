@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;
+using UnityEngine;
 
 namespace ReactUnity.Tests
 {
@@ -40,6 +41,43 @@ namespace ReactUnity.Tests
                 }
             }
             return JavascriptEngineType.Auto;
+        }
+
+        public static IEnumerator<ScriptSource> GetScriptSource(string script, bool html, bool transform)
+        {
+            var transformed = script;
+
+            if (!html && transform)
+            {
+                var transformer = CodeTransformer.TransformCode(script);
+                while (transformer.MoveNext()) yield return null;
+                transformed = transformer.Current;
+            }
+
+            Debug.Assert(!string.IsNullOrWhiteSpace(transformed), "The code must be non-empty");
+
+            if (html)
+            {
+                yield return new ScriptSource
+                {
+                    Language = ScriptSourceLanguage.Html,
+                    UseDevServer = false,
+                    SourceText = transformed,
+                    Type = ScriptSourceType.Raw,
+                };
+            }
+            else
+            {
+                var injectableText = Resources.Load<TextAsset>("ReactUnity/tests/injectable/index");
+                var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", transformed);
+
+                yield return new ScriptSource
+                {
+                    UseDevServer = false,
+                    SourceText = injectedText,
+                    Type = ScriptSourceType.Raw,
+                };
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
 using UnityEditor;
@@ -52,7 +53,10 @@ namespace ReactUnity.Tests.Editor
                 }
             }
 
-            var window = Window = TestReactWindow.CreateWindow(GetScript, engineType);
+            var script = GetScript();
+            while (script.MoveNext()) yield return null;
+
+            var window = Window = TestReactWindow.CreateWindow(() => script.Current, engineType);
 
             window.Timer = RealTimer ? null : new ControlledTimer();
             window.Globals["test"] = test;
@@ -82,7 +86,7 @@ namespace ReactUnity.Tests.Editor
             yield return null;
         }
 
-        public abstract ScriptSource GetScript();
+        public abstract IEnumerator<ScriptSource> GetScript();
         public virtual string GetStyle() => null;
     }
 }

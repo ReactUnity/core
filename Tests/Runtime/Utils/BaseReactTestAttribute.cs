@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
@@ -54,7 +55,10 @@ namespace ReactUnity.Tests
 
             var engineType = TestHelpers.GetEngineTypeOfTest(test);
 
-            var ru = CreateReactUnity(engineType, GetScript());
+            var script = GetScript();
+            while (script.MoveNext()) yield return null;
+
+            var ru = CreateReactUnity(engineType, script.Current);
             ru.timer = RealTimer ? null : new ControlledTimer();
             ru.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
             ru.AfterStart.AddListener(() => {
@@ -109,6 +113,6 @@ namespace ReactUnity.Tests
         {
         }
 
-        public abstract ScriptSource GetScript();
+        public abstract IEnumerator<ScriptSource> GetScript();
     }
 }

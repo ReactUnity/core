@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ReactUnity.Scripting;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace ReactUnity.Tests
 {
     public class ReactInjectableTestAttribute : BaseReactTestAttribute
     {
-        public const string DefaultCode = @"
+        public const string DefaultScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>
@@ -14,44 +15,14 @@ namespace ReactUnity.Tests
             }
 ";
 
-        public string Code = DefaultCode;
+        public string Code = DefaultScript;
         public string Style;
         public bool Html;
         public bool TransformCode = true;
 
-        protected string TransformedCode;
-
         public ReactInjectableTestAttribute() : base() { }
 
-        public override ScriptSource GetScript()
-        {
-            TransformedCode = (!Html && TransformCode) ? CodeTransformer.TransformCode(Code) : Code;
-
-            Debug.Assert(!string.IsNullOrWhiteSpace(TransformedCode), "The code must be non-empty");
-
-            if (Html)
-            {
-                return new ScriptSource
-                {
-                    Language = ScriptSourceLanguage.Html,
-                    UseDevServer = false,
-                    SourceText = TransformedCode,
-                    Type = ScriptSourceType.Raw,
-                };
-            }
-            else
-            {
-                var injectableText = Resources.Load<TextAsset>("ReactUnity/tests/injectable/index");
-                var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", TransformedCode);
-
-                return new ScriptSource
-                {
-                    UseDevServer = false,
-                    SourceText = injectedText,
-                    Type = ScriptSourceType.Raw,
-                };
-            }
-        }
+        public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Code, Html, TransformCode);
 
         public override void AfterStart(ScriptContext ctx)
         {
