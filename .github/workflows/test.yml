@@ -91,6 +91,9 @@ jobs:
           pull: 'NO-PULL'
 
 
+      - name: Set artifacts folder ownership to current user
+        run: sudo chown -R $(id -u):$(id -g) "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
+
       # Workaround for NUnit XML (see https://github.com/dorny/test-reporter/issues/98#issuecomment-867106931)
       - name: Install NUnit
         run: |
