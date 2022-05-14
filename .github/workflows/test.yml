@@ -140,6 +140,13 @@ jobs:
           name: ${{ matrix.suite.name }} coverage
           path: CodeCoverage
 
+      - name: Fail workflow if tests failed
+        if: steps.testRunner.outcome == 'failure'
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Tests failed!')
+
       - name: Upload Coverage to codecov
         if: matrix.coverage && matrix.main
         uses: codecov/codecov-action@v2

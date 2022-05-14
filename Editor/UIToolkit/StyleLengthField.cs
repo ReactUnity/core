@@ -2,6 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+#if !UNITY_2022_1_OR_NEWER
+// TextValueField exists in the UnityEditor namespace in old Unity versions
+using UnityEditor.UIElements;
+#endif
+
 namespace ReactUnity.Editor.UIToolkit
 {
     internal class StyleLengthField : TextValueField<StyleLength>
