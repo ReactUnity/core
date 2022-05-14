@@ -54,14 +54,14 @@ namespace ReactUnity.Tests
             public string GetText() => "myobj";
         }
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>
                     {globals.myObject?.GetText()} {globals.myComponent?.GetText()}
                 </text>;
             }
-        ", autoRender: false)]
+        ", AutoRender = false)]
         public IEnumerator GlobalsGetUpdatedWhenChangedOnSameFrameAsRender()
         {
             var types = new string[] { "start_before", "start_after", "update_before", "update_after" };
@@ -85,7 +85,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>

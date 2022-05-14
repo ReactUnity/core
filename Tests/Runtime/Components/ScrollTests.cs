@@ -38,7 +38,7 @@ namespace ReactUnity.Tests
         public ScrollTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflows()
         {
             yield return null;
@@ -96,19 +96,19 @@ namespace ReactUnity.Tests
             }
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SceneName = TestHelpers.WorldSceneName)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStylingWorldScene()
         {
             yield return RunWithRandomCoords(ScrollbarCanBePositionedAndColoredWithStyling);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle, customScene: ReactInjectableTestAttribute.WorldSceneName)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SceneName = TestHelpers.WorldSceneName)]
         public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflowsWorldScene()
         {
             yield return RunWithRandomCoords(ScrollbarIsVisibleOnlyWhenSideOverflows);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStyling()
         {
             View.Style.Set("width", 300);
@@ -153,7 +153,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator PropertiesGetAppliedToScrollbar()
         {
             View.Style.Set("width", 300);
@@ -201,7 +201,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator ScrollCanBeDoneByCode()
         {
             View.Style.Set("width", 400);

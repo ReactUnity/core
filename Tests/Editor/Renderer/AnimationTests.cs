@@ -44,7 +44,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         public AnimationTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [EditorInjectableTest(BaseScript, BaseStyle, realTimer: true)]
+        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator AnimationShouldWorkWithRealTimer()
         {
             var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
@@ -63,7 +63,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
 
 
-        [EditorInjectableTest(BaseScript, BaseStyle)]
+        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator AnimationShouldWorkOnLayoutStyles()
         {
             var cmp = Q("#test") as UIToolkitComponent<VisualElement>;

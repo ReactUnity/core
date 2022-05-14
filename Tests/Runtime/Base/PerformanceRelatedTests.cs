@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
 
         UGUIComponent View => Q("#test");
 
-        [ReactInjectableTest()]
+        [ReactInjectableTest]
         public IEnumerator ShouldNotGenerateBackgroundWhenNotNecessary()
         {
             yield return null;
@@ -23,7 +23,7 @@ namespace ReactUnity.Tests
             Assert.IsNull(View.BorderAndBackground.ShadowGraphics);
         }
 
-        [ReactInjectableTest()]
+        [ReactInjectableTest]
         public IEnumerator ShouldNotGenerateOverflowMaskWhenNotNecessary()
         {
             yield return null;

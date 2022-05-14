@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
     {
         public ShorthandTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(style: @"
+        [ReactInjectableTest(Style = @"
           #test {
             top: 11px;
             inset: 33px 0 0 21px;
@@ -60,7 +60,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(style: @"
+        [ReactInjectableTest(Style = @"
           #test {
             font: bold italic 23px /33px monospace;
           }
@@ -81,7 +81,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(10f / 23f * 100f, tt.lineSpacing);
         }
 
-        [ReactInjectableTest(style: @"
+        [ReactInjectableTest(Style = @"
           #test {
             background: red url(res:star);
             background-blend-mode: color;

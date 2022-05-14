@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
-using ReactUnity.Scripting;
 using UnityEditor;
 using UnityEngine.TestTools;
 
@@ -24,19 +23,13 @@ namespace ReactUnity.Tests.Editor
         public static bool IsDebugEnabled { get; set; } = false;
 #endif
 
-        public bool AutoRender;
+        public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
 
         public TestReactWindow Window;
 
-        public BaseEditorTestAttribute(bool autoRender = true, bool skipIfExisting = false, bool realTimer = false) :
-            base()
-        {
-            AutoRender = autoRender;
-            SkipIfExisting = skipIfExisting;
-            RealTimer = realTimer;
-        }
+        public BaseEditorTestAttribute() : base() { }
 
         public IEnumerator BeforeTest(ITest test)
         {

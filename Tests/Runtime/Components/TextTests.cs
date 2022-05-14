@@ -32,7 +32,7 @@ namespace ReactUnity.Tests
 
         public TextTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator TextPropertiesAppliedCorrectly()
         {
             yield return null;
@@ -47,7 +47,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("some other text content", Text.TextContent);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator TextStrokeWorks()
         {
             InsertStyle(@"text { text-stroke: 0.5 red; }");
@@ -66,7 +66,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(new Color32(0, 0, 255, 255), Text.Text.outlineColor);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator OverflowAndMaskDoesNotBreakText()
         {
             InsertStyle(@"text {
@@ -77,7 +77,7 @@ namespace ReactUnity.Tests
             Assert.IsNotNull(Text);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator TextCanBeWrappedWithLinkedStyle()
         {
             var textContent = "this is default text content";
@@ -106,7 +106,7 @@ namespace ReactUnity.Tests
             Assert.IsNull(Text.LinkedTextWatcher?.LinkedText);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator EmptyTextShouldHaveZeroSize()
         {
             Globals["textContent"] = "";

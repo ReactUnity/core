@@ -12,7 +12,7 @@ namespace ReactUnity.Tests
 
         public WorldCanvasTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(customScene: ReactInjectableTestAttribute.WorldSceneName, autoRender: false)]
+        [ReactInjectableTest(SceneName = TestHelpers.WorldSceneName, AutoRender = false)]
         public IEnumerator PositionZIsZeroOnRotatedRoot()
         {
 

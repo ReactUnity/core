@@ -12,7 +12,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         public StyleComponentTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -37,7 +37,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -90,7 +90,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.clear, rt2.style.color.value);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>

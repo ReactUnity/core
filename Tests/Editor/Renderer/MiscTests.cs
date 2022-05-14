@@ -10,7 +10,7 @@ namespace ReactUnity.Tests.Editor.Renderer
     {
         public MiscTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [EditorInjectableTest(style: "#test { background-image: none; }")]
+        [EditorInjectableTest(Style = "#test { background-image: none; }")]
         public IEnumerator BackgroundImageNoneDoesNotCrash()
         {
             var cmp = Q("#test") as UIToolkitComponent<VisualElement>;

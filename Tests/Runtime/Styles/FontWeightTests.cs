@@ -20,7 +20,7 @@ namespace ReactUnity.Tests
 
         private TextMeshProUGUI GetText(int i) => Q($"view:nth-child({i})").GameObject.GetComponentInChildren<TextMeshProUGUI>();
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -33,7 +33,7 @@ namespace ReactUnity.Tests
                     <view style={{ fontWeight: 'bold', fontStyle: 'italic' }}>View content 7</view>
                 </>;
             }
-", @"
+", Style = @"
             view:nth-child(1) {
                 font-weight: bold;
             }

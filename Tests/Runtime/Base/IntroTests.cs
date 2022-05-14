@@ -11,14 +11,14 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest()]
+        [ReactInjectableTest]
         public IEnumerator EnsureCorrectEngineIsUsed()
         {
             yield return null;
             Assert.AreEqual(EngineType, Context.Script.EngineType);
         }
 
-        [ReactInjectableTest(style: @"
+        [ReactInjectableTest(Style = @"
             view { color: red; }
             view.blueClass { color: blue; }
             view.greenClass { color: magenta; }
@@ -45,7 +45,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, tmp.color);
         }
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             render(
                 <view>
                     Hello world
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             render(<view>Hello world</view>);
             render(<view>Hello world 2</view>);
         ")]
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world 2", Host.TextContent);
         }
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image active={globals.active} />;

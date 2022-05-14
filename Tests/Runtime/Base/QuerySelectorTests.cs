@@ -94,7 +94,7 @@ namespace ReactUnity.Tests
 
         const string BaseStyle = @"";
 
-        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         [TestCase(null, "*", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", "view", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":root > view", ExpectedResult = typeof(IEnumerator))]
@@ -120,7 +120,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(id, Q(query)?.Id);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         [TestCase("#v1", "v1", "*", ExpectedResult = typeof(IEnumerator))]
         [TestCase("#v1", "v1", "view", ExpectedResult = typeof(IEnumerator))]
         [TestCase("#v1", "v1", ":root > view", ExpectedResult = typeof(IEnumerator))]
@@ -145,7 +145,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(id, Q(query, scoped)?.Id);
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator RootQuerySelector()
         {
             yield return null;
@@ -155,7 +155,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         [TestCase("v1", "view", true, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":root > view", true, ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":scope > view", true, ExpectedResult = typeof(IEnumerator))]
@@ -196,7 +196,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(result, Q("#" + id)?.Matches(query));
         }
 
-        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         [TestCase("v1", "view", "v1", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":root > view", "v1", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":scope > view", "v1", ExpectedResult = typeof(IEnumerator))]
@@ -227,7 +227,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(resultId, Q("#" + id)?.Closest(query)?.Id);
         }
 
-        [ReactInjectableTest(HtmlScript, BaseStyle, SkipIfExisting = true)]
+        [ReactInjectableTest(Code = HtmlScript, Style = BaseStyle, SkipIfExisting = true)]
         [TestCase(null, "*", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", "view", ExpectedResult = typeof(IEnumerator))]
         [TestCase("v1", ":scope > view", ExpectedResult = typeof(IEnumerator))]

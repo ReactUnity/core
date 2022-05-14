@@ -13,7 +13,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         public StyleSheetTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [EditorInjectableTest(style: ":root { color: black !important; }")]
+        [EditorInjectableTest(Style = ":root { color: black !important; }")]
         public IEnumerator StyleSheetsCanBeInsertedAndRemoved()
         {
             yield return null;
@@ -35,7 +35,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.black, text.resolvedStyle.color);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -45,7 +45,7 @@ namespace ReactUnity.Tests.Editor.Renderer
                     <view id='test2' />
                 </>;
             }
-        ", @"
+        ", Style = @"
             view { background-color: black; color: white; }
             view:empty { background-color: red; color: blue; }
             #test + #test2 { background-color: lime; }
@@ -80,7 +80,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.blue, cmp2.Element.resolvedStyle.backgroundColor);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -92,7 +92,7 @@ namespace ReactUnity.Tests.Editor.Renderer
                     </view>
                 </>;
             }
-        ", @"
+        ", Style = @"
             .class\+1 { color: red; }
 
             .hover\:button {

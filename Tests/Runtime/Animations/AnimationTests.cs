@@ -44,7 +44,7 @@ namespace ReactUnity.Tests
         public AnimationTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest()]
+        [ReactInjectableTest]
         public IEnumerator ParsingWorksCorrectly()
         {
             var view = Q("#test");
@@ -91,7 +91,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator AnimationShouldWorkWithRealTimer()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -111,7 +111,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator AnimationShouldWorkOnLayoutStyles()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -130,7 +130,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator AnimationCanBePaused()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
@@ -178,7 +178,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator AnimationShouldWorkOnVisualStyles()
         {
             var view = (Q("#test") as UGUI.ContainerComponent);
@@ -197,7 +197,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator CssVariablesShouldBeAnimatableForVisualStyles()
         {
             Context.InsertStyle(@"
@@ -227,7 +227,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator CssVariablesShouldBeAnimatableForLayoutStyles()
         {
             Context.InsertStyle(@"
@@ -258,7 +258,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator ShouldBeAbleToAnimateBetweenDynamicAndNonDynamic()
         {
             Context.InsertStyle(@"
@@ -288,7 +288,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function addEvent(eventName) {
                 Globals.list.Add(eventName);
             }

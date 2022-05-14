@@ -12,7 +12,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         public MediaQueryTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [EditorInjectableTest(style: @"
+        [EditorInjectableTest(Style = @"
             view { color: red; }
             @media (min-width: 50000px) {
                 view { color: white; }

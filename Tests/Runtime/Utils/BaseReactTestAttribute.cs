@@ -12,12 +12,7 @@ namespace ReactUnity.Tests
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-        public const string DefaultUGUISceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UGUI.unity";
-        public const string DefaultNoopSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_Noop.unity";
-        public const string DefaultUIToolkitSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UIToolkit.unity";
-        public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_World.unity";
-
-        public override string DefaultSceneName => DefaultUGUISceneName;
+        public override string DefaultSceneName => TestHelpers.UGUISceneName;
 
 #if UNITY_EDITOR
         #region Test Debug Toggle
@@ -45,17 +40,11 @@ namespace ReactUnity.Tests
         public static bool IsDebugEnabled { get; set; } = false;
 #endif
 
-        public bool AutoRender;
+        public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
 
-        public BaseReactTestAttribute(string customScene = null, bool autoRender = true, bool skipIfExisting = false, bool realTimer = false) :
-            base(customScene)
-        {
-            AutoRender = autoRender;
-            SkipIfExisting = skipIfExisting;
-            RealTimer = realTimer;
-        }
+        public BaseReactTestAttribute() : base() { }
 
         public override IEnumerator BeforeTest(ITest test)
         {

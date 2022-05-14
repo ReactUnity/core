@@ -13,25 +13,20 @@ namespace ReactUnity.Tests.Editor
             }
 ";
 
-        protected string OriginalCode;
-        protected string Code;
-        protected string Style;
-        protected bool Html;
+        public string Code = DefaultCode;
+        public string Style;
+        public bool Html;
+        public bool TransformCode = true;
 
-        public EditorInjectableTestAttribute(
-            string code = DefaultCode, string style = "", bool autoRender = true,
-            bool transform = true, bool skipIfExisting = false, bool realTimer = false, bool html = false
-        ) : base(autoRender, skipIfExisting, realTimer)
-        {
-            OriginalCode = code ?? DefaultCode;
-            Html = html;
-            Code = (!html && transform) ? CodeTransformer.TransformCode(OriginalCode) : OriginalCode;
-            Style = style;
-        }
+        protected string TransformedCode;
+
+        public EditorInjectableTestAttribute() : base() { }
 
         public override ScriptSource GetScript()
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(Code), "The code must be non-empty");
+            TransformedCode = (!Html && TransformCode) ? CodeTransformer.TransformCode(Code) : Code;
+
+            Debug.Assert(!string.IsNullOrWhiteSpace(TransformedCode), "The code must be non-empty");
 
             if (Html)
             {
@@ -39,14 +34,14 @@ namespace ReactUnity.Tests.Editor
                 {
                     UseDevServer = false,
                     Language = ScriptSourceLanguage.Html,
-                    SourceText = Code,
+                    SourceText = TransformedCode,
                     Type = ScriptSourceType.Raw,
                 };
             }
             else
             {
                 var injectableText = Resources.Load<TextAsset>("ReactUnity/tests/injectable/index");
-                var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", Code);
+                var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", TransformedCode);
 
                 return new ScriptSource
                 {

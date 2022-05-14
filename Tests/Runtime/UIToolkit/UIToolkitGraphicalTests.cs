@@ -56,14 +56,14 @@ namespace ReactUnity.Tests.UIToolkit
 #if !REACT_VECTOR_GRAPHICS
         [Ignore("Unity.VectorGraphics is not enabled")]
 #endif
-        [UIToolkitInjectableTest(@"
+        [UIToolkitInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view id='test'>
                     <svg id='svg' />
                 </view>;
             }
-        ", BaseStyle)]
+        ", Style = BaseStyle)]
         public IEnumerator SvgSnapshots([ValueSource("svgs")] Tuple<string, string> item)
         {
             var svgCmp = Q<SvgElement>("#svg") as SvgComponent;

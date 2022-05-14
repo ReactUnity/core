@@ -27,7 +27,7 @@ namespace ReactUnity.Tests
 
         public PseudoTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(Code = BaseScript, Style = BaseStyle)]
         public IEnumerator ShouldShowAfterContentOnView()
         {
             yield return null;

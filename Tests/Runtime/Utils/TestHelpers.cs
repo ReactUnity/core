@@ -8,6 +8,11 @@ namespace ReactUnity.Tests
 {
     public static class TestHelpers
     {
+        public const string UGUISceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UGUI.unity";
+        public const string NoopSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_Noop.unity";
+        public const string UIToolkitSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UIToolkit.unity";
+        public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_World.unity";
+
         public static (InlineStyles, NodeStyle) CreateStyle()
         {
             var collection = new InlineStyles();

@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
         public WatchableTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
@@ -48,7 +48,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             const watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
             function App() {
                 const globals = watcher.useContext();
@@ -60,7 +60,7 @@ namespace ReactUnity.Tests
                     <App />
                 </watcher.Provider>
             );
-        ", autoRender: false)]
+        ", AutoRender = false)]
         public IEnumerator TestArbitraryWatcher()
         {
             var sd = new SerializableDictionary();
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
 
 
 
-        [ReactInjectableTest(@"
+        [ReactInjectableTest(Code = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
                 const val = ReactUnity.useWatchable(globals.testWatchable);

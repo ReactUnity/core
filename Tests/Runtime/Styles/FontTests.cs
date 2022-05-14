@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
         TextMeshProUGUI Text => View.RectTransform.GetComponentInChildren<TextMeshProUGUI>();
 
 
-        [ReactInjectableTest(style: @"
+        [ReactInjectableTest(Style = @"
     @font-face {
       font-family: ""Test Font Name"";
       src: resource(""ReactUnity/fonts/monospace"");
@@ -37,7 +37,7 @@ namespace ReactUnity.Tests
         const string TextTransformTest = @"export const App = () => <view id='test'>LONDON. Michaelmas term lately over, and the Lord Chancellor sitting in Lincoln's Inn Hall.</view>";
 
 
-        [ReactInjectableTest(TextTransformTest)]
+        [ReactInjectableTest(Code = TextTransformTest)]
         public IEnumerator NativeTextTransformsWork()
         {
             Assert.AreEqual(FontStyles.Normal, Text.fontStyle);
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(DefaultText, Text.text);
         }
 
-        [ReactInjectableTest(TextTransformTest)]
+        [ReactInjectableTest(Code = TextTransformTest)]
         public IEnumerator TextTransformCapitalizeWorks()
         {
             View.Style["text-transform"] = "capitalize";

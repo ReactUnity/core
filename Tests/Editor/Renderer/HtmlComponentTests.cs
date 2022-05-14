@@ -12,7 +12,7 @@ namespace ReactUnity.Tests.Editor.Renderer
     {
         public HtmlComponentTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             const htmlContent = `
                 <style scope=':root'>
                     #test { color: blue; }
@@ -40,7 +40,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(23, rt.style.fontSize.value.value);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             const htmlContent = `
                 <script>Globals.value = 5</script>
             `;
@@ -56,7 +56,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(5, Globals["value"]);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             const htmlContent = `
                 <button onCustomEvent='Globals.value = 5'>Click here</button>
             `;
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(5, Globals["value"]);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <html source={globals.htmlSource} />;
@@ -95,9 +95,9 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual("No never", another.TextContent);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             <button onCustomEvent='Globals.value = 5'>Click here</button>
-        ", html: true)]
+        ", Html = true)]
         public IEnumerator HtmlRendererWorks()
         {
             yield return null;

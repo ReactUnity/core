@@ -11,7 +11,7 @@ namespace ReactUnity.Tests.Editor.Renderer
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             const App = () => (
                 <view>
                     Hello world
@@ -43,7 +43,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(null, Host.Name);
         }
 
-        [EditorInjectableTest(@"
+        [EditorInjectableTest(Code = @"
             const App = () => (
                 <view style={{ color: Interop.UnityEngine.Color.red }}>
                     Hello world

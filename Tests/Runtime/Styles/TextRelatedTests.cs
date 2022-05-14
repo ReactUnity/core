@@ -22,7 +22,7 @@ namespace ReactUnity.Tests
         public TextRelatedTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [ReactInjectableTest(MultipleLevelsScript)]
+        [ReactInjectableTest(Code = MultipleLevelsScript)]
         public IEnumerator TextElementCanBeSelectedInVariousWays()
         {
             var view = Q("#test");
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.green, t2.color);
         }
 
-        [ReactInjectableTest(MultipleLevelsScript)]
+        [ReactInjectableTest(Code = MultipleLevelsScript)]
         public IEnumerator MaxLinesWorks()
         {
             InsertStyle(@"#test { max-lines: 5 }");

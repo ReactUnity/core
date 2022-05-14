@@ -20,7 +20,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 ";
 
 
-        [EditorInjectableTest(BaseScript)]
+        [EditorInjectableTest(Code = BaseScript)]
         public IEnumerator DialogShouldBePositionedCorrectlyForAbsolute()
         {
             var cmp = Q("dialog") as DialogComponent;
@@ -51,7 +51,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             }
         }
 
-        [EditorInjectableTest(BaseScript)]
+        [EditorInjectableTest(Code = BaseScript)]
         public IEnumerator DialogShouldBePositionedCorrectlyForRelative()
         {
             var cmp = Q("dialog") as DialogComponent;
@@ -85,7 +85,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
 
-        [EditorInjectableTest(BaseScript)]
+        [EditorInjectableTest(Code = BaseScript)]
         public IEnumerator DialogShouldHaveCorrectTitle()
         {
             var cmp = Q("dialog") as DialogComponent;
