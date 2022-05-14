@@ -103,7 +103,7 @@ jobs:
 
       - name: Transform NUnit3 to JUnit
         run: |
-          Get-ChildItem . -Filter ${{ steps.testRunner.outputs.artifactsPath }}/*.xml | Foreach-Object {
+          Get-ChildItem . -Filter *.xml | Foreach-Object {
             $xml = Resolve-Path $_.FullName
             $output = Join-Path ($pwd) ($_.BaseName + '_junit.xml')
             $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
@@ -111,8 +111,10 @@ jobs:
             $xslt.Transform($xml, $output);
           }
         shell: pwsh
+        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
 
       - uses: dorny/test-reporter@v1
+        continue-on-error: true
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
