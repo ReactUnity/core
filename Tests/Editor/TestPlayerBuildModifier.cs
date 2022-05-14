@@ -11,8 +11,10 @@ namespace ReactUnity.Tests.Editor
         public BuildPlayerOptions ModifyOptions(BuildPlayerOptions playerOptions)
         {
             playerOptions.scenes = new HashSet<string>(playerOptions.scenes) {
-                "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity",
-                "Packages/com.reactunity.core/Tests/Runtime/TestScene_World.unity",
+                "Packages/com.reactunity.core/Tests/Scenes/TestScene_UGUI.unity",
+                "Packages/com.reactunity.core/Tests/Scenes/TestScene_Noop.unity",
+                "Packages/com.reactunity.core/Tests/Scenes/TestScene_UIToolkit.unity",
+                "Packages/com.reactunity.core/Tests/Scenes/TestScene_World.unity",
             }.ToArray();
             return playerOptions;
         }

@@ -12,9 +12,10 @@ namespace ReactUnity.Tests
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-        public const string DefaultUGUISceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
-        public const string DefaultUIToolkitSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene_UIToolkit.unity";
-        public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene_World.unity";
+        public const string DefaultUGUISceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UGUI.unity";
+        public const string DefaultNoopSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_Noop.unity";
+        public const string DefaultUIToolkitSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UIToolkit.unity";
+        public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_World.unity";
 
         public override string DefaultSceneName => DefaultUGUISceneName;
 
