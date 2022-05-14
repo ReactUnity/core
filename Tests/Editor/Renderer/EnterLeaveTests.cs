@@ -43,7 +43,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
         UIToolkitComponent<VisualElement> View => Q("#test") as UIToolkitComponent<VisualElement>;
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator EnterLeaveWorksWithTransitions()
         {
             Assert.IsNull(View);
@@ -97,7 +97,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.IsNull(View);
         }
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator LeaveCanInterruptEnter()
         {
             Assert.IsNull(View);
@@ -139,7 +139,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.IsNull(View);
         }
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator ZeroLeaveDoesNotCauseCrash()
         {
             InsertStyle(@"

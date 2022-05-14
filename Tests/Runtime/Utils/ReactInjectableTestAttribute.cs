@@ -15,14 +15,14 @@ namespace ReactUnity.Tests
             }
 ";
 
-        public string Code = DefaultScript;
+        public string Script = DefaultScript;
         public string Style;
         public bool Html;
         public bool TransformCode = true;
 
         public ReactInjectableTestAttribute() : base() { }
 
-        public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Code, Html, TransformCode);
+        public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Script, Html, TransformCode);
 
         public override void AfterStart(ScriptContext ctx)
         {

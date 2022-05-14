@@ -31,7 +31,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
         public OrderTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator OrderWorksCorrectly()
         {
             yield return null;

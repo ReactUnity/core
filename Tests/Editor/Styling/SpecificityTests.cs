@@ -86,7 +86,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         public IUIToolkitComponent<TextElement> Text(string selector) => Q(selector) as IUIToolkitComponent<TextElement>;
 
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator LastValidRuleGetsAppliedForSameSpecificity()
         {
             var text = Text("#v1v1t2");
@@ -163,7 +163,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             RemoveStyle(ss2);
         }
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator MoreSpecificSelectorsTakePrecedence()
         {
             var text = Text("#v1v1t2");
@@ -185,7 +185,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             RemoveStyle(ss);
         }
 
-        [EditorInjectableTest(Code = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
+        [EditorInjectableTest(Script = BaseScript, Style = BaseStyle, SkipIfExisting = true)]
         public IEnumerator ImportanceOfInlineStyles()
         {
             var text = Text("#v1v1t2");

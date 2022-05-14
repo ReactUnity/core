@@ -20,7 +20,7 @@ namespace ReactUnity.Tests
 
         private TextMeshProUGUI GetText(int i) => Q($"view:nth-child({i})").GameObject.GetComponentInChildren<TextMeshProUGUI>();
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>

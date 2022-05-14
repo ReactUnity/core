@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
         public FontSizeTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [UGUITest(Code = MultipleLevelsScript)]
+        [UGUITest(Script = MultipleLevelsScript)]
         public IEnumerator DefaultFontSizeWorks()
         {
             yield return null;
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(23, text.fontSize);
         }
 
-        [UGUITest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Script = MultipleLevelsScript, Style = @"
             view {
                 font-size: 1.5em;
             }
@@ -95,7 +95,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(81, text.fontSize);
         }
 
-        [UGUITest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Script = MultipleLevelsScript, Style = @"
             #test {
                 font-size: 2rem;
             }
@@ -114,7 +114,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(108, text.fontSize);
         }
 
-        [UGUITest(Code = MultipleLevelsScript, Style = @"
+        [UGUITest(Script = MultipleLevelsScript, Style = @"
             #test {
                 font-size: 2rem;
                 width: 20rem;

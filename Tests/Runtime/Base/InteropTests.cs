@@ -54,7 +54,7 @@ namespace ReactUnity.Tests
             public string GetText() => "myobj";
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>
@@ -85,7 +85,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <text>

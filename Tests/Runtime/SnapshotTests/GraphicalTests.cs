@@ -48,7 +48,7 @@ namespace ReactUnity.Tests
             Tuple.Create("08", "red, green, yellow 30% 60%, white, blue"),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator GradientSnapshots([ValueSource("gradients")] Tuple<string, string> bg)
         {
             View.Style["background"] = $"linear-gradient({bg.Item2})";
@@ -106,7 +106,7 @@ namespace ReactUnity.Tests
                 new List<string> { "rgba(0,0,0,0.5) 0% 6%, transparent 6% 18%, rgba(0,0,0,0.5) 18% 24%", "rgba(0,0,0,0.5) 0% 6%, transparent 6% 18%, rgba(0,0,0,0.5) 18% 24%" }),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator MultiGradientSnapshots([ValueSource("multiGradients")] Tuple<string, List<string>> bg)
         {
             var linearParts = new List<string> { "45deg,", "-45deg," };
@@ -244,7 +244,7 @@ namespace ReactUnity.Tests
 "),
     };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator AdvancedGradientSnapshots([ValueSource("advancedGradients")] Tuple<string, string> bg)
         {
             InsertStyle("#test {" + bg.Item2 + "}");
@@ -268,7 +268,7 @@ namespace ReactUnity.Tests
             Tuple.Create("inset/02", "1px 1px 14px 1px black inset"),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BoxShadowSnapshots([ValueSource("boxShadows")] Tuple<string, string> bg)
         {
             View.Style["margin"] = 40;
@@ -304,7 +304,7 @@ namespace ReactUnity.Tests
             Tuple.Create("side_rb", "0", "0 10px 10px 0", "red blue lime purple"),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BorderSnapshots([ValueSource("borders")] Tuple<string, string, string, string> bg)
         {
             View.Style["margin"] = 40;
@@ -317,7 +317,7 @@ namespace ReactUnity.Tests
             Assertions.Snapshot("borders/" + bg.Item1);
         }
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundBlendSnapshots()
         {
             View.Style["background"] = "url(res:star)";
@@ -360,7 +360,7 @@ namespace ReactUnity.Tests
             Tuple.Create("19", $"url(\"{DataUrl}\")"),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundSnapshots([ValueSource("backgrounds")] Tuple<string, string> bg)
         {
             View.Style["width"] = "160px";
@@ -393,7 +393,7 @@ namespace ReactUnity.Tests
             Tuple.Create("18", "url(res:star) no-repeat bottom right / 70%, url(res:star) no-repeat bottom left / 70%"),
         };
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator MaskSnapshots([ValueSource("masks")] Tuple<string, string> bg)
         {
             View.Style["width"] = "160px";

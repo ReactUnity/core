@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
         public WatchableTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
@@ -48,7 +48,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             const watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
             function App() {
                 const globals = watcher.useContext();
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
 
 
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
                 const val = ReactUnity.useWatchable(globals.testWatchable);

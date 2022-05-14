@@ -24,7 +24,7 @@ namespace ReactUnity.Tests
 
         public ObjectFitTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         public IEnumerator ObjectFitAndPositionWorksOnImage()
         {
             yield return null;

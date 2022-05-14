@@ -37,7 +37,7 @@ namespace ReactUnity.Tests
         const string TextTransformTest = @"export const App = () => <view id='test'>LONDON. Michaelmas term lately over, and the Lord Chancellor sitting in Lincoln's Inn Hall.</view>";
 
 
-        [UGUITest(Code = TextTransformTest)]
+        [UGUITest(Script = TextTransformTest)]
         public IEnumerator NativeTextTransformsWork()
         {
             Assert.AreEqual(FontStyles.Normal, Text.fontStyle);
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(DefaultText, Text.text);
         }
 
-        [UGUITest(Code = TextTransformTest)]
+        [UGUITest(Script = TextTransformTest)]
         public IEnumerator TextTransformCapitalizeWorks()
         {
             View.Style["text-transform"] = "capitalize";

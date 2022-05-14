@@ -14,7 +14,7 @@ namespace ReactUnity.Tests.Editor
             }
 ";
 
-        public string Code = DefaultScript;
+        public string Script = DefaultScript;
         public string Style;
         public bool Html;
         public bool TransformCode = true;
@@ -23,7 +23,7 @@ namespace ReactUnity.Tests.Editor
 
         public EditorInjectableTestAttribute() : base() { }
 
-        public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Code, Html, TransformCode);
+        public override IEnumerator<ScriptSource> GetScript() => TestHelpers.GetScriptSource(Script, Html, TransformCode);
 
         public override string GetStyle() => Style;
     }

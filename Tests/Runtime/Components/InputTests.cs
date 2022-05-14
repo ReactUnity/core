@@ -35,7 +35,7 @@ namespace ReactUnity.Tests
         public InputTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         public IEnumerator InputPropertiesAreApplied()
         {
             yield return null;
@@ -83,7 +83,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         public IEnumerator InputEventsWork()
         {
             var list = new List<string>();
@@ -109,7 +109,7 @@ namespace ReactUnity.Tests
 
 
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         public IEnumerator PlaceholderWorks()
         {
             yield return null;

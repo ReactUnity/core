@@ -31,7 +31,7 @@ namespace ReactUnity.Tests
 
         public OrderTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator RectTransformsShouldHaveCorrectOrder()
         {
             Q("#test").Style["background"] = "red";
@@ -43,7 +43,7 @@ namespace ReactUnity.Tests
             AssertRectTransformOrder(4, 2, 3, 9, 5, 6, 7, 8, 1);
         }
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator OrderWorksCorrectly()
         {
             Q("#test").Style["background"] = "red";

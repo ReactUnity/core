@@ -8,7 +8,7 @@ namespace ReactUnity.Tests
     {
         public InjectableTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             Renderer.render(<view>Hello world</view>);
         ")]
         public IEnumerator RendererRender()
@@ -17,7 +17,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             ReactUnity.Renderer.render(<view>Hello world</view>);
         ")]
         public IEnumerator ReactUnityRendererRender()
@@ -26,7 +26,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             render(<view>Hello world</view>);
         ")]
         public IEnumerator RenderDirectly()
@@ -35,7 +35,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             export default function SomeComponent() {
                 return <view>Hello world</view>;
             }
@@ -46,7 +46,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             export function Example() {
                 return <view>Hello world</view>;
             }
@@ -57,7 +57,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             export function App() {
                 return <view>Hello world</view>;
             }
@@ -68,7 +68,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             return function SomeComponent() {
                 return <view>Hello world</view>;
             }
@@ -79,7 +79,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 return <view>Hello world</view>;
             }
@@ -90,7 +90,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function Example() {
                 return <view>Hello world</view>;
             }
@@ -101,7 +101,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             import { useGlobals } from '@reactunity/renderer';
 
             export default function App() {
@@ -114,7 +114,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("yes", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             import { Button } from '@reactunity/material';
 
             export default function App() {
@@ -127,7 +127,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("yes", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             import { FixedSizeList } from '@reactunity/material';
 
             export default function App() {

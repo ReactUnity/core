@@ -28,7 +28,7 @@ namespace ReactUnity.Tests
 
         public TransformTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator TransformOriginWorksCorrectly()
         {
             yield return null;
@@ -78,7 +78,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator DefaultScaleZIsIdentity()
         {
             yield return null;

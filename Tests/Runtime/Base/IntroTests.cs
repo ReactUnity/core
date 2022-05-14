@@ -45,7 +45,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, tmp.color);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             render(
                 <view>
                     Hello world
@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             render(<view>Hello world</view>);
             render(<view>Hello world 2</view>);
         ")]
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world 2", Host.TextContent);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image active={globals.active} />;

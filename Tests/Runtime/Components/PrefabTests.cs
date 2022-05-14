@@ -28,7 +28,7 @@ namespace ReactUnity.Tests
 
         public PrefabTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = PrefabBaseScript, Style = PrefabBaseStyle)]
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
         public IEnumerator CorrectPrefabIsMounted()
         {
             yield return null;
@@ -53,7 +53,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = PrefabBaseScript, Style = PrefabBaseStyle)]
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
         public IEnumerator PrefabComponentHasCorrectSize()
         {
             yield return null;
@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = PrefabBaseScript, Style = PrefabBaseStyle)]
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
         public IEnumerator PrefabTargetResizesCorrectly()
         {
             yield return null;

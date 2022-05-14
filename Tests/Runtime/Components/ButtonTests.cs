@@ -50,7 +50,7 @@ namespace ReactUnity.Tests
         public ButtonTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         public IEnumerator ButtonCanBeDisabled()
         {
             Globals["disabled"] = true;
@@ -66,7 +66,7 @@ namespace ReactUnity.Tests
             Assert.IsTrue(Button.Button.interactable);
         }
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         [Ignore("Input simulation not working correctly in all Unity versions")]
         public IEnumerator ButtonClickEventWorks()
         {
@@ -86,7 +86,7 @@ namespace ReactUnity.Tests
             list.AssertListExhaustive("click");
         }
 
-        [UGUITest(Code = BaseScript)]
+        [UGUITest(Script = BaseScript)]
         [Ignore("Input simulation not working correctly in all Unity versions")]
         public IEnumerator ButtonShouldBeClickableWithoutBackground()
         {
@@ -116,7 +116,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = AnchorScript)]
+        [UGUITest(Script = AnchorScript)]
         public IEnumerator AnchorPropertiesCanBeSet()
         {
             Globals["disabled"] = true;

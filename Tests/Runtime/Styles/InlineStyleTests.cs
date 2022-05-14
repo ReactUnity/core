@@ -9,7 +9,7 @@ namespace ReactUnity.Tests
     {
         public InlineStyleTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 const viewRef = React.useCallback((v) => {
                     if(!v) return;
@@ -32,7 +32,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(23, tmp.fontSize);
         }
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             function App() {
                 return <view id='test' style='font-size: 23px'>
                     Hello world
@@ -49,7 +49,7 @@ namespace ReactUnity.Tests
 
 
 
-        [UGUITest(Code = @"
+        [UGUITest(Script = @"
             export default function App() {
                 var globals = ReactUnity.useGlobals();
 

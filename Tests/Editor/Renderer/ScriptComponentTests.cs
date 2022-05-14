@@ -21,7 +21,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             }
         ";
 
-        [EditorInjectableTest(Code = BaseScript)]
+        [EditorInjectableTest(Script = BaseScript)]
         public IEnumerator ScriptTagExecutesOnChange()
         {
             Globals["scriptContent"] = "Globals.value = 5";
@@ -35,7 +35,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
 
-        [EditorInjectableTest(Code = BaseScript)]
+        [EditorInjectableTest(Script = BaseScript)]
         public IEnumerator ScriptTagDoesNotCrashOnError()
         {
             LogAssert.Expect(UnityEngine.LogType.Exception, new Regex("==="));

@@ -35,7 +35,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.black, text.resolvedStyle.color);
         }
 
-        [EditorInjectableTest(Code = @"
+        [EditorInjectableTest(Script = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>
@@ -80,7 +80,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.blue, cmp2.Element.resolvedStyle.backgroundColor);
         }
 
-        [EditorInjectableTest(Code = @"
+        [EditorInjectableTest(Script = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();
                 return <>

@@ -38,7 +38,7 @@ namespace ReactUnity.Tests
         public ScrollTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflows()
         {
             yield return null;
@@ -96,19 +96,19 @@ namespace ReactUnity.Tests
             }
         }
 
-        [WorldTest(Code = BaseScript, Style = BaseStyle)]
+        [WorldTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStylingWorldScene()
         {
             yield return RunWithRandomCoords(ScrollbarCanBePositionedAndColoredWithStyling);
         }
 
-        [WorldTest(Code = BaseScript, Style = BaseStyle)]
+        [WorldTest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarIsVisibleOnlyWhenSideOverflowsWorldScene()
         {
             yield return RunWithRandomCoords(ScrollbarIsVisibleOnlyWhenSideOverflows);
         }
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator ScrollbarCanBePositionedAndColoredWithStyling()
         {
             View.Style.Set("width", 300);
@@ -153,7 +153,7 @@ namespace ReactUnity.Tests
 
 
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator PropertiesGetAppliedToScrollbar()
         {
             View.Style.Set("width", 300);
@@ -201,7 +201,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UGUITest(Code = BaseScript, Style = BaseStyle, RealTimer = true)]
+        [UGUITest(Script = BaseScript, Style = BaseStyle, RealTimer = true)]
         public IEnumerator ScrollCanBeDoneByCode()
         {
             View.Style.Set("width", 400);
