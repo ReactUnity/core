@@ -93,18 +93,20 @@ jobs:
 
       # Workaround for NUnit XML (see https://github.com/dorny/test-reporter/issues/98#issuecomment-867106931)
       - name: Install NUnit
+        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
         run: |
           nuget install NUnit.Console -Version 3.12.0
 
       - name: Fetch transform code
+        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
         run: |
           wget https://raw.githubusercontent.com/nunit/nunit-transforms/master/nunit3-junit/nunit3-junit.xslt
         shell: bash
-        working-directory: "${{ github.workspace }}"
 
       - name: Transform NUnit3 to JUnit
+        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
         run: |
-          Get-ChildItem . -Filter "${{ steps.testRunner.outputs.artifactsPath }}/*.xml" | Foreach-Object {
+          Get-ChildItem . -Filter *.xml | Foreach-Object {
             $xml = Resolve-Path $_.FullName
             $output = Join-Path ($pwd) ($_.BaseName + '_junit.xml')
             $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
@@ -112,7 +114,6 @@ jobs:
             $xslt.Transform($xml, $output);
           }
         shell: pwsh
-        working-directory: "${{ github.workspace }}"
 
       - uses: dorny/test-reporter@v1
         continue-on-error: true
