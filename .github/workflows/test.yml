@@ -115,7 +115,7 @@ jobs:
       - uses: dorny/test-reporter@v1
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
-          path: "${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
+          path: "../${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
           reporter: java-junit
           working-directory: core
 
@@ -132,12 +132,12 @@ jobs:
         if: matrix.coverage && matrix.main
         with:
           name: ${{ matrix.suite.name }} coverage
-          path: tests/CodeCoverage
+          path: CodeCoverage
 
       - name: Upload Coverage to codecov
         if: matrix.coverage && matrix.main
         uses: codecov/codecov-action@v2
         with:
           working-directory: ./core
-          files: ../tests/CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../tests/CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
+          files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
           flags: unittests
