@@ -93,7 +93,6 @@ jobs:
 
       # Workaround for NUnit XML (see https://github.com/dorny/test-reporter/issues/98#issuecomment-867106931)
       - name: Install NUnit
-        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
         run: |
           nuget install NUnit.Console -Version 3.12.0
 
