@@ -115,21 +115,21 @@ jobs:
       - uses: dorny/test-reporter@v1
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
-          path: "../${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
+          path: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
           reporter: java-junit
           working-directory: core
 
 
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
-        if: matrix.main
+        if: always() && matrix.main
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
-        if: matrix.coverage && matrix.main
+        if: always() && matrix.coverage && matrix.main
         with:
           name: ${{ matrix.suite.name }} coverage
           path: CodeCoverage
