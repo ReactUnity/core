@@ -2,6 +2,10 @@
 #define REACT_CLEARSCRIPT
 #endif
 
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
+#define REACT_QUICKJS
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +26,9 @@ namespace ReactUnity.Tests.Editor
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
 #if REACT_CLEARSCRIPT
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
+#endif
+#if REACT_QUICKJS
+    [TestFixture(JavascriptEngineType.QuickJS, Category = "QuickJS")]
 #endif
     public abstract class EditorTestBase
     {

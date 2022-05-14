@@ -34,7 +34,12 @@ namespace ReactUnity.Scripting
             OnInitialize = onInitialize;
             Context = context;
 
+#if JSB_UNITYLESS
             var logger = new DefaultScriptLogger();
+#else
+            var logger = new QuickJSLogger();
+#endif
+
             Runtime = ScriptEngine.CreateRuntime(context.IsEditorContext);
             Runtime.AddModuleResolvers();
             Runtime.OnInitialized += Runtime_OnInitialized;
@@ -145,7 +150,14 @@ namespace ReactUnity.Scripting
 
         public object CreateTypeReference(Type type)
         {
-            return TypeDB.NewDynamicConstructor(MainContext.GetAtom(type.Name), new DynamicConstructor(new DynamicType(type, false), type.GetConstructors()[0]));
+            var ctors = type.GetConstructors();
+
+            if (ctors.Length > 0)
+                return TypeDB.NewDynamicConstructor(
+                    MainContext.GetAtom(type.Name),
+                    new DynamicConstructor(new DynamicType(type, false), ctors[0]));
+
+            return null;
         }
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
@@ -204,5 +216,49 @@ namespace ReactUnity.Scripting
             return new QuickJSEngine(context, debug, awaitDebugger, onInitialize);
         }
     }
+
+#if !JSB_UNITYLESS
+    internal class QuickJSLogger : IScriptLogger
+    {
+        public void WriteException(Exception exception)
+        {
+            try
+            {
+                Debug.LogException(exception);
+                if (exception.InnerException != null)
+                    Debug.LogException(exception.InnerException);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void Write(LogLevel ll, string text)
+        {
+            switch (ll)
+            {
+                case LogLevel.Warn: Debug.LogWarning(text); return;
+                case LogLevel.Error: Debug.LogError(text); return;
+#if REACT_UNITY_DEVELOPER
+                case LogLevel.Info: Debug.Log(text); return;
+                default: Debug.Log(text); return;
+#endif
+            }
+        }
+
+        public void Write(LogLevel ll, string fmt, params object[] args)
+        {
+            switch (ll)
+            {
+                case LogLevel.Warn: Debug.LogWarningFormat(fmt, args); return;
+                case LogLevel.Error: Debug.LogErrorFormat(fmt, args); return;
+#if REACT_UNITY_DEVELOPER
+                case LogLevel.Info: Debug.LogFormat(fmt, args); return;
+                default: Debug.LogFormat(fmt, args); return;
+#endif
+            }
+        }
+    }
+#endif
 }
 #endif
