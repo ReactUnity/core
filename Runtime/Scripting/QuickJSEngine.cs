@@ -6,11 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 using QuickJS;
-using QuickJS.Native;
 using QuickJS.Binding;
+using QuickJS.Native;
 using QuickJS.Utils;
+using UnityEngine;
 
 namespace ReactUnity.Scripting
 {

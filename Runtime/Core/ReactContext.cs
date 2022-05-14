@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using ExCSS;
 using Newtonsoft.Json.Linq;
 using ReactUnity.Helpers;
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
 using ReactUnity.Html;
 using ReactUnity.Scheduling;

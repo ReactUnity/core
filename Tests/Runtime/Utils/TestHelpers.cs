@@ -79,5 +79,31 @@ namespace ReactUnity.Tests
                 };
             }
         }
+
+        #region Test Debug Toggle
+#if UNITY_EDITOR && REACT_UNITY_DEVELOPER
+        const string MenuName = "React/Tests/Debug Tests";
+        public static bool IsDebugEnabled
+        {
+            get => UnityEditor.EditorPrefs.GetBool(MenuName, false);
+            set => UnityEditor.EditorPrefs.SetBool(MenuName, value);
+        }
+
+        [UnityEditor.MenuItem(MenuName)]
+        private static void ToggleTests()
+        {
+            IsDebugEnabled = !IsDebugEnabled;
+        }
+
+        [UnityEditor.MenuItem(MenuName, true)]
+        private static bool ToggleTestsValidate()
+        {
+            UnityEditor.Menu.SetChecked(MenuName, IsDebugEnabled);
+            return true;
+        }
+#else
+        public static bool IsDebugEnabled { get; set; } = false;
+#endif
+        #endregion
     }
 }

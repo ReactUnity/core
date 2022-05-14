@@ -11,19 +11,6 @@ namespace ReactUnity.Tests.Editor
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseEditorTestAttribute : UnityTestAttribute, IOuterUnityTestAction
     {
-#if UNITY_EDITOR
-        #region Test Debug Toggle
-        const string MenuName = "React/Tests/Debug Tests";
-        public static bool IsDebugEnabled
-        {
-            get => UnityEditor.EditorPrefs.GetBool(MenuName, false);
-            set => UnityEditor.EditorPrefs.SetBool(MenuName, value);
-        }
-        #endregion
-#else
-        public static bool IsDebugEnabled { get; set; } = false;
-#endif
-
         public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
@@ -61,8 +48,8 @@ namespace ReactUnity.Tests.Editor
             window.Timer = RealTimer ? null : new ControlledTimer();
             window.Globals["test"] = test;
 
-            window.DebugEnabled = IsDebugEnabled;
-            window.AwaitDebugger = IsDebugEnabled;
+            window.DebugEnabled = TestHelpers.IsDebugEnabled;
+            window.AwaitDebugger = TestHelpers.IsDebugEnabled;
 
             if (AutoRender)
             {

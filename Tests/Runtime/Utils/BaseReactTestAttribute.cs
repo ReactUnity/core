@@ -13,32 +13,6 @@ namespace ReactUnity.Tests
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-#if UNITY_EDITOR
-        #region Test Debug Toggle
-        const string MenuName = "React/Tests/Debug Tests";
-        public static bool IsDebugEnabled
-        {
-            get => UnityEditor.EditorPrefs.GetBool(MenuName, false);
-            set => UnityEditor.EditorPrefs.SetBool(MenuName, value);
-        }
-
-        [UnityEditor.MenuItem(MenuName)]
-        private static void ToggleTests()
-        {
-            IsDebugEnabled = !IsDebugEnabled;
-        }
-
-        [UnityEditor.MenuItem(MenuName, true)]
-        private static bool ToggleTestsValidate()
-        {
-            UnityEditor.Menu.SetChecked(MenuName, IsDebugEnabled);
-            return true;
-        }
-        #endregion
-#else
-        public static bool IsDebugEnabled { get; set; } = false;
-#endif
-
         public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
@@ -83,8 +57,8 @@ namespace ReactUnity.Tests
             ru.AutoRender = false;
             ru.enabled = true;
 
-            ru.Debug = IsDebugEnabled;
-            ru.AwaitDebugger = IsDebugEnabled;
+            ru.Debug = TestHelpers.IsDebugEnabled;
+            ru.AwaitDebugger = TestHelpers.IsDebugEnabled;
 
             return ru;
         }
