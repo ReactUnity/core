@@ -150,18 +150,13 @@ namespace ReactUnity.Scripting
 
         public object CreateTypeReference(Type type)
         {
-            var ctors = type.GetConstructors();
-
-            if (ctors.Length > 0)
-                return TypeDB.NewDynamicConstructor(
-                    MainContext.GetAtom(type.Name),
-                    new DynamicConstructor(new DynamicType(type, false), ctors[0]));
-
-            return null;
+            TypeDB.GetDynamicType(type, false);
+            return TypeDB.GetConstructorOf(type);
         }
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
         {
+            // TODO: Create utility for namespace references
             return null;
         }
 

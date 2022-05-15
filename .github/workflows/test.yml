@@ -36,7 +36,7 @@ jobs:
             unity: { version: "2020.3.33f1" }
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
           # - unity: { version: "2020.3.33f1" }
-          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", testBranch: "tests_2021_2" }
+          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
       - name: Checkout core library
