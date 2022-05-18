@@ -35,22 +35,7 @@ namespace ReactUnity.UGUI
         {
             if (currentTarget == target) return;
 
-            if (currentTarget)
-            {
-                TargetHandler?.Unmount(this);
-                FireEvent("onUnmount", currentTarget);
-                currentTarget = null;
-                TargetHandler = null;
-
-                if (Instance)
-                {
-                    if (InstanceWasPrefab) GameObject.Destroy(Instance);
-                    else Instance.transform.SetParent(InstanceParent, false);
-                }
-                Instance = null;
-                InstanceTransform = null;
-                InstanceParent = null;
-            }
+            DetachInstance();
 
             currentTarget = target;
 
@@ -93,6 +78,26 @@ namespace ReactUnity.UGUI
             TargetHandler = Instance.GetComponent<IPrefabTarget>();
         }
 
+        void DetachInstance()
+        {
+            if (currentTarget)
+            {
+                TargetHandler?.Unmount(this);
+                FireEvent("onUnmount", currentTarget);
+                currentTarget = null;
+                TargetHandler = null;
+
+                if (Instance)
+                {
+                    if (InstanceWasPrefab) GameObject.Destroy(Instance);
+                    else Instance.transform.SetParent(InstanceParent, false);
+                }
+                Instance = null;
+                InstanceTransform = null;
+                InstanceParent = null;
+            }
+        }
+
         GameObject FindTarget(object value)
         {
             if (value == null) return null;
@@ -124,6 +129,12 @@ namespace ReactUnity.UGUI
                     if (handled == null) return base.AddEventListener(eventName, callback);
                     return handled;
             }
+        }
+
+        protected override void DestroySelf()
+        {
+            DetachInstance();
+            base.DestroySelf();
         }
     }
 }

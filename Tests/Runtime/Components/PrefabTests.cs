@@ -12,7 +12,9 @@ namespace ReactUnity.Tests
         const string PrefabBaseScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
-                return <prefab target={globals.prefab} />;
+                return <view>
+                    {!globals.hide && <prefab target={globals.prefab} />}
+                </view>;
             }
         ";
 
@@ -50,6 +52,28 @@ namespace ReactUnity.Tests
 
             Globals["prefab"] = target1;
             Assert.AreEqual(target1, prefab.Instance);
+        }
+
+
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
+        public IEnumerator PrefabCanBeMountedAgain()
+        {
+            yield return null;
+
+            Assert.IsNull(Prefab.Instance);
+
+            var target1 = new GameObject("prefabTarget1", typeof(RectTransform));
+
+            Globals["prefab"] = target1;
+            Assert.AreEqual(target1, Prefab.Instance);
+
+            Globals["hide"] = true;
+            yield return null;
+            Assert.AreEqual(null, Prefab);
+
+            Globals["hide"] = false;
+            yield return null;
+            Assert.AreEqual(target1, Prefab.Instance);
         }
 
 
