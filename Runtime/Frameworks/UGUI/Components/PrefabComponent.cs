@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI
         private bool InstanceWasPrefab;
         IPrefabTarget TargetHandler;
 
-        public PrefabComponent(UGUIContext context, string tag = "prefab") : base(context, tag)
+        public PrefabComponent(UGUIContext context, string tag = "prefab") : base(context, tag, false)
         {
             Layout.SetMeasureFunction(Measure);
         }

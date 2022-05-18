@@ -23,7 +23,7 @@ namespace ReactUnity.UGUI
         {
             RenderTexture.width = (int) source.width;
             RenderTexture.height = (int) source.height;
-            Measurer.MarkDirty();
+            Replaced.Measurer.MarkDirty();
         }
 
         public override void SetProperty(string propertyName, object value)

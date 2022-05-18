@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ReactUnity.Tests
 {
-    public class ObjectFitTests : TestBase
+    public class ImageTests : TestBase
     {
         const string BaseScript = @"
             function App() {
@@ -20,9 +20,9 @@ namespace ReactUnity.Tests
         public Rect Rect => GetRectOfImageContent();
 
 
-        public Rect GetRectOfImageContent() => StylingHelpers.GetScreenClientRect(Image.ImageContainer.transform as RectTransform);
+        public Rect GetRectOfImageContent() => StylingHelpers.GetScreenClientRect(Image.Replaced.RectTransform);
 
-        public ObjectFitTests(JavascriptEngineType engineType) : base(engineType) { }
+        public ImageTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [UGUITest(Script = BaseScript)]
         public IEnumerator ObjectFitAndPositionWorksOnImage()
@@ -182,6 +182,18 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(0, Rect.x, 1);
             Assert.AreEqual(30, Rect.y, 1);
+        }
+
+        [UGUITest(Script = BaseScript, Style = @"
+            image::before, image::after {
+                content: 'hello';
+            }
+")]
+        public IEnumerator BeforeAfterDoesNotCrashImage()
+        {
+            yield return null;
+            Assert.AreEqual("hello", Image.BeforePseudo.TextContent);
+            Assert.AreEqual("hello", Image.AfterPseudo.TextContent);
         }
     }
 }

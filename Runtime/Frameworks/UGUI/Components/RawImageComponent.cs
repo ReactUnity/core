@@ -9,12 +9,10 @@ namespace ReactUnity.UGUI
     {
         public RawImage Image { get; private set; }
 
-        public override MaskableGraphic Graphic => Image;
-
         public RawImageComponent(UGUIContext context, string tag = "rawimage") : base(context, tag)
         {
-            Image = ImageContainer.AddComponent<RawImage>();
-            Measurer.Texture = Image.texture;
+            Image = Replaced.CreateGraphic<RawImage>();
+            Replaced.Measurer.Texture = Image.texture;
         }
 
         protected override void SetSource(object value)
@@ -27,7 +25,7 @@ namespace ReactUnity.UGUI
         protected void SetTexture(Texture texture)
         {
             Image.texture = texture;
-            Measurer.Texture = texture;
+            Replaced.Measurer.Texture = texture;
         }
     }
 }

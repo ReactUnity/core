@@ -19,7 +19,7 @@ namespace ReactUnity
         public IContainerComponent Parent { get; private set; }
 
         public WatchableObjectRecord Data { get; private set; } = new WatchableObjectRecord();
-        public YogaNode Layout { get; private set; }
+        public YogaNode Layout { get; }
         public NodeStyle ComputedStyle => StyleState.Active;
         public StyleState StyleState { get; private set; }
         public StateStyles StateStyles { get; private set; }
@@ -367,7 +367,9 @@ namespace ReactUnity
                 if (inheritedChanges || recursive)
                 {
                     BeforeRules = Context.Style.StyleTree.GetMatchingBefore(this).ToList();
-                    if (BeforeRules.Count > 0) AddBefore();
+                    if (BeforeRules.Count > 0 &&
+                        BeforeRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
+                        AddBefore();
                     else RemoveBefore();
                     BeforePseudo?.ResolveStyle();
 
@@ -379,7 +381,9 @@ namespace ReactUnity
                     }
 
                     AfterRules = Context.Style.StyleTree.GetMatchingAfter(this).ToList();
-                    if (AfterRules.Count > 0) AddAfter();
+                    if (AfterRules.Count > 0 &&
+                        AfterRules.Any(x => x.Data.Rules.Any(y => y.ContainsKey(StyleProperties.content))))
+                        AddAfter();
                     else RemoveAfter();
                     AfterPseudo?.ResolveStyle();
                 }
@@ -522,10 +526,10 @@ namespace ReactUnity
 
         public void AddBefore()
         {
-            if (!IsContainer || BeforePseudo != null) return;
+            if (!IsContainer || BeforePseudo != null || Destroyed) return;
             var tc = Context.CreatePseudoComponent("_before");
             BeforePseudo = tc;
-            tc.SetParent(this, Children.FirstOrDefault());
+            tc?.SetParent(this, Children.FirstOrDefault());
         }
 
         public void RemoveBefore()
@@ -536,10 +540,10 @@ namespace ReactUnity
 
         public void AddAfter()
         {
-            if (!IsContainer || AfterPseudo != null) return;
+            if (!IsContainer || AfterPseudo != null || Destroyed) return;
             var tc = Context.CreatePseudoComponent("_after");
             AfterPseudo = tc;
-            tc.SetParent(this, Children.LastOrDefault(), true);
+            tc?.SetParent(this, Children.LastOrDefault(), true);
         }
 
         public void RemoveAfter()

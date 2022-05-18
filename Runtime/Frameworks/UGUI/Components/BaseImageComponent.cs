@@ -1,5 +1,7 @@
 using Facebook.Yoga;
+using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,33 +9,12 @@ namespace ReactUnity.UGUI
 {
     public abstract class BaseImageComponent : UGUIComponent
     {
-        public ImageMeasurer Measurer { get; private set; }
-        public GameObject ImageContainer { get; private set; }
-
-        public abstract MaskableGraphic Graphic { get; }
-
-        public ReactReplacedElement ReplacedElement { get; private set; }
+        public ReplacedImageComponent Replaced { get; }
 
         public BaseImageComponent(UGUIContext context, string tag) : base(context, tag)
         {
-            ImageContainer = context.CreateNativeObject("[ImageContent]");
-
-            var replacedElementLayout = new YogaNode();
-            Layout.AddChild(replacedElementLayout);
-
-            var rt = ImageContainer.AddComponent<RectTransform>();
-            var re = ReplacedElement = ImageContainer.AddComponent<ReactReplacedElement>();
-            re.Layout = replacedElementLayout;
-
-            rt.SetParent(GameObject.transform);
-            rt.anchorMin = Vector2.zero;
-            rt.anchorMax = Vector2.one;
-            rt.sizeDelta = Vector2.zero;
-
-            Measurer = ImageContainer.AddComponent<ImageMeasurer>();
-            Measurer.Context = context;
-            Measurer.Layout = replacedElementLayout;
-            replacedElementLayout.SetMeasureFunction(Measurer.Measure);
+            Replaced = new ReplacedImageComponent(context);
+            Replaced.SetParent(this);
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -55,9 +36,58 @@ namespace ReactUnity.UGUI
         {
             base.ApplyStylesSelf();
             var fitMode = ComputedStyle.objectFit;
-            if (Measurer.FitMode != fitMode)
-                Measurer.FitMode = fitMode;
-            ReplacedElement.Position = ComputedStyle.objectPosition;
+            if (Replaced.Measurer.FitMode != fitMode)
+                Replaced.Measurer.FitMode = fitMode;
+            Replaced.ReplacedElement.Position = ComputedStyle.objectPosition;
         }
+    }
+
+
+    public class ReplacedImageComponent : UGUIComponent
+    {
+        protected override string DefaultName => $"[ImageContent]";
+
+        public ImageMeasurer Measurer { get; }
+        public ReactReplacedElement ReplacedElement { get; }
+        public MaskableGraphic Graphic { get; private set; }
+
+        public ReplacedImageComponent(UGUIContext context) : base(context, "_image", false)
+        {
+            IsPseudoElement = true;
+
+            ReplacedElement = GetOrAddComponent<ReactReplacedElement>();
+            ReplacedElement.Layout = Layout;
+
+            RectTransform.anchorMin = Vector2.zero;
+            RectTransform.anchorMax = Vector2.one;
+            RectTransform.sizeDelta = Vector2.zero;
+
+            Measurer = GetOrAddComponent<ImageMeasurer>();
+            Measurer.Context = context;
+            Measurer.Layout = Layout;
+            Layout.SetMeasureFunction(Measurer.Measure);
+        }
+
+        public T CreateGraphic<T>() where T : MaskableGraphic
+        {
+            var res = GetOrAddComponent<T>();
+            Graphic = res;
+            return res;
+        }
+
+        protected override void ApplyStylesSelf()
+        {
+            base.ApplyStylesSelf();
+
+            var graphic = GameObject.GetComponent<Graphic>();
+            if (graphic) graphic.color = ComputedStyle.HasValue(StyleProperties.backgroundColor) ?
+                    ComputedStyle.backgroundColor : Color.white;
+        }
+
+        protected override void ApplyLayoutStylesSelf() { }
+
+        protected override void ResolveTransform() { }
+
+        public override BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle) => null;
     }
 }

@@ -10,13 +10,11 @@ namespace ReactUnity.UGUI
     {
         public Image Image { get; private set; }
 
-        public override MaskableGraphic Graphic => Image;
-
         public ImageComponent(UGUIContext context, string tag = "image") : base(context, tag)
         {
-            Image = ImageContainer.AddComponent<Image>();
+            Image = Replaced.CreateGraphic<Image>();
             Image.preserveAspect = true;
-            Measurer.Sprite = Image.sprite;
+            Replaced.Measurer.Sprite = Image.sprite;
         }
 
         protected override void SetSource(object value)
@@ -31,7 +29,7 @@ namespace ReactUnity.UGUI
             var sprite = texture == null ? null : Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
 
             if (Image) Image.sprite = sprite;
-            Measurer.Sprite = sprite;
+            Replaced.Measurer.Sprite = sprite;
         }
 
         public override void SetProperty(string propertyName, object value)

@@ -14,13 +14,11 @@ namespace ReactUnity.UGUI
         public Image Image { get; private set; }
 #endif
 
-        public override MaskableGraphic Graphic => Image;
-
         public SvgComponent(UGUIContext context, string tag = "svg") : base(context, tag)
         {
 #if REACT_VECTOR_GRAPHICS
-            Image = ImageContainer.AddComponent<Unity.VectorGraphics.SVGImage>();
-            Measurer.Sprite = Image.sprite;
+            Image = Replaced.CreateGraphic<Unity.VectorGraphics.SVGImage>();
+            Replaced.Measurer.Sprite = Image.sprite;
 #else
             Debug.LogWarning("Unity.VectorGraphics module is required to use SVG components");
 #endif
@@ -38,7 +36,7 @@ namespace ReactUnity.UGUI
             var sprite = texture == null ? null : Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
 
             Image.sprite = sprite;
-            Measurer.Sprite = sprite;
+            Replaced.Measurer.Sprite = sprite;
         }
 
         public override void SetProperty(string propertyName, object value)

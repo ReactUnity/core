@@ -98,5 +98,30 @@ namespace ReactUnity.Tests
             Assert.AreEqual(116, prefab.Container.rect.height);
 
         }
+
+
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
+        public IEnumerator PrefabDoesNotCrashWithBeforeAfter()
+        {
+            yield return null;
+
+            var prefab = Prefab;
+
+            InsertStyle(@"
+                prefab::before, prefab::after {
+                    content: 'asd';
+                }
+");
+
+            var target1 = new GameObject("prefabTarget1", typeof(RectTransform));
+            target1.AddComponent<PrefabTarget>();
+
+            Globals["prefab"] = target1;
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(null, Prefab.BeforePseudo);
+            Assert.AreEqual(null, Prefab.AfterPseudo);
+        }
     }
 }
