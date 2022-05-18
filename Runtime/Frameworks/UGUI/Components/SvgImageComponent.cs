@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class SvgComponent : BaseImageComponent
+    public class SvgImageComponent : BaseImageComponent
     {
 #if REACT_VECTOR_GRAPHICS
         public Unity.VectorGraphics.SVGImage Image { get; private set; }
@@ -14,7 +14,7 @@ namespace ReactUnity.UGUI
         public Image Image { get; private set; }
 #endif
 
-        public SvgComponent(UGUIContext context, string tag = "svg") : base(context, tag)
+        public SvgImageComponent(UGUIContext context, string tag = "svgimage") : base(context, tag)
         {
 #if REACT_VECTOR_GRAPHICS
             Image = Replaced.CreateGraphic<Unity.VectorGraphics.SVGImage>();
