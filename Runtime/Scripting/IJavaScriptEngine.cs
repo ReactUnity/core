@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine;
 
 namespace ReactUnity.Scripting
 {
@@ -28,44 +29,49 @@ namespace ReactUnity.Scripting
     {
         Auto = 0,
 
-#if REACT_DISABLE_JINT
-        [UnityEngine.InspectorName("Jint (Disabled)")]
-#elif !REACT_JINT_AVAILABLE
-        [UnityEngine.InspectorName("Jint (Unavailable)")]
+
+#if !REACT_JINT_AVAILABLE
+        [Obsolete]
+#elif REACT_DISABLE_JINT
+        [InspectorName("Jint (Disabled)")]
 #endif
         Jint = 1,
 
-#if REACT_DISABLE_CLEARSCRIPT
-        [UnityEngine.InspectorName("ClearScript (Disabled)")]
-#elif !REACT_CLEARSCRIPT_AVAILABLE
-        [UnityEngine.InspectorName("ClearScript (Unavailable)")]
+
+#if !REACT_CLEARSCRIPT_AVAILABLE
+        [Obsolete]
+#elif REACT_DISABLE_CLEARSCRIPT
+        [InspectorName("ClearScript (Disabled)")]
 #else
-        [UnityEngine.InspectorName("ClearScript")]
+        [InspectorName("ClearScript")]
 #endif
         ClearScript = 2,
 
-#if REACT_DISABLE_QUICKJS
-        [UnityEngine.InspectorName("QuickJS (Disabled)")]
-#elif !REACT_QUICKJS_AVAILABLE
-        [UnityEngine.InspectorName("QuickJS (Unavailable)")]
+
+#if !REACT_QUICKJS_AVAILABLE
+        [Obsolete]
+#elif REACT_DISABLE_QUICKJS
+        [InspectorName("QuickJS (Disabled)")]
 #else
-        [UnityEngine.InspectorName("QuickJS")]
+        [InspectorName("QuickJS")]
 #endif
         QuickJS = 3,
 
-#if REACT_YANTRA_AVAILABLE
-#if !REACT_YANTRA
-        [UnityEngine.InspectorName("Yantra (Disabled)")]
+
+#if !REACT_YANTRA_AVAILABLE
+        [Obsolete]
+#elif !REACT_YANTRA
+        [InspectorName("Yantra (Disabled)")]
 #endif
         Yantra = 4,
-#endif
 
-#if REACT_JURASSIC_AVAILABLE
-#if !REACT_JURASSIC
-        [UnityEngine.InspectorName("Jurassic (Disabled)")]
+
+#if !REACT_JURASSIC_AVAILABLE
+        [Obsolete]
+#elif !REACT_JURASSIC
+        [InspectorName("Jurassic (Disabled)")]
 #endif
         Jurassic = 5,
-#endif
     }
 
     public interface IJavaScriptEngine : IDisposable

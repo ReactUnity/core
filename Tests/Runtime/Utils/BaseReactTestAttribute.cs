@@ -37,11 +37,8 @@ namespace ReactUnity.Tests
             ru.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
             ru.AfterStart.AddListener(() => {
                 if (engineType != JavascriptEngineType.Auto && ru.Context.Script.EngineFactory.EngineType != engineType)
-                {
-                    throw new Exception($"{engineType} not supported on this platform");
-                }
-
-                AfterStart(ru.Context.Script);
+                    Assert.Inconclusive($"{engineType} not supported on this platform");
+                else AfterStart(ru.Context.Script);
             });
             if (AutoRender) ru.Render();
         }
