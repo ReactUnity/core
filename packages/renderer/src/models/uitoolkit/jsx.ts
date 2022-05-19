@@ -18,6 +18,7 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
   scroll: BaseElement;
+  svg: Components.Svg & rc.RefAttributes<Cmp.SvgComponent> & Children<never>;
   image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
   toggle: Components.Toggle & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
   input: Components.TextField<Cmp.TextFieldComponent> & rc.RefAttributes<Cmp.TextFieldComponent> & Children<never>;

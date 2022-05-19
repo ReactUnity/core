@@ -20,7 +20,8 @@ export interface UGUIElements extends BaseElements<BaseCmp> {
   scroll: Components.Scroll & RefAttributes<NS.ScrollComponent> & Children;
   image: Components.Image & RefAttributes<NS.ImageComponent> & Children<never>;
   rawimage: Components.RawImage & RefAttributes<NS.RawImageComponent> & Children<never>;
-  svg: Components.SvgImage & RefAttributes<NS.SvgComponent> & Children<never>;
+  svgimage: Components.SvgImage & RefAttributes<NS.SvgImageComponent> & Children<never>;
+  svg: Components.Svg & RefAttributes<NS.SvgComponent> & Children<never>;
   video: Components.Video & RefAttributes<NS.VideoComponent> & Children<never>;
   render: Components.Render & RefAttributes<NS.RenderComponent> & Children<never>;
   object: Components.Object & RefAttributes<NS.ObjectComponent> & Children<never>;

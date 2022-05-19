@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 09/05/2022 16:59:32
+// Generated 19/05/2022 03:17:41
 //
 /* eslint-disable */
 
@@ -313,6 +313,7 @@ export declare namespace ReactUnity {
     DetachedRoots: System.Collections.Generic.HashSet<ReactUnity.IReactComponent>;
     Globals: ReactUnity.Helpers.GlobalRecord;
     IsDisposed: boolean;
+    IsEditorContext: boolean;
     options: ReactUnity.ReactContext_Options;
     Source: ReactUnity.ScriptSource;
     Timer: ReactUnity.Scheduling.ITimer;
@@ -673,6 +674,7 @@ export declare namespace ReactUnity {
       Timer: ReactUnity.Scheduling.ITimer;
       AutoRun: boolean;
       rootVisualElement: UnityEngine.UIElements.VisualElement;
+      overlayCanvas: any; // UnityEditor.Overlays.OverlayCanvas
       wantsMouseMove: boolean;
       wantsMouseEnterLeaveWindow: boolean;
       wantsLessLayoutEvents: boolean;
@@ -739,6 +741,7 @@ export declare namespace ReactUnity {
       Timer: ReactUnity.Scheduling.ITimer;
       AutoRun: boolean;
       rootVisualElement: UnityEngine.UIElements.VisualElement;
+      overlayCanvas: any; // UnityEditor.Overlays.OverlayCanvas
       wantsMouseMove: boolean;
       wantsMouseEnterLeaveWindow: boolean;
       wantsLessLayoutEvents: boolean;
@@ -887,6 +890,7 @@ export declare namespace ReactUnity {
         Inspector: ReactUnity.Editor.Renderer.ReactInspector;
         Property: ReactUnity.Editor.Renderer.ReactProperty;
         static UseragentStylesheet: UnityEngine.TextAsset;
+        IsEditorContext: boolean;
         StateHandlers: Record<string, System.Type>;
         HostElement: UnityEngine.UIElements.VisualElement;
         CalculatesLayout: boolean;
@@ -951,6 +955,7 @@ export declare namespace ReactUnity {
         Timer: ReactUnity.Scheduling.ITimer;
         AutoRun: boolean;
         rootVisualElement: UnityEngine.UIElements.VisualElement;
+        overlayCanvas: any; // UnityEditor.Overlays.OverlayCanvas
         wantsMouseMove: boolean;
         wantsMouseEnterLeaveWindow: boolean;
         wantsLessLayoutEvents: boolean;
@@ -1058,6 +1063,7 @@ export declare namespace ReactUnity {
         Timer: ReactUnity.Scheduling.ITimer;
         AutoRun: boolean;
         rootVisualElement: UnityEngine.UIElements.VisualElement;
+        overlayCanvas: any; // UnityEditor.Overlays.OverlayCanvas
         wantsMouseMove: boolean;
         wantsMouseEnterLeaveWindow: boolean;
         wantsLessLayoutEvents: boolean;
@@ -1224,6 +1230,7 @@ export declare namespace ReactUnity {
       export class DialogWindow {
         constructor();
         rootVisualElement: UnityEngine.UIElements.VisualElement;
+        overlayCanvas: any; // UnityEditor.Overlays.OverlayCanvas
         wantsMouseMove: boolean;
         wantsMouseEnterLeaveWindow: boolean;
         wantsLessLayoutEvents: boolean;
@@ -1699,10 +1706,11 @@ export declare namespace ReactUnity {
     export class Callback {
       constructor(callback: ((arg0: any, arg1: any[]) => any), engine: any);
       constructor(callback: any);
-      constructor(callback: any);
+      constructor(callback: any, context?: ReactUnity.ReactContext);
       constructor(index: number, context: ReactUnity.ReactContext);
       callback: any; // System.Object
       Engine: any; // Jint.Engine
+      static Noop: ReactUnity.Helpers.Callback;
       static From(value: any, context?: ReactUnity.ReactContext, thisVal?: any): ReactUnity.Helpers.Callback;
       Call(): any;
       Call(...args: any[]): any;
@@ -2459,8 +2467,8 @@ export declare namespace ReactUnity {
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
-      GetValue(key: string): any;
-      ClearValue(key: string): void;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
@@ -2475,7 +2483,7 @@ export declare namespace ReactUnity {
     export class ClearScriptEngineFactory {
       constructor();
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2485,6 +2493,9 @@ export declare namespace ReactUnity {
       Auto = 0,
       Jint = 1,
       ClearScript = 2,
+      QuickJS = 3,
+      Yantra = 4,
+      Jurassic = 5,
     }
     export interface IJavaScriptEngine {
       Key: string;
@@ -2492,8 +2503,8 @@ export declare namespace ReactUnity {
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       Evaluate(code: string, fileName?: string): any;
-      ClearValue(key: string): void;
-      GetValue(key: string): any;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
       CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
       IsScriptObject(obj: any): boolean;
       CreateTypeReference(type: System.Type): any;
@@ -2502,7 +2513,7 @@ export declare namespace ReactUnity {
     }
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
     }
     export class JintEngine {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
@@ -2512,8 +2523,8 @@ export declare namespace ReactUnity {
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
-      GetValue(key: string): any;
-      ClearValue(key: string): void;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
@@ -2528,7 +2539,7 @@ export declare namespace ReactUnity {
     export class JintEngineFactory {
       constructor();
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean): ReactUnity.Scripting.IJavaScriptEngine;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2537,6 +2548,42 @@ export declare namespace ReactUnity {
     export class JintTypeConverter {
       constructor(engine: any);
       Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class QuickJSEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void));
+      Key: string;
+      NativeEngine: any; // System.Object
+      Runtime: any; // QuickJS.ScriptRuntime
+      MainContext: any; // QuickJS.ScriptContext
+      Global: any; // QuickJS.ScriptValue
+      TypeRegister: any; // QuickJS.Binding.TypeRegister
+      TypeDB: any; // QuickJS.Utils.ITypeDB
+      ObjectCache: any; // QuickJS.Utils.ObjectCache
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateNativeValue(v: any): any;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class QuickJSEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2616,13 +2663,14 @@ export declare namespace ReactUnity {
       Engine: ReactUnity.Scripting.IJavaScriptEngine;
       Interop: ReactUnity.Helpers.ReactInterop;
       Initialized: boolean;
+      EngineInitialized: boolean;
       Debug: boolean;
       AwaitDebugger: boolean;
       Context: ReactUnity.ReactContext;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       EngineFactory: ReactUnity.Scripting.IJavaScriptEngineFactory;
       RunScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
-      Initialize(): void;
+      Initialize(callback: (() => void)): void;
       ExecuteScript(code: string, fileName?: string): void;
       EvaluateScript(code: string, fileName?: string): any;
       CreateEventCallback(code: string, thisVal: any): ReactUnity.Helpers.Callback;
@@ -4911,7 +4959,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class ImageDefinition {
-      static None: ReactUnity.Types.ImageDefinition;
+      static NoImage: ReactUnity.Types.ImageDefinition;
       SizeUpdatesGraphic: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5272,10 +5320,8 @@ export declare namespace ReactUnity {
     }
     export class BaseImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag: string);
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -5356,14 +5402,97 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class ReplacedImageComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext);
+      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
+      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      RefId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      SetProperty(propertyName: string, value: any): void;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class BaseRenderTextureComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag: string);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -5790,10 +5919,8 @@ export declare namespace ReactUnity {
     export class ImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Image: UnityEngine.UI.Image;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -6055,10 +6182,8 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -6308,10 +6433,8 @@ export declare namespace ReactUnity {
     export class RawImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Image: UnityEngine.UI.RawImage;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -6396,10 +6519,8 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -6737,11 +6858,96 @@ export declare namespace ReactUnity {
     }
     export class SvgComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
+      Content: string;
+      InnerContent: string;
       Image: any; // Unity.VectorGraphics.SVGImage
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      RefId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetProperty(propertyName: string, value: any): void;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SvgImageComponent {
+      constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
+      Image: any; // Unity.VectorGraphics.SVGImage
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -7087,10 +7293,8 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ImageContainer: UnityEngine.GameObject;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -7293,6 +7497,7 @@ export declare namespace ReactUnity {
       DetachedRoots: System.Collections.Generic.HashSet<ReactUnity.IReactComponent>;
       Globals: ReactUnity.Helpers.GlobalRecord;
       IsDisposed: boolean;
+      IsEditorContext: boolean;
       options: ReactUnity.ReactContext_Options;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;
@@ -9614,6 +9819,7 @@ export declare namespace ReactUnity {
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
         SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
         OnCullingChanged(): void;
         Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
         LayoutComplete(): void;
@@ -9765,6 +9971,7 @@ export declare namespace ReactUnity {
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
         SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
         OnCullingChanged(): void;
         Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
         LayoutComplete(): void;
@@ -9999,6 +10206,7 @@ export declare namespace ReactUnity {
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
         SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
         OnCullingChanged(): void;
         Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
         LayoutComplete(): void;
@@ -10217,6 +10425,7 @@ export declare namespace ReactUnity {
         SetLayoutDirty(): void;
         SetVerticesDirty(): void;
         SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
         OnCullingChanged(): void;
         Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
         LayoutComplete(): void;
@@ -11591,6 +11800,84 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class SvgComponent {
+      constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
+      Content: string;
+      InnerContent: string;
+      Source: any; // System.Object
+      Element: ReactUnity.UIToolkit.SvgElement;
+      TargetElement: UnityEngine.UIElements.VisualElement;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      Context: ReactUnity.UIToolkit.UIToolkitContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      RefId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetProperty(propertyName: string, value: any): void;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      CaptureMouse(): void;
+      ReleaseMouse(): void;
+      HasMouseCapture(): boolean;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class TextComponent<TElementType = any> {
       constructor(text: string, context: ReactUnity.UIToolkit.UIToolkitContext, tag: string, isContainer?: boolean);
       Content: string;
@@ -12127,6 +12414,7 @@ export declare namespace ReactUnity {
       DetachedRoots: System.Collections.Generic.HashSet<ReactUnity.IReactComponent>;
       Globals: ReactUnity.Helpers.GlobalRecord;
       IsDisposed: boolean;
+      IsEditorContext: boolean;
       options: ReactUnity.ReactContext_Options;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;
@@ -12167,6 +12455,98 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export class UIToolkitHelpers {
+      static GenerateVectorImage(rawSvg: string): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SvgElement {
+      constructor();
+      constructor(svg: string);
+      [key: string]: any;
+      RawSvg: string;
+      image: UnityEngine.Texture;
+      sprite: UnityEngine.Sprite;
+      vectorImage: UnityEngine.UIElements.VectorImage;
+      sourceRect: UnityEngine.Rect;
+      uv: UnityEngine.Rect;
+      scaleMode: UnityEngine.ScaleMode;
+      tintColor: UnityEngine.Color;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): any;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
     }
     export class UIToolkitContext_Options {
       constructor();

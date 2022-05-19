@@ -1,4 +1,4 @@
-import { BaseCmpProps } from '../base';
+import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
@@ -54,19 +54,18 @@ export interface Anchor extends View<ReactUnity.UGUI.AnchorComponent> {
 }
 
 export interface BaseImage<T = ReactUnity.UGUI.ImageComponent> extends View<T> {
-}
-
-export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> {
   source?: AssetReferenceOrHttp;
 }
 
-export interface RawImage extends Image<ReactUnity.UGUI.RawImageComponent> { }
-export interface Video extends Image<ReactUnity.UGUI.VideoComponent> {
-  source?: AssetReference;
-}
-export interface SvgImage extends Image<ReactUnity.UGUI.SvgComponent> {
+export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> {
   preserveAspect?: boolean;
 }
+
+export interface RawImage extends BaseImage<ReactUnity.UGUI.RawImageComponent> { }
+export interface Video extends BaseImage<ReactUnity.UGUI.VideoComponent> {
+  source?: AssetReference;
+}
+export interface SvgImage<T = ReactUnity.UGUI.SvgImageComponent> extends Image<T> { }
 
 export interface Render<T = ReactUnity.UGUI.RenderComponent> extends BaseImage<T> {
   width: number;
@@ -92,3 +91,5 @@ export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {
   onMount?: (camera: UnityEngine.Transform, sender: T) => void;
   onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
 }
+
+export interface Svg<T = ReactUnity.UGUI.SvgComponent> extends SvgImage<T>, ContentSrcProps { }

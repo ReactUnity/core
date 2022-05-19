@@ -1,4 +1,4 @@
-import { BaseCmpProps } from '../base';
+import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEditor, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference } from '../properties/values';
@@ -86,3 +86,5 @@ export interface IMGUI extends View<Cmp.IMGUIComponent> {
   onGUI?: ActionCallback<Cmp.IMGUIComponent>;
   cullingEnabled?: boolean;
 }
+
+export interface Svg extends View<Cmp.SvgComponent>, ContentSrcProps { }
