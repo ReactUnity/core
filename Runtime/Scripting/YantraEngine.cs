@@ -18,6 +18,7 @@ namespace ReactUnity.Scripting
         public string Key { get; } = "yantra";
         public JSContext Engine { get; }
         public object NativeEngine => Engine;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
         public YantraEngine(ReactContext context, bool debug, bool awaitDebugger)
         {

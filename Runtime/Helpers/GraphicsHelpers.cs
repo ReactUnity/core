@@ -38,6 +38,7 @@ namespace ReactUnity.Helpers
 
         public static Sprite GenerateVectorSprite(string rawSvg)
         {
+            if (string.IsNullOrWhiteSpace(rawSvg)) return null;
 #if !REACT_VECTOR_GRAPHICS
             return null;
 #else

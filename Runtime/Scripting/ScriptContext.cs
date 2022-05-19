@@ -67,7 +67,8 @@ namespace ReactUnity.Scripting
                     engine.SetGlobal("HostContainer", Context.Host);
                     engine.SetGlobal("Globals", Context.Globals);
                     engine.SetGlobal("localStorage", Context.LocalStorage);
-                    CreateLocation(engine);
+
+                    CreateLocation(engine, Context);
                     CreateConsole(engine);
                     CreateScheduler(engine, Context);
                     CreatePolyfills(engine);
@@ -122,6 +123,8 @@ namespace ReactUnity.Scripting
 
         void CreateConsole(IJavaScriptEngine engine)
         {
+            if (engine.Capabilities.HasFlag(EngineCapabilities.Console)) return;
+
             var console = new ConsoleProxy(Context);
 
             engine.SetGlobal("__console", console);
@@ -144,15 +147,21 @@ namespace ReactUnity.Scripting
             engine.DeleteGlobal("__console");
         }
 
-        void CreatePolyfills(IJavaScriptEngine engine)
+        static void CreatePolyfills(IJavaScriptEngine engine)
         {
             // Load essential polyfills
-            engine.Execute(ResourcesHelper.GetPolyfill("base64"));
-            engine.Execute(ResourcesHelper.GetPolyfill("fetch"));
+
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.Base64))
+                engine.Execute(ResourcesHelper.GetPolyfill("base64"));
+
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.Fetch))
+                engine.Execute(ResourcesHelper.GetPolyfill("fetch"));
         }
 
-        void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
+        static void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
         {
+            if (engine.Capabilities.HasFlag(EngineCapabilities.Scheduler)) return;
+
             var scheduler = context.Dispatcher.Scheduler;
 
             engine.SetGlobal("setTimeout", new Func<object, double, int>(scheduler.setTimeout));
@@ -168,15 +177,24 @@ namespace ReactUnity.Scripting
             engine.SetGlobal("clearImmediate", new Action<int?>(scheduler.clearImmediate));
         }
 
-        void CreateLocation(IJavaScriptEngine engine)
+        static void CreateLocation(IJavaScriptEngine engine, ReactContext context)
         {
-            engine.SetGlobal("location", Context.Location);
-            engine.SetGlobal("document", new DocumentProxy(Context, Context.Location.origin));
+            engine.SetGlobal("location", context.Location);
+            engine.SetGlobal("document", new DocumentProxy(context, context.Location.origin));
 
-            engine.Execute(@"global.WebSocket = function(url) { return new WebSocket.original(Context, url); }");
-            engine.Execute(@"global.XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
-            engine.SetProperty(engine.GetGlobal("WebSocket"), "original", typeof(WebSocketProxy));
-            engine.SetProperty(engine.GetGlobal("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
+            {
+                engine.Execute(@"global.WebSocket = function(url) {
+                    return new WebSocket.original(Context, url); }");
+                engine.SetProperty(engine.GetGlobal("WebSocket"), "original", typeof(WebSocketProxy));
+            }
+
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
+            {
+                engine.Execute(@"global.XMLHttpRequest = function() {
+                    return new XMLHttpRequest.original(Context, location.origin); }");
+                engine.SetProperty(engine.GetGlobal("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
+            }
         }
 
         public void Dispose()

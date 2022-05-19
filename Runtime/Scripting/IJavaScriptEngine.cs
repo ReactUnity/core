@@ -78,6 +78,7 @@ namespace ReactUnity.Scripting
     {
         string Key { get; }
         object NativeEngine { get; }
+        EngineCapabilities Capabilities { get; }
 
         void Execute(string code, string fileName = null);
         Exception TryExecute(string code, string fileName = null);

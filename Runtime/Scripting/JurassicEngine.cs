@@ -17,6 +17,7 @@ namespace ReactUnity.Scripting
         public string Key { get; } = "yantra";
         public ScriptEngine Engine { get; }
         public object NativeEngine => Engine;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
         public JurassicEngine(ReactContext context, bool debug, bool awaitDebugger)
         {

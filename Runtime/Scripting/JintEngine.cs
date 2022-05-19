@@ -21,6 +21,7 @@ namespace ReactUnity.Scripting
         public string Key { get; } = "jint";
         public Engine Engine { get; }
         public object NativeEngine => Engine;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {

@@ -18,6 +18,7 @@ namespace ReactUnity.Scripting
     {
         public string Key { get; } = "QuickJS";
         public object NativeEngine => Runtime;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
         private ReactContext Context;
         private Action<IJavaScriptEngine> OnInitialize;

@@ -39,6 +39,7 @@ namespace ReactUnity.UIToolkit
 
         public static (VectorImage, Rect) GenerateVectorImage(string rawSvg)
         {
+            if (string.IsNullOrWhiteSpace(rawSvg)) return (null, default(Rect));
             var (geometry, rect) = GraphicsHelpers.BuildSvgGeometry(rawSvg);
             var sourceRect = rect;
             var vectorImage = GenerateVectorImageAsset(geometry);
