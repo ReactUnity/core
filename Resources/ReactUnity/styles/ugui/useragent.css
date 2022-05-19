@@ -26,7 +26,12 @@ icon {
   flex-basis: auto;
 }
 
-image {
+image,
+rawimage,
+svgimage,
+svg,
+render,
+video {
   overflow: hidden;
   justify-content: center;
   align-items: center;

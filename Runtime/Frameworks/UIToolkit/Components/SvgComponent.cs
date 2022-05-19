@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
@@ -83,12 +83,7 @@ namespace ReactUnity.UIToolkit
 
         protected void RefreshValue()
         {
-#if !REACT_VECTOR_GRAPHICS
-            Debug.LogError(
-                "UnityEngine.VectorGraphics is not enabled, enable this package through REACT_VECTOR_GRAPHICS to allow for svg");
-#else
             Element.RawSvg = InnerContent;
-#endif
         }
 
 

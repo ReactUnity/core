@@ -17,12 +17,24 @@ namespace ReactUnity.UGUI
             Replaced.SetParent(this);
         }
 
+        private object source;
+        public object Source
+        {
+            get => source;
+            set
+            {
+                if (source == value) return;
+                source = value;
+                SetSource(value);
+            }
+        }
+
         public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
                 case "source":
-                    SetSource(value);
+                    Source = value;
                     return;
                 default:
                     base.SetProperty(propertyName, value);
