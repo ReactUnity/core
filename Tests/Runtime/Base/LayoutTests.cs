@@ -12,7 +12,7 @@ namespace ReactUnity.Tests
         [UGUITest()]
         public IEnumerator WidthAndHeightPropertiesCanBeSetToUndefined()
         {
-            var view = Q("view") as UGUI.UGUIComponent;
+            var view = Q("view");
 
             var rt = view.RectTransform;
             var initialWidth = rt.rect.width;
@@ -97,19 +97,19 @@ namespace ReactUnity.Tests
         [UGUITest()]
         public IEnumerator RootRelativeUnitsShouldBeRecalculatedWhenSizeChanges()
         {
-            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);
+            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300);
 
-            var view = Q("view") as UGUI.UGUIComponent;
+            var view = Q("view");
             view.Style["width"] = "10vw";
 
             yield return null;
             Assert.AreEqual(30, view.ClientWidth);
 
-            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 200);
+            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 200);
             yield return null;
             Assert.AreEqual(20, view.ClientWidth);
 
-            RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);
+            RectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300);
             yield return null;
             Assert.AreEqual(30, view.ClientWidth);
         }
@@ -120,6 +120,7 @@ namespace ReactUnity.Tests
         ", AutoRender = false)]
         public IEnumerator InitialLayoutIsCorrectOnEnable()
         {
+            IgnoreForEngine(JavascriptEngineType.QuickJS);
             // Simulate OnEnable
             yield return new WaitForFixedUpdate();
             Component.Render();

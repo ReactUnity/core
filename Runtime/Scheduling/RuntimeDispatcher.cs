@@ -182,7 +182,7 @@ namespace ReactUnity.Scheduling
 
         void LateUpdate()
         {
-            StartAndStopDeferreds(false);
+            StartAndStopDeferreds(true);
 
             var count = CallOnLateUpdate.Count;
             for (int i = 0; i < count; i++)

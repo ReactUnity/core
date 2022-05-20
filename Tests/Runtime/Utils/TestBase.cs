@@ -107,5 +107,11 @@ namespace ReactUnity.Tests
         {
             yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
         }
+
+        public void IgnoreForEngine(JavascriptEngineType engine)
+        {
+            if (EngineType == engine)
+                Assert.Ignore("This test does not work for " + JavascriptEngineType.QuickJS);
+        }
     }
 }
