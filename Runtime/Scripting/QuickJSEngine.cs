@@ -20,7 +20,6 @@ namespace ReactUnity.Scripting
         public object NativeEngine => Runtime;
         public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
-        private ReactContext Context;
         private Action<IJavaScriptEngine> OnInitialize;
 
         public ScriptRuntime Runtime { get; private set; }
@@ -35,13 +34,8 @@ namespace ReactUnity.Scripting
         public QuickJSEngine(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
             OnInitialize = onInitialize;
-            Context = context;
 
-#if JSB_UNITYLESS
-            var logger = new DefaultScriptLogger();
-#else
             var logger = new QuickJSLogger();
-#endif
 
             Runtime = ScriptEngine.CreateRuntime(context.IsEditorContext);
             Runtime.AddModuleResolvers();
@@ -50,36 +44,28 @@ namespace ReactUnity.Scripting
             {
                 withDebugServer = debug,
                 waitingForDebugger = awaitDebugger,
-                fileSystem = GetFileSystem(context, logger),
+                fileSystem = new DefaultFileSystem(logger),
                 asyncManager = new DefaultAsyncManager(),
                 logger = logger,
-                binder = DefaultBinder.GetBinder(true),
+                binder = InvokeReflectBinding,
                 debugServerPort = 9222,
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
             });
         }
 
-        private IFileSystem GetFileSystem(ReactContext ctx, IScriptLogger logger)
+        public static void InvokeReflectBinding(ScriptRuntime runtime)
         {
-#if JSB_UNITYLESS
-            return new DefaultFileSystem(logger);
-#else
-            if (ctx.Source.IsDevServer) return new DefaultFileSystem(logger);
-
-            switch (ctx.Source.Type)
+            var bm = new BindingManager(new Prefs { }, new BindingManager.Args
             {
-                case ScriptSourceType.TextAsset:
-                case ScriptSourceType.File:
-                    return new DefaultFileSystem(logger);
-                case ScriptSourceType.Url:
-                case ScriptSourceType.Resource:
-                case ScriptSourceType.Raw:
-                default:
-                    return new ResourcesFileSystem(logger);
-            }
-#endif
+                bindingCallback = new ReflectBindingCallback(runtime),
+                bindingLogger = new DefaultBindingLogger(LogLevel.Error),
+            });
+            bm.Collect();
+            bm.Generate(TypeBindingFlags.None);
+            bm.Report();
         }
+
 
         private void Runtime_OnInitialized(ScriptRuntime obj)
         {
@@ -179,7 +165,6 @@ namespace ReactUnity.Scripting
             MainContext = null;
             TypeRegister = null;
             ObjectCache = null;
-            Context = null;
 
             Runtime.Shutdown();
             Runtime = null;
@@ -218,7 +203,6 @@ namespace ReactUnity.Scripting
         }
     }
 
-#if !JSB_UNITYLESS
     internal class QuickJSLogger : IScriptLogger
     {
         public void WriteException(Exception exception)
@@ -260,6 +244,5 @@ namespace ReactUnity.Scripting
             }
         }
     }
-#endif
 }
 #endif
