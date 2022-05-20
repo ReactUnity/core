@@ -1,6 +1,7 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using UnityEngine;
 
 namespace ReactUnity.Tests
 {
@@ -111,6 +112,23 @@ namespace ReactUnity.Tests
             RectTransform.SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, 300);
             yield return null;
             Assert.AreEqual(30, view.ClientWidth);
+        }
+
+
+        [UGUITest(Style = @"
+            #test { width: 124px; }
+        ", AutoRender = false)]
+        public IEnumerator InitialLayoutIsCorrectOnEnable()
+        {
+            // Simulate OnEnable
+            yield return new WaitForFixedUpdate();
+            Component.Render();
+            yield return new WaitForEndOfFrame();
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+            Assert.AreEqual(124, rt.rect.width);
+
+            yield return null;
         }
     }
 }

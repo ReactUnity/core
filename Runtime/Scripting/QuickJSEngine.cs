@@ -30,6 +30,8 @@ namespace ReactUnity.Scripting
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
 
+        private bool Initialized = false;
+
         public QuickJSEngine(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
             OnInitialize = onInitialize;
@@ -85,14 +87,12 @@ namespace ReactUnity.Scripting
             TypeRegister = MainContext.CreateTypeRegister();
             TypeDB = MainContext.GetTypeDB();
             ObjectCache = MainContext.GetObjectCache();
-            Context?.Dispatcher.OnEveryUpdate(() => {
-                Runtime.Update((int) (Time.deltaTime * 1000));
-            });
 
             var global = MainContext.GetGlobalObject();
             Global = new ScriptValue(MainContext, global);
             Runtime.FreeValue(Global);
 
+            Initialized = true;
             OnInitialize?.Invoke(this);
         }
 
@@ -200,6 +200,11 @@ namespace ReactUnity.Scripting
         public bool IsScriptObject(object obj)
         {
             return obj is ScriptValue jv;
+        }
+
+        public void Update()
+        {
+            if (Initialized) Runtime.Update((int) (Time.deltaTime * 1000));
         }
     }
 

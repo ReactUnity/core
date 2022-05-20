@@ -118,6 +118,8 @@ namespace ReactUnity.Scripting
         {
             return obj is ObjectInstance;
         }
+
+        public void Update() { }
     }
 
     public class JurassicEngineFactory : IJavaScriptEngineFactory

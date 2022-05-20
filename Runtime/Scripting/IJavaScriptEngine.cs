@@ -95,6 +95,8 @@ namespace ReactUnity.Scripting
         object CreateTypeReference(Type type);
         object CreateNamespaceReference(string ns, params Assembly[] assemblies);
         IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj);
+
+        void Update();
     }
 
     public interface IJavaScriptEngineFactory

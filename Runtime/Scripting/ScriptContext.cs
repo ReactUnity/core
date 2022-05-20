@@ -17,6 +17,8 @@ namespace ReactUnity.Scripting
             get
             {
                 if (!Initialized) Initialize(null);
+
+                if (engine == null) throw new InvalidOperationException("Engine is not initialized yet");
                 return engine;
             }
         }
@@ -33,9 +35,11 @@ namespace ReactUnity.Scripting
             EngineType = engineType;
             Debug = debug;
             AwaitDebugger = awaitDebugger;
+
+            context.Dispatcher.OnEveryUpdate(Update);
         }
 
-        public void RunScript(string script, Action beforeStart = null, Action afterStart = null)
+        public void RunMainScript(string script, Action beforeStart = null, Action afterStart = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
@@ -57,7 +61,11 @@ namespace ReactUnity.Scripting
 
         public void Initialize(Action callback)
         {
-            if (Initialized) return;
+            if (Initialized)
+            {
+                callback?.Invoke();
+                return;
+            }
 
             Initialized = true;
             if (engine == null)
@@ -203,5 +211,7 @@ namespace ReactUnity.Scripting
             engine = null;
             Interop = null;
         }
+
+        internal void Update() => Engine?.Update();
     }
 }

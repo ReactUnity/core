@@ -122,7 +122,7 @@ namespace ReactUnity.Scheduling
             return Started.Count + ToStart.Count;
         }
 
-        void StartAndStopDeferreds()
+        void StartAndStopDeferreds(bool isUpdate)
         {
             foreach (var cr in ToStop)
             {
@@ -149,7 +149,7 @@ namespace ReactUnity.Scheduling
                     newStarts.Add(StartCoroutine(cr));
 
                     // We are already in Update so move Coroutine forward if it is waiting for next Update
-                    if (cr.Current == null) cr.MoveNext();
+                    if (isUpdate && cr.Current == null) cr.MoveNext();
                 }
                 else newStarts.Add(null);
             }
@@ -177,12 +177,12 @@ namespace ReactUnity.Scheduling
 
         void Update()
         {
-            StartAndStopDeferreds();
+            StartAndStopDeferreds(true);
         }
 
         void LateUpdate()
         {
-            StartAndStopDeferreds();
+            StartAndStopDeferreds(false);
 
             var count = CallOnLateUpdate.Count;
             for (int i = 0; i < count; i++)

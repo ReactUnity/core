@@ -216,6 +216,8 @@ namespace ReactUnity.Scripting
         {
             return obj is ScriptObject;
         }
+
+        public void Update() { }
     }
 
     public class ClearScriptEngineFactory : IJavaScriptEngineFactory

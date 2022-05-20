@@ -118,6 +118,8 @@ namespace ReactUnity.Scripting
         {
             return obj is JSObject;
         }
+
+        public void Update() { }
     }
 
     public class YantraEngineFactory : IJavaScriptEngineFactory

@@ -186,10 +186,11 @@ namespace ReactUnity
                 }
                 else
                 {
-                    Script.RunScript(code, options.BeforeStart, options.AfterStart);
+                    Script.RunMainScript(code, options.BeforeStart, options.AfterStart);
                 }
 
                 Style.ResolveStyle();
+                if (CalculatesLayout) Host.Layout?.CalculateLayout();
             }, Dispatcher, true);
 
             if (scriptJob != null) Disposables.Add(scriptJob.Dispose);

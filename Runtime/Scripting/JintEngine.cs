@@ -23,6 +23,8 @@ namespace ReactUnity.Scripting
         public object NativeEngine => Engine;
         public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
 
+        private Action<JsValue> ContinuePromises;
+
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
             Engine = new Engine(opt => {
@@ -50,8 +52,7 @@ namespace ReactUnity.Scripting
             });
 
             var deferred = Engine.RegisterPromise();
-            var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<JsValue>;
-            context?.Dispatcher.OnEveryUpdate(() => resolve(JsValue.Undefined));
+            ContinuePromises = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<JsValue>;
         }
 
         public object Evaluate(string code, string fileName = null)
@@ -167,6 +168,11 @@ namespace ReactUnity.Scripting
         public bool IsScriptObject(object obj)
         {
             return obj is ObjectInstance || obj is System.Dynamic.ExpandoObject;
+        }
+
+        public void Update()
+        {
+            ContinuePromises(JsValue.Undefined);
         }
     }
 
