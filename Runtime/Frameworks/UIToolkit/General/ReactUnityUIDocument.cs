@@ -26,7 +26,7 @@ namespace ReactUnity.UIToolkit
                 Source = script,
                 Timer = timer ?? UnityTimer.Instance,
                 MediaProvider = MediaProvider,
-                OnRestart = Render,
+                OnRestart = () => Render(),
                 OnAudioPlayback = PlayAudio,
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,

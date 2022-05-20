@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
@@ -64,7 +65,7 @@ namespace ReactUnity
 
         protected abstract void ClearRoot();
 
-        private void LoadAndRun(ScriptSource script)
+        private void LoadAndRun(ScriptSource script, Action afterStart = null)
         {
             MediaProvider = CreateMediaProvider();
             Context = CreateContext(script);
@@ -73,17 +74,30 @@ namespace ReactUnity
             {
                 if (sheet) Context.InsertStyle(sheet.text);
             }
-            Context.Start();
+            Context.Start(afterStart);
         }
 
         [ContextMenu("Restart")]
-        public void Render()
+        public WaitForRenderToComplete Render()
         {
             Clean();
-            LoadAndRun(Source);
+
+            var res = new WaitForRenderToComplete();
+            LoadAndRun(Source, () => res.rendered = true);
+
+            if (res.rendered) return null;
+
+            return res;
         }
 
         protected abstract ReactContext CreateContext(ScriptSource script);
         protected abstract IMediaProvider CreateMediaProvider();
+
+
+        public class WaitForRenderToComplete : CustomYieldInstruction
+        {
+            public bool rendered { get; internal set; } = false;
+            public override bool keepWaiting => !rendered;
+        }
     }
 }

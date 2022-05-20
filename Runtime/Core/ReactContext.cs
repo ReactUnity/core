@@ -165,7 +165,7 @@ namespace ReactUnity
         public abstract IReactComponent CreatePseudoComponent(string tag);
         public abstract void PlayAudio(AudioClip clip);
 
-        public void Start()
+        public void Start(Action afterStart = null)
         {
             SetRef(0, Host);
             var renderCount = 0;
@@ -182,11 +182,15 @@ namespace ReactUnity
                 {
                     options.BeforeStart?.Invoke();
                     Html.InsertHtml(code, Host, true);
+                    afterStart?.Invoke();
                     options.AfterStart?.Invoke();
                 }
                 else
                 {
-                    Script.RunMainScript(code, options.BeforeStart, options.AfterStart);
+                    Script.RunMainScript(code, options.BeforeStart, () => {
+                        afterStart?.Invoke();
+                        options.AfterStart();
+                    });
                 }
 
                 Style.ResolveStyle();

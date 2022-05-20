@@ -7,7 +7,18 @@ namespace ReactUnity.Scheduling
     [DefaultExecutionOrder(-1000)]
     public class CurrentLifecycle : MonoBehaviour
     {
-        public string State { get; set; } = "";
+        public string state = "";
+        public string State
+        {
+            get => state;
+            set
+            {
+                state = value;
+#if REACT_LOG_CURRENT_LIFECYCLE
+                Debug.Log("Current Lifecycle: " + state);
+#endif
+            }
+        }
         public int StateID { get; set; } = 0;
 
         /*

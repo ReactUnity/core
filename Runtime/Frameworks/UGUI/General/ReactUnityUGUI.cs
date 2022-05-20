@@ -29,7 +29,7 @@ namespace ReactUnity.UGUI
                 Source = script,
                 Timer = timer ?? UnityTimer.Instance,
                 MediaProvider = MediaProvider,
-                OnRestart = Render,
+                OnRestart = () => Render(),
                 IconSets = IconSets,
                 DefaultIconSet = DefaultIconSet,
                 CursorSet = CursorSet,

@@ -120,7 +120,6 @@ namespace ReactUnity.Tests
         ", AutoRender = false)]
         public IEnumerator InitialLayoutIsCorrectOnEnable()
         {
-            IgnoreForEngine(JavascriptEngineType.QuickJS);
             // Simulate OnEnable
             yield return new WaitForFixedUpdate();
             Component.Render();

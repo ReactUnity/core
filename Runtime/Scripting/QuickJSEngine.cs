@@ -29,7 +29,7 @@ namespace ReactUnity.Scripting
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
 
-        private bool Initialized = false;
+        private bool Initialized;
 
         public QuickJSEngine(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
@@ -37,7 +37,7 @@ namespace ReactUnity.Scripting
 
             var logger = new QuickJSLogger();
 
-            Runtime = ScriptEngine.CreateRuntime(context.IsEditorContext);
+            Runtime = ScriptEngine.CreateRuntime(context?.IsEditorContext ?? false);
             Runtime.AddModuleResolvers();
             Runtime.OnInitialized += Runtime_OnInitialized;
             Runtime.Initialize(new ScriptRuntimeArgs
@@ -84,12 +84,14 @@ namespace ReactUnity.Scripting
 
         public object Evaluate(string code, string fileName = null)
         {
-            return MainContext.EvalSource<object>(code, fileName ?? "__unnamed");
+            var res = MainContext.EvalSource<object>(code, fileName ?? "__unnamed");
+            Runtime.ExecutePendingJob();
+            return res;
         }
 
         public void Execute(string code, string fileName = null)
         {
-            MainContext.EvalSource(code, fileName ?? "__unnamed");
+            Evaluate(code, fileName);
         }
 
         public Exception TryExecute(string code, string fileName = null)
