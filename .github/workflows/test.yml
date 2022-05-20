@@ -124,6 +124,8 @@ jobs:
           path: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
           reporter: java-junit
           working-directory: core
+          list-suites: 'all'
+          list-tests: 'failed'
 
 
       - name: Upload Test Result Artifacts

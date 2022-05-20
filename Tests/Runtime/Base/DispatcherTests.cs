@@ -13,6 +13,7 @@ namespace ReactUnity.Tests
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_RunsOnEachUpdate()
         {
+            yield return new WaitForFixedUpdate();
             var dispatcher = RuntimeDispatcher.Create(null);
 
             var value = 0;
@@ -37,6 +38,7 @@ namespace ReactUnity.Tests
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_StopDoesNotFailUnderLoad()
         {
+            yield return new WaitForFixedUpdate();
             var dispatcher = RuntimeDispatcher.Create(null);
 
             var value = 0;
