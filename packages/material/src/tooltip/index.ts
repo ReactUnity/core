@@ -1,10 +1,10 @@
 import { PositioningLiteral, ReactUnity, Renderer, YogaValue2Aux } from '@reactunity/renderer';
 import clsx from 'clsx';
-import React, { ReactNode, useCallback, useRef } from 'react';
+import React, { ReactNode, useCallback, useLayoutEffect, useRef } from 'react';
 import { useAutoRef } from '../util/hooks/use-auto-ref';
 import style from './index.module.scss';
 
-export type TooltipTrigger = 'hover' | 'press' | 'click';
+export type TooltipTrigger = 'hover' | 'press' | 'click' | 'focus' | 'active' | 'auto';
 export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom' | 'center';
 type Position = PositioningLiteral | [number | string, number | string] | string;
 type NormalizedPosition = readonly [string, string];
@@ -161,7 +161,7 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
   return anchor;
 }
 
-export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: TooltipTrigger = 'hover') {
+export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: TooltipTrigger = 'auto') {
   const tooltipRef = useRef<ReactUnity.UGUI.UGUIComponent>();
   const callbacksRef = useRef<(() => void)[]>([]);
   const elementsRef = useRef<ReactUnity.UGUI.UGUIComponent[]>([]);
@@ -169,6 +169,7 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
   const clearAll = useCallback(() => {
     const callbacks = callbacksRef.current;
     for (const cb of callbacks) cb?.();
+    callbacks.length = 0;
   }, []);
 
 
@@ -187,6 +188,10 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
     show(sender, calculatedProps, trigger === 'click');
   }, [show, trigger, propsRef]);
 
+  useLayoutEffect(() => {
+    return clearAll;
+  }, [trigger, clearAll]);
+
   const register = useCallback((el: ReactUnity.UGUI.UGUIComponent) => {
     if (!el) return;
     elementsRef.current.push(el);
@@ -196,11 +201,21 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
     if (trigger === 'click') {
       callbacks.push(UnityBridge.addEventListener(el, 'onPointerClick', showWithCurrent));
     }
-    else if (trigger === 'press') {
+    else if (trigger === 'press' || trigger === 'active') {
+      // TODO: improve active to handle key presses
       callbacks.push(UnityBridge.addEventListener(el, 'onPointerDown', showWithCurrent));
       callbacks.push(UnityBridge.addEventListener(el, 'onPointerUp', hide));
     }
-    else { // hover
+    else if (trigger === 'focus') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onSelect', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onDeselect', hide));
+    }
+    else if (trigger === 'hover') {
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
+      callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
+    }
+    else { // auto
+      // TODO: improve auto to handle mobile/gamepad differently (active and focus)
       callbacks.push(UnityBridge.addEventListener(el, 'onPointerEnter', showWithCurrent));
       callbacks.push(UnityBridge.addEventListener(el, 'onPointerExit', hide));
     }
@@ -219,7 +234,7 @@ function propsProxy(data: ReactUnity.Helpers.WatchableObjectRecord) {
   return new Proxy(data, {
     get(tg, prop) {
       if (typeof prop === 'symbol') return data[prop as any];
-      return data['tooltip-' + prop];
+      return data.GetValueOrDefault('tooltip-' + prop);
     },
   }) as unknown as TooltipProps;
 }

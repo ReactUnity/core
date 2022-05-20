@@ -99,8 +99,10 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
 
     this.elements.push({ el, listener });
 
-    if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);
-    else el.selected = this.value === el.value;
+    if (typeof el.value !== 'undefined') {
+      if (this.allowMultiple && Array.isArray(this.value)) el.selected = this.value.includes(el.value);
+      else el.selected = this.value === el.value;
+    }
 
     if (this.allowMultiple) {
       if (this.all && !el.selected) {
@@ -133,7 +135,9 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
   }
 
   setAll(checked?: boolean) {
-    if (!this.allowMultiple && checked) throw new Error('Multiple values cannot be selected for radio groups');
+    if (!this.allowMultiple && checked)
+      throw new Error('Multiple values cannot be selected for this selection state');
+
     checked = !!checked;
 
     this.all = checked;
@@ -157,7 +161,8 @@ export class SelectionState<T = any, ElementType extends SelectionElement = Sele
     for (let index = 0; index < this.elements.length; index++) {
       const { el } = this.elements[index];
 
-      const isSelected = this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value;
+      const isSelected = typeof el.value !== 'undefined' &&
+        (this.allowMultiple && Array.isArray(this.value) ? this.value.includes(el.value) : this.value === el.value);
       if (isSelected) res.push(el);
     }
 

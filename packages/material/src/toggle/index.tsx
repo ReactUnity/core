@@ -35,7 +35,9 @@ const _Toggle = React.forwardRef<ToggleEl, Props>(
 
     const selectionRef = useMemo<SelectionElement>(() => ({
       get selected() { return toggleRef.current?.Checked; },
-      set selected(val: boolean) { if (toggleRef.current) toggleRef.current.Checked = val; },
+      set selected(val: boolean) {
+        if (toggleRef.current) toggleRef.current.Checked = val;
+      },
       get value() { return toggleRef.current?.Value; },
       addOnChange: (callback) => {
         return UnityBridge.addEventListener(toggleRef.current, 'onChange', () => {
@@ -79,14 +81,14 @@ type ToggleGroupProps<T = any> = { children?: ReactNode } &
     selectAllLabel?: ReactNode;
   } | {
     multiple?: false;
-    onChange?: (val: T, all: boolean, any: boolean) => void;
+    onChange?: (val: T) => void;
     initialValue?: T;
     showSelectAll?: never;
     selectAllLabel?: never;
   });
 
 const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
-  function _ToggleGroup({ children, multiple, showSelectAll, selectAllLabel, onChange, initialValue }, ref) {
+  function _ToggleGroupOrig({ children, multiple, showSelectAll, selectAllLabel, onChange, initialValue }, ref) {
     const init = useRef(initialValue);
     const selectAllRef = useRef<ToggleEl>();
     const onChangeRef = useAutoRef(onChange);
@@ -128,6 +130,6 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
     </ToggleGroupContext.Provider>;
   });
 
-export const ToggleGroup = React.memo(_ToggleGroup);
+export const ToggleGroup: (<T = any>(props: ToggleGroupProps<T>) => JSX.Element) = React.memo(_ToggleGroup);
 
 
