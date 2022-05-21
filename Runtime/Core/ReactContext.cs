@@ -189,7 +189,7 @@ namespace ReactUnity
                 {
                     Script.RunMainScript(code, options.BeforeStart, () => {
                         afterStart?.Invoke();
-                        options.AfterStart();
+                        options.AfterStart?.Invoke();
                     });
                 }
 

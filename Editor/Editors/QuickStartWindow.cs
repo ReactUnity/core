@@ -99,6 +99,7 @@ namespace ReactUnity.Editor
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.CreateNoWindow = true;
             startInfo.FileName = target;
             startInfo.Arguments = args;
             if (hasOutput)
