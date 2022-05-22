@@ -226,7 +226,7 @@ namespace ReactUnity.Scheduling
 
         private IEnumerator AnimationFrameCoroutine(Action callback, int handle)
         {
-            yield return new WaitForEndOfFrame();
+            yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
             if (!ToStop.Contains(handle)) callback();
         }
 

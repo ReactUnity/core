@@ -123,7 +123,7 @@ namespace ReactUnity.Tests
             // Simulate OnEnable
             yield return new WaitForFixedUpdate();
             Component.Render();
-            yield return new WaitForEndOfFrame();
+            yield return WaitForEndOfFrame();
             var cmp = Q("#test") as UGUI.ContainerComponent;
             var rt = cmp.RectTransform;
             Assert.AreEqual(124, rt.rect.width);
