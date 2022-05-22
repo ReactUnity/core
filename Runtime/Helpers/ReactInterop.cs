@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
-    public class ReactInterop : Dictionary<string, object>
+    public class ReactInterop : Dictionary<string, object>, IDisposable
 #if REACT_CLEARSCRIPT
         , Microsoft.ClearScript.IPropertyBag
 #endif
@@ -67,6 +67,11 @@ namespace ReactUnity.Helpers
             var nsRef = Engine.CreateNamespaceReference(nsName, assemblies);
             this[name] = nsRef;
             return nsRef;
+        }
+
+        public void Dispose()
+        {
+            Clear();
         }
     }
 }

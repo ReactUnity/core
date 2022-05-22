@@ -25,7 +25,6 @@ namespace ReactUnity.Scripting
         public ScriptRuntime Runtime { get; private set; }
         public QuickJS.ScriptContext MainContext { get; private set; }
         public ScriptValue Global { get; private set; }
-        public TypeRegister TypeRegister { get; private set; }
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
 
@@ -70,13 +69,13 @@ namespace ReactUnity.Scripting
         private void Runtime_OnInitialized(ScriptRuntime obj)
         {
             MainContext = Runtime.GetMainContext();
-            TypeRegister = MainContext.CreateTypeRegister();
             TypeDB = MainContext.GetTypeDB();
             ObjectCache = MainContext.GetObjectCache();
 
             var global = MainContext.GetGlobalObject();
-            Global = new ScriptValue(MainContext, global);
-            Runtime.FreeValue(Global);
+            Values.js_get_classvalue(MainContext, global, out ScriptValue globalSv);
+            Global = globalSv;
+            JSApi.JSB_FreeValueRT(Runtime, global);
 
             Initialized = true;
             OnInitialize?.Invoke(this);
@@ -110,6 +109,12 @@ namespace ReactUnity.Scripting
 
         public void SetProperty<T>(object obj, string key, T value)
         {
+            if (obj is ScriptFunction sf)
+            {
+                Values.js_get_classvalue(sf.ctx, sf, out ScriptValue svf);
+                obj = svf;
+            }
+
             if (obj is ScriptValue sv)
             {
                 sv.SetProperty(key, CreateNativeValue(value));
@@ -140,7 +145,10 @@ namespace ReactUnity.Scripting
         public object CreateTypeReference(Type type)
         {
             TypeDB.GetDynamicType(type, false);
-            return TypeDB.GetConstructorOf(type);
+            var ctor = TypeDB.GetConstructorOf(type);
+            Values.js_get_classvalue(MainContext, ctor, out ScriptValue res);
+            JSApi.JS_FreeValue(MainContext, ctor);
+            return res;
         }
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
@@ -152,7 +160,7 @@ namespace ReactUnity.Scripting
         public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
             var obj = JSApi.JS_NewObject(MainContext);
-            var sv = new ScriptValue(MainContext, obj);
+            if (!Values.js_get_classvalue(MainContext, obj, out ScriptValue sv)) return null;
 
             foreach (var item in props) SetProperty(sv, item.Key, item.Value);
 
@@ -162,10 +170,10 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
+            Global?.Dispose();
             Global = null;
             TypeDB = null;
             MainContext = null;
-            TypeRegister = null;
             ObjectCache = null;
 
             Runtime.Shutdown();

@@ -202,8 +202,15 @@ namespace ReactUnity
 
         public void Dispose()
         {
+            CommandsCallback = null;
+            FireEventByRefCallback = null;
+            GetObjectCallback = null;
+            GetEventAsObjectCallback = null;
+
             IsDisposed = true;
             Host.Destroy(false);
+            Host = null;
+            Refs.Clear();
             foreach (var dr in DetachedRoots) dr.Destroy(false);
             DetachedRoots.Clear();
             Dispatcher?.Dispose();

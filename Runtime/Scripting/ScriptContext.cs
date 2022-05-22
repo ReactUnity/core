@@ -115,15 +115,15 @@ namespace ReactUnity.Scripting
 
         void CreateBaseEngine(bool debug, bool awaitDebugger, Action onInitialize)
         {
-            EngineFactory.Create(Context, debug, awaitDebugger, (_engine) => {
-                engine = _engine;
-                _engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this;");
-                _engine.SetGlobal("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
-                _engine.SetGlobal("UnityBridge", ReactUnityBridge.Instance);
+            EngineFactory.Create(Context, debug, awaitDebugger, (engine) => {
+                this.engine = engine;
+                engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this;");
+                engine.SetGlobal("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
+                engine.SetGlobal("UnityBridge", ReactUnityBridge.Instance);
 
-                Interop = new ReactInterop(_engine);
+                Interop = new ReactInterop(engine);
                 Interop.InitializeDefault();
-                _engine.SetGlobal("Interop", Interop);
+                engine.SetGlobal("Interop", Interop);
 
                 onInitialize?.Invoke();
             });
@@ -137,7 +137,7 @@ namespace ReactUnity.Scripting
 
             engine.SetGlobal("__console", console);
             engine.Execute(@"(function() {
-                var _console = __console;
+                var _console = global.__console;
                 global.console = {
                     log:       function log       (arg) { _console.log(arg)           },
                     info:      function info      (arg) { _console.info(arg)          },
@@ -193,23 +193,24 @@ namespace ReactUnity.Scripting
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
             {
                 engine.Execute(@"global.WebSocket = function(url) {
-                    return new WebSocket.original(Context, url); }");
+                    return new global.WebSocket.original(Context, url); }");
                 engine.SetProperty(engine.GetGlobal("WebSocket"), "original", typeof(WebSocketProxy));
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
             {
                 engine.Execute(@"global.XMLHttpRequest = function() {
-                    return new XMLHttpRequest.original(Context, location.origin); }");
+                    return new global.XMLHttpRequest.original(Context, location.origin); }");
                 engine.SetProperty(engine.GetGlobal("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
             }
         }
 
         public void Dispose()
         {
+            Interop?.Dispose();
+            Interop = null;
             engine?.Dispose();
             engine = null;
-            Interop = null;
         }
 
         internal void Update() => Engine?.Update();
