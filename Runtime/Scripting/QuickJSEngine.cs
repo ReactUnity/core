@@ -30,6 +30,11 @@ namespace ReactUnity.Scripting
 
         private bool Initialized;
 
+        static QuickJSEngine()
+        {
+            QuickJSConverters.RegisterAllConverters();
+        }
+
         public QuickJSEngine(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
             OnInitialize = onInitialize;
