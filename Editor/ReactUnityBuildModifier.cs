@@ -2,18 +2,46 @@
 #define REACT_CLEARSCRIPT
 #endif
 
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
+#define REACT_QUICKJS
+#endif
+
+using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
 namespace ReactUnity.Editor
 {
-    public class ReactUnityBuildPreprocessor : IPostprocessBuildWithReport
+    [InitializeOnLoad]
+    public class ReactUnityBuildModifier : IPostprocessBuildWithReport
     {
         public int callbackOrder => 0;
 
 #if REACT_CLEARSCRIPT && REACT_CLEARSCRIPT_ICU
         private static string ClearScriptDllPathTemplate = "Packages/com.reactunity.core/Plugins/ClearScript/ClearScriptV8.{0}";
 #endif
+
+        static ReactUnityBuildModifier()
+        {
+#if REACT_QUICKJS
+            BuildPlayerWindow.RegisterGetBuildPlayerOptionsHandler(ModifyBuildOptions);
+#endif
+        }
+
+        private static BuildPlayerOptions ModifyBuildOptions(BuildPlayerOptions options)
+        {
+            options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(options);
+
+#if REACT_QUICKJS
+            var newDefines = new System.Collections.Generic.List<string>(options.extraScriptingDefines ?? new string[0]);
+            newDefines.Add("JSB_UNITYLESS");
+            newDefines.Add("JSB_RUNTIME_REFLECT_BINDING");
+
+            options.extraScriptingDefines = newDefines.ToArray();
+#endif
+
+            return options;
+        }
 
         public void OnPostprocessBuild(BuildReport report)
         {
