@@ -19,7 +19,11 @@ namespace ReactUnity.UGUI.Behaviours
             if (canvas == null)
                 return;
 
+#if UNITY_2020_3_OR_NEWER
             var canvasGraphics = GraphicRegistry.GetRaycastableGraphicsForCanvas(canvas);
+#else
+            var canvasGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);
+#endif
             if (canvasGraphics == null || canvasGraphics.Count == 0)
                 return;
 
@@ -49,7 +53,7 @@ namespace ReactUnity.UGUI.Behaviours
                 // will be all zeros so when the returned index is 0 we will default to the event data to be safe.
                 eventPosition = eventData.position;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && UNITY_2021_2_OR_NEWER
                 if (Display.activeEditorGameViewTarget != displayIndex)
                     return;
                 eventPosition.z = Display.activeEditorGameViewTarget;
@@ -225,7 +229,13 @@ namespace ReactUnity.UGUI.Behaviours
                 if (!graphic.raycastTarget || graphic.canvasRenderer.cull || graphic.depth == -1)
                     continue;
 
-                if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition, eventCamera, graphic.raycastPadding))
+#if UNITY_2020_3_OR_NEWER
+                var padding = graphic.raycastPadding;
+#else
+                var padding = Vector4.zero;
+#endif
+
+                if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition, eventCamera, padding))
                     continue;
 
                 if (eventCamera != null && eventCamera.WorldToScreenPoint(graphic.rectTransform.position).z > eventCamera.farClipPlane)
