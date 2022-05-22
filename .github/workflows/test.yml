@@ -118,10 +118,42 @@ jobs:
         shell: pwsh
 
       - uses: EnricoMi/publish-unit-test-result-action@v1
-        continue-on-error: true
+        id: test-results
         with:
           check_name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           files: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
+
+      - name: Set badge color
+        shell: bash
+        run: |
+          case ${{ fromJSON( steps.test-results.outputs.json ).conclusion }} in
+            success)
+              echo "BADGE_COLOR=31c653" >> $GITHUB_ENV
+              ;;
+            failure)
+              echo "BADGE_COLOR=800000" >> $GITHUB_ENV
+              ;;
+            neutral)
+              echo "BADGE_COLOR=696969" >> $GITHUB_ENV
+              ;;
+          esac
+
+      - name: Create badge
+        uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
+        with:
+          label: Tests
+          status: '${{ fromJSON( steps.test-results.outputs.json ).stats.tests }} tests, ${{ fromJSON( steps.test-results.outputs.json ).stats.runs }} runs: ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}'
+          color: ${{ env.BADGE_COLOR }}
+          path: ReactUnityTestBadge.svg
+
+      - name: Upload badge to Gist
+        # Upload only for master branch
+        if: github.ref == 'refs/heads/master'
+        uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gistURL: https://gist.githubusercontent.com/KurtGokhan/f744e86dd53cd0159d4f1d56ae9aae19
+          file: ReactUnityTestBadge.svg
 
 
       - name: Upload Test Result Artifacts

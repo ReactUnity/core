@@ -49,6 +49,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.IsNull(View);
             Globals.Set("show", true);
             yield return null;
+            yield return null;
 
             var view = View;
             Assert.NotNull(View);
