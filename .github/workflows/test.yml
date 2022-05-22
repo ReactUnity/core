@@ -147,8 +147,7 @@ jobs:
           path: ReactUnityTestBadge.svg
 
       - name: Upload badge to Gist
-        # Upload only for master branch
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main' && always() && matrix.main
         uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
         with:
           token: ${{ secrets.GIST_TOKEN }}
