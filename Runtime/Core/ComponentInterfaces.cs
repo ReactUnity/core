@@ -38,7 +38,7 @@ namespace ReactUnity
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);
         void Update();
-        void Accept(ReactComponentVisitor visitor);
+        void Accept(ReactComponentVisitor visitor, bool skipSelf = false);
         void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false);
         void SetProperty(string property, object value);
         void SetData(string property, object value);

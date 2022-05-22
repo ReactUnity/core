@@ -5,6 +5,10 @@ namespace ReactUnity.Helpers.Visitors
     internal class UpdateVisitor : ReactComponentVisitor
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override void Visit(IReactComponent component) => component.Update();
+        public override bool Visit(IReactComponent component)
+        {
+            component.Update();
+            return true;
+        }
     }
 }

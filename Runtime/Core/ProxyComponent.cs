@@ -116,7 +116,7 @@ namespace ReactUnity
 
         public void Update() => Proxy.Update();
 
-        public void Accept(ReactComponentVisitor visitor) => Proxy.Accept(visitor);
+        public void Accept(ReactComponentVisitor visitor, bool skipSelf = false) => Proxy.Accept(visitor, skipSelf);
 
         public virtual void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false) =>
             Proxy.SetParent(parent, relativeTo, insertAfter);

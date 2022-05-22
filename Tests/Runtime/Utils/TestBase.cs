@@ -39,6 +39,7 @@ namespace ReactUnity.Tests
         protected Keyboard Keyboard => keyboard ?? (keyboard = InputSystem.AddDevice<Keyboard>());
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
+        protected Canvas CanvasCmp => Canvas.GetComponent<Canvas>();
         protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
         protected RectTransform RectTransform => Component.transform as RectTransform;
         protected ReactContext Context => Component?.Context;

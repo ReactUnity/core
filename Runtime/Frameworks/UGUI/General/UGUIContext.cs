@@ -66,6 +66,17 @@ namespace ReactUnity.UGUI
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
+        public Canvas RootCanvas
+        {
+            get
+            {
+                var h = (Host as HostComponent);
+                var hostCanvas = h.Canvas;
+                if (hostCanvas) return hostCanvas.rootCanvas;
+                return h.GameObject.GetComponentInParent<Canvas>()?.rootCanvas;
+            }
+        }
+
         public UGUIContext(Options options) : base(options)
         {
             Host = new HostComponent(options.HostElement, this);

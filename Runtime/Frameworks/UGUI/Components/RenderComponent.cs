@@ -31,19 +31,12 @@ namespace ReactUnity.UGUI
             }
         }
 
-        Camera FindCamera(object value)
-        {
-            if (value is Camera c) return c;
-            if (value is GameObject g) return g.GetComponent<Camera>();
-            return null;
-        }
-
         public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
                 case "camera":
-                    SetCamera(FindCamera(value));
+                    SetCamera(UnityHelpers.ConvertToComponent<Camera>(value));
                     break;
                 case "width":
                     RenderTexture.width = Convert.ToInt32(value);

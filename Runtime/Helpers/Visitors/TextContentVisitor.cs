@@ -4,7 +4,7 @@ namespace ReactUnity.Helpers.Visitors
     {
         string Text = "";
 
-        public override void Visit(IReactComponent component)
+        public override bool Visit(IReactComponent component)
         {
             switch (component)
             {
@@ -14,6 +14,7 @@ namespace ReactUnity.Helpers.Visitors
                 default:
                     break;
             }
+            return true;
         }
 
         public string Get(IReactComponent component)

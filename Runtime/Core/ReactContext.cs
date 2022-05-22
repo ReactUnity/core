@@ -205,6 +205,7 @@ namespace ReactUnity
             IsDisposed = true;
             Host.Destroy(false);
             foreach (var dr in DetachedRoots) dr.Destroy(false);
+            DetachedRoots.Clear();
             Dispatcher?.Dispose();
             Globals?.Dispose();
             Script?.Dispose();

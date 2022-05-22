@@ -184,6 +184,7 @@ namespace ReactUnity
 
         public void Destroy(bool recursive = true)
         {
+            if (Destroyed) return;
             Entering = false;
             Leaving = false;
             Destroyed = true;
@@ -503,9 +504,12 @@ namespace ReactUnity
             return tree.GetMatchingChildren(this);
         }
 
-        public void Accept(ReactComponentVisitor visitor)
+        public void Accept(ReactComponentVisitor visitor, bool skipSelf = false)
         {
-            visitor.Visit(this);
+            if (!skipSelf)
+            {
+                if (!visitor.Visit(this)) return;
+            }
 
             if (IsContainer)
             {

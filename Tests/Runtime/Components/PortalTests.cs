@@ -2,6 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
+using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -15,7 +16,7 @@ namespace ReactUnity.Tests
                     <view>
                         <text>View content</text>
                     </view>
-                    <portal target={globals.portalTarget}>
+                    <portal target={globals.portalTarget} eventCamera={globals.portalCamera}>
                         <text>Portal Inner Text</text>
                     </portal>
                 </>;
@@ -114,6 +115,151 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.IsFalse(portal.Component);
             Assert.AreEqual(0, target1.transform.childCount);
+        }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PortalMustHaveCorrectEventCamera()
+        {
+            yield return null;
+            Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+
+            var camera = new GameObject("Test Camera", typeof(Camera)).GetComponent<Camera>();
+            Globals["portalCamera"] = camera;
+            Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+
+
+            var cube = new GameObject("Test Cube");
+            Globals["portalTarget"] = cube;
+            Assert.AreEqual(camera, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+
+
+            Globals["portalTarget"] = null;
+            Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+
+
+            Globals["portalTarget"] = cube;
+            Globals["portalCamera"] = null;
+            Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+
+
+            Globals["portalTarget"] = null;
+            Globals["portalCamera"] = null;
+            Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
+            Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <view id='t1' eventViewport={globals.t1}>
+                        <view id='t1t1' eventViewport={globals.t1t1}>
+                            t1t1
+
+                            <view id='t1t1t1' eventViewport={globals.t1t1t1}>
+                                t1t1t1
+                            </view>
+                        </view>
+
+                        <view id='t1t2' eventViewport={globals.t1t2}>
+                            t1t2
+                        </view>
+                    </view>
+
+                    <view id='t2' eventViewport={globals.t2}>
+                        t2
+                    </view>
+                </>;
+            }
+")]
+        public IEnumerator EventViewportMustBePropagatedCorrectly()
+        {
+            yield return null;
+
+            var rect1 = new GameObject("Rect 1", typeof(RectTransform)).GetComponent<RectTransform>();
+            var rect2 = new GameObject("Rect 2", typeof(RectTransform)).GetComponent<RectTransform>();
+            var rect3 = new GameObject("Rect 3", typeof(RectTransform)).GetComponent<RectTransform>();
+            var rect4 = new GameObject("Rect 4", typeof(RectTransform)).GetComponent<RectTransform>();
+
+            var t1 = Q("#t1");
+            var t1t1 = Q("#t1t1");
+            var t1t1t1 = Q("#t1t1t1");
+            var t1t2 = Q("#t1t2");
+            var t2 = Q("#t2");
+
+            Globals["t1"] = rect1;
+            Assert.AreEqual(rect1, t1.ResolvedEventViewport);
+            Assert.AreEqual(rect1, t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect1, t1t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect1, t1t2.ResolvedEventViewport);
+            Assert.AreEqual(null, t2.ResolvedEventViewport);
+
+            Assert.AreEqual(rect1, t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(null, t1t2.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(null, t2.GetComponent<CustomViewportRaycaster>());
+
+
+            Globals["t1t2"] = rect2;
+            Assert.AreEqual(rect1, t1.ResolvedEventViewport);
+            Assert.AreEqual(rect1, t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect1, t1t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect2, t1t2.ResolvedEventViewport);
+            Assert.AreEqual(null, t2.ResolvedEventViewport);
+
+            Assert.AreEqual(rect1, t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(rect2, t1t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+
+
+            Globals["t1t1"] = rect3;
+            Assert.AreEqual(rect1, t1.ResolvedEventViewport);
+            Assert.AreEqual(rect3, t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect3, t1t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect2, t1t2.ResolvedEventViewport);
+            Assert.AreEqual(null, t2.ResolvedEventViewport);
+
+            Assert.AreEqual(rect1, t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(rect3, t1t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(rect2, t1t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+
+
+            Globals["t1"] = null;
+            Assert.AreEqual(null, t1.ResolvedEventViewport);
+            Assert.AreEqual(rect3, t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect3, t1t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect2, t1t2.ResolvedEventViewport);
+            Assert.AreEqual(null, t2.ResolvedEventViewport);
+
+            Assert.AreEqual(null, t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(rect3, t1t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(rect2, t1t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+
+
+            Globals["t1"] = rect4;
+            Globals["t1t1"] = null;
+            Assert.AreEqual(rect4, t1.ResolvedEventViewport);
+            Assert.AreEqual(rect4, t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect4, t1t1t1.ResolvedEventViewport);
+            Assert.AreEqual(rect2, t1t2.ResolvedEventViewport);
+
+            Assert.AreEqual(rect4, t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(rect4, t1t1.GetComponent<CustomViewportRaycaster>()?.EventViewport);
+            Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
+            Assert.AreEqual(rect2, t1t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
         }
     }
 }

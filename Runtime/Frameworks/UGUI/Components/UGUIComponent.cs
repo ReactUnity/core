@@ -50,6 +50,40 @@ namespace ReactUnity.UGUI
         public override float ClientWidth => RectTransform.rect.width;
         public override float ClientHeight => RectTransform.rect.height;
 
+        private RectTransform eventViewport;
+        public RectTransform EventViewport
+        {
+            get => eventViewport;
+            set
+            {
+                if (eventViewport == value) return;
+                eventViewport = value;
+                RefreshEventViewport();
+                PropagateEventViewportChange(this, ResolvedEventViewport, true);
+            }
+        }
+
+        internal RectTransform inheritedEventViewport;
+        internal RectTransform InheritedEventViewport
+        {
+            get => inheritedEventViewport;
+            set
+            {
+                if (inheritedEventViewport == value) return;
+                inheritedEventViewport = value;
+                if (!eventViewport) RefreshEventViewport();
+            }
+        }
+
+        public RectTransform ResolvedEventViewport
+        {
+            get
+            {
+                if (eventViewport) return eventViewport;
+                return inheritedEventViewport;
+            }
+        }
+
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             GameObject = context.CreateNativeObject(DefaultName);
@@ -111,6 +145,9 @@ namespace ReactUnity.UGUI
                     GameObject.SetActive(active);
                     if (active) SetZIndex();
                     return;
+                case "eventViewport":
+                    EventViewport = UnityHelpers.ConvertToComponent<RectTransform>(value);
+                    break;
                 default:
                     base.SetProperty(propertyName, value);
                     return;
@@ -357,14 +394,29 @@ namespace ReactUnity.UGUI
             var z = ComputedStyle.zIndex;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
-            if (!canvas)
-            {
-                canvas = AddComponent<Canvas>();
-                AddComponent<GraphicRaycaster>();
-            }
+            if (!canvas) canvas = InitializeCanvas();
 
             canvas.overrideSorting = z != 0;
             canvas.sortingOrder = z;
+        }
+
+        protected Canvas InitializeCanvas()
+        {
+            if (Destroyed) return null;
+
+            var canvas = AddComponent<Canvas>();
+
+            var resolvedEventViewport = ResolvedEventViewport;
+            if (resolvedEventViewport)
+            {
+                var crc = GetOrAddComponent<CustomViewportRaycaster>();
+                crc.EventViewport = resolvedEventViewport;
+            }
+            else
+            {
+                GetOrAddComponent<GraphicRaycaster>();
+            }
+            return canvas;
         }
 
         #endregion
@@ -431,6 +483,10 @@ namespace ReactUnity.UGUI
             if (child is UGUIComponent u)
             {
                 u.RectTransform.SetParent(Container, false);
+
+                var vp = ResolvedEventViewport;
+                if(vp) PropagateEventViewportChange(u, vp, false);
+
                 if (index >= 0)
                 {
                     if (Children.Count > index)
@@ -540,6 +596,40 @@ namespace ReactUnity.UGUI
             }
 
             return hasUpdate;
+        }
+
+        protected void PropagateEventViewportChange(UGUIComponent cmp, RectTransform vp, bool skipSelf)
+        {
+            cmp.Accept(new EventViewportVisitor(vp), skipSelf);
+        }
+
+        protected void RefreshEventViewport()
+        {
+            var resolved = ResolvedEventViewport;
+
+            var canvas = Canvas;
+
+            if (canvas)
+            {
+                var crc = GetComponent<CustomViewportRaycaster>();
+
+                if (!crc)
+                {
+                    if (!resolved) return;
+
+                    var rc = GetComponent<GraphicRaycaster>();
+                    GameObject.DestroyImmediate(rc);
+                    crc = AddComponent<CustomViewportRaycaster>();
+                }
+
+                crc.EventViewport = resolved;
+            }
+            else
+            {
+                if (!eventViewport) return;
+
+                InitializeCanvas();
+            }
         }
         #endregion
     }

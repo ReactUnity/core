@@ -130,3 +130,8 @@ label {
   flex-direction: row;
   align-items: center;
 }
+
+portal {
+  transform-origin: top left;
+  position: absolute;
+}

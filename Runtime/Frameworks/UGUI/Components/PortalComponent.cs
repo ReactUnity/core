@@ -8,17 +8,22 @@ namespace ReactUnity.UGUI
         RectTransform DefaultTarget => (Context.Host as UGUIComponent)?.Container;
         public IReactComponent ShadowParent { get; private set; }
 
-        RectTransform currentTarget;
+        Transform currentTarget;
+        Camera currentCamera;
+
+        public bool Detached { get; private set; }
 
         public PortalComponent(UGUIContext context, string tag = "portal") : base(context, tag)
         {
             ShadowParent = Context.Host;
             currentTarget = DefaultTarget;
+            InitializeCanvas();
+            SetCamera(null);
         }
 
-        void SetTarget(RectTransform target, IReactComponent shadowParent)
+        void SetTarget(Transform target, IReactComponent shadowParent)
         {
-            RectTransform newTarget;
+            Transform newTarget;
 
             if (target)
             {
@@ -56,9 +61,18 @@ namespace ReactUnity.UGUI
 
         void Attach()
         {
-            if (Parent == null) return;
+            if (Parent == null || Destroyed)
+            {
+                if (Container && Container.parent)
+                {
+                    Container.SetParent(null);
+                    Layout.Parent?.RemoveChild(Layout);
+                    Context.DetachedRoots.Remove(this);
+                }
+                return;
+            }
 
-            if (Container.parent != currentTarget)
+            if (Container && Container.parent != currentTarget)
             {
                 Container.SetParent(currentTarget ? currentTarget : null, false);
 
@@ -66,31 +80,48 @@ namespace ReactUnity.UGUI
                 if (ShadowParent != null)
                 {
                     ShadowParent.Layout.AddChild(Layout);
+                    Detached = false;
                     Context.DetachedRoots.Remove(this);
+                    SetCamera(currentCamera);
                 }
                 else
                 {
+                    Detached = true;
                     Context.DetachedRoots.Add(this);
+                    SetCamera(currentCamera);
                 }
+
+                if (currentTarget)
+                    UnityHelpers.SetLayersRecursively(GameObject.transform, currentTarget.gameObject.layer);
 
                 ResolveStyle(true);
             }
         }
 
-        (RectTransform, IReactComponent) FindTarget(object value)
+        (Transform, IReactComponent) FindTarget(object value)
         {
             if (value == null) return (null, null);
-            if (value is Transform t && t) return (t.transform as RectTransform, t.GetComponentInParent<ReactElement>()?.Component);
-            if (value is GameObject g && g) return (g.transform as RectTransform, g.GetComponentInParent<ReactElement>()?.Component);
-            if (value is Component c && c) return (c.transform as RectTransform, c.GetComponentInParent<ReactElement>()?.Component);
+            if (value is Transform t && t) return (t, t.GetComponentInParent<ReactElement>()?.Component);
+            if (value is GameObject g && g) return (g.transform, g.GetComponentInParent<ReactElement>()?.Component);
+            if (value is Component c && c) return (c.transform, c.GetComponentInParent<ReactElement>()?.Component);
             if (value is UGUIComponent u) return (u.Container, u);
             return (null, null);
+        }
+
+        void SetCamera(Camera camera)
+        {
+            currentCamera = camera;
+
+            if (Detached) Canvas.worldCamera = currentCamera ?? Context.RootCanvas?.worldCamera;
         }
 
         public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
+                case "eventCamera":
+                    SetCamera(UnityHelpers.ConvertToComponent<Camera>(value));
+                    break;
                 case "target":
                     var tg = FindTarget(value);
                     SetTarget(tg.Item1, tg.Item2?.Context == Context ? tg.Item2 : null);
