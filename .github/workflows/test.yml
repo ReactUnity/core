@@ -117,15 +117,11 @@ jobs:
           }
         shell: pwsh
 
-      - uses: dorny/test-reporter@v1
+      - uses: EnricoMi/publish-unit-test-result-action@v1
         continue-on-error: true
         with:
-          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
-          path: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
-          reporter: java-junit
-          working-directory: core
-          list-suites: 'all'
-          list-tests: 'failed'
+          check_name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
+          files: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
 
 
       - name: Upload Test Result Artifacts

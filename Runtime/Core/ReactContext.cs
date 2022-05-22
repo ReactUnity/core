@@ -208,7 +208,7 @@ namespace ReactUnity
             GetEventAsObjectCallback = null;
 
             IsDisposed = true;
-            Host.Destroy(false);
+            Host?.Destroy(false);
             Host = null;
             Refs.Clear();
             foreach (var dr in DetachedRoots) dr.Destroy(false);

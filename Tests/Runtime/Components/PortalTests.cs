@@ -121,6 +121,8 @@ namespace ReactUnity.Tests
         public IEnumerator PortalMustHaveCorrectEventCamera()
         {
             yield return null;
+            Assert.IsNotNull(Portal.Canvas);
+
             Assert.AreEqual(Camera.main, Portal.Canvas.worldCamera);
             Assert.AreEqual(Camera.main, CanvasCmp.worldCamera);
 
