@@ -142,10 +142,11 @@ jobs:
         uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
         with:
           label: Tests
-          status: '${{ fromJSON( steps.test-results.outputs.json ).stats.tests }} tests: ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}'
+          status: '${{ fromJSON( steps.test-results.outputs.json ).stats.tests_succ }}/${{ fromJSON( steps.test-results.outputs.json ).stats.tests }}'
           color: ${{ env.BADGE_COLOR }}
           path: ReactUnityTestBadge.svg
           style: flat
+          scale: 1.4
 
       - name: Upload badge to Gist
         if: github.ref == 'refs/heads/main' && always() && matrix.main
