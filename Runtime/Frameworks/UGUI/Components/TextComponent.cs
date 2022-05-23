@@ -105,7 +105,13 @@ namespace ReactUnity.UGUI
             var fontSize = style.fontSize;
             Text.fontSize = fontSize;
             Text.color = style.color;
+
+#if REACT_TMP_X2
+            Text.textWrappingMode = style.textWrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
+#else
             Text.enableWordWrapping = style.textWrap;
+#endif
+
             Text.alignment = style.textAlign;
             Text.overflowMode = style.textOverflow;
             Text.outlineWidth = style.textStrokeWidth;

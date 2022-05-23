@@ -35,6 +35,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.BuildCompression).Assembly,
                     typeof(UnityEngine.Analytics.Analytics).Assembly,
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
+                    typeof(UnityEngine.UIElements.LineJoin).Assembly,
                     typeof(UnityEngine.AI.NavMesh).Assembly,
                     typeof(UnityEngine.TestTools.LogAssert).Assembly,
 #if UNITY_2021_2_OR_NEWER

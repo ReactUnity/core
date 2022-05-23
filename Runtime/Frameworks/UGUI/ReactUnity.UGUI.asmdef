@@ -37,6 +37,16 @@
             "name": "com.unity.vectorgraphics",
             "expression": "",
             "define": "REACT_VECTOR_GRAPHICS"
+        },
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "3.2.0-pre.0",
+            "define": "REACT_TMP_X2"
+        },
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "[2.2.0-preview.0,3.0.0)",
+            "define": "REACT_TMP_X2"
         }
     ],
     "noEngineReferences": false

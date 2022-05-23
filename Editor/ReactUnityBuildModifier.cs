@@ -23,7 +23,7 @@ namespace ReactUnity.Editor
 
         static ReactUnityBuildModifier()
         {
-#if REACT_QUICKJS
+#if REACT_QUICKJS && !(JSB_UNITYLESS && JSB_RUNTIME_REFLECT_BINDING)
             BuildPlayerWindow.RegisterGetBuildPlayerOptionsHandler(ModifyBuildOptions);
 #endif
         }
@@ -31,8 +31,15 @@ namespace ReactUnity.Editor
         private static BuildPlayerOptions ModifyBuildOptions(BuildPlayerOptions options)
         {
             options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(options);
-
 #if REACT_QUICKJS
+
+#if !UNITY_2020_1_OR_NEWER
+
+#if !(JSB_UNITYLESS && JSB_RUNTIME_REFLECT_BINDING)
+            throw new BuildFailedException("JSB_UNITYLESS and JSB_RUNTIME_REFLECT_BINDING must be defined for QuickJS builds");
+#endif
+
+#else
             var newDefines = new System.Collections.Generic.List<string>(options.extraScriptingDefines ?? new string[0]);
             newDefines.Add("JSB_UNITYLESS");
             newDefines.Add("JSB_RUNTIME_REFLECT_BINDING");
@@ -40,7 +47,11 @@ namespace ReactUnity.Editor
             options.extraScriptingDefines = newDefines.ToArray();
 #endif
 
+#endif
+
+#pragma warning disable CS0162 // Unreachable code detected
             return options;
+#pragma warning restore CS0162 // Unreachable code detected
         }
 
         public void OnPostprocessBuild(BuildReport report)
