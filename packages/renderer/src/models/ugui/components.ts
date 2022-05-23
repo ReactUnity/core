@@ -8,6 +8,7 @@ import { ActionCallback, Events } from './events';
 export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T>, BaseCmpProps {
   active?: boolean;
   style?: Style | string;
+  eventViewport?: UnityEngine.RectTransform | UnityEngine.GameObject | ReactUnity.UGUI.UGUIComponent;
 }
 
 export interface Text extends View<ReactUnity.UGUI.TextComponent> {
@@ -88,6 +89,7 @@ export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> extends View<T> {
 
 export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {
   target?: UnityEngine.GameObject | UnityEngine.Component | UnityEngine.Transform | ReactUnity.UGUI.UGUIComponent;
+  eventCamera?: UnityEngine.Camera | UnityEngine.GameObject;
   onMount?: (camera: UnityEngine.Transform, sender: T) => void;
   onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
 }

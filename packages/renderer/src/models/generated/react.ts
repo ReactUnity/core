@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 19/05/2022 03:17:41
+// Generated 23/05/2022 15:31:21
 //
 /* eslint-disable */
 
@@ -64,7 +64,7 @@ export declare namespace ReactUnity {
     Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
     QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
     AddBefore(): void;
     RemoveBefore(): void;
     AddAfter(): void;
@@ -111,7 +111,7 @@ export declare namespace ReactUnity {
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
-    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
     SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
     SetProperty(property: string, value: any): void;
     SetData(property: string, value: any): void;
@@ -214,7 +214,7 @@ export declare namespace ReactUnity {
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
-    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
     SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
     SetProperty(property: string, value: any): void;
     SetData(property: string, value: any): void;
@@ -280,7 +280,7 @@ export declare namespace ReactUnity {
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
-    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
     SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
     SetProperty(property: string, value: any): void;
     SetData(property: string, value: any): void;
@@ -341,7 +341,7 @@ export declare namespace ReactUnity {
     CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
     CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
     PlayAudio(clip: UnityEngine.AudioClip): void;
-    Start(): void;
+    Start(afterStart?: (() => void)): void;
     Dispose(): void;
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
     GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -387,7 +387,7 @@ export declare namespace ReactUnity {
     AutoRender: boolean;
     BeforeStart: UnityEngine.Events.UnityEvent;
     AfterStart: UnityEngine.Events.UnityEvent;
-    Render(): void;
+    Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
     IsInvoking(): boolean;
     CancelInvoke(): void;
     Invoke(methodName: string, time: number): void;
@@ -536,7 +536,7 @@ export declare namespace ReactUnity {
     ApplyLayoutStyles(): void;
     ResolveStyle(recursive?: boolean): void;
     Update(): void;
-    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+    Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
     SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
     SetData(property: string, value: any): void;
     SetEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): void;
@@ -598,6 +598,18 @@ export declare namespace ReactUnity {
     AwaitDebugger: boolean;
     BeforeStart: (() => void);
     AfterStart: (() => void);
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class ReactUnityBase_WaitForRenderToComplete {
+    constructor();
+    rendered: boolean;
+    keepWaiting: boolean;
+    Current: any; // System.Object
+    MoveNext(): boolean;
+    Reset(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -847,7 +859,7 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class ReactUnityBuildPreprocessor {
+    export class ReactUnityBuildModifier {
       constructor();
       callbackOrder: number;
       OnPostprocessBuild(report: any): void;
@@ -926,7 +938,7 @@ export declare namespace ReactUnity {
         RemoveStyle(sheet: ReactUnity.Styling.StyleSheet): void;
         ResolvePath(path: string): string;
         CreateStaticScript(path: string): ReactUnity.ScriptSource;
-        Start(): void;
+        Start(afterStart?: (() => void)): void;
         Dispose(): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
         GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -1205,7 +1217,7 @@ export declare namespace ReactUnity {
         Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
         AddBefore(): void;
         RemoveBefore(): void;
         AddAfter(): void;
@@ -1433,7 +1445,7 @@ export declare namespace ReactUnity {
         Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
         AddBefore(): void;
         RemoveBefore(): void;
         AddAfter(): void;
@@ -1515,7 +1527,7 @@ export declare namespace ReactUnity {
         Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
         AddBefore(): void;
         RemoveBefore(): void;
         AddAfter(): void;
@@ -1597,7 +1609,7 @@ export declare namespace ReactUnity {
         Closest(query: string): ReactUnity.IReactComponent;
         QuerySelector(query: string): ReactUnity.IReactComponent;
         QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+        Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
         AddBefore(): void;
         RemoveBefore(): void;
         AddAfter(): void;
@@ -1839,6 +1851,7 @@ export declare namespace ReactUnity {
       GetNamespace(nsName: string, assembly: System.Reflection.Assembly): any;
       AddType(name: string, type: System.Type): any;
       AddNamespace(name: string, nsName: string, ...assemblies: System.Reflection.Assembly[]): any;
+      Dispose(): void;
       Add(key: string, value: any): void;
       Clear(): void;
       ContainsKey(key: string): boolean;
@@ -2104,7 +2117,7 @@ export declare namespace ReactUnity {
     }
     export namespace Visitors {
       export class ReactComponentVisitor {
-        Visit(component: ReactUnity.IReactComponent): void;
+        Visit(component: ReactUnity.IReactComponent): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -2156,7 +2169,7 @@ export declare namespace ReactUnity {
       ApplyLayoutStyles(): void;
       ResolveStyle(recursive?: boolean): void;
       Update(): void;
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetData(property: string, value: any): void;
       SetEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): void;
@@ -2238,6 +2251,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      state: string;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -2462,6 +2476,7 @@ export declare namespace ReactUnity {
     export class ClearScriptEngine {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
       Key: string;
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
       Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
       NativeEngine: any; // System.Object
       Evaluate(code: string, fileName?: string): any;
@@ -2475,6 +2490,7 @@ export declare namespace ReactUnity {
       Dispose(): void;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       IsScriptObject(obj: any): boolean;
+      Update(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2489,6 +2505,15 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export enum EngineCapabilities {
+      None = 0,
+      Fetch = 1,
+      XHR = 2,
+      WebSocket = 4,
+      Console = 8,
+      Scheduler = 16,
+      Base64 = 32,
+    }
     export enum JavascriptEngineType {
       Auto = 0,
       Jint = 1,
@@ -2500,6 +2525,7 @@ export declare namespace ReactUnity {
     export interface IJavaScriptEngine {
       Key: string;
       NativeEngine: any; // System.Object
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
       Evaluate(code: string, fileName?: string): any;
@@ -2510,6 +2536,7 @@ export declare namespace ReactUnity {
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      Update(): void;
     }
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
@@ -2520,6 +2547,7 @@ export declare namespace ReactUnity {
       Key: string;
       Engine: any; // Jint.Engine
       NativeEngine: any; // System.Object
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
@@ -2531,6 +2559,7 @@ export declare namespace ReactUnity {
       Dispose(): void;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       IsScriptObject(obj: any): boolean;
+      Update(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2553,16 +2582,26 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class QuickJSConverters {
+      static RegisterAllConverters(): void;
+      static js_push_array(ctx: any, o: System.Array): any;
+      static js_push_delegate(ctx: any, o: System.Delegate): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class QuickJSEngine {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void));
       Key: string;
       NativeEngine: any; // System.Object
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
       Runtime: any; // QuickJS.ScriptRuntime
       MainContext: any; // QuickJS.ScriptContext
       Global: any; // QuickJS.ScriptValue
-      TypeRegister: any; // QuickJS.Binding.TypeRegister
       TypeDB: any; // QuickJS.Utils.ITypeDB
       ObjectCache: any; // QuickJS.Utils.ObjectCache
+      static InvokeReflectBinding(runtime: any): void;
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
       TryExecute(code: string, fileName?: string): System.Exception;
@@ -2575,6 +2614,7 @@ export declare namespace ReactUnity {
       Dispose(): void;
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       IsScriptObject(obj: any): boolean;
+      Update(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2634,7 +2674,7 @@ export declare namespace ReactUnity {
       ApplyLayoutStyles(): void;
       ResolveStyle(recursive?: boolean): void;
       Update(): void;
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       SetData(property: string, value: any): void;
       SetEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): void;
       AddEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -2669,7 +2709,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.ReactContext;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       EngineFactory: ReactUnity.Scripting.IJavaScriptEngineFactory;
-      RunScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
+      RunMainScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
       Initialize(callback: (() => void)): void;
       ExecuteScript(code: string, fileName?: string): void;
       EvaluateScript(code: string, fileName?: string): any;
@@ -3655,7 +3695,7 @@ export declare namespace ReactUnity {
       ApplyLayoutStyles(): void;
       ResolveStyle(recursive?: boolean): void;
       Update(): void;
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       SetData(property: string, value: any): void;
       SetEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): void;
       AddEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): (() => void);
@@ -5248,6 +5288,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5305,7 +5347,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5334,6 +5376,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5389,7 +5433,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5419,6 +5463,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5474,7 +5520,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5505,6 +5551,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5560,7 +5608,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5589,6 +5637,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5645,7 +5695,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5672,6 +5722,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5727,7 +5779,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5757,6 +5809,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5812,7 +5866,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5845,6 +5899,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5903,7 +5959,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -5933,6 +5989,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -5988,7 +6046,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6024,6 +6082,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6082,7 +6142,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6109,6 +6169,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6165,7 +6227,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6196,6 +6258,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6251,7 +6315,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6267,6 +6331,7 @@ export declare namespace ReactUnity {
     export class PortalComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       ShadowParent: ReactUnity.IReactComponent;
+      Detached: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -6279,6 +6344,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6334,7 +6401,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6362,6 +6429,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6417,7 +6486,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6447,6 +6516,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6502,7 +6573,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6533,6 +6604,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6588,7 +6661,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6618,6 +6691,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6673,7 +6748,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6700,6 +6775,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6755,7 +6832,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6790,6 +6867,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6843,7 +6922,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6875,6 +6954,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -6930,7 +7011,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -6960,6 +7041,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -7015,7 +7098,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -7050,6 +7133,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -7106,7 +7191,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -7138,6 +7223,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -7195,7 +7282,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -7221,6 +7308,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -7276,7 +7365,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -7307,6 +7396,8 @@ export declare namespace ReactUnity {
       Name: string;
       ClientWidth: number;
       ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -7363,7 +7454,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -7426,7 +7517,7 @@ export declare namespace ReactUnity {
       AutoRender: boolean;
       BeforeStart: UnityEngine.Events.UnityEvent;
       AfterStart: UnityEngine.Events.UnityEvent;
-      Render(): void;
+      Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -7492,6 +7583,7 @@ export declare namespace ReactUnity {
       DefaultIconSet: ReactUnity.Styling.IconSet;
       IconSets: Record<string, ReactUnity.Styling.IconSet>;
       CursorSet: ReactUnity.Styling.CursorSet;
+      RootCanvas: UnityEngine.Canvas;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
       DetachedRoots: System.Collections.Generic.HashSet<ReactUnity.IReactComponent>;
@@ -7525,7 +7617,7 @@ export declare namespace ReactUnity {
       RemoveStyle(sheet: ReactUnity.Styling.StyleSheet): void;
       ResolvePath(path: string): string;
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
-      Start(): void;
+      Start(afterStart?: (() => void)): void;
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -7559,6 +7651,87 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export namespace Behaviours {
+      export class CustomViewportRaycaster {
+        constructor();
+        eventCamera: UnityEngine.Camera;
+        sortOrderPriority: number;
+        renderOrderPriority: number;
+        ignoreReversedGraphics: boolean;
+        blockingObjects: UnityEngine.UI.GraphicRaycaster_BlockingObjects;
+        blockingMask: UnityEngine.LayerMask;
+        priority: number;
+        rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        EventViewport: UnityEngine.RectTransform;
+        Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
+        ToString(): string;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        GetType(): System.Type;
+      }
       export class ImageMeasurer {
         constructor();
         FitMode: ReactUnity.Types.ObjectFit;
@@ -10990,7 +11163,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11072,7 +11245,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11157,7 +11330,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11244,7 +11417,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11319,7 +11492,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11394,7 +11567,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11471,7 +11644,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11546,7 +11719,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11623,7 +11796,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11705,7 +11878,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11787,7 +11960,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11865,7 +12038,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -11942,7 +12115,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -12025,7 +12198,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -12104,7 +12277,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -12185,7 +12358,7 @@ export declare namespace ReactUnity {
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor): void;
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
       AddBefore(): void;
       RemoveBefore(): void;
       AddAfter(): void;
@@ -12331,7 +12504,7 @@ export declare namespace ReactUnity {
       BeforeStart: UnityEngine.Events.UnityEvent;
       AfterStart: UnityEngine.Events.UnityEvent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
-      Render(): void;
+      Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -12445,7 +12618,7 @@ export declare namespace ReactUnity {
       RemoveStyle(sheet: ReactUnity.Styling.StyleSheet): void;
       ResolvePath(path: string): string;
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
-      Start(): void;
+      Start(afterStart?: (() => void)): void;
       Dispose(): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
