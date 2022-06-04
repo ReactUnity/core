@@ -7,6 +7,7 @@ using System;
 using QuickJS;
 using QuickJS.Binding;
 using QuickJS.Native;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Scripting
 {
@@ -17,6 +18,7 @@ namespace ReactUnity.Scripting
             Values.register_type_caster<Array>(js_push_array);
             Values.register_type_caster<Delegate>(js_push_delegate);
             Values.register_type_caster<object>(js_get_classvalue);
+            Values.register_type_caster<Callback>(js_get_classvalue);
         }
 
         public static JSValue js_push_array(JSContext ctx, Array o)
@@ -43,6 +45,18 @@ namespace ReactUnity.Scripting
             if (Values.js_get_classvalue(ctx, val, out ScriptValue sv))
             {
                 o = sv;
+                return true;
+            }
+
+            o = null;
+            return false;
+        }
+
+        public static bool js_get_classvalue(JSContext ctx, JSValue val, out Callback o)
+        {
+            if (Values.js_get_classvalue(ctx, val, out ScriptValue sv))
+            {
+                o = Callback.From(sv);
                 return true;
             }
 

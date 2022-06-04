@@ -74,7 +74,7 @@ namespace ReactUnity.Helpers
 
         public bool ContainsKey(TKey key)
         {
-            return collection.ContainsKey(key);
+            return key != null && collection.ContainsKey(key);
         }
 
         public IEnumerator<KeyValuePair<TKey, T>> GetEnumerator()
