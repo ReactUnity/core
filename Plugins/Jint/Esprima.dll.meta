@@ -5,7 +5,9 @@ PluginImporter:
   serializedVersion: 2
   iconMap: {}
   executionOrder: {}
-  defineConstraints: []
+  defineConstraints:
+  - '!REACT_EXCLUDE_ESPRIMA'
+  - '!REACT_DISABLE_JINT'
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 1
@@ -23,6 +25,7 @@ PluginImporter:
         Exclude WebGL: 0
         Exclude Win: 0
         Exclude Win64: 0
+        Exclude WindowsStoreApps: 0
   - first:
       Android: Android
     second:
@@ -74,9 +77,13 @@ PluginImporter:
   - first:
       Windows Store Apps: WindowsStoreApps
     second:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: AnyCPU
+        DontProcess: false
+        PlaceholderPath: 
+        SDK: AnySDK
+        ScriptingBackend: AnyScriptingBackend
   userData: 
   assetBundleName: 
   assetBundleVariant: 

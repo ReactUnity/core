@@ -19,11 +19,21 @@ namespace ReactUnity.Editor
         public readonly string NodeUrl = "https://nodejs.org/";
         public readonly string ProjectDirName = "react";
 
+        public const string QuickJSPackageName = "cc.starlessnight.unity-jsb";
+        public const string QuickJSVerifiedVersion = "1.7.5";
+
+
         public int NodeVersion { get; private set; } = -1;
 
         public string PackageVersion;
         public string LatestVersion;
         public bool HasUpdate;
+
+#if REACT_QUICKJS_AVAILABLE
+        public bool QuickJSAvailable = true;
+#else
+        public bool QuickJSAvailable = false;
+#endif
 
 
         [MenuItem("React/Quick Start", priority = 0)]
@@ -177,5 +187,30 @@ namespace ReactUnity.Editor
         {
             Client.Add(PackageName + "@" + version);
         }
+
+
+        public void InstallQuickJS()
+        {
+            Context.Dispatcher.StartDeferred(InstallQuickJSDelegate());
+        }
+
+        private IEnumerator InstallQuickJSDelegate()
+        {
+            PackageManagerHelpers.AddScopedRegistry(
+                "package.openupm.com",
+                "https://package.openupm.com",
+                new string[] {
+                    "com.reactunity",
+                    "cc.starlessnight.unity-jsb"
+                }
+            );
+
+            yield return null;
+
+            var packagesRequest = Client.Add(QuickJSPackageName + "@" + QuickJSVerifiedVersion);
+
+            while (!packagesRequest.IsCompleted) yield return null;
+        }
+
     }
 }
