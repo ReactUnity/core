@@ -49,7 +49,7 @@ namespace ReactUnity.Tests
             public string GetText() => "mycmp";
         }
 
-        public class MyObject : Object
+        public class MyObject
         {
             public string GetText() => "myobj";
         }

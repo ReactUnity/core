@@ -119,16 +119,16 @@ namespace ReactUnity.Helpers
             return (collection as ICollection<KeyValuePair<TKey, T>>).Contains(item);
         }
 
-        public Action AddListener(Action<TKey, T, WatchableDictionary<TKey, T>> listener)
-        {
-            changed += listener;
-            return () => changed -= listener;
-        }
-
         public Action AddListener(object cb)
         {
             var callback = new Callback(cb);
             var listener = new Action<TKey, T, WatchableDictionary<TKey, T>>((key, value, dc) => callback.Call(key, value, dc));
+            changed += listener;
+            return () => changed -= listener;
+        }
+
+        public Action AddListener(Action<TKey, T, WatchableDictionary<TKey, T>> listener)
+        {
             changed += listener;
             return () => changed -= listener;
         }

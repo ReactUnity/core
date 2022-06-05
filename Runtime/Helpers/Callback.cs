@@ -109,7 +109,11 @@ namespace ReactUnity.Helpers
             }
             else if (callback is int i)
             {
-                return context.FireEventByRefCallback.Call(i, args);
+                var res = context.FireEventByRefCallback.Call(i, args);
+#if REACT_QUICKJS
+                (context.Script.Engine as Scripting.QuickJSEngine)?.Runtime.ExecutePendingJob();
+#endif
+                return res;
             }
 #if REACT_CLEARSCRIPT
             else if (callback is Microsoft.ClearScript.ScriptObject so)
