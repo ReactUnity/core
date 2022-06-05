@@ -22,7 +22,7 @@ using UnityEngine.InputSystem;
 namespace ReactUnity.Tests
 {
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
-#if REACT_CLEARSCRIPT
+#if REACT_CLEARSCRIPT && !UNITY_2021_2_OR_NEWER
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
 #endif
 #if REACT_QUICKJS

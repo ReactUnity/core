@@ -23,19 +23,20 @@ jobs:
         platform:
           - ubuntu-20.04
         unity:
-          # - { version: "2021.3.1f1" }
-          # - { version: "2021.2.19f1" }
+          - { version: "2022.1.3f1" }
+          - { version: "2021.3.4f1" }
+          - { version: "2021.2.19f1" }
           - { version: "2021.1.28f1" }
-          # - { version: "2020.3.33f1" }
-          - { version: "2019.4.38f1" }
+          - { version: "2019.4.39f1" }
         suite:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
         include:
           - main: true
             coverage: true
-            unity: { version: "2020.3.33f1" }
+            platform: ubuntu-20.04
+            unity: { version: "2020.3.35f1" }
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
-          # - unity: { version: "2020.3.33f1" }
+          # - unity: { version: "2020.3.35f1" }
           #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
@@ -54,7 +55,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: tests/Library
-          key: Library-${{ matrix.unity.version }}
+          key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-20.04' }}
           restore-keys: |
             Library-
 
