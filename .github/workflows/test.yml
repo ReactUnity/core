@@ -51,6 +51,14 @@ jobs:
           ref: ${{ matrix.suite.testBranch || 'tests' }}
           path: tests
 
+      - name: Checkout QuickJS plugin
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: quickjs
+          repository: ReactUnity/quickjs
+
+
       - name: Cache Unity Library
         uses: actions/cache@v2
         with:
@@ -59,11 +67,17 @@ jobs:
           restore-keys: |
             Library-
 
+
       - name: Clear React Unity package lock
-        run: echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
+        run: |
+          echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
+          echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.quickjs"])') > tests/Packages/packages-lock.json
 
       - name: Install local React Unity package
-        run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
+        run: |
+          echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
+          echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.quickjs"]="file:../../quickjs"') > tests/Packages/manifest.json
+
 
       - name: Install TMP v2
         if: startsWith(matrix.unity.version, '2019')
