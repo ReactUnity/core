@@ -105,5 +105,10 @@ namespace ReactUnity.Tests
         public static bool IsDebugEnabled { get; set; } = false;
 #endif
         #endregion
+
+        public static bool IsNoGraphics()
+        {
+            return SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null;
+        }
     }
 }

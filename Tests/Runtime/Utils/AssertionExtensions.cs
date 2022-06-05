@@ -15,6 +15,12 @@ namespace ReactUnity.Tests
 
         public static void Snapshot(string name, string namePrefix = null, int width = 300, int height = 300)
         {
+            if (TestHelpers.IsNoGraphics())
+            {
+                Assert.Inconclusive("Graphics are not enabled. Snapshot tests cannot be run without graphics.");
+                return;
+            }
+
             Texture2D capture = null, croppedCapture = null, expectedTexture = null;
 
             try
