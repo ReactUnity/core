@@ -112,7 +112,7 @@ namespace ReactUnity.Tests
         public void IgnoreForEngine(JavascriptEngineType engine)
         {
             if (EngineType == engine)
-                Assert.Ignore("This test does not work for " + JavascriptEngineType.QuickJS);
+                Assert.Ignore("This test does not work for " + engine);
         }
     }
 }

@@ -9,8 +9,7 @@
         "GUID:9a66a2efedc711946b7428ea9b41cc0d",
         "GUID:118b4ca3a1852354bac065cf952c1e85",
         "GUID:ac4126d60783f3d4a98aee6be9a997aa",
-        "GUID:eda0539582471264796e5affb41fe082",
-        "GUID:2746379d15af6e84cbeb433df77dd384"
+        "GUID:eda0539582471264796e5affb41fe082"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -56,12 +55,17 @@
             "define": "REACT_TEXTCORE"
         },
         {
-            "name": "Unity",
+            "name": "com.reactunity.core",
             "expression": "",
             "define": "REACT_JINT_AVAILABLE"
         },
         {
-            "name": "Unity",
+            "name": "com.reactunity.core",
+            "expression": "",
+            "define": "REACT_CLEARSCRIPT_AVAILABLE"
+        },
+        {
+            "name": "com.reactunity.clearscript",
             "expression": "",
             "define": "REACT_CLEARSCRIPT_AVAILABLE"
         },
@@ -71,7 +75,7 @@
             "define": "REACT_UITOOLKIT"
         },
         {
-            "name": "cc.starlessnight.unity-jsb",
+            "name": "com.reactunity.quickjs",
             "expression": "",
             "define": "REACT_QUICKJS_AVAILABLE"
         },
@@ -84,6 +88,16 @@
             "name": "com.unity.textmeshpro",
             "expression": "[2.2.0-preview.0,3.0.0)",
             "define": "REACT_TMP_X2"
+        },
+        {
+            "name": "cc.starlessnight.unity-jsb",
+            "expression": "",
+            "define": "REACT_QUICKJS_ORIGINAL"
+        },
+        {
+            "name": "cc.starlessnight.unity-jsb",
+            "expression": "",
+            "define": "REACT_QUICKJS_AVAILABLE"
         }
     ],
     "noEngineReferences": false

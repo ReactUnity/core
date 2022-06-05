@@ -24,5 +24,9 @@
   "dependencies": {
     "com.unity.editorcoroutines": "1.0.0",
     "com.unity.nuget.newtonsoft-json": "3.0.2"
+  },
+  "repository": {
+    "url": "https://github.com/ReactUnity/core.git",
+    "type": "git"
   }
 }
