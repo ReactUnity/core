@@ -161,11 +161,11 @@ createDictionaryProxy;
             var keys = new Func<IDictionary<string, object>, object>(
                 (IDictionary<string, object> dc) =>
                 {
-                    var keys = dc.Keys;
-                    var len = keys.Count;
+                    var items = dc.Keys;
+                    var len = items.Count;
                     var arr = new string[len];
                     var i = 0;
-                    foreach (var item in keys)
+                    foreach (var item in items)
                         arr[i++] = item;
                     return arr;
                 });
