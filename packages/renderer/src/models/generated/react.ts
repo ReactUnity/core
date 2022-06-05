@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 23/05/2022 15:31:21
+// Generated 05/06/2022 23:06:52
 //
 /* eslint-disable */
 
@@ -776,9 +776,12 @@ export declare namespace ReactUnity {
       RequiredNodeVersion: number;
       NodeUrl: string;
       ProjectDirName: string;
+      static QuickJSPackageName: string;
+      static QuickJSVerifiedVersion: string;
       PackageVersion: string;
       LatestVersion: string;
       HasUpdate: boolean;
+      QuickJSAvailable: boolean;
       static ShowDefaultWindow(): void;
       GetProjectPath(): string;
       CreateProject(): void;
@@ -791,6 +794,7 @@ export declare namespace ReactUnity {
       CheckVersion(callback: (() => void)): void;
       CheckVersion(callback: any): void;
       UpdatePackage(version: string): void;
+      InstallQuickJS(): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
@@ -858,6 +862,14 @@ export declare namespace ReactUnity {
       Equals(other: any): boolean;
       ToString(): string;
       GetType(): System.Type;
+    }
+    export class PackageManagerHelpers {
+      static ManifestPath: string;
+      static AddScopedRegistry(name: string, url: string, ...scopesToAdd: string[]): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export class ReactUnityBuildModifier {
       constructor();
@@ -1716,12 +1728,9 @@ export declare namespace ReactUnity {
   }
   export namespace Helpers {
     export class Callback {
-      constructor(callback: ((arg0: any, arg1: any[]) => any), engine: any);
-      constructor(callback: any);
       constructor(callback: any, context?: ReactUnity.ReactContext);
       constructor(index: number, context: ReactUnity.ReactContext);
       callback: any; // System.Object
-      Engine: any; // Jint.Engine
       static Noop: ReactUnity.Helpers.Callback;
       static From(value: any, context?: ReactUnity.ReactContext, thisVal?: any): ReactUnity.Helpers.Callback;
       Call(): any;
@@ -1818,7 +1827,6 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1829,8 +1837,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1895,7 +1903,6 @@ export declare namespace ReactUnity {
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((arg0: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1906,8 +1913,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1949,8 +1956,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1984,8 +1991,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1999,7 +2006,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2020,8 +2026,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2046,8 +2052,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
       GetValueOrDefault(key: string): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2062,7 +2068,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2073,8 +2078,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2473,38 +2478,6 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scripting {
-    export class ClearScriptEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
-      Key: string;
-      Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
-      NativeEngine: any; // System.Object
-      Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
-      GetGlobal(key: string): any;
-      DeleteGlobal(key: string): void;
-      CreateTypeReference(type: System.Type): any;
-      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
-      Dispose(): void;
-      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      IsScriptObject(obj: any): boolean;
-      Update(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ClearScriptEngineFactory {
-      constructor();
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2541,46 +2514,6 @@ export declare namespace ReactUnity {
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-    }
-    export class JintEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
-      Key: string;
-      Engine: any; // Jint.Engine
-      NativeEngine: any; // System.Object
-      Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
-      GetGlobal(key: string): any;
-      DeleteGlobal(key: string): void;
-      CreateTypeReference(type: System.Type): any;
-      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
-      Dispose(): void;
-      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      IsScriptObject(obj: any): boolean;
-      Update(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintEngineFactory {
-      constructor();
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintTypeConverter {
-      constructor(engine: any);
-      Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
     }
     export class QuickJSConverters {
       static RegisterAllConverters(): void;
@@ -2628,6 +2561,29 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export class QuickJSNamespaceReference {
+      constructor(engine: ReactUnity.Scripting.QuickJSEngine, path: string, allowedAssemblies: System.Reflection.Assembly[]);
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
+      Count: number;
+      IsReadOnly: boolean;
+      Get(property: string): any;
+      GetPath(path: string): any;
+      ToString(): string;
+      Add(key: string, value: any): void;
+      ContainsKey(key: string): boolean;
+      Remove(key: string): boolean;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Clear(): void;
+      Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
+      Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
     }
     export class ScriptComponent {
       constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
@@ -3249,8 +3205,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, ReactUnity.Styling.CursorPair>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: ReactUnity.Styling.CursorPair, arg2: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: string, arg1: ReactUnity.Styling.CursorPair, arg2: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -3281,7 +3237,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -3302,8 +3257,8 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<ReactUnity.Styling.IStyleProperty, any>>;
       Remove(key: ReactUnity.Styling.IStyleProperty): boolean;
       RemoveWithoutNotify(key: ReactUnity.Styling.IStyleProperty): boolean;
-      AddListener(listener: ((arg0: ReactUnity.Styling.IStyleProperty, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((arg0: ReactUnity.Styling.IStyleProperty, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
       Equals(obj: any): boolean;
