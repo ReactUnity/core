@@ -14,7 +14,7 @@
 #define REACT_JURASSIC
 #endif
 
-#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
 #define REACT_QUICKJS
 #endif
 
@@ -43,17 +43,17 @@ namespace ReactUnity.Scripting
                     return new QuickJSEngineFactory();
 #endif
 #if REACT_CLEARSCRIPT
-                case JavascriptEngineType.Auto:
                 case JavascriptEngineType.ClearScript:
                     return new ClearScriptEngineFactory();
 #endif
                 default:
-#if REACT_JINT
-                    return new JintEngineFactory();
+
+#if REACT_QUICKJS
+                    return new QuickJSEngineFactory();
 #elif REACT_CLEARSCRIPT
                     return new ClearScriptEngineFactory();
-#elif REACT_QUICKJS
-                    return new QuickJSEngineFactory();
+#elif REACT_JINT
+                    return new JintEngineFactory();
 #elif REACT_YANTRA
                     return new YantraEngineFactory();
 #elif REACT_JURASSIC
