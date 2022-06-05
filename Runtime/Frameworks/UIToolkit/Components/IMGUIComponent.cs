@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
@@ -15,7 +14,7 @@ namespace ReactUnity.UIToolkit
             if (property == "cullingEnabled")
             {
 #if UNITY_2020_1_OR_NEWER
-                Element.cullingEnabled = Convert.ToBoolean(value);
+                Element.cullingEnabled = System.Convert.ToBoolean(value);
 #endif
             }
             else base.SetProperty(property, value);

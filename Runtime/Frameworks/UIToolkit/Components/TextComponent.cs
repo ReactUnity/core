@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
@@ -22,13 +21,13 @@ namespace ReactUnity.UIToolkit
             if (property == "displayTooltipWhenElided")
             {
 #if UNITY_2020_1_OR_NEWER
-                Element.displayTooltipWhenElided = Convert.ToBoolean(value);
+                Element.displayTooltipWhenElided = System.Convert.ToBoolean(value);
 #endif
             }
             else if (property == "richText")
             {
 #if UNITY_2021_1_OR_NEWER
-                Element.enableRichText = Convert.ToBoolean(value);
+                Element.enableRichText = System.Convert.ToBoolean(value);
 #endif
             }
             else base.SetProperty(property, value);

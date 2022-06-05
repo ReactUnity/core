@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace ReactUnity.Tests
 {

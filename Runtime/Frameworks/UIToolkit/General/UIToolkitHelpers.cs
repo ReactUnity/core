@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
-using UnityEngine.UIElements;
 using ReactUnity.Helpers;
 using Unity.VectorGraphics;
+using UnityEngine;
+using UnityEngine.UIElements;
 #else
 using UnityEngine;
 using UnityEngine.UIElements;

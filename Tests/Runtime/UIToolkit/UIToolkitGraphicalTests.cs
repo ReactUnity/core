@@ -3,7 +3,6 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UIToolkit;
-using UnityEngine.UIElements;
 
 namespace ReactUnity.Tests.UIToolkit
 {

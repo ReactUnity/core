@@ -485,7 +485,7 @@ namespace ReactUnity.UGUI
                 u.RectTransform.SetParent(Container, false);
 
                 var vp = ResolvedEventViewport;
-                if(vp) PropagateEventViewportChange(u, vp, false);
+                if (vp) PropagateEventViewportChange(u, vp, false);
 
                 if (index >= 0)
                 {

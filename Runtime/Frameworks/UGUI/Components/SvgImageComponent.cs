@@ -2,7 +2,6 @@ using System;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
@@ -11,7 +10,7 @@ namespace ReactUnity.UGUI
 #if REACT_VECTOR_GRAPHICS
         public Unity.VectorGraphics.SVGImage Image { get; private set; }
 #else
-        public Image Image { get; private set; }
+        public UnityEngine.UI.Image Image { get; private set; }
 #endif
 
         public SvgImageComponent(UGUIContext context, string tag = "svgimage") : base(context, tag)
