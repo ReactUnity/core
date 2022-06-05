@@ -66,56 +66,6 @@ namespace ReactUnity.Tests
             Assert.IsTrue(Button.Button.interactable);
         }
 
-        [UGUITest(Script = BaseScript)]
-        [Ignore("Input simulation not working correctly in all Unity versions")]
-        public IEnumerator ButtonClickEventWorks()
-        {
-            var list = new List<string>();
-            Globals["list"] = list;
-            yield return null;
-
-            Assert.IsEmpty(list);
-
-            Button.Activate();
-            list.AssertListExhaustive("click");
-
-            Input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
-            Input.Click(Mouse.leftButton);
-
-            yield return null;
-            list.AssertListExhaustive("click");
-        }
-
-        [UGUITest(Script = BaseScript)]
-        [Ignore("Input simulation not working correctly in all Unity versions")]
-        public IEnumerator ButtonShouldBeClickableWithoutBackground()
-        {
-            Button.Style["background"] = null;
-
-            var list = new List<string>();
-            Globals["list"] = list;
-            yield return null;
-            Assert.IsEmpty(list);
-
-            Input.Move(Mouse.position, new Vector2(20, Screen.height - 20));
-            Input.Click(Mouse.leftButton);
-            yield return null;
-            list.AssertListExhaustive("click");
-
-            Button.Style["background-blend-mode"] = "multiply";
-            yield return null;
-            Input.Click(Mouse.leftButton);
-            yield return null;
-            list.AssertListExhaustive("click");
-
-            Button.Style["background-blend-mode"] = "color";
-            yield return null;
-            Input.Click(Mouse.leftButton);
-            yield return null;
-            list.AssertListExhaustive("click");
-        }
-
-
         [UGUITest(Script = AnchorScript)]
         public IEnumerator AnchorPropertiesCanBeSet()
         {
