@@ -16,7 +16,7 @@ namespace ReactUnity.UGUI
             Replaced.SetParent(this);
         }
 
-        private object source;
+        protected object source;
         public object Source
         {
             get => source;

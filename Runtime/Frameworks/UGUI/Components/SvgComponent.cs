@@ -9,11 +9,6 @@ namespace ReactUnity.UGUI
     {
         private string content;
         private string innerContent;
-        private object source;
-
-        public SvgComponent(UGUIContext context, string tag = "svg") : base(context, tag)
-        {
-        }
 
         public string Content
         {
@@ -39,6 +34,9 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public SvgComponent(UGUIContext context, string tag = "svg") : base(context, tag)
+        {
+        }
 
         public override void SetProperty(string propertyName, object value)
         {

@@ -1,6 +1,7 @@
 using System;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
+using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -17,10 +18,11 @@ namespace ReactUnity.UGUI
         {
 #if REACT_VECTOR_GRAPHICS
             Image = Replaced.CreateGraphic<Unity.VectorGraphics.SVGImage>();
-            Replaced.Measurer.Sprite = Image.sprite;
 #else
-            Debug.LogWarning("Unity.VectorGraphics module is required to use SVG components");
+            Image = Replaced.CreateGraphic<UnityEngine.UI.Image>();
+            WarningHelpers.WarnOnce("SVG_VECTOR_GRAPHICS", "Unity.VectorGraphics module is required to use SVG components");
 #endif
+            Replaced.Measurer.Sprite = Image.sprite;
         }
 
         protected override void SetSource(object value)
