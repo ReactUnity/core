@@ -215,8 +215,8 @@ namespace ReactUnity
             DetachedRoots.Clear();
             Dispatcher?.Dispose();
             Globals?.Dispose();
+            foreach (var item in Disposables) item?.Invoke();
             Script?.Dispose();
-            foreach (var item in Disposables) item.Invoke();
         }
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);

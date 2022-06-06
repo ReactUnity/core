@@ -110,7 +110,8 @@ namespace ReactUnity.Helpers
             }
             else if (callback is QuickJS.ScriptValue sv)
             {
-                var res = new QuickJS.ScriptFunction(QuickJS.ScriptEngine.GetContext(sv.ctx), sv).Invoke<object>(args);
+                var sff = new QuickJS.ScriptFunction(QuickJS.ScriptEngine.GetContext(sv.ctx), sv);
+                var res = sff.Invoke<object>(args);
                 QuickJS.ScriptEngine.GetRuntime(sv.ctx).ExecutePendingJob();
                 return res;
             }
@@ -118,7 +119,8 @@ namespace ReactUnity.Helpers
             {
                 var eg = (context?.Script.Engine as Scripting.QuickJSEngine);
                 if (eg == null) return null;
-                var res = new QuickJS.ScriptFunction(eg.MainContext, qf).Invoke<object>(args);
+                var sff = new QuickJS.ScriptFunction(eg.MainContext, qf);
+                var res = sff.Invoke<object>(args);
                 eg?.Runtime.ExecutePendingJob();
                 return res;
             }

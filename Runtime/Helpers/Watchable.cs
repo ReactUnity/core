@@ -40,7 +40,7 @@ namespace ReactUnity.Helpers
 
         public Action AddListener(object cb)
         {
-            var callback = new Callback(cb);
+            var callback = Callback.From(cb);
             var listener = new Action<T>((val) => callback.Call(val));
             changed += listener;
             return () => changed -= listener;
