@@ -179,6 +179,7 @@ namespace ReactUnity.Scripting
             TypeDB = null;
             MainContext = null;
             ObjectCache = null;
+            OnInitialize = null;
 
             Runtime.Shutdown();
             Runtime = null;

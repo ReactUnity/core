@@ -112,6 +112,7 @@ namespace ReactUnity.Helpers
             {
                 var sff = new QuickJS.ScriptFunction(QuickJS.ScriptEngine.GetContext(sv.ctx), sv);
                 var res = sff.Invoke<object>(args);
+                sff.Dispose();
                 QuickJS.ScriptEngine.GetRuntime(sv.ctx).ExecutePendingJob();
                 return res;
             }
@@ -121,6 +122,7 @@ namespace ReactUnity.Helpers
                 if (eg == null) return null;
                 var sff = new QuickJS.ScriptFunction(eg.MainContext, qf);
                 var res = sff.Invoke<object>(args);
+                sff.Dispose();
                 eg?.Runtime.ExecutePendingJob();
                 return res;
             }
