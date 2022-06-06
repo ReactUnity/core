@@ -61,6 +61,7 @@ namespace ReactUnity.Scripting
             Engine.AccessContext = typeof(ClearScriptEngine);
             Engine.DefaultAccess = ScriptAccess.Full;
             Engine.UndefinedImportValue = null;
+            Engine.VoidResultValue = Undefined.Value;
 
             Engine.DisableExtensionMethods = false;
             Engine.DisableListIndexTypeRestriction = true;

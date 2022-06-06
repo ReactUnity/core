@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
@@ -77,7 +78,7 @@ namespace ReactUnity.Tests
                 cmp.type = type;
                 yield return null;
                 Assert.AreEqual("myobj mycmp", Q("text").TextContent, type + " has failed");
-                GameObject.Destroy(cmp);
+                GameObject.DestroyImmediate(cmp);
                 Component.enabled = false;
                 Component.AutoRender = false;
                 Component.enabled = true;
@@ -95,6 +96,24 @@ namespace ReactUnity.Tests
         ")]
         public IEnumerator ConsoleLogShouldNotBreakUIWhenItsReturnValueIsPassedAsChildren()
         {
+            yield return null;
+            var text = Q("text").TextContent;
+            Assert.AreEqual("SomeLogTest", text);
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <text>
+                    SomeLogTest{globals.VoidFn()}
+                </text>;
+            }
+        ", AutoRender = false)]
+        public IEnumerator VoidResultShouldNotBreakUIWhenItsReturnValueIsPassedAsChildren()
+        {
+            Globals["VoidFn"] = new Action(() => { });
+            Render();
             yield return null;
             var text = Q("text").TextContent;
             Assert.AreEqual("SomeLogTest", text);
