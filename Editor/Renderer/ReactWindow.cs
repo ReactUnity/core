@@ -180,6 +180,7 @@ namespace ReactUnity.Editor.Renderer
             menu.AddItem(new GUIContent("Auto"), EngineType == JavascriptEngineType.Auto, () => EngineType = JavascriptEngineType.Auto);
             menu.AddItem(new GUIContent("Jint"), EngineType == JavascriptEngineType.Jint, () => EngineType = JavascriptEngineType.Jint);
             menu.AddItem(new GUIContent("ClearScript"), EngineType == JavascriptEngineType.ClearScript, () => EngineType = JavascriptEngineType.ClearScript);
+            menu.AddItem(new GUIContent("QuickJS"), EngineType == JavascriptEngineType.QuickJS, () => EngineType = JavascriptEngineType.QuickJS);
 #endif
         }
     }

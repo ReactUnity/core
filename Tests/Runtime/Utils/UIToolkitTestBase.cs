@@ -25,7 +25,7 @@ namespace ReactUnity.Tests
     [Ignore("UIToolkit is not enabled")]
 #endif
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
-#if REACT_CLEARSCRIPT
+#if REACT_CLEARSCRIPT && !UNITY_2021_2_OR_NEWER
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
 #endif
 #if REACT_QUICKJS

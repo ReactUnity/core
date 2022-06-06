@@ -4,7 +4,7 @@ using ReactUnity.Scripting;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture(JavascriptEngineType.Auto, Category = "ClearScript")]
+    [TestFixture(JavascriptEngineType.Auto, Category = "Query")]
     public class QuerySelectorTests : TestBase
     {
         public QuerySelectorTests(JavascriptEngineType engineType) : base(engineType) { }
