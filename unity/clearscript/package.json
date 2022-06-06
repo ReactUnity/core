@@ -1,0 +1,27 @@
+{
+  "name": "com.reactunity.clearscript",
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com",
+    "url": "https://github.com/KurtGokhan"
+  },
+  "displayName": "React Unity ClearScript",
+  "version": "0.12.0",
+  "unity": "2019.4",
+  "description": "ClearScript (V8) Plugin for ReactUnity",
+  "keywords": [
+    "ReactUnity",
+    "ClearScript",
+    "V8"
+  ],
+  "category": "UI",
+  "type": "library",
+  "documentationUrl": "https://reactunity.github.io/",
+  "license": "MIT",
+  "samples": [],
+  "dependencies": {},
+  "repository": {
+    "url": "https://github.com/ReactUnity/clearscript.git",
+    "type": "git"
+  }
+}
