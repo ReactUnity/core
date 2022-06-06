@@ -36,17 +36,17 @@
             "define": "REACT_INPUT_SYSTEM"
         },
         {
-            "name": "Unity",
+            "name": "com.reactunity.core",
             "expression": "",
             "define": "REACT_JINT_AVAILABLE"
         },
         {
-            "name": "Unity",
+            "name": "com.reactunity.clearscript",
             "expression": "",
             "define": "REACT_CLEARSCRIPT_AVAILABLE"
         },
         {
-            "name": "cc.starlessnight.unity-jsb",
+            "name": "com.reactunity.quickjs",
             "expression": "",
             "define": "REACT_QUICKJS_AVAILABLE"
         }

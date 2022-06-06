@@ -60,11 +60,6 @@
             "define": "REACT_JINT_AVAILABLE"
         },
         {
-            "name": "com.reactunity.core",
-            "expression": "",
-            "define": "REACT_CLEARSCRIPT_AVAILABLE"
-        },
-        {
             "name": "com.reactunity.clearscript",
             "expression": "",
             "define": "REACT_CLEARSCRIPT_AVAILABLE"

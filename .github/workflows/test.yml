@@ -58,6 +58,13 @@ jobs:
           path: quickjs
           repository: ReactUnity/quickjs
 
+      - name: Checkout ClearScript plugin
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: clearscript
+          repository: ReactUnity/clearscript
+
 
       - name: Cache Unity Library
         uses: actions/cache@v2
@@ -72,11 +79,13 @@ jobs:
         run: |
           echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
           echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.quickjs"])') > tests/Packages/packages-lock.json
+          echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.clearscript"])') > tests/Packages/packages-lock.json
 
       - name: Install local React Unity package
         run: |
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.quickjs"]="file:../../quickjs"') > tests/Packages/manifest.json
+          echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.clearscript"]="file:../../clearscript"') > tests/Packages/manifest.json
 
 
       - name: Install TMP v2
