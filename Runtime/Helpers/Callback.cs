@@ -21,15 +21,12 @@ using Jint.Native.Object;
 
 namespace ReactUnity.Helpers
 {
-    public class Callback
+    public class Callback : IDisposable
     {
         public object callback;
         private ReactContext context;
-#if REACT_JINT
-        public Engine Engine;
-#endif
 
-        public static Callback Noop = new Callback(null, null);
+        public static Callback Noop = new Callback((object) null, null);
 
         public static Callback From(object value, ReactContext context = null, object thisVal = null)
         {
@@ -40,26 +37,8 @@ namespace ReactUnity.Helpers
             }
             if (value is Callback cb) return cb;
             if (value is int cbi) return new Callback(cbi, context);
-#if REACT_JINT
-            if (value is Func<JsValue, JsValue[], JsValue> jv) return new Callback(jv, context.Script.Engine.NativeEngine as Engine);
-            if (value is ObjectInstance v) return new Callback(v);
-#endif
             return new Callback(value, context);
         }
-
-#if REACT_JINT
-        public Callback(Func<JsValue, JsValue[], JsValue> callback, Engine engine)
-        {
-            this.callback = callback;
-            this.Engine = engine;
-        }
-
-        public Callback(ObjectInstance callback)
-        {
-            this.callback = callback;
-            this.Engine = callback.Engine;
-        }
-#endif
 
         public Callback(object callback, ReactContext context = null)
         {
@@ -91,11 +70,12 @@ namespace ReactUnity.Helpers
             else if (callback is ObjectInstance v)
             {
                 if (v.IsNull() || v.IsUndefined()) return null;
-                return Engine.Invoke(v, args);
+                return v.Engine.Invoke(v, args);
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
             {
-                return cb.Invoke(JsValue.Null, args.Select(x => JsValue.FromObject(Engine, x)).ToArray());
+                var jintEngine = (context.Script.Engine as Scripting.JintEngine).Engine;
+                return cb.Invoke(JsValue.Null, args.Select(x => JsValue.FromObject(jintEngine, x)).ToArray());
             }
 #endif
             else if (callback is Delegate d)
@@ -155,6 +135,12 @@ namespace ReactUnity.Helpers
             var res = Call(args);
             ReactUnityBridge.Instance.SetCurrentEventPriority(EventPriority.Unknown);
             return res;
+        }
+
+        public void Dispose()
+        {
+            callback = null;
+            context = null;
         }
     }
 }

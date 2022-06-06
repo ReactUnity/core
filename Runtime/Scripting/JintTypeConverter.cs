@@ -14,19 +14,19 @@ namespace ReactUnity.Scripting
 {
     public class JintTypeConverter : DefaultTypeConverter
     {
-        private Engine Engine;
+        private ReactContext Context;
 
-        public JintTypeConverter(Engine engine) : base(engine)
+        public JintTypeConverter(ReactContext context, Engine engine) : base(engine)
         {
-            Engine = engine;
+            Context = context;
         }
 
         public override object Convert(object value, Type type, IFormatProvider formatProvider)
         {
             if (type == typeof(Callback) || type == typeof(object))
             {
-                if (value is Func<JsValue, JsValue[], JsValue> cb) return new Callback(cb, Engine);
-                if (value is ObjectInstance oi) return new Callback(oi);
+                if (value is Func<JsValue, JsValue[], JsValue> cb) return new Callback(cb, Context);
+                if (value is ObjectInstance oi) return new Callback(oi, Context);
             }
 
             return base.Convert(value, type, formatProvider);

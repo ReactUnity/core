@@ -48,7 +48,7 @@ namespace ReactUnity.Scripting
                 opt.Interop.AllowGetType = true;
                 opt.Interop.AllowSystemReflection = true;
 
-                opt.SetTypeConverter(e => new JintTypeConverter(e));
+                opt.SetTypeConverter(e => new JintTypeConverter(context, e));
             });
 
             var deferred = Engine.RegisterPromise();
