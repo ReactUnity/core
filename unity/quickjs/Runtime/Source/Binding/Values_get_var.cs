@@ -9,7 +9,7 @@ namespace QuickJS.Binding
     // collect all built-in js-cs conversion helper methods
     public partial class Values
     {
-        // cast js value to csharp value
+        // cast js value to csharp value 
         // TypeCastGet ~ get/rebind: bool js_get_*(JSContext ctx, JSValue val, out T o);
         public static Dictionary<Type, MethodInfo> _JSCastMap = new Dictionary<Type, MethodInfo>();
 
@@ -80,7 +80,7 @@ namespace QuickJS.Binding
                 }
                 else if (parameters.Length == 3)
                 {
-                    // should only collect the method name with the expected signature,
+                    // should only collect the method name with the expected signature, 
                     // bool js_get_*(JSContext ctx, JSValue val, out T o);
                     if (parameters[2].ParameterType.IsByRef && parameters[1].ParameterType == typeof(JSValue))
                     {
@@ -126,9 +126,9 @@ namespace QuickJS.Binding
 
         /// <summary>
         /// convert csharp object `o` to jsvalue with o.GetType()
-        /// NOTE: auto conversion to JS Array is deliberately ignored to avoid unnecessary gc alloc.
-        ///       jsb.ToArray() is available to use to convert a C# Array to JS Array.
-        /// Type conversions will be processed by _CSCastMap.
+        /// NOTE: auto conversion to JS Array is deliberately ignored to avoid unnecessary gc alloc. 
+        ///       jsb.ToArray() is available to use to convert a C# Array to JS Array. 
+        /// Type conversions will be processed by _CSCastMap. 
         /// ScriptValue is processed in Values_push_class.cs => public static JSValue js_push_classvalue(JSContext ctx, ScriptValue o)
         /// JSValue is processed in Values_push_primitive.cs => public static JSValue js_push_primitive(JSContext ctx, JSValue o)
         /// </summary>

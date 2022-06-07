@@ -14,8 +14,8 @@ namespace QuickJS.Binding
         {
             if (jsValue.IsNullish())
             {
-                realValue = JSApi.JS_UNDEFINED;
-                return false;
+                realValue = jsValue;
+                return true;
             }
 
             var context = ScriptEngine.GetContext(ctx);
@@ -27,7 +27,7 @@ namespace QuickJS.Binding
         {
             if (jsValue.IsNullish())
             {
-                return JSApi.JS_UNDEFINED;
+                return jsValue;
             }
 
             var context = ScriptEngine.GetContext(ctx);

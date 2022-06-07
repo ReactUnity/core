@@ -17,6 +17,7 @@ namespace QuickJS
         public event Action<ScriptContext, string> OnScriptReloaded;
 
         private ScriptRuntime _runtime;
+        private Experimental.IJSApiBridge _apiBridge;
         private int _contextId;
         private JSContext _ctx;
         private AtomCache _atoms;
@@ -55,10 +56,11 @@ namespace QuickJS
 #endif
         }
 
-        public ScriptContext(ScriptRuntime runtime, int contextId, bool withDebugServer, int debugServerPort)
+        public ScriptContext(ScriptRuntime runtime, int contextId, Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
         {
             _isValid = true;
             _runtime = runtime;
+            _apiBridge = apiBridge ?? new Experimental.DefaultJSApiBridgeImpl();
             _contextId = contextId;
             _ctx = JSApi.JS_NewContext(_runtime);
             //TODO will be removed later
@@ -936,6 +938,44 @@ namespace QuickJS
             JSApi.JS_FreeValue(ctx, errorObject);
             JSApi.JS_FreeValue(ctx, errorConstructor);
             JSApi.JS_FreeValue(ctx, globalObject);
+        }
+
+
+        /// <summary>
+        /// 用于对 c# 对象产生 js 包装对象 (不负责自动 Dispose)
+        /// </summary>
+        /// <param name="ctx">JS 环境</param>
+        /// <param name="o">CS 对象</param>
+        /// <returns>映射对象</returns>
+        public JSValue NewBridgeObjectBind(object o)
+        {
+            var cache = _runtime.GetObjectCache();
+            JSValue heapptr;
+            if (cache.TryGetJSValue(o, out heapptr))
+            {
+                return JSApi.JS_DupValue(_ctx, heapptr);
+            }
+
+            var type = o.GetType();
+            var db = this.GetTypeDB();
+            var proto = db.GetPrototypeOf(type.BaseType == typeof(MulticastDelegate) ? typeof(Delegate) : type);
+
+            if (proto.IsNullish())
+            {
+                db.GetDynamicType(type, false);
+                proto = db.GetPrototypeOf(type);
+                if (proto.IsNullish())
+                {
+                    return _ctx.ThrowInternalError(string.Format("no prototype found for {0}", type));
+                }
+            }
+
+            return _apiBridge.NewBridgeObject(this, o, proto);
+        }
+
+        public JSPayloadHeader GetPayloadHeader(JSValue val)
+        {
+            return _apiBridge.GetPayloadHeader(this, val);
         }
 
         public static implicit operator JSContext(ScriptContext sc)

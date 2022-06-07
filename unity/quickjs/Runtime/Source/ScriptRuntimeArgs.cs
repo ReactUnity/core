@@ -54,6 +54,8 @@ namespace QuickJS
         /// </summary>
         public IO.IByteBufferAllocator byteBufferAllocator;
 
+        public Experimental.IJSApiBridge apiBridge;
+
         /// <summary>
         /// specify the binding method (usually via DefaultBinder.GetBinder(...)).
         /// NOTE: reflectbind is only supported in editor.

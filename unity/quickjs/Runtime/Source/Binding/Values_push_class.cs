@@ -10,11 +10,12 @@ namespace QuickJS.Binding
     {
 #if !JSB_UNITYLESS
         // variant push
+        // explicitly call UnityEngine.Object.operator == 
         public static JSValue js_push_classvalue(JSContext ctx, UnityEngine.Object o)
         {
             if (o == null)
             {
-                return JSApi.JS_UNDEFINED;
+                return JSApi.JS_NULL;
             }
 
             return js_push_object(ctx, (object)o);
@@ -25,7 +26,7 @@ namespace QuickJS.Binding
         {
             if (o == null)
             {
-                return JSApi.JS_UNDEFINED;
+                return JSApi.JS_NULL;
             }
             return JSApi.JS_DupValue(ctx, o);
         }
@@ -34,7 +35,7 @@ namespace QuickJS.Binding
         {
             if (o == null)
             {
-                return JSApi.JS_UNDEFINED;
+                return JSApi.JS_NULL;
             }
 
             return js_push_object(ctx, (object)o);
@@ -67,16 +68,11 @@ namespace QuickJS.Binding
             return js_push_object(ctx, o);
         }
 
-        // push 一个对象实例
+        // push 一个对象实例 
         public static JSValue js_push_object(JSContext ctx, object o)
         {
-            var cache = ScriptEngine.GetObjectCache(ctx);
-            JSValue heapptr;
-            if (cache.TryGetJSValue(o, out heapptr))
-            {
-                return JSApi.JS_DupValue(ctx, heapptr);
-            }
-            return NewBridgeObjectBind(ctx, o, true);
+            var context = ScriptEngine.GetContext(ctx);
+            return context.NewBridgeObjectBind(o);
         }
     }
 }

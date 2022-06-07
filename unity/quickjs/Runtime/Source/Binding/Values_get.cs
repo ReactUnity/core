@@ -1249,26 +1249,9 @@ namespace QuickJS.Binding
                 return true;
             }
 
-            bool valueDuplicated = false;
-
-            if (val.IsObject())
-            {
-                var identityAtom = ScriptEngine.GetContext(ctx).GetAtom(KeyForCSharpIdentity);
-                var identity = JSApi.JS_GetProperty(ctx, val, identityAtom);
-                if (!identity.IsNullish())
-                {
-                    val = identity;
-                    valueDuplicated = true;
-                }
-            }
-
-            var header = JSApi.jsb_get_payload_header(ctx, val);
-
-            if (valueDuplicated)
-            {
-                JSApi.JS_FreeValue(ctx, val);
-            }
-
+            var context = ScriptEngine.GetContext(ctx);
+            var header = context.GetPayloadHeader(val);
+            
             switch (header.type_id)
             {
                 case BridgeObjectType.ObjectRef:

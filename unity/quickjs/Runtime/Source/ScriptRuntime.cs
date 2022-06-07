@@ -383,8 +383,7 @@ namespace QuickJS
 #if !JSB_WITH_V8_BACKEND
             JSApi.JS_SetModuleLoaderFunc(_rt, module_normalize, module_loader, IntPtr.Zero);
 #endif
-            CreateContext(args.withDebugServer, args.debugServerPort);
-
+            CreateContext(args.apiBridge, args.withDebugServer, args.debugServerPort);
             _pathResolver = args.pathResolver;
             _asyncManager = args.asyncManager;
             _byteBufferAllocator = args.byteBufferAllocator;
@@ -568,7 +567,7 @@ namespace QuickJS
             return _objectCollection.RemoveObject(handle);
         }
 
-        private ScriptContext CreateContext(bool withDebugServer, int debugServerPort)
+        private ScriptContext CreateContext(Experimental.IJSApiBridge apiBridge, bool withDebugServer, int debugServerPort)
         {
             ScriptContextRef freeEntry;
             int slotIndex;
@@ -587,7 +586,7 @@ namespace QuickJS
                 freeEntry.next = -1;
             }
 
-            var context = new ScriptContext(this, slotIndex + 1, withDebugServer, debugServerPort);
+            var context = new ScriptContext(this, slotIndex + 1, apiBridge, withDebugServer, debugServerPort);
 
             freeEntry.target = context;
             if (_mainContext == null)

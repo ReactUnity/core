@@ -17,7 +17,7 @@ namespace QuickJS.Binding
             if (type == typeof(MonoBehaviour))
             {
 #if UNITY_EDITOR
-                // 在非 Playing 模式下, 通过 AddComponent 方式添加的 JSBehaviour 不会执行 Awake
+                // JSBehaviour.Awake should not be executed in editor mode (not playing)
                 return JSBehaviour.SetScriptInstance(gameObject, ctx, ctor, UnityEditor.EditorApplication.isPlaying);
 #else
                 return JSBehaviour.SetScriptInstance(gameObject, ctx, ctor, true);

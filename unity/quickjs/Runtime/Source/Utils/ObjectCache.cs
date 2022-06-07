@@ -141,13 +141,9 @@ namespace QuickJS.Utils
             }
         }
 
+        // object `o` must be valid as key
         public bool TryGetJSValue(object o, out JSValue heapptr)
         {
-            if (o == null)
-            {
-                heapptr = JSApi.JS_UNDEFINED;
-                return false;
-            }
             return _rmap.TryGetValue(o, out heapptr);
         }
 
