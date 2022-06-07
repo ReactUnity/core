@@ -50,6 +50,7 @@ namespace ReactUnity.Scripting
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |
                 V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt |
                 V8ScriptEngineFlags.DisableGlobalMembers |
+                V8ScriptEngineFlags.UseCaseInsensitiveMemberBinding |
 
                 (debug ? (
                     V8ScriptEngineFlags.EnableDebugging |

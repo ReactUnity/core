@@ -10,16 +10,19 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Styling
 {
-    public class StyleSheet
+    public partial class StyleSheet
     {
         public readonly StyleContext Context;
         public readonly IReactComponent Scope;
         public readonly int ImportanceOffset;
+        public readonly MediaQueryList Media;
+
         public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
-        public readonly MediaQueryList Media;
         public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
+
+        private Stylesheet Parsed;
 
         private bool attached = false;
 
@@ -51,17 +54,6 @@ namespace ReactUnity.Styling
 
         private bool currentEnabled = false;
 
-        internal void ResolveEnabled()
-        {
-            var newEnabled = enabled && attached && (Media == null || Media.matches);
-
-            if (newEnabled == currentEnabled) return;
-
-            currentEnabled = newEnabled;
-            if (newEnabled) Enable();
-            else Disable();
-        }
-
         public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null, string media = null)
         {
             Context = context;
@@ -74,14 +66,46 @@ namespace ReactUnity.Styling
                 Media.OnUpdate += ResolveEnabled;
             }
 
-            Initialize(style, scope);
+            Parse(style);
         }
 
-        private void Initialize(string style, IReactComponent scope)
+        internal void ResolveEnabled()
         {
-            if (string.IsNullOrWhiteSpace(style)) return;
+            var newEnabled = enabled && attached && (Media == null || Media.matches);
 
-            var stylesheet = Context.Parser.Parse(style);
+            if (newEnabled == currentEnabled) return;
+
+            currentEnabled = newEnabled;
+            if (newEnabled) Enable();
+            else Disable();
+        }
+
+        private void RefreshParsed()
+        {
+            Disable();
+            ProcessParsed(Parsed);
+            if (currentEnabled) Enable();
+        }
+
+        private void Parse(string style)
+        {
+            if (string.IsNullOrWhiteSpace(style))
+            {
+                Parsed = Context.Parser.Parse("aaaaaaaaaaaaaaaaaaaaaaaaa { teststsdts: 5; }");
+            }
+            else
+            {
+                Parsed = Context.Parser.Parse(style);
+            }
+            ProcessParsed(Parsed);
+        }
+
+        private void ProcessParsed(Stylesheet stylesheet)
+        {
+            MediaQueries.Clear();
+            Keyframes.Clear();
+            FontFamilies.Clear();
+            Declarations.Clear();
 
             foreach (var child in stylesheet.Children)
             {
@@ -97,7 +121,7 @@ namespace ReactUnity.Styling
 
                     foreach (var rule in media.Children.OfType<StyleRule>())
                     {
-                        var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, scope);
+                        var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, Scope);
                         Declarations.AddRange(dcl);
                     }
                     MediaQueries.Add(mql);
@@ -113,7 +137,7 @@ namespace ReactUnity.Styling
                 }
                 else if (child is StyleRule str)
                 {
-                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, scope);
+                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, Scope);
                     Declarations.AddRange(dcl);
                 }
             }

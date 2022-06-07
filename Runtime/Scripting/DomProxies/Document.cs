@@ -200,6 +200,7 @@ namespace ReactUnity.Scripting.DomProxies
         public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
 
         public StyleSheet Sheet = null;
+        public StyleSheet sheet => Sheet;
         public StyleSheetProxy styleSheet;
 
         public bool enabled;
