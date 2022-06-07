@@ -84,6 +84,7 @@ namespace ReactUnity.Scripting
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
                     engine.Execute("global.postMessage = function() {}");
+                    engine.Execute("global.getComputedStyle = function() { return {}; }");
 
                     EngineInitialized = true;
 

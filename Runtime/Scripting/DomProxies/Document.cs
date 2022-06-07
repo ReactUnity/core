@@ -10,6 +10,9 @@ namespace ReactUnity.Scripting.DomProxies
         public HeadProxy head;
         public string Origin;
         public ReactContext Context;
+        public int nodeType = 9;
+
+        public DocumentProxy documentElement => this;
 
         public DocumentProxy(ReactContext context, string origin)
         {
@@ -23,6 +26,7 @@ namespace ReactUnity.Scripting.DomProxies
             if (type == "script") return new ScriptProxy(this);
             else if (type == "style") return new StyleProxy(this);
             else if (type == "link") return new LinkProxy(this);
+            else if (type == "p") return new { style = new { } };
             else return Context.CreateComponent(type, "");
         }
 
@@ -78,8 +82,8 @@ namespace ReactUnity.Scripting.DomProxies
 
         Dictionary<string, object> attributes = new Dictionary<string, object>();
 
-        public void setAttribute(object key, object value) => attributes[key?.ToString() ?? ""] = value;
-        public void removeAttribute(object key) => attributes.Remove(key?.ToString() ?? "");
+        public virtual void setAttribute(object key, object value) => attributes[key?.ToString() ?? ""] = value;
+        public virtual void removeAttribute(object key) => attributes.Remove(key?.ToString() ?? "");
         public bool hasAttribute(object key) => attributes.ContainsKey(key?.ToString() ?? "");
         public object getAttribute(object key) => attributes.TryGetValue(key?.ToString() ?? "", out var val) ? val : default;
     }
@@ -203,6 +207,16 @@ namespace ReactUnity.Scripting.DomProxies
         public DocumentProxy document;
         public HeadProxy parentNode;
 
+        public string textContent
+        {
+            set
+            {
+                childNodes.Clear();
+                childNodes.Add(value);
+                ProcessNodes();
+            }
+        }
+
         public StyleProxy(DocumentProxy document)
         {
             this.document = document;
@@ -239,7 +253,21 @@ namespace ReactUnity.Scripting.DomProxies
         void ProcessNodes()
         {
             if (Sheet != null) document.Context.RemoveStyle(Sheet);
-            Sheet = document.Context.InsertStyle(string.Join("\n", childNodes));
+            var media = getAttribute("media") as string;
+            Sheet = new StyleSheet(document.Context.Style, string.Join("\n", childNodes), 0, null, media);
+            document.Context.InsertStyle(Sheet);
+        }
+
+        public override void setAttribute(object key, object value)
+        {
+            base.setAttribute(key, value);
+            if (key?.ToString() == "media") ProcessNodes();
+        }
+
+        public override void removeAttribute(object key)
+        {
+            base.removeAttribute(key);
+            if (key?.ToString() == "media") ProcessNodes();
         }
     }
 
