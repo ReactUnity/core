@@ -18,13 +18,61 @@ namespace ReactUnity.Styling
         public readonly Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public readonly Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
+        public readonly MediaQueryList Media;
         public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
-        public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null)
+        private bool attached = false;
+
+        public bool Attached
+        {
+            get => attached;
+            set
+            {
+                if (attached == value) return;
+
+                attached = value;
+                ResolveEnabled();
+            }
+        }
+
+        private bool enabled = true;
+
+        public bool Enabled
+        {
+            get => enabled;
+            set
+            {
+                if (enabled == value) return;
+
+                enabled = value;
+                ResolveEnabled();
+            }
+        }
+
+        private bool currentEnabled = false;
+
+        internal void ResolveEnabled()
+        {
+            var newEnabled = enabled && attached && (Media == null || Media.matches);
+
+            if (newEnabled == currentEnabled) return;
+
+            currentEnabled = newEnabled;
+            if (newEnabled) Enable();
+            else Disable();
+        }
+
+        public StyleSheet(StyleContext context, string style, int importanceOffset = 0, IReactComponent scope = null, string media = null)
         {
             Context = context;
             Scope = scope;
             ImportanceOffset = importanceOffset;
+
+            if (!string.IsNullOrWhiteSpace(media))
+            {
+                Media = MediaQueryList.Create(Context.MediaProvider, media);
+                Media.OnUpdate += ResolveEnabled;
+            }
 
             Initialize(style, scope);
         }

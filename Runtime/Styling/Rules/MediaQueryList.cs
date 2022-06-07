@@ -72,7 +72,7 @@ namespace ReactUnity.Styling.Rules
         private void Subscribe()
         {
             Provider.OnUpdate += Reevaluate;
-            Reevaluate(Provider);
+            savedMatch = Root.Matches(Provider);
         }
 
         public void removeEventListener(string type, object listener)

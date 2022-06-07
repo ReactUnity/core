@@ -35,6 +35,61 @@ namespace ReactUnity.Tests.Editor.Renderer
             Assert.AreEqual(Color.black, text.resolvedStyle.color);
         }
 
+
+        [EditorInjectableTest(Style = "view { color: white; }")]
+        public IEnumerator StyleSheetsCanHaveMediaConditions()
+        {
+            yield return null;
+            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Children[0] as TextComponent<TextElement>;
+            var text = rt.Element;
+
+            var sheet = new Styling.StyleSheet(Context.Style, "view { color: red; }", 0, null, "(min-asd: 600px)");
+            Context.InsertStyle(sheet);
+
+            yield return null;
+            Assert.AreEqual(Color.white, text.resolvedStyle.color);
+
+            MediaProvider.SetNumber("asd", 600);
+            yield return null;
+            Assert.AreEqual(Color.red, text.resolvedStyle.color);
+
+            sheet.Enabled = false;
+            yield return null;
+            Assert.AreEqual(Color.white, text.resolvedStyle.color);
+        }
+
+
+
+        [EditorInjectableTest(Style = "view { color: white; }")]
+        public IEnumerator StyleSheetsCanBeEnabledAndDisabled()
+        {
+            yield return null;
+            var cmp = Q("#test") as UIToolkitComponent<VisualElement>;
+            var rt = cmp.Children[0] as TextComponent<TextElement>;
+            var text = rt.Element;
+
+            var sheet = new Styling.StyleSheet(Context.Style, "view { color: red; }");
+            sheet.Enabled = false;
+            Context.InsertStyle(sheet);
+
+            yield return null;
+            Assert.AreEqual(Color.white, text.resolvedStyle.color);
+
+            sheet.Enabled = true;
+            yield return null;
+            Assert.AreEqual(Color.red, text.resolvedStyle.color);
+
+            sheet.Enabled = false;
+            yield return null;
+            Assert.AreEqual(Color.white, text.resolvedStyle.color);
+
+            sheet.Enabled = true;
+            yield return null;
+            Assert.AreEqual(Color.red, text.resolvedStyle.color);
+        }
+
+
         [EditorInjectableTest(Script = @"
             export default function App() {
                 const globals = ReactUnity.useGlobals();

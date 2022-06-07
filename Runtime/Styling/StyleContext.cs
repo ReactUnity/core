@@ -32,13 +32,15 @@ namespace ReactUnity.Styling
         public virtual void Insert(StyleSheet sheet)
         {
             StyleSheets.Add(sheet);
-            sheet.Enable();
+            sheet.Attached = true;
+            sheet.ResolveEnabled();
         }
 
         public virtual void Remove(StyleSheet sheet)
         {
             StyleSheets.Remove(sheet);
-            sheet.Disable();
+            sheet.Attached = false;
+            sheet.ResolveEnabled();
         }
 
         public FontReference GetFontFamily(string name)

@@ -192,6 +192,8 @@ namespace ReactUnity.Styling
             }
 #endif
 
+            if (value == null && typeof(T).IsValueType) return default(T);
+
             return (T) value;
         }
 
