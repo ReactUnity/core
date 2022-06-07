@@ -55,6 +55,7 @@ namespace ReactUnity.Scripting
                 debugServerPort = 9222,
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
+                apiBridge = new QuickJSApiBridge(),
             });
         }
 
