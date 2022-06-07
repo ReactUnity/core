@@ -86,11 +86,13 @@ namespace ReactUnity.Tests.Editor.Renderer
             Globals["htmlSource"] = new TextReference(AssetReferenceType.Procedural, "<button>Click here</button>");
             yield return null;
             yield return null;
+            yield return null;
             var button = Q("button") as ButtonComponent<Button>;
             Assert.AreEqual("Click here", button.TextContent);
 
 
             Globals["htmlSource"] = new TextReference(AssetReferenceType.Procedural, "<another>No never</another>");
+            yield return null;
             yield return null;
             yield return null;
             var another = Q("another") as IReactComponent;

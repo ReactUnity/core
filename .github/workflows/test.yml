@@ -25,7 +25,7 @@ jobs:
         unity:
           - { version: "2022.1.3f1" }
           - { version: "2021.3.4f1" }
-          - { version: "2021.2.19f1" }
+          # - { version: "2021.2.19f1" }
           - { version: "2021.1.28f1" }
           - { version: "2019.4.39f1" }
         suite:
