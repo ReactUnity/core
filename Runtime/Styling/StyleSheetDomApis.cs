@@ -4,87 +4,169 @@ using ExCSS;
 
 namespace ReactUnity.Styling
 {
-    public partial class StyleSheet
+    public class StyleSheetNode
     {
-        public class StyleSheetNode
+        public class MediaList
         {
-            StyleSheet Sheet;
-            IStylesheetNode Original;
+            public StyleSheetNode Node;
+            public IMediaRule Rule;
 
-            public StyleSheetNode(StyleSheet sheet, IStylesheetNode original)
+            public string mediaText
             {
-                Sheet = sheet;
-                Original = original;
-            }
-
-            public string selectorText
-            {
-                get => (Original as StyleRule)?.SelectorText;
+                get => Rule.ConditionText;
                 set
                 {
-                    if (Original is StyleRule sr)
-                    {
-                        sr.SelectorText = value;
-                        Sheet.RefreshParsed();
-                    }
+                    Rule.ConditionText = value;
+                    Node.Sheet.RefreshParsed();
                 }
             }
 
-            public object style
+            public MediaList(IMediaRule rule, StyleSheetNode node)
             {
-                get
-                {
-                    if (Original is StyleRule sr)
-                    {
-                        return new {
-                            setProperty = new Action<string, string>((name, value) => {
-                                sr.Style.SetProperty(name, value);
-                                Sheet.RefreshParsed();
-                            }),
-                            removeProperty = new Action<string>((name) => {
-                                sr.Style.RemoveProperty(name);
-                                Sheet.RefreshParsed();
-                            }),
-                            getPropertyValue = new Func<string, string>((name) => sr.Style.GetPropertyValue(name)),
-                            getPropertyPriority = new Func<string, string>((name) => sr.Style.GetPropertyPriority(name)),
-                            item = new Func<int, string>((index) => sr.Style[index]),
-                        };
-                    }
+                Rule = rule;
+                Node = node;
+            }
+        }
 
-                    return new { };
+        protected virtual StyleSheet Sheet { get; }
+        protected virtual IStylesheetNode Original { get; }
+
+        public string selectorText
+        {
+            get => (Original as StyleRule)?.SelectorText;
+            set
+            {
+                if (Original is StyleRule sr)
+                {
+                    sr.SelectorText = value;
+                    Sheet.RefreshParsed();
                 }
             }
         }
 
+        public string name
+        {
+            get => (Original as IKeyframesRule)?.Name;
+            set
+            {
+                if (Original is IKeyframesRule ks)
+                {
+                    ks.Name = value;
+                    Sheet.RefreshParsed();
+                }
+            }
+        }
+
+        public object style
+        {
+            get
+            {
+                if (Original is StyleRule sr)
+                {
+                    return new {
+                        setProperty = new Action<string, string>((name, value) => {
+                            sr.Style.SetProperty(name, value);
+                            Sheet.RefreshParsed();
+                        }),
+                        removeProperty = new Action<string>((name) => {
+                            sr.Style.RemoveProperty(name);
+                            Sheet.RefreshParsed();
+                        }),
+                        getPropertyValue = new Func<string, string>((name) => sr.Style.GetPropertyValue(name)),
+                        getPropertyPriority = new Func<string, string>((name) => sr.Style.GetPropertyPriority(name)),
+                        item = new Func<int, string>((index) => sr.Style[index]),
+                    };
+                }
+
+                return new { };
+            }
+        }
+
+        public object media
+        {
+            get
+            {
+                if (Original is IMediaRule mr) return new MediaList(mr, this);
+                return null;
+            }
+        }
+
+        internal StyleSheetNode() { }
+
+        public StyleSheetNode(StyleSheet sheet, IStylesheetNode original)
+        {
+            Sheet = sheet;
+            Original = original;
+        }
 
         #region DOM-Like APIs
 
-        public StyleSheetNode[] cssRules => Parsed.Children.Select(x => new StyleSheetNode(this, x)).ToArray();
+        public StyleSheetNode[] cssRules => Original.Children.Select(x => new StyleSheetNode(Sheet, x)).ToArray();
 
         public void insertRule(string text, int index = 0)
         {
-            var len = Parsed.Children.Count();
+            if (Original is Stylesheet ss)
+            {
+                ss.Insert(text, index);
+            }
+            else if (Original is IKeyframesRule kf)
+            {
+                kf.Add(text);
+            }
+            else if (Original is IMediaRule mr)
+            {
+                mr.Insert(text, index);
+            }
+            else return;
 
-            if (index > len) Parsed.Insert(text, len);
-            else Parsed.Insert(text, index);
-
-            RefreshParsed();
+            Sheet.RefreshParsed();
         }
 
         public void appendRule(string text)
         {
-            var len = Parsed.Children.Count();
-            Parsed.Insert(text, len);
-            RefreshParsed();
+            if (Original is Stylesheet ss)
+            {
+                var len = ss.Children.Count();
+                ss.Insert(text, len);
+            }
+            else if (Original is IKeyframesRule kf)
+            {
+                kf.Add(text);
+            }
+            else if (Original is IMediaRule mr)
+            {
+                var len = mr.Children.Count();
+                mr.Insert(text, len);
+            }
+            else return;
+
+            Sheet.RefreshParsed();
         }
 
         public void deleteRule(int index)
         {
-            Parsed.RemoveAt(index);
-            RefreshParsed();
+            if (Original is Stylesheet ss)
+            {
+                ss.RemoveAt(index);
+            }
+            else if (Original is IKeyframesRule kf)
+            {
+                var child = kf.Children.ElementAtOrDefault(index);
+                if (child is IKeyframeRule ch)
+                {
+                    kf.Remove(ch.KeyText);
+                }
+            }
+            else if (Original is IMediaRule mr)
+            {
+                mr.RemoveAt(index);
+            }
+            else return;
+
+            Sheet.RefreshParsed();
         }
 
-        public StyleSheet replace(string text)
+        public StyleSheetNode replace(string text)
         {
             replaceSync(text);
             return this;
@@ -92,11 +174,20 @@ namespace ReactUnity.Styling
 
         public void replaceSync(string text)
         {
-            Disable();
-            Parse(text);
-            if (currentEnabled) Enable();
+            if (Original is Rule sr)
+            {
+                sr.Text = text;
+                Sheet.RefreshParsed();
+            }
         }
 
         #endregion
+    }
+
+
+    public partial class StyleSheet : StyleSheetNode
+    {
+        protected override IStylesheetNode Original => Parsed;
+        protected override StyleSheet Sheet => this;
     }
 }

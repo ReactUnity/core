@@ -22,7 +22,25 @@ namespace ReactUnity.Styling
         public readonly List<MediaQueryList> MediaQueries = new List<MediaQueryList>();
         public readonly List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>> Declarations = new List<Tuple<RuleTreeNode<StyleData>, Dictionary<IStyleProperty, object>>>();
 
-        private Stylesheet Parsed;
+        internal Stylesheet parsed;
+        internal Stylesheet Parsed
+        {
+            get => parsed;
+            set
+            {
+                if (parsed == value) return;
+
+                if (parsed != null)
+                {
+                    parsed = null;
+                    ResolveEnabled();
+                }
+
+                parsed = value;
+                ProcessParsed(Parsed);
+                ResolveEnabled();
+            }
+        }
 
         private bool attached = false;
 
@@ -32,7 +50,6 @@ namespace ReactUnity.Styling
             set
             {
                 if (attached == value) return;
-
                 attached = value;
                 ResolveEnabled();
             }
@@ -46,7 +63,6 @@ namespace ReactUnity.Styling
             set
             {
                 if (enabled == value) return;
-
                 enabled = value;
                 ResolveEnabled();
             }
@@ -71,7 +87,7 @@ namespace ReactUnity.Styling
 
         internal void ResolveEnabled()
         {
-            var newEnabled = enabled && attached && (Media == null || Media.matches);
+            var newEnabled = enabled && attached && (Media == null || Media.matches) && Parsed != null;
 
             if (newEnabled == currentEnabled) return;
 
@@ -80,14 +96,14 @@ namespace ReactUnity.Styling
             else Disable();
         }
 
-        private void RefreshParsed()
+        internal void RefreshParsed()
         {
-            Disable();
-            ProcessParsed(Parsed);
-            if (currentEnabled) Enable();
+            var oldParsed = Parsed;
+            Parsed = null;
+            Parsed = oldParsed;
         }
 
-        private void Parse(string style)
+        internal void Parse(string style)
         {
             if (string.IsNullOrWhiteSpace(style))
             {
@@ -97,7 +113,6 @@ namespace ReactUnity.Styling
             {
                 Parsed = Context.Parser.Parse(style);
             }
-            ProcessParsed(Parsed);
         }
 
         private void ProcessParsed(Stylesheet stylesheet)
@@ -106,6 +121,8 @@ namespace ReactUnity.Styling
             Keyframes.Clear();
             FontFamilies.Clear();
             Declarations.Clear();
+
+            if (stylesheet == null) return;
 
             foreach (var child in stylesheet.Children)
             {
