@@ -37,8 +37,14 @@ namespace ReactUnity.Styling
                     if (Original is StyleRule sr)
                     {
                         return new {
-                            setProperty = new Action<string, string>((name, value) => sr.Style.SetProperty(name, value)),
-                            removeProperty = new Action<string>((name) => sr.Style.RemoveProperty(name)),
+                            setProperty = new Action<string, string>((name, value) => {
+                                sr.Style.SetProperty(name, value);
+                                Sheet.RefreshParsed();
+                            }),
+                            removeProperty = new Action<string>((name) => {
+                                sr.Style.RemoveProperty(name);
+                                Sheet.RefreshParsed();
+                            }),
                             getPropertyValue = new Func<string, string>((name) => sr.Style.GetPropertyValue(name)),
                             getPropertyPriority = new Func<string, string>((name) => sr.Style.GetPropertyPriority(name)),
                             item = new Func<int, string>((index) => sr.Style[index]),

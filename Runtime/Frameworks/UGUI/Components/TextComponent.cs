@@ -152,6 +152,9 @@ namespace ReactUnity.UGUI
                     LinkedTextWatcher.LinkedText.Destroy(false);
                 LinkedTextWatcher = null;
             }
+
+            // Fixes garbled text after color change
+            Text.UpdateFontAsset();
         }
 
         protected override void DestroySelf()
