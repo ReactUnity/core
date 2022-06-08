@@ -196,7 +196,7 @@ jobs:
           path: CodeCoverage
 
       - name: Fail workflow if tests failed
-        if: steps.testRunner.outcome == 'failure'
+        if: steps.testRunner.outcome == 'failure' && fromJSON( steps.test-results.outputs.json ).conclusion == 'failure'
         uses: actions/github-script@v3
         with:
           script: |
