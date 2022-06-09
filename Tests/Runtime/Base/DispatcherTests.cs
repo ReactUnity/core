@@ -14,7 +14,7 @@ namespace ReactUnity.Tests
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_RunsOnEachUpdate()
         {
             yield return new WaitForFixedUpdate();
-            var dispatcher = RuntimeDispatcher.Create(null);
+            var dispatcher = RuntimeDispatcherBehavior.Create(null);
 
             var value = 0;
 
@@ -39,7 +39,7 @@ namespace ReactUnity.Tests
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_StopDoesNotFailUnderLoad()
         {
             yield return new WaitForFixedUpdate();
-            var dispatcher = RuntimeDispatcher.Create(null);
+            var dispatcher = RuntimeDispatcherBehavior.Create(null);
 
             var value = 0;
 
@@ -92,7 +92,7 @@ namespace ReactUnity.Tests
         [UnityTest]
         public IEnumerator RuntimeDispatcher_CanStopDeferredAsResultOfAnotherDeferred()
         {
-            var dispatcher = RuntimeDispatcher.Create(null);
+            var dispatcher = RuntimeDispatcherBehavior.Create(null);
 
             int handle = 0;
             handle = dispatcher.OnceUpdate(() => {

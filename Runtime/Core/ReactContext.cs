@@ -87,7 +87,9 @@ namespace ReactUnity
             Html = new HtmlContext(this);
 
             var updateVisitor = new UpdateVisitor();
-            Dispatcher.OnEveryUpdate(() => Host?.Accept(updateVisitor));
+            Dispatcher.OnEveryUpdate(() => {
+                Host?.Accept(updateVisitor);
+            });
             if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => {
                 Host?.Layout.CalculateLayout();
                 foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
@@ -224,7 +226,9 @@ namespace ReactUnity
             Script?.Dispose();
         }
 
-        protected virtual IDispatcher CreateDispatcher() => Application.isPlaying ? RuntimeDispatcher.Create(this) as IDispatcher : new EditorDispatcher(this);
+        protected virtual IDispatcher CreateDispatcher() => Application.isPlaying && !IsEditorContext ?
+            RuntimeDispatcherBehavior.Create(this) as IDispatcher :
+            new EditorDispatcher(this);
 
         public void SetRef(int refId, IReactComponent cmp)
         {

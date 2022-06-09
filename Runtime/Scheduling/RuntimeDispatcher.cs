@@ -1,21 +1,19 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ReactUnity.Scheduling
 {
     [DefaultExecutionOrder(-50)]
-    public class RuntimeDispatcher : MonoBehaviour, IDispatcher, IDisposable
+    public class RuntimeDispatcherBehavior : MonoBehaviour
     {
-        System.Threading.Thread mainThread;
+        RuntimeDispatcher Dispatcher;
 
         public static RuntimeDispatcher Create(ReactContext ctx)
         {
             var go = new GameObject("React Unity Runtime Dispatcher");
-            var dispatcher = go.AddComponent<RuntimeDispatcher>();
-            dispatcher.Scheduler = new DefaultScheduler(dispatcher, ctx);
+            var behavior = go.AddComponent<RuntimeDispatcherBehavior>();
+            var dispatcher = new RuntimeDispatcher(ctx, behavior);
             DontDestroyOnLoad(go);
 
 #if REACT_UNITY_DEVELOPER
@@ -25,215 +23,70 @@ namespace ReactUnity.Scheduling
             return dispatcher;
         }
 
-        private List<IEnumerator> ToStart = new List<IEnumerator>() { null };
-        private List<Coroutine> Started = new List<Coroutine>();
-        private HashSet<int> ToStop = new HashSet<int>();
-        private List<Action> CallOnLateUpdate = new List<Action>();
-        public IScheduler Scheduler { get; private set; }
+        private void Update()
+        {
+            Dispatcher.Update();
+        }
+
+        private void LateUpdate()
+        {
+            Dispatcher.LateUpdate();
+        }
+
+        public class RuntimeDispatcher : BaseDispatcher<Coroutine>
+        {
+            public RuntimeDispatcherBehavior Behavior;
 #if REACT_UNITY_DEVELOPER
-        public CurrentLifecycle CurrentLifecycle { get; private set; }
+            public CurrentLifecycle CurrentLifecycle { get; private set; }
 #endif
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OnEveryLateUpdate(Action callback)
-        {
-            CallOnLateUpdate.Add(callback);
-            return -1;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OnEveryUpdate(Action callback)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(OnEveryUpdateCoroutine(callback, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OnceUpdate(Action callback)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OnceLateUpdate(Action callback)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int Timeout(Action callback, float timeSeconds)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AnimationFrame(Action callback)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int Interval(Action callback, float intervalSeconds)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
-        }
-
-        public int Immediate(Action callback)
-        {
-            var handle = GetNextHandle();
-            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool IsMainThread()
-        {
-            return mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int StartDeferred(IEnumerator cr)
-        {
-            var handle = GetNextHandle();
-            ToStart.Add(cr);
-            return handle;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int StartDeferred(IEnumerator cr, int handle)
-        {
-            ToStart.Add(cr);
-            return handle;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void StopDeferred(int cr)
-        {
-            if (cr >= 0) ToStop.Add(cr);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetNextHandle()
-        {
-            return Started.Count + ToStart.Count;
-        }
-
-        void StartAndStopDeferreds(bool isUpdate)
-        {
-            foreach (var cr in ToStop)
+            public RuntimeDispatcher(ReactContext ctx, RuntimeDispatcherBehavior behavior)
             {
-                var toStartIndex = cr - Started.Count;
+                Behavior = behavior;
+                Behavior.Dispatcher = this;
+                Scheduler = new DefaultScheduler(this, ctx);
+            }
 
-                // Stop coroutine before starting
-                if (toStartIndex >= 0) ToStart[toStartIndex] = null;
-                else if (cr >= 0 && cr < Started.Count)
+            protected override IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
+            {
+                yield return new WaitForSeconds(time);
+                if (!ToStop.Contains(handle)) callback();
+            }
+
+            protected override IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
+            {
+                var br = new WaitForSeconds(interval);
+
+                while (true)
                 {
-                    // Coroutine was already started, so stop it
-                    var coroutine = Started[cr];
-                    if (coroutine != null && this) StopCoroutine(coroutine);
-                    Started[cr] = null;
+                    yield return br;
+                    if (!ToStop.Contains(handle)) callback();
+                    else break;
                 }
             }
-            ToStop.Clear();
 
-            var newStarts = new List<Coroutine>();
-            for (int i = 0; i < ToStart.Count; i++)
+            protected override IEnumerator AnimationFrameCoroutine(Action callback, int handle)
             {
-                var cr = ToStart[i];
-                if (cr != null && this)
-                {
-                    newStarts.Add(StartCoroutine(cr));
-
-                    // We are already in Update so move Coroutine forward if it is waiting for next Update
-                    if (isUpdate && cr.Current == null) cr.MoveNext();
-                }
-                else newStarts.Add(null);
-            }
-            ToStart.Clear();
-            Started.AddRange(newStarts);
-        }
-
-        void StopAll()
-        {
-            for (int cr = 0; cr < Started.Count; cr++)
-            {
-                var coroutine = Started[cr];
-                if (coroutine != null && this) StopCoroutine(coroutine);
-                Started[cr] = null;
-            }
-            ToStart.Clear();
-            ToStop.Clear();
-            CallOnLateUpdate.Clear();
-        }
-
-        private void OnEnable()
-        {
-            mainThread = System.Threading.Thread.CurrentThread;
-        }
-
-        void Update()
-        {
-            StartAndStopDeferreds(true);
-        }
-
-        void LateUpdate()
-        {
-            StartAndStopDeferreds(true);
-
-            var count = CallOnLateUpdate.Count;
-            for (int i = 0; i < count; i++)
-                CallOnLateUpdate[i]?.Invoke();
-        }
-
-
-        private IEnumerator OnUpdateCoroutine(Action callback, int handle)
-        {
-            yield return null;
-            if (!ToStop.Contains(handle)) callback();
-        }
-
-        private IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
-        {
-            while (true)
-            {
-                yield return null;
+                yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
                 if (!ToStop.Contains(handle)) callback();
-                else break;
             }
-        }
 
-        private IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
-        {
-            yield return new WaitForSeconds(time);
-            if (!ToStop.Contains(handle)) callback();
-        }
-
-        private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
-        {
-            var br = new WaitForSeconds(interval);
-
-            while (true)
+            public override void Dispose()
             {
-                yield return br;
-                if (!ToStop.Contains(handle)) callback();
-                else break;
+                base.Dispose();
+                if (Behavior && Behavior.gameObject) DestroyImmediate(Behavior.gameObject);
             }
-        }
 
-        private IEnumerator AnimationFrameCoroutine(Action callback, int handle)
-        {
-            yield return Application.isBatchMode ? null : new WaitForEndOfFrame();
-            if (!ToStop.Contains(handle)) callback();
-        }
+            protected override Coroutine StartCoroutine(IEnumerator enumerator)
+            {
+                if (Behavior) return Behavior.StartCoroutine(enumerator);
+                else return null;
+            }
 
-        public void Dispose()
-        {
-            StopAll();
-            if (this && gameObject) DestroyImmediate(gameObject);
+            protected override void StopCoroutine(Coroutine coroutine)
+            {
+                if (Behavior) Behavior.StopCoroutine(coroutine);
+            }
         }
     }
 }
