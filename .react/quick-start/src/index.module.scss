@@ -126,8 +126,7 @@ spinner {
   border-top-color: transparent;
   border-bottom-color: transparent;
   animation: spin 800ms infinite;
-  margin: auto;
-  margin-top: 10px;
+  margin: 10px auto;
 }
 
 @keyframes spin {
