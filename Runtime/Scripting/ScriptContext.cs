@@ -214,6 +214,15 @@ namespace ReactUnity.Scripting
             engine = null;
         }
 
-        internal void Update() => Engine?.Update();
+        internal void Update()
+        {
+#if UNITY_EDITOR
+            var isCompiling = UnityEditor.EditorApplication.isCompiling;
+#else
+            var isCompiling = false;
+#endif
+
+            if (!isCompiling) Engine?.Update();
+        }
     }
 }

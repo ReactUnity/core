@@ -92,6 +92,11 @@ namespace ReactUnity
                 Host?.Layout.CalculateLayout();
                 foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
             });
+
+#if UNITY_EDITOR
+            // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts 
+            UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Dispose;
+#endif
         }
 
         protected virtual StyleContext CreateStyleContext() => new StyleContext(this);
