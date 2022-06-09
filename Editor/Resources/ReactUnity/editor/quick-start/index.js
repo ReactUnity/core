@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 856:
+/***/ 840:
 /***/ ((module) => {
 
 "use strict";
@@ -110,7 +110,7 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 309:
+/***/ 501:
 /***/ ((module) => {
 
 "use strict";
@@ -122,7 +122,7 @@ module.exports = function (i) {
 
 /***/ }),
 
-/***/ 900:
+/***/ 366:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -146,7 +146,7 @@ exports.LegacyRoot = 0;
 
 /***/ }),
 
-/***/ 865:
+/***/ 482:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -162,8 +162,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(914),
-      ba = __webpack_require__(395),
+  var aa = __webpack_require__(68),
+      ba = __webpack_require__(473),
       ca = Object.assign;
 
   function n(a) {
@@ -6511,31 +6511,31 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 327:
+/***/ 258:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(900);
+  module.exports = __webpack_require__(366);
 } else {}
 
 /***/ }),
 
-/***/ 904:
+/***/ 633:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(865);
+  module.exports = __webpack_require__(482);
 } else {}
 
 /***/ }),
 
-/***/ 145:
+/***/ 14:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6550,7 +6550,7 @@ if (true) {
  */
 
 
-var f = __webpack_require__(914),
+var f = __webpack_require__(68),
     k = Symbol["for"]("react.element"),
     l = Symbol["for"]("react.fragment"),
     m = Object.prototype.hasOwnProperty,
@@ -6594,7 +6594,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 784:
+/***/ 715:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7020,31 +7020,31 @@ exports.version = "18.1.0";
 
 /***/ }),
 
-/***/ 914:
+/***/ 68:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(784);
+  module.exports = __webpack_require__(715);
 } else {}
 
 /***/ }),
 
-/***/ 552:
+/***/ 377:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(145);
+  module.exports = __webpack_require__(14);
 } else {}
 
 /***/ }),
 
-/***/ 174:
+/***/ 365:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7360,19 +7360,19 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 395:
+/***/ 473:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(174);
+  module.exports = __webpack_require__(365);
 } else {}
 
 /***/ }),
 
-/***/ 148:
+/***/ 101:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7387,7 +7387,7 @@ if (true) {
  */
 
 
-var e = __webpack_require__(914);
+var e = __webpack_require__(68);
 
 function h(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7451,7 +7451,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ 74:
+/***/ 358:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7466,7 +7466,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
  */
 
 
-var g = __webpack_require__(914);
+var g = __webpack_require__(68);
 
 function n(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7534,47 +7534,47 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ 838:
+/***/ 925:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(148);
+  module.exports = __webpack_require__(101);
 } else {}
 
 /***/ }),
 
-/***/ 223:
+/***/ 167:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(74);
+  module.exports = __webpack_require__(358);
 } else {}
 
 /***/ }),
 
-/***/ 34:
+/***/ 760:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(309);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(856);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__CsMZh{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__AIuJo{max-height:200px;max-width:200px;align-self:center;animation:src_appear__DPHQz 800ms 400ms both;transform-origin:center}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__xmMXU{background-color:rgba(0,0,0,0);border-width:0}.src_checkIcon__Itt\\+f,.src_warnIcon__kF2lo,.src_cancelIcon__4IfF2{flex-shrink:0;margin-right:6px}.src_checkIcon__Itt\\+f{color:#73ff00}.src_warnIcon__kF2lo{color:crimson}@keyframes src_appear__DPHQz{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__CsMZh{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__AIuJo{max-height:200px;max-width:200px;align-self:center;animation:src_appear__DPHQz 800ms 400ms both;transform-origin:center}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__xmMXU{background-color:rgba(0,0,0,0);border-width:0}.src_checkIcon__Itt\\+f,.src_warnIcon__kF2lo,.src_errorIcon__3-Lhv,.src_cancelIcon__4IfF2{flex-shrink:0;margin-right:6px}.src_infoButton__p7Ehn{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__3Zij3{width:20px;height:20px;flex-shrink:1}.src_checkIcon__Itt\\+f{color:#73ff00}.src_warnIcon__kF2lo{color:#fff200}.src_errorIcon__3-Lhv{color:crimson}@keyframes src_appear__DPHQz{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__j9jTI 800ms infinite;margin:auto;margin-top:10px}@keyframes src_spin__j9jTI{from{rotate:0deg}to{rotate:180deg}}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "src_host__CsMZh",
@@ -7583,14 +7583,18 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"projectPath": "src_projectPath__xmMXU",
 	"checkIcon": "src_checkIcon__Itt+f",
 	"warnIcon": "src_warnIcon__kF2lo",
-	"cancelIcon": "src_cancelIcon__4IfF2"
+	"errorIcon": "src_errorIcon__3-Lhv",
+	"cancelIcon": "src_cancelIcon__4IfF2",
+	"infoButton": "src_infoButton__p7Ehn",
+	"infoIcon": "src_infoIcon__3Zij3",
+	"spin": "src_spin__j9jTI"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ 379:
+/***/ 487:
 /***/ ((module) => {
 
 "use strict";
@@ -7701,7 +7705,7 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ 569:
+/***/ 52:
 /***/ ((module) => {
 
 "use strict";
@@ -7747,7 +7751,7 @@ module.exports = insertBySelector;
 
 /***/ }),
 
-/***/ 216:
+/***/ 469:
 /***/ ((module) => {
 
 "use strict";
@@ -7765,7 +7769,7 @@ module.exports = insertStyleElement;
 
 /***/ }),
 
-/***/ 565:
+/***/ 10:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7784,7 +7788,7 @@ module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
-/***/ 795:
+/***/ 631:
 /***/ ((module) => {
 
 "use strict";
@@ -7861,7 +7865,7 @@ module.exports = domAPI;
 
 /***/ }),
 
-/***/ 589:
+/***/ 329:
 /***/ ((module) => {
 
 "use strict";
@@ -7951,11 +7955,11 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
   var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
 
@@ -7985,7 +7989,7 @@ function _iterableToArrayLimit(arr, i) {
 
   return _arr;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
 
@@ -7995,7 +7999,7 @@ function _arrayLikeToArray(arr, len) {
 
   return arr2;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -8005,11 +8009,11 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
 
 
@@ -8017,19 +8021,77 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(914);
-// EXTERNAL MODULE: ./node_modules/react-reconciler/constants.js
-var constants = __webpack_require__(327);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/version.js
-var version = '0.10.1';
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(552);
-// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(838);
-// EXTERNAL MODULE: ./node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__(223);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+
+  if (!it) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function F() {};
+
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function s() {
+      it = it.call(o);
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+// EXTERNAL MODULE: ../../../node_modules/react/index.js
+var react = __webpack_require__(68);
+// EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
+var constants = __webpack_require__(258);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
+var version = '0.11.0';
+// EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(377);
+// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__(925);
+// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
+var with_selector = __webpack_require__(167);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8113,7 +8175,7 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/views/error-boundary.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -8217,7 +8279,7 @@ function (_super) {
 }(react.Component);
 
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/views/default-view.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
 
 
 
@@ -8232,7 +8294,7 @@ function DefaultView(_a) {
     })
   });
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
 var ObjectsRepo =
 /** @class */
 function () {
@@ -8275,9 +8337,9 @@ function () {
 }();
 
 
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(904);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
+// EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__(633);
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -8357,7 +8419,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
 
   return updatePayload;
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/constants.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
 var __rest = undefined && undefined.__rest || function (s, e) {
   var t = {};
 
@@ -8422,7 +8484,7 @@ var commonReconciler = {
   }
 };
 var isDevelopment = "production" === 'development';
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -8464,16 +8526,33 @@ function (_super) {
     _this.call = function (ind, args) {
       var cb = _this.getObject(ind);
 
-      if ('Length' in args) {
-        var newArgs = [];
-        var length = args['Length'];
+      var argsAsList = args;
+      var argsAsArray = args;
+
+      if (typeof argsAsArray.Length === 'number') {
+        // C# Array
+        args = [];
+        var length = argsAsArray.Length;
 
         for (var index = 0; index < length; index++) {
-          var element = args[index];
-          newArgs.push(element);
+          args.push(argsAsArray.GetValue(index));
         }
+      } else if (typeof argsAsList.Count === 'number') {
+        // C# List
+        args = [];
+        var length = argsAsList.Count;
 
-        args = newArgs;
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsList[index]);
+        }
+      } else if (typeof argsAsList.Count === 'function') {
+        // C# IList
+        args = [];
+        var length = argsAsList.Count();
+
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsArray.GetValue(index));
+        }
       }
 
       return cb.apply(null, args);
@@ -8486,7 +8565,7 @@ function (_super) {
 }(ObjectsRepo);
 
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
 
 
 var callbacksRepo = new CallbacksRepo();
@@ -8517,7 +8596,7 @@ function convertPropsToSerializable(props) {
 
   return res;
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8728,7 +8807,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
 });
 
 var asyncReconciler = react_reconciler(hostConfig);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
 var sync_reconciler_assign = undefined && undefined.__assign || function () {
   sync_reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8846,7 +8925,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, co
 });
 
 var syncReconciler = react_reconciler(reconciler_hostConfig);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
 
 
 
@@ -8965,26 +9044,30 @@ var flushSync = defaultReconciler.flushSync;
 const check_namespaceObject = __webpack_require__.p + "static/media/check.png";
 ;// CONCATENATED MODULE: ./src/assets/close.png
 const close_namespaceObject = __webpack_require__.p + "static/media/close.png";
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(379);
+;// CONCATENATED MODULE: ./src/assets/info.png
+const info_namespaceObject = __webpack_require__.p + "static/media/info.png";
+;// CONCATENATED MODULE: ./src/assets/warn.png
+const warn_namespaceObject = __webpack_require__.p + "static/media/warn.png";
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
+var injectStylesIntoStyleTag = __webpack_require__(487);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(795);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleDomAPI.js
+var styleDomAPI = __webpack_require__(631);
 var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertBySelector.js
-var insertBySelector = __webpack_require__(569);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertBySelector.js
+var insertBySelector = __webpack_require__(52);
 var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(565);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
+var setAttributesWithoutAttributes = __webpack_require__(10);
 var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(216);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/insertStyleElement.js
+var insertStyleElement = __webpack_require__(469);
 var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
-// EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(589);
+// EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
+var styleTagTransform = __webpack_require__(329);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/index.module.scss
-var index_module = __webpack_require__(34);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/index.module.scss
+var index_module = __webpack_require__(760);
 ;// CONCATENATED MODULE: ./src/index.module.scss
 
       
@@ -9015,7 +9098,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
        /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/main.tsx
-var Window=Globals.Window;var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.warnIcon});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var Window=Globals.Window;var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var engineTypes=[{type:Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,recommended:false,name:'Jint',implicit:true,tooltip:"Jint is the default JS engine and is shipped together with ReactUnity. It consists of a managed library. It supports every platform Unity can build to.\nJint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.\n\"REACT_DISABLE_JINT\" flag can be used to exclude Jint from build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,recommended:true,name:'QuickJS',implicit:false,tooltip:"QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform except WebGL.\nQuickJS is very fast and reliable. It supports most of the platforms and has decent interop features.\n\"REACT_DISABLE_QUICKJS\" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,recommended:false,name:'ClearScript',implicit:false,tooltip:"ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.\nClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.\n\"REACT_DISABLE_CLEARSCRIPT\" flag can be used to exclude ClearScript from build. Note that native libraries must be excluded manually after build."}];var engineTypesLoaded=new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(engineTypes),_step;try{var _loop=function _loop(){var type=_step.value;Window.CheckEngineVersion(type.type,function(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===engineTypes.length){resolve();}});};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(),_useState14=_slicedToArray(_useState13,2),engines=_useState14[0],setEngines=_useState14[1];(0,react.useEffect)(function(){engineTypesLoaded.then(function(){return setEngines(engineTypes);});},[]);(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_index_module.warnIcon});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["JavaScript Engines",!engines&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!engines&&engines.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[x.name,!!x.recommended&&' (Recommended)',!!x.tooltip&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,children:/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_index_module.infoIcon,tooltip:x.tooltip})}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1}}),!x.installed?x.recommended?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:["Installed Version",' '+x.version,!x.implicit&&!x.recommended&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallEnginePlugin(x.type);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.implicit?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsxs)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:["Update to ",x.latestVersion]})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:"Install"})})]},i);})]})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();

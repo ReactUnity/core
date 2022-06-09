@@ -23,6 +23,8 @@ namespace ReactUnity.UIToolkit
         {
             foreach (var manipulator in Manipulators)
                 Element.RemoveManipulator(manipulator.Value);
+
+            Element.UnregisterCallback<GeometryChangedEvent>(OnResize);
         }
 
         void OnResize(GeometryChangedEvent ev)

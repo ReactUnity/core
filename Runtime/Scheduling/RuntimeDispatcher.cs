@@ -37,7 +37,7 @@ namespace ReactUnity.Scheduling
         {
             public RuntimeDispatcherBehavior Behavior;
 #if REACT_UNITY_DEVELOPER
-            public CurrentLifecycle CurrentLifecycle { get; private set; }
+            public CurrentLifecycle CurrentLifecycle { get; internal set; }
 #endif
 
             public RuntimeDispatcher(ReactContext ctx, RuntimeDispatcherBehavior behavior)

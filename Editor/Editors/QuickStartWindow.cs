@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
+using ReactUnity.Helpers.TypescriptUtils;
+using ReactUnity.Scripting;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -14,14 +17,21 @@ namespace ReactUnity.Editor
 {
     public class QuickStartWindow : ReactWindow
     {
+#pragma warning disable 612
+        static Dictionary<JavascriptEngineType, string> JSEnginePackages = new Dictionary<JavascriptEngineType, string>
+        {
+            { JavascriptEngineType.Jint, "com.reactunity.core" },
+            { JavascriptEngineType.QuickJS, "com.reactunity.quickjs" },
+            { JavascriptEngineType.ClearScript, "com.reactunity.clearscript" },
+        };
+#pragma warning restore 612
+
+        public delegate void CheckVersionCallback(string currentVersion, string latestVersion, bool hasUpdate);
+
         public const string PackageName = "com.reactunity.core";
         public readonly int RequiredNodeVersion = 12;
         public readonly string NodeUrl = "https://nodejs.org/";
         public readonly string ProjectDirName = "react";
-
-        public const string QuickJSPackageName = "cc.starlessnight.unity-jsb";
-        public const string QuickJSVerifiedVersion = "1.7.5";
-
 
         public int NodeVersion { get; private set; } = -1;
 
@@ -34,7 +44,6 @@ namespace ReactUnity.Editor
 #else
         public bool QuickJSAvailable = false;
 #endif
-
 
         [MenuItem("React/Quick Start", priority = 0)]
         public static void ShowDefaultWindow()
@@ -158,29 +167,45 @@ namespace ReactUnity.Editor
             if (canvas) Selection.activeObject = canvas.gameObject;
         }
 
-        public void CheckVersion(Action callback)
-        {
-            Context.Dispatcher.StartDeferred(CheckVersionDelegate(callback));
-        }
-
-        public void CheckVersion(object callback)
+        public void CheckVersion([TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
         {
             var cb = Callback.From(callback, Context);
-            CheckVersion(() => cb.Call());
+            CheckVersion(PackageName, (a, b, c) => cb.Call(a, b, c));
         }
 
-        private IEnumerator CheckVersionDelegate(Action callback)
+        public void CheckVersion(string packageName, CheckVersionCallback callback)
+        {
+            Context.Dispatcher.StartDeferred(CheckVersionDelegate(packageName, callback));
+        }
+
+        public void CheckEngineVersion(JavascriptEngineType type, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
+        {
+            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) return;
+
+            var cb = Callback.From(callback, Context);
+            CheckVersion(enginePackageName, (a, b, c) => cb.Call(a, b, c));
+        }
+
+        private IEnumerator CheckVersionDelegate(string packageName, CheckVersionCallback callback)
         {
             var packagesRequest = Client.List(false, false);
-
             while (!packagesRequest.IsCompleted) yield return null;
+            var pkg = packagesRequest.Result.FirstOrDefault(x => x.name == packageName);
 
-            var ruPackage = packagesRequest.Result.FirstOrDefault(x => x.name == PackageName);
 
-            PackageVersion = ruPackage.version;
-            LatestVersion = ruPackage.versions.latestCompatible;
-            HasUpdate = PackageVersion != LatestVersion;
-            callback();
+            var version = pkg?.version;
+            var latestVersion = pkg?.versions?.latestCompatible;
+            var hasUpdate = !string.IsNullOrWhiteSpace(latestVersion) && latestVersion != version;
+
+            if (packageName == PackageName && pkg != null)
+            {
+                PackageVersion = version;
+                LatestVersion = latestVersion;
+                HasUpdate = hasUpdate;
+            }
+
+            if (pkg != null) callback(version, latestVersion, hasUpdate);
+            else callback(null, null, true);
         }
 
         public void UpdatePackage(string version)
@@ -189,27 +214,51 @@ namespace ReactUnity.Editor
         }
 
 
-        public void InstallQuickJS()
+        public void InstallEnginePlugin(JavascriptEngineType type)
         {
-            Context.Dispatcher.StartDeferred(InstallQuickJSDelegate());
+            Context.Dispatcher.StartDeferred(InstallEnginePluginDelegate(type));
         }
 
-        private IEnumerator InstallQuickJSDelegate()
+        private IEnumerator InstallEnginePluginDelegate(JavascriptEngineType type)
         {
+            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) yield break;
+
             PackageManagerHelpers.AddScopedRegistry(
                 "package.openupm.com",
                 "https://package.openupm.com",
                 new string[] {
                     "com.reactunity",
-                    "cc.starlessnight.unity-jsb"
+                    enginePackageName
                 }
             );
 
             yield return null;
 
-            var packagesRequest = Client.Add(QuickJSPackageName + "@" + QuickJSVerifiedVersion);
+            var listRequest = Client.List(false, false);
+            while (!listRequest.IsCompleted) yield return null;
+            var pkg = listRequest.Result.FirstOrDefault(x => x.name == enginePackageName);
+
+
+            var versionSuffix = "";
+
+            if (pkg != null) versionSuffix += "@" + pkg.versions.latestCompatible;
+
+            var packagesRequest = Client.Add(enginePackageName + versionSuffix);
 
             while (!packagesRequest.IsCompleted) yield return null;
+        }
+
+        public void UninstallEnginePlugin(JavascriptEngineType type)
+        {
+            Context.Dispatcher.StartDeferred(UninstallEnginePluginDelegate(type));
+        }
+
+        private IEnumerator UninstallEnginePluginDelegate(JavascriptEngineType type)
+        {
+            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) yield break;
+
+            var listRequest = Client.Remove(enginePackageName);
+            while (!listRequest.IsCompleted) yield return null;
         }
 
     }

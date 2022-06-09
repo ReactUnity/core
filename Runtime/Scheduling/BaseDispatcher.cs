@@ -16,8 +16,6 @@ namespace ReactUnity.Scheduling
         protected List<Action> CallOnLateUpdate = new List<Action>();
         public IScheduler Scheduler { get; protected set; }
 
-        protected bool UpdatedThisFrame;
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int OnEveryLateUpdate(Action callback)
@@ -197,8 +195,7 @@ namespace ReactUnity.Scheduling
 
         public virtual void Update()
         {
-            if (!UpdatedThisFrame) StartAndStopDeferreds(true);
-            UpdatedThisFrame = false;
+            StartAndStopDeferreds(true);
         }
 
         public virtual void LateUpdate()

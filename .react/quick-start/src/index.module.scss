@@ -77,9 +77,21 @@ section {
 
 .checkIcon,
 .warnIcon,
+.errorIcon,
 .cancelIcon {
   flex-shrink: 0;
   margin-right: 6px;
+}
+
+.infoButton {
+  padding: 4px;
+  background-color: transparent;
+}
+
+.infoIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 1;
 }
 
 .checkIcon {
@@ -87,6 +99,10 @@ section {
 }
 
 .warnIcon {
+  color: rgb(255, 242, 0);
+}
+
+.errorIcon {
   color: crimson;
 }
 
@@ -95,8 +111,31 @@ section {
     opacity: 0%;
     scale: 0.8 0.8;
   }
+
   to {
     opacity: 100%;
     scale: 1 1;
+  }
+}
+
+spinner {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: spin 800ms infinite;
+  margin: auto;
+  margin-top: 10px;
+}
+
+@keyframes spin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 180deg;
   }
 }

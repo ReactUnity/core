@@ -389,7 +389,8 @@ namespace ReactUnity.Editor.Developer
         {
             var isStatic = info.GetAccessors(true)[0].IsStatic;
             var remap = info.GetCustomAttribute<TypescriptRemap>();
-            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.PropertyType, true, false, AllowGeneric && !isStatic);
+            var remapType = info.GetCustomAttribute<TypescriptRemapType>()?.TargetType;
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(remapType ?? info.PropertyType, true, false, AllowGeneric && !isStatic);
             var isNullable = info.PropertyType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
@@ -405,7 +406,8 @@ namespace ReactUnity.Editor.Developer
         {
             var isStatic = info.IsStatic;
             var remap = info.GetCustomAttribute<TypescriptRemap>();
-            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.FieldType, true, false, AllowGeneric && !isStatic);
+            var remapType = info.GetCustomAttribute<TypescriptRemapType>()?.TargetType;
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(remapType ?? info.FieldType, true, false, AllowGeneric && !isStatic);
             var isNullable = info.FieldType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
@@ -421,7 +423,7 @@ namespace ReactUnity.Editor.Developer
         {
             var info = list.First();
             var isStatic = info.IsStatic;
-            var types = string.Join(" | ", list.Select(x => "(" + getTypeScriptStringForArgs(x) + ")"));
+            var types = string.Join(" | ", list.Select(getTypeScriptStringForArgs));
 
             return string.Format("{0}{1}: {2};",
               isStatic ? "static " : "",
@@ -433,8 +435,6 @@ namespace ReactUnity.Editor.Developer
         string getTypeScriptString(MethodInfo info)
         {
             var isStatic = info.IsStatic;
-            var types = getTypeScriptStringForArgs(info);
-
             var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
 
@@ -451,7 +451,7 @@ namespace ReactUnity.Editor.Developer
             var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
 
-            return string.Format("({0}) => {1}",
+            return string.Format("(({0}) => {1})",
               args,
               retType
             );
@@ -467,7 +467,8 @@ namespace ReactUnity.Editor.Developer
         string getTypeScriptString(ParameterInfo info, bool allowGeneric)
         {
             var remap = info.GetCustomAttribute<TypescriptRemap>();
-            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.ParameterType, true, false, allowGeneric);
+            var remapType = info.GetCustomAttribute<TypescriptRemapType>()?.TargetType;
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(remapType ?? info.ParameterType, true, false, allowGeneric);
             var isParams = info.GetCustomAttribute(typeof(ParamArrayAttribute), false) != null;
 
             var keywords = new HashSet<string> {
@@ -514,10 +515,19 @@ namespace ReactUnity.Editor.Developer
 
         string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false, string suffixGeneric = "")
         {
+            var remap = type.GetCustomAttribute<TypescriptRemap>();
+            var remapType = type.GetCustomAttribute<TypescriptRemapType>()?.TargetType;
+
+            if (remapType != null) type = remapType;
+
+            if (!skipKnownTypes && typeof(Delegate).IsAssignableFrom(type) && type != typeof(Delegate) && type != typeof(MulticastDelegate))
+            {
+                return getTypeScriptStringForArgs(type.GetMethod("Invoke"));
+            }
+
             var propertyType = type.ToString();
             var genArgs = type.GetGenericArguments();
 
-            var remap = type.GetCustomAttribute<TypescriptRemap>();
 
             if (!skipKnownTypes && remap != null) return RegisterRemap(remap);
 

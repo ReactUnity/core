@@ -178,9 +178,15 @@ namespace ReactUnity.Editor.Renderer
 
             menu.AddSeparator("");
             menu.AddItem(new GUIContent("Auto"), EngineType == JavascriptEngineType.Auto, () => EngineType = JavascriptEngineType.Auto);
+#if REACT_JINT_AVAILABLE
             menu.AddItem(new GUIContent("Jint"), EngineType == JavascriptEngineType.Jint, () => EngineType = JavascriptEngineType.Jint);
+#endif
+#if REACT_CLEARSCRIPT_AVAILABLE
             menu.AddItem(new GUIContent("ClearScript"), EngineType == JavascriptEngineType.ClearScript, () => EngineType = JavascriptEngineType.ClearScript);
+#endif
+#if REACT_QUICKJS_AVAILABLE
             menu.AddItem(new GUIContent("QuickJS"), EngineType == JavascriptEngineType.QuickJS, () => EngineType = JavascriptEngineType.QuickJS);
+#endif
 #endif
         }
     }

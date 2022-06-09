@@ -29,7 +29,7 @@ namespace ReactUnity.Editor.Renderer
             var source = rootVisualElement.Q<TextField>("source");
             var useDevServer = rootVisualElement.Q<Toggle>("useDevServer");
             var devServer = rootVisualElement.Q<TextField>("devServer");
-            source.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.source", "react-editor/index"));
+            source.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.source", "react/index"));
             useDevServer.SetValueWithoutNotify(EditorPrefs.GetBool("ReactUnity.EditorTester.useDevServer", false));
             devServer.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.devServer", "http://localhost:3000"));
 
