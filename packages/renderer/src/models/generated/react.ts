@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 05/06/2022 23:06:52
+// Generated 10/06/2022 03:30:31
 //
 /* eslint-disable */
 
@@ -143,7 +143,7 @@ export declare namespace ReactUnity {
     Content: string;
     SetText(text: string): void;
   }
-  export interface IHostComponent extends ReactUnity.IReactComponent, ReactUnity.IContainerComponent {
+  export interface IHostComponent extends ReactUnity.IContainerComponent, ReactUnity.IReactComponent {
     Width: number;
     Height: number;
   }
@@ -330,6 +330,7 @@ export declare namespace ReactUnity {
     CursorSet: ReactUnity.Styling.CursorSet;
     CursorAPI: ReactUnity.Helpers.CursorAPI;
     Disposables: (() => void)[];
+    UpdateElementsRecursively(): void;
     InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
     InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
     InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -343,9 +344,9 @@ export declare namespace ReactUnity {
     PlayAudio(clip: UnityEngine.AudioClip): void;
     Start(afterStart?: (() => void)): void;
     Dispose(): void;
+    BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
     GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-    BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
     FlushCommands(serializedCommands?: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -474,8 +475,8 @@ export declare namespace ReactUnity {
     static Resource(path: string): ReactUnity.ScriptSource;
     static Text(path: string): ReactUnity.ScriptSource;
     GetResolvedSourceUrl(useDevServer?: boolean): string;
-    GetScript(callback: ((arg0: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
-    static WatchFileSystem(path: string, callback: ((arg0: string) => void)): System.IDisposable;
+    GetScript(callback: ((obj: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
+    static WatchFileSystem(path: string, callback: ((obj: string) => void)): System.IDisposable;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -776,8 +777,6 @@ export declare namespace ReactUnity {
       RequiredNodeVersion: number;
       NodeUrl: string;
       ProjectDirName: string;
-      static QuickJSPackageName: string;
-      static QuickJSVerifiedVersion: string;
       PackageVersion: string;
       LatestVersion: string;
       HasUpdate: boolean;
@@ -785,16 +784,18 @@ export declare namespace ReactUnity {
       static ShowDefaultWindow(): void;
       GetProjectPath(): string;
       CreateProject(): void;
-      GetNodeVersion(callback?: ((arg0: number) => void)): void;
+      GetNodeVersion(callback?: ((obj: number) => void)): void;
       GetNodeVersion(callback: any): void;
       RunCommand(target: string, args: string, hasOutput?: boolean): System.Diagnostics.Process;
       CanvasExistsInScene(): boolean;
       CreateCanvas(): void;
       SelectCanvas(): void;
-      CheckVersion(callback: (() => void)): void;
-      CheckVersion(callback: any): void;
+      CheckVersion(callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
+      CheckVersion(packageName: string, callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
+      CheckEngineVersion(type: ReactUnity.Scripting.JavascriptEngineType, callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
       UpdatePackage(version: string): void;
-      InstallQuickJS(): void;
+      InstallEnginePlugin(type: ReactUnity.Scripting.JavascriptEngineType): void;
+      UninstallEnginePlugin(type: ReactUnity.Scripting.JavascriptEngineType): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
@@ -889,6 +890,22 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class QuickStartWindow_CheckVersionCallback {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(currentVersion: string, latestVersion: string, hasUpdate: boolean): void;
+      BeginInvoke(currentVersion: string, latestVersion: string, hasUpdate: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export namespace Developer {
       export class TypescriptModelsGenerator {
         constructor(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: Record<string, string>, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean);
@@ -944,6 +961,7 @@ export declare namespace ReactUnity {
         CreateText(text: string): ReactUnity.ITextComponent;
         CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
         CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
+        UpdateElementsRecursively(): void;
         InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
         InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
         InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -952,9 +970,9 @@ export declare namespace ReactUnity {
         CreateStaticScript(path: string): ReactUnity.ScriptSource;
         Start(afterStart?: (() => void)): void;
         Dispose(): void;
+        BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
         GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-        BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
         FlushCommands(serializedCommands?: string): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -1147,7 +1165,7 @@ export declare namespace ReactUnity {
         Inspector: ReactUnity.Editor.Renderer.ReactInspector;
         Property: ReactUnity.Editor.Renderer.ReactProperty;
         HostElement: UnityEngine.UIElements.VisualElement;
-        OnAudioPlayback: ((arg0: UnityEngine.AudioClip) => void);
+        OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
         Globals: ReactUnity.Helpers.SerializableDictionary;
         Source: ReactUnity.ScriptSource;
         Timer: ReactUnity.Scheduling.ITimer;
@@ -1328,7 +1346,7 @@ export declare namespace ReactUnity {
         enabledInHierarchy: boolean;
         enabledSelf: boolean;
         visible: boolean;
-        generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+        generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -1377,7 +1395,7 @@ export declare namespace ReactUnity {
         ElementAt(index: number): UnityEngine.UIElements.VisualElement;
         IndexOf(element: UnityEngine.UIElements.VisualElement): number;
         Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
-        Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+        Sort(comp: ((x: UnityEngine.UIElements.VisualElement, y: UnityEngine.UIElements.VisualElement) => number)): void;
         BringToFront(): void;
         SendToBack(): void;
         PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
@@ -1662,7 +1680,7 @@ export declare namespace ReactUnity {
         enabledInHierarchy: boolean;
         enabledSelf: boolean;
         visible: boolean;
-        generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+        generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -1708,7 +1726,7 @@ export declare namespace ReactUnity {
         ElementAt(index: number): UnityEngine.UIElements.VisualElement;
         IndexOf(element: UnityEngine.UIElements.VisualElement): number;
         Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
-        Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+        Sort(comp: ((x: UnityEngine.UIElements.VisualElement, y: UnityEngine.UIElements.VisualElement) => number)): void;
         BringToFront(): void;
         SendToBack(): void;
         PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
@@ -1736,6 +1754,7 @@ export declare namespace ReactUnity {
       Call(): any;
       Call(...args: any[]): any;
       CallWithPriority(priority: ReactUnity.EventPriority, ...args: any[]): any;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -1787,8 +1806,8 @@ export declare namespace ReactUnity {
     }
     export class SetPropertyEvent {
       constructor();
-      AddListener(call: UnityEngine.Events.UnityAction<string, any>): void;
-      RemoveListener(call: UnityEngine.Events.UnityAction<string, any>): void;
+      AddListener(call: ((arg0: string, arg1: any) => void)): void;
+      RemoveListener(call: ((arg0: string, arg1: any) => void)): void;
       Invoke(arg0: string, arg1: any): void;
       GetPersistentEventCount(): number;
       GetPersistentTarget(index: number): UnityEngine.Object;
@@ -1803,8 +1822,8 @@ export declare namespace ReactUnity {
     }
     export class SetEventListenerEvent {
       constructor();
-      AddListener(call: UnityEngine.Events.UnityAction<string, ReactUnity.Helpers.Callback>): void;
-      RemoveListener(call: UnityEngine.Events.UnityAction<string, ReactUnity.Helpers.Callback>): void;
+      AddListener(call: ((arg0: string, arg1: ReactUnity.Helpers.Callback) => void)): void;
+      RemoveListener(call: ((arg0: string, arg1: ReactUnity.Helpers.Callback) => void)): void;
       Invoke(arg0: string, arg1: ReactUnity.Helpers.Callback): void;
       GetPersistentEventCount(): number;
       GetPersistentTarget(index: number): UnityEngine.Object;
@@ -1827,6 +1846,7 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1838,7 +1858,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1902,7 +1922,8 @@ export declare namespace ReactUnity {
       IsReadOnly: boolean;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
-      AddReserializeListener(callback: ((arg0: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
+      AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1914,7 +1935,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1957,7 +1978,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -1992,7 +2013,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2006,6 +2027,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2027,7 +2049,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: TKey, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2053,7 +2075,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
       GetValueOrDefault(key: string): T;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2068,6 +2090,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2079,7 +2102,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -2220,6 +2243,27 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scheduling {
+    export class BaseDispatcher<CoroutineType = any> {
+      Scheduler: ReactUnity.Scheduling.IScheduler;
+      OnEveryLateUpdate(callback: (() => void)): number;
+      OnEveryUpdate(callback: (() => void)): number;
+      OnceUpdate(callback: (() => void)): number;
+      OnceLateUpdate(callback: (() => void)): number;
+      Timeout(callback: (() => void), timeSeconds: number): number;
+      AnimationFrame(callback: (() => void)): number;
+      Interval(callback: (() => void), intervalSeconds: number): number;
+      Immediate(callback: (() => void)): number;
+      StartDeferred(cr: System.Collections.IEnumerator): number;
+      StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
+      StopDeferred(cr: number): void;
+      Dispose(): void;
+      Update(): void;
+      LateUpdate(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class ControlledTimer {
       constructor();
       AnimationTime: number;
@@ -2320,8 +2364,9 @@ export declare namespace ReactUnity {
     export class EditorDispatcher {
       constructor(ctx: ReactUnity.ReactContext);
       Scheduler: ReactUnity.Scheduling.IScheduler;
-      OnEveryUpdate(call: (() => void)): number;
-      OnEveryLateUpdate(call: (() => void)): number;
+      Dispose(): void;
+      OnEveryLateUpdate(callback: (() => void)): number;
+      OnEveryUpdate(callback: (() => void)): number;
       OnceUpdate(callback: (() => void)): number;
       OnceLateUpdate(callback: (() => void)): number;
       Timeout(callback: (() => void), timeSeconds: number): number;
@@ -2331,8 +2376,8 @@ export declare namespace ReactUnity {
       StartDeferred(cr: System.Collections.IEnumerator): number;
       StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
       StopDeferred(cr: number): void;
-      StopAll(): void;
-      Dispose(): void;
+      Update(): void;
+      LateUpdate(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2382,10 +2427,8 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class RuntimeDispatcher {
+    export class RuntimeDispatcherBehavior {
       constructor();
-      Scheduler: ReactUnity.Scheduling.IScheduler;
-      CurrentLifecycle: ReactUnity.Scheduling.CurrentLifecycle;
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2408,20 +2451,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      static Create(ctx: ReactUnity.ReactContext): ReactUnity.Scheduling.RuntimeDispatcher;
-      OnEveryLateUpdate(callback: (() => void)): number;
-      OnEveryUpdate(callback: (() => void)): number;
-      OnceUpdate(callback: (() => void)): number;
-      OnceLateUpdate(callback: (() => void)): number;
-      Timeout(callback: (() => void), timeSeconds: number): number;
-      AnimationFrame(callback: (() => void)): number;
-      Interval(callback: (() => void), intervalSeconds: number): number;
-      Immediate(callback: (() => void)): number;
-      IsMainThread(): boolean;
-      StartDeferred(cr: System.Collections.IEnumerator): number;
-      StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
-      StopDeferred(cr: number): void;
-      Dispose(): void;
+      static Create(ctx: ReactUnity.ReactContext): ReactUnity.Scheduling.RuntimeDispatcherBehavior_RuntimeDispatcher;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -2476,8 +2506,64 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class RuntimeDispatcherBehavior_RuntimeDispatcher {
+      constructor(ctx: ReactUnity.ReactContext, behavior: ReactUnity.Scheduling.RuntimeDispatcherBehavior);
+      CurrentLifecycle: ReactUnity.Scheduling.CurrentLifecycle;
+      Scheduler: ReactUnity.Scheduling.IScheduler;
+      Behavior: ReactUnity.Scheduling.RuntimeDispatcherBehavior;
+      Dispose(): void;
+      OnEveryLateUpdate(callback: (() => void)): number;
+      OnEveryUpdate(callback: (() => void)): number;
+      OnceUpdate(callback: (() => void)): number;
+      OnceLateUpdate(callback: (() => void)): number;
+      Timeout(callback: (() => void), timeSeconds: number): number;
+      AnimationFrame(callback: (() => void)): number;
+      Interval(callback: (() => void), intervalSeconds: number): number;
+      Immediate(callback: (() => void)): number;
+      StartDeferred(cr: System.Collections.IEnumerator): number;
+      StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
+      StopDeferred(cr: number): void;
+      Update(): void;
+      LateUpdate(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
   }
   export namespace Scripting {
+    export class ClearScriptEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
+      Key: string;
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
+      NativeEngine: any; // System.Object
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClearScriptEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2513,7 +2599,57 @@ export declare namespace ReactUnity {
     }
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+    }
+    export class JintEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
+      Key: string;
+      Engine: any; // Jint.Engine
+      NativeEngine: any; // System.Object
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintTypeConverter {
+      constructor(context: ReactUnity.ReactContext, engine: any);
+      Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class QuickJSApiBridge {
+      constructor();
+      static KeyForCSharpIdentity: string;
+      GetPayloadHeader(context: any, val: any): any;
+      NewBridgeObject(context: any, o: any, proto: any): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export class QuickJSConverters {
       static RegisterAllConverters(): void;
@@ -2525,7 +2661,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class QuickJSEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void));
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void));
       Key: string;
       NativeEngine: any; // System.Object
       Capabilities: ReactUnity.Scripting.EngineCapabilities;
@@ -2556,7 +2692,7 @@ export declare namespace ReactUnity {
     export class QuickJSEngineFactory {
       constructor();
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((arg0: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2695,9 +2831,11 @@ export declare namespace ReactUnity {
       }
       export class DocumentProxy {
         constructor(context: ReactUnity.ReactContext, origin: string);
+        documentElement: ReactUnity.Scripting.DomProxies.DocumentProxy;
         head: ReactUnity.Scripting.DomProxies.HeadProxy;
         Origin: string;
         Context: ReactUnity.ReactContext;
+        nodeType: number;
         createElement(type: string): any;
         createTextNode(text: string): string;
         querySelector(query: string): any;
@@ -2782,6 +2920,8 @@ export declare namespace ReactUnity {
         constructor(document: ReactUnity.Scripting.DomProxies.DocumentProxy);
         tagName: string;
         firstChild: string;
+        sheet: ReactUnity.Styling.StyleSheet;
+        textContent: string;
         nodeType: number;
         nextSibling: any; // System.Object
         childNodes: string[];
@@ -2865,7 +3005,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(): void;
-        BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -2881,7 +3021,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(data: System.Byte[]): void;
-        BeginInvoke(data: System.Byte[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(data: System.Byte[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -2897,7 +3037,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(errorMsg: string): void;
-        BeginInvoke(errorMsg: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(errorMsg: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -2913,7 +3053,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(closeCode: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason: string): void;
-        BeginInvoke(closeCode: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(closeCode: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -3206,7 +3346,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: string, arg1: ReactUnity.Styling.CursorPair, arg2: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: ReactUnity.Styling.CursorPair, arg3: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -3237,6 +3377,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -3258,7 +3399,7 @@ export declare namespace ReactUnity {
       Remove(key: ReactUnity.Styling.IStyleProperty): boolean;
       RemoveWithoutNotify(key: ReactUnity.Styling.IStyleProperty): boolean;
       AddListener(cb: any): (() => void);
-      AddListener(listener: ((arg0: ReactUnity.Styling.IStyleProperty, arg1: any, arg2: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: ReactUnity.Styling.IStyleProperty, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -3331,11 +3472,11 @@ export declare namespace ReactUnity {
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       transitionProperty: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TransitionProperty>;
       transitionDuration: ReactUnity.Types.ICssValueList<number>;
-      transitionTimingFunction: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TimingFunction>;
+      transitionTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
       transitionDelay: ReactUnity.Types.ICssValueList<number>;
       transitionPlayState: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationPlayState>;
       motionDuration: number;
-      motionTimingFunction: ReactUnity.Styling.Animations.TimingFunction;
+      motionTimingFunction: ((value: number, start?: number, end?: number) => number);
       motionDelay: number;
       animationDelay: ReactUnity.Types.ICssValueList<number>;
       animationDirection: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationDirection>;
@@ -3344,7 +3485,7 @@ export declare namespace ReactUnity {
       animationIterationCount: ReactUnity.Types.ICssValueList<number>;
       animationName: ReactUnity.Types.ICssValueList<string>;
       animationPlayState: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.AnimationPlayState>;
-      animationTimingFunction: ReactUnity.Types.ICssValueList<ReactUnity.Styling.Animations.TimingFunction>;
+      animationTimingFunction: ReactUnity.Types.ICssValueList<((value: number, start?: number, end?: number) => number)>;
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
@@ -3694,10 +3835,18 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class StyleSheet {
-      constructor(context: ReactUnity.Styling.StyleContext, style: string, importanceOffset?: number, scope?: ReactUnity.IReactComponent);
+      constructor(context: ReactUnity.Styling.StyleContext, style: string, importanceOffset?: number, scope?: ReactUnity.IReactComponent, media?: string);
+      Attached: boolean;
+      Enabled: boolean;
+      selectorText: string;
+      name: string;
+      style: any; // System.Object
+      media: any; // System.Object
+      cssRules: ReactUnity.Styling.StyleSheetNode[];
       Context: ReactUnity.Styling.StyleContext;
       Scope: ReactUnity.IReactComponent;
       ImportanceOffset: number;
+      Media: ReactUnity.Styling.Rules.MediaQueryList;
       FontFamilies: Record<string, ReactUnity.Types.FontReference>;
       Keyframes: Record<string, ReactUnity.KeyframeList>;
       MediaQueries: ReactUnity.Styling.Rules.MediaQueryList[];
@@ -3707,6 +3856,28 @@ export declare namespace ReactUnity {
       Enable(): void;
       Disable(): void;
       ResolveStyle(): void;
+      insertRule(text: string, index?: number): void;
+      appendRule(text: string): void;
+      deleteRule(index: number): void;
+      replace(text: string): ReactUnity.Styling.StyleSheetNode;
+      replaceSync(text: string): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class StyleSheetNode {
+      constructor(sheet: ReactUnity.Styling.StyleSheet, original: any);
+      selectorText: string;
+      name: string;
+      style: any; // System.Object
+      media: any; // System.Object
+      cssRules: ReactUnity.Styling.StyleSheetNode[];
+      insertRule(text: string, index?: number): void;
+      appendRule(text: string): void;
+      deleteRule(index: number): void;
+      replace(text: string): ReactUnity.Styling.StyleSheetNode;
+      replaceSync(text: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3720,6 +3891,16 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.Styling.StyleState;
       SetCurrent(newStyle: ReactUnity.Styling.NodeStyle): void;
       Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class StyleSheetNode_MediaList {
+      constructor(rule: any, node: ReactUnity.Styling.StyleSheetNode);
+      mediaText: string;
+      Node: ReactUnity.Styling.StyleSheetNode;
+      Rule: any; // ExCSS.IMediaRule
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3781,15 +3962,15 @@ export declare namespace ReactUnity {
         static Interpolate(from: UnityEngine.Vector3, to: UnityEngine.Vector3, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): UnityEngine.Vector3;
         static Interpolate(from: UnityEngine.Vector4, to: UnityEngine.Vector4, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): UnityEngine.Vector4;
         static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): UnityEngine.Quaternion;
-        static Interpolate(t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction, mirror?: boolean): number;
-        static Interpolate(from: number, to: number, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): number;
-        static Interpolate(from: UnityEngine.Color, to: UnityEngine.Color, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Color;
-        static Interpolate(from: UnityEngine.Vector2, to: UnityEngine.Vector2, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Vector2;
-        static Interpolate(from: UnityEngine.Vector3, to: UnityEngine.Vector3, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Vector3;
-        static Interpolate(from: UnityEngine.Vector4, to: UnityEngine.Vector4, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Vector4;
-        static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): UnityEngine.Quaternion;
+        static Interpolate(t: number, timingFunction: ((value: number, start?: number, end?: number) => number), mirror?: boolean): number;
+        static Interpolate(from: number, to: number, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): number;
+        static Interpolate(from: UnityEngine.Color, to: UnityEngine.Color, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): UnityEngine.Color;
+        static Interpolate(from: UnityEngine.Vector2, to: UnityEngine.Vector2, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): UnityEngine.Vector2;
+        static Interpolate(from: UnityEngine.Vector3, to: UnityEngine.Vector3, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): UnityEngine.Vector3;
+        static Interpolate(from: UnityEngine.Vector4, to: UnityEngine.Vector4, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): UnityEngine.Vector4;
+        static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): UnityEngine.Quaternion;
         static Interpolate(from: any, to: any, t: number): any;
-        static Interpolate(from: any, to: any, t: number, timingFunction: ReactUnity.Styling.Animations.TimingFunction): any;
+        static Interpolate(from: any, to: any, t: number, timingFunction: ((value: number, start?: number, end?: number) => number)): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3800,7 +3981,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(value: number, start?: number, end?: number): number;
-        BeginInvoke(value: number, start: number, end: number, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(value: number, start: number, end: number, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): number;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -3812,17 +3993,17 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class TimingFunctions {
-        static Ease: ReactUnity.Styling.Animations.TimingFunction;
-        static EaseIn: ReactUnity.Styling.Animations.TimingFunction;
-        static EaseOut: ReactUnity.Styling.Animations.TimingFunction;
-        static EaseInOut: ReactUnity.Styling.Animations.TimingFunction;
-        static StepStart: ReactUnity.Styling.Animations.TimingFunction;
-        static StepEnd: ReactUnity.Styling.Animations.TimingFunction;
-        static Default: ReactUnity.Styling.Animations.TimingFunction;
+        static Ease: ((value: number, start?: number, end?: number) => number);
+        static EaseIn: ((value: number, start?: number, end?: number) => number);
+        static EaseOut: ((value: number, start?: number, end?: number) => number);
+        static EaseInOut: ((value: number, start?: number, end?: number) => number);
+        static StepStart: ((value: number, start?: number, end?: number) => number);
+        static StepEnd: ((value: number, start?: number, end?: number) => number);
+        static Default: ((value: number, start?: number, end?: number) => number);
         static Linear(t: number, start?: number, end?: number): number;
-        static Steps(count: number, mode?: ReactUnity.Styling.Animations.StepsJumpMode): ReactUnity.Styling.Animations.TimingFunction;
-        static Get(easeType: ReactUnity.Styling.Animations.TimingFunctionType): ReactUnity.Styling.Animations.TimingFunction;
-        static Get(easeType: string): ReactUnity.Styling.Animations.TimingFunction;
+        static Steps(count: number, mode?: ReactUnity.Styling.Animations.StepsJumpMode): ((value: number, start?: number, end?: number) => number);
+        static Get(easeType: ReactUnity.Styling.Animations.TimingFunctionType): ((value: number, start?: number, end?: number) => number);
+        static Get(easeType: string): ((value: number, start?: number, end?: number) => number);
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3861,7 +4042,7 @@ export declare namespace ReactUnity {
       }
       export class TimingFunctions_CubicBezier {
         static Linear(value: number, start?: number, end?: number): number;
-        static Create(mX1: number, mY1: number, mX2: number, mY2: number): ReactUnity.Styling.Animations.TimingFunction;
+        static Create(mX1: number, mY1: number, mX2: number, mY2: number): ((value: number, start?: number, end?: number) => number);
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3901,12 +4082,12 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
       }
       export class ComputedCompound {
-        constructor(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback);
-        Callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback;
+        constructor(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ((values: any[]) => any));
+        Callback: ((values: any[]) => any);
         Values: ReactUnity.Styling.Computed.IComputedValue[];
         Converters: ReactUnity.Styling.Converters.StyleConverterBase[];
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
-        static Create(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ReactUnity.Styling.Computed.ComputedCompound_CompoundCallback, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
+        static Create(values: ReactUnity.Styling.Computed.IComputedValue[], converters: ReactUnity.Styling.Converters.StyleConverterBase[], callback: ((values: any[]) => any), allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -3971,25 +4152,25 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
       }
       export class ComputedList {
-        constructor(values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback, defaultValue?: any);
-        Callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback;
+        constructor(values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((values: any[]) => any), defaultValue?: any);
+        Callback: ((values: any[]) => any);
         Values: System.Collections.Generic.IList<ReactUnity.Styling.Computed.IComputedValue>;
         Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         DefaultValue: any; // System.Object
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
-        static Create(values: any, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedList_CompoundCallback, defaultValue?: any, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
+        static Create(values: any, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((values: any[]) => any), defaultValue?: any, allConstants?: boolean): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
       export class ComputedMapper {
-        constructor(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback);
-        Callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback;
+        constructor(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((value: any) => any));
+        Callback: ((value: any) => any);
         Value: ReactUnity.Styling.Computed.IComputedValue;
         Converter: ReactUnity.Styling.Converters.StyleConverterBase;
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
-        static Create(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ReactUnity.Styling.Computed.ComputedMapper_MapCallback): ReactUnity.Styling.Computed.IComputedValue;
+        static Create(value: ReactUnity.Styling.Computed.IComputedValue, converter: ReactUnity.Styling.Converters.StyleConverterBase, callback: ((value: any) => any)): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -4075,7 +4256,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(values: any[]): any;
-        BeginInvoke(values: any[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(values: any[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): any;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -4091,7 +4272,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(values: any[]): any;
-        BeginInvoke(values: any[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(values: any[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): any;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -4107,7 +4288,7 @@ export declare namespace ReactUnity {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(value: any): any;
-        BeginInvoke(value: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(value: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): any;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -4203,7 +4384,7 @@ export declare namespace ReactUnity {
       }
       export class FloatConverter {
         constructor();
-        constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg0: number) => any)>, allowSuffixless?: boolean);
+        constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg: number) => any)>, allowSuffixless?: boolean);
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
@@ -4372,7 +4553,7 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class Vector3Converter {
-        constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Styling.Converters.StyleConverterBase, defaultZValue?: number);
+        constructor(singleValueMode?: ((arg: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Styling.Converters.StyleConverterBase, defaultZValue?: number);
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Equals(obj: any): boolean;
@@ -4661,7 +4842,7 @@ export declare namespace ReactUnity {
       Value: any; // System.Object
       static None: ReactUnity.Types.AudioReference;
       Dispose(): void;
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.AudioClip) => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: UnityEngine.AudioClip) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4779,17 +4960,17 @@ export declare namespace ReactUnity {
       CopyTo(array: T[]): void;
       CopyTo(index: number, array: T[], arrayIndex: number, count: number): void;
       CopyTo(array: T[], arrayIndex: number): void;
-      Exists(match: System.Predicate<T>): boolean;
-      Find(match: System.Predicate<T>): T;
-      FindAll(match: System.Predicate<T>): T[];
-      FindIndex(match: System.Predicate<T>): number;
-      FindIndex(startIndex: number, match: System.Predicate<T>): number;
-      FindIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
-      FindLast(match: System.Predicate<T>): T;
-      FindLastIndex(match: System.Predicate<T>): number;
-      FindLastIndex(startIndex: number, match: System.Predicate<T>): number;
-      FindLastIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
-      ForEach(action: ((arg0: T) => void)): void;
+      Exists(match: ((obj: T) => boolean)): boolean;
+      Find(match: ((obj: T) => boolean)): T;
+      FindAll(match: ((obj: T) => boolean)): T[];
+      FindIndex(match: ((obj: T) => boolean)): number;
+      FindIndex(startIndex: number, match: ((obj: T) => boolean)): number;
+      FindIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
+      FindLast(match: ((obj: T) => boolean)): T;
+      FindLastIndex(match: ((obj: T) => boolean)): number;
+      FindLastIndex(startIndex: number, match: ((obj: T) => boolean)): number;
+      FindLastIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
+      ForEach(action: ((obj: T) => void)): void;
       GetEnumerator(): System.Collections.Generic.List<T>;
       GetRange(index: number, count: number): T[];
       IndexOf(item: T): number;
@@ -4801,7 +4982,7 @@ export declare namespace ReactUnity {
       LastIndexOf(item: T, index: number): number;
       LastIndexOf(item: T, index: number, count: number): number;
       Remove(item: T): boolean;
-      RemoveAll(match: System.Predicate<T>): number;
+      RemoveAll(match: ((obj: T) => boolean)): number;
       RemoveAt(index: number): void;
       RemoveRange(index: number, count: number): void;
       Reverse(): void;
@@ -4809,10 +4990,10 @@ export declare namespace ReactUnity {
       Sort(): void;
       Sort(comparer: System.Collections.Generic.IComparer<T>): void;
       Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<T>): void;
-      Sort(comparison: System.Comparison<T>): void;
+      Sort(comparison: ((x: T, y: T) => number)): void;
       ToArray(): T[];
       TrimExcess(): void;
-      TrueForAll(match: System.Predicate<T>): boolean;
+      TrueForAll(match: ((obj: T) => boolean)): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4870,7 +5051,7 @@ export declare namespace ReactUnity {
       Type: ReactUnity.Types.AssetReferenceType;
       Value: any; // System.Object
       static None: ReactUnity.Types.FontReference;
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: ReactUnity.Types.FontSource) => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: ReactUnity.Types.FontSource) => void)): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -4987,7 +5168,7 @@ export declare namespace ReactUnity {
       Value: any; // System.Object
       static None: ReactUnity.Types.ImageReference;
       Dispose(): void;
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.Texture2D) => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: UnityEngine.Texture2D) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5026,7 +5207,7 @@ export declare namespace ReactUnity {
       Value: any; // System.Object
       static None: ReactUnity.Types.TextReference;
       Dispose(): void;
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.TextAsset) => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: UnityEngine.TextAsset) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5078,7 +5259,7 @@ export declare namespace ReactUnity {
       Type: ReactUnity.Types.AssetReferenceType;
       Value: any; // System.Object
       static None: ReactUnity.Types.VideoReference;
-      Get(context: ReactUnity.ReactContext, callback: ((arg0: ReactUnity.Types.VideoComponentSource) => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: ReactUnity.Types.VideoComponentSource) => void)): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -6894,7 +7075,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Content: string;
       InnerContent: string;
-      Image: any; // Unity.VectorGraphics.SVGImage
+      Image: UnityEngine.UI.Image;
       Replaced: ReactUnity.UGUI.ReplacedImageComponent;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
@@ -6981,7 +7162,7 @@ export declare namespace ReactUnity {
     }
     export class SvgImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
-      Image: any; // Unity.VectorGraphics.SVGImage
+      Image: UnityEngine.UI.Image;
       Replaced: ReactUnity.UGUI.ReplacedImageComponent;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
@@ -7559,13 +7740,14 @@ export declare namespace ReactUnity {
       Html: ReactUnity.Html.HtmlContext;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: (() => void)[];
-      static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUI.UGUIContext) => ReactUnity.UGUI.UGUIComponent);
-      static textCreator: ((arg0: string, arg1: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
+      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.UGUI.UGUIComponent);
+      static textCreator: ((arg1: string, arg2: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
       CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreateText(text: string): ReactUnity.ITextComponent;
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
+      UpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
       InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
       InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -7574,9 +7756,9 @@ export declare namespace ReactUnity {
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Start(afterStart?: (() => void)): void;
       Dispose(): void;
+      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -8481,8 +8663,8 @@ export declare namespace ReactUnity {
       }
       export class PrefabTarget_PrefabEvent {
         constructor();
-        AddListener(call: UnityEngine.Events.UnityAction<ReactUnity.UGUI.PrefabComponent, ReactUnity.UGUI.Behaviours.PrefabTarget>): void;
-        RemoveListener(call: UnityEngine.Events.UnityAction<ReactUnity.UGUI.PrefabComponent, ReactUnity.UGUI.Behaviours.PrefabTarget>): void;
+        AddListener(call: ((arg0: ReactUnity.UGUI.PrefabComponent, arg1: ReactUnity.UGUI.Behaviours.PrefabTarget) => void)): void;
+        RemoveListener(call: ((arg0: ReactUnity.UGUI.PrefabComponent, arg1: ReactUnity.UGUI.Behaviours.PrefabTarget) => void)): void;
         Invoke(arg0: ReactUnity.UGUI.PrefabComponent, arg1: ReactUnity.UGUI.Behaviours.PrefabTarget): void;
         GetPersistentEventCount(): number;
         GetPersistentTarget(index: number): UnityEngine.Object;
@@ -9959,12 +10141,12 @@ export declare namespace ReactUnity {
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
         CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
-        RegisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
         IsActive(): boolean;
         IsDestroyed(): boolean;
         IsInvoking(): boolean;
@@ -10111,12 +10293,12 @@ export declare namespace ReactUnity {
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
         CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
-        RegisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
         IsActive(): boolean;
         IsDestroyed(): boolean;
         IsInvoking(): boolean;
@@ -10203,7 +10385,7 @@ export declare namespace ReactUnity {
         BackgroundGraphics: ReactUnity.UGUI.Internal.BackgroundImage[];
         MaskGraphics: ReactUnity.UGUI.Internal.BackgroundImage[];
         MaskRoot: UnityEngine.RectTransform;
-        static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent, setContainer: ((arg0: UnityEngine.RectTransform) => void)): ReactUnity.UGUI.Internal.BorderAndBackground;
+        static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent, setContainer: ((obj: UnityEngine.RectTransform) => void)): ReactUnity.UGUI.Internal.BorderAndBackground;
         UpdateStyle(style: ReactUnity.Styling.NodeStyle): void;
         UpdateLayout(layout: Facebook.Yoga.YogaNode): void;
         IsInvoking(): boolean;
@@ -10346,12 +10528,12 @@ export declare namespace ReactUnity {
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
         CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
-        RegisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
         IsActive(): boolean;
         IsDestroyed(): boolean;
         IsInvoking(): boolean;
@@ -10565,12 +10747,12 @@ export declare namespace ReactUnity {
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
         CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
         CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
-        RegisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyLayoutCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyVerticesCallback(action: UnityEngine.Events.UnityAction): void;
-        RegisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
-        UnregisterDirtyMaterialCallback(action: UnityEngine.Events.UnityAction): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
         IsActive(): boolean;
         IsDestroyed(): boolean;
         IsInvoking(): boolean;
@@ -12359,7 +12541,7 @@ export declare namespace ReactUnity {
       enabledInHierarchy: boolean;
       enabledSelf: boolean;
       visible: boolean;
-      generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+      generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -12405,7 +12587,7 @@ export declare namespace ReactUnity {
       ElementAt(index: number): UnityEngine.UIElements.VisualElement;
       IndexOf(element: UnityEngine.UIElements.VisualElement): number;
       Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
-      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      Sort(comp: ((x: UnityEngine.UIElements.VisualElement, y: UnityEngine.UIElements.VisualElement) => number)): void;
       BringToFront(): void;
       SendToBack(): void;
       PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
@@ -12558,8 +12740,8 @@ export declare namespace ReactUnity {
       CursorSet: ReactUnity.Styling.CursorSet;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: (() => void)[];
-      static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UIToolkit.UIToolkitContext) => any);
-      static textCreator: ((arg0: string, arg1: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
+      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.UIToolkit.IUIToolkitComponent<UnityEngine.UIElements.VisualElement>);
+      static textCreator: ((arg1: string, arg2: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
       static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.IReactComponent]]
       Initialize(): void;
       CreateText(text: string): ReactUnity.ITextComponent;
@@ -12567,6 +12749,7 @@ export declare namespace ReactUnity {
       CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
+      UpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
       InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
       InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -12575,9 +12758,9 @@ export declare namespace ReactUnity {
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Start(afterStart?: (() => void)): void;
       Dispose(): void;
+      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
-      BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       FlushCommands(serializedCommands?: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -12619,7 +12802,7 @@ export declare namespace ReactUnity {
       enabledInHierarchy: boolean;
       enabledSelf: boolean;
       visible: boolean;
-      generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+      generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -12660,7 +12843,7 @@ export declare namespace ReactUnity {
       ElementAt(index: number): UnityEngine.UIElements.VisualElement;
       IndexOf(element: UnityEngine.UIElements.VisualElement): number;
       Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
-      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      Sort(comp: ((x: UnityEngine.UIElements.VisualElement, y: UnityEngine.UIElements.VisualElement) => number)): void;
       BringToFront(): void;
       SendToBack(): void;
       PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
@@ -12680,7 +12863,7 @@ export declare namespace ReactUnity {
       constructor();
       CalculatesLayout: boolean;
       HostElement: UnityEngine.UIElements.VisualElement;
-      OnAudioPlayback: ((arg0: UnityEngine.AudioClip) => void);
+      OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
       Globals: ReactUnity.Helpers.SerializableDictionary;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;

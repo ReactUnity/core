@@ -31,7 +31,7 @@ export function diffProperties(
     else {
       const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
       if (depth > 0) {
-        prop = diffProperties(lastProps[propKey], null, depth - 1);
+        prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
       }
 
