@@ -130,6 +130,7 @@ namespace ReactUnity.Styling
             { "textAlign", textAlign },
             { "textOverflow", textOverflow },
             { "textWrap", textWrap },
+            { "whiteSpace", textWrap },
             { "maxLines", maxLines },
             { "lineClamp", maxLines },
             { "textStrokeWidth", textStrokeWidth },

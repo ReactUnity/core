@@ -29,18 +29,18 @@ namespace ReactUnity.Scheduling
         static EditorDispatcher()
         {
             TickEvent = typeof(EditorApplication).GetEvent("tick", BindingFlags.NonPublic | BindingFlags.Static);
-            AddTickMethod = TickEvent.GetAddMethod(true);
-            RemoveTickMethod = TickEvent.GetRemoveMethod(true);
+            AddTickMethod = TickEvent?.GetAddMethod(true);
+            RemoveTickMethod = TickEvent?.GetRemoveMethod(true);
         }
 
         void AddTick(Delegate tick)
         {
-            AddTickMethod.Invoke(null, new object[] { tick });
+            AddTickMethod?.Invoke(null, new object[] { tick });
         }
 
         void RemoveTick(Delegate tick)
         {
-            RemoveTickMethod.Invoke(null, new object[] { tick });
+            RemoveTickMethod?.Invoke(null, new object[] { tick });
         }
 
         public override void Dispose()
@@ -66,7 +66,7 @@ namespace ReactUnity.Scheduling
         {
             Scheduler = new DefaultScheduler(this, ctx);
 #if UNITY_EDITOR
-            TickDelegate = Delegate.CreateDelegate(TickEvent.EventHandlerType, this, this.GetType().GetMethod(nameof(Update)));
+            TickDelegate = TickEvent == null ? null : Delegate.CreateDelegate(TickEvent.EventHandlerType, this, this.GetType().GetMethod(nameof(Update)));
 
             AddTick(TickDelegate);
             EditorApplication.update += LateUpdate;

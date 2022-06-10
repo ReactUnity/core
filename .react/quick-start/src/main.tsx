@@ -225,14 +225,13 @@ function App() {
       </div>}
 
       {!!engines && engines.map((x, i) => <section key={i} style={{ margin: '10px 0 0 0' }}>
-        {x.name}
-        {!!x.recommended && ' (Recommended)'}
+        {x.name + (x.recommended ? ' (Recommended)' : '')}
 
         {!!x.tooltip && <button className={styles.infoButton}>
           <image source={infoImage} className={styles.infoIcon} tooltip={x.tooltip} />
         </button>}
 
-        <view style={{ flexGrow: 1 }} />
+        <view style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }} />
 
         {!x.installed ?
           (x.recommended ? error : warn) :
@@ -243,8 +242,7 @@ function App() {
         </>}
 
         {!!x.installed ? <>
-          Installed Version
-          {' ' + x.version}
+          {'Installed Version ' + x.version}
 
           {!x.implicit && !x.recommended && <button onClick={() => Window.UninstallEnginePlugin(x.type)}>
             Uninstall
@@ -253,7 +251,7 @@ function App() {
           {x.hasUpdate && <>
             {x.implicit ? <>Update ReactUnity to get the latest version</> :
               <button onClick={() => Window.InstallEnginePlugin(x.type)}>
-                Update to {x.latestVersion}
+                {'Update to ' + x.latestVersion}
               </button>}
           </>}
         </> : <>
