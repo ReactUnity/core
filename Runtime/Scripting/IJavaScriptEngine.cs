@@ -6,14 +6,6 @@
 #define REACT_JINT
 #endif
 
-#if !REACT_DISABLE_YANTRA && REACT_YANTRA_AVAILABLE
-#define REACT_YANTRA
-#endif
-
-#if !REACT_DISABLE_JURASSIC && REACT_JURASSIC_AVAILABLE
-#define REACT_JURASSIC
-#endif
-
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
 #define REACT_QUICKJS
 #endif
@@ -56,22 +48,6 @@ namespace ReactUnity.Scripting
         [InspectorName("QuickJS")]
 #endif
         QuickJS = 3,
-
-
-#if !REACT_YANTRA_AVAILABLE
-        [Obsolete]
-#elif !REACT_YANTRA
-        [InspectorName("Yantra (Disabled)")]
-#endif
-        Yantra = 4,
-
-
-#if !REACT_JURASSIC_AVAILABLE
-        [Obsolete]
-#elif !REACT_JURASSIC
-        [InspectorName("Jurassic (Disabled)")]
-#endif
-        Jurassic = 5,
     }
 
     public interface IJavaScriptEngine : IDisposable

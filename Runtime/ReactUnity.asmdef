@@ -23,9 +23,7 @@
         "ExCSS.dll",
         "Jint.dll",
         "websocket-sharp.dll",
-        "Newtonsoft.Json.dll",
-        "YantraJS.Core.dll",
-        "Jurassic.dll"
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

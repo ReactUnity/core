@@ -6,14 +6,6 @@
 #define REACT_JINT
 #endif
 
-#if !REACT_DISABLE_YANTRA && REACT_YANTRA_AVAILABLE
-#define REACT_YANTRA
-#endif
-
-#if !REACT_DISABLE_JURASSIC && REACT_JURASSIC_AVAILABLE
-#define REACT_JURASSIC
-#endif
-
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
 #define REACT_QUICKJS
 #endif
@@ -29,14 +21,6 @@ namespace ReactUnity.Scripting
 #if REACT_JINT
                 case JavascriptEngineType.Jint:
                     return new JintEngineFactory();
-#endif
-#if REACT_YANTRA
-                case JavascriptEngineType.Yantra:
-                    return new YantraEngineFactory();
-#endif
-#if REACT_JURASSIC
-                case JavascriptEngineType.Jurassic:
-                    return new JurassicEngineFactory();
 #endif
 #if REACT_QUICKJS
                 case JavascriptEngineType.QuickJS:
@@ -54,10 +38,6 @@ namespace ReactUnity.Scripting
                     return new ClearScriptEngineFactory();
 #elif REACT_JINT
                     return new JintEngineFactory();
-#elif REACT_YANTRA
-                    return new YantraEngineFactory();
-#elif REACT_JURASSIC
-                    return new JurassicEngineFactory();
 #else
                     throw new System.Exception("Could not find a valid scripting engine.");
 #endif
