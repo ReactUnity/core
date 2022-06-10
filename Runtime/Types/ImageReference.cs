@@ -68,7 +68,25 @@ namespace ReactUnity.Types
             }
             else
             {
-                base.Get(context, realType, realValue, callback);
+                base.Get(context, realType, realValue, (texture) => {
+                    if (texture != null) callback(texture);
+                    else
+                    {
+                        Sprite spriteRes = null;
+                        switch (realType)
+                        {
+                            case AssetReferenceType.Resource:
+                                spriteRes = Resources.Load<Sprite>(realValue as string);
+                                break;
+                            case AssetReferenceType.Global:
+                                if (context.Globals.TryGetValue(realValue as string, out var res)) spriteRes = res as Sprite;
+                                break;
+                        }
+
+                        if (spriteRes != null) callback(spriteRes.texture);
+                        else callback(null);
+                    }
+                });
             }
         }
 

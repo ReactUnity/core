@@ -27,14 +27,14 @@ namespace ReactUnity.UGUI
 
         protected override void SetSource(object value)
         {
-            if (!AllConverters.ImageSourceConverter.TryGetConstantValue<ImageReference>(value, out var source))
-                source = ImageReference.None;
-            source.Get(Context, SetTexture);
+            if (!AllConverters.SpriteSourceConverter.TryGetConstantValue<SpriteReference>(value, out var source))
+                source = SpriteReference.None;
+            source.Get(Context, SetSprite);
         }
 
         protected void SetTexture(Texture2D texture)
         {
-            var sprite = texture == null ? null : Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
+            var sprite = SpriteReference.FromTexture(texture);
 
             SetSprite(sprite);
         }

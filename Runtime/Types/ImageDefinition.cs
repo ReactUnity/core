@@ -19,7 +19,7 @@ namespace ReactUnity.Types
 
             private Sprite sprite;
             public Sprite Sprite => Texture == null ? null :
-                (sprite = sprite ?? Sprite.Create(Texture, new Rect(0, 0, Texture.width, Texture.height), Vector2.one / 2));
+                (sprite = sprite ?? SpriteReference.FromTexture(Texture));
         }
 
         public static ImageDefinition NoImage => UrlImageDefinition.None;

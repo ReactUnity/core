@@ -19,14 +19,19 @@ namespace ReactUnity.UIToolkit
 
         protected void SetSource(object value)
         {
-            if (!AllConverters.ImageSourceConverter.TryGetConstantValue<ImageReference>(value, out var source))
-                source = ImageReference.None;
-            source.Get(Context, SetTexture);
+            if (!AllConverters.SpriteSourceConverter.TryGetConstantValue<SpriteReference>(value, out var source))
+                source = SpriteReference.None;
+            source.Get(Context, SetSprite);
         }
 
         protected void SetTexture(Texture2D texture)
         {
             Element.image = texture;
+        }
+
+        protected void SetSprite(Sprite sprite)
+        {
+            Element.sprite = sprite;
         }
 
         protected override void ApplyStylesSelf()
