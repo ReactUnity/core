@@ -1,7 +1,7 @@
 using System;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI

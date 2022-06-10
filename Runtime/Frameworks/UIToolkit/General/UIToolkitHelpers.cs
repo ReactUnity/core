@@ -69,7 +69,8 @@ namespace ReactUnity.UIToolkit
             return asset as VectorImage;
         }
 #else
-        public static (VectorImage, Rect) GenerateVectorImage(string rawSvg) {
+        public static (VectorImage, Rect) GenerateVectorImage(string rawSvg)
+        {
             ReactUnity.Helpers.WarningHelpers.WarnOnce("SVG_VECTOR_GRAPHICS", "Unity.VectorGraphics module is required to use SVG components");
             return (default(VectorImage), default(Rect));
         }

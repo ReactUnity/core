@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace ReactUnity.Scheduling
 {
@@ -143,6 +142,8 @@ namespace ReactUnity.Scheduling
                 ToStart.Clear();
 
                 foreach (var cnt in continues) cnt.MoveNext();
+
+                isUpdate = false;
             }
 
             Started.AddRange(newStarts);
@@ -161,13 +162,13 @@ namespace ReactUnity.Scheduling
             CallOnLateUpdate.Clear();
         }
 
-        private IEnumerator OnUpdateCoroutine(Action callback, int handle, bool immediate)
+        protected virtual IEnumerator OnUpdateCoroutine(Action callback, int handle, bool immediate)
         {
             yield return immediate ? ImmediateReturnType : null;
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
+        protected virtual IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
         {
             while (true)
             {
