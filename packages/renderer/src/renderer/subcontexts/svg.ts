@@ -58,19 +58,23 @@ export function stringifySVG(node: RichTextNode): string {
         }
       }
     }
-    acc.push('>');
   }
 
   if (node.children?.length > 0) {
+    if (tag) acc.push('>');
+
     for (const child of node.children) {
       acc.push(stringifySVG(child));
     }
-  }
 
-  if (tag) {
-    acc.push('</');
-    acc.push(tag);
-    acc.push('>');
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  }
+  else {
+    if (tag) acc.push(' />');
   }
 
   return acc.join('');
