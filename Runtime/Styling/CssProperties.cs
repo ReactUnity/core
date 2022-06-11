@@ -16,6 +16,7 @@ namespace ReactUnity.Styling
         {
             foreach (var kv in StyleProperties.PropertyMap) PropertyMap[kv.Key] = kv.Value;
             foreach (var kv in LayoutProperties.PropertyMap) PropertyMap[kv.Key] = kv.Value;
+            foreach (var kv in SVGProperties.PropertyMap) PropertyMap[kv.Key] = kv.Value;
 
             var allProperties = new HashSet<IStyleProperty>();
 
@@ -34,8 +35,8 @@ namespace ReactUnity.Styling
                 if (VariableProperties.TryGetValue(name, out var val)) return val;
                 return VariableProperties[name] = new VariableProperty(name);
             }
-            PropertyMap.TryGetValue(name, out var style);
-            return style;
+            if (PropertyMap.TryGetValue(name, out var style)) return style;
+            return null;
         }
 
         public static IStyleKey GetKey(string name)

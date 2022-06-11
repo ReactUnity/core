@@ -63,13 +63,13 @@ namespace ReactUnity.Styling
         {
             Sheet = null;
 
-            if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(InnerContent))
+            if (Parent != null && scope != null && !string.IsNullOrWhiteSpace(ResolvedContent))
             {
                 var scopeEl = GetScopeElement();
 
                 if (scopeEl != null)
                 {
-                    Sheet = new StyleSheet(Context.Style, InnerContent, Importance, scopeEl);
+                    Sheet = new StyleSheet(Context.Style, ResolvedContent, Importance, scopeEl);
                 }
             }
         }

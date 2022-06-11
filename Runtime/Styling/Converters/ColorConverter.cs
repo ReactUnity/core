@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using ReactUnity.Styling.Computed;
 using UnityEngine;
 
@@ -194,6 +195,22 @@ namespace ReactUnity.Styling.Converters
                 return true;
             }
             return base.ConvertInternal(value, out result);
+        }
+
+        public override string StringifyTyped(Color value)
+        {
+            var sb = new StringBuilder("rgba(");
+
+            sb.Append(Mathf.FloorToInt(value.r * 255));
+            sb.Append(",");
+            sb.Append(Mathf.FloorToInt(value.g * 255));
+            sb.Append(",");
+            sb.Append(Mathf.FloorToInt(value.b * 255));
+            sb.Append(",");
+            sb.Append(value.a);
+            sb.Append(")");
+
+            return sb.ToString();
         }
     }
 }

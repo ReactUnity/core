@@ -8,6 +8,7 @@ namespace ReactUnity.Styling.Converters
     public interface IStyleConverter
     {
         IComputedValue Convert(object value);
+        string Stringify(object value);
     }
 
     public class StyleConverterBase : IStyleConverter
@@ -133,10 +134,32 @@ namespace ReactUnity.Styling.Converters
             if (StylingUtils.UnboxConstant(resolved, out var cv) && cv is T t) return t;
             return defaultValue;
         }
+
+        public string Stringify(object value)
+        {
+            if (value is string s) return s;
+            return StringifyInternal(value);
+        }
+
+        public virtual string StringifyInternal(object value)
+        {
+            return null;
+        }
     }
 
     public class TypedStyleConverterBase<T> : StyleConverterBase
     {
         protected override Type TargetType => typeof(T);
+
+        public override string StringifyInternal(object value)
+        {
+            if (value is T t) return StringifyTyped(t);
+            return null;
+        }
+
+        public virtual string StringifyTyped(T value)
+        {
+            return null;
+        }
     }
 }

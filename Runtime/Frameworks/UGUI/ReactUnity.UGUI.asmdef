@@ -11,8 +11,10 @@
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ClearScript.Core.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [
         "!REACT_DISABLE_UGUI"

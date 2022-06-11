@@ -29,6 +29,7 @@ namespace ReactUnity.Styling
         }
 
         public IComputedValue Convert(object value) => converter.Convert(value);
+        public string Stringify(object value) => converter.Stringify(value);
 
         public bool CanHandleKeyword(CssKeyword keyword) => true;
 

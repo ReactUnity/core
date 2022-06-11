@@ -10,7 +10,7 @@ namespace ReactUnity.Html
         protected override void RefreshValue()
         {
             Clear();
-            Context.Html.InsertHtml(InnerContent, this);
+            Context.Html.InsertHtml(ResolvedContent, this);
         }
     }
 }

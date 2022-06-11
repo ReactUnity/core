@@ -18,10 +18,10 @@ namespace ReactUnity.Scripting
 
         public void Execute()
         {
-            if (string.IsNullOrWhiteSpace(InnerContent)) return;
+            if (string.IsNullOrWhiteSpace(ResolvedContent)) return;
             try
             {
-                Context.Script.ExecuteScript(InnerContent, "script");
+                Context.Script.ExecuteScript(ResolvedContent, "script");
             }
             catch (Exception ex)
             {

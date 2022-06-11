@@ -13,6 +13,8 @@ namespace ReactUnity.Styling.Computed
                 if (value is string s) return new ComputedConstant(s);
                 return null;
             }
+
+            public string Stringify(object value) => value as string;
         }
 
         internal static CustomVariableStringConverter VariableStringConverter = new CustomVariableStringConverter();

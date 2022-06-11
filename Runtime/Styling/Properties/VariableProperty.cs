@@ -27,6 +27,7 @@ namespace ReactUnity.Styling
         {
             return value is IComputedValue d ? d : new ComputedDynamic(value);
         }
+        public string Stringify(object value) => value as string;
 
         public object GetStyle(NodeStyle style) => style.GetRawStyleValue(this);
 

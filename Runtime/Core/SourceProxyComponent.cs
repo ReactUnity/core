@@ -20,18 +20,18 @@ namespace ReactUnity
                 if (content != value)
                 {
                     content = value;
-                    if (source == null) InnerContent = value;
+                    if (source == null) ResolvedContent = value;
                 }
             }
         }
 
-        private string innerContent;
-        public string InnerContent
+        private string resolvedContent;
+        public string ResolvedContent
         {
-            get => innerContent;
+            get => resolvedContent;
             private set
             {
-                innerContent = value;
+                resolvedContent = value;
                 RefreshValue();
             }
         }
@@ -70,12 +70,12 @@ namespace ReactUnity
 
         private void SetSource(object value)
         {
-            if (!AllConverters.TextReferenceConverter.TryGetConstantValue<TextReference>(value, out var reference)) InnerContent = Content;
+            if (!AllConverters.TextReferenceConverter.TryGetConstantValue<TextReference>(value, out var reference)) ResolvedContent = Content;
             else
             {
                 reference?.Get(Context, text => {
                     if (value != Source) return;
-                    InnerContent = text?.text;
+                    ResolvedContent = text?.text;
                     FireEvent("onLoad", new { type = "load" });
                 });
             }

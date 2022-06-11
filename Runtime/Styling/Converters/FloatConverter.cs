@@ -121,6 +121,8 @@ namespace ReactUnity.Styling.Converters
             result = null;
             return false;
         }
+
+        public override string StringifyTyped(float value) => value + "";
     }
 
     public class PercentageConverter : FloatConverter
@@ -130,6 +132,8 @@ namespace ReactUnity.Styling.Converters
             { "%", 0.01f },
         })
         { }
+
+        public override string StringifyTyped(float value) => value + "%";
     }
 
     public class ColorValueConverter : FloatConverter
@@ -169,6 +173,8 @@ namespace ReactUnity.Styling.Converters
             }
         )
         { }
+
+        public override string StringifyTyped(float value) => value + "px";
     }
 
     public class FontSizeConverter : FloatConverter
@@ -199,6 +205,8 @@ namespace ReactUnity.Styling.Converters
             }
         )
         { }
+
+        public override string StringifyTyped(float value) => value + "px";
     }
 
     public class AngleConverter : FloatConverter
@@ -228,6 +236,8 @@ namespace ReactUnity.Styling.Converters
                 { "to left top", 315 },
             };
         }
+
+        public override string StringifyTyped(float value) => value + "deg";
     }
 
     public class DurationConverter : FloatConverter
@@ -238,6 +248,8 @@ namespace ReactUnity.Styling.Converters
             { "s", 1 },
         }, null, false)
         { }
+
+        public override string StringifyTyped(float value) => value + "s";
     }
 
     public class CalcConverter : TypedStyleConverterBase<ComputedCalc.CalcValue>

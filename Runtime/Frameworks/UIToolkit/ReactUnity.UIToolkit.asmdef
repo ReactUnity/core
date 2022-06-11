@@ -10,8 +10,10 @@
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ClearScript.Core.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [
         "UNITY_EDITOR || UNITY_2021_2_OR_NEWER",
