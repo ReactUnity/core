@@ -82,5 +82,67 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("svgs/" + item.Item1);
         }
+
+
+
+#if !REACT_VECTOR_GRAPHICS
+        [Ignore("Unity.VectorGraphics is not enabled")]
+#endif
+        [UGUITest(Script = @"
+
+function generatePolylineArray(arrayX, arrayY) {
+  let polyline = '';
+  arrayX.map((coordX, i) => {
+    return polyline += `${coordX}, ${arrayY[i]} `;
+  })
+  return polyline;
+}
+
+const Graph = ({ arrayX, arrayY, lineWidth }) => {
+  const polyline = React.useMemo(() => {
+    return generatePolylineArray(arrayX, arrayY);
+  }, [arrayX, arrayY]);
+
+  return (
+    <svg x='0px' y='0px' viewBox='0 0 1000 2'>
+      <polyline points={polyline} fill='none' stroke={'black'} strokeWidth={lineWidth} />
+
+      {arrayX.map((coordX, i) =>
+        <circle key={i} cx={coordX} cy={arrayY[i]} r={6} fill={'red'} />)}
+    </svg>
+  )
+};
+
+
+const xPoints = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000];
+const yPoints = [5, 30, -5, -10, 15, -15, 20, 5, 8, -12, -20, 2, 3, -5, 8, -2, 22, -30, -15, -35, -20];
+
+export function App() {
+  const globals = useGlobals();
+  const points = globals.points || 7;
+  const lineWidth = globals.lineWidth || 4;
+
+  const [arrayX, arrayY] = React.useMemo(() => {
+    return [xPoints.slice(0, points), yPoints.slice(0, points)];
+  }, [points]);
+
+  return <div id='test'>
+    <Graph arrayX={arrayX} arrayY={arrayY} lineWidth={lineWidth} />
+  </div>;
+}
+
+        ", Style = BaseStyle)]
+        public IEnumerator DynamicSVG()
+        {
+            Assertions.Snapshot("svgs/dynamic1");
+            yield return null;
+            Globals["points"] = 10;
+            yield return null;
+            Assertions.Snapshot("svgs/dynamic2");
+
+            Globals["lineWidth"] = 6;
+            yield return null;
+            Assertions.Snapshot("svgs/dynamic3");
+        }
     }
 }

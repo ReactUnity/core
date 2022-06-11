@@ -529,14 +529,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source:
-    Type: 3
+    Type: 0
     Language: 0
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
     Watch: 1
     SourcePath: react/index
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 1
+    UseDevServer: 0
     DevServer: http://localhost:3100
   Debug: 0
   AwaitDebugger: 0

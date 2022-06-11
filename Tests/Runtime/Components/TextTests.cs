@@ -143,5 +143,33 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(58, Cmp.ClientHeight);
         }
+
+
+        [UGUITest(Script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <view id='root'>
+                    <richtext id='text'>
+                        <color value='red'>
+                            Red
+                            {!globals.hideBlue && <color value = 'blue'>
+                                Blue
+                            </color>}
+                        </color> Normal <br />
+                        Hey
+                    </richtext>
+                </view>;
+            }
+", Style = BaseStyle)]
+        public IEnumerator InlineRichTextShouldWork()
+        {
+            Assert.AreEqual("<color=\"red\">Red<color=\"blue\">Blue</color></color> Normal <br>Hey", Text.Text.text);
+            yield return null;
+
+            Globals["hideBlue"] = true;
+            yield return null;
+            Assert.AreEqual("<color=\"red\">Red</color> Normal <br>Hey", Text.Text.text);
+        }
+
     }
 }

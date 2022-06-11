@@ -11320,9 +11320,9 @@ function stringifyStyle(style) {
       var element = style[key];
 
       if (element != null) {
-        acc.push(key);
-        acc.push(':');
         acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
         acc.push(';');
       }
     }
@@ -11349,7 +11349,7 @@ function stringifySVG(node) {
 
         if (element != null) {
           acc.push(' ');
-          acc.push(key);
+          acc.push(kebabize(key));
           acc.push('="');
           acc.push(element);
           acc.push('"');
