@@ -53,10 +53,10 @@ namespace ReactUnity.UGUI
             }
         }
 
+        protected override string DefaultName => "TEXT";
 
         public TextComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
-            GameObject.name = "TEXT";
             Text = AddComponent<TextMeshProUGUI>();
 
             Measurer = AddComponent<TextMeasurer>();
@@ -194,6 +194,16 @@ namespace ReactUnity.UGUI
             if (transform == TextTransform.UpperCase) Text.fontStyle = styles | FontStyles.UpperCase;
             else if (transform == TextTransform.LowerCase) Text.fontStyle = styles | FontStyles.LowerCase;
             else if (transform == TextTransform.SmallCaps) Text.fontStyle = styles | FontStyles.SmallCaps;
+        }
+    }
+
+    public class RichTextComponent : TextComponent
+    {
+        protected override string DefaultName => "RICHTEXT";
+
+        public RichTextComponent(string text, UGUIContext context, string tag) : base(text, context, tag)
+        {
+            Text.richText = true;
         }
     }
 }

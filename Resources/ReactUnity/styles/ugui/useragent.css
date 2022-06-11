@@ -35,6 +35,7 @@ video {
   overflow: hidden;
   justify-content: center;
   align-items: center;
+  object-fit: scale-down;
 }
 
 button {

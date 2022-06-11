@@ -6,7 +6,7 @@ namespace ReactUnity.UIToolkit
     {
         public string Content => Element.text;
 
-        public TextComponent(string text, UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
+        public TextComponent(string text, UIToolkitContext context, string tag, bool isContainer = true, bool richText = true) : base(context, tag, isContainer)
         {
             Element.text = text;
         }

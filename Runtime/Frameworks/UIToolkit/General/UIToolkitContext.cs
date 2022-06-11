@@ -26,12 +26,14 @@ namespace ReactUnity.UIToolkit
             = new Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>>()
             {
                 { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false) },
+                { "richtext", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false, true) },
                 { "label", (tag, text, context) => new TextComponent<Label>(text, context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent<Button>(context, tag) },
                 { "view", (tag, text, context) => new UIToolkitComponent<VisualElement>(context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
                 { "box", (tag, text, context) => new UIToolkitComponent<Box>(context, tag) },
                 { "toggle", (tag, text, context) => new ToggleComponent<Toggle>(context, tag) },
+                { "img", (tag, text, context) => new ImageComponent(context, tag) },
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
                 { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
                 { "input", (tag, text, context) => new TextFieldComponent(context, tag) },

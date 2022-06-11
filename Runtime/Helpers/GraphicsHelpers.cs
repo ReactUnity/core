@@ -42,8 +42,16 @@ namespace ReactUnity.Helpers
 #if !REACT_VECTOR_GRAPHICS
             return null;
 #else
-            var (geoms, rect) = BuildSvgGeometry(rawSvg);
-            return VectorUtils.BuildSprite(geoms, 1, VectorUtils.Alignment.Center, Vector2.zero, 128, true);
+            try
+            {
+                var (geoms, rect) = BuildSvgGeometry(rawSvg);
+                return VectorUtils.BuildSprite(geoms, 1, VectorUtils.Alignment.Center, Vector2.zero, 128, true);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogException(ex);
+                return null;
+            }
 #endif
         }
     }
