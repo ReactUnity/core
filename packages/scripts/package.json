@@ -47,6 +47,7 @@
     "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "@svgr/webpack": "^6.2.1",
     "@types/react": "^18.0.9",
     "@types/webpack-env": "^1.16.4",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
