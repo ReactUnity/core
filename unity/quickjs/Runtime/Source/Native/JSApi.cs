@@ -537,8 +537,8 @@ namespace QuickJS.Native
         [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe JSValue JS_Call(JSContext ctx, JSValueConst func_obj, JSValueConst this_obj, int argc, JSValueConst* argv);
 
-        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern JSValue JS_Call(JSContext ctx, JSValueConst func_obj, JSValueConst this_obj, int argc, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] JSValueConst[] argv);
+        // [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
+        // public static extern JSValue JS_Call(JSContext ctx, JSValueConst func_obj, JSValueConst this_obj, int argc, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] JSValueConst[] argv);
 
         public static unsafe JSValue JS_Call(JSContext ctx, JSValueConst func_obj, JSValueConst this_obj)
         {

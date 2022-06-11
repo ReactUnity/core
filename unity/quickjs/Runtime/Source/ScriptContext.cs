@@ -650,7 +650,8 @@ namespace QuickJS
             JSApi.JS_SetProperty(ctx, require_obj, context.GetAtom("main"), main_mod_obj);
             JSApi.JS_SetProperty(ctx, require_obj, context.GetAtom("cache"), JSApi.JS_DupValue(ctx, _moduleCache));
 
-            var require_argv = new JSValue[5] { exports_obj, require_obj, module_obj, filename_obj, dirname_obj, };
+            const int RequireArgNum = 5;
+            var require_argv = stackalloc JSValue[RequireArgNum] { exports_obj, require_obj, module_obj, filename_obj, dirname_obj, };
 
             var tagValue = ScriptRuntime.TryReadByteCodeTagValue(source);
             if (tagValue == ScriptRuntime.BYTECODE_COMMONJS_MODULE_TAG)
@@ -666,15 +667,15 @@ namespace QuickJS
                         if (JSApi.JS_IsFunction(ctx, func_val) != 1)
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
-                            JSApi.JS_FreeValue(ctx, require_argv);
+                            JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
                             return ctx.ThrowInternalError("failed to require bytecode module");
                         }
 
-                        var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, require_argv.Length, require_argv);
+                        var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, RequireArgNum, require_argv);
                         JSApi.JS_FreeValue(ctx, func_val);
                         if (rval.IsException())
                         {
-                            JSApi.JS_FreeValue(ctx, require_argv);
+                            JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
                             return rval;
                         }
 
@@ -692,7 +693,7 @@ namespace QuickJS
                     else
                     {
                         JSApi.JS_FreeValue(ctx, bytecodeFunc);
-                        JSApi.JS_FreeValue(ctx, require_argv);
+                        JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
                         return ctx.ThrowInternalError("failed to require bytecode module");
                     }
                 }
@@ -718,17 +719,17 @@ namespace QuickJS
 
                     if (func_val.IsException())
                     {
-                        JSApi.JS_FreeValue(ctx, require_argv);
+                        JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
                         return func_val;
                     }
 
                     if (JSApi.JS_IsFunction(ctx, func_val) == 1)
                     {
-                        var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, require_argv.Length, require_argv);
+                        var rval = JSApi.JS_Call(ctx, func_val, JSApi.JS_UNDEFINED, RequireArgNum, require_argv);
                         if (rval.IsException())
                         {
                             JSApi.JS_FreeValue(ctx, func_val);
-                            JSApi.JS_FreeValue(ctx, require_argv);
+                            JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
                             return rval;
                         }
 
@@ -750,7 +751,7 @@ namespace QuickJS
 
             JSApi.JS_SetProperty(ctx, module_obj, context.GetAtom("loaded"), JSApi.JS_NewBool(ctx, true));
             var exports_ = JSApi.JS_GetProperty(ctx, module_obj, context.GetAtom("exports"));
-            JSApi.JS_FreeValue(ctx, require_argv);
+            JSApi.JS_FreeValue(ctx, RequireArgNum, require_argv);
             return exports_;
         }
 

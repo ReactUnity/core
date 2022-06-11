@@ -64,7 +64,7 @@ namespace QuickJS.Unity
                 var context = runtime.GetMainContext();
                 var ctx = (JSContext)context;
                 JSValue func;
-                
+
                 if (context.LoadModuleCacheExports(module_id, funcName, out func))
                 {
                     var globalThis = context.GetGlobalObject();
@@ -104,7 +104,14 @@ namespace QuickJS.Unity
                             }
 
                             var argv = arglist.ToArray();
-                            var rval = JSApi.JS_Call(ctx, func, globalThis, argv.Length, argv);
+                            JSValue rval = JSApi.JS_UNDEFINED;
+                            unsafe
+                            {
+                                fixed (JSValue* pArgs = argv)
+                                {
+                                    rval = JSApi.JS_Call(ctx, func, globalThis, argv.Length, pArgs);
+                                }
+                            }
 
                             if (rval.IsException())
                             {
