@@ -18,9 +18,9 @@ export function stringifyStyle(style: any): string {
       const element = style[key];
 
       if (element != null) {
-        acc.push(key);
-        acc.push(':');
         acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
         acc.push(';');
       }
     }
@@ -51,7 +51,7 @@ export function stringifySVG(node: RichTextNode): string {
 
         if (element != null) {
           acc.push(' ');
-          acc.push(key);
+          acc.push(kebabize(key));
           acc.push('="');
           acc.push(element);
           acc.push('"');

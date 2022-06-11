@@ -1,28 +1,29 @@
+import * as React from 'react';
 import { UnityEngine } from './generated';
 
 export type RichTextTags = RichTextValueTag;
 
-export interface RichTextVoidTag {
+export interface RichTextVoidTag extends React.Attributes {
   children?: any;
 }
 
-export interface RichTextValueTag {
+export interface RichTextValueTag extends React.Attributes {
   value?: string;
   children?: any;
 }
 
-export interface RichTextColorTag {
+export interface RichTextColorTag extends React.Attributes {
   value?: string | UnityEngine.Color;
   children?: any;
 }
 
-export interface RichTextFontTag {
+export interface RichTextFontTag extends React.Attributes {
   value?: string;
   material?: string;
   children?: any;
 }
 
-export interface RichTextSpriteTag {
+export interface RichTextSpriteTag extends React.Attributes {
   value?: string | number;
   children?: any;
   name?: string;
