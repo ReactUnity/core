@@ -14,7 +14,7 @@ import { syncReconciler } from './sync/reconciler';
 const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();
 
 interface RenderOptions {
-  /* Unity element to render React on. It is the element `ReactUnityUGUI` is attached to by default. */
+  /* Unity element to render React on. It is the element `ReactUnity` component is attached to by default. */
   hostContainer?: NativeContainerInstance;
 
   /* Skips rendering some useful wrappers like `ErrorBoundary` and `GlobalsProvider`. */
@@ -23,8 +23,11 @@ interface RenderOptions {
   /* Allows rendering in `legacy` mode if needed. The default rendering mode is `concurrent`. */
   mode?: 'legacy' | 'concurrent';
 
-  /* Render using the sync reconciler instead of the async (batch) rendering. It is not recommended to change this value. */
-  sync?: boolean;
+  /**
+     Render using the sync reconciler instead of the batch rendering. It is not recommended to change this value.
+     Changing this will disable some features like inline rich-text and svg rendering, although it may improve performance for Jint.
+  */
+  disableBatchRendering?: boolean;
 }
 
 export const Renderer = {
@@ -34,9 +37,7 @@ export const Renderer = {
   ) {
     const hostContainer = options?.hostContainer || HostContainer;
 
-    // For Jint engine, sync is default
-    // For other engines (ClearScript), async is default
-    const isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? options?.sync === false : !options?.sync;
+    const isAsync = !options?.disableBatchRendering;
     let { hostRoot, asyncJobCallback } = containerMap.get(hostContainer) || {};
 
     let findFiberByHostInstance: any = () => null;
@@ -112,8 +113,5 @@ export const Renderer = {
   },
 };
 
-const isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
-const defaultReconciler = isSyncByDefault ? syncReconciler : asyncReconciler;
-
-export const batchedUpdates = defaultReconciler.batchedUpdates;
-export const flushSync = defaultReconciler.flushSync;
+export const batchedUpdates = asyncReconciler.batchedUpdates;
+export const flushSync = asyncReconciler.flushSync;
