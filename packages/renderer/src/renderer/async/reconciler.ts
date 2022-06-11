@@ -1,12 +1,36 @@
 import * as Reconciler from 'react-reconciler';
 import { commonReconciler, getAllowedProps, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
+import { subContextRenderers } from '../subcontexts';
 import { callbacksRepo, convertPropsToSerializable, objectsRepo } from './serializer';
-import { AsyncHostContext, AsyncReconcilerConfig } from './types';
+import { AsyncHostContext, AsyncReconcilerConfig, AsyncSubContext } from './types';
 
 let refId = 0;
 
 const ctxMap = new Map<object, AsyncHostContext>();
+
+const updateSubContext = (instance: AsyncSubContext) => {
+  const rend = subContextRenderers[instance.type];
+
+  let root = instance?.root;
+  let cur = instance;
+
+  while (cur && !root) {
+    root = cur.root;
+    cur = cur.parent;
+  }
+
+  if (!root) return;
+
+  var content = rend(root.subContext.node);
+
+  if (instance.type === 'richtext') {
+    instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+  }
+  else if (instance.type === 'svg') {
+    instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+  }
+};
 
 const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   ...commonReconciler,
@@ -48,17 +72,39 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     const ctx: AsyncHostContext = {
       context,
       commands,
+      refId: rootContainer.refId,
+      type: 'native',
     };
 
     ctxMap.set(context, ctx);
 
     return ctx;
   },
-  getChildHostContext: (parentCtx) => {
+  getChildHostContext: (parentCtx, type) => {
+    if (type === 'richtext' && parentCtx.type === 'native')
+      return {
+        type: 'richtext',
+        hostContext: parentCtx,
+        node: null,
+        parent: null,
+        root: null,
+      };
+
+    if (type === 'svg' && parentCtx.type === 'native')
+      return {
+        type: 'svg',
+        hostContext: parentCtx,
+        node: null,
+        parent: null,
+        root: null,
+      };
+
     return parentCtx;
   },
   getPublicInstance: (instance) => {
-    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === 'native')
+      return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    return null;
   },
 
   supportsMutation: true,
@@ -79,26 +125,91 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   },
 
   createInstance(type, props, rootContainer, ctx, internalHandle) {
-    refId++;
     const aProps = getAllowedProps(props, type);
-    ctx.commands.push(['c', { t: type, r: refId, ...convertPropsToSerializable(aProps) }]);
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['c', { t: type, r: refId, ...convertPropsToSerializable(aProps) }]);
 
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
-    return { ...ctx, refId };
+      const res = { ...ctx, refId };
+
+      if (type === 'richtext') {
+        res.subContext = {
+          type: 'richtext',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps,
+          },
+          root: res,
+          hostContext: res,
+          parent: null,
+        };
+      }
+
+      if (type === 'svg') {
+        res.subContext = {
+          type: 'svg',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps,
+          },
+          root: res,
+          hostContext: res,
+          parent: null,
+        };
+      }
+
+      return res;
+    }
+    else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return {
+        ...ctx,
+        node: {
+          tag: type,
+          children: [],
+          attributes: aProps,
+        },
+      };
+    }
   },
 
   createTextInstance(text, rootContainer, ctx, internalHandle) {
-    refId++;
-    ctx.commands.push(['t', { r: refId, c: text }]);
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['t', { r: refId, c: text }]);
 
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
-    return { ...ctx, refId };
+      return { ...ctx, refId };
+    }
+    else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return {
+        ...ctx,
+        node: { text },
+      };
+    }
   },
 
   appendInitialChild(parent, child) {
-    parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+    }
+    else if (
+      (parent.type === 'richtext' && child.type === 'richtext') ||
+      (parent.type === 'svg' && child.type === 'svg')
+    ) {
+      if ('children' in parent.node)
+        parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   finalizeInitialChildren: () => false,
   commitMount: (instance) => { },
@@ -114,31 +225,94 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
   commitUpdate(instance, updatePayload, type) {
     const props = getAllowedProps(updatePayload, type);
-    instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+    if (instance.type === 'native') {
+      instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+    }
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node)
+        instance.node.attributes = { ...instance.node.attributes, ...props };
+      updateSubContext(instance);
+    }
   },
 
 
-  commitTextUpdate(textInstance, oldText, newText) {
-    textInstance.commands.push(['x', { r: textInstance.refId, c: newText }]);
+  commitTextUpdate(instance, oldText, newText) {
+    if (instance.type === 'native') {
+      instance.commands.push(['x', { r: instance.refId, c: newText }]);
+    }
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node = { text: newText };
+      updateSubContext(instance);
+    }
   },
 
   appendChild(parent, child) {
-    child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+    }
+    else if (
+      (parent.type === 'richtext' && child.type === 'richtext') ||
+      (parent.type === 'svg' && child.type === 'svg')
+    ) {
+      if ('children' in parent.node)
+        parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   appendChildToContainer(parent, child) {
-    child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+    if (child.type === 'native')
+      child.commands.push(['a', { p: parent.refId, c: child.refId }]);
   },
   insertBefore(parent, child, beforeChild) {
-    child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
+      child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+    }
+    else if (
+      (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext') ||
+      (parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg')) {
+      if ('children' in parent.node) {
+        const index = parent.node.children.indexOf(beforeChild.node);
+        if (index >= 0) parent.node.children.splice(index, 0, child.node);
+        else parent.node.children.push(child.node);
+      }
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   insertInContainerBefore(parent, child, beforeChild) {
-    child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+    if (child.type === 'native' && beforeChild.type === 'native')
+      child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
   },
   removeChild(parent, child) {
-    child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+    }
+    else if (
+      (parent.type === 'richtext' && child.type === 'richtext') ||
+      (parent.type === 'svg' && child.type === 'svg')
+    ) {
+      if ('children' in parent.node) {
+        const index = parent.node.children.indexOf(child.node);
+        if (index >= 0) parent.node.children.splice(index, 1);
+      }
+      updateSubContext(parent);
+    }
   },
   removeChildFromContainer(parent, child) {
-    child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+    if (child.type === 'native')
+      child.commands.push(['r', { p: parent.refId, c: child.refId }]);
   },
 
   resetTextContent: () => { },
@@ -148,16 +322,36 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   // Required for Suspense
 
   hideInstance: (instance) => {
-    instance.commands.push(['h', { r: instance.refId, h: true }]);
+    if (instance.type === 'native')
+      instance.commands.push(['h', { r: instance.refId, h: true }]);
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   hideTextInstance: (instance) => {
-    instance.commands.push(['h', { r: instance.refId, h: true }]);
+    if (instance.type === 'native')
+      instance.commands.push(['h', { r: instance.refId, h: true }]);
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   unhideInstance: (instance) => {
-    instance.commands.push(['h', { r: instance.refId, h: false }]);
+    if (instance.type === 'native')
+      instance.commands.push(['h', { r: instance.refId, h: false }]);
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   },
   unhideTextInstance: (instance) => {
-    instance.commands.push(['h', { r: instance.refId, h: false }]);
+    if (instance.type === 'native')
+      instance.commands.push(['h', { r: instance.refId, h: false }]);
+    else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   },
 };
 

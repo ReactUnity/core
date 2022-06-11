@@ -1,6 +1,8 @@
 import { RefAttributes } from 'react';
 import { ReactUnity } from './generated';
 import { AssetReferenceOrHttp } from './properties';
+import { RichTextElements, RichTextTags } from './richtext';
+import { SVGElements } from './svg';
 
 type BaseCmp = ReactUnity.IReactComponent;
 
@@ -45,8 +47,8 @@ export type StyleCmpDef = StyleCmpProps & RefAttributes<ReactUnity.Styling.Style
 export type ScriptCmpDef = ContentSrcProps & RefAttributes<ReactUnity.Scripting.ScriptComponent> & { children?: Textable | Textable[] };
 export type HtmlCmpDef = ContentSrcProps & RefAttributes<ReactUnity.Html.HtmlComponent> & { children?: never };
 
-export interface BaseElements<BaseCmpType> {
-  [key: string]: BaseCmpType;
+export interface BaseElements<BaseCmpType> extends RichTextElements, SVGElements {
+  [key: string]: BaseCmpType | RichTextTags | SVGElements[keyof SVGElements];
   style: BaseCmpType & StyleCmpDef;
   script: BaseCmpType & ScriptCmpDef;
   html: BaseCmpType & HtmlCmpDef;

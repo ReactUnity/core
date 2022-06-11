@@ -6,7 +6,7 @@ import { version } from '../version';
 import { DefaultView } from '../views/default-view';
 import { ObjectsRepo } from './async/objects';
 import { asyncReconciler } from './async/reconciler';
-import { AsyncNativeInstance } from './async/types';
+import { AsyncContainerInstance, AsyncNativeInstance } from './async/types';
 import { isDevelopment } from './constants';
 import { syncReconciler } from './sync/reconciler';
 
@@ -64,7 +64,8 @@ export const Renderer = {
           return Array.prototype.push.apply(commands, args);
         };
 
-        const hostContainerInstance = {
+        const hostContainerInstance: AsyncContainerInstance = {
+          type: 'native',
           commands,
           component: hostContainer,
           context: hostContainer.Context,

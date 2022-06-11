@@ -6,20 +6,50 @@ import {
 import { BatchCommand } from './commands';
 import { ObjectsRepo } from './objects';
 
-export type AsyncHostContext = {
+export type AsyncHostContext = AsyncNativeInstance | AsyncSubContext;
+export type AsyncInstance = AsyncNativeInstance | AsyncSubContext;
+
+export type AsyncNativeInstance = {
   context: ReactUnity.ReactContext;
   commands: BatchCommand[];
-};
-
-export type AsyncNativeInstance = AsyncHostContext & {
   refId: number;
+  type: 'native';
+  subContext?: AsyncSubContext;
 };
 
-type AsyncContainerInstance = AsyncNativeInstance & {
+export type AsyncSubContext = RichTextContext | SvgContext;
+
+export type RichTextContext = {
+  hostContext: AsyncNativeInstance;
+  type: 'richtext';
+  node: RichTextNode;
+  root: AsyncNativeInstance;
+  parent: RichTextContext;
+};
+
+export type SvgContext = {
+  hostContext: AsyncNativeInstance;
+  type: 'svg';
+  node: RichTextNode;
+  root: AsyncNativeInstance;
+  parent: SvgContext;
+};
+
+export type RichTextNode = ({
+  tag: string;
+  attributes: Record<string, any>;
+  children: RichTextNode[];
+  hidden?: boolean;
+} | {
+  text: string;
+  hidden?: boolean;
+});
+
+export type AsyncContainerInstance = AsyncNativeInstance & {
   component: ReactUnity.IReactComponent;
   fiberCache: ObjectsRepo | null;
 };
 
 type AsyncPublicInstance = ReactUnity.IReactComponent;
 
-export type AsyncReconcilerConfig = Reconciler.HostConfig<InstanceTag, Props, AsyncContainerInstance, AsyncNativeInstance, AsyncNativeInstance, AsyncNativeInstance, HydratableInstance, AsyncPublicInstance, AsyncHostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
+export type AsyncReconcilerConfig = Reconciler.HostConfig<InstanceTag, Props, AsyncContainerInstance, AsyncInstance, AsyncInstance, AsyncNativeInstance, HydratableInstance, AsyncPublicInstance, AsyncHostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;

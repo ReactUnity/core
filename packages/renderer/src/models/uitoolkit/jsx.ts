@@ -2,6 +2,7 @@
 import * as rc from 'react';
 import { BaseElements, Textable } from '../base';
 import { ReactUnity } from '../generated';
+import { SVGEelement } from '../svg';
 import * as Components from './components';
 
 import Cmp = ReactUnity.UIToolkit;
@@ -15,10 +16,12 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   box: BaseElement;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+  richtext: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
   scroll: BaseElement;
-  svg: Components.Svg & rc.RefAttributes<Cmp.SvgComponent> & Children<never>;
+  svg: Components.Svg & rc.RefAttributes<Cmp.SvgComponent> & Children<any> & SVGEelement;
+  img: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
   image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
   toggle: Components.Toggle & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
   input: Components.TextField<Cmp.TextFieldComponent> & rc.RefAttributes<Cmp.TextFieldComponent> & Children<never>;

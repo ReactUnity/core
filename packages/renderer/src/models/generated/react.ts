@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 10/06/2022 03:30:31
+// Generated 11/06/2022 18:41:19
 //
 /* eslint-disable */
 
@@ -497,7 +497,7 @@ export declare namespace ReactUnity {
     constructor(cmp: ReactUnity.IContainerComponent);
     constructor(ctx: ReactUnity.ReactContext, tag: string);
     Content: string;
-    InnerContent: string;
+    ResolvedContent: string;
     Source: any; // System.Object
     Proxy: ReactUnity.IContainerComponent;
     Context: ReactUnity.ReactContext;
@@ -2157,7 +2157,7 @@ export declare namespace ReactUnity {
     export class HtmlComponent {
       constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
       Content: string;
-      InnerContent: string;
+      ResolvedContent: string;
       Source: any; // System.Object
       Proxy: ReactUnity.IContainerComponent;
       Context: ReactUnity.ReactContext;
@@ -2578,8 +2578,6 @@ export declare namespace ReactUnity {
       Jint = 1,
       ClearScript = 2,
       QuickJS = 3,
-      Yantra = 4,
-      Jurassic = 5,
     }
     export interface IJavaScriptEngine {
       Key: string;
@@ -2724,7 +2722,7 @@ export declare namespace ReactUnity {
     export class ScriptComponent {
       constructor(ctx: ReactUnity.ReactContext, tag?: string, text?: string);
       Content: string;
-      InnerContent: string;
+      ResolvedContent: string;
       Source: any; // System.Object
       Proxy: ReactUnity.IContainerComponent;
       Context: ReactUnity.ReactContext;
@@ -3581,6 +3579,7 @@ export declare namespace ReactUnity {
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       converter: ReactUnity.Styling.Converters.StyleConverterBase;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       GetHashCode(): number;
       Equals(obj: any): boolean;
@@ -3681,11 +3680,21 @@ export declare namespace ReactUnity {
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       converter: ReactUnity.Styling.Converters.StyleConverterBase;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       GetHashCode(): number;
       Equals(obj: any): boolean;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SVGProperties {
+      static fill: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static stroke: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
@@ -3703,6 +3712,7 @@ export declare namespace ReactUnity {
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       converter: ReactUnity.Styling.Converters.StyleConverterBase;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       GetHashCode(): number;
       Equals(obj: any): boolean;
@@ -3722,6 +3732,7 @@ export declare namespace ReactUnity {
       affectsLayout: boolean;
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
       GetHashCode(): number;
       Equals(obj: any): boolean;
@@ -3748,7 +3759,7 @@ export declare namespace ReactUnity {
       Active: boolean;
       Sheet: ReactUnity.Styling.StyleSheet;
       Content: string;
-      InnerContent: string;
+      ResolvedContent: string;
       Source: any; // System.Object
       Proxy: ReactUnity.IContainerComponent;
       Context: ReactUnity.ReactContext;
@@ -4050,8 +4061,11 @@ export declare namespace ReactUnity {
       }
       export class TimingFunctions_Converter {
         constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: ((value: number, start?: number, end?: number) => number)): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4059,8 +4073,11 @@ export declare namespace ReactUnity {
       }
       export class TransitionProperty_Converter {
         constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: ReactUnity.Styling.Animations.TransitionProperty): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4332,6 +4349,7 @@ export declare namespace ReactUnity {
         static ColorConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BoxShadowConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ImageReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static SpriteSourceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ImageSourceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static TextReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static AudioReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -4353,8 +4371,11 @@ export declare namespace ReactUnity {
       }
       export class BoolConverter {
         constructor(truthyValues: string[], falsyValues: string[]);
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: boolean): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4362,8 +4383,11 @@ export declare namespace ReactUnity {
       }
       export class ColorConverter {
         constructor();
+        StringifyTyped(value: UnityEngine.Color): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4377,6 +4401,8 @@ export declare namespace ReactUnity {
         KeywordOnly: boolean;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        StringifyInternal(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4387,8 +4413,11 @@ export declare namespace ReactUnity {
         constructor(suffixMap: Record<string, number>, suffixMapper?: Record<string, ((arg: number) => any)>, allowSuffixless?: boolean);
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4398,8 +4427,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4409,8 +4441,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4420,8 +4455,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4431,8 +4469,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4442,8 +4483,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4453,8 +4497,11 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
+        StringifyTyped(value: number): string;
+        StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4465,8 +4512,11 @@ export declare namespace ReactUnity {
         BaseConverter: ReactUnity.Styling.Converters.FloatConverter;
         BasePercentage: boolean;
         AllowsUnitless: boolean;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: ReactUnity.Styling.Computed.ComputedCalc_CalcValue): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4480,8 +4530,11 @@ export declare namespace ReactUnity {
         Min: number;
         Max: number;
         FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: number): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4495,8 +4548,11 @@ export declare namespace ReactUnity {
         Min: number;
         Max: number;
         FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: number): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4505,8 +4561,11 @@ export declare namespace ReactUnity {
       export class StringConverter {
         constructor();
         static Normalize(value: string): string;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: string): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4514,11 +4573,14 @@ export declare namespace ReactUnity {
       }
       export interface IStyleConverter {
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
       }
       export class StyleConverterBase {
         constructor();
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        StringifyInternal(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4526,8 +4588,11 @@ export declare namespace ReactUnity {
       }
       export class TypedStyleConverterBase<T = any> {
         constructor();
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: T): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4537,6 +4602,8 @@ export declare namespace ReactUnity {
         constructor();
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        StringifyInternal(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4547,6 +4614,8 @@ export declare namespace ReactUnity {
         AllowLiterals: boolean;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        StringifyInternal(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4554,8 +4623,11 @@ export declare namespace ReactUnity {
       }
       export class Vector3Converter {
         constructor(singleValueMode?: ((arg: number) => UnityEngine.Vector3), floatParser?: ReactUnity.Styling.Converters.StyleConverterBase, defaultZValue?: number);
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: UnityEngine.Vector3): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4565,8 +4637,11 @@ export declare namespace ReactUnity {
         constructor(allowHorizontal?: boolean, allowVertical?: boolean);
         static Horizontal: ReactUnity.Styling.Converters.YogaValueConverter;
         static Vertical: ReactUnity.Styling.Converters.YogaValueConverter;
+        StringifyInternal(value: any): string;
+        StringifyTyped(value: Facebook.Yoga.YogaValue): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4828,8 +4903,11 @@ export declare namespace ReactUnity {
     export class BaseConverter<AssetType = any, T = any> {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: T): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5200,6 +5278,20 @@ export declare namespace ReactUnity {
       Vertical = 2,
       Both = 3,
     }
+    export class SpriteReference {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(url: ReactUnity.Types.Url);
+      Type: ReactUnity.Types.AssetReferenceType;
+      Value: any; // System.Object
+      static None: ReactUnity.Types.SpriteReference;
+      static FromTexture(texture: UnityEngine.Texture2D): UnityEngine.Sprite;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: UnityEngine.Sprite) => void)): void;
+      Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class TextReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       constructor(url: ReactUnity.Types.Url);
@@ -5290,8 +5382,11 @@ export declare namespace ReactUnity {
     export class AudioReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.AudioReference): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5301,6 +5396,8 @@ export declare namespace ReactUnity {
       constructor();
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      StringifyInternal(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5312,6 +5409,8 @@ export declare namespace ReactUnity {
       static FloatParser: ReactUnity.Styling.Converters.StyleConverterBase;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      StringifyInternal(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5319,8 +5418,11 @@ export declare namespace ReactUnity {
     }
     export class Cursor_Converter {
       constructor();
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.Cursor): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5329,8 +5431,11 @@ export declare namespace ReactUnity {
     export class FontReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.FontReference): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5359,8 +5464,11 @@ export declare namespace ReactUnity {
     }
     export class ImageDefinition_Converter {
       constructor();
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.ImageDefinition): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5369,8 +5477,24 @@ export declare namespace ReactUnity {
     export class ImageReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.ImageReference): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SpriteReference_Converter {
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.SpriteReference): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5379,8 +5503,11 @@ export declare namespace ReactUnity {
     export class TextReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.TextReference): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5389,8 +5516,11 @@ export declare namespace ReactUnity {
     export class VideoReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.VideoReference): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5398,8 +5528,11 @@ export declare namespace ReactUnity {
     }
     export class YogaValue2_Converter {
       constructor(allowLiterals?: boolean, separator?: System.Char, singleValueAssignsBoth?: boolean);
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.YogaValue2): string;
       CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -7075,7 +7208,8 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Content: string;
       InnerContent: string;
-      Image: UnityEngine.UI.Image;
+      ResolvedContent: string;
+      Image: any; // Unity.VectorGraphics.SVGImage
       Replaced: ReactUnity.UGUI.ReplacedImageComponent;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
@@ -7124,6 +7258,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       SetProperty(propertyName: string, value: any): void;
+      Update(): void;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
@@ -7131,7 +7266,6 @@ export declare namespace ReactUnity {
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
       UpdateOrder(prev: number, current: number): boolean;
-      Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
@@ -7162,7 +7296,7 @@ export declare namespace ReactUnity {
     }
     export class SvgImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
-      Image: UnityEngine.UI.Image;
+      Image: any; // Unity.VectorGraphics.SVGImage
       Replaced: ReactUnity.UGUI.ReplacedImageComponent;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
@@ -7250,6 +7384,98 @@ export declare namespace ReactUnity {
     export class TextComponent {
       constructor(text: string, context: ReactUnity.UGUI.UGUIContext, tag: string);
       constructor(linkedTo: ReactUnity.UGUI.TextComponent);
+      Text: any; // TMPro.TextMeshProUGUI
+      Width: number;
+      Height: number;
+      Measurer: ReactUnity.UGUI.Behaviours.TextMeasurer;
+      LinkedTextWatcher: ReactUnity.UGUI.Behaviours.LinkedTextWatcher;
+      Content: string;
+      Font: ReactUnity.Types.FontReference;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Component: ReactUnity.UGUI.Behaviours.ReactElement;
+      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
+      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Container: UnityEngine.RectTransform;
+      Name: string;
+      ClientWidth: number;
+      ClientHeight: number;
+      EventViewport: UnityEngine.RectTransform;
+      ResolvedEventViewport: UnityEngine.RectTransform;
+      Context: ReactUnity.UGUI.UGUIContext;
+      Parent: ReactUnity.IContainerComponent;
+      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StyleState: ReactUnity.Styling.StyleState;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: InlineStyleRemap;
+      InlineStylesheet: ReactUnity.Styling.StyleSheet;
+      ParentIndex: number;
+      CurrentOrder: number;
+      Entering: boolean;
+      Leaving: boolean;
+      Destroyed: boolean;
+      IsPseudoElement: boolean;
+      Tag: string;
+      TextContent: string;
+      ClassName: string;
+      ClassList: ReactUnity.Helpers.ClassList;
+      Id: string;
+      RefId: number;
+      IsContainer: boolean;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      ScrollLeft: number;
+      ScrollTop: number;
+      ScrollWidth: number;
+      ScrollHeight: number;
+      SetText(text: string): void;
+      SetProperty(property: string, value: any): void;
+      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetBoundingClientRect(): UnityEngine.Rect;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      UpdateOrder(prev: number, current: number): boolean;
+      Update(): void;
+      MarkForStyleResolving(recursive: boolean): void;
+      Remove(): void;
+      Destroy(recursive?: boolean): void;
+      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
+      FireEvent(eventName: string, arg: any): void;
+      SetData(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      ApplyStyles(): void;
+      ApplyLayoutStyles(): void;
+      Matches(query: string): boolean;
+      Closest(query: string): ReactUnity.IReactComponent;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Clear(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class RichTextComponent {
+      constructor(text: string, context: ReactUnity.UGUI.UGUIContext, tag: string);
       Text: any; // TMPro.TextMeshProUGUI
       Width: number;
       Height: number;
@@ -12114,6 +12340,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Content: string;
       InnerContent: string;
+      ResolvedContent: string;
       Source: any; // System.Object
       Element: ReactUnity.UIToolkit.SvgElement;
       TargetElement: UnityEngine.UIElements.VisualElement;
@@ -12152,6 +12379,7 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       SetProperty(propertyName: string, value: any): void;
+      Update(): void;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
@@ -12159,7 +12387,6 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
-      Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
@@ -12189,7 +12416,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class TextComponent<TElementType = any> {
-      constructor(text: string, context: ReactUnity.UIToolkit.UIToolkitContext, tag: string, isContainer?: boolean);
+      constructor(text: string, context: ReactUnity.UIToolkit.UIToolkitContext, tag: string, isContainer?: boolean, richText?: boolean);
       Content: string;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
