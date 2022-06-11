@@ -54,5 +54,31 @@ namespace ReactUnity.Tests.UIToolkit
             yield return null;
             Assertions.Snapshot("uitoolkit/svgs/" + item.Item1);
         }
+
+
+#if !REACT_VECTOR_GRAPHICS
+        [Ignore("Unity.VectorGraphics is not enabled")]
+#endif
+        [UIToolkitTest(Style = BaseStyle, AutoRender = false)]
+        public IEnumerator InlineSvgSnapshots([ValueSource("svgs")] Tuple<string, string> item)
+        {
+            var script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <view id='test'>
+                  " + item.Item2 + @"
+                </view>;
+            }
+            ";
+
+            var source = TestHelpers.GetScriptSource(script, false, true);
+            while (source.MoveNext()) yield return null;
+            Component.Source = source.Current;
+            Render();
+
+            yield return null;
+            yield return null;
+            Assertions.Snapshot("uitoolkit/svgs/" + item.Item1);
+        }
     }
 }
