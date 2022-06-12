@@ -14,9 +14,11 @@ using System;
 using System.Linq;
 
 #if REACT_JINT
+using System.Globalization;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
+using ReactUnity.Scripting;
 #endif
 
 namespace ReactUnity.Helpers
@@ -70,12 +72,19 @@ namespace ReactUnity.Helpers
             else if (callback is ObjectInstance v)
             {
                 if (v.IsNull() || v.IsUndefined()) return null;
-                return v.Engine.Invoke(v, args);
+                var res = v.Engine.Invoke(v, args);
+                var converted = v.Engine.ClrTypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
+                v.Engine.RunContinuations();
+                return converted;
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
             {
                 var jintEngine = (context.Script.Engine as Scripting.JintEngine).Engine;
-                return cb.Invoke(JsValue.Null, args.Select(x => JsValue.FromObject(jintEngine, x)).ToArray());
+                var clrf = new Jint.Runtime.Interop.ClrFunctionInstance(jintEngine, "callbackFunc", cb);
+                var res = jintEngine.Invoke(clrf, args);
+                var converted = jintEngine.ClrTypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
+                jintEngine.RunContinuations();
+                return converted;
             }
 #endif
             else if (callback is Delegate d)

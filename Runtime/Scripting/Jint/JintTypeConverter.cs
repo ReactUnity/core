@@ -23,6 +23,11 @@ namespace ReactUnity.Scripting
 
         public override object Convert(object value, Type type, IFormatProvider formatProvider)
         {
+            if (type == typeof(object))
+            {
+                if (value is ObjectWrapper ow) return ow.Target;
+            }
+
             if (type == typeof(Callback) || type == typeof(object))
             {
                 if (value is Func<JsValue, JsValue[], JsValue> cb) return Callback.From(cb, Context);
