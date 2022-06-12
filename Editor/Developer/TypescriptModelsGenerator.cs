@@ -132,6 +132,28 @@ namespace ReactUnity.Editor.Developer
                 true
             );
         }
+
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
+        [UnityEditor.MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
+        public static void GenerateQuickJS()
+        {
+            GenerateWith(
+                new List<Assembly> {
+                    typeof(QuickJS.ScriptEngine).Assembly,
+                    typeof(QuickJS.Native.JSApi).Assembly,
+                    typeof(QuickJS.JSPayloadHeader).Assembly,
+                },
+                new List<string> { "QuickJS" },
+                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
+                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                new List<string> { },
+                true,
+                true,
+                true,
+                true
+            );
+        }
+#endif
 #endif
 
 
@@ -165,14 +187,18 @@ namespace ReactUnity.Editor.Developer
         List<string> ExcludedNamespaces;
         List<string> ExcludedTypes;
         Dictionary<string, string> ImportNamespaces;
-        HashSet<string> Imports;
         Dictionary<string, string> Remaps;
         bool ExportAsClass;
         bool AllowGeneric;
         bool AllowIndexer;
+        bool AllowPointer;
+
+        HashSet<string> Imports;
+        HashSet<string> Helpers;
+
 
         public static void GenerateWith(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
-            bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true)
+            bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true, bool allowPointer = false)
         {
             var generator =
                 new TypescriptModelsGenerator(
@@ -183,7 +209,8 @@ namespace ReactUnity.Editor.Developer
                     excludeTypes,
                     exportAsClass,
                     generateGenericClasses,
-                    allowIndexer
+                    allowIndexer,
+                    allowPointer
                 );
             generator.Generate();
         }
@@ -196,7 +223,8 @@ namespace ReactUnity.Editor.Developer
             List<string> excludeTypes,
             bool exportAsClass = true,
             bool generateGenericClasses = false,
-            bool allowIndexer = true
+            bool allowIndexer = true,
+            bool allowPointer = false
         )
         {
             Assemblies = assemblies;
@@ -205,11 +233,13 @@ namespace ReactUnity.Editor.Developer
             Remaps = new Dictionary<string, string>();
             IncludedNamespaces = include;
             ExcludedNamespaces = exclude ?? new List<string>();
-            Imports = new HashSet<string>();
             ExportAsClass = exportAsClass;
             AllowGeneric = generateGenericClasses;
             AllowIndexer = allowIndexer;
+            AllowPointer = allowPointer;
 
+            Imports = new HashSet<string>();
+            Helpers = new HashSet<string>();
         }
 
         public void Generate()
@@ -298,7 +328,7 @@ namespace ReactUnity.Editor.Developer
                     if (ExportAsClass)
                     {
                         var ctors = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public).Where(x =>
-                            !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer));
+                            !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)));
                         foreach (var info in ctors)
                             sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
                     }
@@ -306,7 +336,7 @@ namespace ReactUnity.Editor.Developer
                     var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
                                     x.GetIndexParameters().Length == 0 &&
-                                    !x.PropertyType.IsPointer &&
+                                    !(!AllowPointer && x.PropertyType.IsPointer) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || (x.GetGetMethod()?.IsPublic ?? false) || (x.GetSetMethod()?.IsPublic ?? false))
                                     )
@@ -315,15 +345,15 @@ namespace ReactUnity.Editor.Developer
 
                     var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
-                                    !x.FieldType.IsPointer &&
+                                    !(!AllowPointer && x.FieldType.IsPointer) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
                                     );
 
                     var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
-                                    !(x.ReturnType.IsByRef || x.ReturnType.IsPointer) &&
-                                    !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer) &&
+                                    !(x.ReturnType.IsByRef || (!AllowPointer && x.ReturnType.IsPointer)) &&
+                                    !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)) &&
                                     !x.IsGenericMethod &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
@@ -358,6 +388,25 @@ namespace ReactUnity.Editor.Developer
             var importGroups = Imports.GroupBy(x => ImportNamespaces[x]);
             var remapGroups = Remaps.GroupBy(x => x.Value, x => x.Key);
 
+            var helpers = "";
+
+            if (Helpers.Contains("pointer"))
+            {
+                helpers += n;
+                helpers += "export interface Pointer<T> {" + n;
+                helpers += "  type?: T;" + n;
+                helpers += "  __pointer: true;" + n;
+                helpers += "}" + n;
+                helpers += n;
+            }
+
+            if (Helpers.Contains("byte"))
+            {
+                helpers += n;
+                helpers += "type Byte = number;" + n;
+                helpers += n;
+            }
+
             var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
@@ -367,6 +416,7 @@ namespace ReactUnity.Editor.Developer
                 $"/* eslint-disable */{n}{n}" +
                 $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(y => y))} }} from '{x.Key}';"))}{n}" +
                 n +
+                helpers +
                 sb;
         }
 
@@ -515,6 +565,15 @@ namespace ReactUnity.Editor.Developer
 
         string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false, string suffixGeneric = "")
         {
+            if (type.IsPointer)
+            {
+                Helpers.Add("pointer");
+                var baseType = type.Assembly.GetType(type.FullName.Replace("*", ""));
+                var baseTypeStr = getTypesScriptType(baseType, withNs, skipKnownTypes, allowGeneric, suffixGeneric);
+
+                return $"Pointer<{baseTypeStr}>";
+            }
+
             var remap = type.GetCustomAttribute<TypescriptRemap>();
             var remapType = type.GetCustomAttribute<TypescriptRemapType>()?.TargetType;
 
@@ -539,6 +598,10 @@ namespace ReactUnity.Editor.Developer
                 {
                     case "System.Void":
                         return "void";
+
+                    case "System.Byte":
+                        Helpers.Add("byte");
+                        return "Byte";
 
                     case "System.Action":
                         return "(() => void)";

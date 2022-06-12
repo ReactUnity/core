@@ -31,7 +31,11 @@ namespace ReactUnity.UIToolkit
 
         protected void SetSprite(Sprite sprite)
         {
+#if UNITY_2021_1_OR_NEWER
             Element.sprite = sprite;
+#else
+            Element.image = sprite.texture;
+#endif
         }
 
         protected override void ApplyStylesSelf()
