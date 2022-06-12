@@ -26,18 +26,6 @@ icon {
   flex-basis: auto;
 }
 
-image,
-rawimage,
-svgimage,
-svg,
-render,
-video {
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  object-fit: scale-down;
-}
-
 button {
   padding: 8px 12px;
   align-items: center;

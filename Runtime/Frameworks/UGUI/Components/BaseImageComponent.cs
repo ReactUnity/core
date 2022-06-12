@@ -1,6 +1,4 @@
-using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
-using ReactUnity.UGUI.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +6,11 @@ namespace ReactUnity.UGUI
 {
     public abstract class BaseImageComponent : UGUIComponent
     {
-        public ReplacedImageComponent Replaced { get; }
+        public ReplacedImageHelper Replaced { get; }
 
-        public BaseImageComponent(UGUIContext context, string tag) : base(context, tag)
+        public BaseImageComponent(UGUIContext context, string tag) : base(context, tag, false)
         {
-            Replaced = new ReplacedImageComponent(context);
-            Replaced.SetParent(this);
+            Replaced = new ReplacedImageHelper(this);
         }
 
         protected object source;
@@ -51,54 +48,41 @@ namespace ReactUnity.UGUI
                 Replaced.Measurer.FitMode = fitMode;
             Replaced.ReplacedElement.Position = ComputedStyle.objectPosition;
         }
-    }
 
-
-    public class ReplacedImageComponent : UGUIComponent
-    {
-        protected override string DefaultName => $"[ImageContent]";
-
-        public ImageMeasurer Measurer { get; }
-        public ReactReplacedElement ReplacedElement { get; }
-        public MaskableGraphic Graphic { get; private set; }
-
-        public ReplacedImageComponent(UGUIContext context) : base(context, "_image", false)
+        public class ReplacedImageHelper
         {
-            IsPseudoElement = true;
+            public GameObject GameObject { get; }
+            public RectTransform RectTransform { get; }
+            public ImageMeasurer Measurer { get; }
+            public ReactReplacedElement ReplacedElement { get; }
+            public MaskableGraphic Graphic { get; private set; }
 
-            ReplacedElement = GetOrAddComponent<ReactReplacedElement>();
-            ReplacedElement.Layout = Layout;
+            public ReplacedImageHelper(BaseImageComponent parent)
+            {
+                var go = GameObject = new GameObject("[ImageContent]", typeof(RectTransform));
+                var rt = RectTransform = go.GetComponent<RectTransform>();
 
-            RectTransform.anchorMin = Vector2.zero;
-            RectTransform.anchorMax = Vector2.one;
-            RectTransform.sizeDelta = Vector2.zero;
+                rt.SetParent(parent.RectTransform);
 
-            Measurer = GetOrAddComponent<ImageMeasurer>();
-            Measurer.Context = context;
-            Measurer.Layout = Layout;
-            Layout.SetMeasureFunction(Measurer.Measure);
+                ReplacedElement = go.AddComponent<ReactReplacedElement>();
+
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.sizeDelta = Vector2.zero;
+
+                ReplacedElement.Measurer = Measurer = go.AddComponent<ImageMeasurer>();
+                Measurer.Context = parent.Context;
+
+                Measurer.Layout = ReplacedElement.Layout = parent.Layout;
+                parent.Layout.SetMeasureFunction(Measurer.Measure);
+            }
+
+            public T CreateGraphic<T>() where T : MaskableGraphic
+            {
+                var res = GameObject.AddComponent<T>();
+                Graphic = res;
+                return res;
+            }
         }
-
-        public T CreateGraphic<T>() where T : MaskableGraphic
-        {
-            var res = GetOrAddComponent<T>();
-            Graphic = res;
-            return res;
-        }
-
-        protected override void ApplyStylesSelf()
-        {
-            base.ApplyStylesSelf();
-
-            var graphic = GameObject.GetComponent<Graphic>();
-            if (graphic) graphic.color = ComputedStyle.HasValue(StyleProperties.backgroundColor) ?
-                    ComputedStyle.backgroundColor : Color.white;
-        }
-
-        protected override void ApplyLayoutStylesSelf() { }
-
-        protected override void ResolveTransform() { }
-
-        public override BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle) => null;
     }
 }

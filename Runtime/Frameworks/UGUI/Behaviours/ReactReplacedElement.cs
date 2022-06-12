@@ -11,6 +11,7 @@ namespace ReactUnity.UGUI.Behaviours
     {
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
+        public ImageMeasurer Measurer { get; internal set; }
 
         private bool hasPositionUpdate = true;
         private YogaValue2 position = YogaValue2.Center;
@@ -77,11 +78,13 @@ namespace ReactUnity.UGUI.Behaviours
             rt.anchorMin = new Vector2(anchorMinX, anchorMinY);
             rt.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
             rt.anchoredPosition = new Vector2(offsetX, offsetY);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
+
+            var measured = Measurer.Measure(Layout, Layout.LayoutWidth, YogaMeasureMode.Exactly, Layout.LayoutHeight, YogaMeasureMode.Exactly);
+
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, measured.width);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, measured.height);
 
             hasPositionUpdate = false;
-            Layout.MarkLayoutSeen();
         }
     }
 }

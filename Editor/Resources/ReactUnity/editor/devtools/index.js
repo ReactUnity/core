@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 840:
+/***/ 441:
 /***/ ((module) => {
 
 "use strict";
@@ -110,7 +110,7 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 501:
+/***/ 297:
 /***/ ((module) => {
 
 "use strict";
@@ -122,7 +122,7 @@ module.exports = function (i) {
 
 /***/ }),
 
-/***/ 366:
+/***/ 981:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -146,7 +146,7 @@ exports.LegacyRoot = 0;
 
 /***/ }),
 
-/***/ 482:
+/***/ 123:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -162,8 +162,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(68),
-      ba = __webpack_require__(473),
+  var aa = __webpack_require__(152),
+      ba = __webpack_require__(526),
       ca = Object.assign;
 
   function n(a) {
@@ -6511,31 +6511,31 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 258:
+/***/ 832:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(366);
+  module.exports = __webpack_require__(981);
 } else {}
 
 /***/ }),
 
-/***/ 633:
+/***/ 573:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(482);
+  module.exports = __webpack_require__(123);
 } else {}
 
 /***/ }),
 
-/***/ 14:
+/***/ 454:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6550,7 +6550,7 @@ if (true) {
  */
 
 
-var f = __webpack_require__(68),
+var f = __webpack_require__(152),
     k = Symbol["for"]("react.element"),
     l = Symbol["for"]("react.fragment"),
     m = Object.prototype.hasOwnProperty,
@@ -6594,7 +6594,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 715:
+/***/ 848:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7020,31 +7020,31 @@ exports.version = "18.1.0";
 
 /***/ }),
 
-/***/ 68:
+/***/ 152:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(715);
+  module.exports = __webpack_require__(848);
 } else {}
 
 /***/ }),
 
-/***/ 377:
+/***/ 797:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(14);
+  module.exports = __webpack_require__(454);
 } else {}
 
 /***/ }),
 
-/***/ 365:
+/***/ 523:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7360,19 +7360,19 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 473:
+/***/ 526:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(365);
+  module.exports = __webpack_require__(523);
 } else {}
 
 /***/ }),
 
-/***/ 101:
+/***/ 773:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7387,7 +7387,7 @@ if (true) {
  */
 
 
-var e = __webpack_require__(68);
+var e = __webpack_require__(152);
 
 function h(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7451,7 +7451,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ 358:
+/***/ 783:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7466,7 +7466,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
  */
 
 
-var g = __webpack_require__(68);
+var g = __webpack_require__(152);
 
 function n(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7534,40 +7534,40 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ 925:
+/***/ 550:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(101);
+  module.exports = __webpack_require__(773);
 } else {}
 
 /***/ }),
 
-/***/ 167:
+/***/ 764:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(358);
+  module.exports = __webpack_require__(783);
 } else {}
 
 /***/ }),
 
-/***/ 414:
+/***/ 886:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(297);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(441);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -7584,16 +7584,16 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 645:
+/***/ 590:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(297);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(441);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -7613,16 +7613,16 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 805:
+/***/ 635:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(297);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(441);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -7657,16 +7657,16 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 449:
+/***/ 467:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(297);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(441);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -8041,17 +8041,17 @@ var __webpack_exports__ = {};
 "use strict";
 
 // EXTERNAL MODULE: ../../../node_modules/react/index.js
-var react = __webpack_require__(68);
+var react = __webpack_require__(152);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
-var constants = __webpack_require__(258);
+var constants = __webpack_require__(832);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
 var version = '0.11.0';
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(377);
+var jsx_runtime = __webpack_require__(797);
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(925);
+var shim = __webpack_require__(550);
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__(167);
+var with_selector = __webpack_require__(764);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -8299,7 +8299,7 @@ function () {
 
 
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(633);
+var react_reconciler = __webpack_require__(573);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
@@ -8325,7 +8325,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
       var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
       if (depth > 0) {
-        prop = diffProperties(lastProps[propKey], null, depth - 1);
+        prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
       } // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
@@ -8445,6 +8445,146 @@ var commonReconciler = {
   }
 };
 var isDevelopment = "production" === 'development';
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/richtext.js
+function stringifyRichText(node) {
+  var _a, _b;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
+      acc.push('="');
+      acc.push(node.attributes.value);
+      acc.push('"');
+    }
+
+    for (var key in node.attributes) {
+      if (key === 'value') continue;
+
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var value = node.attributes[key];
+
+        if (value != null) {
+          acc.push(' ');
+          acc.push(key);
+
+          if (typeof value === 'number') {
+            acc.push('=');
+            acc.push(value + '');
+          } else {
+            acc.push('="');
+            acc.push(value);
+            acc.push('"');
+          }
+        }
+      }
+    }
+
+    acc.push('>');
+  }
+
+  if (((_b = node.children) === null || _b === void 0 ? void 0 : _b.length) > 0) {
+    for (var _i = 0, _c = node.children; _i < _c.length; _i++) {
+      var child = _c[_i];
+      acc.push(stringifyRichText(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/svg.js
+function kebabize(str) {
+  return str.split('').map(function (letter, idx) {
+    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
+  }).join('');
+}
+
+;
+function stringifyStyle(style) {
+  if (typeof style === 'string') return style;
+  var acc = [];
+
+  for (var key in style) {
+    if (Object.prototype.hasOwnProperty.call(style, key)) {
+      var element = style[key];
+
+      if (element != null) {
+        acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
+        acc.push(';');
+      }
+    }
+  }
+
+  return acc.join('');
+}
+function stringifySVG(node) {
+  var _a;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    for (var key in node.attributes) {
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var element = node.attributes[key];
+        if (key === 'style') element = stringifyStyle(element);
+
+        if (element != null) {
+          acc.push(' ');
+          acc.push(kebabize(key));
+          acc.push('="');
+          acc.push(element);
+          acc.push('"');
+        }
+      }
+    }
+  }
+
+  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+    if (tag) acc.push('>');
+
+    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
+      var child = _b[_i];
+      acc.push(stringifySVG(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  } else {
+    if (tag) acc.push(' />');
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/index.js
+
+
+var subContextRenderers = {
+  'richtext': stringifyRichText,
+  'svg': stringifySVG
+};
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -8487,16 +8627,33 @@ function (_super) {
     _this.call = function (ind, args) {
       var cb = _this.getObject(ind);
 
-      if ('Length' in args) {
-        var newArgs = [];
-        var length = args['Length'];
+      var argsAsList = args;
+      var argsAsArray = args;
+
+      if (typeof argsAsArray.Length === 'number') {
+        // C# Array
+        args = [];
+        var length = argsAsArray.Length;
 
         for (var index = 0; index < length; index++) {
-          var element = args[index];
-          newArgs.push(element);
+          args.push(argsAsArray.GetValue(index));
         }
+      } else if (typeof argsAsList.Count === 'number') {
+        // C# List
+        args = [];
+        var length = argsAsList.Count;
 
-        args = newArgs;
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsList[index]);
+        }
+      } else if (typeof argsAsList.Count === 'function') {
+        // C# IList
+        args = [];
+        var length = argsAsList.Count();
+
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsArray.GetValue(index));
+        }
       }
 
       return cb.apply(null, args);
@@ -8561,8 +8718,37 @@ var reconciler_assign = undefined && undefined.__assign || function () {
 
 
 
+
 var refId = 0;
 var ctxMap = new Map();
+
+var updateSubContext = function updateSubContext(instance) {
+  var rend = subContextRenderers[instance.type];
+  var root = instance === null || instance === void 0 ? void 0 : instance.root;
+  var cur = instance;
+
+  while (cur && !root) {
+    root = cur.root;
+    cur = cur.parent;
+  }
+
+  if (!root) return;
+  var content = rend(root.subContext.node);
+
+  if (instance.type === 'richtext') {
+    instance.hostContext.commands.push(['x', {
+      r: root.refId,
+      c: content
+    }]);
+  } else if (instance.type === 'svg') {
+    instance.hostContext.commands.push(['u', reconciler_assign({
+      r: root.refId,
+      t: 'svg'
+    }, convertPropsToSerializable({
+      innerContent: content
+    }))]);
+  }
+};
 
 var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   getRootHostContext: function getRootHostContext(rootContainer) {
@@ -8599,16 +8785,33 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
     var ctx = {
       context: context,
-      commands: commands
+      commands: commands,
+      refId: rootContainer.refId,
+      type: 'native'
     };
     ctxMap.set(context, ctx);
     return ctx;
   },
-  getChildHostContext: function getChildHostContext(parentCtx) {
+  getChildHostContext: function getChildHostContext(parentCtx, type) {
+    if (type === 'richtext' && parentCtx.type === 'native') return {
+      type: 'richtext',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
+    if (type === 'svg' && parentCtx.type === 'native') return {
+      type: 'svg',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
     return parentCtx;
   },
   getPublicInstance: function getPublicInstance(instance) {
-    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    return null;
   },
   supportsMutation: true,
   supportsHydration: false,
@@ -8628,33 +8831,93 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     UnityBridge.clearContainer(container);
   },
   createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    refId++;
     var aProps = getAllowedProps(props, type);
-    ctx.commands.push(['c', reconciler_assign({
-      t: type,
-      r: refId
-    }, convertPropsToSerializable(aProps))]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['c', reconciler_assign({
+        t: type,
+        r: refId
+      }, convertPropsToSerializable(aProps))]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+
+      var res = reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+
+      if (type === 'richtext') {
+        res.subContext = {
+          type: 'richtext',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      if (type === 'svg') {
+        res.subContext = {
+          type: 'svg',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      return res;
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          tag: type,
+          children: [],
+          attributes: aProps
+        }
+      });
+    }
   },
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    refId++;
-    ctx.commands.push(['t', {
-      r: refId,
-      c: text
-    }]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['t', {
+        r: refId,
+        c: text
+      }]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          text: text
+        }
+      });
+    }
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    parent.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      parent.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   finalizeInitialChildren: function finalizeInitialChildren() {
     return false;
@@ -8671,51 +8934,100 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
-    instance.commands.push(['u', reconciler_assign({
-      r: instance.refId,
-      t: type
-    }, convertPropsToSerializable(props))]);
+
+    if (instance.type === 'native') {
+      instance.commands.push(['u', reconciler_assign({
+        r: instance.refId,
+        t: type
+      }, convertPropsToSerializable(props))]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
+      updateSubContext(instance);
+    }
   },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    textInstance.commands.push(['x', {
-      r: textInstance.refId,
-      c: newText
-    }]);
+  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
+    if (instance.type === 'native') {
+      instance.commands.push(['x', {
+        r: instance.refId,
+        c: newText
+      }]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node = {
+        text: newText
+      };
+      updateSubContext(instance);
+    }
   },
   appendChild: function appendChild(parent, child) {
-    child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    child.commands.push(['a', {
+    if (child.type === 'native') child.commands.push(['a', {
       p: parent.refId,
       c: child.refId
     }]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
+      child.commands.push(['i', {
+        p: parent.refId,
+        c: child.refId,
+        i: beforeChild.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(beforeChild.node);
+        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
+      }
+
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
+    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
       p: parent.refId,
       c: child.refId,
       i: beforeChild.refId
     }]);
   },
   removeChild: function removeChild(parent, child) {
-    child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['r', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(child.node);
+        if (index >= 0) parent.node.children.splice(index, 1);
+      }
+
+      updateSubContext(parent);
+    }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    child.commands.push(['r', {
+    if (child.type === 'native') child.commands.push(['r', {
       p: parent.refId,
       c: child.refId
     }]);
@@ -8725,28 +9037,40 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   unhideInstance: function unhideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   }
 });
 
@@ -8885,10 +9209,8 @@ var Renderer = {
       options = {};
     }
 
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer; // For Jint engine, sync is default
-    // For other engines (ClearScript), async is default
-
-    var isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? (options === null || options === void 0 ? void 0 : options.sync) === false : !(options === null || options === void 0 ? void 0 : options.sync);
+    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
 
     var _a = containerMap.get(hostContainer) || {},
         hostRoot = _a.hostRoot,
@@ -8932,6 +9254,7 @@ var Renderer = {
         };
 
         var hostContainerInstance = {
+          type: 'native',
           commands: commands_1,
           component: hostContainer,
           context: hostContainer.Context,
@@ -8980,15 +9303,13 @@ var Renderer = {
     return rc;
   }
 };
-var isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
-var defaultReconciler = isSyncByDefault ? syncReconciler : asyncReconciler;
-var batchedUpdates = defaultReconciler.batchedUpdates;
-var flushSync = defaultReconciler.flushSync;
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+var batchedUpdates = asyncReconciler.batchedUpdates;
+var flushSync = asyncReconciler.flushSync;
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(arr, i) {
   var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
 
@@ -9018,7 +9339,7 @@ function _iterableToArrayLimit(arr, i) {
 
   return _arr;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
 
@@ -9028,7 +9349,7 @@ function _arrayLikeToArray(arr, len) {
 
   return arr2;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -9038,11 +9359,11 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === "Map" || n === "Set") return Array.from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
 
 
@@ -9053,7 +9374,7 @@ function _slicedToArray(arr, i) {
 ;// CONCATENATED MODULE: ./src/context/selection.tsx
 var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=Interop.UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}var ctx=/*#__PURE__*/react.createContext(undefined);function SelectionProvider(_ref){var children=_ref.children;var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];var updateSelection=function updateSelection(){return setSelection(getSelection());};(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(updateSelection);var removeStateChange=Window.AddPlayModeStateChange(updateSelection);var removeVisibilityChange=Window.AddVisibilityChange(updateSelection);return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/react.createElement(ctx.Provider,{value:selection},children);};function useSelection(){var context=react.useContext(ctx);if(context===undefined){throw new Error('useSelection must be used within a provider');}return context;}
 ;// CONCATENATED MODULE: ./src/context/style.tsx
-var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('devtools-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.Styling.StyleSheet(state.element.Context.Style,'',1,null);var style=state.styles;var selector="[devtools-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
+var styleContext=/*#__PURE__*/react.createContext(null);var useStyleContext=function useStyleContext(){return (0,react.useContext)(styleContext);};var findElementId=function findElementId(state,el){var ind=state.findIndex(function(x){return x.element===el;});if(ind<0){ind=state.length;var st={element:el,styles:{},ind:ind};state.push(st);el.SetData('devtools-el',ind+'');}return ind;};var buildSheet=function buildSheet(state){var sheet=new Interop.ReactUnity.Styling.StyleSheet(state.element.Context.Style,'',1,null,null);var style=state.styles;var selector="[devtools-el=".concat(state.ind,"]");var values=[];var valuesDic=Globals.Window.CreateStyleDictionary();for(var _prop in style){if(Object.prototype.hasOwnProperty.call(style,_prop)){var val=style[_prop];values.push("".concat(_prop,": ").concat(val,";\n"));valuesDic.Add(_prop,val);}}if(values.length)sheet.AddRules(selector,valuesDic);state.sheet=sheet;return sheet;};var changed=function changed(state){var ctx=state.element.Context;if(state.sheet){ctx.RemoveStyle(state.sheet);state.sheet=null;}var newSheet=buildSheet(state);state.sheet=ctx.InsertStyle(newSheet);};function StyleContext(_ref){var children=_ref.children;var state=(0,react.useRef)([]);var ctx=(0,react.useMemo)(function(){return{setProp:function setProp(el,prop,value){var ind=findElementId(state.current,el);state.current[ind].styles[prop]=value;changed(state.current[ind]);},removeProp:function removeProp(el,prop){var ind=findElementId(state.current,el);Reflect.deleteProperty(state.current[ind].styles,prop);changed(state.current[ind]);},hasProp:function hasProp(el,prop){var ind=findElementId(state.current,el);return Object.prototype.hasOwnProperty.call(state.current[ind].styles,prop);},getProp:function getProp(el,prop){var ind=findElementId(state.current,el);return state.current[ind].styles[prop];},getStyles:function getStyles(el){var ind=findElementId(state.current,el);return state.current[ind].styles;},getElementId:function getElementId(el){return findElementId(state.current,el);}};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)(styleContext.Provider,{value:ctx,children:children});}
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(487);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -9072,8 +9393,8 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(329);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/main/classes/index.module.scss
-var index_module = __webpack_require__(414);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/main/classes/index.module.scss
+var index_module = __webpack_require__(886);
 ;// CONCATENATED MODULE: ./src/main/classes/index.module.scss
 
       
@@ -9105,8 +9426,8 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 ;// CONCATENATED MODULE: ./src/main/classes/index.tsx
 var savedClasses={};function Classes(){var _useSelection;var selection=(_useSelection=useSelection())===null||_useSelection===void 0?void 0:_useSelection.Component;var ctx=useStyleContext();var _useState=(0,react.useState)(0),_useState2=_slicedToArray(_useState,2),render=_useState2[0],setRender=_useState2[1];var submit=(0,react.useCallback)(function(ev,sender){if(ev.keyCode===Interop.UnityEngine.KeyCode.Return||ev.keyCode===Interop.UnityEngine.KeyCode.KeypadEnter){selection.ClassList.Add(sender.Value);sender.SetValueWithoutNotify('');setRender(function(x){return x+1;});}},[selection]);var toggled=(0,react.useCallback)(function(ev,sender){selection.ClassList.Toggle(sender.Data['id'],sender.Value);setRender(function(x){return x+1;});},[selection]);var classes=(0,react.useMemo)(function(){if(!selection)return null;void render;var dataId=ctx.getElementId(selection);var saved=new Set(savedClasses[dataId]||[]);var list=selection.ClassList.Name.split(' ');var len=list.length;for(var index=0;index<len;index++){var element=list[index];saved.add(element);}return savedClasses[dataId]=Array.from(saved).filter(function(x){return x;});},[selection,ctx,render]);if(!selection)return;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:classes_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("input",{label:"Add class",onKeyDown:submit}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:classes_index_module.classes,children:classes.map(function(x){return/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:x,"data-id":x,onChange:toggled,value:selection.ClassList.Contains(x)},x);})})]});}
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/main/global-style/index.module.scss
-var global_style_index_module = __webpack_require__(645);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/main/global-style/index.module.scss
+var global_style_index_module = __webpack_require__(590);
 ;// CONCATENATED MODULE: ./src/main/global-style/index.module.scss
 
       
@@ -9138,7 +9459,7 @@ var index_module_update = injectStylesIntoStyleTag_default()(global_style_index_
 
 ;// CONCATENATED MODULE: ./src/main/global-style/index.tsx
 var stylesheets={};function GlobalStyle(){var _useState=(0,react.useState)(false),_useState2=_slicedToArray(_useState,2),show=_useState2[0],setShow=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),savedInput=_useState4[0],setSavedInput=_useState4[1];var selection=useSelection();(0,react.useEffect)(function(){if(!selection)return;var sheet=stylesheets[savedInput];if(sheet){selection.Component.Context.InsertStyle(sheet);}else{sheet=stylesheets[savedInput]=selection.Component.Context.InsertStyle(savedInput);}return function(){if(sheet)selection.Component.Context.RemoveStyle(sheet);};},[savedInput,selection]);var inputRef=(0,react.useRef)();var save=function save(){setSavedInput(inputRef.current.Value);};var cancel=function cancel(){inputRef.current.Value=savedInput;setShow(false);};var keyup=function keyup(ev){if(ev.ctrlKey&&(ev.keyCode===Interop.UnityEngine.KeyCode.Return||ev.keyCode===Interop.UnityEngine.KeyCode.KeypadEnter)){ev.PreventDefault();ev.StopImmediatePropagation();ev.StopPropagation();save(null);}else if(ev.keyCode===Interop.UnityEngine.KeyCode.Escape){ev.PreventDefault();ev.StopImmediatePropagation();ev.StopPropagation();cancel(null);}};var closeCallback=(0,react.useCallback)(function(){return setShow(false);},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_global_style_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:function onButtonClick(){return setShow(function(x){return!x;});},children:"Edit Global Styles"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("dialog",{show:show,onClose:closeCallback,title:"Global Styles",className:main_global_style_index_module.dialog,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:main_global_style_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("input",{className:main_global_style_index_module.input,value:savedInput,ref:inputRef,multiline:true,onKeyUp:keyup})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_global_style_index_module.actions,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:cancel,children:"Cancel (Esc)"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:save,children:"Save (Ctrl + Enter)"})]})]})]});}
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/defineProperty.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -9153,7 +9474,7 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 
 
 function ownKeys(object, enumerableOnly) {
@@ -9229,7 +9550,7 @@ function toVal(mix) {
 
   return str;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -9244,7 +9565,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
   return target;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
 
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
@@ -9272,8 +9593,8 @@ var StyleLength=Interop.UnityEngine.UIElements.StyleLength;var StyleKeyword=Inte
 var YogaValue2=Interop.ReactUnity.Types.YogaValue2;function YogaValue2Field(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var x=convertYogaToLength(value===null||value===void 0?void 0:value.X);var y=convertYogaToLength(value===null||value===void 0?void 0:value.Y);var xRef=(0,react.useRef)();var yRef=(0,react.useRef)();var changed=function changed(){var xVal=xRef.current.Element.value;var yVal=yRef.current.Element.value;var val=new YogaValue2(convertLengthToYoga(xVal),convertLengthToYoga(yVal));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,'unity-composite-field','unity-base-field'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m('unity-base-field__input','unity-composite-field__input'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"X",value:x,onChange:changed,ref:xRef,style:{minWidth:60},className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field','unity-composite-field__field--first')}),/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"Y",value:y,onChange:changed,ref:yRef,style:{minWidth:60},className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field')}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"unity-composite-field__field-spacer"})]})]});}
 ;// CONCATENATED MODULE: ./src/common/props.ts
 var _excluded=["arrangement","partTemplate"];var fourDirectionParts=['','top','right','bottom','left'];var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var borderRadiusField={component:YogaValue2Field};var styleProps=[{props:[{name:'Display',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'position',component:enumComponent('ReactUnity.Types.PositionType'),label:'Position Type'},{name:'backgroundColor',component:'color',label:'Background Color'},{name:'backgroundImage',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',component:sliderComponent(),label:'Opacity'},{name:'zIndex',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',component:'toggle',label:'Visibility'}]},{label:'Text',props:[{name:'StyleDirection',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',component:'color',label:'Color'},{name:'fontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',label:'Font Size'},lengthField),{name:'textAlign',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',component:'toggle',label:'Text Wrap'},{name:'content',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',component:YogaValue2Field,label:'Translate'},{name:'scale',component:'vector3',label:'Scale'},{name:'rotate',component:'vector3',label:'Rotate'}]},{props:[{name:'pointerEvents',component:enumComponent('ReactUnity.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',component:enumComponent('ReactUnity.Types.Appearance'),label:'Appearance'},{name:'navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth'},lengthField),{},{label:'Max Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight'},lengthField),{},{label:'Max Height',source:'layout'})]},{props:[{name:'FlexDirection',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[_objectSpread2(_objectSpread2({name:'borderRadius'},borderRadiusField),{},{label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}}),{name:'borderColor',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];var allProps=[];for(var pIndex=0;pIndex<styleProps.length;pIndex++){var group=styleProps[pIndex];for(var index=0;index<group.props.length;index++){var prop=group.props[index];if(prop.arrangement){for(var partIndex=0;partIndex<fourDirectionParts.length;partIndex++){var _part=fourDirectionParts[partIndex];var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',_part):prop.partTemplate(_part);var arrangement=prop.arrangement,partTemplate=prop.partTemplate,rest=_objectWithoutProperties(prop,_excluded);allProps.push(_objectSpread2(_objectSpread2({},rest),{},{name:partName,partlessName:prop.name,label:partName}));}}else{allProps.push(prop);}}}
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/main/grouped-styles/index.module.scss
-var grouped_styles_index_module = __webpack_require__(805);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/main/grouped-styles/index.module.scss
+var grouped_styles_index_module = __webpack_require__(635);
 ;// CONCATENATED MODULE: ./src/main/grouped-styles/index.module.scss
 
       
@@ -9305,8 +9626,8 @@ var grouped_styles_index_module_update = injectStylesIntoStyleTag_default()(grou
 
 ;// CONCATENATED MODULE: ./src/main/grouped-styles/index.tsx
 function GroupedStyles(_ref){var showShowAll=_ref.showShowAll;var _useState=(0,react.useState)(true),_useState2=_slicedToArray(_useState,2),showAll=_useState2[0],setShowAll=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:main_grouped_styles_index_module.styles,children:[!!showShowAll&&/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:main_grouped_styles_index_module.showAllButton}),showAll?styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x},i);}):allProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:x,optional:true},i);})]});}function Group(_ref2){var group=_ref2.group,className=_ref2.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_grouped_styles_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_grouped_styles_index_module.groupHeader,children:group.label}),group.props.map(function(x){return/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropView,{prop:x},x.name);})]});}function StylePropView(_ref3){var prop=_ref3.prop;return prop.arrangement==='rect'||prop.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{prop:prop},prop.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop},prop.name);}function StylePropRow(_ref4){var _prop$label;var prop=_ref4.prop,className=_ref4.className,optional=_ref4.optional;var element=useSelection();var cmp=element.Component;var ctx=useStyleContext();var styles=ctx.getStyles(cmp);var changedDebounce=react.useRef();var changed=function changed(debounce){if(changedDebounce.current!=null){clearTimeout(changedDebounce.current);changedDebounce.current=null;}changedDebounce.current=setTimeout(function(){changedDebounce.current=null;cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});},debounce);};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)ctx.setProp(cmp,name,res);}else ctx.setProp(cmp,name,value.newValue);changed(500);};var _useState3=(0,react.useState)(0),_useState4=_slicedToArray(_useState3,2),setRender=_useState4[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:cmp.ComputedStyle[prop.name];var gval=(prop.getter?prop.getter(val,element):val)||null;var exists=(prop.name in styles);var removeStyle=function removeStyle(){ctx.removeProp(cmp,prop.name);changed(0);};return optional&&!exists?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,main_grouped_styles_index_module.row,exists&&main_grouped_styles_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:removeStyle,className:main_grouped_styles_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:main_grouped_styles_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref5){var _prop$label2;var prop=_ref5.prop;var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_grouped_styles_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,className:clsx_m(main_grouped_styles_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:main_grouped_styles_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:main_grouped_styles_index_module.removeButton,style:{visibility:'hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_grouped_styles_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_grouped_styles_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_grouped_styles_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:main_grouped_styles_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(main_grouped_styles_index_module.propRect,main_grouped_styles_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_grouped_styles_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:main_grouped_styles_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref6){var prop=_ref6.prop,part=_ref6.part;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,className:clsx_m(main_grouped_styles_index_module.rectPart,main_grouped_styles_index_module['part-'+part],'react-unity__field__inline',isCorner&&main_grouped_styles_index_module.corner)})});}
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/main/index.module.scss
-var main_index_module = __webpack_require__(449);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/main/index.module.scss
+var main_index_module = __webpack_require__(467);
 ;// CONCATENATED MODULE: ./src/main/index.module.scss
 
       

@@ -58,13 +58,10 @@ namespace ReactUnity.UGUI.Behaviours
             MarkDirty();
         }
 
-        public void MarkDirty()
-        {
-            if (Layout?.Parent != null) Layout.MarkDirty();
-        }
+        public void MarkDirty() => Layout?.MarkDirty();
 
 
-        public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
+        public YogaSize Measure(YogaNode node, float width, YogaMeasureMode wm, float height, YogaMeasureMode hm)
         {
             float ow = 0;
             float oh = 0;
@@ -78,6 +75,7 @@ namespace ReactUnity.UGUI.Behaviours
                 ow = texture.width;
                 oh = texture.height;
             }
+            var ar = ow / oh;
 
             // ObjectFit.None
             var rw = ow;
@@ -93,6 +91,22 @@ namespace ReactUnity.UGUI.Behaviours
                 }
 
                 if (rh < height)
+                {
+                    var scale = height / rh;
+                    rh = height;
+                    rw *= scale;
+                }
+            }
+            else if (fitMode == ObjectFit.Contain)
+            {
+                if (rw != width)
+                {
+                    var scale = width / rw;
+                    rw = width;
+                    rh *= scale;
+                }
+
+                if (rh > height)
                 {
                     var scale = height / rh;
                     rh = height;
@@ -117,29 +131,61 @@ namespace ReactUnity.UGUI.Behaviours
             }
             else if (fitMode == ObjectFit.Fill)
             {
-                rw = width;
-                rh = height;
-            }
-            else if (fitMode == ObjectFit.Contain)
-            {
-                if (rw != width)
+                if (wm == YogaMeasureMode.Exactly)
                 {
-                    var scale = width / rw;
                     rw = width;
-                    rh *= scale;
-                }
 
-                if (rh > height)
+                    if (hm == YogaMeasureMode.Exactly) rh = height;
+                    else if (hm == YogaMeasureMode.AtMost) rh = Mathf.Min(height, rw / ar);
+                    else rh = rw / ar;
+                }
+                else if (wm == YogaMeasureMode.AtMost)
                 {
-                    var scale = height / rh;
-                    rh = height;
-                    rw *= scale;
+                    if (hm == YogaMeasureMode.Exactly)
+                    {
+                        rh = height;
+                        rw = Mathf.Min(width, rh * ar);
+                    }
+                    else if (hm == YogaMeasureMode.AtMost)
+                    {
+                        if (rw != width)
+                        {
+                            var scale = width / rw;
+                            rw = width;
+                            rh *= scale;
+                        }
+
+                        if (rh > height)
+                        {
+                            var scale = height / rh;
+                            rh = height;
+                            rw *= scale;
+                        }
+                    }
+                    else
+                    {
+                        rw = width;
+                        rh = rw / ar;
+                    }
+                }
+                else
+                {
+                    if (hm == YogaMeasureMode.Exactly || hm == YogaMeasureMode.AtMost)
+                    {
+                        rh = height;
+                        rw = rh * ar;
+                    }
+                    else
+                    {
+                        // Keep originals
+                    }
                 }
             }
 
 
-            // TODO: Verify this logic
-            // If a dimension is NaN, that means the layout does not care when that dimension is.
+            // TODO: Verify this logic - Fill is already handled correctly
+
+            // If a dimension is NaN, that means the layout does not care what that dimension is.
             // In that case, we can show the most suitable size,
             // Which is the up/down scaled version of original image with same aspect ratio
 
@@ -153,13 +199,12 @@ namespace ReactUnity.UGUI.Behaviours
             }
             else if (hnan)
             {
-                rh = rw * oh / ow;
+                rh = rw / ar;
             }
             else if (wnan)
             {
-                rw = rh * ow / oh;
+                rw = rh * ar;
             }
-
 
             return new YogaSize
             {

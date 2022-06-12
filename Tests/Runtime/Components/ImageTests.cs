@@ -192,8 +192,8 @@ namespace ReactUnity.Tests
         public IEnumerator BeforeAfterDoesNotCrashImage()
         {
             yield return null;
-            Assert.AreEqual("hello", Image.BeforePseudo.TextContent);
-            Assert.AreEqual("hello", Image.AfterPseudo.TextContent);
+            Assert.AreEqual(null, Image.BeforePseudo);
+            Assert.AreEqual(null, Image.AfterPseudo);
         }
     }
 }
