@@ -67,6 +67,7 @@ namespace QuickJS.Binding
         private MethodInfo _methodInfo;
 
         private ParameterInfo[] _inputParameters;
+        private int requiredArgCount;
         private ParameterInfo[] _methodParameters;
 
         public DynamicMethod(DynamicType type, MethodInfo methodInfo, bool asExtensionAnyway)
@@ -84,6 +85,11 @@ namespace QuickJS.Binding
                 if (!Values.IsContextualType(p.ParameterType))
                 {
                     argIndex++;
+                }
+
+                if (!p.IsOptional)
+                {
+                    requiredArgCount++;
                 }
             }
             _inputParameters = new ParameterInfo[argIndex];
@@ -105,7 +111,7 @@ namespace QuickJS.Binding
 
         public override bool CheckArgs(JSContext ctx, int argc, JSValue[] argv)
         {
-            if (_inputParameters.Length != argc)
+            if (!(argc <= _inputParameters.Length && argc >= requiredArgCount))
             {
                 return false;
             }
@@ -488,6 +494,7 @@ namespace QuickJS.Binding
         private DynamicType _type;
         private ConstructorInfo _ctor;
         private ParameterInfo[] _parameters;
+        private int requiredArgCount;
         private bool _disposable;
 
         public DynamicConstructor(DynamicType type, ConstructorInfo ctor)
@@ -501,6 +508,14 @@ namespace QuickJS.Binding
             _ctor = ctor;
             _parameters = _ctor.GetParameters();
             _disposable = disposable;
+
+            for (int i = 0; i < _parameters.Length; i++)
+            {
+                if (!_parameters[i].IsOptional)
+                {
+                    requiredArgCount++;
+                }
+            }
         }
 
         public override int GetParameterCount()
@@ -510,7 +525,7 @@ namespace QuickJS.Binding
 
         public override bool CheckArgs(JSContext ctx, int argc, JSValue[] argv)
         {
-            if (_parameters.Length != argc)
+            if (!(argc <= _parameters.Length && argc >= requiredArgCount))
             {
                 return false;
             }
@@ -525,11 +540,24 @@ namespace QuickJS.Binding
                 return ctx.ThrowInternalError("constructor is inaccessible due to its protection level");
             }
 
-            var nArgs = Math.Min(argc, _parameters.Length);
-            var args = new object[nArgs];
+            var nArgs = _parameters.Length;
+            var args = new object[_parameters.Length];
             for (var i = 0; i < nArgs; i++)
             {
-                if (!Values.js_get_var(ctx, argv[i], _parameters[i].ParameterType, out args[i]))
+                var param = _parameters[i];
+
+                if (i >= argc)
+                {
+                    if (param.IsOptional)
+                    {
+                        args[i] = param.DefaultValue;
+                    }
+                    else
+                    {
+                        return ctx.ThrowInternalError("enough arguments were not specified for constructor");
+                    }
+                }
+                else if (!Values.js_get_var(ctx, argv[i], param.ParameterType, out args[i]))
                 {
                     return ctx.ThrowInternalError("failed to cast val");
                 }

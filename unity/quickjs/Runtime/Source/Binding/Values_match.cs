@@ -250,6 +250,16 @@ namespace QuickJS.Binding
             {
                 var parameterInfo = parameterInfos[i];
                 var pType = parameterInfo.ParameterType;
+
+                if (i >= argv.Length)
+                {
+                    if (!parameterInfo.IsOptional)
+                    {
+                        return false;
+                    }
+                    continue;
+                }
+
                 if (pType.IsByRef)
                 {
                     if (!js_match_type_hint(ctx, argv[i], pType.GetElementType()))
