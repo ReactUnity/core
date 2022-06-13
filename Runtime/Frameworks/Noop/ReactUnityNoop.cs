@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ReactUnity.Noop
 {
+    [AddComponentMenu("")]
     internal class ReactUnityNoop : ReactUnityBase
     {
         public RectTransform Root => transform as RectTransform;

@@ -22,6 +22,18 @@ head {
   align-self: center;
   animation: appear 800ms 400ms both;
   transform-origin: center;
+
+  @keyframes appear {
+    from {
+      opacity: 0%;
+      scale: 0.8 0.8;
+    }
+
+    to {
+      opacity: 100%;
+      scale: 1 1;
+    }
+  }
 }
 
 h1 {
@@ -75,6 +87,34 @@ section {
   border-width: 0;
 }
 
+.packageName {
+  opacity: 0.6;
+}
+
+spinner {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  animation: spin 800ms infinite;
+  margin: 10px auto;
+  transform-origin: center;
+
+  @keyframes spin {
+    from {
+      rotate: 0deg;
+    }
+
+    to {
+      rotate: 180deg;
+    }
+  }
+}
+
+// Icons
+
 .checkIcon,
 .warnIcon,
 .errorIcon,
@@ -104,38 +144,4 @@ section {
 
 .errorIcon {
   color: crimson;
-}
-
-@keyframes appear {
-  from {
-    opacity: 0%;
-    scale: 0.8 0.8;
-  }
-
-  to {
-    opacity: 100%;
-    scale: 1 1;
-  }
-}
-
-spinner {
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-  animation: spin 800ms infinite;
-  margin: 10px auto;
-  transform-origin: center;
-}
-
-@keyframes spin {
-  from {
-    rotate: 0deg;
-  }
-
-  to {
-    rotate: 180deg;
-  }
 }

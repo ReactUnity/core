@@ -15,8 +15,42 @@ using UnityEngine.SceneManagement;
 
 namespace ReactUnity.Editor
 {
+    [InitializeOnLoad]
     public class QuickStartWindow : ReactWindow
     {
+        public const string WindowVersion = "0";
+
+        public static bool ShowWindowOnStartup
+        {
+            get
+            {
+                return EditorPrefs.GetBool($"ReactUnity.Editor.{nameof(QuickStartWindow)}.ShowWindowOnStartup.{WindowVersion}", true);
+            }
+            set
+            {
+                EditorPrefs.SetBool($"ReactUnity.Editor.{nameof(QuickStartWindow)}.ShowWindowOnStartup.{WindowVersion}", value);
+            }
+        }
+
+
+#if REACT_EDITOR_COROUTINES
+        static QuickStartWindow()
+        {
+            EditorApplication.update += InitialEditorUpdate;
+        }
+
+        static void InitialEditorUpdate()
+        {
+            EditorApplication.update -= InitialEditorUpdate;
+
+            if (ShowWindowOnStartup)
+            {
+                ShowDefaultWindow();
+                ShowWindowOnStartup = false;
+            }
+        }
+#endif
+
 #pragma warning disable 612
         static Dictionary<JavascriptEngineType, string> JSEnginePackages = new Dictionary<JavascriptEngineType, string>
         {
@@ -181,9 +215,13 @@ namespace ReactUnity.Editor
         public void CheckEngineVersion(JavascriptEngineType type, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
         {
             if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) return;
+            CheckPackageVersion(enginePackageName, callback);
+        }
 
+        public void CheckPackageVersion(string packageName, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
+        {
             var cb = Callback.From(callback, Context);
-            CheckVersion(enginePackageName, (a, b, c) => cb.Call(a, b, c));
+            CheckVersion(packageName, (a, b, c) => cb.Call(a, b, c));
         }
 
         private IEnumerator CheckVersionDelegate(string packageName, CheckVersionCallback callback)
@@ -258,6 +296,41 @@ namespace ReactUnity.Editor
             if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) yield break;
 
             var listRequest = Client.Remove(enginePackageName);
+            while (!listRequest.IsCompleted) yield return null;
+        }
+
+
+        public void InstallUnityPlugin(string pluginName)
+        {
+            Context.Dispatcher.StartDeferred(InstallUnityPluginDelegate(pluginName));
+        }
+
+        private IEnumerator InstallUnityPluginDelegate(string pluginName)
+        {
+            yield return null;
+
+            var listRequest = Client.List(false, false);
+            while (!listRequest.IsCompleted) yield return null;
+            var pkg = listRequest.Result.FirstOrDefault(x => x.name == pluginName);
+
+            var versionSuffix = "";
+
+            if (pkg != null) versionSuffix += "@" + pkg.versions.latestCompatible;
+
+            var packagesRequest = Client.Add(pluginName + versionSuffix);
+
+            while (!packagesRequest.IsCompleted) yield return null;
+        }
+
+
+        public void UninstallUnityPlugin(string pluginName)
+        {
+            Context.Dispatcher.StartDeferred(UninstallUnityPluginDelegate(pluginName));
+        }
+
+        private IEnumerator UninstallUnityPluginDelegate(string pluginName)
+        {
+            var listRequest = Client.Remove(pluginName);
             while (!listRequest.IsCompleted) yield return null;
         }
 

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 840:
+/***/ 441:
 /***/ ((module) => {
 
 "use strict";
@@ -110,7 +110,7 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 501:
+/***/ 297:
 /***/ ((module) => {
 
 "use strict";
@@ -122,7 +122,7 @@ module.exports = function (i) {
 
 /***/ }),
 
-/***/ 366:
+/***/ 467:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -146,7 +146,7 @@ exports.LegacyRoot = 0;
 
 /***/ }),
 
-/***/ 482:
+/***/ 123:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -162,8 +162,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(68),
-      ba = __webpack_require__(473),
+  var aa = __webpack_require__(152),
+      ba = __webpack_require__(526),
       ca = Object.assign;
 
   function n(a) {
@@ -6511,31 +6511,31 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 258:
+/***/ 832:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(366);
+  module.exports = __webpack_require__(467);
 } else {}
 
 /***/ }),
 
-/***/ 633:
+/***/ 573:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(482);
+  module.exports = __webpack_require__(123);
 } else {}
 
 /***/ }),
 
-/***/ 14:
+/***/ 454:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6550,7 +6550,7 @@ if (true) {
  */
 
 
-var f = __webpack_require__(68),
+var f = __webpack_require__(152),
     k = Symbol["for"]("react.element"),
     l = Symbol["for"]("react.fragment"),
     m = Object.prototype.hasOwnProperty,
@@ -6594,7 +6594,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 715:
+/***/ 848:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7020,31 +7020,31 @@ exports.version = "18.1.0";
 
 /***/ }),
 
-/***/ 68:
+/***/ 152:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(715);
+  module.exports = __webpack_require__(848);
 } else {}
 
 /***/ }),
 
-/***/ 377:
+/***/ 797:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(14);
+  module.exports = __webpack_require__(454);
 } else {}
 
 /***/ }),
 
-/***/ 365:
+/***/ 523:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7360,19 +7360,19 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 473:
+/***/ 526:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(365);
+  module.exports = __webpack_require__(523);
 } else {}
 
 /***/ }),
 
-/***/ 101:
+/***/ 773:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7387,7 +7387,7 @@ if (true) {
  */
 
 
-var e = __webpack_require__(68);
+var e = __webpack_require__(152);
 
 function h(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7451,7 +7451,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ 358:
+/***/ 783:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7466,7 +7466,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
  */
 
 
-var g = __webpack_require__(68);
+var g = __webpack_require__(152);
 
 function n(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7534,60 +7534,61 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ 925:
+/***/ 550:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(101);
+  module.exports = __webpack_require__(773);
 } else {}
 
 /***/ }),
 
-/***/ 167:
+/***/ 764:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(358);
+  module.exports = __webpack_require__(783);
 } else {}
 
 /***/ }),
 
-/***/ 760:
+/***/ 473:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(501);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(297);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(840);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(441);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__CsMZh{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__AIuJo{max-height:200px;max-width:200px;align-self:center;animation:src_appear__DPHQz 800ms 400ms both;transform-origin:center}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__xmMXU{background-color:rgba(0,0,0,0);border-width:0}.src_checkIcon__Itt\\+f,.src_warnIcon__kF2lo,.src_errorIcon__3-Lhv,.src_cancelIcon__4IfF2{flex-shrink:0;margin-right:6px}.src_infoButton__p7Ehn{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__3Zij3{width:20px;height:20px;flex-shrink:1}.src_checkIcon__Itt\\+f{color:#73ff00}.src_warnIcon__kF2lo{color:#fff200}.src_errorIcon__3-Lhv{color:crimson}@keyframes src_appear__DPHQz{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__j9jTI 800ms infinite;margin:10px auto;transform-origin:center}@keyframes src_spin__j9jTI{from{rotate:0deg}to{rotate:180deg}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__CsMZh{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__AIuJo{max-height:200px;max-width:200px;align-self:center;animation:src_appear__DPHQz 800ms 400ms both;transform-origin:center}@keyframes src_appear__DPHQz{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__xmMXU{background-color:rgba(0,0,0,0);border-width:0}.src_packageName__q\\+lcg{opacity:.6}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__j9jTI 800ms infinite;margin:10px auto;transform-origin:center}@keyframes src_spin__j9jTI{from{rotate:0deg}to{rotate:180deg}}.src_checkIcon__Itt\\+f,.src_warnIcon__kF2lo,.src_errorIcon__3-Lhv,.src_cancelIcon__4IfF2{flex-shrink:0;margin-right:6px}.src_infoButton__p7Ehn{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__3Zij3{width:20px;height:20px;flex-shrink:1}.src_checkIcon__Itt\\+f{color:#73ff00}.src_warnIcon__kF2lo{color:#fff200}.src_errorIcon__3-Lhv{color:crimson}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "src_host__CsMZh",
 	"logo": "src_logo__AIuJo",
 	"appear": "src_appear__DPHQz",
 	"projectPath": "src_projectPath__xmMXU",
+	"packageName": "src_packageName__q+lcg",
+	"spin": "src_spin__j9jTI",
 	"checkIcon": "src_checkIcon__Itt+f",
 	"warnIcon": "src_warnIcon__kF2lo",
 	"errorIcon": "src_errorIcon__3-Lhv",
 	"cancelIcon": "src_cancelIcon__4IfF2",
 	"infoButton": "src_infoButton__p7Ehn",
-	"infoIcon": "src_infoIcon__3Zij3",
-	"spin": "src_spin__j9jTI"
+	"infoIcon": "src_infoIcon__3Zij3"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8021,76 +8022,18 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
-
-function _createForOfIteratorHelper(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-
-  if (!it) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-
-      var F = function F() {};
-
-      return {
-        s: F,
-        n: function n() {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function e(_e) {
-          throw _e;
-        },
-        f: F
-      };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  var normalCompletion = true,
-      didErr = false,
-      err;
-  return {
-    s: function s() {
-      it = it.call(o);
-    },
-    n: function n() {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function e(_e2) {
-      didErr = true;
-      err = _e2;
-    },
-    f: function f() {
-      try {
-        if (!normalCompletion && it["return"] != null) it["return"]();
-      } finally {
-        if (didErr) throw err;
-      }
-    }
-  };
-}
 // EXTERNAL MODULE: ../../../node_modules/react/index.js
-var react = __webpack_require__(68);
+var react = __webpack_require__(152);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
-var constants = __webpack_require__(258);
+var constants = __webpack_require__(832);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
 var version = '0.11.0';
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(377);
+var jsx_runtime = __webpack_require__(797);
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(925);
+var shim = __webpack_require__(550);
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__(167);
+var with_selector = __webpack_require__(764);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -8338,7 +8281,7 @@ function () {
 
 
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(633);
+var react_reconciler = __webpack_require__(573);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
@@ -8364,7 +8307,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
       var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
       if (depth > 0) {
-        prop = diffProperties(lastProps[propKey], null, depth - 1);
+        prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
       } // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
@@ -8484,6 +8427,146 @@ var commonReconciler = {
   }
 };
 var isDevelopment = "production" === 'development';
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/richtext.js
+function stringifyRichText(node) {
+  var _a, _b;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
+      acc.push('="');
+      acc.push(node.attributes.value);
+      acc.push('"');
+    }
+
+    for (var key in node.attributes) {
+      if (key === 'value') continue;
+
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var value = node.attributes[key];
+
+        if (value != null) {
+          acc.push(' ');
+          acc.push(key);
+
+          if (typeof value === 'number') {
+            acc.push('=');
+            acc.push(value + '');
+          } else {
+            acc.push('="');
+            acc.push(value);
+            acc.push('"');
+          }
+        }
+      }
+    }
+
+    acc.push('>');
+  }
+
+  if (((_b = node.children) === null || _b === void 0 ? void 0 : _b.length) > 0) {
+    for (var _i = 0, _c = node.children; _i < _c.length; _i++) {
+      var child = _c[_i];
+      acc.push(stringifyRichText(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/svg.js
+function kebabize(str) {
+  return str.split('').map(function (letter, idx) {
+    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
+  }).join('');
+}
+
+;
+function stringifyStyle(style) {
+  if (typeof style === 'string') return style;
+  var acc = [];
+
+  for (var key in style) {
+    if (Object.prototype.hasOwnProperty.call(style, key)) {
+      var element = style[key];
+
+      if (element != null) {
+        acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
+        acc.push(';');
+      }
+    }
+  }
+
+  return acc.join('');
+}
+function stringifySVG(node) {
+  var _a;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    for (var key in node.attributes) {
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var element = node.attributes[key];
+        if (key === 'style') element = stringifyStyle(element);
+
+        if (element != null) {
+          acc.push(' ');
+          acc.push(kebabize(key));
+          acc.push('="');
+          acc.push(element);
+          acc.push('"');
+        }
+      }
+    }
+  }
+
+  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+    if (tag) acc.push('>');
+
+    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
+      var child = _b[_i];
+      acc.push(stringifySVG(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  } else {
+    if (tag) acc.push(' />');
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/index.js
+
+
+var subContextRenderers = {
+  'richtext': stringifyRichText,
+  'svg': stringifySVG
+};
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -8617,8 +8700,37 @@ var reconciler_assign = undefined && undefined.__assign || function () {
 
 
 
+
 var refId = 0;
 var ctxMap = new Map();
+
+var updateSubContext = function updateSubContext(instance) {
+  var rend = subContextRenderers[instance.type];
+  var root = instance === null || instance === void 0 ? void 0 : instance.root;
+  var cur = instance;
+
+  while (cur && !root) {
+    root = cur.root;
+    cur = cur.parent;
+  }
+
+  if (!root) return;
+  var content = rend(root.subContext.node);
+
+  if (instance.type === 'richtext') {
+    instance.hostContext.commands.push(['x', {
+      r: root.refId,
+      c: content
+    }]);
+  } else if (instance.type === 'svg') {
+    instance.hostContext.commands.push(['u', reconciler_assign({
+      r: root.refId,
+      t: 'svg'
+    }, convertPropsToSerializable({
+      innerContent: content
+    }))]);
+  }
+};
 
 var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   getRootHostContext: function getRootHostContext(rootContainer) {
@@ -8655,16 +8767,33 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
     var ctx = {
       context: context,
-      commands: commands
+      commands: commands,
+      refId: rootContainer.refId,
+      type: 'native'
     };
     ctxMap.set(context, ctx);
     return ctx;
   },
-  getChildHostContext: function getChildHostContext(parentCtx) {
+  getChildHostContext: function getChildHostContext(parentCtx, type) {
+    if (type === 'richtext' && parentCtx.type === 'native') return {
+      type: 'richtext',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
+    if (type === 'svg' && parentCtx.type === 'native') return {
+      type: 'svg',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
     return parentCtx;
   },
   getPublicInstance: function getPublicInstance(instance) {
-    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    return null;
   },
   supportsMutation: true,
   supportsHydration: false,
@@ -8684,33 +8813,93 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     UnityBridge.clearContainer(container);
   },
   createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    refId++;
     var aProps = getAllowedProps(props, type);
-    ctx.commands.push(['c', reconciler_assign({
-      t: type,
-      r: refId
-    }, convertPropsToSerializable(aProps))]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['c', reconciler_assign({
+        t: type,
+        r: refId
+      }, convertPropsToSerializable(aProps))]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+
+      var res = reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+
+      if (type === 'richtext') {
+        res.subContext = {
+          type: 'richtext',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      if (type === 'svg') {
+        res.subContext = {
+          type: 'svg',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      return res;
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          tag: type,
+          children: [],
+          attributes: aProps
+        }
+      });
+    }
   },
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    refId++;
-    ctx.commands.push(['t', {
-      r: refId,
-      c: text
-    }]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['t', {
+        r: refId,
+        c: text
+      }]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          text: text
+        }
+      });
+    }
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    parent.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      parent.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   finalizeInitialChildren: function finalizeInitialChildren() {
     return false;
@@ -8727,51 +8916,100 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
-    instance.commands.push(['u', reconciler_assign({
-      r: instance.refId,
-      t: type
-    }, convertPropsToSerializable(props))]);
+
+    if (instance.type === 'native') {
+      instance.commands.push(['u', reconciler_assign({
+        r: instance.refId,
+        t: type
+      }, convertPropsToSerializable(props))]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
+      updateSubContext(instance);
+    }
   },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    textInstance.commands.push(['x', {
-      r: textInstance.refId,
-      c: newText
-    }]);
+  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
+    if (instance.type === 'native') {
+      instance.commands.push(['x', {
+        r: instance.refId,
+        c: newText
+      }]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node = {
+        text: newText
+      };
+      updateSubContext(instance);
+    }
   },
   appendChild: function appendChild(parent, child) {
-    child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    child.commands.push(['a', {
+    if (child.type === 'native') child.commands.push(['a', {
       p: parent.refId,
       c: child.refId
     }]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
+      child.commands.push(['i', {
+        p: parent.refId,
+        c: child.refId,
+        i: beforeChild.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(beforeChild.node);
+        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
+      }
+
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
+    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
       p: parent.refId,
       c: child.refId,
       i: beforeChild.refId
     }]);
   },
   removeChild: function removeChild(parent, child) {
-    child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['r', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(child.node);
+        if (index >= 0) parent.node.children.splice(index, 1);
+      }
+
+      updateSubContext(parent);
+    }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    child.commands.push(['r', {
+    if (child.type === 'native') child.commands.push(['r', {
       p: parent.refId,
       c: child.refId
     }]);
@@ -8781,28 +9019,40 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   unhideInstance: function unhideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   }
 });
 
@@ -8941,10 +9191,8 @@ var Renderer = {
       options = {};
     }
 
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer; // For Jint engine, sync is default
-    // For other engines (ClearScript), async is default
-
-    var isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? (options === null || options === void 0 ? void 0 : options.sync) === false : !(options === null || options === void 0 ? void 0 : options.sync);
+    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
 
     var _a = containerMap.get(hostContainer) || {},
         hostRoot = _a.hostRoot,
@@ -8988,6 +9236,7 @@ var Renderer = {
         };
 
         var hostContainerInstance = {
+          type: 'native',
           commands: commands_1,
           component: hostContainer,
           context: hostContainer.Context,
@@ -9036,10 +9285,8 @@ var Renderer = {
     return rc;
   }
 };
-var isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
-var defaultReconciler = isSyncByDefault ? syncReconciler : asyncReconciler;
-var batchedUpdates = defaultReconciler.batchedUpdates;
-var flushSync = defaultReconciler.flushSync;
+var batchedUpdates = asyncReconciler.batchedUpdates;
+var flushSync = asyncReconciler.flushSync;
 ;// CONCATENATED MODULE: ./src/assets/check.png
 const check_namespaceObject = __webpack_require__.p + "static/media/check.png";
 ;// CONCATENATED MODULE: ./src/assets/close.png
@@ -9066,8 +9313,8 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(329);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/index.module.scss
-var index_module = __webpack_require__(760);
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/index.module.scss
+var index_module = __webpack_require__(473);
 ;// CONCATENATED MODULE: ./src/index.module.scss
 
       
@@ -9097,8 +9344,72 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
        /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
+;// CONCATENATED MODULE: ./src/common.tsx
+var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_index_module.warnIcon});var info=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_index_module.infoIcon});var Window=Globals.Window;
+;// CONCATENATED MODULE: ../../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+
+  if (!it) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function F() {};
+
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function s() {
+      it = it.call(o);
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+;// CONCATENATED MODULE: ./src/engine-plugins.tsx
+var engineTypes=[{type:Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,packageName:'com.reactunity.core',recommended:false,name:'Jint',implicit:true,tooltip:"Jint is the default JS engine and is shipped together with ReactUnity. It consists of a managed library. It supports every platform Unity can build to.\nJint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.\n\"REACT_DISABLE_JINT\" flag can be used to exclude Jint from build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,packageName:'com.reactunity.quickjs',recommended:true,name:'QuickJS',implicit:false,tooltip:"QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform except WebGL.\nQuickJS is very fast and reliable. It supports most of the platforms and has decent interop features.\n\"REACT_DISABLE_QUICKJS\" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,packageName:'com.reactunity.clearscript',recommended:false,name:'ClearScript',implicit:false,tooltip:"ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.\nClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.\nClearScript is the only engine capable of debugging. JavaScript can be debugged on port 9222 with Node debuggers like Chrome Inspector or VSCode.\n\"REACT_DISABLE_CLEARSCRIPT\" flag can be used to exclude ClearScript from build. Note that native libraries must be excluded manually after build."}];var engineTypesLoaded=new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(engineTypes),_step;try{var _loop=function _loop(){var type=_step.value;Window.CheckEngineVersion(type.type,function(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===engineTypes.length){resolve();}});};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});function EnginePlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),engines=_useState2[0],setEngines=_useState2[1];(0,react.useEffect)(function(){engineTypesLoaded.then(function(){return setEngines(engineTypes);});},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["JavaScript Engines",!engines&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!engines&&engines.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,tooltip:x.tooltip,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.recommended?' (Recommended)':''),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_index_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.recommended?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.implicit&&!x.recommended&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallEnginePlugin(x.type);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.implicit?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:'Update to '+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:"Install"})})]},i);})]});}
+;// CONCATENATED MODULE: ./src/unity-plugins.tsx
+var pluginTypes=[{packageName:'com.unity.editorcoroutines',name:'Unity Editor Coroutines',required:true,tooltip:"Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed."},{packageName:'com.unity.vectorgraphics',name:'Unity Vector Graphics',required:false,tooltip:"Required for SVG rendering."}];var pluginsLoaded=new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(pluginTypes),_step;try{var _loop=function _loop(){var type=_step.value;var resolveFunc=function resolveFunc(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===pluginTypes.length){resolve();}};Window.CheckPackageVersion(type.packageName,resolveFunc);};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});function UnityPlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),plugins=_useState2[0],setPlugins=_useState2[1];(0,react.useEffect)(function(){pluginsLoaded.then(function(){return setPlugins(pluginTypes);});},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["Additional Plugins",!plugins&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!plugins&&plugins.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.required?' (Required)':' (Optional)'),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_index_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.required?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.required&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.required?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallUnityPlugin(x.packageName);},children:'Update to '+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallUnityPlugin(x.packageName);},children:"Install"})})]},i);})]});}
 ;// CONCATENATED MODULE: ./src/main.tsx
-var Window=Globals.Window;var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var engineTypes=[{type:Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,recommended:false,name:'Jint',implicit:true,tooltip:"Jint is the default JS engine and is shipped together with ReactUnity. It consists of a managed library. It supports every platform Unity can build to.\nJint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.\n\"REACT_DISABLE_JINT\" flag can be used to exclude Jint from build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,recommended:true,name:'QuickJS',implicit:false,tooltip:"QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform except WebGL.\nQuickJS is very fast and reliable. It supports most of the platforms and has decent interop features.\n\"REACT_DISABLE_QUICKJS\" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,recommended:false,name:'ClearScript',implicit:false,tooltip:"ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.\nClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.\n\"REACT_DISABLE_CLEARSCRIPT\" flag can be used to exclude ClearScript from build. Note that native libraries must be excluded manually after build."}];var engineTypesLoaded=new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(engineTypes),_step;try{var _loop=function _loop(){var type=_step.value;Window.CheckEngineVersion(type.type,function(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===engineTypes.length){resolve();}});};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(),_useState14=_slicedToArray(_useState13,2),engines=_useState14[0],setEngines=_useState14[1];(0,react.useEffect)(function(){engineTypesLoaded.then(function(){return setEngines(engineTypes);});},[]);(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_index_module.warnIcon});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["JavaScript Engines",!engines&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!engines&&engines.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[x.name+(x.recommended?' (Recommended)':''),!!x.tooltip&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,children:/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_index_module.infoIcon,tooltip:x.tooltip})}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.recommended?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.implicit&&!x.recommended&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallEnginePlugin(x.type);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.implicit?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:'Update to '+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallEnginePlugin(x.type);},children:"Install"})})]},i);})]})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)(EnginePlugins,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(UnityPlugins,{})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();
