@@ -42,3 +42,9 @@ declare module 'react/jsx-runtime' {
     interface IntrinsicElements extends UGUIElements { }
   }
 }
+
+declare global {
+  interface DefaultComponentProps extends Components.View {
+    ref?: React.Ref<ReactUnity.UGUI.UGUIComponent>;
+  }
+}

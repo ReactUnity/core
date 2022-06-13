@@ -39,6 +39,10 @@ declare global {
     [key: string]: any;
   }
 
+  interface DefaultComponentProps {
+    [key: string]: any;
+  }
+
   var Globals: ReactUnity.Helpers.WatchableRecord<any> & DefaultGlobals;
 
   // Scheduling

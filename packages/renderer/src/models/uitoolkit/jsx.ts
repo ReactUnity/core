@@ -48,3 +48,9 @@ declare module 'react/jsx-runtime' {
     interface IntrinsicElements extends UIToolkitElements { }
   }
 }
+
+declare global {
+  interface DefaultComponentProps extends Components.View {
+    ref?: React.Ref<ReactUnity.UIToolkit.UIToolkitComponent>;
+  }
+}
