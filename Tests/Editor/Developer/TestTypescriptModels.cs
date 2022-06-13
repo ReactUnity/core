@@ -15,17 +15,18 @@ namespace ReactUnity.Tests.Editor.Developer
         [UnityEditor.MenuItem("React/Developer/Generate NUnit Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
-            TypescriptModelsGenerator.GenerateWith(
-                new List<Assembly> {
-                    typeof(Assert).Assembly,
-                },
-                new List<string> { "NUnit.Framework" },
-                new List<string> { "System.Configuration", "System.Xml", "System.Net", "System.Web" },
-                new Dictionary<string, string> { { "System", "./system" } },
-                new List<string> { },
-                true,
-                true
-            );
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> { typeof(Assert).Assembly },
+                IncludedNamespaces = new List<string> { "NUnit.Framework" },
+                ExcludedNamespaces = new List<string> { "System.Configuration", "System.Xml", "System.Net", "System.Web" },
+                ImportNamespaces = new Dictionary<string, string> { { "System", "./system" } },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+            };
+
+            generator.Generate();
         }
 #endif
     }

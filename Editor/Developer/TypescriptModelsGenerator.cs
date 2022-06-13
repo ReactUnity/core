@@ -12,6 +12,8 @@ namespace ReactUnity.Editor.Developer
     [ExcludeFromCodeCoverage]
     public class TypescriptModelsGenerator
     {
+        #region Generators
+
 #if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
         const string IgnoreInputSystem = "BogusNamespace";
 #else
@@ -22,8 +24,7 @@ namespace ReactUnity.Editor.Developer
         [UnityEditor.MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
         public static void GenerateUnity()
         {
-            GenerateWith(
-                new List<Assembly> {
+            var assemblies = new List<Assembly> {
                     typeof(UnityEngine.GameObject).Assembly,
                     typeof(UnityEngine.Video.VideoPlayer).Assembly,
                     typeof(UnityEngine.AudioSource).Assembly,
@@ -57,65 +58,87 @@ namespace ReactUnity.Editor.Developer
 #if REACT_VECTOR_GRAPHICS && REACT_ENABLE_ADVANCED_TYPES
                     typeof(Unity.VectorGraphics.VectorUtils).Assembly,
 #endif
-                },
-                new List<string> { "Unity", "UnityEngine" },
-                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel" },
-                new Dictionary<string, string> { { "System", "./system" } },
-                new List<string> { },
-                true,
-                true
-            );
+                };
+
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = assemblies,
+                IncludedNamespaces = new List<string> { "Unity", "UnityEngine" },
+                ExcludedNamespaces = new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel" },
+                ImportNamespaces = new Dictionary<string, string> { { "System", "./system" } },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = true,
+                AllowPointer = false
+            };
+
+            generator.Generate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
-            GenerateWith(
-                new List<Assembly> {
-                    typeof(UnityEditor.EditorWindow).Assembly,
-                },
-                new List<string> { "UnityEditor" },
-                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
-                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
-                new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
-                true,
-                true
-            );
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> { typeof(UnityEditor.EditorWindow).Assembly },
+                IncludedNamespaces = new List<string> { "UnityEditor" },
+                ExcludedNamespaces = new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
+                ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
+                ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = true,
+                AllowPointer = false
+            };
+
+            generator.Generate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
         public static void GenerateReactUnity()
         {
-            GenerateWith(
-                new List<Assembly> { typeof(ReactContext).Assembly, typeof(TypescriptModelsGenerator).Assembly, typeof(ReactUnity.UGUI.UGUIContext).Assembly, typeof(ReactUnity.UIToolkit.UIToolkitContext).Assembly, },
-                new List<string> { "ReactUnity" },
-                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
-                new List<string> { },
-                true,
-                true
-            );
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> { typeof(ReactContext).Assembly, typeof(TypescriptModelsGenerator).Assembly, typeof(ReactUnity.UGUI.UGUIContext).Assembly, typeof(ReactUnity.UIToolkit.UIToolkitContext).Assembly, },
+                IncludedNamespaces = new List<string> { "ReactUnity" },
+                ExcludedNamespaces = new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
+                ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = true,
+                AllowPointer = false
+            };
+
+            generator.Generate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
         public static void GenerateYoga()
         {
-            GenerateWith(
-                new List<Assembly> { typeof(Facebook.Yoga.YogaNode).Assembly, },
-                new List<string> { "Facebook.Yoga" },
-                new List<string> { },
-                new Dictionary<string, string> { { "System", "./system" } },
-                new List<string> { },
-                true,
-                true
-            );
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> { typeof(Facebook.Yoga.YogaNode).Assembly, },
+                IncludedNamespaces = new List<string> { "Facebook.Yoga" },
+                ExcludedNamespaces = new List<string> { },
+                ImportNamespaces = new Dictionary<string, string> { { "System", "./system" } },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = true,
+                AllowPointer = false
+            };
+
+            generator.Generate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
         public static void GenerateSystem()
         {
-            GenerateWith(
-                new List<Assembly> {
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> {
                     typeof(System.Convert).Assembly,
                     typeof(System.Object).Assembly,
                     typeof(System.Collections.Generic.HashSet<>).Assembly,
@@ -124,38 +147,45 @@ namespace ReactUnity.Editor.Developer
                     typeof(System.Collections.Specialized.StringDictionary).Assembly,
                     typeof(System.Reflection.Assembly).Assembly,
                 },
-                new List<string> { "System" },
-                new List<string> { "System.Configuration", "System.Xml", "System.Net" },
-                new Dictionary<string, string> { },
-                new List<string> { },
-                true,
-                true
-            );
+                IncludedNamespaces = new List<string> { "System" },
+                ExcludedNamespaces = new List<string> { "System.Configuration", "System.Xml", "System.Net" },
+                ImportNamespaces = new Dictionary<string, string> { },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = false,
+                AllowPointer = false,
+            };
+
+            generator.Generate();
         }
 
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
         [UnityEditor.MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
         public static void GenerateQuickJS()
         {
-            GenerateWith(
-                new List<Assembly> {
-                    typeof(QuickJS.ScriptEngine).Assembly,
-                    typeof(QuickJS.Native.JSApi).Assembly,
-                    typeof(QuickJS.JSPayloadHeader).Assembly,
-                },
-                new List<string> { "QuickJS" },
-                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
-                new List<string> { },
-                true,
-                true,
-                true,
-                true
-            );
+            var generator =
+                new TypescriptModelsGenerator()
+                {
+                    Assemblies = new List<Assembly> {
+                        typeof(QuickJS.ScriptEngine).Assembly,
+                        typeof(QuickJS.Native.JSApi).Assembly,
+                        typeof(QuickJS.JSPayloadHeader).Assembly,
+                    },
+                    IncludedNamespaces = new List<string> { "QuickJS" },
+                    ExcludedNamespaces = new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
+                    ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                    ExcludedTypes = new List<string> { },
+                    AllowGeneric = true,
+                    AllowIndexer = true,
+                    AllowPointer = true,
+                    WriteDocs = true,
+                    IncludeExterns = true,
+                };
+            generator.Generate();
         }
 #endif
 #endif
-
 
         [UnityEditor.MenuItem("React/Generate Project Typescript Models", priority = 0)]
         public static void GenerateCurrentProject()
@@ -169,78 +199,53 @@ namespace ReactUnity.Editor.Developer
             };
 
             var defaultAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => assemblySet.Contains(x.GetName().Name)).ToList();
-            GenerateWith(
-                defaultAssemblies,
-                null,
-                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                new Dictionary<string, string> {
+
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = defaultAssemblies,
+                IncludedNamespaces = null,
+                ExcludedNamespaces = new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
+                ImportNamespaces = new Dictionary<string, string> {
                     { "UnityEngine", "@reactunity/renderer" }, { "UnityEditor", "@reactunity/renderer" }, { "Unity", "@reactunity/renderer" },
                     { "System", "@reactunity/renderer" }, { "ReactUnity", "@reactunity/renderer" }, { "Facebook", "@reactunity/renderer" } },
-                new List<string> { },
-                true,
-                true
-            );
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+                AllowIndexer = true,
+                AllowPointer = false
+            };
         }
 
-        List<Assembly> Assemblies;
-        List<string> IncludedNamespaces;
-        List<string> ExcludedNamespaces;
-        List<string> ExcludedTypes;
-        Dictionary<string, string> ImportNamespaces;
-        Dictionary<string, string> Remaps;
-        bool ExportAsClass;
-        bool AllowGeneric;
-        bool AllowIndexer;
-        bool AllowPointer;
-
-        HashSet<string> Imports;
-        HashSet<string> Helpers;
+        #endregion
 
 
-        public static void GenerateWith(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
-            bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true, bool allowPointer = false)
-        {
-            var generator =
-                new TypescriptModelsGenerator(
-                    assemblies,
-                    include,
-                    exclude,
-                    import,
-                    excludeTypes,
-                    exportAsClass,
-                    generateGenericClasses,
-                    allowIndexer,
-                    allowPointer
-                );
-            generator.Generate();
-        }
+        #region Options
 
-        public TypescriptModelsGenerator(
-            List<Assembly> assemblies,
-            List<string> include,
-            List<string> exclude,
-            Dictionary<string, string> import,
-            List<string> excludeTypes,
-            bool exportAsClass = true,
-            bool generateGenericClasses = false,
-            bool allowIndexer = true,
-            bool allowPointer = false
-        )
-        {
-            Assemblies = assemblies;
-            ExcludedTypes = excludeTypes;
-            ImportNamespaces = import ?? new Dictionary<string, string>();
-            Remaps = new Dictionary<string, string>();
-            IncludedNamespaces = include;
-            ExcludedNamespaces = exclude ?? new List<string>();
-            ExportAsClass = exportAsClass;
-            AllowGeneric = generateGenericClasses;
-            AllowIndexer = allowIndexer;
-            AllowPointer = allowPointer;
+        public List<Assembly> Assemblies { get; set; } = new List<Assembly>();
+        public List<string> IncludedNamespaces { get; set; } = null;
+        public List<string> ExcludedNamespaces { get; set; } = null;
+        public List<string> ExcludedTypes { get; set; } = null;
+        public Dictionary<string, string> ImportNamespaces { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Remaps { get; set; } = new Dictionary<string, string>();
+        public bool ExportAsClass { get; set; } = true;
+        public bool AllowGeneric { get; set; } = false;
+        public bool AllowIndexer { get; set; } = true;
+        public bool AllowPointer { get; set; } = false;
+        public bool WriteDocs { get; set; } = false;
+        public bool IncludeExterns { get; set; } = false;
 
-            Imports = new HashSet<string>();
-            Helpers = new HashSet<string>();
-        }
+        #endregion
+
+
+        #region State
+
+        HashSet<string> Imports = new HashSet<string>();
+        HashSet<string> Helpers = new HashSet<string>();
+
+        #endregion
+
+
+        private static string n = "\n";
 
         public void Generate()
         {
@@ -263,7 +268,6 @@ namespace ReactUnity.Editor.Developer
             var sb = new StringBuilder();
 
             var nsStack = new Stack<string>();
-            var n = "\n";
 
             string spaces(int depth = 0)
             {
@@ -356,7 +360,8 @@ namespace ReactUnity.Editor.Developer
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)) &&
                                     !x.IsGenericMethod &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
-                                    ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic)
+                                    ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic ||
+                                        (IncludeExterns && x.IsStatic && x.GetMethodBody() == null))
                                     );
 
                     var indexer = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
@@ -379,7 +384,7 @@ namespace ReactUnity.Editor.Developer
                     //    sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
 
                     foreach (var info in methods)
-                        sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
+                        sb.Append($"{bl1}{getTypeScriptString(info, bl1)}{n}");
                 }
 
                 sb.Append($"{bl}}}{n}");
@@ -482,17 +487,23 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        string getTypeScriptString(MethodInfo info)
+        string getTypeScriptString(MethodInfo info, string indent)
         {
             var isStatic = info.IsStatic;
             var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
 
-            return string.Format("{0}{1}({2}): {3};",
+            var docs = new List<string>();
+            if (info.IsPrivate) docs.Add("@private");
+            if (isStatic && info.GetMethodBody() == null) docs.Add("@external");
+            var modifiers = FormatJSDocLines(docs, indent);
+
+            return string.Format("{4}{0}{1}({2}): {3};",
               isStatic ? "static " : "",
               info.Name,
               args,
-              retType
+              retType,
+              modifiers
             );
         }
 
@@ -723,6 +734,20 @@ namespace ReactUnity.Editor.Developer
         {
             int index = name.IndexOf('`');
             return index == -1 ? name : name.Substring(0, index);
+        }
+
+        string FormatJSDocLines(List<string> lines, string indent)
+        {
+            if (!WriteDocs || lines.Count == 0) return "";
+
+            if (lines.Count == 1)
+            {
+                return $"/**{lines[0]} */{n}{indent}";
+            }
+
+            var content = string.Join("", lines.Select(x => $"{indent} * {x}{n}").ToArray());
+
+            return $"/**{n}{content}{indent} */{n}{indent}";
         }
     }
 }
