@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [],
+    "typeRoots": [
+      "typings"
+    ],
+    "baseUrl": "./",
+    "pretty": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "none",
+    "allowUmdGlobalAccess": true,
+    "moduleResolution": "node",
+    "outDir": "..",
+    "outFile": "../quickjs.jslib",
+    "noImplicitAny": false,
+    "strict": false,
+    "noImplicitUseStrict": true,
+    "noUncheckedIndexedAccess": false,
+    "suppressExcessPropertyErrors": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "strictNullChecks": false
+  },
+  "files": [
+    "quickjs.ts",
+    "typings/emscripten.d.ts",
+    "typings/unity.d.ts",
+    "typings/jsapi.d.ts",
+    "typings/plugin.d.ts"
+  ],
+  "include": [
+    "typings/*.d.ts",
+  ]
+}
