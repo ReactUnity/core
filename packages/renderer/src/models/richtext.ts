@@ -7,8 +7,8 @@ export interface RichTextVoidTag extends React.Attributes {
   children?: any;
 }
 
-export interface RichTextValueTag extends React.Attributes {
-  value?: string;
+export interface RichTextValueTag<T = string | number> extends React.Attributes {
+  value?: T | string;
   children?: any;
 }
 
@@ -36,38 +36,38 @@ export interface RichTextElements {
   'zwsp': RichTextVoidTag;
   'br': RichTextVoidTag;
 
-  'align': RichTextValueTag;
-  'alpha': RichTextValueTag;
+  'align': RichTextValueTag<'right' | 'center' | 'left'>;
+  'alpha': RichTextValueTag<string>;
   'color': RichTextColorTag;
   'b': RichTextVoidTag;
   'i': RichTextVoidTag;
-  'cspace': RichTextValueTag;
+  'cspace': RichTextValueTag<number>;
   'font': RichTextFontTag;
-  'indent': RichTextValueTag;
-  'line-height': RichTextValueTag;
-  'line-indent': RichTextValueTag;
+  'indent': RichTextValueTag<number>;
+  'line-height': RichTextValueTag<number>;
+  'line-indent': RichTextValueTag<number>;
   'link': RichTextValueTag;
   'lowercase': RichTextVoidTag;
   'uppercase': RichTextVoidTag;
   'smallcaps': RichTextVoidTag;
   'allcaps': RichTextVoidTag;
-  'margin': RichTextValueTag;
-  'margin-left': RichTextValueTag;
-  'margin-right': RichTextValueTag;
+  'margin': RichTextValueTag<number>;
+  'margin-left': RichTextValueTag<number>;
+  'margin-right': RichTextValueTag<number>;
   'mark': RichTextValueTag;
   'mspace': RichTextVoidTag;
   'noparse': RichTextVoidTag;
   'nobr': RichTextVoidTag;
   'page': RichTextVoidTag;
-  'pos': RichTextValueTag;
-  'size': RichTextValueTag;
-  'space': RichTextValueTag;
+  'pos': RichTextValueTag<number>;
+  'size': RichTextValueTag<number>;
+  'space': RichTextValueTag<number>;
   'sprite': RichTextSpriteTag;
   's': RichTextVoidTag;
   'u': RichTextVoidTag;
   'style': RichTextValueTag;
   'sub': RichTextVoidTag;
   'sup': RichTextVoidTag;
-  'voffset': RichTextValueTag;
-  'width': RichTextValueTag;
+  'voffset': RichTextValueTag<number>;
+  'width': RichTextValueTag<number>;
 };

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 11/06/2022 18:41:19
+// Generated 14/06/2022 22:41:19
 //
 /* eslint-disable */
 
@@ -8,6 +8,9 @@ import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
 import { UnityEngine } from './unity';
 import { Facebook } from './yoga';
+
+
+type Byte = number;
 
 export declare namespace ReactUnity {
   export class BaseReactComponent<ContextType = any> {
@@ -745,6 +748,7 @@ export declare namespace ReactUnity {
     }
     export class QuickStartWindow {
       constructor();
+      static ShowWindowOnStartup: boolean;
       NodeVersion: number;
       Context: ReactUnity.ReactContext;
       HostElement: ReactUnity.Editor.UIToolkit.ReactUnityEditorElement;
@@ -773,6 +777,10 @@ export declare namespace ReactUnity {
       position: UnityEngine.Rect;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static WindowVersion: string;
+      static ScopeName: string;
+      static ScopeUrl: string;
+      static CompanyScope: string;
       static PackageName: string;
       RequiredNodeVersion: number;
       NodeUrl: string;
@@ -780,22 +788,19 @@ export declare namespace ReactUnity {
       PackageVersion: string;
       LatestVersion: string;
       HasUpdate: boolean;
-      QuickJSAvailable: boolean;
       static ShowDefaultWindow(): void;
+      GetProjectFullPath(): string;
       GetProjectPath(): string;
       CreateProject(): void;
-      GetNodeVersion(callback?: ((obj: number) => void)): void;
-      GetNodeVersion(callback: any): void;
+      GetNodeVersion(callback: ((obj: number) => void)): void;
       RunCommand(target: string, args: string, hasOutput?: boolean): System.Diagnostics.Process;
       CanvasExistsInScene(): boolean;
       CreateCanvas(): void;
       SelectCanvas(): void;
-      CheckVersion(callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
       CheckVersion(packageName: string, callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
-      CheckEngineVersion(type: ReactUnity.Scripting.JavascriptEngineType, callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
-      UpdatePackage(version: string): void;
-      InstallEnginePlugin(type: ReactUnity.Scripting.JavascriptEngineType): void;
-      UninstallEnginePlugin(type: ReactUnity.Scripting.JavascriptEngineType): void;
+      InstallScopedPlugin(packageName: string): void;
+      InstallUnityPlugin(pluginName: string): void;
+      UninstallUnityPlugin(pluginName: string): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
@@ -908,15 +913,28 @@ export declare namespace ReactUnity {
     }
     export namespace Developer {
       export class TypescriptModelsGenerator {
-        constructor(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: Record<string, string>, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean);
+        constructor();
+        Assemblies: System.Reflection.Assembly[];
+        IncludedNamespaces: string[];
+        ExcludedNamespaces: string[];
+        ExcludedTypes: string[];
+        ImportNamespaces: Record<string, string>;
+        Remaps: Record<string, string>;
+        ExportAsClass: boolean;
+        AllowGeneric: boolean;
+        AllowIndexer: boolean;
+        AllowPointer: boolean;
+        WriteDocs: boolean;
+        IncludeExterns: boolean;
         static GenerateUnity(): void;
         static GenerateEditor(): void;
         static GenerateReactUnity(): void;
         static GenerateYoga(): void;
         static GenerateSystem(): void;
+        static GenerateQuickJS(): void;
         static GenerateCurrentProject(): void;
-        static GenerateWith(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: any, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean): void;
-        Generate(): void;
+        PickFileAndGenerate(): string;
+        GenerateTo(filePath: string): void;
         GetTypescript(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -1846,7 +1864,6 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1923,7 +1940,6 @@ export declare namespace ReactUnity {
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2027,7 +2043,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2090,7 +2105,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2532,38 +2546,6 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scripting {
-    export class ClearScriptEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
-      Key: string;
-      Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
-      NativeEngine: any; // System.Object
-      Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
-      GetGlobal(key: string): any;
-      DeleteGlobal(key: string): void;
-      CreateTypeReference(type: System.Type): any;
-      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
-      Dispose(): void;
-      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      IsScriptObject(obj: any): boolean;
-      Update(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ClearScriptEngineFactory {
-      constructor();
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2626,6 +2608,13 @@ export declare namespace ReactUnity {
       constructor();
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintExtensions {
+      static RunContinuations(engine: any): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3018,8 +3007,8 @@ export declare namespace ReactUnity {
         constructor(object: any, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
-        Invoke(data: System.Byte[]): void;
-        BeginInvoke(data: System.Byte[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        Invoke(data: Byte[]): void;
+        BeginInvoke(data: Byte[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -3087,7 +3076,7 @@ export declare namespace ReactUnity {
       export interface IWebSocket {
         Connect(): void;
         Close(code?: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason?: string): void;
-        Send(data: System.Byte[]): void;
+        Send(data: Byte[]): void;
         GetState(): ReactUnity.Scripting.DomProxies.WebSocketState;
       }
       export class WebSocketHelpers {
@@ -3182,7 +3171,7 @@ export declare namespace ReactUnity {
         constructor(url: string);
         Connect(): void;
         Close(code?: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason?: string): void;
-        Send(data: System.Byte[]): void;
+        Send(data: Byte[]): void;
         GetState(): ReactUnity.Scripting.DomProxies.WebSocketState;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -3375,7 +3364,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -4328,6 +4316,7 @@ export declare namespace ReactUnity {
     export namespace Converters {
       export class AllConverters {
         constructor();
+        static RawConverter: ReactUnity.Styling.Converters.IStyleConverter;
         static DefaultConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static StringConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static FloatConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -4551,6 +4540,15 @@ export declare namespace ReactUnity {
         StringifyInternal(value: any): string;
         StringifyTyped(value: number): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+        Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+        Stringify(value: any): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class RawConverter {
+        constructor();
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;
         Equals(obj: any): boolean;
@@ -5318,7 +5316,7 @@ export declare namespace ReactUnity {
       FullUrl: string;
       NormalizedUrl: string;
       HasKnownProtocol: boolean;
-      GetData(): System.Byte[];
+      GetData(): Byte[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5631,7 +5629,7 @@ export declare namespace ReactUnity {
     }
     export class BaseImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag: string);
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -5715,98 +5713,11 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class ReplacedImageComponent {
-      constructor(context: ReactUnity.UGUI.UGUIContext);
-      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
-      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
-      Graphic: UnityEngine.UI.MaskableGraphic;
-      GameObject: UnityEngine.GameObject;
-      RectTransform: UnityEngine.RectTransform;
-      Component: ReactUnity.UGUI.Behaviours.ReactElement;
-      BorderAndBackground: ReactUnity.UGUI.Internal.BorderAndBackground;
-      OverflowMask: ReactUnity.UGUI.Internal.MaskAndImage;
-      Selectable: UnityEngine.UI.Selectable;
-      CanvasGroup: UnityEngine.CanvasGroup;
-      Canvas: UnityEngine.Canvas;
-      Container: UnityEngine.RectTransform;
-      Name: string;
-      ClientWidth: number;
-      ClientHeight: number;
-      EventViewport: UnityEngine.RectTransform;
-      ResolvedEventViewport: UnityEngine.RectTransform;
-      Context: ReactUnity.UGUI.UGUIContext;
-      Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
-      ComputedStyle: ReactUnity.Styling.NodeStyle;
-      StyleState: ReactUnity.Styling.StyleState;
-      StateStyles: ReactUnity.Styling.StateStyles;
-      Style: InlineStyleRemap;
-      InlineStylesheet: ReactUnity.Styling.StyleSheet;
-      ParentIndex: number;
-      CurrentOrder: number;
-      Entering: boolean;
-      Leaving: boolean;
-      Destroyed: boolean;
-      IsPseudoElement: boolean;
-      Tag: string;
-      TextContent: string;
-      ClassName: string;
-      ClassList: ReactUnity.Helpers.ClassList;
-      Id: string;
-      RefId: number;
-      IsContainer: boolean;
-      Children: ReactUnity.IReactComponent[];
-      BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
-      BeforePseudo: ReactUnity.IReactComponent;
-      AfterPseudo: ReactUnity.IReactComponent;
-      ScrollLeft: number;
-      ScrollTop: number;
-      ScrollWidth: number;
-      ScrollHeight: number;
-      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
-      AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
-      SetProperty(propertyName: string, value: any): void;
-      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
-      GetBoundingClientRect(): UnityEngine.Rect;
-      GetComponent(type: System.Type): any;
-      AddComponent(type: System.Type): any;
-      UpdateOrder(prev: number, current: number): boolean;
-      Update(): void;
-      MarkForStyleResolving(recursive: boolean): void;
-      Remove(): void;
-      Destroy(recursive?: boolean): void;
-      SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
-      SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
-      FireEvent(eventName: string, arg: any): void;
-      SetData(propertyName: string, value: any): void;
-      ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
-      ApplyStyles(): void;
-      ApplyLayoutStyles(): void;
-      Matches(query: string): boolean;
-      Closest(query: string): ReactUnity.IReactComponent;
-      QuerySelector(query: string): ReactUnity.IReactComponent;
-      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
-      Accept(visitor: ReactUnity.Helpers.Visitors.ReactComponentVisitor, skipSelf?: boolean): void;
-      AddBefore(): void;
-      RemoveBefore(): void;
-      AddAfter(): void;
-      RemoveAfter(): void;
-      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
-      UnregisterChild(child: ReactUnity.IReactComponent): void;
-      Clear(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export class BaseRenderTextureComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag: string);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6244,7 +6155,7 @@ export declare namespace ReactUnity {
     export class ImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Image: UnityEngine.UI.Image;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6513,7 +6424,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6771,7 +6682,7 @@ export declare namespace ReactUnity {
     export class RawImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Image: UnityEngine.UI.RawImage;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6859,7 +6770,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -7210,7 +7121,7 @@ export declare namespace ReactUnity {
       InnerContent: string;
       ResolvedContent: string;
       Image: any; // Unity.VectorGraphics.SVGImage
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -7297,7 +7208,7 @@ export declare namespace ReactUnity {
     export class SvgImageComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Image: any; // Unity.VectorGraphics.SVGImage
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -7744,7 +7655,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
-      Replaced: ReactUnity.UGUI.ReplacedImageComponent;
+      Replaced: ReactUnity.UGUI.BaseImageComponent_ReplacedImageHelper;
       Source: any; // System.Object
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -7991,6 +7902,18 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class BaseImageComponent_ReplacedImageHelper {
+      constructor(parent: ReactUnity.UGUI.BaseImageComponent);
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
+      ReplacedElement: ReactUnity.UGUI.Behaviours.ReactReplacedElement;
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class UGUIContext_Options {
       constructor();
       CalculatesLayout: boolean;
@@ -8125,7 +8048,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         Context: ReactUnity.UGUI.UGUIContext;
         MarkDirty(): void;
-        Measure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+        Measure(node: Facebook.Yoga.YogaNode, width: number, wm: Facebook.Yoga.YogaMeasureMode, height: number, hm: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -8405,6 +8328,7 @@ export declare namespace ReactUnity {
       export class ReactReplacedElement {
         constructor();
         Layout: Facebook.Yoga.YogaNode;
+        Measurer: ReactUnity.UGUI.Behaviours.ImageMeasurer;
         Position: ReactUnity.Types.YogaValue2;
         useGUILayout: boolean;
         runInEditMode: boolean;

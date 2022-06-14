@@ -1,5 +1,13 @@
 import { RichTextNode } from '../async/types';
 
+export function parametrizeValue(value: string | number) {
+  if (typeof value === 'number') return value + '';
+  value = value + '';
+
+  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
+  return value;
+}
+
 export function stringifyRichText(node: RichTextNode): string {
   if (node.hidden) return '';
 
@@ -14,9 +22,9 @@ export function stringifyRichText(node: RichTextNode): string {
     acc.push(tag);
 
     if (node.attributes?.value != null) {
-      acc.push('="');
-      acc.push(node.attributes.value);
-      acc.push('"');
+      const value = node.attributes?.value;
+      acc.push('=');
+      acc.push(parametrizeValue(value));
     }
 
     for (const key in node.attributes) {
@@ -27,16 +35,8 @@ export function stringifyRichText(node: RichTextNode): string {
         if (value != null) {
           acc.push(' ');
           acc.push(key);
-
-          if (typeof value === 'number') {
-            acc.push('=');
-            acc.push(value + '');
-          }
-          else {
-            acc.push('="');
-            acc.push(value);
-            acc.push('"');
-          }
+          acc.push('=');
+          acc.push(parametrizeValue(value));
         }
       }
     }
