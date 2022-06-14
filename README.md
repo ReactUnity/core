@@ -21,7 +21,7 @@ Node is only used while developing and not required in runtime or after the proj
 **Install via OpenUPM (recommended)**
 
 ```
-npx openupm-cli add com.reactunity.core
+npx openupm-cli add com.reactunity.core com.reactunity.quickjs
 ```
 
 **Or add using the package manager with the git URL**
@@ -37,7 +37,7 @@ https://github.com/ReactUnity/core.git#latest
 - Run `npm start` from React project
 - Click play in Unity
 
-The documentation on the [main website](https://reactunity.github.io) is under development. You can also read detailed instructions in the outdated [wiki](https://github.com/ReactUnity/core/wiki).
+The documentation on the [main website](https://reactunity.github.io) is under development.
 
 ## Known Issues
 
