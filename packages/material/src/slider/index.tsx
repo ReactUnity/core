@@ -8,6 +8,7 @@ import style from './index.module.scss';
 
 export type SliderDirection = 'horizontal' | 'vertical' | 'horizontal-reverse' | 'vertical-reverse';
 export type SliderMode = 'normal' | 'diff' | 'falloff';
+export type SliderValuePosition = 'auto' | 'top' | 'bottom' | 'left' | 'right' | 'center';
 export type SliderChildCallback = ((val: number) => ReactNode);
 
 export interface SliderRef extends ControlRef<number> {
@@ -23,6 +24,7 @@ export interface SliderProps extends View, ControlProps<number> {
   allowScroll?: boolean;
   scrollMultiplier?: number;
   direction?: SliderDirection;
+  valuePosition?: SliderValuePosition;
   children?: ReactNode | SliderChildCallback;
 }
 
@@ -40,7 +42,7 @@ const SliderChild = forwardRef(
 const _Slider = forwardRef<SliderRef, SliderProps>(
   function _Slider({
     onChange, onScroll, name, children, defaultValue, value, direction = 'horizontal',
-    mode = 'normal', min = 0, max = 1, step = 0, keyStep = null, allowScroll = false,
+    mode = 'normal', valuePosition = 'auto', min = 0, max = 1, step = 0, keyStep = null, allowScroll = false,
     scrollMultiplier = 1 / 6, readOnly, ...otherProps
   }, ref) {
     const isControlled = useControlCheck({ value, defaultValue, onChange, readOnly });
@@ -133,16 +135,19 @@ const _Slider = forwardRef<SliderRef, SliderProps>(
       get root() { return elementRef.current; },
     }), [elementRef, curValue, setValWithStep]);
 
-    return <view name={name || '<Slider>'} {...otherProps} ref={elementRef} data-direction={direction} data-orientation={orientation} data-readonly={readOnly ? true : undefined}
+    return <view name={name || '<Slider>'} {...otherProps} ref={elementRef}
+      data-direction={direction} data-orientation={orientation} data-readonly={readOnly ? true : undefined} data-cursor={valuePosition}
       onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback} onScroll={scrollCallback}
       className={clsx(style.host, otherProps.className, 'mat-slider')}>
       <view name="<Slider-Track>" className={clsx(style.track, 'mat-slider-track')}>
         <view name="<Slider-Fill>" className={clsx(style.fill, 'mat-slider-fill')} ref={fillRef} style={{ [sizeProp]: (100 * (curValue.current - min) / range) + '%' }}>
           <view name="<Slider-Thumb-Container>" className={clsx(style.thumbContainer, 'mat-slider-thumb-container')}>
             <view name="<Slider-Thumb>" className={clsx(style.thumb, 'mat-slider-thumb')}>
-              {typeof children === 'function' ?
-                <SliderChild defaultValue={curValue.current} callback={children as any} ref={childRef} /> :
-                children}
+              <view name="<Slider-Value>" className={clsx(style.value, 'mat-slider-value')}>
+                {typeof children === 'function' ?
+                  <SliderChild defaultValue={curValue.current} callback={children as any} ref={childRef} /> :
+                  children}
+              </view>
             </view>
           </view>
         </view>

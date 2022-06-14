@@ -114,4 +114,35 @@
       background-color: hsl(0deg, 0%, 92%);
     }
   }
+
+  .value {
+    position: absolute;
+    margin: 5px;
+  }
+
+  &[cursor="center"] .value {
+    inset: 0;
+  }
+
+  &[cursor="above"] .value,
+  &[cursor="auto"][orientation="horizontal"] .value {
+    bottom: 100%;
+    text-align: bottom;
+  }
+
+  &[cursor="below"] .value {
+    top: 100%;
+    text-align: top;
+  }
+
+  &[cursor="left"] .value {
+    right: 100%;
+    text-align: left;
+  }
+
+  &[cursor="right"] .value,
+  &[cursor="auto"][orientation="vertical"] .value {
+    left: 100%;
+    text-align: right;
+  }
 }
