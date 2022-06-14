@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
+using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
@@ -166,22 +167,24 @@ namespace ReactUnity.Styling
         {
             var value = GetRawStyleValue(prop);
 
-            if (value is IComputedValue dd) value = dd.ResolveValue(prop, this, prop);
+            var converter = prop is VariableProperty ? AllConverters.RawConverter : prop;
+
+            if (value is IComputedValue dd) value = dd.ResolveValue(prop, this, converter);
 
             if (value == null)
             {
                 value = prop.defaultValue;
-                if (value is IComputedValue d) value = d.ResolveValue(prop, this, prop);
+                if (value is IComputedValue d) value = d.ResolveValue(prop, this, converter);
             }
             else if (convert && value.GetType() != typeof(T))
             {
                 value = prop.Convert(value);
-                if (value is IComputedValue d) value = d.ResolveValue(prop, this, prop);
+                if (value is IComputedValue d) value = d.ResolveValue(prop, this, converter);
 
                 if (value == null)
                 {
                     value = prop.defaultValue;
-                    if (value is IComputedValue dv) value = dv.ResolveValue(prop, this, prop);
+                    if (value is IComputedValue dv) value = dv.ResolveValue(prop, this, converter);
                 }
             }
 

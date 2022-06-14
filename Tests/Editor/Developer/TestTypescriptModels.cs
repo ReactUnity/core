@@ -26,7 +26,7 @@ namespace ReactUnity.Tests.Editor.Developer
                 AllowGeneric = true,
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 #endif
     }

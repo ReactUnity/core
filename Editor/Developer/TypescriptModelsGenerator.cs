@@ -73,7 +73,7 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
@@ -92,7 +92,7 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
@@ -111,7 +111,7 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
@@ -130,7 +130,7 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 
         [UnityEditor.MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
@@ -157,7 +157,7 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false,
             };
 
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
@@ -182,7 +182,7 @@ namespace ReactUnity.Editor.Developer
                     WriteDocs = true,
                     IncludeExterns = true,
                 };
-            generator.Generate();
+            generator.PickFileAndGenerate();
         }
 #endif
 #endif
@@ -247,11 +247,19 @@ namespace ReactUnity.Editor.Developer
 
         private static string n = "\n";
 
-        public void Generate()
+        public string PickFileAndGenerate()
         {
             var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
-            if (string.IsNullOrWhiteSpace(filePath)) return;
+            if (string.IsNullOrWhiteSpace(filePath)) return filePath;
 
+            GenerateTo(filePath);
+
+            return filePath;
+        }
+
+        public void GenerateTo(string filePath)
+        {
+            UnityEngine.Debug.Assert(!string.IsNullOrWhiteSpace(filePath));
 
             var res = GetTypescript();
             File.WriteAllText(filePath, res);

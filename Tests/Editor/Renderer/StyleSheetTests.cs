@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Scripting;
+using ReactUnity.Styling;
 using ReactUnity.UIToolkit;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -165,6 +166,43 @@ namespace ReactUnity.Tests.Editor.Renderer
             cmp = Q(".hover\\:button") as UIToolkitComponent<VisualElement>;
             rt = cmp.Children.FirstOrDefault() as TextComponent<TextElement>;
             Assert.AreEqual(Color.blue, rt.Element.resolvedStyle.color);
+        }
+
+
+        [EditorInjectableTest(Script = @"
+            export default function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <view className='c1'>
+                        Hey
+                    </view>
+                    <view className='c2'>
+                        Hey
+                    </view>
+                </>;
+            }
+        ", Style = @"
+            .c1 + .c2 { --v1: 1px; }
+            .c1+ .c2 { --v2: 2px; }
+            .c1 +.c2 { --v3: 3px; }
+            .c1+.c2 { --v4: 4px; }
+            * + .c2 { --v5: 5px; }
+            *+.c2 { --v6: 6px; }
+            *+view { --v7: 7px; }
+        ")]
+        public IEnumerator AdjacencySelectorsParsesCorrectly()
+        {
+            yield return null;
+
+            var cmp = Q(".c2") as UIToolkitComponent<VisualElement>;
+
+            Assert.AreEqual("1px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v1")));
+            Assert.AreEqual("2px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v2")));
+            Assert.AreEqual("3px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v3")));
+            Assert.AreEqual("4px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v4")));
+            Assert.AreEqual("5px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v5")));
+            Assert.AreEqual("6px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v6")));
+            Assert.AreEqual("7px", cmp.ComputedStyle.GetStyleValue<string>(CssProperties.GetProperty("--v7")));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ReactUnity.Styling.Computed
             var loop = 0;
             while (value is IComputedValue vl)
             {
-                if (loop > 10)
+                if (loop > 16)
                 {
                     throw new System.Exception("Endless loop of computed value detected");
                 }

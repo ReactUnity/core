@@ -10,6 +10,7 @@ namespace ReactUnity.Styling.Converters
 {
     public class AllConverters
     {
+        static public IStyleConverter RawConverter = new RawConverter();
         static public StyleConverterBase DefaultConverter = new StringConverter();
         static public StyleConverterBase StringConverter = new StringConverter();
 
