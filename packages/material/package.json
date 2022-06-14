@@ -37,8 +37,59 @@
       "all": [
         "./dist/index.d.ts"
       ],
-      "*": [
-        "./dist/src/*/index.d.ts"
+      "accordion": [
+        "./dist/src/accordion/index.d.ts"
+      ],
+      "alert": [
+        "./dist/src/alert/index.d.ts"
+      ],
+      "button": [
+        "./dist/src/button/index.d.ts"
+      ],
+      "card": [
+        "./dist/src/card/index.d.ts"
+      ],
+      "confirm": [
+        "./dist/src/confirm/index.d.ts"
+      ],
+      "input": [
+        "./dist/src/input/index.d.ts"
+      ],
+      "modal": [
+        "./dist/src/modal/index.d.ts"
+      ],
+      "paper": [
+        "./dist/src/paper/index.d.ts"
+      ],
+      "prompt": [
+        "./dist/src/prompt/index.d.ts"
+      ],
+      "ripple": [
+        "./dist/src/ripple/index.d.ts"
+      ],
+      "select": [
+        "./dist/src/select/index.d.ts"
+      ],
+      "slider": [
+        "./dist/src/slider/index.d.ts"
+      ],
+      "styles": [
+        "./dist/src/styles/index.d.ts"
+      ],
+      "text": [
+        "./dist/src/text/index.d.ts"
+      ],
+      "toggle": [
+        "./dist/src/toggle/index.d.ts"
+      ],
+      "tooltip": [
+        "./dist/src/tooltip/index.d.ts"
+      ],
+      "util": [
+        "./dist/src/util/index.d.ts"
+      ],
+      "virtual-scroll": [
+        "./dist/src/virtual-scroll/index.d.ts"
       ]
     }
   },
@@ -56,15 +107,16 @@
     "pack": "yarn pack"
   },
   "dependencies": {
+    "clsx": "^1.1.1",
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.11.0",
-    "concurrently": "^7.1.0",
+    "concurrently": "^7.2.1",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "@reactunity/renderer": "^0.11.0",
