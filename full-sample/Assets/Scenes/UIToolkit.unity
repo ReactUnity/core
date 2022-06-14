@@ -162,7 +162,7 @@ MonoBehaviour:
     SourcePath: react/uitoolkit
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 1
+    UseDevServer: 0
     DevServer: http://localhost:3100/uitoolkit.js
   Debug: 0
   AwaitDebugger: 0

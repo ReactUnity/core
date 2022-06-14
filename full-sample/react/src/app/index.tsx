@@ -1,5 +1,5 @@
 import { Renderer } from '@reactunity/renderer';
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { MemoryRouter, useNavigate } from 'react-router';
 import styles from './index.module.scss';
 import { AppRoutes } from './routes';
@@ -14,8 +14,10 @@ function App() {
       <button onClick={() => nav('animations')}>Animations</button>
       <button onClick={() => nav('images')}>Images</button>
       <button onClick={() => nav('bg-patterns')}>Background Patterns</button>
+      <button onClick={() => nav('svgs')}>SVGs</button>
       <button onClick={() => nav('lazy')}>Lazy loading</button>
       <button onClick={() => nav('tailwind')}>Tailwind</button>
+      <button onClick={() => nav('jss')}>JSS</button>
     </view>
 
     <scroll className={styles.scroll}>

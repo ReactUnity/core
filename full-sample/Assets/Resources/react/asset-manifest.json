@@ -2,9 +2,14 @@
   "files": {
     "index.js": "/index.js",
     "uitoolkit.js": "/uitoolkit.js",
-    "static/js/9.chunk.js": "/static/js/9.chunk.js",
-    "static/js/968.chunk.js": "/static/js/968.chunk.js",
-    "static/media/bg.png": "/static/media/bg.png"
+    "static/js/857.chunk.js": "/static/js/857.chunk.js",
+    "static/js/809.chunk.js": "/static/js/809.chunk.js",
+    "static/media/bg.png": "/static/media/bg.png",
+    "static/media/check.svg": "/static/media/check.4701752daa56435b75dc4edd7886d403.svg",
+    "index.js.map": "/index.js.map",
+    "uitoolkit.js.map": "/uitoolkit.js.map",
+    "857.chunk.js.map": "/static/js/857.chunk.js.map",
+    "809.chunk.js.map": "/static/js/809.chunk.js.map"
   },
   "entrypoints": [
     "index.js"

@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7989:
+/***/ 4758:
 /***/ ((module) => {
 
 "use strict";
@@ -110,19 +110,36 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 9367:
+/***/ 713:
 /***/ ((module) => {
 
 "use strict";
 
 
-module.exports = function (i) {
-  return i[1];
+module.exports = function (item) {
+  var content = item[1];
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (typeof btoa === "function") {
+    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
+    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+    var sourceMapping = "/*# ".concat(data, " */");
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || "").concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join("\n");
+  }
+
+  return [content].join("\n");
 };
 
 /***/ }),
 
-/***/ 5623:
+/***/ 1156:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -146,7 +163,7 @@ exports.LegacyRoot = 0;
 
 /***/ }),
 
-/***/ 8192:
+/***/ 7955:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /**
@@ -162,8 +179,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(3792),
-      ba = __webpack_require__(1481),
+  var aa = __webpack_require__(1867),
+      ba = __webpack_require__(6017),
       ca = Object.assign;
 
   function n(a) {
@@ -6511,31 +6528,31 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 2014:
+/***/ 2354:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(5623);
+  module.exports = __webpack_require__(1156);
 } else {}
 
 /***/ }),
 
-/***/ 3630:
+/***/ 1295:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(8192);
+  module.exports = __webpack_require__(7955);
 } else {}
 
 /***/ }),
 
-/***/ 6534:
+/***/ 6785:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6550,7 +6567,7 @@ if (true) {
  */
 
 
-var f = __webpack_require__(3792),
+var f = __webpack_require__(1867),
     k = Symbol["for"]("react.element"),
     l = Symbol["for"]("react.fragment"),
     m = Object.prototype.hasOwnProperty,
@@ -6594,7 +6611,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 3166:
+/***/ 19:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7020,31 +7037,31 @@ exports.version = "18.1.0";
 
 /***/ }),
 
-/***/ 3792:
+/***/ 1867:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(3166);
+  module.exports = __webpack_require__(19);
 } else {}
 
 /***/ }),
 
-/***/ 4790:
+/***/ 838:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(6534);
+  module.exports = __webpack_require__(6785);
 } else {}
 
 /***/ }),
 
-/***/ 7714:
+/***/ 322:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7360,19 +7377,19 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 1481:
+/***/ 6017:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(7714);
+  module.exports = __webpack_require__(322);
 } else {}
 
 /***/ }),
 
-/***/ 3985:
+/***/ 3975:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7387,7 +7404,7 @@ if (true) {
  */
 
 
-var e = __webpack_require__(3792);
+var e = __webpack_require__(1867);
 
 function h(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7451,7 +7468,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ 3560:
+/***/ 4315:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7466,7 +7483,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
  */
 
 
-var g = __webpack_require__(3792);
+var g = __webpack_require__(1867);
 
 function n(a, b) {
   return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
@@ -7534,47 +7551,47 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ 6198:
+/***/ 7491:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(3985);
+  module.exports = __webpack_require__(3975);
 } else {}
 
 /***/ }),
 
-/***/ 9113:
+/***/ 5372:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(3560);
+  module.exports = __webpack_require__(4315);
 } else {}
 
 /***/ }),
 
-/***/ 7635:
+/***/ 8399:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9367);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7989);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(713);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4758);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root>*{background-color:#fafafa}.uitoolkit_app__Y3Jh-{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.uitoolkit_app__Y3Jh- h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px}.uitoolkit_app__Y3Jh- h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.uitoolkit_app__Y3Jh- section{margin-top:10px;margin-bottom:10px}.uitoolkit_app__Y3Jh- row{flex-direction:row;align-items:center}.uitoolkit_app__Y3Jh- column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.uitoolkit_app__Y3Jh- image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.uitoolkit_app__Y3Jh- input{border-width:1px;border-color:#000}.uitoolkit_app__Y3Jh- button:hover{audio:url(res:click)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root>*{background-color:#fafafa}.uitoolkit_app__Y3Jh-{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.uitoolkit_app__Y3Jh- h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px}.uitoolkit_app__Y3Jh- h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.uitoolkit_app__Y3Jh- section{margin-top:10px;margin-bottom:10px}.uitoolkit_app__Y3Jh- row{flex-direction:row;align-items:center}.uitoolkit_app__Y3Jh- column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.uitoolkit_app__Y3Jh- image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.uitoolkit_app__Y3Jh- input{border-width:1px;border-color:#000}.uitoolkit_app__Y3Jh- button:hover{audio:url(res:click)}", "",{"version":3,"sources":["webpack://./src/uitoolkit/index.module.scss"],"names":[],"mappings":"AAAA,QACE,wBAAA,CAGF,sBACE,YAAA,CACA,eAAA,CACA,UAAA,CACA,iBAAA,CACA,mBAAA,CAEA,yBACE,cAAA,CACA,yBAAA,CACA,aAAA,CACA,kBAAA,CAGF,yBACE,cAAA,CACA,oBAAA,CACA,aAAA,CACA,iBAAA,CAGF,8BACE,eAAA,CACA,kBAAA,CAGF,0BACE,kBAAA,CACA,kBAAA,CAGF,6BACE,qBAAA,CACA,kBAAA,CACA,WAAA,CACA,aAAA,CAGF,4BACE,WAAA,CACA,aAAA,CACA,YAAA,CACA,qBAAA,CACA,mBAAA,CACA,6BAAA,CACA,kBAAA,CAGF,4BACE,gBAAA,CACA,iBAAA,CAIA,mCACE,oBAAA","sourcesContent":[":root > * {\n  background-color: #fafafa;\n}\n\n.app {\n  padding: 20px;\n  max-width: 960px;\n  width: 100%;\n  align-self: center;\n  align-items: stretch;\n\n  h1 {\n    font-size: 36px;\n    font-style: smallcaps, bold;\n    color: #582a9c;\n    margin-bottom: 12px;\n  }\n\n  h2 {\n    font-size: 30px;\n    font-style: smallcaps;\n    color: #fb2f8e;\n    margin-bottom: 8px;\n  }\n\n  section {\n    margin-top: 10px;\n    margin-bottom: 10px;\n  }\n\n  row {\n    flex-direction: row;\n    align-items: center;\n  }\n\n  column {\n    flex-direction: column;\n    align-items: center;\n    flex-grow: 1;\n    flex-shrink: 0;\n  }\n\n  image {\n    flex-grow: 1;\n    flex-shrink: 1;\n    flex-basis: 0;\n    object-fit: scale-down;\n    object-position: 50%;\n    transition: object-position 2s;\n    align-self: stretch;\n  }\n\n  input {\n    border-width: 1px;\n    border-color: black;\n  }\n\n  button {\n    &:hover {\n      audio: url(res:click);\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"app": "uitoolkit_app__Y3Jh-"
@@ -7584,7 +7601,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ 6062:
+/***/ 3743:
 /***/ ((module) => {
 
 "use strict";
@@ -7695,7 +7712,7 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ 6793:
+/***/ 8591:
 /***/ ((module) => {
 
 "use strict";
@@ -7741,7 +7758,7 @@ module.exports = insertBySelector;
 
 /***/ }),
 
-/***/ 1173:
+/***/ 6190:
 /***/ ((module) => {
 
 "use strict";
@@ -7759,7 +7776,7 @@ module.exports = insertStyleElement;
 
 /***/ }),
 
-/***/ 7892:
+/***/ 7035:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -7778,7 +7795,7 @@ module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
 
-/***/ 4036:
+/***/ 8124:
 /***/ ((module) => {
 
 "use strict";
@@ -7855,7 +7872,7 @@ module.exports = domAPI;
 
 /***/ }),
 
-/***/ 2464:
+/***/ 2799:
 /***/ ((module) => {
 
 "use strict";
@@ -7946,17 +7963,17 @@ var __webpack_exports__ = {};
 "use strict";
 
 // EXTERNAL MODULE: ../../node_modules/react/index.js
-var react = __webpack_require__(3792);
+var react = __webpack_require__(1867);
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
-var constants = __webpack_require__(2014);
+var constants = __webpack_require__(2354);
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
 var version = '0.11.0';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(4790);
+var jsx_runtime = __webpack_require__(838);
 // EXTERNAL MODULE: ../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(6198);
+var shim = __webpack_require__(7491);
 // EXTERNAL MODULE: ../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__(9113);
+var with_selector = __webpack_require__(5372);
 ;// CONCATENATED MODULE: ../../renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -8204,7 +8221,7 @@ function () {
 
 
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(3630);
+var react_reconciler = __webpack_require__(1295);
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
@@ -8230,7 +8247,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
       var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
       if (depth > 0) {
-        prop = diffProperties(lastProps[propKey], null, depth - 1);
+        prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
       } // For all other deleted properties we add it to the queue. We use
       // the whitelist in the commit phase instead.
@@ -8350,6 +8367,145 @@ var commonReconciler = {
   }
 };
 var isDevelopment = "production" === 'development';
+;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/richtext.js
+function parametrizeValue(value) {
+  if (typeof value === 'number') return value + '';
+  value = value + '';
+  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
+  return value;
+}
+function stringifyRichText(node) {
+  var _a, _b, _c;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
+      var value = (_b = node.attributes) === null || _b === void 0 ? void 0 : _b.value;
+      acc.push('=');
+      acc.push(parametrizeValue(value));
+    }
+
+    for (var key in node.attributes) {
+      if (key === 'value') continue;
+
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var value = node.attributes[key];
+
+        if (value != null) {
+          acc.push(' ');
+          acc.push(key);
+          acc.push('=');
+          acc.push(parametrizeValue(value));
+        }
+      }
+    }
+
+    acc.push('>');
+  }
+
+  if (((_c = node.children) === null || _c === void 0 ? void 0 : _c.length) > 0) {
+    for (var _i = 0, _d = node.children; _i < _d.length; _i++) {
+      var child = _d[_i];
+      acc.push(stringifyRichText(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/svg.js
+function kebabize(str) {
+  return str.split('').map(function (letter, idx) {
+    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
+  }).join('');
+}
+
+;
+function stringifyStyle(style) {
+  if (typeof style === 'string') return style;
+  var acc = [];
+
+  for (var key in style) {
+    if (Object.prototype.hasOwnProperty.call(style, key)) {
+      var element = style[key];
+
+      if (element != null) {
+        acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
+        acc.push(';');
+      }
+    }
+  }
+
+  return acc.join('');
+}
+function stringifySVG(node) {
+  var _a;
+
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+
+    for (var key in node.attributes) {
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var element = node.attributes[key];
+        if (key === 'style') element = stringifyStyle(element);
+
+        if (element != null) {
+          acc.push(' ');
+          acc.push(kebabize(key));
+          acc.push('="');
+          acc.push(element);
+          acc.push('"');
+        }
+      }
+    }
+  }
+
+  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+    if (tag) acc.push('>');
+
+    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
+      var child = _b[_i];
+      acc.push(stringifySVG(child));
+    }
+
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  } else {
+    if (tag) acc.push(' />');
+  }
+
+  return acc.join('');
+}
+;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/index.js
+
+
+var subContextRenderers = {
+  'richtext': stringifyRichText,
+  'svg': stringifySVG
+};
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -8392,16 +8548,33 @@ function (_super) {
     _this.call = function (ind, args) {
       var cb = _this.getObject(ind);
 
-      if ('Length' in args) {
-        var newArgs = [];
-        var length = args['Length'];
+      var argsAsList = args;
+      var argsAsArray = args;
+
+      if (typeof argsAsArray.Length === 'number') {
+        // C# Array
+        args = [];
+        var length = argsAsArray.Length;
 
         for (var index = 0; index < length; index++) {
-          var element = args[index];
-          newArgs.push(element);
+          args.push(argsAsArray.GetValue(index));
         }
+      } else if (typeof argsAsList.Count === 'number') {
+        // C# List
+        args = [];
+        var length = argsAsList.Count;
 
-        args = newArgs;
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsList[index]);
+        }
+      } else if (typeof argsAsList.Count === 'function') {
+        // C# IList
+        args = [];
+        var length = argsAsList.Count();
+
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsArray.GetValue(index));
+        }
       }
 
       return cb.apply(null, args);
@@ -8466,8 +8639,37 @@ var reconciler_assign = undefined && undefined.__assign || function () {
 
 
 
+
 var refId = 0;
 var ctxMap = new Map();
+
+var updateSubContext = function updateSubContext(instance) {
+  var rend = subContextRenderers[instance.type];
+  var root = instance === null || instance === void 0 ? void 0 : instance.root;
+  var cur = instance;
+
+  while (cur && !root) {
+    root = cur.root;
+    cur = cur.parent;
+  }
+
+  if (!root) return;
+  var content = rend(root.subContext.node);
+
+  if (instance.type === 'richtext') {
+    instance.hostContext.commands.push(['x', {
+      r: root.refId,
+      c: content
+    }]);
+  } else if (instance.type === 'svg') {
+    instance.hostContext.commands.push(['u', reconciler_assign({
+      r: root.refId,
+      t: 'svg'
+    }, convertPropsToSerializable({
+      innerContent: content
+    }))]);
+  }
+};
 
 var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   getRootHostContext: function getRootHostContext(rootContainer) {
@@ -8504,16 +8706,33 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
     var ctx = {
       context: context,
-      commands: commands
+      commands: commands,
+      refId: rootContainer.refId,
+      type: 'native'
     };
     ctxMap.set(context, ctx);
     return ctx;
   },
-  getChildHostContext: function getChildHostContext(parentCtx) {
+  getChildHostContext: function getChildHostContext(parentCtx, type) {
+    if (type === 'richtext' && parentCtx.type === 'native') return {
+      type: 'richtext',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
+    if (type === 'svg' && parentCtx.type === 'native') return {
+      type: 'svg',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
     return parentCtx;
   },
   getPublicInstance: function getPublicInstance(instance) {
-    return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    return null;
   },
   supportsMutation: true,
   supportsHydration: false,
@@ -8533,33 +8752,93 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     UnityBridge.clearContainer(container);
   },
   createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    refId++;
     var aProps = getAllowedProps(props, type);
-    ctx.commands.push(['c', reconciler_assign({
-      t: type,
-      r: refId
-    }, convertPropsToSerializable(aProps))]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['c', reconciler_assign({
+        t: type,
+        r: refId
+      }, convertPropsToSerializable(aProps))]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+
+      var res = reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+
+      if (type === 'richtext') {
+        res.subContext = {
+          type: 'richtext',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      if (type === 'svg') {
+        res.subContext = {
+          type: 'svg',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+
+      return res;
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          tag: type,
+          children: [],
+          attributes: aProps
+        }
+      });
+    }
   },
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    refId++;
-    ctx.commands.push(['t', {
-      r: refId,
-      c: text
-    }]);
-    if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-    return reconciler_assign(reconciler_assign({}, ctx), {
-      refId: refId
-    });
+    if (ctx.type === 'native') {
+      refId++;
+      ctx.commands.push(['t', {
+        r: refId,
+        c: text
+      }]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        refId: refId
+      });
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return reconciler_assign(reconciler_assign({}, ctx), {
+        node: {
+          text: text
+        }
+      });
+    }
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    parent.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      parent.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   finalizeInitialChildren: function finalizeInitialChildren() {
     return false;
@@ -8576,51 +8855,100 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
-    instance.commands.push(['u', reconciler_assign({
-      r: instance.refId,
-      t: type
-    }, convertPropsToSerializable(props))]);
+
+    if (instance.type === 'native') {
+      instance.commands.push(['u', reconciler_assign({
+        r: instance.refId,
+        t: type
+      }, convertPropsToSerializable(props))]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
+      updateSubContext(instance);
+    }
   },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    textInstance.commands.push(['x', {
-      r: textInstance.refId,
-      c: newText
-    }]);
+  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
+    if (instance.type === 'native') {
+      instance.commands.push(['x', {
+        r: instance.refId,
+        c: newText
+      }]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node = {
+        text: newText
+      };
+      updateSubContext(instance);
+    }
   },
   appendChild: function appendChild(parent, child) {
-    child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['a', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    child.commands.push(['a', {
+    if (child.type === 'native') child.commands.push(['a', {
       p: parent.refId,
       c: child.refId
     }]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
+      child.commands.push(['i', {
+        p: parent.refId,
+        c: child.refId,
+        i: beforeChild.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(beforeChild.node);
+        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
+      }
+
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    child.commands.push(['i', {
+    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
       p: parent.refId,
       c: child.refId,
       i: beforeChild.refId
     }]);
   },
   removeChild: function removeChild(parent, child) {
-    child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+
+    if (parent.type === 'native' && child.type === 'native') {
+      child.commands.push(['r', {
+        p: parent.refId,
+        c: child.refId
+      }]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(child.node);
+        if (index >= 0) parent.node.children.splice(index, 1);
+      }
+
+      updateSubContext(parent);
+    }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    child.commands.push(['r', {
+    if (child.type === 'native') child.commands.push(['r', {
       p: parent.refId,
       c: child.refId
     }]);
@@ -8630,28 +8958,40 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: true
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
   },
   unhideInstance: function unhideInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    instance.commands.push(['h', {
+    if (instance.type === 'native') instance.commands.push(['h', {
       r: instance.refId,
       h: false
-    }]);
+    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
   }
 });
 
@@ -8790,10 +9130,8 @@ var Renderer = {
       options = {};
     }
 
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer; // For Jint engine, sync is default
-    // For other engines (ClearScript), async is default
-
-    var isAsync = hostContainer.Context.Script.Engine.Key === 'jint' ? (options === null || options === void 0 ? void 0 : options.sync) === false : !(options === null || options === void 0 ? void 0 : options.sync);
+    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
 
     var _a = containerMap.get(hostContainer) || {},
         hostRoot = _a.hostRoot,
@@ -8837,6 +9175,7 @@ var Renderer = {
         };
 
         var hostContainerInstance = {
+          type: 'native',
           commands: commands_1,
           component: hostContainer,
           context: hostContainer.Context,
@@ -8885,34 +9224,67 @@ var Renderer = {
     return rc;
   }
 };
-var isSyncByDefault = HostContainer.Context.Script.Engine.Key === 'jint';
-var defaultReconciler = isSyncByDefault ? syncReconciler : asyncReconciler;
-var batchedUpdates = defaultReconciler.batchedUpdates;
-var flushSync = defaultReconciler.flushSync;
+var batchedUpdates = asyncReconciler.batchedUpdates;
+var flushSync = asyncReconciler.flushSync;
 ;// CONCATENATED MODULE: ./src/assets/base64Image.txt
 /* harmony default export */ const base64Image = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAcElEQVR4AezOsREAIAjFUAs3dgAGYkj8C3g2oBTJXfo3iD419dJ2eOn5EuM6LnsFynQkb4AKQP2zlBOLpAEBAgQIECBAgAA1Au29p6aDrlPBQd3UdJA7yIcUho4KA5UBBxDHk9GwzwdiGQY6gVEwCgC3bcAZ+oXojwAAAABJRU5ErkJggg==\n");
 ;// CONCATENATED MODULE: ./src/assets/bg.png
 const bg_namespaceObject = __webpack_require__.p + "static/media/bg.png";
+;// CONCATENATED MODULE: ./src/assets/check.svg
+var _path;
+
+var _excluded = ["title", "titleId"];
+
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+var SvgCheck = function SvgCheck(_ref, ref) {
+  var title = _ref.title,
+      titleId = _ref.titleId,
+      props = _objectWithoutProperties(_ref, _excluded);
+
+  return /*#__PURE__*/react.createElement("svg", _extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 32 32",
+    fill: "black",
+    ref: ref,
+    "aria-labelledby": titleId
+  }, props), title ? /*#__PURE__*/react.createElement("title", {
+    id: titleId
+  }, title) : null, _path || (_path = /*#__PURE__*/react.createElement("path", {
+    d: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+  })));
+};
+
+var ForwardRef = /*#__PURE__*/(0,react.forwardRef)(SvgCheck);
+
+/* harmony default export */ const check = (__webpack_require__.p + "static/media/check.4701752daa56435b75dc4edd7886d403.svg");
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
-var injectStylesIntoStyleTag = __webpack_require__(6062);
+var injectStylesIntoStyleTag = __webpack_require__(3743);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/styleDomAPI.js
-var styleDomAPI = __webpack_require__(4036);
+var styleDomAPI = __webpack_require__(8124);
 var styleDomAPI_default = /*#__PURE__*/__webpack_require__.n(styleDomAPI);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/insertBySelector.js
-var insertBySelector = __webpack_require__(6793);
+var insertBySelector = __webpack_require__(8591);
 var insertBySelector_default = /*#__PURE__*/__webpack_require__.n(insertBySelector);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js
-var setAttributesWithoutAttributes = __webpack_require__(7892);
+var setAttributesWithoutAttributes = __webpack_require__(7035);
 var setAttributesWithoutAttributes_default = /*#__PURE__*/__webpack_require__.n(setAttributesWithoutAttributes);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/insertStyleElement.js
-var insertStyleElement = __webpack_require__(1173);
+var insertStyleElement = __webpack_require__(6190);
 var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleElement);
 // EXTERNAL MODULE: ../../node_modules/style-loader/dist/runtime/styleTagTransform.js
-var styleTagTransform = __webpack_require__(2464);
+var styleTagTransform = __webpack_require__(2799);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[4]!./src/uitoolkit/index.module.scss
-var index_module = __webpack_require__(7635);
+// EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[7].use[1]!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[7].use[4]!./src/uitoolkit/index.module.scss
+var index_module = __webpack_require__(8399);
 ;// CONCATENATED MODULE: ./src/uitoolkit/index.module.scss
 
       
@@ -8943,10 +9315,11 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
        /* harmony default export */ const uitoolkit_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/uitoolkit/index.tsx
-var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:uitoolkit_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:uitoolkit_index_module.clickButton,children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:bg_namespaceObject}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:webImage})]})]})]})});};Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:uitoolkit_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsx)(ForwardRef,{}),/*#__PURE__*/(0,jsx_runtime.jsx)("svg",{source:check}),/*#__PURE__*/(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),/*#__PURE__*/(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:uitoolkit_index_module.clickButton,children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:bg_namespaceObject}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:webImage})]})]})]})});};Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/entry/uitoolkit.tsx
 
 })();
 
 /******/ })()
 ;
+//# sourceMappingURL=uitoolkit.js.map

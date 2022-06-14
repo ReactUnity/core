@@ -4,7 +4,9 @@ import AnimationsPage from "src/pages/animations";
 import BgPatternsPage from "src/pages/bg-patterns";
 import HomePage from "src/pages/home";
 import ImagesPage from "src/pages/images";
+import JSSPage from "src/pages/jss";
 import MaterialPage from "src/pages/material";
+import SvgsPage from "src/pages/svgs";
 
 const Lazy = React.lazy(() =>
   new Promise<any>((resolve) =>
@@ -20,6 +22,7 @@ export function AppRoutes() {
     <Route path={'animations'} element={<AnimationsPage />} />
     <Route path={'images'} element={<ImagesPage />} />
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
+    <Route path={'svgs'} element={<SvgsPage />} />
 
     <Route path={'lazy'} element={
       <Suspense fallback={<>
@@ -30,5 +33,6 @@ export function AppRoutes() {
     } />
 
     <Route path={'tailwind'} element={<TailwindPage />} />
+    <Route path={'jss'} element={<JSSPage />} />
   </Routes>;
 }

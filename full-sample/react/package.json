@@ -17,11 +17,13 @@
   "dependencies": {
     "@reactunity/material": "^0.11.0",
     "@reactunity/renderer": "^0.11.0",
-    "@reduxjs/toolkit": "^1.8.1",
+    "@reduxjs/toolkit": "^1.8.2",
     "clsx": "^1.1.1",
     "history": "^5.3.0",
     "react": "^18.1.0",
-    "react-redux": "^8.0.1",
+    "react-icons": "^4.4.0",
+    "react-jss": "^10.9.0",
+    "react-redux": "^8.0.2",
     "react-router": "^6.3.0",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0"
@@ -30,7 +32,7 @@
     "@reactunity/previewer": "^0.10.2",
     "@reactunity/scripts": "^0.11.0",
     "@types/react-redux": "^7.1.24",
-    "tailwindcss": "^3.0.24",
-    "typescript": "^4.6.4"
+    "tailwindcss": "^3.1.2",
+    "typescript": "^4.7.3"
   }
 }

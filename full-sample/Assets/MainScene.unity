@@ -379,7 +379,19 @@ MonoBehaviour:
         m_CallState: 2
   OnUnmount:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 139628652}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnSetProperty:
     m_PersistentCalls:
       m_Calls: []
@@ -642,7 +654,7 @@ MonoBehaviour:
     DevServer: http://192.168.1.50:3100
   Debug: 0
   AwaitDebugger: 0
-  EngineType: 2
+  EngineType: 0
   Globals:
     Entries:
     - Key: renderCamera
@@ -662,7 +674,9 @@ MonoBehaviour:
     - Key: customPrefab
       Value: {fileID: 139628652}
     - Key: portalRoot
-      Value: {fileID: 0}
+      Value: {fileID: 909049341}
+    - Key: portalCamera
+      Value: {fileID: 315642566}
   Stylesheets: []
   AutoRender: 1
   BeforeStart:
@@ -774,14 +788,14 @@ MonoBehaviour:
     Language: 0
     SourceAsset: {fileID: 4900000, guid: 7624f5153498b8249bc319430a2a9f3a, type: 3}
     Watch: 1
-    SourcePath: react/index#showcase
+    SourcePath: jstest
     SourceText: 
     ResourcesPath: 
     UseDevServer: 0
     DevServer: http://localhost:3100#showcase
   Debug: 0
   AwaitDebugger: 0
-  EngineType: 0
+  EngineType: 3
   Globals:
     Entries:
     - Key: renderCamera
@@ -2294,7 +2308,7 @@ LightingSettings:
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
   m_PVRMinBounces: 2
-  m_PVREnvironmentImportanceSampling: 0
+  m_PVREnvironmentImportanceSampling: 1
   m_PVRFilteringMode: 2
   m_PVRDenoiserTypeDirect: 0
   m_PVRDenoiserTypeIndirect: 0

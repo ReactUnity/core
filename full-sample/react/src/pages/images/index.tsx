@@ -1,7 +1,8 @@
 import { ReactUnity, UnityEngine, useGlobals } from '@reactunity/renderer';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
+import check from 'src/assets/check.svg';
 import styles from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
@@ -23,7 +24,19 @@ export function ImagesPage() {
     else vp.Play();
   };
 
+  const [renderRef, setRenderRef] = useState<ReactUnity.UGUI.RenderComponent>();
+
   return <view className={styles.host}>
+
+
+    <portal id='pt' target={(Globals.portalRoot)} eventCamera={Globals.portalCamera} style={{ scale: 1 / 200, translateZ: -0.55 }} eventViewport={renderRef}>
+      This is a portal
+
+      <button>
+        Button inside portal
+      </button>
+    </portal>
+
     <section>
       <h2>Image</h2>
 
@@ -31,6 +44,17 @@ export function ImagesPage() {
         <image source={pngImage} />
         <image source={base64Image} />
         <image source={webImage} />
+      </row>
+    </section>
+
+    <section>
+      <h2>Vector Images</h2>
+
+      <row>
+        <svgimage source={'res:check'} />
+        <svg source={check} />
+        <svg source={'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'} />
+        <svg source={'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/debian.svg'} />
       </row>
     </section>
 
@@ -54,7 +78,7 @@ export function ImagesPage() {
       <h2>Render Texture</h2>
 
       <row>
-        <render width={900} height={400} style={{ flexGrow: 1 }}
+        <render width={900} height={400} style={{ flexGrow: 1 }} ref={setRenderRef}
           onDrag={(ev) => {
             Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
           }}

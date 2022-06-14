@@ -57,12 +57,15 @@ const VariableSizeExample = () => (
 
 
 export function VirtualScrolls() {
-  return <Paper elevation={2}>
-    Virtual Scrolls:
-    <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-      <FixedSizeExample />
-      <VariableSizeExample />
-      <FixedGridExample />
-    </view>
-  </Paper>;
+  return <section>
+    <h2>Virtual Scrolls</h2>
+
+    <Paper elevation={2}>
+      <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <FixedSizeExample />
+        <VariableSizeExample />
+        <FixedGridExample />
+      </view>
+    </Paper>
+  </section>;
 }

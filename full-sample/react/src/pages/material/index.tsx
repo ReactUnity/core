@@ -1,4 +1,4 @@
-import { Accordion } from '@reactunity/material/accordion';
+import { Accordion } from '@reactunity/material';
 import { AlertDialog } from '@reactunity/material/alert';
 import { Button } from '@reactunity/material/button';
 import { Card } from '@reactunity/material/card';
@@ -19,21 +19,23 @@ export function MaterialPage() {
 
 
   return <view className={style.app}>
-    <h1 style={{ color: 'red' }}>Material Showcase 😎</h1>
-    <Dialogs />
-    <VirtualScrolls />
-    <Cards />
+    <h1>Material Showcase</h1>
     <Sliders />
     <Inputs />
     <Dropdowns />
     <Checkboxes />
+    <Cards />
+    <Dialogs />
+    <VirtualScrolls />
   </view>;
 };
 
 function Dialogs() {
   const [dlOpen, setDlOpen] = React.useState(0);
 
-  return <>
+  return <section>
+    <h2>Dialogs</h2>
+
     <Paper elevation={2}>
       <Button onClick={() => setDlOpen(1)}>Open Alert With Text Only</Button>
       <Button onClick={() => setDlOpen(2)}>Open Alert With Title Only</Button>
@@ -63,13 +65,13 @@ function Dialogs() {
       <PromptDialog open={dlOpen === 8} onClose={() => setDlOpen(0)} backdropClose title={'Some prompt title'} />
       <PromptDialog placeholder="Some placeholder" open={dlOpen === 9} onClose={() => setDlOpen(0)} backdropClose text={'Some prompt text'} title={'Some prompt title'} />
     </Paper>
-  </>;
+  </section>;
 }
 
 function Cards() {
   return <>
     <section>
-      <h2>Card</h2>
+      <h2>Cards</h2>
 
       <Card>
         <Card.Content>
@@ -100,7 +102,7 @@ function Sliders() {
   const [sliderVal, setSliderVal] = useState(60);
 
   return <section>
-    <h2>Slider</h2>
+    <h2>Sliders</h2>
 
     <Slider allowScroll direction="horizontal" mode="normal" max={100} step={20}>{(val) => val * val}</Slider>
     <Slider allowScroll direction="horizontal" mode="diff" defaultValue={20} max={100} step={20}>{(val) => val * val}</Slider>
@@ -114,7 +116,7 @@ function Sliders() {
 
 function Inputs() {
   return <section>
-    <view>No Placeholder:</view>
+    <h2>Inputs</h2>
 
     <TextField variant="standard" />
     <TextField variant="filled" />
@@ -130,6 +132,8 @@ function Inputs() {
 
 function Checkboxes() {
   return <section>
+    <h2>Toggles</h2>
+
     <Toggle>Checkbox</Toggle>
     <Toggle indeterminate>Indeterminate</Toggle>
 
@@ -151,43 +155,34 @@ function Checkboxes() {
 }
 
 function Tooltips() {
-  const ttHover = useDataTooltip('hover');
-  const ttPress = useDataTooltip('press');
-  const ttClick = useDataTooltip('click');
+  const [trigger, setTrigger] = useState('auto');
+  const tt = useDataTooltip(trigger as any);
 
   return <section>
-    <h2>Tooltip</h2>
+    <h2>Tooltips</h2>
 
     <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <view>
+        Show on:
 
-      <view style={{ alignItems: 'center' }}>
-        Hover
-        <Button ref={ttHover.register} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
-        <Button ref={ttHover.register} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
-        <Button ref={ttHover.register} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
-        <Button ref={ttHover.register} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
-        <Button ref={ttHover.register} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
-        <Button ref={ttHover.register} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
+        <ToggleGroup initialValue={trigger} onChange={(res: string) => setTrigger(res)}>
+          <Toggle value="auto">Auto</Toggle>
+          <Toggle value="hover">Hover</Toggle>
+          <Toggle value="press">Press</Toggle>
+          <Toggle value="click">Click</Toggle>
+          <Toggle value="focus">Focus</Toggle>
+        </ToggleGroup>
       </view>
 
-      <view style={{ alignItems: 'center' }}>
-        Press
-        <Button ref={ttPress.register} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
-        <Button ref={ttPress.register} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
-        <Button ref={ttPress.register} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
-        <Button ref={ttPress.register} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
-        <Button ref={ttPress.register} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
-        <Button ref={ttPress.register} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
-      </view>
-
-      <view style={{ alignItems: 'center' }}>
-        Click
-        <Button ref={ttClick.register} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
-        <Button ref={ttClick.register} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
-        <Button ref={ttClick.register} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
-        <Button ref={ttClick.register} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
-        <Button ref={ttClick.register} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
-        <Button ref={ttClick.register} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
+      <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <view style={{ alignItems: 'center' }}>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
+        </view>
       </view>
     </view>
   </section>;
@@ -197,6 +192,8 @@ const initialValue = ['val1', 'val2'];
 
 function Dropdowns() {
   return <section>
+    <h2>Dropdowns</h2>
+
     <Select placeholder={'Regular select'} initialValue="val1">
       <Select.Option value="val1">Option 1</Select.Option>
       <Select.Option value="val2">Option 2</Select.Option>
