@@ -138,6 +138,7 @@ namespace ReactUnity.Styling.Shorthands
                             yArg = AllConverters.FloatConverter.TryGetConstantValue(args[1], 0f);
                             if (yArg is float ys) scale = new Vector3(scale.x, scale.y * ys, scale.z);
                         }
+                        else if (xArg is float ys) scale = new Vector3(scale.x, scale.y * ys, scale.z);
 
                         break;
                     case "scale3d":
