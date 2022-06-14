@@ -1,4 +1,4 @@
-#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT) && REACT_CLEARSCRIPT_AVAILABLE
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT || (UNITY_ANDROID && !UNITY_EDITOR)) && REACT_CLEARSCRIPT_AVAILABLE
 #define REACT_CLEARSCRIPT
 #endif
 
@@ -38,9 +38,6 @@ namespace ReactUnity.Scripting
 
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            HostSettings.IsAndroid = true;
-#endif
             HostSettings.AuxiliarySearchPath =
                 Application.dataPath + ";" +
                 Application.dataPath + "/Plugins;" +
