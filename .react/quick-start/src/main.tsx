@@ -1,12 +1,14 @@
 import { Renderer } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
-import { check, error, Window } from './common';
+import { check, error, info, packageName, warn, Window } from './common';
 import { EnginePlugins } from './engine-plugins';
 import styles from './index.module.scss';
 import { UnityPlugins } from './unity-plugins';
 
 const vsCodePath = 'vscode://file/{path}/';
 const filePath = 'file:{path}';
+const createLearnUrl = 'https://github.com/ReactUnity/create#readme';
+const fullProjectPath = Window.GetProjectFullPath();
 
 function App() {
   const [nodeVersion, setNodeVersion] = useState(Window.NodeVersion);
@@ -25,10 +27,10 @@ function App() {
 
   useEffect(() => {
     if (!packageVersion) {
-      Window.CheckVersion(() => {
-        setPackageVersion(Window.PackageVersion);
-        setLatestVersion(Window.LatestVersion);
-        setHasUpdate(Window.HasUpdate);
+      Window.CheckVersion(packageName, (cur, latest, hasUpdate) => {
+        setPackageVersion(cur);
+        setLatestVersion(latest);
+        setHasUpdate(hasUpdate);
       });
     }
   }, [packageVersion]);
@@ -72,9 +74,9 @@ function App() {
           </row> :
           <>
             <row>
-              {error}
+              {warn}
               {nodeVersion === 0 ?
-                <text>Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed.</text> :
+                <text>Node.js was not detected in this computer. Make sure it is installed or ignore this message if it already is.</text> :
                 <text>Node.js {nodeVersion} is installed but minimum recommended version is {Window.RequiredNodeVersion}.</text>}
             </row>
 
@@ -94,11 +96,11 @@ function App() {
         </> :
         <>
           <row>
-            {error}
+            {warn}
             <text>ReactUnity is out of date. Current version: {packageVersion}, Latest version: {latestVersion}</text>
           </row>
           <actions>
-            <button onClick={() => Window.UpdatePackage(latestVersion)}>Update</button>
+            <button onClick={() => Window.InstallScopedPlugin(packageName)}>Update</button>
           </actions>
         </>}
     </section>
@@ -112,6 +114,24 @@ function App() {
         <actions>
           <anchor url={vsCodePath.replace('{path}', projectPath)}>Open in VSCode</anchor>
           <anchor url={filePath.replace('{path}', projectPath)}>Show in file explorer</anchor>
+        </actions>
+      </>}
+
+      {!projectOk && <>
+        <row>
+          {warn}
+          <text>React project does not exist at the default path.</text>
+
+          <button className={styles.infoButton}
+            tooltip={`The default project path is "${fullProjectPath}".\nYou can ignore this message if you have a project created in another path.`}>
+            {info}
+          </button>
+        </row>
+
+        <actions>
+          <anchor url={createLearnUrl}>
+            Learn How To Create
+          </anchor>
         </actions>
       </>}
     </section>

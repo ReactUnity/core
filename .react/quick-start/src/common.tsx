@@ -12,3 +12,5 @@ export const warn = <image source={warnImage} className={styles.warnIcon} />
 export const info = <image source={infoImage} className={styles.infoIcon} />
 
 export const Window = Globals.Window as ReactUnity.Editor.QuickStartWindow;
+
+export const packageName = "com.reactunity.core";

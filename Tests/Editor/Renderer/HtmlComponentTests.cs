@@ -83,6 +83,11 @@ namespace ReactUnity.Tests.Editor.Renderer
         ")]
         public IEnumerator HtmlCanBeSetFromSource()
         {
+            if (Application.isBatchMode)
+            {
+                Assert.Ignore("This test is skipped in batch mode due to potential errors");
+                yield break;
+            }
             yield return null;
             Globals["htmlSource"] = new TextReference(AssetReferenceType.Procedural, "<button>Click here</button>");
             var button = Q("button") as ButtonComponent<Button>;

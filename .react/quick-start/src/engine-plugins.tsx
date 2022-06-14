@@ -55,7 +55,7 @@ const engineTypesLoaded = new Promise<void>((resolve) => {
   let loadedCount = 0;
 
   for (const type of engineTypes) {
-    Window.CheckEngineVersion(type.type,
+    Window.CheckVersion(type.packageName,
       (version, latestVersion, hasUpdate) => {
         type.version = version;
         type.latestVersion = latestVersion;
@@ -113,18 +113,18 @@ export function EnginePlugins() {
         {!!x.installed ? <>
           {'Installed Version ' + x.version}
 
-          {!x.implicit && !x.recommended && <button onClick={() => Window.UninstallEnginePlugin(x.type)}>
+          {!x.implicit && !x.recommended && <button onClick={() => Window.UninstallUnityPlugin(x.packageName)}>
             Uninstall
           </button>}
 
           {x.hasUpdate && <>
             {x.implicit ? <>Update ReactUnity to get the latest version</> :
-              <button onClick={() => Window.InstallEnginePlugin(x.type)}>
+              <button onClick={() => Window.InstallScopedPlugin(x.packageName)}>
                 {'Update to ' + x.latestVersion}
               </button>}
           </>}
         </> : <>
-          <button onClick={() => Window.InstallEnginePlugin(x.type)}>
+          <button onClick={() => Window.InstallScopedPlugin(x.packageName)}>
             Install
           </button>
         </>}

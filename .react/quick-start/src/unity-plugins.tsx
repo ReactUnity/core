@@ -45,7 +45,7 @@ const pluginsLoaded = new Promise<void>((resolve) => {
       }
     };
 
-    Window.CheckPackageVersion(type.packageName, resolveFunc);
+    Window.CheckVersion(type.packageName, resolveFunc);
   }
 });
 

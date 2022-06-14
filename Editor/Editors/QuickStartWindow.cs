@@ -18,6 +18,8 @@ namespace ReactUnity.Editor
     [InitializeOnLoad]
     public class QuickStartWindow : ReactWindow
     {
+        #region Startup
+
         public const string WindowVersion = "0";
 
         public static bool ShowWindowOnStartup
@@ -51,17 +53,21 @@ namespace ReactUnity.Editor
         }
 #endif
 
-#pragma warning disable 612
-        static Dictionary<JavascriptEngineType, string> JSEnginePackages = new Dictionary<JavascriptEngineType, string>
+        [MenuItem("React/Quick Start", priority = 0)]
+        public static void ShowDefaultWindow()
         {
-            { JavascriptEngineType.Jint, "com.reactunity.core" },
-            { JavascriptEngineType.QuickJS, "com.reactunity.quickjs" },
-            { JavascriptEngineType.ClearScript, "com.reactunity.clearscript" },
-        };
-#pragma warning restore 612
+            var window = GetWindow<QuickStartWindow>();
+            window.titleContent = new GUIContent("React Quick Start");
+            window.minSize = new Vector2(300, 200);
+        }
+
+        #endregion
 
         public delegate void CheckVersionCallback(string currentVersion, string latestVersion, bool hasUpdate);
 
+        public const string ScopeName = "package.openupm.com";
+        public const string ScopeUrl = "https://package.openupm.com";
+        public const string CompanyScope = "com.reactunity";
         public const string PackageName = "com.reactunity.core";
         public readonly int RequiredNodeVersion = 12;
         public readonly string NodeUrl = "https://nodejs.org/";
@@ -73,20 +79,6 @@ namespace ReactUnity.Editor
         public string LatestVersion;
         public bool HasUpdate;
 
-#if REACT_QUICKJS_AVAILABLE
-        public bool QuickJSAvailable = true;
-#else
-        public bool QuickJSAvailable = false;
-#endif
-
-        [MenuItem("React/Quick Start", priority = 0)]
-        public static void ShowDefaultWindow()
-        {
-            var window = GetWindow<QuickStartWindow>();
-            window.titleContent = new GUIContent("React Quick Start");
-            window.minSize = new Vector2(300, 200);
-        }
-
         protected override ScriptSource GetScript()
         {
             var res = ScriptSource.Resource("ReactUnity/editor/quick-start/index");
@@ -97,11 +89,16 @@ namespace ReactUnity.Editor
             return res;
         }
 
+        public string GetProjectFullPath()
+        {
+            return Path.GetFullPath(ProjectDirName);
+        }
+
         public string GetProjectPath()
         {
             try
             {
-                var projectDir = Path.GetFullPath(ProjectDirName);
+                var projectDir = GetProjectFullPath();
                 var exists = Directory.Exists(projectDir);
 
                 if (exists) return projectDir.Replace('\\', '/');
@@ -115,11 +112,25 @@ namespace ReactUnity.Editor
 
         public void CreateProject()
         {
-            RunCommand("npx", "@reactunity/create");
+            try
+            {
+                RunCommand("npx", "@reactunity/create");
+            }
+            catch
+            {
+                EditorUtility.DisplayDialog(
+                    "Create ReactUnity Project",
+                    "Failed to automatically create the React project.\n" +
+                    "Please create it manually by going to root folder of this project and running the following command: \n" +
+                    "    npx @reactunity/create",
+                    "OK");
+            }
         }
 
-        public void GetNodeVersion(Action<int> callback = null)
+        public void GetNodeVersion([TypescriptRemapType(typeof(Action<int>))] object callback)
         {
+            var cb = Callback.From(callback, Context, this);
+
             try
             {
                 var process = RunCommand("node", "-v", true);
@@ -138,14 +149,9 @@ namespace ReactUnity.Editor
                 NodeVersion = 0;
             }
 
-            callback?.Invoke(NodeVersion);
+            cb?.Call(NodeVersion);
         }
 
-        public void GetNodeVersion(object callback)
-        {
-            var cb = Callback.From(callback, Context, this);
-            GetNodeVersion(x => cb.Call(x));
-        }
 
         public Process RunCommand(string target, string args, bool hasOutput = false)
         {
@@ -166,6 +172,9 @@ namespace ReactUnity.Editor
 
             return process;
         }
+
+
+        #region Canvas Check
 
         public bool CanvasExistsInScene()
         {
@@ -201,27 +210,16 @@ namespace ReactUnity.Editor
             if (canvas) Selection.activeObject = canvas.gameObject;
         }
 
-        public void CheckVersion([TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
+        #endregion
+
+
+        #region Package Management
+
+        public void CheckVersion(string packageName, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
         {
             var cb = Callback.From(callback, Context);
-            CheckVersion(PackageName, (a, b, c) => cb.Call(a, b, c));
-        }
 
-        public void CheckVersion(string packageName, CheckVersionCallback callback)
-        {
-            Context.Dispatcher.StartDeferred(CheckVersionDelegate(packageName, callback));
-        }
-
-        public void CheckEngineVersion(JavascriptEngineType type, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
-        {
-            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) return;
-            CheckPackageVersion(enginePackageName, callback);
-        }
-
-        public void CheckPackageVersion(string packageName, [TypescriptRemapType(typeof(CheckVersionCallback))] object callback)
-        {
-            var cb = Callback.From(callback, Context);
-            CheckVersion(packageName, (a, b, c) => cb.Call(a, b, c));
+            Context.Dispatcher.StartDeferred(CheckVersionDelegate(packageName, (a, b, c) => cb.Call(a, b, c)));
         }
 
         private IEnumerator CheckVersionDelegate(string packageName, CheckVersionCallback callback)
@@ -246,59 +244,24 @@ namespace ReactUnity.Editor
             else callback(null, null, true);
         }
 
-        public void UpdatePackage(string version)
+        public void InstallScopedPlugin(string packageName)
         {
-            Client.Add(PackageName + "@" + version);
+            Context.Dispatcher.StartDeferred(InstallScopedPluginDelegate(packageName));
         }
 
-
-        public void InstallEnginePlugin(JavascriptEngineType type)
+        private IEnumerator InstallScopedPluginDelegate(string packageName)
         {
-            Context.Dispatcher.StartDeferred(InstallEnginePluginDelegate(type));
-        }
-
-        private IEnumerator InstallEnginePluginDelegate(JavascriptEngineType type)
-        {
-            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) yield break;
-
             PackageManagerHelpers.AddScopedRegistry(
-                "package.openupm.com",
-                "https://package.openupm.com",
+                ScopeName,
+                ScopeUrl,
                 new string[] {
-                    "com.reactunity",
-                    enginePackageName
+                    CompanyScope,
+                    packageName
                 }
             );
 
-            yield return null;
-
-            var listRequest = Client.List(false, false);
-            while (!listRequest.IsCompleted) yield return null;
-            var pkg = listRequest.Result.FirstOrDefault(x => x.name == enginePackageName);
-
-
-            var versionSuffix = "";
-
-            if (pkg != null) versionSuffix += "@" + pkg.versions.latestCompatible;
-
-            var packagesRequest = Client.Add(enginePackageName + versionSuffix);
-
-            while (!packagesRequest.IsCompleted) yield return null;
+            yield return InstallUnityPluginDelegate(packageName);
         }
-
-        public void UninstallEnginePlugin(JavascriptEngineType type)
-        {
-            Context.Dispatcher.StartDeferred(UninstallEnginePluginDelegate(type));
-        }
-
-        private IEnumerator UninstallEnginePluginDelegate(JavascriptEngineType type)
-        {
-            if (!JSEnginePackages.TryGetValue(type, out var enginePackageName)) yield break;
-
-            var listRequest = Client.Remove(enginePackageName);
-            while (!listRequest.IsCompleted) yield return null;
-        }
-
 
         public void InstallUnityPlugin(string pluginName)
         {
@@ -319,9 +282,24 @@ namespace ReactUnity.Editor
 
             var packagesRequest = Client.Add(pluginName + versionSuffix);
 
-            while (!packagesRequest.IsCompleted) yield return null;
-        }
+            while (!packagesRequest.IsCompleted)
+            {
+                if (packagesRequest.Error != null)
+                {
+                    UnityEngine.Debug.LogError(packagesRequest.Error.ToString());
+                    yield break;
+                }
+                else
+                {
+                    UnityEngine.Debug.Log(packagesRequest.Status);
+                }
+                yield return null;
+            }
 
+            var errors = packagesRequest?.Result?.errors;
+
+            if (errors != null) UnityEngine.Debug.LogError("Errors while installing the package: \n" + string.Join("\n", errors.Select(x => x.ToString()).ToArray()));
+        }
 
         public void UninstallUnityPlugin(string pluginName)
         {
@@ -334,5 +312,6 @@ namespace ReactUnity.Editor
             while (!listRequest.IsCompleted) yield return null;
         }
 
+        #endregion
     }
 }
