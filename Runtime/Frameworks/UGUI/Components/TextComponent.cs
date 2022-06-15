@@ -5,6 +5,7 @@ using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
@@ -194,6 +195,18 @@ namespace ReactUnity.UGUI
             if (transform == TextTransform.UpperCase) Text.fontStyle = styles | FontStyles.UpperCase;
             else if (transform == TextTransform.LowerCase) Text.fontStyle = styles | FontStyles.LowerCase;
             else if (transform == TextTransform.SmallCaps) Text.fontStyle = styles | FontStyles.SmallCaps;
+        }
+
+        public string GetLinkInfo(PointerEventData eventData)
+        {
+            var camera = RectTransform.GetComponentInParent<Canvas>()?.worldCamera;
+            int linkIndex = TMP_TextUtilities.FindIntersectingLink(Text, eventData.position, camera);
+            if (linkIndex != -1)
+            {
+                TMP_LinkInfo linkInfo = Text.textInfo.linkInfo[linkIndex];
+                return linkInfo.GetLinkID();
+            }
+            return null;
         }
     }
 

@@ -55,6 +55,7 @@ namespace ReactUnity.UGUI
                 { "focus-within", typeof(FocusWithinStateHandler) },
                 { "focus-visible", typeof(FocusVisibleStateHandler) },
                 { "hover", typeof(HoverStateHandler) },
+                { "link-hover", typeof(LinkHoverStateHandler) },
             };
 
         public IconSet DefaultIconSet { get; }
