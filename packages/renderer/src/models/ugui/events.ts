@@ -15,6 +15,7 @@ export interface Events<T = BaseCmp> extends BaseEvents<T> {
   onPointerDown?: PointerEventCallback<T>;
   onPointerEnter?: PointerEventCallback<T>;
   onPointerExit?: PointerEventCallback<T>;
+  onPointerMove?: PointerEventCallback<T>;
   onSubmit?: BaseEventCallback<T>;
   onCancel?: BaseEventCallback<T>;
   onSelect?: BaseEventCallback<T>;

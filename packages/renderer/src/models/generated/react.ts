@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 14/06/2022 22:41:19
+// Generated 15/06/2022 18:30:47
 //
 /* eslint-disable */
 
@@ -872,15 +872,6 @@ export declare namespace ReactUnity {
     export class PackageManagerHelpers {
       static ManifestPath: string;
       static AddScopedRegistry(name: string, url: string, ...scopesToAdd: string[]): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ReactUnityBuildModifier {
-      constructor();
-      callbackOrder: number;
-      OnPostprocessBuild(report: any): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -1864,6 +1855,7 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1940,6 +1932,7 @@ export declare namespace ReactUnity {
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2043,6 +2036,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2105,6 +2099,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2546,6 +2541,38 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scripting {
+    export class ClearScriptEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
+      Key: string;
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
+      NativeEngine: any; // System.Object
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClearScriptEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2861,6 +2888,7 @@ export declare namespace ReactUnity {
         constructor();
         tagName: string;
         Children: ReactUnity.Scripting.DomProxies.IDomElementProxy[];
+        childNodes: ReactUnity.Scripting.DomProxies.IDomElementProxy[];
         nodeType: number;
         nextSibling: any; // System.Object
         id: string;
@@ -2906,24 +2934,27 @@ export declare namespace ReactUnity {
       export class StyleProxy {
         constructor(document: ReactUnity.Scripting.DomProxies.DocumentProxy);
         tagName: string;
+        childNodes: ReactUnity.Scripting.DomProxies.NodeList<string>;
         firstChild: string;
+        lastChild: string;
         sheet: ReactUnity.Styling.StyleSheet;
         textContent: string;
         nodeType: number;
         nextSibling: any; // System.Object
-        childNodes: string[];
         Sheet: ReactUnity.Styling.StyleSheet;
         styleSheet: ReactUnity.Scripting.DomProxies.StyleProxy_StyleSheetProxy;
         enabled: boolean;
         document: ReactUnity.Scripting.DomProxies.DocumentProxy;
         parentNode: ReactUnity.Scripting.DomProxies.HeadProxy;
         id: string;
+        hasChildNodes(): boolean;
         OnAppend(): void;
         OnRemove(): void;
-        appendChild(text: string): void;
-        removeChild(text: string): void;
         setAttribute(key: any, value: any): void;
         removeAttribute(key: any): void;
+        appendChild(text: string): void;
+        removeChild(text: string): void;
+        insertBefore(child: string, before: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
         Equals(obj: any): boolean;
@@ -2982,6 +3013,27 @@ export declare namespace ReactUnity {
         hash: string;
         pathname: string;
         reload(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class NodeList<T = any> {
+        constructor(values: T[]);
+        [key: string]: any;
+        Keys: System.Collections.Generic.ICollection<string>;
+        Values: System.Collections.Generic.ICollection<any>;
+        Count: number;
+        IsReadOnly: boolean;
+        Add(key: string, value: any): void;
+        Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+        Clear(): void;
+        Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+        ContainsKey(key: string): boolean;
+        CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+        Remove(key: string): boolean;
+        Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3364,6 +3416,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -3734,6 +3787,7 @@ export declare namespace ReactUnity {
       SubscribeToState(state: string): ReactUnity.IStateHandler;
       StartState(state: string): boolean;
       EndState(state: string): boolean;
+      GetState(state: string): boolean;
       GetStateOrSubscribe(state: string): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -7349,6 +7403,7 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
+      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
@@ -7441,6 +7496,7 @@ export declare namespace ReactUnity {
       ScrollHeight: number;
       SetText(text: string): void;
       SetProperty(property: string, value: any): void;
+      GetLinkInfo(eventData: UnityEngine.EventSystems.PointerEventData): string;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.UGUI.Internal.BorderAndBackground;
       GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
@@ -9699,6 +9755,78 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class PointerMoveHandler {
+        constructor();
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerExit(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        ClearListeners(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class PointerUpHandler {
         constructor();
         useGUILayout: boolean;
@@ -11027,6 +11155,7 @@ export declare namespace ReactUnity {
       export class CursorHandler {
         constructor();
         Cursor: ReactUnity.Types.ICssValueList<ReactUnity.Types.Cursor>;
+        CursorShown: boolean;
         useGUILayout: boolean;
         runInEditMode: boolean;
         enabled: boolean;
@@ -11313,6 +11442,78 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
       }
       export class HoverStateHandler {
+        constructor();
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerExit(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        ClearListeners(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class LinkHoverStateHandler {
         constructor();
         useGUILayout: boolean;
         runInEditMode: boolean;

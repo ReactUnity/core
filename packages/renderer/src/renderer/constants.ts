@@ -52,6 +52,22 @@ export const commonReconciler = {
     callback => Promise.resolve(null).then(callback)
       .catch((error) => setTimeout(() => { throw error; }, 0)),
   cancelTimeout: (handle) => clearTimeout(handle),
+
+  beforeActiveInstanceBlur() {
+  },
+
+  afterActiveInstanceBlur() {
+  },
+
+  getInstanceFromNode(node) {
+    return undefined;
+  },
+  getInstanceFromScope(scopeInstance) {
+    return undefined;
+  },
+
+  prepareScopeUpdate(scopeInstance, instance) {
+  },
 };
 
 export const isDevelopment = process.env.NODE_ENV === 'development';

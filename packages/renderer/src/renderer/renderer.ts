@@ -81,10 +81,10 @@ export const Renderer = {
           hostContainer.Context.FlushCommands(serialized);
         };
 
-        hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, false, null)
+        hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', (error) => console.error(error), null)
       }
       else {
-        hostRoot = syncReconciler.createContainer(hostContainer, mode, false, null)
+        hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', (error) => console.error(error), null)
       }
       containerMap.set(hostContainer, { hostRoot, asyncJobCallback });
     }
