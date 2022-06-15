@@ -290,10 +290,6 @@ namespace ReactUnity.Editor
                     UnityEngine.Debug.LogError(packagesRequest.Error.ToString());
                     yield break;
                 }
-                else
-                {
-                    UnityEngine.Debug.Log(packagesRequest.Status);
-                }
                 yield return null;
             }
 
