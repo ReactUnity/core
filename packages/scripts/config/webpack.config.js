@@ -288,6 +288,8 @@ const baseConfigFactory = function (webpackEnv) {
         }),
       ],
       runtimeChunk: false,
+      chunkIds: 'named',
+      moduleIds: 'named',
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
