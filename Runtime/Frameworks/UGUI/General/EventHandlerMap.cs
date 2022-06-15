@@ -13,6 +13,7 @@ namespace ReactUnity.UGUI
             { "onPointerDown", typeof(PointerDownHandler) },
             { "onPointerEnter", typeof(PointerEnterHandler) },
             { "onPointerExit", typeof(PointerExitHandler) },
+            { "onPointerMove", typeof(PointerMoveHandler) },
             { "onSubmit", typeof(SubmitHandler) },
             { "onCancel", typeof(CancelHandler) },
             { "onSelect", typeof(SelectHandler) },
