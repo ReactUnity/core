@@ -21,6 +21,19 @@ namespace ReactUnity.UGUI.StateHandlers
         }
 
         private bool cursorShown = false;
+        public bool CursorShown
+        {
+            get => cursorShown;
+            set
+            {
+                if (value != cursorShown)
+                {
+                    cursorShown = value;
+                    if (value) Context?.CursorAPI.Push(Component);
+                    else Context?.CursorAPI.Pop(Component);
+                }
+            }
+        }
 
         private void OnEnable()
         {
@@ -29,20 +42,17 @@ namespace ReactUnity.UGUI.StateHandlers
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Context.CursorAPI.Push(Component);
-            cursorShown = true;
+            CursorShown = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Context.CursorAPI.Pop(Component);
-            cursorShown = false;
+            CursorShown = false;
         }
 
         private void OnDisable()
         {
-            Context?.CursorAPI.Pop(Component);
-            cursorShown = false;
+            CursorShown = false;
         }
     }
 }

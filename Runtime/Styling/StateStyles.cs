@@ -55,6 +55,8 @@ namespace ReactUnity.Styling
             return res;
         }
 
+        public bool GetState(string state) => States.Contains(state);
+
         public bool GetStateOrSubscribe(string state)
         {
             if (Subscribed.Add(state)) SubscribeToState(state);

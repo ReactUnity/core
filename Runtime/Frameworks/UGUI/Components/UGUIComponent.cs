@@ -322,6 +322,8 @@ namespace ReactUnity.UGUI
                 handler.Context = Context;
                 handler.Component = this;
                 handler.enabled = true;
+
+                handler.CursorShown = StateStyles.GetState("hover") || StateStyles.GetState("link-hover");
             }
             handler.Cursor = ComputedStyle.cursor;
         }
