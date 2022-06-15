@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 import { FaAlignCenter, FaBeer } from 'react-icons/fa';
 import { FcDoughnutChart } from 'react-icons/fc';
+import { IconContext } from 'react-icons/lib';
 import { ReactComponent as CheckSVG } from 'src/assets/check.svg';
 import { Graph } from './graph';
 import styles from './index.module.scss';
@@ -36,9 +37,11 @@ export function SvgsPage() {
       <h2>React Icons</h2>
 
       <row>
-        <FaBeer />
-        <FaAlignCenter />
-        <FcDoughnutChart />
+        <IconContext.Provider value={{ size: '50px' }}>
+          <FaBeer />
+          <FaAlignCenter />
+          <FcDoughnutChart />
+        </IconContext.Provider>
       </row>
     </view>
 

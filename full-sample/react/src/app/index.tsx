@@ -8,17 +8,15 @@ function App() {
   const nav = useNavigate();
 
   return <view className={styles.host}>
-    <view className={styles.sidepanel}>
+    <scroll className={styles.sidepanel}>
       <button onClick={() => nav('')}>Home</button>
       <button onClick={() => nav('material')}>Material</button>
       <button onClick={() => nav('animations')}>Animations</button>
       <button onClick={() => nav('images')}>Images</button>
       <button onClick={() => nav('bg-patterns')}>Background Patterns</button>
       <button onClick={() => nav('svgs')}>SVGs</button>
-      <button onClick={() => nav('lazy')}>Lazy loading</button>
-      <button onClick={() => nav('tailwind')}>Tailwind</button>
-      <button onClick={() => nav('jss')}>JSS</button>
-    </view>
+      <button onClick={() => nav('style-frameworks/jss')}>Style Frameworks</button>
+    </scroll>
 
     <scroll className={styles.scroll}>
       <view className={styles.content}>

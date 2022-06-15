@@ -4,16 +4,14 @@ import AnimationsPage from "src/pages/animations";
 import BgPatternsPage from "src/pages/bg-patterns";
 import HomePage from "src/pages/home";
 import ImagesPage from "src/pages/images";
-import JSSPage from "src/pages/jss";
 import MaterialPage from "src/pages/material";
+import StyleFrameworksPage from "src/pages/style-frameworks";
+import EmotionPage from "src/pages/style-frameworks/emotion";
+import JSSPage from "src/pages/style-frameworks/jss";
+import StyledComponentsPage from "src/pages/style-frameworks/styled-components";
 import SvgsPage from "src/pages/svgs";
 
-const Lazy = React.lazy(() =>
-  new Promise<any>((resolve) =>
-    // Delay loading by 2 seconds
-    setTimeout(() => import('src/pages/lazy').then(x => ({ default: x.Lazy })).then(resolve), 2000)));
-
-const TailwindPage = React.lazy(() => import('src/pages/tailwind'));
+const TailwindPage = React.lazy(() => import('src/pages/style-frameworks/tailwind'));
 
 export function AppRoutes() {
   return <Routes>
@@ -24,15 +22,12 @@ export function AppRoutes() {
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
     <Route path={'svgs'} element={<SvgsPage />} />
 
-    <Route path={'lazy'} element={
-      <Suspense fallback={<>
-        Loading
-      </>}>
-        <Lazy />
-      </Suspense>
-    } />
-
-    <Route path={'tailwind'} element={<TailwindPage />} />
-    <Route path={'jss'} element={<JSSPage />} />
-  </Routes>;
+    < Route path={'style-frameworks'} element={< StyleFrameworksPage />}>
+      <Route path={'jss'} element={<JSSPage />} />
+      <Route path={'styled-components'} element={<StyledComponentsPage />} />
+      <Route path={'emotion'} element={<EmotionPage />} />
+      <Route path={'tailwind'} element={
+        <Suspense fallback={<>Loading</>}><TailwindPage /></Suspense>} />
+    </Route >
+  </Routes >;
 }

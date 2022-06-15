@@ -1,9 +1,5 @@
-import { create as createJss } from 'jss';
 import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-
-const jss = createJss({
-});
 
 export function JSSPage() {
   return <>

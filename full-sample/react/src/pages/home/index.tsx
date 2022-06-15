@@ -1,9 +1,17 @@
 
+import { useNavigate } from 'react-router';
 import styles from './index.module.scss';
 
 export const HomePage = () => {
+  const nav = useNavigate();
+
   return <view className={styles.host}>
-    <richtext>
+    <richtext
+      onPointerClick={(ev, sender) => {
+        const linkId = sender.GetLinkInfo(ev);
+        if (linkId === 'svgs') nav('svgs');
+      }}
+    >
       <size value={'32'}>
         Welcome to ReactUnity 😎
       </size>
@@ -23,9 +31,19 @@ export const HomePage = () => {
             </uppercase>
           </color>
 
-          to see examples
+          to see examples.
         </color>
       </size>
+
+
+      Check out the new <link value={'svgs'}>
+        <size value={24}>
+
+          <color value='blue'>
+            SVG
+          </color>
+        </size>
+      </link> feature for example.
     </richtext>
   </view >;
 };
