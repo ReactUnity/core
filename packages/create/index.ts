@@ -60,7 +60,7 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
 
 async function runOpenUPM() {
   const cmd = 'npx' + (process.platform === 'win32' ? '.cmd' : '');
-  return await run_script(cmd, ['-y', 'openupm-cli', 'add', 'com.reactunity.core'], { cwd: unityDir });
+  return await run_script(cmd, ['-y', 'openupm-cli', 'add', 'com.reactunity.core', 'com.reactunity.quickjs'], { cwd: unityDir });
 }
 
 async function create() {
