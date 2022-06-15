@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/renderer",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "React renderer for Unity3D",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
@@ -61,7 +61,7 @@
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.11.0",
+    "@reactunity/scripts": "^0.12.0",
     "@types/react-reconciler": "^0.28.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.3"
