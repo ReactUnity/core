@@ -84,7 +84,12 @@ namespace ReactUnity.Scripting
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
                     engine.Execute("global.postMessage = function() {}");
+
+                    // Required for JSS
                     engine.Execute("global.getComputedStyle = function() { return {}; }");
+
+                    // Required for styled-components
+                    engine.Execute("global.HTMLElement = {}");
 
                     EngineInitialized = true;
 

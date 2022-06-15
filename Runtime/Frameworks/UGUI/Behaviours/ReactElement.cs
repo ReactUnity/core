@@ -75,11 +75,21 @@ namespace ReactUnity.UGUI.Behaviours
 
         private void Start()
         {
-            if (Layout == null) enabled = false;
+            if (Layout == null)
+            {
+                Destroy(this);
+                return;
+            }
         }
 
         private void LateUpdate()
         {
+            if (Layout == null)
+            {
+                Destroy(this);
+                return;
+            }
+
             var translate = this.translate;
             if (!Layout.HasNewLayout && !hasPositionUpdate) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;

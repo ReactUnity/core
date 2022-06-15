@@ -38,6 +38,7 @@ namespace ReactUnity.Editor
 #if REACT_EDITOR_COROUTINES
         static QuickStartWindow()
         {
+            EditorApplication.update -= InitialEditorUpdate;
             EditorApplication.update += InitialEditorUpdate;
         }
 

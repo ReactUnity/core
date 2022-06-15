@@ -92,6 +92,7 @@ namespace ReactUnity.Scripting.DomProxies
     {
         public override string tagName { get; } = "head";
         public List<IDomElementProxy> Children { get; } = new List<IDomElementProxy>();
+        public List<IDomElementProxy> childNodes => Children;
 
         public void appendChild(IDomElementProxy child)
         {
@@ -183,8 +184,8 @@ namespace ReactUnity.Scripting.DomProxies
             {
                 set
                 {
-                    Proxy.childNodes.Clear();
-                    Proxy.childNodes.Add(value);
+                    Proxy.childList.Clear();
+                    Proxy.childList.Add(value);
                     Proxy.ProcessNodes();
                 }
             }
@@ -196,8 +197,11 @@ namespace ReactUnity.Scripting.DomProxies
         }
 
         public override string tagName { get; } = "style";
-        public List<string> childNodes = new List<string>();
-        public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
+        internal List<string> childList = new List<string>();
+        public NodeList<string> childNodes { get; }
+        public string firstChild => childList.Count > 0 ? childList[0] : default;
+        public string lastChild => childList.Count > 0 ? childList[childList.Count - 1] : default;
+        public bool hasChildNodes() => childList.Count > 0;
 
         public StyleSheet Sheet = null;
         public StyleSheet sheet => Sheet;
@@ -212,14 +216,15 @@ namespace ReactUnity.Scripting.DomProxies
         {
             set
             {
-                childNodes.Clear();
-                childNodes.Add(value);
+                childList.Clear();
+                childList.Add(value);
                 ProcessNodes();
             }
         }
 
         public StyleProxy(DocumentProxy document)
         {
+            childNodes = new NodeList<string>(childList);
             this.document = document;
             parentNode = document.head;
             styleSheet = new StyleSheetProxy(this);
@@ -237,25 +242,11 @@ namespace ReactUnity.Scripting.DomProxies
             Sheet = null;
         }
 
-        public void appendChild(string text)
-        {
-            childNodes.Add(text);
-
-            if (enabled) ProcessNodes();
-        }
-
-        public void removeChild(string text)
-        {
-            childNodes.Remove(text);
-
-            if (enabled) ProcessNodes();
-        }
-
         void ProcessNodes()
         {
             if (Sheet != null) document.Context.RemoveStyle(Sheet);
             var media = getAttribute("media") as string;
-            Sheet = new StyleSheet(document.Context.Style, string.Join("\n", childNodes), 0, null, media);
+            Sheet = new StyleSheet(document.Context.Style, string.Join("\n", childList), 0, null, media);
             document.Context.InsertStyle(Sheet);
         }
 
@@ -269,6 +260,29 @@ namespace ReactUnity.Scripting.DomProxies
         {
             base.removeAttribute(key);
             if (key?.ToString() == "media") ProcessNodes();
+        }
+
+        public void appendChild(string text)
+        {
+            childList.Add(text);
+
+            if (enabled) ProcessNodes();
+        }
+
+        public void removeChild(string text)
+        {
+            childList.Remove(text);
+
+            if (enabled) ProcessNodes();
+        }
+
+        public void insertBefore(string child, object before)
+        {
+            var ind = before is string ip ? childList.IndexOf(ip) : -1;
+            if (ind >= 0) childList.Insert(ind, child);
+            else childList.Add(child);
+
+            if (enabled) ProcessNodes();
         }
     }
 
