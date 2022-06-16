@@ -7,13 +7,15 @@ declare global {
 
   export declare type PluginState = {
     stringify: ((bytes: any) => string);
+    stringifyBuffer: ((bytes: any, bufferSize) => string);
     bufferify: ((str: string) => [number, number]);
     dynCall: ((bytes: any) => string);
     runtimes: Record<string, PluginRuntime | undefined>;
     contexts: Record<string, PluginContext | undefined>;
     lastRuntimeId: number;
     lastContextId: number;
-    atoms: PluginHeap;
+    atoms?: PluginHeap<string>;
+    createHeap: <T>() => PluginHeap<T>;
   }
 
   export declare type PluginRuntime = {

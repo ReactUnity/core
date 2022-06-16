@@ -3,52 +3,11 @@
  */
 
 type PluginType = JSApiExternals & {
-  $state: PluginState;
+  $state: typeof state;
+  $state__postset?: string;
 }
 
-function createHeap<T = any>(): PluginHeap<T> {
-  var push = function (object) {
-    if (typeof object === 'undefined') return 0;
-
-    var id = res.lastId++;
-
-    record[id] = {
-      refCount: 1,
-      value: object,
-    };
-
-    return id;
-  };
-
-  var record: PluginHeap['record'] = {};
-
-  const res = {
-    record,
-    lastId: 1,
-    push,
-    get(id) {
-      var ho = record[id];
-      return ho.value;
-    },
-    ref(id, diff) {
-      var ho = record[id];
-
-      ho.refCount += diff;
-
-      console.assert(ho.refCount >= 0);
-
-      if (ho.refCount <= 0) {
-        record[id] = undefined;
-      }
-
-      return ho.refCount;
-    },
-  };
-
-  return res;
-}
-
-enum JSPropFlags {
+const enum JSPropFlags {
   /* flags for object properties */
   JS_PROP_CONFIGURABLE = (1 << 0),
   JS_PROP_WRITABLE = (1 << 1),
@@ -87,45 +46,79 @@ enum JSPropFlags {
   NONE = 0,
 }
 
-const Constants = {
-  VERSION: 0x010704,
-  CS_JSB_VERSION: 0xa,
-  JS_TAG_FIRST: -11, /* first negative tag */
-  JS_TAG_BIG_DECIMAL: -11,
-  JS_TAG_BIG_INT: -10,
-  JS_TAG_BIG_FLOAT: -9,
-  JS_TAG_SYMBOL: -8,
-  JS_TAG_STRING: -7,
-  JS_TAG_MODULE: -3, /* used internally */
-  JS_TAG_FUNCTION_BYTECODE: -2, /* used internally */
-  JS_TAG_OBJECT: -1,
-  JS_TAG_INT: 0,
-  JS_TAG_BOOL: 1,
-  JS_TAG_NULL: 2,
-  JS_TAG_UNDEFINED: 3,
-  JS_TAG_EXCEPTION: 6,
-  JS_TAG_FLOAT64: 7,
-  JS_WRITE_OBJ_BYTECODE: 1 << 0, /* allow function/module */
-  JS_WRITE_OBJ_BSWAP: 1 << 1, /* byte swapped output */
-  JS_WRITE_OBJ_SAB: 1 << 2, /* allow SharedArrayBuffer */
-  JS_WRITE_OBJ_REFERENCE: 1 << 3, /* allow object references to encode arbitrary object graph */
-  JS_READ_OBJ_BYTECODE: 1 << 0, /* allow function/module */
-  JS_READ_OBJ_ROM_DATA: 1 << 1, /* avoid duplicating 'buf' data */
-  JS_READ_OBJ_SAB: 1 << 2, /* allow SharedArrayBuffer */
-  JS_READ_OBJ_REFERENCE: 1 << 3, /* allow object references */
-}
-
-function stringifyBuffer(buffer: number | Pointer<number>, bufferLength: number) {
-  var buf = new ArrayBuffer(bufferLength);
-  var arr = new Uint32Array(buf);
-  for (var i = 0; i < bufferLength; i++)
-    arr[i] = HEAP32[(buffer as any >> 2) + i];
-  var val = state.stringify(arr);
-  return val;
+const enum Constants {
+  VERSION = 0x010704,
+  CS_JSB_VERSION = 0xa,
+  JS_TAG_FIRST = -11, /* first negative tag */
+  JS_TAG_BIG_DECIMAL = -11,
+  JS_TAG_BIG_INT = -10,
+  JS_TAG_BIG_FLOAT = -9,
+  JS_TAG_SYMBOL = -8,
+  JS_TAG_STRING = -7,
+  JS_TAG_MODULE = -3, /* used internally */
+  JS_TAG_FUNCTION_BYTECODE = -2, /* used internally */
+  JS_TAG_OBJECT = -1,
+  JS_TAG_INT = 0,
+  JS_TAG_BOOL = 1,
+  JS_TAG_NULL = 2,
+  JS_TAG_UNDEFINED = 3,
+  JS_TAG_EXCEPTION = 6,
+  JS_TAG_FLOAT64 = 7,
+  JS_WRITE_OBJ_BYTECODE = 1 << 0, /* allow function/module */
+  JS_WRITE_OBJ_BSWAP = 1 << 1, /* byte swapped output */
+  JS_WRITE_OBJ_SAB = 1 << 2, /* allow SharedArrayBuffer */
+  JS_WRITE_OBJ_REFERENCE = 1 << 3, /* allow object references to encode arbitrary object graph */
+  JS_READ_OBJ_BYTECODE = 1 << 0, /* allow function/module */
+  JS_READ_OBJ_ROM_DATA = 1 << 1, /* avoid duplicating 'buf' data */
+  JS_READ_OBJ_SAB = 1 << 2, /* allow SharedArrayBuffer */
+  JS_READ_OBJ_REFERENCE = 1 << 3, /* allow object references */
 }
 
 var QuickJSPlugin: PluginType = {
+  $state__postset: 'state.atoms = state.createHeap();',
   $state: {
+    createHeap<T = any>(): PluginHeap<T> {
+      var push = function (object) {
+        if (typeof object === 'undefined') return 0;
+
+        var id = res.lastId++;
+
+        record[id] = {
+          refCount: 1,
+          value: object,
+        };
+
+        return id;
+      };
+
+      var record: PluginHeap['record'] = {};
+
+      const res = {
+        record,
+        lastId: 1,
+        push,
+        get(id) {
+          var ho = record[id];
+          return ho.value;
+        },
+        ref(id, diff) {
+          var ho = record[id];
+
+          ho.refCount += diff;
+
+          console.assert(ho.refCount >= 0);
+
+          if (ho.refCount <= 0) {
+            record[id] = undefined;
+          }
+
+          return ho.refCount;
+        },
+      };
+
+      return res;
+    },
+
     stringify(arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
     bufferify(arg: string) {
       var returnStr = "bla";
@@ -135,10 +128,18 @@ var QuickJSPlugin: PluginType = {
       return [buffer, bufferSize];
     },
 
+    stringifyBuffer(buffer: number | Pointer<number>, bufferLength: number) {
+      var buf = new ArrayBuffer(bufferLength);
+      var arr = new Uint32Array(buf);
+      for (var i = 0; i < bufferLength; i++)
+        arr[i] = HEAP32[(buffer as any >> 2) + i];
+      var val = state.stringify(arr);
+      return val;
+    },
+
     dynCall() { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
     runtimes: {},
     contexts: {},
-    atoms: createHeap<string>(),
     lastRuntimeId: 1,
     lastContextId: 1,
   },
@@ -220,7 +221,7 @@ var QuickJSPlugin: PluginType = {
       return (window['eval' as any] as any)(code);
     };
 
-    var objects = createHeap();
+    var objects = state.createHeap();
 
     var globalId = objects.push(window);
 
@@ -693,7 +694,7 @@ var QuickJSPlugin: PluginType = {
   JS_NewStringLen(ctx, str, len) {
     var context = state.contexts[ctx];
 
-    var val = stringifyBuffer(str as any, len);
+    var val = state.stringifyBuffer(str as any, len);
 
     return context.objects.push(val);
   },
@@ -752,7 +753,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ParseJSON(ctx, buf, buf_len, filename) {
     var context = state.contexts[ctx];
-    var str = stringifyBuffer(buf as any, buf_len);
+    var str = state.stringifyBuffer(buf as any, buf_len);
     var res = JSON.parse(str);
     return context.objects.push(res);
   },
@@ -807,7 +808,7 @@ var QuickJSPlugin: PluginType = {
   },
 
   js_strndup(ctx, s, n) {
-    var str = stringifyBuffer(s as any, n);
+    var str = state.stringifyBuffer(s as any, n);
 
     var [buffer] = state.bufferify(str);
     return buffer;
@@ -822,7 +823,7 @@ var QuickJSPlugin: PluginType = {
 
   JSB_ThrowError(ctx, buf, buf_len) {
     // TODO:
-    var str = stringifyBuffer(buf as any, buf_len);
+    var str = state.stringifyBuffer(buf as any, buf_len);
     console.error(str);
 
     return -1;
