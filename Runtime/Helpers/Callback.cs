@@ -107,7 +107,11 @@ namespace ReactUnity.Helpers
 #if REACT_CLEARSCRIPT
             else if (callback is Microsoft.ClearScript.ScriptObject so)
             {
-                return so.Invoke(false, args);
+                // TODO: because of an error in ClearScipt, arrays cannot be iterated (Mono bug?)
+                so.Engine.Global.SetProperty("__temp__", so);
+                so.Engine.Global.SetProperty("__args__", args?.ToList());
+                var res = so.Engine.Evaluate(null, true, "var res = __temp__(...(__args__ || [])); delete __temp__; delete __args__; res;");
+                return res;
             }
 #endif
 #if REACT_QUICKJS

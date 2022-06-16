@@ -19,7 +19,7 @@ namespace ReactUnity.Scripting
 
         private const string tempKey = "__$__temp_key__$__";
 
-        public V8ScriptEngine Engine { get; }
+        public V8ScriptEngine Engine { get; private set; }
         public object NativeEngine => Engine;
 
         static string GetPluginFolder()
@@ -68,7 +68,6 @@ namespace ReactUnity.Scripting
             Engine.DisableTypeRestriction = true;
             Engine.ExposeHostObjectStaticMembers = true;
             Engine.UseReflectionBindFallback = true;
-            Engine.EnableAutoHostVariables = true;
             Engine.EnableNullResultWrapping = false;
 
             SetGlobal("host", new ExtendedHostFunctions());
@@ -126,7 +125,7 @@ namespace ReactUnity.Scripting
 
         public object GetGlobal(string key)
         {
-            return Engine.Evaluate(null, true, key);
+            return Engine.Global.GetProperty(key);
         }
 
         public void SetProperty<T>(object obj, string key, T value)
@@ -165,8 +164,8 @@ namespace ReactUnity.Scripting
         public object CreateTypeReference(Type type)
         {
             Engine.AddHostType(tempKey, type);
-            var res = Engine.Evaluate(tempKey);
-            Engine.Execute("delete " + tempKey);
+            var res = Engine.Global.GetProperty(tempKey);
+            Engine.Global.DeleteProperty(tempKey);
             return res;
         }
 
@@ -190,9 +189,10 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
-            Engine.Interrupt();
-            Engine.CollectGarbage(true);
-            Engine.Dispose();
+            Engine?.Interrupt();
+            Engine?.CollectGarbage(true);
+            Engine?.Dispose();
+            Engine = null;
         }
 
         public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)

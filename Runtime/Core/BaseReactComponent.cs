@@ -229,7 +229,7 @@ namespace ReactUnity
 
             Parent = newParent;
 
-            if (Parent == null) return;
+            if (Parent?.Children == null) return;
 
             relativeTo = relativeTo ?? (insertAfter ? null : newParent.AfterPseudo);
 

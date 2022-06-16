@@ -25,6 +25,7 @@ namespace ReactUnity.Scripting
         public ScriptRuntime Runtime { get; private set; }
         public QuickJS.ScriptContext MainContext { get; private set; }
         public ScriptValue Global { get; private set; }
+        public ScriptFunction ObjectKeys { get; private set; }
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
 
@@ -81,6 +82,13 @@ namespace ReactUnity.Scripting
             var global = MainContext.GetGlobalObject();
             Values.js_get_classvalue(MainContext, global, out ScriptValue globalSv);
             Global = globalSv;
+
+            var objCtor = Global.GetProperty<ScriptValue>("Object");
+            var keys = objCtor.GetProperty<ScriptFunction>("keys");
+            keys.SetBound(objCtor);
+            objCtor.Dispose();
+            ObjectKeys = keys;
+
             JSApi.JSB_FreeValueRT(Runtime, global);
 
             Initialized = true;
@@ -177,6 +185,8 @@ namespace ReactUnity.Scripting
         {
             Global?.Dispose();
             Global = null;
+            ObjectKeys?.Dispose();
+            ObjectKeys = null;
             TypeDB = null;
             MainContext = null;
             ObjectCache = null;
@@ -194,7 +204,10 @@ namespace ReactUnity.Scripting
             }
             else if (obj is ScriptValue jv)
             {
-                Debug.LogError("Can't traverse script object in QuickJS");
+                var res = ObjectKeys.Invoke<string[]>(jv);
+
+                foreach (var kv in res)
+                    yield return new KeyValuePair<string, object>(kv, jv.GetProperty<object>(kv));
             }
         }
 
