@@ -163,12 +163,12 @@ namespace ReactUnity.Tests
 ", Style = BaseStyle)]
         public IEnumerator InlineRichTextShouldWork()
         {
-            Assert.AreEqual("<color=\"red\">Red<color=\"blue\">Blue</color></color> Normal <br>Hey", Text.Text.text);
+            Assert.AreEqual("<color=red>Red<color=blue>Blue</color></color> Normal <br>Hey", Text.Text.text);
             yield return null;
 
             Globals["hideBlue"] = true;
             yield return null;
-            Assert.AreEqual("<color=\"red\">Red</color> Normal <br>Hey", Text.Text.text);
+            Assert.AreEqual("<color=red>Red</color> Normal <br>Hey", Text.Text.text);
         }
 
     }
