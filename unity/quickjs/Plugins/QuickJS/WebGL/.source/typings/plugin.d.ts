@@ -3,8 +3,6 @@ export { };
 declare global {
   var state: PluginState;
 
-  export declare type JSValue = QuickJS.Native.JSValue;
-
   export declare type PluginState = {
     stringify: ((bytes: any) => string);
     stringifyBuffer: ((bytes: any, bufferSize) => string);
