@@ -88,23 +88,12 @@ var QuickJSPlugin = {
             };
             return res;
         },
-        UTF8ArrayToString: function (ptr, bufferLength) {
-            return UTF8ArrayToString(HEAPU8, ptr, bufferLength);
-        },
-        stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
+        stringify: function (ptr, bufferLength) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(ptr, bufferLength); },
         bufferify: function (arg) {
             var bufferSize = lengthBytesUTF8(arg) + 1;
             var buffer = _malloc(bufferSize);
             stringToUTF8(arg, buffer, bufferSize);
             return [buffer, bufferSize];
-        },
-        stringifyBuffer: function (buffer, bufferLength) {
-            var buf = new ArrayBuffer(bufferLength);
-            var arr = new Uint8Array(buf);
-            for (var i = 0; i < bufferLength; i++)
-                arr[i] = HEAPU32[(buffer >> 2) + i];
-            var val = state.stringify(arr);
-            return val;
         },
         dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
         runtimes: {},
@@ -205,7 +194,7 @@ var QuickJSPlugin = {
     },
     JS_Eval: function (ptr, ctx, input, input_len, filename, eval_flags) {
         var context = state.getContext(ctx);
-        var code = state.UTF8ArrayToString(input, input_len);
+        var code = state.stringify(input, input_len);
         var res = context.evaluate(code);
         context.objects.push(res, ptr);
     },
@@ -454,7 +443,7 @@ var QuickJSPlugin = {
     // #region Atoms
     JS_NewAtomLen: function (ctx, str, len) {
         var context = state.getContext(ctx);
-        var val = state.UTF8ArrayToString(str, len);
+        var val = state.stringify(str, len);
         return state.atoms.push(val, undefined);
     },
     JS_AtomToString: function (ptr, ctx, atom) {
@@ -548,7 +537,7 @@ var QuickJSPlugin = {
     // #endregion
     JS_ParseJSON: function (ptr, ctx, buf, buf_len, filename) {
         var context = state.getContext(ctx);
-        var str = state.UTF8ArrayToString(buf, buf_len);
+        var str = state.stringify(buf, buf_len);
         var res = JSON.parse(str);
         context.objects.push(res, ptr);
     },
@@ -593,7 +582,7 @@ var QuickJSPlugin = {
     },
     JS_NewStringLen: function (ptr, ctx, str, len) {
         var context = state.getContext(ctx);
-        var val = state.UTF8ArrayToString(str, len);
+        var val = state.stringify(str, len);
         context.objects.push(val, ptr);
     },
     JSB_NewEmptyString: function (ptr, ctx) {
@@ -659,7 +648,7 @@ var QuickJSPlugin = {
     // #region Errors
     JSB_ThrowError: function (ctx, buf, buf_len) {
         // TODO:
-        var str = state.UTF8ArrayToString(buf, buf_len);
+        var str = state.stringify(buf, buf_len);
         console.error(str);
         return -1;
     },
@@ -686,7 +675,7 @@ var QuickJSPlugin = {
     // #endregion
     // #region Low level Set
     js_strndup: function (ctx, s, n) {
-        var str = state.UTF8ArrayToString(s, n);
+        var str = state.stringify(s, n);
         var buffer = state.bufferify(str)[0];
         return buffer;
     },

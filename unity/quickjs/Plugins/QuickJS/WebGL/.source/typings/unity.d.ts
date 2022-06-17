@@ -2,13 +2,12 @@ export { };
 
 declare global {
 
-  const UTF8ArrayToString: (heap: Uint8Array, idx: number, maxBytesToRead?: number) => string;
   const UTF8ToString: (ptr: number, maxBytesToRead?: number) => string;
   const stringToUTF8: (str: string, outPtr: number, maxBytesToRead?: number) => void;
 
   const Pointer_stringify: (val: any) => string;
-  const stringToUTF8: (arg: string, buffer: number, bufferLength: number) => number;
   const lengthBytesUTF8: (val: any) => number;
+
   const dynCall: any;
   const Runtime: any;
   const LibraryManager: any;

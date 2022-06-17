@@ -57,7 +57,7 @@ declare global {
     static JS_SetHostPromiseRejectionTracker(rt: JSRuntime, cb: IntPtr, opaque: IntPtr): void;
     static JS_GetPropertyUint32(returnValue: JSValue, ctx: JSContext, this_obj: JSValue, idx: UInt32);
     static JS_GetPropertyInternal(returnValue: JSValue, ctx: JSContext, obj: JSValue, prop: JSAtom, receiver: JSValue, throw_ref_error: number);
-    static JS_GetPropertyStr(returnValue: JSValue, ctx: JSContext, this_obj: JSValue, prop: string);
+    static JS_GetPropertyStr(returnValue: JSValue, ctx: JSContext, this_obj: JSValue, prop: Pointer<string>);
     static JS_DefineProperty(ctx: JSContext, this_obj: JSValue, prop: JSAtom, val: JSValue, getter: JSValue, setter: JSValue, flags: JSPropFlags): Boolish;
     static JS_DefinePropertyValue(ctx: JSContext, this_obj: JSValue, prop: JSAtom, val: JSValue, flags: JSPropFlags): Boolish;
     static JS_GetException(returnValue: JSValue, ctx: JSContext);

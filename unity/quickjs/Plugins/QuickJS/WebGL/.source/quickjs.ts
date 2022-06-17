@@ -98,24 +98,12 @@ var QuickJSPlugin: PluginType = {
 
       return res;
     },
-    UTF8ArrayToString: function (ptr: Pointer<number>, bufferLength: number) {
-      return UTF8ArrayToString(HEAPU8, ptr, bufferLength);
-    },
-    stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
+    stringify: function (ptr: number | Pointer<number>, bufferLength?: number) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(ptr, bufferLength); },
     bufferify: function (arg: string) {
       var bufferSize = lengthBytesUTF8(arg) + 1;
       var buffer = _malloc(bufferSize);
       stringToUTF8(arg, buffer, bufferSize);
       return [buffer, bufferSize];
-    },
-
-    stringifyBuffer: function (buffer: number | Pointer<number>, bufferLength: number) {
-      var buf = new ArrayBuffer(bufferLength);
-      var arr = new Uint8Array(buf);
-      for (var i = 0; i < bufferLength; i++)
-        arr[i] = HEAPU32[(buffer as any >> 2) + i];
-      var val = state.stringify(arr);
-      return val;
     },
 
     dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
@@ -245,7 +233,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_Eval(ptr, ctx, input, input_len, filename, eval_flags) {
     var context = state.getContext(ctx);
-    var code = state.UTF8ArrayToString(input, input_len);
+    var code = state.stringify(input, input_len);
 
     var res = context.evaluate(code);
 
@@ -567,7 +555,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_NewAtomLen(ctx, str, len) {
     var context = state.getContext(ctx);
-    var val = state.UTF8ArrayToString(str, len);
+    var val = state.stringify(str, len);
 
     return state.atoms.push(val, undefined);
   },
@@ -691,7 +679,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ParseJSON(ptr, ctx, buf, buf_len, filename) {
     var context = state.getContext(ctx);
-    var str = state.UTF8ArrayToString(buf as any, buf_len);
+    var str = state.stringify(buf as any, buf_len);
     var res = JSON.parse(str);
     context.objects.push(res, ptr);
   },
@@ -749,7 +737,7 @@ var QuickJSPlugin: PluginType = {
   JS_NewStringLen(ptr, ctx, str, len) {
     var context = state.getContext(ctx);
 
-    var val = state.UTF8ArrayToString(str as any, len);
+    var val = state.stringify(str as any, len);
 
     context.objects.push(val, ptr);
   },
@@ -831,7 +819,7 @@ var QuickJSPlugin: PluginType = {
 
   JSB_ThrowError(ctx, buf, buf_len) {
     // TODO:
-    var str = state.UTF8ArrayToString(buf as any, buf_len);
+    var str = state.stringify(buf as any, buf_len);
     console.error(str);
 
     return -1;
@@ -870,7 +858,7 @@ var QuickJSPlugin: PluginType = {
   // #region Low level Set
 
   js_strndup(ctx, s, n) {
-    var str = state.UTF8ArrayToString(s as any, n);
+    var str = state.stringify(s as any, n);
 
     var [buffer] = state.bufferify(str);
     return buffer as IntPtr;
