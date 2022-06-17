@@ -9,7 +9,7 @@ type PluginType = JSApiExternals & {
 }
 
 var QuickJSPlugin: PluginType = {
-  $state__postset: 'state.atoms = state.createHeap(true);',
+  $state__postset: 'state.atoms = state.createHeap(true);\n',
   $state: {
     createHeap: function <T = any>(isAtom: boolean): PluginHeap<T> {
       var getTag = function (object): Tags {
@@ -31,7 +31,10 @@ var QuickJSPlugin: PluginType = {
         record,
         lastId: 1,
         push(object, ptr) {
-          if (typeof object === 'undefined') return 0;
+          if (typeof object === 'undefined') {
+            res.refIndex(0, 1, ptr);
+            return 0;
+          }
 
           var id = res.lastId++;
 
@@ -45,15 +48,30 @@ var QuickJSPlugin: PluginType = {
 
           return id;
         },
-        get(id) {
+        get(val) {
+          var id = isAtom ? val : HEAP32[val >> 2];
+          if (id === 0) return undefined;
           var ho = record[id];
           return ho.value;
         },
         ref(obj, diff, ptr) {
-          var id = HEAP32[obj >> 2];
+          var id = isAtom ? obj : HEAP32[obj >> 2];
           return res.refIndex(id, diff, ptr);
         },
         refIndex(id, diff, ptr) {
+          if (id === 0) {
+            if (typeof ptr === 'number') {
+              HEAP32[ptr >> 2] = 0;
+              if (!isAtom) {
+                var bu = new BigInt64Array(HEAPF64.buffer);
+                bu[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_UNDEFINED);
+                // HEAP32[(ptr >> 2) + 2] = Tags.JS_TAG_UNDEFINED;
+              }
+            }
+
+            return 0;
+          }
+
           var ho = record[id];
 
           ho.refCount += diff;
@@ -64,9 +82,14 @@ var QuickJSPlugin: PluginType = {
             record[id] = undefined;
           }
 
-          if (typeof ptr === 'number' && ptr > 0) {
+          if (typeof ptr === 'number') {
             HEAP32[ptr >> 2] = id;
-            if (!isAtom) HEAP32[ptr >> 2 + 2] = ho.tag;
+            if (!isAtom) {
+              // TODO: [Improvement] find out if there is an easier way to pass longs to C#
+              var bu = new BigInt64Array(HEAPF64.buffer);
+              bu[(ptr >> 3) + 1] = BigInt(ho.tag);
+              // HEAP32[(ptr >> 2) + 2] = ho.tag;
+            }
           }
 
           return ho.refCount;
@@ -75,7 +98,9 @@ var QuickJSPlugin: PluginType = {
 
       return res;
     },
-
+    UTF8ArrayToString: function (ptr: Pointer<number>, bufferLength: number) {
+      return UTF8ArrayToString(HEAPU8, ptr, bufferLength);
+    },
     stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
     bufferify: function (arg: string) {
       var bufferSize = lengthBytesUTF8(arg) + 1;
@@ -86,9 +111,9 @@ var QuickJSPlugin: PluginType = {
 
     stringifyBuffer: function (buffer: number | Pointer<number>, bufferLength: number) {
       var buf = new ArrayBuffer(bufferLength);
-      var arr = new Uint32Array(buf);
+      var arr = new Uint8Array(buf);
       for (var i = 0; i < bufferLength; i++)
-        arr[i] = HEAP32[(buffer as any >> 2) + i];
+        arr[i] = HEAPU32[(buffer as any >> 2) + i];
       var val = state.stringify(arr);
       return val;
     },
@@ -99,11 +124,11 @@ var QuickJSPlugin: PluginType = {
     lastRuntimeId: 1,
     lastContextId: 1,
     getRuntime: function (rt) {
-      var rtId = HEAP32[rt >> 2];
+      var rtId = rt;
       return state.runtimes[rtId];
     },
     getContext: function (ctx) {
-      var ctxId = HEAP32[ctx >> 2];
+      var ctxId = ctx;
       return state.contexts[ctxId];
     },
   },
@@ -112,8 +137,8 @@ var QuickJSPlugin: PluginType = {
     return Constants.CS_JSB_VERSION;
   },
 
-  JSB_NewRuntime(ptr, finalizer) {
-    console.log(finalizer);
+  JSB_NewRuntime(finalizer) {
+    // TODO: understand what to do with finalizer
 
     var id = state.lastRuntimeId++;
 
@@ -122,14 +147,9 @@ var QuickJSPlugin: PluginType = {
       contexts: {},
     };
 
-    HEAP32[ptr >> 2] = id;
+    return id;
   },
 
-  /**
-   *
-   * @param rtId
-   * @returns
-   */
   JSB_GetRuntimeOpaque(rtId) {
     return state.getRuntime(rtId).opaque;
   },
@@ -157,20 +177,22 @@ var QuickJSPlugin: PluginType = {
 
     state.runtimes[runtime.id] = undefined;
 
-    return 1;
+    return true;
   },
 
-  JS_GetRuntime(ptr, ctxId) {
+  JS_GetRuntime(ctxId) {
     var context = state.getContext(ctxId);
-    HEAP32[ptr >> 2] = context.runtimeId;
+    return context.runtimeId;
   },
 
-  JS_NewContext(ptr, rtId) {
+  JS_NewContext(rtId) {
     var id = state.lastContextId++;
     var runtime = state.getRuntime(rtId);
 
 
     var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.head.appendChild(iframe);
     var window = iframe.contentWindow!;
 
     window['parent' as any] = undefined;
@@ -223,7 +245,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_Eval(ptr, ctx, input, input_len, filename, eval_flags) {
     var context = state.getContext(ctx);
-    var code = state.stringifyBuffer(input, input_len);
+    var code = state.UTF8ArrayToString(input, input_len);
 
     var res = context.evaluate(code);
 
@@ -376,20 +398,31 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
+    const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
-    const opts: PropertyDescriptor = {
-      get: getterVal,
-      set: setterVal,
-      value: valVal,
-    };
 
-    if (hasConfigurable) opts.configurable = configurable;
-    if (hasEnumerable) opts.enumerable = enumerable;
-    if (hasWritable) opts.writable = writable;
+    try {
+      const opts: PropertyDescriptor = {
+        get: getterVal,
+        set: setterVal,
+        value: valVal,
+      };
 
-    Object.defineProperty(thisVal, propVal, opts);
+      if (hasConfigurable) opts.configurable = configurable;
+      if (hasEnumerable) opts.enumerable = enumerable;
+      if (hasWritable) opts.writable = writable;
 
-    return 1;
+      Object.defineProperty(thisVal, propVal, opts);
+
+      return true;
+    } catch (ex) {
+      if (shouldThrow) {
+        context.lastException = ex;
+        return -1;
+      }
+    }
+
+    return false;
   },
 
   JS_DefinePropertyValue(ctx, this_obj, prop, val, flags) {
@@ -406,17 +439,28 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
-    const opts: PropertyDescriptor = {
-      value: valVal,
-    };
+    const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
-    if (hasConfigurable) opts.configurable = configurable;
-    if (hasEnumerable) opts.enumerable = enumerable;
-    if (hasWritable) opts.writable = writable;
+    try {
+      const opts: PropertyDescriptor = {
+        value: valVal,
+      };
 
-    Object.defineProperty(thisVal, propVal, opts);
+      if (hasConfigurable) opts.configurable = configurable;
+      if (hasEnumerable) opts.enumerable = enumerable;
+      if (hasWritable) opts.writable = writable;
 
-    return 1;
+      Object.defineProperty(thisVal, propVal, opts);
+      return true;
+    }
+    catch (err) {
+      if (shouldThrow) {
+        context.lastException = err;
+        return -1;
+      }
+    }
+
+    return false;
   },
 
   JS_HasProperty(ctx, this_obj, prop) {
@@ -430,8 +474,6 @@ var QuickJSPlugin: PluginType = {
   },
 
   JS_SetPropertyInternal(ctx, this_obj, prop, val, flags) {
-    // TODO: throw error if property exists
-
     var context = state.getContext(ctx);
 
     const thisVal = context.objects.get(this_obj);
@@ -445,32 +487,38 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
+    const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
-    const opts: PropertyDescriptor = {
-      value: valVal,
-    };
+    try {
+      const opts: PropertyDescriptor = {
+        value: valVal,
+      };
 
-    if (hasConfigurable) opts.configurable = configurable;
-    if (hasEnumerable) opts.enumerable = enumerable;
-    if (hasWritable) opts.writable = writable;
+      if (hasConfigurable) opts.configurable = configurable;
+      if (hasEnumerable) opts.enumerable = enumerable;
+      if (hasWritable) opts.writable = writable;
 
-    Object.defineProperty(thisVal, propVal, opts);
+      Object.defineProperty(thisVal, propVal, opts);
 
-    return 1;
+      return true;
+    } catch (err) {
+      if (shouldThrow) {
+        context.lastException = err;
+        return -1;
+      }
+    }
+
+    return false;
   },
 
   JS_SetPropertyUint32(ctx, this_obj, idx, val) {
-    // TODO: throw error if property exists
-
     var context = state.getContext(ctx);
 
     const thisVal = context.objects.get(this_obj);
     const valVal = context.objects.get(val);
     const propVal = idx;
 
-    Reflect.set(thisVal, propVal, valVal);
-
-    return 1;
+    return !!Reflect.set(thisVal, propVal, valVal);
   },
 
   jsb_get_payload_header(ctx, val) {
@@ -517,17 +565,11 @@ var QuickJSPlugin: PluginType = {
 
   // #region Atoms
 
-  JS_NewAtomLen(ptr, ctx, str, len) {
+  JS_NewAtomLen(ctx, str, len) {
     var context = state.getContext(ctx);
+    var val = state.UTF8ArrayToString(str, len);
 
-    var buf = new ArrayBuffer(len);
-    var arr = new Uint32Array(buf);
-    for (var i = 0; i < len; i++)
-      arr[i] = HEAP32[(str as any >> 2) + i];
-
-    var val = state.stringify(arr);
-
-    state.atoms.push(val, ptr);
+    return state.atoms.push(val, undefined);
   },
 
   JS_AtomToString(ptr, ctx, atom) {
@@ -543,73 +585,74 @@ var QuickJSPlugin: PluginType = {
     state.atoms.ref(v, -1, undefined);
   },
 
-  JS_DupAtom(ptr, ctx, v) {
+  JS_DupAtom(ctx, v) {
     var context = state.getContext(ctx);
-    state.atoms.ref(v, 1, ptr);
+    state.atoms.ref(v, 1, undefined);
+    return v;
   },
 
-  JSB_ATOM_constructor(ptr) {
-    state.atoms.push('constructor', ptr);
+  JSB_ATOM_constructor() {
+    return state.atoms.push('constructor', undefined);
   },
 
-  JSB_ATOM_Error(ptr) {
-    state.atoms.push('Error', ptr);
+  JSB_ATOM_Error() {
+    return state.atoms.push('Error', undefined);
   },
 
-  JSB_ATOM_fileName(ptr) {
-    state.atoms.push('fileName', ptr);
+  JSB_ATOM_fileName() {
+    return state.atoms.push('fileName', undefined);
   },
 
-  JSB_ATOM_Function(ptr) {
-    state.atoms.push('Function', ptr);
+  JSB_ATOM_Function() {
+    return state.atoms.push('Function', undefined);
   },
 
-  JSB_ATOM_length(ptr) {
-    state.atoms.push('length', ptr);
+  JSB_ATOM_length() {
+    return state.atoms.push('length', undefined);
   },
 
-  JSB_ATOM_lineNumber(ptr) {
-    state.atoms.push('lineNumber', ptr);
+  JSB_ATOM_lineNumber() {
+    return state.atoms.push('lineNumber', undefined);
   },
 
-  JSB_ATOM_message(ptr) {
-    state.atoms.push('message', ptr);
+  JSB_ATOM_message() {
+    return state.atoms.push('message', undefined);
   },
 
-  JSB_ATOM_name(ptr) {
-    state.atoms.push('name', ptr);
+  JSB_ATOM_name() {
+    return state.atoms.push('name', undefined);
   },
 
-  JSB_ATOM_Number(ptr) {
-    state.atoms.push('Number', ptr);
+  JSB_ATOM_Number() {
+    return state.atoms.push('Number', undefined);
   },
 
-  JSB_ATOM_prototype(ptr) {
-    state.atoms.push('prototype', ptr);
+  JSB_ATOM_prototype() {
+    return state.atoms.push('prototype', undefined);
   },
 
-  JSB_ATOM_Proxy(ptr) {
-    state.atoms.push('Proxy', ptr);
+  JSB_ATOM_Proxy() {
+    return state.atoms.push('Proxy', undefined);
   },
 
-  JSB_ATOM_stack(ptr) {
-    state.atoms.push('stack', ptr);
+  JSB_ATOM_stack() {
+    return state.atoms.push('stack', undefined);
   },
 
-  JSB_ATOM_String(ptr) {
-    state.atoms.push('String', ptr);
+  JSB_ATOM_String() {
+    return state.atoms.push('String', undefined);
   },
 
-  JSB_ATOM_Object(ptr) {
-    state.atoms.push('Object', ptr);
+  JSB_ATOM_Object() {
+    return state.atoms.push('Object', undefined);
   },
 
-  JSB_ATOM_Operators(ptr) {
-    state.atoms.push('Operators', ptr);
+  JSB_ATOM_Operators() {
+    return state.atoms.push('Operators', undefined);
   },
 
-  JSB_ATOM_Symbol_operatorSet(ptr) {
-    state.atoms.push('operatorSet', ptr);
+  JSB_ATOM_Symbol_operatorSet() {
+    return state.atoms.push('operatorSet', undefined);
   },
 
   // #endregion
@@ -648,7 +691,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ParseJSON(ptr, ctx, buf, buf_len, filename) {
     var context = state.getContext(ctx);
-    var str = state.stringifyBuffer(buf as any, buf_len);
+    var str = state.UTF8ArrayToString(buf as any, buf_len);
     var res = JSON.parse(str);
     context.objects.push(res, ptr);
   },
@@ -706,7 +749,7 @@ var QuickJSPlugin: PluginType = {
   JS_NewStringLen(ptr, ctx, str, len) {
     var context = state.getContext(ctx);
 
-    var val = state.stringifyBuffer(str as any, len);
+    var val = state.UTF8ArrayToString(str as any, len);
 
     context.objects.push(val, ptr);
   },
@@ -721,34 +764,46 @@ var QuickJSPlugin: PluginType = {
 
   // #region Bridge
 
-  JSB_NewCFunction(ctx, func, atom, length, cproto, magic) {
+  JSB_NewCFunction(ret, ctx, func, atom, length, cproto, magic) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var fn = function () { };
+    context.objects.push(fn, ret);
   },
 
-  JSB_NewCFunctionMagic(ctx, func, atom, length, cproto, magic) {
+  JSB_NewCFunctionMagic(ret, ctx, func, atom, length, cproto, magic) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var fn = function () { };
+    context.objects.push(fn, ret);
   },
 
-  jsb_new_bridge_object(ctx, proto, object_id) {
+  jsb_new_bridge_object(ret, ctx, proto, object_id) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var res = {};
+    context.objects.push(res, ret);
   },
 
-  jsb_new_bridge_value(ctx, proto, size) {
+  jsb_new_bridge_value(ret, ctx, proto, size) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var res = {};
+    context.objects.push(res, ret);
   },
 
-  JSB_NewBridgeClassObject(ctx, new_target, object_id) {
+  JSB_NewBridgeClassObject(ret, ctx, new_target, object_id) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var res = {};
+    context.objects.push(res, ret);
   },
 
-  JSB_NewBridgeClassValue(ctx, new_target, size) {
+  JSB_NewBridgeClassValue(ret, ctx, new_target, size) {
+    var context = state.getContext(ctx);
     // TODO: Priority
-    return 0;
+    var res = {};
+    context.objects.push(res, ret);
   },
 
   JSB_GetBridgeClassID() {
@@ -756,14 +811,18 @@ var QuickJSPlugin: PluginType = {
     return 0;
   },
 
-  jsb_construct_bridge_object(ctx, proto, object_id) {
-    // TODO: priority
-    return 0;
+  jsb_construct_bridge_object(ret, ctx, proto, object_id) {
+    var context = state.getContext(ctx);
+    // TODO: Priority
+    var res = {};
+    context.objects.push(res, ret);
   },
 
-  jsb_crossbind_constructor(ctx, new_target) {
+  jsb_crossbind_constructor(ret, ctx, new_target) {
+    var context = state.getContext(ctx);
     // TODO: I have no idea
-    return 0;
+    var res = function () { };
+    context.objects.push(res, ret);
   },
 
   // #endregion
@@ -772,7 +831,7 @@ var QuickJSPlugin: PluginType = {
 
   JSB_ThrowError(ctx, buf, buf_len) {
     // TODO:
-    var str = state.stringifyBuffer(buf as any, buf_len);
+    var str = state.UTF8ArrayToString(buf as any, buf_len);
     console.error(str);
 
     return -1;
@@ -811,7 +870,7 @@ var QuickJSPlugin: PluginType = {
   // #region Low level Set
 
   js_strndup(ctx, s, n) {
-    var str = state.stringifyBuffer(s as any, n);
+    var str = state.UTF8ArrayToString(s as any, n);
 
     var [buffer] = state.bufferify(str);
     return buffer as IntPtr;
@@ -1056,7 +1115,7 @@ var QuickJSPlugin: PluginType = {
 
   // #region Misc features
 
-  JS_NewPromiseCapability(ptr, ctx, resolving_funcs) {
+  JS_NewPromiseCapability(ret, ctx, resolving_funcs) {
     // TODO
     return 0;
   },
@@ -1073,7 +1132,7 @@ var QuickJSPlugin: PluginType = {
     // TODO:
   },
 
-  JS_GetImportMeta(ctx, m) {
+  JS_GetImportMeta(ret, ctx, m) {
     // TODO:
     return 0;
   },
