@@ -5,7 +5,7 @@
 var QuickJSPlugin = {
     $state__postset: 'state.atoms = state.createHeap(true);',
     $state: {
-        createHeap(isAtom) {
+        createHeap: function (isAtom) {
             var getTag = function (object) {
                 if (object === undefined)
                     return 3 /* Tags.JS_TAG_UNDEFINED */;
@@ -28,10 +28,10 @@ var QuickJSPlugin = {
                 return -1 /* Tags.JS_TAG_OBJECT */;
             };
             var record = {};
-            const res = {
-                record,
+            var res = {
+                record: record,
                 lastId: 1,
-                push(object, ptr) {
+                push: function (object, ptr) {
                     if (typeof object === 'undefined')
                         return 0;
                     var id = res.lastId++;
@@ -43,15 +43,15 @@ var QuickJSPlugin = {
                     res.refIndex(id, 1, ptr);
                     return id;
                 },
-                get(id) {
+                get: function (id) {
                     var ho = record[id];
                     return ho.value;
                 },
-                ref(obj, diff, ptr) {
+                ref: function (obj, diff, ptr) {
                     var id = HEAP32[obj >> 2];
                     return res.refIndex(id, diff, ptr);
                 },
-                refIndex(id, diff, ptr) {
+                refIndex: function (id, diff, ptr) {
                     var ho = record[id];
                     ho.refCount += diff;
                     console.assert(ho.refCount >= 0);
@@ -68,15 +68,14 @@ var QuickJSPlugin = {
             };
             return res;
         },
-        stringify(arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
-        bufferify(arg) {
-            var returnStr = "bla";
-            var bufferSize = lengthBytesUTF8(returnStr) + 1;
+        stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
+        bufferify: function (arg) {
+            var bufferSize = lengthBytesUTF8(arg) + 1;
             var buffer = _malloc(bufferSize);
-            stringToUTF8(returnStr, buffer, bufferSize);
+            stringToUTF8(arg, buffer, bufferSize);
             return [buffer, bufferSize];
         },
-        stringifyBuffer(buffer, bufferLength) {
+        stringifyBuffer: function (buffer, bufferLength) {
             var buf = new ArrayBuffer(bufferLength);
             var arr = new Uint32Array(buf);
             for (var i = 0; i < bufferLength; i++)
@@ -84,28 +83,28 @@ var QuickJSPlugin = {
             var val = state.stringify(arr);
             return val;
         },
-        dynCall() { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
+        dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
         runtimes: {},
         contexts: {},
         lastRuntimeId: 1,
         lastContextId: 1,
-        getRuntime(rt) {
+        getRuntime: function (rt) {
             var rtId = HEAP32[rt >> 2];
             return state.runtimes[rtId];
         },
-        getContext(ctx) {
+        getContext: function (ctx) {
             var ctxId = HEAP32[ctx >> 2];
             return state.contexts[ctxId];
         },
     },
-    JSB_Init() {
+    JSB_Init: function () {
         return 10 /* Constants.CS_JSB_VERSION */;
     },
-    JSB_NewRuntime(ptr, finalizer) {
+    JSB_NewRuntime: function (ptr, finalizer) {
         console.log(finalizer);
         var id = state.lastRuntimeId++;
         state.runtimes[id] = {
-            id,
+            id: id,
             contexts: {},
         };
         HEAP32[ptr >> 2] = id;
@@ -115,21 +114,21 @@ var QuickJSPlugin = {
      * @param rtId
      * @returns
      */
-    JSB_GetRuntimeOpaque(rtId) {
+    JSB_GetRuntimeOpaque: function (rtId) {
         return state.getRuntime(rtId).opaque;
     },
-    JSB_SetRuntimeOpaque(rtId, opaque) {
+    JSB_SetRuntimeOpaque: function (rtId, opaque) {
         state.getRuntime(rtId).opaque = opaque;
     },
-    JS_GetContextOpaque(ctx) {
+    JS_GetContextOpaque: function (ctx) {
         return state.getContext(ctx).opaque;
     },
-    JS_SetContextOpaque(ctx, opaque) {
+    JS_SetContextOpaque: function (ctx, opaque) {
         state.getContext(ctx).opaque = opaque;
     },
-    JSB_FreeRuntime(rtId) {
+    JSB_FreeRuntime: function (rtId) {
         var runtime = state.getRuntime(rtId);
-        for (const key in runtime.contexts) {
+        for (var key in runtime.contexts) {
             if (Object.hasOwnProperty.call(runtime.contexts, key)) {
                 state.contexts[key] = undefined;
             }
@@ -137,11 +136,11 @@ var QuickJSPlugin = {
         state.runtimes[runtime.id] = undefined;
         return 1;
     },
-    JS_GetRuntime(ptr, ctxId) {
+    JS_GetRuntime: function (ptr, ctxId) {
         var context = state.getContext(ctxId);
         HEAP32[ptr >> 2] = context.runtimeId;
     },
-    JS_NewContext(ptr, rtId) {
+    JS_NewContext: function (ptr, rtId) {
         var id = state.lastContextId++;
         var runtime = state.getRuntime(rtId);
         var iframe = document.createElement('iframe');
@@ -157,25 +156,25 @@ var QuickJSPlugin = {
         };
         var objects = state.createHeap(false);
         var context = {
-            id,
+            id: id,
             runtimeId: rtId,
-            iframe,
-            window,
-            execute,
-            evaluate,
-            objects,
+            iframe: iframe,
+            window: window,
+            execute: execute,
+            evaluate: evaluate,
+            objects: objects,
         };
         runtime.contexts[id] = context;
         state.contexts[id] = context;
         return id;
     },
-    JS_FreeContext(ctxId) {
+    JS_FreeContext: function (ctxId) {
         var context = state.getContext(ctxId);
         var runtime = state.runtimes[context.runtimeId];
         runtime.contexts[context.id] = undefined;
         state.contexts[context.id] = undefined;
     },
-    JS_GetGlobalObject(returnValue, ctxId) {
+    JS_GetGlobalObject: function (returnValue, ctxId) {
         var context = state.getContext(ctxId);
         if (!context.globalId) {
             context.objects.push(context.window, returnValue);
@@ -184,47 +183,47 @@ var QuickJSPlugin = {
             context.objects.refIndex(context.globalId, 1, returnValue);
         }
     },
-    JS_Eval(ptr, ctx, input, input_len, filename, eval_flags) {
+    JS_Eval: function (ptr, ctx, input, input_len, filename, eval_flags) {
         var context = state.getContext(ctx);
         var code = state.stringifyBuffer(input, input_len);
         var res = context.evaluate(code);
         context.objects.push(res, ptr);
     },
-    JS_IsInstanceOf(ctxId, val, obj) {
+    JS_IsInstanceOf: function (ctxId, val, obj) {
         var context = state.getContext(ctxId);
         var valVal = context.objects.get(val);
         var ctorVal = context.objects.get(obj);
         return !!(valVal instanceof ctorVal);
     },
-    JS_GetException(ptr, ctx) {
+    JS_GetException: function (ptr, ctx) {
         var context = state.getContext(ctx);
         context.objects.push(context.lastException, ptr);
     },
-    JSB_FreeValue(ctx, v) {
+    JSB_FreeValue: function (ctx, v) {
         var context = state.getContext(ctx);
         context.objects.ref(v, -1, undefined);
     },
-    JSB_FreeValueRT(ctx, v) {
+    JSB_FreeValueRT: function (ctx, v) {
         // TODO:
     },
-    JSB_DupValue(ptr, ctx, v) {
+    JSB_DupValue: function (ptr, ctx, v) {
         var context = state.getContext(ctx);
         context.objects.ref(v, 1, ptr);
     },
-    JS_RunGC(rt) {
+    JS_RunGC: function (rt) {
         // TODO: handle gracefully
         return 0;
     },
-    JS_ComputeMemoryUsage(rt, s) {
+    JS_ComputeMemoryUsage: function (rt, s) {
         // TODO: https://blog.unity.com/technology/unity-webgl-memory-the-unity-heap
     },
-    JS_GetPropertyUint32(ptr, ctxId, val, index) {
+    JS_GetPropertyUint32: function (ptr, ctxId, val, index) {
         var context = state.getContext(ctxId);
         var obj = context.objects.get(val);
         var res = obj[index];
         context.objects.push(res, ptr);
     },
-    JS_GetPropertyInternal(ptr, ctxId, val, prop, receiver, throwRefError) {
+    JS_GetPropertyInternal: function (ptr, ctxId, val, prop, receiver, throwRefError) {
         var context = state.getContext(ctxId);
         var valObj = context.objects.get(val);
         var receiverObj = context.objects.get(receiver);
@@ -232,144 +231,173 @@ var QuickJSPlugin = {
         var res = Reflect.get(valObj, propStr, receiverObj);
         context.objects.push(res, ptr);
     },
-    JS_GetPropertyStr(ptr, ctxId, val, prop) {
+    JS_GetPropertyStr: function (ptr, ctxId, val, prop) {
         var context = state.getContext(ctxId);
         var valObj = context.objects.get(val);
         var propStr = state.stringify(prop);
         var res = Reflect.get(valObj, propStr);
         context.objects.push(res, ptr);
     },
-    JS_Invoke(ptr, ctx, this_obj, prop, argc, argv) {
+    JS_Invoke: function (ptr, ctx, this_obj, prop, argc, argv) {
         var context = state.getContext(ctx);
-        const arr = new Array(argc);
+        var arr = new Array(argc);
         for (var i = 0; i < argc; i++)
             arr[i] = HEAP32[(argv >> 2) + i];
-        const propVal = state.atoms.get(prop);
-        const thisVal = context.objects.get(this_obj);
-        const func = Reflect.get(thisVal, propVal);
-        const args = arr.map(context.objects.get);
-        const val = func.apply(thisVal, args);
+        var propVal = state.atoms.get(prop);
+        var thisVal = context.objects.get(this_obj);
+        var func = Reflect.get(thisVal, propVal);
+        var args = arr.map(context.objects.get);
+        var val = func.apply(thisVal, args);
         context.objects.push(val, ptr);
     },
-    JS_Call(ptr, ctx, func_obj, this_obj, argc, argv) {
+    JS_Call: function (ptr, ctx, func_obj, this_obj, argc, argv) {
         var context = state.getContext(ctx);
-        const arr = new Array(argc);
+        var arr = new Array(argc);
         for (var i = 0; i < argc; i++)
             arr[i] = HEAP32[(argv >> 2) + i];
-        const func = context.objects.get(func_obj);
-        const thisVal = context.objects.get(this_obj);
-        const args = arr.map(context.objects.get);
-        const val = func.apply(thisVal, args);
+        var func = context.objects.get(func_obj);
+        var thisVal = context.objects.get(this_obj);
+        var args = arr.map(context.objects.get);
+        var val = func.apply(thisVal, args);
         context.objects.push(val, ptr);
     },
-    JS_CallConstructor(ptr, ctx, func_obj, argc, argv) {
+    JS_CallConstructor: function (ptr, ctx, func_obj, argc, argv) {
         var context = state.getContext(ctx);
-        const arr = new Array(argc);
+        var arr = new Array(argc);
         for (var i = 0; i < argc; i++)
             arr[i] = HEAP32[(argv >> 2) + i];
-        const func = context.objects.get(func_obj);
-        const args = arr.map(context.objects.get);
-        const val = Reflect.construct(func, args);
+        var func = context.objects.get(func_obj);
+        var args = arr.map(context.objects.get);
+        var val = Reflect.construct(func, args);
         context.objects.push(val, ptr);
     },
-    JS_SetConstructor(ctx, ctor, proto) {
+    JS_SetConstructor: function (ctx, ctor, proto) {
         var context = state.getContext(ctx);
         var ctorVal = context.objects.get(ctor);
         var protoVal = context.objects.get(proto);
         ctorVal.prototype = protoVal;
     },
-    JS_SetPrototype(ctx, obj, proto) {
+    JS_SetPrototype: function (ctx, obj, proto) {
         var context = state.getContext(ctx);
         var objVal = context.objects.get(obj);
         var protoVal = context.objects.get(proto);
         Reflect.setPrototypeOf(objVal, protoVal);
         return true;
     },
-    JS_DefineProperty(ctx, this_obj, prop, val, getter, setter, flags) {
+    JS_DefineProperty: function (ctx, this_obj, prop, val, getter, setter, flags) {
         var context = state.getContext(ctx);
-        const thisVal = context.objects.get(this_obj);
-        const getterVal = context.objects.get(getter);
-        const setterVal = context.objects.get(setter);
-        const valVal = context.objects.get(val);
-        const propVal = state.atoms.get(prop);
-        const configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
-        const hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
-        const enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
-        const hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
-        const writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
-        const hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
-        Object.defineProperty(thisVal, propVal, Object.assign(Object.assign(Object.assign({ get: getterVal, set: setterVal, value: valVal }, hasConfigurable && { configurable }), hasEnumerable && { enumerable }), hasWritable && { writable }));
+        var thisVal = context.objects.get(this_obj);
+        var getterVal = context.objects.get(getter);
+        var setterVal = context.objects.get(setter);
+        var valVal = context.objects.get(val);
+        var propVal = state.atoms.get(prop);
+        var configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
+        var hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
+        var enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
+        var hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
+        var writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
+        var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
+        var opts = {
+            get: getterVal,
+            set: setterVal,
+            value: valVal,
+        };
+        if (hasConfigurable)
+            opts.configurable = configurable;
+        if (hasEnumerable)
+            opts.enumerable = enumerable;
+        if (hasWritable)
+            opts.writable = writable;
+        Object.defineProperty(thisVal, propVal, opts);
         return 1;
     },
-    JS_DefinePropertyValue(ctx, this_obj, prop, val, flags) {
+    JS_DefinePropertyValue: function (ctx, this_obj, prop, val, flags) {
         var context = state.getContext(ctx);
-        const thisVal = context.objects.get(this_obj);
-        const valVal = context.objects.get(val);
-        const propVal = state.atoms.get(prop);
-        const configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
-        const hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
-        const enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
-        const hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
-        const writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
-        const hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
-        Object.defineProperty(thisVal, propVal, Object.assign(Object.assign(Object.assign({ value: valVal }, hasConfigurable && { configurable }), hasEnumerable && { enumerable }), hasWritable && { writable }));
+        var thisVal = context.objects.get(this_obj);
+        var valVal = context.objects.get(val);
+        var propVal = state.atoms.get(prop);
+        var configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
+        var hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
+        var enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
+        var hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
+        var writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
+        var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
+        var opts = {
+            value: valVal,
+        };
+        if (hasConfigurable)
+            opts.configurable = configurable;
+        if (hasEnumerable)
+            opts.enumerable = enumerable;
+        if (hasWritable)
+            opts.writable = writable;
+        Object.defineProperty(thisVal, propVal, opts);
         return 1;
     },
-    JS_HasProperty(ctx, this_obj, prop) {
+    JS_HasProperty: function (ctx, this_obj, prop) {
         var context = state.getContext(ctx);
         var thisVal = context.objects.get(this_obj);
         var propVal = state.atoms.get(prop);
         var res = Reflect.has(thisVal, propVal);
         return !!res;
     },
-    JS_SetPropertyInternal(ctx, this_obj, prop, val, flags) {
+    JS_SetPropertyInternal: function (ctx, this_obj, prop, val, flags) {
         // TODO: throw error if property exists
         var context = state.getContext(ctx);
-        const thisVal = context.objects.get(this_obj);
-        const valVal = context.objects.get(val);
-        const propVal = state.atoms.get(prop);
-        const configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
-        const hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
-        const enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
-        const hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
-        const writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
-        const hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
-        Object.defineProperty(thisVal, propVal, Object.assign(Object.assign(Object.assign({ value: valVal }, hasConfigurable && { configurable }), hasEnumerable && { enumerable }), hasWritable && { writable }));
+        var thisVal = context.objects.get(this_obj);
+        var valVal = context.objects.get(val);
+        var propVal = state.atoms.get(prop);
+        var configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
+        var hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
+        var enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
+        var hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
+        var writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
+        var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
+        var opts = {
+            value: valVal,
+        };
+        if (hasConfigurable)
+            opts.configurable = configurable;
+        if (hasEnumerable)
+            opts.enumerable = enumerable;
+        if (hasWritable)
+            opts.writable = writable;
+        Object.defineProperty(thisVal, propVal, opts);
         return 1;
     },
-    JS_SetPropertyUint32(ctx, this_obj, idx, val) {
+    JS_SetPropertyUint32: function (ctx, this_obj, idx, val) {
         // TODO: throw error if property exists
         var context = state.getContext(ctx);
-        const thisVal = context.objects.get(this_obj);
-        const valVal = context.objects.get(val);
-        const propVal = idx;
+        var thisVal = context.objects.get(this_obj);
+        var valVal = context.objects.get(val);
+        var propVal = idx;
         Reflect.set(thisVal, propVal, valVal);
         return 1;
     },
-    jsb_get_payload_header(ctx, val) {
+    jsb_get_payload_header: function (ctx, val) {
         // TODO:
         return 0;
     },
-    JS_ToCStringLen2(ctx, len, val, cesu8) {
+    JS_ToCStringLen2: function (ctx, len, val, cesu8) {
         var context = state.getContext(ctx);
         var str = context.objects.get(val);
-        var [buffer, length] = state.bufferify(str);
+        var _a = state.bufferify(str), buffer = _a[0], length = _a[1];
         HEAP32[(len >> 2)] = length;
         return buffer;
     },
-    JS_FreeCString(ctx, ptr) {
+    JS_FreeCString: function (ctx, ptr) {
         // TODO:
     },
-    js_free(ctx, ptr) {
+    js_free: function (ctx, ptr) {
         // TODO:
     },
-    JSB_FreePayload(ctx, val) {
+    JSB_FreePayload: function (ctx, val) {
         // TODO:
         return 0;
     },
-    JS_GetArrayBuffer(ctx, psize, obj) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(obj);
+    JS_GetArrayBuffer: function (ctx, psize, obj) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(obj);
         if (value instanceof ArrayBuffer) {
             HEAP32[psize >> 2] = value.byteLength;
             return value;
@@ -377,7 +405,7 @@ var QuickJSPlugin = {
         return 0;
     },
     // #region Atoms
-    JS_NewAtomLen(ptr, ctx, str, len) {
+    JS_NewAtomLen: function (ptr, ctx, str, len) {
         var context = state.getContext(ctx);
         var buf = new ArrayBuffer(len);
         var arr = new Uint32Array(buf);
@@ -386,101 +414,101 @@ var QuickJSPlugin = {
         var val = state.stringify(arr);
         state.atoms.push(val, ptr);
     },
-    JS_AtomToString(ptr, ctx, atom) {
+    JS_AtomToString: function (ptr, ctx, atom) {
         var context = state.getContext(ctx);
         var str = state.atoms.get(atom);
         context.objects.push(str, ptr);
     },
-    JS_FreeAtom(ctx, v) {
+    JS_FreeAtom: function (ctx, v) {
         var context = state.getContext(ctx);
         state.atoms.ref(v, -1, undefined);
     },
-    JS_DupAtom(ptr, ctx, v) {
+    JS_DupAtom: function (ptr, ctx, v) {
         var context = state.getContext(ctx);
         state.atoms.ref(v, 1, ptr);
     },
-    JSB_ATOM_constructor(ptr) {
+    JSB_ATOM_constructor: function (ptr) {
         state.atoms.push('constructor', ptr);
     },
-    JSB_ATOM_Error(ptr) {
+    JSB_ATOM_Error: function (ptr) {
         state.atoms.push('Error', ptr);
     },
-    JSB_ATOM_fileName(ptr) {
+    JSB_ATOM_fileName: function (ptr) {
         state.atoms.push('fileName', ptr);
     },
-    JSB_ATOM_Function(ptr) {
+    JSB_ATOM_Function: function (ptr) {
         state.atoms.push('Function', ptr);
     },
-    JSB_ATOM_length(ptr) {
+    JSB_ATOM_length: function (ptr) {
         state.atoms.push('length', ptr);
     },
-    JSB_ATOM_lineNumber(ptr) {
+    JSB_ATOM_lineNumber: function (ptr) {
         state.atoms.push('lineNumber', ptr);
     },
-    JSB_ATOM_message(ptr) {
+    JSB_ATOM_message: function (ptr) {
         state.atoms.push('message', ptr);
     },
-    JSB_ATOM_name(ptr) {
+    JSB_ATOM_name: function (ptr) {
         state.atoms.push('name', ptr);
     },
-    JSB_ATOM_Number(ptr) {
+    JSB_ATOM_Number: function (ptr) {
         state.atoms.push('Number', ptr);
     },
-    JSB_ATOM_prototype(ptr) {
+    JSB_ATOM_prototype: function (ptr) {
         state.atoms.push('prototype', ptr);
     },
-    JSB_ATOM_Proxy(ptr) {
+    JSB_ATOM_Proxy: function (ptr) {
         state.atoms.push('Proxy', ptr);
     },
-    JSB_ATOM_stack(ptr) {
+    JSB_ATOM_stack: function (ptr) {
         state.atoms.push('stack', ptr);
     },
-    JSB_ATOM_String(ptr) {
+    JSB_ATOM_String: function (ptr) {
         state.atoms.push('String', ptr);
     },
-    JSB_ATOM_Object(ptr) {
+    JSB_ATOM_Object: function (ptr) {
         state.atoms.push('Object', ptr);
     },
-    JSB_ATOM_Operators(ptr) {
+    JSB_ATOM_Operators: function (ptr) {
         state.atoms.push('Operators', ptr);
     },
-    JSB_ATOM_Symbol_operatorSet(ptr) {
+    JSB_ATOM_Symbol_operatorSet: function (ptr) {
         state.atoms.push('operatorSet', ptr);
     },
     // #endregion
     // #region Is
-    JS_IsArray(ctx, val) {
+    JS_IsArray: function (ctx, val) {
         var context = state.getContext(ctx);
         var valVal = context.objects.get(val);
         var res = Array.isArray(valVal);
         return !!res;
     },
-    JS_IsConstructor(ctx, val) {
+    JS_IsConstructor: function (ctx, val) {
         var context = state.getContext(ctx);
         var obj = context.objects.get(val);
         var res = !!obj.prototype && !!obj.prototype.constructor.name;
         return !!res;
     },
-    JS_IsError(ctx, val) {
+    JS_IsError: function (ctx, val) {
         var context = state.getContext(ctx);
         var valVal = context.objects.get(val);
         var res = valVal instanceof Error;
         return !!res;
     },
-    JS_IsFunction(ctx, val) {
+    JS_IsFunction: function (ctx, val) {
         var context = state.getContext(ctx);
         var valVal = context.objects.get(val);
         var res = typeof valVal === 'function';
         return !!res;
     },
     // #endregion
-    JS_ParseJSON(ptr, ctx, buf, buf_len, filename) {
+    JS_ParseJSON: function (ptr, ctx, buf, buf_len, filename) {
         var context = state.getContext(ctx);
         var str = state.stringifyBuffer(buf, buf_len);
         var res = JSON.parse(str);
         context.objects.push(res, ptr);
     },
-    JS_JSONStringify(ptr, ctx, obj, replacer, space) {
+    JS_JSONStringify: function (ptr, ctx, obj, replacer, space) {
         var context = state.getContext(ctx);
         var objVal = context.objects.get(obj);
         var rpVal = context.objects.get(replacer);
@@ -489,318 +517,318 @@ var QuickJSPlugin = {
         context.objects.push(res, ptr);
     },
     // #region New
-    JS_NewArray(ptr, ctx) {
+    JS_NewArray: function (ptr, ctx) {
         var context = state.getContext(ctx);
         var res = [];
         context.objects.push(res, ptr);
     },
-    JS_NewArrayBufferCopy(ptr, ctx, buf, len) {
+    JS_NewArrayBufferCopy: function (ptr, ctx, buf, len) {
         var context = state.getContext(ctx);
         var nptr = _malloc(len);
         var res = new Uint8Array(HEAPU8.buffer, nptr, len);
         res.set(new Uint8Array(buf));
         context.objects.push(res, ptr);
     },
-    JSB_NewFloat64(ptr, ctx, d) {
+    JSB_NewFloat64: function (ptr, ctx, d) {
         var context = state.getContext(ctx);
         context.objects.push(d, ptr);
     },
-    JSB_NewInt64(ptr, ctx, d) {
+    JSB_NewInt64: function (ptr, ctx, d) {
         var context = state.getContext(ctx);
         context.objects.push(d, ptr);
     },
-    JS_NewObject(ptr, ctx) {
+    JS_NewObject: function (ptr, ctx) {
         var context = state.getContext(ctx);
         var res = {};
         context.objects.push(res, ptr);
     },
-    JS_NewString(ptr, ctx, str) {
+    JS_NewString: function (ptr, ctx, str) {
         var context = state.getContext(ctx);
         var res = state.stringify(str);
         context.objects.push(res, ptr);
     },
-    JS_NewStringLen(ptr, ctx, str, len) {
+    JS_NewStringLen: function (ptr, ctx, str, len) {
         var context = state.getContext(ctx);
         var val = state.stringifyBuffer(str, len);
         context.objects.push(val, ptr);
     },
-    JSB_NewEmptyString(ptr, ctx) {
+    JSB_NewEmptyString: function (ptr, ctx) {
         var context = state.getContext(ctx);
         var res = "";
         context.objects.push(res, ptr);
     },
     // #endregion
     // #region Bridge
-    JSB_NewCFunction(ctx, func, atom, length, cproto, magic) {
+    JSB_NewCFunction: function (ctx, func, atom, length, cproto, magic) {
         // TODO: Priority
         return 0;
     },
-    JSB_NewCFunctionMagic(ctx, func, atom, length, cproto, magic) {
+    JSB_NewCFunctionMagic: function (ctx, func, atom, length, cproto, magic) {
         // TODO: Priority
         return 0;
     },
-    jsb_new_bridge_object(ctx, proto, object_id) {
+    jsb_new_bridge_object: function (ctx, proto, object_id) {
         // TODO: Priority
         return 0;
     },
-    jsb_new_bridge_value(ctx, proto, size) {
+    jsb_new_bridge_value: function (ctx, proto, size) {
         // TODO: Priority
         return 0;
     },
-    JSB_NewBridgeClassObject(ctx, new_target, object_id) {
+    JSB_NewBridgeClassObject: function (ctx, new_target, object_id) {
         // TODO: Priority
         return 0;
     },
-    JSB_NewBridgeClassValue(ctx, new_target, size) {
+    JSB_NewBridgeClassValue: function (ctx, new_target, size) {
         // TODO: Priority
         return 0;
     },
-    JSB_GetBridgeClassID() {
+    JSB_GetBridgeClassID: function () {
         // TODO: priority
         return 0;
     },
-    jsb_construct_bridge_object(ctx, proto, object_id) {
+    jsb_construct_bridge_object: function (ctx, proto, object_id) {
         // TODO: priority
         return 0;
     },
-    jsb_crossbind_constructor(ctx, new_target) {
+    jsb_crossbind_constructor: function (ctx, new_target) {
         // TODO: I have no idea
         return 0;
     },
     // #endregion
     // #region Errors
-    JSB_ThrowError(ctx, buf, buf_len) {
+    JSB_ThrowError: function (ctx, buf, buf_len) {
         // TODO:
         var str = state.stringifyBuffer(buf, buf_len);
         console.error(str);
         return -1;
     },
-    JSB_ThrowTypeError(ctx, msg) {
+    JSB_ThrowTypeError: function (ctx, msg) {
         // TODO:
         console.error('Type error');
         return -1;
     },
-    JSB_ThrowRangeError(ctx, msg) {
+    JSB_ThrowRangeError: function (ctx, msg) {
         // TODO:
         console.error('Range error');
         return -1;
     },
-    JSB_ThrowInternalError(ctx, msg) {
+    JSB_ThrowInternalError: function (ctx, msg) {
         // TODO:
         console.error('Internal error');
         return -1;
     },
-    JSB_ThrowReferenceError(ctx, msg) {
+    JSB_ThrowReferenceError: function (ctx, msg) {
         // TODO:
         console.error('Reference error');
         return -1;
     },
     // #endregion
     // #region Low level Set
-    js_strndup(ctx, s, n) {
+    js_strndup: function (ctx, s, n) {
         var str = state.stringifyBuffer(s, n);
-        var [buffer] = state.bufferify(str);
+        var buffer = state.bufferify(str)[0];
         return buffer;
     },
-    jsb_get_bytes(ctx, val, n, v0) {
+    jsb_get_bytes: function (ctx, val, n, v0) {
         // TODO:
         return 0;
     },
-    jsb_get_floats(ctx, val, n, v0) {
+    jsb_get_floats: function (ctx, val, n, v0) {
         // TODO:
         return 0;
     },
-    jsb_set_byte_4(ctx, val, v0, v1, v2, v3) {
+    jsb_set_byte_4: function (ctx, val, v0, v1, v2, v3) {
         // TODO:
         return 0;
     },
-    jsb_set_bytes(ctx, val, n, v0) {
+    jsb_set_bytes: function (ctx, val, n, v0) {
         // TODO:
         return 0;
     },
-    jsb_set_float_2(ctx, val, v0, v1) {
+    jsb_set_float_2: function (ctx, val, v0, v1) {
         // TODO:
         return 0;
     },
-    jsb_set_float_3(ctx, val, v0, v1, v2) {
+    jsb_set_float_3: function (ctx, val, v0, v1, v2) {
         // TODO:
         return 0;
     },
-    jsb_set_float_4(ctx, val, v0, v1, v2, v3) {
+    jsb_set_float_4: function (ctx, val, v0, v1, v2, v3) {
         // TODO:
         return 0;
     },
-    jsb_set_floats(ctx, val, n, v0) {
+    jsb_set_floats: function (ctx, val, n, v0) {
         // TODO:
         return 0;
     },
-    jsb_set_int_1(ctx, val, v0) {
+    jsb_set_int_1: function (ctx, val, v0) {
         // TODO:
         return 0;
     },
-    jsb_set_int_2(ctx, val, v0, v1) {
+    jsb_set_int_2: function (ctx, val, v0, v1) {
         // TODO:
         return 0;
     },
-    jsb_set_int_3(ctx, val, v0, v1, v2) {
+    jsb_set_int_3: function (ctx, val, v0, v1, v2) {
         // TODO:
         return 0;
     },
-    jsb_set_int_4(ctx, val, v0, v1, v2, v3) {
+    jsb_set_int_4: function (ctx, val, v0, v1, v2, v3) {
         // TODO:
         return 0;
     },
     // #endregion
     // #region Low Level Get
-    jsb_get_byte_4(ctx, val, v0, v1, v2, v3) {
+    jsb_get_byte_4: function (ctx, val, v0, v1, v2, v3) {
         return false;
     },
-    jsb_get_float_2(ctx, val, v0, v1) {
+    jsb_get_float_2: function (ctx, val, v0, v1) {
         return false;
     },
-    jsb_get_float_3(ctx, val, v0, v1, v2) {
+    jsb_get_float_3: function (ctx, val, v0, v1, v2) {
         return false;
     },
-    jsb_get_float_4(ctx, val, v0, v1, v2, v3) {
+    jsb_get_float_4: function (ctx, val, v0, v1, v2, v3) {
         return false;
     },
-    jsb_get_int_1(ctx, val, v0) {
+    jsb_get_int_1: function (ctx, val, v0) {
         return false;
     },
-    jsb_get_int_2(ctx, val, v0, v1) {
+    jsb_get_int_2: function (ctx, val, v0, v1) {
         return false;
     },
-    jsb_get_int_3(ctx, val, v0, v1, v2) {
+    jsb_get_int_3: function (ctx, val, v0, v1, v2) {
         return false;
     },
-    jsb_get_int_4(ctx, val, v0, v1, v2, v3) {
+    jsb_get_int_4: function (ctx, val, v0, v1, v2, v3) {
         return false;
     },
     // #endregion
     // #region To
-    JS_ToBigInt64(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JS_ToBigInt64: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number') {
             HEAP32[(pres >> 2)] = 0;
             HEAP32[(pres >> 2) + 1] = value;
             return true;
         }
         if (typeof value === 'bigint') {
-            var bg = (BigInt(2) ** BigInt(32));
+            var bg = BigInt('0x100000000000000000000000000000000');
             HEAP32[(pres >> 2)] = Number(value / bg);
             HEAP32[(pres >> 2) + 1] = Number(value % bg);
             return true;
         }
         return false;
     },
-    JS_ToFloat64(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JS_ToFloat64: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number' || typeof value === 'bigint') {
             HEAPF64[pres >> 3] = Number(value);
             return true;
         }
         return false;
     },
-    JS_ToIndex(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JS_ToIndex: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number') {
             HEAPU32[(pres >> 2)] = 0;
             HEAPU32[(pres >> 2) + 1] = value;
             return true;
         }
         if (typeof value === 'bigint') {
-            var bg = (BigInt(2) ** BigInt(32));
+            var bg = BigInt('0x100000000000000000000000000000000');
             HEAPU32[(pres >> 2)] = Number(value / bg);
             HEAPU32[(pres >> 2) + 1] = Number(value % bg);
             return true;
         }
         return false;
     },
-    JS_ToInt32(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JS_ToInt32: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number' || typeof value === 'bigint') {
             HEAP32[pres >> 2] = Number(value);
             return true;
         }
         return false;
     },
-    JS_ToInt64(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JS_ToInt64: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number') {
             HEAP32[(pres >> 2)] = 0;
             HEAP32[(pres >> 2) + 1] = value;
             return true;
         }
         if (typeof value === 'bigint') {
-            var bg = (BigInt(2) ** BigInt(32));
+            var bg = BigInt('0x100000000000000000000000000000000');
             HEAP32[(pres >> 2)] = Number(value / bg);
             HEAP32[(pres >> 2) + 1] = Number(value % bg);
             return true;
         }
         return false;
     },
-    JSB_ToUint32(ctx, pres, val) {
-        const context = state.getContext(ctx);
-        const value = context.objects.get(val);
+    JSB_ToUint32: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
         if (typeof value === 'number' || typeof value === 'bigint') {
             HEAPU32[pres >> 2] = Number(value);
             return true;
         }
         return false;
     },
-    JS_ToBool(ctx, val) {
+    JS_ToBool: function (ctx, val) {
         var context = state.getContext(ctx);
         var objVal = context.objects.get(val);
         return !!objVal;
     },
     // #endregion
     // #region Bytecode
-    JS_ReadObject(ptr, ctx, buf, buf_len, flags) {
+    JS_ReadObject: function (ptr, ctx, buf, buf_len, flags) {
         console.warn('Bytecode is not supported in WebGL Backend');
     },
-    JS_WriteObject(ctx, psize, obj, flags) {
+    JS_WriteObject: function (ctx, psize, obj, flags) {
         console.warn('Bytecode is not supported in WebGL Backend');
         return 0;
     },
-    JS_EvalFunction(ptr, ctx, fun_obj) {
+    JS_EvalFunction: function (ptr, ctx, fun_obj) {
         console.warn('Bytecode is not supported in WebGL Backend');
     },
     // #endregion
     // #region Misc features
-    JS_NewPromiseCapability(ptr, ctx, resolving_funcs) {
+    JS_NewPromiseCapability: function (ptr, ctx, resolving_funcs) {
         // TODO
         return 0;
     },
-    JS_SetHostPromiseRejectionTracker(rt, cb, opaque) {
+    JS_SetHostPromiseRejectionTracker: function (rt, cb, opaque) {
         // TODO:
     },
-    JS_SetInterruptHandler(rt, cb, opaque) {
+    JS_SetInterruptHandler: function (rt, cb, opaque) {
         // TODO:
     },
-    JS_SetModuleLoaderFunc(rt, module_normalize, module_loader, opaque) {
+    JS_SetModuleLoaderFunc: function (rt, module_normalize, module_loader, opaque) {
         // TODO:
     },
-    JS_GetImportMeta(ctx, m) {
-        // TODO:
-        return 0;
-    },
-    JS_ResolveModule(ctx, obj) {
+    JS_GetImportMeta: function (ctx, m) {
         // TODO:
         return 0;
     },
-    JS_AddIntrinsicOperators(ctx) {
+    JS_ResolveModule: function (ctx, obj) {
+        // TODO:
+        return 0;
+    },
+    JS_AddIntrinsicOperators: function (ctx) {
         console.warn('Operator overloading is not supported in WebGL Backend');
     },
-    JS_ExecutePendingJob(rt, pctx) {
+    JS_ExecutePendingJob: function (rt, pctx) {
         // Automatically handled by browsers
         return false;
     },
-    JS_IsJobPending(rt, pctx) {
+    JS_IsJobPending: function (rt, pctx) {
         // Automatically handled by browsers
         return false;
     },

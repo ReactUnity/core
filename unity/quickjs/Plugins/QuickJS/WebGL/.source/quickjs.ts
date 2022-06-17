@@ -11,7 +11,7 @@ type PluginType = JSApiExternals & {
 var QuickJSPlugin: PluginType = {
   $state__postset: 'state.atoms = state.createHeap(true);',
   $state: {
-    createHeap<T = any>(isAtom: boolean): PluginHeap<T> {
+    createHeap: function <T = any>(isAtom: boolean): PluginHeap<T> {
       var getTag = function (object): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
         if (object === null) return Tags.JS_TAG_NULL;
@@ -76,16 +76,15 @@ var QuickJSPlugin: PluginType = {
       return res;
     },
 
-    stringify(arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
-    bufferify(arg: string) {
-      var returnStr = "bla";
-      var bufferSize = lengthBytesUTF8(returnStr) + 1;
+    stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
+    bufferify: function (arg: string) {
+      var bufferSize = lengthBytesUTF8(arg) + 1;
       var buffer = _malloc(bufferSize);
-      stringToUTF8(returnStr, buffer, bufferSize);
+      stringToUTF8(arg, buffer, bufferSize);
       return [buffer, bufferSize];
     },
 
-    stringifyBuffer(buffer: number | Pointer<number>, bufferLength: number) {
+    stringifyBuffer: function (buffer: number | Pointer<number>, bufferLength: number) {
       var buf = new ArrayBuffer(bufferLength);
       var arr = new Uint32Array(buf);
       for (var i = 0; i < bufferLength; i++)
@@ -94,16 +93,16 @@ var QuickJSPlugin: PluginType = {
       return val;
     },
 
-    dynCall() { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
+    dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
     runtimes: {},
     contexts: {},
     lastRuntimeId: 1,
     lastContextId: 1,
-    getRuntime(rt) {
+    getRuntime: function (rt) {
       var rtId = HEAP32[rt >> 2];
       return state.runtimes[rtId];
     },
-    getContext(ctx) {
+    getContext: function (ctx) {
       var ctxId = HEAP32[ctx >> 2];
       return state.contexts[ctxId];
     },
@@ -377,14 +376,18 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
-    Object.defineProperty(thisVal, propVal, {
+
+    const opts: PropertyDescriptor = {
       get: getterVal,
       set: setterVal,
       value: valVal,
-      ...hasConfigurable && { configurable },
-      ...hasEnumerable && { enumerable },
-      ...hasWritable && { writable },
-    });
+    };
+
+    if (hasConfigurable) opts.configurable = configurable;
+    if (hasEnumerable) opts.enumerable = enumerable;
+    if (hasWritable) opts.writable = writable;
+
+    Object.defineProperty(thisVal, propVal, opts);
 
     return 1;
   },
@@ -403,12 +406,15 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
-    Object.defineProperty(thisVal, propVal, {
+    const opts: PropertyDescriptor = {
       value: valVal,
-      ...hasConfigurable && { configurable },
-      ...hasEnumerable && { enumerable },
-      ...hasWritable && { writable },
-    });
+    };
+
+    if (hasConfigurable) opts.configurable = configurable;
+    if (hasEnumerable) opts.enumerable = enumerable;
+    if (hasWritable) opts.writable = writable;
+
+    Object.defineProperty(thisVal, propVal, opts);
 
     return 1;
   },
@@ -439,12 +445,16 @@ var QuickJSPlugin: PluginType = {
     const writable = !!(flags & JSPropFlags.JS_PROP_WRITABLE);
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
-    Object.defineProperty(thisVal, propVal, {
+
+    const opts: PropertyDescriptor = {
       value: valVal,
-      ...hasConfigurable && { configurable },
-      ...hasEnumerable && { enumerable },
-      ...hasWritable && { writable },
-    });
+    };
+
+    if (hasConfigurable) opts.configurable = configurable;
+    if (hasEnumerable) opts.enumerable = enumerable;
+    if (hasWritable) opts.writable = writable;
+
+    Object.defineProperty(thisVal, propVal, opts);
 
     return 1;
   },
@@ -940,7 +950,7 @@ var QuickJSPlugin: PluginType = {
       return true;
     }
     if (typeof value === 'bigint') {
-      var bg = (BigInt(2) ** BigInt(32));
+      var bg = BigInt('0x100000000000000000000000000000000');
       HEAP32[(pres >> 2)] = Number(value / bg);
       HEAP32[(pres >> 2) + 1] = Number(value % bg);
       return true;
@@ -969,7 +979,7 @@ var QuickJSPlugin: PluginType = {
       return true;
     }
     if (typeof value === 'bigint') {
-      var bg = (BigInt(2) ** BigInt(32));
+      var bg = BigInt('0x100000000000000000000000000000000');
       HEAPU32[(pres >> 2)] = Number(value / bg);
       HEAPU32[(pres >> 2) + 1] = Number(value % bg);
       return true;
@@ -999,7 +1009,7 @@ var QuickJSPlugin: PluginType = {
       return true;
     }
     if (typeof value === 'bigint') {
-      var bg = (BigInt(2) ** BigInt(32));
+      var bg = BigInt('0x100000000000000000000000000000000');
       HEAP32[(pres >> 2)] = Number(value / bg);
       HEAP32[(pres >> 2) + 1] = Number(value % bg);
       return true;
