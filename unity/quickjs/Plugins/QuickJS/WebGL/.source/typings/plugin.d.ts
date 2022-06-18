@@ -6,7 +6,7 @@ declare global {
   export declare type PluginState = {
     stringify: ((ptr: number | Pointer<number>, bufferLength?: number) => string);
     bufferify: ((str: string) => [number, number]);
-    dynCall: ((bytes: any) => string);
+    dynCall: typeof dynCall;
     runtimes: Record<string, PluginRuntime | undefined>;
     contexts: Record<string, PluginContext | undefined>;
     lastRuntimeId: number;
@@ -43,7 +43,10 @@ declare global {
   export declare type PluginHeap<T = any, PtrType = JSValue> = {
     record: Record<string | number, PluginHeapObject>;
     get: ((ref: PtrType) => T);
-    push: ((obj: T, ptr: PtrType) => number);
+    getRecord: ((ref: PtrType) => PluginHeapObject);
+    push: ((obj: T, ptr: PtrType, type?: BridgeObjectType, payload?: number) => number);
+    allocate: ((obj: T, type?: BridgeObjectType) => PtrType);
+    batchAllocate: ((objs: T[]) => PointerArray<PtrType>);
     ref: ((obj: PtrType, diff: number, ptr: PtrType) => number);
     refIndex: ((obj: number, diff: number, ptr: PtrType) => number);
     lastId: number;
@@ -53,8 +56,13 @@ declare global {
     refCount: number;
     tag: Tags;
     value: any;
+    type: BridgeObjectType;
+    payload: number;
   };
 
+  export declare type BridgeStruct = {
+    values: number[];
+  };
 
   const enum JSPropFlags {
     /* flags for object properties */
@@ -144,5 +152,37 @@ declare global {
 
     /* don't include the stack frames before this eval in the Error() backtraces */
     JS_EVAL_FLAG_BACKTRACE_BARRIER = (1 << 6),
+  }
+
+
+  const enum BridgeObjectType {
+    None = 0,
+    TypeRef = 1,
+    ObjectRef = 2,
+    ValueType = 3,
+  }
+
+  const enum JSCFunctionEnum {
+    /* XXX: should rename for namespace isolation */
+    JS_CFUNC_generic = 0,
+    JS_CFUNC_generic_magic = 1,
+    JS_CFUNC_constructor = 2, // unused in jsb
+    JS_CFUNC_constructor_magic = 3,
+    JS_CFUNC_constructor_or_func = 4, // unused in jsb
+    JS_CFUNC_constructor_or_func_magic = 5, // unused in jsb
+    JS_CFUNC_f_f = 6, // unused in jsb
+    JS_CFUNC_f_f_f = 7, // unused in jsb
+    JS_CFUNC_getter = 8,
+    JS_CFUNC_setter = 9,
+    JS_CFUNC_getter_magic = 10,
+    JS_CFUNC_setter_magic = 11,
+    JS_CFUNC_iterator_next = 12, // unused in jsb
+  }
+
+  const enum Sizes {
+    JSPayloadHeader = 8,
+    JSValueUnion = 8,
+    JSValue = 16,
+    JSAtom = 4,
   }
 }

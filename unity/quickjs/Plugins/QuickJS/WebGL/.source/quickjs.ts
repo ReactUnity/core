@@ -11,7 +11,7 @@ type PluginType = JSApiExternals & {
 var QuickJSPlugin: PluginType = {
   $state__postset: 'state.atoms = state.createHeap(true);\n',
   $state: {
-    createHeap: function <T = any>(isAtom: boolean): PluginHeap<T> {
+    createHeap: function <T = any, PtrType extends Pointer<any> = JSValue>(isAtom: boolean): PluginHeap<T, PtrType> {
       var getTag = function (object): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
         if (object === null) return Tags.JS_TAG_NULL;
@@ -27,13 +27,44 @@ var QuickJSPlugin: PluginType = {
 
       var record: PluginHeap['record'] = {};
 
-      const res: PluginHeap<T> = {
+      const map = new Map<any, number>();
+
+      const res: PluginHeap<T, PtrType> = {
         record,
         lastId: 1,
-        push(object, ptr) {
+
+        allocate(object, type) {
+          if (isAtom) return res.push(object, undefined, type) as PtrType;
+          var ptr = _malloc(Sizes.JSValue) as PtrType;
+          res.push(object, ptr, type);
+          return ptr as PtrType;
+        },
+        batchAllocate(objects) {
+          var size = isAtom ? Sizes.JSAtom : Sizes.JSValue;
+          var arr = _malloc(size * objects.length) as PointerArray<PtrType>;
+
+          for (let index = 0; index < objects.length; index++) {
+            const object = objects[index];
+            res.push(object, arr + (index * size) as PtrType);
+          }
+
+          return arr;
+        },
+        push(object, ptr, type, payload) {
           if (typeof object === 'undefined') {
             res.refIndex(0, 1, ptr);
             return 0;
+          }
+
+          const foundId = map.get(object);
+
+          if (foundId > 0) {
+            var found = record[foundId];
+            found.type = type || found.type;
+            found.payload = payload || found.payload;
+
+            res.refIndex(foundId, 1, ptr);
+            return foundId;
           }
 
           var id = res.lastId++;
@@ -42,7 +73,11 @@ var QuickJSPlugin: PluginType = {
             refCount: 0,
             value: object,
             tag: getTag(object),
+            type: type || BridgeObjectType.None,
+            payload,
           };
+
+          map.set(id, id);
 
           res.refIndex(id, 1, ptr);
 
@@ -53,6 +88,18 @@ var QuickJSPlugin: PluginType = {
           if (id === 0) return undefined;
           var ho = record[id];
           return ho.value;
+        },
+        getRecord(val) {
+          var id = isAtom ? val : HEAP32[val >> 2];
+          if (id === 0) return {
+            refCount: 0,
+            value: undefined,
+            tag: Tags.JS_TAG_UNDEFINED,
+            type: BridgeObjectType.None,
+            payload: -1,
+          };
+          var ho = record[id];
+          return ho;
         },
         ref(obj, diff, ptr) {
           var id = isAtom ? obj : HEAP32[obj >> 2];
@@ -232,12 +279,17 @@ var QuickJSPlugin: PluginType = {
   },
 
   JS_Eval(ptr, ctx, input, input_len, filename, eval_flags) {
-    var context = state.getContext(ctx);
-    var code = state.stringify(input, input_len);
+    try {
+      var context = state.getContext(ctx);
+      var code = state.stringify(input, input_len);
 
-    var res = context.evaluate(code);
+      var res = context.evaluate(code);
 
-    context.objects.push(res, ptr);
+      context.objects.push(res, ptr);
+    } catch (err) {
+      context.lastException = err;
+      context.objects.push(err, ptr);
+    }
   },
 
   JS_IsInstanceOf(ctxId, val, obj) {
@@ -393,19 +445,23 @@ var QuickJSPlugin: PluginType = {
       const opts: PropertyDescriptor = {
         get: getterVal,
         set: setterVal,
-        value: valVal,
       };
+
+      if (!getter && !setter) {
+        opts.value = valVal;
+      }
 
       if (hasConfigurable) opts.configurable = configurable;
       if (hasEnumerable) opts.enumerable = enumerable;
-      if (hasWritable) opts.writable = writable;
+      if (!getter && !setter && hasWritable) opts.writable = writable;
 
       Object.defineProperty(thisVal, propVal, opts);
 
       return true;
-    } catch (ex) {
+    } catch (err) {
+      context.lastException = err;
       if (shouldThrow) {
-        context.lastException = ex;
+        console.error(err);
         return -1;
       }
     }
@@ -442,8 +498,9 @@ var QuickJSPlugin: PluginType = {
       return true;
     }
     catch (err) {
+      context.lastException = err;
       if (shouldThrow) {
-        context.lastException = err;
+        console.error(err);
         return -1;
       }
     }
@@ -490,8 +547,9 @@ var QuickJSPlugin: PluginType = {
 
       return true;
     } catch (err) {
+      context.lastException = err;
       if (shouldThrow) {
-        context.lastException = err;
+        console.error(err);
         return -1;
       }
     }
@@ -509,19 +567,29 @@ var QuickJSPlugin: PluginType = {
     return !!Reflect.set(thisVal, propVal, valVal);
   },
 
-  jsb_get_payload_header(ctx, val) {
-    // TODO:
+  jsb_get_payload_header(ret, ctx, val) {
 
-    return 0;
+    var context = state.getContext(ctx);
+
+    var rec = context.objects.getRecord(val);
+
+    HEAP32[ret >> 2] = rec.type;
+    HEAP32[(ret >> 2) + 1] = rec.payload || 0;
   },
 
   JS_ToCStringLen2(ctx, len, val, cesu8) {
     var context = state.getContext(ctx);
 
     var str = context.objects.get(val);
+
+
+    if (typeof str === 'undefined') {
+      HEAP32[(len >> 2)] = 0;
+      return 0 as IntPtr;
+    }
+
     var [buffer, length] = state.bufferify(str);
     HEAP32[(len >> 2)] = length;
-
     return buffer as IntPtr;
   },
 
@@ -533,7 +601,7 @@ var QuickJSPlugin: PluginType = {
     // TODO:
   },
 
-  JSB_FreePayload(ctx, val) {
+  JSB_FreePayload(ret, ctx, val) {
     // TODO:
     return 0;
   },
@@ -754,56 +822,110 @@ var QuickJSPlugin: PluginType = {
 
   JSB_NewCFunction(ret, ctx, func, atom, length, cproto, magic) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var fn = function () { };
+
+    var fn = function () {
+      const args = arguments;
+
+      const thisPtr = context.objects.allocate(this);
+      const ret = _malloc(Sizes.JSValue) as JSValue;
+
+      if (cproto === JSCFunctionEnum.JS_CFUNC_generic) {
+        const argc = args.length;
+        const argv = context.objects.batchAllocate(Array.from(args));
+        state.dynCall<typeof JSApiDelegates.JSCFunction>('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
+      }
+      else if (cproto === JSCFunctionEnum.JS_CFUNC_setter) {
+        const val = context.objects.allocate(args[0]);
+        state.dynCall<typeof JSApiDelegates.JSSetterCFunction>('viiii', func, [ret, ctx, thisPtr, val]);
+      }
+      else if (cproto === JSCFunctionEnum.JS_CFUNC_getter) {
+        state.dynCall<typeof JSApiDelegates.JSGetterCFunction>('viii', func, [ret, ctx, thisPtr]);
+      }
+      else {
+        throw new Error('Unknown type of function specified: ' + cproto);
+      }
+
+      return context.objects.get(ret);
+    };
+
     context.objects.push(fn, ret);
   },
 
   JSB_NewCFunctionMagic(ret, ctx, func, atom, length, cproto, magic) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var fn = function () { };
+
+    var fn = function () {
+      const args = arguments;
+
+      const thisPtr = context.objects.allocate(this);
+      const ret = _malloc(Sizes.JSValue) as JSValue;
+
+      if (cproto === JSCFunctionEnum.JS_CFUNC_generic_magic) {
+        const argc = args.length;
+        const argv = context.objects.batchAllocate(Array.from(args));
+        state.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+      }
+      else if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
+        const argc = args.length;
+        const argv = context.objects.batchAllocate(Array.from(args));
+        state.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+      }
+      else if (cproto === JSCFunctionEnum.JS_CFUNC_setter_magic) {
+        const val = context.objects.allocate(args[0]);
+        state.dynCall<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func, [ret, ctx, thisPtr, val, magic]);
+      }
+      else if (cproto === JSCFunctionEnum.JS_CFUNC_getter_magic) {
+        state.dynCall<typeof JSApiDelegates.JSGetterCFunctionMagic>('viiii', func, [ret, ctx, thisPtr, magic]);
+      }
+      else {
+        throw new Error('Unknown type of function specified: ' + cproto);
+      }
+
+      return context.objects.get(ret);
+    };
+
     context.objects.push(fn, ret);
   },
 
   jsb_new_bridge_object(ret, ctx, proto, object_id) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var res = {};
-    context.objects.push(res, ret);
+    var protoVal = context.objects.get(proto);
+    var res = Object.create(protoVal);
+    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_new_bridge_value(ret, ctx, proto, size) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var res = {};
+    var protoVal = context.objects.get(proto);
+    var res = Object.create(protoVal) as BridgeStruct;
+    res.values = new Array(size).fill(0);
     context.objects.push(res, ret);
   },
 
   JSB_NewBridgeClassObject(ret, ctx, new_target, object_id) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var res = {};
-    context.objects.push(res, ret);
+    var res = context.objects.get(new_target);
+
+    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
   },
 
   JSB_NewBridgeClassValue(ret, ctx, new_target, size) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var res = {};
+    var res = context.objects.get(new_target) as BridgeStruct;
+    res.values = new Array(size).fill(0);
     context.objects.push(res, ret);
   },
 
   JSB_GetBridgeClassID() {
-    // TODO: priority
+    // TODO: I have no idea
     return 0;
   },
 
-  jsb_construct_bridge_object(ret, ctx, proto, object_id) {
+  jsb_construct_bridge_object(ret, ctx, ctor, object_id) {
     var context = state.getContext(ctx);
-    // TODO: Priority
-    var res = {};
-    context.objects.push(res, ret);
+    var ctorVal = context.objects.get(ctor);
+    var res = Reflect.construct(ctorVal, []);
+    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_crossbind_constructor(ret, ctx, new_target) {
@@ -817,40 +939,49 @@ var QuickJSPlugin: PluginType = {
 
   // #region Errors
 
-  JSB_ThrowError(ctx, buf, buf_len) {
-    // TODO:
+  JSB_ThrowError(ret, ctx, buf, buf_len) {
+    var context = state.getContext(ctx);
     var str = state.stringify(buf as any, buf_len);
-    console.error(str);
-
-    return -1;
+    var err = new Error(str);
+    console.error(err);
+    context.objects.push(err, ret);
+    // TODO: throw?
   },
 
-  JSB_ThrowTypeError(ctx, msg) {
-    // TODO:
-    console.error('Type error');
-
-    return -1;
+  JSB_ThrowTypeError(ret, ctx, msg) {
+    var context = state.getContext(ctx);
+    var str = 'Type Error';
+    var err = new Error(str);
+    console.error(err);
+    context.objects.push(err, ret);
+    // TODO: throw?
   },
 
-  JSB_ThrowRangeError(ctx, msg) {
-    // TODO:
-    console.error('Range error');
-
-    return -1;
+  JSB_ThrowRangeError(ret, ctx, msg) {
+    var context = state.getContext(ctx);
+    var str = 'Range Error';
+    var err = new Error(str);
+    console.error(err);
+    context.objects.push(err, ret);
+    // TODO: throw?
   },
 
-  JSB_ThrowInternalError(ctx, msg) {
-    // TODO:
-    console.error('Internal error');
-
-    return -1;
+  JSB_ThrowInternalError(ret, ctx, msg) {
+    var context = state.getContext(ctx);
+    var str = 'Internal Error';
+    var err = new Error(str);
+    console.error(err);
+    context.objects.push(err, ret);
+    // TODO: throw?
   },
 
-  JSB_ThrowReferenceError(ctx, msg) {
-    // TODO:
-    console.error('Reference error');
-
-    return -1;
+  JSB_ThrowReferenceError(ret, ctx, msg) {
+    var context = state.getContext(ctx);
+    var str = 'Reference Error';
+    var err = new Error(str);
+    console.error(err);
+    context.objects.push(err, ret);
+    // TODO: throw?
   },
 
   // #endregion

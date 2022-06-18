@@ -8,7 +8,11 @@ declare global {
   const Pointer_stringify: (val: any) => string;
   const lengthBytesUTF8: (val: any) => number;
 
-  const dynCall: any;
+  const dynCall: <T = void>(
+    signature: T extends void ? string : string,
+    ptr: number | Pointer<any>,
+    args: T extends void ? (number | Pointer<any>)[] : Parameters<T>
+  ) => void;
   const Runtime: any;
   const LibraryManager: any;
   const autoAddDeps: any;

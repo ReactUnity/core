@@ -8,7 +8,12 @@ declare global {
 
   export type Pointer<T> = number & {
     type?: T;
-    __out: true;
+    __pointer: true;
+  };
+
+  export type PointerArray<T> = number & {
+    type?: T;
+    __pointerArray: true;
   };
 
   export type Out<T> = number & {
@@ -18,6 +23,7 @@ declare global {
 
   export type Boolish = boolean | -1;
 
+  export type int = number;
   export type Byte = number;
   export type Int64 = number;
   export type UInt32 = number;
@@ -25,6 +31,7 @@ declare global {
   export type IntPtr = Pointer<'IntPtr'>;
   export type JSPayloadHeader = Pointer<'JSPayloadHeader'>;
   export type JSValue = Pointer<'JSValue'>;
+  export type JSValueConst = JSValue;
   export type JSAtom = UInt32;
   export type JSContext = UInt32;
   export type JSRuntime = UInt32;
@@ -163,5 +170,21 @@ declare global {
     static jsb_set_byte_4(ctx: JSContext, val: JSValue, v0: Byte, v1: Byte, v2: Byte, v3: Byte): number;
     static jsb_get_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): number;
     static jsb_set_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): number;
+  }
+
+  export declare class JSApiDelegates {
+    static JSInterruptHandler(rt: JSRuntime, opaque: IntPtr): int;
+    static JSHostPromiseRejectionTracker(ctx: JSContext, promise: JSValueConst, reason: JSValueConst, is_handled: bool, opaque: IntPtr): void;
+    static JSModuleNormalizeFunc(ctx: JSContext, module_base_name: Pointer<string>, module_name: Pointer<string>, opaque: IntPtr): IntPtr;
+    static JSModuleLoaderFunc(ctx: JSContext, module_name: Pointer<string>, opaque: IntPtr): JSModuleDef;
+    static JSGCObjectFinalizer(rt: JSRuntime, header: JSPayloadHeader): void;
+    static JSCFunction(returnValue: JSValue, ctx: JSContext, this_obj: JSValueConst, argc: int, argv: PointerArray<JSValueConst>);
+    static JSCFunctionMagic(returnValue: JSValue, ctx: JSContext, this_obj: JSValueConst, argc: int, argv: PointerArray<JSValueConst>, magic: int);
+    static JSSetterCFunction(returnValue: JSValue, ctx: JSContext, this_val: JSValueConst, val: JSValueConst);
+    static JSSetterCFunctionMagic(returnValue: JSValue, ctx: JSContext, this_val: JSValueConst, val: JSValueConst, magic: int);
+    static JSGetterCFunction(returnValue: JSValue, ctx: JSContext, this_val: JSValueConst);
+    static JSGetterCFunctionMagic(returnValue: JSValue, ctx: JSContext, this_val: JSValueConst, magic: int);
+    static JSLogCFunction(level: number, line: Pointer<string>): void;
+    static JSWaitingForDebuggerCFunction(ctx: JSContext): void;
   }
 }
