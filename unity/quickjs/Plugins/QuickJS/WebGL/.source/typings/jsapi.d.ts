@@ -99,9 +99,9 @@ declare global {
     static JS_HasProperty(ctx: JSContext, this_obj: JSValue, prop: JSAtom): Boolish;
     static JS_ParseJSON(returnValue: JSValue, ctx: JSContext, buf: Pointer<Byte>, buf_len: size_t, filename: Pointer<Byte>);
     static JS_JSONStringify(returnValue: JSValue, ctx: JSContext, obj: JSValue, replacer: JSValue, space0: JSValue);
-    static JS_CallConstructor(returnValue: JSValue, ctx: JSContext, func_obj: JSValue, argc: number, argv: Pointer<JSValue>);
-    static JS_Call(returnValue: JSValue, ctx: JSContext, func_obj: JSValue, this_obj: JSValue, argc: number, argv: Pointer<JSValue>);
-    static JS_Invoke(returnValue: JSValue, ctx: JSContext, this_val: JSValue, atom: JSAtom, argc: number, argv: Pointer<JSValue>);
+    static JS_CallConstructor(returnValue: JSValue, ctx: JSContext, func_obj: JSValue, argc: number, argv: PointerArray<JSValue>);
+    static JS_Call(returnValue: JSValue, ctx: JSContext, func_obj: JSValue, this_obj: JSValue, argc: number, argv: PointerArray<JSValue>);
+    static JS_Invoke(returnValue: JSValue, ctx: JSContext, this_val: JSValue, atom: JSAtom, argc: number, argv: PointerArray<JSValue>);
     static JS_SetPrototype(ctx: JSContext, obj: JSValue, proto_val: JSValue): Boolish;
     static JS_RunGC(rt: JSRuntime): void;
     static JS_ToBool(ctx: JSContext, val: JSValue): Boolish;

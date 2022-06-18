@@ -6,12 +6,13 @@ var QuickJSPlugin = {
     $state__postset: 'state.atoms = state.createHeap(true);\n',
     $state: {
         createHeap: function (isAtom) {
-            var getTag = function (object) {
+            var getTag = function (object, allowNumbers) {
+                if (allowNumbers === void 0) { allowNumbers = false; }
                 if (object === undefined)
                     return 3 /* Tags.JS_TAG_UNDEFINED */;
                 if (object === null)
                     return 2 /* Tags.JS_TAG_NULL */;
-                if (typeof object === 'number')
+                if (allowNumbers && typeof object === 'number')
                     return 7 /* Tags.JS_TAG_FLOAT64 */;
                 if (typeof object === 'boolean')
                     return 1 /* Tags.JS_TAG_BOOL */;
@@ -22,7 +23,7 @@ var QuickJSPlugin = {
                 if (typeof object === 'string')
                     return -7 /* Tags.JS_TAG_STRING */;
                 if (typeof object === 'bigint')
-                    return -9 /* Tags.JS_TAG_BIG_FLOAT */;
+                    return -10 /* Tags.JS_TAG_BIG_INT */;
                 if (object instanceof Error)
                     return 6 /* Tags.JS_TAG_EXCEPTION */;
                 return -1 /* Tags.JS_TAG_OBJECT */;
@@ -32,11 +33,11 @@ var QuickJSPlugin = {
             var res = {
                 record: record,
                 lastId: 1,
-                allocate: function (object, type) {
+                allocate: function (object, type, payload) {
                     if (isAtom)
-                        return res.push(object, undefined, type);
+                        return res.push(object, undefined, type, payload);
                     var ptr = _malloc(16 /* Sizes.JSValue */);
-                    res.push(object, ptr, type);
+                    res.push(object, ptr, type, payload);
                     return ptr;
                 },
                 batchAllocate: function (objects) {
@@ -48,11 +49,24 @@ var QuickJSPlugin = {
                     }
                     return arr;
                 },
+                batchGet: function (ptrs, count) {
+                    var size = (isAtom ? 4 /* Sizes.JSAtom */ : 16 /* Sizes.JSValue */);
+                    var arr = new Array(count);
+                    for (var index = 0; index < count; index++) {
+                        var object = res.get(ptrs + index * size);
+                        arr[index] = object;
+                    }
+                    return arr;
+                },
                 push: function (object, ptr, type, payload) {
                     if (typeof object === 'undefined') {
                         res.refIndex(0, 1, ptr);
                         return 0;
                     }
+                    // if (!isAtom && typeof object === 'number') {
+                    //   res.ref(object as any, 1, ptr);
+                    //   return -1;
+                    // }
                     var foundId = map.get(object);
                     if (foundId > 0) {
                         var found = record[foundId];
@@ -63,35 +77,71 @@ var QuickJSPlugin = {
                     }
                     var id = res.lastId++;
                     record[id] = {
+                        id: id,
                         refCount: 0,
                         value: object,
                         tag: getTag(object),
                         type: type || 0 /* BridgeObjectType.None */,
                         payload: payload,
                     };
-                    map.set(id, id);
+                    map.set(object, id);
                     res.refIndex(id, 1, ptr);
                     return id;
                 },
                 get: function (val) {
-                    var id = isAtom ? val : HEAP32[val >> 2];
-                    if (id === 0)
-                        return undefined;
-                    var ho = record[id];
-                    return ho.value;
+                    var tag = isAtom ? undefined : Number(state.HEAP64()[(val >> 3) + 1]);
+                    if (tag === 0 /* Tags.JS_TAG_INT */) {
+                        return HEAP32[val >> 2];
+                    }
+                    else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
+                        return HEAPF64[val >> 3];
+                    }
+                    else {
+                        var id = isAtom ? val : HEAP32[val >> 2];
+                        if (id === 0)
+                            return undefined;
+                        var ho = record[id];
+                        return ho.value;
+                    }
                 },
                 getRecord: function (val) {
-                    var id = isAtom ? val : HEAP32[val >> 2];
-                    if (id === 0)
+                    var tag = isAtom ? undefined : Number(state.HEAP64()[(val >> 3) + 1]);
+                    if (tag === 0 /* Tags.JS_TAG_INT */) {
+                        var value = HEAP32[val >> 2];
                         return {
+                            id: -1,
                             refCount: 0,
-                            value: undefined,
-                            tag: 3 /* Tags.JS_TAG_UNDEFINED */,
-                            type: 0 /* BridgeObjectType.None */,
-                            payload: -1,
+                            value: value,
+                            tag: 0 /* Tags.JS_TAG_INT */,
+                            type: 3 /* BridgeObjectType.ValueType */,
+                            payload: value,
                         };
-                    var ho = record[id];
-                    return ho;
+                    }
+                    else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
+                        var value = HEAPF64[val >> 3];
+                        return {
+                            id: -1,
+                            refCount: 0,
+                            value: value,
+                            tag: 7 /* Tags.JS_TAG_FLOAT64 */,
+                            type: 3 /* BridgeObjectType.ValueType */,
+                            payload: value,
+                        };
+                    }
+                    else {
+                        var id = isAtom ? val : HEAP32[val >> 2];
+                        if (id === 0)
+                            return {
+                                id: 0,
+                                refCount: 0,
+                                value: undefined,
+                                tag: 3 /* Tags.JS_TAG_UNDEFINED */,
+                                type: 0 /* BridgeObjectType.None */,
+                                payload: -1,
+                            };
+                        var ho = record[id];
+                        return ho;
+                    }
                 },
                 ref: function (obj, diff, ptr) {
                     var id = isAtom ? obj : HEAP32[obj >> 2];
@@ -102,8 +152,8 @@ var QuickJSPlugin = {
                         if (typeof ptr === 'number') {
                             HEAP32[ptr >> 2] = 0;
                             if (!isAtom) {
-                                var bu = new BigInt64Array(HEAPF64.buffer);
-                                bu[(ptr >> 3) + 1] = BigInt(3 /* Tags.JS_TAG_UNDEFINED */);
+                                HEAP32[(ptr >> 2) + 1] = 0;
+                                state.HEAP64()[(ptr >> 3) + 1] = BigInt(3 /* Tags.JS_TAG_UNDEFINED */);
                             }
                         }
                         return 0;
@@ -112,16 +162,21 @@ var QuickJSPlugin = {
                     ho.refCount += diff;
                     console.assert(ho.refCount >= 0);
                     if (ho.refCount <= 0) {
-                        record[id] = undefined;
+                        res.popIndex(id);
                     }
                     if (typeof ptr === 'number') {
                         HEAP32[ptr >> 2] = id;
                         if (!isAtom) {
-                            var bu = new BigInt64Array(HEAPF64.buffer);
-                            bu[(ptr >> 3) + 1] = BigInt(ho.tag);
+                            HEAP32[(ptr >> 2) + 1] = 0;
+                            state.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
                         }
                     }
                     return ho.refCount;
+                },
+                popIndex: function (id) {
+                    var rec = record[id];
+                    record[id] = undefined;
+                    map.delete(rec.value);
                 },
             };
             return res;
@@ -145,6 +200,12 @@ var QuickJSPlugin = {
         getContext: function (ctx) {
             var ctxId = ctx;
             return state.contexts[ctxId];
+        },
+        HEAP64: function () {
+            return new BigInt64Array(HEAPF64.buffer);
+        },
+        HEAPU64: function () {
+            return new BigUint64Array(HEAPF64.buffer);
         },
     },
     JSB_Init: function () {
@@ -268,10 +329,11 @@ var QuickJSPlugin = {
         // _free(ptr);
     },
     JSB_FreePayload: function (ret, ctx, val) {
+        var _a;
         var context = state.getContext(ctx);
         var rec = context.objects.getRecord(val);
         HEAP32[ret >> 2] = rec.type;
-        HEAP32[(ret >> 2) + 1] = rec.payload || 0;
+        HEAP32[(ret >> 2) + 1] = (_a = rec.payload) !== null && _a !== void 0 ? _a : -1;
         // TODO: free?
     },
     JSB_DupValue: function (ptr, ctx, v) {
@@ -308,34 +370,25 @@ var QuickJSPlugin = {
     },
     JS_Invoke: function (ptr, ctx, this_obj, prop, argc, argv) {
         var context = state.getContext(ctx);
-        var arr = new Array(argc);
-        for (var i = 0; i < argc; i++)
-            arr[i] = HEAP32[(argv >> 2) + i];
         var propVal = state.atoms.get(prop);
         var thisVal = context.objects.get(this_obj);
         var func = Reflect.get(thisVal, propVal);
-        var args = arr.map(context.objects.get);
+        var args = context.objects.batchGet(argv, argc);
         var val = func.apply(thisVal, args);
         context.objects.push(val, ptr);
     },
     JS_Call: function (ptr, ctx, func_obj, this_obj, argc, argv) {
         var context = state.getContext(ctx);
-        var arr = new Array(argc);
-        for (var i = 0; i < argc; i++)
-            arr[i] = HEAP32[(argv >> 2) + i];
         var func = context.objects.get(func_obj);
         var thisVal = context.objects.get(this_obj);
-        var args = arr.map(context.objects.get);
+        var args = context.objects.batchGet(argv, argc);
         var val = func.apply(thisVal, args);
         context.objects.push(val, ptr);
     },
     JS_CallConstructor: function (ptr, ctx, func_obj, argc, argv) {
         var context = state.getContext(ctx);
-        var arr = new Array(argc);
-        for (var i = 0; i < argc; i++)
-            arr[i] = HEAP32[(argv >> 2) + i];
         var func = context.objects.get(func_obj);
-        var args = arr.map(context.objects.get);
+        var args = context.objects.batchGet(argv, argc);
         var val = Reflect.construct(func, args);
         context.objects.push(val, ptr);
     },
@@ -438,25 +491,9 @@ var QuickJSPlugin = {
         var thisVal = context.objects.get(this_obj);
         var valVal = context.objects.get(val);
         var propVal = state.atoms.get(prop);
-        var configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
-        var hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
-        var enumerable = !!(flags & 4 /* JSPropFlags.JS_PROP_ENUMERABLE */);
-        var hasEnumerable = enumerable || !!(flags & 1024 /* JSPropFlags.JS_PROP_HAS_ENUMERABLE */);
-        var writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
-        var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         try {
-            var opts = {
-                value: valVal,
-            };
-            if (hasConfigurable)
-                opts.configurable = configurable;
-            if (hasEnumerable)
-                opts.enumerable = enumerable;
-            if (hasWritable)
-                opts.writable = writable;
-            Object.defineProperty(thisVal, propVal, opts);
-            return true;
+            return !!Reflect.set(thisVal, propVal, valVal);
         }
         catch (err) {
             context.lastException = err;
@@ -619,11 +656,13 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var nptr = _malloc(len);
         var res = new Uint8Array(HEAPU8.buffer, nptr, len);
-        res.set(new Uint8Array(buf));
+        var existing = new Uint8Array(HEAPU8.buffer, buf, len);
+        res.set(existing);
         context.objects.push(res, ptr);
     },
     JSB_NewFloat64: function (ptr, ctx, d) {
         var context = state.getContext(ctx);
+        // TODO: push literal
         context.objects.push(d, ptr);
     },
     JSB_NewInt64: function (ptr, ctx, d) {
@@ -654,7 +693,7 @@ var QuickJSPlugin = {
     // #region Bridge
     JSB_NewCFunction: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = state.getContext(ctx);
-        var fn = function () {
+        function jscFunction() {
             var args = arguments;
             var thisPtr = context.objects.allocate(this);
             var ret = _malloc(16 /* Sizes.JSValue */);
@@ -674,12 +713,13 @@ var QuickJSPlugin = {
                 throw new Error('Unknown type of function specified: ' + cproto);
             }
             return context.objects.get(ret);
-        };
-        context.objects.push(fn, ret);
+        }
+        ;
+        context.objects.push(jscFunction, ret);
     },
     JSB_NewCFunctionMagic: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = state.getContext(ctx);
-        var fn = function () {
+        function jscFunctionMagic() {
             var args = arguments;
             var thisPtr = context.objects.allocate(this);
             var ret = _malloc(16 /* Sizes.JSValue */);
@@ -704,8 +744,9 @@ var QuickJSPlugin = {
                 throw new Error('Unknown type of function specified: ' + cproto);
             }
             return context.objects.get(ret);
-        };
-        context.objects.push(fn, ret);
+        }
+        ;
+        context.objects.push(jscFunctionMagic, ret);
     },
     jsb_new_bridge_object: function (ret, ctx, proto, object_id) {
         var context = state.getContext(ctx);
@@ -743,8 +784,11 @@ var QuickJSPlugin = {
     },
     jsb_crossbind_constructor: function (ret, ctx, new_target) {
         var context = state.getContext(ctx);
+        var target = context.objects.get(new_target);
         // TODO: I have no idea
-        var res = function () { };
+        var res = function () {
+            return new target();
+        };
         context.objects.push(res, ret);
     },
     // #endregion
@@ -1022,21 +1066,6 @@ var QuickJSPlugin = {
     },
     // #endregion
     // #region To
-    JS_ToBigInt64: function (ctx, pres, val) {
-        var context = state.getContext(ctx);
-        var value = context.objects.get(val);
-        if (typeof value === 'number') {
-            var bu = new BigInt64Array(HEAPF64.buffer);
-            bu[pres >> 3] = BigInt(value);
-            return true;
-        }
-        if (typeof value === 'bigint') {
-            var bu = new BigInt64Array(HEAPF64.buffer);
-            bu[pres >> 3] = value;
-            return true;
-        }
-        return false;
-    },
     JS_ToFloat64: function (ctx, pres, val) {
         var context = state.getContext(ctx);
         var value = context.objects.get(val);
@@ -1058,14 +1087,17 @@ var QuickJSPlugin = {
     JS_ToInt64: function (ctx, pres, val) {
         var context = state.getContext(ctx);
         var value = context.objects.get(val);
-        if (typeof value === 'number') {
-            var bu = new BigInt64Array(HEAPF64.buffer);
-            bu[pres >> 3] = BigInt(value);
+        if (typeof value === 'number' || typeof value === 'bigint') {
+            state.HEAP64()[pres >> 3] = BigInt(value);
             return true;
         }
-        if (typeof value === 'bigint') {
-            var bu = new BigInt64Array(HEAPF64.buffer);
-            bu[pres >> 3] = value;
+        return false;
+    },
+    JS_ToBigInt64: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
+        if (typeof value === 'number' || typeof value === 'bigint') {
+            state.HEAP64()[pres >> 3] = BigInt(value);
             return true;
         }
         return false;
@@ -1073,14 +1105,8 @@ var QuickJSPlugin = {
     JS_ToIndex: function (ctx, pres, val) {
         var context = state.getContext(ctx);
         var value = context.objects.get(val);
-        if (typeof value === 'number') {
-            var bu = new BigUint64Array(HEAPF64.buffer);
-            bu[pres >> 3] = BigInt(value);
-            return true;
-        }
-        if (typeof value === 'bigint') {
-            var bu = new BigUint64Array(HEAPF64.buffer);
-            bu[pres >> 3] = value;
+        if (typeof value === 'number' || typeof value === 'bigint') {
+            state.HEAPU64()[pres >> 3] = BigInt(value);
             return true;
         }
         return false;

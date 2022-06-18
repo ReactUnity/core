@@ -16,6 +16,9 @@ declare global {
 
     getRuntime: (ctx: JSRuntime) => PluginRuntime;
     getContext: (ctx: JSContext) => PluginContext;
+
+    HEAP64: () => BigInt64Array;
+    HEAPU64: () => BigUint64Array;
   }
 
   export declare type PluginRuntime = {
@@ -41,18 +44,21 @@ declare global {
   };
 
   export declare type PluginHeap<T = any, PtrType = JSValue> = {
+    popIndex: (id: number) => void;
     record: Record<string | number, PluginHeapObject>;
     get: ((ref: PtrType) => T);
     getRecord: ((ref: PtrType) => PluginHeapObject);
     push: ((obj: T, ptr: PtrType, type?: BridgeObjectType, payload?: number) => number);
-    allocate: ((obj: T, type?: BridgeObjectType) => PtrType);
+    allocate: ((obj: T, type?: BridgeObjectType, payload?: number) => PtrType);
     batchAllocate: ((objs: T[]) => PointerArray<PtrType>);
+    batchGet: ((arr: PointerArray<PtrType>, count: number) => T[]);
     ref: ((obj: PtrType, diff: number, ptr: PtrType) => number);
     refIndex: ((obj: number, diff: number, ptr: PtrType) => number);
     lastId: number;
   };
 
   export declare type PluginHeapObject = {
+    id: number;
     refCount: number;
     tag: Tags;
     value: any;
