@@ -174,9 +174,9 @@ var QuickJSPlugin = {
                     return ho.refCount;
                 },
                 popIndex: function (id) {
-                    var rec = record[id];
-                    record[id] = undefined;
-                    map.delete(rec.value);
+                    // var rec = record[id];
+                    // record[id] = undefined;
+                    // map.delete(rec.value);
                 },
             };
             return res;
@@ -693,9 +693,12 @@ var QuickJSPlugin = {
     // #region Bridge
     JSB_NewCFunction: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = state.getContext(ctx);
+        var name = state.atoms.get(atom) || 'jscFunction';
         function jscFunction() {
+            void name;
             var args = arguments;
-            var thisPtr = context.objects.allocate(this);
+            var thisObj = this === window ? context.window : this;
+            var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
                 var argc = args.length;
@@ -719,9 +722,12 @@ var QuickJSPlugin = {
     },
     JSB_NewCFunctionMagic: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = state.getContext(ctx);
+        var name = state.atoms.get(atom) || 'jscFunctionMagic';
         function jscFunctionMagic() {
+            void name;
             var args = arguments;
-            var thisPtr = context.objects.allocate(this);
+            var thisObj = this === window ? context.window : this;
+            var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {
                 var argc = args.length;

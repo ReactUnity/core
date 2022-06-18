@@ -22,6 +22,9 @@
     "outFile": "../quickjs.jslib",
     "noImplicitAny": false,
     "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "removeComments": false,
     "noImplicitUseStrict": true,
     "noUncheckedIndexedAccess": false,
     "suppressExcessPropertyErrors": true,
@@ -32,7 +35,7 @@
   "files": [
     "quickjs.ts",
     "typings/emscripten.d.ts",
-    "typings/unity.d.ts",
+    "typings/environment.d.ts",
     "typings/jsapi.d.ts",
     "typings/plugin.d.ts"
   ],
