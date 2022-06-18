@@ -112,7 +112,6 @@ var QuickJSPlugin: PluginType = {
               if (!isAtom) {
                 var bu = new BigInt64Array(HEAPF64.buffer);
                 bu[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_UNDEFINED);
-                // HEAP32[(ptr >> 2) + 2] = Tags.JS_TAG_UNDEFINED;
               }
             }
 
@@ -132,10 +131,8 @@ var QuickJSPlugin: PluginType = {
           if (typeof ptr === 'number') {
             HEAP32[ptr >> 2] = id;
             if (!isAtom) {
-              // TODO: [Improvement] find out if there is an easier way to pass longs to C#
               var bu = new BigInt64Array(HEAPF64.buffer);
               bu[(ptr >> 3) + 1] = BigInt(ho.tag);
-              // HEAP32[(ptr >> 2) + 2] = ho.tag;
             }
           }
 
@@ -310,8 +307,28 @@ var QuickJSPlugin: PluginType = {
     context.objects.ref(v, -1, undefined);
   },
 
-  JSB_FreeValueRT(ctx, v) {
+  JSB_FreeValueRT(rt, v) {
     // TODO:
+  },
+
+  JS_FreeCString(ctx, ptr) {
+    // TODO:
+    // _free(ptr);
+  },
+
+  js_free(ctx, ptr) {
+    // TODO:
+    // _free(ptr);
+  },
+
+  JSB_FreePayload(ret, ctx, val) {
+    var context = state.getContext(ctx);
+    var rec = context.objects.getRecord(val);
+
+    HEAP32[ret >> 2] = rec.type;
+    HEAP32[(ret >> 2) + 1] = rec.payload || 0;
+
+    // TODO: free?
   },
 
   JSB_DupValue(ptr, ctx, v) {
@@ -591,19 +608,6 @@ var QuickJSPlugin: PluginType = {
     var [buffer, length] = state.bufferify(str);
     HEAP32[(len >> 2)] = length;
     return buffer as IntPtr;
-  },
-
-  JS_FreeCString(ctx, ptr) {
-    // TODO:
-  },
-
-  js_free(ctx, ptr) {
-    // TODO:
-  },
-
-  JSB_FreePayload(ret, ctx, val) {
-    // TODO:
-    return 0;
   },
 
   JS_GetArrayBuffer(ctx, psize, obj) {
@@ -898,7 +902,7 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     var protoVal = context.objects.get(proto);
     var res = Object.create(protoVal) as BridgeStruct;
-    res.values = new Array(size).fill(0);
+    res.$$values = new Array(size).fill(0);
     context.objects.push(res, ret);
   },
 
@@ -912,7 +916,7 @@ var QuickJSPlugin: PluginType = {
   JSB_NewBridgeClassValue(ret, ctx, new_target, size) {
     var context = state.getContext(ctx);
     var res = context.objects.get(new_target) as BridgeStruct;
-    res.values = new Array(size).fill(0);
+    res.$$values = new Array(size).fill(0);
     context.objects.push(res, ret);
   },
 
@@ -995,124 +999,290 @@ var QuickJSPlugin: PluginType = {
     return buffer as IntPtr;
   },
 
-  jsb_get_bytes(ctx, val, n, v0) {
+  jsb_set_floats(ctx, val, n, v0) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = n / Sizes.Single;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
-  },
+    for (let index = 0; index < count; index++) {
+      const val = HEAPF32[(v0 >> 2) + index];
+      obj.$$values[index] = val;
+    }
 
-  jsb_get_floats(ctx, val, n, v0) {
-
-    // TODO:
-
-    return 0;
-  },
-
-  jsb_set_byte_4(ctx, val, v0, v1, v2, v3) {
-
-    // TODO:
-
-    return 0;
+    return true;
   },
 
   jsb_set_bytes(ctx, val, n, v0) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = n / Sizes.Single;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    for (let index = 0; index < count; index++) {
+      const val = HEAP32[(v0 >> 2) + index];
+      obj.$$values[index] = val;
+    }
+
+    return true;
+  },
+
+  jsb_set_byte_4(ctx, val, v0, v1, v2, v3) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    obj.$$values[0] = HEAP32[(v0 >> 2)];
+    obj.$$values[1] = HEAP32[(v1 >> 2)];
+    obj.$$values[2] = HEAP32[(v2 >> 2)];
+    obj.$$values[3] = HEAP32[(v3 >> 2)];
+
+    return true;
   },
 
   jsb_set_float_2(ctx, val, v0, v1) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 2;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAPF32[(v0 >> 2)];
+    obj.$$values[1] = HEAPF32[(v1 >> 2)];
+
+    return true;
   },
 
   jsb_set_float_3(ctx, val, v0, v1, v2) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 3;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAPF32[(v0 >> 2)];
+    obj.$$values[1] = HEAPF32[(v1 >> 2)];
+    obj.$$values[2] = HEAPF32[(v2 >> 2)];
+
+    return true;
   },
 
   jsb_set_float_4(ctx, val, v0, v1, v2, v3) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
-  },
+    obj.$$values[0] = HEAPF32[(v0 >> 2)];
+    obj.$$values[1] = HEAPF32[(v1 >> 2)];
+    obj.$$values[2] = HEAPF32[(v2 >> 2)];
+    obj.$$values[3] = HEAPF32[(v3 >> 2)];
 
-  jsb_set_floats(ctx, val, n, v0) {
-
-    // TODO:
-
-    return 0;
+    return true;
   },
 
   jsb_set_int_1(ctx, val, v0) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 1;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAP32[(v0 >> 2)];
+
+    return true;
   },
 
   jsb_set_int_2(ctx, val, v0, v1) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 2;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAP32[(v0 >> 2)];
+    obj.$$values[1] = HEAP32[(v1 >> 2)];
+
+    return true;
   },
 
   jsb_set_int_3(ctx, val, v0, v1, v2) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 3;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAP32[(v0 >> 2)];
+    obj.$$values[1] = HEAP32[(v1 >> 2)];
+    obj.$$values[2] = HEAP32[(v2 >> 2)];
+
+    return true;
   },
 
   jsb_set_int_4(ctx, val, v0, v1, v2, v3) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
 
-    // TODO:
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
 
-    return 0;
+    obj.$$values[0] = HEAP32[(v0 >> 2)];
+    obj.$$values[1] = HEAP32[(v1 >> 2)];
+    obj.$$values[2] = HEAP32[(v2 >> 2)];
+    obj.$$values[3] = HEAP32[(v3 >> 2)];
+
+    return true;
   },
 
   // #endregion
 
   // #region Low Level Get
 
+  jsb_get_bytes(ctx, val, n, v0) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = n / Sizes.Single;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    for (let index = 0; index < count; index++) {
+      const val = obj.$$values[index];
+      HEAP32[(v0 >> 2) + index] = val;
+    }
+
+    return true;
+  },
+
+  jsb_get_floats(ctx, val, n, v0) {
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = n / Sizes.Single;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    for (let index = 0; index < count; index++) {
+      const val = obj.$$values[index];
+      HEAPF32[(v0 >> 2) + index] = val;
+    }
+
+    return true;
+  },
+
   jsb_get_byte_4(ctx, val, v0, v1, v2, v3) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAP32[(v0 >> 2)] = obj.$$values[0];
+    HEAP32[(v1 >> 2)] = obj.$$values[1];
+    HEAP32[(v2 >> 2)] = obj.$$values[2];
+    HEAP32[(v3 >> 2)] = obj.$$values[3];
+
+    return true;
   },
 
   jsb_get_float_2(ctx, val, v0, v1) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 2;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAPF32[(v0 >> 2)] = obj.$$values[0];
+    HEAPF32[(v1 >> 2)] = obj.$$values[1];
+
+    return true;
   },
 
   jsb_get_float_3(ctx, val, v0, v1, v2) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 3;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAPF32[(v0 >> 2)] = obj.$$values[0];
+    HEAPF32[(v1 >> 2)] = obj.$$values[1];
+    HEAPF32[(v2 >> 2)] = obj.$$values[2];
+
+    return true;
   },
 
   jsb_get_float_4(ctx, val, v0, v1, v2, v3) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAPF32[(v0 >> 2)] = obj.$$values[0];
+    HEAPF32[(v1 >> 2)] = obj.$$values[1];
+    HEAPF32[(v2 >> 2)] = obj.$$values[2];
+    HEAPF32[(v3 >> 2)] = obj.$$values[3];
+
+    return true;
   },
 
   jsb_get_int_1(ctx, val, v0) {
-    return false
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 1;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAP32[(v0 >> 2)] = obj.$$values[0];
+
+    return true;
   },
 
   jsb_get_int_2(ctx, val, v0, v1) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 2;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAP32[(v0 >> 2)] = obj.$$values[0];
+    HEAP32[(v1 >> 2)] = obj.$$values[1];
+
+    return true;
   },
 
   jsb_get_int_3(ctx, val, v0, v1, v2) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 3;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAP32[(v0 >> 2)] = obj.$$values[0];
+    HEAP32[(v1 >> 2)] = obj.$$values[1];
+    HEAP32[(v2 >> 2)] = obj.$$values[2];
+
+    return true;
   },
 
   jsb_get_int_4(ctx, val, v0, v1, v2, v3) {
-    return false;
+    var context = state.getContext(ctx);
+    const obj = context.objects.get(val) as BridgeStruct;
+
+    const count = 4;
+    if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
+
+    HEAP32[(v0 >> 2)] = obj.$$values[0];
+    HEAP32[(v1 >> 2)] = obj.$$values[1];
+    HEAP32[(v2 >> 2)] = obj.$$values[2];
+    HEAP32[(v3 >> 2)] = obj.$$values[3];
+
+    return true;
   },
 
   // #endregion
@@ -1123,14 +1293,13 @@ var QuickJSPlugin: PluginType = {
     const context = state.getContext(ctx);
     const value = context.objects.get(val);
     if (typeof value === 'number') {
-      HEAP32[(pres >> 2)] = 0;
-      HEAP32[(pres >> 2) + 1] = value;
+      var bu = new BigInt64Array(HEAPF64.buffer);
+      bu[pres >> 3] = BigInt(value);
       return true;
     }
     if (typeof value === 'bigint') {
-      var bg = BigInt('0x100000000000000000000000000000000');
-      HEAP32[(pres >> 2)] = Number(value / bg);
-      HEAP32[(pres >> 2) + 1] = Number(value % bg);
+      var bu = new BigInt64Array(HEAPF64.buffer);
+      bu[pres >> 3] = value;
       return true;
     }
     return false;
@@ -1148,25 +1317,8 @@ var QuickJSPlugin: PluginType = {
     return false;
   },
 
-  JS_ToIndex(ctx, pres, val) {
-    const context = state.getContext(ctx);
-    const value = context.objects.get(val);
-    if (typeof value === 'number') {
-      HEAPU32[(pres >> 2)] = 0;
-      HEAPU32[(pres >> 2) + 1] = value;
-      return true;
-    }
-    if (typeof value === 'bigint') {
-      var bg = BigInt('0x100000000000000000000000000000000');
-      HEAPU32[(pres >> 2)] = Number(value / bg);
-      HEAPU32[(pres >> 2) + 1] = Number(value % bg);
-      return true;
-    }
-    return false;
-  },
 
   JS_ToInt32(ctx, pres, val) {
-
     const context = state.getContext(ctx);
     const value = context.objects.get(val);
 
@@ -1182,14 +1334,29 @@ var QuickJSPlugin: PluginType = {
     const context = state.getContext(ctx);
     const value = context.objects.get(val);
     if (typeof value === 'number') {
-      HEAP32[(pres >> 2)] = 0;
-      HEAP32[(pres >> 2) + 1] = value;
+      var bu = new BigInt64Array(HEAPF64.buffer);
+      bu[pres >> 3] = BigInt(value);
       return true;
     }
     if (typeof value === 'bigint') {
-      var bg = BigInt('0x100000000000000000000000000000000');
-      HEAP32[(pres >> 2)] = Number(value / bg);
-      HEAP32[(pres >> 2) + 1] = Number(value % bg);
+      var bu = new BigInt64Array(HEAPF64.buffer);
+      bu[pres >> 3] = value;
+      return true;
+    }
+    return false;
+  },
+
+  JS_ToIndex(ctx, pres, val) {
+    const context = state.getContext(ctx);
+    const value = context.objects.get(val);
+    if (typeof value === 'number') {
+      var bu = new BigUint64Array(HEAPF64.buffer);
+      bu[pres >> 3] = BigInt(value);
+      return true;
+    }
+    if (typeof value === 'bigint') {
+      var bu = new BigUint64Array(HEAPF64.buffer);
+      bu[pres >> 3] = value;
       return true;
     }
     return false;

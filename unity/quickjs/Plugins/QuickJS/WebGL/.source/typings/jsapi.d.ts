@@ -157,19 +157,19 @@ declare global {
     static jsb_get_int_3(ctx: JSContext, val: JSValue, v0: Out<number>, v1: Out<number>, v2: Out<number>): Boolish;
     static jsb_get_int_4(ctx: JSContext, val: JSValue, v0: Out<number>, v1: Out<number>, v2: Out<number>, v3: Out<number>): Boolish;
     static jsb_get_byte_4(ctx: JSContext, val: JSValue, v0: Out<number>, v1: Out<number>, v2: Out<number>, v3: Out<number>): Boolish;
+    static jsb_get_floats(ctx: JSContext, val: JSValue, n: number, v0: Pointer<number>): Boolish;
+    static jsb_get_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): Boolish;
 
-    static jsb_get_floats(ctx: JSContext, val: JSValue, n: number, v0: Pointer<number>): number;
-    static jsb_set_floats(ctx: JSContext, val: JSValue, n: number, v0: Pointer<number>): number;
-    static jsb_set_float_2(ctx: JSContext, val: JSValue, v0: number, v1: number): number;
-    static jsb_set_float_3(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number): number;
-    static jsb_set_float_4(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number, v3: number): number;
-    static jsb_set_int_1(ctx: JSContext, val: JSValue, v0: number): number;
-    static jsb_set_int_2(ctx: JSContext, val: JSValue, v0: number, v1: number): number;
-    static jsb_set_int_3(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number): number;
-    static jsb_set_int_4(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number, v3: number): number;
-    static jsb_set_byte_4(ctx: JSContext, val: JSValue, v0: Byte, v1: Byte, v2: Byte, v3: Byte): number;
-    static jsb_get_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): number;
-    static jsb_set_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): number;
+    static jsb_set_floats(ctx: JSContext, val: JSValue, n: number, v0: Pointer<number>): Boolish;
+    static jsb_set_float_2(ctx: JSContext, val: JSValue, v0: number, v1: number): Boolish;
+    static jsb_set_float_3(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number): Boolish;
+    static jsb_set_float_4(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number, v3: number): Boolish;
+    static jsb_set_int_1(ctx: JSContext, val: JSValue, v0: number): Boolish;
+    static jsb_set_int_2(ctx: JSContext, val: JSValue, v0: number, v1: number): Boolish;
+    static jsb_set_int_3(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number): Boolish;
+    static jsb_set_int_4(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number, v3: number): Boolish;
+    static jsb_set_byte_4(ctx: JSContext, val: JSValue, v0: Byte, v1: Byte, v2: Byte, v3: Byte): Boolish;
+    static jsb_set_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): Boolish;
   }
 
   export declare class JSApiDelegates {

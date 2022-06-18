@@ -61,7 +61,7 @@ declare global {
   };
 
   export declare type BridgeStruct = {
-    values: number[];
+    $$values: number[];
   };
 
   const enum JSPropFlags {
@@ -179,10 +179,13 @@ declare global {
     JS_CFUNC_iterator_next = 12, // unused in jsb
   }
 
+
   const enum Sizes {
     JSPayloadHeader = 8,
     JSValueUnion = 8,
     JSValue = 16,
     JSAtom = 4,
+    Single = 4,
+    Double = 8,
   }
 }

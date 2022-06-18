@@ -104,7 +104,6 @@ var QuickJSPlugin = {
                             if (!isAtom) {
                                 var bu = new BigInt64Array(HEAPF64.buffer);
                                 bu[(ptr >> 3) + 1] = BigInt(3 /* Tags.JS_TAG_UNDEFINED */);
-                                // HEAP32[(ptr >> 2) + 2] = Tags.JS_TAG_UNDEFINED;
                             }
                         }
                         return 0;
@@ -118,10 +117,8 @@ var QuickJSPlugin = {
                     if (typeof ptr === 'number') {
                         HEAP32[ptr >> 2] = id;
                         if (!isAtom) {
-                            // TODO: [Improvement] find out if there is an easier way to pass longs to C#
                             var bu = new BigInt64Array(HEAPF64.buffer);
                             bu[(ptr >> 3) + 1] = BigInt(ho.tag);
-                            // HEAP32[(ptr >> 2) + 2] = ho.tag;
                         }
                     }
                     return ho.refCount;
@@ -259,8 +256,23 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         context.objects.ref(v, -1, undefined);
     },
-    JSB_FreeValueRT: function (ctx, v) {
+    JSB_FreeValueRT: function (rt, v) {
         // TODO:
+    },
+    JS_FreeCString: function (ctx, ptr) {
+        // TODO:
+        // _free(ptr);
+    },
+    js_free: function (ctx, ptr) {
+        // TODO:
+        // _free(ptr);
+    },
+    JSB_FreePayload: function (ret, ctx, val) {
+        var context = state.getContext(ctx);
+        var rec = context.objects.getRecord(val);
+        HEAP32[ret >> 2] = rec.type;
+        HEAP32[(ret >> 2) + 1] = rec.payload || 0;
+        // TODO: free?
     },
     JSB_DupValue: function (ptr, ctx, v) {
         var context = state.getContext(ctx);
@@ -478,16 +490,6 @@ var QuickJSPlugin = {
         var _a = state.bufferify(str), buffer = _a[0], length = _a[1];
         HEAP32[(len >> 2)] = length;
         return buffer;
-    },
-    JS_FreeCString: function (ctx, ptr) {
-        // TODO:
-    },
-    js_free: function (ctx, ptr) {
-        // TODO:
-    },
-    JSB_FreePayload: function (ret, ctx, val) {
-        // TODO:
-        return 0;
     },
     JS_GetArrayBuffer: function (ctx, psize, obj) {
         var context = state.getContext(ctx);
@@ -715,7 +717,7 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var protoVal = context.objects.get(proto);
         var res = Object.create(protoVal);
-        res.values = new Array(size).fill(0);
+        res.$$values = new Array(size).fill(0);
         context.objects.push(res, ret);
     },
     JSB_NewBridgeClassObject: function (ret, ctx, new_target, object_id) {
@@ -726,7 +728,7 @@ var QuickJSPlugin = {
     JSB_NewBridgeClassValue: function (ret, ctx, new_target, size) {
         var context = state.getContext(ctx);
         var res = context.objects.get(new_target);
-        res.values = new Array(size).fill(0);
+        res.$$values = new Array(size).fill(0);
         context.objects.push(res, ret);
     },
     JSB_GetBridgeClassID: function () {
@@ -794,79 +796,229 @@ var QuickJSPlugin = {
         var buffer = state.bufferify(str)[0];
         return buffer;
     },
-    jsb_get_bytes: function (ctx, val, n, v0) {
-        // TODO:
-        return 0;
-    },
-    jsb_get_floats: function (ctx, val, n, v0) {
-        // TODO:
-        return 0;
-    },
-    jsb_set_byte_4: function (ctx, val, v0, v1, v2, v3) {
-        // TODO:
-        return 0;
+    jsb_set_floats: function (ctx, val, n, v0) {
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = n / 4 /* Sizes.Single */;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        for (var index = 0; index < count; index++) {
+            var val_1 = HEAPF32[(v0 >> 2) + index];
+            obj.$$values[index] = val_1;
+        }
+        return true;
     },
     jsb_set_bytes: function (ctx, val, n, v0) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = n / 4 /* Sizes.Single */;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        for (var index = 0; index < count; index++) {
+            var val_2 = HEAP32[(v0 >> 2) + index];
+            obj.$$values[index] = val_2;
+        }
+        return true;
+    },
+    jsb_set_byte_4: function (ctx, val, v0, v1, v2, v3) {
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAP32[(v0 >> 2)];
+        obj.$$values[1] = HEAP32[(v1 >> 2)];
+        obj.$$values[2] = HEAP32[(v2 >> 2)];
+        obj.$$values[3] = HEAP32[(v3 >> 2)];
+        return true;
     },
     jsb_set_float_2: function (ctx, val, v0, v1) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 2;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAPF32[(v0 >> 2)];
+        obj.$$values[1] = HEAPF32[(v1 >> 2)];
+        return true;
     },
     jsb_set_float_3: function (ctx, val, v0, v1, v2) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 3;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAPF32[(v0 >> 2)];
+        obj.$$values[1] = HEAPF32[(v1 >> 2)];
+        obj.$$values[2] = HEAPF32[(v2 >> 2)];
+        return true;
     },
     jsb_set_float_4: function (ctx, val, v0, v1, v2, v3) {
-        // TODO:
-        return 0;
-    },
-    jsb_set_floats: function (ctx, val, n, v0) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAPF32[(v0 >> 2)];
+        obj.$$values[1] = HEAPF32[(v1 >> 2)];
+        obj.$$values[2] = HEAPF32[(v2 >> 2)];
+        obj.$$values[3] = HEAPF32[(v3 >> 2)];
+        return true;
     },
     jsb_set_int_1: function (ctx, val, v0) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 1;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAP32[(v0 >> 2)];
+        return true;
     },
     jsb_set_int_2: function (ctx, val, v0, v1) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 2;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAP32[(v0 >> 2)];
+        obj.$$values[1] = HEAP32[(v1 >> 2)];
+        return true;
     },
     jsb_set_int_3: function (ctx, val, v0, v1, v2) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 3;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAP32[(v0 >> 2)];
+        obj.$$values[1] = HEAP32[(v1 >> 2)];
+        obj.$$values[2] = HEAP32[(v2 >> 2)];
+        return true;
     },
     jsb_set_int_4: function (ctx, val, v0, v1, v2, v3) {
-        // TODO:
-        return 0;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        obj.$$values[0] = HEAP32[(v0 >> 2)];
+        obj.$$values[1] = HEAP32[(v1 >> 2)];
+        obj.$$values[2] = HEAP32[(v2 >> 2)];
+        obj.$$values[3] = HEAP32[(v3 >> 2)];
+        return true;
     },
     // #endregion
     // #region Low Level Get
+    jsb_get_bytes: function (ctx, val, n, v0) {
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = n / 4 /* Sizes.Single */;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        for (var index = 0; index < count; index++) {
+            var val_3 = obj.$$values[index];
+            HEAP32[(v0 >> 2) + index] = val_3;
+        }
+        return true;
+    },
+    jsb_get_floats: function (ctx, val, n, v0) {
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = n / 4 /* Sizes.Single */;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        for (var index = 0; index < count; index++) {
+            var val_4 = obj.$$values[index];
+            HEAPF32[(v0 >> 2) + index] = val_4;
+        }
+        return true;
+    },
     jsb_get_byte_4: function (ctx, val, v0, v1, v2, v3) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAP32[(v0 >> 2)] = obj.$$values[0];
+        HEAP32[(v1 >> 2)] = obj.$$values[1];
+        HEAP32[(v2 >> 2)] = obj.$$values[2];
+        HEAP32[(v3 >> 2)] = obj.$$values[3];
+        return true;
     },
     jsb_get_float_2: function (ctx, val, v0, v1) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 2;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAPF32[(v0 >> 2)] = obj.$$values[0];
+        HEAPF32[(v1 >> 2)] = obj.$$values[1];
+        return true;
     },
     jsb_get_float_3: function (ctx, val, v0, v1, v2) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 3;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAPF32[(v0 >> 2)] = obj.$$values[0];
+        HEAPF32[(v1 >> 2)] = obj.$$values[1];
+        HEAPF32[(v2 >> 2)] = obj.$$values[2];
+        return true;
     },
     jsb_get_float_4: function (ctx, val, v0, v1, v2, v3) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAPF32[(v0 >> 2)] = obj.$$values[0];
+        HEAPF32[(v1 >> 2)] = obj.$$values[1];
+        HEAPF32[(v2 >> 2)] = obj.$$values[2];
+        HEAPF32[(v3 >> 2)] = obj.$$values[3];
+        return true;
     },
     jsb_get_int_1: function (ctx, val, v0) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 1;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAP32[(v0 >> 2)] = obj.$$values[0];
+        return true;
     },
     jsb_get_int_2: function (ctx, val, v0, v1) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 2;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAP32[(v0 >> 2)] = obj.$$values[0];
+        HEAP32[(v1 >> 2)] = obj.$$values[1];
+        return true;
     },
     jsb_get_int_3: function (ctx, val, v0, v1, v2) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 3;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAP32[(v0 >> 2)] = obj.$$values[0];
+        HEAP32[(v1 >> 2)] = obj.$$values[1];
+        HEAP32[(v2 >> 2)] = obj.$$values[2];
+        return true;
     },
     jsb_get_int_4: function (ctx, val, v0, v1, v2, v3) {
-        return false;
+        var context = state.getContext(ctx);
+        var obj = context.objects.get(val);
+        var count = 4;
+        if (!Array.isArray(obj.$$values) || count >= obj.$$values.length)
+            return false;
+        HEAP32[(v0 >> 2)] = obj.$$values[0];
+        HEAP32[(v1 >> 2)] = obj.$$values[1];
+        HEAP32[(v2 >> 2)] = obj.$$values[2];
+        HEAP32[(v3 >> 2)] = obj.$$values[3];
+        return true;
     },
     // #endregion
     // #region To
@@ -874,14 +1026,13 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var value = context.objects.get(val);
         if (typeof value === 'number') {
-            HEAP32[(pres >> 2)] = 0;
-            HEAP32[(pres >> 2) + 1] = value;
+            var bu = new BigInt64Array(HEAPF64.buffer);
+            bu[pres >> 3] = BigInt(value);
             return true;
         }
         if (typeof value === 'bigint') {
-            var bg = BigInt('0x100000000000000000000000000000000');
-            HEAP32[(pres >> 2)] = Number(value / bg);
-            HEAP32[(pres >> 2) + 1] = Number(value % bg);
+            var bu = new BigInt64Array(HEAPF64.buffer);
+            bu[pres >> 3] = value;
             return true;
         }
         return false;
@@ -891,22 +1042,6 @@ var QuickJSPlugin = {
         var value = context.objects.get(val);
         if (typeof value === 'number' || typeof value === 'bigint') {
             HEAPF64[pres >> 3] = Number(value);
-            return true;
-        }
-        return false;
-    },
-    JS_ToIndex: function (ctx, pres, val) {
-        var context = state.getContext(ctx);
-        var value = context.objects.get(val);
-        if (typeof value === 'number') {
-            HEAPU32[(pres >> 2)] = 0;
-            HEAPU32[(pres >> 2) + 1] = value;
-            return true;
-        }
-        if (typeof value === 'bigint') {
-            var bg = BigInt('0x100000000000000000000000000000000');
-            HEAPU32[(pres >> 2)] = Number(value / bg);
-            HEAPU32[(pres >> 2) + 1] = Number(value % bg);
             return true;
         }
         return false;
@@ -924,14 +1059,28 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var value = context.objects.get(val);
         if (typeof value === 'number') {
-            HEAP32[(pres >> 2)] = 0;
-            HEAP32[(pres >> 2) + 1] = value;
+            var bu = new BigInt64Array(HEAPF64.buffer);
+            bu[pres >> 3] = BigInt(value);
             return true;
         }
         if (typeof value === 'bigint') {
-            var bg = BigInt('0x100000000000000000000000000000000');
-            HEAP32[(pres >> 2)] = Number(value / bg);
-            HEAP32[(pres >> 2) + 1] = Number(value % bg);
+            var bu = new BigInt64Array(HEAPF64.buffer);
+            bu[pres >> 3] = value;
+            return true;
+        }
+        return false;
+    },
+    JS_ToIndex: function (ctx, pres, val) {
+        var context = state.getContext(ctx);
+        var value = context.objects.get(val);
+        if (typeof value === 'number') {
+            var bu = new BigUint64Array(HEAPF64.buffer);
+            bu[pres >> 3] = BigInt(value);
+            return true;
+        }
+        if (typeof value === 'bigint') {
+            var bu = new BigUint64Array(HEAPF64.buffer);
+            bu[pres >> 3] = value;
             return true;
         }
         return false;
