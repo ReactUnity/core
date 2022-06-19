@@ -6,13 +6,12 @@ var QuickJSPlugin = {
     $state__postset: 'state.atoms = state.createAtoms();\n',
     $state: {
         createObjects: function () {
-            var getTag = function (object, allowNumbers) {
-                if (allowNumbers === void 0) { allowNumbers = false; }
+            var getTag = function (object) {
                 if (object === undefined)
                     return 3 /* Tags.JS_TAG_UNDEFINED */;
                 if (object === null)
                     return 2 /* Tags.JS_TAG_NULL */;
-                if (allowNumbers && typeof object === 'number')
+                if (typeof object === 'number')
                     return 7 /* Tags.JS_TAG_FLOAT64 */;
                 if (typeof object === 'boolean')
                     return 1 /* Tags.JS_TAG_BOOL */;
@@ -69,6 +68,14 @@ var QuickJSPlugin = {
                         }
                         return;
                     }
+                    if (typeof object === 'boolean') {
+                        if (typeof ptr === 'number') {
+                            HEAP32[ptr >> 2] = object ? 1 : 0;
+                            HEAP32[(ptr >> 2) + 1] = 0;
+                            state.HEAP64()[(ptr >> 3) + 1] = BigInt(1 /* Tags.JS_TAG_BOOL */);
+                        }
+                        return;
+                    }
                     var foundId = map.get(object);
                     if (foundId > 0) {
                         res.refIndex(foundId, 1, ptr);
@@ -90,6 +97,9 @@ var QuickJSPlugin = {
                     if (tag === 0 /* Tags.JS_TAG_INT */) {
                         return HEAP32[val >> 2];
                     }
+                    else if (tag === 1 /* Tags.JS_TAG_BOOL */) {
+                        return !!HEAP32[val >> 2];
+                    }
                     else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
                         return HEAPF64[val >> 3];
                     }
@@ -109,9 +119,16 @@ var QuickJSPlugin = {
                             id: -1,
                             refCount: 0,
                             value: value,
-                            tag: 0 /* Tags.JS_TAG_INT */,
-                            type: 3 /* BridgeObjectType.ValueType */,
-                            payload: value,
+                            tag: tag,
+                        };
+                    }
+                    else if (tag === 1 /* Tags.JS_TAG_BOOL */) {
+                        var boolValue = !!HEAP32[val >> 2];
+                        return {
+                            id: -1,
+                            refCount: 0,
+                            value: boolValue,
+                            tag: tag,
                         };
                     }
                     else if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
@@ -120,9 +137,7 @@ var QuickJSPlugin = {
                             id: -1,
                             refCount: 0,
                             value: value,
-                            tag: 7 /* Tags.JS_TAG_FLOAT64 */,
-                            type: 3 /* BridgeObjectType.ValueType */,
-                            payload: value,
+                            tag: tag,
                         };
                     }
                     else {
@@ -154,6 +169,15 @@ var QuickJSPlugin = {
                         if (typeof ptr === 'number') {
                             var val = HEAP32[(obj >> 2)];
                             HEAP32[(ptr >> 2)] = val;
+                            HEAP32[(ptr >> 2) + 1] = 0;
+                            state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
+                        }
+                        return;
+                    }
+                    else if (tag === 1 /* Tags.JS_TAG_BOOL */) {
+                        if (typeof ptr === 'number') {
+                            var valBool = !!HEAP32[(obj >> 2)];
+                            HEAP32[(ptr >> 2)] = valBool ? 1 : 0;
                             HEAP32[(ptr >> 2) + 1] = 0;
                             state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
                         }
@@ -336,11 +360,14 @@ var QuickJSPlugin = {
         return context.runtimeId;
     },
     JS_NewContext: function (rtId) {
+        var _a, _b;
         var id = state.lastContextId++;
         var runtime = state.getRuntime(rtId);
         var extraGlobals = {
             location: undefined,
             document: undefined,
+            btoa: (_a = window.btoa) === null || _a === void 0 ? void 0 : _a.bind(window),
+            atob: (_b = window.atob) === null || _b === void 0 ? void 0 : _b.bind(window),
         };
         var globals = new Proxy(extraGlobals, {
             get: function (target, p, receiver) {
@@ -364,11 +391,8 @@ var QuickJSPlugin = {
                         extraGlobals.self =
                             extraGlobals.this =
                                 globals;
-        window['__quickJSGlobals'] = globals;
-        window['btoa'] = window.btoa.bind(window);
-        window['atob'] = window.atob.bind(window);
         var evaluate = function (code, filename) {
-            var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
+            var sourceMap = !filename ? '' : '\n//# sourceURL=unity-jsb:///' + filename;
             return (function (evalCode) {
                 //@ts-ignore
                 with (globals) {

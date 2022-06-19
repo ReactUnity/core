@@ -12,10 +12,10 @@ var QuickJSPlugin: PluginType = {
   $state__postset: 'state.atoms = state.createAtoms();\n',
   $state: {
     createObjects: function (): PluginObjects {
-      var getTag = function (object, allowNumbers = false): Tags {
+      var getTag = function (object): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
         if (object === null) return Tags.JS_TAG_NULL;
-        if (allowNumbers && typeof object === 'number') return Tags.JS_TAG_FLOAT64;
+        if (typeof object === 'number') return Tags.JS_TAG_FLOAT64;
         if (typeof object === 'boolean') return Tags.JS_TAG_BOOL;
         if (typeof object === 'function') return Tags.JS_TAG_FUNCTION_BYTECODE;
         if (typeof object === 'symbol') return Tags.JS_TAG_SYMBOL;
@@ -77,6 +77,16 @@ var QuickJSPlugin: PluginType = {
             return;
           }
 
+          if (typeof object === 'boolean') {
+            if (typeof ptr === 'number') {
+              HEAP32[ptr >> 2] = object ? 1 : 0;
+              HEAP32[(ptr >> 2) + 1] = 0;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_BOOL);
+            }
+
+            return;
+          }
+
           const foundId = map.get(object);
 
           if (foundId > 0) {
@@ -105,6 +115,9 @@ var QuickJSPlugin: PluginType = {
           if (tag === Tags.JS_TAG_INT) {
             return HEAP32[val >> 2];
           }
+          else if (tag === Tags.JS_TAG_BOOL) {
+            return !!HEAP32[val >> 2];
+          }
           else if (tag === Tags.JS_TAG_FLOAT64) {
             return HEAPF64[val >> 3];
           }
@@ -124,9 +137,16 @@ var QuickJSPlugin: PluginType = {
               id: -1,
               refCount: 0,
               value,
-              tag: Tags.JS_TAG_INT,
-              type: BridgeObjectType.ValueType,
-              payload: value,
+              tag,
+            };
+          }
+          else if (tag === Tags.JS_TAG_BOOL) {
+            var boolValue = !!HEAP32[val >> 2];
+            return {
+              id: -1,
+              refCount: 0,
+              value: boolValue,
+              tag,
             };
           }
           else if (tag === Tags.JS_TAG_FLOAT64) {
@@ -135,9 +155,7 @@ var QuickJSPlugin: PluginType = {
               id: -1,
               refCount: 0,
               value,
-              tag: Tags.JS_TAG_FLOAT64,
-              type: BridgeObjectType.ValueType,
-              payload: value,
+              tag,
             };
           }
           else {
@@ -169,6 +187,15 @@ var QuickJSPlugin: PluginType = {
             if (typeof ptr === 'number') {
               var val = HEAP32[(obj >> 2)];
               HEAP32[(ptr >> 2)] = val;
+              HEAP32[(ptr >> 2) + 1] = 0;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
+            }
+            return;
+          }
+          else if (tag === Tags.JS_TAG_BOOL) {
+            if (typeof ptr === 'number') {
+              var valBool = !!HEAP32[(obj >> 2)];
+              HEAP32[(ptr >> 2)] = valBool ? 1 : 0;
               HEAP32[(ptr >> 2) + 1] = 0;
               state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
             }
@@ -382,6 +409,8 @@ var QuickJSPlugin: PluginType = {
     var extraGlobals: any = {
       location: undefined,
       document: undefined,
+      btoa: window.btoa?.bind(window),
+      atob: window.atob?.bind(window),
     };
 
     var globals: typeof window = new Proxy(extraGlobals, {
@@ -406,12 +435,8 @@ var QuickJSPlugin: PluginType = {
       extraGlobals.this =
       globals;
 
-    window['__quickJSGlobals'] = globals;
-    window['btoa'] = window.btoa.bind(window);
-    window['atob'] = window.atob.bind(window);
-
     var evaluate = function (code: string, filename?: string) {
-      var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
+      var sourceMap = !filename ? '' : '\n//# sourceURL=unity-jsb:///' + filename;
 
       return (function (evalCode) {
         //@ts-ignore
