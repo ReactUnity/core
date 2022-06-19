@@ -9,7 +9,7 @@ type PluginType = JSApiExternals & {
 }
 
 var QuickJSPlugin: PluginType = {
-  $state__postset: 'state.atoms = state.createHeap(true);\n',
+  $state__postset: 'state.atoms = state.createAtoms();\n',
   $state: {
     returnLastStatement: function (code: string) {
       // @ts-ignore
@@ -20,7 +20,7 @@ var QuickJSPlugin: PluginType = {
       }
       else { }
     },
-    createHeap: function <T = any, PtrType extends Pointer<any> = JSValue>(isAtom: boolean): PluginHeap<T, PtrType> {
+    createObjects: function (): PluginObjects {
       var getTag = function (object, allowNumbers = false): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
         if (object === null) return Tags.JS_TAG_NULL;
@@ -34,37 +34,36 @@ var QuickJSPlugin: PluginType = {
         return Tags.JS_TAG_OBJECT;
       };
 
-      var record: PluginHeap['record'] = {};
+      var record: PluginObjects['record'] = {};
 
       const map = new Map<any, number>();
 
-      const res: PluginHeap<T, PtrType> = {
+      const res: PluginObjects = {
         record,
-        lastId: 1,
+        lastId: 0,
 
         allocate(object, type, payload) {
-          if (isAtom) return res.push(object, undefined, type, payload) as PtrType;
-          var ptr = _malloc(Sizes.JSValue) as PtrType;
+          var ptr = _malloc(Sizes.JSValue) as JSValue;
           res.push(object, ptr, type, payload);
-          return ptr as PtrType;
+          return ptr as JSValue;
         },
         batchAllocate(objects) {
-          var size = isAtom ? Sizes.JSAtom : Sizes.JSValue;
-          var arr = _malloc(size * objects.length) as PointerArray<PtrType>;
+          var size = Sizes.JSValue;
+          var arr = _malloc(size * objects.length) as PointerArray<JSValue>;
 
           for (let index = 0; index < objects.length; index++) {
             const object = objects[index];
-            res.push(object, arr + (index * size) as PtrType);
+            res.push(object, arr + (index * size) as JSValue);
           }
 
           return arr;
         },
         batchGet(ptrs, count) {
-          var size = (isAtom ? Sizes.JSAtom : Sizes.JSValue);
+          var size = Sizes.JSValue;
 
           var arr = new Array(count);
           for (let index = 0; index < count; index++) {
-            const object = res.get(ptrs + index * size as PtrType);
+            const object = res.get(ptrs + index * size as JSValue);
             arr[index] = object;
           }
 
@@ -73,13 +72,17 @@ var QuickJSPlugin: PluginType = {
         push(object, ptr, type, payload) {
           if (typeof object === 'undefined') {
             res.refIndex(0, 1, ptr);
-            return 0;
+            return;
           }
 
-          // if (!isAtom && typeof object === 'number') {
-          //   res.ref(object as any, 1, ptr);
-          //   return -1;
-          // }
+          if (typeof object === 'number') {
+            if (typeof ptr === 'number') {
+              HEAPF64[ptr >> 3] = object;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_FLOAT64);
+            }
+
+            return;
+          }
 
           const foundId = map.get(object);
 
@@ -89,10 +92,10 @@ var QuickJSPlugin: PluginType = {
             found.payload = payload || found.payload;
 
             res.refIndex(foundId, 1, ptr);
-            return foundId;
+            return;
           }
 
-          var id = res.lastId++;
+          var id = ++res.lastId;
 
           record[id] = {
             id,
@@ -110,7 +113,7 @@ var QuickJSPlugin: PluginType = {
           return id;
         },
         get(val) {
-          var tag = isAtom ? undefined : Number(state.HEAP64()[(val >> 3) + 1]);
+          var tag = Number(state.HEAP64()[(val >> 3) + 1]);
 
           if (tag === Tags.JS_TAG_INT) {
             return HEAP32[val >> 2];
@@ -119,14 +122,14 @@ var QuickJSPlugin: PluginType = {
             return HEAPF64[val >> 3];
           }
           else {
-            var id = isAtom ? val : HEAP32[val >> 2];
+            var id = HEAP32[val >> 2];
             if (id === 0) return undefined;
             var ho = record[id];
             return ho.value;
           }
         },
         getRecord(val) {
-          var tag = isAtom ? undefined : Number(state.HEAP64()[(val >> 3) + 1]);
+          var tag = Number(state.HEAP64()[(val >> 3) + 1]);
 
           if (tag === Tags.JS_TAG_INT) {
             var value = HEAP32[val >> 2];
@@ -151,7 +154,7 @@ var QuickJSPlugin: PluginType = {
             };
           }
           else {
-            var id = isAtom ? val : HEAP32[val >> 2];
+            var id = HEAP32[val >> 2];
             if (id === 0) return {
               id: 0,
               refCount: 0,
@@ -165,20 +168,38 @@ var QuickJSPlugin: PluginType = {
           }
         },
         ref(obj, diff, ptr) {
-          var id = isAtom ? obj : HEAP32[obj >> 2];
-          return res.refIndex(id, diff, ptr);
+          var tag = Number(state.HEAP64()[(obj >> 3) + 1]);
+
+          if (tag === Tags.JS_TAG_FLOAT64) {
+            if (typeof ptr === 'number') {
+              var val = HEAPF64[(obj >> 3)];
+              HEAPF64[ptr >> 3] = val;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
+            }
+            return;
+          }
+          else if (tag === Tags.JS_TAG_INT) {
+            if (typeof ptr === 'number') {
+              var val = HEAP32[(obj >> 2)];
+              HEAP32[(ptr >> 2)] = val;
+              HEAP32[(ptr >> 2) + 1] = 0;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(tag);
+            }
+            return;
+          }
+
+          var id = HEAP32[obj >> 2];
+          res.refIndex(id, diff, ptr);
         },
         refIndex(id, diff, ptr) {
           if (id === 0) {
             if (typeof ptr === 'number') {
               HEAP32[ptr >> 2] = 0;
-              if (!isAtom) {
-                HEAP32[(ptr >> 2) + 1] = 0;
-                state.HEAP64()[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_UNDEFINED);
-              }
+              HEAP32[(ptr >> 2) + 1] = 0;
+              state.HEAP64()[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_UNDEFINED);
             }
 
-            return 0;
+            return;
           }
 
           var ho = record[id];
@@ -193,18 +214,74 @@ var QuickJSPlugin: PluginType = {
 
           if (typeof ptr === 'number') {
             HEAP32[ptr >> 2] = id;
-            if (!isAtom) {
-              HEAP32[(ptr >> 2) + 1] = 0;
-              state.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
-            }
+            HEAP32[(ptr >> 2) + 1] = 0;
+            state.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
           }
-
-          return ho.refCount;
         },
         popIndex(id) {
           // var rec = record[id];
           // record[id] = undefined;
           // map.delete(rec.value);
+        },
+      };
+
+      return res;
+    },
+    createAtoms(): PluginAtoms {
+      var record: PluginAtoms['record'] = {};
+      var map: PluginAtoms['map'] = {};
+
+      var res: PluginAtoms = {
+        record,
+        map,
+        lastId: 0,
+        get(ref) {
+          if (ref === 0) return undefined;
+          return record[ref].value;
+        },
+        push(str) {
+          if (str === undefined) return 0;
+          var mapped = map[str];
+          var id;
+
+          if (!mapped) {
+            id = ++res.lastId;
+            map[str] = record[id] = {
+              id,
+              value: str,
+              refCount: 1,
+            };
+          } else {
+            id = mapped.id;
+            mapped.refCount++;
+          }
+
+          return id;
+        },
+        pushId(id) {
+          if (id === 0) return;
+
+          var recorded = record[id];
+          console.assert(!!recorded);
+          if (!recorded) return 0;
+          recorded.refCount++;
+
+          return id;
+        },
+        pop(id) {
+          if (id === 0) return;
+
+          var recorded = record[id];
+          console.assert(!!recorded);
+          if (!recorded) return;
+
+          recorded.refCount--;
+          console.assert(recorded.refCount >= 0);
+
+          if (recorded.refCount == 0) {
+            delete map[recorded.value];
+            delete record[id];
+          }
         },
       };
 
@@ -302,7 +379,7 @@ var QuickJSPlugin: PluginType = {
 
     var contentWindow = iframe.contentWindow!;
 
-    var extraGlobals = {
+    var extraGlobals: any = {
       location: undefined,
       document: undefined,
     };
@@ -310,46 +387,67 @@ var QuickJSPlugin: PluginType = {
     var globals: typeof contentWindow = new Proxy(extraGlobals, {
       get(target, p, receiver) {
         if (p in target) return target[p];
-        else return contentWindow[p];
+        else return window[p];
       },
       set(target, p, val, receiver) {
         target[p] = val;
         return true;
       },
       has(target, key) {
-        return (key in contentWindow) || (key in target);
+        return (key in window) || (key in target);
       },
     }) as any;
+
+    extraGlobals.globalThis =
+      extraGlobals.global =
+      extraGlobals.window =
+      extraGlobals.parent =
+      extraGlobals.self =
+      extraGlobals.this =
+      globals;
 
     contentWindow['__quickJSGlobals'] = globals;
     contentWindow['btoa'] = contentWindow.btoa.bind(contentWindow);
     contentWindow['atob'] = contentWindow.atob.bind(contentWindow);
 
+    window['__quickJSGlobals'] = globals;
     window['btoa'] = window.btoa.bind(window);
     window['atob'] = window.atob.bind(window);
 
 
-    var evaluate = function (code: string) {
+    var evaluate = function (code: string, filename?: string) {
 
-      var replacedCode = state.returnLastStatement(code);
+      // var replacedCode = state.returnLastStatement(code);
 
-      var fullCode = '(function() {\n' +
-        'var globalThis, global, window, parent, self;\n' +
-        'globalThis = global = window = parent = self = this;\n' +
-        'with(globalThis) {\n' +
-        replacedCode +
-        '}\n' +
-        '}).call(this.__quickJSGlobals)'
+      var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
 
-      return (contentWindow['eval' as any] as any)(fullCode);
+      //@ts-ignore
+      with (globals) {
+        return (function (evalCode) {
+          return eval(evalCode);
+        }).call(globals, code + sourceMap);
+      }
+
+      // var fullCode =
+      //   '(function() {\n' +
+      //   'var globalThis, global, window, parent, self;\n' +
+      //   'globalThis = global = window = parent = self = this;\n' +
+      //   'with(globalThis) {\n' +
+      //   replacedCode +
+      //   '}\n' +
+      //   '}).call(this.__quickJSGlobals)\n' +
+      //   sourceMap;
+
+      // return (contentWindow['eval' as any] as any)(fullCode);
     };
 
-    var objects = state.createHeap(false);
+    var objects = state.createObjects();
 
     var context: PluginContext = {
       id,
       runtimeId: rtId,
       iframe,
+      window,
       globalObject: globals,
       evaluate,
       objects,
@@ -383,8 +481,9 @@ var QuickJSPlugin: PluginType = {
     try {
       var context = state.getContext(ctx);
       var code = state.stringify(input, input_len);
+      var filenameStr = state.stringify(filename);
 
-      var res = context.evaluate(code);
+      var res = context.evaluate(code, filenameStr);
 
       context.objects.push(res, ptr);
     } catch (err) {
@@ -709,7 +808,7 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     var val = state.stringify(str, len);
 
-    return state.atoms.push(val, undefined);
+    return state.atoms.push(val);
   },
 
   JS_AtomToString(ptr, ctx, atom) {
@@ -721,78 +820,75 @@ var QuickJSPlugin: PluginType = {
   },
 
   JS_FreeAtom(ctx, v) {
-    var context = state.getContext(ctx);
-    state.atoms.ref(v, -1, undefined);
+    state.atoms.pop(v);
   },
 
   JS_DupAtom(ctx, v) {
-    var context = state.getContext(ctx);
-    state.atoms.ref(v, 1, undefined);
-    return v;
+    return state.atoms.pushId(v);
   },
 
   JSB_ATOM_constructor() {
-    return state.atoms.push('constructor', undefined);
+    return state.atoms.push('constructor');
   },
 
   JSB_ATOM_Error() {
-    return state.atoms.push('Error', undefined);
+    return state.atoms.push('Error');
   },
 
   JSB_ATOM_fileName() {
-    return state.atoms.push('fileName', undefined);
+    return state.atoms.push('fileName');
   },
 
   JSB_ATOM_Function() {
-    return state.atoms.push('Function', undefined);
+    return state.atoms.push('Function');
   },
 
   JSB_ATOM_length() {
-    return state.atoms.push('length', undefined);
+    return state.atoms.push('length');
   },
 
   JSB_ATOM_lineNumber() {
-    return state.atoms.push('lineNumber', undefined);
+    return state.atoms.push('lineNumber');
   },
 
   JSB_ATOM_message() {
-    return state.atoms.push('message', undefined);
+    return state.atoms.push('message');
   },
 
   JSB_ATOM_name() {
-    return state.atoms.push('name', undefined);
+    return state.atoms.push('name');
   },
 
   JSB_ATOM_Number() {
-    return state.atoms.push('Number', undefined);
+    return state.atoms.push('Number');
   },
 
   JSB_ATOM_prototype() {
-    return state.atoms.push('prototype', undefined);
+    return state.atoms.push('prototype');
   },
 
   JSB_ATOM_Proxy() {
-    return state.atoms.push('Proxy', undefined);
+    return state.atoms.push('Proxy');
   },
 
   JSB_ATOM_stack() {
-    return state.atoms.push('stack', undefined);
+    return state.atoms.push('stack');
   },
 
   JSB_ATOM_String() {
-    return state.atoms.push('String', undefined);
+    return state.atoms.push('String');
   },
 
   JSB_ATOM_Object() {
-    return state.atoms.push('Object', undefined);
+    return state.atoms.push('Object');
   },
 
   JSB_ATOM_Operators() {
-    return state.atoms.push('Operators', undefined);
+    return state.atoms.push('Operators');
   },
 
   JSB_ATOM_Symbol_operatorSet() {
-    return state.atoms.push('operatorSet', undefined);
+    return state.atoms.push('operatorSet');
   },
 
   // #endregion
@@ -1086,9 +1182,9 @@ var QuickJSPlugin: PluginType = {
   // #region Low level Set
 
   js_strndup(ctx, s, n) {
-    var str = state.stringify(s as any, n);
-
-    var [buffer] = state.bufferify(str);
+    var buffer = _malloc(n + 1);
+    _memcpy(buffer, s, n);
+    HEAPU8[buffer + n] = 0;
     return buffer as IntPtr;
   },
 
@@ -1388,10 +1484,9 @@ var QuickJSPlugin: PluginType = {
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAPF64[pres >> 3] = Number(value);
-      return true;
+      return false;
     }
-
-    return false;
+    return -1;
   },
 
 
@@ -1401,10 +1496,10 @@ var QuickJSPlugin: PluginType = {
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAP32[pres >> 2] = Number(value);
-      return true;
+      return false;
     }
 
-    return false;
+    return -1;
   },
 
   JS_ToInt64(ctx, pres, val) {
@@ -1412,9 +1507,9 @@ var QuickJSPlugin: PluginType = {
     const value = context.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       state.HEAP64()[pres >> 3] = BigInt(value);
-      return true;
+      return false;
     }
-    return false;
+    return -1;
   },
 
   JS_ToBigInt64(ctx, pres, val) {
@@ -1422,9 +1517,9 @@ var QuickJSPlugin: PluginType = {
     const value = context.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       state.HEAP64()[pres >> 3] = BigInt(value);
-      return true;
+      return false;
     }
-    return false;
+    return -1;
   },
 
   JS_ToIndex(ctx, pres, val) {
@@ -1432,9 +1527,9 @@ var QuickJSPlugin: PluginType = {
     const value = context.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       state.HEAPU64()[pres >> 3] = BigInt(value);
-      return true;
+      return false;
     }
-    return false;
+    return -1;
   },
 
   JSB_ToUint32(ctx, pres, val) {
@@ -1443,10 +1538,9 @@ var QuickJSPlugin: PluginType = {
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAPU32[pres >> 2] = Number(value);
-      return true;
+      return false;
     }
-
-    return false;
+    return -1;
   },
 
   JS_ToBool(ctx, val) {

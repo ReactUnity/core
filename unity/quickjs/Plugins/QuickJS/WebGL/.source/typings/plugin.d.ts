@@ -12,8 +12,9 @@ declare global {
     contexts: Record<string, PluginContext | undefined>;
     lastRuntimeId: number;
     lastContextId: number;
-    atoms?: PluginHeap<string, JSAtom>;
-    createHeap: <T>(isAtom: boolean) => PluginHeap<T>;
+    atoms?: PluginAtoms;
+    createObjects: () => PluginObjects;
+    createAtoms: () => PluginAtoms;
 
     getRuntime: (ctx: JSRuntime) => PluginRuntime;
     getContext: (ctx: JSContext) => PluginContext;
@@ -32,27 +33,43 @@ declare global {
     id: number;
     opaque?: any;
     runtimeId: number;
-    objects: PluginHeap;
-    iframe: HTMLIFrameElement;
+    objects: PluginObjects;
 
+    window: Window;
     globalObject: Window;
     globalObjectId?: number;
 
-    evaluate: ((script: string) => any);
+    evaluate: ((script: string, filename?: string) => any);
     lastException?: Error;
   };
 
-  export declare type PluginHeap<T = any, PtrType = JSValue> = {
+  export declare type PluginAtoms = {
+    record: Record<number, PluginAtom>;
+    map: Record<string, PluginAtom>;
+    get: ((ref: JSAtom) => string);
+    lastId: number;
+    push: ((str: string) => JSAtom);
+    pushId: ((id: JSAtom) => JSAtom);
+    pop: ((ref: JSAtom) => void);
+  };
+
+  export declare type PluginAtom = {
+    id: number;
+    value: string;
+    refCount: number;
+  }
+
+  export declare type PluginObjects = {
     popIndex: (id: number) => void;
     record: Record<string | number, PluginHeapObject>;
-    get: ((ref: PtrType) => T);
-    getRecord: ((ref: PtrType) => PluginHeapObject);
-    push: ((obj: T, ptr: PtrType, type?: BridgeObjectType, payload?: number) => number);
-    allocate: ((obj: T, type?: BridgeObjectType, payload?: number) => PtrType);
-    batchAllocate: ((objs: T[]) => PointerArray<PtrType>);
-    batchGet: ((arr: PointerArray<PtrType>, count: number) => T[]);
-    ref: ((obj: PtrType, diff: number, ptr: PtrType) => number);
-    refIndex: ((obj: number, diff: number, ptr: PtrType) => number);
+    get: ((ref: JSValue) => any);
+    getRecord: ((ref: JSValue) => PluginHeapObject);
+    push: ((obj: any, ptr: JSValue, type?: BridgeObjectType, payload?: number) => void);
+    allocate: ((obj: any, type?: BridgeObjectType, payload?: number) => JSValue);
+    batchAllocate: ((objs: any[]) => PointerArray<JSValue>);
+    batchGet: ((arr: PointerArray<JSValue>, count: number) => any[]);
+    ref: ((obj: JSValue, diff: number, ptr: JSValue) => void);
+    refIndex: ((obj: number, diff: number, ptr: JSValue) => void);
     lastId: number;
   };
 

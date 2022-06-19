@@ -74,5 +74,6 @@ declare global {
   const preloadedAudios: any;
 
   function _malloc(size: number): number;
+  function _memcpy(target: number, src: number, size: number): void;
   function _free(ptr: number): void;
 }
