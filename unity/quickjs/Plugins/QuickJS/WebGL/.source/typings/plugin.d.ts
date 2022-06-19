@@ -59,24 +59,31 @@ declare global {
   }
 
   export declare type PluginObjects = {
-    popIndex: (id: number) => void;
-    record: Record<string | number, PluginHeapObject>;
+    deleteIndex: (id: number) => void;
+    record: Record<string | number, PluginObject>;
     get: ((ref: JSValue) => any);
-    getRecord: ((ref: JSValue) => PluginHeapObject);
-    push: ((obj: any, ptr: JSValue, type?: BridgeObjectType, payload?: number) => void);
-    allocate: ((obj: any, type?: BridgeObjectType, payload?: number) => JSValue);
+    getRecord: ((ref: JSValue) => PluginObject);
+    push: ((obj: any, ptr: JSValue) => void);
+    allocate: ((obj: any) => JSValue);
     batchAllocate: ((objs: any[]) => PointerArray<JSValue>);
     batchGet: ((arr: PointerArray<JSValue>, count: number) => any[]);
     ref: ((obj: JSValue, diff: number, ptr: JSValue) => void);
     refIndex: ((obj: number, diff: number, ptr: JSValue) => void);
     lastId: number;
+    setPayload: ((obj: any, type: BridgeObjectType, payload: number) => void);
+    getPayload: ((obj: any) => PluginObjectPayload);
+    clearPayload: ((obj: any) => void);
+    payloadMap: Map<any, PluginObjectPayload>;
   };
 
-  export declare type PluginHeapObject = {
+  export declare type PluginObject = {
     id: number;
     refCount: number;
     tag: Tags;
     value: any;
+  };
+
+  export declare type PluginObjectPayload = {
     type: BridgeObjectType;
     payload: number;
   };

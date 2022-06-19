@@ -30,12 +30,13 @@ var QuickJSPlugin = {
             };
             var record = {};
             var map = new Map();
+            var payloadMap = new Map();
             var res = {
                 record: record,
                 lastId: 0,
-                allocate: function (object, type, payload) {
+                allocate: function (object) {
                     var ptr = _malloc(16 /* Sizes.JSValue */);
-                    res.push(object, ptr, type, payload);
+                    res.push(object, ptr);
                     return ptr;
                 },
                 batchAllocate: function (objects) {
@@ -56,7 +57,7 @@ var QuickJSPlugin = {
                     }
                     return arr;
                 },
-                push: function (object, ptr, type, payload) {
+                push: function (object, ptr) {
                     if (typeof object === 'undefined') {
                         res.refIndex(0, 1, ptr);
                         return;
@@ -70,9 +71,6 @@ var QuickJSPlugin = {
                     }
                     var foundId = map.get(object);
                     if (foundId > 0) {
-                        var found = record[foundId];
-                        found.type = type || found.type;
-                        found.payload = payload || found.payload;
                         res.refIndex(foundId, 1, ptr);
                         return;
                     }
@@ -82,8 +80,6 @@ var QuickJSPlugin = {
                         refCount: 0,
                         value: object,
                         tag: getTag(object),
-                        type: type || 0 /* BridgeObjectType.None */,
-                        payload: payload,
                     };
                     map.set(object, id);
                     res.refIndex(id, 1, ptr);
@@ -179,7 +175,7 @@ var QuickJSPlugin = {
                     ho.refCount += diff;
                     console.assert(ho.refCount >= 0);
                     if (ho.refCount <= 0) {
-                        res.popIndex(id);
+                        res.deleteIndex(id);
                     }
                     if (typeof ptr === 'number') {
                         HEAP32[ptr >> 2] = id;
@@ -187,10 +183,31 @@ var QuickJSPlugin = {
                         state.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
                     }
                 },
-                popIndex: function (id) {
+                deleteIndex: function (id) {
                     // var rec = record[id];
-                    // record[id] = undefined;
+                    // delete record[id];
                     // map.delete(rec.value);
+                },
+                payloadMap: payloadMap,
+                setPayload: function (obj, type, payload) {
+                    payloadMap.set(obj, {
+                        type: 0 /* BridgeObjectType.None */ || type,
+                        payload: payload,
+                    });
+                },
+                getPayload: function (obj) {
+                    var res = payloadMap.get(obj);
+                    if (res)
+                        return res;
+                    else {
+                        return {
+                            type: 0 /* BridgeObjectType.None */,
+                            payload: 0,
+                        };
+                    }
+                },
+                clearPayload: function (obj) {
+                    payloadMap.delete(obj);
                 },
             };
             return res;
@@ -352,12 +369,12 @@ var QuickJSPlugin = {
         window['atob'] = window.atob.bind(window);
         var evaluate = function (code, filename) {
             var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
-            //@ts-ignore
-            with (globals) {
-                return (function (evalCode) {
+            return (function (evalCode) {
+                //@ts-ignore
+                with (globals) {
                     return eval(evalCode);
-                }).call(globals, code + sourceMap);
-            }
+                }
+            }).call(globals, code + sourceMap);
         };
         var objects = state.createObjects();
         var context = {
@@ -427,12 +444,12 @@ var QuickJSPlugin = {
         // _free(ptr);
     },
     JSB_FreePayload: function (ret, ctx, val) {
-        var _a;
         var context = state.getContext(ctx);
-        var rec = context.objects.getRecord(val);
-        HEAP32[ret >> 2] = rec.type;
-        HEAP32[(ret >> 2) + 1] = (_a = rec.payload) !== null && _a !== void 0 ? _a : -1;
-        // TODO: free?
+        var obj = context.objects.get(val);
+        var payload = context.objects.getPayload(obj);
+        HEAP32[ret >> 2] = payload.type;
+        HEAP32[(ret >> 2) + 1] = payload.payload;
+        context.objects.clearPayload(obj);
     },
     JSB_DupValue: function (ptr, ctx, v) {
         var context = state.getContext(ctx);
@@ -618,9 +635,10 @@ var QuickJSPlugin = {
     },
     jsb_get_payload_header: function (ret, ctx, val) {
         var context = state.getContext(ctx);
-        var rec = context.objects.getRecord(val);
+        var obj = context.objects.get(val);
+        var rec = context.objects.getPayload(obj);
         HEAP32[ret >> 2] = rec.type;
-        HEAP32[(ret >> 2) + 1] = rec.payload || 0;
+        HEAP32[(ret >> 2) + 1] = rec.payload;
     },
     JS_ToCStringLen2: function (ctx, len, val, cesu8) {
         var context = state.getContext(ctx);
@@ -764,7 +782,6 @@ var QuickJSPlugin = {
     },
     JSB_NewFloat64: function (ptr, ctx, d) {
         var context = state.getContext(ctx);
-        // TODO: push literal
         context.objects.push(d, ptr);
     },
     JSB_NewInt64: function (ptr, ctx, d) {
@@ -860,7 +877,8 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var protoVal = context.objects.get(proto);
         var res = Object.create(protoVal);
-        context.objects.push(res, ret, 2 /* BridgeObjectType.ObjectRef */, object_id);
+        context.objects.push(res, ret);
+        context.objects.setPayload(res, 2 /* BridgeObjectType.ObjectRef */, object_id);
     },
     jsb_new_bridge_value: function (ret, ctx, proto, size) {
         var context = state.getContext(ctx);
@@ -872,7 +890,8 @@ var QuickJSPlugin = {
     JSB_NewBridgeClassObject: function (ret, ctx, new_target, object_id) {
         var context = state.getContext(ctx);
         var res = context.objects.get(new_target);
-        context.objects.push(res, ret, 2 /* BridgeObjectType.ObjectRef */, object_id);
+        context.objects.push(res, ret);
+        context.objects.setPayload(res, 2 /* BridgeObjectType.ObjectRef */, object_id);
     },
     JSB_NewBridgeClassValue: function (ret, ctx, new_target, size) {
         var context = state.getContext(ctx);
@@ -888,7 +907,8 @@ var QuickJSPlugin = {
         var context = state.getContext(ctx);
         var ctorVal = context.objects.get(ctor);
         var res = Reflect.construct(ctorVal, []);
-        context.objects.push(res, ret, 2 /* BridgeObjectType.ObjectRef */, object_id);
+        context.objects.push(res, ret);
+        context.objects.setPayload(res, 2 /* BridgeObjectType.ObjectRef */, object_id);
     },
     jsb_crossbind_constructor: function (ret, ctx, new_target) {
         var context = state.getContext(ctx);

@@ -29,13 +29,15 @@ var QuickJSPlugin: PluginType = {
 
       const map = new Map<any, number>();
 
+      var payloadMap: PluginObjects['payloadMap'] = new Map();
+
       const res: PluginObjects = {
         record,
         lastId: 0,
 
-        allocate(object, type, payload) {
+        allocate(object) {
           var ptr = _malloc(Sizes.JSValue) as JSValue;
-          res.push(object, ptr, type, payload);
+          res.push(object, ptr);
           return ptr as JSValue;
         },
         batchAllocate(objects) {
@@ -60,7 +62,7 @@ var QuickJSPlugin: PluginType = {
 
           return arr;
         },
-        push(object, ptr, type, payload) {
+        push(object, ptr) {
           if (typeof object === 'undefined') {
             res.refIndex(0, 1, ptr);
             return;
@@ -78,10 +80,6 @@ var QuickJSPlugin: PluginType = {
           const foundId = map.get(object);
 
           if (foundId > 0) {
-            var found = record[foundId];
-            found.type = type || found.type;
-            found.payload = payload || found.payload;
-
             res.refIndex(foundId, 1, ptr);
             return;
           }
@@ -93,8 +91,6 @@ var QuickJSPlugin: PluginType = {
             refCount: 0,
             value: object,
             tag: getTag(object),
-            type: type || BridgeObjectType.None,
-            payload,
           };
 
           map.set(object, id);
@@ -189,7 +185,6 @@ var QuickJSPlugin: PluginType = {
               HEAP32[(ptr >> 2) + 1] = 0;
               state.HEAP64()[(ptr >> 3) + 1] = BigInt(Tags.JS_TAG_UNDEFINED);
             }
-
             return;
           }
 
@@ -200,7 +195,7 @@ var QuickJSPlugin: PluginType = {
           console.assert(ho.refCount >= 0);
 
           if (ho.refCount <= 0) {
-            res.popIndex(id);
+            res.deleteIndex(id);
           }
 
           if (typeof ptr === 'number') {
@@ -209,10 +204,31 @@ var QuickJSPlugin: PluginType = {
             state.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
           }
         },
-        popIndex(id) {
+        deleteIndex(id) {
           // var rec = record[id];
-          // record[id] = undefined;
+          // delete record[id];
           // map.delete(rec.value);
+        },
+        payloadMap,
+        setPayload(obj, type, payload) {
+          payloadMap.set(obj, {
+            type: BridgeObjectType.None || type,
+            payload,
+          });
+        },
+        getPayload(obj) {
+          var res = payloadMap.get(obj);
+
+          if (res) return res;
+          else {
+            return {
+              type: BridgeObjectType.None,
+              payload: 0,
+            };
+          }
+        },
+        clearPayload(obj) {
+          payloadMap.delete(obj);
         },
       };
 
@@ -397,12 +413,12 @@ var QuickJSPlugin: PluginType = {
     var evaluate = function (code: string, filename?: string) {
       var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
 
-      //@ts-ignore
-      with (globals) {
-        return (function (evalCode) {
+      return (function (evalCode) {
+        //@ts-ignore
+        with (globals) {
           return eval(evalCode);
-        }).call(globals, code + sourceMap);
-      }
+        }
+      }).call(globals, code + sourceMap);
     };
 
     var objects = state.createObjects();
@@ -490,12 +506,13 @@ var QuickJSPlugin: PluginType = {
 
   JSB_FreePayload(ret, ctx, val) {
     var context = state.getContext(ctx);
-    var rec = context.objects.getRecord(val);
+    var obj = context.objects.get(val);
 
-    HEAP32[ret >> 2] = rec.type;
-    HEAP32[(ret >> 2) + 1] = rec.payload ?? -1;
+    var payload = context.objects.getPayload(obj);
+    HEAP32[ret >> 2] = payload.type;
+    HEAP32[(ret >> 2) + 1] = payload.payload;
 
-    // TODO: free?
+    context.objects.clearPayload(obj);
   },
 
   JSB_DupValue(ptr, ctx, v) {
@@ -729,11 +746,12 @@ var QuickJSPlugin: PluginType = {
   jsb_get_payload_header(ret, ctx, val) {
 
     var context = state.getContext(ctx);
+    var obj = context.objects.get(val);
 
-    var rec = context.objects.getRecord(val);
+    var rec = context.objects.getPayload(obj);
 
     HEAP32[ret >> 2] = rec.type;
-    HEAP32[(ret >> 2) + 1] = rec.payload || 0;
+    HEAP32[(ret >> 2) + 1] = rec.payload;
   },
 
   JS_ToCStringLen2(ctx, len, val, cesu8) {
@@ -926,7 +944,6 @@ var QuickJSPlugin: PluginType = {
 
   JSB_NewFloat64(ptr, ctx, d) {
     var context = state.getContext(ctx);
-    // TODO: push literal
     context.objects.push(d, ptr);
   },
 
@@ -1044,7 +1061,8 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     var protoVal = context.objects.get(proto);
     var res = Object.create(protoVal);
-    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
+    context.objects.push(res, ret);
+    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_new_bridge_value(ret, ctx, proto, size) {
@@ -1059,7 +1077,8 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     var res = context.objects.get(new_target);
 
-    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
+    context.objects.push(res, ret);
+    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   JSB_NewBridgeClassValue(ret, ctx, new_target, size) {
@@ -1078,7 +1097,8 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     var ctorVal = context.objects.get(ctor);
     var res = Reflect.construct(ctorVal, []);
-    context.objects.push(res, ret, BridgeObjectType.ObjectRef, object_id);
+    context.objects.push(res, ret);
+    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_crossbind_constructor(ret, ctx, new_target) {
