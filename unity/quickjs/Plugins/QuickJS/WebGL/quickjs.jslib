@@ -5,15 +5,6 @@
 var QuickJSPlugin = {
     $state__postset: 'state.atoms = state.createAtoms();\n',
     $state: {
-        returnLastStatement: function (code) {
-            // @ts-ignore
-            if (true || typeof Babel !== 'undefined') {
-                // @ts-ignore
-                var output = Babel.transform('(function() { return do {\n' + code + '\n } })()', { presets: [], plugins: ['proposal-do-expressions'] }).code;
-                return 'return ' + output;
-            }
-            else { }
-        },
         createObjects: function () {
             var getTag = function (object, allowNumbers) {
                 if (allowNumbers === void 0) { allowNumbers = false; }
@@ -330,10 +321,6 @@ var QuickJSPlugin = {
     JS_NewContext: function (rtId) {
         var id = state.lastContextId++;
         var runtime = state.getRuntime(rtId);
-        var iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.head.appendChild(iframe);
-        var contentWindow = iframe.contentWindow;
         var extraGlobals = {
             location: undefined,
             document: undefined,
@@ -360,14 +347,10 @@ var QuickJSPlugin = {
                         extraGlobals.self =
                             extraGlobals.this =
                                 globals;
-        contentWindow['__quickJSGlobals'] = globals;
-        contentWindow['btoa'] = contentWindow.btoa.bind(contentWindow);
-        contentWindow['atob'] = contentWindow.atob.bind(contentWindow);
         window['__quickJSGlobals'] = globals;
         window['btoa'] = window.btoa.bind(window);
         window['atob'] = window.atob.bind(window);
         var evaluate = function (code, filename) {
-            // var replacedCode = state.returnLastStatement(code);
             var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
             //@ts-ignore
             with (globals) {
@@ -375,22 +358,12 @@ var QuickJSPlugin = {
                     return eval(evalCode);
                 }).call(globals, code + sourceMap);
             }
-            // var fullCode =
-            //   '(function() {\n' +
-            //   'var globalThis, global, window, parent, self;\n' +
-            //   'globalThis = global = window = parent = self = this;\n' +
-            //   'with(globalThis) {\n' +
-            //   replacedCode +
-            //   '}\n' +
-            //   '}).call(this.__quickJSGlobals)\n' +
-            //   sourceMap;
-            // return (contentWindow['eval' as any] as any)(fullCode);
         };
         var objects = state.createObjects();
         var context = {
             id: id,
             runtimeId: rtId,
-            iframe: iframe,
+            window: window,
             globalObject: globals,
             evaluate: evaluate,
             objects: objects,
@@ -826,7 +799,7 @@ var QuickJSPlugin = {
         function jscFunction() {
             void name;
             var args = arguments;
-            var thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
+            var thisObj = this === window ? context.globalObject : this;
             var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
@@ -855,7 +828,7 @@ var QuickJSPlugin = {
         function jscFunctionMagic() {
             void name;
             var args = arguments;
-            var thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
+            var thisObj = this === window ? context.globalObject : this;
             var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {

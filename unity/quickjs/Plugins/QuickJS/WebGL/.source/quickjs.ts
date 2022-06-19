@@ -11,15 +11,6 @@ type PluginType = JSApiExternals & {
 var QuickJSPlugin: PluginType = {
   $state__postset: 'state.atoms = state.createAtoms();\n',
   $state: {
-    returnLastStatement: function (code: string) {
-      // @ts-ignore
-      if (true || typeof Babel !== 'undefined') {
-        // @ts-ignore
-        var output = Babel.transform('(function() { return do {\n' + code + '\n } })()', { presets: [], plugins: ['proposal-do-expressions'] }).code;
-        return 'return ' + output;
-      }
-      else { }
-    },
     createObjects: function (): PluginObjects {
       var getTag = function (object, allowNumbers = false): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
@@ -372,19 +363,12 @@ var QuickJSPlugin: PluginType = {
     var id = state.lastContextId++;
     var runtime = state.getRuntime(rtId);
 
-
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.head.appendChild(iframe);
-
-    var contentWindow = iframe.contentWindow!;
-
     var extraGlobals: any = {
       location: undefined,
       document: undefined,
     };
 
-    var globals: typeof contentWindow = new Proxy(extraGlobals, {
+    var globals: typeof window = new Proxy(extraGlobals, {
       get(target, p, receiver) {
         if (p in target) return target[p];
         else return window[p];
@@ -406,19 +390,11 @@ var QuickJSPlugin: PluginType = {
       extraGlobals.this =
       globals;
 
-    contentWindow['__quickJSGlobals'] = globals;
-    contentWindow['btoa'] = contentWindow.btoa.bind(contentWindow);
-    contentWindow['atob'] = contentWindow.atob.bind(contentWindow);
-
     window['__quickJSGlobals'] = globals;
     window['btoa'] = window.btoa.bind(window);
     window['atob'] = window.atob.bind(window);
 
-
     var evaluate = function (code: string, filename?: string) {
-
-      // var replacedCode = state.returnLastStatement(code);
-
       var sourceMap = !filename ? '' : '\n//# sourceURL=eval:///' + filename;
 
       //@ts-ignore
@@ -427,18 +403,6 @@ var QuickJSPlugin: PluginType = {
           return eval(evalCode);
         }).call(globals, code + sourceMap);
       }
-
-      // var fullCode =
-      //   '(function() {\n' +
-      //   'var globalThis, global, window, parent, self;\n' +
-      //   'globalThis = global = window = parent = self = this;\n' +
-      //   'with(globalThis) {\n' +
-      //   replacedCode +
-      //   '}\n' +
-      //   '}).call(this.__quickJSGlobals)\n' +
-      //   sourceMap;
-
-      // return (contentWindow['eval' as any] as any)(fullCode);
     };
 
     var objects = state.createObjects();
@@ -446,7 +410,6 @@ var QuickJSPlugin: PluginType = {
     var context: PluginContext = {
       id,
       runtimeId: rtId,
-      iframe,
       window,
       globalObject: globals,
       evaluate,
@@ -1011,7 +974,7 @@ var QuickJSPlugin: PluginType = {
       void name;
       const args = arguments;
 
-      const thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
+      const thisObj = this === window ? context.globalObject : this;
       const thisPtr = context.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
@@ -1046,7 +1009,7 @@ var QuickJSPlugin: PluginType = {
       void name;
       const args = arguments;
 
-      const thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
+      const thisObj = this === window ? context.globalObject : this;
       const thisPtr = context.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 

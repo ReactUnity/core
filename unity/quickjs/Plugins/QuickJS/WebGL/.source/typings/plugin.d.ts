@@ -4,7 +4,6 @@ declare global {
   var state: PluginState;
 
   export declare type PluginState = {
-    returnLastStatement(code: string): string;
     stringify: ((ptr: number | Pointer<number>, bufferLength?: number) => string);
     bufferify: ((str: string) => [number, number]);
     dynCall: typeof dynCall;
