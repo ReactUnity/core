@@ -11,6 +11,15 @@ type PluginType = JSApiExternals & {
 var QuickJSPlugin: PluginType = {
   $state__postset: 'state.atoms = state.createHeap(true);\n',
   $state: {
+    returnLastStatement: function (code: string) {
+      // @ts-ignore
+      if (true || typeof Babel !== 'undefined') {
+        // @ts-ignore
+        var output = Babel.transform('(function() { return do {\n' + code + '\n } })()', { presets: [], plugins: ['proposal-do-expressions'] }).code;
+        return 'return ' + output;
+      }
+      else { }
+    },
     createHeap: function <T = any, PtrType extends Pointer<any> = JSValue>(isAtom: boolean): PluginHeap<T, PtrType> {
       var getTag = function (object, allowNumbers = false): Tags {
         if (object === undefined) return Tags.JS_TAG_UNDEFINED;
@@ -290,18 +299,49 @@ var QuickJSPlugin: PluginType = {
     var iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     document.head.appendChild(iframe);
-    var window = iframe.contentWindow!;
 
-    window['parent' as any] = undefined;
+    var contentWindow = iframe.contentWindow!;
 
-    var execute = function (code) {
-      var script = window.document.createElement('script');
-      script.innerText = code;
-      window.document.head.appendChild(script);
+    var extraGlobals = {
+      location: undefined,
+      document: undefined,
     };
 
-    var evaluate = function (code) {
-      return (window['eval' as any] as any)(code);
+    var globals: typeof contentWindow = new Proxy(extraGlobals, {
+      get(target, p, receiver) {
+        if (p in target) return target[p];
+        else return contentWindow[p];
+      },
+      set(target, p, val, receiver) {
+        target[p] = val;
+        return true;
+      },
+      has(target, key) {
+        return (key in contentWindow) || (key in target);
+      },
+    }) as any;
+
+    contentWindow['__quickJSGlobals'] = globals;
+    contentWindow['btoa'] = contentWindow.btoa.bind(contentWindow);
+    contentWindow['atob'] = contentWindow.atob.bind(contentWindow);
+
+    window['btoa'] = window.btoa.bind(window);
+    window['atob'] = window.atob.bind(window);
+
+
+    var evaluate = function (code: string) {
+
+      var replacedCode = state.returnLastStatement(code);
+
+      var fullCode = '(function() {\n' +
+        'var globalThis, global, window, parent, self;\n' +
+        'globalThis = global = window = parent = self = this;\n' +
+        'with(globalThis) {\n' +
+        replacedCode +
+        '}\n' +
+        '}).call(this.__quickJSGlobals)'
+
+      return (contentWindow['eval' as any] as any)(fullCode);
     };
 
     var objects = state.createHeap(false);
@@ -310,8 +350,7 @@ var QuickJSPlugin: PluginType = {
       id,
       runtimeId: rtId,
       iframe,
-      window,
-      execute,
+      globalObject: globals,
       evaluate,
       objects,
     };
@@ -332,11 +371,11 @@ var QuickJSPlugin: PluginType = {
   JS_GetGlobalObject(returnValue, ctxId) {
     var context = state.getContext(ctxId);
 
-    if (!context.globalId) {
-      context.objects.push(context.window, returnValue);
+    if (!context.globalObjectId) {
+      context.objects.push(context.globalObject, returnValue);
     }
     else {
-      context.objects.refIndex(context.globalId, 1, returnValue);
+      context.objects.refIndex(context.globalObjectId, 1, returnValue);
     }
   },
 
@@ -351,6 +390,7 @@ var QuickJSPlugin: PluginType = {
     } catch (err) {
       context.lastException = err;
       context.objects.push(err, ptr);
+      console.error(err);
     }
   },
 
@@ -423,7 +463,8 @@ var QuickJSPlugin: PluginType = {
     var valObj = context.objects.get(val);
     var receiverObj = context.objects.get(receiver);
     var propStr = state.atoms.get(prop);
-    var res = Reflect.get(valObj, propStr, receiverObj);
+    var res = valObj[propStr];
+    // var res = Reflect.get(valObj, propStr, receiverObj);
 
     context.objects.push(res, ptr);
   },
@@ -432,7 +473,8 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctxId);
     var valObj = context.objects.get(val);
     var propStr = state.stringify(prop);
-    var res = Reflect.get(valObj, propStr);
+    var res = valObj[propStr];
+    // var res = Reflect.get(valObj, propStr);
 
     context.objects.push(res, ptr);
   },
@@ -441,7 +483,8 @@ var QuickJSPlugin: PluginType = {
     var context = state.getContext(ctx);
     const propVal = state.atoms.get(prop);
     const thisVal = context.objects.get(this_obj);
-    const func = Reflect.get(thisVal, propVal);
+    const func = thisVal[propVal];
+    // const func = Reflect.get(thisVal, propVal);
 
     const args = context.objects.batchGet(argv, argc);
 
@@ -595,7 +638,9 @@ var QuickJSPlugin: PluginType = {
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
     try {
-      return !!Reflect.set(thisVal, propVal, valVal);
+      // return !!Reflect.set(thisVal, propVal, valVal);
+      thisVal[propVal] = valVal;
+      return true;
     } catch (err) {
       context.lastException = err;
       if (shouldThrow) {
@@ -614,7 +659,9 @@ var QuickJSPlugin: PluginType = {
     const valVal = context.objects.get(val);
     const propVal = idx;
 
-    return !!Reflect.set(thisVal, propVal, valVal);
+    // return !!Reflect.set(thisVal, propVal, valVal);
+    thisVal[propVal] = valVal;
+    return true;
   },
 
   jsb_get_payload_header(ret, ctx, val) {
@@ -639,7 +686,7 @@ var QuickJSPlugin: PluginType = {
     }
 
     var [buffer, length] = state.bufferify(str);
-    HEAP32[(len >> 2)] = length;
+    HEAP32[(len >> 2)] = length - 1;
     return buffer as IntPtr;
   },
 
@@ -868,7 +915,7 @@ var QuickJSPlugin: PluginType = {
       void name;
       const args = arguments;
 
-      const thisObj = this === window ? context.window : this;
+      const thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
       const thisPtr = context.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
@@ -903,7 +950,7 @@ var QuickJSPlugin: PluginType = {
       void name;
       const args = arguments;
 
-      const thisObj = this === window ? context.window : this;
+      const thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
       const thisPtr = context.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 

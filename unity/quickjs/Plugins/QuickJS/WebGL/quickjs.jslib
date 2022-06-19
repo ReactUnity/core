@@ -5,6 +5,15 @@
 var QuickJSPlugin = {
     $state__postset: 'state.atoms = state.createHeap(true);\n',
     $state: {
+        returnLastStatement: function (code) {
+            // @ts-ignore
+            if (true || typeof Babel !== 'undefined') {
+                // @ts-ignore
+                var output = Babel.transform('(function() { return do {\n' + code + '\n } })()', { presets: [], plugins: ['proposal-do-expressions'] }).code;
+                return 'return ' + output;
+            }
+            else { }
+        },
         createHeap: function (isAtom) {
             var getTag = function (object, allowNumbers) {
                 if (allowNumbers === void 0) { allowNumbers = false; }
@@ -252,23 +261,48 @@ var QuickJSPlugin = {
         var iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         document.head.appendChild(iframe);
-        var window = iframe.contentWindow;
-        window['parent'] = undefined;
-        var execute = function (code) {
-            var script = window.document.createElement('script');
-            script.innerText = code;
-            window.document.head.appendChild(script);
+        var contentWindow = iframe.contentWindow;
+        var extraGlobals = {
+            location: undefined,
+            document: undefined,
         };
+        var globals = new Proxy(extraGlobals, {
+            get: function (target, p, receiver) {
+                if (p in target)
+                    return target[p];
+                else
+                    return contentWindow[p];
+            },
+            set: function (target, p, val, receiver) {
+                target[p] = val;
+                return true;
+            },
+            has: function (target, key) {
+                return (key in contentWindow) || (key in target);
+            },
+        });
+        contentWindow['__quickJSGlobals'] = globals;
+        contentWindow['btoa'] = contentWindow.btoa.bind(contentWindow);
+        contentWindow['atob'] = contentWindow.atob.bind(contentWindow);
+        window['btoa'] = window.btoa.bind(window);
+        window['atob'] = window.atob.bind(window);
         var evaluate = function (code) {
-            return window['eval'](code);
+            var replacedCode = state.returnLastStatement(code);
+            var fullCode = '(function() {\n' +
+                'var globalThis, global, window, parent, self;\n' +
+                'globalThis = global = window = parent = self = this;\n' +
+                'with(globalThis) {\n' +
+                replacedCode +
+                '}\n' +
+                '}).call(this.__quickJSGlobals)';
+            return contentWindow['eval'](fullCode);
         };
         var objects = state.createHeap(false);
         var context = {
             id: id,
             runtimeId: rtId,
             iframe: iframe,
-            window: window,
-            execute: execute,
+            globalObject: globals,
             evaluate: evaluate,
             objects: objects,
         };
@@ -284,11 +318,11 @@ var QuickJSPlugin = {
     },
     JS_GetGlobalObject: function (returnValue, ctxId) {
         var context = state.getContext(ctxId);
-        if (!context.globalId) {
-            context.objects.push(context.window, returnValue);
+        if (!context.globalObjectId) {
+            context.objects.push(context.globalObject, returnValue);
         }
         else {
-            context.objects.refIndex(context.globalId, 1, returnValue);
+            context.objects.refIndex(context.globalObjectId, 1, returnValue);
         }
     },
     JS_Eval: function (ptr, ctx, input, input_len, filename, eval_flags) {
@@ -301,6 +335,7 @@ var QuickJSPlugin = {
         catch (err) {
             context.lastException = err;
             context.objects.push(err, ptr);
+            console.error(err);
         }
     },
     JS_IsInstanceOf: function (ctxId, val, obj) {
@@ -358,21 +393,24 @@ var QuickJSPlugin = {
         var valObj = context.objects.get(val);
         var receiverObj = context.objects.get(receiver);
         var propStr = state.atoms.get(prop);
-        var res = Reflect.get(valObj, propStr, receiverObj);
+        var res = valObj[propStr];
+        // var res = Reflect.get(valObj, propStr, receiverObj);
         context.objects.push(res, ptr);
     },
     JS_GetPropertyStr: function (ptr, ctxId, val, prop) {
         var context = state.getContext(ctxId);
         var valObj = context.objects.get(val);
         var propStr = state.stringify(prop);
-        var res = Reflect.get(valObj, propStr);
+        var res = valObj[propStr];
+        // var res = Reflect.get(valObj, propStr);
         context.objects.push(res, ptr);
     },
     JS_Invoke: function (ptr, ctx, this_obj, prop, argc, argv) {
         var context = state.getContext(ctx);
         var propVal = state.atoms.get(prop);
         var thisVal = context.objects.get(this_obj);
-        var func = Reflect.get(thisVal, propVal);
+        var func = thisVal[propVal];
+        // const func = Reflect.get(thisVal, propVal);
         var args = context.objects.batchGet(argv, argc);
         var val = func.apply(thisVal, args);
         context.objects.push(val, ptr);
@@ -493,7 +531,9 @@ var QuickJSPlugin = {
         var propVal = state.atoms.get(prop);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         try {
-            return !!Reflect.set(thisVal, propVal, valVal);
+            // return !!Reflect.set(thisVal, propVal, valVal);
+            thisVal[propVal] = valVal;
+            return true;
         }
         catch (err) {
             context.lastException = err;
@@ -509,7 +549,9 @@ var QuickJSPlugin = {
         var thisVal = context.objects.get(this_obj);
         var valVal = context.objects.get(val);
         var propVal = idx;
-        return !!Reflect.set(thisVal, propVal, valVal);
+        // return !!Reflect.set(thisVal, propVal, valVal);
+        thisVal[propVal] = valVal;
+        return true;
     },
     jsb_get_payload_header: function (ret, ctx, val) {
         var context = state.getContext(ctx);
@@ -525,7 +567,7 @@ var QuickJSPlugin = {
             return 0;
         }
         var _a = state.bufferify(str), buffer = _a[0], length = _a[1];
-        HEAP32[(len >> 2)] = length;
+        HEAP32[(len >> 2)] = length - 1;
         return buffer;
     },
     JS_GetArrayBuffer: function (ctx, psize, obj) {
@@ -697,7 +739,7 @@ var QuickJSPlugin = {
         function jscFunction() {
             void name;
             var args = arguments;
-            var thisObj = this === window ? context.window : this;
+            var thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
             var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
@@ -726,7 +768,7 @@ var QuickJSPlugin = {
         function jscFunctionMagic() {
             void name;
             var args = arguments;
-            var thisObj = this === window ? context.window : this;
+            var thisObj = (this === window || this === context.iframe.contentWindow) ? context.globalObject : this;
             var thisPtr = context.objects.allocate(thisObj);
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {

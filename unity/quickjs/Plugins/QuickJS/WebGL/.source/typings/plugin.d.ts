@@ -4,6 +4,7 @@ declare global {
   var state: PluginState;
 
   export declare type PluginState = {
+    returnLastStatement(code: string): string;
     stringify: ((ptr: number | Pointer<number>, bufferLength?: number) => string);
     bufferify: ((str: string) => [number, number]);
     dynCall: typeof dynCall;
@@ -31,15 +32,13 @@ declare global {
     id: number;
     opaque?: any;
     runtimeId: number;
-    globalId?: number;
-
     objects: PluginHeap;
-
     iframe: HTMLIFrameElement;
-    window: Window;
-    evaluate: ((script: string) => any);
-    execute: ((script: string) => any);
 
+    globalObject: Window;
+    globalObjectId?: number;
+
+    evaluate: ((script: string) => any);
     lastException?: Error;
   };
 
