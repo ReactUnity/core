@@ -1,7 +1,7 @@
 export { };
 
 declare global {
-  var state: PluginState;
+  var unityJsbState: PluginState;
 
   export declare type PluginState = {
     stringify: ((ptr: number | Pointer<number>, bufferLength?: number) => string);
