@@ -61,7 +61,7 @@ namespace ReactUnity.Tests
                 yield return new ScriptSource
                 {
                     Language = ScriptSourceLanguage.Html,
-                    UseDevServer = false,
+                    UseDevServer = ScriptSource.DevServerType.Never,
                     SourceText = transformed,
                     Type = ScriptSourceType.Raw,
                 };
@@ -73,7 +73,7 @@ namespace ReactUnity.Tests
 
                 yield return new ScriptSource
                 {
-                    UseDevServer = false,
+                    UseDevServer = ScriptSource.DevServerType.Never,
                     SourceText = injectedText,
                     Type = ScriptSourceType.Raw,
                 };

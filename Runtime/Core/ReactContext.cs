@@ -150,7 +150,7 @@ namespace ReactUnity
             var src = new ScriptSource(Source);
             src.SourcePath = ResolvePath(path);
             src.Type = Source.EffectiveScriptSource;
-            src.UseDevServer = Source.IsDevServer;
+            src.UseDevServer = Source.IsDevServer ? ScriptSource.DevServerType.Always : ScriptSource.DevServerType.Never;
             return src;
         }
 

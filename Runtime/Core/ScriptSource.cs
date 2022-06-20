@@ -14,6 +14,13 @@ namespace ReactUnity
     [Serializable]
     public class ScriptSource
     {
+        public enum DevServerType
+        {
+            Never = 0,
+            InEditor = 1,
+            Always = 2,
+        }
+
         public ScriptSource() { }
 
         public ScriptSource(ScriptSource source)
@@ -33,7 +40,7 @@ namespace ReactUnity
             {
                 Type = ScriptSourceType.Resource,
                 SourcePath = path,
-                UseDevServer = false,
+                UseDevServer = DevServerType.Never,
                 Watch = false,
             };
         }
@@ -44,7 +51,7 @@ namespace ReactUnity
             {
                 Type = ScriptSourceType.Raw,
                 SourceText = path,
-                UseDevServer = false,
+                UseDevServer = DevServerType.Never,
                 Watch = false,
             };
         }
@@ -56,7 +63,13 @@ namespace ReactUnity
         public string SourcePath;
         public string SourceText;
         public string ResourcesPath;
-        public bool UseDevServer = true;
+        public DevServerType UseDevServer = DevServerType.InEditor;
+        public bool ShouldUseDevServer =>
+#if UNITY_EDITOR
+            UseDevServer == DevServerType.InEditor || UseDevServer == DevServerType.Always;
+#else
+            UseDevServer == DevServerType.Always;
+#endif
         public string DevServer = "http://localhost:3000";
         const string DevServerFilename = "/index.js";
         public string DevServerFile
@@ -104,20 +117,14 @@ namespace ReactUnity
             }
         }
 
-#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
         private bool DevServerFailed = false;
-        public bool IsDevServer => !DevServerFailed && UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
-#else
-        public bool IsDevServer => false;
-#endif
+        public bool IsDevServer => !DevServerFailed && ShouldUseDevServer && !string.IsNullOrWhiteSpace(DevServer);
 
         public ScriptSourceType EffectiveScriptSource => IsDevServer ? ScriptSourceType.Url : Type;
 
         public string GetResolvedSourceUrl(bool useDevServer = true)
         {
-#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
             if (useDevServer && IsDevServer) return DevServer;
-#endif
 
             if (Type == ScriptSourceType.File || Type == ScriptSourceType.Resource)
                 return SourcePath;
@@ -152,7 +159,6 @@ namespace ReactUnity
 
         public IDisposable GetScript(Action<string> callback, IDispatcher dispatcher = null, bool useDevServer = true)
         {
-#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
             if (useDevServer && IsDevServer)
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
@@ -165,7 +171,6 @@ namespace ReactUnity
                             GetScript(callback, dispatcher, false);
                         })));
             }
-#endif
 
 #if REACT_SHOULD_WATCH
             var watchFile = false;

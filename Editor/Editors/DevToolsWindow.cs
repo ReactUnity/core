@@ -20,7 +20,7 @@ namespace ReactUnity.Editor
             var res = ScriptSource.Resource("ReactUnity/editor/devtools/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4000";
-            res.UseDevServer = DevServerEnabled;
+            res.UseDevServer = DevServerEnabled ? ScriptSource.DevServerType.InEditor : ScriptSource.DevServerType.Never;
 #endif
             return res;
         }

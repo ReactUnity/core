@@ -58,7 +58,7 @@ namespace ReactUnity.Editor.Renderer
             {
                 Type = ScriptSourceType.Resource,
                 SourcePath = sourceVal,
-                UseDevServer = useDevServerVal,
+                UseDevServer = useDevServerVal ? ScriptSource.DevServerType.InEditor : ScriptSource.DevServerType.Never,
                 DevServer = devServerVal,
             };
         }
