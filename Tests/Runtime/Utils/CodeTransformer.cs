@@ -18,7 +18,7 @@ namespace ReactUnity.Tests
         {
             EngineFactory = JavascriptEngineHelpers.GetEngineFactory(type);
             Engine = EngineFactory.Create(null, false, false, (res) => {
-                res.Execute(Resources.Load<TextAsset>("ReactUnity/tests/scripts/babel-standalone").text);
+                res.Execute(Resources.Load<TextAsset>("ReactUnity/tests/scripts/babel-standalone").text, "ReactUnity/babel-standalone");
                 Initialized = true;
             });
         }

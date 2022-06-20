@@ -21,7 +21,7 @@ namespace ReactUnity.Scripting
             if (string.IsNullOrWhiteSpace(ResolvedContent)) return;
             try
             {
-                Context.Script.ExecuteScript(ResolvedContent, "script");
+                Context.Script.ExecuteScript(ResolvedContent, "ReactUnity/scripts/" + (String.IsNullOrWhiteSpace(Name) ? "anonymous" : Name));
             }
             catch (Exception ex)
             {

@@ -113,7 +113,7 @@ function createDictionaryProxy (targetProxy, contains, getter, setter, remover, 
     });
 }
 createDictionaryProxy;
-", "createDictionaryProxy");
+", "ReactUnity/quickjs/createDictionaryProxy");
 
             var contains = new Func<IDictionary<string, object>, string, bool>(
                 (IDictionary<string, object> dc, string key) => {

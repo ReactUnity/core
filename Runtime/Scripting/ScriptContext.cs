@@ -54,7 +54,7 @@ namespace ReactUnity.Scripting
                 }));
 
                 beforeStartCallbacks.ForEach(x => x?.Invoke());
-                var error = engine.TryExecute(script, "ReactUnity");
+                var error = engine.TryExecute(script, "ReactUnity/main");
                 afterStartCallbacks.ForEach(x => x?.Invoke(error));
             });
         }
@@ -92,7 +92,7 @@ namespace ReactUnity.Scripting
                         // Required for styled-components
                         global.HTMLElement = {};
                         void 0;
-                    ");
+                    ", "ReactUnity/shims/dom");
 
                     EngineInitialized = true;
 
@@ -126,7 +126,7 @@ namespace ReactUnity.Scripting
         {
             EngineFactory.Create(Context, debug, awaitDebugger, (engine) => {
                 this.engine = engine;
-                engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this; void 0;");
+                engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this; void 0;", "ReactUnity/shims/global");
                 engine.SetGlobal("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
                 engine.SetGlobal("UnityBridge", ReactUnityBridge.Instance);
 
@@ -140,11 +140,11 @@ namespace ReactUnity.Scripting
 
         void CreateConsole(IJavaScriptEngine engine)
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            engine.Execute("global.console = global.$$webglWindow.console; void 0;", "ReactUnity/shims/console");
+#else
             if (engine.Capabilities.HasFlag(EngineCapabilities.Console)) return;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-            engine.Execute("global.console = global.$$webglWindow.console; void 0;");
-#else
             var console = new ConsoleProxy(Context);
 
             engine.SetGlobal("__console", console);
@@ -164,7 +164,7 @@ namespace ReactUnity.Scripting
                     count:     function count    (name) { return _console.count(name) },
                 };
                 void 0;
-})()");
+})()", "ReactUnity/shims/console");
             engine.DeleteGlobal("__console");
 #endif
         }
@@ -174,10 +174,10 @@ namespace ReactUnity.Scripting
             // Load essential polyfills
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Base64))
-                engine.Execute(ResourcesHelper.GetPolyfill("base64"));
+                engine.Execute(ResourcesHelper.GetPolyfill("base64"), "ReactUnity/polyfills/base64");
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Fetch))
-                engine.Execute(ResourcesHelper.GetPolyfill("fetch"));
+                engine.Execute(ResourcesHelper.GetPolyfill("fetch"), "ReactUnity/polyfills/fetch");
         }
 
         static void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
@@ -207,14 +207,14 @@ namespace ReactUnity.Scripting
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
             {
                 var webSocketGlobal = engine.Evaluate(@"global.WebSocket = function(url) {
-                    return new global.WebSocket.original(Context, url); }");
+                    return new global.WebSocket.original(Context, url); }", "ReactUnity/shims/websocket");
                 engine.SetProperty(webSocketGlobal, "original", typeof(WebSocketProxy));
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
             {
                 var xhrGlobal = engine.Evaluate(@"global.XMLHttpRequest = function() {
-                    return new global.XMLHttpRequest.original(Context, location.origin); }");
+                    return new global.XMLHttpRequest.original(Context, location.origin); }", "ReactUnity/shims/xhr");
                 engine.SetProperty(xhrGlobal, "original", typeof(XMLHttpRequest));
             }
         }
