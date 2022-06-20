@@ -1,7 +1,7 @@
 
 import cn from 'classnames';
 import Head from 'next/head';
-import React, { LegacyRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { LegacyRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from './index.module.scss';
 import { defaultUnityInstanceName, isLoaderScriptLoaded, UnityAPI, UnityInstance } from './types';
@@ -44,7 +44,7 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
       SetReactScript: (jsx, css) => {
         unityInstance.SendMessage('ReactCanvas', 'SetJSX', jsx);
         if (css) unityInstance.SendMessage('ReactCanvas', 'SetCSS', css);
-        unityInstance.SendMessage('ReactCanvas', 'Render');
+        unityInstance.SendMessage('ReactCanvas', 'RenderBridge');
       },
       ReplaceCSS: (css) => {
         unityInstance.SendMessage('ReactCanvas', 'ReplaceCSS', css);

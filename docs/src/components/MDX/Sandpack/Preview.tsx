@@ -33,12 +33,12 @@ export function Preview({
 
   const error: any = compiledCode.error || compiledCss.error || undefined;
 
-  const delayedCss = useDebounce(compiledCss.compiledCode, 400);
+  const delayedCss = useDebounce(compiledCss.compiledCode, 300);
 
   const codeSubj = useSubject(compiledCode);
 
   const delayedCode = useObservable(() => codeSubj.pipe(
-    debounce(x => x.error ? of(0) : timer(1000)),
+    debounce(x => x.error ? of(0) : timer(300)),
     filter(x => !x.error),
     map(x => x.compiledCode!),
   ), [], compiledCode.compiledCode || '');
