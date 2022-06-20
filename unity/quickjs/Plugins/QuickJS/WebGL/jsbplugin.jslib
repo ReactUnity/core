@@ -35,17 +35,20 @@ var UnityJSBPlugin = {
                 lastId: 0,
                 allocate: function (object) {
                     var ptr = _malloc(16 /* Sizes.JSValue */);
-                    res.push(object, ptr);
-                    return ptr;
+                    var id = res.push(object, ptr);
+                    return [ptr, id];
                 },
                 batchAllocate: function (objects) {
                     var size = 16 /* Sizes.JSValue */;
-                    var arr = _malloc(size * objects.length);
-                    for (var index = 0; index < objects.length; index++) {
+                    var len = objects.length;
+                    var arr = _malloc(size * len);
+                    var ids = Array(len);
+                    for (var index = 0; index < len; index++) {
                         var object = objects[index];
-                        res.push(object, arr + (index * size));
+                        var id = res.push(object, arr + (index * size));
+                        ids[index] = id;
                     }
-                    return arr;
+                    return [arr, ids];
                 },
                 batchGet: function (ptrs, count) {
                     var size = 16 /* Sizes.JSValue */;
@@ -58,7 +61,7 @@ var UnityJSBPlugin = {
                 },
                 push: function (object, ptr) {
                     if (typeof object === 'undefined') {
-                        res.refIndex(0, 1, ptr);
+                        res.duplicateId(0, ptr);
                         return;
                     }
                     if (typeof object === 'number') {
@@ -78,8 +81,8 @@ var UnityJSBPlugin = {
                     }
                     var foundId = map.get(object);
                     if (foundId > 0) {
-                        res.refIndex(foundId, 1, ptr);
-                        return;
+                        res.duplicateId(foundId, ptr);
+                        return foundId;
                     }
                     var id = ++res.lastId;
                     record[id] = {
@@ -89,7 +92,7 @@ var UnityJSBPlugin = {
                         tag: getTag(object),
                     };
                     map.set(object, id);
-                    res.refIndex(id, 1, ptr);
+                    res.duplicateId(id, ptr);
                     return id;
                 },
                 get: function (val) {
@@ -155,7 +158,7 @@ var UnityJSBPlugin = {
                         return ho;
                     }
                 },
-                ref: function (obj, diff, ptr) {
+                duplicate: function (obj, ptr) {
                     var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
                     if (tag === 7 /* Tags.JS_TAG_FLOAT64 */) {
                         if (typeof ptr === 'number') {
@@ -184,9 +187,9 @@ var UnityJSBPlugin = {
                         return;
                     }
                     var id = HEAP32[obj >> 2];
-                    res.refIndex(id, diff, ptr);
+                    res.duplicateId(id, ptr);
                 },
-                refIndex: function (id, diff, ptr) {
+                duplicateId: function (id, ptr) {
                     if (id === 0) {
                         if (typeof ptr === 'number') {
                             HEAP32[ptr >> 2] = 0;
@@ -196,15 +199,30 @@ var UnityJSBPlugin = {
                         return;
                     }
                     var ho = record[id];
-                    ho.refCount += diff;
-                    console.assert(ho.refCount >= 0);
+                    ho.refCount += 1;
                     if (typeof ptr === 'number') {
                         HEAP32[ptr >> 2] = id;
                         HEAP32[(ptr >> 2) + 1] = 0;
                         unityJsbState.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
                     }
                 },
-                deleteIndex: function (id) {
+                pop: function (obj) {
+                    var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
+                    if (tag === 7 /* Tags.JS_TAG_FLOAT64 */
+                        || tag === 0 /* Tags.JS_TAG_INT */
+                        || tag === 1 /* Tags.JS_TAG_BOOL */)
+                        return;
+                    var id = HEAP32[obj >> 2];
+                    res.popId(id);
+                },
+                popId: function (id) {
+                    if (!id)
+                        return;
+                    var ho = record[id];
+                    ho.refCount -= 1;
+                    console.assert(ho.refCount >= 0);
+                },
+                deleteRecord: function (id) {
                     var rec = record[id];
                     delete record[id];
                     map.delete(rec.value);
@@ -333,11 +351,11 @@ var UnityJSBPlugin = {
                 var lastId = objects.lastId;
                 var record = objects.record;
                 var aliveItemCount = 0;
-                for (var index = 0; index < lastId; index++) {
+                for (var index = 0; index <= lastId; index++) {
                     var element = record[index];
                     if (element) {
                         if (element.refCount <= 0) {
-                            objects.deleteIndex(index);
+                            objects.deleteRecord(index);
                         }
                         else {
                             aliveItemCount++;
@@ -442,7 +460,7 @@ var UnityJSBPlugin = {
             context.runtime.objects.push(context.globalObject, returnValue);
         }
         else {
-            context.runtime.objects.refIndex(context.globalObjectId, 1, returnValue);
+            context.runtime.objects.duplicateId(context.globalObjectId, returnValue);
         }
     },
     JS_Eval: function (ptr, ctx, input, input_len, filename, eval_flags) {
@@ -471,11 +489,11 @@ var UnityJSBPlugin = {
     },
     JSB_FreeValue: function (ctx, v) {
         var context = unityJsbState.getContext(ctx);
-        context.runtime.objects.ref(v, -1, undefined);
+        context.runtime.objects.pop(v);
     },
     JSB_FreeValueRT: function (rt, v) {
         var runtime = unityJsbState.getRuntime(rt);
-        runtime.objects.ref(v, -1, undefined);
+        runtime.objects.pop(v);
     },
     JSB_FreePayload: function (ret, ctx, val) {
         var context = unityJsbState.getContext(ctx);
@@ -487,7 +505,7 @@ var UnityJSBPlugin = {
     },
     JSB_DupValue: function (ptr, ctx, v) {
         var context = unityJsbState.getContext(ctx);
-        context.runtime.objects.ref(v, 1, ptr);
+        context.runtime.objects.duplicate(v, ptr);
     },
     JS_RunGC: function (rt) {
         var runtime = unityJsbState.getRuntime(rt);
@@ -626,7 +644,7 @@ var UnityJSBPlugin = {
         var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         // SetProperty frees the value automatically
-        runtime.objects.ref(val, -1, undefined);
+        runtime.objects.pop(val);
         try {
             var opts = {
                 value: valVal,
@@ -663,7 +681,7 @@ var UnityJSBPlugin = {
         var valVal = runtime.objects.get(val);
         var propVal = unityJsbState.atoms.get(prop);
         // SetProperty frees the value automatically
-        runtime.objects.ref(val, -1, undefined);
+        runtime.objects.pop(val);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         try {
             thisVal[propVal] = valVal;
@@ -685,7 +703,7 @@ var UnityJSBPlugin = {
         var valVal = context.runtime.objects.get(val);
         var propVal = idx;
         // SetProperty frees the value automatically
-        runtime.objects.ref(val, -1, undefined);
+        runtime.objects.pop(val);
         try {
             thisVal[propVal] = valVal;
             return true;
@@ -877,21 +895,26 @@ var UnityJSBPlugin = {
     // #region Bridge
     JSB_NewCFunction: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = unityJsbState.getContext(ctx);
+        var runtime = context.runtime;
         var name = unityJsbState.atoms.get(atom) || 'jscFunction';
         function jscFunction() {
             void name;
             var args = arguments;
             var thisObj = this === window ? context.globalObject : this;
-            var thisPtr = context.runtime.objects.allocate(thisObj);
+            var _a = runtime.objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
                 var argc = args.length;
-                var argv = context.runtime.objects.batchAllocate(Array.from(args));
+                var _b = context.runtime.objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
                 unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
+                argIds.forEach(runtime.objects.popId);
+                _free(argv);
             }
             else if (cproto === 9 /* JSCFunctionEnum.JS_CFUNC_setter */) {
-                var val = context.runtime.objects.allocate(args[0]);
+                var _c = context.runtime.objects.allocate(args[0]), val = _c[0], valId = _c[1];
                 unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, val]);
+                runtime.objects.popId(valId);
+                _free(val);
             }
             else if (cproto === 8 /* JSCFunctionEnum.JS_CFUNC_getter */) {
                 unityJsbState.dynCall('viii', func, [ret, ctx, thisPtr]);
@@ -899,33 +922,45 @@ var UnityJSBPlugin = {
             else {
                 throw new Error('Unknown type of function specified: ' + cproto);
             }
-            return context.runtime.objects.get(ret);
+            runtime.objects.popId(thisId);
+            _free(thisPtr);
+            var returnValue = context.runtime.objects.get(ret);
+            context.runtime.objects.pop(ret);
+            _free(ret);
+            return returnValue;
         }
         ;
         context.runtime.objects.push(jscFunction, ret);
     },
     JSB_NewCFunctionMagic: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = unityJsbState.getContext(ctx);
+        var runtime = context.runtime;
         var name = unityJsbState.atoms.get(atom) || 'jscFunctionMagic';
         function jscFunctionMagic() {
             void name;
             var args = arguments;
             var thisObj = this === window ? context.globalObject : this;
-            var thisPtr = context.runtime.objects.allocate(thisObj);
+            var _a = runtime.objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {
                 var argc = args.length;
-                var argv = context.runtime.objects.batchAllocate(Array.from(args));
+                var _b = context.runtime.objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
                 unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+                argIds.forEach(runtime.objects.popId);
+                _free(argv);
             }
             else if (cproto === 3 /* JSCFunctionEnum.JS_CFUNC_constructor_magic */) {
                 var argc = args.length;
-                var argv = context.runtime.objects.batchAllocate(Array.from(args));
+                var _c = context.runtime.objects.batchAllocate(Array.from(args)), argv = _c[0], argIds = _c[1];
                 unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+                argIds.forEach(runtime.objects.popId);
+                _free(argv);
             }
             else if (cproto === 11 /* JSCFunctionEnum.JS_CFUNC_setter_magic */) {
-                var val = context.runtime.objects.allocate(args[0]);
+                var _d = context.runtime.objects.allocate(args[0]), val = _d[0], valId = _d[1];
                 unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, val, magic]);
+                runtime.objects.popId(valId);
+                _free(val);
             }
             else if (cproto === 10 /* JSCFunctionEnum.JS_CFUNC_getter_magic */) {
                 unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, magic]);
@@ -933,7 +968,12 @@ var UnityJSBPlugin = {
             else {
                 throw new Error('Unknown type of function specified: ' + cproto);
             }
-            return context.runtime.objects.get(ret);
+            runtime.objects.popId(thisId);
+            _free(thisPtr);
+            var returnValue = context.runtime.objects.get(ret);
+            context.runtime.objects.pop(ret);
+            _free(ret);
+            return returnValue;
         }
         ;
         context.runtime.objects.push(jscFunctionMagic, ret);

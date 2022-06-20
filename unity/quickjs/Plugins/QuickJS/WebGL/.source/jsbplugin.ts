@@ -37,19 +37,22 @@ var UnityJSBPlugin: PluginType = {
 
         allocate(object) {
           var ptr = _malloc(Sizes.JSValue) as JSValue;
-          res.push(object, ptr);
-          return ptr as JSValue;
+          var id = res.push(object, ptr);
+          return [ptr as JSValue, id];
         },
         batchAllocate(objects) {
           var size = Sizes.JSValue;
-          var arr = _malloc(size * objects.length) as PointerArray<JSValue>;
+          var len = objects.length;
+          var arr = _malloc(size * len) as PointerArray<JSValue>;
+          var ids = Array(len);
 
-          for (let index = 0; index < objects.length; index++) {
+          for (let index = 0; index < len; index++) {
             const object = objects[index];
-            res.push(object, arr + (index * size) as JSValue);
+            var id = res.push(object, arr + (index * size) as JSValue);
+            ids[index] = id;
           }
 
-          return arr;
+          return [arr, ids];
         },
         batchGet(ptrs, count) {
           var size = Sizes.JSValue;
@@ -64,7 +67,7 @@ var UnityJSBPlugin: PluginType = {
         },
         push(object, ptr) {
           if (typeof object === 'undefined') {
-            res.refIndex(0, 1, ptr);
+            res.duplicateId(0, ptr);
             return;
           }
 
@@ -90,8 +93,8 @@ var UnityJSBPlugin: PluginType = {
           const foundId = map.get(object);
 
           if (foundId > 0) {
-            res.refIndex(foundId, 1, ptr);
-            return;
+            res.duplicateId(foundId, ptr);
+            return foundId;
           }
 
           var id = ++res.lastId;
@@ -105,7 +108,7 @@ var UnityJSBPlugin: PluginType = {
 
           map.set(object, id);
 
-          res.refIndex(id, 1, ptr);
+          res.duplicateId(id, ptr);
 
           return id;
         },
@@ -172,7 +175,7 @@ var UnityJSBPlugin: PluginType = {
             return ho;
           }
         },
-        ref(obj, diff, ptr) {
+        duplicate(obj, ptr) {
           var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
 
           if (tag === Tags.JS_TAG_FLOAT64) {
@@ -203,9 +206,9 @@ var UnityJSBPlugin: PluginType = {
           }
 
           var id = HEAP32[obj >> 2];
-          res.refIndex(id, diff, ptr);
+          res.duplicateId(id, ptr);
         },
-        refIndex(id, diff, ptr) {
+        duplicateId(id, ptr) {
           if (id === 0) {
             if (typeof ptr === 'number') {
               HEAP32[ptr >> 2] = 0;
@@ -217,9 +220,7 @@ var UnityJSBPlugin: PluginType = {
 
           var ho = record[id];
 
-          ho.refCount += diff;
-
-          console.assert(ho.refCount >= 0);
+          ho.refCount += 1;
 
           if (typeof ptr === 'number') {
             HEAP32[ptr >> 2] = id;
@@ -227,7 +228,23 @@ var UnityJSBPlugin: PluginType = {
             unityJsbState.HEAP64()[(ptr >> 3) + 1] = BigInt(ho.tag);
           }
         },
-        deleteIndex(id) {
+        pop(obj) {
+          var tag = Number(unityJsbState.HEAP64()[(obj >> 3) + 1]);
+
+          if (tag === Tags.JS_TAG_FLOAT64
+            || tag === Tags.JS_TAG_INT
+            || tag === Tags.JS_TAG_BOOL) return;
+
+          var id = HEAP32[obj >> 2];
+          res.popId(id);
+        },
+        popId(id) {
+          if (!id) return;
+          var ho = record[id];
+          ho.refCount -= 1;
+          console.assert(ho.refCount >= 0);
+        },
+        deleteRecord(id) {
           var rec = record[id];
           delete record[id];
           map.delete(rec.value);
@@ -366,12 +383,12 @@ var UnityJSBPlugin: PluginType = {
 
         var aliveItemCount = 0;
 
-        for (let index = 0; index < lastId; index++) {
+        for (let index = 0; index <= lastId; index++) {
           const element = record[index];
 
           if (element) {
             if (element.refCount <= 0) {
-              objects.deleteIndex(index);
+              objects.deleteRecord(index);
             }
             else {
               aliveItemCount++;
@@ -497,7 +514,7 @@ var UnityJSBPlugin: PluginType = {
       context.runtime.objects.push(context.globalObject, returnValue);
     }
     else {
-      context.runtime.objects.refIndex(context.globalObjectId, 1, returnValue);
+      context.runtime.objects.duplicateId(context.globalObjectId, returnValue);
     }
   },
 
@@ -532,12 +549,12 @@ var UnityJSBPlugin: PluginType = {
 
   JSB_FreeValue(ctx, v) {
     var context = unityJsbState.getContext(ctx);
-    context.runtime.objects.ref(v, -1, undefined);
+    context.runtime.objects.pop(v);
   },
 
   JSB_FreeValueRT(rt, v) {
     var runtime = unityJsbState.getRuntime(rt);
-    runtime.objects.ref(v, -1, undefined);
+    runtime.objects.pop(v);
   },
 
   JSB_FreePayload(ret, ctx, val) {
@@ -553,7 +570,7 @@ var UnityJSBPlugin: PluginType = {
 
   JSB_DupValue(ptr, ctx, v) {
     var context = unityJsbState.getContext(ctx);
-    context.runtime.objects.ref(v, 1, ptr);
+    context.runtime.objects.duplicate(v, ptr);
   },
 
   JS_RunGC(rt) {
@@ -728,7 +745,7 @@ var UnityJSBPlugin: PluginType = {
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
     // SetProperty frees the value automatically
-    runtime.objects.ref(val, -1, undefined);
+    runtime.objects.pop(val);
 
     try {
       const opts: PropertyDescriptor = {
@@ -772,7 +789,7 @@ var UnityJSBPlugin: PluginType = {
     const propVal = unityJsbState.atoms.get(prop);
 
     // SetProperty frees the value automatically
-    runtime.objects.ref(val, -1, undefined);
+    runtime.objects.pop(val);
 
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
@@ -799,7 +816,7 @@ var UnityJSBPlugin: PluginType = {
     const propVal = idx;
 
     // SetProperty frees the value automatically
-    runtime.objects.ref(val, -1, undefined);
+    runtime.objects.pop(val);
 
     try {
       thisVal[propVal] = valVal;
@@ -1056,6 +1073,7 @@ var UnityJSBPlugin: PluginType = {
 
   JSB_NewCFunction(ret, ctx, func, atom, length, cproto, magic) {
     var context = unityJsbState.getContext(ctx);
+    var runtime = context.runtime;
 
     var name = unityJsbState.atoms.get(atom) || 'jscFunction';
 
@@ -1064,17 +1082,21 @@ var UnityJSBPlugin: PluginType = {
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const thisPtr = context.runtime.objects.allocate(thisObj);
+      const [thisPtr, thisId] = runtime.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic) {
         const argc = args.length;
-        const argv = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunction>('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
+        argIds.forEach(runtime.objects.popId);
+        _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter) {
-        const val = context.runtime.objects.allocate(args[0]);
+        const [val, valId] = context.runtime.objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunction>('viiii', func, [ret, ctx, thisPtr, val]);
+        runtime.objects.popId(valId);
+        _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter) {
         unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunction>('viii', func, [ret, ctx, thisPtr]);
@@ -1082,8 +1104,13 @@ var UnityJSBPlugin: PluginType = {
       else {
         throw new Error('Unknown type of function specified: ' + cproto);
       }
+      runtime.objects.popId(thisId);
+      _free(thisPtr);
 
-      return context.runtime.objects.get(ret);
+      const returnValue = context.runtime.objects.get(ret);
+      context.runtime.objects.pop(ret);
+      _free(ret);
+      return returnValue;
     };
 
     context.runtime.objects.push(jscFunction, ret);
@@ -1091,6 +1118,7 @@ var UnityJSBPlugin: PluginType = {
 
   JSB_NewCFunctionMagic(ret, ctx, func, atom, length, cproto, magic) {
     var context = unityJsbState.getContext(ctx);
+    var runtime = context.runtime;
 
     var name = unityJsbState.atoms.get(atom) || 'jscFunctionMagic';
 
@@ -1099,22 +1127,28 @@ var UnityJSBPlugin: PluginType = {
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const thisPtr = context.runtime.objects.allocate(thisObj);
+      const [thisPtr, thisId] = runtime.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic_magic) {
         const argc = args.length;
-        const argv = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+        argIds.forEach(runtime.objects.popId);
+        _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
         const argc = args.length;
-        const argv = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+        argIds.forEach(runtime.objects.popId);
+        _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter_magic) {
-        const val = context.runtime.objects.allocate(args[0]);
+        const [val, valId] = context.runtime.objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func, [ret, ctx, thisPtr, val, magic]);
+        runtime.objects.popId(valId);
+        _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter_magic) {
         unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunctionMagic>('viiii', func, [ret, ctx, thisPtr, magic]);
@@ -1122,8 +1156,13 @@ var UnityJSBPlugin: PluginType = {
       else {
         throw new Error('Unknown type of function specified: ' + cproto);
       }
+      runtime.objects.popId(thisId);
+      _free(thisPtr);
 
-      return context.runtime.objects.get(ret);
+      const returnValue = context.runtime.objects.get(ret);
+      context.runtime.objects.pop(ret);
+      _free(ret);
+      return returnValue;
     };
 
     context.runtime.objects.push(jscFunctionMagic, ret);

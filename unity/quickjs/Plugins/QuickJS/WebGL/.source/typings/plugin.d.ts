@@ -61,16 +61,18 @@ declare global {
   }
 
   export declare type PluginObjects = {
-    deleteIndex: (id: number) => void;
+    deleteRecord: (id: number) => void;
     record: Record<string | number, PluginObject>;
     get: ((ref: JSValue) => any);
     getRecord: ((ref: JSValue) => PluginObject);
-    push: ((obj: any, ptr: JSValue) => void);
-    allocate: ((obj: any) => JSValue);
-    batchAllocate: ((objs: any[]) => PointerArray<JSValue>);
+    push: ((obj: any, ptr: JSValue) => number | undefined);
+    duplicate: ((obj: JSValue, ptr: JSValue) => void);
+    duplicateId: ((id: number, ptr: JSValue) => void);
+    pop: ((obj: JSValue) => void);
+    popId: ((id: number | undefined) => void);
+    allocate: ((obj: any) => [JSValue, number | undefined]);
+    batchAllocate: ((objs: any[]) => [PointerArray<JSValue>, (number | undefined)[]]);
     batchGet: ((arr: PointerArray<JSValue>, count: number) => any[]);
-    ref: ((obj: JSValue, diff: number, ptr: JSValue) => void);
-    refIndex: ((obj: number, diff: number, ptr: JSValue) => void);
     lastId: number;
     setPayload: ((obj: any, type: BridgeObjectType, payload: number) => void);
     getPayload: ((obj: any) => PluginObjectPayload);
