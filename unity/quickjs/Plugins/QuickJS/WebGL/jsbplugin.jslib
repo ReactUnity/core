@@ -464,8 +464,8 @@ var UnityJSBPlugin = {
         }
     },
     JS_Eval: function (ptr, ctx, input, input_len, filename, eval_flags) {
+        var context = unityJsbState.getContext(ctx);
         try {
-            var context = unityJsbState.getContext(ctx);
             var code = unityJsbState.stringify(input, input_len);
             var filenameStr = unityJsbState.stringify(filename);
             var res = context.evaluate(code, filenameStr);
