@@ -8,7 +8,7 @@ type PluginType = JSApiExternals & {
   $unityJsbState__postset?: string;
 }
 
-var QuickJSPlugin: PluginType = {
+var UnityJSBPlugin: PluginType = {
   $unityJsbState__postset: 'unityJsbState.atoms = unityJsbState.createAtoms();\n',
   $unityJsbState: {
     createObjects: function (): PluginObjects {
@@ -1643,5 +1643,5 @@ var QuickJSPlugin: PluginType = {
 
 };
 
-autoAddDeps(QuickJSPlugin, '$unityJsbState');
-mergeInto(LibraryManager.library, QuickJSPlugin);
+autoAddDeps(UnityJSBPlugin, '$unityJsbState');
+mergeInto(LibraryManager.library, UnityJSBPlugin);

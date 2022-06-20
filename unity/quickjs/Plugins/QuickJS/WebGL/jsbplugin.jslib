@@ -2,7 +2,7 @@
  * Build with the following command:
  * npx -p typescript tsc
  */
-var QuickJSPlugin = {
+var UnityJSBPlugin = {
     $unityJsbState__postset: 'unityJsbState.atoms = unityJsbState.createAtoms();\n',
     $unityJsbState: {
         createObjects: function () {
@@ -1342,5 +1342,5 @@ var QuickJSPlugin = {
     },
     // #endregion
 };
-autoAddDeps(QuickJSPlugin, '$unityJsbState');
-mergeInto(LibraryManager.library, QuickJSPlugin);
+autoAddDeps(UnityJSBPlugin, '$unityJsbState');
+mergeInto(LibraryManager.library, UnityJSBPlugin);
