@@ -508,7 +508,6 @@ var UnityJSBPlugin = {
         var receiverObj = context.runtime.objects.get(receiver);
         var propStr = unityJsbState.atoms.get(prop);
         var res = valObj[propStr];
-        // var res = Reflect.get(valObj, propStr, receiverObj);
         context.runtime.objects.push(res, ptr);
     },
     JS_GetPropertyStr: function (ptr, ctxId, val, prop) {
@@ -516,7 +515,6 @@ var UnityJSBPlugin = {
         var valObj = context.runtime.objects.get(val);
         var propStr = unityJsbState.stringify(prop);
         var res = valObj[propStr];
-        // var res = Reflect.get(valObj, propStr);
         context.runtime.objects.push(res, ptr);
     },
     JS_Invoke: function (ptr, ctx, this_obj, prop, argc, argv) {
@@ -524,25 +522,42 @@ var UnityJSBPlugin = {
         var propVal = unityJsbState.atoms.get(prop);
         var thisVal = context.runtime.objects.get(this_obj);
         var func = thisVal[propVal];
-        // const func = Reflect.get(thisVal, propVal);
         var args = context.runtime.objects.batchGet(argv, argc);
-        var val = func.apply(thisVal, args);
-        context.runtime.objects.push(val, ptr);
+        var res;
+        try {
+            res = func.apply(thisVal, args);
+        }
+        catch (err) {
+            res = err;
+        }
+        context.runtime.objects.push(res, ptr);
     },
     JS_Call: function (ptr, ctx, func_obj, this_obj, argc, argv) {
         var context = unityJsbState.getContext(ctx);
         var func = context.runtime.objects.get(func_obj);
         var thisVal = context.runtime.objects.get(this_obj);
         var args = context.runtime.objects.batchGet(argv, argc);
-        var val = func.apply(thisVal, args);
-        context.runtime.objects.push(val, ptr);
+        var res;
+        try {
+            res = func.apply(thisVal, args);
+        }
+        catch (err) {
+            res = err;
+        }
+        context.runtime.objects.push(res, ptr);
     },
     JS_CallConstructor: function (ptr, ctx, func_obj, argc, argv) {
         var context = unityJsbState.getContext(ctx);
         var func = context.runtime.objects.get(func_obj);
         var args = context.runtime.objects.batchGet(argv, argc);
-        var val = Reflect.construct(func, args);
-        context.runtime.objects.push(val, ptr);
+        var res;
+        try {
+            res = Reflect.construct(func, args);
+        }
+        catch (err) {
+            res = err;
+        }
+        context.runtime.objects.push(res, ptr);
     },
     JS_SetConstructor: function (ctx, ctor, proto) {
         var context = unityJsbState.getContext(ctx);
@@ -599,8 +614,9 @@ var UnityJSBPlugin = {
     },
     JS_DefinePropertyValue: function (ctx, this_obj, prop, val, flags) {
         var context = unityJsbState.getContext(ctx);
-        var thisVal = context.runtime.objects.get(this_obj);
-        var valVal = context.runtime.objects.get(val);
+        var runtime = context.runtime;
+        var thisVal = runtime.objects.get(this_obj);
+        var valVal = runtime.objects.get(val);
         var propVal = unityJsbState.atoms.get(prop);
         var configurable = !!(flags & 1 /* JSPropFlags.JS_PROP_CONFIGURABLE */);
         var hasConfigurable = configurable || !!(flags & 256 /* JSPropFlags.JS_PROP_HAS_CONFIGURABLE */);
@@ -609,6 +625,8 @@ var UnityJSBPlugin = {
         var writable = !!(flags & 2 /* JSPropFlags.JS_PROP_WRITABLE */);
         var hasWritable = writable || !!(flags & 512 /* JSPropFlags.JS_PROP_HAS_WRITABLE */);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
+        // SetProperty frees the value automatically
+        runtime.objects.ref(val, -1, undefined);
         try {
             var opts = {
                 value: valVal,
@@ -640,12 +658,14 @@ var UnityJSBPlugin = {
     },
     JS_SetPropertyInternal: function (ctx, this_obj, prop, val, flags) {
         var context = unityJsbState.getContext(ctx);
-        var thisVal = context.runtime.objects.get(this_obj);
-        var valVal = context.runtime.objects.get(val);
+        var runtime = context.runtime;
+        var thisVal = runtime.objects.get(this_obj);
+        var valVal = runtime.objects.get(val);
         var propVal = unityJsbState.atoms.get(prop);
+        // SetProperty frees the value automatically
+        runtime.objects.ref(val, -1, undefined);
         var shouldThrow = !!(flags & 16384 /* JSPropFlags.JS_PROP_THROW */) || !!(flags & 32768 /* JSPropFlags.JS_PROP_THROW_STRICT */);
         try {
-            // return !!Reflect.set(thisVal, propVal, valVal);
             thisVal[propVal] = valVal;
             return true;
         }
@@ -660,12 +680,20 @@ var UnityJSBPlugin = {
     },
     JS_SetPropertyUint32: function (ctx, this_obj, idx, val) {
         var context = unityJsbState.getContext(ctx);
+        var runtime = context.runtime;
         var thisVal = context.runtime.objects.get(this_obj);
         var valVal = context.runtime.objects.get(val);
         var propVal = idx;
-        // return !!Reflect.set(thisVal, propVal, valVal);
-        thisVal[propVal] = valVal;
-        return true;
+        // SetProperty frees the value automatically
+        runtime.objects.ref(val, -1, undefined);
+        try {
+            thisVal[propVal] = valVal;
+            return true;
+        }
+        catch (err) {
+            context.lastException = err;
+        }
+        return false;
     },
     jsb_get_payload_header: function (ret, ctx, val) {
         var context = unityJsbState.getContext(ctx);

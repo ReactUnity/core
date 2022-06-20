@@ -580,7 +580,6 @@ var UnityJSBPlugin: PluginType = {
     var receiverObj = context.runtime.objects.get(receiver);
     var propStr = unityJsbState.atoms.get(prop);
     var res = valObj[propStr];
-    // var res = Reflect.get(valObj, propStr, receiverObj);
 
     context.runtime.objects.push(res, ptr);
   },
@@ -590,7 +589,6 @@ var UnityJSBPlugin: PluginType = {
     var valObj = context.runtime.objects.get(val);
     var propStr = unityJsbState.stringify(prop);
     var res = valObj[propStr];
-    // var res = Reflect.get(valObj, propStr);
 
     context.runtime.objects.push(res, ptr);
   },
@@ -600,13 +598,18 @@ var UnityJSBPlugin: PluginType = {
     const propVal = unityJsbState.atoms.get(prop);
     const thisVal = context.runtime.objects.get(this_obj);
     const func = thisVal[propVal];
-    // const func = Reflect.get(thisVal, propVal);
 
     const args = context.runtime.objects.batchGet(argv, argc);
 
-    const val = func.apply(thisVal, args);
+    let res;
+    try {
+      res = func.apply(thisVal, args);
+    }
+    catch (err) {
+      res = err;
+    }
 
-    context.runtime.objects.push(val, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_Call(ptr, ctx, func_obj, this_obj, argc, argv) {
@@ -616,9 +619,15 @@ var UnityJSBPlugin: PluginType = {
 
     const args = context.runtime.objects.batchGet(argv, argc);
 
-    const val = func.apply(thisVal, args);
+    let res;
+    try {
+      res = func.apply(thisVal, args);
+    }
+    catch (err) {
+      res = err;
+    }
 
-    context.runtime.objects.push(val, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_CallConstructor(ptr, ctx, func_obj, argc, argv) {
@@ -627,9 +636,15 @@ var UnityJSBPlugin: PluginType = {
 
     const args = context.runtime.objects.batchGet(argv, argc);
 
-    const val = Reflect.construct(func, args);
+    let res;
+    try {
+      res = Reflect.construct(func, args);
+    }
+    catch (err) {
+      res = err;
+    }
 
-    context.runtime.objects.push(val, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_SetConstructor(ctx, ctor, proto) {
@@ -697,9 +712,10 @@ var UnityJSBPlugin: PluginType = {
 
   JS_DefinePropertyValue(ctx, this_obj, prop, val, flags) {
     var context = unityJsbState.getContext(ctx);
+    var runtime = context.runtime;
 
-    const thisVal = context.runtime.objects.get(this_obj);
-    const valVal = context.runtime.objects.get(val);
+    const thisVal = runtime.objects.get(this_obj);
+    const valVal = runtime.objects.get(val);
     const propVal = unityJsbState.atoms.get(prop);
 
     const configurable = !!(flags & JSPropFlags.JS_PROP_CONFIGURABLE);
@@ -710,6 +726,9 @@ var UnityJSBPlugin: PluginType = {
     const hasWritable = writable || !!(flags & JSPropFlags.JS_PROP_HAS_WRITABLE);
 
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
+
+    // SetProperty frees the value automatically
+    runtime.objects.ref(val, -1, undefined);
 
     try {
       const opts: PropertyDescriptor = {
@@ -746,15 +765,18 @@ var UnityJSBPlugin: PluginType = {
 
   JS_SetPropertyInternal(ctx, this_obj, prop, val, flags) {
     var context = unityJsbState.getContext(ctx);
+    var runtime = context.runtime;
 
-    const thisVal = context.runtime.objects.get(this_obj);
-    const valVal = context.runtime.objects.get(val);
+    const thisVal = runtime.objects.get(this_obj);
+    const valVal = runtime.objects.get(val);
     const propVal = unityJsbState.atoms.get(prop);
+
+    // SetProperty frees the value automatically
+    runtime.objects.ref(val, -1, undefined);
 
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
 
     try {
-      // return !!Reflect.set(thisVal, propVal, valVal);
       thisVal[propVal] = valVal;
       return true;
     } catch (err) {
@@ -770,14 +792,23 @@ var UnityJSBPlugin: PluginType = {
 
   JS_SetPropertyUint32(ctx, this_obj, idx, val) {
     var context = unityJsbState.getContext(ctx);
+    var runtime = context.runtime;
 
     const thisVal = context.runtime.objects.get(this_obj);
     const valVal = context.runtime.objects.get(val);
     const propVal = idx;
 
-    // return !!Reflect.set(thisVal, propVal, valVal);
-    thisVal[propVal] = valVal;
-    return true;
+    // SetProperty frees the value automatically
+    runtime.objects.ref(val, -1, undefined);
+
+    try {
+      thisVal[propVal] = valVal;
+      return true;
+    } catch (err) {
+      context.lastException = err;
+    }
+
+    return false;
   },
 
   jsb_get_payload_header(ret, ctx, val) {
