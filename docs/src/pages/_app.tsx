@@ -7,17 +7,11 @@ import '@docsearch/css';
 import { GlobalUnityProvider } from 'components/unity';
 import { AppProps } from 'next/app';
 import * as React from 'react';
-import { hotjar } from 'utils/hotjar';
 import '../styles/algolia.css';
-import '../styles/fonts.css';
 import '../styles/index.css';
 import '../styles/sandpack.css';
 
-if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_HJ_SITE_ID && process.env.NEXT_PUBLIC_HJ_SITE_V) {
-  hotjar(process.env.NEXT_PUBLIC_HJ_SITE_ID, process.env.NEXT_PUBLIC_HJ_SITE_V);
-}
-
-const EmptyAppShell: React.FC = ({ children }) => <>{children}</>;
+const EmptyAppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => <>{children}</>;
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   let AppShell = (Component as any).appShell || EmptyAppShell;
