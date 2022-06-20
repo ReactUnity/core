@@ -1,4 +1,4 @@
-#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
 #define REACT_QUICKJS
 #endif
 
@@ -18,7 +18,15 @@ namespace ReactUnity.Scripting
     {
         public string Key { get; } = "QuickJS";
         public object NativeEngine => Runtime;
-        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None;
+        public EngineCapabilities Capabilities { get; } = EngineCapabilities.None
+#if !UNITY_EDITOR && UNITY_WEBGL
+            | EngineCapabilities.Fetch
+            | EngineCapabilities.XHR
+            | EngineCapabilities.WebSocket
+            | EngineCapabilities.Console
+            | EngineCapabilities.Base64
+#endif
+            | EngineCapabilities.None;
 
         private Action<IJavaScriptEngine> OnInitialize;
 

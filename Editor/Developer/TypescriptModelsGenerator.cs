@@ -160,7 +160,7 @@ namespace ReactUnity.Editor.Developer
             generator.PickFileAndGenerate();
         }
 
-#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
         [UnityEditor.MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
         public static void GenerateQuickJS()
         {
