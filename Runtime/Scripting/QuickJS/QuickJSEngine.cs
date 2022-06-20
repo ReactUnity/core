@@ -112,7 +112,8 @@ namespace ReactUnity.Scripting
 
         public void Execute(string code, string fileName = null)
         {
-            Evaluate(code, fileName);
+            var voidedCode = code + "\n;;void 0;";
+            Evaluate(voidedCode, fileName);
         }
 
         public Exception TryExecute(string code, string fileName = null)

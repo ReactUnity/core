@@ -83,13 +83,16 @@ namespace ReactUnity.Scripting
 
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
-                    engine.Execute("global.postMessage = function() {}");
+                    engine.Execute(@"
+                        global.postMessage = function() {};
 
-                    // Required for JSS
-                    engine.Execute("global.getComputedStyle = function() { return {}; }");
+                        // Required for JSS
+                        global.getComputedStyle = function() { return {}; };
 
-                    // Required for styled-components
-                    engine.Execute("global.HTMLElement = {}");
+                        // Required for styled-components
+                        global.HTMLElement = {};
+                        void 0;
+                    ");
 
                     EngineInitialized = true;
 
@@ -123,7 +126,7 @@ namespace ReactUnity.Scripting
         {
             EngineFactory.Create(Context, debug, awaitDebugger, (engine) => {
                 this.engine = engine;
-                engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this;");
+                engine.Execute("this.globalThis = this.global = this.window = this.parent = this.self = this; void 0;");
                 engine.SetGlobal("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(Context.MediaProvider, media)));
                 engine.SetGlobal("UnityBridge", ReactUnityBridge.Instance);
 
@@ -139,6 +142,9 @@ namespace ReactUnity.Scripting
         {
             if (engine.Capabilities.HasFlag(EngineCapabilities.Console)) return;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+            engine.Execute("global.console = global.$$webglWindow.console; void 0;");
+#else
             var console = new ConsoleProxy(Context);
 
             engine.SetGlobal("__console", console);
@@ -157,8 +163,10 @@ namespace ReactUnity.Scripting
                     assert:    function assert    (arg) { _console.assert(arg)        },
                     count:     function count    (name) { return _console.count(name) },
                 };
+                void 0;
 })()");
             engine.DeleteGlobal("__console");
+#endif
         }
 
         static void CreatePolyfills(IJavaScriptEngine engine)
@@ -198,16 +206,16 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
             {
-                engine.Execute(@"global.WebSocket = function(url) {
+                var webSocketGlobal = engine.Evaluate(@"global.WebSocket = function(url) {
                     return new global.WebSocket.original(Context, url); }");
-                engine.SetProperty(engine.GetGlobal("WebSocket"), "original", typeof(WebSocketProxy));
+                engine.SetProperty(webSocketGlobal, "original", typeof(WebSocketProxy));
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
             {
-                engine.Execute(@"global.XMLHttpRequest = function() {
+                var xhrGlobal = engine.Evaluate(@"global.XMLHttpRequest = function() {
                     return new global.XMLHttpRequest.original(Context, location.origin); }");
-                engine.SetProperty(engine.GetGlobal("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
+                engine.SetProperty(xhrGlobal, "original", typeof(XMLHttpRequest));
             }
         }
 
