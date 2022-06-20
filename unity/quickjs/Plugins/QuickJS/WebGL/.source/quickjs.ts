@@ -221,10 +221,6 @@ var QuickJSPlugin: PluginType = {
 
           console.assert(ho.refCount >= 0);
 
-          if (ho.refCount <= 0) {
-            res.deleteIndex(id);
-          }
-
           if (typeof ptr === 'number') {
             HEAP32[ptr >> 2] = id;
             HEAP32[(ptr >> 2) + 1] = 0;
@@ -232,9 +228,9 @@ var QuickJSPlugin: PluginType = {
           }
         },
         deleteIndex(id) {
-          // var rec = record[id];
-          // delete record[id];
-          // map.delete(rec.value);
+          var rec = record[id];
+          delete record[id];
+          map.delete(rec.value);
         },
         payloadMap,
         setPayload(obj, type, payload) {
@@ -358,10 +354,33 @@ var QuickJSPlugin: PluginType = {
     // TODO: understand what to do with finalizer
 
     var id = unityJsbState.lastRuntimeId++;
+    var objects = unityJsbState.createObjects();
 
     unityJsbState.runtimes[id] = {
       id,
       contexts: {},
+      objects,
+      garbageCollect() {
+        var lastId = objects.lastId;
+        var record = objects.record;
+
+        var aliveItemCount = 0;
+
+        for (let index = 0; index < lastId; index++) {
+          const element = record[index];
+
+          if (element) {
+            if (element.refCount <= 0) {
+              objects.deleteIndex(index);
+            }
+            else {
+              aliveItemCount++;
+            }
+          }
+        }
+
+        return aliveItemCount;
+      },
     };
 
     return id;
@@ -385,16 +404,17 @@ var QuickJSPlugin: PluginType = {
 
   JSB_FreeRuntime(rtId) {
     var runtime = unityJsbState.getRuntime(rtId);
+    var aliveItemCount = runtime.garbageCollect();
 
     for (const key in runtime.contexts) {
       if (Object.hasOwnProperty.call(runtime.contexts, key)) {
-        unityJsbState.contexts[key] = undefined;
+        delete unityJsbState.contexts[key];
       }
     }
 
-    unityJsbState.runtimes[runtime.id] = undefined;
+    delete unityJsbState.runtimes[runtime.id];
 
-    return true;
+    return aliveItemCount === 0;
   },
 
   JS_GetRuntime(ctxId) {
@@ -411,6 +431,7 @@ var QuickJSPlugin: PluginType = {
       document: undefined,
       btoa: window.btoa?.bind(window),
       atob: window.atob?.bind(window),
+      $$webglWindow: window,
     };
 
     var globals: typeof window = new Proxy(extraGlobals, {
@@ -446,15 +467,14 @@ var QuickJSPlugin: PluginType = {
       }).call(globals, code + sourceMap);
     };
 
-    var objects = unityJsbState.createObjects();
 
     var context: PluginContext = {
       id,
+      runtime,
       runtimeId: rtId,
       window,
       globalObject: globals,
       evaluate,
-      objects,
     };
 
     runtime.contexts[id] = context;
@@ -466,18 +486,18 @@ var QuickJSPlugin: PluginType = {
     var context = unityJsbState.getContext(ctxId);
     var runtime = unityJsbState.runtimes[context.runtimeId];
 
-    runtime.contexts[context.id] = undefined;
-    unityJsbState.contexts[context.id] = undefined;
+    delete runtime.contexts[context.id];
+    delete unityJsbState.contexts[context.id];
   },
 
   JS_GetGlobalObject(returnValue, ctxId) {
     var context = unityJsbState.getContext(ctxId);
 
     if (!context.globalObjectId) {
-      context.objects.push(context.globalObject, returnValue);
+      context.runtime.objects.push(context.globalObject, returnValue);
     }
     else {
-      context.objects.refIndex(context.globalObjectId, 1, returnValue);
+      context.runtime.objects.refIndex(context.globalObjectId, 1, returnValue);
     }
   },
 
@@ -489,65 +509,57 @@ var QuickJSPlugin: PluginType = {
 
       var res = context.evaluate(code, filenameStr);
 
-      context.objects.push(res, ptr);
+      context.runtime.objects.push(res, ptr);
     } catch (err) {
       context.lastException = err;
-      context.objects.push(err, ptr);
+      context.runtime.objects.push(err, ptr);
       console.error(err);
     }
   },
 
   JS_IsInstanceOf(ctxId, val, obj) {
     var context = unityJsbState.getContext(ctxId);
-    var valVal = context.objects.get(val);
-    var ctorVal = context.objects.get(obj);
+    var valVal = context.runtime.objects.get(val);
+    var ctorVal = context.runtime.objects.get(obj);
     return !!(valVal instanceof ctorVal);
   },
 
   JS_GetException(ptr, ctx) {
     var context = unityJsbState.getContext(ctx);
 
-    context.objects.push(context.lastException, ptr);
+    context.runtime.objects.push(context.lastException, ptr);
   },
 
   JSB_FreeValue(ctx, v) {
     var context = unityJsbState.getContext(ctx);
-    context.objects.ref(v, -1, undefined);
+    context.runtime.objects.ref(v, -1, undefined);
   },
 
   JSB_FreeValueRT(rt, v) {
-    // TODO:
-  },
-
-  JS_FreeCString(ctx, ptr) {
-    // TODO:
-    // _free(ptr);
-  },
-
-  js_free(ctx, ptr) {
-    // TODO:
-    // _free(ptr);
+    var runtime = unityJsbState.getRuntime(rt);
+    runtime.objects.ref(v, -1, undefined);
   },
 
   JSB_FreePayload(ret, ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var obj = context.objects.get(val);
+    var obj = context.runtime.objects.get(val);
 
-    var payload = context.objects.getPayload(obj);
+    var payload = context.runtime.objects.getPayload(obj);
     HEAP32[ret >> 2] = payload.type;
     HEAP32[(ret >> 2) + 1] = payload.payload;
 
-    context.objects.clearPayload(obj);
+    context.runtime.objects.clearPayload(obj);
   },
 
   JSB_DupValue(ptr, ctx, v) {
     var context = unityJsbState.getContext(ctx);
-    context.objects.ref(v, 1, ptr);
+    context.runtime.objects.ref(v, 1, ptr);
   },
 
   JS_RunGC(rt) {
-    // TODO: handle gracefully
-    return 0;
+    var runtime = unityJsbState.getRuntime(rt);
+
+    runtime.garbageCollect();
   },
 
   JS_ComputeMemoryUsage(rt, s) {
@@ -556,81 +568,81 @@ var QuickJSPlugin: PluginType = {
 
   JS_GetPropertyUint32(ptr, ctxId, val, index) {
     var context = unityJsbState.getContext(ctxId);
-    var obj = context.objects.get(val);
+    var obj = context.runtime.objects.get(val);
     var res = obj[index];
 
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_GetPropertyInternal(ptr, ctxId, val, prop, receiver, throwRefError) {
     var context = unityJsbState.getContext(ctxId);
-    var valObj = context.objects.get(val);
-    var receiverObj = context.objects.get(receiver);
+    var valObj = context.runtime.objects.get(val);
+    var receiverObj = context.runtime.objects.get(receiver);
     var propStr = unityJsbState.atoms.get(prop);
     var res = valObj[propStr];
     // var res = Reflect.get(valObj, propStr, receiverObj);
 
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_GetPropertyStr(ptr, ctxId, val, prop) {
     var context = unityJsbState.getContext(ctxId);
-    var valObj = context.objects.get(val);
+    var valObj = context.runtime.objects.get(val);
     var propStr = unityJsbState.stringify(prop);
     var res = valObj[propStr];
     // var res = Reflect.get(valObj, propStr);
 
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_Invoke(ptr, ctx, this_obj, prop, argc, argv) {
     var context = unityJsbState.getContext(ctx);
     const propVal = unityJsbState.atoms.get(prop);
-    const thisVal = context.objects.get(this_obj);
+    const thisVal = context.runtime.objects.get(this_obj);
     const func = thisVal[propVal];
     // const func = Reflect.get(thisVal, propVal);
 
-    const args = context.objects.batchGet(argv, argc);
+    const args = context.runtime.objects.batchGet(argv, argc);
 
     const val = func.apply(thisVal, args);
 
-    context.objects.push(val, ptr);
+    context.runtime.objects.push(val, ptr);
   },
 
   JS_Call(ptr, ctx, func_obj, this_obj, argc, argv) {
     var context = unityJsbState.getContext(ctx);
-    const func = context.objects.get(func_obj);
-    const thisVal = context.objects.get(this_obj);
+    const func = context.runtime.objects.get(func_obj);
+    const thisVal = context.runtime.objects.get(this_obj);
 
-    const args = context.objects.batchGet(argv, argc);
+    const args = context.runtime.objects.batchGet(argv, argc);
 
     const val = func.apply(thisVal, args);
 
-    context.objects.push(val, ptr);
+    context.runtime.objects.push(val, ptr);
   },
 
   JS_CallConstructor(ptr, ctx, func_obj, argc, argv) {
     var context = unityJsbState.getContext(ctx);
-    const func = context.objects.get(func_obj);
+    const func = context.runtime.objects.get(func_obj);
 
-    const args = context.objects.batchGet(argv, argc);
+    const args = context.runtime.objects.batchGet(argv, argc);
 
     const val = Reflect.construct(func, args);
 
-    context.objects.push(val, ptr);
+    context.runtime.objects.push(val, ptr);
   },
 
   JS_SetConstructor(ctx, ctor, proto) {
     var context = unityJsbState.getContext(ctx);
-    var ctorVal = context.objects.get(ctor);
-    var protoVal = context.objects.get(proto);
+    var ctorVal = context.runtime.objects.get(ctor);
+    var protoVal = context.runtime.objects.get(proto);
     ctorVal.prototype = protoVal;
   },
 
   JS_SetPrototype(ctx, obj, proto) {
     var context = unityJsbState.getContext(ctx);
-    var objVal = context.objects.get(obj);
-    var protoVal = context.objects.get(proto);
+    var objVal = context.runtime.objects.get(obj);
+    var protoVal = context.runtime.objects.get(proto);
     Reflect.setPrototypeOf(objVal, protoVal);
 
     return true;
@@ -639,10 +651,10 @@ var QuickJSPlugin: PluginType = {
   JS_DefineProperty(ctx, this_obj, prop, val, getter, setter, flags) {
     var context = unityJsbState.getContext(ctx);
 
-    const thisVal = context.objects.get(this_obj);
-    const getterVal = context.objects.get(getter);
-    const setterVal = context.objects.get(setter);
-    const valVal = context.objects.get(val);
+    const thisVal = context.runtime.objects.get(this_obj);
+    const getterVal = context.runtime.objects.get(getter);
+    const setterVal = context.runtime.objects.get(setter);
+    const valVal = context.runtime.objects.get(val);
     const propVal = unityJsbState.atoms.get(prop);
 
     const configurable = !!(flags & JSPropFlags.JS_PROP_CONFIGURABLE);
@@ -686,8 +698,8 @@ var QuickJSPlugin: PluginType = {
   JS_DefinePropertyValue(ctx, this_obj, prop, val, flags) {
     var context = unityJsbState.getContext(ctx);
 
-    const thisVal = context.objects.get(this_obj);
-    const valVal = context.objects.get(val);
+    const thisVal = context.runtime.objects.get(this_obj);
+    const valVal = context.runtime.objects.get(val);
     const propVal = unityJsbState.atoms.get(prop);
 
     const configurable = !!(flags & JSPropFlags.JS_PROP_CONFIGURABLE);
@@ -724,7 +736,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_HasProperty(ctx, this_obj, prop) {
     var context = unityJsbState.getContext(ctx);
-    var thisVal = context.objects.get(this_obj);
+    var thisVal = context.runtime.objects.get(this_obj);
     var propVal = unityJsbState.atoms.get(prop);
 
     var res = Reflect.has(thisVal, propVal);
@@ -735,8 +747,8 @@ var QuickJSPlugin: PluginType = {
   JS_SetPropertyInternal(ctx, this_obj, prop, val, flags) {
     var context = unityJsbState.getContext(ctx);
 
-    const thisVal = context.objects.get(this_obj);
-    const valVal = context.objects.get(val);
+    const thisVal = context.runtime.objects.get(this_obj);
+    const valVal = context.runtime.objects.get(val);
     const propVal = unityJsbState.atoms.get(prop);
 
     const shouldThrow = !!(flags & JSPropFlags.JS_PROP_THROW) || !!(flags & JSPropFlags.JS_PROP_THROW_STRICT);
@@ -759,8 +771,8 @@ var QuickJSPlugin: PluginType = {
   JS_SetPropertyUint32(ctx, this_obj, idx, val) {
     var context = unityJsbState.getContext(ctx);
 
-    const thisVal = context.objects.get(this_obj);
-    const valVal = context.objects.get(val);
+    const thisVal = context.runtime.objects.get(this_obj);
+    const valVal = context.runtime.objects.get(val);
     const propVal = idx;
 
     // return !!Reflect.set(thisVal, propVal, valVal);
@@ -771,9 +783,9 @@ var QuickJSPlugin: PluginType = {
   jsb_get_payload_header(ret, ctx, val) {
 
     var context = unityJsbState.getContext(ctx);
-    var obj = context.objects.get(val);
+    var obj = context.runtime.objects.get(val);
 
-    var rec = context.objects.getPayload(obj);
+    var rec = context.runtime.objects.getPayload(obj);
 
     HEAP32[ret >> 2] = rec.type;
     HEAP32[(ret >> 2) + 1] = rec.payload;
@@ -782,7 +794,7 @@ var QuickJSPlugin: PluginType = {
   JS_ToCStringLen2(ctx, len, val, cesu8) {
     var context = unityJsbState.getContext(ctx);
 
-    var str = context.objects.get(val);
+    var str = context.runtime.objects.get(val);
 
 
     if (typeof str === 'undefined') {
@@ -795,9 +807,13 @@ var QuickJSPlugin: PluginType = {
     return buffer as IntPtr;
   },
 
+  JS_FreeCString(ctx, ptr) {
+    _free(ptr);
+  },
+
   JS_GetArrayBuffer(ctx, psize, obj) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(obj);
+    const value = context.runtime.objects.get(obj);
 
     if (value instanceof ArrayBuffer) {
       HEAP32[psize >> 2] = value.byteLength;
@@ -822,7 +838,7 @@ var QuickJSPlugin: PluginType = {
 
     var str = unityJsbState.atoms.get(atom);
 
-    context.objects.push(str, ptr);
+    context.runtime.objects.push(str, ptr);
   },
 
   JS_FreeAtom(ctx, v) {
@@ -903,28 +919,28 @@ var QuickJSPlugin: PluginType = {
 
   JS_IsArray(ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var valVal = context.objects.get(val);
+    var valVal = context.runtime.objects.get(val);
     var res = Array.isArray(valVal);
     return !!res;
   },
 
   JS_IsConstructor(ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var obj = context.objects.get(val);
+    var obj = context.runtime.objects.get(val);
     var res = !!obj.prototype && !!obj.prototype.constructor.name;
     return !!res;
   },
 
   JS_IsError(ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var valVal = context.objects.get(val);
+    var valVal = context.runtime.objects.get(val);
     var res = valVal instanceof Error;
     return !!res;
   },
 
   JS_IsFunction(ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var valVal = context.objects.get(val);
+    var valVal = context.runtime.objects.get(val);
     var res = typeof valVal === 'function';
     return !!res;
   },
@@ -935,17 +951,17 @@ var QuickJSPlugin: PluginType = {
     var context = unityJsbState.getContext(ctx);
     var str = unityJsbState.stringify(buf as any, buf_len);
     var res = JSON.parse(str);
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_JSONStringify(ptr, ctx, obj, replacer, space) {
     var context = unityJsbState.getContext(ctx);
-    var objVal = context.objects.get(obj);
-    var rpVal = context.objects.get(replacer);
-    var spVal = context.objects.get(space);
+    var objVal = context.runtime.objects.get(obj);
+    var rpVal = context.runtime.objects.get(replacer);
+    var spVal = context.runtime.objects.get(space);
 
     var res = JSON.stringify(objVal, rpVal, spVal);
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   // #region New
@@ -953,7 +969,7 @@ var QuickJSPlugin: PluginType = {
   JS_NewArray(ptr, ctx) {
     var context = unityJsbState.getContext(ctx);
     var res = [];
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_NewArrayBufferCopy(ptr, ctx, buf, len) {
@@ -964,29 +980,29 @@ var QuickJSPlugin: PluginType = {
     var existing = new Uint8Array(HEAPU8.buffer, buf, len);
     res.set(existing);
 
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JSB_NewFloat64(ptr, ctx, d) {
     var context = unityJsbState.getContext(ctx);
-    context.objects.push(d, ptr);
+    context.runtime.objects.push(d, ptr);
   },
 
   JSB_NewInt64(ptr, ctx, d) {
     var context = unityJsbState.getContext(ctx);
-    context.objects.push(d, ptr);
+    context.runtime.objects.push(d, ptr);
   },
 
   JS_NewObject(ptr, ctx) {
     var context = unityJsbState.getContext(ctx);
     var res = {};
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_NewString(ptr, ctx, str) {
     var context = unityJsbState.getContext(ctx);
     var res = unityJsbState.stringify(str);
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   JS_NewStringLen(ptr, ctx, str, len) {
@@ -994,13 +1010,13 @@ var QuickJSPlugin: PluginType = {
 
     var val = unityJsbState.stringify(str as any, len);
 
-    context.objects.push(val, ptr);
+    context.runtime.objects.push(val, ptr);
   },
 
   JSB_NewEmptyString(ptr, ctx) {
     var context = unityJsbState.getContext(ctx);
     var res = "";
-    context.objects.push(res, ptr);
+    context.runtime.objects.push(res, ptr);
   },
 
   // #endregion
@@ -1017,16 +1033,16 @@ var QuickJSPlugin: PluginType = {
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const thisPtr = context.objects.allocate(thisObj);
+      const thisPtr = context.runtime.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic) {
         const argc = args.length;
-        const argv = context.objects.batchAllocate(Array.from(args));
+        const argv = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunction>('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter) {
-        const val = context.objects.allocate(args[0]);
+        const val = context.runtime.objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunction>('viiii', func, [ret, ctx, thisPtr, val]);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter) {
@@ -1036,10 +1052,10 @@ var QuickJSPlugin: PluginType = {
         throw new Error('Unknown type of function specified: ' + cproto);
       }
 
-      return context.objects.get(ret);
+      return context.runtime.objects.get(ret);
     };
 
-    context.objects.push(jscFunction, ret);
+    context.runtime.objects.push(jscFunction, ret);
   },
 
   JSB_NewCFunctionMagic(ret, ctx, func, atom, length, cproto, magic) {
@@ -1052,21 +1068,21 @@ var QuickJSPlugin: PluginType = {
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const thisPtr = context.objects.allocate(thisObj);
+      const thisPtr = context.runtime.objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic_magic) {
         const argc = args.length;
-        const argv = context.objects.batchAllocate(Array.from(args));
+        const argv = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
         const argc = args.length;
-        const argv = context.objects.batchAllocate(Array.from(args));
+        const argv = context.runtime.objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter_magic) {
-        const val = context.objects.allocate(args[0]);
+        const val = context.runtime.objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func, [ret, ctx, thisPtr, val, magic]);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter_magic) {
@@ -1076,41 +1092,41 @@ var QuickJSPlugin: PluginType = {
         throw new Error('Unknown type of function specified: ' + cproto);
       }
 
-      return context.objects.get(ret);
+      return context.runtime.objects.get(ret);
     };
 
-    context.objects.push(jscFunctionMagic, ret);
+    context.runtime.objects.push(jscFunctionMagic, ret);
   },
 
   jsb_new_bridge_object(ret, ctx, proto, object_id) {
     var context = unityJsbState.getContext(ctx);
-    var protoVal = context.objects.get(proto);
+    var protoVal = context.runtime.objects.get(proto);
     var res = Object.create(protoVal);
-    context.objects.push(res, ret);
-    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
+    context.runtime.objects.push(res, ret);
+    context.runtime.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_new_bridge_value(ret, ctx, proto, size) {
     var context = unityJsbState.getContext(ctx);
-    var protoVal = context.objects.get(proto);
+    var protoVal = context.runtime.objects.get(proto);
     var res = Object.create(protoVal) as BridgeStruct;
     res.$$values = new Array(size).fill(0);
-    context.objects.push(res, ret);
+    context.runtime.objects.push(res, ret);
   },
 
   JSB_NewBridgeClassObject(ret, ctx, new_target, object_id) {
     var context = unityJsbState.getContext(ctx);
-    var res = context.objects.get(new_target);
+    var res = context.runtime.objects.get(new_target);
 
-    context.objects.push(res, ret);
-    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
+    context.runtime.objects.push(res, ret);
+    context.runtime.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   JSB_NewBridgeClassValue(ret, ctx, new_target, size) {
     var context = unityJsbState.getContext(ctx);
-    var res = context.objects.get(new_target) as BridgeStruct;
+    var res = context.runtime.objects.get(new_target) as BridgeStruct;
     res.$$values = new Array(size).fill(0);
-    context.objects.push(res, ret);
+    context.runtime.objects.push(res, ret);
   },
 
   JSB_GetBridgeClassID() {
@@ -1120,20 +1136,20 @@ var QuickJSPlugin: PluginType = {
 
   jsb_construct_bridge_object(ret, ctx, ctor, object_id) {
     var context = unityJsbState.getContext(ctx);
-    var ctorVal = context.objects.get(ctor);
+    var ctorVal = context.runtime.objects.get(ctor);
     var res = Reflect.construct(ctorVal, []);
-    context.objects.push(res, ret);
-    context.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
+    context.runtime.objects.push(res, ret);
+    context.runtime.objects.setPayload(res, BridgeObjectType.ObjectRef, object_id);
   },
 
   jsb_crossbind_constructor(ret, ctx, new_target) {
     var context = unityJsbState.getContext(ctx);
-    var target = context.objects.get(new_target);
+    var target = context.runtime.objects.get(new_target);
     // TODO: I have no idea
     var res = function () {
       return new target();
     };
-    context.objects.push(res, ret);
+    context.runtime.objects.push(res, ret);
   },
 
   // #endregion
@@ -1145,7 +1161,7 @@ var QuickJSPlugin: PluginType = {
     var str = unityJsbState.stringify(buf as any, buf_len);
     var err = new Error(str);
     console.error(err);
-    context.objects.push(err, ret);
+    context.runtime.objects.push(err, ret);
     // TODO: throw?
   },
 
@@ -1154,7 +1170,7 @@ var QuickJSPlugin: PluginType = {
     var str = 'Type Error';
     var err = new Error(str);
     console.error(err);
-    context.objects.push(err, ret);
+    context.runtime.objects.push(err, ret);
     // TODO: throw?
   },
 
@@ -1163,7 +1179,7 @@ var QuickJSPlugin: PluginType = {
     var str = 'Range Error';
     var err = new Error(str);
     console.error(err);
-    context.objects.push(err, ret);
+    context.runtime.objects.push(err, ret);
     // TODO: throw?
   },
 
@@ -1172,7 +1188,7 @@ var QuickJSPlugin: PluginType = {
     var str = 'Internal Error';
     var err = new Error(str);
     console.error(err);
-    context.objects.push(err, ret);
+    context.runtime.objects.push(err, ret);
     // TODO: throw?
   },
 
@@ -1181,7 +1197,7 @@ var QuickJSPlugin: PluginType = {
     var str = 'Reference Error';
     var err = new Error(str);
     console.error(err);
-    context.objects.push(err, ret);
+    context.runtime.objects.push(err, ret);
     // TODO: throw?
   },
 
@@ -1198,7 +1214,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_floats(ctx, val, n, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = n / Sizes.Single;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1213,7 +1229,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_bytes(ctx, val, n, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = n / Sizes.Single;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1228,7 +1244,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_byte_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1243,7 +1259,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_float_2(ctx, val, v0, v1) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 2;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1256,7 +1272,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_float_3(ctx, val, v0, v1, v2) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 3;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1270,7 +1286,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_float_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1285,7 +1301,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_int_1(ctx, val, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 1;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1297,7 +1313,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_int_2(ctx, val, v0, v1) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 2;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1310,7 +1326,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_int_3(ctx, val, v0, v1, v2) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 3;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1324,7 +1340,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_set_int_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1343,7 +1359,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_bytes(ctx, val, n, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = n / Sizes.Single;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1358,7 +1374,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_floats(ctx, val, n, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = n / Sizes.Single;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1373,7 +1389,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_byte_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1388,7 +1404,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_float_2(ctx, val, v0, v1) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 2;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1401,7 +1417,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_float_3(ctx, val, v0, v1, v2) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 3;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1415,7 +1431,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_float_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1430,7 +1446,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_int_1(ctx, val, v0) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 1;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1442,7 +1458,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_int_2(ctx, val, v0, v1) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 2;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1455,7 +1471,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_int_3(ctx, val, v0, v1, v2) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 3;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1469,7 +1485,7 @@ var QuickJSPlugin: PluginType = {
 
   jsb_get_int_4(ctx, val, v0, v1, v2, v3) {
     var context = unityJsbState.getContext(ctx);
-    const obj = context.objects.get(val) as BridgeStruct;
+    const obj = context.runtime.objects.get(val) as BridgeStruct;
 
     const count = 4;
     if (!Array.isArray(obj.$$values) || count >= obj.$$values.length) return false;
@@ -1488,7 +1504,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToFloat64(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAPF64[pres >> 3] = Number(value);
@@ -1500,7 +1516,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToInt32(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAP32[pres >> 2] = Number(value);
@@ -1512,7 +1528,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToInt64(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       unityJsbState.HEAP64()[pres >> 3] = BigInt(value);
       return false;
@@ -1522,7 +1538,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToBigInt64(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       unityJsbState.HEAP64()[pres >> 3] = BigInt(value);
       return false;
@@ -1532,7 +1548,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToIndex(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
     if (typeof value === 'number' || typeof value === 'bigint') {
       unityJsbState.HEAPU64()[pres >> 3] = BigInt(value);
       return false;
@@ -1542,7 +1558,7 @@ var QuickJSPlugin: PluginType = {
 
   JSB_ToUint32(ctx, pres, val) {
     const context = unityJsbState.getContext(ctx);
-    const value = context.objects.get(val);
+    const value = context.runtime.objects.get(val);
 
     if (typeof value === 'number' || typeof value === 'bigint') {
       HEAPU32[pres >> 2] = Number(value);
@@ -1553,7 +1569,7 @@ var QuickJSPlugin: PluginType = {
 
   JS_ToBool(ctx, val) {
     var context = unityJsbState.getContext(ctx);
-    var objVal = context.objects.get(val);
+    var objVal = context.runtime.objects.get(val);
     return !!objVal;
   },
 
@@ -1572,6 +1588,10 @@ var QuickJSPlugin: PluginType = {
 
   JS_EvalFunction(ptr, ctx, fun_obj) {
     console.warn('Bytecode is not supported in WebGL Backend');
+  },
+
+  js_free(ctx, ptr) {
+    // TODO: Not sure what this is but seems related to Bytecode
   },
 
   // #endregion

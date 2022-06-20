@@ -26,13 +26,15 @@ declare global {
     id: number;
     opaque?: any;
     contexts: Record<string, PluginContext | undefined>;
+    objects: PluginObjects;
+    garbageCollect(): number;
   };
 
   export declare type PluginContext = {
     id: number;
     opaque?: any;
+    runtime: PluginRuntime;
     runtimeId: number;
-    objects: PluginObjects;
 
     window: Window;
     globalObject: Window;
