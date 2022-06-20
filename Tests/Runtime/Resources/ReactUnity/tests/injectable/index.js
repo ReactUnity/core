@@ -8485,36 +8485,6 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/create fake namespace object */
-/******/ 	(() => {
-/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
-/******/ 		var leafPrototypes;
-/******/ 		// create a fake namespace object
-/******/ 		// mode & 1: value is a module id, require it
-/******/ 		// mode & 2: merge all properties of value into the ns
-/******/ 		// mode & 4: return value when already ns object
-/******/ 		// mode & 16: return value when it's Promise-like
-/******/ 		// mode & 8|1: behave like require
-/******/ 		__webpack_require__.t = function(value, mode) {
-/******/ 			if(mode & 1) value = this(value);
-/******/ 			if(mode & 8) return value;
-/******/ 			if(typeof value === 'object' && value) {
-/******/ 				if((mode & 4) && value.__esModule) return value;
-/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
-/******/ 			}
-/******/ 			var ns = Object.create(null);
-/******/ 			__webpack_require__.r(ns);
-/******/ 			var def = {};
-/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
-/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
-/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
-/******/ 			}
-/******/ 			def['default'] = () => (value);
-/******/ 			__webpack_require__.d(ns, def);
-/******/ 			return ns;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -8651,7 +8621,6 @@ function toVal(mix) {
 }
 // EXTERNAL MODULE: ../../../node_modules/react/index.js
 var react = __webpack_require__("../../../node_modules/react/index.js");
-var react_namespaceObject = /*#__PURE__*/__webpack_require__.t(react, 2);
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/helpers.js
 
 function getChildrenOfType(children, type) {
@@ -14551,7 +14520,7 @@ function useWatchable(obj) {
 
 
 ;// CONCATENATED MODULE: ./src/app.tsx
-var app_react=globalThis.react=globalThis.React=react_namespaceObject;var ReactUnity=globalThis.ReactUnity=renderer_dist_namespaceObject;var Material=globalThis.Material=dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__("../../../material/dist/src/styles/index.js");};/*INJECTABLE_START*/
+var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__("../../../material/dist/src/styles/index.js");};/*INJECTABLE_START*/
 (function (react, ReactUnity, Material, MaterialStyles) {
   var __originalRender = ReactUnity.Renderer.render;
 
@@ -14560,6 +14529,7 @@ var app_react=globalThis.react=globalThis.React=react_namespaceObject;var ReactU
     renderCalled = true;
     __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
+
 
   ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
   var ReactUnityRenderer = ReactUnity.Renderer;
@@ -14577,14 +14547,22 @@ var app_react=globalThis.react=globalThis.React=react_namespaceObject;var ReactU
     if (module.startsWith('@reactunity/material/')) return Material;
   };
 
+
+  globalThis.react = globalThis.React = react;
+  globalThis.render = render;
+  globalThis.Renderer = globalThis.ReactUnityRenderer = Renderer;
+  globalThis.ReactUnity = ReactUnity;
+  globalThis.Material = Material;
+  globalThis.MaterialStyles = MaterialStyles;
+
   var defaultComponent;
 
   let result = (function (module, exports, render, require) {
 
     /*INJECT_CODE*/
 
-    if(typeof App === 'function') defaultComponent = App;
-    else if(typeof Example === 'function') defaultComponent = Example;
+    if (typeof App === 'function') defaultComponent = App;
+    else if (typeof Example === 'function') defaultComponent = Example;
   })(module, exports, render, require);
 
 
