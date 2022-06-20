@@ -8,6 +8,7 @@ import {
   SandpackProvider,
   SandpackThemeProvider
 } from '@codesandbox/sandpack-react';
+import { CodeMirrorRef } from '@codesandbox/sandpack-react/dist/types/components/CodeEditor/CodeMirror';
 import cn from 'classnames';
 import rangeParser from 'parse-numeric-range';
 import * as React from 'react';
@@ -36,7 +37,7 @@ const CodeBlock = React.forwardRef(
       noMargin?: boolean;
       noMarkers?: boolean;
     },
-    ref?: React.Ref<HTMLDivElement>
+    ref?: React.Ref<CodeMirrorRef>
   ) => {
     const getDecoratedLineInfo = () => {
       if (!metastring) {

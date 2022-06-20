@@ -6,8 +6,8 @@ import { useGlobalUnity } from './context';
 import styles from './index.module.scss';
 
 interface Props {
-  script?: string;
-  style?: string;
+  script?: string | null;
+  style?: string | null;
   className?: string;
   autoActivate?: boolean;
   hideActivateButton?: boolean;
@@ -24,7 +24,7 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
     const latestStyle = React.useRef(style);
 
     const unityContainer = React.useRef<HTMLDivElement | null>(null);
-    const setRef = useCallback((el) => {
+    const setRef = useCallback((el: HTMLDivElement | null) => {
       if (el) unityContainer.current = el;
     }, [unityContainer]);
     const { instance, insertTo, insertedToRef, setLoaded } = useGlobalUnity();

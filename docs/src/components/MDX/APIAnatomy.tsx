@@ -2,6 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import { CodeMirrorRef } from '@codesandbox/sandpack-react/dist/types/components/CodeEditor/CodeMirror';
 import cn from 'classnames';
 import * as React from 'react';
 import tailwindConfig from '../../../tailwind.config';
@@ -42,7 +43,7 @@ const colors = [
 
 export function APIAnatomy({ children }: APIAnatomyProps) {
   const [activeStep, setActiveStep] = React.useState<number | null>(null);
-  const ref = React.useRef<HTMLDivElement>();
+  const ref = React.useRef<CodeMirrorRef>();
 
   const { steps, code } = React.Children.toArray(children).reduce(
     (acc: AnatomyContent, child) => {

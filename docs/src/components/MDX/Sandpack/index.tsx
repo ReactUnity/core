@@ -11,7 +11,7 @@ import { CustomPreset } from './CustomPreset';
 
 
 type SandpackProps = {
-  children: React.ReactChildren;
+  children: React.ReactNode;
   autorun?: boolean;
   setup?: SandpackSetup;
 };

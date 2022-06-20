@@ -24,7 +24,7 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
     return createPortal(<div style={{ width: 0, height: 0 }} id={id} />, document.body, id);
   }, [id])
 
-  const setCanvasRef = useCallback(async canvas => {
+  const setCanvasRef = useCallback(async (canvas: HTMLCanvasElement | null) => {
     if (!canvas || !scriptLoaded) { return; }
 
     const unityInstance: UnityInstance = await global.createUnityInstance(canvas, {

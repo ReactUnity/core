@@ -7,7 +7,7 @@ export interface CompiledCode {
   error?: any;
 }
 
-type TransformFn = (x: string) => string;
+type TransformFn = (x: string) => string | null | undefined;
 const transformJsxToES5: TransformFn = (code: string) => Babel.transform(code, { presets: ['es2015', 'react'] }).code;
 const identity: TransformFn = x => x;
 

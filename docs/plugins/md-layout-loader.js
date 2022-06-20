@@ -29,7 +29,9 @@ module.exports = async function (src) {
   const layout = layoutMap[pageParentDir] || 'Home';
   const code =
     `import withLayout from 'components/Layout/Layout${layout}';
-export default withLayout(${JSON.stringify(data)})
+export default withLayout(${JSON.stringify(data)});
+
+
 ` + content;
 
   return callback(null, code);
