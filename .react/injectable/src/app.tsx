@@ -2,8 +2,9 @@ import * as ReactUnityMaterialModule from '@reactunity/material/all';
 import * as ReactUnityModule from '@reactunity/renderer';
 import * as React from 'react';
 
-const ReactUnity = ReactUnityModule;
-const Material = ReactUnityMaterialModule;
+const react = globalThis.react = globalThis.React = React;
+const ReactUnity = globalThis.ReactUnity = ReactUnityModule;
+const Material = globalThis.Material = ReactUnityMaterialModule;
 const MaterialStyles = () => require('@reactunity/material/styles');
 
 /*INJECTABLE_START*/
