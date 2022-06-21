@@ -446,6 +446,7 @@ const UnityJSBPlugin: PluginType = {
     const extraGlobals: any = {
       location: undefined,
       document: undefined,
+      addEventListener: undefined,
       btoa: window.btoa?.bind(window),
       atob: window.atob?.bind(window),
       $$webglWindow: window,
@@ -623,6 +624,7 @@ const UnityJSBPlugin: PluginType = {
       res = func.apply(thisVal, args);
     }
     catch (err) {
+      context.lastException = err;
       res = err;
     }
 
@@ -641,6 +643,7 @@ const UnityJSBPlugin: PluginType = {
       res = func.apply(thisVal, args);
     }
     catch (err) {
+      context.lastException = err;
       res = err;
     }
 
@@ -658,6 +661,7 @@ const UnityJSBPlugin: PluginType = {
       res = Reflect.construct(func, args);
     }
     catch (err) {
+      context.lastException = err;
       res = err;
     }
 

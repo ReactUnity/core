@@ -401,6 +401,7 @@ var UnityJSBPlugin = {
         var extraGlobals = {
             location: undefined,
             document: undefined,
+            addEventListener: undefined,
             btoa: (_a = window.btoa) === null || _a === void 0 ? void 0 : _a.bind(window),
             atob: (_b = window.atob) === null || _b === void 0 ? void 0 : _b.bind(window),
             $$webglWindow: window,
@@ -546,6 +547,7 @@ var UnityJSBPlugin = {
             res = func.apply(thisVal, args);
         }
         catch (err) {
+            context.lastException = err;
             res = err;
         }
         context.runtime.objects.push(res, ptr);
@@ -560,6 +562,7 @@ var UnityJSBPlugin = {
             res = func.apply(thisVal, args);
         }
         catch (err) {
+            context.lastException = err;
             res = err;
         }
         context.runtime.objects.push(res, ptr);
@@ -573,6 +576,7 @@ var UnityJSBPlugin = {
             res = Reflect.construct(func, args);
         }
         catch (err) {
+            context.lastException = err;
             res = err;
         }
         context.runtime.objects.push(res, ptr);
