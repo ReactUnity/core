@@ -295,7 +295,8 @@ namespace ReactUnity.Editor
 
             var errors = packagesRequest?.Result?.errors;
 
-            if (errors != null) UnityEngine.Debug.LogError("Errors while installing the package: \n" + string.Join("\n", errors.Select(x => x.ToString()).ToArray()));
+            if (errors != null && errors.Any(x => !string.IsNullOrWhiteSpace(x.message)))
+                UnityEngine.Debug.LogError("Errors while installing the package: \n" + string.Join("\n", errors.Select(x => x.ToString()).ToArray()));
         }
 
         public void UninstallUnityPlugin(string pluginName)

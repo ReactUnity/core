@@ -12,6 +12,9 @@ namespace ReactUnity.UIToolkit
         {
             switch (eventName)
             {
+#if !UNITY_2020_1_OR_NEWER
+                case "onClick":
+#endif
                 case "onButtonClick":
                     Action listener = () => callback.CallWithPriority(EventPriority.Discrete, this, this);
                     Element.clicked += listener;

@@ -73,9 +73,11 @@ namespace ReactUnity.Editor
 
         private static void SaveManifest(JObject manifest)
         {
+            var utf8WithoutBom = new UTF8Encoding(false);
+
             using (var fileStream = new FileStream(ManifestPath, FileMode.Create, FileAccess.ReadWrite))
             {
-                using (var streamWriter = new StreamWriter(fileStream, Encoding.UTF8)
+                using (var streamWriter = new StreamWriter(fileStream, utf8WithoutBom)
                 {
                     NewLine = "\n",
                 })
