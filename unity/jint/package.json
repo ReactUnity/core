@@ -1,0 +1,27 @@
+{
+  "name": "com.reactunity.jint",
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com",
+    "url": "https://github.com/KurtGokhan"
+  },
+  "displayName": "React Unity Jint",
+  "version": "0.13.0",
+  "unity": "2019.4",
+  "description": "Jint (V8) Plugin for ReactUnity",
+  "keywords": [
+    "ReactUnity",
+    "Jint",
+    "V8"
+  ],
+  "category": "UI",
+  "type": "library",
+  "documentationUrl": "https://reactunity.github.io/",
+  "license": "MIT",
+  "samples": [],
+  "dependencies": {},
+  "repository": {
+    "url": "https://github.com/ReactUnity/jint.git",
+    "type": "git"
+  }
+}
