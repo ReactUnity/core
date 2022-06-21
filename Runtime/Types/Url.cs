@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using ReactUnity.Styling.Converters;
 
@@ -6,7 +7,7 @@ namespace ReactUnity.Types
 {
     public class Url
     {
-        private static Regex DataRegex = new Regex(@"^data:(?<mime>[\w/\-\.]+)?(;(?<encoding>\w+))?,?(?<data>.*)", RegexOptions.Compiled);
+        private static Regex DataRegex = new Regex(@"^data:(?<mime>[\w/\-\.\+]+)?(;(?<encoding>\w+))?,?(?<data>.*)", RegexOptions.Compiled);
 
         public UrlProtocol Protocol { get; }
         public string FullUrl { get; }
@@ -78,7 +79,15 @@ namespace ReactUnity.Types
                 var mime = dataMatch.Groups["mime"].Value;
                 var encoding = dataMatch.Groups["encoding"].Value;
                 var data = dataMatch.Groups["data"].Value;
-                return Convert.FromBase64String(data);
+
+                if (encoding == "base64")
+                {
+                    return Convert.FromBase64String(data);
+                }
+                else
+                {
+                    return Encoding.UTF8.GetBytes(Uri.UnescapeDataString(data));
+                }
             }
             return null;
         }

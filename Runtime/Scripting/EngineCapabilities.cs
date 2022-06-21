@@ -12,5 +12,6 @@ namespace ReactUnity.Scripting
         Console = 8,
         Scheduler = 16,
         Base64 = 32,
+        URL = 64,
     }
 }

@@ -204,6 +204,11 @@ namespace ReactUnity.Scripting
             engine.SetGlobal("location", context.Location);
             engine.SetGlobal("document", new DocumentProxy(context, context.Location.origin));
 
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.URL))
+            {
+                engine.SetGlobal("URL", typeof(URL));
+            }
+
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
             {
                 var webSocketGlobal = engine.Evaluate(@"global.WebSocket = function(url) {
