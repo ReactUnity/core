@@ -31,8 +31,9 @@ namespace ReactUnity.Scripting
                     return new ClearScriptEngineFactory();
 #endif
                 default:
-
-#if REACT_QUICKJS
+#if REACT_JINT && (UNITY_WEBGL && !UNITY_EDITOR)
+                    return new JintEngineFactory();
+#elif REACT_QUICKJS
                     return new QuickJSEngineFactory();
 #elif REACT_CLEARSCRIPT
                     return new ClearScriptEngineFactory();
