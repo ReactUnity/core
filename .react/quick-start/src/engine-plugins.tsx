@@ -15,26 +15,26 @@ const engineTypes: Array<{
   tooltip?: string;
 }> = [
     {
-      type: Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,
-      packageName: 'com.reactunity.core',
-      recommended: false,
-      name: 'Jint',
-      implicit: true,
-      tooltip:
-        `Jint is the default JS engine and is shipped together with ReactUnity. It consists of a managed library. It supports every platform Unity can build to.
-Jint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.
-"REACT_DISABLE_JINT" flag can be used to exclude Jint from build.`,
-    },
-    {
       type: Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,
       packageName: 'com.reactunity.quickjs',
       recommended: true,
       name: 'QuickJS',
       implicit: false,
       tooltip:
-        `QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform except WebGL.
-QuickJS is very fast and reliable. It supports most of the platforms and has decent interop features.
+        `QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform.
+QuickJS is very fast and reliable. It supports all platforms and has decent interop features.
 "REACT_DISABLE_QUICKJS" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build.`,
+    },
+    {
+      type: Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,
+      packageName: 'com.reactunity.jint',
+      recommended: false,
+      name: 'Jint',
+      implicit: false,
+      tooltip:
+        `Jint is a managed JS interpreter written entirely in C#. It consists of some managed libraries. It supports every platform.
+Jint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.
+"REACT_DISABLE_JINT" flag can be used to exclude Jint from build.`,
     },
     {
       type: Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,
@@ -43,7 +43,6 @@ QuickJS is very fast and reliable. It supports most of the platforms and has dec
       name: 'ClearScript',
       implicit: false,
       tooltip:
-
         `ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.
 ClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.
 ClearScript is the only engine capable of debugging. JavaScript can be debugged on port 9222 with Node debuggers like Chrome Inspector or VSCode.

@@ -25,6 +25,7 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.WebSocket
             | EngineCapabilities.Console
             | EngineCapabilities.Base64
+            | EngineCapabilities.URL
 #endif
             | EngineCapabilities.None;
 
