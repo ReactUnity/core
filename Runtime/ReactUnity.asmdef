@@ -54,7 +54,7 @@
             "define": "REACT_TEXTCORE"
         },
         {
-            "name": "com.reactunity.core",
+            "name": "com.reactunity.jint",
             "expression": "",
             "define": "REACT_JINT_AVAILABLE"
         },

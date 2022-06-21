@@ -46,7 +46,7 @@
             "define": "REACT_VECTOR_GRAPHICS"
         },
         {
-            "name": "com.reactunity.core",
+            "name": "com.reactunity.jint",
             "expression": "",
             "define": "REACT_JINT_AVAILABLE"
         },
