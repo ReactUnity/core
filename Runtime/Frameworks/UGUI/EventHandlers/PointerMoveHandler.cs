@@ -51,7 +51,7 @@ namespace ReactUnity.UGUI.EventHandlers
             if (currentMouse == null) return null;
             var pos = currentMouse.position.ReadValue();
 #else
-            var pos = Input.mousePosition;
+            var pos = (Vector2) Input.mousePosition;
 #endif
 
             leftData.Reset();
