@@ -287,7 +287,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
         }
 
-
+        [Retry(3)]
         [UGUITest(Script = @"
             function addEvent(eventName) {
                 Globals.list.Add(eventName);

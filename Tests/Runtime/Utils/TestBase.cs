@@ -6,6 +6,10 @@
 #define REACT_QUICKJS
 #endif
 
+#if !REACT_DISABLE_JINT && REACT_JINT_AVAILABLE && (!UNITY_WEBGL || UNITY_EDITOR)
+#define REACT_JINT
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +25,9 @@ using UnityEngine.InputSystem;
 
 namespace ReactUnity.Tests
 {
+#if REACT_JINT
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
+#endif
 #if REACT_CLEARSCRIPT && !UNITY_2021_2_OR_NEWER
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
 #endif
