@@ -1,6 +1,10 @@
 /**
  * Build with the following command:
  * npx -p typescript tsc
+ *
+ * BEWARE: Using some syntaxes will make Emscripten fail while building
+ * Such known syntaxes: Object spread (...), BigInt literals
+ * The output is targeted for es5 as Emscripten only understands that syntax
  */
 
 type PluginType = JSApiExternals & {
@@ -17,7 +21,6 @@ const UnityJSBPlugin: PluginType = {
         if (object === null) return Tags.JS_TAG_NULL;
         if (typeof object === 'number') return Tags.JS_TAG_FLOAT64;
         if (typeof object === 'boolean') return Tags.JS_TAG_BOOL;
-        if (typeof object === 'function') return Tags.JS_TAG_FUNCTION_BYTECODE;
         if (typeof object === 'symbol') return Tags.JS_TAG_SYMBOL;
         if (typeof object === 'string') return Tags.JS_TAG_STRING;
         if (typeof object === 'bigint') return Tags.JS_TAG_BIG_INT;
@@ -252,7 +255,7 @@ const UnityJSBPlugin: PluginType = {
         payloadMap,
         setPayload(obj, type, payload) {
           payloadMap.set(obj, {
-            type: BridgeObjectType.None || type,
+            type,
             payload,
           });
         },
@@ -276,11 +279,10 @@ const UnityJSBPlugin: PluginType = {
     },
     createAtoms(): PluginAtoms {
       const record: PluginAtoms['record'] = {};
-      const map: PluginAtoms['map'] = {};
+      const map = new Map<string, PluginAtom>();
 
       const res: PluginAtoms = {
         record,
-        map,
         lastId: 0,
         get(ref) {
           if (ref === 0) return undefined;
@@ -288,16 +290,17 @@ const UnityJSBPlugin: PluginType = {
         },
         push(str) {
           if (str === undefined) return 0;
-          const mapped = map[str];
+          const mapped = map.get(str);
           let id;
 
           if (!mapped) {
             id = ++res.lastId;
-            map[str] = record[id] = {
+            const item = record[id] = {
               id,
               value: str,
               refCount: 1,
             };
+            map.set(str, item);
           } else {
             id = mapped.id;
             mapped.refCount++;
@@ -326,7 +329,7 @@ const UnityJSBPlugin: PluginType = {
           console.assert(recorded.refCount >= 0);
 
           if (recorded.refCount == 0) {
-            delete map[recorded.value];
+            map.delete(recorded.value);
             delete record[id];
           }
         },
@@ -595,7 +598,6 @@ const UnityJSBPlugin: PluginType = {
   JS_GetPropertyInternal(ptr, ctxId, val, prop, receiver, throwRefError) {
     const context = unityJsbState.getContext(ctxId);
     const valObj = context.runtime.objects.get(val);
-    const receiverObj = context.runtime.objects.get(receiver);
     const propStr = unityJsbState.atoms.get(prop);
     const res = valObj[propStr];
 
@@ -673,6 +675,12 @@ const UnityJSBPlugin: PluginType = {
     const ctorVal = context.runtime.objects.get(ctor);
     const protoVal = context.runtime.objects.get(proto);
     ctorVal.prototype = protoVal;
+    protoVal.constructor = ctorVal;
+
+    var ctorPayload = context.runtime.objects.getPayload(ctorVal);
+    if (ctorPayload.type === BridgeObjectType.TypeRef) {
+      context.runtime.objects.setPayload(protoVal, ctorPayload.type, ctorPayload.payload);
+    }
   },
 
   JS_SetPrototype(ctx, obj, proto) {
@@ -1077,99 +1085,102 @@ const UnityJSBPlugin: PluginType = {
 
   JSB_NewCFunction(ret, ctx, func, atom, length, cproto, magic) {
     const context = unityJsbState.getContext(ctx);
-    const runtime = context.runtime;
+    const objects = context.runtime.objects;
 
     const name = unityJsbState.atoms.get(atom) || 'jscFunction';
 
     function jscFunction() {
-      void name;
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const [thisPtr, thisId] = runtime.objects.allocate(thisObj);
+      const [thisPtr, thisId] = objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic) {
         const argc = args.length;
-        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunction>('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
-        argIds.forEach(runtime.objects.popId);
+        argIds.forEach(objects.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter) {
-        const [val, valId] = context.runtime.objects.allocate(args[0]);
+        const [val, valId] = objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunction>('viiii', func, [ret, ctx, thisPtr, val]);
-        runtime.objects.popId(valId);
+        objects.popId(valId);
         _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter) {
         unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunction>('viii', func, [ret, ctx, thisPtr]);
       }
       else {
-        throw new Error('Unknown type of function specified: ' + cproto);
+        throw new Error(`Unknown type of function specified: name=${name} type=${cproto}`);
       }
-      runtime.objects.popId(thisId);
+      objects.popId(thisId);
       _free(thisPtr);
 
-      const returnValue = context.runtime.objects.get(ret);
-      context.runtime.objects.pop(ret);
+      const returnValue = objects.get(ret);
+      objects.pop(ret);
       _free(ret);
       return returnValue;
-    };
+    }
 
-    context.runtime.objects.push(jscFunction, ret);
+    jscFunction['$$csharpFunctionName'] = name;
+    objects.push(jscFunction, ret);
   },
 
   JSB_NewCFunctionMagic(ret, ctx, func, atom, length, cproto, magic) {
     const context = unityJsbState.getContext(ctx);
-    const runtime = context.runtime;
+    const objects = context.runtime.objects;
 
     const name = unityJsbState.atoms.get(atom) || 'jscFunctionMagic';
 
     function jscFunctionMagic() {
-      void name;
       const args = arguments;
 
       const thisObj = this === window ? context.globalObject : this;
-      const [thisPtr, thisId] = runtime.objects.allocate(thisObj);
+      const [thisPtr, thisId] = objects.allocate(thisObj);
       const ret = _malloc(Sizes.JSValue) as JSValue;
 
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic_magic) {
         const argc = args.length;
-        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
-        argIds.forEach(runtime.objects.popId);
+        argIds.forEach(objects.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
         const argc = args.length;
-        const [argv, argIds] = context.runtime.objects.batchAllocate(Array.from(args));
+        const [argv, argIds] = objects.batchAllocate(Array.from(args));
         unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
-        argIds.forEach(runtime.objects.popId);
+        argIds.forEach(objects.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter_magic) {
-        const [val, valId] = context.runtime.objects.allocate(args[0]);
+        const [val, valId] = objects.allocate(args[0]);
         unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func, [ret, ctx, thisPtr, val, magic]);
-        runtime.objects.popId(valId);
+        objects.popId(valId);
         _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter_magic) {
         unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunctionMagic>('viiii', func, [ret, ctx, thisPtr, magic]);
       }
       else {
-        throw new Error('Unknown type of function specified: ' + cproto);
+        throw new Error(`Unknown type of function specified: name=${name} type=${cproto}`);
       }
-      runtime.objects.popId(thisId);
+      objects.popId(thisId);
       _free(thisPtr);
 
-      const returnValue = context.runtime.objects.get(ret);
-      context.runtime.objects.pop(ret);
+      const returnValue = objects.get(ret);
+      objects.pop(ret);
       _free(ret);
       return returnValue;
     };
+    jscFunctionMagic['$$csharpFunctionName'] = name;
+    objects.push(jscFunctionMagic, ret);
 
-    context.runtime.objects.push(jscFunctionMagic, ret);
+    if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
+      objects.setPayload(jscFunctionMagic, BridgeObjectType.TypeRef, magic);
+    }
   },
 
   jsb_new_bridge_object(ret, ctx, proto, object_id) {

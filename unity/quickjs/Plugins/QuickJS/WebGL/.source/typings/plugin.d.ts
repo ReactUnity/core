@@ -46,7 +46,6 @@ declare global {
 
   export declare type PluginAtoms = {
     record: Record<number, PluginAtom>;
-    map: Record<string, PluginAtom>;
     get: ((ref: JSAtom) => string);
     lastId: number;
     push: ((str: string) => JSAtom);
@@ -62,7 +61,7 @@ declare global {
 
   export declare type PluginObjects = {
     deleteRecord: (id: number) => void;
-    record: Record<string | number, PluginObject>;
+    record: Record<number, PluginObject>;
     get: ((ref: JSValue) => any);
     getRecord: ((ref: JSValue) => PluginObject);
     push: ((obj: any, ptr: JSValue) => number | undefined);

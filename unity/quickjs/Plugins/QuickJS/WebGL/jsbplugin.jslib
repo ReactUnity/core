@@ -1,6 +1,10 @@
 /**
  * Build with the following command:
  * npx -p typescript tsc
+ *
+ * BEWARE: Using some syntaxes will make Emscripten fail while building
+ * Such known syntaxes: Object spread (...), BigInt literals
+ * The output is targeted for es5 as Emscripten only understands that syntax
  */
 var UnityJSBPlugin = {
     $unityJsbState__postset: 'unityJsbState.atoms = unityJsbState.createAtoms();\n',
@@ -15,8 +19,6 @@ var UnityJSBPlugin = {
                     return 7 /* Tags.JS_TAG_FLOAT64 */;
                 if (typeof object === 'boolean')
                     return 1 /* Tags.JS_TAG_BOOL */;
-                if (typeof object === 'function')
-                    return -2 /* Tags.JS_TAG_FUNCTION_BYTECODE */;
                 if (typeof object === 'symbol')
                     return -8 /* Tags.JS_TAG_SYMBOL */;
                 if (typeof object === 'string')
@@ -230,7 +232,7 @@ var UnityJSBPlugin = {
                 payloadMap: payloadMap,
                 setPayload: function (obj, type, payload) {
                     payloadMap.set(obj, {
-                        type: 0 /* BridgeObjectType.None */ || type,
+                        type: type,
                         payload: payload,
                     });
                 },
@@ -253,10 +255,9 @@ var UnityJSBPlugin = {
         },
         createAtoms: function () {
             var record = {};
-            var map = {};
+            var map = new Map();
             var res = {
                 record: record,
-                map: map,
                 lastId: 0,
                 get: function (ref) {
                     if (ref === 0)
@@ -266,15 +267,16 @@ var UnityJSBPlugin = {
                 push: function (str) {
                     if (str === undefined)
                         return 0;
-                    var mapped = map[str];
+                    var mapped = map.get(str);
                     var id;
                     if (!mapped) {
                         id = ++res.lastId;
-                        map[str] = record[id] = {
+                        var item = record[id] = {
                             id: id,
                             value: str,
                             refCount: 1,
                         };
+                        map.set(str, item);
                     }
                     else {
                         id = mapped.id;
@@ -302,7 +304,7 @@ var UnityJSBPlugin = {
                     recorded.refCount--;
                     console.assert(recorded.refCount >= 0);
                     if (recorded.refCount == 0) {
-                        delete map[recorded.value];
+                        map.delete(recorded.value);
                         delete record[id];
                     }
                 },
@@ -524,7 +526,6 @@ var UnityJSBPlugin = {
     JS_GetPropertyInternal: function (ptr, ctxId, val, prop, receiver, throwRefError) {
         var context = unityJsbState.getContext(ctxId);
         var valObj = context.runtime.objects.get(val);
-        var receiverObj = context.runtime.objects.get(receiver);
         var propStr = unityJsbState.atoms.get(prop);
         var res = valObj[propStr];
         context.runtime.objects.push(res, ptr);
@@ -586,6 +587,11 @@ var UnityJSBPlugin = {
         var ctorVal = context.runtime.objects.get(ctor);
         var protoVal = context.runtime.objects.get(proto);
         ctorVal.prototype = protoVal;
+        protoVal.constructor = ctorVal;
+        var ctorPayload = context.runtime.objects.getPayload(ctorVal);
+        if (ctorPayload.type === 1 /* BridgeObjectType.TypeRef */) {
+            context.runtime.objects.setPayload(protoVal, ctorPayload.type, ctorPayload.payload);
+        }
     },
     JS_SetPrototype: function (ctx, obj, proto) {
         var context = unityJsbState.getContext(ctx);
@@ -899,88 +905,90 @@ var UnityJSBPlugin = {
     // #region Bridge
     JSB_NewCFunction: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = unityJsbState.getContext(ctx);
-        var runtime = context.runtime;
+        var objects = context.runtime.objects;
         var name = unityJsbState.atoms.get(atom) || 'jscFunction';
         function jscFunction() {
-            void name;
             var args = arguments;
             var thisObj = this === window ? context.globalObject : this;
-            var _a = runtime.objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
+            var _a = objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
                 var argc = args.length;
-                var _b = context.runtime.objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
+                var _b = objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
                 unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
-                argIds.forEach(runtime.objects.popId);
+                argIds.forEach(objects.popId);
                 _free(argv);
             }
             else if (cproto === 9 /* JSCFunctionEnum.JS_CFUNC_setter */) {
-                var _c = context.runtime.objects.allocate(args[0]), val = _c[0], valId = _c[1];
+                var _c = objects.allocate(args[0]), val = _c[0], valId = _c[1];
                 unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, val]);
-                runtime.objects.popId(valId);
+                objects.popId(valId);
                 _free(val);
             }
             else if (cproto === 8 /* JSCFunctionEnum.JS_CFUNC_getter */) {
                 unityJsbState.dynCall('viii', func, [ret, ctx, thisPtr]);
             }
             else {
-                throw new Error('Unknown type of function specified: ' + cproto);
+                throw new Error("Unknown type of function specified: name=".concat(name, " type=").concat(cproto));
             }
-            runtime.objects.popId(thisId);
+            objects.popId(thisId);
             _free(thisPtr);
-            var returnValue = context.runtime.objects.get(ret);
-            context.runtime.objects.pop(ret);
+            var returnValue = objects.get(ret);
+            objects.pop(ret);
             _free(ret);
             return returnValue;
         }
-        ;
-        context.runtime.objects.push(jscFunction, ret);
+        jscFunction['$$csharpFunctionName'] = name;
+        objects.push(jscFunction, ret);
     },
     JSB_NewCFunctionMagic: function (ret, ctx, func, atom, length, cproto, magic) {
         var context = unityJsbState.getContext(ctx);
-        var runtime = context.runtime;
+        var objects = context.runtime.objects;
         var name = unityJsbState.atoms.get(atom) || 'jscFunctionMagic';
         function jscFunctionMagic() {
-            void name;
             var args = arguments;
             var thisObj = this === window ? context.globalObject : this;
-            var _a = runtime.objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
+            var _a = objects.allocate(thisObj), thisPtr = _a[0], thisId = _a[1];
             var ret = _malloc(16 /* Sizes.JSValue */);
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {
                 var argc = args.length;
-                var _b = context.runtime.objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
+                var _b = objects.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
                 unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
-                argIds.forEach(runtime.objects.popId);
+                argIds.forEach(objects.popId);
                 _free(argv);
             }
             else if (cproto === 3 /* JSCFunctionEnum.JS_CFUNC_constructor_magic */) {
                 var argc = args.length;
-                var _c = context.runtime.objects.batchAllocate(Array.from(args)), argv = _c[0], argIds = _c[1];
+                var _c = objects.batchAllocate(Array.from(args)), argv = _c[0], argIds = _c[1];
                 unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
-                argIds.forEach(runtime.objects.popId);
+                argIds.forEach(objects.popId);
                 _free(argv);
             }
             else if (cproto === 11 /* JSCFunctionEnum.JS_CFUNC_setter_magic */) {
-                var _d = context.runtime.objects.allocate(args[0]), val = _d[0], valId = _d[1];
+                var _d = objects.allocate(args[0]), val = _d[0], valId = _d[1];
                 unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, val, magic]);
-                runtime.objects.popId(valId);
+                objects.popId(valId);
                 _free(val);
             }
             else if (cproto === 10 /* JSCFunctionEnum.JS_CFUNC_getter_magic */) {
                 unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, magic]);
             }
             else {
-                throw new Error('Unknown type of function specified: ' + cproto);
+                throw new Error("Unknown type of function specified: name=".concat(name, " type=").concat(cproto));
             }
-            runtime.objects.popId(thisId);
+            objects.popId(thisId);
             _free(thisPtr);
-            var returnValue = context.runtime.objects.get(ret);
-            context.runtime.objects.pop(ret);
+            var returnValue = objects.get(ret);
+            objects.pop(ret);
             _free(ret);
             return returnValue;
         }
         ;
-        context.runtime.objects.push(jscFunctionMagic, ret);
+        jscFunctionMagic['$$csharpFunctionName'] = name;
+        objects.push(jscFunctionMagic, ret);
+        if (cproto === 3 /* JSCFunctionEnum.JS_CFUNC_constructor_magic */) {
+            objects.setPayload(jscFunctionMagic, 1 /* BridgeObjectType.TypeRef */, magic);
+        }
     },
     jsb_new_bridge_object: function (ret, ctx, proto, object_id) {
         var context = unityJsbState.getContext(ctx);
