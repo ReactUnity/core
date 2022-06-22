@@ -11,9 +11,9 @@ declare global {
     contexts: Record<string, PluginContext | undefined>;
     lastRuntimeId: number;
     lastContextId: number;
-    atoms?: PluginAtoms;
-    createObjects: () => PluginObjects;
-    createAtoms: () => PluginAtoms;
+    atoms?: AtomReferences;
+    createObjectReferences: () => ObjectReferences;
+    createAtoms: () => AtomReferences;
 
     getRuntime: (ctx: JSRuntime) => PluginRuntime;
     getContext: (ctx: JSContext) => PluginContext;
@@ -26,7 +26,7 @@ declare global {
     id: number;
     opaque?: any;
     contexts: Record<string, PluginContext | undefined>;
-    objects: PluginObjects;
+    refs: ObjectReferences;
     garbageCollect(): number;
   };
 
@@ -44,8 +44,8 @@ declare global {
     lastException?: Error;
   };
 
-  export declare type PluginAtoms = {
-    record: Record<number, PluginAtom>;
+  export declare type AtomReferences = {
+    record: Record<number, AtomReference>;
     get: ((ref: JSAtom) => string);
     lastId: number;
     push: ((str: string) => JSAtom);
@@ -53,17 +53,17 @@ declare global {
     pop: ((ref: JSAtom) => void);
   };
 
-  export declare type PluginAtom = {
+  export declare type AtomReference = {
     id: number;
     value: string;
     refCount: number;
   }
 
-  export declare type PluginObjects = {
+  export declare type ObjectReferences = {
     deleteRecord: (id: number) => void;
-    record: Record<number, PluginObject>;
+    record: Record<number, ObjectReference>;
     get: ((ref: JSValue) => any);
-    getRecord: ((ref: JSValue) => PluginObject);
+    getRecord: ((ref: JSValue) => ObjectReference);
     push: ((obj: any, ptr: JSValue) => number | undefined);
     duplicate: ((obj: JSValue, ptr: JSValue) => void);
     duplicateId: ((id: number, ptr: JSValue) => void);
@@ -74,19 +74,19 @@ declare global {
     batchGet: ((arr: PointerArray<JSValue>, count: number) => any[]);
     lastId: number;
     setPayload: ((obj: any, type: BridgeObjectType, payload: number) => void);
-    getPayload: ((obj: any) => PluginObjectPayload);
+    getPayload: ((obj: any) => ObjectReferencePayload);
     clearPayload: ((obj: any) => void);
-    payloadMap: Map<any, PluginObjectPayload>;
+    payloadMap: Map<any, ObjectReferencePayload>;
   };
 
-  export declare type PluginObject = {
+  export declare type ObjectReference = {
     id: number;
     refCount: number;
     tag: Tags;
     value: any;
   };
 
-  export declare type PluginObjectPayload = {
+  export declare type ObjectReferencePayload = {
     type: BridgeObjectType;
     payload: number;
   };
