@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using QuickJS.Utils;
 using UnityEngine;
@@ -74,8 +75,11 @@ namespace ReactUnity.Scripting
         Assembly[] _allowedAssemblies;
         private readonly string _path;
 
-        public ICollection<string> Keys => new string[0];
-        public ICollection<object> Values => new object[0];
+        private ICollection<string> keys;
+        public ICollection<string> Keys => keys ?? (keys = CalculateKeys());
+
+        private ICollection<object> values;
+        public ICollection<object> Values => values ?? (values = CalculateValues());
 
         public int Count => 0;
 
@@ -187,6 +191,41 @@ namespace ReactUnity.Scripting
                 types.Add(nestedType);
                 AddNestedTypesRecursively(types, nestedType);
             }
+        }
+
+        private ICollection<string> CalculateKeys()
+        {
+            var lookupAssemblies = new[] { Assembly.GetCallingAssembly(), Assembly.GetExecutingAssembly() };
+
+            IEnumerable<string> result = new List<string>();
+
+            foreach (var assembly in lookupAssemblies)
+            {
+                result = result.Concat(GetKeysOfNamespaceInAssembly(assembly));
+            }
+
+            foreach (var assembly in _allowedAssemblies)
+            {
+                result = result.Concat(GetKeysOfNamespaceInAssembly(assembly));
+            }
+
+            result = result.Concat(GetKeysOfNamespaceInAssembly(typeof(System.Type).Assembly));
+
+            return result.Distinct().ToList();
+        }
+
+        private IEnumerable<string> GetKeysOfNamespaceInAssembly(Assembly assembly)
+        {
+            return assembly.GetTypes()
+                ?.Where(x => x.Namespace == null ? string.IsNullOrWhiteSpace(_path) : x.Namespace.StartsWith(_path))
+                ?.Select(x => x.FullName.Replace(_path + ".", ""))
+                ?.Select(x => x.Contains('.') ? x.Substring(0, x.IndexOf('.')) : x)
+                ?? new string[0];
+        }
+
+        private ICollection<object> CalculateValues()
+        {
+            return Keys.Select(Get).ToList();
         }
 
         public override string ToString()
