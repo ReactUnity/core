@@ -4,7 +4,7 @@ declare global {
   var unityJsbState: PluginState;
 
   export declare type PluginState = {
-    stringify: ((ptr: number | Pointer<number>, bufferLength?: number) => string);
+    stringify: ((ptr: number | Pointer<string>, bufferLength?: number) => string);
     bufferify: ((str: string) => [number, number]);
     dynCall: typeof dynCall;
     runtimes: Record<string, PluginRuntime | undefined>;
@@ -37,11 +37,17 @@ declare global {
     runtimeId: number;
 
     window: Window;
+    iframe: HTMLIFrameElement;
+    contentWindow: Window;
+
     globalObject: Window;
     globalObjectId?: number;
 
     evaluate: ((script: string, filename?: string) => any);
     lastException?: Error;
+
+    free(): void;
+    setBaseUrl(url: string): void;
   };
 
   export declare type AtomReferences = {

@@ -383,12 +383,13 @@ var UnityJSBPlugin = {
     },
     JSB_FreeRuntime: function (rtId) {
         var runtime = unityJsbState.getRuntime(rtId);
-        var aliveItemCount = runtime.garbageCollect();
-        for (var key in runtime.contexts) {
-            if (Object.hasOwnProperty.call(runtime.contexts, key)) {
-                delete unityJsbState.contexts[key];
-            }
+        var ctxIds = Object.keys(runtime.contexts);
+        for (var index = 0; index < ctxIds.length; index++) {
+            var ctxId = ctxIds[index];
+            var context = runtime.contexts[ctxId];
+            context.free();
         }
+        var aliveItemCount = runtime.garbageCollect();
         delete unityJsbState.runtimes[runtime.id];
         return aliveItemCount === 0;
     },
@@ -400,6 +401,17 @@ var UnityJSBPlugin = {
         var _a, _b;
         var id = unityJsbState.lastContextId++;
         var runtime = unityJsbState.getRuntime(rtId);
+        var iframe = document.createElement('iframe');
+        iframe.name = 'unity-jsb-context-' + id;
+        iframe.style.display = 'none';
+        document.head.appendChild(iframe);
+        var contentWindow = iframe.contentWindow;
+        var fetch = contentWindow.fetch.bind(contentWindow);
+        var URL = contentWindow.URL;
+        var XMLHttpRequest = contentWindow.XMLHttpRequest;
+        var XMLHttpRequestUpload = contentWindow.XMLHttpRequestUpload;
+        var WebSocket = contentWindow.WebSocket;
+        var baseTag = null;
         var extraGlobals = {
             location: undefined,
             document: undefined,
@@ -407,13 +419,18 @@ var UnityJSBPlugin = {
             btoa: (_a = window.btoa) === null || _a === void 0 ? void 0 : _a.bind(window),
             atob: (_b = window.atob) === null || _b === void 0 ? void 0 : _b.bind(window),
             $$webglWindow: window,
+            WebSocket: WebSocket,
+            fetch: fetch,
+            URL: URL,
+            XMLHttpRequest: XMLHttpRequest,
+            XMLHttpRequestUpload: XMLHttpRequestUpload,
         };
         var globals = new Proxy(extraGlobals, {
             get: function (target, p, receiver) {
                 if (p in target)
                     return target[p];
-                else
-                    return window[p];
+                var res = window[p];
+                return res;
             },
             set: function (target, p, val, receiver) {
                 target[p] = val;
@@ -446,6 +463,26 @@ var UnityJSBPlugin = {
             window: window,
             globalObject: globals,
             evaluate: evaluate,
+            iframe: iframe,
+            contentWindow: contentWindow,
+            free: function () {
+                if (iframe.parentNode)
+                    iframe.parentNode.removeChild(iframe);
+                delete runtime.contexts[context.id];
+                delete unityJsbState.contexts[context.id];
+            },
+            setBaseUrl: function (url) {
+                if (!baseTag) {
+                    baseTag = document.createElement('base');
+                }
+                baseTag.setAttribute('href', url);
+                if (baseTag.parentNode && !url) {
+                    baseTag.parentNode.removeChild(baseTag);
+                }
+                else if (!baseTag.parentNode && url) {
+                    iframe.contentWindow.document.head.appendChild(baseTag);
+                }
+            },
         };
         runtime.contexts[id] = context;
         unityJsbState.contexts[id] = context;
@@ -453,9 +490,12 @@ var UnityJSBPlugin = {
     },
     JS_FreeContext: function (ctxId) {
         var context = unityJsbState.getContext(ctxId);
-        var runtime = unityJsbState.runtimes[context.runtimeId];
-        delete runtime.contexts[context.id];
-        delete unityJsbState.contexts[context.id];
+        context.free();
+    },
+    JS_SetBaseUrl: function (ctxId, url) {
+        var context = unityJsbState.getContext(ctxId);
+        var urlStr = unityJsbState.stringify(url);
+        context.setBaseUrl(urlStr);
     },
     JS_GetGlobalObject: function (returnValue, ctxId) {
         var context = unityJsbState.getContext(ctxId);

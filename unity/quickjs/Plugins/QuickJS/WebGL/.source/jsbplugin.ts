@@ -424,14 +424,16 @@ const UnityJSBPlugin: PluginType = {
 
   JSB_FreeRuntime(rtId) {
     const runtime = unityJsbState.getRuntime(rtId);
-    const aliveItemCount = runtime.garbageCollect();
+    const ctxIds = Object.keys(runtime.contexts);
 
-    for (const key in runtime.contexts) {
-      if (Object.hasOwnProperty.call(runtime.contexts, key)) {
-        delete unityJsbState.contexts[key];
-      }
+    for (let index = 0; index < ctxIds.length; index++) {
+      const ctxId = ctxIds[index];
+      const context = runtime.contexts[ctxId];
+      context.free();
+
     }
 
+    const aliveItemCount = runtime.garbageCollect();
     delete unityJsbState.runtimes[runtime.id];
 
     return aliveItemCount === 0;
@@ -446,6 +448,20 @@ const UnityJSBPlugin: PluginType = {
     const id = unityJsbState.lastContextId++;
     const runtime = unityJsbState.getRuntime(rtId);
 
+    const iframe = document.createElement('iframe');
+    iframe.name = 'unity-jsb-context-' + id;
+    iframe.style.display = 'none';
+    document.head.appendChild(iframe);
+
+    const contentWindow = iframe.contentWindow! as typeof window;
+    const fetch = contentWindow.fetch.bind(contentWindow);
+    const URL = contentWindow.URL;
+    const XMLHttpRequest = contentWindow.XMLHttpRequest;
+    const XMLHttpRequestUpload = contentWindow.XMLHttpRequestUpload;
+    const WebSocket = contentWindow.WebSocket;
+
+    let baseTag: HTMLBaseElement = null;
+
     const extraGlobals: any = {
       location: undefined,
       document: undefined,
@@ -453,12 +469,18 @@ const UnityJSBPlugin: PluginType = {
       btoa: window.btoa?.bind(window),
       atob: window.atob?.bind(window),
       $$webglWindow: window,
+      WebSocket,
+      fetch,
+      URL,
+      XMLHttpRequest,
+      XMLHttpRequestUpload,
     };
 
     const globals: typeof window = new Proxy(extraGlobals, {
       get(target, p, receiver) {
         if (p in target) return target[p];
-        else return window[p];
+        const res = window[p];
+        return res;
       },
       set(target, p, val, receiver) {
         target[p] = val;
@@ -496,6 +518,30 @@ const UnityJSBPlugin: PluginType = {
       window,
       globalObject: globals,
       evaluate,
+      iframe,
+      contentWindow,
+
+      free() {
+        if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+
+        delete runtime.contexts[context.id];
+        delete unityJsbState.contexts[context.id];
+      },
+
+      setBaseUrl(url: string) {
+        if (!baseTag) {
+          baseTag = document.createElement('base');
+        }
+
+        baseTag.setAttribute('href', url);
+
+        if (baseTag.parentNode && !url) {
+          baseTag.parentNode.removeChild(baseTag);
+        }
+        else if (!baseTag.parentNode && url) {
+          iframe.contentWindow.document.head.appendChild(baseTag);
+        }
+      },
     };
 
     runtime.contexts[id] = context;
@@ -505,10 +551,14 @@ const UnityJSBPlugin: PluginType = {
 
   JS_FreeContext(ctxId) {
     const context = unityJsbState.getContext(ctxId);
-    const runtime = unityJsbState.runtimes[context.runtimeId];
+    context.free();
+  },
 
-    delete runtime.contexts[context.id];
-    delete unityJsbState.contexts[context.id];
+  JS_SetBaseUrl(ctxId, url) {
+    const context = unityJsbState.getContext(ctxId);
+    const urlStr = unityJsbState.stringify(url);
+
+    context.setBaseUrl(urlStr);
   },
 
   JS_GetGlobalObject(returnValue, ctxId) {

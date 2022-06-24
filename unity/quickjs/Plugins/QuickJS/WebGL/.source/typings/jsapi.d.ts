@@ -170,6 +170,8 @@ declare global {
     static jsb_set_int_4(ctx: JSContext, val: JSValue, v0: number, v1: number, v2: number, v3: number): Boolish;
     static jsb_set_byte_4(ctx: JSContext, val: JSValue, v0: Byte, v1: Byte, v2: Byte, v3: Byte): Boolish;
     static jsb_set_bytes(ctx: JSContext, val: JSValue, n: number, v0: Pointer<Byte>): Boolish;
+
+    static JS_SetBaseUrl(ctx: JSContext, url: Pointer<string>): void;
   }
 
   export declare class JSApiDelegates {
