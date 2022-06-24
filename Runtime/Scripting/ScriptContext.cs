@@ -76,7 +76,7 @@ namespace ReactUnity.Scripting
                     engine.SetGlobal("Globals", Context.Globals);
                     engine.SetGlobal("localStorage", Context.LocalStorage);
 
-                    CreateLocation(engine, Context);
+                    CreateDOMShims(engine, Context);
                     CreateConsole(engine);
                     CreateScheduler(engine, Context);
                     CreatePolyfills(engine);
@@ -199,7 +199,7 @@ namespace ReactUnity.Scripting
             engine.SetGlobal("clearImmediate", new Action<int?>(scheduler.clearImmediate));
         }
 
-        static void CreateLocation(IJavaScriptEngine engine, ReactContext context)
+        static void CreateDOMShims(IJavaScriptEngine engine, ReactContext context)
         {
             engine.SetGlobal("location", context.Location);
             engine.SetGlobal("document", new DocumentProxy(context, context.Location.origin));

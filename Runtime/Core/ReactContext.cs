@@ -47,13 +47,13 @@ namespace ReactUnity
         public ITimer Timer { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
-        public Location Location { get; }
+        public Location Location { get; private set; }
         public LocalStorage LocalStorage { get; }
         public IMediaProvider MediaProvider { get; }
         public Action OnRestart { get; }
         public StylesheetParser StyleParser { get; }
         public StyleContext Style { get; private set; }
-        public ScriptContext Script { get; }
+        public ScriptContext Script { get; private set; }
         public HtmlContext Html { get; }
         public virtual CursorSet CursorSet { get; }
         public CursorAPI CursorAPI { get; }
@@ -75,7 +75,6 @@ namespace ReactUnity
 
             StyleParser = new StylesheetParser(true, true, true, true, true, false, true);
             Style = CreateStyleContext();
-            Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
 
             Html = new HtmlContext(this);
 
@@ -121,28 +120,8 @@ namespace ReactUnity
         public virtual string ResolvePath(string path)
         {
             var source = Source.GetResolvedSourceUrl();
-            var type = Source.EffectiveScriptSource;
 
-            if (type == ScriptSourceType.Url)
-            {
-                var baseUrl = new Uri(source);
-                if (Uri.TryCreate(baseUrl, path, out var res)) return res.AbsoluteUri;
-            }
-            else if (type == ScriptSourceType.File || type == ScriptSourceType.Resource)
-            {
-                var lastSlash = source.LastIndexOfAny(new[] { '/', '\\' });
-                var parent = source.Substring(0, lastSlash);
-
-                var res = parent + (path.StartsWith("/") ? path : "/" + path);
-                if (type == ScriptSourceType.Resource) return GetResourceUrl(res);
-                return res;
-            }
-            else
-            {
-                // TODO: write path rewriting logic
-            }
-
-            return null;
+            return new URL(path, source).href;
         }
 
         public virtual ScriptSource CreateStaticScript(string path)
@@ -150,16 +129,8 @@ namespace ReactUnity
             var src = new ScriptSource(Source);
             src.SourcePath = ResolvePath(path);
             src.Type = Source.EffectiveScriptSource;
-            src.UseDevServer = Source.IsDevServer ? ScriptSource.DevServerType.Always : ScriptSource.DevServerType.Never;
+            src.UseDevServer = ScriptSource.DevServerType.Never;
             return src;
-        }
-
-        private string GetResourceUrl(string fullUrl)
-        {
-            var splits = ResourcesRegex.Split(fullUrl);
-            var url = splits[splits.Length - 1];
-
-            return ExtensionRegex.Replace(url, "");
         }
 
         public abstract ITextComponent CreateText(string text);
@@ -174,6 +145,9 @@ namespace ReactUnity
             var renderCount = 0;
 
             var scriptJob = Source.GetScript((code) => {
+                Location = new Location(this);
+                Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
+
                 if (renderCount > 0)
                 {
                     Style = CreateStyleContext();

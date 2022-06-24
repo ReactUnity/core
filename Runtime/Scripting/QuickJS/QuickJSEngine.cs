@@ -25,11 +25,11 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.WebSocket
             | EngineCapabilities.Console
             | EngineCapabilities.Base64
-            | EngineCapabilities.URL
 #endif
             | EngineCapabilities.None;
 
         private Action<IJavaScriptEngine> OnInitialize;
+        private ReactContext Context;
 
         public ScriptRuntime Runtime { get; private set; }
         public QuickJS.ScriptContext MainContext { get; private set; }
@@ -47,6 +47,7 @@ namespace ReactUnity.Scripting
 
         public QuickJSEngine(ReactContext context, bool debug, bool awaitDebugger, Action<IJavaScriptEngine> onInitialize)
         {
+            Context = context;
             OnInitialize = onInitialize;
 
             var logger = new QuickJSLogger();
@@ -99,6 +100,9 @@ namespace ReactUnity.Scripting
             ObjectKeys = keys;
 
             JSApi.JSB_FreeValueRT(Runtime, global);
+
+            if (Context != null)
+                JSApi.JS_SetBaseUrl(MainContext, Context.Location.origin);
 
             Initialized = true;
             OnInitialize?.Invoke(this);

@@ -7,6 +7,7 @@ using System.Collections;
 using System.IO;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
+using ReactUnity.Scripting.DomProxies;
 using UnityEngine;
 
 namespace ReactUnity
@@ -134,20 +135,9 @@ namespace ReactUnity
             {
                 var href = SourcePath;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-                var abs = UnityEngine.Application.absoluteURL;
-                if (!href.StartsWith("http") && abs != null)
-                {
-                    var parsed = new System.Text.RegularExpressions.Regex(@"^(.*:)//([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$").Match(abs);
-
-                    var parsedProto = parsed.Groups[1].Value;
-                    var parsedHost = parsed.Groups[2].Value;
-                    var parsedPort = parsed.Groups[3].Value;
-
-                    href = parsedProto + "//" + parsedHost + parsedPort + "/" + new System.Text.RegularExpressions.Regex("^/").Replace(href, "");
-                }
-#endif
-                return href;
+                var abs = Application.absoluteURL;
+                var url = new URL(href, abs);
+                return url.href;
             }
             return "";
         }
