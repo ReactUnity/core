@@ -8,11 +8,10 @@
   "displayName": "React Unity Jint",
   "version": "0.13.0",
   "unity": "2019.4",
-  "description": "Jint (V8) Plugin for ReactUnity",
+  "description": "Jint Plugin for ReactUnity",
   "keywords": [
     "ReactUnity",
-    "Jint",
-    "V8"
+    "Jint"
   ],
   "category": "UI",
   "type": "library",
