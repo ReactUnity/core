@@ -19,7 +19,7 @@ namespace ReactUnity.UGUI
             set
             {
                 InputField.SetTextWithoutNotify(value);
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 
@@ -29,7 +29,7 @@ namespace ReactUnity.UGUI
             set
             {
                 InputField.interactable = !value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 
@@ -39,7 +39,7 @@ namespace ReactUnity.UGUI
             set
             {
                 InputField.readOnly = value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 
@@ -51,7 +51,7 @@ namespace ReactUnity.UGUI
             {
                 placeholder = value;
                 PlaceholderComponent.SetText(placeholder);
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 

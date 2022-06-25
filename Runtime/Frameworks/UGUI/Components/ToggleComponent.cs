@@ -17,7 +17,7 @@ namespace ReactUnity.UGUI
             set
             {
                 Toggle.SetIsOnWithoutNotify(value);
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 
@@ -28,7 +28,7 @@ namespace ReactUnity.UGUI
             set
             {
                 indeterminate = value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
         public bool Disabled
@@ -37,14 +37,14 @@ namespace ReactUnity.UGUI
             set
             {
                 Toggle.interactable = !value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 
         public ToggleComponent(UGUIContext context) : base(context, "toggle")
         {
             Toggle = AddComponent<Toggle>();
-            Toggle.onValueChanged.AddListener(x => MarkStyleUpdateWithSiblings(true));
+            Toggle.onValueChanged.AddListener(x => MarkForStyleResolvingWithSiblings(true));
         }
 
         public void Focus()

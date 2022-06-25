@@ -39,7 +39,7 @@ namespace ReactUnity.Styling
 
             if (res)
             {
-                Component.MarkStyleUpdateWithSiblings(true);
+                Component.MarkForStyleResolvingWithSiblings(true);
             }
             return res;
         }
@@ -50,7 +50,7 @@ namespace ReactUnity.Styling
 
             if (res)
             {
-                Component.MarkStyleUpdateWithSiblings(true);
+                Component.MarkForStyleResolvingWithSiblings(true);
             }
             return res;
         }

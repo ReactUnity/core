@@ -111,7 +111,7 @@ namespace ReactUnity.UGUI
         protected override void DestroySelf()
         {
             base.DestroySelf();
-            GameObject.Destroy(GameObject);
+            if (GameObject) GameObject.Destroy(GameObject);
         }
 
         #region Setters

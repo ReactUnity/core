@@ -171,5 +171,25 @@ namespace ReactUnity.Tests
             Assert.AreEqual("<color=red>Red</color> Normal <br>Hey", Text.Text.text);
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle, AutoRender = false)]
+        public IEnumerator TextSizeShouldIncreaseImmediateOnLongerText()
+        {
+            yield return null;
+            var str = "my text somewhat short";
+            Component.Globals.Set("textContent", str);
+            Render();
+            yield return null;
+
+            var initialWidth = Text.ClientWidth;
+
+            Assert.Greater(initialWidth, 50);
+
+            Component.Globals.Set("textContent", str + " but now longer");
+            yield return null;
+
+            var newWidth = Text.ClientWidth;
+
+            Assert.Greater(newWidth, initialWidth);
+        }
     }
 }

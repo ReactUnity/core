@@ -26,7 +26,7 @@ namespace ReactUnity.Html
         {
             IReactComponent nodeElement = null;
 
-            var isTextElement = node.Name == "text" || node.Name == "icon" || node.Name == "style" || node.Name == "script" || node.Name == "html";
+            var isTextElement = ReactUnityBridge.TextTypes.Contains(node.Name) || node.Name == "html";
 
             if (node.NodeType == XmlNodeType.Element || node.NodeType == XmlNodeType.Text)
             {

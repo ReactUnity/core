@@ -63,7 +63,7 @@ namespace ReactUnity
         public void SetProperty(string property, object value) { }
         public void SetData(string property, object value) { }
         public void MarkForStyleResolving(bool recursive) { }
-        public void MarkStyleUpdateWithSiblings(bool recursive) { }
+        public void MarkForStyleResolvingWithSiblings(bool recursive) { }
         public void Remove() { }
         public void Clear() { }
         public void Destroy(bool recursive = true) => Destroyed = true;

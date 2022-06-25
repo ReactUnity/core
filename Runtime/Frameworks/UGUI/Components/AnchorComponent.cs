@@ -19,7 +19,7 @@ namespace ReactUnity.UGUI
             set
             {
                 disabled = value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 

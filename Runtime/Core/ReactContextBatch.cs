@@ -44,7 +44,8 @@ namespace ReactUnity
                 var val = child.Value;
                 object value = null;
 
-                if (child.Name == "style") value = MultiEnumerator(val, true);
+                if (child.Name == "style" || child.Name == "data")
+                    value = MultiEnumerator(val, true);
                 else
                 {
                     switch (val.Type)

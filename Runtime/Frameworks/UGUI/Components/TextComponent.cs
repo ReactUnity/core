@@ -78,7 +78,11 @@ namespace ReactUnity.UGUI
 
         public void SetText(string text)
         {
-            if (!TextSetByStyle) Text.text = TextCapitalized ? TextInfo.ToTitleCase(text) : text;
+            if (!TextSetByStyle)
+            {
+                Text.text = TextCapitalized ? TextInfo.ToTitleCase(text) : text;
+                Layout.MarkDirty();
+            }
             TextInside = text;
         }
 
@@ -137,7 +141,11 @@ namespace ReactUnity.UGUI
             TextCapitalized = style.textTransform == TextTransform.Capitalize;
             if (TextCapitalized) finalText = TextInfo.ToTitleCase(finalText);
 
-            if (Text.text != finalText) Text.text = finalText;
+            if (Text.text != finalText)
+            {
+                Text.text = finalText;
+                Layout.MarkDirty();
+            }
 
 
             var isLinked = style.textOverflow == TextOverflowModes.Linked;

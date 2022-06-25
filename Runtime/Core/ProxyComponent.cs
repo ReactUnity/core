@@ -137,7 +137,7 @@ namespace ReactUnity
 
         public void MarkForStyleResolving(bool recursive) => Proxy.MarkForStyleResolving(recursive);
 
-        public void MarkStyleUpdateWithSiblings(bool recursive) => Proxy.MarkStyleUpdateWithSiblings(recursive);
+        public void MarkForStyleResolvingWithSiblings(bool recursive) => Proxy.MarkForStyleResolvingWithSiblings(recursive);
 
         public bool Matches(string query) => Proxy.Matches(query);
 

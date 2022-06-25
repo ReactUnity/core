@@ -16,7 +16,7 @@ namespace ReactUnity.UGUI
             set
             {
                 Button.interactable = !value;
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
 

@@ -52,7 +52,7 @@ namespace ReactUnity
             set
             {
                 id = value?.ToString();
-                MarkStyleUpdateWithSiblings(true);
+                MarkForStyleResolvingWithSiblings(true);
             }
         }
         public abstract string Name { get; set; }
@@ -138,7 +138,7 @@ namespace ReactUnity
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void DataChanged(string key, object value, WatchableDictionary<string, object> style)
         {
-            MarkStyleUpdateWithSiblings(true);
+            MarkForStyleResolvingWithSiblings(true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -223,7 +223,7 @@ namespace ReactUnity
                 }
 
                 Parent.UnregisterChild(this);
-                Parent.MarkStyleUpdateWithSiblings(true);
+                Parent.MarkForStyleResolvingWithSiblings(true);
                 ParentIndex = -1;
             }
 
@@ -255,7 +255,7 @@ namespace ReactUnity
             }
 
             StyleState.SetParent(newParent.StyleState);
-            newParent.MarkStyleUpdateWithSiblings(true);
+            newParent.MarkForStyleResolvingWithSiblings(true);
         }
 
 
@@ -391,7 +391,7 @@ namespace ReactUnity
             }
         }
 
-        public void MarkStyleUpdateWithSiblings(bool recursive)
+        public void MarkForStyleResolvingWithSiblings(bool recursive)
         {
             if (Parent == null) return;
 
@@ -444,7 +444,7 @@ namespace ReactUnity
                     {
                         StateStyles.EndState("enter");
                         Entering = false;
-                        MarkStyleUpdateWithSiblings(true);
+                        MarkForStyleResolvingWithSiblings(true);
                     }
                 }
                 else

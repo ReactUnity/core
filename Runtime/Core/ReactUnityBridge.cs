@@ -10,7 +10,7 @@ namespace ReactUnity
     internal class ReactUnityBridge
     {
         private const string StringStyleSymbol = "__style_as_string__";
-        static HashSet<string> TextTypes = new HashSet<string> { "text", "icon", "style", "script" };
+        internal static HashSet<string> TextTypes = new HashSet<string> { "text", "icon", "style", "script" };
 
         private static ReactUnityBridge instance;
         public static ReactUnityBridge Instance => instance = instance ?? new ReactUnityBridge();
@@ -180,8 +180,24 @@ namespace ReactUnity
                             var stVal = stylePayload.Current.Value;
                             st.SetWithoutNotify(stKey, stVal);
                         }
-                        cmp.MarkForStyleResolving(false);
+                        cmp.MarkForStyleResolving(true);
                     }
+                }
+                else if (attr == "data")
+                {
+                    var dataPayload =
+                        typeof(IEnumerator<KeyValuePair<string, object>>).IsAssignableFrom(value.GetType()) ?
+                        ((IEnumerator<KeyValuePair<string, object>>) value) :
+                        cmp.Context.Script.Engine.TraverseScriptObject(value);
+                    var st = cmp.Data;
+
+                    while (dataPayload.MoveNext())
+                    {
+                        var stKey = dataPayload.Current.Key;
+                        var stVal = dataPayload.Current.Value;
+                        st.SetWithoutNotify(stKey, stVal);
+                    }
+                    cmp.MarkForStyleResolvingWithSiblings(true);
                 }
                 else if (attr == StringStyleSymbol)
                 {
@@ -190,6 +206,10 @@ namespace ReactUnity
                 else if (attr.StartsWith("data-"))
                 {
                     setData(instance, attr.Substring(5), value);
+                }
+                else if (attr.StartsWith("aria-"))
+                {
+                    setData(instance, attr, value);
                 }
                 else
                 {
