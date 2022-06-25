@@ -76,7 +76,7 @@ namespace ReactUnity.Types
                         switch (realType)
                         {
                             case AssetReferenceType.Resource:
-                                spriteRes = Resources.Load<Sprite>(realValue as string);
+                                spriteRes = ResourcesHelper.LoadResource<Sprite>(realValue as string);
                                 break;
                             case AssetReferenceType.Global:
                                 if (context.Globals.TryGetValue(realValue as string, out var res)) spriteRes = res as Sprite;

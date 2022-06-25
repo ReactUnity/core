@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
@@ -154,7 +155,7 @@ namespace ReactUnity.Types
             switch (realType)
             {
                 case AssetReferenceType.Resource:
-                    return Resources.Load(realValue as string, typeof(T)) as T;
+                    return ResourcesHelper.LoadResource<T>(realValue as string);
                 case AssetReferenceType.Global:
                     if (context.Globals.TryGetValue(realValue as string, out var res)) return res as T;
                     else return default;

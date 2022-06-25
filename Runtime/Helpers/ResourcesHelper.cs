@@ -53,5 +53,27 @@ namespace ReactUnity.Helpers
 #endif
             return null;
         }
+
+        public static T LoadResource<T>(string path, bool excludeExtension = true) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(path)) return default(T);
+            if (!typeof(Object).IsAssignableFrom(typeof(T))) return default(T);
+
+            if (excludeExtension) path = GetResourcePathWithoutExtension(path);
+
+            return Resources.Load(path, typeof(T)) as T;
+        }
+
+        public static string GetResourcePathWithoutExtension(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return path;
+            var lastDot = path.LastIndexOf('.');
+            var lastSlash = path.LastIndexOf('/');
+
+            if (lastDot > 0 && (lastDot > lastSlash + 1))
+                path = path.Substring(0, lastDot);
+
+            return path;
+        }
     }
 }

@@ -201,7 +201,7 @@ namespace ReactUnity
                     throw new Exception("REACT_DISABLE_WEB is defined. Web API cannot be used.");
 #endif
                 case ScriptSourceType.Resource:
-                    var asset = Resources.Load(StripHashAndSearch(SourcePath)) as TextAsset;
+                    var asset = Resources.Load<TextAsset>(StripHashAndSearch(SourcePath));
                     if (asset)
                     {
 #if UNITY_EDITOR

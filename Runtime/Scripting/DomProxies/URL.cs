@@ -50,7 +50,7 @@ namespace ReactUnity.Scripting.DomProxies
                 {
                     var newSegments = new List<string>();
 
-                    if (!url.StartsWith("/"))
+                    if (!url.StartsWith("/") || string.IsNullOrWhiteSpace(baseCl.protocol))
                     {
                         var basePathSegments = baseCl.GetPathSegments();
                         AddToPath(newSegments, basePathSegments);

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using ReactUnity.Helpers;
 using ReactUnity.Scripting.DomProxies;
 
 namespace ReactUnity.Tests.Editor
@@ -60,6 +61,7 @@ namespace ReactUnity.Tests.Editor
 
         [TestCase("static/media/bg.png", "react/index.js", "react/static/media/bg.png")]
         [TestCase("static/media/bg.png", "react/index.js?param1=test#myhash", "react/static/media/bg.png")]
+        [TestCase("/static/media/bg.png", "a/b/c/index.js", "a/b/c/static/media/bg.png")]
         [TestCase("https://reactunity.io", null, "https://reactunity.io/")]
         [TestCase("https://reactunity.io/", null, "https://reactunity.io/")]
         [TestCase("https://reactunity.io/a", null, "https://reactunity.io/a")]
@@ -84,5 +86,21 @@ namespace ReactUnity.Tests.Editor
             var lc = new URL(url, baseUrl);
             Assert.AreEqual(expectedResult, lc.href);
         }
+
+        [TestCase(null, null)]
+        [TestCase("", "")]
+        [TestCase(" ", " ")]
+        [TestCase("abc/def/ghi", "abc/def/ghi")]
+        [TestCase("abc/def/ghi.gg", "abc/def/ghi")]
+        [TestCase("abc/def/ghi.gg/asd", "abc/def/ghi.gg/asd")]
+        [TestCase("abc/def/ghi.gg/asd.ff", "abc/def/ghi.gg/asd")]
+        [TestCase("abc/def/ghi.gg/.asd", "abc/def/ghi.gg/.asd")]
+        [TestCase("abc/def/ghi.gg/.asd.ff", "abc/def/ghi.gg/.asd")]
+        public void TestGetResourcePathWithoutExtension(string path, string expectedResult)
+        {
+            var lc = ResourcesHelper.GetResourcePathWithoutExtension(path);
+            Assert.AreEqual(expectedResult, lc);
+        }
+
     }
 }
