@@ -14,8 +14,7 @@
     "defineConstraints": [
         "!REACT_EXCLUDE_QUICKJS",
         "!REACT_QUICKJS_ORIGINAL",
-        "!REACT_DISABLE_QUICKJS",
-        "!UNITY_WEBGL || UNITY_EDITOR"
+        "!REACT_DISABLE_QUICKJS"
     ],
     "versionDefines": [
         {

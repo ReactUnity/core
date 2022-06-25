@@ -16,8 +16,7 @@
         "UNITY_EDITOR || JSB_RUNTIME_REFLECT_BINDING",
         "!REACT_QUICKJS_ORIGINAL",
         "!REACT_EXCLUDE_QUICKJS",
-        "!REACT_DISABLE_QUICKJS",
-        "!UNITY_WEBGL || UNITY_EDITOR"
+        "!REACT_DISABLE_QUICKJS"
     ],
     "versionDefines": [
         {

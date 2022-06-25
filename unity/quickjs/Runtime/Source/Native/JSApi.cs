@@ -956,5 +956,14 @@ namespace QuickJS.Native
         }
         #endregion
 
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+        [DllImport(JSBDLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void JS_SetBaseUrl(JSContext ctx, string url);
+#else
+        /// <summary>
+        /// Sets the base url for fetch, WebSocket and XHR requests in WebGL backend. Has no effect in other backends.
+        /// </summary>
+        public static void JS_SetBaseUrl(JSContext ctx, string url) { }
+#endif
     }
 }
