@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/06/2022 18:30:47
+// Generated 26/06/2022 03:25:06
 //
 /* eslint-disable */
 
@@ -59,7 +59,7 @@ export declare namespace ReactUnity {
     SetData(propertyName: string, value: any): void;
     SetProperty(propertyName: string, value: any): void;
     ResolveStyle(recursive?: boolean): void;
-    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    MarkForStyleResolvingWithSiblings(recursive: boolean): void;
     UpdateOrder(prev: number, current: number): boolean;
     ApplyStyles(): void;
     ApplyLayoutStyles(): void;
@@ -124,7 +124,7 @@ export declare namespace ReactUnity {
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
     MarkForStyleResolving(recursive: boolean): void;
-    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    MarkForStyleResolvingWithSiblings(recursive: boolean): void;
     Matches(query: string): boolean;
     Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -222,7 +222,7 @@ export declare namespace ReactUnity {
     SetProperty(property: string, value: any): void;
     SetData(property: string, value: any): void;
     MarkForStyleResolving(recursive: boolean): void;
-    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    MarkForStyleResolvingWithSiblings(recursive: boolean): void;
     Remove(): void;
     Clear(): void;
     Destroy(recursive?: boolean): void;
@@ -293,7 +293,7 @@ export declare namespace ReactUnity {
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
     MarkForStyleResolving(recursive: boolean): void;
-    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    MarkForStyleResolvingWithSiblings(recursive: boolean): void;
     Matches(query: string): boolean;
     Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -462,6 +462,7 @@ export declare namespace ReactUnity {
   export class ScriptSource {
     constructor();
     constructor(source: ReactUnity.ScriptSource);
+    ShouldUseDevServer: boolean;
     DevServerFile: string;
     FileName: string;
     IsDevServer: boolean;
@@ -473,7 +474,7 @@ export declare namespace ReactUnity {
     SourcePath: string;
     SourceText: string;
     ResourcesPath: string;
-    UseDevServer: boolean;
+    UseDevServer: ReactUnity.ScriptSource_DevServerType;
     DevServer: string;
     static Resource(path: string): ReactUnity.ScriptSource;
     static Text(path: string): ReactUnity.ScriptSource;
@@ -549,7 +550,7 @@ export declare namespace ReactUnity {
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
     MarkForStyleResolving(recursive: boolean): void;
-    MarkStyleUpdateWithSiblings(recursive: boolean): void;
+    MarkForStyleResolvingWithSiblings(recursive: boolean): void;
     Matches(query: string): boolean;
     Closest(query: string): ReactUnity.IReactComponent;
     QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -618,6 +619,11 @@ export declare namespace ReactUnity {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export enum ScriptSource_DevServerType {
+    Never = 0,
+    InEditor = 1,
+    Always = 2,
   }
   export namespace Editor {
     export class ReactElementDrawer {
@@ -1249,7 +1255,7 @@ export declare namespace ReactUnity {
         FireEvent(eventName: string, arg: any): void;
         SetData(propertyName: string, value: any): void;
         ResolveStyle(recursive?: boolean): void;
-        MarkStyleUpdateWithSiblings(recursive: boolean): void;
+        MarkForStyleResolvingWithSiblings(recursive: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
         Matches(query: string): boolean;
@@ -1477,7 +1483,7 @@ export declare namespace ReactUnity {
         SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
         FireEvent(eventName: string, arg: any): void;
         SetData(propertyName: string, value: any): void;
-        MarkStyleUpdateWithSiblings(recursive: boolean): void;
+        MarkForStyleResolvingWithSiblings(recursive: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
         Matches(query: string): boolean;
@@ -1559,7 +1565,7 @@ export declare namespace ReactUnity {
         FireEvent(eventName: string, arg: any): void;
         SetData(propertyName: string, value: any): void;
         ResolveStyle(recursive?: boolean): void;
-        MarkStyleUpdateWithSiblings(recursive: boolean): void;
+        MarkForStyleResolvingWithSiblings(recursive: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
         Matches(query: string): boolean;
@@ -1641,7 +1647,7 @@ export declare namespace ReactUnity {
         FireEvent(eventName: string, arg: any): void;
         SetData(propertyName: string, value: any): void;
         ResolveStyle(recursive?: boolean): void;
-        MarkStyleUpdateWithSiblings(recursive: boolean): void;
+        MarkForStyleResolvingWithSiblings(recursive: boolean): void;
         ApplyStyles(): void;
         ApplyLayoutStyles(): void;
         Matches(query: string): boolean;
@@ -1855,7 +1861,6 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1932,7 +1937,6 @@ export declare namespace ReactUnity {
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2036,7 +2040,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2099,7 +2102,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2215,7 +2217,7 @@ export declare namespace ReactUnity {
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
       MarkForStyleResolving(recursive: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       Matches(query: string): boolean;
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -2541,38 +2543,6 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scripting {
-    export class ClearScriptEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
-      Key: string;
-      Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
-      NativeEngine: any; // System.Object
-      Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
-      GetGlobal(key: string): any;
-      DeleteGlobal(key: string): void;
-      CreateTypeReference(type: System.Type): any;
-      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
-      Dispose(): void;
-      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      IsScriptObject(obj: any): boolean;
-      Update(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class ClearScriptEngineFactory {
-      constructor();
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2581,6 +2551,7 @@ export declare namespace ReactUnity {
       Console = 8,
       Scheduler = 16,
       Base64 = 32,
+      URL = 64,
     }
     export enum JavascriptEngineType {
       Auto = 0,
@@ -2607,53 +2578,6 @@ export declare namespace ReactUnity {
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-    }
-    export class JintEngine {
-      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
-      Key: string;
-      Engine: any; // Jint.Engine
-      NativeEngine: any; // System.Object
-      Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
-      GetGlobal(key: string): any;
-      DeleteGlobal(key: string): void;
-      CreateTypeReference(type: System.Type): any;
-      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
-      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
-      Dispose(): void;
-      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      IsScriptObject(obj: any): boolean;
-      Update(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintEngineFactory {
-      constructor();
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintExtensions {
-      static RunContinuations(engine: any): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintTypeConverter {
-      constructor(context: ReactUnity.ReactContext, engine: any);
-      Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
     }
     export class QuickJSApiBridge {
       constructor();
@@ -2682,6 +2606,7 @@ export declare namespace ReactUnity {
       Runtime: any; // QuickJS.ScriptRuntime
       MainContext: any; // QuickJS.ScriptContext
       Global: any; // QuickJS.ScriptValue
+      ObjectKeys: any; // QuickJS.ScriptFunction
       TypeDB: any; // QuickJS.Utils.ITypeDB
       ObjectCache: any; // QuickJS.Utils.ObjectCache
       static InvokeReflectBinding(runtime: any): void;
@@ -2788,7 +2713,7 @@ export declare namespace ReactUnity {
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
       MarkForStyleResolving(recursive: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       Matches(query: string): boolean;
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -3001,7 +2926,7 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class Location {
-        constructor(href: string, ctx?: ReactUnity.ReactContext);
+        constructor(href: string);
         constructor(ctx: ReactUnity.ReactContext);
         href: string;
         protocol: string;
@@ -3012,6 +2937,7 @@ export declare namespace ReactUnity {
         search: string;
         hash: string;
         pathname: string;
+        rawPathname: string;
         reload(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -3034,6 +2960,24 @@ export declare namespace ReactUnity {
         GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
         Remove(key: string): boolean;
         Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class URL {
+        constructor(url: string);
+        constructor(url: string, baseUrl: string);
+        href: string;
+        protocol: string;
+        hostname: string;
+        origin: string;
+        host: string;
+        port: string;
+        search: string;
+        hash: string;
+        pathname: string;
+        rawPathname: string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3416,7 +3360,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -3852,7 +3795,7 @@ export declare namespace ReactUnity {
       GetComponent(type: System.Type): any;
       AddComponent(type: System.Type): any;
       MarkForStyleResolving(recursive: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       Matches(query: string): boolean;
       Closest(query: string): ReactUnity.IReactComponent;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -5661,7 +5604,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -5747,7 +5690,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -5835,7 +5778,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -5922,7 +5865,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6006,7 +5949,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6093,7 +6036,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6186,7 +6129,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6273,7 +6216,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6369,7 +6312,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6454,7 +6397,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6542,7 +6485,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6628,7 +6571,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6713,7 +6656,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6800,7 +6743,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6888,7 +6831,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -6975,7 +6918,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7059,7 +7002,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7149,7 +7092,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7239,7 +7182,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7326,7 +7269,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7420,7 +7363,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7513,7 +7456,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7604,7 +7547,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7687,7 +7630,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -7776,7 +7719,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -11644,7 +11587,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -11726,7 +11669,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -11811,7 +11754,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -11898,7 +11841,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -11973,7 +11916,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12048,7 +11991,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12125,7 +12068,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12200,7 +12143,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12277,7 +12220,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12359,7 +12302,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12441,7 +12384,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12520,7 +12463,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12597,7 +12540,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12680,7 +12623,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12759,7 +12702,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
@@ -12840,7 +12783,7 @@ export declare namespace ReactUnity {
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
       ResolveStyle(recursive?: boolean): void;
-      MarkStyleUpdateWithSiblings(recursive: boolean): void;
+      MarkForStyleResolvingWithSiblings(recursive: boolean): void;
       ApplyStyles(): void;
       ApplyLayoutStyles(): void;
       Matches(query: string): boolean;
