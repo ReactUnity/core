@@ -41,7 +41,7 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
     ripple.Style.Set('width', mag);
     ripple.Style.Set('height', mag);
   } else {
-    ripple.Style.Set('position', 'static');
+    ripple.Style.Set('position', 'inset');
     ripple.Style.Set('left', '50%');
     ripple.Style.Set('top', '50%');
     ripple.Style.Set('width', maxDimension);
