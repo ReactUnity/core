@@ -36,6 +36,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.BuildCompression).Assembly,
                     typeof(UnityEngine.Analytics.Analytics).Assembly,
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
+                    typeof(UnityEngine.ParticleSystem).Assembly,
 #if UNITY_2022_1_OR_NEWER
                     typeof(UnityEngine.UIElements.LineJoin).Assembly,
 #endif
@@ -413,6 +414,16 @@ namespace ReactUnity.Editor.Developer
                 helpers += n;
             }
 
+            if (Helpers.Contains("ref"))
+            {
+                helpers += n;
+                helpers += "export interface Ref<T> {" + n;
+                helpers += "  type?: T;" + n;
+                helpers += "  __ref: true;" + n;
+                helpers += "}" + n;
+                helpers += n;
+            }
+
             if (Helpers.Contains("byte"))
             {
                 helpers += n;
@@ -486,7 +497,7 @@ namespace ReactUnity.Editor.Developer
         {
             var info = list.First();
             var isStatic = info.IsStatic;
-            var types = string.Join(" | ", list.Select(getTypeScriptStringForArgs));
+            var types = string.Join(" | ", list.Select(x => getTypeScriptStringForArgs(x, !isStatic)));
 
             return string.Format("{0}{1}: {2};",
               isStatic ? "static " : "",
@@ -498,8 +509,8 @@ namespace ReactUnity.Editor.Developer
         string getTypeScriptString(MethodInfo info, string indent)
         {
             var isStatic = info.IsStatic;
-            var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
-            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
+            var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !isStatic);
+            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !isStatic)));
 
             var docs = new List<string>();
             if (info.IsPrivate) docs.Add("@private");
@@ -515,10 +526,10 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        string getTypeScriptStringForArgs(MethodInfo info)
+        string getTypeScriptStringForArgs(MethodInfo info, bool allowGeneric)
         {
-            var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
-            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
+            var retType = getTypesScriptType(info.ReturnType, true, false, allowGeneric && AllowGeneric && !info.IsStatic);
+            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, allowGeneric && AllowGeneric && !info.IsStatic)));
 
             return string.Format("(({0}) => {1})",
               args,
@@ -587,10 +598,19 @@ namespace ReactUnity.Editor.Developer
             if (type.IsPointer)
             {
                 Helpers.Add("pointer");
-                var baseType = type.Assembly.GetType(type.FullName.Replace("*", ""));
+                var baseType = type.GetElementType();
                 var baseTypeStr = getTypesScriptType(baseType, withNs, skipKnownTypes, allowGeneric, suffixGeneric);
 
                 return $"Pointer<{baseTypeStr}>";
+            }
+
+            if (type.IsByRef)
+            {
+                Helpers.Add("ref");
+                var baseType = type.GetElementType();
+                var baseTypeStr = getTypesScriptType(baseType, withNs, skipKnownTypes, allowGeneric, suffixGeneric);
+
+                return $"Ref<{baseTypeStr}>";
             }
 
             var remap = type.GetCustomAttribute<TypescriptRemap>();
@@ -600,7 +620,7 @@ namespace ReactUnity.Editor.Developer
 
             if (!skipKnownTypes && typeof(Delegate).IsAssignableFrom(type) && type != typeof(Delegate) && type != typeof(MulticastDelegate))
             {
-                return getTypeScriptStringForArgs(type.GetMethod("Invoke"));
+                return getTypeScriptStringForArgs(type.GetMethod("Invoke"), allowGeneric);
             }
 
             var propertyType = type.ToString();
