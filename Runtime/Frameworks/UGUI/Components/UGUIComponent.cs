@@ -171,7 +171,11 @@ namespace ReactUnity.UGUI
             var computed = ComputedStyle;
 
             var pos = StylingHelpers.GetStyleEnumCustom(computed, StyleProperties.position);
-            Layout.PositionType = pos == PositionType.Relative ? YogaPositionType.Relative : YogaPositionType.Absolute;
+            Layout.PositionType =
+                pos == PositionType.Static ? YogaPositionType.Static :
+                pos == PositionType.Relative ? YogaPositionType.Relative :
+                pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset ? YogaPositionType.Absolute :
+                YogaPositionType.Default;
 
             Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
             Layout.Wrap = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Wrap);

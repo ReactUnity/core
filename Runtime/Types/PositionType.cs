@@ -2,10 +2,12 @@ namespace ReactUnity.Types
 {
     public enum PositionType
     {
-        Relative = 0,
-        Absolute = 1,
-        Static = 2,
+        Default = 0,
+        Static = 0,
+        Relative = 1,
+        Absolute = 2,
         Fixed = 3,
         Sticky = 4,
+        Inset = 10,
     }
 }
