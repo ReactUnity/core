@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 26/06/2022 03:25:06
+// Generated 27/06/2022 23:11:23
 //
 /* eslint-disable */
 
@@ -755,6 +755,7 @@ export declare namespace ReactUnity {
     export class QuickStartWindow {
       constructor();
       static ShowWindowOnStartup: boolean;
+      static ShowEngineWarningOnStartup: boolean;
       NodeVersion: number;
       Context: ReactUnity.ReactContext;
       HostElement: ReactUnity.Editor.UIToolkit.ReactUnityEditorElement;
@@ -1861,6 +1862,7 @@ export declare namespace ReactUnity {
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -1937,6 +1939,7 @@ export declare namespace ReactUnity {
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2040,6 +2043,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2102,6 +2106,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2149,6 +2154,20 @@ export declare namespace ReactUnity {
       SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
       SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
       UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class YogaHelpers {
+      static HasValue(val: Facebook.Yoga.YogaValue): boolean;
+      static IfPoint(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
+      static IfPercent(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
+      static GetPointValue(val: Facebook.Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
+      static GetRatioValue(val: Facebook.Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
+      static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
+      static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: UnityEngine.Vector2, yInverted?: boolean): UnityEngine.Vector2;
+      static GetRatioValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2543,6 +2562,38 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Scripting {
+    export class ClearScriptEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
+      Key: string;
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
+      NativeEngine: any; // System.Object
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ClearScriptEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export enum EngineCapabilities {
       None = 0,
       Fetch = 1,
@@ -2578,6 +2629,53 @@ export declare namespace ReactUnity {
     export interface IJavaScriptEngineFactory {
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+    }
+    export class JintEngine {
+      constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
+      Key: string;
+      Engine: any; // Jint.Engine
+      NativeEngine: any; // System.Object
+      Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Evaluate(code: string, fileName?: string): any;
+      Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
+      GetGlobal(key: string): any;
+      DeleteGlobal(key: string): void;
+      CreateTypeReference(type: System.Type): any;
+      CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
+      CreateScriptObject(props: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>): any;
+      Dispose(): void;
+      TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      IsScriptObject(obj: any): boolean;
+      Update(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintEngineFactory {
+      constructor();
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintExtensions {
+      static RunContinuations(engine: any): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class JintTypeConverter {
+      constructor(context: ReactUnity.ReactContext, engine: any);
+      Convert(value: any, type: System.Type, formatProvider: System.IFormatProvider): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export class QuickJSApiBridge {
       constructor();
@@ -3360,6 +3458,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -3544,6 +3643,8 @@ export declare namespace ReactUnity {
       static BorderStartWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static BorderEndWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static Order: any; // ReactUnity.Styling.LayoutProperty`1[System.Int32]
+      static RowGap: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static ColumnGap: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5261,11 +5362,13 @@ export declare namespace ReactUnity {
       None = 2,
     }
     export enum PositionType {
-      Relative = 0,
-      Absolute = 1,
-      Static = 2,
+      Default = 0,
+      Static = 0,
+      Relative = 1,
+      Absolute = 2,
       Fixed = 3,
       Sticky = 4,
+      Inset = 10,
     }
     export enum ScrollDirection {
       None = 0,

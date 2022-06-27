@@ -22,17 +22,17 @@ export interface Layout {
   alignContent?: YogaAlign;
   alignSelf?: YogaAlign;
   alignItems?: YogaAlign;
-  borderWidth?: number;
-  borderStartWidth?: number;
-  borderEndWidth?: number;
-  borderTopWidth?: number;
-  borderRightWidth?: number;
-  borderBottomWidth?: number;
-  borderLeftWidth?: number;
-  aspectRatio?: number;
+  borderWidth?: number | string;
+  borderStartWidth?: number | string;
+  borderEndWidth?: number | string;
+  borderTopWidth?: number | string;
+  borderRightWidth?: number | string;
+  borderBottomWidth?: number | string;
+  borderLeftWidth?: number | string;
+  aspectRatio?: number | string;
   flexDirection?: FlexDirection;
-  flexShrink?: number;
-  flexGrow?: number;
+  flexShrink?: number | string;
+  flexGrow?: number | string;
   flexBasis?: YogaValueAux;
   minHeight?: YogaValueAux;
   minWidth?: YogaValueAux;
@@ -64,6 +64,8 @@ export interface Layout {
   paddingTop?: YogaValueAux;
   paddingEnd?: YogaValueAux;
   paddingLeft?: YogaValueAux;
+  rowGap?: number | string;
+  columnGap?: number | string;
 }
 
 export interface LayoutExtended {

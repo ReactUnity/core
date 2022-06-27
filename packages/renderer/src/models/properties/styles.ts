@@ -116,6 +116,7 @@ export interface RenderStyle {
   motion?: string;
   audio?: string;
   transform?: string;
+  gap?: string | number;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;
