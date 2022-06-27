@@ -59,6 +59,9 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<int> Order = new LayoutProperty<int>("order", true);
 
+        public static readonly LayoutProperty<float> RowGap = new LayoutProperty<float>("RowGap", true, 0f, converter: AllConverters.LengthConverter);
+        public static readonly LayoutProperty<float> ColumnGap = new LayoutProperty<float>("ColumnGap", true, 0f, converter: AllConverters.LengthConverter);
+
         public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "flexDirection", FlexDirection },
@@ -110,6 +113,8 @@ namespace ReactUnity.Styling
             { "borderStartWidth", BorderStartWidth },
             { "borderEndWidth", BorderEndWidth },
             { "order", Order },
+            { "rowGap", RowGap },
+            { "columnGap", ColumnGap },
 
             { "flex-direction", FlexDirection },
             { "justify-content", JustifyContent },
@@ -147,6 +152,8 @@ namespace ReactUnity.Styling
             { "border-bottom-width", BorderBottomWidth },
             { "border-start-width", BorderStartWidth },
             { "border-end-width", BorderEndWidth },
+            { "row-gap", RowGap },
+            { "column-gap", ColumnGap },
 
             { "direction", StyleDirection },
             { "flex-wrap", Wrap },

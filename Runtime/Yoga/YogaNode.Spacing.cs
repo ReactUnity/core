@@ -452,6 +452,45 @@ namespace Facebook.Yoga
             }
         }
 
+        public float Gap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.All);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGap.All, value);
+            }
+        }
+
+        public float RowGap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.Row);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGap.Row, value);
+            }
+        }
+
+        public float ColumnGap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.Column);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGap.Column, value);
+            }
+        }
+
         public float LayoutMarginLeft
         {
             get

@@ -6,20 +6,20 @@
  */
 
 #if !UNITY_EDITOR && (UNITY_WEBGL || UNITY_IOS)
-    #define OLD_YOGA
+    #define YOGA_LEGACY
 #endif
 
 namespace Facebook.Yoga
 {
     public enum YogaPositionType
     {
-#if OLD_YOGA
+#if YOGA_LEGACY
         Default = 0,
         Static = 0,
-        Relative = 1,
-        Absolute = 2,
+        Relative = 0,
+        Absolute = 1,
 #else
-        Default = 0,
+        Default = 1,
         Static = 0,
         Relative = 1,
         Absolute = 2,

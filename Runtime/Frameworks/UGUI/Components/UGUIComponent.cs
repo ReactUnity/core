@@ -207,6 +207,9 @@ namespace ReactUnity.UGUI
             Layout.Top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
             Layout.Bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
+            Layout.RowGap = StylingHelpers.GetStyleFloat(computed, LayoutProperties.RowGap);
+            Layout.ColumnGap = StylingHelpers.GetStyleFloat(computed, LayoutProperties.ColumnGap);
+
             Layout.BorderLeftWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
             Layout.BorderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
             Layout.BorderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
