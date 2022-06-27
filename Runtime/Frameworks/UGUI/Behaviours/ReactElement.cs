@@ -1,5 +1,6 @@
 using System.Collections;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Types;
 using UnityEngine;
@@ -51,6 +52,7 @@ namespace ReactUnity.UGUI.Behaviours
             }
         }
 
+        private PositionType previousPositionType = PositionType.Relative;
         private PositionType positionType = PositionType.Relative;
 
         public PositionType PositionType
@@ -61,6 +63,7 @@ namespace ReactUnity.UGUI.Behaviours
                 if (value != positionType)
                 {
                     hasPositionUpdate = true;
+                    previousPositionType = positionType;
                     positionType = value;
                 }
             }
@@ -96,21 +99,98 @@ namespace ReactUnity.UGUI.Behaviours
             var pivotDiff = rt.pivot - Vector2.up;
 
 
-            var tran = new Vector2(CalculateYogaVal(translate.X, Layout.LayoutWidth), -CalculateYogaVal(translate.Y, Layout.LayoutHeight));
+            var tran = new Vector2(
+                translate.X.GetPointValue(Layout.LayoutWidth, 0),
+                -translate.Y.GetPointValue(Layout.LayoutHeight, 0));
             var visible = Layout.Display != YogaDisplay.None;
 
             var z = translateZ.Unit == YogaUnit.Point ? translateZ.Value : 0;
 
-            if (positionType == PositionType.Static)
+            if (positionType != previousPositionType)
             {
-                // TODO: improve static positioning to affect 4 sides
-                var x = CalculateYogaVal(Layout.Left, Layout.LayoutWidth);
-                var y = CalculateYogaVal(Layout.Top, Layout.LayoutHeight);
+                if (positionType != PositionType.Inset)
+                {
+                    rt.anchorMin = Vector2.up;
+                    rt.anchorMax = Vector2.up;
+                }
+            }
 
-                var posX = x + pivotDiff.x * Layout.LayoutWidth;
-                var posY = -y + pivotDiff.y * Layout.LayoutHeight;
+            if (positionType == PositionType.Inset)
+            {
+                if (currentMotion != null) StopCoroutine(currentMotion);
 
-                SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible);
+                var anchorMinX = 0f;
+                var anchorMinY = 0f;
+                var anchorMaxX = 0f;
+                var anchorMaxY = 0f;
+                var offsetMinX = 0f;
+                var offsetMinY = 0f;
+                var offsetMaxX = 0f;
+                var offsetMaxY = 0f;
+
+                if (Layout.Right.HasValue())
+                {
+                    if (Layout.Left.HasValue())
+                    {
+                        anchorMinX = Layout.Left.IfPercent(0) / 100f;
+                        anchorMaxX = 1 - (Layout.Right.IfPercent(0) / 100f);
+                        offsetMinX = Layout.Left.IfPoint() + tran.x;
+                        offsetMaxX = -Layout.Right.IfPoint() + tran.x;
+                    }
+                    else
+                    {
+                        var anchorValue = 1 - (Layout.Right.IfPercent(0) / 100f);
+                        anchorMinX = anchorValue;
+                        anchorMaxX = anchorValue;
+                        var rightn = Layout.Right.IfPoint();
+
+                        offsetMinX = -rightn + tran.x - Layout.LayoutWidth;
+                        offsetMaxX = -rightn + tran.x;
+                    }
+                }
+                else
+                {
+                    var anchorValue = Layout.Left.IfPercent(0) / 100f;
+                    anchorMinX = anchorValue;
+                    anchorMaxX = anchorValue;
+                    var leftn = Layout.Left.IfPoint();
+                    offsetMinX = leftn + tran.x;
+                    offsetMaxX = leftn + tran.x + Layout.LayoutWidth;
+                }
+
+                if (Layout.Bottom.HasValue())
+                {
+                    if (Layout.Top.HasValue())
+                    {
+                        anchorMinY = Layout.Bottom.IfPercent(0) / 100;
+                        anchorMaxY = 1 - (Layout.Top.IfPercent(0) / 100);
+                        offsetMinY = Layout.Bottom.IfPoint() + tran.y;
+                        offsetMaxY = -Layout.Top.IfPoint() + tran.y;
+                    }
+                    else
+                    {
+                        var anchorVal = Layout.Bottom.IfPercent(0) / 100;
+                        anchorMinY = anchorVal;
+                        anchorMaxY = anchorVal;
+                        var bottomn = Layout.Bottom.IfPoint();
+                        offsetMinY = bottomn + tran.y;
+                        offsetMaxY = bottomn + tran.y + Layout.LayoutHeight;
+                    }
+                }
+                else
+                {
+                    var anchorVal = 1 - (Layout.Top.IfPercent(0) / 100f);
+                    anchorMinY = anchorVal;
+                    anchorMaxY = anchorVal;
+                    var topn = Layout.Top.IfPoint();
+                    offsetMinY = -topn + tran.y - Layout.LayoutHeight;
+                    offsetMaxY = -topn + tran.y;
+                }
+
+                rt.anchorMin = new Vector2(anchorMinX, anchorMinY);
+                rt.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
+                rt.offsetMin = new Vector2(offsetMinX, offsetMinY);
+                rt.offsetMax = new Vector2(offsetMaxX, offsetMaxY);
             }
             else
             {
@@ -121,11 +201,6 @@ namespace ReactUnity.UGUI.Behaviours
             }
             hasPositionUpdate = false;
             Layout.MarkLayoutSeen();
-        }
-
-        private float CalculateYogaVal(YogaValue val, float size)
-        {
-            return val.Unit == YogaUnit.Percent ? size * val.Value / 100 : val.Value;
         }
 
         private void SetPositionAndSize(Vector2 pos, Vector2 size, float z, bool visible)

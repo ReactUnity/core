@@ -130,5 +130,149 @@ namespace ReactUnity.Tests
 
             yield return null;
         }
+
+        [UGUITest(
+            Script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <view id='parent'>
+                    <view id='test' />
+                </view>;
+            }",
+            Style = @"
+                #parent {
+                    background-color: gray;
+                    width: 200px;
+                    height: 160px;
+                }
+
+                #test {
+                    background-color: red;
+                    width: 20px;
+                    height: 32px;
+                    position: inset;
+                    transform-origin: top left;
+                }
+            ")]
+        public IEnumerator InsetLayoutPositionsElementsCorrectly()
+        {
+            var parent = Q("#parent") as UGUI.ContainerComponent;
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+
+            Assert.AreEqual(new Rect(0, 0, 20, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("top", "10px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 10, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "0 10px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 20, 20, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("top", "10%");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 16, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "0 10px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 26, 20, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("bottom", "10%");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 16, 20, 128), GetRect(cmp));
+
+            cmp.Style.Set("translate", "0 10px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 26, 20, 128), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("top", "initial");
+            cmp.Style.Set("bottom", "20px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 108, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "0 10px");
+            yield return null;
+            Assert.AreEqual(new Rect(0, 118, 20, 32), GetRect(cmp));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            cmp.Style.Set("top", "initial");
+            cmp.Style.Set("bottom", "initial");
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("left", "10px");
+            yield return null;
+            Assert.AreEqual(new Rect(10, 0, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "10px 0");
+            yield return null;
+            Assert.AreEqual(new Rect(20, 0, 20, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("left", "10%");
+            yield return null;
+            Assert.AreEqual(new Rect(20, 0, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "30px 0");
+            yield return null;
+            Assert.AreEqual(new Rect(50, 0, 20, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("right", "10%");
+            yield return null;
+            Assert.AreEqual(new Rect(20, 0, 160, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "10px 0");
+            yield return null;
+            Assert.AreEqual(new Rect(30, 0, 160, 32), GetRect(cmp));
+
+
+
+            cmp.Style.Set("translate", "none");
+            cmp.Style.Set("left", "initial");
+            cmp.Style.Set("right", "20px");
+            yield return null;
+            Assert.AreEqual(new Rect(160, 0, 20, 32), GetRect(cmp));
+
+            cmp.Style.Set("translate", "10px 0");
+            yield return null;
+            Assert.AreEqual(new Rect(170, 0, 20, 32), GetRect(cmp));
+        }
+
+        private Rect GetRect(UGUI.ContainerComponent cmp)
+        {
+            var rect = cmp.GetBoundingClientRect();
+            var prect = (cmp.Parent as UGUI.ContainerComponent).GetBoundingClientRect();
+            var x = Mathf.Round(rect.x - prect.x);
+            var y = Mathf.Round(rect.y - prect.y);
+
+            return new Rect(x, y, rect.width, rect.height);
+        }
     }
 }
