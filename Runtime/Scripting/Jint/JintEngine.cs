@@ -74,7 +74,7 @@ namespace ReactUnity.Scripting
             }
             catch (JavaScriptException ex)
             {
-                Debug.LogError($"JS exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogError($"JS exception in {ex.Location}");
                 Debug.LogException(ex);
                 return ex;
             }

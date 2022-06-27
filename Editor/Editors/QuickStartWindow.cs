@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -21,17 +20,19 @@ namespace ReactUnity.Editor
         #region Startup
 
         public const string WindowVersion = "0";
+        internal static readonly string ShowWindowOnStartupKey = $"ReactUnity.Editor.{nameof(QuickStartWindow)}.{nameof(ShowWindowOnStartup)}.{WindowVersion}";
+        internal static readonly string ShowEngineWarningOnStartupKey = $"ReactUnity.Editor.{nameof(QuickStartWindow)}.{nameof(ShowEngineWarningOnStartup)}";
 
         public static bool ShowWindowOnStartup
         {
-            get
-            {
-                return EditorPrefs.GetBool($"ReactUnity.Editor.{nameof(QuickStartWindow)}.ShowWindowOnStartup.{WindowVersion}", true);
-            }
-            set
-            {
-                EditorPrefs.SetBool($"ReactUnity.Editor.{nameof(QuickStartWindow)}.ShowWindowOnStartup.{WindowVersion}", value);
-            }
+            get => EditorPrefs.GetBool(ShowWindowOnStartupKey, true);
+            set => EditorPrefs.SetBool(ShowWindowOnStartupKey, value);
+        }
+
+        public static bool ShowEngineWarningOnStartup
+        {
+            get => EditorPrefs.GetBool(ShowEngineWarningOnStartupKey, true);
+            set => EditorPrefs.SetBool(ShowEngineWarningOnStartupKey, value);
         }
 
 
@@ -46,7 +47,37 @@ namespace ReactUnity.Editor
         {
             EditorApplication.update -= InitialEditorUpdate;
 
-            if (ShowWindowOnStartup)
+            if (!JavascriptEngineHelpers.HasEngine)
+            {
+                if (ShowEngineWarningOnStartup)
+                {
+                    var result = EditorUtility.DisplayDialogComplex(
+                        "Install Default JavaScript Engine?",
+                        "ReactUnity requires at least one JavaScript engine to work, but none is installed.\n" +
+                        "Do you want to automatically install the defalut JavaScript engine? \n" +
+                        "    com.reactunity.quickjs",
+                        "Yes",
+                        "No",
+                        "No and don't show again"
+                    );
+
+                    switch (result)
+                    {
+                        case 0:
+                            var enumerator = InstallScopedPluginDelegate("com.reactunity.quickjs");
+                            Unity.EditorCoroutines.Editor.EditorCoroutineUtility.StartCoroutineOwnerless(enumerator);
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            ShowEngineWarningOnStartup = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else if (ShowWindowOnStartup)
             {
                 ShowDefaultWindow();
                 ShowWindowOnStartup = false;
@@ -250,7 +281,7 @@ namespace ReactUnity.Editor
             Context.Dispatcher.StartDeferred(InstallScopedPluginDelegate(packageName));
         }
 
-        private IEnumerator InstallScopedPluginDelegate(string packageName)
+        private static IEnumerator InstallScopedPluginDelegate(string packageName)
         {
             PackageManagerHelpers.AddScopedRegistry(
                 ScopeName,
@@ -269,7 +300,7 @@ namespace ReactUnity.Editor
             Context.Dispatcher.StartDeferred(InstallUnityPluginDelegate(pluginName));
         }
 
-        private IEnumerator InstallUnityPluginDelegate(string pluginName)
+        private static IEnumerator InstallUnityPluginDelegate(string pluginName)
         {
             yield return null;
 

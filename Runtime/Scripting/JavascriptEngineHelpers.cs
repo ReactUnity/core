@@ -14,6 +14,12 @@ namespace ReactUnity.Scripting
 {
     internal class JavascriptEngineHelpers
     {
+#if REACT_QUICKJS || REACT_JINT || REACT_CLEARSCRIPT
+        public static bool HasEngine => true;
+#else
+        public static bool HasEngine => false;
+#endif
+
         public static IJavaScriptEngineFactory GetEngineFactory(JavascriptEngineType type)
         {
             switch (type)
@@ -40,7 +46,7 @@ namespace ReactUnity.Scripting
 #elif REACT_JINT
                     return new JintEngineFactory();
 #else
-                    throw new System.Exception("Could not find a valid scripting engine.");
+                    throw new System.Exception("Could not find a valid scripting engine. To learn how to install one, visit https://github.com/ReactUnity/core#installing");
 #endif
             }
         }

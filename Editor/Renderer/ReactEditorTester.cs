@@ -7,6 +7,10 @@ namespace ReactUnity.Editor.Renderer
 {
     public class ReactEditorTester : ReactWindow
     {
+        internal static readonly string PrefsSourceKey = "ReactUnity.EditorTester.source";
+        internal static readonly string PrefsUseDevServerKey = "ReactUnity.EditorTester.useDevServer";
+        internal static readonly string PrefsDevServerKey = "ReactUnity.EditorTester.devServer";
+
         [MenuItem("React/Editor Tester")]
         public static void ShowDefaultWindow()
         {
@@ -29,9 +33,9 @@ namespace ReactUnity.Editor.Renderer
             var source = rootVisualElement.Q<TextField>("source");
             var useDevServer = rootVisualElement.Q<Toggle>("useDevServer");
             var devServer = rootVisualElement.Q<TextField>("devServer");
-            source.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.source", "react/index"));
-            useDevServer.SetValueWithoutNotify(EditorPrefs.GetBool("ReactUnity.EditorTester.useDevServer", false));
-            devServer.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.devServer", "http://localhost:3000"));
+            source.SetValueWithoutNotify(EditorPrefs.GetString(PrefsSourceKey, "react/index"));
+            useDevServer.SetValueWithoutNotify(EditorPrefs.GetBool(PrefsUseDevServerKey, false));
+            devServer.SetValueWithoutNotify(EditorPrefs.GetString(PrefsDevServerKey, "http://localhost:3000"));
 
             rootVisualElement.Q<Button>("run").clicked += () => Restart(rootVisualElement.Q("root"));
         }
@@ -46,9 +50,9 @@ namespace ReactUnity.Editor.Renderer
             var useDevServerVal = useDevServer.value;
             var devServerVal = devServer.text;
 
-            EditorPrefs.SetString("ReactUnity.EditorTester.source", sourceVal);
-            EditorPrefs.SetBool("ReactUnity.EditorTester.useDevServer", useDevServerVal);
-            EditorPrefs.SetString("ReactUnity.EditorTester.devServer", devServerVal);
+            EditorPrefs.SetString(PrefsSourceKey, sourceVal);
+            EditorPrefs.SetBool(PrefsUseDevServerKey, useDevServerVal);
+            EditorPrefs.SetString(PrefsDevServerKey, devServerVal);
 
             useDevServer.RegisterValueChangedCallback(x => {
                 devServer.SetEnabled(x.newValue);
