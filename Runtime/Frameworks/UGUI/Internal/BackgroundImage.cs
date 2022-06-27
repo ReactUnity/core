@@ -86,7 +86,7 @@ namespace ReactUnity.UGUI.Internal
 
                 var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
                 var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
-                var psPoint = StylingUtils.GetPointValue(BackgroundPosition, Size - szPoint, 0, false);
+                var psPoint = BackgroundPosition.GetPointValue(Size - szPoint, 0, false);
                 var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);
 
                 result.SetVector(SizeProp, sz);
@@ -150,7 +150,7 @@ namespace ReactUnity.UGUI.Internal
 
             if (image != null)
             {
-                var sz = StylingUtils.GetPointValue(backgroundSize.Value, Size, Size, false);
+                var sz = backgroundSize.Value.GetPointValue(Size, Size, false);
 
                 image.ResolveImage(Context, sz, (sp) => {
                     if (image != Definition) return;
@@ -194,20 +194,20 @@ namespace ReactUnity.UGUI.Internal
                     }
                     else
                     {
-                        var yVal = StylingUtils.GetPointValue(val.Y, containerSize.y, containerSize.y);
+                        var yVal = val.Y.GetPointValue(containerSize.y, containerSize.y);
                         var xVal = ip ? containerSize.x : yVal * intinsicProportions;
                         return new Vector2(xVal, yVal);
                     }
                 }
                 else if (autoY)
                 {
-                    var xVal = StylingUtils.GetPointValue(val.X, containerSize.x, containerSize.x);
+                    var xVal = val.X.GetPointValue(containerSize.x, containerSize.x);
                     var yVal = ip ? containerSize.y : xVal / intinsicProportions;
                     return new Vector2(xVal, yVal);
                 }
                 else
                 {
-                    return StylingUtils.GetPointValue(val, containerSize, containerSize, false);
+                    return val.GetPointValue(containerSize, containerSize, false);
                 }
             }
             else

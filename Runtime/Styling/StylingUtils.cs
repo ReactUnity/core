@@ -7,38 +7,6 @@ namespace ReactUnity.Styling
 {
     internal static class StylingUtils
     {
-        public static float GetPointValue(YogaValue val, float fullSize, float defaultValue = float.NaN)
-        {
-            if (val.Unit == YogaUnit.Point) return val.Value;
-            if (val.Unit == YogaUnit.Percent) return fullSize * val.Value / 100f;
-            return defaultValue;
-        }
-
-        public static float GetRatioValue(YogaValue val, float fullSize, float defaultValue = float.NaN)
-        {
-            if (val.Unit == YogaUnit.Point) return val.Value / fullSize;
-            if (val.Unit == YogaUnit.Percent) return val.Value / 100f;
-            return defaultValue;
-        }
-
-        public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = false)
-        {
-            var yval = GetPointValue(val.Y, fullSize.y, defaultValue);
-            return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue), yInverted ? fullSize.y - yval : yval);
-        }
-
-        public static Vector2 GetPointValue(YogaValue2 val, Vector2 fullSize, Vector2 defaultValue = default, bool yInverted = false)
-        {
-            var yval = GetPointValue(val.Y, fullSize.y, defaultValue.y);
-            return new Vector2(GetPointValue(val.X, fullSize.x, defaultValue.x), yInverted ? fullSize.y - yval : yval);
-        }
-
-        public static Vector2 GetRatioValue(YogaValue2 val, Vector2 fullSize, float defaultValue = float.NaN, bool yInverted = false)
-        {
-            var yval = GetRatioValue(val.Y, fullSize.y, defaultValue);
-            return new Vector2(GetRatioValue(val.X, fullSize.x, defaultValue), yInverted ? 1 - yval : yval);
-        }
-
         public static IComputedValue CreateComputed(object value)
         {
             if (value is IComputedValue cv) return cv;

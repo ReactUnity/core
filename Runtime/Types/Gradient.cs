@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
 using UnityEngine;
@@ -110,7 +111,7 @@ namespace ReactUnity.Types
             var distance = CalculateLength(dimensions);
 
             var first = Keys[0];
-            float offset = StylingUtils.GetRatioValue(first.Offset, distance, 0);
+            float offset = first.Offset.GetRatioValue(distance, 0);
             float length = 1f;
 
             if (Repeating) length = 0;
@@ -120,7 +121,7 @@ namespace ReactUnity.Types
             {
                 var key = Keys[i];
 
-                var off = StylingUtils.GetRatioValue(key.Offset, distance, float.NaN);
+                var off = key.Offset.GetRatioValue(distance, float.NaN);
 
                 if (!float.IsNaN(off) && off > length)
                 {
@@ -192,7 +193,7 @@ namespace ReactUnity.Types
             {
                 var key = Keys[i];
 
-                var off = StylingUtils.GetRatioValue(key.Offset, width);
+                var off = key.Offset.GetRatioValue(width);
 
                 if (off > t) break;
 
@@ -212,7 +213,7 @@ namespace ReactUnity.Types
             for (int i = lastIndexWithOffset + 1; i < Keys.Count; i++)
             {
                 var key = Keys[i];
-                var off = StylingUtils.GetRatioValue(key.Offset, width);
+                var off = key.Offset.GetRatioValue(width);
                 if (!float.IsNaN(off))
                 {
                     nextIndexWithOffset = i;
@@ -313,7 +314,7 @@ namespace ReactUnity.Types
             base.ModifyMaterial(context, material, size);
 
             var calc = GetRamp(size);
-            material.SetVector("_at", StylingUtils.GetRatioValue(At, size, float.NaN, true));
+            material.SetVector("_at", At.GetRatioValue(size, float.NaN, true));
             material.SetFloat("_sizeHint", (int) SizeHint);
             material.SetFloat("_shape", (int) Shape);
             material.SetFloat("_radius", CalculateRadius(size) * Mathf.Max(1, calc.Length));
@@ -321,12 +322,12 @@ namespace ReactUnity.Types
 
         protected override float CalculateLength(Vector2 size)
         {
-            var at = StylingUtils.GetPointValue(At, size, float.NaN, true);
+            var at = At.GetPointValue(size, float.NaN, true);
 
             switch (SizeHint)
             {
                 case RadialGradientSizeHint.Custom:
-                    return StylingUtils.GetPointValue(Radius, size.x, 0);
+                    return Radius.GetPointValue(size.x, 0);
                 case RadialGradientSizeHint.FarthestSide:
                     return Mathf.Max(at.x, size.x - at.x, at.y, size.y - at.y);
                 case RadialGradientSizeHint.ClosestCorner:
@@ -342,12 +343,12 @@ namespace ReactUnity.Types
         protected float CalculateRadius(Vector2 size)
         {
             var aspect = size.x / size.y;
-            var at = StylingUtils.GetRatioValue(At, size, float.NaN, true);
+            var at = At.GetRatioValue(size, float.NaN, true);
 
             switch (SizeHint)
             {
                 case RadialGradientSizeHint.Custom:
-                    return StylingUtils.GetRatioValue(Radius, size.y, 0) / aspect;
+                    return Radius.GetRatioValue(size.y, 0) / aspect;
                 case RadialGradientSizeHint.FarthestSide:
                     return Mathf.Max(at.x, 1 - at.x, at.y / aspect, (1 - at.y) / aspect);
                 case RadialGradientSizeHint.ClosestCorner:
@@ -376,7 +377,7 @@ namespace ReactUnity.Types
         internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
             base.ModifyMaterial(context, material, size);
-            material.SetVector("_at", StylingUtils.GetRatioValue(At, size, float.NaN, true));
+            material.SetVector("_at", At.GetRatioValue(size, float.NaN, true));
             material.SetFloat("_from", From);
         }
 
