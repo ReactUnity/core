@@ -8,7 +8,7 @@ namespace ReactUnity.UIToolkit
         public float Height { get; private set; } = -1;
 
         protected string OriginalName { get; private set; }
-        protected override string DefaultName => OriginalName;
+        protected override string DefaultName => OriginalName ?? Element?.name;
         public HostComponent(VisualElement element, UIToolkitContext ctx) : base(element, ctx, "_root")
         {
             Width = Element.layout.width;
@@ -16,7 +16,7 @@ namespace ReactUnity.UIToolkit
             Context.MediaProvider.SetDimensions(Width, Height);
 
             element.RegisterCallback<GeometryChangedEvent>(OnResize);
-            OriginalName = Name;
+            OriginalName = element.name;
         }
 
         protected override void DestroySelf()

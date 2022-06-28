@@ -29,11 +29,6 @@ namespace ReactUnity.UIToolkit
         public T Element { get; protected set; }
         VisualElement IUIToolkitComponent.Element => Element;
         public virtual VisualElement TargetElement => Element;
-        public override string Name
-        {
-            get => Element.name;
-            set => Element.name = string.IsNullOrWhiteSpace(value) ? DefaultName : value;
-        }
 
         public override float ClientWidth => Element.layout.width;
         public override float ClientHeight => Element.layout.height;
@@ -46,7 +41,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = element;
             Element.userData = this;
-            Name = null;
+            RefreshName();
         }
 
         public UIToolkitComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
@@ -54,7 +49,7 @@ namespace ReactUnity.UIToolkit
             ClassList = new UITClassList(this);
             Element = new T();
             Element.userData = this;
-            Name = null;
+            RefreshName();
         }
 
         protected override void ApplyLayoutStylesSelf()
@@ -311,6 +306,11 @@ namespace ReactUnity.UIToolkit
             }
         }
 
+        protected override void ApplyName(string resolvedName)
+        {
+            Element.name = resolvedName;
+        }
+
         #endregion
 
         public override object GetComponent(Type type)
@@ -424,7 +424,7 @@ namespace ReactUnity.UIToolkit
         {
             private readonly IUIToolkitComponent<T> Component;
 
-            public UITClassList(IUIToolkitComponent<T> component) : base(component)
+            public UITClassList(UIToolkitComponent<T> component) : base(component)
             {
                 Component = component;
             }

@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI
                     Data["horizontal"] = value;
                     Data["vertical"] = !value;
                     Data["direction"] = value ? "horizontal" : "vertical";
-                    Name = Name;
+                    RefreshName();
                     UpdatePosition();
                 }
             }

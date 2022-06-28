@@ -121,6 +121,37 @@ namespace ReactUnity.Tests
             Assert.AreEqual("REACT_ROOT", Host.GameObject.name);
         }
 
+        [UGUITest(Script = @"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <customtag name={globals.name} id={globals.id} className={globals.className} />;
+            }
+        ")]
+        public IEnumerator GameObjectNamesShowIdOrClassNameIfMissing()
+        {
+            yield return null;
+            var go = Q("customtag").GameObject;
+            Assert.AreEqual("<customtag>", go.name);
+
+            Globals.Set("name", "Something name");
+            Assert.AreEqual("Something name", go.name);
+
+            Globals.Set("id", "myel");
+            Assert.AreEqual("Something name", go.name);
+
+            Globals.Set("name", null);
+            Assert.AreEqual("<customtag #myel>", go.name);
+
+            Globals.Set("className", "cl1 and cl2");
+            Assert.AreEqual("<customtag #myel>", go.name);
+
+            Globals.Set("id", null);
+            Assert.AreEqual("<customtag .cl1.and.cl2>", go.name);
+
+            Globals.Set("className", null);
+            Assert.AreEqual("<customtag>", go.name);
+        }
+
         [UGUITest]
         public IEnumerator ElementsAreRenderedInTheSameLayerAsHost()
         {

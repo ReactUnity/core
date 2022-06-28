@@ -2,9 +2,14 @@ using System;
 
 namespace ReactUnity.Helpers
 {
+    internal interface IClassChangeHandler
+    {
+        void OnClassChange();
+    }
+
     public class ClassList : WatchableSet<string>
     {
-        private readonly IReactComponent Component;
+        private readonly IClassChangeHandler Component;
 
         private string name;
         public string Name
@@ -25,7 +30,7 @@ namespace ReactUnity.Helpers
             }
         }
 
-        public ClassList(IReactComponent component)
+        internal ClassList(IClassChangeHandler component)
         {
             Component = component;
         }
@@ -33,13 +38,13 @@ namespace ReactUnity.Helpers
         internal override void OnAdd(string item)
         {
             name = null;
-            Component.MarkForStyleResolvingWithSiblings(true);
+            Component.OnClassChange();
         }
 
         internal override void OnRemove(string item)
         {
             name = null;
-            Component.MarkForStyleResolvingWithSiblings(true);
+            Component.OnClassChange();
         }
 
         internal override void OnBeforeChange()
@@ -49,7 +54,13 @@ namespace ReactUnity.Helpers
 
         internal override void OnAfterChange()
         {
-            Component.MarkForStyleResolvingWithSiblings(true);
+            Component.OnClassChange();
+        }
+
+        public override string ToString()
+        {
+            if (Count > 0) return "." + string.Join(".", this);
+            return "";
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ReactUnity.UGUI
         public float Height => RectTransform.rect.height;
 
         protected string OriginalName { get; private set; }
-        protected override string DefaultName => OriginalName;
+        protected override string DefaultName => OriginalName ?? GameObject.name;
 
         public ResponsiveElement ResponsiveElement { get; private set; }
 

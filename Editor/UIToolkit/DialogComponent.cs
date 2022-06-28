@@ -11,11 +11,7 @@ namespace ReactUnity.Editor.UIToolkit
 {
     public class DialogComponent : UIToolkitComponent<DialogElement>
     {
-        public override string Name
-        {
-            get => Element.Name;
-            set => Element.Name = value;
-        }
+        protected override string DefaultName => null;
 
         public override VisualElement TargetElement => Element.contentContainer;
 

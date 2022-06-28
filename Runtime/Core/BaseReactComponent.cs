@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace ReactUnity
 {
-    public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent where ContextType : ReactContext
+    public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent, IClassChangeHandler where ContextType : ReactContext
     {
         public ContextType Context { get; }
         ReactContext IReactComponent.Context => Context;
@@ -36,7 +36,27 @@ namespace ReactUnity
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
-        protected virtual string DefaultName => $"<{Tag}>";
+
+        protected virtual string DefaultName
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    return $"<{Tag} #{id}>";
+                }
+                else if (ClassList.Count > 0)
+                {
+                    var classString = ClassList.ToString();
+                    if (classString.Length > 36) return $"<{Tag} {classString.Substring(0, 33)}...>";
+                    return $"<{Tag} {classString}>";
+                }
+
+                return $"<{Tag}>";
+            }
+        }
+
+        public string ResolvedName => string.IsNullOrWhiteSpace(name) ? DefaultName : name;
 
         public string ClassName
         {
@@ -53,9 +73,20 @@ namespace ReactUnity
             {
                 id = value?.ToString();
                 MarkForStyleResolvingWithSiblings(true);
+                RefreshName();
             }
         }
-        public abstract string Name { get; set; }
+
+        private string name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                RefreshName();
+            }
+        }
 
         private int refId = -1;
         public int RefId
@@ -209,6 +240,12 @@ namespace ReactUnity
                 Context.RemoveStyle(InlineStylesheet);
                 InlineStylesheet = null;
             }
+        }
+
+        public void OnClassChange()
+        {
+            MarkForStyleResolvingWithSiblings(true);
+            RefreshName();
         }
 
         #region Setters
@@ -470,6 +507,10 @@ namespace ReactUnity
         {
             MarkForStyleApply(hasLayout);
         }
+
+        protected void RefreshName() => ApplyName(ResolvedName);
+
+        protected abstract void ApplyName(string resolvedName);
 
         #endregion
 

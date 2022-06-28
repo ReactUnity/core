@@ -35,18 +35,6 @@ namespace ReactUnity.UGUI
 
         public RectTransform Container { get; protected set; }
 
-        private string name;
-        public override string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                if (!string.IsNullOrWhiteSpace(value)) GameObject.name = value;
-                else if (!string.IsNullOrWhiteSpace(DefaultName)) GameObject.name = DefaultName;
-            }
-        }
-
         public override float ClientWidth => RectTransform.rect.width;
         public override float ClientHeight => RectTransform.rect.height;
 
@@ -105,7 +93,7 @@ namespace ReactUnity.UGUI
             GameObject = existing.gameObject;
             RectTransform = existing;
             Container = existing;
-            Name = null;
+            RefreshName();
         }
 
         protected override void DestroySelf()
@@ -152,6 +140,11 @@ namespace ReactUnity.UGUI
                     base.SetProperty(propertyName, value);
                     return;
             }
+        }
+
+        protected override void ApplyName(string resolvedName)
+        {
+            GameObject.name = resolvedName;
         }
 
         #endregion
