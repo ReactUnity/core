@@ -16,7 +16,7 @@ namespace ReactUnity.Scripting
 {
     public class QuickJSEngine : IJavaScriptEngine
     {
-        public string Key { get; } = "QuickJS";
+        public string Key { get; } = "quickjs";
         public object NativeEngine => Runtime;
         public EngineCapabilities Capabilities { get; } = EngineCapabilities.None
 #if !UNITY_EDITOR && UNITY_WEBGL

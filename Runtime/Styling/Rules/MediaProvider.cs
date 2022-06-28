@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Rules
@@ -72,28 +73,57 @@ namespace ReactUnity.Styling.Rules
             return MediaType == type || type == "all" || types.Contains(type);
         }
 
+        public void InitDefaults()
+        {
+            values["platform"] = Application.platform.ToString().ToLowerInvariant();
+            values["device-type"] = SystemInfo.deviceType.ToString().ToLowerInvariant();
+            values["system"] = SystemInfo.operatingSystemFamily.ToString().ToLowerInvariant();
+            values["language"] = Application.systemLanguage.ToString().ToLowerInvariant();
+            values["install-mode"] = Application.installMode.ToString().ToLowerInvariant();
+
+            values["yoga"] = YogaHelpers.IsLegacyYoga ? "legacy" : "newest";
+
+            if (Application.isConsolePlatform) types.Add("console");
+            if (Application.isMobilePlatform) types.Add("console");
+            if (Application.isBatchMode) types.Add("batch");
+            if (Application.isPlaying) types.Add("playing");
+            if (Application.isEditor) types.Add("editing");
+
+            values["genuine"] = !Application.genuineCheckAvailable ? "unknown" :
+                Application.genuine ? "yes" : "no";
+        }
+
         public void RecalculateDefaults()
         {
             var updated = false;
 
 
-            float oldVal = GetNumericalValue("screen-width");
+            float oldVal = GetNumericalValue("window-width");
             float newVal = Screen.width;
 
             if (oldVal != newVal)
             {
-                numbers["screen-width"] = newVal;
+                numbers["window-width"] = newVal;
                 updated = true;
             }
 
 
 
-            oldVal = GetNumericalValue("screen-height");
+            oldVal = GetNumericalValue("window-height");
             newVal = Screen.height;
 
             if (oldVal != newVal)
             {
-                numbers["screen-height"] = newVal;
+                numbers["window-height"] = newVal;
+                updated = true;
+            }
+
+            oldVal = GetNumericalValue("window-aspect-ratio");
+            newVal = (float) Screen.width / Screen.height;
+
+            if (oldVal != newVal)
+            {
+                numbers["window-aspect-ratio"] = newVal;
                 updated = true;
             }
 
@@ -108,23 +138,32 @@ namespace ReactUnity.Styling.Rules
             }
 
 
-            oldVal = GetNumericalValue("resolution-width");
+            oldVal = GetNumericalValue("screen-width");
             newVal = Screen.currentResolution.width;
 
             if (oldVal != newVal)
             {
-                numbers["resolution-width"] = newVal;
+                numbers["screen-width"] = newVal;
                 updated = true;
             }
 
 
 
-            oldVal = GetNumericalValue("resolution-height");
+            oldVal = GetNumericalValue("screen-height");
             newVal = Screen.currentResolution.height;
 
             if (oldVal != newVal)
             {
-                numbers["resolution-height"] = newVal;
+                numbers["screen-height"] = newVal;
+                updated = true;
+            }
+
+            oldVal = GetNumericalValue("screen-aspect-ratio");
+            newVal = (float) Screen.currentResolution.width / Screen.currentResolution.height;
+
+            if (oldVal != newVal)
+            {
+                numbers["screen-aspect-ratio"] = newVal;
                 updated = true;
             }
 
@@ -149,12 +188,23 @@ namespace ReactUnity.Styling.Rules
             }
 
 
-            var oldBool = GetValue("full-screen") != null;
+            oldVal = GetNumericalValue("target-fps");
+            newVal = Application.targetFrameRate;
+
+            if (oldVal != newVal)
+            {
+                numbers["target-fps"] = newVal;
+                updated = true;
+            }
+
+
+            var oldBool = types.Contains("full-screen");
             var newBool = Screen.fullScreen;
 
             if (oldBool != newBool)
             {
-                values["full-screen"] = newBool ? "yes" : null;
+                if (newBool) types.Add("full-screen");
+                else types.Remove("full-screen");
                 updated = true;
             }
 
@@ -180,6 +230,16 @@ namespace ReactUnity.Styling.Rules
                 updated = true;
             }
 
+
+            oldBool = types.Contains("focused");
+            newBool = Application.isFocused;
+
+            if (oldBool != newBool)
+            {
+                if (newBool) types.Add("focused");
+                else types.Remove("focused");
+                updated = true;
+            }
 
             if (updated) OnUpdate?.Invoke(this);
         }
