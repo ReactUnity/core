@@ -96,6 +96,18 @@ namespace ReactUnity.Tests
             Assert.AreEqual(false, cmp.activeSelf);
         }
 
+        [UGUITest(Script = @"
+            function App() {
+                return <image active={true} />;
+            }
+        ")]
+        public IEnumerator ActivePropertyShouldNotCrashAtInitialization()
+        {
+            yield return null;
+            var cmp = (Q("image") as UGUI.ImageComponent).GameObject;
+            Assert.AreEqual(true, cmp.activeSelf);
+        }
+
         [UGUITest]
         public IEnumerator HostNameCanBeChanged()
         {

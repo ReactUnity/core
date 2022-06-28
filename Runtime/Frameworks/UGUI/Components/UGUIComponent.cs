@@ -400,6 +400,7 @@ namespace ReactUnity.UGUI
 
         private void SetZIndex()
         {
+            if (ComputedStyle == null) return;
             var z = ComputedStyle.zIndex;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
