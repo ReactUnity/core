@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 27/06/2022 23:11:23
+// Generated 29/06/2022 01:19:50
 //
 /* eslint-disable */
 
@@ -31,6 +31,7 @@ export declare namespace ReactUnity {
     IsPseudoElement: boolean;
     Tag: string;
     TextContent: string;
+    ResolvedName: string;
     ClassName: string;
     ClassList: ReactUnity.Helpers.ClassList;
     Id: string;
@@ -52,6 +53,7 @@ export declare namespace ReactUnity {
     MarkForStyleResolving(recursive: boolean): void;
     Remove(): void;
     Destroy(recursive?: boolean): void;
+    OnClassChange(): void;
     SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
     SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
     AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -1201,7 +1203,6 @@ export declare namespace ReactUnity {
     export namespace UIToolkit {
       export class DialogComponent {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag?: string);
-        Name: string;
         TargetElement: UnityEngine.UIElements.VisualElement;
         Element: ReactUnity.Editor.UIToolkit.DialogElement;
         ClientWidth: number;
@@ -1223,9 +1224,11 @@ export declare namespace ReactUnity {
         IsPseudoElement: boolean;
         Tag: string;
         TextContent: string;
+        ResolvedName: string;
         ClassName: string;
         ClassList: ReactUnity.Helpers.ClassList;
         Id: string;
+        Name: string;
         RefId: number;
         IsContainer: boolean;
         Children: ReactUnity.IReactComponent[];
@@ -1251,6 +1254,7 @@ export declare namespace ReactUnity {
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
         Destroy(recursive?: boolean): void;
+        OnClassChange(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
         FireEvent(eventName: string, arg: any): void;
@@ -1433,7 +1437,6 @@ export declare namespace ReactUnity {
         Height: number;
         Element: UnityEngine.UIElements.VisualElement;
         TargetElement: UnityEngine.UIElements.VisualElement;
-        Name: string;
         ClientWidth: number;
         ClientHeight: number;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -1453,9 +1456,11 @@ export declare namespace ReactUnity {
         IsPseudoElement: boolean;
         Tag: string;
         TextContent: string;
+        ResolvedName: string;
         ClassName: string;
         ClassList: ReactUnity.Helpers.ClassList;
         Id: string;
+        Name: string;
         RefId: number;
         IsContainer: boolean;
         Children: ReactUnity.IReactComponent[];
@@ -1480,6 +1485,7 @@ export declare namespace ReactUnity {
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
         Destroy(recursive?: boolean): void;
+        OnClassChange(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
         FireEvent(eventName: string, arg: any): void;
@@ -1511,7 +1517,6 @@ export declare namespace ReactUnity {
         Value: System.Enum;
         Element: T;
         TargetElement: UnityEngine.UIElements.VisualElement;
-        Name: string;
         ClientWidth: number;
         ClientHeight: number;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -1531,9 +1536,11 @@ export declare namespace ReactUnity {
         IsPseudoElement: boolean;
         Tag: string;
         TextContent: string;
+        ResolvedName: string;
         ClassName: string;
         ClassList: ReactUnity.Helpers.ClassList;
         Id: string;
+        Name: string;
         RefId: number;
         IsContainer: boolean;
         Children: ReactUnity.IReactComponent[];
@@ -1561,6 +1568,7 @@ export declare namespace ReactUnity {
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
         Destroy(recursive?: boolean): void;
+        OnClassChange(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
         FireEvent(eventName: string, arg: any): void;
@@ -1593,7 +1601,6 @@ export declare namespace ReactUnity {
         Value: UnityEngine.Object;
         Element: any; // UnityEditor.UIElements.ObjectField
         TargetElement: UnityEngine.UIElements.VisualElement;
-        Name: string;
         ClientWidth: number;
         ClientHeight: number;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -1613,9 +1620,11 @@ export declare namespace ReactUnity {
         IsPseudoElement: boolean;
         Tag: string;
         TextContent: string;
+        ResolvedName: string;
         ClassName: string;
         ClassList: ReactUnity.Helpers.ClassList;
         Id: string;
+        Name: string;
         RefId: number;
         IsContainer: boolean;
         Children: ReactUnity.IReactComponent[];
@@ -1643,6 +1652,7 @@ export declare namespace ReactUnity {
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
         Destroy(recursive?: boolean): void;
+        OnClassChange(): void;
         SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
         FireEvent(eventName: string, arg: any): void;
@@ -1777,10 +1787,10 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class ClassList {
-      constructor(component: ReactUnity.IReactComponent);
       Name: string;
       Count: number;
       IsReadOnly: boolean;
+      ToString(): string;
       GetArray(): string[];
       Add(item: string): boolean;
       Toggle(item: string): boolean;
@@ -1808,7 +1818,6 @@ export declare namespace ReactUnity {
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
-      ToString(): string;
     }
     export class CursorAPI {
       constructor(context: ReactUnity.ReactContext);
@@ -2160,6 +2169,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class YogaHelpers {
+      static IsLegacyYoga: boolean;
       static HasValue(val: Facebook.Yoga.YogaValue): boolean;
       static IfPoint(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
       static IfPercent(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
@@ -4760,6 +4770,7 @@ export declare namespace ReactUnity {
         MediaType: string;
         static CreateMediaProvider(type: string, framework: string, isEditor: boolean): ReactUnity.Styling.Rules.DefaultMediaProvider;
         HasType(type: string): boolean;
+        InitDefaults(): void;
         RecalculateDefaults(): void;
         GetNumericalValue(property: string): number;
         GetValue(property: string): string;
@@ -5652,7 +5663,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -5674,9 +5684,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -5702,6 +5714,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5740,7 +5753,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -5762,9 +5774,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -5788,6 +5802,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5828,7 +5843,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -5850,9 +5864,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -5876,6 +5892,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5914,7 +5931,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -5936,9 +5952,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -5963,6 +5981,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -5999,7 +6018,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6021,9 +6039,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6047,6 +6067,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6086,7 +6107,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6108,9 +6128,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6134,6 +6156,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6176,7 +6199,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6198,9 +6220,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6227,6 +6251,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6266,7 +6291,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6288,9 +6312,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6314,6 +6340,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6359,7 +6386,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6381,9 +6407,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6410,6 +6438,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6446,7 +6475,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6468,9 +6496,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6495,6 +6525,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6535,7 +6566,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6557,9 +6587,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6583,6 +6615,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6621,7 +6654,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6643,9 +6675,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6670,6 +6704,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -6706,7 +6741,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6728,9 +6762,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6754,6 +6790,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6793,7 +6830,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6815,9 +6851,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6841,6 +6879,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6881,7 +6920,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6903,9 +6941,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -6929,6 +6969,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -6968,7 +7009,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -6990,9 +7030,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7017,6 +7059,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7052,7 +7095,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7074,9 +7116,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7101,6 +7145,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
       SetData(propertyName: string, value: any): void;
@@ -7144,7 +7189,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7166,9 +7210,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7190,6 +7236,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7232,7 +7279,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7254,9 +7300,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7280,6 +7328,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7319,7 +7368,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7341,9 +7389,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7367,6 +7417,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7411,7 +7462,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7433,9 +7483,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7461,6 +7513,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7504,7 +7557,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7526,9 +7578,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7554,6 +7608,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7595,7 +7650,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7617,9 +7671,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7645,6 +7701,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7680,7 +7737,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7702,9 +7758,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7728,6 +7786,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -7768,7 +7827,6 @@ export declare namespace ReactUnity {
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
       Container: UnityEngine.RectTransform;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       EventViewport: UnityEngine.RectTransform;
@@ -7790,9 +7848,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -7817,6 +7877,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -11638,7 +11699,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
       Element: UnityEngine.UIElements.Button;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -11658,9 +11718,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -11685,6 +11747,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -11717,7 +11780,6 @@ export declare namespace ReactUnity {
       Value: TValueType;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -11737,9 +11799,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -11767,6 +11831,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -11801,7 +11866,6 @@ export declare namespace ReactUnity {
       Value: string;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -11821,9 +11885,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -11852,6 +11918,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -11887,7 +11954,6 @@ export declare namespace ReactUnity {
       Value: string;
       Element: UnityEngine.UIElements.TextField;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -11907,9 +11973,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -11939,6 +12007,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -11968,7 +12037,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -11988,9 +12056,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12014,6 +12084,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12043,7 +12114,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Element: T;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12063,9 +12133,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12089,6 +12161,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12120,7 +12193,6 @@ export declare namespace ReactUnity {
       Height: number;
       Element: UnityEngine.UIElements.VisualElement;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12140,9 +12212,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12166,6 +12240,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12195,7 +12270,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Element: UnityEngine.UIElements.Image;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12215,9 +12289,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12241,6 +12317,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12270,7 +12347,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
       Element: UnityEngine.UIElements.IMGUIContainer;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12290,9 +12366,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12318,6 +12396,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12350,7 +12429,6 @@ export declare namespace ReactUnity {
       Value: UnityEngine.Vector2;
       Element: UnityEngine.UIElements.MinMaxSlider;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12370,9 +12448,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12400,6 +12480,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12432,7 +12513,6 @@ export declare namespace ReactUnity {
       Value: TValueType;
       Element: S;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12452,9 +12532,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12482,6 +12564,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12515,7 +12598,6 @@ export declare namespace ReactUnity {
       Source: any; // System.Object
       Element: ReactUnity.UIToolkit.SvgElement;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12535,9 +12617,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12561,6 +12645,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12591,7 +12676,6 @@ export declare namespace ReactUnity {
       Content: string;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12611,9 +12695,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12638,6 +12724,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12671,7 +12758,6 @@ export declare namespace ReactUnity {
       Value: boolean;
       Element: T;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12691,9 +12777,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12721,6 +12809,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12754,7 +12843,6 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string, isContainer?: boolean);
       Element: T;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12774,9 +12862,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12800,6 +12890,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -12831,7 +12922,6 @@ export declare namespace ReactUnity {
       Value: TValueType;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
-      Name: string;
       ClientWidth: number;
       ClientHeight: number;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
@@ -12851,9 +12941,11 @@ export declare namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       TextContent: string;
+      ResolvedName: string;
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       Id: string;
+      Name: string;
       RefId: number;
       IsContainer: boolean;
       Children: ReactUnity.IReactComponent[];
@@ -12881,6 +12973,7 @@ export declare namespace ReactUnity {
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
+      OnClassChange(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): void;
       FireEvent(eventName: string, arg: any): void;
@@ -13138,7 +13231,7 @@ export declare namespace ReactUnity {
       CursorSet: ReactUnity.Styling.CursorSet;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: (() => void)[];
-      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.UIToolkit.IUIToolkitComponent<UnityEngine.UIElements.VisualElement>);
+      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => any);
       static textCreator: ((arg1: string, arg2: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
       static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.IReactComponent]]
       Initialize(): void;
