@@ -34,9 +34,11 @@ namespace ReactUnity.Scripting
         public ScriptRuntime Runtime { get; private set; }
         public QuickJS.ScriptContext MainContext { get; private set; }
         public ScriptValue Global { get; private set; }
-        public ScriptFunction ObjectKeys { get; private set; }
         public ITypeDB TypeDB { get; private set; }
         public ObjectCache ObjectCache { get; private set; }
+
+        public ScriptFunction ObjectKeys { get; private set; }
+        public QuickJSApiBridge ApiBridge { get; private set; }
 
         private bool Initialized;
 
@@ -52,6 +54,8 @@ namespace ReactUnity.Scripting
 
             var logger = new QuickJSLogger();
 
+            ApiBridge = new QuickJSApiBridge();
+
             Runtime = ScriptEngine.CreateRuntime(context?.IsEditorContext ?? false);
             Runtime.AddModuleResolvers();
             Runtime.OnInitialized += Runtime_OnInitialized;
@@ -66,7 +70,7 @@ namespace ReactUnity.Scripting
                 debugServerPort = 9222,
                 byteBufferAllocator = new QuickJS.IO.ByteBufferPooledAllocator(),
                 pathResolver = new PathResolver(),
-                apiBridge = new QuickJSApiBridge(),
+                apiBridge = ApiBridge,
             });
         }
 
@@ -199,14 +203,18 @@ namespace ReactUnity.Scripting
         {
             Global?.Dispose();
             Global = null;
+
+            ApiBridge?.Dispose();
+            ApiBridge = null;
             ObjectKeys?.Dispose();
             ObjectKeys = null;
+
             TypeDB = null;
             MainContext = null;
             ObjectCache = null;
             OnInitialize = null;
 
-            Runtime.Shutdown();
+            Runtime?.Shutdown();
             Runtime = null;
         }
 

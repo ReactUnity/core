@@ -13,9 +13,11 @@ using QScriptContext = QuickJS.ScriptContext;
 
 namespace ReactUnity.Scripting
 {
-    public class QuickJSApiBridge : IJSApiBridge
+    public class QuickJSApiBridge : IJSApiBridge, IDisposable
     {
         public const string KeyForCSharpIdentity = "__csharp_host_identity__";
+
+        private ScriptFunction createDictionaryProxy;
 
         public JSPayloadHeader GetPayloadHeader(QScriptContext context, JSValue val)
         {
@@ -72,47 +74,63 @@ namespace ReactUnity.Scripting
             return val;
         }
 
-        private static unsafe JSValue CreateDictionaryProxy(QScriptContext _context, JSValue target)
+        private JSValue CreateDictionaryProxy(QScriptContext context, JSValue target)
+        {
+            var creator = createDictionaryProxy ??
+                (createDictionaryProxy = CreateDictionaryProxyCreator(context));
+
+            var ctx = (JSContext) context;
+
+            var proxy = creator.Invoke<ScriptValue>(target);
+            var res = JSApi.JS_DupValue(ctx, proxy);
+            proxy.Dispose();
+            JSApi.JS_FreeValue(ctx, target);
+            return res;
+        }
+
+        private static unsafe ScriptFunction CreateDictionaryProxyCreator(QScriptContext _context)
         {
             var ctx = (JSContext) _context;
 
-            var createDictionaryProxy = _context.EvalSource<ScriptFunction>(@"
-function createDictionaryProxy (targetProxy, contains, getter, setter, remover, keys) {
-    return new Proxy(targetProxy, {
-        get(target, key, receiver) {
-            if(key === '" + KeyForCSharpIdentity + @"') return target;
-            if(typeof key === 'string' && contains(target, key)) return getter(target, key);
-            var res = target[key];
-            return res;
-        },
-        set(target, key, value) {
-            if(typeof key === 'string') setter(target, key, value);
-            else target[key] = value;
-            return true;
-        },
-        has(target, key) {
-            return contains(target, key);
-        },
-        deleteProperty(target, key) {
-            remover(target, key);
-            return true;
-        },
-        ownKeys(target) {
-            return keys(target);
-        },
-        getOwnPropertyDescriptor(target, key) {
-            if(typeof key === 'string' && contains(target, key)) {
-                return {
-                  value: getter(target, key),
-                  enumerable: true,
-                  configurable: true
-                };
-            }
-            return undefined;
-        },
-    });
+            var createDictionaryProxyCreator = _context.EvalSource<ScriptFunction>(@"
+function createDictionaryProxyCreator (contains, getter, setter, remover, keys) {
+    return function createDictionaryProxy(targetProxy) {
+        return new Proxy(targetProxy, {
+            get(target, key, receiver) {
+                if(key === '" + KeyForCSharpIdentity + @"') return target;
+                if(typeof key === 'string' && contains(target, key)) return getter(target, key);
+                var res = target[key];
+                return res;
+            },
+            set(target, key, value) {
+                if(typeof key === 'string') setter(target, key, value);
+                else target[key] = value;
+                return true;
+            },
+            has(target, key) {
+                return contains(target, key);
+            },
+            deleteProperty(target, key) {
+                remover(target, key);
+                return true;
+            },
+            ownKeys(target) {
+                return keys(target);
+            },
+            getOwnPropertyDescriptor(target, key) {
+                if(typeof key === 'string' && contains(target, key)) {
+                    return {
+                      value: getter(target, key),
+                      enumerable: true,
+                      configurable: true
+                    };
+                }
+                return undefined;
+            },
+        });
+    };
 }
-createDictionaryProxy;
+createDictionaryProxyCreator;
 ", "ReactUnity/quickjs/createDictionaryProxy");
 
             var contains = new Func<IDictionary<string, object>, string, bool>(
@@ -147,7 +165,6 @@ createDictionaryProxy;
                 });
 
             var prs = new object[] {
-                target,
                 contains,
                 getter,
                 setter,
@@ -155,13 +172,17 @@ createDictionaryProxy;
                 keys,
             };
 
-            var _proxy = createDictionaryProxy.Invoke<ScriptValue>(prs);
+            var createDictionaryProxy = createDictionaryProxyCreator.Invoke<ScriptFunction>(prs);
 
-            var res = JSApi.JS_DupValue(ctx, _proxy);
-            _proxy.Dispose();
-            createDictionaryProxy.Dispose();
-            JSApi.JS_FreeValue(ctx, target);
-            return res;
+            createDictionaryProxyCreator.Dispose();
+
+            return createDictionaryProxy;
+        }
+
+        public void Dispose()
+        {
+            createDictionaryProxy?.Dispose();
+            createDictionaryProxy = null;
         }
     }
 }
