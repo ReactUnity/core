@@ -992,6 +992,11 @@
             Gets the total physical memory size in bytes.
             </summary>
         </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.TotalAvailableSize">
+            <summary>
+            Gets the total available memory size in bytes.
+            </summary>
+        </member>
         <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.UsedHeapSize">
             <summary>
             Gets the used heap size in bytes.
@@ -1000,6 +1005,11 @@
         <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.HeapSizeLimit">
             <summary>
             Gets the heap size limit in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.TotalExternalSize">
+            <summary>
+            Gets the total external memory size in bytes.
             </summary>
         </member>
         <member name="T:Microsoft.ClearScript.V8.V8Script">
@@ -1734,7 +1744,7 @@
             <c><see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</see></c>
             objects. This conversion is bidirectional and lossy. A <c>DateTime</c> object
             constructed from a JavaScript <c>Date</c> object always represents a Coordinated
-            Universal Timestamp (UTC) and has its <c><see cref="P:System.DateTime.Kind"/></c> property set to
+            Universal Time (UTC) and has its <c><see cref="P:System.DateTime.Kind"/></c> property set to
             <c><see cref="F:System.DateTimeKind.Utc"/></c>.
             </summary>
         </member>
@@ -1774,7 +1784,10 @@
         <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableValueTaskPromiseConversion">
             <summary>
             Specifies that the script engine is to perform automatic conversion from
-            .NET <c>ValueTask</c> and <c>ValueTask&lt;TResult&gt;</c> structures to JavaScript
+            .NET
+            <c><see href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.valuetask">ValueTask</see></c> and
+            <c><see href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.valuetask-1">ValueTask&lt;TResult&gt;</see></c>
+            structures to JavaScript
             <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promises</see>.
             This conversion is unidirectional and lossy. This option is ignored if
             <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion"/></c> is not specified.
