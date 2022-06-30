@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -272,8 +272,6 @@ GameObject:
   - component: {fileID: 420524932}
   - component: {fileID: 420524926}
   - component: {fileID: 420524933}
-  - component: {fileID: 420524935}
-  - component: {fileID: 420524934}
   m_Layer: 5
   m_Name: ReactCanvas
   m_TagString: Untagged
@@ -288,7 +286,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420524925}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
@@ -836,14 +834,13 @@ MonoBehaviour:
       symbols[i])) {\n          to[symbols[i]] = from[symbols[i]];\n        }\n     
       }\n    }\n  }\n\n  return to;\n};\n\n/***/ }),\n\n/***/ 742:\n/***/ ((module,
       __unused_webpack_exports, __webpack_require__) => {\n\n/* module decorator
-      */ module = __webpack_require__.nmd(module);\n/** @license React v0.26.2\n
-      * react-reconciler.production.min.js\n *\n * Copyright (c) Facebook, Inc. and
+      */ module = __webpack_require__.nmd(module);\n/** @license React v0.26.2\n*
+      react-reconciler.production.min.js\n *\n * Copyright (c) Facebook, Inc. and
       its affiliates.\n *\n * This source code is licensed under the MIT license
-      found in the\n * LICENSE file in the root directory of this source tree.\n
-      */\nmodule.exports = function $$$reconciler($$$hostConfig) {\n  var exports
-      = {};\n  'use strict';\n\n  var aa = __webpack_require__(243),\n      ba =
-      __webpack_require__(28),\n      m = __webpack_require__(697);\n\n  function
-      q(a) {\n    for (var b = \"https://reactjs.org/docs/error-decoder.html?invariant=\"
+      found in the\n * LICENSE file in the root directory of this source tree.\n*/\nmodule.exports
+      = function $$$reconciler($$$hostConfig) {\n  var exports = {};\n  'use strict';\n\n 
+      var aa = __webpack_require__(243),\n      ba = __webpack_require__(28),\n     
+      m = __webpack_require__(697);\n\n  function q(a) {\n    for (var b = \"https://reactjs.org/docs/error-decoder.html?invariant=\"
       + a, c = 1; c < arguments.length; c++) {\n      b += \"&args[]=\" + encodeURIComponent(arguments[c]);\n   
       }\n\n    return \"Minified React error #\" + a + \"; visit \" + b + \" for
       the full message or use the non-minified dev environment for full errors and
@@ -2631,14 +2628,14 @@ MonoBehaviour:
       }),\n\n/***/ 502:\n/***/ ((module, __unused_webpack_exports, __webpack_require__)
       => {\n\n\"use strict\";\n\n\nif (true) {\n  module.exports = __webpack_require__(742);\n}
       else {}\n\n/***/ }),\n\n/***/ 8:\n/***/ ((__unused_webpack_module, exports,
-      __webpack_require__) => {\n\n\"use strict\";\n/** @license React v17.0.2\n
-      * react-jsx-runtime.production.min.js\n *\n * Copyright (c) Facebook, Inc.
-      and its affiliates.\n *\n * This source code is licensed under the MIT license
-      found in the\n * LICENSE file in the root directory of this source tree.\n
-      */\n\n\n__webpack_require__(243);\n\nvar f = __webpack_require__(28),\n   
-      g = 60103;\n\nexports.Fragment = 60107;\n\nif (\"function\" === typeof Symbol
-      && Symbol[\"for\"]) {\n  var h = Symbol[\"for\"];\n  g = h(\"react.element\");\n 
-      exports.Fragment = h(\"react.fragment\");\n}\n\nvar m = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,\n   
+      __webpack_require__) => {\n\n\"use strict\";\n/** @license React v17.0.2\n*
+      react-jsx-runtime.production.min.js\n *\n * Copyright (c) Facebook, Inc. and
+      its affiliates.\n *\n * This source code is licensed under the MIT license
+      found in the\n * LICENSE file in the root directory of this source tree.\n*/\n\n\n__webpack_require__(243);\n\nvar
+      f = __webpack_require__(28),\n    g = 60103;\n\nexports.Fragment = 60107;\n\nif
+      (\"function\" === typeof Symbol && Symbol[\"for\"]) {\n  var h = Symbol[\"for\"];\n 
+      g = h(\"react.element\");\n  exports.Fragment = h(\"react.fragment\");\n}\n\nvar
+      m = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,\n   
       n = Object.prototype.hasOwnProperty,\n    p = {\n  key: !0,\n  ref: !0,\n 
       __self: !0,\n  __source: !0\n};\n\nfunction q(c, a, k) {\n  var b,\n      d
       = {},\n      e = null,\n      l = null;\n  void 0 !== k && (e = \"\" + k);\n 
@@ -2648,9 +2645,9 @@ MonoBehaviour:
       0 === d[b] && (d[b] = a[b]);\n  }\n  return {\n    $$typeof: g,\n    type:
       c,\n    key: e,\n    ref: l,\n    props: d,\n    _owner: m.current\n  };\n}\n\nexports.jsx
       = q;\nexports.jsxs = q;\n\n/***/ }),\n\n/***/ 723:\n/***/ ((__unused_webpack_module,
-      exports, __webpack_require__) => {\n\n\"use strict\";\n/** @license React v17.0.2\n
-      * react.production.min.js\n *\n * Copyright (c) Facebook, Inc. and its affiliates.\n
-      *\n * This source code is licensed under the MIT license found in the\n * LICENSE
+      exports, __webpack_require__) => {\n\n\"use strict\";\n/** @license React v17.0.2\n*
+      react.production.min.js\n *\n * Copyright (c) Facebook, Inc. and its affiliates.\n*\n*
+      This source code is licensed under the MIT license found in the\n * LICENSE
       file in the root directory of this source tree.\n */\n\n\nvar l = __webpack_require__(243),\n   
       n = 60103,\n    p = 60106;\n\nexports.Fragment = 60107;\nexports.StrictMode
       = 60108;\nexports.Profiler = 60114;\nvar q = 60109,\n    r = 60110,\n    t
@@ -2768,28 +2765,28 @@ MonoBehaviour:
       else {}\n\n/***/ }),\n\n/***/ 76:\n/***/ ((module, __unused_webpack_exports,
       __webpack_require__) => {\n\n\"use strict\";\n\n\nif (true) {\n  module.exports
       = __webpack_require__(8);\n} else {}\n\n/***/ }),\n\n/***/ 778:\n/***/ ((__unused_webpack_module,
-      exports) => {\n\n\"use strict\";\n/** @license React v0.20.2\n * scheduler.production.min.js\n
-      *\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source
-      code is licensed under the MIT license found in the\n * LICENSE file in the
-      root directory of this source tree.\n */\n\n\nvar _f, g, h, k;\n\nif (\"object\"
-      === typeof performance && \"function\" === typeof performance.now) {\n  var
-      l = performance;\n\n  exports.unstable_now = function () {\n    return l.now();\n 
-      };\n} else {\n  var p = Date,\n      q = p.now();\n\n  exports.unstable_now
-      = function () {\n    return p.now() - q;\n  };\n}\n\nif (\"undefined\" ===
-      typeof window || \"function\" !== typeof MessageChannel) {\n  var t = null,\n     
-      u = null,\n      w = function w() {\n    if (null !== t) try {\n      var a
-      = exports.unstable_now();\n      t(!0, a);\n      t = null;\n    } catch (b)
-      {\n      throw setTimeout(w, 0), b;\n    }\n  };\n\n  _f = function f(a) {\n   
-      null !== t ? setTimeout(_f, 0, a) : (t = a, setTimeout(w, 0));\n  };\n\n  g
-      = function g(a, b) {\n    u = setTimeout(a, b);\n  };\n\n  h = function h()
-      {\n    clearTimeout(u);\n  };\n\n  exports.unstable_shouldYield = function
-      () {\n    return !1;\n  };\n\n  k = exports.unstable_forceFrameRate = function
-      () {};\n} else {\n  var x = window.setTimeout,\n      y = window.clearTimeout;\n\n 
-      if (\"undefined\" !== typeof console) {\n    var z = window.cancelAnimationFrame;\n   
-      \"function\" !== typeof window.requestAnimationFrame && console.error(\"This
-      browser doesn't support requestAnimationFrame. Make sure that you load a polyfill
-      in older browsers. https://reactjs.org/link/react-polyfills\");\n    \"function\"
-      !== typeof z && console.error(\"This browser doesn't support cancelAnimationFrame.
+      exports) => {\n\n\"use strict\";\n/** @license React v0.20.2\n * scheduler.production.min.js\n*\n*
+      Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is
+      licensed under the MIT license found in the\n * LICENSE file in the root directory
+      of this source tree.\n */\n\n\nvar _f, g, h, k;\n\nif (\"object\" === typeof
+      performance && \"function\" === typeof performance.now) {\n  var l = performance;\n\n 
+      exports.unstable_now = function () {\n    return l.now();\n  };\n} else {\n 
+      var p = Date,\n      q = p.now();\n\n  exports.unstable_now = function () {\n   
+      return p.now() - q;\n  };\n}\n\nif (\"undefined\" === typeof window || \"function\"
+      !== typeof MessageChannel) {\n  var t = null,\n      u = null,\n      w = function
+      w() {\n    if (null !== t) try {\n      var a = exports.unstable_now();\n     
+      t(!0, a);\n      t = null;\n    } catch (b) {\n      throw setTimeout(w, 0),
+      b;\n    }\n  };\n\n  _f = function f(a) {\n    null !== t ? setTimeout(_f,
+      0, a) : (t = a, setTimeout(w, 0));\n  };\n\n  g = function g(a, b) {\n    u
+      = setTimeout(a, b);\n  };\n\n  h = function h() {\n    clearTimeout(u);\n 
+      };\n\n  exports.unstable_shouldYield = function () {\n    return !1;\n  };\n\n 
+      k = exports.unstable_forceFrameRate = function () {};\n} else {\n  var x =
+      window.setTimeout,\n      y = window.clearTimeout;\n\n  if (\"undefined\" !==
+      typeof console) {\n    var z = window.cancelAnimationFrame;\n    \"function\"
+      !== typeof window.requestAnimationFrame && console.error(\"This browser doesn't
+      support requestAnimationFrame. Make sure that you load a polyfill in older
+      browsers. https://reactjs.org/link/react-polyfills\");\n    \"function\" !==
+      typeof z && console.error(\"This browser doesn't support cancelAnimationFrame.
       Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills\");\n 
       }\n\n  var A = !1,\n      B = null,\n      C = -1,\n      D = 5,\n      E =
       0;\n\n  exports.unstable_shouldYield = function () {\n    return exports.unstable_now()
@@ -3793,30 +3790,29 @@ MonoBehaviour:
       arguments);\n};\n\n\n/**\r\n * Creates a context that updates its value when
       the values in the dictionary change\r\n * @param dictionary The dictionary
       to be watched. Must implement the EventDictionary type in the C#\r\n * @param
-      displayName A displayName to identify this context easier in case of problems\r\n
-      */\n\nfunction createDictionaryWatcher(dictionary, displayName) {\n  var ctx
-      = react.createContext(undefined);\n  if (displayName) ctx.displayName = displayName;\n\n 
-      var Provider = function Provider(_a) {\n    var children = _a.children;\n\n   
-      var _b = react.useState(0),\n        render = _b[0],\n        setRender = _b[1];\n\n   
-      react.useLayoutEffect(function () {\n      var remove = dictionary === null
-      || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value,
-      dic) {\n        setRender(function (x) {\n          return x + 1;\n       
-      });\n      });\n\n      if (!remove) {\n        if (displayName) console.warn(displayName
-      + \" dictionary does not provide a change listener\");else console.warn('The
-      dictionary does not provide a change listener');\n      }\n\n      return function
-      () {\n        return remove === null || remove === void 0 ? void 0 : remove();\n     
-      };\n    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps\n\n   
-      var value = react.useMemo(function () {\n      return dictionary_watcher_assign({},
-      dictionary);\n    }, [render]);\n    return react.createElement(ctx.Provider,
-      {\n      value: value\n    }, children);\n  };\n\n  function useContext() {\n   
-      var context = react.useContext(ctx);\n\n    if (context === undefined) {\n     
-      if (displayName) throw new Error(displayName + \".useContext must be used within
-      a \" + displayName + \".Provider\");else throw new Error('useContext must be
-      used within a provider');\n    }\n\n    return context;\n  }\n\n  return {\n   
-      context: ctx,\n    Provider: Provider,\n    useContext: useContext\n  };\n}\nvar
-      globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');\nvar useGlobals
-      = globalsWatcher.useContext;\nvar GlobalsProvider = globalsWatcher.Provider;\n;//
-      CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js\nvar
+      displayName A displayName to identify this context easier in case of problems\r\n*/\n\nfunction
+      createDictionaryWatcher(dictionary, displayName) {\n  var ctx = react.createContext(undefined);\n 
+      if (displayName) ctx.displayName = displayName;\n\n  var Provider = function
+      Provider(_a) {\n    var children = _a.children;\n\n    var _b = react.useState(0),\n       
+      render = _b[0],\n        setRender = _b[1];\n\n    react.useLayoutEffect(function
+      () {\n      var remove = dictionary === null || dictionary === void 0 ? void
+      0 : dictionary.AddListener(function (key, value, dic) {\n        setRender(function
+      (x) {\n          return x + 1;\n        });\n      });\n\n      if (!remove)
+      {\n        if (displayName) console.warn(displayName + \" dictionary does not
+      provide a change listener\");else console.warn('The dictionary does not provide
+      a change listener');\n      }\n\n      return function () {\n        return
+      remove === null || remove === void 0 ? void 0 : remove();\n      };\n    },
+      []); // eslint-disable-next-line react-hooks/exhaustive-deps\n\n    var value
+      = react.useMemo(function () {\n      return dictionary_watcher_assign({}, dictionary);\n   
+      }, [render]);\n    return react.createElement(ctx.Provider, {\n      value:
+      value\n    }, children);\n  };\n\n  function useContext() {\n    var context
+      = react.useContext(ctx);\n\n    if (context === undefined) {\n      if (displayName)
+      throw new Error(displayName + \".useContext must be used within a \" + displayName
+      + \".Provider\");else throw new Error('useContext must be used within a provider');\n   
+      }\n\n    return context;\n  }\n\n  return {\n    context: ctx,\n    Provider:
+      Provider,\n    useContext: useContext\n  };\n}\nvar globalsWatcher = createDictionaryWatcher(Globals,
+      'globalsContext');\nvar useGlobals = globalsWatcher.useContext;\nvar GlobalsProvider
+      = globalsWatcher.Provider;\n;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js\nvar
       __extends = undefined && undefined.__extends || function () {\n  var _extendStatics
       = function extendStatics(d, b) {\n    _extendStatics = Object.setPrototypeOf
       || {\n      __proto__: []\n    } instanceof Array && function (d, b) {\n     
@@ -4965,6 +4961,7 @@ MonoBehaviour:
       Value: {fileID: 1764012036}
     - Key: WebInjectable
       Value: {fileID: 420524925}
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -5034,6 +5031,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -5077,6 +5075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d423a64ae31374b85821d9a52e9db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AutoRender: 0
   ReactCanvas: {fileID: 420524926}
   TestScript: "function Example() {\r\n  return /*#__PURE__*/React.createElement(React.Fragment,
     null, /*#__PURE__*/React.createElement(\"view\", null), /*#__PURE__*/React.createElement(\"view\",
@@ -5088,30 +5087,7 @@ MonoBehaviour:
     #a5a5a5;\r\n}\r\n\r\nview:nth-child(3) {\r\n  background-color: rgba(10, 10,
     235, 0.4);\r\n}\r\n\r\nview:nth-child(4) {\r\n  background-color: #00ff0033;\r\n}\r\n\r"
   InjectableScript: {fileID: 4900000, guid: 2a395c58d00601541a5ccd68c072bef3, type: 3}
---- !u!114 &420524934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420524925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbe1ec66e6fd2d45b20d3ae706d1ff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &420524935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420524925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbe1ec66e6fd2d45b20d3ae706d1ff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  RerenderScript: {fileID: 4900000, guid: 4bc46b5f58ee7d240ad1237cc91653a5, type: 3}
 --- !u!1 &952785539
 GameObject:
   m_ObjectHideFlags: 0

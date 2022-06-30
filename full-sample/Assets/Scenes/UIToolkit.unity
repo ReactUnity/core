@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source:
-    Type: 0
+    Type: 3
     Language: 0
     SourceAsset: {fileID: 4900000, guid: 60fee6ad071b08b4e9667fa2e39697d8, type: 3}
     Watch: 1
@@ -164,19 +164,20 @@ MonoBehaviour:
     ResourcesPath: 
     UseDevServer: 0
     DevServer: http://localhost:3100/uitoolkit.js
-  Debug: 0
-  AwaitDebugger: 0
   EngineType: 0
   Globals:
     Entries: []
-  Stylesheets: []
-  AutoRender: 1
-  BeforeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterStart:
-    m_PersistentCalls:
-      m_Calls: []
+  AdvancedOptions:
+    MediaUpdateInterval: 0.5
+    DebugMode: 0
+    AutoRender: 1
+    Stylesheets: []
+    BeforeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterStart:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!82 &29708825
 AudioSource:
   m_ObjectHideFlags: 0

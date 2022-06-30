@@ -6,6 +6,7 @@ import HomePage from "src/pages/home";
 import ImagesPage from "src/pages/images";
 import MaterialPage from "src/pages/material";
 import StyleFrameworksPage from "src/pages/style-frameworks";
+import BootstrapPage from "src/pages/style-frameworks/bootstrap";
 import EmotionPage from "src/pages/style-frameworks/emotion";
 import JSSPage from "src/pages/style-frameworks/jss";
 import StyledComponentsPage from "src/pages/style-frameworks/styled-components";
@@ -22,10 +23,11 @@ export function AppRoutes() {
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
     <Route path={'svgs'} element={<SvgsPage />} />
 
-    < Route path={'style-frameworks'} element={< StyleFrameworksPage />}>
+    <Route path={'style-frameworks'} element={< StyleFrameworksPage />}>
       <Route path={'jss'} element={<JSSPage />} />
       <Route path={'styled-components'} element={<StyledComponentsPage />} />
       <Route path={'emotion'} element={<EmotionPage />} />
+      <Route path={'bootstrap'} element={<BootstrapPage />} />
       <Route path={'tailwind'} element={
         <Suspense fallback={<>Loading</>}><TailwindPage /></Suspense>} />
     </Route >

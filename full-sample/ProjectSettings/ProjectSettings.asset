@@ -418,7 +418,14 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 449c8a4a6db2ea24d95cf3d120fe44c0, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
@@ -826,13 +833,12 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   scriptingDefineSymbols:
     : 
-    Android: REACT_UNITY_DEVELOPER;REACT_DISABLE_CLEARSCRIPT;REACT_DISABLE_JINT
-    Standalone: REACT_UNITY_DEVELOPER
+    WebGL: REACT_UNITY_DEVELOPER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
     Android: 0
-    Standalone: 0
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel: {}
@@ -848,18 +854,18 @@ PlayerSettings:
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform:
     Android: 6
-    Standalone: 6
+    Standalone: 3
     WebGL: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Template2D
+  metroPackageName: com.rectunity.dev-sample
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: reactunity
   metroCertificateIssuer: reactunity
   metroCertificateNotAfter: 80ec379cc18bd901
-  metroApplicationDescription: Template_2D
+  metroApplicationDescription: Test App For ReactUnity
   wsaImages: {}
   metroTileShortName: dev-sample
   metroTileShowName: 0
@@ -874,7 +880,9 @@ PlayerSettings:
   metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628,
     a: 1}
   metroSplashScreenUseBackgroundColor: 0
-  platformCapabilities: {}
+  platformCapabilities:
+    WindowsStoreApps:
+      InternetClient: True
   metroTargetDeviceFamilies: {}
   metroFTAName: 
   metroFTAFileTypes: []

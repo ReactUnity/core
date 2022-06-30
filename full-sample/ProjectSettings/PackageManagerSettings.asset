@@ -32,9 +32,10 @@ MonoBehaviour:
     m_Scopes:
     - com.openupm
     - com.reactunity
-    - com.reactunity.core
-    - com.reactunity.quickjs
     - com.reactunity.clearscript
+    - com.reactunity.core
+    - com.reactunity.jint
+    - com.reactunity.quickjs
     m_IsDefault: 0
     m_Capabilities: 0
   m_UserSelectedRegistryName: package.openupm.com

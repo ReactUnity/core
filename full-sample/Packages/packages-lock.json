@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": {
-      "version": "0.12.0",
+      "version": "0.13.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.12.0",
+      "version": "0.13.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -17,8 +17,15 @@
       },
       "url": "https://package.openupm.com"
     },
+    "com.reactunity.jint": {
+      "version": "0.13.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.reactunity.quickjs": {
-      "version": "0.12.0",
+      "version": "0.13.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -45,7 +52,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.15",
+      "version": "2.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {

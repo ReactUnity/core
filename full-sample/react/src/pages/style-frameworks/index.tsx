@@ -23,6 +23,7 @@ export function StyleFrameworksPage() {
       <CustomNavLink to={'./styled-components'}>Styled Components</CustomNavLink>
       <CustomNavLink to={'./emotion'}>Emotion</CustomNavLink>
       <CustomNavLink to={'./tailwind'}>Tailwind</CustomNavLink>
+      <CustomNavLink to={'./bootstrap'}>Bootstrap</CustomNavLink>
     </row>
 
     <Outlet />

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,6 +207,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -243,13 +244,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Script:
+  Source:
     Type: 2
+    Language: 0
     SourceAsset: {fileID: 0}
+    Watch: 1
     SourcePath: /index.js
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 1
+    UseDevServer: 0
     DevServer: http://localhost:3000
   Debug: 0
   AwaitDebugger: 0
@@ -260,6 +263,7 @@ MonoBehaviour:
       Value: {fileID: 1277903368}
     - Key: WebInspector
       Value: {fileID: 420524925}
+  Stylesheets: []
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -329,6 +333,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -342,6 +347,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -430,6 +436,7 @@ Transform:
   m_LocalRotation: {x: 0.114045, y: 0.35338345, z: -0.043452647, w: 0.92748356}
   m_LocalPosition: {x: -3.44, y: 2.4, z: -3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
