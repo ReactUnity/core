@@ -34,8 +34,8 @@ namespace ReactUnity.Tests
 
             var ru = CreateReactUnity(engineType, script.Current);
             ru.timer = RealTimer ? null : new ControlledTimer();
-            ru.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
-            ru.AfterStart.AddListener(() => {
+            ru.AdvancedOptions.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
+            ru.AdvancedOptions.AfterStart.AddListener(() => {
                 if (engineType != JavascriptEngineType.Auto && ru.Context.Script.EngineFactory.EngineType != engineType)
                     Assert.Inconclusive($"{engineType} not supported on this platform");
                 else AfterStart(ru.Context.Script);
@@ -51,7 +51,7 @@ namespace ReactUnity.Tests
 
             ru.EngineType = engineType;
             ru.Source = script;
-            ru.AutoRender = false;
+            ru.AdvancedOptions.AutoRender = false;
             ru.enabled = true;
 
             ru.Debug = TestHelpers.IsDebugEnabled;

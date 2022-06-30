@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
@@ -12,6 +13,17 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
+        [Serializable]
+        public class ReactAdvancedOptions
+        {
+            public float MediaUpdateInterval = 0.5f;
+            public bool AutoRender = true;
+            public List<TextAsset> Stylesheets = new List<TextAsset>();
+            [Space(10)]
+            public UnityEvent BeforeStart = new UnityEvent();
+            public UnityEvent AfterStart = new UnityEvent();
+        }
+
         [FormerlySerializedAs("Script")]
         public ScriptSource Source = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
 
@@ -26,19 +38,13 @@ namespace ReactUnity
         public ITimer timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
-        public List<TextAsset> Stylesheets = new List<TextAsset>();
+        public ReactAdvancedOptions AdvancedOptions;
 
-        #region Advanced Options
-
-        [HideInInspector] public bool AutoRender = true;
-        [HideInInspector] public UnityEvent BeforeStart = new UnityEvent();
-        [HideInInspector] public UnityEvent AfterStart = new UnityEvent();
-
-        #endregion
+        private Coroutine MediaProviderCoroutine;
 
         void OnEnable()
         {
-            if (AutoRender) Render();
+            if (AdvancedOptions.AutoRender) Render();
         }
 
         void OnDisable()
@@ -59,6 +65,8 @@ namespace ReactUnity
         protected virtual void Clean()
         {
             ClearRoot();
+            if (MediaProviderCoroutine != null) StopCoroutine(MediaProviderCoroutine);
+            MediaProviderCoroutine = null;
             Context?.Dispose();
             Context = null;
         }
@@ -68,11 +76,15 @@ namespace ReactUnity
         private void LoadAndRun(ScriptSource script, Action afterStart = null)
         {
             MediaProvider = CreateMediaProvider();
+            MediaProviderCoroutine = StartCoroutine(UpdateMediaProvider());
             Context = CreateContext(script);
 
-            foreach (var sheet in Stylesheets)
+            if (AdvancedOptions?.Stylesheets != null)
             {
-                if (sheet) Context.InsertStyle(sheet.text);
+                foreach (var sheet in AdvancedOptions.Stylesheets)
+                {
+                    if (sheet) Context.InsertStyle(sheet.text);
+                }
             }
             Context.Start(afterStart);
         }
@@ -93,6 +105,22 @@ namespace ReactUnity
         protected abstract ReactContext CreateContext(ScriptSource script);
         protected abstract IMediaProvider CreateMediaProvider();
 
+        protected virtual IEnumerator UpdateMediaProvider()
+        {
+            var wait = new WaitForSeconds(AdvancedOptions.MediaUpdateInterval);
+            while (true)
+            {
+                yield return wait;
+
+                if (Context?.MediaProvider is DefaultMediaProvider df)
+                {
+                    df.SetUpdatesSuspended(true);
+                    df.RecalculateScreenAndDevices();
+                    df.RecalculateInput();
+                    df.SetUpdatesSuspended(false);
+                }
+            }
+        }
 
         public class WaitForRenderToComplete : CustomYieldInstruction
         {

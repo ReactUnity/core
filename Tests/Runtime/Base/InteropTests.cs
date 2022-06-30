@@ -80,7 +80,7 @@ namespace ReactUnity.Tests
                 Assert.AreEqual("myobj mycmp", Q("text").TextContent, type + " has failed");
                 GameObject.DestroyImmediate(cmp);
                 Component.enabled = false;
-                Component.AutoRender = false;
+                Component.AdvancedOptions.AutoRender = false;
                 Component.enabled = true;
             }
         }

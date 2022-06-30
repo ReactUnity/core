@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ReactUnity.Styling.Rules
@@ -100,7 +101,7 @@ namespace ReactUnity.Styling.Rules
             if (context.HasType(Name)) return true;
 
             var value = context.GetValue(Name);
-            return value != null;
+            return !string.IsNullOrWhiteSpace(value) && value != "no" && value != "none";
         }
     }
 
@@ -121,9 +122,14 @@ namespace ReactUnity.Styling.Rules
 
             var value = context.GetValue(Feature);
 
-            if (Condition == null) return value != null;
+            if (string.IsNullOrWhiteSpace(Condition)) return string.IsNullOrWhiteSpace(value);
 
-            return value == Condition;
+            if (string.IsNullOrWhiteSpace(value)) return false;
+
+            if (value[0] == ',')
+                return value.IndexOf("," + Condition, StringComparison.InvariantCultureIgnoreCase) >= 0;
+
+            return Condition.Equals(value, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 

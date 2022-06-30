@@ -266,14 +266,16 @@ MonoBehaviour:
   EngineType: 0
   Globals:
     Entries: []
-  Stylesheets: []
-  AutoRender: 1
-  BeforeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterStart:
-    m_PersistentCalls:
-      m_Calls: []
+  AdvancedOptions:
+    MediaUpdateInterval: 0.5
+    AutoRender: 1
+    Stylesheets: []
+    BeforeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterStart:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2008299894
 GameObject:
   m_ObjectHideFlags: 0
