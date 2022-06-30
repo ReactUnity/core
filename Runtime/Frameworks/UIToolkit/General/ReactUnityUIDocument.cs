@@ -31,9 +31,9 @@ namespace ReactUnity.UIToolkit
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
-                BeforeStart = AdvancedOptions?.BeforeStart == null ? null :
+                BeforeStart = AdvancedOptions?.BeforeStart == null ? (Action) null :
                     AdvancedOptions.BeforeStart.Invoke,
-                AfterStart = AdvancedOptions?.AfterStart == null ? null :
+                AfterStart = AdvancedOptions?.AfterStart == null ? (Action) null :
                     AdvancedOptions.AfterStart.Invoke,
             });
             ctx.Initialize();

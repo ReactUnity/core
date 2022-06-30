@@ -1,3 +1,4 @@
+using System;
 using ReactUnity.Scheduling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
@@ -29,9 +30,9 @@ namespace ReactUnity.Noop
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
-                BeforeStart = AdvancedOptions?.BeforeStart == null ? null :
+                BeforeStart = AdvancedOptions?.BeforeStart == null ? (Action) null :
                     AdvancedOptions.BeforeStart.Invoke,
-                AfterStart = AdvancedOptions?.AfterStart == null ? null :
+                AfterStart = AdvancedOptions?.AfterStart == null ? (Action) null :
                     AdvancedOptions.AfterStart.Invoke,
             });
         }

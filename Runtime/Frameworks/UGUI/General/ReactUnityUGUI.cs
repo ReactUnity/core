@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ReactUnity.Scheduling;
 using ReactUnity.Styling;
@@ -36,9 +37,9 @@ namespace ReactUnity.UGUI
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
-                BeforeStart = AdvancedOptions?.BeforeStart == null ? null :
+                BeforeStart = AdvancedOptions?.BeforeStart == null ? (Action) null :
                     AdvancedOptions.BeforeStart.Invoke,
-                AfterStart = AdvancedOptions?.AfterStart == null ? null :
+                AfterStart = AdvancedOptions?.AfterStart == null ? (Action) null :
                     AdvancedOptions.AfterStart.Invoke,
             });
         }

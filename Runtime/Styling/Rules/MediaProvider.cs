@@ -474,7 +474,7 @@ namespace ReactUnity.Styling.Rules
 
         public void RecalculateInput()
         {
-#if REACT_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
             var pointer = Pointer.current;
 
             var acc = new List<PointerAccuracy>
@@ -540,6 +540,7 @@ namespace ReactUnity.Styling.Rules
             CurrentInputDevice = lastDeviceName;
 
 #else
+
             var deviceNamesAll = "";
             if (Input.GetJoystickNames().Length > 0) deviceNamesAll += ",gamepad";
             if (Input.touchSupported) deviceNamesAll += ",touch";
