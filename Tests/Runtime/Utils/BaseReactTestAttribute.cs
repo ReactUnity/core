@@ -54,8 +54,7 @@ namespace ReactUnity.Tests
             ru.AdvancedOptions.AutoRender = false;
             ru.enabled = true;
 
-            ru.Debug = TestHelpers.IsDebugEnabled;
-            ru.AwaitDebugger = TestHelpers.IsDebugEnabled;
+            ru.AdvancedOptions.DebugMode = TestHelpers.IsDebugEnabled ? ReactUnityBase.DebugMode.DebugAndAwait : ReactUnityBase.DebugMode.None;
 
             return ru;
         }

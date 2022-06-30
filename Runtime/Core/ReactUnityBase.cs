@@ -13,10 +13,19 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
+        public enum DebugMode
+        {
+            None = 0,
+            Debug = 1,
+            DebugAndAwait = 2,
+        }
+
         [Serializable]
         public class ReactAdvancedOptions
         {
             public float MediaUpdateInterval = 0.5f;
+            [Tooltip("Serve debugging protocol on port 9222")]
+            public DebugMode DebugMode = DebugMode.None;
             public bool AutoRender = true;
             public List<TextAsset> Stylesheets = new List<TextAsset>();
             [Space(10)]
@@ -27,10 +36,6 @@ namespace ReactUnity
         [FormerlySerializedAs("Script")]
         public ScriptSource Source = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index", Watch = true };
 
-        [Tooltip("Serve debugging protocol on port 9222")]
-        public bool Debug = false;
-        public bool AwaitDebugger = false;
-
         public JavascriptEngineType EngineType = JavascriptEngineType.Auto;
 
         public IMediaProvider MediaProvider { get; private set; }
@@ -38,7 +43,7 @@ namespace ReactUnity
         public ITimer timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
-        public ReactAdvancedOptions AdvancedOptions;
+        public ReactAdvancedOptions AdvancedOptions = new ReactAdvancedOptions();
 
         private Coroutine MediaProviderCoroutine;
 
@@ -77,9 +82,10 @@ namespace ReactUnity
         {
             MediaProvider = CreateMediaProvider();
             MediaProviderCoroutine = StartCoroutine(UpdateMediaProvider());
+            if (AdvancedOptions == null) AdvancedOptions = new ReactAdvancedOptions();
             Context = CreateContext(script);
 
-            if (AdvancedOptions?.Stylesheets != null)
+            if (AdvancedOptions.Stylesheets != null)
             {
                 foreach (var sheet in AdvancedOptions.Stylesheets)
                 {

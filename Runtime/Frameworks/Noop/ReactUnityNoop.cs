@@ -1,4 +1,3 @@
-using System;
 using ReactUnity.Scheduling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
@@ -27,13 +26,11 @@ namespace ReactUnity.Noop
                 Timer = timer ?? UnityTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = () => Render(),
-                Debug = Debug,
-                AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
-                BeforeStart = AdvancedOptions?.BeforeStart == null ? (Action) null :
-                    AdvancedOptions.BeforeStart.Invoke,
-                AfterStart = AdvancedOptions?.AfterStart == null ? (Action) null :
-                    AdvancedOptions.AfterStart.Invoke,
+                Debug = AdvancedOptions.DebugMode != DebugMode.None,
+                AwaitDebugger = AdvancedOptions.DebugMode == DebugMode.DebugAndAwait,
+                BeforeStart = AdvancedOptions.BeforeStart.Invoke,
+                AfterStart = AdvancedOptions.AfterStart.Invoke,
             });
         }
 

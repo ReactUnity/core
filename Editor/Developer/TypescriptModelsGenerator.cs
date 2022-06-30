@@ -407,7 +407,7 @@ namespace ReactUnity.Editor.Developer
             if (Helpers.Contains("pointer"))
             {
                 helpers += n;
-                helpers += "export interface Pointer<T> {" + n;
+                helpers += "interface Pointer<T> {" + n;
                 helpers += "  type?: T;" + n;
                 helpers += "  __pointer: true;" + n;
                 helpers += "}" + n;
@@ -417,7 +417,7 @@ namespace ReactUnity.Editor.Developer
             if (Helpers.Contains("ref"))
             {
                 helpers += n;
-                helpers += "export interface Ref<T> {" + n;
+                helpers += "interface Ref<T> {" + n;
                 helpers += "  type?: T;" + n;
                 helpers += "  __ref: true;" + n;
                 helpers += "}" + n;
