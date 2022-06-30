@@ -1,6 +1,6 @@
 //
 // Types in assemblies: Facebook.Yoga
-// Generated 23/05/2022 15:32:00
+// Generated 30/06/2022 20:21:41
 //
 /* eslint-disable */
 
@@ -13,7 +13,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(node: Facebook.Yoga.YogaNode, width: number, height: number): number;
-      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, height: number, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, height: number, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): number;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -29,7 +29,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string): void;
-      BeginInvoke(config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -45,7 +45,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
-      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): Facebook.Yoga.YogaSize;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -79,7 +79,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(unmanagedNodePtr: System.IntPtr, width: number, height: number): number;
-      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, height: number, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, height: number, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): number;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -92,13 +92,13 @@ export declare namespace Facebook {
     }
     export class YogaConfig {
       constructor();
-      Logger: Facebook.Yoga.Logger;
+      Logger: ((config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string) => void);
       UseWebDefaults: boolean;
       PointScaleFactor: number;
       SetExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature, enabled: boolean): void;
       IsExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature): boolean;
       static GetInstanceCount(): number;
-      static SetDefaultLogger(logger: Facebook.Yoga.Logger): void;
+      static SetDefaultLogger(logger: ((config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -146,6 +146,11 @@ export declare namespace Facebook {
       Row = 2,
       RowReverse = 3,
     }
+    export enum YogaGap {
+      Column = 0,
+      Row = 1,
+      All = 2,
+    }
     export enum YogaJustify {
       FlexStart = 0,
       Center = 1,
@@ -159,7 +164,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(unmanagedConfigPtr: System.IntPtr, unmanagedNotePtr: System.IntPtr, level: Facebook.Yoga.YogaLogLevel, message: string): void;
-      BeginInvoke(unmanagedConfigPtr: System.IntPtr, unmanagedNotePtr: System.IntPtr, level: Facebook.Yoga.YogaLogLevel, message: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(unmanagedConfigPtr: System.IntPtr, unmanagedNotePtr: System.IntPtr, level: Facebook.Yoga.YogaLogLevel, message: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -183,7 +188,7 @@ export declare namespace Facebook {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(unmanagedNodePtr: System.IntPtr, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
-      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): Facebook.Yoga.YogaSize;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -267,6 +272,9 @@ export declare namespace Facebook {
       BorderStartWidth: number;
       BorderEndWidth: number;
       BorderWidth: number;
+      Gap: number;
+      RowGap: number;
+      ColumnGap: number;
       LayoutMarginLeft: number;
       LayoutMarginTop: number;
       LayoutMarginRight: number;
@@ -291,8 +299,8 @@ export declare namespace Facebook {
       RemoveChild(child: Facebook.Yoga.YogaNode): void;
       Clear(): void;
       IndexOf(node: Facebook.Yoga.YogaNode): number;
-      SetMeasureFunction(measureFunction: Facebook.Yoga.MeasureFunction): void;
-      SetBaselineFunction(baselineFunction: Facebook.Yoga.BaselineFunction): void;
+      SetMeasureFunction(measureFunction: ((node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode) => Facebook.Yoga.YogaSize)): void;
+      SetBaselineFunction(baselineFunction: ((node: Facebook.Yoga.YogaNode, width: number, height: number) => number)): void;
       CalculateLayout(width?: number, height?: number): void;
       Print(options?: Facebook.Yoga.YogaPrintOptions): string;
       GetEnumerator(): System.Collections.Generic.IEnumerator<Facebook.Yoga.YogaNode>;
@@ -311,8 +319,10 @@ export declare namespace Facebook {
       Scroll = 2,
     }
     export enum YogaPositionType {
-      Relative = 0,
-      Absolute = 1,
+      Default = 1,
+      Static = 0,
+      Relative = 1,
+      Absolute = 2,
     }
     export enum YogaPrintOptions {
       Layout = 1,

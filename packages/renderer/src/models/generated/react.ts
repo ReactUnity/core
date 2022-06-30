@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 29/06/2022 01:19:50
+// Generated 30/06/2022 20:21:47
 //
 /* eslint-disable */
 
@@ -385,14 +385,9 @@ export declare namespace ReactUnity {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     Source: ReactUnity.ScriptSource;
-    Debug: boolean;
-    AwaitDebugger: boolean;
     EngineType: ReactUnity.Scripting.JavascriptEngineType;
     Globals: ReactUnity.Helpers.SerializableDictionary;
-    Stylesheets: UnityEngine.TextAsset[];
-    AutoRender: boolean;
-    BeforeStart: UnityEngine.Events.UnityEvent;
-    AfterStart: UnityEngine.Events.UnityEvent;
+    AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
     Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
     IsInvoking(): boolean;
     CancelInvoke(): void;
@@ -605,6 +600,24 @@ export declare namespace ReactUnity {
     AwaitDebugger: boolean;
     BeforeStart: (() => void);
     AfterStart: (() => void);
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum ReactUnityBase_DebugMode {
+    None = 0,
+    Debug = 1,
+    DebugAndAwait = 2,
+  }
+  export class ReactUnityBase_ReactAdvancedOptions {
+    constructor();
+    MediaUpdateInterval: number;
+    DebugMode: ReactUnity.ReactUnityBase_DebugMode;
+    AutoRender: boolean;
+    Stylesheets: UnityEngine.TextAsset[];
+    BeforeStart: UnityEngine.Events.UnityEvent;
+    AfterStart: UnityEngine.Events.UnityEvent;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2692,6 +2705,7 @@ export declare namespace ReactUnity {
       static KeyForCSharpIdentity: string;
       GetPayloadHeader(context: any, val: any): any;
       NewBridgeObject(context: any, o: any, proto: any): any;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2714,9 +2728,10 @@ export declare namespace ReactUnity {
       Runtime: any; // QuickJS.ScriptRuntime
       MainContext: any; // QuickJS.ScriptContext
       Global: any; // QuickJS.ScriptValue
-      ObjectKeys: any; // QuickJS.ScriptFunction
       TypeDB: any; // QuickJS.Utils.ITypeDB
       ObjectCache: any; // QuickJS.Utils.ObjectCache
+      ObjectKeys: any; // QuickJS.ScriptFunction
+      ApiBridge: ReactUnity.Scripting.QuickJSApiBridge;
       static InvokeReflectBinding(runtime: any): void;
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
@@ -4763,20 +4778,39 @@ export declare namespace ReactUnity {
         SetValue(property: string, value: string): void;
         SetNumber(property: string, value: number): void;
         SetDimensions(width: number, height: number): void;
-        RecalculateDefaults(): void;
+        RecalculateScreenAndDevices(): void;
       }
       export class DefaultMediaProvider {
         constructor(mediaType: string, numbers?: Record<string, number>, values?: Record<string, string>, types?: System.Collections.Generic.HashSet<string>);
         MediaType: string;
+        CursorLockMode: UnityEngine.CursorLockMode;
+        CursorVisible: boolean;
+        ApplicationFocused: boolean;
+        IsFullScreen: boolean;
+        FullScreenMode: UnityEngine.FullScreenMode;
+        TargetFramerate: number;
+        ScreenBrightness: number;
+        ScreenDpi: number;
+        ScreenRefreshRate: number;
+        ScreenSize: UnityEngine.Vector2;
+        WindowSize: UnityEngine.Vector2;
+        CurrentPointerAccuracy: ReactUnity.Styling.Rules.DefaultMediaProvider_PointerAccuracy;
+        AnyPointerAccuracy: ReactUnity.Styling.Rules.DefaultMediaProvider_PointerAccuracy[];
+        CurrentPointerHover: boolean;
+        AnyPointerHover: boolean;
+        AnyInputDevice: string;
+        CurrentInputDevice: string;
         static CreateMediaProvider(type: string, framework: string, isEditor: boolean): ReactUnity.Styling.Rules.DefaultMediaProvider;
         HasType(type: string): boolean;
-        InitDefaults(): void;
-        RecalculateDefaults(): void;
         GetNumericalValue(property: string): number;
         GetValue(property: string): string;
         SetValue(property: string, value: string): void;
         SetNumber(property: string, value: number): void;
         SetDimensions(width: number, height: number): void;
+        InitConstants(): void;
+        RecalculateScreenAndDevices(): void;
+        RecalculateInput(): void;
+        SetUpdatesSuspended(suspended: boolean): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4985,6 +5019,11 @@ export declare namespace ReactUnity {
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
+      }
+      export enum DefaultMediaProvider_PointerAccuracy {
+        None = 0,
+        Coarse = 1,
+        Fine = 2,
       }
     }
   }
@@ -7945,14 +7984,9 @@ export declare namespace ReactUnity {
       DefaultIconSet: ReactUnity.Styling.IconSet;
       IconSets: ReactUnity.Styling.IconSet[];
       Source: ReactUnity.ScriptSource;
-      Debug: boolean;
-      AwaitDebugger: boolean;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Globals: ReactUnity.Helpers.SerializableDictionary;
-      Stylesheets: UnityEngine.TextAsset[];
-      AutoRender: boolean;
-      BeforeStart: UnityEngine.Events.UnityEvent;
-      AfterStart: UnityEngine.Events.UnityEvent;
+      AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
       Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
       CancelInvoke(): void;
@@ -13123,14 +13157,9 @@ export declare namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Source: ReactUnity.ScriptSource;
-      Debug: boolean;
-      AwaitDebugger: boolean;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Globals: ReactUnity.Helpers.SerializableDictionary;
-      Stylesheets: UnityEngine.TextAsset[];
-      AutoRender: boolean;
-      BeforeStart: UnityEngine.Events.UnityEvent;
-      AfterStart: UnityEngine.Events.UnityEvent;
+      AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
       PlayAudio(clip: UnityEngine.AudioClip): void;
       Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
       IsInvoking(): boolean;

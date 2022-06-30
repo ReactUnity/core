@@ -1,11 +1,20 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 23/05/2022 15:31:32
+// Generated 30/06/2022 20:21:36
 //
 /* eslint-disable */
 
 import { System } from './system';
 import { Unity, UnityEngine } from './unity';
+
+
+interface Ref<T> {
+  type?: T;
+  __ref: true;
+}
+
+
+type Byte = number;
 
 export declare namespace UnityEditor {
   export class ActiveEditorTracker {
@@ -47,7 +56,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -232,8 +241,8 @@ export declare namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     static ShowBuildPlayerWindow(): void;
     static GetPlaybackEngineDownloadURL(moduleName: string): string;
-    static RegisterGetBuildPlayerOptionsHandler(func: ((arg0: UnityEditor.BuildPlayerOptions) => UnityEditor.BuildPlayerOptions)): void;
-    static RegisterBuildPlayerHandler(func: ((arg0: UnityEditor.BuildPlayerOptions) => void)): void;
+    static RegisterGetBuildPlayerOptionsHandler(func: ((arg: UnityEditor.BuildPlayerOptions) => UnityEditor.BuildPlayerOptions)): void;
+    static RegisterBuildPlayerHandler(func: ((obj: UnityEditor.BuildPlayerOptions) => void)): void;
     BeginWindows(): void;
     EndWindows(): void;
     ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -415,14 +424,14 @@ export declare namespace UnityEditor {
     static SetGenericData(type: string, data: any): void;
     static AcceptDrag(): void;
     static HasHandler(dropDstId: number, handler: System.Delegate): boolean;
-    static AddDropHandler(handler: UnityEditor.DragAndDrop_ProjectBrowserDropHandler): void;
-    static AddDropHandler(handler: UnityEditor.DragAndDrop_SceneDropHandler): void;
-    static AddDropHandler(handler: UnityEditor.DragAndDrop_HierarchyDropHandler): void;
-    static AddDropHandler(handler: UnityEditor.DragAndDrop_InspectorDropHandler): void;
-    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_ProjectBrowserDropHandler): void;
-    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_SceneDropHandler): void;
-    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_HierarchyDropHandler): void;
-    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_InspectorDropHandler): void;
+    static AddDropHandler(handler: ((dragInstanceId: number, dropUponPath: string, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static AddDropHandler(handler: ((dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static AddDropHandler(handler: ((dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static AddDropHandler(handler: ((targets: UnityEngine.Object[], perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static RemoveDropHandler(handler: ((dragInstanceId: number, dropUponPath: string, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static RemoveDropHandler(handler: ((dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static RemoveDropHandler(handler: ((dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
+    static RemoveDropHandler(handler: ((targets: UnityEngine.Object[], perform: boolean) => UnityEditor.DragAndDropVisualMode)): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -433,7 +442,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(dragInstanceId: number, dropUponPath: string, perform: boolean): UnityEditor.DragAndDropVisualMode;
-    BeginInvoke(dragInstanceId: number, dropUponPath: string, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(dragInstanceId: number, dropUponPath: string, perform: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -449,7 +458,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean): UnityEditor.DragAndDropVisualMode;
-    BeginInvoke(dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -465,7 +474,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(targets: UnityEngine.Object[], perform: boolean): UnityEditor.DragAndDropVisualMode;
-    BeginInvoke(targets: UnityEngine.Object[], perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(targets: UnityEngine.Object[], perform: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -481,7 +490,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean): UnityEditor.DragAndDropVisualMode;
-    BeginInvoke(dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -517,17 +526,17 @@ export declare namespace UnityEditor {
     static timeSinceStartup: number;
     static isSceneDirty: boolean;
     static currentScene: string;
-    static projectWindowItemOnGUI: UnityEditor.EditorApplication_ProjectWindowItemCallback;
-    static projectWindowItemInstanceOnGUI: UnityEditor.EditorApplication_ProjectWindowItemInstanceCallback;
-    static hierarchyWindowItemOnGUI: UnityEditor.EditorApplication_HierarchyWindowItemCallback;
-    static update: UnityEditor.EditorApplication_CallbackFunction;
-    static delayCall: UnityEditor.EditorApplication_CallbackFunction;
-    static hierarchyWindowChanged: UnityEditor.EditorApplication_CallbackFunction;
-    static projectWindowChanged: UnityEditor.EditorApplication_CallbackFunction;
-    static searchChanged: UnityEditor.EditorApplication_CallbackFunction;
-    static modifierKeysChanged: UnityEditor.EditorApplication_CallbackFunction;
-    static playmodeStateChanged: UnityEditor.EditorApplication_CallbackFunction;
-    static contextualPropertyMenu: UnityEditor.EditorApplication_SerializedPropertyCallbackFunction;
+    static projectWindowItemOnGUI: ((guid: string, selectionRect: UnityEngine.Rect) => void);
+    static projectWindowItemInstanceOnGUI: ((instanceID: number, selectionRect: UnityEngine.Rect) => void);
+    static hierarchyWindowItemOnGUI: ((instanceID: number, selectionRect: UnityEngine.Rect) => void);
+    static update: (() => void);
+    static delayCall: (() => void);
+    static hierarchyWindowChanged: (() => void);
+    static projectWindowChanged: (() => void);
+    static searchChanged: (() => void);
+    static modifierKeysChanged: (() => void);
+    static playmodeStateChanged: (() => void);
+    static contextualPropertyMenu: ((menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty) => void);
     static LoadLevelInPlayMode(path: string): void;
     static LoadLevelAdditiveInPlayMode(path: string): void;
     static LoadLevelAsyncInPlayMode(path: string): UnityEngine.AsyncOperation;
@@ -567,7 +576,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(guid: string, selectionRect: UnityEngine.Rect): void;
-    BeginInvoke(guid: string, selectionRect: UnityEngine.Rect, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(guid: string, selectionRect: UnityEngine.Rect, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -583,7 +592,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(instanceID: number, selectionRect: UnityEngine.Rect): void;
-    BeginInvoke(instanceID: number, selectionRect: UnityEngine.Rect, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(instanceID: number, selectionRect: UnityEngine.Rect, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -599,7 +608,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(instanceID: number, selectionRect: UnityEngine.Rect): void;
-    BeginInvoke(instanceID: number, selectionRect: UnityEngine.Rect, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(instanceID: number, selectionRect: UnityEngine.Rect, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -615,7 +624,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -631,7 +640,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty): void;
-    BeginInvoke(menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -909,7 +918,7 @@ export declare namespace UnityEditor {
     static EnumPopup(position: UnityEngine.Rect, label: string, selected: System.Enum, style: UnityEngine.GUIStyle): System.Enum;
     static EnumPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum): System.Enum;
     static EnumPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle): System.Enum;
-    static EnumPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg0: System.Enum) => boolean), includeObsolete?: boolean, style?: UnityEngine.GUIStyle): System.Enum;
+    static EnumPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg: System.Enum) => boolean), includeObsolete?: boolean, style?: UnityEngine.GUIStyle): System.Enum;
     static IntPopup(position: UnityEngine.Rect, selectedValue: number, displayedOptions: string[], optionValues: number[]): number;
     static IntPopup(position: UnityEngine.Rect, selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle): number;
     static IntPopup(position: UnityEngine.Rect, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[]): number;
@@ -967,8 +976,8 @@ export declare namespace UnityEditor {
     static EnumMaskPopup(position: UnityEngine.Rect, label: string, selected: System.Enum, style: UnityEngine.GUIStyle): System.Enum;
     static EnumMaskPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum): System.Enum;
     static EnumMaskPopup(position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle): System.Enum;
-    static BeginFoldoutHeaderGroup(position: UnityEngine.Rect, foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: ((arg0: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
-    static BeginFoldoutHeaderGroup(position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: ((arg0: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
+    static BeginFoldoutHeaderGroup(position: UnityEngine.Rect, foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: ((obj: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
+    static BeginFoldoutHeaderGroup(position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: ((obj: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
     static EndFoldoutHeaderGroup(): void;
     static GradientField(position: UnityEngine.Rect, gradient: UnityEngine.Gradient): UnityEngine.Gradient;
     static GradientField(position: UnityEngine.Rect, label: string, gradient: UnityEngine.Gradient): UnityEngine.Gradient;
@@ -1161,8 +1170,8 @@ export declare namespace UnityEditor {
     static EnumPopup(label: string, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
     static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
     static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
-    static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg0: System.Enum) => boolean), includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
-    static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg0: System.Enum) => boolean), includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
+    static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg: System.Enum) => boolean), includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
+    static EnumPopup(label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: ((arg: System.Enum) => boolean), includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
     static IntPopup(selectedValue: number, displayedOptions: string[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]): number;
     static IntPopup(selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): number;
     static IntPopup(selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]): number;
@@ -1300,8 +1309,8 @@ export declare namespace UnityEditor {
     static EnumMaskPopup(label: string, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
     static EnumMaskPopup(label: UnityEngine.GUIContent, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
     static EnumMaskPopup(label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]): System.Enum;
-    static BeginFoldoutHeaderGroup(foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: ((arg0: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
-    static BeginFoldoutHeaderGroup(foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: ((arg0: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
+    static BeginFoldoutHeaderGroup(foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: ((obj: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
+    static BeginFoldoutHeaderGroup(foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: ((obj: UnityEngine.Rect) => void), menuIcon?: UnityEngine.GUIStyle): boolean;
     static EndFoldoutHeaderGroup(): void;
     static GradientField(value: UnityEngine.Gradient, ...options: UnityEngine.GUILayoutOption[]): UnityEngine.Gradient;
     static GradientField(label: string, value: UnityEngine.Gradient, ...options: UnityEngine.GUILayoutOption[]): UnityEngine.Gradient;
@@ -1487,7 +1496,7 @@ export declare namespace UnityEditor {
     ToString(): string;
   }
   export class EditorGUIUtility_PropertyCallbackScope {
-    constructor(callback: ((arg0: UnityEngine.Rect, arg1: UnityEditor.SerializedProperty) => void));
+    constructor(callback: ((arg1: UnityEngine.Rect, arg2: UnityEditor.SerializedProperty) => void));
     Dispose(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -2011,9 +2020,9 @@ export declare namespace UnityEditor {
     static DisplayDialog(title: string, message: string, ok: string, dialogOptOutDecisionType: UnityEditor.DialogOptOutDecisionType, dialogOptOutDecisionStorageKey: string): boolean;
     static DisplayDialog(title: string, message: string, ok: string, cancel: string, dialogOptOutDecisionType: UnityEditor.DialogOptOutDecisionType, dialogOptOutDecisionStorageKey: string): boolean;
     static DisplayPopupMenu(position: UnityEngine.Rect, menuItemPath: string, command: UnityEditor.MenuCommand): void;
-    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any): void;
-    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any, showHotkey: boolean): void;
-    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], checkEnabled: ((arg0: number) => boolean), selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any, showHotkey?: boolean): void;
+    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: ((userData: any, options: string[], selected: number) => void), userData: any): void;
+    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: ((userData: any, options: string[], selected: number) => void), userData: any, showHotkey: boolean): void;
+    static DisplayCustomMenu(position: UnityEngine.Rect, options: UnityEngine.GUIContent[], checkEnabled: ((arg: number) => boolean), selected: number, callback: ((userData: any, options: string[], selected: number) => void), userData: any, showHotkey?: boolean): void;
     static FormatBytes(bytes: number): string;
     static SetSelectedWireframeHidden(renderer: UnityEngine.Renderer, enabled: boolean): void;
     static CreateGameObjectWithHideFlags(name: string, flags: UnityEngine.HideFlags, ...components: System.Type[]): UnityEngine.GameObject;
@@ -2027,7 +2036,7 @@ export declare namespace UnityEditor {
     static GetPrefabParent(source: UnityEngine.Object): UnityEngine.Object;
     static FindPrefabRoot(source: UnityEngine.GameObject): UnityEngine.GameObject;
     static ResetToPrefabState(source: UnityEngine.Object): boolean;
-    static DisplayCustomMenuWithSeparators(position: UnityEngine.Rect, options: string[], enabled: boolean[], separator: boolean[], selected: number[], callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any): void;
+    static DisplayCustomMenuWithSeparators(position: UnityEngine.Rect, options: string[], enabled: boolean[], separator: boolean[], selected: number[], callback: ((userData: any, options: string[], selected: number) => void), userData: any): void;
     static SetCustomDiffTool(path: string, twoWayDiff: string, threeWayDiff: string, mergeCommand: string, forceEnableCustomTool?: boolean): void;
     static SetDefaultParentObject(defaultParentObject: UnityEngine.GameObject): void;
     static ClearDefaultParentObject(scene: UnityEngine.SceneManagement.Scene): void;
@@ -2043,7 +2052,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(userData: any, options: string[], selected: number): void;
-    BeginInvoke(userData: any, options: string[], selected: number, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(userData: any, options: string[], selected: number, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -2252,16 +2261,16 @@ export declare namespace UnityEditor {
     static Disc(id: number, rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, axis: UnityEngine.Vector3, size: number, cutoffPlane: boolean, snap: number): UnityEngine.Quaternion;
     static FreeRotateHandle(id: number, rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, size: number): UnityEngine.Quaternion;
     static Slider(position: UnityEngine.Vector3, direction: UnityEngine.Vector3): UnityEngine.Vector3;
-    static Slider(position: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): UnityEngine.Vector3;
-    static Slider(controlID: number, position: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): UnityEngine.Vector3;
-    static Slider(controlID: number, position: UnityEngine.Vector3, offset: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): UnityEngine.Vector3;
-    static FreeMoveHandle(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, snap: UnityEngine.Vector3, capFunction: UnityEditor.Handles_CapFunction): UnityEngine.Vector3;
-    static FreeMoveHandle(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, snap: UnityEngine.Vector3, capFunction: UnityEditor.Handles_CapFunction): UnityEngine.Vector3;
-    static FreeMoveHandle(position: UnityEngine.Vector3, size: number, snap: UnityEngine.Vector3, capFunction: UnityEditor.Handles_CapFunction): UnityEngine.Vector3;
-    static FreeMoveHandle(controlID: number, position: UnityEngine.Vector3, size: number, snap: UnityEngine.Vector3, capFunction: UnityEditor.Handles_CapFunction): UnityEngine.Vector3;
-    static ScaleValueHandle(value: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): number;
-    static ScaleValueHandle(controlID: number, value: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): number;
-    static Button(position: UnityEngine.Vector3, direction: UnityEngine.Quaternion, size: number, pickSize: number, capFunction: UnityEditor.Handles_CapFunction): boolean;
+    static Slider(position: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): UnityEngine.Vector3;
+    static Slider(controlID: number, position: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): UnityEngine.Vector3;
+    static Slider(controlID: number, position: UnityEngine.Vector3, offset: UnityEngine.Vector3, direction: UnityEngine.Vector3, size: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): UnityEngine.Vector3;
+    static FreeMoveHandle(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, snap: UnityEngine.Vector3, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void)): UnityEngine.Vector3;
+    static FreeMoveHandle(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, snap: UnityEngine.Vector3, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void)): UnityEngine.Vector3;
+    static FreeMoveHandle(position: UnityEngine.Vector3, size: number, snap: UnityEngine.Vector3, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void)): UnityEngine.Vector3;
+    static FreeMoveHandle(controlID: number, position: UnityEngine.Vector3, size: number, snap: UnityEngine.Vector3, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void)): UnityEngine.Vector3;
+    static ScaleValueHandle(value: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): number;
+    static ScaleValueHandle(controlID: number, value: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): number;
+    static Button(position: UnityEngine.Vector3, direction: UnityEngine.Quaternion, size: number, pickSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void)): boolean;
     static CubeHandleCap(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
     static SphereHandleCap(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
     static ConeHandleCap(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
@@ -2277,14 +2286,14 @@ export declare namespace UnityEditor {
     static ScaleHandle(scale: UnityEngine.Vector3, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number): UnityEngine.Vector3;
     static RadiusHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, radius: number, handlesOnly: boolean): number;
     static RadiusHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, radius: number): number;
-    static Slider2D(id: number, handlePos: UnityEngine.Vector3, offset: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2): UnityEngine.Vector3;
-    static Slider2D(id: number, handlePos: UnityEngine.Vector3, offset: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
-    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2): UnityEngine.Vector3;
-    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
-    static Slider2D(id: number, handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2): UnityEngine.Vector3;
-    static Slider2D(id: number, handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
-    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: number): UnityEngine.Vector3;
-    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: UnityEditor.Handles_CapFunction, snap: number, drawHelper: boolean): UnityEngine.Vector3;
+    static Slider2D(id: number, handlePos: UnityEngine.Vector3, offset: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2): UnityEngine.Vector3;
+    static Slider2D(id: number, handlePos: UnityEngine.Vector3, offset: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
+    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2): UnityEngine.Vector3;
+    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
+    static Slider2D(id: number, handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2): UnityEngine.Vector3;
+    static Slider2D(id: number, handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: UnityEngine.Vector2, drawHelper: boolean): UnityEngine.Vector3;
+    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number): UnityEngine.Vector3;
+    static Slider2D(handlePos: UnityEngine.Vector3, handleDir: UnityEngine.Vector3, slideDir1: UnityEngine.Vector3, slideDir2: UnityEngine.Vector3, handleSize: number, capFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void), snap: number, drawHelper: boolean): UnityEngine.Vector3;
     static FreeRotateHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, size: number): UnityEngine.Quaternion;
     static ScaleSlider(scale: number, position: UnityEngine.Vector3, direction: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, snap: number): number;
     static Disc(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, axis: UnityEngine.Vector3, size: number, cutoffPlane: boolean, snap: number): UnityEngine.Quaternion;
@@ -2360,7 +2369,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
-    BeginInvoke(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -2376,7 +2385,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(position: UnityEngine.Vector3): number;
-    BeginInvoke(position: UnityEngine.Vector3, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(position: UnityEngine.Vector3, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -2562,7 +2571,7 @@ export declare namespace UnityEditor {
     textureDimension: UnityEngine.Rendering.TextureDimension;
     rangeLimits: UnityEngine.Vector2;
     hasMixedValue: boolean;
-    applyPropertyCallback: UnityEditor.MaterialProperty_ApplyPropertyCallback;
+    applyPropertyCallback: ((prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any) => boolean);
     colorValue: UnityEngine.Color;
     vectorValue: UnityEngine.Vector4;
     floatValue: number;
@@ -2581,7 +2590,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any): boolean;
-    BeginInvoke(prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): boolean;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -2654,7 +2663,7 @@ export declare namespace UnityEditor {
   }
   export class MonoScript {
     constructor();
-    bytes: System.Byte[];
+    bytes: Byte[];
     text: string;
     dataSize: System.Int64;
     name: string;
@@ -4500,7 +4509,7 @@ export declare namespace UnityEditor {
   export class ShaderData_VariantCompileInfo {
     Success: boolean;
     Messages: UnityEditor.ShaderMessage[];
-    ShaderData: System.Byte[];
+    ShaderData: Byte[];
     Attributes: UnityEngine.Rendering.VertexAttribute[];
     ConstantBuffers: UnityEditor.ShaderData_ConstantBufferInfo[];
     TextureBindings: UnityEditor.ShaderData_TextureBindingInfo[];
@@ -4682,9 +4691,9 @@ export declare namespace UnityEditor {
   }
   export class Undo {
     constructor();
-    static undoRedoPerformed: UnityEditor.Undo_UndoRedoCallback;
-    static willFlushUndoRecord: UnityEditor.Undo_WillFlushUndoRecord;
-    static postprocessModifications: UnityEditor.Undo_PostprocessModifications;
+    static undoRedoPerformed: (() => void);
+    static willFlushUndoRecord: (() => void);
+    static postprocessModifications: ((modifications: UnityEditor.UndoPropertyModification[]) => UnityEditor.UndoPropertyModification[]);
     static RegisterCompleteObjectUndo(objectToUndo: UnityEngine.Object, name: string): void;
     static RegisterCompleteObjectUndo(objectsToUndo: UnityEngine.Object[], name: string): void;
     static SetTransformParent(transform: UnityEngine.Transform, newParent: UnityEngine.Transform, name: string): void;
@@ -4730,7 +4739,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -4746,7 +4755,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -4762,7 +4771,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(modifications: UnityEditor.UndoPropertyModification[]): UnityEditor.UndoPropertyModification[];
-    BeginInvoke(modifications: UnityEditor.UndoPropertyModification[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(modifications: UnityEditor.UndoPropertyModification[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): UnityEditor.UndoPropertyModification[];
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -5013,7 +5022,7 @@ export declare namespace UnityEditor {
   }
   export class AnimationUtility {
     constructor();
-    static onCurveWasModified: UnityEditor.AnimationUtility_OnCurveWasModified;
+    static onCurveWasModified: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType) => void);
     static GetAnimationClips(component: UnityEngine.Animation): UnityEngine.AnimationClip[];
     static GetAnimationClips(gameObject: UnityEngine.GameObject): UnityEngine.AnimationClip[];
     static SetAnimationClips(animation: UnityEngine.Animation, clips: UnityEngine.AnimationClip[]): void;
@@ -5073,7 +5082,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType): void;
-    BeginInvoke(clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -5247,7 +5256,7 @@ export declare namespace UnityEditor {
     static GlobalArtifactProcessedVersion: System.UInt32;
     static ActiveRefreshImportMode: UnityEditor.AssetDatabase_RefreshImportMode;
     static DesiredWorkerCount: number;
-    static onImportPackageItemsCompleted: ((arg0: string[]) => void);
+    static onImportPackageItemsCompleted: ((obj: string[]) => void);
     static CanOpenForEdit(assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions): void;
     static IsOpenForEdit(assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions): void;
     static MakeEditable(path: string): boolean;
@@ -5395,7 +5404,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(packageName: string): void;
-    BeginInvoke(packageName: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(packageName: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -5411,7 +5420,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(packageName: string, errorMessage: string): void;
-    BeginInvoke(packageName: string, errorMessage: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(packageName: string, errorMessage: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -5615,7 +5624,7 @@ export declare namespace UnityEditor {
   }
   export class ShaderInclude {
     constructor();
-    bytes: System.Byte[];
+    bytes: Byte[];
     text: string;
     dataSize: System.Int64;
     name: string;
@@ -6073,11 +6082,11 @@ export declare namespace UnityEditor {
     static EndCurveFrame(): void;
     static DrawCurveFrame(r: UnityEngine.Rect): UnityEngine.Rect;
     static DrawCurveBackground(r: UnityEngine.Rect): void;
-    static DrawFilledCurve(r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveEvaluator, curveColor: UnityEngine.Color): void;
-    static DrawFilledCurve(r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveAndColorEvaluator): void;
-    static DrawMinMaxFilledCurve(r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioMinMaxCurveAndColorEvaluator): void;
-    static DrawSymmetricFilledCurve(r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveAndColorEvaluator): void;
-    static DrawCurve(r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveEvaluator, curveColor: UnityEngine.Color): void;
+    static DrawFilledCurve(r: UnityEngine.Rect, eval: ((x: number) => number), curveColor: UnityEngine.Color): void;
+    static DrawFilledCurve(r: UnityEngine.Rect, eval: ((x: number, col: Ref<UnityEngine.Color>) => number)): void;
+    static DrawMinMaxFilledCurve(r: UnityEngine.Rect, eval: ((x: number, col: Ref<UnityEngine.Color>, minValue: Ref<number>, maxValue: Ref<number>) => void)): void;
+    static DrawSymmetricFilledCurve(r: UnityEngine.Rect, eval: ((x: number, col: Ref<UnityEngine.Color>) => number)): void;
+    static DrawCurve(r: UnityEngine.Rect, eval: ((x: number) => number), curveColor: UnityEngine.Color): void;
     static DrawGradientRect(r: UnityEngine.Rect, c1: UnityEngine.Color, c2: UnityEngine.Color, blend: number, horizontal: boolean): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -6089,7 +6098,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(x: number): number;
-    BeginInvoke(x: number, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(x: number, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -6174,7 +6183,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(context: UnityEditor.CommandExecuteContext): void;
-    BeginInvoke(context: UnityEditor.CommandExecuteContext, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(context: UnityEditor.CommandExecuteContext, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -6212,8 +6221,8 @@ export declare namespace UnityEditor {
   }
   export class CommandService {
     static GetCommandLabel(commandId: string): string;
-    static RegisterCommand(id: string, label: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint): void;
-    static RegisterCommand(id: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint): void;
+    static RegisterCommand(id: string, label: string, handler: ((context: UnityEditor.CommandExecuteContext) => void), hint?: UnityEditor.CommandHint): void;
+    static RegisterCommand(id: string, handler: ((context: UnityEditor.CommandExecuteContext) => void), hint?: UnityEditor.CommandHint): void;
     static UnregisterCommand(id: string): boolean;
     static Exists(id: string): boolean;
     static Execute(id: string): any;
@@ -6413,7 +6422,7 @@ export declare namespace UnityEditor {
     static lightingSettings: UnityEngine.LightingSettings;
     static lightingSettingsDefaults: UnityEngine.LightingSettings;
     static lightmapSnapshot: UnityEditor.LightmapSnapshot;
-    static completed: UnityEditor.Lightmapping_OnCompletedFunction;
+    static completed: (() => void);
     static ClearDiskCache(): void;
     static BakeAsync(): boolean;
     static Bake(): boolean;
@@ -6445,7 +6454,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -6461,7 +6470,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -6579,8 +6588,8 @@ export declare namespace UnityEditor {
   export class GenericMenu {
     constructor();
     allowDuplicateNames: boolean;
-    AddItem(content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction): void;
-    AddItem(content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction2, userData: any): void;
+    AddItem(content: UnityEngine.GUIContent, on: boolean, func: (() => void)): void;
+    AddItem(content: UnityEngine.GUIContent, on: boolean, func: ((userData: any) => void), userData: any): void;
     AddDisabledItem(content: UnityEngine.GUIContent): void;
     AddDisabledItem(content: UnityEngine.GUIContent, on: boolean): void;
     AddSeparator(path: string): void;
@@ -6597,7 +6606,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -6613,7 +6622,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(userData: any): void;
-    BeginInvoke(userData: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(userData: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7283,7 +7292,7 @@ export declare namespace UnityEditor {
   }
   export class PrefabUtility {
     constructor();
-    static prefabInstanceUpdated: UnityEditor.PrefabUtility_PrefabInstanceUpdated;
+    static prefabInstanceUpdated: ((instance: UnityEngine.GameObject) => void);
     static GetPrefabObject(targetObject: UnityEngine.Object): UnityEngine.Object;
     static GetPrefabInstanceHandle(instanceComponentOrGameObject: UnityEngine.Object): UnityEngine.Object;
     static HasManagedReferencesWithMissingTypes(assetComponentOrGameObject: UnityEngine.Object): boolean;
@@ -7373,7 +7382,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(instance: UnityEngine.GameObject): void;
-    BeginInvoke(instance: UnityEngine.GameObject, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(instance: UnityEngine.GameObject, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7458,7 +7467,7 @@ export declare namespace UnityEditor {
     static UnregisterCancelCallback(id: number): void;
     static Pause(id: number): boolean;
     static Resume(id: number): boolean;
-    static RegisterPauseCallback(id: number, callback: ((arg0: boolean) => boolean)): void;
+    static RegisterPauseCallback(id: number, callback: ((arg: boolean) => boolean)): void;
     static UnregisterPauseCallback(id: number): void;
     static GetCount(): number;
     static GetCountPerStatus(): number[];
@@ -7561,7 +7570,7 @@ export declare namespace UnityEditor {
     Remove(): number;
     RegisterCancelCallback(callback: (() => boolean)): void;
     UnregisterCancelCallback(): void;
-    RegisterPauseCallback(callback: ((arg0: boolean) => boolean)): void;
+    RegisterPauseCallback(callback: ((arg: boolean) => boolean)): void;
     UnregisterPauseCallback(): void;
     SetDescription(newDescription: string): void;
     SetTimeDisplayMode(mode: UnityEditor.Progress_TimeDisplayMode): void;
@@ -7677,7 +7686,7 @@ export declare namespace UnityEditor {
     ToString(): string;
   }
   export class LightingExplorerTableColumn {
-    constructor(type: UnityEditor.LightingExplorerTableColumn_DataType, headerContent: UnityEngine.GUIContent, propertyName?: string, width?: number, onGUIDelegate?: UnityEditor.LightingExplorerTableColumn_OnGUIDelegate, compareDelegate?: UnityEditor.LightingExplorerTableColumn_ComparePropertiesDelegate, copyDelegate?: UnityEditor.LightingExplorerTableColumn_CopyPropertiesDelegate, dependencyIndices?: number[]);
+    constructor(type: UnityEditor.LightingExplorerTableColumn_DataType, headerContent: UnityEngine.GUIContent, propertyName?: string, width?: number, onGUIDelegate?: ((r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[]) => void), compareDelegate?: ((lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty) => number), copyDelegate?: ((target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty) => void), dependencyIndices?: number[]);
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -7697,7 +7706,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[]): void;
-    BeginInvoke(r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7713,7 +7722,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty): number;
-    BeginInvoke(lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7729,7 +7738,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty): void;
-    BeginInvoke(target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7810,10 +7819,10 @@ export declare namespace UnityEditor {
     position: UnityEngine.Rect;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    static lastActiveSceneViewChanged: ((arg0: UnityEditor.SceneView, arg1: UnityEditor.SceneView) => void);
+    static lastActiveSceneViewChanged: ((arg1: UnityEditor.SceneView, arg2: UnityEditor.SceneView) => void);
     m_SceneLighting: boolean;
     m_AudioPlay: boolean;
-    static onSceneGUIDelegate: UnityEditor.SceneView_OnSceneFunc;
+    static onSceneGUIDelegate: ((sceneView: UnityEditor.SceneView) => void);
     m_RenderMode: UnityEditor.DrawCameraMode;
     m_ValidateTrueMetals: boolean;
     ResetCameraSettings(): void;
@@ -7918,7 +7927,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sceneView: UnityEditor.SceneView): void;
-    BeginInvoke(sceneView: UnityEditor.SceneView, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sceneView: UnityEditor.SceneView, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -7986,12 +7995,12 @@ export declare namespace UnityEditor {
     settingsPath: string;
     scope: UnityEditor.SettingsScope;
     keywords: System.Collections.Generic.IEnumerable<string>;
-    guiHandler: ((arg0: string) => void);
+    guiHandler: ((obj: string) => void);
     titleBarGuiHandler: (() => void);
     footerBarGuiHandler: (() => void);
-    activateHandler: ((arg0: string, arg1: UnityEngine.UIElements.VisualElement) => void);
+    activateHandler: ((arg1: string, arg2: UnityEngine.UIElements.VisualElement) => void);
     deactivateHandler: (() => void);
-    hasSearchInterestHandler: ((arg0: string) => boolean);
+    hasSearchInterestHandler: ((arg: string) => boolean);
     inspectorUpdateHandler: (() => void);
     OnActivate(searchContext: string, rootElement: UnityEngine.UIElements.VisualElement): void;
     OnDeactivate(): void;
@@ -8026,12 +8035,12 @@ export declare namespace UnityEditor {
     settingsPath: string;
     scope: UnityEditor.SettingsScope;
     keywords: System.Collections.Generic.IEnumerable<string>;
-    guiHandler: ((arg0: string) => void);
+    guiHandler: ((obj: string) => void);
     titleBarGuiHandler: (() => void);
     footerBarGuiHandler: (() => void);
-    activateHandler: ((arg0: string, arg1: UnityEngine.UIElements.VisualElement) => void);
+    activateHandler: ((arg1: string, arg2: UnityEngine.UIElements.VisualElement) => void);
     deactivateHandler: (() => void);
-    hasSearchInterestHandler: ((arg0: string) => boolean);
+    hasSearchInterestHandler: ((arg: string) => boolean);
     inspectorUpdateHandler: (() => void);
     static CreateProviderFromAssetPath(settingsWindowPath: string, assetPath: string, keywords?: any): UnityEditor.AssetSettingsProvider;
     static CreateProviderFromObject(settingsWindowPath: string, settingsObj: UnityEngine.Object, keywords?: any): UnityEditor.AssetSettingsProvider;
@@ -8261,7 +8270,7 @@ export declare namespace UnityEditor {
     static organizationKey: string;
     static coppaCompliance: UnityEditor.CoppaCompliance;
     static projectBound: boolean;
-    static RefreshAccessToken(refresh: ((arg0: boolean) => void)): void;
+    static RefreshAccessToken(refresh: ((obj: boolean) => void)): void;
     static ShowLogin(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -8482,7 +8491,7 @@ export declare namespace UnityEditor {
     GetCompatibleWithAnyPlatform(): boolean;
     SetExcludeFromAnyPlatform(platformName: string, excludedFromAny: boolean): void;
     GetExcludeFromAnyPlatform(platformName: string): boolean;
-    SetIncludeInBuildDelegate(includeInBuildDelegate: UnityEditor.PluginImporter_IncludeInBuildDelegate): void;
+    SetIncludeInBuildDelegate(includeInBuildDelegate: ((path: string) => boolean)): void;
     SetExcludeFromAnyPlatform(platform: UnityEditor.BuildTarget, excludedFromAny: boolean): void;
     GetExcludeFromAnyPlatform(platform: UnityEditor.BuildTarget): boolean;
     SetExcludeEditorFromAnyPlatform(excludedFromAny: boolean): void;
@@ -8522,7 +8531,7 @@ export declare namespace UnityEditor {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(path: string): boolean;
-    BeginInvoke(path: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(path: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): boolean;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -9593,7 +9602,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(): boolean;
-      BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): boolean;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -9642,7 +9651,7 @@ export declare namespace UnityEditor {
     }
     export class AnimFloat {
       constructor(value: number);
-      constructor(value: number, callback: UnityEngine.Events.UnityAction);
+      constructor(value: number, callback: (() => void));
       isAnimating: boolean;
       target: number;
       value: number;
@@ -9656,7 +9665,7 @@ export declare namespace UnityEditor {
     export class AnimVector3 {
       constructor();
       constructor(value: UnityEngine.Vector3);
-      constructor(value: UnityEngine.Vector3, callback: UnityEngine.Events.UnityAction);
+      constructor(value: UnityEngine.Vector3, callback: (() => void));
       isAnimating: boolean;
       target: UnityEngine.Vector3;
       value: UnityEngine.Vector3;
@@ -9670,8 +9679,8 @@ export declare namespace UnityEditor {
     export class AnimBool {
       constructor();
       constructor(value: boolean);
-      constructor(callback: UnityEngine.Events.UnityAction);
-      constructor(value: boolean, callback: UnityEngine.Events.UnityAction);
+      constructor(callback: (() => void));
+      constructor(value: boolean, callback: (() => void));
       faded: number;
       isAnimating: boolean;
       target: boolean;
@@ -9686,7 +9695,7 @@ export declare namespace UnityEditor {
     }
     export class AnimQuaternion {
       constructor(value: UnityEngine.Quaternion);
-      constructor(value: UnityEngine.Quaternion, callback: UnityEngine.Events.UnityAction);
+      constructor(value: UnityEngine.Quaternion, callback: (() => void));
       isAnimating: boolean;
       target: UnityEngine.Quaternion;
       value: UnityEngine.Quaternion;
@@ -11215,7 +11224,7 @@ export declare namespace UnityEditor {
   }
   export namespace Connect {
     export class UnityOAuth {
-      static GetAuthorizationCodeAsync(clientId: string, callback: ((arg0: UnityEditor.Connect.UnityOAuth_AuthCodeResponse) => void)): void;
+      static GetAuthorizationCodeAsync(clientId: string, callback: ((obj: UnityEditor.Connect.UnityOAuth_AuthCodeResponse) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11329,20 +11338,20 @@ export declare namespace UnityEditor {
     export class UnityEventTools {
       static AddPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase): void;
       static RemovePersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number): void;
-      static AddPersistentListener(unityEvent: UnityEngine.Events.UnityEvent, call: UnityEngine.Events.UnityAction): void;
-      static RegisterPersistentListener(unityEvent: UnityEngine.Events.UnityEvent, index: number, call: UnityEngine.Events.UnityAction): void;
-      static RemovePersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: UnityEngine.Events.UnityAction): void;
+      static AddPersistentListener(unityEvent: UnityEngine.Events.UnityEvent, call: (() => void)): void;
+      static RegisterPersistentListener(unityEvent: UnityEngine.Events.UnityEvent, index: number, call: (() => void)): void;
+      static RemovePersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: (() => void)): void;
       static UnregisterPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number): void;
-      static AddVoidPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: UnityEngine.Events.UnityAction): void;
-      static RegisterVoidPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: UnityEngine.Events.UnityAction): void;
-      static AddIntPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: any, argument: number): void;
-      static RegisterIntPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: number): void;
-      static AddFloatPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: any, argument: number): void;
-      static RegisterFloatPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: number): void;
-      static AddBoolPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: any, argument: boolean): void;
-      static RegisterBoolPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: boolean): void;
-      static AddStringPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: any, argument: string): void;
-      static RegisterStringPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: string): void;
+      static AddVoidPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: (() => void)): void;
+      static RegisterVoidPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: (() => void)): void;
+      static AddIntPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: ((arg0: number) => void), argument: number): void;
+      static RegisterIntPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: ((arg0: number) => void), argument: number): void;
+      static AddFloatPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: ((arg0: number) => void), argument: number): void;
+      static RegisterFloatPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: ((arg0: number) => void), argument: number): void;
+      static AddBoolPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: ((arg0: boolean) => void), argument: boolean): void;
+      static RegisterBoolPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: ((arg0: boolean) => void), argument: boolean): void;
+      static AddStringPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, call: ((arg0: string) => void), argument: string): void;
+      static RegisterStringPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: ((arg0: string) => void), argument: string): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11639,7 +11648,7 @@ export declare namespace UnityEditor {
     export namespace RestService {
       export class PlayerDataFileLocator {
         constructor();
-        static Register(locator: UnityEditor.Experimental.RestService.PlayerDataFileLocator_Locator): void;
+        static Register(locator: ((path: Ref<string>) => boolean)): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -11685,7 +11694,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(devices: UnityEditor.Hardware.UsbDevice[]): void;
-      BeginInvoke(devices: UnityEditor.Hardware.UsbDevice[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(devices: UnityEditor.Hardware.UsbDevice[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -11734,7 +11743,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(): void;
-      BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -11767,10 +11776,10 @@ export declare namespace UnityEditor {
         radiusHandleColor: UnityEngine.Color;
         fillColor: UnityEngine.Color;
         wireframeColor: UnityEngine.Color;
-        angleHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        angleHandleSizeFunction: UnityEditor.Handles_SizeFunction;
-        radiusHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        radiusHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        angleHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        angleHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
+        radiusHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        radiusHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         static DefaultAngleHandleDrawFunction(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
         static DefaultAngleHandleSizeFunction(position: UnityEngine.Vector3): number;
         static DefaultRadiusHandleSizeFunction(position: UnityEngine.Vector3): number;
@@ -11790,8 +11799,8 @@ export declare namespace UnityEditor {
         axes: UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle_Axes;
         handleColor: UnityEngine.Color;
         wireframeColor: UnityEngine.Color;
-        midpointHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        midpointHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        midpointHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         SetColor(color: UnityEngine.Color): void;
         DrawHandle(): void;
         Equals(obj: any): boolean;
@@ -11809,8 +11818,8 @@ export declare namespace UnityEditor {
         axes: UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle_Axes;
         handleColor: UnityEngine.Color;
         wireframeColor: UnityEngine.Color;
-        midpointHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        midpointHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        midpointHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         SetColor(color: UnityEngine.Color): void;
         DrawHandle(): void;
         Equals(obj: any): boolean;
@@ -11830,8 +11839,8 @@ export declare namespace UnityEditor {
         axes: UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle_Axes;
         handleColor: UnityEngine.Color;
         wireframeColor: UnityEngine.Color;
-        midpointHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        midpointHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        midpointHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         static DefaultMidpointHandleSizeFunction(position: UnityEngine.Vector3): number;
         SetColor(color: UnityEngine.Color): void;
         DrawHandle(): void;
@@ -11855,8 +11864,8 @@ export declare namespace UnityEditor {
         axes: UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle_Axes;
         handleColor: UnityEngine.Color;
         wireframeColor: UnityEngine.Color;
-        midpointHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        midpointHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        midpointHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         SetColor(color: UnityEngine.Color): void;
         DrawHandle(): void;
         Equals(obj: any): boolean;
@@ -11885,7 +11894,7 @@ export declare namespace UnityEditor {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(): void;
-        BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -11924,7 +11933,7 @@ export declare namespace UnityEditor {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader): void;
-        BeginInvoke(multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -12062,7 +12071,7 @@ export declare namespace UnityEditor {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle): boolean;
-        BeginInvoke(position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): boolean;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -12078,7 +12087,7 @@ export declare namespace UnityEditor {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean): number[];
-        BeginInvoke(clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): number[];
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -12168,8 +12177,8 @@ export declare namespace UnityEditor {
         radius: number;
         fillAlpha: number;
         wireframeAlpha: number;
-        angleHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        angleHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        angleHandleDrawFunction: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
+        angleHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         DrawHandle(): void;
         DrawHandle(usingArticulations: boolean): void;
         Equals(obj: any): boolean;
@@ -12307,8 +12316,8 @@ export declare namespace UnityEditor {
       constructor(filePath: string, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
       constructor(filePath: string, audioAttrs: UnityEditor.Media.AudioTrackAttributes);
       m_Ptr: System.IntPtr;
-      AddFrame(width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<System.Byte>): boolean;
-      AddFrame(width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<System.Byte>, time: UnityEditor.Media.MediaTime): boolean;
+      AddFrame(width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<Byte>): boolean;
+      AddFrame(width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<Byte>, time: UnityEditor.Media.MediaTime): boolean;
       AddFrame(texture: UnityEngine.Texture2D): boolean;
       AddFrame(texture: UnityEngine.Texture2D, time: UnityEditor.Media.MediaTime): boolean;
       AddSamples(trackIndex: System.UInt16, interleavedSamples: Unity.Collections.NativeArray<number>): boolean;
@@ -12392,8 +12401,8 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
     }
     export class MemorySection {
-      constructor(bytes: System.Byte[], startAddress: System.UInt64);
-      bytes: System.Byte[];
+      constructor(bytes: Byte[], startAddress: System.UInt64);
+      bytes: Byte[];
       startAddress: System.UInt64;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -12401,14 +12410,14 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
     }
     export class TypeDescription {
-      constructor(name: string, assembly: string, fields: UnityEditor.MemoryProfiler.FieldDescription[], staticFieldBytes: System.Byte[], baseOrElementTypeIndes: number, size: number, typeInfoAddress: System.UInt64, typeIndex: number, flags: UnityEditor.MemoryProfiler.TypeDescription_TypeFlags);
+      constructor(name: string, assembly: string, fields: UnityEditor.MemoryProfiler.FieldDescription[], staticFieldBytes: Byte[], baseOrElementTypeIndes: number, size: number, typeInfoAddress: System.UInt64, typeIndex: number, flags: UnityEditor.MemoryProfiler.TypeDescription_TypeFlags);
       isValueType: boolean;
       isArray: boolean;
       arrayRank: number;
       name: string;
       assembly: string;
       fields: UnityEditor.MemoryProfiler.FieldDescription[];
-      staticFieldBytes: System.Byte[];
+      staticFieldBytes: Byte[];
       baseOrElementTypeIndex: number;
       size: number;
       typeInfoAddress: System.UInt64;
@@ -12460,14 +12469,14 @@ export declare namespace UnityEditor {
       Close(): void;
       Tick(): void;
       Send(data: string): void;
-      Send(data: System.Byte[]): void;
-      RegisterMessageHandler(handler: ((arg0: string) => void)): (() => void);
-      UnregisterMessageHandler(handler: ((arg0: string) => void)): void;
-      RegisterMessageHandler(handler: ((arg0: System.Byte[]) => void)): (() => void);
-      UnregisterMessageHandler(handler: ((arg0: System.Byte[]) => void)): void;
+      Send(data: Byte[]): void;
+      RegisterMessageHandler(handler: ((obj: string) => void)): (() => void);
+      UnregisterMessageHandler(handler: ((obj: string) => void)): void;
+      RegisterMessageHandler(handler: ((obj: Byte[]) => void)): (() => void);
+      UnregisterMessageHandler(handler: ((obj: Byte[]) => void)): void;
       NewRequestId(): number;
       GetChannelClientInfo(): UnityEditor.MPE.ChannelClientInfo;
-      static Send(connectionId: number, data: System.Byte[]): void;
+      static Send(connectionId: number, data: Byte[]): void;
       static Close(channelName: string): void;
       static GetOrCreateClient(channelName: string): UnityEditor.MPE.ChannelClient;
       static Shutdown(): void;
@@ -12481,8 +12490,8 @@ export declare namespace UnityEditor {
       ToString(): string;
     }
     export class ChannelClientScope {
-      constructor(autoTick: boolean, channelName: string, handler: ((arg0: string) => void), closeClientOnExit?: boolean);
-      constructor(autoTick: boolean, channelName: string, handler: ((arg0: System.Byte[]) => void), closeClientOnExit?: boolean);
+      constructor(autoTick: boolean, channelName: string, handler: ((obj: string) => void), closeClientOnExit?: boolean);
+      constructor(autoTick: boolean, channelName: string, handler: ((obj: Byte[]) => void), closeClientOnExit?: boolean);
       client: UnityEditor.MPE.ChannelClient;
       Dispose(): void;
       Equals(obj: any): boolean;
@@ -12491,12 +12500,12 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
     }
     export class ChannelService {
-      static GetOrCreateChannel(channelName: string, handler: ((arg0: number, arg1: System.Byte[]) => void)): (() => void);
-      static RegisterMessageHandler(channelName: string, handler: ((arg0: number, arg1: System.Byte[]) => void)): (() => void);
-      static UnregisterMessageHandler(channelName: string, handler: ((arg0: number, arg1: System.Byte[]) => void)): void;
+      static GetOrCreateChannel(channelName: string, handler: ((arg1: number, arg2: Byte[]) => void)): (() => void);
+      static RegisterMessageHandler(channelName: string, handler: ((arg1: number, arg2: Byte[]) => void)): (() => void);
+      static UnregisterMessageHandler(channelName: string, handler: ((arg1: number, arg2: Byte[]) => void)): void;
       static CloseChannel(channelName: string): void;
-      static Broadcast(channelId: number, data: System.Byte[]): void;
-      static Send(connectionId: number, data: System.Byte[]): void;
+      static Broadcast(channelId: number, data: Byte[]): void;
+      static Send(connectionId: number, data: Byte[]): void;
       static GetAddress(): string;
       static GetPort(): number;
       static Start(): void;
@@ -12505,7 +12514,7 @@ export declare namespace UnityEditor {
       static GetChannelList(): UnityEditor.MPE.ChannelInfo[];
       static GetChannelClientList(): UnityEditor.MPE.ChannelClientInfo[];
       static Broadcast(channelId: number, data: string): void;
-      static BroadcastBinary(channelId: number, data: System.Byte[]): void;
+      static BroadcastBinary(channelId: number, data: Byte[]): void;
       static Send(connectionId: number, data: string): void;
       static ChannelNameToId(channelName: string): number;
       Equals(obj: any): boolean;
@@ -12514,7 +12523,7 @@ export declare namespace UnityEditor {
       ToString(): string;
     }
     export class ChannelScope {
-      constructor(channelName: string, handler: ((arg0: number, arg1: System.Byte[]) => void), closeChannelOnExit?: boolean);
+      constructor(channelName: string, handler: ((arg1: number, arg2: Byte[]) => void), closeChannelOnExit?: boolean);
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -12529,16 +12538,16 @@ export declare namespace UnityEditor {
       static isConnected: boolean;
       static Start(): void;
       static Close(): void;
-      static RegisterEventHandler(eventType: string, handler: ((arg0: string, arg1: any[]) => void)): (() => void);
-      static RegisterEventHandler(eventType: string, handler: ((arg0: string, arg1: any[]) => any)): (() => void);
-      static UnregisterEventHandler(eventType: string, handler: ((arg0: string, arg1: any[]) => any)): void;
+      static RegisterEventHandler(eventType: string, handler: ((arg1: string, arg2: any[]) => void)): (() => void);
+      static RegisterEventHandler(eventType: string, handler: ((arg1: string, arg2: any[]) => any)): (() => void);
+      static UnregisterEventHandler(eventType: string, handler: ((arg1: string, arg2: any[]) => any)): void;
       static Clear(): void;
       static Emit(eventType: string, args?: any, targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
       static Emit(eventType: string, args: any[], targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
       static IsRequestPending(eventType: string): boolean;
       static CancelRequest(eventType: string, message?: string): boolean;
-      static Request(eventType: string, promiseHandler: ((arg0: System.Exception, arg1: any[]) => void), args?: any, timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
-      static Request(eventType: string, promiseHandler: ((arg0: System.Exception, arg1: any[]) => void), args: any[], timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
+      static Request(eventType: string, promiseHandler: ((arg1: System.Exception, arg2: any[]) => void), args?: any, timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
+      static Request(eventType: string, promiseHandler: ((arg1: System.Exception, arg2: any[]) => void), args: any[], timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization): void;
       static Log(msg: string): void;
       static Log(msg: string, logType: UnityEngine.LogType): void;
       static Tick(): void;
@@ -12613,8 +12622,8 @@ export declare namespace UnityEditor {
       static GetProcessState(pid: number): UnityEditor.MPE.ProcessState;
       static HasCapability(capName: string): boolean;
       static ApplyPropertyModifications(modifications: UnityEditor.PropertyModification[]): void;
-      static SerializeObject(instanceId: number): System.Byte[];
-      static DeserializeObject(bytes: System.Byte[]): UnityEngine.Object;
+      static SerializeObject(instanceId: number): Byte[];
+      static DeserializeObject(bytes: Byte[]): UnityEngine.Object;
       static EnableProfileConnection(dataPath: string): number;
       static DisableProfileConnection(): void;
       Equals(obj: any): boolean;
@@ -12626,7 +12635,7 @@ export declare namespace UnityEditor {
   export namespace Networking {
     export namespace PlayerConnection {
       export class PlayerConnectionGUIUtility {
-        static GetConnectionState(parentWindow: UnityEditor.EditorWindow, connectedCallback?: ((arg0: string) => void)): UnityEngine.Networking.PlayerConnection.IConnectionState;
+        static GetConnectionState(parentWindow: UnityEditor.EditorWindow, connectedCallback?: ((obj: string) => void)): UnityEngine.Networking.PlayerConnection.IConnectionState;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -12664,16 +12673,16 @@ export declare namespace UnityEditor {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Initialize(): void;
-        Register(messageId: System.Guid, callback: UnityEngine.Events.UnityAction<UnityEngine.Networking.PlayerConnection.MessageEventArgs>): void;
-        Unregister(messageId: System.Guid, callback: UnityEngine.Events.UnityAction<UnityEngine.Networking.PlayerConnection.MessageEventArgs>): void;
-        RegisterConnection(callback: UnityEngine.Events.UnityAction<number>): void;
-        RegisterDisconnection(callback: UnityEngine.Events.UnityAction<number>): void;
-        UnregisterConnection(callback: UnityEngine.Events.UnityAction<number>): void;
-        UnregisterDisconnection(callback: UnityEngine.Events.UnityAction<number>): void;
-        Send(messageId: System.Guid, data: System.Byte[], playerId: number): void;
-        Send(messageId: System.Guid, data: System.Byte[]): void;
-        TrySend(messageId: System.Guid, data: System.Byte[], playerId: number): boolean;
-        TrySend(messageId: System.Guid, data: System.Byte[]): boolean;
+        Register(messageId: System.Guid, callback: ((arg0: UnityEngine.Networking.PlayerConnection.MessageEventArgs) => void)): void;
+        Unregister(messageId: System.Guid, callback: ((arg0: UnityEngine.Networking.PlayerConnection.MessageEventArgs) => void)): void;
+        RegisterConnection(callback: ((arg0: number) => void)): void;
+        RegisterDisconnection(callback: ((arg0: number) => void)): void;
+        UnregisterConnection(callback: ((arg0: number) => void)): void;
+        UnregisterDisconnection(callback: ((arg0: number) => void)): void;
+        Send(messageId: System.Guid, data: Byte[], playerId: number): void;
+        Send(messageId: System.Guid, data: Byte[]): void;
+        TrySend(messageId: System.Guid, data: Byte[], playerId: number): boolean;
+        TrySend(messageId: System.Guid, data: Byte[]): boolean;
         DisconnectAll(): void;
         SetDirty(): void;
         GetInstanceID(): number;
@@ -12789,7 +12798,7 @@ export declare namespace UnityEditor {
       enabledInHierarchy: boolean;
       enabledSelf: boolean;
       visible: boolean;
-      generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+      generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -12831,7 +12840,7 @@ export declare namespace UnityEditor {
       ElementAt(index: number): UnityEngine.UIElements.VisualElement;
       IndexOf(element: UnityEngine.UIElements.VisualElement): number;
       Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
-      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      Sort(comp: ((x: UnityEngine.UIElements.VisualElement, y: UnityEngine.UIElements.VisualElement) => number)): void;
       BringToFront(): void;
       SendToBack(): void;
       PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
@@ -13641,7 +13650,7 @@ export declare namespace UnityEditor {
           ToString(): string;
         }
         export class ManagedMemorySectionEntries {
-          bytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Byte[]>;
+          bytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<Byte[]>;
           startAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
           GetNumEntries(): System.UInt32;
           Equals(obj: any): boolean;
@@ -13679,7 +13688,7 @@ export declare namespace UnityEditor {
           typeDescriptionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           assembly: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           fieldIndices: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number[]>;
-          staticFieldBytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Byte[]>;
+          staticFieldBytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<Byte[]>;
           baseOrElementTypeIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           size: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           typeInfoAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
@@ -14065,7 +14074,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14081,7 +14090,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(path: string, mode: UnityEditor.SceneManagement.OpenSceneMode): void;
-      BeginInvoke(path: string, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(path: string, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14097,7 +14106,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14113,7 +14122,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene, removingScene: boolean): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, removingScene: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, removingScene: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14129,7 +14138,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14145,7 +14154,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene, path: string): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, path: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, path: string, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14161,7 +14170,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14177,7 +14186,7 @@ export declare namespace UnityEditor {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(scene: UnityEngine.SceneManagement.Scene): void;
-      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(scene: UnityEngine.SceneManagement.Scene, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -14212,7 +14221,7 @@ export declare namespace UnityEditor {
     }
     export class SceneHierarchyHooks {
       static provideSubScenes: (() => UnityEditor.SceneManagement.SceneHierarchyHooks_SubSceneInfo[]);
-      static provideSubSceneName: ((arg0: UnityEditor.SceneManagement.SceneHierarchyHooks_SubSceneInfo) => string);
+      static provideSubSceneName: ((arg: UnityEditor.SceneManagement.SceneHierarchyHooks_SubSceneInfo) => string);
       static ReloadAllSceneHierarchies(): void;
       static CanSetNewParent(transform: UnityEngine.Transform, newParent: UnityEngine.Transform): boolean;
       static CanMoveTransformToScene(transform: UnityEngine.Transform, scene: UnityEngine.SceneManagement.Scene): boolean;
@@ -14462,7 +14471,7 @@ export declare namespace UnityEditor {
     }
     export class ObjectSelectorSearchContext {
       constructor();
-      selectorConstraint: ((arg0: UnityEditor.SearchService.ObjectSelectorTargetInfo, arg1: UnityEngine.Object[], arg2: UnityEditor.SearchService.ObjectSelectorSearchContext) => boolean);
+      selectorConstraint: ((arg1: UnityEditor.SearchService.ObjectSelectorTargetInfo, arg2: UnityEngine.Object[], arg3: UnityEditor.SearchService.ObjectSelectorSearchContext) => boolean);
       guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
       currentObject: UnityEngine.Object;
@@ -14575,13 +14584,13 @@ export declare namespace UnityEditor {
       EndSearch(context: UnityEditor.SearchService.ISearchContext): void;
     }
     export interface ISearchEngine<T = any> {
-      Search(context: UnityEditor.SearchService.ISearchContext, query: string, asyncItemsReceived: ((arg0: System.Collections.Generic.IEnumerable<T>) => void)): System.Collections.Generic.IEnumerable<T>;
+      Search(context: UnityEditor.SearchService.ISearchContext, query: string, asyncItemsReceived: ((obj: System.Collections.Generic.IEnumerable<T>) => void)): System.Collections.Generic.IEnumerable<T>;
     }
     export interface IFilterEngine<T = any> {
       Filter(context: UnityEditor.SearchService.ISearchContext, query: string, objectToFilter: T): boolean;
     }
     export interface ISelectorEngine {
-      SelectObject(context: UnityEditor.SearchService.ISearchContext, onObjectSelectorClosed: ((arg0: UnityEngine.Object, arg1: boolean) => void), onObjectSelectedUpdated: ((arg0: UnityEngine.Object) => void)): boolean;
+      SelectObject(context: UnityEditor.SearchService.ISearchContext, onObjectSelectorClosed: ((arg1: UnityEngine.Object, arg2: boolean) => void), onObjectSelectedUpdated: ((obj: UnityEngine.Object) => void)): boolean;
       SetSearchFilter(context: UnityEditor.SearchService.ISearchContext, searchFilter: string): void;
     }
   }
@@ -15095,8 +15104,8 @@ export declare namespace UnityEditor {
       static onlineState: UnityEditor.VersionControl.OnlineState;
       static offlineReason: string;
       static activeTask: UnityEditor.VersionControl.Task;
-      static preSubmitCallback: UnityEditor.VersionControl.Provider_PreSubmitCallback;
-      static preCheckoutCallback: UnityEditor.VersionControl.Provider_PreCheckoutCallback;
+      static preSubmitCallback: ((list: UnityEditor.VersionControl.AssetList, changesetID: Ref<string>, changesetDescription: Ref<string>) => boolean);
+      static preCheckoutCallback: ((list: UnityEditor.VersionControl.AssetList, changesetID: Ref<string>, changesetDescription: Ref<string>) => boolean);
       static GetActivePlugin(): UnityEditor.VersionControl.Plugin;
       static GetActiveConfigFields(): UnityEditor.VersionControl.ConfigField[];
       static ChangeSets(): UnityEditor.VersionControl.Task;
@@ -15287,17 +15296,17 @@ export declare namespace UnityEditor {
       CopyTo(array: UnityEditor.VersionControl.Asset[]): void;
       CopyTo(index: number, array: UnityEditor.VersionControl.Asset[], arrayIndex: number, count: number): void;
       CopyTo(array: UnityEditor.VersionControl.Asset[], arrayIndex: number): void;
-      Exists(match: System.Predicate<UnityEditor.VersionControl.Asset>): boolean;
-      Find(match: System.Predicate<UnityEditor.VersionControl.Asset>): UnityEditor.VersionControl.Asset;
-      FindAll(match: System.Predicate<UnityEditor.VersionControl.Asset>): UnityEditor.VersionControl.Asset[];
-      FindIndex(match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      FindIndex(startIndex: number, match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      FindIndex(startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      FindLast(match: System.Predicate<UnityEditor.VersionControl.Asset>): UnityEditor.VersionControl.Asset;
-      FindLastIndex(match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      FindLastIndex(startIndex: number, match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      FindLastIndex(startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
-      ForEach(action: ((arg0: UnityEditor.VersionControl.Asset) => void)): void;
+      Exists(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): boolean;
+      Find(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): UnityEditor.VersionControl.Asset;
+      FindAll(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): UnityEditor.VersionControl.Asset[];
+      FindIndex(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      FindIndex(startIndex: number, match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      FindIndex(startIndex: number, count: number, match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      FindLast(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): UnityEditor.VersionControl.Asset;
+      FindLastIndex(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      FindLastIndex(startIndex: number, match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      FindLastIndex(startIndex: number, count: number, match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
+      ForEach(action: ((obj: UnityEditor.VersionControl.Asset) => void)): void;
       GetEnumerator(): System.Collections.Generic.List<UnityEditor.VersionControl.Asset>;
       GetRange(index: number, count: number): UnityEditor.VersionControl.Asset[];
       IndexOf(item: UnityEditor.VersionControl.Asset): number;
@@ -15309,7 +15318,7 @@ export declare namespace UnityEditor {
       LastIndexOf(item: UnityEditor.VersionControl.Asset, index: number): number;
       LastIndexOf(item: UnityEditor.VersionControl.Asset, index: number, count: number): number;
       Remove(item: UnityEditor.VersionControl.Asset): boolean;
-      RemoveAll(match: System.Predicate<UnityEditor.VersionControl.Asset>): number;
+      RemoveAll(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): number;
       RemoveAt(index: number): void;
       RemoveRange(index: number, count: number): void;
       Reverse(): void;
@@ -15317,10 +15326,10 @@ export declare namespace UnityEditor {
       Sort(): void;
       Sort(comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>): void;
       Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>): void;
-      Sort(comparison: System.Comparison<UnityEditor.VersionControl.Asset>): void;
+      Sort(comparison: ((x: UnityEditor.VersionControl.Asset, y: UnityEditor.VersionControl.Asset) => number)): void;
       ToArray(): UnityEditor.VersionControl.Asset[];
       TrimExcess(): void;
-      TrueForAll(match: System.Predicate<UnityEditor.VersionControl.Asset>): boolean;
+      TrueForAll(match: ((obj: UnityEditor.VersionControl.Asset) => boolean)): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -15342,17 +15351,17 @@ export declare namespace UnityEditor {
       CopyTo(array: UnityEditor.VersionControl.ChangeSet[]): void;
       CopyTo(index: number, array: UnityEditor.VersionControl.ChangeSet[], arrayIndex: number, count: number): void;
       CopyTo(array: UnityEditor.VersionControl.ChangeSet[], arrayIndex: number): void;
-      Exists(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): boolean;
-      Find(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): UnityEditor.VersionControl.ChangeSet;
-      FindAll(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): UnityEditor.VersionControl.ChangeSet[];
-      FindIndex(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      FindIndex(startIndex: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      FindIndex(startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      FindLast(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): UnityEditor.VersionControl.ChangeSet;
-      FindLastIndex(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      FindLastIndex(startIndex: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      FindLastIndex(startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
-      ForEach(action: ((arg0: UnityEditor.VersionControl.ChangeSet) => void)): void;
+      Exists(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): boolean;
+      Find(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): UnityEditor.VersionControl.ChangeSet;
+      FindAll(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): UnityEditor.VersionControl.ChangeSet[];
+      FindIndex(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      FindIndex(startIndex: number, match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      FindIndex(startIndex: number, count: number, match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      FindLast(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): UnityEditor.VersionControl.ChangeSet;
+      FindLastIndex(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      FindLastIndex(startIndex: number, match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      FindLastIndex(startIndex: number, count: number, match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
+      ForEach(action: ((obj: UnityEditor.VersionControl.ChangeSet) => void)): void;
       GetEnumerator(): System.Collections.Generic.List<UnityEditor.VersionControl.ChangeSet>;
       GetRange(index: number, count: number): UnityEditor.VersionControl.ChangeSet[];
       IndexOf(item: UnityEditor.VersionControl.ChangeSet): number;
@@ -15364,7 +15373,7 @@ export declare namespace UnityEditor {
       LastIndexOf(item: UnityEditor.VersionControl.ChangeSet, index: number): number;
       LastIndexOf(item: UnityEditor.VersionControl.ChangeSet, index: number, count: number): number;
       Remove(item: UnityEditor.VersionControl.ChangeSet): boolean;
-      RemoveAll(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): number;
+      RemoveAll(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): number;
       RemoveAt(index: number): void;
       RemoveRange(index: number, count: number): void;
       Reverse(): void;
@@ -15372,10 +15381,10 @@ export declare namespace UnityEditor {
       Sort(): void;
       Sort(comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>): void;
       Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>): void;
-      Sort(comparison: System.Comparison<UnityEditor.VersionControl.ChangeSet>): void;
+      Sort(comparison: ((x: UnityEditor.VersionControl.ChangeSet, y: UnityEditor.VersionControl.ChangeSet) => number)): void;
       ToArray(): UnityEditor.VersionControl.ChangeSet[];
       TrimExcess(): void;
-      TrueForAll(match: System.Predicate<UnityEditor.VersionControl.ChangeSet>): boolean;
+      TrueForAll(match: ((obj: UnityEditor.VersionControl.ChangeSet) => boolean)): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

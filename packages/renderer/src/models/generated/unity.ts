@@ -1,13 +1,13 @@
 //
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.ParticleSystemModule, UnityEngine.UIElementsNativeModule, UnityEngine.AIModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule, UnityEngine.XRModule, UnityEngine.PhysicsModule, UnityEngine.InputLegacyModule, UnityEngine.UI, Unity.InputSystem, Unity.InputSystem
-// Generated 29/06/2022 01:19:58
+// Generated 30/06/2022 20:21:30
 //
 /* eslint-disable */
 
 import { System } from './system';
 
 
-export interface Ref<T> {
+interface Ref<T> {
   type?: T;
   __ref: true;
 }
