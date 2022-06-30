@@ -8101,7 +8101,7 @@ var react = __webpack_require__("../../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.12.0';
+var version = '0.13.0';
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../../node_modules/react/jsx-runtime.js");
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
