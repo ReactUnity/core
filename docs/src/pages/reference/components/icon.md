@@ -16,12 +16,18 @@ export default function App() {
     <icon>person</icon>
     <icon>add</icon>
     <icon>done_all</icon>
-    <icon style={{ fontSize: 32 }}>language</icon>
-    <icon style={{ fontSize: 96 }}>
+    <icon style={{ fontSize: 48 }}>language</icon>
+    <icon style={{ fontSize: 96, color: 'red' }}>
       keyboard_arrow_down
     </icon>
   </view>;
 };
+```
+
+```css style.css
+icon {
+  font-size: 32px;
+}
 ```
 
 </Sandpack>
