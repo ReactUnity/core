@@ -34,6 +34,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase ColorConverter = new ColorConverter();
         static public StyleConverterBase BoxShadowConverter = new BoxShadow.Converter();
         static public StyleConverterBase ImageReferenceConverter = new ImageReference.Converter();
+        static public StyleConverterBase SpriteReferenceConverter = new SpriteReference.Converter();
         static public StyleConverterBase SpriteSourceConverter = new SpriteReference.Converter(true);
         static public StyleConverterBase ImageSourceConverter = new ImageReference.Converter(true);
         static public StyleConverterBase TextReferenceConverter = new TextReference.Converter(true);

@@ -1,14 +1,13 @@
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Internal
 {
-    public class BackgroundImage : RawImage
+    public class BackgroundImage : Image
     {
         public static readonly int SizeProp = Shader.PropertyToID("_size");
         public static readonly int PosProp = Shader.PropertyToID("_pos");
@@ -59,7 +58,7 @@ namespace ReactUnity.UGUI.Internal
                 if (resolved != value)
                 {
                     resolved = value;
-                    texture = value?.Texture;
+                    sprite = value?.Sprite;
                     UpdateBlendMode();
                 }
             }
@@ -128,13 +127,13 @@ namespace ReactUnity.UGUI.Internal
 
                 if (image != null && image != ImageDefinition.NoImage)
                 {
-                    texture = null;
+                    sprite = null;
                     color = Color.clear;
                     UpdateImage();
                 }
                 else
                 {
-                    texture = null;
+                    sprite = null;
                     color = tint;
                 }
             }
@@ -161,7 +160,7 @@ namespace ReactUnity.UGUI.Internal
 
         private void UpdateBlendMode()
         {
-            color = BlendMode == BackgroundBlendMode.Normal && texture != null ? Color.white : TintColor;
+            color = BlendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : TintColor;
         }
 
         static private Vector2 CalculateSize(Vector2 containerSize, Vector2 intrinsicSize, float intinsicProportions, BackgroundSize size)

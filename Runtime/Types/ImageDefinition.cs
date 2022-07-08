@@ -13,13 +13,10 @@ namespace ReactUnity.Types
         {
             public static ResolvedImage Default = new ResolvedImage();
 
-            public Texture2D Texture;
+            public Sprite Sprite;
+            public Texture2D Texture => Sprite?.texture;
             public Vector2 IntrinsicSize = new Vector2(float.NaN, float.NaN);
             public float IntrinsicProportions = float.NaN;
-
-            private Sprite sprite;
-            public Sprite Sprite => Texture == null ? null :
-                (sprite = sprite ?? SpriteReference.FromTexture(Texture));
         }
 
         public static ImageDefinition NoImage => UrlImageDefinition.None;
@@ -41,7 +38,7 @@ namespace ReactUnity.Types
                 "repeating-conic-gradient",
             };
 
-            private static StyleConverterBase ImageConverter = AllConverters.ImageReferenceConverter;
+            private static StyleConverterBase SpriteConverter = AllConverters.SpriteReferenceConverter;
 
             public override bool HandleKeyword(CssKeyword keyword, out IComputedValue result)
             {
@@ -52,9 +49,9 @@ namespace ReactUnity.Types
 
             protected override bool ConvertInternal(object value, out IComputedValue result)
             {
-                return ComputedMapper.Create(out result, value, ImageConverter,
+                return ComputedMapper.Create(out result, value, SpriteConverter,
                     (resolved) => {
-                        if (resolved is ImageReference irr) return new UrlImageDefinition(irr);
+                        if (resolved is SpriteReference irr) return new UrlImageDefinition(irr);
                         return null;
                     });
             }
@@ -70,9 +67,9 @@ namespace ReactUnity.Types
                         });
                 }
 
-                return ComputedMapper.Create(out result, value, ImageConverter,
+                return ComputedMapper.Create(out result, value, SpriteConverter,
                     (resolved) => {
-                        if (resolved is ImageReference irr) return new UrlImageDefinition(irr);
+                        if (resolved is SpriteReference irr) return new UrlImageDefinition(irr);
                         return null;
                     });
             }
@@ -81,22 +78,22 @@ namespace ReactUnity.Types
 
     public class UrlImageDefinition : ImageDefinition
     {
-        public static UrlImageDefinition None { get; } = new UrlImageDefinition(ImageReference.None);
-        public ImageReference Reference { get; }
+        public static UrlImageDefinition None { get; } = new UrlImageDefinition(SpriteReference.None);
+        public SpriteReference Reference { get; }
 
-        public UrlImageDefinition(ImageReference reference)
+        public UrlImageDefinition(SpriteReference reference)
         {
             Reference = reference;
         }
 
         internal override void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback)
         {
-            Reference.Get(context, tx => {
-                callback(tx == null ? null : new ResolvedImage
+            Reference.Get(context, sp => {
+                callback(sp == null ? null : new ResolvedImage
                 {
-                    Texture = tx,
-                    IntrinsicSize = new Vector2(tx.width, tx.height),
-                    IntrinsicProportions = tx.width / tx.height,
+                    Sprite = sp,
+                    IntrinsicSize = sp.rect.size,
+                    IntrinsicProportions = sp.rect.size.x / sp.rect.size.y,
                 });
             });
         }
@@ -117,7 +114,7 @@ namespace ReactUnity.Types
             var calc = Gradient.GetRamp(size);
             callback(new ResolvedImage
             {
-                Texture = calc.Texture,
+                Sprite = SpriteReference.FromTexture(calc.Texture),
             });
         }
 

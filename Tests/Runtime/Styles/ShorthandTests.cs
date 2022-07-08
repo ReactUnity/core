@@ -97,7 +97,7 @@ namespace ReactUnity.Tests
             var bg = cmp.BorderAndBackground;
             var mask = cmp.OverflowMask;
 
-            Assert.AreEqual(typeof(Texture2D), bg.BackgroundGraphics[0].texture?.GetType());
+            Assert.AreEqual(typeof(Sprite), bg.BackgroundGraphics[0].sprite?.GetType());
             Assert.AreEqual(Color.red, bg.BackgroundGraphics[0].color);
             Assert.AreEqual(Color.red, bg.BgColor);
 
