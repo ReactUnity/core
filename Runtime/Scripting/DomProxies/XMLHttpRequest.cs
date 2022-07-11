@@ -105,7 +105,15 @@ namespace ReactUnity.Scripting.DomProxies
         public void send(IDictionary<string, object> o)
         {
             options = extractOptions(o);
-            url = new Uri(origin + options["url"]);
+            options = extractOptions(o);
+
+            string finalUrl = options["url"] as string;
+
+	        if(!finalUrl.StartsWith("http://") && !finalUrl.StartsWith("https://")){
+                finalUrl = origin + finalUrl;
+	        }
+            
+            url = new Uri(finalUrl);
 
             req = UnityWebRequest.Get(url);
             requestHandle = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(
