@@ -13,4 +13,17 @@ namespace ReactUnity.Helpers.Visitors
             return true;
         }
     }
+
+    internal class LateUpdateVisitor : ReactComponentVisitor
+    {
+        public static readonly LateUpdateVisitor Instance = new LateUpdateVisitor();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override bool Visit(IReactComponent component)
+        {
+            if (!component.UpdatedThisFrame) component.Update();
+            component.UpdatedThisFrame = false;
+            return true;
+        }
+    }
 }

@@ -25,6 +25,7 @@ namespace ReactUnity
         public bool Destroyed { get; private set; }
         public bool Entering { get; }
         public bool Leaving { get; }
+        public bool UpdatedThisFrame { get; set; }
         public YogaNode Layout { get; }
         public StyleState StyleState { get; }
         public NodeStyle ComputedStyle { get; }
@@ -57,7 +58,7 @@ namespace ReactUnity
         public string Content { get; }
         public void ApplyLayoutStyles() { }
         public void ResolveStyle(bool recursive = false) { }
-        public void Update() { }
+        public void Update() => UpdatedThisFrame = true;
         public void Accept(ReactComponentVisitor visitor, bool skipSelf = false) { }
         public void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false) => Parent = parent;
         public void SetProperty(string property, object value) { }

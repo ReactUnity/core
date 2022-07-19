@@ -79,6 +79,7 @@ namespace ReactUnity
             Html = new HtmlContext(this);
 
             Dispatcher.OnEveryUpdate(UpdateElementsRecursively);
+            Dispatcher.OnEveryLateUpdate(LateUpdateElementsRecursively);
 
             if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => {
                 Host?.Layout.CalculateLayout();
@@ -91,10 +92,8 @@ namespace ReactUnity
 #endif
         }
 
-        public void UpdateElementsRecursively()
-        {
-            Host?.Accept(UpdateVisitor.Instance);
-        }
+        public void UpdateElementsRecursively() => Host?.Accept(UpdateVisitor.Instance);
+        public void LateUpdateElementsRecursively() => Host?.Accept(LateUpdateVisitor.Instance);
 
         protected virtual StyleContext CreateStyleContext() => new StyleContext(this);
 

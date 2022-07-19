@@ -32,6 +32,7 @@ namespace ReactUnity
         public int CurrentOrder { get; protected set; } = 0;
         public bool Entering { get; private set; }
         public bool Leaving { get; private set; }
+        public bool UpdatedThisFrame { get; set; }
         public bool Destroyed { get; private set; }
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
@@ -155,6 +156,7 @@ namespace ReactUnity
 
         public virtual void Update()
         {
+            UpdatedThisFrame = true;
             if (Destroyed) return;
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             ApplyEnterLeave();

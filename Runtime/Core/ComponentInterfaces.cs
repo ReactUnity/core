@@ -18,6 +18,7 @@ namespace ReactUnity
         bool Destroyed { get; }
         bool Entering { get; }
         bool Leaving { get; }
+        bool UpdatedThisFrame { get; set; }
         YogaNode Layout { get; }
         StyleState StyleState { get; }
         NodeStyle ComputedStyle { get; }

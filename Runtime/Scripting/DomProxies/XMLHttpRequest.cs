@@ -105,7 +105,6 @@ namespace ReactUnity.Scripting.DomProxies
         public void send(IDictionary<string, object> o)
         {
             options = extractOptions(o);
-            options = extractOptions(o);
 
             string finalUrl = options["url"] as string;
 

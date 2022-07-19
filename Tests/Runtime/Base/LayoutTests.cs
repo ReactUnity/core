@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using UnityEngine;
 
@@ -273,6 +274,29 @@ namespace ReactUnity.Tests
             var y = Mathf.Round(rect.y - prect.y);
 
             return new Rect(x, y, rect.width, rect.height);
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {
+                return <></>;
+            }
+
+            setTimeout(() => {
+              const el = UnityBridge.createElement('view', '', HostContainer);
+              el.Id = 'test';
+              UnityBridge.appendChild(HostContainer, el);
+            }, 0);
+", Style = @"
+            #test { width: 124px; }
+        ")]
+        public IEnumerator InitialLayoutIsCorrectForElementsCreatedInSetTimeout()
+        {
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+            Assert.AreEqual(124, rt.rect.width);
+
+            yield return null;
         }
     }
 }

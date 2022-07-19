@@ -22,6 +22,11 @@ namespace ReactUnity
 
         public bool Entering => Proxy.Entering;
         public bool Leaving => Proxy.Leaving;
+        public bool UpdatedThisFrame
+        {
+            get => Proxy.UpdatedThisFrame;
+            set => Proxy.UpdatedThisFrame = value;
+        }
         public YogaNode Layout => Proxy.Layout;
 
         public StyleState StyleState => Proxy.StyleState;
