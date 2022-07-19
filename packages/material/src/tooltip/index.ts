@@ -26,6 +26,10 @@ export type TooltipProps = {
   offset?: number;
   position?: TooltipPosition;
   interactive?: boolean;
+  /*
+   * Show tooltip after <delay> milliseconds
+   */
+  delay?: number;
 };
 export type TooltipPropsCallback = ((el: ReactUnity.UGUI.UGUIComponent) => TooltipProps);
 
@@ -146,8 +150,6 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
   const pivotOriginal = props.pivot || pos?.pivot || 'top';
   tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
 
-  UnityBridge.appendChild(target, anchor);
-
   if (withBackdrop) {
     const backdrop = UnityBridge.createElement('portal', '', HostContainer) as ReactUnity.UGUI.UGUIComponent;
     backdrop.ClassName = clsx(style.backdrop, 'mat-tooltip-backdrop');
@@ -158,11 +160,15 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
 
   UnityBridge.appendChild(anchor, tooltip);
   Renderer.render(props.content, { disableHelpers: true, hostContainer: tooltip });
+
+  UnityBridge.appendChild(target, anchor);
+
   return anchor;
 }
 
 export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: TooltipTrigger = 'auto') {
   const tooltipRef = useRef<ReactUnity.UGUI.UGUIComponent>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const callbacksRef = useRef<(() => void)[]>([]);
   const elementsRef = useRef<ReactUnity.UGUI.UGUIComponent[]>([]);
   const propsRef = useAutoRef(props);
@@ -174,18 +180,34 @@ export function useTooltip(props: TooltipProps | TooltipPropsCallback, trigger: 
 
 
   const hide = useCallback(() => {
+    if (timeoutRef.current >= 0) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
     tooltipRef.current?.Remove();
     tooltipRef.current = null;
   }, []);
 
   const show = useCallback((target: ReactUnity.UGUI.UGUIComponent, properties?: TooltipProps, withBackdrop: boolean = false) => {
-    tooltipRef.current?.Remove();
+    hide();
     return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
   }, [hide]);
 
   const showWithCurrent = useCallback((ev: any, sender: ReactUnity.UGUI.UGUIComponent) => {
     const calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
-    show(sender, calculatedProps, trigger === 'click');
+    const withBackdrop = trigger === 'click';
+    const delay = calculatedProps.delay;
+
+    if (delay > 0) {
+      timeoutRef.current = setTimeout(() => {
+        setImmediate(() => {
+          show(sender, calculatedProps, withBackdrop);
+        });
+      }, delay);
+    } else {
+      show(sender, calculatedProps, withBackdrop);
+    }
   }, [show, trigger, propsRef]);
 
   useLayoutEffect(() => {
