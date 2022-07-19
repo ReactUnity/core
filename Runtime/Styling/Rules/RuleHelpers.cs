@@ -32,6 +32,7 @@ namespace ReactUnity.Styling.Rules
             { "indeterminate", RuleSelectorPartType.Indeterminate },
             { "activatable", RuleSelectorPartType.Activatable },
             { "text", RuleSelectorPartType.Text },
+            { "graphic", RuleSelectorPartType.Graphic },
         };
 
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)

@@ -122,4 +122,8 @@ namespace ReactUnity
         bool ReadOnly { get; }
         bool PlaceholderShown { get; }
     }
+
+    public interface IGraphicComponent : IReactComponent
+    {
+    }
 }

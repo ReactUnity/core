@@ -195,5 +195,21 @@ namespace ReactUnity.Tests
             Assert.AreEqual(null, Image.BeforePseudo);
             Assert.AreEqual(null, Image.AfterPseudo);
         }
+
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator StyleColorAppliesToImage()
+        {
+            yield return null;
+            Assert.AreEqual(Color.white, Image.Image.color);
+
+            InsertStyle(":graphic { color: blue; }");
+            yield return null;
+            Assert.AreEqual(Color.blue, Image.Image.color);
+
+            InsertStyle("image { color: red; }");
+            yield return null;
+            Assert.AreEqual(Color.red, Image.Image.color);
+        }
     }
 }

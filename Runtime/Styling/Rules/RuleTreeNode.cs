@@ -331,6 +331,7 @@ namespace ReactUnity.Styling.Rules
         // Custom pseudo classes
         Activatable = 300,
         Text = 301,
+        Graphic = 302,
 
         // Pseudo-elements
         Before = 500,
@@ -425,6 +426,8 @@ namespace ReactUnity.Styling.Rules
                     return component is IActivatableComponent;
                 case RuleSelectorPartType.Text:
                     return component is ITextComponent;
+                case RuleSelectorPartType.Graphic:
+                    return component is IGraphicComponent;
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
                     return true;

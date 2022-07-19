@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public abstract class BaseImageComponent : UGUIComponent
+    public abstract class BaseImageComponent : UGUIComponent, IGraphicComponent
     {
         public ReplacedImageHelper Replaced { get; }
 
@@ -43,10 +43,14 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
-            var fitMode = ComputedStyle.objectFit;
+            var style = ComputedStyle;
+
+            var fitMode = style.objectFit;
             if (Replaced.Measurer.FitMode != fitMode)
                 Replaced.Measurer.FitMode = fitMode;
-            Replaced.ReplacedElement.Position = ComputedStyle.objectPosition;
+            Replaced.ReplacedElement.Position = style.objectPosition;
+
+            Replaced.Graphic.color = style.color;
         }
 
         public class ReplacedImageHelper

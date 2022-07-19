@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
@@ -20,7 +19,7 @@ namespace ReactUnity.UGUI
             Image = Replaced.CreateGraphic<Unity.VectorGraphics.SVGImage>();
 #else
             Image = Replaced.CreateGraphic<UnityEngine.UI.Image>();
-            WarningHelpers.WarnOnce("SVG_VECTOR_GRAPHICS", "Unity.VectorGraphics module is required to use SVG components");
+            Helpers.WarningHelpers.WarnOnce("SVG_VECTOR_GRAPHICS", "Unity.VectorGraphics module is required to use SVG components");
 #endif
             Replaced.Measurer.Sprite = Image.sprite;
         }

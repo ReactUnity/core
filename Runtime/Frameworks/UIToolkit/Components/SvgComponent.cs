@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ReactUnity.UIToolkit
 {
-    public class SvgComponent : UIToolkitComponent<SvgElement>
+    public class SvgComponent : UIToolkitComponent<SvgElement>, IGraphicComponent
     {
         private string content;
         private string innerContent;

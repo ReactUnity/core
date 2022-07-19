@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class ImageComponent : UIToolkitComponent<Image>
+    public class ImageComponent : UIToolkitComponent<Image>, IGraphicComponent
     {
         public ImageComponent(UIToolkitContext context, string tag) : base(context, tag)
         { }
@@ -42,8 +42,9 @@ namespace ReactUnity.UIToolkit
         {
             base.ApplyStylesSelf();
 
-            if (ComputedStyle.HasValue(StyleProperties.color)) Element.tintColor = ComputedStyle.color;
-            else Element.tintColor = Color.white;
+            Element.tintColor = ComputedStyle.HasValue(StyleProperties.color)
+                ? ComputedStyle.color
+                : Color.white;
         }
     }
 }
