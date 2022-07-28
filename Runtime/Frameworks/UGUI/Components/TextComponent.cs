@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using Facebook.Yoga;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using TMPro;
@@ -117,7 +118,13 @@ namespace ReactUnity.UGUI
             Text.enableWordWrapping = style.textWrap;
 #endif
 
-            Text.alignment = style.textAlign;
+            var textAlign = style.textAlign;
+            var alignDefault = textAlign == TextAlignmentOptions.Converted;
+            Text.alignment = alignDefault ? TextAlignmentOptions.TopLeft : textAlign;
+            var align = (int) textAlign;
+            if ((align > 500 && align < 530) || alignDefault)
+                Text.verticalAlignment = style.verticalAlign;
+
             Text.overflowMode = style.textOverflow;
             Text.outlineWidth = style.textStrokeWidth;
             Text.outlineColor = style.textStrokeColor;

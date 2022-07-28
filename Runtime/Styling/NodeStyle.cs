@@ -54,6 +54,7 @@ namespace ReactUnity.Styling
         public float letterSpacing => GetStyleValue(StyleProperties.letterSpacing);
         public float wordSpacing => GetStyleValue(StyleProperties.wordSpacing);
         public TextAlignmentOptions textAlign => GetStyleValue(StyleProperties.textAlign);
+        public VerticalAlignmentOptions verticalAlign => GetStyleValue(StyleProperties.verticalAlign);
         public TextOverflowModes textOverflow => GetStyleValue(StyleProperties.textOverflow);
         public bool textWrap => GetStyleValue(StyleProperties.textWrap);
         public int maxLines => GetStyleValue(StyleProperties.maxLines);

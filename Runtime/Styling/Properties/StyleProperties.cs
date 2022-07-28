@@ -43,7 +43,8 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", ComputedFontSize.Default, true, true, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> letterSpacing = new StyleProperty<float>("letterSpacing", 0f, true, true, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> wordSpacing = new StyleProperty<float>("wordSpacing", 0f, true, true, AllConverters.FontSizeConverter);
-        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
+        public static readonly StyleProperty<TextAlignmentOptions> textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.Converted, false, true);
+        public static readonly StyleProperty<VerticalAlignmentOptions> verticalAlign = new StyleProperty<VerticalAlignmentOptions>("verticalAlign", VerticalAlignmentOptions.Top, false, true);
         public static readonly StyleProperty<TextOverflowModes> textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static readonly StyleProperty<bool> textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
         public static readonly StyleProperty<int> maxLines = new StyleProperty<int>("maxLines", (int) short.MaxValue, true, true);
@@ -128,6 +129,7 @@ namespace ReactUnity.Styling
             { "letterSpacing", letterSpacing },
             { "wordSpacing", wordSpacing },
             { "textAlign", textAlign },
+            { "verticalAlign", verticalAlign },
             { "textOverflow", textOverflow },
             { "textWrap", textWrap },
             { "whiteSpace", textWrap },
@@ -241,6 +243,7 @@ namespace ReactUnity.Styling
             { "letter-spacing", letterSpacing },
             { "word-spacing", wordSpacing },
             { "text-align", textAlign },
+            { "vertical-align", verticalAlign },
             { "text-overflow", textOverflow },
             { "text-wrap", textWrap },
             { "max-lines", maxLines },

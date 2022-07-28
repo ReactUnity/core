@@ -42,7 +42,7 @@ namespace ReactUnity.Styling
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
-            if (value == null)
+            if (value == null || ("" == value as string))
             {
                 collection.Remove(this);
                 return ModifiedProperties;

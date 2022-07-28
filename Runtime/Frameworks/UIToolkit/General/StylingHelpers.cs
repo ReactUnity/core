@@ -48,7 +48,7 @@ namespace ReactUnity.UIToolkit
             { TextAlignmentOptions.CaplineJustified, TextAnchor.MiddleCenter },
             { TextAlignmentOptions.CaplineFlush, TextAnchor.MiddleCenter },
             { TextAlignmentOptions.CaplineGeoAligned, TextAnchor.MiddleCenter },
-            { TextAlignmentOptions.Converted, TextAnchor.MiddleCenter },
+            { TextAlignmentOptions.Converted, TextAnchor.UpperLeft },
         };
 
         public static StyleLength YogaValueToStyleLength(YogaValue value)

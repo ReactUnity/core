@@ -2,6 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
+using TMPro;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -191,5 +192,58 @@ namespace ReactUnity.Tests
 
             Assert.Greater(newWidth, initialWidth);
         }
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TextAlignAndVerticalAlignWorks()
+        {
+            var v = Q("#root");
+            var t = (Q("#text") as TextComponent).Text;
+
+            Assert.AreEqual(TextAlignmentOptions.TopLeft, t.alignment);
+            yield return null;
+
+
+            v.Style["text-align"] = "topleft";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.TopLeft, t.alignment);
+
+
+            v.Style["text-align"] = "top";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.Top, t.alignment);
+
+            v.Style["text-align"] = "bottom-right";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BottomRight, t.alignment);
+
+
+            v.Style["text-align"] = "bottom-right";
+            v.Style["vertical-align"] = "geometry";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BottomRight, t.alignment);
+
+            v.Style["text-align"] = "right";
+            v.Style["vertical-align"] = "baseline";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BaselineRight, t.alignment);
+
+            v.Style["text-align"] = null;
+            v.Style["vertical-align"] = "baseline";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BaselineLeft, t.alignment);
+
+            v.Style["text-align"] = "right";
+            v.Style["text-align"] = "";
+            v.Style["vertical-align"] = "baseline";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BaselineLeft, t.alignment);
+
+            v.Style["text-align"] = "right";
+            v.Style["text-align"] = "a";
+            v.Style["vertical-align"] = "baseline";
+            yield return null;
+            Assert.AreEqual(TextAlignmentOptions.BaselineRight, t.alignment);
+        }
+
     }
 }
