@@ -13,5 +13,6 @@ namespace ReactUnity.Scripting
         Scheduler = 16,
         Base64 = 32,
         URL = 64,
+        Navigator = 128,
     }
 }

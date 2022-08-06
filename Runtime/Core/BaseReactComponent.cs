@@ -315,8 +315,7 @@ namespace ReactUnity
 
         public virtual Action AddEventListener(string eventName, Callback fun)
         {
-            List<Callback> list;
-            if (!BaseEventHandlers.TryGetValue(eventName, out list))
+            if (!BaseEventHandlers.TryGetValue(eventName, out var list))
                 BaseEventHandlers[eventName] = list = new List<Callback>();
             list.Add(fun);
 

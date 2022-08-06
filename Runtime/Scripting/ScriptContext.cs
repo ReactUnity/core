@@ -102,6 +102,11 @@ namespace ReactUnity.Scripting
             else callback?.Invoke();
         }
 
+        public object JsonParse(string str)
+        {
+            return Engine.Evaluate(str);
+        }
+
         public void ExecuteScript(string code, string fileName = null)
         {
             Engine.Execute(code, fileName);
@@ -221,6 +226,12 @@ namespace ReactUnity.Scripting
                 var xhrGlobal = engine.Evaluate(@"global.XMLHttpRequest = function() {
                     return new global.XMLHttpRequest.original(Context, location.origin); }", "ReactUnity/shims/xhr");
                 engine.SetProperty(xhrGlobal, "original", typeof(XMLHttpRequest));
+                engine.SetGlobal("FormData", typeof(FormData));
+            }
+
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.Navigator))
+            {
+                engine.Evaluate(@"global.navigator = { product: 'ReactNative' }");
             }
         }
 
