@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 30/06/2022 20:21:47
+// Generated 06/08/2022 14:34:11
 //
 /* eslint-disable */
 
@@ -27,6 +27,7 @@ export declare namespace ReactUnity {
     CurrentOrder: number;
     Entering: boolean;
     Leaving: boolean;
+    UpdatedThisFrame: boolean;
     Destroyed: boolean;
     IsPseudoElement: boolean;
     Tag: string;
@@ -91,6 +92,7 @@ export declare namespace ReactUnity {
     Destroyed: boolean;
     Entering: boolean;
     Leaving: boolean;
+    UpdatedThisFrame: boolean;
     Layout: Facebook.Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -168,6 +170,8 @@ export declare namespace ReactUnity {
     ReadOnly: boolean;
     PlaceholderShown: boolean;
   }
+  export interface IGraphicComponent {
+  }
   export enum EventPriority {
     Unknown = 0,
     Discrete = 1,
@@ -186,6 +190,7 @@ export declare namespace ReactUnity {
     Destroyed: boolean;
     Entering: boolean;
     Leaving: boolean;
+    UpdatedThisFrame: boolean;
     Layout: Facebook.Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -254,6 +259,7 @@ export declare namespace ReactUnity {
     Destroyed: boolean;
     Entering: boolean;
     Leaving: boolean;
+    UpdatedThisFrame: boolean;
     Layout: Facebook.Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -336,6 +342,7 @@ export declare namespace ReactUnity {
     CursorAPI: ReactUnity.Helpers.CursorAPI;
     Disposables: (() => void)[];
     UpdateElementsRecursively(): void;
+    LateUpdateElementsRecursively(): void;
     InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
     InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
     InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -507,6 +514,7 @@ export declare namespace ReactUnity {
     Destroyed: boolean;
     Entering: boolean;
     Leaving: boolean;
+    UpdatedThisFrame: boolean;
     Layout: Facebook.Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -558,6 +566,19 @@ export declare namespace ReactUnity {
     UnregisterChild(child: ReactUnity.IReactComponent): void;
     SetText(text: string): void;
     Clear(): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class FormData {
+    constructor();
+    append(name: string, value: any, fileName?: string): void;
+    delete(name: string): void;
+    get(name: string): any;
+    getAll(name: string): any[];
+    has(name: string): boolean;
+    set(name: string, value: any, fileName?: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -993,6 +1014,7 @@ export declare namespace ReactUnity {
         CreateDefaultComponent(tag: string, text: string): ReactUnity.IReactComponent;
         CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
         UpdateElementsRecursively(): void;
+        LateUpdateElementsRecursively(): void;
         InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
         InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
         InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -1233,6 +1255,7 @@ export declare namespace ReactUnity {
         CurrentOrder: number;
         Entering: boolean;
         Leaving: boolean;
+        UpdatedThisFrame: boolean;
         Destroyed: boolean;
         IsPseudoElement: boolean;
         Tag: string;
@@ -1465,6 +1488,7 @@ export declare namespace ReactUnity {
         CurrentOrder: number;
         Entering: boolean;
         Leaving: boolean;
+        UpdatedThisFrame: boolean;
         Destroyed: boolean;
         IsPseudoElement: boolean;
         Tag: string;
@@ -1545,6 +1569,7 @@ export declare namespace ReactUnity {
         CurrentOrder: number;
         Entering: boolean;
         Leaving: boolean;
+        UpdatedThisFrame: boolean;
         Destroyed: boolean;
         IsPseudoElement: boolean;
         Tag: string;
@@ -1629,6 +1654,7 @@ export declare namespace ReactUnity {
         CurrentOrder: number;
         Entering: boolean;
         Leaving: boolean;
+        UpdatedThisFrame: boolean;
         Destroyed: boolean;
         IsPseudoElement: boolean;
         Tag: string;
@@ -2219,6 +2245,7 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Layout: Facebook.Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -2626,6 +2653,7 @@ export declare namespace ReactUnity {
       Scheduler = 16,
       Base64 = 32,
       URL = 64,
+      Navigator = 128,
     }
     export enum JavascriptEngineType {
       Auto = 0,
@@ -2795,6 +2823,7 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Layout: Facebook.Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -2865,6 +2894,7 @@ export declare namespace ReactUnity {
       EngineFactory: ReactUnity.Scripting.IJavaScriptEngineFactory;
       RunMainScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
       Initialize(callback: (() => void)): void;
+      JsonParse(str: string): any;
       ExecuteScript(code: string, fileName?: string): void;
       EvaluateScript(code: string, fileName?: string): any;
       CreateEventCallback(code: string, thisVal: any): ReactUnity.Helpers.Callback;
@@ -3031,6 +3061,18 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class EventHandler {
+        constructor();
+        SetEventListener(eventName: string, fun: any): void;
+        GetEventListener(eventName: string): any;
+        AddEventListener(eventName: string, fun: any): (() => void);
+        RemoveEventListener(eventName: string, fun: any): void;
+        GetHandlers(eventName: string): any[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3327,29 +3369,35 @@ export declare namespace ReactUnity {
       export class XMLHttpRequest {
         constructor(context: ReactUnity.ReactContext);
         constructor(context: ReactUnity.ReactContext, origin: string);
-        origin: string;
         onload: any; // System.Object
+        onloadstart: any; // System.Object
+        onloadend: any; // System.Object
         onerror: any; // System.Object
         onreadystatechange: any; // System.Object
         ontimeout: any; // System.Object
         onabort: any; // System.Object
+        onprogress: any; // System.Object
         withCredentials: boolean;
-        timeout?: number;
+        timeout: number;
+        responseType: string;
+        readyState: number;
         status: number;
         statusText: string;
-        responseHeaders: string;
-        readyState: number;
         DONE: string;
         responseText: string;
-        response: string;
+        responseXML: string;
         responseURL: string;
-        static dispatches: string[];
-        open(method: string, url: string, async: boolean): void;
-        setRequestHeader(name: any, value: any): void;
+        response: any; // System.Object
+        open(method: string, url: any, async?: boolean, user?: string, password?: string): void;
         append(name: any, value: any): void;
+        send(o?: any): void;
         abort(): void;
-        send(o: System.Collections.Generic.IDictionary<string, any>): void;
+        setRequestHeader(header: string, value: string): void;
+        getResponseHeader(header: string): string;
         getAllResponseHeaders(): string;
+        overrideMimeType(mimeType: string): void;
+        addEventListener(eventType: string, callback: any, capture?: boolean): void;
+        removeEventListener(eventType: string, callback: any, capture?: boolean): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3551,6 +3599,7 @@ export declare namespace ReactUnity {
       letterSpacing: number;
       wordSpacing: number;
       textAlign: any; // TMPro.TextAlignmentOptions
+      verticalAlign: any; // TMPro.VerticalAlignmentOptions
       textOverflow: any; // TMPro.TextOverflowModes
       textWrap: boolean;
       maxLines: number;
@@ -3728,6 +3777,7 @@ export declare namespace ReactUnity {
       static letterSpacing: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static wordSpacing: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static textAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextAlignmentOptions]
+      static verticalAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.VerticalAlignmentOptions]
       static textOverflow: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextOverflowModes]
       static textWrap: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
       static maxLines: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
@@ -3879,6 +3929,7 @@ export declare namespace ReactUnity {
       Destroyed: boolean;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Layout: Facebook.Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
@@ -4461,6 +4512,7 @@ export declare namespace ReactUnity {
         static ColorConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BoxShadowConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ImageReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static SpriteReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static SpriteSourceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static ImageSourceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static TextReferenceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -4988,6 +5040,7 @@ export declare namespace ReactUnity {
         Leave = 201,
         Activatable = 300,
         Text = 301,
+        Graphic = 302,
         Before = 500,
         After = 501,
         Important = 1000,
@@ -5367,9 +5420,9 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class UrlImageDefinition {
-      constructor(reference: ReactUnity.Types.ImageReference);
+      constructor(reference: ReactUnity.Types.SpriteReference);
       static None: ReactUnity.Types.UrlImageDefinition;
-      Reference: ReactUnity.Types.ImageReference;
+      Reference: ReactUnity.Types.SpriteReference;
       SizeUpdatesGraphic: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5600,9 +5653,9 @@ export declare namespace ReactUnity {
     }
     export class ImageDefinition_ResolvedImage {
       constructor();
-      Sprite: UnityEngine.Sprite;
-      static Default: ReactUnity.Types.ImageDefinition_ResolvedImage;
       Texture: UnityEngine.Texture2D;
+      static Default: ReactUnity.Types.ImageDefinition_ResolvedImage;
+      Sprite: UnityEngine.Sprite;
       IntrinsicSize: UnityEngine.Vector2;
       IntrinsicProportions: number;
       Equals(obj: any): boolean;
@@ -5719,6 +5772,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -5809,6 +5863,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -5899,6 +5954,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -5987,6 +6043,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6074,6 +6131,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6163,6 +6221,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6255,6 +6314,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6347,6 +6407,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6442,6 +6503,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6531,6 +6593,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6622,6 +6685,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6710,6 +6774,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6797,6 +6862,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6886,6 +6952,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -6976,6 +7043,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7065,6 +7133,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7151,6 +7220,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7245,6 +7315,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7335,6 +7406,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7424,6 +7496,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7518,6 +7591,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7613,6 +7687,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7706,6 +7781,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7793,6 +7869,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -7883,6 +7960,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -8082,6 +8160,7 @@ export declare namespace ReactUnity {
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
       UpdateElementsRecursively(): void;
+      LateUpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
       InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
       InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
@@ -10485,9 +10564,30 @@ export declare namespace ReactUnity {
         Definition: ReactUnity.Types.ImageDefinition;
         BackgroundSize: ReactUnity.Types.BackgroundSize;
         materialForRendering: UnityEngine.Material;
+        sprite: UnityEngine.Sprite;
+        overrideSprite: UnityEngine.Sprite;
+        type: UnityEngine.UI.Image_Type;
+        preserveAspect: boolean;
+        fillCenter: boolean;
+        fillMethod: UnityEngine.UI.Image_FillMethod;
+        fillAmount: number;
+        fillClockwise: boolean;
+        fillOrigin: number;
+        eventAlphaThreshold: number;
+        alphaHitTestMinimumThreshold: number;
+        useSpriteMesh: boolean;
         mainTexture: UnityEngine.Texture;
-        texture: UnityEngine.Texture;
-        uvRect: UnityEngine.Rect;
+        hasBorder: boolean;
+        pixelsPerUnitMultiplier: number;
+        pixelsPerUnit: number;
+        material: UnityEngine.Material;
+        minWidth: number;
+        preferredWidth: number;
+        flexibleWidth: number;
+        minHeight: number;
+        preferredHeight: number;
+        flexibleHeight: number;
+        layoutPriority: number;
         onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
         maskable: boolean;
         isMaskingGraphic: boolean;
@@ -10499,7 +10599,6 @@ export declare namespace ReactUnity {
         canvas: UnityEngine.Canvas;
         canvasRenderer: UnityEngine.CanvasRenderer;
         defaultMaterial: UnityEngine.Material;
-        material: UnityEngine.Material;
         useGUILayout: boolean;
         runInEditMode: boolean;
         enabled: boolean;
@@ -10536,7 +10635,13 @@ export declare namespace ReactUnity {
         BackgroundRepeatY: ReactUnity.Types.BackgroundRepeat;
         GetDefaultMaterial(): UnityEngine.Material;
         SetBackgroundColorAndImage(tint: UnityEngine.Color, image: ReactUnity.Types.ImageDefinition, blendMode?: ReactUnity.Types.BackgroundBlendMode): void;
+        DisableSpriteOptimizations(): void;
+        OnBeforeSerialize(): void;
+        OnAfterDeserialize(): void;
         SetNativeSize(): void;
+        CalculateLayoutInputHorizontal(): void;
+        CalculateLayoutInputVertical(): void;
+        IsRaycastLocationValid(screenPoint: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
         GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
         Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
         SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
@@ -11748,6 +11853,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -11829,6 +11935,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -11915,6 +12022,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12003,6 +12111,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12086,6 +12195,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12163,6 +12273,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12242,6 +12353,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12319,6 +12431,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12396,6 +12509,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12478,6 +12592,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12562,6 +12677,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12647,6 +12763,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12725,6 +12842,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12807,6 +12925,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12892,6 +13011,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -12971,6 +13091,7 @@ export declare namespace ReactUnity {
       CurrentOrder: number;
       Entering: boolean;
       Leaving: boolean;
+      UpdatedThisFrame: boolean;
       Destroyed: boolean;
       IsPseudoElement: boolean;
       Tag: string;
@@ -13270,6 +13391,7 @@ export declare namespace ReactUnity {
       CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
       PlayAudio(clip: UnityEngine.AudioClip): void;
       UpdateElementsRecursively(): void;
+      LateUpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
       InsertStyle(style: string, importanceOffset: number): ReactUnity.Styling.StyleSheet;
       InsertStyle(sheet: ReactUnity.Styling.StyleSheet): ReactUnity.Styling.StyleSheet;
