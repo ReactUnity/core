@@ -103,7 +103,6 @@ module.exports = function (proxy, allowedHost) {
       // Serve the fallback of web previewer as the index page
       { directory: path.join(__dirname, 'public'), },
     ],
-
     client: {
       webSocketURL: {
         // Enable custom sockjs pathname for websocket connection to hot reloading server.
