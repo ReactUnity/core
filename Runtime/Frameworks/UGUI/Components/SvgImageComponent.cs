@@ -40,7 +40,7 @@ namespace ReactUnity.UGUI
 
         protected void SetSprite(Sprite sprite)
         {
-            Image.sprite = sprite;
+            if (Image) Image.sprite = sprite;
             Replaced.Measurer.Sprite = sprite;
         }
 

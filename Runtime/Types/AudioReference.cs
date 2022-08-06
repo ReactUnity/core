@@ -44,7 +44,7 @@ namespace ReactUnity.Types
         IEnumerator GetClip(ReactContext context, AssetReferenceType realType, object realValue, Action<AudioClip> callback)
         {
             var www = GetWebRequest(context, realType, realValue);
-            yield return www.SendWebRequest();
+            if (!www.isDone) yield return www.SendWebRequest();
 
             AudioClip result = null;
             try

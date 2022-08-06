@@ -61,7 +61,7 @@ namespace ReactUnity.Types
         IEnumerator GetTextAsset(ReactContext context, AssetReferenceType realType, string realValue, Action<TextAsset> callback)
         {
             var www = GetWebRequest(context, realType, realValue);
-            yield return www.SendWebRequest();
+            if (!www.isDone) yield return www.SendWebRequest();
 
             var resultString = www.downloadHandler.text;
             callback(new TextAsset(resultString));

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,6 +28,8 @@ namespace ReactUnity.Types
 
     public class AssetReference<AssetType> : IDisposable where AssetType : class
     {
+        private static Dictionary<object, UnityWebRequest> WebCache = new Dictionary<object, UnityWebRequest>();
+
         public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
         private static Regex HttpRegex = new Regex("^https?://");
         private static Regex FileRegex = new Regex("^file:");
@@ -179,6 +182,8 @@ namespace ReactUnity.Types
 
         protected UnityWebRequest GetWebRequest(ReactContext context, AssetReferenceType realType, object realValue)
         {
+            if (WebCache.TryGetValue(Value, out var req)) return req;
+
             var url = realValue as string;
 
             var www = CreateWebRequest(url);
@@ -219,6 +224,8 @@ namespace ReactUnity.Types
                     }
                 }
             }
+
+            WebCache[Value] = www;
 
             return www;
         }
