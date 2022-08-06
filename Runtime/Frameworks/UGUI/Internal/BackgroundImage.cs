@@ -59,6 +59,7 @@ namespace ReactUnity.UGUI.Internal
                 {
                     resolved = value;
                     sprite = value?.Sprite;
+                    type = sprite == null || sprite.border == Vector4.zero ? Type.Simple : Type.Sliced;
                     UpdateBlendMode();
                 }
             }
