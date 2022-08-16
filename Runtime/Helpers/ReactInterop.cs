@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ReactUnity.Scripting;
-using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
@@ -24,12 +24,14 @@ namespace ReactUnity.Helpers
 
         public void InitializeDefault()
         {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
             Add("System", Engine.CreateNamespaceReference("System", typeof(object).Assembly));
-            Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", typeof(Vector2).Assembly, typeof(UnityEngine.UIElements.Button).Assembly));
-            Add("ReactUnity", Engine.CreateNamespaceReference("ReactUnity", typeof(ReactUnityBridge).Assembly));
+            Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", assemblies.Where(x => x.FullName.StartsWith("UnityEngine.")).ToArray()));
+            Add("ReactUnity", Engine.CreateNamespaceReference("ReactUnity", assemblies.Where(x => x.FullName.StartsWith("ReactUnity.")).ToArray()));
             Add("Facebook", Engine.CreateNamespaceReference("Facebook", typeof(Facebook.Yoga.YogaValue).Assembly));
 #if UNITY_EDITOR
-            Add("UnityEditor", Engine.CreateNamespaceReference("UnityEditor", typeof(UnityEditor.EditorWindow).Assembly, typeof(UnityEditor.UIElements.ColorField).Assembly));
+            Add("UnityEditor", Engine.CreateNamespaceReference("UnityEditor", assemblies.Where(x => x.FullName.StartsWith("UnityEditor.")).ToArray()));
 #endif
             Add("GetType", new Func<string, object>(GetType));
             Add("GetNamespace", new Func<string, object>(GetNamespace));

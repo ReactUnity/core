@@ -185,7 +185,7 @@ namespace ReactUnity.Scripting
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
         {
-            return new QuickJSNamespaceReference(this, ns, assemblies);
+            return new ScriptNamespaceReference(this, ns, assemblies);
         }
 
         public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)

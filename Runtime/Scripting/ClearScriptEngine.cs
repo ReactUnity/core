@@ -171,8 +171,7 @@ namespace ReactUnity.Scripting
 
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
         {
-            if (assemblies.Length > 0) return new HostTypeCollection(assemblies).GetNamespaceNode(ns);
-            else return new HostTypeCollection().GetNamespaceNode(ns);
+            return new ScriptNamespaceReference(this, ns, assemblies);
         }
 
         public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
