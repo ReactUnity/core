@@ -175,13 +175,13 @@ function Tooltips() {
       </view>
 
       <view style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <view style={{ alignItems: 'center' }}>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
-          <Button variant={'filled'} ref={tt.register} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
+        <view style={{ alignItems: 'center', gap: 10 }}>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={0} data-tooltip-offset={20} data-tooltip-position="top" data-tooltip-content="This is shown on top">Top</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={200} data-tooltip-position="bottom" data-tooltip-content="This is shown on bottom">Bottom</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={400} data-tooltip-position="left" data-tooltip-content="This is shown on left">Left</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={600} data-tooltip-position="right" data-tooltip-content="This is shown on right">Right</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={600} data-tooltip-position="center" data-tooltip-content="This is shown on center">Center</Button>
+          <Button variant={'filled'} ref={tt.register} data-tooltip-delay={600} data-tooltip-anchor="bottom right" data-tooltip-pivot="top left" data-tooltip-content="This is shown on right bottom corner">Custom</Button>
         </view>
       </view>
     </view>

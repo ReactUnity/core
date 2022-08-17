@@ -31,6 +31,7 @@
     from {
       background-position: 0 0%;
     }
+
     to {
       background-position: 0 100%;
     }
@@ -41,5 +42,35 @@
       box-shadow: 0 0 20px #fff, 20px 0 80px #f0f, -20px 0 80px #0ff, inset 0 0 50px #fff, inset -50px 0 80px #f0f,
         inset 50px 0 80px #0ff, inset -50px 0 300px #f0f, inset 50px 0 300px #0ff;
     }
+  }
+}
+
+
+.items {
+  margin: 24px;
+}
+
+.item {
+  width: 160px;
+  margin-bottom: 10px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 6px;
+  font-size: 20px;
+  translate: 0 0;
+  opacity: 1;
+
+  transition: opacity 600ms ease-out;
+  motion: 600ms;
+
+  &:enter {
+    translate: 100% 0;
+    opacity: 0;
+  }
+
+  &:leave {
+    opacity: 0;
+    translate: -100% 0;
+    state-duration: 600ms;
   }
 }
