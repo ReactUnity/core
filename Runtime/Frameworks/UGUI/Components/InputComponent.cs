@@ -73,7 +73,6 @@ namespace ReactUnity.UGUI
             TextViewport = new ContainerComponent(context, "_viewport");
             TextViewport.IsPseudoElement = true;
             TextViewport.GameObject.name = "[Text Viewport]";
-            TextViewport.Style["flex-grow"] = 1;
             TextViewport.SetParent(this);
             TextViewport.AddComponent<RectMask2D>();
 
@@ -81,7 +80,6 @@ namespace ReactUnity.UGUI
             PlaceholderComponent = new TextComponent("", context, "_placeholder");
             PlaceholderComponent.IsPseudoElement = true;
             PlaceholderComponent.GameObject.name = "[Placeholder]";
-            PlaceholderComponent.Layout.PositionType = YogaPositionType.Absolute;
             PlaceholderComponent.SetParent(TextViewport);
             PlaceholderComponent.Component.enabled = false;
             var phRect = PlaceholderComponent.RectTransform;

@@ -46,19 +46,24 @@ button {
 input {
   flex-direction: row;
   padding: 8px;
-  min-height: 40px;
-  min-width: 200px;
   max-width: 100%;
   overflow: hidden;
   background-color: white;
   border-radius: 8px;
   text-align: left;
+  vertical-align: middle;
   cursor: text;
   appearance: input;
   pointer-events: all;
 }
 
+input::viewport {
+  max-width: 100%;
+  flex-grow: 1;
+}
+
 input::placeholder {
+  position: absolute;
   opacity: 0.6;
 }
 
