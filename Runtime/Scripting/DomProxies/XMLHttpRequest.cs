@@ -72,8 +72,13 @@ namespace ReactUnity.Scripting.DomProxies
 
         public int readyState =>
             request == null ? 0 :
+#if UNITY_2020_3_OR_NEWER
             request.result == UnityWebRequest.Result.InProgress ? 3 :
             request.result == UnityWebRequest.Result.Success ? 4 :
+#else
+            request.isDone ? 4 :
+            !request.isModifiable ? 3 :
+#endif
             1;
         public int status => (int) request.responseCode;
         public string statusText => isError ? "error" : "ok";
@@ -109,9 +114,13 @@ namespace ReactUnity.Scripting.DomProxies
 
 
         private bool isError => request != null && (
+#if UNITY_2020_3_OR_NEWER
             request.result == UnityWebRequest.Result.ConnectionError ||
             request.result == UnityWebRequest.Result.ProtocolError ||
             request.result == UnityWebRequest.Result.DataProcessingError
+#else
+            request.isHttpError || request.isNetworkError
+#endif
         );
 
 
