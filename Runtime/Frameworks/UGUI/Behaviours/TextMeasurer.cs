@@ -45,7 +45,11 @@ namespace ReactUnity.UGUI.Behaviours
         private void LateUpdate()
         {
             // HACK: TMPro does not update the text layout until the next frame if this is not called
-            if (layoutDirty && Text) Text.SetLayoutDirty();
+            if (layoutDirty && Text)
+            {
+                Text.SetLayoutDirty();
+                layoutDirty = false;
+            }
         }
     }
 }
