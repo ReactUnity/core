@@ -61,6 +61,7 @@ namespace ReactUnity.UGUI
         public ContainerComponent TextViewport { get; set; }
         public TextComponent TextComponent { get; set; }
         public TextComponent PlaceholderComponent { get; set; }
+        public ScrollbarComponent VerticalScrollbar { get; private set; }
 
         public InputComponent(string text, UGUIContext context) : base(context, "input")
         {
@@ -118,6 +119,36 @@ namespace ReactUnity.UGUI
         public void SetText(string text)
         {
             InputField.text = text;
+        }
+
+        protected override void ApplyLayoutStylesSelf()
+        {
+            base.ApplyLayoutStylesSelf();
+            if (Layout.Overflow == YogaOverflow.Scroll)
+            {
+                if (VerticalScrollbar == null) VerticalScrollbar = CreateScrollbar();
+            }
+            else
+            {
+                if (VerticalScrollbar != null)
+                {
+                    VerticalScrollbar.Destroy();
+                    VerticalScrollbar = null;
+                    InputField.verticalScrollbar = null;
+                }
+            }
+        }
+
+        private ScrollbarComponent CreateScrollbar()
+        {
+            var sc = new ScrollbarComponent(Context);
+            sc.Horizontal = false;
+            sc.Inverted = true;
+            sc.SetParent(this);
+
+            InputField.verticalScrollbar = sc.Scrollbar;
+
+            return sc;
         }
 
         protected override void ApplyStylesSelf()

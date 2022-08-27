@@ -27,12 +27,27 @@ namespace ReactUnity.UGUI
             }
         }
 
+        private bool inverted;
+        public bool Inverted
+        {
+            get => inverted;
+            set
+            {
+                if (value != inverted)
+                {
+                    inverted = value;
+                    Data["inverted"] = value;
+                    UpdatePosition();
+                }
+            }
+        }
+
         protected override string DefaultName => $"[{(Horizontal ? "Horizontal" : "Vertical")} Scrollbar]";
 
         public Scrollbar Scrollbar { get; }
         public ScrollbarThumbComponent Thumb { get; }
 
-        public ScrollbarComponent(UGUIContext context) : base(context, "_scrollbar")
+        public ScrollbarComponent(UGUIContext context, string tag = "_scrollbar") : base(context, tag)
         {
             IsPseudoElement = true;
             Component.enabled = false;
@@ -54,12 +69,16 @@ namespace ReactUnity.UGUI
         public override void SetProperty(string propertyName, object value)
         {
             if (propertyName == "horizontal") Horizontal = Convert.ToBoolean(value);
+            else if (propertyName == "inverted") Inverted = Convert.ToBoolean(value);
             else base.SetProperty(propertyName, value);
         }
 
         void UpdatePosition()
         {
-            Scrollbar.SetDirection(!Horizontal ? Scrollbar.Direction.BottomToTop : Scrollbar.Direction.LeftToRight, true);
+            Scrollbar.SetDirection(!Horizontal ?
+                (Inverted ? Scrollbar.Direction.TopToBottom : Scrollbar.Direction.BottomToTop) :
+                (Inverted ? Scrollbar.Direction.RightToLeft : Scrollbar.Direction.LeftToRight)
+                , true);
 
             var rt = RectTransform;
             if (Horizontal)
