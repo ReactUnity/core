@@ -1,34 +1,37 @@
 using Facebook.Yoga;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Behaviours
 {
-    public class TextMeasurer : MonoBehaviour, ILayoutSelfController
+    [DefaultExecutionOrder(-8)]
+    public class TextMeasurer : MonoBehaviour
     {
         private TextMeshProUGUI tmpro;
         private TextMeshProUGUI Text => tmpro = tmpro ?? GetComponent<TextMeshProUGUI>();
-        private bool layoutDirty = false;
 
         public YogaNode Layout;
         public UGUIContext Context;
+
+        private float preferredWidth = 0;
+        private float preferredHeight = 0;
 
         void Start()
         {
             if (Layout == null) enabled = false;
         }
 
-        void ILayoutController.SetLayoutHorizontal()
+        private void Update()
         {
-            Layout?.MarkDirty();
-            layoutDirty = true;
-        }
+            var nw = Text.preferredWidth;
+            var nh = Text.preferredHeight;
 
-        void ILayoutController.SetLayoutVertical()
-        {
-            Layout?.MarkDirty();
-            layoutDirty = true;
+            if (preferredWidth != nw || preferredHeight != nh)
+            {
+                preferredWidth = nw;
+                preferredHeight = nh;
+                Layout?.MarkDirty();
+            }
         }
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
@@ -40,16 +43,6 @@ namespace ReactUnity.UGUI.Behaviours
                 width = Mathf.Ceil(values.x),
                 height = Mathf.Ceil(values.y),
             };
-        }
-
-        private void LateUpdate()
-        {
-            // HACK: TMPro does not update the text layout until the next frame if this is not called
-            if (layoutDirty && Text)
-            {
-                Text.SetLayoutDirty();
-                layoutDirty = false;
-            }
         }
     }
 }
