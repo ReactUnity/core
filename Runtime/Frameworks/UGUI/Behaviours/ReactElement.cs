@@ -119,14 +119,14 @@ namespace ReactUnity.UGUI.Behaviours
             {
                 if (currentMotion != null) StopCoroutine(currentMotion);
 
-                var anchorMinX = 0f;
-                var anchorMinY = 0f;
-                var anchorMaxX = 0f;
-                var anchorMaxY = 0f;
-                var offsetMinX = 0f;
-                var offsetMinY = 0f;
-                var offsetMaxX = 0f;
-                var offsetMaxY = 0f;
+                float anchorMinX;
+                float anchorMinY;
+                float anchorMaxX;
+                float anchorMaxY;
+                float offsetMinX;
+                float offsetMinY;
+                float offsetMaxX;
+                float offsetMaxY;
 
                 if (Layout.Right.HasValue())
                 {

@@ -8,8 +8,8 @@ namespace ReactUnity.UGUI.Behaviours
     public class TextMeasurer : MonoBehaviour, ILayoutSelfController
     {
         private TextMeshProUGUI tmpro;
-
-        TextMeshProUGUI Text => tmpro = tmpro ?? GetComponent<TextMeshProUGUI>();
+        private TextMeshProUGUI Text => tmpro = tmpro ?? GetComponent<TextMeshProUGUI>();
+        private bool layoutDirty = false;
 
         public YogaNode Layout;
         public UGUIContext Context;
@@ -22,11 +22,13 @@ namespace ReactUnity.UGUI.Behaviours
         void ILayoutController.SetLayoutHorizontal()
         {
             Layout?.MarkDirty();
+            layoutDirty = true;
         }
 
         void ILayoutController.SetLayoutVertical()
         {
             Layout?.MarkDirty();
+            layoutDirty = true;
         }
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
@@ -38,6 +40,12 @@ namespace ReactUnity.UGUI.Behaviours
                 width = Mathf.Ceil(values.x),
                 height = Mathf.Ceil(values.y),
             };
+        }
+
+        private void LateUpdate()
+        {
+            // HACK: TMPro does not update the text layout until the next frame if this is not called
+            if (layoutDirty && Text) Text.SetLayoutDirty();
         }
     }
 }
