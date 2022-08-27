@@ -120,12 +120,6 @@ namespace ReactUnity.UGUI
             InputField.text = text;
         }
 
-        protected override void ApplyLayoutStylesSelf()
-        {
-            base.ApplyLayoutStylesSelf();
-            TextComponent.Measurer.enabled = Layout.Width.Unit == YogaUnit.Auto;
-        }
-
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
