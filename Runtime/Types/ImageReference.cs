@@ -95,7 +95,7 @@ namespace ReactUnity.Types
         IEnumerator GetTexture(ReactContext context, AssetReferenceType realType, string realValue, Action<Texture2D> callback)
         {
             var www = GetWebRequest(context, realType, realValue);
-            if (!www.isDone) yield return www.SendWebRequest();
+            yield return SendWebRequestIfNecessary(www);
 
             var resultTexture = DownloadHandlerTexture.GetContent(www);
             callback(resultTexture);

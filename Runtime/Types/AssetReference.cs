@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -7,7 +8,6 @@ using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
-using UnityEngine;
 using UnityEngine.Networking;
 
 namespace ReactUnity.Types
@@ -237,6 +237,18 @@ namespace ReactUnity.Types
 
         public virtual void Dispose()
         {
+        }
+
+        public static IEnumerator SendWebRequestIfNecessary(UnityWebRequest www)
+        {
+            if (www.isModifiable)
+            {
+                if (!www.isDone) yield return www.SendWebRequest();
+            }
+            else
+            {
+                while (!www.isDone) yield return null;
+            }
         }
 
         public abstract class BaseConverter<T> : TypedStyleConverterBase<T> where T : AssetReference<AssetType>
