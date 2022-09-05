@@ -132,10 +132,6 @@ namespace ReactUnity
             return src;
         }
 
-        public abstract ITextComponent CreateText(string text);
-        public abstract IReactComponent CreateDefaultComponent(string tag, string text);
-        public abstract IReactComponent CreateComponent(string tag, string text);
-        public abstract IReactComponent CreatePseudoComponent(string tag);
         public abstract void PlayAudio(AudioClip clip);
 
         public void Start(Action afterStart = null)

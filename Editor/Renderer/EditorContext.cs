@@ -91,11 +91,11 @@ namespace ReactUnity.Editor.Renderer
             return ctx;
         }
 
-        public override IReactComponent CreateComponent(string tag, string text)
+        protected override IReactComponent CreateComponentInternal(string tag, string text)
         {
-            if (!ComponentCreators.TryGetValue(tag, out var creator)) return base.CreateComponent(tag, text);
+            if (!ComponentCreators.TryGetValue(tag, out var creator)) return base.CreateComponentInternal(tag, text);
 
-            IUIToolkitComponent<VisualElement> res = creator(tag, text, this);
+            var res = creator(tag, text, this);
             return res;
         }
 

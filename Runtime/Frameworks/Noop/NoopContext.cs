@@ -48,20 +48,20 @@ namespace ReactUnity.Noop
             return ctx;
         }
 
-        public override IReactComponent CreateDefaultComponent(string tag, string text) => defaultCreator(tag, text, this);
+        protected override IReactComponent CreateDefaultComponentInternal(string tag, string text) => defaultCreator(tag, text, this);
 
-        public override IReactComponent CreateComponent(string tag, string text)
+        protected override IReactComponent CreateComponentInternal(string tag, string text)
         {
             if (ComponentCreators.TryGetValue(tag, out var creator)) return creator(tag, text, this);
             else return CreateDefaultComponent(tag, text);
         }
 
-        public override ITextComponent CreateText(string text)
+        protected override ITextComponent CreateTextInternal(string text)
         {
             return textCreator(text, this);
         }
 
-        public override IReactComponent CreatePseudoComponent(string tag)
+        protected override IReactComponent CreatePseudoComponentInternal(string tag)
         {
             var tc = new NoopComponent(this, tag);
             return tc;
