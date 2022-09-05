@@ -51,6 +51,8 @@ namespace ReactUnity.UGUI
             Replaced.ReplacedElement.Position = style.objectPosition;
 
             Replaced.Graphic.color = style.color;
+
+            Replaced.Graphic.raycastTarget = style.pointerEvents != Types.PointerEvents.None;
         }
 
         public class ReplacedImageHelper

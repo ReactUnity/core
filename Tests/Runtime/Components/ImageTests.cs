@@ -211,5 +211,27 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(Color.red, Image.Image.color);
         }
+
+        [UGUITest(Script = BaseScript)]
+        public IEnumerator PointerEventsDisablesRaycastTargetOfImage()
+        {
+            Assert.AreEqual(true, Image.Image.raycastTarget);
+
+            InsertStyle("image { pointer-events: none; }");
+            yield return null;
+            Assert.AreEqual(false, Image.Image.raycastTarget);
+
+            InsertStyle("image { pointer-events: auto; }");
+            yield return null;
+            Assert.AreEqual(true, Image.Image.raycastTarget);
+
+            InsertStyle("image { pointer-events: none; }");
+            yield return null;
+            Assert.AreEqual(false, Image.Image.raycastTarget);
+
+            InsertStyle("image { pointer-events: all; }");
+            yield return null;
+            Assert.AreEqual(true, Image.Image.raycastTarget);
+        }
     }
 }
