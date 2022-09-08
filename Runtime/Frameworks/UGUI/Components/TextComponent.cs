@@ -136,7 +136,13 @@ namespace ReactUnity.UGUI
             Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
             Text.characterSpacing = style.letterSpacing * 100;
             Text.wordSpacing = style.wordSpacing * 100;
-            Text.maxVisibleLines = style.maxLines;
+
+            var maxLines = style.maxLines;
+            if (Text.maxVisibleLines != maxLines)
+            {
+                Text.maxVisibleLines = maxLines;
+                Layout.MarkDirty();
+            }
 
 
             string finalText;

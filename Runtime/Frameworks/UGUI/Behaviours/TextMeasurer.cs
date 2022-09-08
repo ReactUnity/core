@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Facebook.Yoga;
 using TMPro;
 using UnityEngine;
@@ -36,7 +38,40 @@ namespace ReactUnity.UGUI.Behaviours
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var values = Text.GetPreferredValues(width, height);
+            var values = Vector2.zero;
+            var valuesFound = false;
+
+            var maxLines = Text.maxVisibleLines;
+            if (maxLines < Int16.MaxValue)
+            {
+                var ti = Text.GetTextInfo(Text.text);
+                if (ti.lineCount > maxLines)
+                {
+                    maxLines--;
+
+                    var txt = new StringBuilder();
+
+                    var ci = ti.characterInfo;
+                    var len = ci.Length;
+
+                    if (ci[len - 1].lineNumber > maxLines)
+                    {
+                        for (int i = 0; i < len; i++)
+                        {
+                            var c = ci[i];
+                            if (c.lineNumber > maxLines) break;
+                            txt.Append(ci[i].character);
+                        }
+                        values = Text.GetPreferredValues(txt.ToString(), width, height);
+                        valuesFound = true;
+                    }
+                }
+            }
+
+            if (!valuesFound)
+            {
+                values = Text.GetPreferredValues(width, height);
+            }
 
             return new YogaSize
             {

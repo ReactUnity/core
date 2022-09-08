@@ -245,5 +245,58 @@ namespace ReactUnity.Tests
             Assert.AreEqual(TextAlignmentOptions.BaselineRight, t.alignment);
         }
 
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator TextShouldTakeMaxLinesIntoAccountWhenCalculatingSize()
+        {
+            var t = (Q("#text") as TextComponent).Text;
+
+            Component.Globals.Set("textContent",
+@"Line 1
+Line 2
+Line 3
+Line 4
+Line 5
+Line 6");
+
+            yield return null;
+
+            var height = t.rectTransform.rect.height;
+            Assert.AreEqual(169, height, 10);
+
+
+            Text.Style["max-lines"] = "3";
+            yield return null;
+            yield return null;
+
+            height = t.rectTransform.rect.height;
+            Assert.AreEqual(85, height, 10);
+
+
+
+            Text.Style["max-lines"] = "9";
+            yield return null;
+            yield return null;
+
+            height = t.rectTransform.rect.height;
+            Assert.AreEqual(169, height, 10);
+
+
+
+            Text.Style["max-lines"] = "5";
+            yield return null;
+            yield return null;
+
+            height = t.rectTransform.rect.height;
+            Assert.AreEqual(141, height, 10);
+
+
+
+            Text.Style["max-lines"] = "6";
+            yield return null;
+            yield return null;
+            height = t.rectTransform.rect.height;
+            Assert.AreEqual(169, height, 10);
+        }
+
     }
 }
