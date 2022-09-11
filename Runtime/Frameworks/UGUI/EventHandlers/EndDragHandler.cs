@@ -25,7 +25,7 @@ namespace ReactUnity.UGUI.EventHandlers
         
         private void OnDisable(){
             if(IsDragging) {
-                OnEvent?.Invoke(eventData);
+                OnEvent?.Invoke(null);
                 
                 IsDragging = false;
             }
