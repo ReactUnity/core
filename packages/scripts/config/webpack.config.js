@@ -189,14 +189,14 @@ const baseConfigFactory = function (webpackEnv) {
   return {
     // Webpack noise constrained to errors and warnings
     stats: 'errors-warnings',
-    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
+    mode: isEnvProduction ? 'production' : 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
     devtool: isEnvProduction
       ? (shouldUseSourceMap
         ? (sourceMapType || 'source-map')
         : false)
-      : isEnvDevelopment && (sourceMapType || 'eval-source-map'),
+      : isEnvDevelopment && (sourceMapType || 'cheap-module-source-map'),
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: {
