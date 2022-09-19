@@ -213,8 +213,11 @@ namespace ReactUnity.Editor.Developer
                 ExportAsClass = true,
                 AllowGeneric = true,
                 AllowIndexer = true,
-                AllowPointer = false
+                AllowPointer = false,
+                IsExternal = true,
             };
+
+            generator.PickFileAndGenerate();
         }
 
         #endregion
@@ -234,6 +237,7 @@ namespace ReactUnity.Editor.Developer
         public bool AllowPointer { get; set; } = false;
         public bool WriteDocs { get; set; } = false;
         public bool IncludeExterns { get; set; } = false;
+        public bool IsExternal { get; set; } = false;
 
         #endregion
 
@@ -252,6 +256,13 @@ namespace ReactUnity.Editor.Developer
         {
             var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
             if (string.IsNullOrWhiteSpace(filePath)) return filePath;
+
+            var extension = Path.GetExtension(filePath);
+            if (extension != ".ts")
+            {
+                UnityEngine.Debug.LogError("Please pick a destination file with '.ts' extension");
+                return null;
+            }
 
             GenerateTo(filePath);
 
@@ -754,7 +765,7 @@ namespace ReactUnity.Editor.Developer
         string RegisterRemap(TypescriptRemap remap)
         {
             if (remap == null) return null;
-            Remaps[remap.PropName] = remap.FileName;
+            Remaps[remap.PropName] = IsExternal ? remap.ExternalFileName : remap.FileName;
             return remap.PropName;
         }
 

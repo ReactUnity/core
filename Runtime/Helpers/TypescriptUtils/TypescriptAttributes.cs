@@ -20,11 +20,13 @@ namespace ReactUnity.Helpers.TypescriptUtils
     public sealed class TypescriptRemap : Attribute
     {
         public string FileName { get; }
+        public string ExternalFileName { get; }
         public string PropName { get; }
 
-        public TypescriptRemap(string file, string prop)
+        public TypescriptRemap(string file, string externalFile, string prop)
         {
             FileName = file;
+            ExternalFileName = externalFile;
             PropName = prop;
         }
     }

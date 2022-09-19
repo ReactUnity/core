@@ -24,7 +24,7 @@ namespace ReactUnity
         public StyleState StyleState { get; private set; }
         public StateStyles StateStyles { get; private set; }
 
-        [TypescriptRemap("../properties/style", "InlineStyleRemap")]
+        [TypescriptRemap("../properties/style", "@reactunity/renderer", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
         public StyleSheet InlineStylesheet { get; protected set; }
 
