@@ -17,6 +17,7 @@ namespace ReactUnity.Styling
     {
         public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: AllConverters.PercentageConverter);
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
+        public static readonly StyleProperty<string> sortingLayer = new StyleProperty<string>("sortingLayer", null, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
@@ -102,6 +103,7 @@ namespace ReactUnity.Styling
         {
             { "opacity", opacity },
             { "zIndex", zIndex },
+            { "sortingLayer", sortingLayer },
             { "visibility", visibility },
             { "position", position },
             { "cursor", cursor },
@@ -207,6 +209,7 @@ namespace ReactUnity.Styling
             { "audio-iteration-count", audioIterationCount },
 
             { "z-index", zIndex },
+            { "sorting-layer", sortingLayer },
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
             { "background-image", backgroundImage },

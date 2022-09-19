@@ -26,6 +26,7 @@ namespace ReactUnity.Styling
         public int order => GetStyleValue(LayoutProperties.Order);
         public float opacity => GetStyleValue(StyleProperties.opacity);
         public int zIndex => GetStyleValue(StyleProperties.zIndex);
+        public string sortingLayer => GetStyleValue(StyleProperties.sortingLayer);
         public bool visibility => GetStyleValue(StyleProperties.visibility);
         public PositionType position => GetStyleValue(StyleProperties.position);
         public ICssValueList<Types.Cursor> cursor => GetStyleValue(StyleProperties.cursor);
