@@ -86,6 +86,7 @@ export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> extends View<T> {
   target?: UnityEngine.GameObject | UnityEngine.Component;
   onMount?: (camera: UnityEngine.GameObject, sender: T) => void;
   onUnmount?: (camera: UnityEngine.GameObject, sender: T) => void;
+  [key: string]: any;
 }
 
 export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {

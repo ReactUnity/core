@@ -31,6 +31,8 @@ export type TextAlign = 'top-left' | 'top' | 'top-right' | 'top-justified' | 'to
   | 'midline-right' | 'midline-justified' | 'midline-flush' | 'midline-geo-aligned' | 'capline-left' | 'capline'
   | 'capline-right' | 'capline-justified' | 'capline-flush' | 'capline-geo-aligned' | 'converted';
 
+export type VerticalAlign = 'top' | 'middle' | 'bottom' | 'baseline' | 'geometry' | 'capline';
+
 export type TimingFunctionType = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'step-start' | 'step-end';
 export type AnimationFillMode = 'none' | 'both' | 'forwards' | 'backwards';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
