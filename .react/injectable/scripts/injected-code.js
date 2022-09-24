@@ -31,6 +31,7 @@
   globalThis.ReactUnity = ReactUnity;
   globalThis.Material = Material;
   globalThis.MaterialStyles = MaterialStyles;
+  globalThis.useGlobals = ReactUnity.useGlobals;
 
   var defaultComponent;
 

@@ -118,7 +118,7 @@ const xPoints = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 6
 const yPoints = [5, 30, -5, -10, 15, -15, 20, 5, 8, -12, -20, 2, 3, -5, 8, -2, 22, -30, -15, -35, -20];
 
 export function App() {
-  const globals = useGlobals();
+  const globals = ReactUnity.useGlobals();
   const points = globals.points || 7;
   const lineWidth = globals.lineWidth || 4;
 

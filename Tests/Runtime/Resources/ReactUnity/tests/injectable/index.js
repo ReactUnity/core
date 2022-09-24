@@ -8556,68 +8556,41 @@ __webpack_require__.d(dist_namespaceObject, {
 var renderer_dist_namespaceObject = {};
 __webpack_require__.r(renderer_dist_namespaceObject);
 __webpack_require__.d(renderer_dist_namespaceObject, {
-  "GlobalsProvider": () => (dictionary_watcher_GlobalsProvider),
-  "Renderer": () => (renderer_Renderer),
-  "batchedUpdates": () => (renderer_batchedUpdates),
-  "createDictionaryWatcher": () => (dictionary_watcher_createDictionaryWatcher),
-  "flushSync": () => (renderer_flushSync),
-  "globalsWatcher": () => (dictionary_watcher_globalsWatcher),
+  "GlobalsProvider": () => (GlobalsProvider),
+  "Renderer": () => (Renderer),
+  "batchedUpdates": () => (batchedUpdates),
+  "createDictionaryWatcher": () => (createDictionaryWatcher),
+  "flushSync": () => (flushSync),
+  "globalsWatcher": () => (globalsWatcher),
   "icon": () => (icon),
-  "unstable_batchedUpdates": () => (renderer_batchedUpdates),
-  "useGlobals": () => (dictionary_watcher_useGlobals),
+  "unstable_batchedUpdates": () => (batchedUpdates),
+  "useGlobals": () => (useGlobals),
   "useWatchable": () => (useWatchable)
 });
 
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../../node_modules/clsx/dist/clsx.m.js
-function toVal(mix) {
-  var k,
-      y,
-      str = '';
-
-  if (typeof mix === 'string' || typeof mix === 'number') {
-    str += mix;
-  } else if (typeof mix === 'object') {
-    if (Array.isArray(mix)) {
-      for (k = 0; k < mix.length; k++) {
-        if (mix[k]) {
-          if (y = toVal(mix[k])) {
-            str && (str += ' ');
-            str += y;
-          }
-        }
-      }
-    } else {
-      for (k in mix) {
-        if (mix[k]) {
-          str && (str += ' ');
-          str += k;
-        }
-      }
-    }
+function r(e) {
+  var t,
+      f,
+      n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == typeof e) if (Array.isArray(e)) for (t = 0; t < e.length; t++) {
+    e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (t in e) {
+    e[t] && (n && (n += " "), n += t);
   }
-
-  return str;
+  return n;
 }
 
-/* harmony default export */ function clsx_m() {
-  var i = 0,
-      tmp,
-      x,
-      str = '';
-
-  while (i < arguments.length) {
-    if (tmp = arguments[i++]) {
-      if (x = toVal(tmp)) {
-        str && (str += ' ');
-        str += x;
-      }
-    }
+function clsx() {
+  for (var e, t, f = 0, n = ""; f < arguments.length;) {
+    (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
   }
 
-  return str;
+  return n;
 }
+/* harmony default export */ const clsx_m = (clsx);
 // EXTERNAL MODULE: ../../../node_modules/react/index.js
 var react = __webpack_require__("../../../node_modules/react/index.js");
 ;// CONCATENATED MODULE: ../../../material/dist/src/util/helpers.js
@@ -10910,13 +10883,13 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
 var Slider = react.memo(_Slider); //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/version.js
-var version = '0.12.0';
+;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
+var version = '0.13.1';
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
 var shim = __webpack_require__("../../../node_modules/use-sync-external-store/shim/index.js");
 // EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
 var with_selector = __webpack_require__("../../../node_modules/use-sync-external-store/with-selector.js");
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
 var dictionary_watcher_assign = undefined && undefined.__assign || function () {
   dictionary_watcher_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11000,7 +10973,7 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/views/error-boundary.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -11104,7 +11077,7 @@ function (_super) {
 }(react.Component);
 
 
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/views/default-view.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
 
 
 
@@ -11119,7 +11092,7 @@ function DefaultView(_a) {
     })
   });
 }
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
 var ObjectsRepo =
 /** @class */
 function () {
@@ -11164,7 +11137,7 @@ function () {
 
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__("../../../node_modules/react-reconciler/index.js");
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
@@ -11244,7 +11217,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
 
   return updatePayload;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/constants.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
 var constants_rest = undefined && undefined.__rest || function (s, e) {
   var t = {};
 
@@ -11318,7 +11291,7 @@ var commonReconciler = {
   prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
 };
 var isDevelopment = "production" === 'development';
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/richtext.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/richtext.js
 function parametrizeValue(value) {
   if (typeof value === 'number') return value + '';
   value = value + '';
@@ -11376,7 +11349,7 @@ function stringifyRichText(node) {
 
   return acc.join('');
 }
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/svg.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/svg.js
 function kebabize(str) {
   return str.split('').map(function (letter, idx) {
     return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
@@ -11450,14 +11423,14 @@ function stringifySVG(node) {
 
   return acc.join('');
 }
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/index.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/index.js
 
 
 var subContextRenderers = {
   'richtext': stringifyRichText,
   'svg': stringifySVG
 };
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -11538,7 +11511,7 @@ function (_super) {
 }(ObjectsRepo);
 
 
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
 
 
 var callbacksRepo = new CallbacksRepo();
@@ -11569,7 +11542,7 @@ function convertPropsToSerializable(props) {
 
   return res;
 }
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11947,7 +11920,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
 });
 
 var asyncReconciler = react_reconciler(hostConfig);
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
 var sync_reconciler_assign = undefined && undefined.__assign || function () {
   sync_reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -12065,7 +12038,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, co
 });
 
 var syncReconciler = react_reconciler(reconciler_hostConfig);
-;// CONCATENATED MODULE: ../../../node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
 
 
 
@@ -12336,7 +12309,6 @@ function addTooltip(target, props, withBackdrop, hide) {
   anchor.Style.Set('inset', -(props.offset || 5));
   var pivotOriginal = props.pivot || (pos === null || pos === void 0 ? void 0 : pos.pivot) || 'top';
   tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
-  UnityBridge.appendChild(target, anchor);
 
   if (withBackdrop) {
     var backdrop = UnityBridge.createElement('portal', '', HostContainer);
@@ -12351,6 +12323,7 @@ function addTooltip(target, props, withBackdrop, hide) {
     disableHelpers: true,
     hostContainer: tooltip
   });
+  UnityBridge.appendChild(target, anchor);
   return anchor;
 }
 
@@ -12360,6 +12333,7 @@ function useTooltip(props, trigger) {
   }
 
   var tooltipRef = (0,react.useRef)();
+  var timeoutRef = (0,react.useRef)();
   var callbacksRef = (0,react.useRef)([]);
   var elementsRef = (0,react.useRef)([]);
   var propsRef = useAutoRef(props);
@@ -12376,22 +12350,36 @@ function useTooltip(props, trigger) {
   var hide = (0,react.useCallback)(function () {
     var _a;
 
+    if (timeoutRef.current >= 0) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
     (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
     tooltipRef.current = null;
   }, []);
   var show = (0,react.useCallback)(function (target, properties, withBackdrop) {
-    var _a;
-
     if (withBackdrop === void 0) {
       withBackdrop = false;
     }
 
-    (_a = tooltipRef.current) === null || _a === void 0 ? void 0 : _a.Remove();
+    hide();
     return tooltipRef.current = addTooltip(target, properties, withBackdrop, hide);
   }, [hide]);
   var showWithCurrent = (0,react.useCallback)(function (ev, sender) {
     var calculatedProps = typeof propsRef.current === 'function' ? propsRef.current(sender) : propsRef.current;
-    show(sender, calculatedProps, trigger === 'click');
+    var withBackdrop = trigger === 'click';
+    var delay = calculatedProps.delay;
+
+    if (delay > 0) {
+      timeoutRef.current = setTimeout(function () {
+        setImmediate(function () {
+          show(sender, calculatedProps, withBackdrop);
+        });
+      }, delay);
+    } else {
+      show(sender, calculatedProps, withBackdrop);
+    }
   }, [show, trigger, propsRef]);
   (0,react.useLayoutEffect)(function () {
     return clearAll;
@@ -14429,90 +14417,6 @@ var VariableSizeList = createListComponent({
  //# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ../../../material/dist/index.js
  //# sourceMappingURL=index.js.map
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
-var helpers_dictionary_watcher_assign = undefined && undefined.__assign || function () {
-  helpers_dictionary_watcher_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return helpers_dictionary_watcher_assign.apply(this, arguments);
-};
-
-
-
-
-/**
- * Creates a context that updates its value when the values in the dictionary change
- * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
- * @param displayName A displayName to identify this context easier in case of problems
- */
-
-function dictionary_watcher_createDictionaryWatcher(dictionary, displayName) {
-  var ctx = (0,react.createContext)(undefined);
-  if (displayName) ctx.displayName = displayName;
-
-  var snapshot = helpers_dictionary_watcher_assign({}, dictionary);
-
-  var subscribe = function subscribe(onStoreChange) {
-    snapshot = helpers_dictionary_watcher_assign({}, dictionary);
-    var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
-      snapshot = helpers_dictionary_watcher_assign({}, dictionary);
-      onStoreChange();
-    });
-
-    if (!remove) {
-      if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
-    }
-
-    return function () {
-      return remove === null || remove === void 0 ? void 0 : remove();
-    };
-  };
-
-  var getSnapshot = function getSnapshot() {
-    return snapshot;
-  };
-
-  var Provider = function GlobalsProvider(_a) {
-    var children = _a.children;
-    var value = (0,shim.useSyncExternalStore)(subscribe, getSnapshot, getSnapshot);
-    return (0,react.createElement)(ctx.Provider, {
-      value: value
-    }, children);
-  };
-
-  function useSelector(selector) {
-    return (0,with_selector.useSyncExternalStoreWithSelector)(subscribe, getSnapshot, getSnapshot, selector);
-  }
-
-  function useDictionaryContext() {
-    var context = (0,react.useContext)(ctx);
-
-    if (context === undefined) {
-      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
-    }
-
-    return context;
-  }
-
-  return {
-    context: ctx,
-    Provider: Provider,
-    useContext: useDictionaryContext,
-    useSelector: useSelector
-  };
-}
-var dictionary_watcher_globalsWatcher = dictionary_watcher_createDictionaryWatcher(Globals, 'globalsContext');
-var dictionary_watcher_useGlobals = dictionary_watcher_globalsWatcher.useContext;
-var dictionary_watcher_GlobalsProvider = dictionary_watcher_globalsWatcher.Provider;
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/icons.js
 var icons_assign = undefined && undefined.__assign || function () {
   icons_assign = Object.assign || function (t) {
@@ -14576,1187 +14480,6 @@ function useWatchable(obj) {
   }, [obj, isWatchable]);
   return (0,shim.useSyncExternalStore)(subscribe, getSnapshot);
 }
-;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version_version = '0.13.0';
-;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
-var error_boundary_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var views_error_boundary_assign = undefined && undefined.__assign || function () {
-  views_error_boundary_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return views_error_boundary_assign.apply(this, arguments);
-};
-
-
-
-
-var error_boundary_ErrorBoundary =
-/** @class */
-function (_super) {
-  error_boundary_extends(ErrorBoundary, _super);
-
-  function ErrorBoundary(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {
-      hasError: false,
-      error: null
-    };
-    return _this;
-  }
-
-  ErrorBoundary.getDerivedStateFromError = function (error) {
-    // Update state so the next render will show the fallback UI.
-    return {
-      hasError: true,
-      error: error
-    };
-  };
-
-  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {// You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-  };
-
-  ErrorBoundary.prototype.render = function () {
-    var _a, _b;
-
-    if (this.state.hasError) {
-      return (0,jsx_runtime.jsxs)("view", views_error_boundary_assign({
-        style: {
-          color: 'crimson',
-          padding: 20
-        }
-      }, {
-        children: [(0,jsx_runtime.jsx)("view", views_error_boundary_assign({
-          style: {
-            marginBottom: '12px'
-          }
-        }, {
-          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
-        })), (0,jsx_runtime.jsx)("view", {
-          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
-        })]
-      }));
-    }
-
-    return this.props.children;
-  };
-
-  return ErrorBoundary;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
-
-
-
-function default_view_DefaultView(_a) {
-  var children = _a.children,
-      withHelpers = _a.withHelpers;
-  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
-    children: !withHelpers ? children : (0,jsx_runtime.jsx)(error_boundary_ErrorBoundary, {
-      children: (0,jsx_runtime.jsx)(dictionary_watcher_GlobalsProvider, {
-        children: children
-      })
-    })
-  });
-}
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
-var objects_ObjectsRepo =
-/** @class */
-function () {
-  function ObjectsRepo() {
-    var _this = this;
-
-    this.indices = [{}];
-    this.objects = new WeakMap();
-
-    this.setObject = function (index, item) {
-      var it = _this.indices[index];
-
-      if (!it) {
-        it = _this.indices[index] = {};
-      }
-
-      _this.objects.set(it, item);
-    };
-
-    this.addObject = function (item) {
-      if (!item) return -1;
-      var it = {};
-      var ind = _this.indices.length;
-
-      _this.indices.push(it);
-
-      _this.objects.set(it, item);
-
-      return ind;
-    };
-
-    this.getObject = function (index) {
-      if (index < 0) return undefined;
-      var it = _this.indices[index];
-      return _this.objects.get(it);
-    };
-  }
-
-  return ObjectsRepo;
-}();
-
-
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
-var diffing_styleStringSymbol = '__style_as_string__';
-function diffing_diffProperties(lastProps, nextProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
-
-  if (lastProps === nextProps) return null;
-  var updatePayload = null;
-  var propKey;
-
-  for (propKey in lastProps) {
-    // This loop is for removing properties that existed in the previous properties, but not on current
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue;
-    }
-
-    var prop = null; // If style existed in the previous properties as string, set it to null
-
-    if (propKey === 'style' && typeof lastProps.style === 'string') {
-      (updatePayload = updatePayload || {})[diffing_styleStringSymbol] = null;
-    } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
-
-      if (depth > 0) {
-        prop = diffing_diffProperties(lastProps[propKey], {}, depth - 1);
-        if (!prop) continue;
-      } // For all other deleted properties we add it to the queue. We use
-      // the whitelist in the commit phase instead.
-
-
-      (updatePayload = updatePayload || {})[propKey] = prop;
-    }
-  }
-
-  for (propKey in nextProps) {
-    // This loop is for finding difference between current properties and previous properties
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-
-    var prop = nextProp;
-
-    if (propKey === 'style') {
-      var prevWasString = typeof lastProp === 'string';
-      var curIsString = typeof prop === 'string';
-
-      if (prevWasString !== curIsString) {
-        (updatePayload = updatePayload || {})[diffing_styleStringSymbol] = typeof prop === 'string' ? prop : null;
-
-        if (curIsString) {
-          // Current style is string while previous is object, so revert all changes from the previous one
-          prop = diffing_diffProperties(lastProp, {}, 0);
-          if (!prop) continue;
-        }
-      } else {
-        if (curIsString) {
-          // Both styles are string, style does not need changing
-          continue;
-        } else {
-          // Both styles are object, take the difference
-          prop = diffing_diffProperties(lastProp, nextProp, 0);
-          if (!prop) continue;
-        }
-      }
-    }
-
-    if (deepDiffing > 0) {
-      prop = diffing_diffProperties(lastProp, nextProp, deepDiffing - 1);
-      if (!prop) continue;
-    }
-
-    (updatePayload = updatePayload || {})[propKey] = prop;
-  }
-
-  return updatePayload;
-}
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
-var renderer_constants_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-var constants_hideClass = 'react-unity__renderer__hidden';
-var constants_eventPriorities = {
-  discrete: constants.DiscreteEventPriority,
-  continuous: constants.ContinuousEventPriority,
-  "default": constants.DefaultEventPriority,
-  idle: constants.IdleEventPriority
-};
-var constants_textTypes = {
-  text: true,
-  icon: true,
-  style: true,
-  script: true
-};
-function constants_getAllowedProps(props, type) {
-  var children = props.children,
-      tag = props.tag,
-      rest = renderer_constants_rest(props, ["children", "tag"]);
-
-  if (constants_textTypes[type] && 'children' in props) {
-    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
-  }
-
-  if (typeof props.style === 'string') rest[diffing_styleStringSymbol] = props.style;
-  return rest;
-}
-var constants_commonReconciler = {
-  // -------------------
-  //     Scheduling
-  // -------------------
-  now: Date.now,
-  getCurrentEventPriority: function getCurrentEventPriority() {
-    return UnityBridge.CurrentEventPriority || constants_eventPriorities["default"];
-  },
-  noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, delay) {
-    return setTimeout(callback, delay);
-  },
-  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
-    return Promise.resolve(null).then(callback)["catch"](function (error) {
-      return setTimeout(function () {
-        throw error;
-      }, 0);
-    });
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    return clearTimeout(handle);
-  },
-  beforeActiveInstanceBlur: function beforeActiveInstanceBlur() {},
-  afterActiveInstanceBlur: function afterActiveInstanceBlur() {},
-  getInstanceFromNode: function getInstanceFromNode(node) {
-    return undefined;
-  },
-  getInstanceFromScope: function getInstanceFromScope(scopeInstance) {
-    return undefined;
-  },
-  prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
-};
-var constants_isDevelopment = "production" === 'development';
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/richtext.js
-function richtext_parametrizeValue(value) {
-  if (typeof value === 'number') return value + '';
-  value = value + '';
-  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
-  return value;
-}
-function richtext_stringifyRichText(node) {
-  var _a, _b, _c;
-
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
-
-  if (tag) {
-    acc.push('<');
-    acc.push(tag);
-
-    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
-      var value = (_b = node.attributes) === null || _b === void 0 ? void 0 : _b.value;
-      acc.push('=');
-      acc.push(richtext_parametrizeValue(value));
-    }
-
-    for (var key in node.attributes) {
-      if (key === 'value') continue;
-
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
-        var value = node.attributes[key];
-
-        if (value != null) {
-          acc.push(' ');
-          acc.push(key);
-          acc.push('=');
-          acc.push(richtext_parametrizeValue(value));
-        }
-      }
-    }
-
-    acc.push('>');
-  }
-
-  if (((_c = node.children) === null || _c === void 0 ? void 0 : _c.length) > 0) {
-    for (var _i = 0, _d = node.children; _i < _d.length; _i++) {
-      var child = _d[_i];
-      acc.push(richtext_stringifyRichText(child));
-    }
-
-    if (tag) {
-      acc.push('</');
-      acc.push(tag);
-      acc.push('>');
-    }
-  }
-
-  return acc.join('');
-}
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/svg.js
-function svg_kebabize(str) {
-  return str.split('').map(function (letter, idx) {
-    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
-  }).join('');
-}
-
-;
-function svg_stringifyStyle(style) {
-  if (typeof style === 'string') return style;
-  var acc = [];
-
-  for (var key in style) {
-    if (Object.prototype.hasOwnProperty.call(style, key)) {
-      var element = style[key];
-
-      if (element != null) {
-        acc.push(svg_kebabize(key));
-        acc.push(':');
-        acc.push(element);
-        acc.push(';');
-      }
-    }
-  }
-
-  return acc.join('');
-}
-function svg_stringifySVG(node) {
-  var _a;
-
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
-
-  if (tag) {
-    acc.push('<');
-    acc.push(tag);
-
-    for (var key in node.attributes) {
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
-        var element = node.attributes[key];
-        if (key === 'style') element = svg_stringifyStyle(element);
-
-        if (element != null) {
-          acc.push(' ');
-          acc.push(svg_kebabize(key));
-          acc.push('="');
-          acc.push(element);
-          acc.push('"');
-        }
-      }
-    }
-  }
-
-  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-    if (tag) acc.push('>');
-
-    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
-      var child = _b[_i];
-      acc.push(svg_stringifySVG(child));
-    }
-
-    if (tag) {
-      acc.push('</');
-      acc.push(tag);
-      acc.push('>');
-    }
-  } else {
-    if (tag) acc.push(' />');
-  }
-
-  return acc.join('');
-}
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/index.js
-
-
-var subcontexts_subContextRenderers = {
-  'richtext': richtext_stringifyRichText,
-  'svg': svg_stringifySVG
-};
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
-var async_callbacks_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-
-
-var callbacks_CallbacksRepo =
-/** @class */
-function (_super) {
-  async_callbacks_extends(CallbacksRepo, _super);
-
-  function CallbacksRepo() {
-    var _this = _super.call(this) || this;
-
-    _this.call = function (ind, args) {
-      var cb = _this.getObject(ind);
-
-      var argsAsList = args;
-      var argsAsArray = args;
-
-      if (typeof argsAsArray.Length === 'number') {
-        // C# Array
-        args = [];
-        var length = argsAsArray.Length;
-
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsArray.GetValue(index));
-        }
-      } else if (typeof argsAsList.Count === 'number') {
-        // C# List
-        args = [];
-        var length = argsAsList.Count;
-
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsList[index]);
-        }
-      } else if (typeof argsAsList.Count === 'function') {
-        // C# IList
-        args = [];
-        var length = argsAsList.Count();
-
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsArray.GetValue(index));
-        }
-      }
-
-      return cb.apply(null, args);
-    };
-
-    return _this;
-  }
-
-  return CallbacksRepo;
-}(objects_ObjectsRepo);
-
-
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
-
-
-var serializer_callbacksRepo = new callbacks_CallbacksRepo();
-var serializer_objectsRepo = new objects_ObjectsRepo(); // Separates properties in 3 categories: regular props, callbacks and non-serializable objects
-
-function serializer_convertPropsToSerializable(props) {
-  var res = {};
-
-  for (var key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      var value = props[key];
-
-      if (value == null) {
-        (res.p || (res.p = {}))[key] = null;
-      } else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = serializer_convertPropsToSerializable(value);
-      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
-        var ind = serializer_callbacksRepo.addObject(value);
-        (res.e || (res.e = {}))[key] = ind;
-      } else if (typeof value === 'object' || typeof value === 'function') {
-        var ind = serializer_objectsRepo.addObject(value);
-        (res.o || (res.o = {}))[key] = ind;
-      } else {
-        (res.p || (res.p = {}))[key] = value;
-      }
-    }
-  }
-
-  return res;
-}
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
-var async_reconciler_assign = undefined && undefined.__assign || function () {
-  async_reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return async_reconciler_assign.apply(this, arguments);
-};
-
-
-
-
-
-
-var reconciler_refId = 0;
-var reconciler_ctxMap = new Map();
-
-var reconciler_updateSubContext = function updateSubContext(instance) {
-  var rend = subcontexts_subContextRenderers[instance.type];
-  var root = instance === null || instance === void 0 ? void 0 : instance.root;
-  var cur = instance;
-
-  while (cur && !root) {
-    root = cur.root;
-    cur = cur.parent;
-  }
-
-  if (!root) return;
-  var content = rend(root.subContext.node);
-
-  if (instance.type === 'richtext') {
-    instance.hostContext.commands.push(['x', {
-      r: root.refId,
-      c: content
-    }]);
-  } else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', async_reconciler_assign({
-      r: root.refId,
-      t: 'svg'
-    }, serializer_convertPropsToSerializable({
-      innerContent: content
-    }))]);
-  }
-};
-
-var async_reconciler_hostConfig = async_reconciler_assign(async_reconciler_assign({}, constants_commonReconciler), {
-  getRootHostContext: function getRootHostContext(rootContainer) {
-    var context = rootContainer.context;
-
-    if (rootContainer.refId < 0) {
-      reconciler_refId++;
-      rootContainer.context.SetRef(reconciler_refId, rootContainer.component);
-      rootContainer.refId = reconciler_refId;
-    }
-
-    var existing = reconciler_ctxMap.get(context);
-    if (existing) return existing;
-    var commands = rootContainer.commands;
-
-    var flushCommands = function flushCommands() {
-      var serialized = JSON.stringify(commands);
-      commands.length = 0;
-      return serialized;
-    };
-
-    var fireEventByRef = function fireEventByRef(ind, args) {
-      return serializer_callbacksRepo.call(ind, args);
-    };
-
-    var getObjectRef = function getObjectRef(ind) {
-      return serializer_objectsRepo.getObject(ind);
-    };
-
-    var getEventAsObjectRef = function getEventAsObjectRef(ind) {
-      return serializer_callbacksRepo.getObject(ind);
-    };
-
-    context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
-    var ctx = {
-      context: context,
-      commands: commands,
-      refId: rootContainer.refId,
-      type: 'native'
-    };
-    reconciler_ctxMap.set(context, ctx);
-    return ctx;
-  },
-  getChildHostContext: function getChildHostContext(parentCtx, type) {
-    if (type === 'richtext' && parentCtx.type === 'native') return {
-      type: 'richtext',
-      hostContext: parentCtx,
-      node: null,
-      parent: null,
-      root: null
-    };
-    if (type === 'svg' && parentCtx.type === 'native') return {
-      type: 'svg',
-      hostContext: parentCtx,
-      node: null,
-      parent: null,
-      root: null
-    };
-    return parentCtx;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
-    return null;
-  },
-  supportsMutation: true,
-  supportsHydration: false,
-  supportsPersistence: false,
-  supportsMicrotasks: true,
-  supportsTestSelectors: false,
-  isPrimaryRenderer: true,
-  warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  clearContainer: function clearContainer(container) {
-    UnityBridge.clearContainer(container);
-  },
-  createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    var aProps = constants_getAllowedProps(props, type);
-
-    if (ctx.type === 'native') {
-      reconciler_refId++;
-      ctx.commands.push(['c', async_reconciler_assign({
-        t: type,
-        r: reconciler_refId
-      }, serializer_convertPropsToSerializable(aProps))]);
-      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(reconciler_refId, internalHandle);
-
-      var res = async_reconciler_assign(async_reconciler_assign({}, ctx), {
-        refId: reconciler_refId
-      });
-
-      if (type === 'richtext') {
-        res.subContext = {
-          type: 'richtext',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-
-      if (type === 'svg') {
-        res.subContext = {
-          type: 'svg',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-
-      return res;
-    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return async_reconciler_assign(async_reconciler_assign({}, ctx), {
-        node: {
-          tag: type,
-          children: [],
-          attributes: aProps
-        }
-      });
-    }
-  },
-  createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    if (ctx.type === 'native') {
-      reconciler_refId++;
-      ctx.commands.push(['t', {
-        r: reconciler_refId,
-        c: text
-      }]);
-      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(reconciler_refId, internalHandle);
-      return async_reconciler_assign(async_reconciler_assign({}, ctx), {
-        refId: reconciler_refId
-      });
-    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return async_reconciler_assign(async_reconciler_assign({}, ctx), {
-        node: {
-          text: text
-        }
-      });
-    }
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-
-    if (parent.type === 'native' && child.type === 'native') {
-      parent.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
-      child.root = parent.root;
-      child.parent = parent;
-      reconciler_updateSubContext(child);
-    }
-  },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount(instance) {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
-    return constants_textTypes[type];
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
-    return diffing_diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type) {
-    var props = constants_getAllowedProps(updatePayload, type);
-
-    if (instance.type === 'native') {
-      instance.commands.push(['u', async_reconciler_assign({
-        r: instance.refId,
-        t: type
-      }, serializer_convertPropsToSerializable(props))]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      if ('attributes' in instance.node) instance.node.attributes = async_reconciler_assign(async_reconciler_assign({}, instance.node.attributes), props);
-      reconciler_updateSubContext(instance);
-    }
-  },
-  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
-    if (instance.type === 'native') {
-      instance.commands.push(['x', {
-        r: instance.refId,
-        c: newText
-      }]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node = {
-        text: newText
-      };
-      reconciler_updateSubContext(instance);
-    }
-  },
-  appendChild: function appendChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-
-    if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
-      child.root = parent.root;
-      child.parent = parent;
-      reconciler_updateSubContext(child);
-    }
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-
-    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      child.commands.push(['i', {
-        p: parent.refId,
-        c: child.refId,
-        i: beforeChild.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
-      if ('children' in parent.node) {
-        var index = parent.node.children.indexOf(beforeChild.node);
-        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
-      }
-
-      child.root = parent.root;
-      child.parent = parent;
-      reconciler_updateSubContext(child);
-    }
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
-  },
-  removeChild: function removeChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-
-    if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['r', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) {
-        var index = parent.node.children.indexOf(child.node);
-        if (index >= 0) parent.node.children.splice(index, 1);
-      }
-
-      reconciler_updateSubContext(parent);
-    }
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
-  },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
-  hideInstance: function hideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = true;
-      reconciler_updateSubContext(instance);
-    }
-  },
-  hideTextInstance: function hideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = true;
-      reconciler_updateSubContext(instance);
-    }
-  },
-  unhideInstance: function unhideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = false;
-      reconciler_updateSubContext(instance);
-    }
-  },
-  unhideTextInstance: function unhideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = false;
-      reconciler_updateSubContext(instance);
-    }
-  }
-});
-
-var reconciler_asyncReconciler = react_reconciler(async_reconciler_hostConfig);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
-var renderer_sync_reconciler_assign = undefined && undefined.__assign || function () {
-  renderer_sync_reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return renderer_sync_reconciler_assign.apply(this, arguments);
-};
-
-
-
-
-var reconciler_hostContext = {};
-var reconciler_childContext = {};
-
-var sync_reconciler_hostConfig = renderer_sync_reconciler_assign(renderer_sync_reconciler_assign({}, constants_commonReconciler), {
-  getRootHostContext: function getRootHostContext() {
-    return reconciler_hostContext;
-  },
-  getChildHostContext: function getChildHostContext() {
-    return reconciler_childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
-  supportsMutation: true,
-  supportsHydration: false,
-  supportsPersistence: false,
-  supportsMicrotasks: true,
-  supportsTestSelectors: false,
-  isPrimaryRenderer: true,
-  warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  clearContainer: function clearContainer(container) {
-    return UnityBridge.clearContainer(container);
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  createInstance: function createInstance(type, props, rootContainerInstance) {
-    var aProps = constants_getAllowedProps(props, type);
-    var children = aProps.children || null;
-    delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
-  },
-  createTextInstance: function createTextInstance(text, rootContainerInstance) {
-    return UnityBridge.createText(text, rootContainerInstance);
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    UnityBridge.appendChild(parent, child);
-  },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount() {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
-    return constants_textTypes[type];
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
-    return diffing_diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type) {
-    UnityBridge.applyUpdate(instance, constants_getAllowedProps(updatePayload, type), type);
-  },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    UnityBridge.setText(textInstance, newText);
-  },
-  appendChild: function appendChild(parent, child) {
-    return UnityBridge.appendChild(parent, child);
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    return UnityBridge.appendChildToContainer(parent, child);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  removeChild: function removeChild(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
-  hideInstance: function hideInstance(instance) {
-    instance.ClassList.Add(constants_hideClass);
-  },
-  hideTextInstance: function hideTextInstance(instance) {
-    instance.ClassList.Add(constants_hideClass);
-  },
-  unhideInstance: function unhideInstance(instance) {
-    instance.ClassList.Remove(constants_hideClass);
-  },
-  unhideTextInstance: function unhideTextInstance(instance) {
-    instance.ClassList.Remove(constants_hideClass);
-  }
-});
-
-var reconciler_syncReconciler = react_reconciler(sync_reconciler_hostConfig);
-;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
-
-
-
-
-
-
-
-
-var renderer_containerMap = new Map();
-var renderer_Renderer = {
-  render: function render(element, options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
-    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-
-    var _a = renderer_containerMap.get(hostContainer) || {},
-        hostRoot = _a.hostRoot,
-        asyncJobCallback = _a.asyncJobCallback;
-
-    var findFiberByHostInstance = function findFiberByHostInstance() {
-      return null;
-    };
-
-    if (!hostRoot) {
-      var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
-
-      if (isAsync) {
-        var fiberCache_1 = constants_isDevelopment ? new objects_ObjectsRepo() : null;
-
-        if (constants_isDevelopment) {
-          findFiberByHostInstance = function findFiberByHostInstance(instance) {
-            return !instance ? null : fiberCache_1.getObject(instance.refId);
-          };
-        }
-
-        var scheduled_1 = false;
-        var commands_1 = [];
-
-        commands_1.push = function () {
-          var args = [];
-
-          for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-          }
-
-          if (!scheduled_1) {
-            scheduled_1 = true;
-            Promise.resolve().then(function () {
-              asyncJobCallback();
-              scheduled_1 = false;
-            });
-          }
-
-          return Array.prototype.push.apply(commands_1, args);
-        };
-
-        var hostContainerInstance = {
-          type: 'native',
-          commands: commands_1,
-          component: hostContainer,
-          context: hostContainer.Context,
-          refId: hostContainer.RefId,
-          fiberCache: fiberCache_1
-        };
-
-        asyncJobCallback = function asyncJobCallback() {
-          if (!commands_1.length) return;
-          var serialized = JSON.stringify(commands_1);
-          commands_1.length = 0;
-          hostContainer.Context.FlushCommands(serialized);
-        };
-
-        hostRoot = reconciler_asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      } else {
-        hostRoot = reconciler_syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      }
-
-      renderer_containerMap.set(hostContainer, {
-        hostRoot: hostRoot,
-        asyncJobCallback: asyncJobCallback
-      });
-    }
-
-    var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
-
-    if (shouldWrapWithHelpers) {
-      var viewWrapperProps = {
-        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers)
-      };
-      element = (0,react.createElement)(default_view_DefaultView, viewWrapperProps, element);
-    }
-
-    var rc = isAsync ? reconciler_asyncReconciler : reconciler_syncReconciler;
-    rc.updateContainer(element, hostRoot, null);
-    rc.injectIntoDevTools({
-      bundleType: constants_isDevelopment ? 1 : 0,
-      version: version_version,
-      rendererPackageName: '@reactunity/renderer',
-      rendererConfig: {
-        isAsync: isAsync
-      },
-      findFiberByHostInstance: findFiberByHostInstance
-    });
-    return rc;
-  }
-};
-var renderer_batchedUpdates = reconciler_asyncReconciler.batchedUpdates;
-var renderer_flushSync = reconciler_asyncReconciler.flushSync;
 ;// CONCATENATED MODULE: ../../../renderer/dist/index.js
 
 
@@ -15801,6 +14524,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
   globalThis.ReactUnity = ReactUnity;
   globalThis.Material = Material;
   globalThis.MaterialStyles = MaterialStyles;
+  globalThis.useGlobals = ReactUnity.useGlobals;
 
   var defaultComponent;
 
