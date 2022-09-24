@@ -9,6 +9,12 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "com.reactunity.quickjs": {
+      "version": "file:../../quickjs",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 0,

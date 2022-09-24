@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: L1
+    uniqueID: 2596702327
+    locked: 0
+  - name: L2
+    uniqueID: 2239241579
+    locked: 0
+  - name: L3
+    uniqueID: 904487951
+    locked: 0
+  - name: L4
+    uniqueID: 3778593457
+    locked: 0

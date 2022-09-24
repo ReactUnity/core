@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Packages/com.reactunity.core/Tests/Runtime/TestScene.unity
+    path: Packages/com.reactunity.core/Tests/Scenes/TestScene_UGUI.unity
     guid: 61bc8eaafb23dc540bd48594a7b880ee
   m_configObjects: {}
