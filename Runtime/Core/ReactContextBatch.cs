@@ -91,7 +91,9 @@ namespace ReactUnity
             {
                 var ind = child.Value.Value<int>();
                 var callback = ind <= 0 ? null :
-                    (eventsAsObjects ? GetEventAsObjectCallback.Call(ind) : Callback.From(ind, this));
+                    (eventsAsObjects ?
+                        GetEventAsObjectCallback.Call(ind) :
+                        Callback.From(ind, this, allowIndexedCallbacks: true));
                 yield return new KeyValuePair<string, object>(child.Name, callback);
             }
         }

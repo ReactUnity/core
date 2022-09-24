@@ -30,7 +30,7 @@ namespace ReactUnity.Helpers
 
         public static Callback Noop = new Callback((object) null, null);
 
-        public static Callback From(object value, ReactContext context = null, object thisVal = null)
+        public static Callback From(object value, ReactContext context = null, object thisVal = null, bool allowIndexedCallbacks = false)
         {
             if (value == null) return Noop;
             if (value is string s)
@@ -38,7 +38,11 @@ namespace ReactUnity.Helpers
                 return context.Script.CreateEventCallback(s, thisVal);
             }
             if (value is Callback cb) return cb;
-            if (value is int cbi) return new Callback(cbi, context);
+            if (value is int cbi)
+            {
+                if (allowIndexedCallbacks) return new Callback(cbi, context);
+                return Noop;
+            }
             return new Callback(value, context);
         }
 
@@ -98,7 +102,7 @@ namespace ReactUnity.Helpers
             }
             else if (callback is int i)
             {
-                var res = context.FireEventByRefCallback.Call(i, args);
+                var res = context.FireEventByRefCallback?.Call(i, args);
 #if REACT_QUICKJS
                 (context.Script.Engine as Scripting.QuickJSEngine)?.Runtime.ExecutePendingJob();
 #endif
