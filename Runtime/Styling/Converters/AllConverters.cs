@@ -49,6 +49,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase FontWeightConverter = new EnumConverter<TMPro.FontWeight>(false, false);
         static public StyleConverterBase ImageDefinitionConverter = new ImageDefinition.Converter();
         static public StyleConverterBase BackgroundSizeConverter = new BackgroundSize.Converter();
+        static public StyleConverterBase SortingLayerConverter = new SortingLayerConverter();
 
 
         private static Dictionary<Type, StyleConverterBase> Map = new Dictionary<Type, StyleConverterBase>()
@@ -75,6 +76,7 @@ namespace ReactUnity.Styling.Converters
             { typeof(TransitionProperty), TransitionPropertyConverter },
             { typeof(ImageDefinition), ImageDefinitionConverter },
             { typeof(BackgroundSize), BackgroundSizeConverter },
+            { typeof(SortingLayer), SortingLayerConverter },
         };
 
         public static StyleConverterBase Get<T>() => Get(typeof(T));

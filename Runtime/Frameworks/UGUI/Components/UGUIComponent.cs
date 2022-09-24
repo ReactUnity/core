@@ -396,7 +396,7 @@ namespace ReactUnity.UGUI
             if (ComputedStyle == null) return;
             var z = ComputedStyle.zIndex;
             var layer = ComputedStyle.sortingLayer;
-            var layerIsDefault = string.IsNullOrWhiteSpace(layer) || layer == "Default";
+            var layerIsDefault = layer.value == 0 || !SortingLayer.IsValid(layer.id);
             var defaultSorting = z == 0 && layerIsDefault;
             Canvas canvas = Canvas;
             if (!canvas && defaultSorting) return;
@@ -404,7 +404,7 @@ namespace ReactUnity.UGUI
 
             canvas.overrideSorting = !defaultSorting;
             canvas.sortingOrder = z;
-            canvas.sortingLayerName = layer;
+            canvas.sortingLayerID = layer.id;
         }
 
         protected Canvas InitializeCanvas()
