@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
@@ -13,7 +14,16 @@ namespace ReactUnity.Tests
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <view>
-                    {!globals.hide && <prefab target={globals.prefab} />}
+                    {!globals.hide &&
+                        <prefab
+                            target={globals.prefab}
+                            custom-a={5}
+                            custom-b={globals.customProp}
+                            custom={{
+                                c: 6,
+                                d: globals.customPropDeep
+                            }}
+                        />}
                 </view>;
             }
         ";
@@ -146,6 +156,42 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(null, Prefab.BeforePseudo);
             Assert.AreEqual(null, Prefab.AfterPseudo);
+        }
+
+
+
+        [UGUITest(Script = PrefabBaseScript, Style = PrefabBaseStyle)]
+        public IEnumerator PrefabCustomPropertiesAreRegistered()
+        {
+            yield return null;
+
+            var prefab = Prefab;
+
+            var target1 = new GameObject("prefabTarget1", typeof(RectTransform));
+            var target = target1.AddComponent<PrefabTarget>();
+
+            var props = new Dictionary<string, object>();
+
+            target.OnSetProperty = new Helpers.SetPropertyEvent();
+            target.OnSetProperty.AddListener((p, v) => props[p] = v);
+
+            Globals["prefab"] = target1;
+            yield return null;
+
+
+            Assert.AreEqual(5, props["a"]);
+            Assert.AreEqual(null, props["b"]);
+            Assert.AreEqual(6, props["c"]);
+            Assert.AreEqual(null, props["d"]);
+
+
+            Globals["customProp"] = 7;
+            Globals["customPropDeep"] = 9;
+            yield return null;
+            yield return null;
+
+            Assert.AreEqual(7, props["b"]);
+            Assert.AreEqual(9, props["d"]);
         }
     }
 }

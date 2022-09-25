@@ -1,9 +1,9 @@
 using System;
 using System.Globalization;
 using Facebook.Yoga;
-using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Measurers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
 
-        public TextMeasurer Measurer { get; private set; }
+        public TextMeasurer Measurer { get; }
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
         public string Content => Text.text;

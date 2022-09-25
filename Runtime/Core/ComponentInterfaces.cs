@@ -42,6 +42,7 @@ namespace ReactUnity
         void Accept(ReactComponentVisitor visitor, bool skipSelf = false);
         void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false);
         void SetProperty(string property, object value);
+        void SetCustomProperty(string property, object value);
         void SetData(string property, object value);
         void SetEventListener(string eventType, Callback callback);
         Action AddEventListener(string eventType, Callback callback);

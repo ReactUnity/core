@@ -4,7 +4,7 @@ using Facebook.Yoga;
 using TMPro;
 using UnityEngine;
 
-namespace ReactUnity.UGUI.Behaviours
+namespace ReactUnity.UGUI.Measurers
 {
     [DefaultExecutionOrder(-8)]
     public class TextMeasurer : MonoBehaviour

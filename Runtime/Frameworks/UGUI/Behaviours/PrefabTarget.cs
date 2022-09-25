@@ -1,22 +1,17 @@
 using System;
 using ReactUnity.Helpers;
+using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI.Behaviours
 {
-    public class PrefabTarget : UIBehaviour, IPrefabTarget
+    public class PrefabTarget : MonoBehaviour, IPrefabTarget
     {
         public PrefabComponent MountedTo;
         public PrefabEvent OnMount;
         public PrefabEvent OnUnmount;
         public SetPropertyEvent OnSetProperty;
         public SetEventListenerEvent OnSetEventListener;
-
-        protected override void OnRectTransformDimensionsChange()
-        {
-            MountedTo?.Layout?.MarkDirty();
-        }
 
         public virtual void Mount(PrefabComponent cmp)
         {
@@ -49,16 +44,19 @@ namespace ReactUnity.UGUI.Behaviours
 
     public interface IPrefabTarget
     {
-        /* Return true to notify that this property is handled */
+        /// <summary>Called when a custom property of the component is added/changed</summary>
+        /// <returns>True if property is handled by this handler</returns>
         bool SetProperty(string propertyName, object value);
 
-        /* Return true to notify that this event is handled */
+
+        /// <summary>Called when an event of the component is added/changed</summary>
+        /// <returns>True if event is handled by this handler</returns>
         Action AddEventListener(string eventName, Callback callback);
 
-        /* Callback called when the target is mounted on the component */
+        /// <summary>Called when the target is mounted on the component</summary>
         void Mount(PrefabComponent cmp);
 
-        /* Callback called when the target is unmounted off the component */
+        /// <summary>Called when the target is unmounted off the component</summary>
         void Unmount(PrefabComponent cmp);
     }
 }

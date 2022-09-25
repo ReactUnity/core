@@ -27,6 +27,7 @@ namespace ReactUnity
         [TypescriptRemap("../properties/style", "@reactunity/renderer", "InlineStyleRemap")]
         public InlineStyles Style { get; protected set; } = new InlineStyles();
         public StyleSheet InlineStylesheet { get; protected set; }
+        public Dictionary<string, object> CustomProperties { get; protected set; }
 
         public int ParentIndex { get; protected set; } = -1;
         public int CurrentOrder { get; protected set; } = 0;
@@ -338,6 +339,13 @@ namespace ReactUnity
 
         public virtual void SetProperty(string propertyName, object value)
         {
+            if (propertyName.StartsWith("custom-"))
+            {
+                var propName = propertyName.Substring(7);
+                SetCustomProperty(propName, value);
+                return;
+            }
+
             switch (propertyName)
             {
                 case "id":
@@ -370,6 +378,12 @@ namespace ReactUnity
 #endif
                     return;
             }
+        }
+
+        public virtual void SetCustomProperty(string propertyName, object value)
+        {
+            if (CustomProperties == null) CustomProperties = new Dictionary<string, object>();
+            CustomProperties[propertyName] = value;
         }
 
         #endregion

@@ -11139,6 +11139,11 @@ function () {
 var react_reconciler = __webpack_require__("../../../node_modules/react-reconciler/index.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
+var propDepths = {
+  style: 1,
+  data: 1,
+  custom: 1
+};
 function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
@@ -11159,7 +11164,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
     if (propKey === 'style' && typeof lastProps.style === 'string') {
       (updatePayload = updatePayload || {})[styleStringSymbol] = null;
     } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
 
       if (depth > 0) {
         prop = diffProperties(lastProps[propKey], {}, depth - 1);
@@ -11205,11 +11210,13 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
           if (!prop) continue;
         }
       }
-    }
+    } else {
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
 
-    if (deepDiffing > 0) {
-      prop = diffProperties(lastProp, nextProp, deepDiffing - 1);
-      if (!prop) continue;
+      if (depth > 0) {
+        prop = diffProperties(lastProp, nextProp, depth - 1);
+        if (!prop) continue;
+      }
     }
 
     (updatePayload = updatePayload || {})[propKey] = prop;

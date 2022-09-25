@@ -1,4 +1,5 @@
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Measurers;
 using UnityEngine;
 using UnityEngine.UI;
 

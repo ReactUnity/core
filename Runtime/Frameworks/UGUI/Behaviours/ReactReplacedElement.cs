@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Measurers;
 using UnityEngine;
 
 namespace ReactUnity.UGUI.Behaviours

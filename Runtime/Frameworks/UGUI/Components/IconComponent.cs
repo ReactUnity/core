@@ -1,6 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Styling;
-using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Measurers;
 using TMPro;
 using UnityEngine.UI;
 
@@ -13,7 +13,7 @@ namespace ReactUnity.UGUI
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
 
-        public TextMeasurer Measurer { get; private set; }
+        public TextMeasurer Measurer { get; }
 
         public string Content => Text.text;
 

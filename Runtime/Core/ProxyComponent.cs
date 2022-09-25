@@ -128,6 +128,8 @@ namespace ReactUnity
 
         public virtual void SetProperty(string property, object value) => Proxy.SetProperty(property, value);
 
+        public virtual void SetCustomProperty(string property, object value) => Proxy.SetCustomProperty(property, value);
+
         public void SetData(string property, object value) => Proxy.SetData(property, value);
 
         public void SetEventListener(string eventType, Callback callback) => Proxy.SetEventListener(eventType, callback);

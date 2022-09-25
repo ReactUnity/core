@@ -199,6 +199,20 @@ namespace ReactUnity
                     }
                     cmp.MarkForStyleResolvingWithSiblings(true);
                 }
+                else if (attr == "custom")
+                {
+                    var dataPayload =
+                        typeof(IEnumerator<KeyValuePair<string, object>>).IsAssignableFrom(value.GetType()) ?
+                        ((IEnumerator<KeyValuePair<string, object>>) value) :
+                        cmp.Context.Script.Engine.TraverseScriptObject(value);
+
+                    while (dataPayload.MoveNext())
+                    {
+                        var stKey = dataPayload.Current.Key;
+                        var stVal = dataPayload.Current.Value;
+                        cmp.SetCustomProperty(stKey, stVal);
+                    }
+                }
                 else if (attr == StringStyleSymbol)
                 {
                     setProperty(instance, "style", value);

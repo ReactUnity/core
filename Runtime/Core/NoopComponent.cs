@@ -62,6 +62,7 @@ namespace ReactUnity
         public void Accept(ReactComponentVisitor visitor, bool skipSelf = false) { }
         public void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false) => Parent = parent;
         public void SetProperty(string property, object value) { }
+        public void SetCustomProperty(string property, object value) { }
         public void SetData(string property, object value) { }
         public void MarkForStyleResolving(bool recursive) { }
         public void MarkForStyleResolvingWithSiblings(bool recursive) { }
