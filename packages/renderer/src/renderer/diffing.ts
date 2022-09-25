@@ -2,6 +2,12 @@ export type DiffResult = null | Record<string, any>;
 
 export const styleStringSymbol = '__style_as_string__';
 
+const propDepths = {
+  style: 1,
+  data: 1,
+  custom: 1,
+};
+
 export function diffProperties(
   lastProps: Record<string, any>,
   nextProps: Record<string, any>,
@@ -29,7 +35,7 @@ export function diffProperties(
       (updatePayload = updatePayload || {})[styleStringSymbol] = null;
     }
     else {
-      const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
+      const depth = deepDiffing > 0 ? deepDiffing : (propDepths[propKey] || 0);
       if (depth > 0) {
         prop = diffProperties(lastProps[propKey], {}, depth - 1);
         if (!prop) continue;
@@ -80,10 +86,12 @@ export function diffProperties(
         }
       }
     }
-
-    if (deepDiffing > 0) {
-      prop = diffProperties(lastProp, nextProp, deepDiffing - 1);
-      if (!prop) continue;
+    else {
+      const depth = deepDiffing > 0 ? deepDiffing : (propDepths[propKey] || 0);
+      if (depth > 0) {
+        prop = diffProperties(lastProp, nextProp, depth - 1);
+        if (!prop) continue;
+      }
     }
 
     (updatePayload = updatePayload || {})[propKey] = prop;

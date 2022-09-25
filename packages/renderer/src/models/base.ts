@@ -1,6 +1,6 @@
 import { RefAttributes } from 'react';
 import { ReactUnity } from './generated';
-import { AssetReferenceOrHttp } from './properties';
+import { AssetReferenceOrHttp, Style } from './properties';
 import { RichTextElements, RichTextTags } from './richtext';
 import { SVGElements } from './svg';
 
@@ -29,6 +29,9 @@ export interface BaseCmpProps {
   name?: string;
   class?: string;
   className?: string;
+  style?: Style | string;
+  data?: Record<string, any>;
+  custom?: Record<string, any>;
 }
 
 export interface ContentSrcProps extends BaseCmpProps {

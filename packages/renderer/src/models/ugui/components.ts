@@ -1,14 +1,11 @@
 import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
-import { Style } from '../properties';
 import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
 
 export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T>, BaseCmpProps {
   active?: boolean;
-  style?: Style | string;
-  data?: Record<string, any>;
   eventViewport?: UnityEngine.RectTransform | UnityEngine.GameObject | ReactUnity.UGUI.UGUIComponent;
 }
 
@@ -79,14 +76,13 @@ export interface Render<T = ReactUnity.UGUI.RenderComponent> extends BaseImage<T
 }
 
 export interface Object extends Render<ReactUnity.UGUI.ObjectComponent> {
-  target: UnityEngine.GameObject;
+  target?: UnityEngine.GameObject;
 }
 
 export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> extends View<T> {
   target?: UnityEngine.GameObject | UnityEngine.Component;
   onMount?: (camera: UnityEngine.GameObject, sender: T) => void;
   onUnmount?: (camera: UnityEngine.GameObject, sender: T) => void;
-  [key: string]: any;
 }
 
 export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {
