@@ -34,7 +34,7 @@ namespace ReactUnity
         [Preserve]
         public ITextComponent createText(string text, IReactComponent host)
         {
-            var el = host.Context.CreateText(text);
+            var el = host.Context.CreateText("_text", text);
             return el;
         }
 

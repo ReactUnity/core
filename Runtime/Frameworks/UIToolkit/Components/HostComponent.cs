@@ -40,5 +40,7 @@ namespace ReactUnity.UIToolkit
                 Context.Host.MarkForStyleResolving(true);
             }
         }
+
+        public override bool Pool() => false;
     }
 }

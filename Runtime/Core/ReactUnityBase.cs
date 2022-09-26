@@ -23,6 +23,8 @@ namespace ReactUnity
         [Serializable]
         public class ReactAdvancedOptions
         {
+            [Tooltip("Controls whether the pooling is enabled. Basic pooling enables pooling only for basic components like text and pseudo components.")]
+            public ReactContext.PoolingType Pooling = ReactContext.PoolingType.Basic;
             public float MediaUpdateInterval = 0.5f;
             [Tooltip("Serve debugging protocol on port 9222")]
             public DebugMode DebugMode = DebugMode.None;

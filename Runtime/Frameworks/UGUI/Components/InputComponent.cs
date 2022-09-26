@@ -65,22 +65,26 @@ namespace ReactUnity.UGUI
 
         public InputComponent(string text, UGUIContext context) : base(context, "input")
         {
-            // Input field's properties must be fully assigned before OnEnable is called
-            GameObject.SetActive(false);
-
             AddComponent<ScrollEventBubbling>();
             InputField = AddComponent<TMP_InputField>();
+            SetupContents();
+            SetText(text);
+        }
 
-            TextViewport = new ContainerComponent(context, "_viewport");
+        private void SetupContents()
+        {
+            // Input field's properties must be fully assigned before OnEnable is called
+            GameObject.SetActive(false);
+            TextViewport = Context.CreateDefaultComponent("_viewport", null) as ContainerComponent;
             TextViewport.IsPseudoElement = true;
-            TextViewport.GameObject.name = "[Text Viewport]";
+            TextViewport.Name = "[Text Viewport]";
             TextViewport.SetParent(this);
-            TextViewport.AddComponent<RectMask2D>();
+            TextViewport.GetOrAddComponent<RectMask2D>();
 
 
-            PlaceholderComponent = new TextComponent("", context, "_placeholder");
+            PlaceholderComponent = Context.CreateText("_placeholder") as TextComponent;
             PlaceholderComponent.IsPseudoElement = true;
-            PlaceholderComponent.GameObject.name = "[Placeholder]";
+            PlaceholderComponent.Name = "[Placeholder]";
             PlaceholderComponent.SetParent(TextViewport);
             PlaceholderComponent.Component.enabled = false;
             var phRect = PlaceholderComponent.RectTransform;
@@ -93,9 +97,9 @@ namespace ReactUnity.UGUI
 
 
 
-            TextComponent = new TextComponent(text, context, "_value");
+            TextComponent = Context.CreateText("_value") as TextComponent;
             TextComponent.IsPseudoElement = true;
-            TextComponent.GameObject.name = "[Text]";
+            TextComponent.Name = "[Text]";
             TextComponent.SetParent(TextViewport);
             TextComponent.Component.enabled = false;
             var textRect = TextComponent.RectTransform;
@@ -113,7 +117,6 @@ namespace ReactUnity.UGUI
             InputField.fontAsset = TextComponent.Text.font;
 
             GameObject.SetActive(true);
-            SetText(text);
         }
 
         public void SetText(string text)
@@ -141,7 +144,7 @@ namespace ReactUnity.UGUI
 
         private ScrollbarComponent CreateScrollbar()
         {
-            var sc = new ScrollbarComponent(Context);
+            var sc = Context.CreateComponentWithPool("_scrollbar", null, (tag, text) => new ScrollbarComponent(Context));
             sc.Horizontal = false;
             sc.Inverted = true;
             sc.SetParent(this);
@@ -242,6 +245,27 @@ namespace ReactUnity.UGUI
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+            VerticalScrollbar = null;
+
+            return true;
+        }
+
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+
+            SetupContents();
+            Value = string.Empty;
+            Placeholder = string.Empty;
+            Disabled = false;
+            ReadOnly = false;
+
+            return true;
         }
     }
 }

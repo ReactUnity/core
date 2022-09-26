@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace ReactUnity
 {
-    public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent, IClassChangeHandler where ContextType : ReactContext
+    public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent, IPoolableComponent, IClassChangeHandler where ContextType : ReactContext
     {
         public ContextType Context { get; }
         ReactContext IReactComponent.Context => Context;
@@ -35,15 +35,30 @@ namespace ReactUnity
         public bool Leaving { get; private set; }
         public bool UpdatedThisFrame { get; set; }
         public bool Destroyed { get; private set; }
-        public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
         public string TextContent => new TextContentVisitor().Get(this);
+        public Stack<IPoolableComponent> PoolStack { get; set; }
+
+        private bool isPseudoElement;
+        public bool IsPseudoElement
+        {
+            get => isPseudoElement;
+            set
+            {
+                isPseudoElement = value;
+                RefreshName();
+            }
+        }
 
         protected virtual string DefaultName
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(id))
+                if (IsPseudoElement)
+                {
+                    return Tag;
+                }
+                else if (!string.IsNullOrWhiteSpace(id))
                 {
                     return $"<{Tag} #{id}>";
                 }
@@ -96,7 +111,7 @@ namespace ReactUnity
             get => refId;
             set
             {
-                if (refId >= 0) throw new InvalidOperationException("RefId cannot be assigned to. It is read-only.");
+                if (refId >= 0 && value >= 0) throw new InvalidOperationException("RefId cannot be assigned to. It is read-only.");
                 refId = value;
             }
         }
@@ -145,9 +160,9 @@ namespace ReactUnity
                 Layout.Data = this;
             }
 
+            Entering = true;
             StateStyles = new StateStyles(this);
             StateStyles.StartState("enter");
-            Entering = true;
             stateUpdateTime = Context.Timer.AnimationTime;
 
             StyleState = new StyleState(context);
@@ -225,7 +240,6 @@ namespace ReactUnity
             var pr = Parent;
             SetParent(null);
             pr?.ResolveStyle(true);
-            DestroySelf();
 
             if (recursive && IsContainer)
             {
@@ -243,6 +257,52 @@ namespace ReactUnity
                 Context.RemoveStyle(InlineStylesheet);
                 InlineStylesheet = null;
             }
+
+            if (PoolStack != null)
+            {
+                Context.PoolComponent(this, PoolStack);
+            }
+            else
+            {
+                DestroySelf();
+            }
+        }
+
+        public virtual bool Pool()
+        {
+            return true;
+        }
+
+        public virtual bool Revive()
+        {
+            Style.ClearWithoutNotify();
+            Data.ClearWithoutNotify();
+            ClassList.ClearWithoutNotify();
+            name = null;
+            Id = null;
+
+            Entering = true;
+            Leaving = false;
+            Destroyed = false;
+            markedStyleResolve = true;
+            markedForStyleApply = true;
+            markedForLayoutApply = true;
+            markedStyleResolveRecursive = true;
+            UpdatedThisFrame = false;
+
+
+            foreach (var kv in EventHandlerRemovers)
+                kv.Value?.Invoke();
+
+            EventHandlerRemovers.Clear();
+            BaseEventHandlers.Clear();
+
+            StyleState.Clear();
+
+            StateStyles.Clear();
+            StateStyles.StartState("enter");
+            stateUpdateTime = Context.Timer.AnimationTime;
+            return true;
         }
 
         public void OnClassChange()
@@ -269,33 +329,34 @@ namespace ReactUnity
 
             Parent = newParent;
 
-            if (Parent?.Children == null) return;
-
-            relativeTo = relativeTo ?? (insertAfter ? null : newParent.AfterPseudo);
-
-            if (relativeTo == null)
+            if (newParent?.Children != null)
             {
-                ParentIndex = newParent.Children.Count;
-                newParent.RegisterChild(this);
-                UpdateOrder(int.MaxValue, CurrentOrder);
-            }
-            else
-            {
-                var ind = relativeTo.ParentIndex;
-                if (insertAfter) ind++;
-                newParent.RegisterChild(this, ind);
+                relativeTo = relativeTo ?? (insertAfter ? null : newParent.AfterPseudo);
 
-                ParentIndex = ind;
-                for (int i = ind + 1; i < newParent.Children.Count; i++)
+                if (relativeTo == null)
                 {
-                    if (newParent.Children[i] is BaseReactComponent<ContextType> br) br.ParentIndex++;
+                    ParentIndex = newParent.Children.Count;
+                    newParent.RegisterChild(this);
+                    UpdateOrder(int.MaxValue, CurrentOrder);
                 }
-                UpdateOrder(int.MaxValue, CurrentOrder);
-                UpdateOrder(int.MinValue, CurrentOrder);
+                else
+                {
+                    var ind = relativeTo.ParentIndex;
+                    if (insertAfter) ind++;
+                    newParent.RegisterChild(this, ind);
+
+                    ParentIndex = ind;
+                    for (int i = ind + 1; i < newParent.Children.Count; i++)
+                    {
+                        if (newParent.Children[i] is BaseReactComponent<ContextType> br) br.ParentIndex++;
+                    }
+                    UpdateOrder(int.MaxValue, CurrentOrder);
+                    UpdateOrder(int.MinValue, CurrentOrder);
+                }
             }
 
-            StyleState.SetParent(newParent.StyleState);
-            newParent.MarkForStyleResolvingWithSiblings(true);
+            StyleState.SetParent(newParent?.StyleState);
+            newParent?.MarkForStyleResolvingWithSiblings(true);
         }
 
 
@@ -304,7 +365,7 @@ namespace ReactUnity
             if (EventHandlerRemovers.TryGetValue(eventName, out var remover))
             {
                 remover?.Invoke();
-                EventHandlerRemovers[eventName] = null;
+                EventHandlerRemovers.Remove(eventName);
             }
 
             if (fun != null)

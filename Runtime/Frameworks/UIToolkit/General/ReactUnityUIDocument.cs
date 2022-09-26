@@ -33,6 +33,7 @@ namespace ReactUnity.UIToolkit
                 AwaitDebugger = AdvancedOptions.DebugMode == DebugMode.DebugAndAwait,
                 BeforeStart = AdvancedOptions.BeforeStart.Invoke,
                 AfterStart = AdvancedOptions.AfterStart.Invoke,
+                Pooling = AdvancedOptions.Pooling,
             });
             ctx.Initialize();
             return ctx;

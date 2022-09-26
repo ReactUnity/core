@@ -8,7 +8,7 @@ using ReactUnity.Styling.Rules;
 
 namespace ReactUnity
 {
-    public class NoopComponent : IContainerComponent, IHostComponent, ITextComponent
+    public class NoopComponent : IContainerComponent, IHostComponent, ITextComponent, IPoolableComponent
     {
         protected Dictionary<string, List<Callback>> BaseEventHandlers = new Dictionary<string, List<Callback>>();
         protected Dictionary<string, Action> EventHandlerRemovers = new Dictionary<string, Action>();
@@ -56,6 +56,8 @@ namespace ReactUnity
         public List<RuleTreeNode<StyleData>> BeforeRules { get; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; }
         public string Content { get; }
+        public Stack<IPoolableComponent> PoolStack { get; set; }
+
         public void ApplyLayoutStyles() { }
         public void ResolveStyle(bool recursive = false) { }
         public void Update() => UpdatedThisFrame = true;
@@ -68,7 +70,17 @@ namespace ReactUnity
         public void MarkForStyleResolvingWithSiblings(bool recursive) { }
         public void Remove() { }
         public void Clear() { }
-        public void Destroy(bool recursive = true) => Destroyed = true;
+        public void Destroy(bool recursive = true)
+        {
+            Destroyed = true;
+            if (PoolStack != null) Context.PoolComponent(this, PoolStack);
+        }
+        public bool Revive()
+        {
+            Destroyed = false;
+            return true;
+        }
+        public bool Pool() => true;
         public void RegisterChild(IReactComponent child, int index = -1) { }
         public void UnregisterChild(IReactComponent child) { }
         public object GetComponent(Type type) => null;

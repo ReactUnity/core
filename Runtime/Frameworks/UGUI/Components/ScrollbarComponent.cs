@@ -45,7 +45,7 @@ namespace ReactUnity.UGUI
         protected override string DefaultName => $"[{(Horizontal ? "Horizontal" : "Vertical")} Scrollbar]";
 
         public Scrollbar Scrollbar { get; }
-        public ScrollbarThumbComponent Thumb { get; }
+        public ScrollbarThumbComponent Thumb { get; private set; }
 
         public ScrollbarComponent(UGUIContext context, string tag = "_scrollbar") : base(context, tag)
         {
@@ -54,16 +54,21 @@ namespace ReactUnity.UGUI
             Layout.PositionType = YogaPositionType.Absolute;
             Scrollbar = AddComponent<Scrollbar>();
 
-            Thumb = new ScrollbarThumbComponent(context);
+            SetupContents();
+
+            Data["horizontal"] = false;
+            Data["vertical"] = true;
+            Data["direction"] = "vertical";
+        }
+
+        private void SetupContents()
+        {
+            Thumb = Context.CreateComponentWithPool("_scrollbar-thumb", null, (tag, text) => new ScrollbarThumbComponent(Context));
             Thumb.SetParent(this);
             Thumb.Style["pointer-events"] = PointerEvents.All;
             Thumb.ResolveStyle();
             Thumb.UpdateBackgroundGraphic(true, true);
             Scrollbar.targetGraphic = Thumb.BorderAndBackground?.BgImage;
-
-            Data["horizontal"] = false;
-            Data["vertical"] = true;
-            Data["direction"] = "vertical";
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -163,6 +168,17 @@ namespace ReactUnity.UGUI
                 rt.offsetMin = new Vector2(RectTransform.offsetMin.x, StylingHelpers.GetPointValue(bottom, 0));
                 rt.offsetMax = new Vector2(RectTransform.offsetMax.x, -StylingHelpers.GetPointValue(top, 0));
             }
+        }
+
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+
+            Horizontal = false;
+            Inverted = false;
+            SetupContents();
+
+            return true;
         }
     }
 

@@ -63,11 +63,14 @@ namespace ReactUnity.UGUI
 
         public override CursorSet CursorSet { get; }
 
+        public RectTransform PoolRoot { get; }
+        public RectTransform OffscreenRoot { get; }
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 
-        public static Func<string, UGUIContext, ITextComponent> textCreator =
-            (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
+        public static Func<string, string, UGUIContext, ITextComponent> textCreator =
+            (tag, text, context) => new TextComponent(text, context, tag ?? "_text") { IsPseudoElement = true };
 
         public Canvas RootCanvas
         {
@@ -82,6 +85,29 @@ namespace ReactUnity.UGUI
 
         public UGUIContext(Options options) : base(options)
         {
+            PoolRoot = new GameObject("[Pool]", typeof(RectTransform)).GetComponent<RectTransform>();
+            PoolRoot.SetParent(options.HostElement, false);
+            PoolRoot.localPosition = Vector2.zero;
+            PoolRoot.pivot = Vector2.up;
+            PoolRoot.anchorMin = Vector2.up;
+            PoolRoot.anchorMax = Vector2.up;
+            PoolRoot.offsetMin = Vector2.zero;
+            PoolRoot.offsetMax = Vector2.zero;
+            PoolRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
+            PoolRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            PoolRoot.gameObject.SetActive(false);
+
+            OffscreenRoot = new GameObject("[Offscreen]", typeof(RectTransform)).GetComponent<RectTransform>();
+            OffscreenRoot.SetParent(options.HostElement, false);
+            OffscreenRoot.localPosition = Vector2.zero;
+            OffscreenRoot.pivot = Vector2.up;
+            OffscreenRoot.anchorMin = Vector2.up;
+            OffscreenRoot.anchorMax = Vector2.up;
+            OffscreenRoot.offsetMin = Vector2.zero;
+            OffscreenRoot.offsetMax = Vector2.zero;
+            OffscreenRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
+            OffscreenRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
             Host = new HostComponent(options.HostElement, this);
             Host.ResolveStyle(true);
 
@@ -114,16 +140,15 @@ namespace ReactUnity.UGUI
             else return CreateDefaultComponent(tag, text);
         }
 
-        protected override ITextComponent CreateTextInternal(string text)
+        protected override ITextComponent CreateTextInternal(string tag = "_text", string text = "")
         {
-            return textCreator(text, this);
+            return textCreator(tag, text, this);
         }
 
         protected override IReactComponent CreatePseudoComponentInternal(string tag)
         {
             var tc = new TextComponent("", this, tag);
             tc.IsPseudoElement = true;
-            tc.GameObject.name = tag;
             return tc;
         }
 

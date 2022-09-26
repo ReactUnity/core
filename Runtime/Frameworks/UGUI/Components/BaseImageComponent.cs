@@ -56,6 +56,14 @@ namespace ReactUnity.UGUI
             Replaced.Graphic.raycastTarget = style.pointerEvents != Types.PointerEvents.None;
         }
 
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+
+            Source = null;
+            return true;
+        }
+
         public class ReplacedImageHelper
         {
             public GameObject GameObject { get; }

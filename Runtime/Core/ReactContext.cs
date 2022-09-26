@@ -16,6 +16,13 @@ namespace ReactUnity
 {
     public abstract partial class ReactContext : IDisposable
     {
+        public enum PoolingType
+        {
+            None = 0,
+            Basic = 1,
+            All = 2,
+        }
+
         public class Options
         {
             public SerializableDictionary Globals;
@@ -28,6 +35,7 @@ namespace ReactUnity
             public bool AwaitDebugger;
             public Action BeforeStart;
             public Action AfterStart;
+            public PoolingType Pooling;
 
             public virtual bool CalculatesLayout { get; }
         }

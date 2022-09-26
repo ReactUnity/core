@@ -153,7 +153,33 @@ namespace ReactUnity.Styling
             if (transitionRunning) UpdateTransitions();
             if (animationRunning) UpdateAnimations();
             if (audioRunning) UpdateAudio();
-            if (shouldUpdate) OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+            if (shouldUpdate)
+            {
+                shouldUpdate = false;
+                OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+                shouldUpdateWithLayout = false;
+            }
+        }
+
+        public void Clear()
+        {
+            Previous = null;
+            Current = null;
+            Active = null;
+
+            propertyTransitionStates = null;
+            activeTransitions = null;
+            transitionRunning = false;
+
+            runningAnimations = null;
+            activeAnimations = null;
+            animationRunning = false;
+
+            audioStates = null;
+            activeAudioList = null;
+            audioRunning = false;
+            audioStartTime = 0;
+
             shouldUpdate = false;
             shouldUpdateWithLayout = false;
         }

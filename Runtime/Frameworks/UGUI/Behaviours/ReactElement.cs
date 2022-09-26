@@ -73,6 +73,8 @@ namespace ReactUnity.UGUI.Behaviours
         private void OnEnable()
         {
             rt = transform as RectTransform;
+            IsVisible = false;
+            firstTime = true;
         }
 
         private void Start()

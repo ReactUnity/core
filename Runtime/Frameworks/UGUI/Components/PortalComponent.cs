@@ -112,7 +112,9 @@ namespace ReactUnity.UGUI
         {
             currentCamera = camera;
 
-            if (Detached) Canvas.worldCamera = currentCamera ?? Context.RootCanvas?.worldCamera;
+            var canvas = Canvas;
+            if (Detached && canvas.renderMode != RenderMode.ScreenSpaceOverlay && canvas.isActiveAndEnabled)
+                canvas.worldCamera = currentCamera ?? Context.RootCanvas?.worldCamera;
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -130,6 +132,27 @@ namespace ReactUnity.UGUI
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        protected override void DestroySelf()
+        {
+            base.DestroySelf();
+            SetTarget(null, null);
+        }
+
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+            SetTarget(null, null);
+            return true;
+        }
+
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            RectTransform.SetParent(null, false);
+            SetCamera(currentCamera);
+            return true;
         }
     }
 }

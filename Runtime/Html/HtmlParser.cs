@@ -31,7 +31,7 @@ namespace ReactUnity.Html
             if (node.NodeType == XmlNodeType.Element || node.NodeType == XmlNodeType.Text)
             {
                 nodeElement = node.NodeType == XmlNodeType.Text ?
-                    Context.Context.CreateText(node.InnerText) :
+                    Context.Context.CreateText("_text", node.InnerText) :
                     Context.Context.CreateComponent(node.Name, isTextElement ? node.InnerText : "");
 
                 if (node.Attributes != null)

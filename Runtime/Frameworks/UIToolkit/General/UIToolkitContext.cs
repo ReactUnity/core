@@ -19,8 +19,8 @@ namespace ReactUnity.UIToolkit
         public static Func<string, string, UIToolkitContext, IUIToolkitComponent<VisualElement>> defaultCreator =
             (tag, text, context) => new UIToolkitComponent<VisualElement>(context, tag);
 
-        public static Func<string, UIToolkitContext, ITextComponent> textCreator =
-            (text, context) => new TextComponent<TextElement>(text, context, "_text", false);
+        public static Func<string, string, UIToolkitContext, ITextComponent> textCreator =
+            (tag, text, context) => new TextComponent<TextElement>(text, context, tag ?? "_text", false);
 
         public static Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>>()
@@ -93,9 +93,9 @@ namespace ReactUnity.UIToolkit
             return ctx;
         }
 
-        protected override ITextComponent CreateTextInternal(string text)
+        protected override ITextComponent CreateTextInternal(string tag = "_text", string text = "")
         {
-            return textCreator(text, this);
+            return textCreator(tag, text, this);
         }
 
         protected override IReactComponent CreateDefaultComponentInternal(string tag, string text) => defaultCreator(tag, text, this);

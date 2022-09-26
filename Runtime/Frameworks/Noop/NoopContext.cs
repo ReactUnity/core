@@ -32,8 +32,8 @@ namespace ReactUnity.Noop
         public static Func<string, string, NoopContext, NoopComponent> defaultCreator =
             (tag, text, context) => new NoopComponent(context, tag);
 
-        public static Func<string, NoopContext, ITextComponent> textCreator =
-            (text, context) => new NoopComponent(context, "text");
+        public static Func<string, string, NoopContext, ITextComponent> textCreator =
+            (tag, text, context) => new NoopComponent(context, tag ?? "_text");
 
         public NoopContext(Options options) : base(options)
         {
@@ -56,9 +56,9 @@ namespace ReactUnity.Noop
             else return CreateDefaultComponent(tag, text);
         }
 
-        protected override ITextComponent CreateTextInternal(string text)
+        protected override ITextComponent CreateTextInternal(string tag = "_text", string text = "")
         {
-            return textCreator(text, this);
+            return textCreator(tag, text, this);
         }
 
         protected override IReactComponent CreatePseudoComponentInternal(string tag)

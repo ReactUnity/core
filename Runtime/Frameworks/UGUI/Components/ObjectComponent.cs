@@ -81,12 +81,6 @@ namespace ReactUnity.UGUI
                 case "target":
                     SetTarget(value as GameObject);
                     break;
-                case "width":
-                    RenderTexture.width = Convert.ToInt32(value);
-                    break;
-                case "height":
-                    RenderTexture.height = Convert.ToInt32(value);
-                    break;
                 default:
                     base.SetProperty(propertyName, value);
                     break;

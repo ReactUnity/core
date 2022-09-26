@@ -38,6 +38,7 @@ namespace ReactUnity.UGUI
                 AwaitDebugger = AdvancedOptions.DebugMode == DebugMode.DebugAndAwait,
                 BeforeStart = AdvancedOptions.BeforeStart.Invoke,
                 AfterStart = AdvancedOptions.AfterStart.Invoke,
+                Pooling = AdvancedOptions.Pooling,
             });
         }
 

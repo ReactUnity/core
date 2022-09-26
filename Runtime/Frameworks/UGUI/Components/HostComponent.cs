@@ -84,5 +84,7 @@ namespace ReactUnity.UGUI
             // TODO: handle translate
             // TODO: revert values back if does not exist in style
         }
+
+        public override bool Pool() => false;
     }
 }

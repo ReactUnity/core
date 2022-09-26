@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class UGUIComponent : BaseReactComponent<UGUIContext>
+    public abstract class UGUIComponent : BaseReactComponent<UGUIContext>
     {
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
@@ -101,6 +101,25 @@ namespace ReactUnity.UGUI
             base.DestroySelf();
             if (GameObject) GameObject.Destroy(GameObject);
         }
+
+        public override bool Revive()
+        {
+            if (!base.Revive()) return false;
+            if (!RectTransform) return false;
+
+            RectTransform.SetParent(Context.OffscreenRoot, false);
+            return true;
+        }
+
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+            if (!RectTransform) return false;
+
+            RectTransform.SetParent(Context.PoolRoot, false);
+            return true;
+        }
+
 
         #region Setters
 

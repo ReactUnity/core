@@ -62,5 +62,11 @@ namespace ReactUnity.Styling
             if (Subscribed.Add(state)) SubscribeToState(state);
             return States.Contains(state);
         }
+
+        public void Clear()
+        {
+            Subscribed.Clear();
+            States.Clear();
+        }
     }
 }

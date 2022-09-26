@@ -38,12 +38,6 @@ namespace ReactUnity.UGUI
                 case "camera":
                     SetCamera(UnityHelpers.ConvertToComponent<Camera>(value));
                     break;
-                case "width":
-                    RenderTexture.width = Convert.ToInt32(value);
-                    break;
-                case "height":
-                    RenderTexture.height = Convert.ToInt32(value);
-                    break;
                 default:
                     base.SetProperty(propertyName, value);
                     break;

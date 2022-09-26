@@ -127,4 +127,11 @@ namespace ReactUnity
     public interface IGraphicComponent : IReactComponent
     {
     }
+
+    public interface IPoolableComponent : IReactComponent
+    {
+        Stack<IPoolableComponent> PoolStack { get; set; }
+        bool Pool();
+        bool Revive();
+    }
 }

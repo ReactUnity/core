@@ -21,8 +21,7 @@ namespace ReactUnity.UGUI
 
         private void PrepareCompleted(VideoPlayer source)
         {
-            RenderTexture.width = (int) source.width;
-            RenderTexture.height = (int) source.height;
+            SetDimensions((int) source.width, (int) source.height);
             Replaced.Measurer.MarkDirty();
         }
 
@@ -55,7 +54,7 @@ namespace ReactUnity.UGUI
                     VideoPlayer.clip = res.Clip;
                     VideoPlayer.url = res.Url;
                     VideoPlayer.source = res.Type;
-                    VideoPlayer.Prepare();
+                    if (VideoPlayer.isActiveAndEnabled) VideoPlayer.Prepare();
                 }
             });
         }
