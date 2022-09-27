@@ -1,5 +1,5 @@
 import * as Reconciler from 'react-reconciler';
-import { commonReconciler, getAllowedProps, textTypes } from '../constants';
+import { commonReconciler, getAllowedProps, stringizePoolKey, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
 import { subContextRenderers } from '../subcontexts';
 import { callbacksRepo, convertPropsToSerializable, objectsRepo } from './serializer';
@@ -128,7 +128,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     const aProps = getAllowedProps(props, type);
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['c', { t: type, r: refId, ...convertPropsToSerializable(aProps) }]);
+      ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
 
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 

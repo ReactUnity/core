@@ -26,9 +26,10 @@ type ApplyUpdatesParams = {
  * h: Hidden
  * e: Events & callbacks
  * o: Objects
+ * k: Pool Key
  */
 
-export type CreateInstanceCommand = ['c', ApplyUpdatesParams];
+export type CreateInstanceCommand = ['c', ApplyUpdatesParams & { k?: string }];
 export type CreateTextInstanceCommand = ['t', { r: number, c?: string }];
 export type AppendChildCommand = ['a', { p: number, c: number }];
 export type RemoveChildCommand = ['r', { p: number, c: number }];

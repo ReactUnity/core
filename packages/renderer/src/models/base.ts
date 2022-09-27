@@ -22,6 +22,8 @@ export interface BaseEvents<T = BaseCmp> {
   onTransitionEnd?: TransitionCallback<T>;
 }
 
+export type PoolKey = string | number | boolean | null | undefined;
+
 export type Textable = string | number | boolean | null | undefined;
 
 export interface BaseCmpProps {
@@ -32,6 +34,7 @@ export interface BaseCmpProps {
   style?: Style | string;
   data?: Record<string, any>;
   custom?: Record<string, any>;
+  pool?: PoolKey;
 }
 
 export interface ContentSrcProps extends BaseCmpProps {

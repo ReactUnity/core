@@ -1,5 +1,6 @@
 import * as Reconciler from 'react-reconciler';
 import { ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, IdleEventPriority } from 'react-reconciler/constants';
+import { PoolKey } from '../models/base';
 import { NoTimeout, TimeoutHandle } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
@@ -21,8 +22,18 @@ export const textTypes = {
   script: true,
 };
 
+export function stringizePoolKey(key: PoolKey) {
+  switch (typeof key) {
+    case 'string': return key;
+    case 'boolean': return key ? 'default' : '';
+    case 'number': return key.toString();
+    case 'undefined': return null;
+    default: return '';
+  }
+}
+
 export function getAllowedProps(props, type) {
-  const { children, tag, ...rest } = props;
+  const { children, tag, pool, ...rest } = props;
 
   if (textTypes[type] && 'children' in props) {
     rest.children = (!children || typeof children === 'boolean') ? null : Array.isArray(children) ? children.join('') : children + '';

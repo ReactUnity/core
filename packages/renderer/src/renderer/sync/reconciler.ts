@@ -3,7 +3,7 @@ import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
-import { commonReconciler, getAllowedProps, hideClass, textTypes } from '../constants';
+import { commonReconciler, getAllowedProps, hideClass, stringizePoolKey, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
 
 type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
@@ -36,7 +36,7 @@ const hostConfig: Config & { [key: string]: any } = {
     const aProps = getAllowedProps(props, type);
     const children = aProps.children || null;
     delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
   },
 
   createTextInstance(text, rootContainerInstance) {

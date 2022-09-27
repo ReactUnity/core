@@ -11,7 +11,7 @@ import { isDevelopment } from './constants';
 import { syncReconciler } from './sync/reconciler';
 
 
-const containerMap = new Map<NativeContainerInstance, { hostRoot: any, asyncJobCallback: () => void }>();
+const containerMap = new Map<NativeContainerInstance | number, { hostRoot: any, asyncJobCallback: () => void }>();
 
 interface RenderOptions {
   /* Unity element to render React on. It is the element `ReactUnity` component is attached to by default. */
@@ -36,9 +36,10 @@ export const Renderer = {
     options: RenderOptions = {},
   ) {
     const hostContainer = options?.hostContainer || HostContainer;
+    const cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
 
     const isAsync = !options?.disableBatchRendering;
-    let { hostRoot, asyncJobCallback } = containerMap.get(hostContainer) || {};
+    let { hostRoot, asyncJobCallback } = containerMap.get(cacheKey) || {};
 
     let findFiberByHostInstance: any = () => null;
 
@@ -86,7 +87,7 @@ export const Renderer = {
       else {
         hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', (error) => console.error(error), null)
       }
-      containerMap.set(hostContainer, { hostRoot, asyncJobCallback });
+      containerMap.set(cacheKey, { hostRoot, asyncJobCallback });
     }
 
     const shouldWrapWithHelpers = !options?.disableHelpers;
