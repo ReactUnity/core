@@ -111,8 +111,21 @@ namespace ReactUnity
             get => refId;
             set
             {
-                if (refId >= 0 && value >= 0) throw new InvalidOperationException("RefId cannot be assigned to. It is read-only.");
+                if (refId >= 0 && value >= 0)
+                    throw new InvalidOperationException("RefId cannot be assigned to. It is read-only.");
                 refId = value;
+            }
+        }
+
+        private int instanceId = -1;
+        public int InstanceId
+        {
+            get => instanceId;
+            set
+            {
+                if (instanceId >= 0 && value >= 0)
+                    throw new InvalidOperationException("InstanceId cannot be assigned to. It is read-only.");
+                instanceId = value;
             }
         }
 

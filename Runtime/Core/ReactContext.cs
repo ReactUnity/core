@@ -145,6 +145,7 @@ namespace ReactUnity
         public void Start(Action afterStart = null)
         {
             SetRef(0, Host);
+            Host.InstanceId = 0;
             var renderCount = 0;
 
             var scriptJob = Source.GetScript((code) => {

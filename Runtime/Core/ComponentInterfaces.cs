@@ -35,6 +35,7 @@ namespace ReactUnity
         int ParentIndex { get; }
         int CurrentOrder { get; }
         int RefId { get; set; }
+        int InstanceId { get; set; }
 
         void ApplyLayoutStyles();
         void ResolveStyle(bool recursive = false);

@@ -53,7 +53,7 @@ namespace ReactUnity.Noop
         protected override IReactComponent CreateComponentInternal(string tag, string text)
         {
             if (ComponentCreators.TryGetValue(tag, out var creator)) return creator(tag, text, this);
-            else return CreateDefaultComponent(tag, text);
+            else return CreateDefaultComponentInternal(tag, text);
         }
 
         protected override ITextComponent CreateTextInternal(string tag = "_text", string text = "")

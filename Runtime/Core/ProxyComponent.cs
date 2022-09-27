@@ -59,6 +59,8 @@ namespace ReactUnity
             set => Proxy.RefId = value;
         }
 
+        public int InstanceId { get; set; } = -1;
+
         public string ClassName
         {
             get => Proxy.ClassName;

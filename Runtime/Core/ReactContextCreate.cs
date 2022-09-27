@@ -6,6 +6,8 @@ namespace ReactUnity
 {
     public abstract partial class ReactContext
     {
+        private int CurrentInstanceId { get; set; } = 1;
+
         protected abstract ITextComponent CreateTextInternal(string tag = "_text", string text = "");
         protected abstract IReactComponent CreateDefaultComponentInternal(string tag, string text);
         protected abstract IReactComponent CreateComponentInternal(string tag, string text);
@@ -45,6 +47,7 @@ namespace ReactUnity
             if (res == null) res = creator(tag, text);
 
             if (res is IPoolableComponent rp) rp.PoolStack = pool;
+            res.InstanceId = CurrentInstanceId++;
             return res;
         }
 
@@ -63,6 +66,7 @@ namespace ReactUnity
         public void PoolComponent(IPoolableComponent cmp, Stack<IPoolableComponent> pool)
         {
             cmp.RefId = -1;
+            cmp.InstanceId = -1;
             if (cmp.Pool())
                 pool.Push(cmp);
         }

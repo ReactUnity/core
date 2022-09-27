@@ -33,6 +33,7 @@ namespace ReactUnity
         public StyleSheet InlineStylesheet { get; }
         public string Id { get; set; }
         public int RefId { get; set; } = -1;
+        public int InstanceId { get; set; } = -1;
         public string Name { get; set; }
         public string Tag { get; }
         public string TextContent { get; }
