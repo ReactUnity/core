@@ -20,27 +20,35 @@ namespace ReactUnity
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private T CreateComponentWithPoolInternal<T>(string tag, string text, Func<string, string, T> creator, bool enablePooling, Dictionary<string, Stack<IPoolableComponent>> pools = null) where T : class, IReactComponent
+        private T CreateComponentWithPoolInternal<T>(string tag, string text, Func<string, string, T> creator, bool enablePooling, Dictionary<string, Stack<IPoolableComponent>> pools = null, string poolKey = null) where T : class, IReactComponent
         {
-            if (enablePooling) return CreateComponentWithPool(tag, text, creator, pools);
+            if (enablePooling) return CreateComponentWithPool(tag, text, creator, pools, poolKey);
             return creator(tag, text);
         }
 
-        public T CreateComponentWithPool<T>(string tag, string text, Func<string, string, T> creator, Dictionary<string, Stack<IPoolableComponent>> pools = null) where T : class, IReactComponent
+        public T CreateComponentWithPool<T>(string tag, string text, Func<string, string, T> creator, Dictionary<string, Stack<IPoolableComponent>> pools = null, string poolKey = null) where T : class, IReactComponent
         {
             pools = pools ?? ComponentPool;
-
-            if (!pools.TryGetValue(tag, out var pool)) pool = pools[tag] = new Stack<IPoolableComponent>();
+            poolKey = poolKey ?? (options.Pooling == PoolingType.All ? "default" : "");
+            Stack<IPoolableComponent> pool = null;
 
             T res = null;
-            if (pool.Count > 0)
+
+            if (poolKey != "")
             {
-                res = pool.Pop() as T;
-                if (res is ITextComponent t) t.SetText(text);
-                if (res is IPoolableComponent p)
+                var key = $"{tag}$_${poolKey}";
+
+                if (!pools.TryGetValue(key, out pool)) pool = pools[key] = new Stack<IPoolableComponent>();
+
+                if (pool.Count > 0)
                 {
-                    if (!p.Revive())
-                        res = null;
+                    res = pool.Pop() as T;
+                    if (res is ITextComponent t) t.SetText(text);
+                    if (res is IPoolableComponent p)
+                    {
+                        if (!p.Revive())
+                            res = null;
+                    }
                 }
             }
 
@@ -51,17 +59,28 @@ namespace ReactUnity
             return res;
         }
 
-        public ITextComponent CreateText(string tag = "_text", string text = "") =>
-            CreateComponentWithPoolInternal(tag, text, CreateTextInternal, options.Pooling != PoolingType.None, TextComponentPool);
+        public ITextComponent CreateText(string tag = "_text", string text = "", string poolKey = null) =>
+            CreateComponentWithPoolInternal(tag, text,
+                CreateTextInternal,
+                options.Pooling != PoolingType.None, TextComponentPool,
+                poolKey ?? (options.Pooling != PoolingType.None ? "default" : ""));
 
-        public IReactComponent CreateDefaultComponent(string tag, string text) =>
-            CreateComponentWithPoolInternal(tag, text, CreateDefaultComponentInternal, options.Pooling == PoolingType.All, DefaultComponentPool);
+        public IReactComponent CreateDefaultComponent(string tag, string text, string poolKey = null) =>
+            CreateComponentWithPoolInternal(tag, text, CreateDefaultComponentInternal,
+                options.Pooling == PoolingType.All, DefaultComponentPool,
+                poolKey ?? (options.Pooling == PoolingType.All ? "default" : ""));
 
-        public IReactComponent CreateComponent(string tag, string text) =>
-            CreateComponentWithPoolInternal(tag, text, CreateComponentInternal, options.Pooling == PoolingType.All);
+        public IReactComponent CreateComponent(string tag, string text, string poolKey = null) =>
+            CreateComponentWithPoolInternal(tag, text,
+                CreateComponentInternal,
+                options.Pooling == PoolingType.All, ComponentPool,
+                poolKey ?? (options.Pooling == PoolingType.All ? "default" : ""));
 
-        public IReactComponent CreatePseudoComponent(string tag) =>
-            CreateComponentWithPoolInternal(tag, null, (t, r) => CreatePseudoComponentInternal(t), options.Pooling != PoolingType.None, PseudoComponentPool);
+        public IReactComponent CreatePseudoComponent(string tag, string poolKey = null) =>
+            CreateComponentWithPoolInternal(tag, null,
+                (t, r) => CreatePseudoComponentInternal(t),
+                options.Pooling != PoolingType.None, PseudoComponentPool,
+                poolKey ?? (options.Pooling != PoolingType.None ? "default" : ""));
 
         public void PoolComponent(IPoolableComponent cmp, Stack<IPoolableComponent> pool)
         {

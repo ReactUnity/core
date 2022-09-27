@@ -11253,10 +11253,29 @@ var textTypes = {
   style: true,
   script: true
 };
+function stringizePoolKey(key) {
+  switch (typeof key) {
+    case 'string':
+      return key;
+
+    case 'boolean':
+      return key ? 'default' : '';
+
+    case 'number':
+      return key.toString();
+
+    case 'undefined':
+      return null;
+
+    default:
+      return '';
+  }
+}
 function getAllowedProps(props, type) {
   var children = props.children,
       tag = props.tag,
-      rest = constants_rest(props, ["children", "tag"]);
+      pool = props.pool,
+      rest = constants_rest(props, ["children", "tag", "pool"]);
 
   if (textTypes[type] && 'children' in props) {
     rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
@@ -11689,7 +11708,8 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
       refId++;
       ctx.commands.push(['c', reconciler_assign({
         t: type,
-        r: refId
+        r: refId,
+        k: stringizePoolKey(props.pool)
       }, convertPropsToSerializable(aProps))]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -11981,7 +12001,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, co
     var aProps = getAllowedProps(props, type);
     var children = aProps.children || null;
     delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -12062,9 +12082,10 @@ var Renderer = {
     }
 
     var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+    var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
     var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
 
-    var _a = containerMap.get(hostContainer) || {},
+    var _a = containerMap.get(cacheKey) || {},
         hostRoot = _a.hostRoot,
         asyncJobCallback = _a.asyncJobCallback;
 
@@ -12130,7 +12151,7 @@ var Renderer = {
         }, null);
       }
 
-      containerMap.set(hostContainer, {
+      containerMap.set(cacheKey, {
         hostRoot: hostRoot,
         asyncJobCallback: asyncJobCallback
       });

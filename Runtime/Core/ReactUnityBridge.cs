@@ -32,16 +32,16 @@ namespace ReactUnity
         #region Creation
 
         [Preserve]
-        public ITextComponent createText(string text, IReactComponent host)
+        public ITextComponent createText(string text, IReactComponent host, string poolKey = null)
         {
-            var el = host.Context.CreateText("_text", text);
+            var el = host.Context.CreateText("_text", text, poolKey);
             return el;
         }
 
         [Preserve]
-        public IReactComponent createElement(string tag, string text, IReactComponent host, object props = null)
+        public IReactComponent createElement(string tag, string text, IReactComponent host, object props = null, string poolKey = null)
         {
-            var el = host.Context.CreateComponent(tag, text);
+            var el = host.Context.CreateComponent(tag, text, poolKey);
             applyUpdate(el, props, tag);
             return el;
         }

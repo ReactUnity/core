@@ -156,7 +156,8 @@ namespace ReactUnity
                 {
                     var refId = val["r"].Value<int>();
                     var type = val["t"].ToString();
-                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val));
+                    var poolKey = val["k"]?.ToString();
+                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
                     if (refId > 0) SetRef(refId, el);
                 }
                 else if (key == "t")
