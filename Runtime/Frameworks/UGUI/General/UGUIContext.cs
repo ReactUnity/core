@@ -85,7 +85,10 @@ namespace ReactUnity.UGUI
 
         public UGUIContext(Options options) : base(options)
         {
-            PoolRoot = new GameObject("[Pool]", typeof(RectTransform)).GetComponent<RectTransform>();
+            Host = new HostComponent(options.HostElement, this);
+            Host.ResolveStyle(true);
+
+            PoolRoot = CreateNativeObject("[Pool]", typeof(RectTransform)).GetComponent<RectTransform>();
             PoolRoot.SetParent(options.HostElement, false);
             PoolRoot.localPosition = Vector2.zero;
             PoolRoot.pivot = Vector2.up;
@@ -97,7 +100,7 @@ namespace ReactUnity.UGUI
             PoolRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
             PoolRoot.gameObject.SetActive(false);
 
-            OffscreenRoot = new GameObject("[Offscreen]", typeof(RectTransform)).GetComponent<RectTransform>();
+            OffscreenRoot = CreateNativeObject("[Offscreen]", typeof(RectTransform)).GetComponent<RectTransform>();
             OffscreenRoot.SetParent(options.HostElement, false);
             OffscreenRoot.localPosition = Vector2.zero;
             OffscreenRoot.pivot = Vector2.up;
@@ -107,9 +110,6 @@ namespace ReactUnity.UGUI
             OffscreenRoot.offsetMax = Vector2.zero;
             OffscreenRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
             OffscreenRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-
-            Host = new HostComponent(options.HostElement, this);
-            Host.ResolveStyle(true);
 
             if (options.IconSets != null)
             {

@@ -74,7 +74,7 @@ namespace ReactUnity.UGUI
 
             public ReplacedImageHelper(BaseImageComponent parent)
             {
-                var go = GameObject = new GameObject("[ImageContent]", typeof(RectTransform));
+                var go = GameObject = parent.Context.CreateNativeObject("[ImageContent]", typeof(RectTransform));
                 var rt = RectTransform = go.GetComponent<RectTransform>();
 
                 rt.SetParent(parent.RectTransform);
