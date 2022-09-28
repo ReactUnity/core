@@ -1688,7 +1688,7 @@
         <member name="T:Microsoft.ClearScript.V8.V8ScriptEngine.JsonHelper">
             <exclude/>
         </member>
-        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.JsonHelper.#ctor(Microsoft.ClearScript.ScriptEngine)">
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.JsonHelper.#ctor(Microsoft.ClearScript.V8.V8ScriptEngine)">
             <exclude/>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.JsonHelper.ToJson(System.Object,System.Object)">

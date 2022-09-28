@@ -35,6 +35,31 @@
             reflection.
             </remarks>
         </member>
+        <member name="T:Microsoft.ClearScript.DefaultDocumentLoader">
+            <summary>
+            Provides a default <c><see cref="T:Microsoft.ClearScript.DocumentLoader"></see></c> implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.DefaultDocumentLoader.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.DefaultDocumentLoader"/></c> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.DefaultDocumentLoader.MaxCacheSize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.DefaultDocumentLoader.LoadDocumentAsync(Microsoft.ClearScript.DocumentSettings,System.Nullable{Microsoft.ClearScript.DocumentInfo},System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.DefaultDocumentLoader.GetCachedDocument(System.Uri)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.DefaultDocumentLoader.CacheDocument(Microsoft.ClearScript.Document,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.ClearScript.DefaultDocumentLoader.DiscardCachedDocuments">
+            <inheritdoc/>
+        </member>
         <member name="T:Microsoft.ClearScript.DefaultScriptUsageAttribute">
             <summary>
             Specifies defaults for how type members are to be exposed to script code.
@@ -2034,8 +2059,9 @@
             When this attribute is applied to a struct, ClearScript exposes the same object reference
             for all instances of the struct that satisfy equality comparison, giving script code the
             ability to use native equality operators to compare the exposed objects. This behavior is
-            also enabled automatically for all enums, numeric types, <c><see cref="T:System.DateTime"/></c>,
-            <c><see cref="T:System.DateTimeOffset"/></c>, and <c><see cref="T:System.TimeSpan"/></c>.
+            also enabled automatically for all enums, <c>readonly</c> structs, numeric types,
+            <c><see cref="T:System.DateTime"/></c>, <c><see cref="T:System.DateTimeOffset"/></c>,
+            <c><see cref="T:System.TimeSpan"/></c>, and <c><see cref="T:System.Guid"></see></c>.
             </remarks>
         </member>
         <member name="M:Microsoft.ClearScript.ImmutableValueAttribute.#ctor">
@@ -2098,6 +2124,11 @@
         <member name="P:Microsoft.ClearScript.IScriptEngineException.ScriptException">
             <summary>
             Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngineException.ScriptExceptionAsObject">
+            <summary>
+            Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified, without engaging the dynamic infrastructure.
             </summary>
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngineException.InnerException">
@@ -2788,15 +2819,33 @@
             scenarios, so setting this property to <c>true</c> is not recommended.
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.DisableDynamicBinding">
+            <summary>
+            Enables or disables dynamic method binding.
+            </summary>
+            <remarks>
+            When this property is set to <c>true</c>, the script engine bypasses the default method
+            binding algorithm and uses reflection-based method binding instead. This approach
+            abandons support for generic type inference and other features, but it avoids engaging
+            the dynamic infrastructure.
+            </remarks>
+            <seealso cref="P:Microsoft.ClearScript.ScriptEngine.UseReflectionBindFallback"/>
+        </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.UseReflectionBindFallback">
             <summary>
             Enables or disables the use of reflection-based method binding as a fallback.
             </summary>
             <remarks>
+            <para>
             When this property is set to <c>true</c>, the script engine attempts to use
             reflection-based method binding when the default method binding algorithm fails. This
             approach reduces type safety, but it may be useful for running legacy scripts that rely
             on the specific behavior of reflection-based method binding.
+            </para>
+            <para>
+            This property has no effect when <see cref="P:Microsoft.ClearScript.ScriptEngine.DisableDynamicBinding"/> is set to
+            <c>true</c>.
+            </para>
             </remarks>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.EnableAutoHostVariables">
@@ -3941,6 +3990,11 @@
             Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified.
             </summary>
         </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngineException.ScriptExceptionAsObject">
+            <summary>
+            Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified, without engaging the dynamic infrastructure.
+            </summary>
+        </member>
         <member name="M:Microsoft.ClearScript.ScriptEngineException.ToString">
             <summary>
             Returns a string that represents the current exception.
@@ -4012,6 +4066,11 @@
         <member name="P:Microsoft.ClearScript.ScriptInterruptedException.ScriptException">
             <summary>
             Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptInterruptedException.ScriptExceptionAsObject">
+            <summary>
+            Gets the script exception that caused the current exception to be thrown, or <c>null</c> if one was not specified, without engaging the dynamic infrastructure.
             </summary>
         </member>
         <member name="M:Microsoft.ClearScript.ScriptInterruptedException.ToString">
@@ -4229,6 +4288,13 @@
             </summary>
             <param name="name">The name of the method to invoke.</param>
             <param name="args">Optional arguments for method invocation.</param>
+            <returns>The invocation result value.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.ScriptObject.InvokeAsFunction(System.Object[])">
+            <summary>
+            Invokes the script object as a function.
+            </summary>
+            <param name="args">Optional arguments for object invocation.</param>
             <returns>The invocation result value.</returns>
         </member>
         <member name="T:Microsoft.ClearScript.ScriptUsageAttribute">
