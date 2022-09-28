@@ -222,3 +222,28 @@ jobs:
           working-directory: ./core
           files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
           flags: unittests
+
+      - name: Setup Pages
+        if: matrix.main
+        uses: actions/configure-pages@v2
+
+      - name: Upload Pages Artifact
+        if: matrix.main
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './tests/PerformanceReport'
+
+
+  deploy:
+    needs: tests
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
