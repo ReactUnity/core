@@ -16,6 +16,7 @@ namespace ReactUnity.Tests
         public bool AutoRender = true;
         public bool SkipIfExisting;
         public bool RealTimer;
+        public ReactContext.PoolingType Pooling = ReactContext.PoolingType.None;
 
         public BaseReactTestAttribute() : base() { }
 
@@ -34,6 +35,7 @@ namespace ReactUnity.Tests
 
             var ru = CreateReactUnity(engineType, script.Current);
             ru.timer = RealTimer ? null : new ControlledTimer();
+            ru.AdvancedOptions.Pooling = Pooling;
             ru.AdvancedOptions.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
             ru.AdvancedOptions.AfterStart.AddListener(() => {
                 if (engineType != JavascriptEngineType.Auto && ru.Context.Script.EngineFactory.EngineType != engineType)

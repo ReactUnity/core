@@ -2,6 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UGUI;
+using Unity.PerformanceTesting;
 
 namespace ReactUnity.Tests
 {
@@ -29,5 +30,13 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.IsNull(View.OverflowMask);
         }
+
+
+        [UGUITest, Performance]
+        public IEnumerator TestFramePerformance()
+        {
+            yield return Measure.Frames().WarmupCount(10).MeasurementCount(60);
+        }
+
     }
 }
