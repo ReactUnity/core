@@ -35,7 +35,7 @@ namespace ReactUnity.Tests
         [UGUITest, Performance]
         public IEnumerator TestFramePerformance()
         {
-            yield return Measure.Frames().WarmupCount(10).MeasurementCount(60);
+            yield return Measure.Frames().WarmupCount(10).MeasurementCount(60).Run();
         }
 
     }
