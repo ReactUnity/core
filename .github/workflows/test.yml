@@ -235,7 +235,12 @@ jobs:
 
 
   deploy:
+    name: Deploy results to Github Pages
+    if: ${{ always() }}
     needs: tests
+    concurrency:
+      group: pages
+      cancel-in-progress: true
     permissions:
       pages: write
       id-token: write
