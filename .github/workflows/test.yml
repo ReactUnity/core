@@ -117,12 +117,21 @@ jobs:
         if: matrix.main
         run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" --reportdirpath=PerformanceReport
 
+      - name: Rename Performance Report
+        working-directory: ./tests/PerformanceReport/UnityPerformanceBenchmark
+        if: matrix.main
+        run: |
+          find . -name '*.html' -exec bash -c 'mv $0 index.html' {} \;
+          cd ..
+          mv UnityPerformanceBenchmark Performance
+
+
       - name: Upload Performance Result Artifacts
         uses: actions/upload-artifact@v2
         if: matrix.main
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Performance Report"
-          path: "${{ github.workspace }}/tests/PerformanceReport"
+          path: "${{ github.workspace }}/tests/PerformanceReport/Performance"
 
       - name: Commit Snapshots
         if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
@@ -231,7 +240,7 @@ jobs:
         if: matrix.main
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './tests/PerformanceReport'
+          path: './tests/PerformanceReport/Performance'
 
 
   deploy:
