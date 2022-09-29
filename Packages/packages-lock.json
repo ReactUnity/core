@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.reactunity.clearscript": {
+      "version": "file:../../clearscript",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.reactunity.core": {
       "version": "file:../../core",
       "depth": 0,
@@ -8,6 +14,12 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
+    },
+    "com.reactunity.jint": {
+      "version": "file:../../jint",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.reactunity.quickjs": {
       "version": "file:../../quickjs",
