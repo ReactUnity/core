@@ -1,3 +1,7 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT || (UNITY_ANDROID && !UNITY_EDITOR)) && REACT_CLEARSCRIPT_AVAILABLE
+#define REACT_CLEARSCRIPT
+#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +36,26 @@ namespace ReactUnity.Tests
 
             var script = GetScript();
             while (script.MoveNext()) yield return null;
+
+#if REACT_CLEARSCRIPT
+            if (engineType == JavascriptEngineType.ClearScript)
+            {
+                var retries = 0;
+                while (true)
+                {
+                    try
+                    {
+                        var pollEngine = new ClearScriptEngine(null, false, false);
+                        if (pollEngine.NativeEngine != null) break;
+                    }
+                    catch { }
+                    retries++;
+                    if (retries > 60) break;
+                    yield return null;
+                }
+            }
+#endif
+
 
             var ru = CreateReactUnity(engineType, script.Current);
             ru.timer = RealTimer ? null : new ControlledTimer();
