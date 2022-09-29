@@ -116,7 +116,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
         with:
           unityVersion: ${{ matrix.unity.version }}
-          testMode: ${{ matrix.suite.assemblies.includes('Editor') && 'All' || 'PlayMode' }}
+          testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}
           customParameters: ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           projectPath: tests
