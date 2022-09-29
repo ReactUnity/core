@@ -17,6 +17,12 @@ on:
 jobs:
   tests:
     name: ${{ matrix.suite.name }} - Unity ${{ matrix.unity.version }}
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     strategy:
       fail-fast: false
       matrix:
@@ -32,11 +38,11 @@ jobs:
         include:
           - main: true
             coverage: true
-            platform: ubuntu-20.04
             unity: { version: "2021.3.8f1" }
             suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
-          # - unity: { version: "2021.3.8f1" }
-          #   suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor" }
+          - performance: true
+            unity: { version: "2021.3.8f1" }
+            suite: { name: "Performance Tests", assemblies: "ReactUnity.Tests.Performance" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
       - name: Checkout core library
@@ -114,21 +120,20 @@ jobs:
 
       - name: Generate Performance Report
         working-directory: ./tests
-        if: matrix.main
+        if: matrix.performance
         run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" --reportdirpath=PerformanceReport
 
       - name: Rename Performance Report
         working-directory: ./tests/PerformanceReport/UnityPerformanceBenchmark
-        if: matrix.main
+        if: matrix.performance
         run: |
           find . -name '*.html' -exec bash -c 'mv $0 index.html' {} \;
           cd ..
           mv UnityPerformanceBenchmark Performance
 
-
       - name: Upload Performance Result Artifacts
         uses: actions/upload-artifact@v2
-        if: matrix.main
+        if: matrix.performance
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Performance Report"
           path: "${{ github.workspace }}/tests/PerformanceReport/Performance"
@@ -232,32 +237,17 @@ jobs:
           files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
           flags: unittests
 
-      - name: Setup Pages
-        if: matrix.main
+      - name: Setup Github Pages
+        if: matrix.performance && always()
         uses: actions/configure-pages@v2
 
       - name: Upload Pages Artifact
-        if: matrix.main
+        if: matrix.performance && always()
         uses: actions/upload-pages-artifact@v1
         with:
           path: './tests/PerformanceReport/Performance'
 
-
-  deploy:
-    name: Deploy results to Github Pages
-    if: ${{ always() }}
-    needs: tests
-    concurrency:
-      group: pages
-      cancel-in-progress: true
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
+        if: matrix.performance && always()
         id: deployment
         uses: actions/deploy-pages@v1
