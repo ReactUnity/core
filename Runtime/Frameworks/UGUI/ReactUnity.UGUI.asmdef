@@ -6,7 +6,8 @@
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:9a66a2efedc711946b7428ea9b41cc0d",
-        "GUID:68550284b645f4b9894995579f34290a"
+        "GUID:68550284b645f4b9894995579f34290a",
+        "GUID:1fbc052e3ea2ff24b8874f1cedb59b6c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -49,6 +50,11 @@
             "name": "com.unity.textmeshpro",
             "expression": "[2.2.0-preview.0,3.0.0)",
             "define": "REACT_TMP_X2"
+        },
+        {
+            "name": "com.nosuchstudio.rtltmpro",
+            "expression": "",
+            "define": "REACT_RTLTMPRO"
         }
     ],
     "noEngineReferences": false
