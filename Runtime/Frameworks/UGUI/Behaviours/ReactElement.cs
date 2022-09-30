@@ -15,6 +15,7 @@ namespace ReactUnity.UGUI.Behaviours
         private RectTransform rt;
         public YogaNode Layout { get; internal set; }
         public UGUIComponent Component { get; internal set; }
+        public TMPro.TextMeshProUGUI Text { get; internal set; }
 
         private bool IsVisible = false;
         private bool firstTime = true;
@@ -97,6 +98,8 @@ namespace ReactUnity.UGUI.Behaviours
             var translate = this.translate;
             if (!Layout.HasNewLayout && !hasPositionUpdate) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
+
+            if (Text) Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
 
             var pivotDiff = rt.pivot - Vector2.up;
 

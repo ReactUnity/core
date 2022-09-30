@@ -189,6 +189,7 @@ namespace ReactUnity.UGUI
                 pos == PositionType.Absolute || pos == PositionType.Fixed || pos == PositionType.Inset ? YogaPositionType.Absolute :
                 YogaPositionType.Default;
 
+            Layout.StyleDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.StyleDirection);
             Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
             Layout.Wrap = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Wrap);
             Layout.FlexGrow = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexGrow);
