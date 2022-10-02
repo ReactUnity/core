@@ -47,6 +47,10 @@ jobs:
             suite: { name: "Performance Tests", assemblies: "ReactUnity.Tests.Performance" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
       - name: Checkout core library
         uses: actions/checkout@v2
         with:
@@ -134,7 +138,7 @@ jobs:
         if: matrix.performance
         working-directory: ./tests
         run: |
-          find "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" -name \*.xml -exec cp {} TestResults \;
+          find "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" -name \*.xml -exec cp {} "TestResults/{} ${{ steps.vars.outputs.sha_short }}" \;
 
       - name: Generate Performance Report
         if: matrix.performance
