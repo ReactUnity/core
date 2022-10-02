@@ -1,7 +1,4 @@
-using Facebook.Yoga;
 using ReactUnity.Styling.Computed;
-using ReactUnity.Types;
-using UnityEngine;
 
 namespace ReactUnity.Styling
 {

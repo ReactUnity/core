@@ -1,6 +1,5 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using UnityEngine;
 

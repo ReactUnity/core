@@ -6,7 +6,7 @@
  */
 
 #if !UNITY_EDITOR && (UNITY_WEBGL || UNITY_IOS)
-    #define YOGA_LEGACY
+#define YOGA_LEGACY
 #endif
 
 namespace Facebook.Yoga

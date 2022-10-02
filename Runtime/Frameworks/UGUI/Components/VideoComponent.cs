@@ -1,7 +1,6 @@
 
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
-using UnityEngine;
 using UnityEngine.Video;
 
 namespace ReactUnity.UGUI

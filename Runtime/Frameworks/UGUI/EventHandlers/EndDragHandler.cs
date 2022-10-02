@@ -8,7 +8,7 @@ namespace ReactUnity.UGUI.EventHandlers
     public class EndDragHandler : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;
-        
+
         private bool IsDragging;
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -19,14 +19,16 @@ namespace ReactUnity.UGUI.EventHandlers
         public void OnEndDrag(PointerEventData eventData)
         {
             OnEvent?.Invoke(eventData);
-            
+
             IsDragging = false;
         }
-        
-        private void OnDisable(){
-            if(IsDragging) {
+
+        private void OnDisable()
+        {
+            if (IsDragging)
+            {
                 OnEvent?.Invoke(null);
-                
+
                 IsDragging = false;
             }
         }

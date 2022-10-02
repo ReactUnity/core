@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
 using UnityEngine;
 
