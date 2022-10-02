@@ -126,31 +126,37 @@ jobs:
         with:
           unityVersion: ${{ matrix.unity.version }}
           testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}
-          customParameters: -profiler-enable ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
+          customParameters: ${{ matrix.performance && '-profiler-enable' }} ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           projectPath: tests
 
-      - name: Cache previous run results
+      - name: Cache Performance Test Results
         if: matrix.performance
         uses: actions/cache@v3
         with:
-          path: tests/TestResults
-          key: previous-runs-${{ github.sha }}
+          path: tests/PerformanceTestResults
+          key: performance-results-${{ github.sha }}
           restore-keys: |
-            previous-runs-
+            performance-results-
 
-      - name: Copy test results to previous runs
+      - name: Copy Test Results to Performance Test Results
         if: matrix.performance
         working-directory: ./tests
         run: |
-          mkdir -p TestResults
+          mkdir -p PerformanceTestResults
           cd "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
-          find . -name \*.xml -exec bash -c 'cp $0 "${{ github.workspace }}/tests/TestResults/${{ github.sha }}-$(basename ""$0"")"' {} \;
+          find . -name \*.xml -exec bash -c 'cp $0 "${{ github.workspace }}/tests/PerformanceTestResults/$(date +%s)-$(basename ""$0"")"' {} \;
+
+      - name: Keep only last 10 files
+        if: matrix.performance
+        working-directory: tests/PerformanceTestResults
+        continue-on-error: true
+        run: ls -A1t | tail -n +11 | xargs rm
 
       - name: Generate Performance Report
         if: matrix.performance
         working-directory: ./tests
-        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/tests/TestResults" --reportdirpath=PerformanceReport
+        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/tests/PerformanceTestResults" --reportdirpath=PerformanceReport
 
       - name: Rename Performance Report
         working-directory: ./tests/PerformanceReport/UnityPerformanceBenchmark

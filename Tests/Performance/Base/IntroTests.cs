@@ -38,7 +38,11 @@ bg {
 "), Performance]
         public IEnumerator TestFramePerformanceWithMultipleBackgrounds()
         {
-            yield return Measure.Frames().WarmupCount(10).MeasurementCount(60).ProfilerMarkers("Batches Count").Run();
+            yield return Measure.Frames()
+                .WarmupCount(10)
+                .MeasurementCount(60)
+                .ProfilerMarkers(new SampleGroup("Batches Count", SampleUnit.Byte))
+                .Run();
         }
     }
 }
