@@ -121,10 +121,26 @@ jobs:
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           projectPath: tests
 
-      - name: Generate Performance Report
-        working-directory: ./tests
+      - name: Cache previous run results
         if: matrix.performance
-        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" --reportdirpath=PerformanceReport
+        working-directory: ./tests
+        uses: actions/cache@v2
+        with:
+          path: TestResults
+          key: previous-runs-${{ github.sha }}
+          restore-keys: |
+            previous-runs-
+
+      - name: Copy test results to previous runs
+        if: matrix.performance
+        working-directory: ./tests
+        run: |
+          find "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" -name \*.xml -exec cp {} TestResults \;
+
+      - name: Generate Performance Report
+        if: matrix.performance
+        working-directory: ./tests
+        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results=TestResults --reportdirpath=PerformanceReport
 
       - name: Rename Performance Report
         working-directory: ./tests/PerformanceReport/UnityPerformanceBenchmark
