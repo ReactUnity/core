@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
@@ -9,6 +8,12 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Internal
 {
+#if NET_STANDARD_2_0 && !NET_STANDARD_2_1
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
+
     public class BasicBorderImage : RoundedBorderMaskImage
     {
         private struct ShaderProps

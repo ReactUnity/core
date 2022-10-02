@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
@@ -7,6 +6,12 @@ using UnityEngine;
 
 namespace ReactUnity.Types
 {
+#if NET_STANDARD_2_0 && !NET_STANDARD_2_1
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
+
     internal class GradientRampProperties
     {
         public Texture2D Texture;

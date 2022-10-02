@@ -8,6 +8,12 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Internal
 {
+#if NET_STANDARD_2_0 && !NET_STANDARD_2_1
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
+
     public class BackgroundImage : Image
     {
         private struct ShaderProps
@@ -32,7 +38,7 @@ namespace ReactUnity.UGUI.Internal
 
             public override int GetHashCode()
             {
-                return System.HashCode.Combine(BaseMaterial, Size, Pos, RepeatX, RepeatY, Aspect);
+                return HashCode.Combine(BaseMaterial, Size, Pos, RepeatX, RepeatY, Aspect);
             }
 
             public void SetToMaterial(Material mat)
