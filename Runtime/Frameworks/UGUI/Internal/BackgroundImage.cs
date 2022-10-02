@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
@@ -9,6 +10,44 @@ namespace ReactUnity.UGUI.Internal
 {
     public class BackgroundImage : Image
     {
+        private struct ShaderProps
+        {
+            public Material BaseMaterial;
+            public Vector4 Size;
+            public Vector4 Pos;
+            public int RepeatX;
+            public int RepeatY;
+            public float Aspect;
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       Size.Equals(props.Size) &&
+                       Pos.Equals(props.Pos) &&
+                       RepeatX == props.RepeatX &&
+                       RepeatY == props.RepeatY &&
+                       Aspect == props.Aspect;
+            }
+
+            public override int GetHashCode()
+            {
+                return System.HashCode.Combine(BaseMaterial, Size, Pos, RepeatX, RepeatY, Aspect);
+            }
+
+            public void SetToMaterial(Material mat)
+            {
+                mat.SetVector(SizeProp, Size);
+                mat.SetVector(PosProp, Pos);
+                mat.SetFloat(RepeatXProp, RepeatX);
+                mat.SetFloat(RepeatYProp, RepeatY);
+                mat.SetFloat(AspectProp, Aspect);
+            }
+        }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+
+
         public static readonly int SizeProp = Shader.PropertyToID("_size");
         public static readonly int PosProp = Shader.PropertyToID("_pos");
         public static readonly int RepeatXProp = Shader.PropertyToID("_repeatX");
@@ -82,19 +121,31 @@ namespace ReactUnity.UGUI.Internal
         {
             get
             {
-                Material result = base.materialForRendering;
+                Material baseMat = base.materialForRendering;
 
                 var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
                 var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
                 var psPoint = BackgroundPosition.GetPointValue(Size - szPoint, 0, false);
                 var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);
 
-                result.SetVector(SizeProp, sz);
-                result.SetVector(PosProp, ps);
-                result.SetFloat(RepeatXProp, (int) BackgroundRepeatX);
-                result.SetFloat(RepeatYProp, (int) BackgroundRepeatY);
-                result.SetFloat(AspectProp, szPoint.x / szPoint.y);
-                Definition?.ModifyMaterial(Context, result, szPoint);
+                var props = new ShaderProps
+                {
+                    BaseMaterial = baseMat,
+                    Size = sz,
+                    Pos = ps,
+                    RepeatX = (int) BackgroundRepeatX,
+                    RepeatY = (int) BackgroundRepeatY,
+                    Aspect = szPoint.x / szPoint.y,
+                };
+
+                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+                {
+                    result = new Material(props.BaseMaterial);
+                    props.SetToMaterial(result);
+                    result = Definition?.ModifyMaterial(Context, result, szPoint);
+                    CachedMaterials[props] = result;
+                }
+
                 return result;
             }
         }

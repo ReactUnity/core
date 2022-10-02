@@ -22,7 +22,6 @@ function App() {
         {arr.map((x,i) => <bg key={i} />)}
     </>;
 }
-
 ",
             Style = @"
 :host {
@@ -38,10 +37,12 @@ bg {
 "), Performance]
         public IEnumerator TestFramePerformanceWithMultipleBackgrounds()
         {
+            var batchesCount = new SampleGroup("Batches Count", SampleUnit.Byte);
+
             yield return Measure.Frames()
                 .WarmupCount(10)
                 .MeasurementCount(60)
-                .ProfilerMarkers(new SampleGroup("Batches Count", SampleUnit.Byte))
+                .ProfilerMarkers(batchesCount)
                 .Run();
         }
     }

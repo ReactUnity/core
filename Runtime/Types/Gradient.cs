@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
@@ -40,11 +41,48 @@ namespace ReactUnity.Types
 
     public abstract class BaseGradient
     {
+        private struct ShaderProps
+        {
+            internal Material BaseMaterial;
+            public float GradientType;
+            public float Repeating;
+            public float Distance;
+            public float Length;
+            public float Offset;
+
+            public void SetMaterialProps(Material mat)
+            {
+                mat.SetFloat("_gradientType", GradientType);
+                mat.SetFloat("_repeating", Repeating);
+                mat.SetFloat("_distance", Distance);
+                mat.SetFloat("_length", Length);
+                mat.SetFloat("_offset", Offset);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       GradientType == props.GradientType &&
+                       Repeating == props.Repeating &&
+                       Distance == props.Distance &&
+                       Length == props.Length &&
+                       Offset == props.Offset;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(BaseMaterial, GradientType, Repeating, Distance, Length, Offset);
+            }
+        }
+
         public class ColorKey
         {
             public Color? Color;
             public YogaValue Offset;
         }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
 
         public virtual GradientType Type { get; }
         public List<ColorKey> Keys { get; }
@@ -240,15 +278,28 @@ namespace ReactUnity.Types
         }
 
 
-        internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        internal virtual Material ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
-            material.SetFloat("_gradientType", (int) Type);
-            material.SetFloat("_repeating", Repeating ? 1 : 0);
-
             var calc = GetRamp(size);
-            material.SetFloat("_distance", calc.Distance);
-            material.SetFloat("_length", calc.Length);
-            material.SetFloat("_offset", calc.Offset);
+
+            var props = new ShaderProps
+            {
+                BaseMaterial = material,
+                GradientType = (int) Type,
+                Repeating = Repeating ? 1 : 0,
+                Distance = calc.Distance,
+                Length = calc.Length,
+                Offset = calc.Offset,
+            };
+
+            if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+            {
+                result = new Material(props.BaseMaterial);
+                props.SetMaterialProps(result);
+                CachedMaterials[props] = result;
+            }
+
+            return result;
         }
 
         protected abstract float CalculateLength(Vector2 size);
@@ -256,6 +307,31 @@ namespace ReactUnity.Types
 
     public class LinearGradient : BaseGradient
     {
+        private struct ShaderProps
+        {
+            internal Material BaseMaterial;
+            public float Angle;
+
+            public void SetMaterialProps(Material mat)
+            {
+                mat.SetFloat("_angle", Angle);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       Angle == props.Angle;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(BaseMaterial, Angle);
+            }
+        }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+
         public override GradientType Type => GradientType.Linear;
         public float Angle { get; set; }
 
@@ -264,10 +340,24 @@ namespace ReactUnity.Types
             Angle = angle;
         }
 
-        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        internal override Material ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
-            base.ModifyMaterial(context, material, size);
-            material.SetFloat("_angle", Angle);
+            material = base.ModifyMaterial(context, material, size);
+
+            var props = new ShaderProps
+            {
+                BaseMaterial = material,
+                Angle = Angle,
+            };
+
+            if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+            {
+                result = new Material(props.BaseMaterial);
+                props.SetMaterialProps(result);
+                CachedMaterials[props] = result;
+            }
+
+            return result;
         }
 
         protected override float CalculateLength(Vector2 size)
@@ -294,6 +384,40 @@ namespace ReactUnity.Types
 
     public class RadialGradient : BaseGradient
     {
+        private struct ShaderProps
+        {
+            internal Material BaseMaterial;
+            public Vector2 At;
+            public int SizeHint;
+            public int Shape;
+            public float Radius;
+
+            public void SetMaterialProps(Material mat)
+            {
+                mat.SetVector("_at", At);
+                mat.SetFloat("_sizeHint", SizeHint);
+                mat.SetFloat("_shape", Shape);
+                mat.SetFloat("_radius", Radius);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       At.Equals(props.At) &&
+                       SizeHint == props.SizeHint &&
+                       Shape == props.Shape &&
+                       Radius == props.Radius;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(BaseMaterial, At, SizeHint, Shape, Radius);
+            }
+        }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+
         public override GradientType Type => GradientType.Radial;
         public YogaValue2 At { get; set; }
         public YogaValue Radius { get; set; }
@@ -309,15 +433,29 @@ namespace ReactUnity.Types
             Shape = shape;
         }
 
-        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        internal override Material ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
-            base.ModifyMaterial(context, material, size);
+            material = base.ModifyMaterial(context, material, size);
 
             var calc = GetRamp(size);
-            material.SetVector("_at", At.GetRatioValue(size, float.NaN, true));
-            material.SetFloat("_sizeHint", (int) SizeHint);
-            material.SetFloat("_shape", (int) Shape);
-            material.SetFloat("_radius", CalculateRadius(size) * Mathf.Max(1, calc.Length));
+
+            var props = new ShaderProps
+            {
+                BaseMaterial = material,
+                At = At.GetRatioValue(size, float.NaN, true),
+                SizeHint = (int) SizeHint,
+                Shape = (int) Shape,
+                Radius = CalculateRadius(size) * Mathf.Max(1, calc.Length),
+            };
+
+            if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+            {
+                result = new Material(props.BaseMaterial);
+                props.SetMaterialProps(result);
+                CachedMaterials[props] = result;
+            }
+
+            return result;
         }
 
         protected override float CalculateLength(Vector2 size)
@@ -364,6 +502,34 @@ namespace ReactUnity.Types
 
     public class ConicGradient : BaseGradient
     {
+        private struct ShaderProps
+        {
+            internal Material BaseMaterial;
+            public Vector2 At;
+            public float From;
+
+            public void SetMaterialProps(Material mat)
+            {
+                mat.SetVector("_at", At);
+                mat.SetFloat("_from", From);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       At.Equals(props.At) &&
+                       From == props.From;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(BaseMaterial, At, From);
+            }
+        }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+
         public override GradientType Type => GradientType.Conic;
         public YogaValue2 At { get; set; }
         public float From { get; set; }
@@ -374,11 +540,25 @@ namespace ReactUnity.Types
             From = from;
         }
 
-        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size)
+        internal override Material ModifyMaterial(ReactContext context, Material material, Vector2 size)
         {
-            base.ModifyMaterial(context, material, size);
-            material.SetVector("_at", At.GetRatioValue(size, float.NaN, true));
-            material.SetFloat("_from", From);
+            material = base.ModifyMaterial(context, material, size);
+
+            var props = new ShaderProps
+            {
+                BaseMaterial = material,
+                At = At.GetRatioValue(size, float.NaN, true),
+                From = From,
+            };
+
+            if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+            {
+                result = new Material(props.BaseMaterial);
+                props.SetMaterialProps(result);
+                CachedMaterials[props] = result;
+            }
+
+            return result;
         }
 
         protected override float CalculateLength(Vector2 size) => 1;

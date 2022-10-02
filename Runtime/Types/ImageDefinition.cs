@@ -25,7 +25,7 @@ namespace ReactUnity.Types
 
         internal virtual void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback) => callback(ResolvedImage.Default);
 
-        internal virtual void ModifyMaterial(ReactContext context, Material material, Vector2 size) { }
+        internal virtual Material ModifyMaterial(ReactContext context, Material material, Vector2 size) => material;
 
         public class Converter : TypedStyleConverterBase<ImageDefinition>
         {
@@ -118,6 +118,6 @@ namespace ReactUnity.Types
             });
         }
 
-        internal override void ModifyMaterial(ReactContext context, Material material, Vector2 size) => Gradient.ModifyMaterial(context, material, size);
+        internal override Material ModifyMaterial(ReactContext context, Material material, Vector2 size) => Gradient.ModifyMaterial(context, material, size);
     }
 }
