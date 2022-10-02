@@ -1,12 +1,32 @@
 using System.Collections;
+using System.Text;
+using NUnit.Framework;
 using ReactUnity.Scripting;
 using Unity.PerformanceTesting;
 
 namespace ReactUnity.Tests.Performance
 {
+    [TestFixture(JavascriptEngineType.Auto)]
     public class IntroTests : TestBase
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
+
+        [Test]
+        public void ReportAvailableProfilerMarkers()
+        {
+            var availableStats = PerformanceTestHelpers.EnumerateProfilerStats();
+
+            var sb = new StringBuilder("Available stats:\n");
+            foreach (var s in availableStats)
+            {
+                sb.AppendLine($"{s.Cat.Name}\t\t - {s.Name}\t\t - {s.Unit}");
+            }
+
+            var dir = "../artifacts/";
+
+            if (!System.IO.Directory.Exists(dir)) System.IO.Directory.CreateDirectory(dir);
+            System.IO.File.WriteAllText(dir + "AvailableProfilerStats.txt", sb.ToString());
+        }
 
         [UGUITest, Performance]
         public IEnumerator TestFramePerformance()
@@ -37,7 +57,7 @@ bg {
 "), Performance]
         public IEnumerator TestFramePerformanceWithMultipleBackgrounds()
         {
-            var batchesCount = new SampleGroup("Batches Count", SampleUnit.Byte);
+            var batchesCount = new SampleGroup("Draw Calls Count", SampleUnit.Byte);
 
             yield return Measure.Frames()
                 .WarmupCount(10)
