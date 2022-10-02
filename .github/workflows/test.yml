@@ -123,8 +123,7 @@ jobs:
 
       - name: Cache previous run results
         if: matrix.performance
-        working-directory: ./tests
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: TestResults
           key: previous-runs-${{ github.sha }}
