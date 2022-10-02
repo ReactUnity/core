@@ -47,10 +47,6 @@ jobs:
             suite: { name: "Performance Tests", assemblies: "ReactUnity.Tests.Performance" }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
-      - name: Set outputs
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
       - name: Checkout core library
         uses: actions/checkout@v2
         with:
@@ -112,6 +108,15 @@ jobs:
         if: startsWith(matrix.unity.version, '2019')
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
 
+      - name: Cache Unity Library
+        uses: actions/cache@v3
+        with:
+          path: tests/Library
+          key: Unity-Library-${{matrix.platform}}-${{ matrix.unity.version }}
+          restore-keys: |
+            Unity-Library-${{matrix.platform}}
+            Unity-Library-
+
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
         id: testRunner
@@ -129,7 +134,7 @@ jobs:
         if: matrix.performance
         uses: actions/cache@v3
         with:
-          path: TestResults
+          path: tests/TestResults
           key: previous-runs-${{ github.sha }}
           restore-keys: |
             previous-runs-
@@ -138,12 +143,14 @@ jobs:
         if: matrix.performance
         working-directory: ./tests
         run: |
-          find "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}" -name \*.xml -exec cp {} "TestResults/{} ${{ steps.vars.outputs.sha_short }}" \;
+          mkdir -p TestResults
+          cd "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
+          find . -name \*.xml -exec bash -c 'cp $0 "${{ github.workspace }}/tests/TestResults/${{ github.sha }}-$(basename ""$0"")"' {} \;
 
       - name: Generate Performance Report
         if: matrix.performance
         working-directory: ./tests
-        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results=TestResults --reportdirpath=PerformanceReport
+        run: dotnet PerformanceReporter/UnityPerformanceBenchmarkReporter.dll --results="${{ github.workspace }}/tests/TestResults" --reportdirpath=PerformanceReport
 
       - name: Rename Performance Report
         working-directory: ./tests/PerformanceReport/UnityPerformanceBenchmark
@@ -152,13 +159,6 @@ jobs:
           find . -name '*.html' -exec bash -c 'mv $0 index.html' {} \;
           cd ..
           mv UnityPerformanceBenchmark Performance
-
-      - name: Upload Performance Result Artifacts
-        uses: actions/upload-artifact@v2
-        if: matrix.performance
-        with:
-          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Performance Report"
-          path: "${{ github.workspace }}/tests/PerformanceReport/Performance"
 
       - name: Commit Snapshots
         if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
