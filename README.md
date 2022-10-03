@@ -48,7 +48,7 @@ The documentation on the [main website](https://reactunity.github.io) is under d
 
 ## Resources and References
 
-- [Sample Project](https://github.com/ReactUnity/samples) and [Demo](https://reactunity.github.io/samples)
+- [Sample Project](https://github.com/ReactUnity/full-sample)
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [`npx @reactunity/create`](https://github.com/ReactUnity/create)
 - [Acknowledgements](./.github/acknowledgements.md)

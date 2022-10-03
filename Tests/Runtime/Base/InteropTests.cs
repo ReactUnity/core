@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using UnityEngine;
@@ -117,6 +118,57 @@ namespace ReactUnity.Tests
             yield return null;
             var text = Q("text").TextContent;
             Assert.AreEqual("SomeLogTest", text);
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {  };
+
+            Assert.AreEqual(5, Globals.a);
+        ", AutoRender = false)]
+        public IEnumerator GlobalsKeysCanBeAccessedNaturally()
+        {
+            Globals["a"] = 5;
+            yield return null;
+            Render();
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {  };
+
+            Assert.AreEqual(2, Globals.list.length);
+            Assert.AreEqual(5, Globals.list[0]);
+            Assert.AreEqual(7, Globals.list[1]);
+
+            Assert.AreEqual(12, [...Globals.list].reduce((acc, x) => acc + x));
+        ", AutoRender = false)]
+        public IEnumerator ListItemsCanBeAccessedNaturally()
+        {
+            IgnoreForEngine(JavascriptEngineType.ClearScript);
+
+            Globals["list"] = new List<int>() { 5, 7 };
+            yield return null;
+            Render();
+        }
+
+
+        [UGUITest(Script = @"
+            function App() {  };
+
+            Assert.AreEqual(2, Globals.list.length);
+            Assert.AreEqual(5, Globals.list[0]);
+            Assert.AreEqual(7, Globals.list[1]);
+
+            Assert.AreEqual(12, [...Globals.list].reduce((acc, x) => acc + x));
+        ", AutoRender = false)]
+        public IEnumerator ArrayItemsCanBeAccessedNaturally()
+        {
+            IgnoreForEngine(JavascriptEngineType.ClearScript);
+
+            Globals["list"] = new int[] { 5, 7 };
+            yield return null;
+            Render();
         }
     }
 }

@@ -5,10 +5,12 @@
 #if REACT_QUICKJS
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using QuickJS;
 using QuickJS.Experimental;
 using QuickJS.Native;
+using static UnityEngine.GraphicsBuffer;
 using QScriptContext = QuickJS.ScriptContext;
 
 namespace ReactUnity.Scripting
@@ -18,6 +20,7 @@ namespace ReactUnity.Scripting
         public const string KeyForCSharpIdentity = "__csharp_host_identity__";
 
         private ScriptFunction createDictionaryProxy;
+        private ScriptFunction createListProxy;
 
         public JSPayloadHeader GetPayloadHeader(QScriptContext context, JSValue val)
         {
@@ -56,15 +59,26 @@ namespace ReactUnity.Scripting
             }
             else
             {
+                var proxy = JSApi.JS_UNDEFINED;
                 if (typeof(IDictionary<string, object>).IsAssignableFrom(o.GetType()))
                 {
-                    var proxy = CreateDictionaryProxy(context, val);
+                    proxy = CreateDictionaryProxy(context, val);
+
+                }
+                else if (typeof(IList).IsAssignableFrom(o.GetType()))
+                {
+                    proxy = CreateListProxy(context, val);
+                }
+
+                if (!proxy.IsUndefined())
+                {
                     if (proxy.IsException())
                     {
                         JSApi.JS_FreeValue(context, proxy);
                         cache.RemoveObject(object_id);
                         return proxy;
                     }
+
                     val = proxy;
                 }
 
@@ -74,11 +88,8 @@ namespace ReactUnity.Scripting
             return val;
         }
 
-        private JSValue CreateDictionaryProxy(QScriptContext context, JSValue target)
+        private JSValue UseProxyCreator(QScriptContext context, JSValue target, ScriptFunction creator)
         {
-            var creator = createDictionaryProxy ??
-                (createDictionaryProxy = CreateDictionaryProxyCreator(context));
-
             var ctx = (JSContext) context;
 
             var proxy = creator.Invoke<ScriptValue>(target);
@@ -88,11 +99,25 @@ namespace ReactUnity.Scripting
             return res;
         }
 
+        private JSValue CreateDictionaryProxy(QScriptContext context, JSValue target)
+        {
+            var creator = createDictionaryProxy ??
+                (createDictionaryProxy = CreateDictionaryProxyCreator(context));
+            return UseProxyCreator(context, target, creator);
+        }
+
+        private JSValue CreateListProxy(QScriptContext context, JSValue target)
+        {
+            var creator = createListProxy ??
+                (createListProxy = CreateListProxyCreator(context));
+            return UseProxyCreator(context, target, creator);
+        }
+
         private static unsafe ScriptFunction CreateDictionaryProxyCreator(QScriptContext _context)
         {
             var ctx = (JSContext) _context;
 
-            var createDictionaryProxyCreator = _context.EvalSource<ScriptFunction>(@"
+            var proxyCreator = _context.EvalSource<ScriptFunction>(@"
 function createDictionaryProxyCreator (contains, getter, setter, remover, keys) {
     return function createDictionaryProxy(targetProxy) {
         return new Proxy(targetProxy, {
@@ -172,17 +197,140 @@ createDictionaryProxyCreator;
                 keys,
             };
 
-            var createDictionaryProxy = createDictionaryProxyCreator.Invoke<ScriptFunction>(prs);
+            var proxy = proxyCreator.Invoke<ScriptFunction>(prs);
 
-            createDictionaryProxyCreator.Dispose();
+            proxyCreator.Dispose();
 
-            return createDictionaryProxy;
+            return proxy;
+        }
+
+        private static unsafe ScriptFunction CreateListProxyCreator(QScriptContext _context)
+        {
+            var ctx = (JSContext) _context;
+
+            var proxyCreator = _context.EvalSource<ScriptFunction>(@"
+function createListProxyCreator (getLength, getter, setter) {
+    return function createListProxy(targetProxy) {
+        return new Proxy(targetProxy, {
+            get(target, key, receiver) {
+                if(key === '" + KeyForCSharpIdentity + @"') return target;
+
+                if(key === Symbol.iterator) return function* () {
+                    const length = getLength(target);
+                    for (let i = 0; i < length; i++) {
+                        yield getter(target, i);
+                    }
+                };
+
+                if(key === 'length') return getLength(target);
+
+                if(typeof key === 'string') {
+                    const parsed = parseInt(key);
+                    if (parsed >= 0 && key === parsed + '') {
+                        const length = getLength(target);
+                        if (parsed < length) return getter(target, parsed);
+                    }
+                }
+                var res = target[key];
+                return res;
+            },
+            set(target, key, value) {
+                if(typeof key === 'string') {
+                    const parsed = parseInt(key);
+                    if (parsed >= 0 && key === parsed + '') {
+                        const length = getLength(target);
+                        if (parsed < length) {
+                            setter(target, parsed, value);
+                            return true;
+                        }
+                    }
+                }
+
+                target[key] = value;
+                return true;
+            },
+            has(target, key) {
+                if(typeof key === 'string') {
+                    const parsed = parseInt(key);
+                    if (parsed >= 0 && key === parsed + '') {
+                        const length = getLength(target);
+                        if (parsed < length) {
+                            return true;
+                        }
+                    }
+                }
+                return key === 'length';
+            },
+            deleteProperty(target, key) {
+                remover(target, key);
+                return true;
+            },
+            ownKeys(target) {
+                const length = getLength(target);
+                const res = [];
+                for (let i = 0; i < length; i++) {
+                    res.push(i + '');
+                }
+                return res;
+            },
+            getOwnPropertyDescriptor(target, key) {
+
+                if(typeof key === 'string') {
+                    const parsed = parseInt(key);
+                    if (parsed >= 0 && key === parsed + '') {
+                        const length = getLength(target);
+                        if (parsed < length) {
+                            return {
+                                value: getter(target, parsed),
+                                enumerable: true,
+                                configurable: true
+                            };
+                        }
+                    }
+                }
+
+                return undefined;
+            },
+        });
+    };
+}
+createListProxyCreator;
+", "ReactUnity/quickjs/createListProxy");
+
+            var getLength = new Func<IList, int>(
+                (IList dc) => {
+                    return dc.Count;
+                });
+
+            var getter = new Func<IList, int, object>(
+                (IList dc, int key) => {
+                    return dc[key];
+                });
+
+            var setter = new Action<IList, int, object>(
+                (IList dc, int key, object value) => {
+                    dc[key] = value;
+                });
+
+            var prs = new object[] {
+                getLength,
+                getter,
+                setter,
+            };
+
+            var proxy = proxyCreator.Invoke<ScriptFunction>(prs);
+
+            proxyCreator.Dispose();
+
+            return proxy;
         }
 
         public void Dispose()
         {
             createDictionaryProxy?.Dispose();
             createDictionaryProxy = null;
+            createListProxy?.Dispose();
+            createListProxy = null;
         }
     }
 }
