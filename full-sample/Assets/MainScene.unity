@@ -778,6 +778,7 @@ GameObject:
   - component: {fileID: 314699166}
   - component: {fileID: 314699165}
   - component: {fileID: 314699164}
+  - component: {fileID: 314699167}
   - component: {fileID: 314699163}
   - component: {fileID: 314699162}
   m_Layer: 29
@@ -832,9 +833,12 @@ MonoBehaviour:
       Value: {fileID: 909049341}
     - Key: portalCamera
       Value: {fileID: 315642566}
+    - Key: InteropTest
+      Value: {fileID: 314699167}
   AdvancedOptions:
+    Pooling: 1
     MediaUpdateInterval: 0.5
-    DebugMode: 0
+    DebugMode: 1
     AutoRender: 1
     Stylesheets: []
     BeforeStart:
@@ -904,7 +908,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -929,6 +933,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &314699167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314699161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5867f942a10bd8e439c4be118d38bf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &315642566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,6 +1077,7 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!114 &328694441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,14 +2038,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909049341}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.011079326, y: 0.01292931, z: 0.0064010206, w: 0.9998346}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1827512584}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.26, y: 1.49, z: 0.75}
 --- !u!65 &909049343
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -260,26 +260,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b154206d4a53a9488c14c830a713fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Script:
+  Source:
     Type: 3
+    Language: 0
     SourceAsset: {fileID: 0}
+    Watch: 1
     SourcePath: react/index#material
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
     DevServer: http://localhost:3100#material
-  Debug: 0
-  AwaitDebugger: 0
   EngineType: 2
   Globals:
     Entries: []
-  AutoRender: 1
-  BeforeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterStart:
-    m_PersistentCalls:
-      m_Calls: []
+  AdvancedOptions:
+    MediaUpdateInterval: 0.5
+    DebugMode: 0
+    AutoRender: 1
+    Stylesheets: []
+    BeforeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterStart:
+      m_PersistentCalls:
+        m_Calls: []
   CursorSet: {fileID: 11400000, guid: 4169d60088612bd47b2c2a0a907960fa, type: 2}
   DefaultIconSet: {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
   IconSets:
@@ -342,6 +346,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 2147483647
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

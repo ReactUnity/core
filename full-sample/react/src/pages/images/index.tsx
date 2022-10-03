@@ -42,6 +42,7 @@ export function ImagesPage() {
 
       <row>
         <image source={pngImage} />
+        <image source={pngImage} />
         <image source={base64Image} />
         <image source={webImage} />
       </row>

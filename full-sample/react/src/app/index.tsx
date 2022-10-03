@@ -16,6 +16,7 @@ function App() {
       <button onClick={() => nav('bg-patterns')}>Background Patterns</button>
       <button onClick={() => nav('svgs')}>SVGs</button>
       <button onClick={() => nav('style-frameworks/jss')}>Style Frameworks</button>
+      <button onClick={() => nav('interop')}>Interop</button>
     </scroll>
 
     <scroll className={styles.scroll}>

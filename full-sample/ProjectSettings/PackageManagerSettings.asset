@@ -30,6 +30,7 @@ MonoBehaviour:
     m_Name: package.openupm.com
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.nosuchstudio.rtltmpro
     - com.openupm
     - com.reactunity
     - com.reactunity.clearscript
@@ -43,6 +44,6 @@ MonoBehaviour:
   m_RegistryInfoDraft:
     m_Modified: 0
     m_ErrorMessage: 
-    m_UserModificationsInstanceId: -832
-    m_OriginalInstanceId: -836
+    m_UserModificationsInstanceId: -828
+    m_OriginalInstanceId: -832
   m_LoadAssets: 0

@@ -2,7 +2,7 @@ import { Paper } from '@reactunity/material/paper';
 import { FixedSizeGrid, FixedSizeList, VariableSizeList } from '@reactunity/material/virtual-scroll';
 
 const Row = ({ index, style }: any) => (
-  <text style={style}>Row {index}</text>
+  <text style={style} pool={true}>Row {index}</text>
 );
 
 

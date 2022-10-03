@@ -336,19 +336,20 @@ MonoBehaviour:
     ResourcesPath: 
     UseDevServer: 0
     DevServer: http://localhost:3100#showcase
-  Debug: 0
-  AwaitDebugger: 0
   EngineType: 0
   Globals:
     Entries: []
-  Stylesheets: []
-  AutoRender: 1
-  BeforeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterStart:
-    m_PersistentCalls:
-      m_Calls: []
+  AdvancedOptions:
+    MediaUpdateInterval: 0.5
+    DebugMode: 0
+    AutoRender: 1
+    Stylesheets: []
+    BeforeStart:
+      m_PersistentCalls:
+        m_Calls: []
+    AfterStart:
+      m_PersistentCalls:
+        m_Calls: []
   CursorSet: {fileID: 11400000, guid: 4169d60088612bd47b2c2a0a907960fa, type: 2}
   DefaultIconSet: {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
   IconSets:

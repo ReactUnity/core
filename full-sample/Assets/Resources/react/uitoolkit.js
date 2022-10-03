@@ -8006,7 +8006,7 @@ var react = __webpack_require__("../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.13.0';
+var version = '0.13.1';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 // EXTERNAL MODULE: ../../node_modules/use-sync-external-store/shim/index.js
@@ -8263,6 +8263,11 @@ function () {
 var react_reconciler = __webpack_require__("../../node_modules/react-reconciler/index.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
+var propDepths = {
+  style: 1,
+  data: 1,
+  custom: 1
+};
 function diffProperties(lastProps, nextProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
@@ -8283,7 +8288,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
     if (propKey === 'style' && typeof lastProps.style === 'string') {
       (updatePayload = updatePayload || {})[styleStringSymbol] = null;
     } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
 
       if (depth > 0) {
         prop = diffProperties(lastProps[propKey], {}, depth - 1);
@@ -8329,11 +8334,13 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
           if (!prop) continue;
         }
       }
-    }
+    } else {
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
 
-    if (deepDiffing > 0) {
-      prop = diffProperties(lastProp, nextProp, deepDiffing - 1);
-      if (!prop) continue;
+      if (depth > 0) {
+        prop = diffProperties(lastProp, nextProp, depth - 1);
+        if (!prop) continue;
+      }
     }
 
     (updatePayload = updatePayload || {})[propKey] = prop;
@@ -8370,10 +8377,29 @@ var textTypes = {
   style: true,
   script: true
 };
+function stringizePoolKey(key) {
+  switch (typeof key) {
+    case 'string':
+      return key;
+
+    case 'boolean':
+      return key ? 'default' : '';
+
+    case 'number':
+      return key.toString();
+
+    case 'undefined':
+      return null;
+
+    default:
+      return '';
+  }
+}
 function getAllowedProps(props, type) {
   var children = props.children,
       tag = props.tag,
-      rest = __rest(props, ["children", "tag"]);
+      pool = props.pool,
+      rest = __rest(props, ["children", "tag", "pool"]);
 
   if (textTypes[type] && 'children' in props) {
     rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
@@ -8806,7 +8832,8 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
       refId++;
       ctx.commands.push(['c', reconciler_assign({
         t: type,
-        r: refId
+        r: refId,
+        k: stringizePoolKey(props.pool)
       }, convertPropsToSerializable(aProps))]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -9098,7 +9125,7 @@ var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, co
     var aProps = getAllowedProps(props, type);
     var children = aProps.children || null;
     delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps);
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance) {
     return UnityBridge.createText(text, rootContainerInstance);
@@ -9179,9 +9206,10 @@ var Renderer = {
     }
 
     var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+    var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
     var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
 
-    var _a = containerMap.get(hostContainer) || {},
+    var _a = containerMap.get(cacheKey) || {},
         hostRoot = _a.hostRoot,
         asyncJobCallback = _a.asyncJobCallback;
 
@@ -9247,7 +9275,7 @@ var Renderer = {
         }, null);
       }
 
-      containerMap.set(hostContainer, {
+      containerMap.set(cacheKey, {
         hostRoot: hostRoot,
         asyncJobCallback: asyncJobCallback
       });
