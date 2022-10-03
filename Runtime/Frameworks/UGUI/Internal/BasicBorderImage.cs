@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Internal
 {
-#if NET_STANDARD_2_0 && !NET_STANDARD_2_1
+#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
     using HashCode = ReactUnity.Helpers.HashCode;
 #else
     using HashCode = System.HashCode;
