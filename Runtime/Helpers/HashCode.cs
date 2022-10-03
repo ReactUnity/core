@@ -266,7 +266,7 @@ namespace ReactUnity.Helpers
 
         public void Add<T>(T value, IEqualityComparer<T> comparer)
         {
-            Add(value is null ? 0 : (comparer?.GetHashCode(value) ?? value.GetHashCode()));
+            Add(value == null ? 0 : (comparer?.GetHashCode(value) ?? value.GetHashCode()));
         }
 
         private void Add(int value)
