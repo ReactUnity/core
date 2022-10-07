@@ -1,5 +1,6 @@
 
 import { ReactUnity } from '@reactunity/renderer';
+import { createContext } from 'react';
 import checkImage from './assets/check.png';
 import errorImage from './assets/close.png';
 import infoImage from './assets/info.png';
@@ -14,3 +15,6 @@ export const info = <image source={infoImage} className={styles.infoIcon} />
 export const Window = Globals.Window as ReactUnity.Editor.QuickStartWindow;
 
 export const packageName = "com.reactunity.core";
+
+
+export const SetIsLoadingContext = createContext<(loading: boolean) => void>(undefined);

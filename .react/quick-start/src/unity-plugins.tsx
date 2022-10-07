@@ -1,60 +1,90 @@
-import { useEffect, useState } from 'react';
-import { check, error, info, warn, Window } from './common';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { check, error, info, SetIsLoadingContext, warn, Window } from './common';
 import styles from './index.module.scss';
 
-const pluginTypes: Array<{
+interface PluginType {
   packageName: string;
   name: string;
   required: boolean;
   version?: string;
+  scoped?: boolean;
   latestVersion?: string;
   installed?: boolean;
   hasUpdate?: boolean;
   tooltip?: string;
-}> = [
-    {
-      packageName: 'com.unity.editorcoroutines',
-      name: 'Unity Editor Coroutines',
-      required: true,
-      tooltip:
-        `Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.`,
-    },
-    {
-      packageName: 'com.unity.vectorgraphics',
-      name: 'Unity Vector Graphics',
-      required: false,
-      tooltip:
-        `Required for SVG rendering.`,
-    },
-  ];
+}
 
-const pluginsLoaded = new Promise<void>((resolve) => {
-  let loadedCount = 0;
+const pluginTypes: Array<PluginType> = [
+  {
+    packageName: 'com.unity.editorcoroutines',
+    name: 'Unity Editor Coroutines',
+    required: true,
+    tooltip:
+      `Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed.`,
+  },
+  {
+    packageName: 'com.unity.vectorgraphics',
+    name: 'Unity Vector Graphics',
+    required: false,
+    tooltip:
+      `Required for SVG rendering.`,
+  },
+  {
+    packageName: 'com.nosuchstudio.rtltmpro',
+    name: 'RTLTMPro',
+    required: false,
+    scoped: true,
+    tooltip:
+      `Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro.`,
+  },
+];
 
-  for (const type of pluginTypes) {
-    const resolveFunc = (version: string, latestVersion: string, hasUpdate: boolean) => {
-      type.version = version;
-      type.latestVersion = latestVersion;
-      type.hasUpdate = hasUpdate;
-      type.installed = !!type.version;
+function initPlugins() {
+  return new Promise<void>((resolve) => {
+    let loadedCount = 0;
 
-      loadedCount++;
+    for (const type of pluginTypes) {
+      const resolveFunc = (version: string, latestVersion: string, hasUpdate: boolean) => {
+        type.version = version;
+        type.latestVersion = latestVersion;
+        type.hasUpdate = hasUpdate;
+        type.installed = !!type.version;
 
-      if (loadedCount === pluginTypes.length) {
-        resolve();
-      }
-    };
+        loadedCount++;
 
-    Window.CheckVersion(type.packageName, resolveFunc);
-  }
-});
+        if (loadedCount === pluginTypes.length) {
+          resolve();
+        }
+      };
 
-export function UnityPlugins() {
+      Window.CheckVersion(type.packageName, resolveFunc);
+    }
+  });
+}
+
+export function AdditionalPlugins() {
   const [plugins, setPlugins] = useState<typeof pluginTypes>();
+  const [loadingPlugin, setLoadingPlugin] = useState('');
+  const [updatePlugins, setUpdatePlugins] = useState(0);
+  const setIsLoading = useContext(SetIsLoadingContext);
+
+  const installPlugin = useCallback((x: PluginType) => {
+    const update = () => {
+      setIsLoading(false);
+      setUpdatePlugins(x => x + 1);
+    };
+    if (x.scoped) Window.InstallScopedPlugin(x.packageName, update);
+    else Window.InstallUnityPlugin(x.packageName, update);
+
+    setLoadingPlugin(x.packageName);
+    setIsLoading(true);
+  }, []);
+
 
   useEffect(() => {
-    pluginsLoaded.then(() => setPlugins(pluginTypes));
-  }, []);
+    setPlugins(null);
+    initPlugins().then(() => setPlugins(pluginTypes));
+  }, [updatePlugins]);
 
 
   return (
@@ -95,14 +125,14 @@ export function UnityPlugins() {
           </button>}
 
           {x.hasUpdate && <>
-            {x.required ? <>Update ReactUnity to get the latest version</> :
-              <button onClick={() => Window.InstallUnityPlugin(x.packageName)}>
-                {'Update to ' + x.latestVersion}
+            {x.required ? <>Update to get the latest version</> :
+              <button onClick={() => installPlugin(x)}>
+                {(loadingPlugin === x.packageName ? 'Updating to ' : 'Update to ') + x.latestVersion}
               </button>}
           </>}
         </> : <>
-          <button onClick={() => Window.InstallUnityPlugin(x.packageName)}>
-            Install
+          <button onClick={() => installPlugin(x)}>
+            {loadingPlugin === x.packageName ? 'Installing' : 'Install'}
           </button>
         </>}
       </section>)}

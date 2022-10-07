@@ -95,6 +95,7 @@ namespace ReactUnity.Editor
 
         #endregion
 
+        public delegate void PluginCallback();
         public delegate void CheckVersionCallback(string currentVersion, string latestVersion, bool hasUpdate);
 
         public const string ScopeName = "package.openupm.com";
@@ -276,12 +277,13 @@ namespace ReactUnity.Editor
             else callback(null, null, true);
         }
 
-        public void InstallScopedPlugin(string packageName)
+        public void InstallScopedPlugin(string packageName, [TypescriptRemapType(typeof(PluginCallback))] object callback = null)
         {
-            Context.Dispatcher.StartDeferred(InstallScopedPluginDelegate(packageName));
+            var cb = Callback.From(callback, Context);
+            Context.Dispatcher.StartDeferred(InstallScopedPluginDelegate(packageName, cb));
         }
 
-        private static IEnumerator InstallScopedPluginDelegate(string packageName)
+        private static IEnumerator InstallScopedPluginDelegate(string packageName, Callback cb = null)
         {
             PackageManagerHelpers.AddScopedRegistry(
                 ScopeName,
@@ -292,15 +294,16 @@ namespace ReactUnity.Editor
                 }
             );
 
-            yield return InstallUnityPluginDelegate(packageName);
+            yield return InstallUnityPluginDelegate(packageName, cb);
         }
 
-        public void InstallUnityPlugin(string pluginName)
+        public void InstallUnityPlugin(string pluginName, [TypescriptRemapType(typeof(PluginCallback))] object callback = null)
         {
-            Context.Dispatcher.StartDeferred(InstallUnityPluginDelegate(pluginName));
+            var cb = Callback.From(callback, Context);
+            Context.Dispatcher.StartDeferred(InstallUnityPluginDelegate(pluginName, cb));
         }
 
-        private static IEnumerator InstallUnityPluginDelegate(string pluginName)
+        private static IEnumerator InstallUnityPluginDelegate(string pluginName, Callback cb = null)
         {
             yield return null;
 
@@ -319,6 +322,7 @@ namespace ReactUnity.Editor
                 if (packagesRequest.Error != null)
                 {
                     UnityEngine.Debug.LogError(packagesRequest.Error.ToString());
+                    cb?.Call();
                     yield break;
                 }
                 yield return null;
@@ -328,17 +332,21 @@ namespace ReactUnity.Editor
 
             if (errors != null && errors.Any(x => !string.IsNullOrWhiteSpace(x.message)))
                 UnityEngine.Debug.LogError("Errors while installing the package: \n" + string.Join("\n", errors.Select(x => x.ToString()).ToArray()));
+
+            cb?.Call();
         }
 
-        public void UninstallUnityPlugin(string pluginName)
+        public void UninstallUnityPlugin(string pluginName, [TypescriptRemapType(typeof(PluginCallback))] object callback = null)
         {
-            Context.Dispatcher.StartDeferred(UninstallUnityPluginDelegate(pluginName));
+            var cb = Callback.From(callback, Context);
+            Context.Dispatcher.StartDeferred(UninstallUnityPluginDelegate(pluginName, cb));
         }
 
-        private IEnumerator UninstallUnityPluginDelegate(string pluginName)
+        private IEnumerator UninstallUnityPluginDelegate(string pluginName, Callback cb = null)
         {
             var listRequest = Client.Remove(pluginName);
             while (!listRequest.IsCompleted) yield return null;
+            cb?.Call();
         }
 
         #endregion

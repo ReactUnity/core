@@ -145,3 +145,11 @@ spinner {
 .errorIcon {
   color: crimson;
 }
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  align-items: center;
+  justify-content: center;
+}
