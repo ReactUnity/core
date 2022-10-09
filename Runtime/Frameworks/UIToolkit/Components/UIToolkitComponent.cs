@@ -261,6 +261,14 @@ namespace ReactUnity.UIToolkit
             Element.RemoveFromHierarchy();
         }
 
+        public override bool Pool()
+        {
+            if (!base.Pool()) return false;
+
+            Element.RemoveFromHierarchy();
+            return true;
+        }
+
         #region Setters
 
         public override Action AddEventListener(string eventName, Callback fun)

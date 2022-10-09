@@ -21,7 +21,7 @@ namespace ReactUnity.UGUI.Internal
             public Vector4 BorderRadiusX;
             public Vector4 BorderRadiusY;
             public Vector4 BorderRadiusCuts;
-            public Vector4 Size;
+            public Vector2 Size;
 
             public override bool Equals(object obj)
             {
@@ -50,7 +50,7 @@ namespace ReactUnity.UGUI.Internal
         static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
 
         public YogaValue2[] BorderRadius = new YogaValue2[4];
-        public Vector4 Size;
+        public Vector2 Size;
 
         protected override void OnEnable()
         {
@@ -166,7 +166,7 @@ namespace ReactUnity.UGUI.Internal
         protected virtual void RefreshSize()
         {
             var rect = ((RectTransform) transform).rect;
-            Size = new Vector4(rect.width, rect.height, 0, 0);
+            Size = new Vector2(rect.width, rect.height);
             SetMaterialDirty();
 
             var mask = GetComponent<Mask>();
