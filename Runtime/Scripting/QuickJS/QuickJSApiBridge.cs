@@ -296,7 +296,16 @@ function createListProxyCreator (getLength, setLength, getter, setter) {
             },
         });
 
-        Object.setPrototypeOf(res, Array.prototype);
+        const originalPrototype = Object.getPrototypeOf(targetProxy);
+
+        const prototypeProxy = new Proxy(originalPrototype, {
+            get(target, key, receiver) {
+                if(key in target) return target[key];
+                return Array.prototype[key];
+            }
+        });
+
+        Object.setPrototypeOf(res, prototypeProxy);
 
         return res;
     };
