@@ -152,6 +152,34 @@ namespace ReactUnity.Tests
             Render();
         }
 
+        [UGUITest(Script = @"
+            function App() {  };
+
+            Assert.AreEqual(12, Globals.list.reduce((acc, x) => acc + x));
+            Globals.list.splice(1, 1, 9, 11);
+            Assert.AreEqual(3, Globals.list.length);
+            Assert.AreEqual(25, Globals.list.reduce((acc, x) => acc + x));
+
+            Globals.list.length = 2;
+            Assert.AreEqual(14, Globals.list.reduce((acc, x) => acc + x));
+
+            Globals.list.length = 4;
+            Assert.AreEqual(4, Globals.list.length);
+            Assert.AreEqual(0, Globals.list[3]);
+
+            Globals.list.push(3);
+            Assert.AreEqual(3, Globals.list[4]);
+        ", AutoRender = false)]
+        public IEnumerator ListsCanHaveArrayPrototypeMethods()
+        {
+            IgnoreForEngine(JavascriptEngineType.ClearScript);
+            IgnoreForEngine(JavascriptEngineType.Jint);
+
+            Globals["list"] = new List<int>() { 5, 7 };
+            yield return null;
+            Render();
+        }
+
 
         [UGUITest(Script = @"
             function App() {  };
@@ -161,6 +189,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(7, Globals.list[1]);
 
             Assert.AreEqual(12, [...Globals.list].reduce((acc, x) => acc + x));
+            Assert.AreEqual(12, Globals.list.reduce((acc, x) => acc + x));
         ", AutoRender = false)]
         public IEnumerator ArrayItemsCanBeAccessedNaturally()
         {

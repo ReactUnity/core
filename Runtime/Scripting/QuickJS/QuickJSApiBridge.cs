@@ -209,9 +209,9 @@ createDictionaryProxyCreator;
             var ctx = (JSContext) _context;
 
             var proxyCreator = _context.EvalSource<ScriptFunction>(@"
-function createListProxyCreator (getLength, getter, setter) {
+function createListProxyCreator (getLength, setLength, getter, setter) {
     return function createListProxy(targetProxy) {
-        return new Proxy(targetProxy, {
+        const res = new Proxy(targetProxy, {
             get(target, key, receiver) {
                 if(key === '" + KeyForCSharpIdentity + @"') return target;
 
@@ -235,14 +235,17 @@ function createListProxyCreator (getLength, getter, setter) {
                 return res;
             },
             set(target, key, value) {
+                if(key === 'length') {
+                    if(typeof value === 'number')
+                        return setLength(target, value);
+                    return false;
+                }
+
                 if(typeof key === 'string') {
                     const parsed = parseInt(key);
                     if (parsed >= 0 && key === parsed + '') {
                         const length = getLength(target);
-                        if (parsed < length) {
-                            setter(target, parsed, value);
-                            return true;
-                        }
+                        return setter(target, parsed, value);
                     }
                 }
 
@@ -292,28 +295,117 @@ function createListProxyCreator (getLength, getter, setter) {
                 return undefined;
             },
         });
+
+        Object.setPrototypeOf(res, Array.prototype);
+
+        return res;
     };
 }
 createListProxyCreator;
 ", "ReactUnity/quickjs/createListProxy");
 
+            Type getListItemType(IList list)
+            {
+                var type = list.GetType();
+                var interfaces = type.GetInterfaces();
+
+                for (int i = 0; i < interfaces.Length; i++)
+                {
+                    var intf = interfaces[i];
+
+                    if (intf.IsGenericType && intf.GetGenericTypeDefinition() == typeof(IList<>))
+                    {
+                        return type.GetGenericArguments()[0];
+                    }
+                }
+                return null;
+            }
+
+            void addDefaultItem(IList list)
+            {
+                var itemType = getListItemType(list);
+
+                if (itemType != null)
+                {
+                    list.Add(Activator.CreateInstance(itemType));
+                    return;
+                }
+
+                list.Add(null);
+            }
+
+            object convertToListItemType(IList list, object value)
+            {
+                var itemType = getListItemType(list);
+                if (value == null) return Activator.CreateInstance(itemType);
+                if (value.GetType() == itemType) return value;
+                return Convert.ChangeType(value, itemType);
+            }
+
             var getLength = new Func<IList, int>(
-                (IList dc) => {
-                    return dc.Count;
+                (IList list) => {
+                    return list.Count;
+                });
+
+            var setLength = new Func<IList, int, bool>(
+                (IList list, int length) => {
+                    if (list.IsFixedSize) return false;
+
+                    if (length <= 0)
+                    {
+                        list.Clear();
+                        return true;
+                    }
+
+                    if (length < list.Count)
+                    {
+                        for (int i = list.Count - 1; i >= length; i--)
+                        {
+                            list.RemoveAt(i);
+                        }
+                    }
+                    else if (length > list.Count)
+                    {
+                        for (int i = list.Count; i < length; i++)
+                        {
+                            addDefaultItem(list);
+                        }
+                    }
+
+                    return true;
                 });
 
             var getter = new Func<IList, int, object>(
-                (IList dc, int key) => {
-                    return dc[key];
+                (IList list, int key) => {
+                    return list[key];
                 });
 
-            var setter = new Action<IList, int, object>(
-                (IList dc, int key, object value) => {
-                    dc[key] = value;
+            var setter = new Func<IList, int, object, bool>(
+                (IList list, int key, object value) => {
+                    if (key < 0) return false;
+
+                    if (key < list.Count)
+                    {
+                        list[key] = convertToListItemType(list, value);
+                        return true;
+                    }
+                    else
+                    {
+                        if (list.IsFixedSize) return false;
+
+                        for (int i = list.Count; i < key - 1; i++)
+                        {
+                            addDefaultItem(list);
+                        }
+
+                        list.Add(convertToListItemType(list, value));
+                        return true;
+                    }
                 });
 
             var prs = new object[] {
                 getLength,
+                setLength,
                 getter,
                 setter,
             };
