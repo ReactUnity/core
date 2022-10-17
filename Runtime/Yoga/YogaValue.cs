@@ -5,14 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Facebook.Yoga
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct YogaValue
     {
+        [UnityEngine.SerializeField]
         private float value;
+        [UnityEngine.SerializeField]
         private YogaUnit unit;
 
         public YogaUnit Unit

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using UnityEngine;
 
 namespace ReactUnity.Types
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct YogaValue2 : Interpolatable
     {
@@ -20,13 +22,22 @@ namespace ReactUnity.Types
         public static YogaValue2 Center = new YogaValue2(YogaValue.Percent(50), YogaValue.Percent(50));
         public static YogaValue2 Full = new YogaValue2(YogaValue.Percent(100), YogaValue.Percent(100));
 
-        public YogaValue X { get; private set; }
-        public YogaValue Y { get; private set; }
+        [SerializeField]
+        private YogaValue x;
+        public YogaValue X => x;
+
+        [SerializeField]
+        private YogaValue y;
+        public YogaValue Y => y;
+
+        [SerializeField]
+        private bool locked;
 
         public YogaValue2(YogaValue x, YogaValue y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
+            this.locked = true;
         }
 
         public static YogaValue2 Point(float x, float y)

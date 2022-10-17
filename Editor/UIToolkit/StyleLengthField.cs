@@ -106,10 +106,7 @@ namespace ReactUnity.Editor.UIToolkit
         {
             StyleLengthField parentLengthField => (StyleLengthField) parent;
 
-            protected override string allowedCharacters
-            {
-                get { return "0123456789autonepx%.,-+"; }
-            }
+            protected override string allowedCharacters => "0123456789autonepx%.,-+";
 
             public override void ApplyInputDeviceDelta(Vector3 delta, DeltaSpeed speed, StyleLength startValue)
             {
