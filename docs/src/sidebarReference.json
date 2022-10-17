@@ -166,6 +166,10 @@
           ]
         },
         {
+          "title": "CSS Media Queries",
+          "path": "/reference/media-queries"
+        },
+        {
           "title": "Material Components",
           "path": "/reference/material",
           "routes": [
