@@ -4,6 +4,7 @@ using System.Linq;
 using Facebook.Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Shapes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +22,10 @@ namespace ReactUnity.UGUI.Internal
         private Action<RectTransform> SetContainer;
         internal RawImage BgImage;
 
-        public RoundedBorderMaskImage RootGraphic;
+        public WebRect RootGraphic;
         public Mask RootMask;
 
-        public BasicBorderImage BorderGraphic;
+        public WebBorder BorderGraphic;
 
         public List<BoxShadowImage> ShadowGraphics;
         public List<BackgroundImage> BackgroundGraphics;
@@ -71,12 +72,12 @@ namespace ReactUnity.UGUI.Internal
             if (!cmp) cmp = go.AddComponent<BorderAndBackground>();
 
             var context = comp.Context;
-            var root = context.CreateNativeObject("[GraphicRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
-            var border = context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
+            var root = context.CreateNativeObject("[GraphicRoot]", typeof(RectTransform), typeof(WebRect));
+            var border = context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorder));
             var bg = context.CreateNativeObject("[BackgroundImage]", typeof(RectTransform), typeof(RawImage));
 
 
-            cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
+            cmp.RootGraphic = root.GetComponent<WebRect>();
             cmp.RootGraphic.raycastTarget = false;
 
             cmp.Component = comp;
@@ -85,7 +86,7 @@ namespace ReactUnity.UGUI.Internal
             cmp.RootMask.showMaskGraphic = false;
             cmp.SetContainer = setContainer;
 
-            cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
+            cmp.BorderGraphic = border.GetComponent<WebBorder>();
             cmp.BorderGraphic.InsetBorder = cmp.RootGraphic;
 
             var bgImage = bg.GetComponent<RawImage>();
@@ -165,10 +166,14 @@ namespace ReactUnity.UGUI.Internal
             ShadowRoot.offsetMax = max;
 
 
-            var borderSize = new Vector4(borderTop, borderRight, borderBottom, borderLeft);
             BorderGraphic.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
-            BorderGraphic.BorderSize = borderSize;
-            BorderGraphic.SetMaterialDirty();
+
+            if (BorderGraphic.Border == null) BorderGraphic.Border = new WebOutlineProperties();
+            BorderGraphic.Border.TopWidth = borderTop;
+            BorderGraphic.Border.RightWidth = borderRight;
+            BorderGraphic.Border.BottomWidth = borderBottom;
+            BorderGraphic.Border.LeftWidth = borderLeft;
+            BorderGraphic.SetVerticesDirty();
             BorderGraphic.RefreshInsetBorder();
 
             RootGraphic.SetMaterialDirty();
@@ -181,9 +186,7 @@ namespace ReactUnity.UGUI.Internal
             RootGraphic.SetMaterialDirty();
             MaskUtilities.NotifyStencilStateChanged(RootMask);
 
-            BorderGraphic.BorderRadius = v;
-            BorderGraphic.SetMaterialDirty();
-            BorderGraphic.RefreshInsetBorder();
+            BorderGraphic.Rounding = new WebRoundingProperties(v);
 
             if (ShadowGraphics != null)
             {
@@ -199,11 +202,12 @@ namespace ReactUnity.UGUI.Internal
 
         private void SetBorderColor(Color top, Color right, Color bottom, Color left)
         {
-            BorderGraphic.TopColor = top;
-            BorderGraphic.RightColor = right;
-            BorderGraphic.BottomColor = bottom;
-            BorderGraphic.LeftColor = left;
-            BorderGraphic.SetMaterialDirty();
+            if (BorderGraphic.Border == null) BorderGraphic.Border = new WebOutlineProperties();
+            BorderGraphic.Border.TopColor = top;
+            BorderGraphic.Border.RightColor = right;
+            BorderGraphic.Border.BottomColor = bottom;
+            BorderGraphic.Border.LeftColor = left;
+            BorderGraphic.SetVerticesDirty();
         }
 
         private void SetBackground(

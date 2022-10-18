@@ -1,4 +1,5 @@
 using ReactUnity.Types;
+using ReactUnity.UGUI.Shapes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace ReactUnity.UGUI.Internal
         private ReactContext Context;
         public Mask Mask;
         public Graphic Graphic;
-        public RoundedBorderMaskImage Image;
+        public WebRect Image;
         private bool Enabled;
 
         public static MaskAndImage Create(GameObject go, ReactContext ctx)
@@ -18,8 +19,8 @@ namespace ReactUnity.UGUI.Internal
             cmp.Context = ctx;
             cmp.Graphic = go.GetComponent<Graphic>();
 
-            if (cmp.Graphic) cmp.Image = cmp.Graphic as RoundedBorderMaskImage;
-            else cmp.Graphic = cmp.Image = go.AddComponent<RoundedBorderMaskImage>();
+            if (cmp.Graphic) cmp.Image = cmp.Graphic as WebRect;
+            else cmp.Graphic = cmp.Image = go.AddComponent<WebRect>();
 
             if (cmp.Image) cmp.Image.raycastTarget = false;
             return cmp;
@@ -34,7 +35,14 @@ namespace ReactUnity.UGUI.Internal
         internal void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
             if (!Image) return;
-            Image.BorderRadius = new YogaValue2[4] { tl, tr, br, bl };
+            Image.Rounding = new WebRoundingProperties
+            {
+                Type = WebRoundingProperties.RoundedType.Individual,
+                TLRadius = tl,
+                TRRadius = tr,
+                BRRadius = br,
+                BLRadius = bl,
+            };
             MaskChanged();
             Image.SetMaterialDirty();
             if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);

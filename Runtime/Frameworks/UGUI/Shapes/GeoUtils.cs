@@ -1,0 +1,23 @@
+using UnityEngine;
+
+namespace ReactUnity.UGUI.Shapes
+{
+    public static class GeoUtils
+    {
+        public static readonly Vector3 UpV3 = Vector3.up;
+        public static readonly Vector3 DownV3 = Vector3.down;
+        public static readonly Vector3 LeftV3 = Vector3.left;
+        public static readonly Vector3 RightV3 = Vector3.right;
+
+        public static readonly Vector3 ZeroV3 = Vector3.zero;
+        public static readonly Vector2 ZeroV2 = Vector2.zero;
+
+        public static readonly Vector3 UINormal = Vector3.back;
+        public static readonly Vector4 UITangent = new Vector4(1.0f, 0.0f, 0.0f, -1.0f);
+
+        public static readonly float QuaterPI = Mathf.PI * 0.25f;
+        public static readonly float HalfPI = Mathf.PI * 0.5f;
+        public static readonly float TwoPI = Mathf.PI * 2.0f;
+
+    }
+}

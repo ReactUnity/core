@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Shapes;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -65,7 +66,7 @@ namespace ReactUnity.UGUI.Internal
         public Color LeftColor;
         public Vector4 BorderSize;
 
-        public RoundedBorderMaskImage InsetBorder;
+        public WebRect InsetBorder;
 
         public override Material GetDefaultMaterial()
         {
@@ -143,15 +144,7 @@ namespace ReactUnity.UGUI.Internal
                     Mathf.Ceil(bry.w - BorderSize.z)
                 );
 
-                InsetBorder.BorderRadius = new YogaValue2[4] {
-                    YogaValue2.Point(brx.x, bry.x),
-                    YogaValue2.Point(brx.y, bry.y),
-                    YogaValue2.Point(brx.z, bry.z),
-                    YogaValue2.Point(brx.w, bry.w),
-                };
-                InsetBorder.SetMaterialDirty();
-                var mask = InsetBorder.GetComponent<Mask>();
-                if (mask) MaskUtilities.NotifyStencilStateChanged(mask);
+                InsetBorder.Rounding = new WebRoundingProperties(brx, bry);
             }
         }
     }
