@@ -26,6 +26,7 @@ namespace ReactUnity.Scripting.DomProxies
             if (type == "script") return new ScriptProxy(this);
             else if (type == "style") return new StyleProxy(this);
             else if (type == "link") return new LinkProxy(this);
+            else if (type == "a") return new AnchorProxy(this);
             else if (type == "p") return new { style = new { } };
             else return Context.CreateComponent(type, "");
         }
@@ -344,6 +345,56 @@ namespace ReactUnity.Scripting.DomProxies
         {
             component?.Remove();
             component = null;
+        }
+
+        public void appendChild(string text) { }
+
+        public void removeChild(string text) { }
+    }
+
+    public class AnchorProxy : DomElementProxyBase, IDomElementProxy
+    {
+        public override string tagName { get; } = "link";
+        public DocumentProxy document;
+        public HeadProxy parentNode;
+
+        public URL url;
+
+
+        public string href => url?.href ?? "";
+        public string protocol => url?.protocol ?? "";
+        public string hostname => url?.hostname ?? "";
+        public string origin => url?.origin ?? "";
+        public string host => url?.host ?? "";
+        public string port => url?.port ?? "";
+        public string search => url?.search ?? "";
+        public string hash => url?.hash ?? "";
+        public string pathname => url?.pathname ?? "";
+        public string rawPathname => url?.rawPathname ?? "";
+
+
+
+        public AnchorProxy(DocumentProxy document)
+        {
+            this.document = document;
+            parentNode = document.head;
+        }
+
+        public void OnAppend()
+        {
+        }
+
+        public void OnRemove()
+        {
+        }
+
+        public override void setAttribute(object key, object value)
+        {
+            base.setAttribute(key, value);
+            if (key?.ToString() == "href")
+            {
+                url = new URL(value?.ToString(), document.Context.Location.origin);
+            }
         }
 
         public void appendChild(string text) { }

@@ -242,7 +242,7 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Navigator))
             {
-                engine.Evaluate(@"global.navigator = { product: 'ReactNative' }");
+                engine.Evaluate(@"global.navigator = { product: 'ReactUnity' }");
             }
         }
 
