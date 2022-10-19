@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,9 +10,13 @@ namespace ReactUnity.Scripting.DomProxies
 {
     public class XMLHttpRequest
     {
+        const string FormContentType = "application/x-www-form-urlencoded";
+
         private ReactContext context;
         private string origin { get; set; }
         private string overridenMimeType { get; set; }
+        private string contentType { get; set; }
+        private string stringBody { get; set; }
 
         public object onload
         {
@@ -188,6 +194,18 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void setRequestHeader(string header, string value)
         {
+            if (string.Equals(header, "content-type", StringComparison.InvariantCultureIgnoreCase))
+            {
+                contentType = value;
+                if (request.uploadHandler != null)
+                    request.uploadHandler.contentType = value;
+
+                if (stringBody != null)
+                {
+                    SetupPost(stringBody);
+                }
+            }
+
             request?.SetRequestHeader(header.ToLowerInvariant(), value);
         }
 
@@ -282,28 +300,23 @@ namespace ReactUnity.Scripting.DomProxies
 
             if (data is string s)
             {
-                var tmpReq = UnityWebRequest.Post(request.url, s);
-                request.downloadHandler = tmpReq.downloadHandler;
-                request.uploadHandler = tmpReq.uploadHandler;
+                SetupPost(s);
             }
             else if (data is WWWForm f)
             {
                 var tmpReq = UnityWebRequest.Post(request.url, f);
-                request.downloadHandler = tmpReq.downloadHandler;
-                request.uploadHandler = tmpReq.uploadHandler;
+                ReplaceUploadDownloadHandlers(tmpReq);
             }
             else if (data is FormData ff)
             {
                 var w = ff.GetForm();
                 var tmpReq = UnityWebRequest.Post(request.url, w);
-                request.downloadHandler = tmpReq.downloadHandler;
-                request.uploadHandler = tmpReq.uploadHandler;
+                ReplaceUploadDownloadHandlers(tmpReq);
             }
             else if (data is Dictionary<string, string> d)
             {
                 var tmpReq = UnityWebRequest.Post(request.url, d);
-                request.downloadHandler = tmpReq.downloadHandler;
-                request.uploadHandler = tmpReq.uploadHandler;
+                ReplaceUploadDownloadHandlers(tmpReq);
             }
             else if (context.Script.Engine.IsScriptObject(data))
             {
@@ -315,9 +328,53 @@ namespace ReactUnity.Scripting.DomProxies
                     if (dt.Current.Value is string ss) dic[dt.Current.Key] = ss;
 
                 var tmpReq = UnityWebRequest.Post(request.url, dic);
-                request.downloadHandler = tmpReq.downloadHandler;
-                request.uploadHandler = tmpReq.uploadHandler;
+                ReplaceUploadDownloadHandlers(tmpReq);
             }
+        }
+
+        void ReplaceUploadDownloadHandlers(UnityWebRequest req)
+        {
+            if (!string.IsNullOrWhiteSpace(request.uploadHandler?.contentType))
+                req.uploadHandler.contentType = request.uploadHandler.contentType;
+            else if (!string.IsNullOrWhiteSpace(contentType))
+                req.uploadHandler.contentType = contentType;
+
+            request.downloadHandler = req.downloadHandler;
+            request.uploadHandler = req.uploadHandler;
+        }
+
+        void SetupPost(string body)
+        {
+            stringBody = body;
+            request.downloadHandler = new DownloadHandlerBuffer();
+            if (!string.IsNullOrEmpty(body))
+            {
+                var type = FormContentType;
+
+                if (!string.IsNullOrWhiteSpace(request.uploadHandler?.contentType))
+                    type = request.uploadHandler.contentType;
+                else if (!string.IsNullOrWhiteSpace(contentType))
+                    type = contentType;
+
+                if (type == FormContentType)
+                {
+                    body = DataEncode(body);
+                }
+
+
+                var array = Encoding.UTF8.GetBytes(body);
+                request.uploadHandler = new UploadHandlerRaw(array);
+                request.uploadHandler.contentType = type;
+            }
+        }
+
+        public static string DataEncode(string toEncode)
+        {
+            var method = typeof(UnityWebRequest).Assembly
+                ?.GetType("UnityEngine.WWWTranscoder")
+                ?.GetMethod("DataEncode", new Type[] { typeof(string) });
+
+            return method == null ? toEncode : method.Invoke(null, new object[] { toEncode }) as string;
         }
     }
 }
