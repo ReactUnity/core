@@ -22,6 +22,7 @@ namespace ReactUnity.Scripting
 #if !UNITY_EDITOR && UNITY_WEBGL
             | EngineCapabilities.Fetch
             | EngineCapabilities.XHR
+            | EngineCapabilities.Encoding
             | EngineCapabilities.WebSocket
             | EngineCapabilities.Console
             | EngineCapabilities.Base64

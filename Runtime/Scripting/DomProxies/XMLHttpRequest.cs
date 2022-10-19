@@ -10,13 +10,10 @@ namespace ReactUnity.Scripting.DomProxies
 {
     public class XMLHttpRequest
     {
-        const string FormContentType = "application/x-www-form-urlencoded";
-
         private ReactContext context;
         private string origin { get; set; }
         private string overridenMimeType { get; set; }
         private string contentType { get; set; }
-        private string stringBody { get; set; }
 
         public object onload
         {
@@ -199,11 +196,6 @@ namespace ReactUnity.Scripting.DomProxies
                 contentType = value;
                 if (request.uploadHandler != null)
                     request.uploadHandler.contentType = value;
-
-                if (stringBody != null)
-                {
-                    SetupPost(stringBody);
-                }
             }
 
             request?.SetRequestHeader(header.ToLowerInvariant(), value);
@@ -345,36 +337,20 @@ namespace ReactUnity.Scripting.DomProxies
 
         void SetupPost(string body)
         {
-            stringBody = body;
             request.downloadHandler = new DownloadHandlerBuffer();
             if (!string.IsNullOrEmpty(body))
             {
-                var type = FormContentType;
+                var type = "text/plain";
 
                 if (!string.IsNullOrWhiteSpace(request.uploadHandler?.contentType))
                     type = request.uploadHandler.contentType;
                 else if (!string.IsNullOrWhiteSpace(contentType))
                     type = contentType;
 
-                if (type == FormContentType)
-                {
-                    body = DataEncode(body);
-                }
-
-
                 var array = Encoding.UTF8.GetBytes(body);
                 request.uploadHandler = new UploadHandlerRaw(array);
                 request.uploadHandler.contentType = type;
             }
-        }
-
-        public static string DataEncode(string toEncode)
-        {
-            var method = typeof(UnityWebRequest).Assembly
-                ?.GetType("UnityEngine.WWWTranscoder")
-                ?.GetMethod("DataEncode", new Type[] { typeof(string) });
-
-            return method == null ? toEncode : method.Invoke(null, new object[] { toEncode }) as string;
         }
     }
 }

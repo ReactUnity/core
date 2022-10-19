@@ -26,6 +26,7 @@ namespace ReactUnity.Scripting
             if (type == typeof(object))
             {
                 if (value is ObjectWrapper ow) return ow.Target;
+                if (value is JsString js) return js.ToString();
             }
 
             if (type == typeof(Callback) || type == typeof(object))

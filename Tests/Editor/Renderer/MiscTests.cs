@@ -20,5 +20,36 @@ namespace ReactUnity.Tests.Editor.Renderer
             yield return null;
             Assert.AreEqual(null, cmp.Element.style.backgroundImage.value.texture);
         }
+
+
+        [EditorInjectableTest()]
+        public IEnumerator EncodingHelpersWork()
+        {
+            yield return null;
+
+            Assert.AreEqual(
+                "bla%26bla%26bla",
+                Context.Script.EvaluateScript(@"encodeURI('bla&bla&bla')")
+            );
+
+            Assert.AreEqual(
+                "bla%26bla%26bla",
+                Context.Script.EvaluateScript(@"encodeURIComponent('bla&bla&bla')")
+            );
+
+
+
+            Assert.AreEqual(
+                "%5c%25+%2b",
+                Context.Script.EvaluateScript(@"encodeURI('\\% +')")
+            );
+
+
+            Assert.AreEqual(
+                "%5c%25%20%2b",
+                Context.Script.EvaluateScript(@"encodeURIComponent('\\% +')")
+            );
+
+        }
     }
 }

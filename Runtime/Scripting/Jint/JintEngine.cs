@@ -5,6 +5,7 @@
 #if REACT_JINT
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using Esprima;
 using Jint;
@@ -52,7 +53,7 @@ namespace ReactUnity.Scripting
 
         public object Evaluate(string code, string fileName = null)
         {
-            return Engine.Evaluate(code);
+            return Engine.ClrTypeConverter.Convert(Engine.Evaluate(code), typeof(object), CultureInfo.InvariantCulture);
         }
 
         public void Execute(string code, string fileName = null)
@@ -93,7 +94,7 @@ namespace ReactUnity.Scripting
 
         public object GetGlobal(string key)
         {
-            return Engine.Evaluate(key);
+            return Evaluate(key);
         }
 
         public void SetProperty<T>(object obj, string key, T value)
