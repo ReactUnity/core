@@ -229,9 +229,20 @@ namespace ReactUnity.Scripting
                 engine.SetGlobal("FormData", typeof(FormData));
             }
 
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.Encoding))
+            {
+                engine.SetGlobal("EncodingHelpers", typeof(EncodingHelpers));
+                engine.Execute(@"
+                    global.encodeURI          = function(x) {   return EncodingHelpers.encodeURI(x + '')            };
+                    global.decodeURI          = function(x) {   return EncodingHelpers.decodeURI(x + '')            };
+                    global.encodeURIComponent = function(x) {   return EncodingHelpers.encodeURIComponent(x + '')   };
+                    global.decodeURIComponent = function(x) {   return EncodingHelpers.decodeURIComponent(x + '')   };
+                ", "ReactUnity/shims/encoding");
+            }
+
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Navigator))
             {
-                engine.Evaluate(@"global.navigator = { product: 'ReactNative' }");
+                engine.Evaluate(@"global.navigator = { product: 'ReactUnity' }");
             }
         }
 

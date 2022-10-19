@@ -14,5 +14,6 @@ namespace ReactUnity.Scripting
         Base64 = 32,
         URL = 64,
         Navigator = 128,
+        Encoding = 256,
     }
 }
