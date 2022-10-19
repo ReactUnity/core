@@ -171,25 +171,7 @@ namespace ReactUnity.UGUI.Shapes
                 Border.LeftWidth
             );
 
-            var innerRect = GetInnerRect();
-            var outerRect = GetOuterRect();
-            Rounding.UpdateAdjusted(outerRect.size, innerRect.size, Border);
-
-            var brx = new Vector4(
-                Mathf.Ceil(Rounding.AdjustedTLRadius.x - borderSizes.w),
-                Mathf.Ceil(Rounding.AdjustedTRRadius.x - borderSizes.y),
-                Mathf.Ceil(Rounding.AdjustedBRRadius.x - borderSizes.y),
-                Mathf.Ceil(Rounding.AdjustedBLRadius.x - borderSizes.w)
-            );
-
-            var bry = new Vector4(
-                Mathf.Ceil(Rounding.AdjustedTLRadius.y - borderSizes.x),
-                Mathf.Ceil(Rounding.AdjustedTRRadius.y - borderSizes.x),
-                Mathf.Ceil(Rounding.AdjustedBRRadius.y - borderSizes.z),
-                Mathf.Ceil(Rounding.AdjustedBLRadius.y - borderSizes.z)
-            );
-
-            InnerRounding = new WebRoundingProperties(brx, bry);
+            InnerRounding = Rounding.OffsetBorder(GetInnerRect(), borderSizes);
         }
 
 

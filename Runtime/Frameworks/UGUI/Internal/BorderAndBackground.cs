@@ -27,7 +27,7 @@ namespace ReactUnity.UGUI.Internal
 
         public WebBorder BorderGraphic;
 
-        public List<BoxShadowImage> ShadowGraphics;
+        public List<WebShadow> ShadowGraphics;
         public List<BackgroundImage> BackgroundGraphics;
         public List<BackgroundImage> MaskGraphics;
         public BackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
@@ -194,8 +194,7 @@ namespace ReactUnity.UGUI.Internal
                 {
                     var g = ShadowGraphics[i];
 
-                    g.BorderRadius = v;
-                    g.SetMaterialDirty();
+                    g.Rounding = new WebRoundingProperties(v);
                 }
             }
         }
@@ -268,7 +267,7 @@ namespace ReactUnity.UGUI.Internal
 
             if (ShadowGraphics == null)
             {
-                if (validCount > 0) ShadowGraphics = new List<BoxShadowImage>();
+                if (validCount > 0) ShadowGraphics = new List<WebShadow>();
                 else return;
             }
 
@@ -299,24 +298,29 @@ namespace ReactUnity.UGUI.Internal
                 var g = ShadowGraphics[len - 1 - i];
                 var rt = g.rectTransform;
 
-                g.Shadow = shadow;
+                g.Shadow = new WebShadowProperties
+                {
+                    Blur = shadow.blur.x,
+                    Spread = shadow.spread.x,
+                    Inset = shadow.inset,
+                    Offset = new Vector2(shadow.offset.x, -shadow.offset.y),
+                };
 
                 if (shadow.inset)
                 {
                     if (rt.parent != BackgroundRoot) FullStretch(rt, BackgroundRoot);
-                    rt.sizeDelta = Vector2.zero;
-                    rt.anchoredPosition = Vector2.zero;
+                    //rt.sizeDelta = Vector2.zero;
+                    //rt.anchoredPosition = Vector2.zero;
                 }
                 else
                 {
                     if (rt.parent != ShadowRoot) FullStretch(rt, ShadowRoot);
 
-                    rt.sizeDelta = ((shadow.inset ? -1 : 1) * shadow.spread + shadow.blur) * 2;
-                    rt.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
+                    //rt.sizeDelta = ((shadow.inset ? -1 : 1) * shadow.spread + shadow.blur) * 2;
+                    //rt.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
                 }
 
                 g.color = shadow.color;
-                g.SetMaterialDirty();
             }
         }
 
@@ -430,9 +434,9 @@ namespace ReactUnity.UGUI.Internal
 
         private void CreateShadow()
         {
-            var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
-            var img = sd.GetComponent<BoxShadowImage>();
-            img.MaskRoot = transform;
+            var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(WebShadow));
+            var img = sd.GetComponent<WebShadow>();
+            //img.MaskRoot = transform;
             img.raycastTarget = false;
             ShadowGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, ShadowRoot);

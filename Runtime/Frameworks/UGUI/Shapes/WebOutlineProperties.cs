@@ -10,9 +10,9 @@ namespace ReactUnity.UGUI.Shapes
         public Color BottomColor = Color.black;
         public Color LeftColor = Color.black;
 
-        public float TopWidth = 0;
-        public float RightWidth = 0;
-        public float BottomWidth = 0;
-        public float LeftWidth = 0;
+        [Min(0)] public float TopWidth = 0;
+        [Min(0)] public float RightWidth = 0;
+        [Min(0)] public float BottomWidth = 0;
+        [Min(0)] public float LeftWidth = 0;
     }
 }

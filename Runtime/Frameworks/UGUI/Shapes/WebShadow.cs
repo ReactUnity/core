@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ReactUnity.UGUI.Shapes
 {
     [RequireComponent(typeof(CanvasRenderer))]
-    public class WebRect : MaskableGraphic
+    public class WebShadow : MaskableGraphic
     {
         [SerializeField]
         private WebRoundingProperties rounding = new WebRoundingProperties();
@@ -15,6 +15,20 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 rounding = value;
+                SetVerticesDirty();
+            }
+        }
+
+        [SerializeField]
+        private WebShadowProperties shadow = new WebShadowProperties();
+
+        public WebShadowProperties Shadow
+        {
+            get => shadow;
+            set
+            {
+                shadow = value;
+                maskable = shadow.Inset;
                 SetVerticesDirty();
             }
         }
@@ -34,6 +48,7 @@ namespace ReactUnity.UGUI.Shapes
         protected override void OnEnable()
         {
             base.OnEnable();
+            maskable = false;
             SetVerticesDirty();
         }
 
@@ -43,17 +58,37 @@ namespace ReactUnity.UGUI.Shapes
             vh.Clear();
             Rect pixelRect = RectTransformUtility.PixelAdjustRect(rectTransform, canvas);
 
-            Rounding.UpdateAdjusted(pixelRect.size, pixelRect.size);
+            var width = pixelRect.width;
+            var height = pixelRect.height;
+
+            var center = pixelRect.center;
+            center = center + shadow.Offset;
+
+            if (shadow.Inset)
+            {
+                width = Mathf.Max(0, width - shadow.Spread * 2);
+                height = Mathf.Max(0, height - shadow.Spread * 2);
+            }
+            else
+            {
+                width = Mathf.Max(0, width + shadow.Spread * 2);
+                height = Mathf.Max(0, height + shadow.Spread * 2);
+            }
+
+            var size = new Vector2(width, height);
+
+            Rounding.UpdateAdjusted(size, size);
 
             AddRoundedRect(
                 ref vh,
-                pixelRect.center,
-                pixelRect.width,
-                pixelRect.height,
+                center,
+                width,
+                height,
                 Rounding,
                 color,
                 GeoUtils.ZeroV2,
-                ref unitPositionData
+                ref unitPositionData,
+                Shadow
             );
         }
 
@@ -86,73 +121,171 @@ namespace ReactUnity.UGUI.Shapes
             Vector2 center,
             float width,
             float height,
-            WebRoundingProperties roundedProperties,
+            WebRoundingProperties rounding,
             Color32 color,
             Vector2 uv,
-            ref RoundedCornerUnitPositionData cornerUnitPositions
+            ref RoundedCornerUnitPositionData cornerUnitPositions,
+            WebShadowProperties shadow
         )
         {
-            if (roundedProperties.Type == WebRoundingProperties.RoundedType.None)
-            {
-                RectUtils.AddRect(
-                    ref vh,
-                    center,
-                    width,
-                    height,
-                    color,
-                    uv
-                );
+            var rect = new Rect(0, 0, width, height);
+            var bl2 = shadow.Blur * 2;
 
-                return;
-            }
+            var hardWidth = Mathf.Max(0, width - bl2);
+            var hardHeight = Mathf.Max(0, height - bl2);
+            var softWidth = Mathf.Max(0, width + bl2);
+            var softHeight = Mathf.Max(0, height + bl2);
 
-
-            RoundedCornerUnitPositionData.SetCornerUnitPositions(
-                roundedProperties,
-                ref cornerUnitPositions
+            var tl = new Vector2(
+                Mathf.Max(shadow.Blur, rounding.AdjustedTLRadius.x),
+                Mathf.Max(shadow.Blur, rounding.AdjustedTLRadius.y)
             );
+
+            var tr = new Vector2(
+                Mathf.Max(shadow.Blur, rounding.AdjustedTRRadius.x),
+                Mathf.Max(shadow.Blur, rounding.AdjustedTRRadius.y)
+            );
+
+            var br = new Vector2(
+                Mathf.Max(shadow.Blur, rounding.AdjustedBRRadius.x),
+                Mathf.Max(shadow.Blur, rounding.AdjustedBRRadius.y)
+            );
+
+            var bl = new Vector2(
+                Mathf.Max(shadow.Blur, rounding.AdjustedBLRadius.x),
+                Mathf.Max(shadow.Blur, rounding.AdjustedBLRadius.y)
+            );
+
+            rounding = new WebRoundingProperties(new Vector4(tl.x, tr.x, br.x, bl.x), new Vector4(tl.y, tr.y, br.y, bl.y));
+            rounding.UpdateAdjusted(rect.size, rect.size);
+
+            cornerUnitPositions = new RoundedCornerUnitPositionData();
+            RoundedCornerUnitPositionData.SetCornerUnitPositions(rounding, ref cornerUnitPositions);
+
+            var ringAdded = false;
+
+            if (shadow.Inset)
+            {
+                hardWidth = Mathf.Max(0, width + bl2);
+                hardHeight = Mathf.Max(0, height + bl2);
+                softWidth = Mathf.Max(0, width - bl2);
+                softHeight = Mathf.Max(0, height - bl2);
+
+                if (shadow.Offset.sqrMagnitude > 0 || shadow.Spread > 0)
+                {
+                    ringAdded = true;
+                    var ringWidth = hardWidth + shadow.Offset.x * 2 + shadow.Spread * 2;
+                    var ringHeight = hardHeight + shadow.Offset.y * 2 + shadow.Spread * 2;
+
+                    AddRoundedRectVerticesRing(
+                        ref vh,
+                        center,
+                        ringWidth,
+                        ringHeight,
+                        ringWidth,
+                        ringHeight,
+                        tl,
+                        tl,
+                        tr,
+                        tr,
+                        br,
+                        br,
+                        bl,
+                        bl,
+                        cornerUnitPositions,
+                        color,
+                        color,
+                        color,
+                        color,
+                        Vector2.one,
+                        false
+                    );
+
+                }
+            }
 
             int numVertices = vh.currentVertCount;
 
             tmpUV.x = 0.5f;
             tmpUV.y = 0.5f;
 
-            vh.AddVert(center, color, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            if (!shadow.Inset)
+            {
+                vh.AddVert(center, color, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            }
+
+            var hardRounding = rounding.OffsetBorder(rect, Vector4.one * -shadow.Blur);
+            var hardRect = new Vector2(hardWidth, hardHeight);
+            hardRounding.UpdateAdjusted(hardRect, hardRect);
 
             AddRoundedRectVerticesRing(
                 ref vh,
                 center,
-                width,
-                height,
-                width,
-                height,
-                roundedProperties.AdjustedTLRadius,
-                roundedProperties.AdjustedTLRadius,
-                roundedProperties.AdjustedTRRadius,
-                roundedProperties.AdjustedTRRadius,
-                roundedProperties.AdjustedBRRadius,
-                roundedProperties.AdjustedBRRadius,
-                roundedProperties.AdjustedBLRadius,
-                roundedProperties.AdjustedBLRadius,
+                hardWidth,
+                hardHeight,
+                hardWidth,
+                hardHeight,
+                hardRounding.AdjustedTLRadius,
+                hardRounding.AdjustedTLRadius,
+                hardRounding.AdjustedTRRadius,
+                hardRounding.AdjustedTRRadius,
+                hardRounding.AdjustedBRRadius,
+                hardRounding.AdjustedBRRadius,
+                hardRounding.AdjustedBLRadius,
+                hardRounding.AdjustedBLRadius,
                 cornerUnitPositions,
                 color,
                 color,
                 color,
                 color,
-                uv,
-                false
+                Vector2.one,
+                ringAdded
             );
 
-
-            // set indices
-            int numNewVertices = vh.currentVertCount - numVertices;
-            for (int i = 0; i < numNewVertices - 1; i++)
+            if (!shadow.Inset)
             {
-                vh.AddTriangle(numVertices, numVertices + i, numVertices + i + 1);
+                // set indices
+                int numNewVertices = vh.currentVertCount - numVertices;
+                for (int i = 0; i < numNewVertices - 1; i++)
+                {
+                    vh.AddTriangle(numVertices, numVertices + i, numVertices + i + 1);
+                }
+
+                // set last triangle
+                vh.AddTriangle(numVertices, vh.currentVertCount - 1, numVertices + 1);
             }
 
-            // set last triangle
-            vh.AddTriangle(numVertices, vh.currentVertCount - 1, numVertices + 1);
+            var fadedColor = new Color32(color.r, color.g, color.b, 0);
+
+
+
+            var softRounding = rounding.OffsetBorder(rect, Vector4.one * shadow.Blur);
+            var softRect = new Vector2(hardWidth, hardHeight);
+            softRounding.UpdateAdjusted(softRect, softRect);
+
+            AddRoundedRectVerticesRing(
+                ref vh,
+                center,
+                softWidth,
+                softHeight,
+                softWidth,
+                softHeight,
+                hardRounding.AdjustedTLRadius,
+                hardRounding.AdjustedTLRadius,
+                hardRounding.AdjustedTRRadius,
+                hardRounding.AdjustedTRRadius,
+                hardRounding.AdjustedBRRadius,
+                hardRounding.AdjustedBRRadius,
+                hardRounding.AdjustedBLRadius,
+                hardRounding.AdjustedBLRadius,
+                cornerUnitPositions,
+                fadedColor,
+                fadedColor,
+                fadedColor,
+                fadedColor,
+                Vector2.zero,
+                true
+            );
         }
 
 
