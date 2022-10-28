@@ -194,7 +194,10 @@ namespace ReactUnity.UGUI.Internal
                 {
                     var g = ShadowGraphics[i];
 
-                    g.Rounding = new WebRoundingProperties(v);
+                    g.Rounding = new WebRoundingProperties(v)
+                    {
+                        UniformResolution = new WebRoundingResolutionProperties(10),
+                    };
                 }
             }
         }

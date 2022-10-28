@@ -64,7 +64,7 @@ namespace ReactUnity.UGUI.Shapes
             BLRadius = borders[3];
         }
 
-        public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineProperties outline = null)
+        public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineProperties outline = null, WebRoundingProperties matchRounding = null)
         {
             outline = outline ?? DefaultOutline;
 
@@ -152,17 +152,17 @@ namespace ReactUnity.UGUI.Shapes
 
             if (ResolutionMode == ResolutionType.Uniform)
             {
-                TLResolution.UpdateAdjusted(bra.x, UniformResolution, 4.0f);
-                TRResolution.UpdateAdjusted(bra.y, UniformResolution, 4.0f);
-                BRResolution.UpdateAdjusted(bra.z, UniformResolution, 4.0f);
-                BLResolution.UpdateAdjusted(bra.w, UniformResolution, 4.0f);
+                TLResolution.UpdateAdjusted(bra.x, UniformResolution, 4.0f, matchRounding?.TLResolution);
+                TRResolution.UpdateAdjusted(bra.y, UniformResolution, 4.0f, matchRounding?.TRResolution);
+                BRResolution.UpdateAdjusted(bra.z, UniformResolution, 4.0f, matchRounding?.BRResolution);
+                BLResolution.UpdateAdjusted(bra.w, UniformResolution, 4.0f, matchRounding?.BLResolution);
             }
             else
             {
-                TLResolution.UpdateAdjusted(bra.x, 4.0f);
-                TRResolution.UpdateAdjusted(bra.y, 4.0f);
-                BRResolution.UpdateAdjusted(bra.z, 4.0f);
-                BLResolution.UpdateAdjusted(bra.w, 4.0f);
+                TLResolution.UpdateAdjusted(bra.x, 4.0f, matchRounding?.TLResolution);
+                TRResolution.UpdateAdjusted(bra.y, 4.0f, matchRounding?.TRResolution);
+                BRResolution.UpdateAdjusted(bra.z, 4.0f, matchRounding?.BRResolution);
+                BLResolution.UpdateAdjusted(bra.w, 4.0f, matchRounding?.BLResolution);
             }
         }
 
@@ -195,20 +195,23 @@ namespace ReactUnity.UGUI.Shapes
             UpdateAdjusted(offsetRect.size, rect.size, border);
 
             var brx = new Vector4(
-                Mathf.Ceil(AdjustedTLRadius.x - borderSizes.w),
-                Mathf.Ceil(AdjustedTRRadius.x - borderSizes.y),
-                Mathf.Ceil(AdjustedBRRadius.x - borderSizes.y),
-                Mathf.Ceil(AdjustedBLRadius.x - borderSizes.w)
+                Mathf.Ceil(AdjustedTLRadius.x + (borderSizes.w)),
+                Mathf.Ceil(AdjustedTRRadius.x + (borderSizes.y)),
+                Mathf.Ceil(AdjustedBRRadius.x + (borderSizes.y)),
+                Mathf.Ceil(AdjustedBLRadius.x + (borderSizes.w))
             );
 
             var bry = new Vector4(
-                Mathf.Ceil(AdjustedTLRadius.y - borderSizes.x),
-                Mathf.Ceil(AdjustedTRRadius.y - borderSizes.x),
-                Mathf.Ceil(AdjustedBRRadius.y - borderSizes.z),
-                Mathf.Ceil(AdjustedBLRadius.y - borderSizes.z)
+                Mathf.Ceil(AdjustedTLRadius.y + (borderSizes.x)),
+                Mathf.Ceil(AdjustedTRRadius.y + (borderSizes.x)),
+                Mathf.Ceil(AdjustedBRRadius.y + (borderSizes.z)),
+                Mathf.Ceil(AdjustedBLRadius.y + (borderSizes.z))
             );
 
-            return new WebRoundingProperties(brx, bry);
+            return new WebRoundingProperties(brx, bry)
+            {
+                UniformResolution = UniformResolution,
+            };
         }
     }
 }

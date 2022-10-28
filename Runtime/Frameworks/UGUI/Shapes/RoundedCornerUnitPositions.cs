@@ -60,7 +60,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 if (makeSharpCorner)
                 {
-                    angle = baseAngle + GeoUtils.QuaterPI;
+                    angle = baseAngle + GeoUtils.QuarterPI;
                     float length = Mathf.Sqrt(2.0f);
 
                     for (int i = 0; i < count; i++)
@@ -74,10 +74,10 @@ namespace ReactUnity.UGUI.Shapes
                     var passed = false;
                     for (int i = 0; i < count; i++)
                     {
-                        var inc = angleIncrement * i;
+                        var inc = Mathf.Min(angleIncrement * i, GeoUtils.HalfPI);
                         angle = baseAngle + inc;
 
-                        if (!passed && inc >= GeoUtils.QuaterPI)
+                        if (!passed && inc >= GeoUtils.QuarterPI)
                         {
                             passed = true;
                             unitPositions[i].x = Mathf.Sin(angle);

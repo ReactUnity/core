@@ -106,17 +106,14 @@ namespace ReactUnity.UGUI.Shapes
 
             int numNewVertices = totalResolution + 1;
 
-            int innerStartIndex = vh.currentVertCount - numNewVertices - numNewVertices - 1;
+            int innerStartIndex = vh.currentVertCount - numNewVertices - numNewVertices;
             int outerStartIndex = vh.currentVertCount - numNewVertices;
 
-            for (int i = 0; i < totalResolution; i++)
+            for (int i = 0, j = totalResolution; i <= totalResolution; j = i++)
             {
-                vh.AddTriangle(innerStartIndex + i + 1, outerStartIndex + i, outerStartIndex + i + 1);
-                vh.AddTriangle(innerStartIndex + i + 1, outerStartIndex + i + 1, innerStartIndex + i + 2);
+                vh.AddTriangle(innerStartIndex + i, outerStartIndex + i, outerStartIndex + j);
+                vh.AddTriangle(outerStartIndex + j, innerStartIndex + j, innerStartIndex + i);
             }
-
-            vh.AddTriangle(innerStartIndex + 1, outerStartIndex + totalResolution, outerStartIndex);
-            vh.AddTriangle(innerStartIndex + 1, outerStartIndex - 1, outerStartIndex + totalResolution);
         }
     }
 }

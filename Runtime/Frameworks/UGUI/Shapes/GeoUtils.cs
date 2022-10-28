@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI.Shapes
         public static readonly Vector3 UINormal = Vector3.back;
         public static readonly Vector4 UITangent = new Vector4(1.0f, 0.0f, 0.0f, -1.0f);
 
-        public static readonly float QuaterPI = Mathf.PI * 0.25f;
+        public static readonly float QuarterPI = Mathf.PI * 0.25f;
         public static readonly float HalfPI = Mathf.PI * 0.5f;
         public static readonly float TwoPI = Mathf.PI * 2.0f;
 
