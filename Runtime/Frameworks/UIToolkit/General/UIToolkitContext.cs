@@ -35,7 +35,7 @@ namespace ReactUnity.UIToolkit
                 { "toggle", (tag, text, context) => new ToggleComponent<Toggle>(context, tag) },
                 { "img", (tag, text, context) => new ImageComponent(context, tag) },
                 { "image", (tag, text, context) => new ImageComponent(context, tag) },
-                { "scroll", (tag, text, context) => new UIToolkitComponent<ScrollView>(context, tag) }, // TODO
+                { "scroll", (tag, text, context) => new ScrollViewComponent(context, tag) },
                 { "input", (tag, text, context) => new TextFieldComponent(context, tag) },
                 { "style", (tag, text, context) => new Styling.StyleComponent(context, tag, text) },
                 { "script", (tag, text, context) => new Scripting.ScriptComponent(context, tag, text) },
