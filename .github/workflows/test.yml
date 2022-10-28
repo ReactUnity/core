@@ -56,39 +56,39 @@ jobs:
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
       - name: Checkout core library
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: core
 
       - name: Checkout test project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ matrix.suite.testBranch || 'tests' }}
           path: tests
 
       - name: Checkout Jint plugin
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
           path: jint
           repository: ReactUnity/jint
 
       - name: Checkout QuickJS plugin
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
           path: quickjs
           repository: ReactUnity/quickjs
 
       - name: Checkout ClearScript plugin
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
           path: clearscript
           repository: ReactUnity/clearscript
 
       - name: Cache Unity Library
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: tests/Library
           key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-20.04' }}
@@ -173,7 +173,7 @@ jobs:
 
       - name: Commit Snapshots
         if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
-        uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v9
         with:
           add: "Tests/.snapshots"
           cwd: "./core"
@@ -207,7 +207,7 @@ jobs:
           }
         shell: pwsh
 
-      - uses: EnricoMi/publish-unit-test-result-action@v1
+      - uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         with:
           check_name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
@@ -229,7 +229,7 @@ jobs:
           esac
 
       - name: Create badge
-        uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
+        uses: emibcn/badge-action@v1
         with:
           label: Tests
           status: "${{ fromJSON( steps.test-results.outputs.json ).stats.tests_succ }}/${{ fromJSON( steps.test-results.outputs.json ).stats.tests }}"
@@ -247,7 +247,7 @@ jobs:
           file: ReactUnityTestBadge.svg
 
       - name: Upload Test Result Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
@@ -262,7 +262,7 @@ jobs:
 
       - name: Upload Coverage to codecov
         if: matrix.coverage && matrix.main
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           working-directory: ./core
           files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
