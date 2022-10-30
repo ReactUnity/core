@@ -145,7 +145,7 @@ namespace ReactUnity.UGUI.Shapes
             WebShadowProperties shadow
         )
         {
-            var bl2 = shadow.Blur * 2;
+            var bl2 = Mathf.Max(0, shadow.Blur) * 2;
             var sp2 = shadow.Spread * 2;
 
             width = Mathf.Max(0, width + sp2);
@@ -157,13 +157,8 @@ namespace ReactUnity.UGUI.Shapes
             var softWidth = Mathf.Max(0, width + bl2);
             var softHeight = Mathf.Max(0, height + bl2);
 
+            var baseColor = new Color32(color.r, color.g, color.b, color.a);
             var fadedColor = new Color32(color.r, color.g, color.b, 0);
-
-
-            var hardRounding = rounding.OffsetBorder(size, Vector4.one * shadow.Blur);
-            var hardRect = new Vector2(hardWidth, hardHeight);
-            hardRounding.UpdateAdjusted(hardRect, hardRect, null, rounding);
-            RoundedCornerUnitPositionData.SetCornerUnitPositions(hardRounding, ref hardCornerUnits);
 
 
             var softRounding = rounding.OffsetBorder(size, Vector4.one * -shadow.Blur);
@@ -172,39 +167,57 @@ namespace ReactUnity.UGUI.Shapes
             RoundedCornerUnitPositionData.SetCornerUnitPositions(softRounding, ref softCornerUnits);
 
 
+            var noHardEdge = hardWidth == 0 || hardHeight == 0;
+
+
+            if (noHardEdge)
+            {
+                var ratioX = Mathf.Min(1, width / bl2);
+                var ratioY = Mathf.Min(1, height / bl2);
+                var minRatio = Mathf.Min(ratioX, ratioY);
+                baseColor = new Color32(color.r, color.g, color.b, (byte) (color.a * minRatio * minRatio));
+            }
+
 
             tmpUV.x = 0.5f;
             tmpUV.y = 0.5f;
-            vh.AddVert(center, color, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
-
+            vh.AddVert(center, baseColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             var numVertices = vh.currentVertCount;
 
-            AddRoundedRectVerticesRing(
-                ref vh,
-                center,
-                hardWidth,
-                hardHeight,
-                hardWidth,
-                hardHeight,
-                hardRounding.AdjustedTLRadius,
-                hardRounding.AdjustedTLRadius,
-                hardRounding.AdjustedTRRadius,
-                hardRounding.AdjustedTRRadius,
-                hardRounding.AdjustedBRRadius,
-                hardRounding.AdjustedBRRadius,
-                hardRounding.AdjustedBLRadius,
-                hardRounding.AdjustedBLRadius,
-                hardCornerUnits,
-                color,
-                color,
-                color,
-                color,
-                Vector2.one,
-                false
-            );
+            if (!noHardEdge)
+            {
+                var hardRounding = rounding.OffsetBorder(size, Vector4.one * shadow.Blur);
+                var hardRect = new Vector2(hardWidth, hardHeight);
+                hardRounding.UpdateAdjusted(hardRect, hardRect, null, rounding);
+                RoundedCornerUnitPositionData.SetCornerUnitPositions(hardRounding, ref hardCornerUnits);
 
-            var numNewVertices = vh.currentVertCount - numVertices;
-            RectUtils.AddRingIndicesToCenter(ref vh, numVertices - 1, numVertices, numNewVertices);
+                AddRoundedRectVerticesRing(
+                    ref vh,
+                    center,
+                    hardWidth,
+                    hardHeight,
+                    hardWidth,
+                    hardHeight,
+                    hardRounding.AdjustedTLRadius,
+                    hardRounding.AdjustedTLRadius,
+                    hardRounding.AdjustedTRRadius,
+                    hardRounding.AdjustedTRRadius,
+                    hardRounding.AdjustedBRRadius,
+                    hardRounding.AdjustedBRRadius,
+                    hardRounding.AdjustedBLRadius,
+                    hardRounding.AdjustedBLRadius,
+                    hardCornerUnits,
+                    color,
+                    color,
+                    color,
+                    color,
+                    Vector2.one,
+                    false
+                );
+
+                var numNewVertices = vh.currentVertCount - numVertices;
+                RectUtils.AddRingIndicesToCenter(ref vh, numVertices - 1, numVertices, numNewVertices);
+            }
 
             AddRoundedRectVerticesRing(
                 ref vh,
@@ -227,8 +240,14 @@ namespace ReactUnity.UGUI.Shapes
                 fadedColor,
                 fadedColor,
                 Vector2.zero,
-                true
+                !noHardEdge
             );
+
+            if (noHardEdge)
+            {
+                var numNewVertices = vh.currentVertCount - numVertices;
+                RectUtils.AddRingIndicesToCenter(ref vh, numVertices - 1, numVertices, numNewVertices);
+            }
         }
 
         public static void AddInsetShadowRect(
@@ -245,7 +264,7 @@ namespace ReactUnity.UGUI.Shapes
             WebShadowProperties shadow
         )
         {
-            var bl2 = shadow.Blur * 2;
+            var bl2 = Mathf.Max(0, shadow.Blur) * 2;
 
             width = Mathf.Max(0, width - shadow.Spread * 2);
             height = Mathf.Max(0, height - shadow.Spread * 2);
