@@ -114,13 +114,7 @@ namespace ReactUnity.UGUI.Internal
         {
             base.OnEnable();
             raycastTarget = false;
-            material = GetDefaultMaterial();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual Material GetDefaultMaterial()
-        {
-            return Instantiate(ResourcesHelper.BackgroundImageMaterial);
+            material = ResourcesHelper.BackgroundImageMaterial;
         }
 
         public override Material materialForRendering
@@ -148,9 +142,10 @@ namespace ReactUnity.UGUI.Internal
                 {
                     result = new Material(props.BaseMaterial);
                     props.SetToMaterial(result);
-                    result = Definition?.ModifyMaterial(Context, result, szPoint);
                     CachedMaterials[props] = result;
                 }
+
+                result = Definition?.ModifyMaterial(Context, result, szPoint);
 
                 return result;
             }

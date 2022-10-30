@@ -21,6 +21,7 @@ namespace ReactUnity.Types
 
         public static ImageDefinition NoImage => UrlImageDefinition.None;
 
+        public virtual bool DoesNotModifyMaterial => false;
         public virtual bool SizeUpdatesGraphic => false;
 
         internal virtual void ResolveImage(ReactContext context, Vector2 size, Action<ResolvedImage> callback) => callback(ResolvedImage.Default);
@@ -80,6 +81,7 @@ namespace ReactUnity.Types
     {
         public static UrlImageDefinition None { get; } = new UrlImageDefinition(SpriteReference.None);
         public SpriteReference Reference { get; }
+        public override bool DoesNotModifyMaterial => true;
 
         public UrlImageDefinition(SpriteReference reference)
         {

@@ -46,7 +46,7 @@ namespace Facebook.Yoga
 
         public bool Equals(YogaValue other)
         {
-            return Unit == other.Unit && (Value.Equals(other.Value) || Unit == YogaUnit.Undefined);
+            return Unit == other.Unit && (Value.Equals(other.Value) || Unit == YogaUnit.Undefined || Unit == YogaUnit.Auto);
         }
 
         public override bool Equals(object obj)
@@ -94,5 +94,8 @@ namespace Facebook.Yoga
         {
             return Point(pointValue);
         }
+
+        public static bool operator ==(YogaValue left, YogaValue right) => left.Equals(right);
+        public static bool operator !=(YogaValue left, YogaValue right) => !(left == right);
     }
 }

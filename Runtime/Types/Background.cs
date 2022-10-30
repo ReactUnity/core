@@ -5,6 +5,12 @@ using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Types
 {
+#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
+
     public struct BackgroundSize : Interpolatable
     {
         public static readonly BackgroundSize Auto = new BackgroundSize(YogaValue2.Auto);
@@ -39,6 +45,18 @@ namespace ReactUnity.Types
             return t > 0.5f ? to : this;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is BackgroundSize size &&
+                   Keyword == size.Keyword &&
+                   Value == size.Value;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Keyword, Value);
+        }
+
         public class Converter : StyleConverterBase
         {
             StyleConverterBase ValueConverter = AllConverters.YogaValue2Converter;
@@ -67,6 +85,16 @@ namespace ReactUnity.Types
                         return null;
                     });
             }
+        }
+
+        public static bool operator ==(BackgroundSize left, BackgroundSize right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(BackgroundSize left, BackgroundSize right)
+        {
+            return !(left == right);
         }
     }
 

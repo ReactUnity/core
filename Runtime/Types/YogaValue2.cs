@@ -63,8 +63,8 @@ namespace ReactUnity.Types
         public override bool Equals(object obj)
         {
             return obj is YogaValue2 value &&
-                   EqualityComparer<YogaValue>.Default.Equals(X, value.X) &&
-                   EqualityComparer<YogaValue>.Default.Equals(Y, value.Y);
+                   X == value.X &&
+                   Y == value.Y;
         }
 
         public override int GetHashCode()
@@ -93,21 +93,16 @@ namespace ReactUnity.Types
         {
             return new YogaValue2(Negate(X), Negate(Y));
         }
+
         private YogaValue Negate(YogaValue val)
         {
             if (val.Unit == YogaUnit.Percent) return YogaValue.Percent(-val.Value);
             if (val.Unit == YogaUnit.Point) return YogaValue.Point(-val.Value);
             return val;
         }
-        public static bool operator ==(YogaValue2 left, YogaValue2 right)
-        {
-            return left.X.Unit == right.X.Unit && left.X.Value == right.X.Value
-                && left.Y.Unit == right.Y.Unit && left.Y.Value == right.Y.Value;
-        }
-        public static bool operator !=(YogaValue2 left, YogaValue2 right)
-        {
-            return !(left == right);
-        }
+
+        public static bool operator ==(YogaValue2 left, YogaValue2 right) => left.Equals(right);
+        public static bool operator !=(YogaValue2 left, YogaValue2 right) => !(left == right);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public object Interpolate(object to, float t)
