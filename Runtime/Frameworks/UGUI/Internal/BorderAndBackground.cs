@@ -439,7 +439,7 @@ namespace ReactUnity.UGUI.Internal
         {
             var sd = Context.CreateNativeObject("[Shadow]", typeof(RectTransform), typeof(WebShadow));
             var img = sd.GetComponent<WebShadow>();
-            //img.MaskRoot = transform;
+            img.MaskRoot = transform;
             img.raycastTarget = false;
             ShadowGraphics.Add(img);
             FullStretch(sd.transform as RectTransform, ShadowRoot);

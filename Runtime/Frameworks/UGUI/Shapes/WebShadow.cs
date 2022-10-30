@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
@@ -6,6 +9,81 @@ namespace ReactUnity.UGUI.Shapes
     [RequireComponent(typeof(CanvasRenderer))]
     public class WebShadow : MaskableGraphic
     {
+        #region Material Stuff
+
+        private struct ShaderProps
+        {
+            public Material BaseMaterial;
+            public bool Inset;
+            public int StencilId;
+
+            public override bool Equals(object obj)
+            {
+                return obj is ShaderProps props &&
+                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
+                       Inset == props.Inset &&
+                       StencilId == props.StencilId;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(BaseMaterial, Inset, StencilId);
+            }
+
+            public void SetToMaterial(Material mat)
+            {
+                if (Inset)
+                {
+                    mat.SetInt("_StencilComp", (int) CompareFunction.Equal);
+                }
+                else
+                {
+                    mat.SetInt("_StencilReadMask", StencilId);
+                    mat.SetInt("_StencilComp", (int) CompareFunction.LessEqual);
+                }
+            }
+        }
+
+        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
+
+        public Transform MaskRoot;
+
+        public override Material materialForRendering
+        {
+            get
+            {
+                if (Shadow == null) return base.materialForRendering;
+
+                var stencilId = -1;
+
+                if (!Shadow.Inset)
+                {
+                    var depth = MaskUtilities.GetStencilDepth(MaskRoot, MaskRoot.GetComponentInParent<Canvas>()?.transform ?? MaskRoot.root);
+                    var id = 0;
+                    for (int i = 0; i < depth; i++) id |= 1 << i;
+                    stencilId = id;
+                }
+
+                var props = new ShaderProps
+                {
+                    BaseMaterial = base.materialForRendering,
+                    Inset = Shadow.Inset,
+                    StencilId = stencilId,
+                };
+
+                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
+                {
+                    result = new Material(props.BaseMaterial);
+                    props.SetToMaterial(result);
+                    CachedMaterials[props] = result;
+                }
+
+                return result;
+            }
+        }
+
+        #endregion
+
         [SerializeField]
         private WebRoundingProperties rounding = new WebRoundingProperties()
         {
@@ -31,8 +109,8 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 shadow = value;
-                maskable = shadow.Inset;
                 SetVerticesDirty();
+                SetMaterialDirty();
             }
         }
 
@@ -53,7 +131,6 @@ namespace ReactUnity.UGUI.Shapes
         protected override void OnEnable()
         {
             base.OnEnable();
-            maskable = false;
             SetVerticesDirty();
         }
 
@@ -119,6 +196,7 @@ namespace ReactUnity.UGUI.Shapes
             base.OnValidate();
             Rounding?.OnCheck();
             RefreshSize();
+            SetMaterialDirty();
         }
 #endif
 
