@@ -176,15 +176,12 @@ namespace ReactUnity.UGUI.Internal
             BorderGraphic.SetVerticesDirty();
             BorderGraphic.RefreshInsetBorder();
 
-            RootGraphic.SetMaterialDirty();
+            RootGraphic.SetVerticesDirty();
         }
 
         private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
             var v = new YogaValue2[4] { tl, tr, br, bl };
-
-            RootGraphic.SetMaterialDirty();
-            MaskUtilities.NotifyStencilStateChanged(RootMask);
 
             BorderGraphic.Rounding = new WebRoundingProperties(v);
 

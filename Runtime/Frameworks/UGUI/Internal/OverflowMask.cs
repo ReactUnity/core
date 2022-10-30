@@ -44,8 +44,7 @@ namespace ReactUnity.UGUI.Internal
                 BLRadius = bl,
             };
             MaskChanged();
-            Image.SetMaterialDirty();
-            if (Mask && Mask.enabled) MaskUtilities.NotifyStencilStateChanged(Mask);
+            Image.SetVerticesDirty();
         }
 
         void MaskChanged()
@@ -58,7 +57,6 @@ namespace ReactUnity.UGUI.Internal
                 {
                     Mask = gameObject.GetComponent<Mask>() ?? gameObject.AddComponent<Mask>();
                     Mask.showMaskGraphic = false;
-                    Mask.enabled = false;
                 }
                 Mask.enabled = true;
             }

@@ -36,6 +36,10 @@ namespace ReactUnity.UGUI.Shapes
                 {
                     mat.SetInt("_StencilComp", (int) CompareFunction.Equal);
                 }
+                else if (StencilId < 0)
+                {
+                    mat.SetInt("_StencilComp", (int) CompareFunction.Always);
+                }
                 else
                 {
                     mat.SetInt("_StencilReadMask", StencilId);
