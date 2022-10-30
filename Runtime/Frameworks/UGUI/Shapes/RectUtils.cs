@@ -115,5 +115,19 @@ namespace ReactUnity.UGUI.Shapes
                 vh.AddTriangle(outerStartIndex + j, innerStartIndex + j, innerStartIndex + i);
             }
         }
+
+
+        public static void AddRingIndicesToCenter(
+            ref VertexHelper vh,
+            int centerIndex,
+            int ringStartIndex,
+            int ringVertexCount
+        )
+        {
+            for (int i = 0, j = ringVertexCount - 1; i < ringVertexCount; j = i++)
+            {
+                vh.AddTriangle(centerIndex, ringStartIndex + i, ringStartIndex + j);
+            }
+        }
     }
 }

@@ -176,7 +176,7 @@ namespace ReactUnity.UGUI.Shapes
             UniformResolution.OnCheck();
         }
 
-        public WebRoundingProperties OffsetBorder(Rect rect, Vector4 borderSizes)
+        public WebRoundingProperties OffsetBorder(Vector2 size, Vector4 borderSizes)
         {
             var border = new WebOutlineProperties()
             {
@@ -186,26 +186,24 @@ namespace ReactUnity.UGUI.Shapes
                 LeftWidth = borderSizes.w,
             };
 
-            var offsetRect = new Rect(
-                rect.x - border.LeftWidth,
-                rect.y - border.BottomWidth,
-                rect.width + border.LeftWidth + border.RightWidth,
-                rect.height + border.BottomWidth + border.TopWidth
+            var offsetSize = new Vector2(
+                size.x + border.LeftWidth + border.RightWidth,
+                size.y + border.BottomWidth + border.TopWidth
             );
-            UpdateAdjusted(offsetRect.size, rect.size, border);
+            UpdateAdjusted(offsetSize, size, border);
 
             var brx = new Vector4(
-                Mathf.Ceil(AdjustedTLRadius.x + (borderSizes.w)),
-                Mathf.Ceil(AdjustedTRRadius.x + (borderSizes.y)),
-                Mathf.Ceil(AdjustedBRRadius.x + (borderSizes.y)),
-                Mathf.Ceil(AdjustedBLRadius.x + (borderSizes.w))
+                Mathf.Ceil(AdjustedTLRadius.x - (borderSizes.w)),
+                Mathf.Ceil(AdjustedTRRadius.x - (borderSizes.y)),
+                Mathf.Ceil(AdjustedBRRadius.x - (borderSizes.y)),
+                Mathf.Ceil(AdjustedBLRadius.x - (borderSizes.w))
             );
 
             var bry = new Vector4(
-                Mathf.Ceil(AdjustedTLRadius.y + (borderSizes.x)),
-                Mathf.Ceil(AdjustedTRRadius.y + (borderSizes.x)),
-                Mathf.Ceil(AdjustedBRRadius.y + (borderSizes.z)),
-                Mathf.Ceil(AdjustedBLRadius.y + (borderSizes.z))
+                Mathf.Ceil(AdjustedTLRadius.y - (borderSizes.x)),
+                Mathf.Ceil(AdjustedTRRadius.y - (borderSizes.x)),
+                Mathf.Ceil(AdjustedBRRadius.y - (borderSizes.z)),
+                Mathf.Ceil(AdjustedBLRadius.y - (borderSizes.z))
             );
 
             return new WebRoundingProperties(brx, bry)

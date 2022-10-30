@@ -171,7 +171,7 @@ namespace ReactUnity.UGUI.Shapes
                 Border.LeftWidth
             );
 
-            InnerRounding = Rounding.OffsetBorder(GetInnerRect(), borderSizes);
+            InnerRounding = Rounding.OffsetBorder(GetInnerRect().size, borderSizes);
         }
 
 

@@ -12,20 +12,22 @@ namespace ReactUnity.UGUI.Shapes
 
         public static void SetCornerUnitPositions(
             WebRoundingProperties rounding,
-            ref RoundedCornerUnitPositionData cornerUnitPositions
+            ref RoundedCornerUnitPositionData cornerUnitPositions,
+            bool forceUpdate = false
         )
         {
-            SetUnitPosition(ref cornerUnitPositions.TLUnitPositions, rounding.TLResolution.AdjustedResolution, GeoUtils.HalfPI + Mathf.PI, rounding.TLResolution.MakeSharpCorner);
-            SetUnitPosition(ref cornerUnitPositions.TRUnitPositions, rounding.TRResolution.AdjustedResolution, 0.0f, rounding.TRResolution.MakeSharpCorner);
-            SetUnitPosition(ref cornerUnitPositions.BRUnitPositions, rounding.BRResolution.AdjustedResolution, GeoUtils.HalfPI, rounding.BRResolution.MakeSharpCorner);
-            SetUnitPosition(ref cornerUnitPositions.BLUnitPositions, rounding.BLResolution.AdjustedResolution, Mathf.PI, rounding.BLResolution.MakeSharpCorner);
+            SetUnitPosition(ref cornerUnitPositions.TLUnitPositions, rounding.TLResolution.AdjustedResolution, GeoUtils.HalfPI + Mathf.PI, rounding.TLResolution.MakeSharpCorner, forceUpdate);
+            SetUnitPosition(ref cornerUnitPositions.TRUnitPositions, rounding.TRResolution.AdjustedResolution, 0.0f, rounding.TRResolution.MakeSharpCorner, forceUpdate);
+            SetUnitPosition(ref cornerUnitPositions.BRUnitPositions, rounding.BRResolution.AdjustedResolution, GeoUtils.HalfPI, rounding.BRResolution.MakeSharpCorner, forceUpdate);
+            SetUnitPosition(ref cornerUnitPositions.BLUnitPositions, rounding.BLResolution.AdjustedResolution, Mathf.PI, rounding.BLResolution.MakeSharpCorner, forceUpdate);
         }
 
         public static void SetUnitPosition(
             ref Vector2[] unitPositions,
             int resolution,
             float baseAngle,
-            bool makeSharpCorner
+            bool makeSharpCorner,
+            bool forceUpdate = false
         )
         {
             var count = resolution;
@@ -36,7 +38,7 @@ namespace ReactUnity.UGUI.Shapes
                 count++;
             }
 
-            bool needsUpdate = false;
+            bool needsUpdate = forceUpdate;
 
             if (
                 unitPositions == null ||
@@ -44,12 +46,6 @@ namespace ReactUnity.UGUI.Shapes
             )
             {
                 unitPositions = new Vector2[count];
-
-                for (int i = 0; i < unitPositions.Length; i++)
-                {
-                    unitPositions[i] = GeoUtils.ZeroV2;
-                }
-
                 needsUpdate = true;
             }
 
