@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 28/09/2022 01:46:09
+// Generated 07/10/2022 21:33:26
 //
 /* eslint-disable */
 
@@ -871,9 +871,9 @@ export declare namespace ReactUnity {
       CreateCanvas(): void;
       SelectCanvas(): void;
       CheckVersion(packageName: string, callback: ((currentVersion: string, latestVersion: string, hasUpdate: boolean) => void)): void;
-      InstallScopedPlugin(packageName: string): void;
-      InstallUnityPlugin(pluginName: string): void;
-      UninstallUnityPlugin(pluginName: string): void;
+      InstallScopedPlugin(packageName: string, callback?: (() => void)): void;
+      InstallUnityPlugin(pluginName: string, callback?: (() => void)): void;
+      UninstallUnityPlugin(pluginName: string, callback?: (() => void)): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(cb: any): (() => void);
@@ -956,6 +956,22 @@ export declare namespace ReactUnity {
       TimeScale: number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class QuickStartWindow_PluginCallback {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(): void;
+      BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
       GetType(): System.Type;
       ToString(): string;
     }
@@ -8703,6 +8719,7 @@ export declare namespace ReactUnity {
         constructor();
         Layout: Facebook.Yoga.YogaNode;
         Component: ReactUnity.UGUI.UGUIComponent;
+        Text: any; // TMPro.TextMeshProUGUI
         Translate: ReactUnity.Types.YogaValue2;
         TranslateZ: Facebook.Yoga.YogaValue;
         PositionType: ReactUnity.Types.PositionType;
