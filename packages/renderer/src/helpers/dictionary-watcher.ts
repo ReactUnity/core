@@ -84,7 +84,7 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
     return createElement(ctx.Provider, { value }, children);
   };
 
-  function useSelector<Res>(selector: (store: RecordType) => Res, isEqual?: (a: any, b: any) => boolean) {
+  function useSelector<Res>(selector: (store: RecordType) => Res, isEqual?: (a: Res, b: Res) => boolean) {
     return useSyncExternalStoreWithSelector(subscribe, getSnapshot, getSnapshot, selector, isEqual);
   }
 
@@ -102,5 +102,5 @@ export function createDictionaryWatcher<ValueType = any, RecordType = Record<str
 
 export const globalsWatcher = createDictionaryWatcher<any, DefaultGlobals>(Globals, 'globalsContext');
 export const useGlobals = globalsWatcher.useContext;
-export const useSelector = globalsWatcher.useSelector;
+export const useGlobalsSelector = globalsWatcher.useSelector;
 export const GlobalsProvider = globalsWatcher.Provider;
