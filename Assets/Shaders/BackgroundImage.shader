@@ -150,7 +150,7 @@ Shader "ReactUnity/BackgroundImage"
           res = fixed4(0,0,0,0);
         }
         else {
-          float2 uv = float2(tx, 1 - ty);
+          float2 uv = i.uv;
           float2 txPos = uv;
 
           if (_gradientType == 1) {

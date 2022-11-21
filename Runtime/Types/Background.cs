@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Computed;
@@ -10,7 +11,7 @@ namespace ReactUnity.Types
 #else
     using HashCode = System.HashCode;
 #endif
-
+    [Serializable]
     public struct BackgroundSize : Interpolatable
     {
         public static readonly BackgroundSize Auto = new BackgroundSize(YogaValue2.Auto);
@@ -39,7 +40,7 @@ namespace ReactUnity.Types
         {
             if (to is BackgroundSize tto)
             {
-                if (Keyword != tto.Keyword) return t > 0.5f ? to : this;
+                if (Keyword != tto.Keyword || Keyword != BackgroundSizeKeyword.Custom) return t > 0.5f ? to : this;
                 return new BackgroundSize((YogaValue2) Value.Interpolate(tto.Value, t));
             }
             return t > 0.5f ? to : this;

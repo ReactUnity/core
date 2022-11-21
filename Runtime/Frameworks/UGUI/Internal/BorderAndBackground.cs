@@ -28,7 +28,7 @@ namespace ReactUnity.UGUI.Internal
         public WebBorder BorderGraphic;
 
         public List<WebShadow> ShadowGraphics;
-        public List<BackgroundImage> BackgroundGraphics;
+        public List<WebBackgroundImage> BackgroundGraphics;
         public List<BackgroundImage> MaskGraphics;
         public BackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
 
@@ -223,7 +223,7 @@ namespace ReactUnity.UGUI.Internal
 
             if (BackgroundGraphics == null)
             {
-                if (validCount > 0) BackgroundGraphics = new List<BackgroundImage>();
+                if (validCount > 0) BackgroundGraphics = new List<WebBackgroundImage>();
                 else return;
             }
 
@@ -444,8 +444,8 @@ namespace ReactUnity.UGUI.Internal
 
         private void CreateBackgroundImage()
         {
-            var sd = Context.CreateNativeObject("[Background]", typeof(RectTransform), typeof(BackgroundImage));
-            var img = sd.GetComponent<BackgroundImage>();
+            var sd = Context.CreateNativeObject("[Background]", typeof(RectTransform), typeof(WebBackgroundImage));
+            var img = sd.GetComponent<WebBackgroundImage>();
             img.color = Color.clear;
             img.Context = Context;
             BackgroundGraphics.Add(img);
