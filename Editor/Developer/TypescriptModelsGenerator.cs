@@ -49,16 +49,21 @@ namespace ReactUnity.Editor.Developer
                 throw new InvalidOperationException("File must have '.ts' extension");
             }
 
-            var res = GetTypescript();
+            var res = GetTypescriptForAllTypes();
             File.WriteAllText(filePath, res);
         }
 
-        public string GetTypescript()
+        public string GetTypescriptForAllTypes()
         {
             var types = Assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
                 .Select(x => x.OrderByDescending(t => t.GetGenericArguments().Length).First())
                 .Append(null);
+            return GetTypescriptFor(types.ToList());
+        }
+
+        public string GetTypescriptFor(List<Type> types)
+        {
             var sb = new StringBuilder();
 
             var nsStack = new Stack<string>();
@@ -219,7 +224,7 @@ namespace ReactUnity.Editor.Developer
             var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
-                $"// Types in assemblies: {string.Join(", ", Assemblies.Select(x => x.GetName().Name))}{n}" +
+                $"// Types in assemblies: {string.Join(", ", types.Select(type => type.Assembly).Select(x => x.GetName().Name).Distinct())}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
                 $"/* eslint-disable */{n}{n}" +
