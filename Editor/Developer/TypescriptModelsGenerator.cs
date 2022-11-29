@@ -49,16 +49,21 @@ namespace ReactUnity.Editor.Developer
                 throw new InvalidOperationException("File must have '.ts' extension");
             }
 
-            var res = GetTypescript();
+            var res = GetTypescriptForAllTypes();
             File.WriteAllText(filePath, res);
         }
 
-        public string GetTypescript()
+        public string GetTypescriptForAllTypes()
         {
             var types = Assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
                 .Select(x => x.OrderByDescending(t => t.GetGenericArguments().Length).First())
                 .Append(null);
+            return GetTypescriptFor(types);
+        }
+
+        public string GetTypescriptFor(IEnumerable<Type> types)
+        {
             var sb = new StringBuilder();
 
             var nsStack = new Stack<string>();
