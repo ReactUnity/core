@@ -59,10 +59,10 @@ namespace ReactUnity.Editor.Developer
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
                 .Select(x => x.OrderByDescending(t => t.GetGenericArguments().Length).First())
                 .Append(null);
-            return GetTypescriptFor(types);
+            return GetTypescriptFor(types.ToList());
         }
 
-        public string GetTypescriptFor(IEnumerable<Type> types)
+        public string GetTypescriptFor(List<Type> types)
         {
             var sb = new StringBuilder();
 
