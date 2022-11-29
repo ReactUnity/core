@@ -224,7 +224,7 @@ namespace ReactUnity.Editor.Developer
             var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
-                $"// Types in assemblies: {string.Join(", ", Assemblies.Select(x => x.GetName().Name))}{n}" +
+                $"// Types in assemblies: {string.Join(", ", types.Select(type => type.Assembly).Select(x => x.GetName().Name).Distinct())}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
                 $"/* eslint-disable */{n}{n}" +
