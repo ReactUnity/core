@@ -224,7 +224,7 @@ namespace ReactUnity.Editor.Developer
             var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
-                $"// Types in assemblies: {string.Join(", ", types.Select(type => type.Assembly).Select(x => x.GetName().Name).Distinct())}{n}" +
+                $"// Types in assemblies: {string.Join(", ", types.Where(type => type != null).Select(type => type.Assembly).Select(x => x.GetName().Name).Distinct())}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
                 $"/* eslint-disable */{n}{n}" +
@@ -445,7 +445,7 @@ namespace ReactUnity.Editor.Developer
 
             if (!skipKnownTypes && remap != null) return RegisterRemap(remap);
 
-            if (ExcludedTypes.Contains(propertyType)) return "any";
+            if (ExcludedTypes != null && ExcludedTypes.Contains(propertyType)) return "any";
 
             if (!skipKnownTypes)
             {
