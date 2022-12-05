@@ -3,13 +3,13 @@ name: Tests
 on:
   push:
     branches:
-      - '**'
+      - "**"
     paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.vscode/**'
+      - "docs/**"
+      - "**.md"
+      - ".vscode/**"
   pull_request:
-    branches: [ main ]
+    branches: [main]
   repository_dispatch:
     types: [run-tests]
   workflow_dispatch:
@@ -22,9 +22,6 @@ jobs:
       id-token: write
       checks: write
       pull-requests: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     strategy:
       fail-fast: false
       matrix:
@@ -36,15 +33,26 @@ jobs:
           - { version: "2020.3.38f1" }
           - { version: "2019.4.40f1" }
         suite:
-          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
+          - {
+              name: "Unit Tests",
+              assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor",
+            }
         include:
           - main: true
             coverage: true
             unity: { version: "2021.3.8f1" }
-            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor" }
+            suite:
+              {
+                name: "Unit Tests",
+                assemblies: "ReactUnity.Tests;ReactUnity.Tests.Editor",
+              }
           - performance: true
             unity: { version: "2021.3.8f1" }
-            suite: { name: "Performance Tests", assemblies: "ReactUnity.Tests.Performance" }
+            suite:
+              {
+                name: "Performance Tests",
+                assemblies: "ReactUnity.Tests.Performance",
+              }
     runs-on: ${{ matrix.platform || 'ubuntu-20.04' }}
     steps:
       - name: Checkout core library
@@ -79,7 +87,6 @@ jobs:
           path: clearscript
           repository: ReactUnity/clearscript
 
-
       - name: Cache Unity Library
         uses: actions/cache@v3
         with:
@@ -87,7 +94,6 @@ jobs:
           key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-20.04' }}
           restore-keys: |
             Library-
-
 
       - name: Clear React Unity package lock
         run: |
@@ -102,7 +108,6 @@ jobs:
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.jint"]="file:../../jint"') > tests/Packages/manifest.json
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.quickjs"]="file:../../quickjs"') > tests/Packages/manifest.json
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.clearscript"]="file:../../clearscript"') > tests/Packages/manifest.json
-
 
       - name: Install TMP v2
         if: startsWith(matrix.unity.version, '2019')
@@ -170,12 +175,11 @@ jobs:
         if: hashFiles('core/Tests/.snapshots/snapshots.lock') != '' && matrix.main
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'Tests/.snapshots'
-          cwd: './core'
+          add: "Tests/.snapshots"
+          cwd: "./core"
           default_author: github_actions
-          message: 'Update snapshots'
-          pull: 'NO-PULL'
-
+          message: "Update snapshots"
+          pull: "NO-PULL"
 
       - name: Set artifacts folder ownership to current user
         run: sudo chown -R $(id -u):$(id -g) "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
@@ -228,7 +232,7 @@ jobs:
         uses: emibcn/badge-action@v1
         with:
           label: Tests
-          status: '${{ fromJSON( steps.test-results.outputs.json ).stats.tests_succ }}/${{ fromJSON( steps.test-results.outputs.json ).stats.tests }}'
+          status: "${{ fromJSON( steps.test-results.outputs.json ).stats.tests_succ }}/${{ fromJSON( steps.test-results.outputs.json ).stats.tests }}"
           color: ${{ env.BADGE_COLOR }}
           path: ReactUnityTestBadge.svg
           style: flat
@@ -242,7 +246,6 @@ jobs:
           gistURL: https://gist.githubusercontent.com/KurtGokhan/f744e86dd53cd0159d4f1d56ae9aae19
           file: ReactUnityTestBadge.svg
 
-
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v3
         if: always()
@@ -255,7 +258,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('Tests failed!')
+            core.setFailed('Tests failed!')
 
       - name: Upload Coverage to codecov
         if: matrix.coverage && matrix.main
@@ -273,7 +276,7 @@ jobs:
         if: matrix.performance && always()
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './tests/PerformanceReport/Performance'
+          path: "./tests/PerformanceReport/Performance"
 
       - name: Deploy to GitHub Pages
         if: matrix.performance && always()
