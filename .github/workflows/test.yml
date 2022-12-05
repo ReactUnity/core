@@ -184,34 +184,11 @@ jobs:
       - name: Set artifacts folder ownership to current user
         run: sudo chown -R $(id -u):$(id -g) "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
 
-      # Workaround for NUnit XML (see https://github.com/dorny/test-reporter/issues/98#issuecomment-867106931)
-      - name: Install NUnit
-        run: |
-          nuget install NUnit.Console -Version 3.12.0
-
-      - name: Fetch transform code
-        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
-        run: |
-          wget https://raw.githubusercontent.com/nunit/nunit-transforms/master/nunit3-junit/nunit3-junit.xslt
-        shell: bash
-
-      - name: Transform NUnit3 to JUnit
-        working-directory: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"
-        run: |
-          Get-ChildItem . -Filter *.xml | Foreach-Object {
-            $xml = Resolve-Path $_.FullName
-            $output = Join-Path ($pwd) ($_.BaseName + '_junit.xml')
-            $xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
-            $xslt.Load("nunit3-junit.xslt");
-            $xslt.Transform($xml, $output);
-          }
-        shell: pwsh
-
       - uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         with:
           check_name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
-          files: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*_junit.xml"
+          nunit_files: "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}/*.xml"
 
       - name: Set badge color
         shell: bash
