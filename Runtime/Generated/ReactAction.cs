@@ -13,8 +13,25 @@ namespace ReactUnity.Helpers
 {
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction
   {
       /// <summary>
@@ -72,8 +89,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1>
   {
       /// <summary>
@@ -131,8 +165,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2>
   {
       /// <summary>
@@ -190,8 +241,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3>
   {
       /// <summary>
@@ -249,8 +317,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4>
   {
       /// <summary>
@@ -308,8 +393,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4, T5>
   {
       /// <summary>
@@ -367,8 +469,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4, T5, T6>
   {
       /// <summary>
@@ -426,8 +545,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7>
   {
       /// <summary>
@@ -485,8 +621,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8>
   {
       /// <summary>
@@ -544,8 +697,25 @@ namespace ReactUnity.Helpers
   }
   /// <summary>
   ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
-  ///   to delegates and events in ReactUnity.
+  ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
   /// </summary>
+	/// <example>
+	///   <code language="csharp">
+	///     var callback = new ReactAction&lt;string&gt;();
+	///     callback += (str) => Console.WriteLine(str);
+	///     callback.Invoke("It works! From C#");
+	///     callback -= (str) => Console.WriteLine(str);
+	///   </code>
+	/// </example>
+	/// <example>
+	///   <code language="js">
+	///     useEffect(() => {
+	///       let unsubscribe = Global.Instance.Delegate.AddListener((str) => console.log(str));
+	///       Global.Instance.Delegate.Invoke("It works! From TypeScript");
+	///       return () => unsubscribe();
+	///     }, []);
+	///   </code>
+	/// </example>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>
   {
       /// <summary>
