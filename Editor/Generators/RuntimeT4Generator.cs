@@ -1,14 +1,14 @@
-﻿using System;
+﻿#if REACT_UNITY_DEVELOPER
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using ReactUnity.Editor.Editor.Generators.ReactAction;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactUnity.Editor.Editor.Generators
+namespace ReactUnity.Editor.Generators
 {
     public class RuntimeT4Generator
     {
@@ -21,7 +21,7 @@ namespace ReactUnity.Editor.Editor.Generators
         /// <summary>
         ///     Generates the code from all templates in the project and saves them to Runtime/Generated folder
         /// </summary>
-        [MenuItem("React/GenerateCodeFromTemplates")]
+        [MenuItem("React/Generate Code From T4 Templates")]
         public static void GenerateFromTemplates()
         {
             var uniqueTemplates = new HashSet<string>();
@@ -111,3 +111,4 @@ namespace ReactUnity.Editor.Editor.Generators
         }
     }
 }
+#endif

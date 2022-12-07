@@ -1,4 +1,6 @@
-﻿namespace ReactUnity.Editor.Editor.Generators
+﻿#if REACT_UNITY_DEVELOPER
+
+namespace ReactUnity.Editor.Generators
 {
     public class CommonGenerators
     {
@@ -13,3 +15,4 @@
 
     }
 }
+#endif

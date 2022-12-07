@@ -12,7 +12,7 @@ using ReactUnity.Helpers;
 namespace ReactUnity.Helpers
 {
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction
@@ -25,7 +25,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -71,7 +71,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1>
@@ -84,7 +84,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -130,7 +130,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2>
@@ -143,7 +143,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -189,7 +189,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3>
@@ -202,7 +202,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -248,7 +248,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4>
@@ -261,7 +261,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -307,7 +307,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4, T5>
@@ -320,7 +320,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -366,7 +366,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4, T5, T6>
@@ -379,7 +379,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -425,7 +425,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7>
@@ -438,7 +438,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -484,7 +484,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8>
@@ -497,7 +497,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
@@ -543,7 +543,7 @@ namespace ReactUnity.Helpers
         }
   }
   /// <summary>
-  ///   A wrapper class for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
+  ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
   ///   to delegates and events in ReactUnity.
   /// </summary>
   class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>
@@ -556,7 +556,7 @@ namespace ReactUnity.Helpers
       /// <summary>
       ///   Adds the listener to the action, and returns a function that removes the listener. This method should be only called from React.
       /// </summary>
-      [Obsolete("This method should be only called from React.", true)]
+      [Obsolete("This method should be only called from React. Use standard delegate syntax instead, with += and -= operators.")]
       public Action AddListener(object callback)
         {
             var cb = Callback.From(callback);
