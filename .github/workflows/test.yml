@@ -28,9 +28,10 @@ jobs:
         platform:
           - ubuntu-20.04
         unity:
-          - { version: "2022.1.14f1" }
+          - { version: "2022.2.1f1" }
+          - { version: "2022.1.24f1" }
           - { version: "2021.1.28f1" }
-          - { version: "2020.3.38f1" }
+          - { version: "2020.3.43f1" }
           - { version: "2019.4.40f1" }
         suite:
           - {
@@ -40,7 +41,7 @@ jobs:
         include:
           - main: true
             coverage: true
-            unity: { version: "2021.3.8f1" }
+            unity: { version: "2021.3.16f1" }
             suite:
               {
                 name: "Unit Tests",
@@ -128,13 +129,16 @@ jobs:
         continue-on-error: true
         env:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
-          REACT_OVERWRITE_SNAPSHOTS: ${{ contains(github.event.head_commit.message, '[snapshots]') && 'true' || 'false' }}
         with:
+          projectPath: tests
+          checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           unityVersion: ${{ matrix.unity.version }}
           testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}
-          customParameters: ${{ matrix.performance && '-profiler-enable' }} ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
-          checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
-          projectPath: tests
+          customParameters: |
+            ${{ contains(github.event.head_commit.message, '[snapshots]') && '-reactOverwriteSnapshots' }}
+            ${{ matrix.performance && '-profiler-enable' }}
+            ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }}
+            -assemblyNames ${{ matrix.suite.assemblies }}
 
       - name: Cache Performance Test Results
         if: matrix.performance
