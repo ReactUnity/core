@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    [ScriptedImporter(2, new string[] {
+    [ScriptedImporter(3, new string[] {
         "css",
-#if UNITY_2021_2 || UNITY_2021_3 || UNITY_2021_4
+#if UNITY_2021_2 || UNITY_2021_3 || UNITY_2021_4 || UNITY_2022_2_OR_NEWER
         "js",
 #endif
     })]
