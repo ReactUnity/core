@@ -492,16 +492,13 @@ namespace ReactUnity.UGUI.Shapes
             bool addIndices
         )
         {
-            Debug.Assert(fullWidth > 0 && fullHeight > 0);
+            tmpUV = uv;
 
             float xMin = center.x - width * 0.5f;
             float yMin = center.y - height * 0.5f;
 
             float xMax = center.x + width * 0.5f;
             float yMax = center.y + height * 0.5f;
-
-            float xMinUV = center.x - fullWidth * 0.5f;
-            float yMinUV = center.y - fullHeight * 0.5f;
 
             // TR
             tmpV3.x = xMax - trRadius.x;
@@ -520,9 +517,6 @@ namespace ReactUnity.UGUI.Shapes
                 tmpPos.x = tmpV3.x + cornerUnitPositions.TRUnitPositions[i].x * trOuterRadius.x;
                 tmpPos.y = tmpV3.y + cornerUnitPositions.TRUnitPositions[i].y * trOuterRadius.y;
                 tmpPos.z = tmpV3.z;
-
-                tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
-                tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
 
                 vh.AddVert(tmpPos, i > hl ? rightColor : topColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -544,9 +538,6 @@ namespace ReactUnity.UGUI.Shapes
                 tmpPos.x = tmpV3.x + cornerUnitPositions.BRUnitPositions[i].x * brOuterRadius.x;
                 tmpPos.y = tmpV3.y + cornerUnitPositions.BRUnitPositions[i].y * brOuterRadius.y;
                 tmpPos.z = tmpV3.z;
-
-                tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
-                tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
 
                 vh.AddVert(tmpPos, i > hl ? bottomColor : rightColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
@@ -570,9 +561,6 @@ namespace ReactUnity.UGUI.Shapes
                 tmpPos.y = tmpV3.y + cornerUnitPositions.BLUnitPositions[i].y * blOuterRadius.y;
                 tmpPos.z = tmpV3.z;
 
-                tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
-                tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
-
                 vh.AddVert(tmpPos, i > hl ? leftColor : bottomColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
 
@@ -595,9 +583,6 @@ namespace ReactUnity.UGUI.Shapes
                 tmpPos.y = tmpV3.y + cornerUnitPositions.TLUnitPositions[i].y * tlOuterRadius.y;
                 tmpPos.z = tmpV3.z;
 
-                tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
-                tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
-
                 vh.AddVert(tmpPos, i > hl ? topColor : leftColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
             }
 
@@ -608,9 +593,6 @@ namespace ReactUnity.UGUI.Shapes
             tmpPos.x = tmpV3.x + cornerUnitPositions.TRUnitPositions[0].x * trOuterRadius.x;
             tmpPos.y = tmpV3.y + cornerUnitPositions.TRUnitPositions[0].y * trOuterRadius.y;
             tmpPos.z = tmpV3.z;
-
-            tmpUV.x = (tmpPos.x - xMinUV) / fullWidth;
-            tmpUV.y = (tmpPos.y - yMinUV) / fullHeight;
 
             vh.AddVert(tmpPos, topColor, tmpUV, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
