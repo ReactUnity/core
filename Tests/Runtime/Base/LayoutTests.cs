@@ -75,9 +75,9 @@ namespace ReactUnity.Tests
 
 
 
-            view.Style.Set("maxHeight", 20);
+            view.Style.Set("maxHeight", 16);
             yield return null;
-            Assert.AreEqual(20, rt.rect.height);
+            Assert.AreEqual(16, rt.rect.height);
 
             view.Style.Set("maxHeight", "auto");
             yield return null;

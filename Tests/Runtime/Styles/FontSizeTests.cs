@@ -27,7 +27,7 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(24, text.fontSize);
+            Assert.AreEqual(16, text.fontSize);
         }
 
         [UGUITest(Style = @"
@@ -43,11 +43,11 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(24, text.fontSize);
+            Assert.AreEqual(16, text.fontSize);
 
             cmp.Style["font-size"] = "150%";
             yield return null;
-            Assert.AreEqual(36, text.fontSize);
+            Assert.AreEqual(24, text.fontSize);
         }
 
         [UGUITest(Style = @"
@@ -63,7 +63,7 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(36, text.fontSize);
+            Assert.AreEqual(24, text.fontSize);
         }
 
         [UGUITest(Style = @"
@@ -92,7 +92,7 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(81, text.fontSize);
+            Assert.AreEqual(54, text.fontSize);
         }
 
         [UGUITest(Script = MultipleLevelsScript, Style = @"
@@ -111,7 +111,7 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(108, text.fontSize);
+            Assert.AreEqual(72, text.fontSize);
         }
 
         [UGUITest(Script = MultipleLevelsScript, Style = @"
@@ -130,9 +130,9 @@ namespace ReactUnity.Tests
             var rt = cmp.RectTransform;
             var text = rt.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            Assert.AreEqual(48, text.fontSize);
-            Assert.AreEqual(480, rt.rect.width);
-            Assert.AreEqual(48 * 4, rt.rect.height);
+            Assert.AreEqual(32, text.fontSize);
+            Assert.AreEqual(320, rt.rect.width);
+            Assert.AreEqual(32 * 4, rt.rect.height);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ReactUnity.Styling.Computed
                     break;
                 case RootValueType.Rem:
                     var hostStyle = style.Context.Host.ComputedStyle;
-                    if (style == hostStyle && ReferenceEquals(prop, StyleProperties.fontSize)) size = 24;
+                    if (style == hostStyle && ReferenceEquals(prop, StyleProperties.fontSize)) size = 16;
                     else size = hostStyle.fontSize;
                     break;
                 case RootValueType.None:

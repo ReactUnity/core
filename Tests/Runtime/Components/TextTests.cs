@@ -131,7 +131,7 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            Assert.AreEqual(29, Cmp.ClientHeight);
+            Assert.AreEqual(19, Cmp.ClientHeight);
 
 
             InsertStyle(@"
@@ -142,7 +142,7 @@ namespace ReactUnity.Tests
             yield return null;
             yield return null;
 
-            Assert.AreEqual(58, Cmp.ClientHeight);
+            Assert.AreEqual(38, Cmp.ClientHeight);
         }
 
 
@@ -261,7 +261,7 @@ Line 6");
             yield return null;
 
             var height = t.rectTransform.rect.height;
-            Assert.AreEqual(169, height, 10);
+            Assert.AreEqual(113, height, 10);
 
 
             Text.Style["max-lines"] = "3";
@@ -269,7 +269,7 @@ Line 6");
             yield return null;
 
             height = t.rectTransform.rect.height;
-            Assert.AreEqual(85, height, 10);
+            Assert.AreEqual(55, height, 10);
 
 
 
@@ -278,7 +278,7 @@ Line 6");
             yield return null;
 
             height = t.rectTransform.rect.height;
-            Assert.AreEqual(169, height, 10);
+            Assert.AreEqual(113, height, 10);
 
 
 
@@ -287,7 +287,7 @@ Line 6");
             yield return null;
 
             height = t.rectTransform.rect.height;
-            Assert.AreEqual(141, height, 10);
+            Assert.AreEqual(94, height, 10);
 
 
 
@@ -295,7 +295,7 @@ Line 6");
             yield return null;
             yield return null;
             height = t.rectTransform.rect.height;
-            Assert.AreEqual(169, height, 10);
+            Assert.AreEqual(113, height, 10);
         }
 
     }
