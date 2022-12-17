@@ -66,17 +66,39 @@ namespace ReactUnity.Tests
 
                     File.WriteAllText(lockfile, "updated");
                 }
-
-                var bytes = File.ReadAllBytes(filePath);
-                expectedTexture = new Texture2D(width, height, TextureFormat.RGB24, false);
-                if (!expectedTexture.LoadImage(bytes))
+                else
                 {
-                    Assert.Fail($"Snapshot failed ({name}): Cannot load image into texture");
-                    return;
-                }
-                expectedTexture.Apply();
+                    var bytes = File.ReadAllBytes(filePath);
+                    expectedTexture = new Texture2D(width, height, TextureFormat.RGB24, false);
+                    if (!expectedTexture.LoadImage(bytes))
+                    {
+                        Assert.Fail($"Snapshot failed ({name}): Cannot load image into texture");
+                        return;
+                    }
+                    expectedTexture.Apply();
 
-                CompareTexture(expectedTexture, croppedCapture, name);
+                    if (TestHelpers.ShouldOverwriteSnapshots)
+                    {
+                        try
+                        {
+                            CompareTexture(expectedTexture, croppedCapture, name);
+                        }
+                        catch (AssertionException ex)
+                        {
+
+                            File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
+                            File.WriteAllText(lockfile, "updated");
+
+                            Assert.Inconclusive(
+                                "Snapshots were different. Overwriting old snapshots as per the preferences. The message was:\n" +
+                                ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        CompareTexture(expectedTexture, croppedCapture, name);
+                    }
+                }
             }
             finally
             {

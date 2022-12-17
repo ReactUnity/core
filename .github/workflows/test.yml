@@ -128,6 +128,7 @@ jobs:
         continue-on-error: true
         env:
           UNITY_LICENSE: ${{ secrets[matrix.unity.license || 'UNITY_LICENSE'] }}
+          REACT_OVERWRITE_SNAPSHOTS: ${{ contains(github.event.head_commit.message, '[snapshots]') && 'true' || 'false' }}
         with:
           unityVersion: ${{ matrix.unity.version }}
           testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}

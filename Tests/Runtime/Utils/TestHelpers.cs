@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;
@@ -105,6 +106,43 @@ namespace ReactUnity.Tests
         public static bool IsDebugEnabled { get; set; } = false;
 #endif
         #endregion
+
+#if UNITY_EDITOR && REACT_UNITY_DEVELOPER
+        const string SnapshotsMenuName = "React/Tests/Overwrite Snapshots";
+        private static bool OverwriteSnapshots
+        {
+            get => UnityEditor.EditorPrefs.GetBool(SnapshotsMenuName, false);
+            set => UnityEditor.EditorPrefs.SetBool(SnapshotsMenuName, value);
+        }
+
+        [UnityEditor.MenuItem(SnapshotsMenuName)]
+        private static void ToggleOverwriteSnapshots()
+        {
+            OverwriteSnapshots = !OverwriteSnapshots;
+        }
+
+        [UnityEditor.MenuItem(SnapshotsMenuName, true)]
+        private static bool ToggleOverwriteSnapshotsValidate()
+        {
+            UnityEditor.Menu.SetChecked(SnapshotsMenuName, OverwriteSnapshots);
+            return true;
+        }
+#else
+        private static bool OverwriteSnapshots { get; set; } = false;
+#endif
+
+        public static bool ShouldOverwriteSnapshots
+        {
+            get
+            {
+                return OverwriteSnapshots ||
+#if REACT_OVERWRITE_SNAPSHOTS
+                    true ||
+#endif
+                    Environment.GetCommandLineArgs().Contains("-reactOverwriteSnapshots") ||
+                    Environment.GetEnvironmentVariable("REACT_OVERWRITE_SNAPSHOTS") == "true";
+            }
+        }
 
         public static bool IsNoGraphics()
         {
