@@ -32,7 +32,7 @@ namespace ReactUnity.Editor
             var currentUnit = property.FindPropertyRelative("unit");
             var currentValue = property.FindPropertyRelative("value");
 
-            var currentUnitInt = currentUnit.enumValueFlag;
+            var currentUnitInt = currentUnit.intValue;
             var currentValueFloat = currentValue.floatValue;
 
             var numerical = (int) YogaUnit.Point == currentUnitInt || (int) YogaUnit.Percent == currentUnitInt;
@@ -60,7 +60,7 @@ namespace ReactUnity.Editor
 
 
             var newUnitValue = EditorGUI.Popup(buttonRect, currentUnitInt, UnitOptions, EditorStyles.popup);
-            currentUnit.enumValueFlag = System.Convert.ToInt32(newUnitValue);
+            currentUnit.intValue = System.Convert.ToInt32(newUnitValue);
 
 
             if (EditorGUI.EndChangeCheck())

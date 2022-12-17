@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -6,6 +5,12 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
+#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
+    using HashCode = ReactUnity.Helpers.HashCode;
+#else
+    using HashCode = System.HashCode;
+#endif
+
     [RequireComponent(typeof(CanvasRenderer))]
     public class WebBorder : MaskableGraphic
     {
