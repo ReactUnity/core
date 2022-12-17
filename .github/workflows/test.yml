@@ -18,6 +18,7 @@ jobs:
   tests:
     name: ${{ matrix.suite.name }} - Unity ${{ matrix.unity.version }}
     permissions:
+      contents: write
       pages: write
       id-token: write
       checks: write
@@ -59,17 +60,20 @@ jobs:
       - name: Checkout core library
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           path: core
 
       - name: Checkout test project
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: ${{ matrix.suite.testBranch || 'tests' }}
           path: tests
 
       - name: Checkout Jint plugin
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: main
           path: jint
           repository: ReactUnity/jint
@@ -77,6 +81,7 @@ jobs:
       - name: Checkout QuickJS plugin
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: main
           path: quickjs
           repository: ReactUnity/quickjs
@@ -84,6 +89,7 @@ jobs:
       - name: Checkout ClearScript plugin
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: main
           path: clearscript
           repository: ReactUnity/clearscript
