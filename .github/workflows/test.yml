@@ -180,7 +180,6 @@ jobs:
           cwd: "./core"
           default_author: github_actions
           message: "Update snapshots"
-          pull: "NO-PULL"
 
       - name: Set artifacts folder ownership to current user
         run: sudo chown -R $(id -u):$(id -g) "${{ github.workspace }}/${{ steps.testRunner.outputs.artifactsPath }}"

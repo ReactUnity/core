@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+#if REACT_UNITY_DEVELOPER
 using System.Reflection;
+#endif
 
 namespace ReactUnity.Editor.Developer
 {
@@ -59,7 +61,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = true,
+                Members = TypescriptModelsGenerator.MemberFlags.All,
                 AllowPointer = false
             };
 
@@ -78,7 +80,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = true,
+                Members = TypescriptModelsGenerator.MemberFlags.All,
                 AllowPointer = false
             };
 
@@ -97,7 +99,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = true,
+                Members = TypescriptModelsGenerator.MemberFlags.All,
                 AllowPointer = false
             };
 
@@ -116,7 +118,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = true,
+                Members = TypescriptModelsGenerator.MemberFlags.All,
                 AllowPointer = false
             };
 
@@ -143,7 +145,6 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = false,
                 AllowPointer = false,
             };
 
@@ -167,7 +168,7 @@ namespace ReactUnity.Editor.Developer
                     ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
                     ExcludedTypes = new List<string> { },
                     AllowGeneric = true,
-                    AllowIndexer = true,
+                    Members = TypescriptModelsGenerator.MemberFlags.All,
                     AllowPointer = true,
                     WriteDocs = true,
                     IncludeExterns = true,
@@ -201,7 +202,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
-                AllowIndexer = true,
+                Members = TypescriptModelsGenerator.MemberFlags.All,
                 AllowPointer = false,
                 IsExternal = true,
             };
