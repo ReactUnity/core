@@ -29,8 +29,8 @@ namespace ReactUnity.UGUI.Internal
 
         public List<WebShadow> ShadowGraphics;
         public List<WebBackgroundImage> BackgroundGraphics;
-        public List<BackgroundImage> MaskGraphics;
-        public BackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
+        public List<WebBackgroundImage> MaskGraphics;
+        public WebBackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
 
         public RectTransform MaskRoot;
 
@@ -337,7 +337,7 @@ namespace ReactUnity.UGUI.Internal
 
             if (MaskGraphics == null)
             {
-                if (validCount > 0) MaskGraphics = new List<BackgroundImage>();
+                if (validCount > 0) MaskGraphics = new List<WebBackgroundImage>();
                 else return;
             }
 
@@ -378,7 +378,7 @@ namespace ReactUnity.UGUI.Internal
             {
                 if (MaskRoot == null)
                 {
-                    var mr = Context.CreateNativeObject("[MaskRoot]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                    var mr = Context.CreateNativeObject("[MaskRoot]", typeof(RectTransform), typeof(WebBackgroundImage), typeof(Mask));
                     MaskRoot = mr.transform as RectTransform;
                     var children = Component.RectTransform.OfType<RectTransform>().ToList();
                     FullStretch(MaskRoot, Component.RectTransform);
@@ -389,18 +389,19 @@ namespace ReactUnity.UGUI.Internal
 
                 var mask = MaskRoot.GetComponent<Mask>();
                 mask.showMaskGraphic = false;
-                var img = MaskRoot.GetComponent<BackgroundImage>();
+                var img = MaskRoot.GetComponent<WebBackgroundImage>();
                 img.color = Color.clear;
                 img.Context = Context;
                 mask.enabled = img.enabled = true;
+
                 MaskGraphics.Add(img);
             }
             else
             {
-                var sd = Context.CreateNativeObject("[Mask]", typeof(RectTransform), typeof(BackgroundImage), typeof(Mask));
+                var sd = Context.CreateNativeObject("[Mask]", typeof(RectTransform), typeof(WebBackgroundImage), typeof(Mask));
                 var mask = sd.GetComponent<Mask>();
                 mask.showMaskGraphic = false;
-                var img = sd.GetComponent<BackgroundImage>();
+                var img = sd.GetComponent<WebBackgroundImage>();
                 img.color = Color.clear;
                 img.Context = Context;
 
@@ -421,7 +422,7 @@ namespace ReactUnity.UGUI.Internal
             if (i == 0)
             {
                 var mask = MaskRoot.GetComponent<Mask>();
-                var img = MaskRoot.GetComponent<BackgroundImage>();
+                var img = MaskRoot.GetComponent<WebBackgroundImage>();
                 mask.enabled = img.enabled = false;
             }
             else
