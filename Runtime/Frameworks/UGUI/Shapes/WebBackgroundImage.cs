@@ -130,7 +130,7 @@ namespace ReactUnity.UGUI.Shapes
             get
             {
                 var baseMat = base.materialForRendering;
-                if (definition?.DoesNotModifyMaterial ?? true) return baseMat;
+                if (Definition?.DoesNotModifyMaterial ?? true) return baseMat;
 
                 var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
                 var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
@@ -301,91 +301,145 @@ namespace ReactUnity.UGUI.Shapes
 #endif
 
 
-        private static (float, float, int) CalculateRepeat(float size, float totalSize, BackgroundRepeat repeat)
+        private static (float, float, int, float) CalculateRepeat(float size, float totalSize, float pos, BackgroundRepeat repeat)
         {
             var rt = totalSize / size;
 
             var tile = size;
             var spacing = 0f;
             var count = Mathf.CeilToInt(rt);
+            var startPos = pos;
 
-            if (repeat == BackgroundRepeat.NoRepeat) count = 1;
+            if (repeat == BackgroundRepeat.NoRepeat)
+            {
+                count = 1;
+            }
             else if (repeat == BackgroundRepeat.Round)
             {
-                count = Mathf.RoundToInt(rt);
+                count = Mathf.Max(1, Mathf.RoundToInt(rt));
                 tile = totalSize / count;
             }
             else if (repeat == BackgroundRepeat.Space)
             {
                 count = Mathf.FloorToInt(rt);
-                spacing = (totalSize - tile * count) / (count - 1);
+
+                if (count > 1)
+                {
+                    spacing = (totalSize - tile * count) / (count - 1);
+                    startPos = 0;
+                }
+                else
+                {
+                    count = 1;
+                    spacing = 0f;
+                }
             }
 
 
-            return (tile, spacing, count);
+            if (repeat == BackgroundRepeat.Repeat || repeat == BackgroundRepeat.Round)
+            {
+                if (startPos > 0)
+                {
+                    var stCount = Mathf.Ceil(Mathf.Abs(startPos) / tile);
+                    startPos = startPos - stCount * tile;
+                    count++;
+                }
+                else if (startPos < 0)
+                {
+                    var stCount = Mathf.Floor(Mathf.Abs(startPos) / tile);
+                    startPos = startPos + stCount * tile;
+                    count++;
+                }
+            }
+
+            return (tile, spacing, count, startPos);
         }
 
         protected override void OnPopulateMesh(VertexHelper vh)
         {
             vh.Clear();
-            Rect pixelRect = RectTransformUtility.PixelAdjustRect(rectTransform, canvas);
-
-            var width = pixelRect.width;
-            var height = pixelRect.height;
-
-            var size = new Vector2(width, height);
-
+            var size = RectTransformUtility.PixelAdjustRect(rectTransform, canvas).size;
 
             var szPoint = CalculateSize(size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
             var psPoint = BackgroundPosition.GetPointValue(size - szPoint, 0, true);
 
-            var (tileX, spacingX, countX) = CalculateRepeat(szPoint.x, width, BackgroundRepeatX);
-            var (tileY, spacingY, countY) = CalculateRepeat(szPoint.y, height, BackgroundRepeatY);
+            var (tileX, spacingX, countX, startPosX) = CalculateRepeat(szPoint.x, size.x, psPoint.x, BackgroundRepeatX);
+            var (tileY, spacingY, countY, startPosY) = CalculateRepeat(szPoint.y, size.y, psPoint.y, BackgroundRepeatY);
 
-            var ct0 = Vector2.zero;
-            var ct1 = Vector2.up;
-            var ct2 = Vector2.right;
-            var ct3 = Vector2.one;
+            var offset = size * rectTransform.pivot;
 
             for (int x = 0; x < countX; x++)
             {
+                var tx = x * tileX;
+                var spx = x * spacingX;
+
+                var x0 = tx + spx + startPosX;
+                var x1 = x0 + tileX;
+
+                var ux0 = 0f;
+                var ux1 = 1f;
+
+                if (x1 <= 0 || x0 >= size.x) continue;
+
+                if (x1 > size.x)
+                {
+                    ux1 = (size.x - x0) / tileX;
+                    x1 = size.x;
+                }
+
+                if (x0 < 0)
+                {
+                    ux0 = -x0 / tileX;
+                    x0 = 0;
+                }
+
+
                 for (int y = 0; y < countY; y++)
                 {
-                    var tx = x * tileX;
                     var ty = y * tileY;
-                    var spx = x * spacingX;
                     var spy = y * spacingY;
-                    var dx = tx + spx;
-                    var dy = ty + spy;
-                    var d = new Vector2(dx, dy) + psPoint - size * rectTransform.pivot;
-                    var t = new Vector2(tileX, tileY);
 
-                    var c0 = d + ct0 * t;
-                    var c1 = d + ct1 * t;
-                    var c2 = d + ct2 * t;
-                    var c3 = d + ct3 * t;
+                    var y0 = ty + spy + startPosY;
+                    var y1 = y0 + tileY;
+
+                    var uy0 = 0f;
+                    var uy1 = 1f;
+
+                    if (y1 <= 0 || y0 >= size.y) continue;
+
+                    if (y1 > size.y)
+                    {
+                        uy1 = (size.y - y0) / tileY;
+                        y1 = size.y;
+                    }
+
+                    if (y0 < 0)
+                    {
+                        uy0 = -y0 / tileY;
+                        y0 = 0;
+                    }
+
+
+                    var p00 = new Vector2(x0, y0) - offset;
+                    var p01 = new Vector2(x0, y1) - offset;
+                    var p10 = new Vector2(x1, y0) - offset;
+                    var p11 = new Vector2(x1, y1) - offset;
+
+                    var u00 = new Vector2(ux0, uy0);
+                    var u01 = new Vector2(ux0, uy1);
+                    var u10 = new Vector2(ux1, uy0);
+                    var u11 = new Vector2(ux1, uy1);
+
+
                     var ind = vh.currentVertCount;
 
+                    vh.AddVert(p00, color, u00, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(p01, color, u01, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(p10, color, u10, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(p11, color, u11, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
 
-                    var xs = c0.x < size.x;
-                    var ys = c0.y < size.y;
-                    var xe = c3.x > size.x;
-                    var ye = c3.y > size.y;
-
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (i == 0)
-                        {
-
-                            vh.AddVert(c0, color, ct0, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                            vh.AddVert(c1, color, ct1, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                            vh.AddVert(c2, color, ct2, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                            vh.AddVert(c3, color, ct3, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-
-                            vh.AddTriangle(ind, ind + 1, ind + 2);
-                            vh.AddTriangle(ind + 1, ind + 3, ind + 2);
-                        }
-                    }
+                    vh.AddTriangle(ind, ind + 1, ind + 2);
+                    vh.AddTriangle(ind + 1, ind + 3, ind + 2);
                 }
             }
         }
