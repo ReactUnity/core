@@ -21,12 +21,12 @@ namespace ReactUnity.Tests.Editor.Renderer
             yield return null;
 
 
-            Assert.AreEqual(120, view.Element.layout.width, 0.5f);
+            Assert.AreEqual(160, view.Element.layout.width, 0.5f);
 
-            Context.InsertStyle(@":root { font-size: 16px; }");
+            Context.InsertStyle(@":root { font-size: 20px; }");
             yield return null;
 
-            Assert.AreEqual(160, view.Element.layout.width, 0.5f);
+            Assert.AreEqual(200, view.Element.layout.width, 0.5f);
         }
     }
 }

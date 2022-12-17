@@ -4,6 +4,7 @@
 
 #if REACT_QUICKJS
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using QuickJS;
@@ -217,6 +218,23 @@ namespace ReactUnity.Scripting
 
             Runtime?.Shutdown();
             Runtime = null;
+        }
+
+        public IEnumerable<object> TraverseScriptArray(object obj)
+        {
+            if (obj is IEnumerable eo)
+            {
+                foreach (var kv in eo) yield return kv;
+            }
+            else if (obj is ScriptValue jv)
+            {
+                var len = jv.GetProperty<int>("length");
+
+                for (int i = 0; i < len; i++)
+                {
+                    yield return jv.GetProperty<object>(i + "");
+                }
+            }
         }
 
         public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)

@@ -4,6 +4,7 @@
 
 #if REACT_CLEARSCRIPT
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.ClearScript;
@@ -192,6 +193,26 @@ namespace ReactUnity.Scripting
             Engine?.CollectGarbage(true);
             Engine?.Dispose();
             Engine = null;
+        }
+
+        public IEnumerable<object> TraverseScriptArray(object obj)
+        {
+            if (obj is IEnumerable eo)
+            {
+                foreach (var kv in eo) yield return kv;
+            }
+            else if (obj is ScriptObject jv)
+            {
+                var length = jv.GetProperty("length");
+
+                if (length is double len)
+                {
+                    for (int i = 0; i < len; i++)
+                    {
+                        yield return jv.GetProperty(i + "");
+                    }
+                }
+            }
         }
 
         public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)

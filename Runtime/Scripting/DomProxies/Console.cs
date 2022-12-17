@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -19,13 +20,15 @@ namespace ReactUnity.Scripting.DomProxies
             this.ctx = ctx;
         }
 
-        private void GenericLog(object msg, Action<string> baseCaller, object[] subs)
+        private void GenericLog(object msg, Action<string> baseCaller, object subsObj)
         {
             string res = msg?.ToString() ?? "";
 
             var matches = replaceRegex.Matches(res);
 
             var aStringBuilder = new StringBuilder(res);
+
+            var subs = ctx.Script.Engine.TraverseScriptArray(subsObj).ToArray();
 
             if (subs != null)
             {
@@ -50,32 +53,32 @@ namespace ReactUnity.Scripting.DomProxies
             baseCaller(aStringBuilder.ToString());
         }
 
-        public void log(object msg, object[] subs)
+        public void log(object msg, object subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void info(object msg, object[] subs)
+        public void info(object msg, object subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void debug(object msg, object[] subs)
+        public void debug(object msg, object subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void warn(object msg, object[] subs)
+        public void warn(object msg, object subs)
         {
             GenericLog(msg, Debug.LogWarning, subs);
         }
 
-        public void error(object msg, object[] subs)
+        public void error(object msg, object subs)
         {
             GenericLog(msg, Debug.LogError, subs);
         }
 
-        public void dir(object msg, object[] subs)
+        public void dir(object msg, object subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }

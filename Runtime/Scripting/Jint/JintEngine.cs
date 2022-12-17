@@ -4,6 +4,7 @@
 
 #if REACT_JINT
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -143,6 +144,26 @@ namespace ReactUnity.Scripting
 
         public void Dispose()
         {
+        }
+
+        public IEnumerable<object> TraverseScriptArray(object obj)
+        {
+            if (obj is IEnumerable eo)
+            {
+                foreach (var kv in eo) yield return kv;
+            }
+            else if (obj is ObjectInstance jv)
+            {
+                var length = jv.Get("length").ToObject();
+
+                if (length is double len)
+                {
+                    for (int i = 0; i < len; i++)
+                    {
+                        yield return jv.Get(i + "").ToObject();
+                    }
+                }
+            }
         }
 
         public IEnumerator<KeyValuePair<string, object>> TraverseScriptObject(object obj)
