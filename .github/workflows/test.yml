@@ -30,7 +30,7 @@ jobs:
           - ubuntu-20.04
         unity:
           - { version: "2022.2.1f1" }
-          - { version: "2022.1.23f1" }
+          - { version: "2022.1.24f1" }
           - { version: "2021.1.28f1" }
           - { version: "2020.3.43f1" }
           - { version: "2019.4.40f1" }
@@ -99,8 +99,6 @@ jobs:
         with:
           path: tests/Library
           key: Library-${{ matrix.unity.version }}-${{ matrix.platform || 'ubuntu-20.04' }}
-          restore-keys: |
-            Library-
 
       - name: Clear React Unity package lock
         run: |
@@ -119,15 +117,6 @@ jobs:
       - name: Install TMP v2
         if: startsWith(matrix.unity.version, '2019')
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
-
-      - name: Cache Unity Library
-        uses: actions/cache@v3
-        with:
-          path: tests/Library
-          key: Unity-Library-${{matrix.platform}}-${{ matrix.unity.version }}
-          restore-keys: |
-            Unity-Library-${{matrix.platform}}
-            Unity-Library-
 
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
