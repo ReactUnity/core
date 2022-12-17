@@ -19,53 +19,63 @@ namespace ReactUnity.Scripting.DomProxies
             this.ctx = ctx;
         }
 
-        private void GenericLog(object msg, Action<string> baseCaller, params object[] subs)
+        private void GenericLog(object msg, Action<string> baseCaller, object[] subs)
         {
             string res = msg?.ToString() ?? "";
 
             var matches = replaceRegex.Matches(res);
 
-
             var aStringBuilder = new StringBuilder(res);
 
-            for (int i = matches.Count - 1; i >= 0; i--)
+            if (subs != null)
             {
-                var match = matches[i];
-                var sub = subs.Length > i ? subs[i] : match.Value;
+                for (int i = matches.Count - 1; i >= 0; i--)
+                {
+                    var match = matches[i];
+                    var sub = subs.Length > i ? subs[i] : match.Value;
 
-                aStringBuilder.Remove(match.Index, match.Length);
-                aStringBuilder.Insert(match.Index, sub);
+                    aStringBuilder.Remove(match.Index, match.Length);
+                    aStringBuilder.Insert(match.Index, sub);
+                }
+
+                for (int i = matches.Count; i < subs.Length; i++)
+                {
+                    var sub = subs[i];
+
+                    aStringBuilder.Append(" ");
+                    aStringBuilder.Append(sub);
+                }
             }
 
             baseCaller(aStringBuilder.ToString());
         }
 
-        public void log(object msg, params object[] subs)
+        public void log(object msg, object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void info(object msg, params object[] subs)
+        public void info(object msg, object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void debug(object msg, params object[] subs)
+        public void debug(object msg, object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
 
-        public void warn(object msg, params object[] subs)
+        public void warn(object msg, object[] subs)
         {
             GenericLog(msg, Debug.LogWarning, subs);
         }
 
-        public void error(object msg, params object[] subs)
+        public void error(object msg, object[] subs)
         {
             GenericLog(msg, Debug.LogError, subs);
         }
 
-        public void dir(object msg, params object[] subs)
+        public void dir(object msg, object[] subs)
         {
             GenericLog(msg, Debug.Log, subs);
         }
@@ -79,8 +89,7 @@ namespace ReactUnity.Scripting.DomProxies
             }
             Counters[name] = count + 1;
 
-
-            Debug.Log($"{name}: {count}");
+            Debug.Log($"Count[{name}]: {count}");
             return count;
         }
 

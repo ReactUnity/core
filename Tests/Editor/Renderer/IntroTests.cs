@@ -3,6 +3,7 @@ using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.UIToolkit;
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Tests.Editor.Renderer
@@ -58,6 +59,25 @@ namespace ReactUnity.Tests.Editor.Renderer
             var rt = cmp.Element;
 
             Assert.AreEqual(Color.red, rt.style.color.value);
+        }
+
+        [EditorInjectableTest]
+        public IEnumerator ConsoleWorks()
+        {
+            yield return null;
+            var eng = Context.Script;
+
+            LogAssert.Expect(LogType.Log, "hey");
+            eng.ExecuteScript("console.log('hey')");
+
+            LogAssert.Expect(LogType.Log, "hey you");
+            eng.ExecuteScript("console.log('hey', 'you')");
+
+            LogAssert.Expect(LogType.Log, "hey you too");
+            eng.ExecuteScript("console.log('hey', 'you', 'too')");
+
+            LogAssert.Expect(LogType.Log, "hey you 2");
+            eng.ExecuteScript("console.log('hey', 'you', 2)");
         }
     }
 }

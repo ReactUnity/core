@@ -156,14 +156,13 @@ namespace ReactUnity.Scripting
             engine.Execute(@"(function() {
                 var _console = global.__console;
                 global.console = {
-                    log:       function log       (arg) { _console.log(arg)           },
-                    info:      function info      (arg) { _console.info(arg)          },
-                    debug:     function debug     (arg) { _console.debug(arg)         },
-                    trace:     function trace     (arg) { _console.debug(arg)         },
-                    warn:      function warn      (arg) { _console.warn(arg)          },
-                    error:     function error     (arg) { _console.error(arg)         },
-                    exception: function exception (arg) { _console.exception(arg)     },
-                    dir:       function dir       (arg) { _console.dir(arg)           },
+                    log:       function log       ()    { _console.log   (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    info:      function info      ()    { _console.info  (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    debug:     function debug     ()    { _console.debug (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    trace:     function trace     ()    { _console.debug (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    warn:      function warn      ()    { _console.warn  (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    error:     function error     ()    { _console.error (arguments[0], Array.prototype.slice.call(arguments, 1)) },
+                    dir:       function dir       ()    { _console.dir   (arguments[0], Array.prototype.slice.call(arguments, 1)) },
                     clear:     function clear     (arg) { _console.clear(arg)         },
                     assert:    function assert    (arg) { _console.assert(arg)        },
                     count:     function count    (name) { return _console.count(name) },
