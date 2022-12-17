@@ -156,8 +156,8 @@ namespace ReactUnity.UGUI.Internal
             Root.offsetMin = -min;
             Root.offsetMax = -max;
 
-            Border.offsetMin = min;
-            Border.offsetMax = max;
+            Border.offsetMin = Vector2.zero;
+            Border.offsetMax = Vector2.zero;
 
             BackgroundRoot.offsetMin = min;
             BackgroundRoot.offsetMax = max;
