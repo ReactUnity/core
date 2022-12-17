@@ -466,7 +466,11 @@ namespace ReactUnity.Styling.Rules
 
             ScreenBrightness = Screen.brightness;
             ScreenDpi = Screen.dpi;
+#if UNITY_2022_2_OR_NEWER
+            ScreenRefreshRate = (float) Screen.currentResolution.refreshRateRatio.value;
+#else
             ScreenRefreshRate = Screen.currentResolution.refreshRate;
+#endif
             ScreenSize = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
             WindowSize = new Vector2(Screen.width, Screen.height);
         }

@@ -27,6 +27,7 @@ namespace ReactUnity.Helpers
     {
         public object callback;
         private ReactContext context;
+        public bool Destroyed { get; private set; } = false;
 
         public static Callback Noop = new Callback((object) null, null);
 
@@ -160,6 +161,7 @@ namespace ReactUnity.Helpers
 
         public void Dispose()
         {
+            Destroyed = true;
             callback = null;
             context = null;
         }
