@@ -15,7 +15,7 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<YogaAlign> AlignSelf = new LayoutProperty<YogaAlign>("AlignSelf");
         public static readonly LayoutProperty<YogaAlign> AlignContent = new LayoutProperty<YogaAlign>("AlignContent");
         public static readonly LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
-        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", true);
+        public static readonly LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow");
         public static readonly LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true, float.NaN);
         public static readonly LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
         public static readonly LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);

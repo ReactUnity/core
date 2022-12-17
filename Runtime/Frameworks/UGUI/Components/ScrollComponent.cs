@@ -40,7 +40,7 @@ namespace ReactUnity.UGUI
         {
             ScrollRect = AddComponent<SmoothScrollRect>();
 
-            var viewport = ctx.CreateNativeObject("[ScrollViewport]").AddComponent<RectTransform>();
+            var viewport = ctx.CreateNativeObject("[ScrollViewport]", typeof(RectTransform), typeof(RectMask2D)).GetComponent<RectTransform>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;
@@ -49,9 +49,12 @@ namespace ReactUnity.UGUI
             viewport.pivot = Vector2.up;
             viewport.offsetMin = new Vector2(0, -1);
             viewport.offsetMax = new Vector2(1, 0);
-            var vpImage = viewport.gameObject.AddComponent<Image>();
-            vpImage.color = Color.clear;
 
+            // Make element clickable in everywhere
+            var vpImage = viewport.gameObject.AddComponent<RawImage>();
+            vpImage.maskable = false;
+            vpImage.raycastTarget = true;
+            vpImage.color = Color.clear;
 
             var content = ctx.CreateNativeObject("[ScrollContent]").AddComponent<RectTransform>();
             Container = content;

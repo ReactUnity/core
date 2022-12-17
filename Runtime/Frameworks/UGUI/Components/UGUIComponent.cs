@@ -319,7 +319,7 @@ namespace ReactUnity.UGUI
         {
             var computed = ComputedStyle;
             var mask = OverflowMask;
-            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) != YogaOverflow.Visible;
+            var hasMask = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow) == YogaOverflow.Hidden;
 
             // Mask is not defined and there is no need for it
             if (!hasMask && mask == null) return;
