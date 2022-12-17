@@ -92,6 +92,8 @@ namespace ReactUnity.UGUI.Shapes
             ref RoundedCornerUnitPositionData cornerUnitPositions
         )
         {
+            if (width <= 0 || height <= 0) return;
+
             if (roundedProperties.Type == WebRoundingProperties.RoundedType.None)
             {
                 RectUtils.AddRect(
@@ -180,6 +182,8 @@ namespace ReactUnity.UGUI.Shapes
             bool addIndices
         )
         {
+            Debug.Assert(fullWidth > 0 && fullHeight > 0);
+
             float xMin = center.x - width * 0.5f;
             float yMin = center.y - height * 0.5f;
 

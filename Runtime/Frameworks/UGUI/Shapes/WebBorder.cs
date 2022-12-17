@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -220,6 +220,8 @@ namespace ReactUnity.UGUI.Shapes
 
             if (rounding.Type == WebRoundingProperties.RoundedType.None)
             {
+                if (width <= 0 || height <= 0) return;
+
                 AddRectRing(
                     ref vh,
                     outline,
@@ -235,6 +237,8 @@ namespace ReactUnity.UGUI.Shapes
 
                 return;
             }
+
+            if (fullWidth <= 0 || fullHeight <= 0) return;
 
             RoundedCornerUnitPositionData.SetCornerUnitPositions(
                 rounding,
@@ -357,6 +361,8 @@ namespace ReactUnity.UGUI.Shapes
             bool addRingIndices = false
         )
         {
+            Debug.Assert(totalWidth > 0 && totalHeight > 0);
+
             float uvXInset = 0.5f - width / totalWidth * 0.5f;
             float uvYInset = 0.5f - height / totalHeight * 0.5f;
 

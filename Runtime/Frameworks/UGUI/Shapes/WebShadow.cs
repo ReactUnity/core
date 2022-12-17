@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -254,8 +254,8 @@ namespace ReactUnity.UGUI.Shapes
 
             if (noHardEdge)
             {
-                var ratioX = Mathf.Min(1, width / bl2);
-                var ratioY = Mathf.Min(1, height / bl2);
+                var ratioX = Mathf.Min(1, bl2 == 0 ? 1 : width / bl2);
+                var ratioY = Mathf.Min(1, bl2 == 0 ? 1 : height / bl2);
                 var minRatio = Mathf.Min(ratioX, ratioY);
                 baseColor = new Color32(color.r, color.g, color.b, (byte) (color.a * minRatio * minRatio));
             }
@@ -487,6 +487,8 @@ namespace ReactUnity.UGUI.Shapes
             bool addIndices
         )
         {
+            Debug.Assert(fullWidth > 0 && fullHeight > 0);
+
             float xMin = center.x - width * 0.5f;
             float yMin = center.y - height * 0.5f;
 

@@ -115,10 +115,10 @@ namespace ReactUnity.UGUI.Shapes
 
             // Pixel unit of each corner - tl,tr,br,bl
             var pixelUnits = new Vector4(
-                Mathf.Min(size.x / sums.x, size.y / sums.w),
-                Mathf.Min(size.x / sums.x, size.y / sums.y),
-                Mathf.Min(size.x / sums.z, size.y / sums.y),
-                Mathf.Min(size.x / sums.z, size.y / sums.w)
+                Mathf.Min(sums.x == 0 ? 0 : size.x / sums.x, sums.w == 0 ? 0 : size.y / sums.w),
+                Mathf.Min(sums.x == 0 ? 0 : size.x / sums.x, sums.y == 0 ? 0 : size.y / sums.y),
+                Mathf.Min(sums.z == 0 ? 0 : size.x / sums.z, sums.y == 0 ? 0 : size.y / sums.y),
+                Mathf.Min(sums.z == 0 ? 0 : size.x / sums.z, sums.w == 0 ? 0 : size.y / sums.w)
             );
 
             // Final sizes of corner border radii (horizontal)

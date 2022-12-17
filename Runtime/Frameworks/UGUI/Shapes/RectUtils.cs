@@ -41,6 +41,8 @@ namespace ReactUnity.UGUI.Shapes
             bool addRingIndices = false
         )
         {
+            Debug.Assert(totalWidth > 0 && totalHeight > 0);
+
             float uvXInset = 0.5f - width / totalWidth * 0.5f;
             float uvYInset = 0.5f - height / totalHeight * 0.5f;
 

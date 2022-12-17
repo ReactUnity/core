@@ -33,10 +33,7 @@ namespace ReactUnity.UGUI.Shapes
             var count = resolution;
             count += count % 2 == 0 ? 2 : 1;
 
-            if (count % 2 == 0)
-            {
-                count++;
-            }
+            if (count % 2 == 0) count++;
 
             bool needsUpdate = forceUpdate;
 
