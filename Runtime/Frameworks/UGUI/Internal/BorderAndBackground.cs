@@ -257,7 +257,6 @@ namespace ReactUnity.UGUI.Internal
                 sd.BackgroundRepeatY = repeatYs.Get(i);
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
                 sd.BackgroundSize = sizes.Get(i);
-                sd.SetMaterialDirty();
             }
         }
 
@@ -368,7 +367,6 @@ namespace ReactUnity.UGUI.Internal
                 sd.BackgroundRepeatY = repeatYs.Get(i);
                 sd.BackgroundPosition = new YogaValue2(positionsX.Get(i), positionsY.Get(i));
                 sd.BackgroundSize = sizes.Get(i);
-                sd.SetMaterialDirty();
             }
         }
 

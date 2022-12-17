@@ -68,7 +68,9 @@ namespace ReactUnity.UGUI.Internal
             set
             {
                 definition = value;
-                SetMaterialDirty();
+
+                if (definition != null && !definition.DoesNotModifyMaterial)
+                    SetMaterialDirty();
             }
         }
 
@@ -160,7 +162,9 @@ namespace ReactUnity.UGUI.Internal
         {
             var rect = ((RectTransform) transform).rect;
             Size = new Vector2(rect.width, rect.height);
-            SetMaterialDirty();
+
+            if (definition != null && !definition.DoesNotModifyMaterial)
+                SetMaterialDirty();
 
             var mask = GetComponent<Mask>();
             if (mask) MaskUtilities.NotifyStencilStateChanged(mask);
