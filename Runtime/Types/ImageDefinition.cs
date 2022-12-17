@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
@@ -20,6 +21,8 @@ namespace ReactUnity.Types
         }
 
         public static ImageDefinition NoImage => UrlImageDefinition.None;
+
+        public virtual Material DefaultMaterial => null;
 
         public virtual bool DoesNotModifyMaterial => false;
         public virtual bool SizeUpdatesGraphic => false;
@@ -105,6 +108,7 @@ namespace ReactUnity.Types
     {
         public BaseGradient Gradient { get; }
         public override bool SizeUpdatesGraphic => Gradient.SizeUpdatesGraphic;
+        public override Material DefaultMaterial => ResourcesHelper.BackgroundImageMaterial;
 
         public GradientImageDefinition(BaseGradient gradient)
         {

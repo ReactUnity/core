@@ -71,6 +71,7 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 definition = value;
+                material = definition?.DefaultMaterial;
                 SetMaterialDirty();
             }
         }
@@ -139,7 +140,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 var props = new ShaderProps
                 {
-                    BaseMaterial = ResourcesHelper.BackgroundImageMaterial,
+                    BaseMaterial = baseMat,
                     Size = sz,
                     Pos = ps,
                     RepeatX = (int) BackgroundRepeatX,
