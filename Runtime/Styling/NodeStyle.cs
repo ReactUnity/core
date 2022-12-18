@@ -30,6 +30,7 @@ namespace ReactUnity.Styling
         public bool visibility => GetStyleValue(StyleProperties.visibility);
         public PositionType position => GetStyleValue(StyleProperties.position);
         public ICssValueList<Types.Cursor> cursor => GetStyleValue(StyleProperties.cursor);
+        public Isolation isolation => GetStyleValue(StyleProperties.isolation);
         public PointerEvents pointerEvents => GetStyleValue(StyleProperties.pointerEvents);
         public YogaValue2 borderTopLeftRadius => GetStyleValue(StyleProperties.borderTopLeftRadius);
         public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);

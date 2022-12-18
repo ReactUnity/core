@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");
+        public static readonly StyleProperty<Isolation> isolation = new StyleProperty<Isolation>("isolation", Isolation.Auto);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
         public static readonly StyleProperty<YogaValue2> borderTopLeftRadius = new StyleProperty<YogaValue2>("borderTopLeftRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
         public static readonly StyleProperty<YogaValue2> borderTopRightRadius = new StyleProperty<YogaValue2>("borderTopRightRadius", YogaValue2.Zero, true, converter: AllConverters.BorderRadiusConverter);
@@ -107,6 +108,7 @@ namespace ReactUnity.Styling
             { "visibility", visibility },
             { "position", position },
             { "cursor", cursor },
+            { "isolation", isolation },
             { "pointerEvents", pointerEvents },
             { "borderTopLeftRadius", borderTopLeftRadius },
             { "borderTopRightRadius", borderTopRightRadius },

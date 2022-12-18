@@ -292,6 +292,7 @@ namespace ReactUnity.UGUI
             var visibility = ComputedStyle.visibility;
             var none = Layout.Display == YogaDisplay.None;
             var interaction = ComputedStyle.pointerEvents;
+            var isolated = ComputedStyle.isolation == Isolation.Isolate;
 
             if (!visibility || none) opacity = 0;
             if (none) interaction = PointerEvents.None;
@@ -304,9 +305,10 @@ namespace ReactUnity.UGUI
 
             var group = CanvasGroup;
             // Group does not exist and there is no need for it, quit early
-            if (!group && !isTransparent && hasInteraction) return;
+            if (!group && !isolated && !isTransparent && hasInteraction) return;
             if (!group) group = AddComponent<CanvasGroup>();
 
+            group.ignoreParentGroups = isolated;
             group.alpha = opacity;
             group.interactable = hasInteraction;
 
