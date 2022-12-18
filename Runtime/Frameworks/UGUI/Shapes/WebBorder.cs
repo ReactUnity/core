@@ -1,48 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
-#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
-    using HashCode = ReactUnity.Helpers.HashCode;
-#else
-    using HashCode = System.HashCode;
-#endif
-
     [RequireComponent(typeof(CanvasRenderer))]
     public class WebBorder : MaskableGraphic
     {
-        private struct ShaderProps
-        {
-            public Material BaseMaterial;
-            public int Stencil;
-
-            public override bool Equals(object obj)
-            {
-                return obj is ShaderProps props &&
-                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
-                       Stencil == props.Stencil;
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(BaseMaterial, Stencil);
-            }
-
-            public void SetToMaterial(Material mat)
-            {
-                mat.SetInt("_StencilComp", (int) CompareFunction.Equal);
-                mat.SetInt("_StencilOp", (int) StencilOp.Zero);
-                mat.SetFloat("_Stencil", Stencil);
-
-            }
-        }
-
-        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
-
-
         [SerializeField]
         private WebRoundingProperties rounding = new WebRoundingProperties();
 
@@ -178,32 +141,6 @@ namespace ReactUnity.UGUI.Shapes
 
             InnerRounding = Rounding.OffsetBorder(GetInnerRect().size, borderSizes);
         }
-
-
-        public override Material materialForRendering
-        {
-            get
-            {
-                Material baseMat = base.materialForRendering;
-                var stencil = (int) baseMat.GetFloat("_Stencil") >> 1;
-
-                var props = new ShaderProps
-                {
-                    BaseMaterial = baseMat,
-                    Stencil = stencil,
-                };
-
-                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
-                {
-                    result = new Material(baseMat);
-                    props.SetToMaterial(result);
-                    CachedMaterials[props] = result;
-                }
-
-                return result;
-            }
-        }
-
 
         static Vector3 tmpPos = Vector3.zero;
         static Vector2 tmpUVPos = Vector2.zero;
