@@ -150,17 +150,19 @@ namespace ReactUnity.Styling.Converters
         private const float CM = 37.8f;
         private const float IN = 96f;
 
+        public static Dictionary<string, float> UnitValueMap = new Dictionary<string, float>
+        {
+            { "px", 1 },
+            { "cm", CM },
+            { "mm", CM / 10 },
+            { "Q", CM / 40f },
+            { "in", IN },
+            { "pc", IN / 6 },
+            { "pt", IN / 72f },
+        };
+
         public LengthConverter() : base(
-            new Dictionary<string, float>
-            {
-                { "px", 1 },
-                { "cm", CM },
-                { "mm", CM / 10 },
-                { "Q", CM / 40f },
-                { "in", IN },
-                { "pc", IN / 6 },
-                { "pt", IN / 72f },
-            },
+            UnitValueMap,
             new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
@@ -170,9 +172,10 @@ namespace ReactUnity.Styling.Converters
                 { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedPercentage(x) },
-                //{ "lh", x => new DynamicFontSizeValue(x) },
-                //{ "ex", x => new DynamicFontSizeValue(x / 2) },
-                //{ "ch", x => new DynamicFontSizeValue(x / 2) }
+                { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
+                { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
+                { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
+                { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
             }
         )
         { }
@@ -183,16 +186,7 @@ namespace ReactUnity.Styling.Converters
     public class FontSizeConverter : FloatConverter
     {
         public FontSizeConverter() : base(
-            new Dictionary<string, float>
-            {
-                { "px", 1 },
-                { "pt", 96f / 72f },
-                { "pc", 16 },
-                { "in", 96 },
-                { "cm", 38 },
-                { "mm", 3.8f },
-                { "Q", 38f / 40f },
-            },
+            LengthConverter.UnitValueMap,
             new Dictionary<string, Func<float, object>>
             {
                 { "rem", x => new ComputedRootRelative(x, ComputedRootRelative.RootValueType.Rem) },
@@ -202,9 +196,10 @@ namespace ReactUnity.Styling.Converters
                 { "vmax", x => new ComputedRootRelative(x / 100f, ComputedRootRelative.RootValueType.Max) },
                 { "em", x => new ComputedFontSize(x) },
                 { "%", x => new ComputedFontSize(x / 100f) },
-                //{ "lh", x => new DynamicFontSizeValue(x) },
-                //{ "ex", x => new DynamicFontSizeValue(x / 2) },
-                //{ "ch", x => new DynamicFontSizeValue(x / 2) }
+                { "lh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.LineHeight) },
+                { "rlh", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.RootLineHeight) },
+                { "ch", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.CharacterWidth) },
+                { "ex", x => new ComputedFontProperty(x, ComputedFontProperty.FontPropertyType.XHeight) },
             }
         )
         { }

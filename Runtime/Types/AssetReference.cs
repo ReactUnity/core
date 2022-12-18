@@ -37,8 +37,8 @@ namespace ReactUnity.Types
         public AssetReferenceType Type { get; private set; } = AssetReferenceType.None;
         public object Value { get; private set; }
 
-        protected bool IsCached;
-        protected AssetType CachedValue;
+        public bool IsCached { get; protected set; }
+        public AssetType CachedValue { get; protected set; }
 
         public AssetReference(AssetReferenceType type, object value)
         {

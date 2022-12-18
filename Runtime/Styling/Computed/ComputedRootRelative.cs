@@ -5,6 +5,8 @@ namespace ReactUnity.Styling.Computed
 {
     public struct ComputedRootRelative : IComputedValue
     {
+        public static readonly float DefaultFontSize = 16f;
+
         public enum RootValueType
         {
             None,
@@ -44,7 +46,7 @@ namespace ReactUnity.Styling.Computed
                     break;
                 case RootValueType.Rem:
                     var hostStyle = style.Context.Host.ComputedStyle;
-                    if (style == hostStyle && ReferenceEquals(prop, StyleProperties.fontSize)) size = 16;
+                    if (style == hostStyle && ReferenceEquals(prop, StyleProperties.fontSize)) size = DefaultFontSize;
                     else size = hostStyle.fontSize;
                     break;
                 case RootValueType.None:
