@@ -48,6 +48,7 @@ namespace ReactUnity.UGUI
                             Text.font = asset;
                             var style = ComputedStyle;
                             RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
+                            RecalculateLineHeight();
                         }
                     });
                 }
@@ -129,11 +130,7 @@ namespace ReactUnity.UGUI
 
             Font = style.fontFamily;
             RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
-
-            var lineHeight = style.lineHeight;
-            Text.lineSpacing = (lineHeight - fontSize) / fontSize * 100;
-            Text.characterSpacing = style.letterSpacing * 100;
-            Text.wordSpacing = style.wordSpacing * 100;
+            RecalculateLineHeight();
 
             var maxLines = style.maxLines;
             if (Text.maxVisibleLines != maxLines)
@@ -214,6 +211,26 @@ namespace ReactUnity.UGUI
             if (transform == TextTransform.UpperCase) Text.fontStyle = styles | FontStyles.UpperCase;
             else if (transform == TextTransform.LowerCase) Text.fontStyle = styles | FontStyles.LowerCase;
             else if (transform == TextTransform.SmallCaps) Text.fontStyle = styles | FontStyles.SmallCaps;
+        }
+
+        private void RecalculateLineHeight()
+        {
+            var style = ComputedStyle;
+            var fontSize = Text.fontSize;
+            var lineHeight = style.lineHeight;
+            var fi = Text.font.faceInfo;
+
+            var scale = fi.pointSize == 0 ? 1 : fontSize / fi.pointSize;
+
+            var fontLineHeight = fi.lineHeight * scale;
+
+            var lineDif = lineHeight - fontLineHeight;
+            var halfLineDif = lineDif / 2;
+
+            Text.margin = new Vector4(0, halfLineDif, 0, Math.Abs(halfLineDif));
+            Text.lineSpacing = lineDif / fontSize * 100;
+            Text.characterSpacing = style.letterSpacing / fontSize * 100;
+            Text.wordSpacing = style.wordSpacing / fontSize * 100;
         }
 
         public string GetLinkInfo(PointerEventData eventData)

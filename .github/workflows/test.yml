@@ -30,7 +30,6 @@ jobs:
           - ubuntu-20.04
         unity:
           - { version: "2022.2.1f1" }
-          - { version: "2022.1.24f1" }
           - { version: "2021.1.28f1" }
           - { version: "2020.3.43f1" }
           - { version: "2019.4.40f1" }

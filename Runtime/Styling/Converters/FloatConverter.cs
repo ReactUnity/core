@@ -147,16 +147,19 @@ namespace ReactUnity.Styling.Converters
 
     public class LengthConverter : FloatConverter
     {
+        private const float CM = 37.8f;
+        private const float IN = 96f;
+
         public LengthConverter() : base(
             new Dictionary<string, float>
             {
                 { "px", 1 },
-                { "pt", 96f / 72f },
-                { "pc", 16 },
-                { "in", 96 },
-                { "cm", 38 },
-                { "mm", 3.8f },
-                { "Q", 38f / 40f },
+                { "cm", CM },
+                { "mm", CM / 10 },
+                { "Q", CM / 40f },
+                { "in", IN },
+                { "pc", IN / 6 },
+                { "pt", IN / 72f },
             },
             new Dictionary<string, Func<float, object>>
             {
