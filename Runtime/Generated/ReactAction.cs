@@ -34,7 +34,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction
+    public class ReactAction
     {
         /// <summary>
         ///   The underlying action.
@@ -49,16 +49,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action listener = null;
-            listener = () =>
-            {
-                try
-                {
-                    cb.Call();
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = () => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call();
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -89,6 +82,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -97,7 +91,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -120,7 +114,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1>
+    public class ReactAction<T1>
     {
         /// <summary>
         ///   The underlying action.
@@ -135,16 +129,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1> listener = null;
-            listener = (arg1) =>
-            {
-                try
-                {
-                    cb.Call(arg1);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -175,6 +162,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -183,7 +171,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -206,7 +194,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2>
+    public class ReactAction<T1, T2>
     {
         /// <summary>
         ///   The underlying action.
@@ -221,16 +209,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2> listener = null;
-            listener = (arg1, arg2) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -261,6 +242,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -269,7 +251,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -292,7 +274,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3>
+    public class ReactAction<T1, T2, T3>
     {
         /// <summary>
         ///   The underlying action.
@@ -307,16 +289,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3> listener = null;
-            listener = (arg1, arg2, arg3) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -347,6 +322,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -355,7 +331,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -378,7 +354,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4>
+    public class ReactAction<T1, T2, T3, T4>
     {
         /// <summary>
         ///   The underlying action.
@@ -393,16 +369,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4> listener = null;
-            listener = (arg1, arg2, arg3, arg4) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -433,6 +402,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -441,7 +411,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -464,7 +434,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4, T5>
+    public class ReactAction<T1, T2, T3, T4, T5>
     {
         /// <summary>
         ///   The underlying action.
@@ -479,16 +449,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4, T5> listener = null;
-            listener = (arg1, arg2, arg3, arg4, arg5) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4, arg5);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4, arg5) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4, arg5);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -519,6 +482,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -527,7 +491,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -550,7 +514,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4, T5, T6>
+    public class ReactAction<T1, T2, T3, T4, T5, T6>
     {
         /// <summary>
         ///   The underlying action.
@@ -565,16 +529,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4, T5, T6> listener = null;
-            listener = (arg1, arg2, arg3, arg4, arg5, arg6) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4, arg5, arg6);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4, arg5, arg6) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4, arg5, arg6);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -605,6 +562,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -613,7 +571,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -636,7 +594,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4, T5, T6, T7>
+    public class ReactAction<T1, T2, T3, T4, T5, T6, T7>
     {
         /// <summary>
         ///   The underlying action.
@@ -651,16 +609,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4, T5, T6, T7> listener = null;
-            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -691,6 +642,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -699,7 +651,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -722,7 +674,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8>
+    public class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8>
     {
         /// <summary>
         ///   The underlying action.
@@ -737,16 +689,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4, T5, T6, T7, T8> listener = null;
-            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -777,6 +722,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -785,7 +731,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
     /// <summary>
     ///   A wrapper for the <see cref="ReactUnity.Helpers.Callback" /> class to provide convienient access to the
     ///   delegates and events in ReactUnity from both JavaScript and TypeScript as well as C# as normal events.
@@ -808,7 +754,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>
+    public class ReactAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>
     {
         /// <summary>
         ///   The underlying action.
@@ -823,16 +769,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener = null;
-            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) =>
-            {
-                try
-                {
-                    cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -863,6 +802,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -871,6 +811,6 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
 }
 

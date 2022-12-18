@@ -128,7 +128,7 @@ jobs:
           checkName: ${{ matrix.suite.name }} ${{ matrix.unity.version }}
           unityVersion: ${{ matrix.unity.version }}
           testMode: ${{ contains(matrix.suite.assemblies, 'Editor') && 'All' || 'PlayMode' }}
-          customParameters: |
+          customParameters: >-
             ${{ contains(github.event.head_commit.message, '[snapshots]') && '-reactOverwriteSnapshots' }}
             ${{ matrix.performance && '-profiler-enable' }}
             ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }}

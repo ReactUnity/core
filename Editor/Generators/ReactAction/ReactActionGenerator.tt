@@ -36,7 +36,7 @@ namespace ReactUnity.Helpers
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction<#=GetTemplateArgs(i)#>
+    public class ReactAction<#=GetTemplateArgs(i)#>
     {
         /// <summary>
         ///   The underlying action.
@@ -51,16 +51,9 @@ namespace ReactUnity.Helpers
         {
             var cb = Callback.From(callback);
             Action<#=GetTemplateArgs(i)#> listener = null;
-            listener = (<#=GetInvokeArgs(i)#>) =>
-            {
-                try
-                {
-                    cb.Call(<#=GetInvokeArgs(i)#>);
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
+            listener = (<#=GetInvokeArgs(i)#>) => {
+                if (cb.Destroyed) _delegate -= listener;
+                else cb.Call(<#=GetInvokeArgs(i)#>);
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -91,6 +84,7 @@ namespace ReactUnity.Helpers
             action._delegate += listener;
             return action;
         }
+
         /// <summary>
         ///   Removes the listener from the action.
         /// </summary>
@@ -99,7 +93,7 @@ namespace ReactUnity.Helpers
             action._delegate -= listener;
             return action;
         }
-  }
+    }
 <#
   } // End of for loop
 #>

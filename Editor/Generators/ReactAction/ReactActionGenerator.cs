@@ -67,7 +67,7 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
     ///     }, []);
     ///   </code>
     /// </example>
-    class ReactAction");
+    public class ReactAction");
             
             #line 39 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
@@ -105,20 +105,15 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
             
             #line default
             #line hidden
-            this.Write(") =>\r\n            {\r\n                try\r\n                {\r\n                    " +
-                    "cb.Call(");
+            this.Write(") => {\r\n                if (cb.Destroyed) _delegate -= listener;\r\n               " +
+                    " else cb.Call(");
             
-            #line 58 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 56 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetInvokeArgs(i)));
             
             #line default
             #line hidden
             this.Write(@");
-                }
-                catch
-                {
-                    _delegate -= listener;
-                }
             };
             _delegate += listener;
             return () => _delegate -= listener;
@@ -129,7 +124,7 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
         /// </summary>
         public Action AddListener(Action");
             
-            #line 72 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 65 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
@@ -138,14 +133,14 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
                     "=> _delegate -= listener;\r\n        }\r\n\r\n        ///  <summary>\r\n        ///    I" +
                     "nvokes the action.\r\n        ///  </summary>\r\n        public void Invoke(");
             
-            #line 81 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 74 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetParameterArgs(i)));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            _delegate?.Invoke(");
             
-            #line 83 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 76 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetInvokeArgs(i)));
             
             #line default
@@ -153,52 +148,52 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
             this.Write(");\r\n        }\r\n\r\n        /// <summary>\r\n        ///   Creates a new ReactAction f" +
                     "rom a callback.\r\n        /// </summary>\r\n        public static ReactAction");
             
-            #line 89 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 82 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" operator +(ReactAction");
             
-            #line 89 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 82 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" action, Action");
             
-            #line 89 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 82 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" listener)\r\n        {\r\n            action._delegate += listener;\r\n            ret" +
-                    "urn action;\r\n        }\r\n        /// <summary>\r\n        ///   Removes the listene" +
-                    "r from the action.\r\n        /// </summary>\r\n        public static ReactAction");
+                    "urn action;\r\n        }\r\n\r\n        /// <summary>\r\n        ///   Removes the liste" +
+                    "ner from the action.\r\n        /// </summary>\r\n        public static ReactAction");
             
-            #line 97 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 91 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" operator -(ReactAction");
             
-            #line 97 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 91 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" action, Action");
             
-            #line 97 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 91 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetTemplateArgs(i)));
             
             #line default
             #line hidden
             this.Write(" listener)\r\n        {\r\n            action._delegate -= listener;\r\n            ret" +
-                    "urn action;\r\n        }\r\n  }\r\n");
+                    "urn action;\r\n        }\r\n    }\r\n");
             
-            #line 103 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+            #line 97 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
 
   } // End of for loop
 
@@ -209,7 +204,7 @@ namespace ReactUnity.Editor.Editor.Generators.ReactAction
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 108 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
+        #line 102 "S:\Work\Unity\reactunity\core\Editor\Generators\ReactAction\ReactActionGenerator.tt"
 
   private string[] types = new string[] { "T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10" };
   private string[] args = new string[] { "arg1", "arg2", "arg3", "arg4", "arg5", "arg6", "arg7", "arg8", "arg9", "arg10" };
