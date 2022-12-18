@@ -1,4 +1,3 @@
-﻿#if REACT_UNITY_DEVELOPER
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,54 +17,64 @@ namespace ReactUnity.Editor.Generators
         /// </summary>
         public static Dictionary<string, Dictionary<string, object>> Sessions { get; } = new Dictionary<string, Dictionary<string, object>>();
 
+        static List<string> TemplateNames { get; } = new List<string>()
+        {
+            "ReactActionGenerator"
+        };
+
         /// <summary>
         ///     Generates the code from all templates in the project and saves them to Runtime/Generated folder
         /// </summary>
+#if REACT_UNITY_DEVELOPER
         [MenuItem("React/Generate Code From T4 Templates")]
+#endif
         public static void GenerateFromTemplates()
         {
-            var uniqueTemplates = new HashSet<string>();
-            var templates = typeof(RuntimeT4Generator).Assembly.GetTypes()
-                .Where(type => type.FullName.Contains("GeneratedTextTransformation"));
-            foreach (Type template in templates)
+            foreach (var templateName in TemplateNames)
             {
-                // Get the template name
-                var name = GetTemplateName(template);
-
-                // Ignore duplicates and templates that are not root templates
-                if(uniqueTemplates.Contains(name)) continue;
-                if (!template.BaseType.Name.Equals("GeneratedTextTransformationBase")) continue;
-                uniqueTemplates.Add(name);
-
-                // Add common data to the session
-                var session = Sessions.ContainsKey(name) ? Sessions[name] : new Dictionary<string, object>();
-                AddCommonSessionValues(ref session);
-
-                // Using reflection, create an instance of the template and run it
-                var transformation = Activator.CreateInstance(template);
-                var transformTextMethod = template.GetMethod("TransformText");
-                var sessionsProperty = template.GetProperty("Session");
-                var errorsProperty = template.GetProperty("Errors");
-
-                // Set session
-                sessionsProperty.SetValue(transformation, session);
-
-                // Transform text
-                var content = (string)transformTextMethod.Invoke(transformation, null);
-
-                // Write to file in Runtime/Generated folder
-                WriteGenerationResult(name, content);
-
-                // Get errors
-                var errors = (CollectionBase) errorsProperty.GetValue(transformation);
-                if (errors.Count > 0)
+                var uniqueTemplates = new HashSet<string>();
+                var templates = typeof(RuntimeT4Generator).Assembly.GetTypes()
+                    .Where(type => type.FullName.Contains(templateName));
+                foreach (Type template in templates)
                 {
-                    Debug.LogError("An error occured while generating code from template " + name);
-                    foreach (var error in errors)
+                    // Get the template name
+                    var name = GetTemplateName(template);
+
+                    // Ignore duplicates and templates that are not root templates
+                    if (uniqueTemplates.Contains(name)) continue;
+                    if (!template.BaseType.Name.Equals(templateName + "Base")) continue;
+                    uniqueTemplates.Add(name);
+
+                    // Add common data to the session
+                    var session = Sessions.ContainsKey(name) ? Sessions[name] : new Dictionary<string, object>();
+                    AddCommonSessionValues(ref session);
+
+                    // Using reflection, create an instance of the template and run it
+                    var transformation = Activator.CreateInstance(template);
+                    var transformTextMethod = template.GetMethod("TransformText");
+                    var sessionsProperty = template.GetProperty("Session");
+                    var errorsProperty = template.GetProperty("Errors");
+
+                    // Set session
+                    sessionsProperty.SetValue(transformation, session);
+
+                    // Transform text
+                    var content = (string) transformTextMethod.Invoke(transformation, null);
+
+                    // Write to file in Runtime/Generated folder
+                    WriteGenerationResult(name, content);
+
+                    // Get errors
+                    var errors = (CollectionBase) errorsProperty.GetValue(transformation);
+                    if (errors.Count > 0)
                     {
-                        Debug.LogError("Error in template " + name + ": " + error);
+                        Debug.LogError("An error occured while generating code from template " + name);
+                        foreach (var error in errors)
+                        {
+                            Debug.LogError("Error in template " + name + ": " + error);
+                        }
+                        return;
                     }
-                    return;
                 }
             }
 
@@ -107,8 +116,7 @@ namespace ReactUnity.Editor.Generators
         /// <param name="session">Session data to modify</param>
         private static void AddCommonSessionValues(ref Dictionary<string, object> session)
         {
-            session["Common"] = new CommonGenerators();
+            session["Common"] = new GeneratorHelpers();
         }
     }
 }
-#endif

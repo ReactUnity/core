@@ -78,7 +78,9 @@ namespace ReactUnity.Tests
             Assert.AreEqual(FontWeight.Regular, tt.fontWeight);
             Assert.AreEqual("monospace", tt.font.name);
             Assert.AreEqual(23, tt.fontSize);
-            Assert.AreEqual(10f / 23f * 100f, tt.lineSpacing);
+            Assert.AreEqual(1.33f, tt.margin.y, 0.1f);
+            Assert.AreEqual(1.33f, tt.margin.w, 0.1f);
+            Assert.AreEqual(11.59f, tt.lineSpacing, 0.1f);
         }
 
         [UGUITest(Style = @"
@@ -95,7 +97,6 @@ namespace ReactUnity.Tests
 
             var cmp = Q("#test");
             var bg = cmp.BorderAndBackground;
-            var mask = cmp.OverflowMask;
 
             Assert.AreEqual(typeof(Sprite), bg.BackgroundGraphics[0].sprite?.GetType());
             Assert.AreEqual(Color.red, bg.BackgroundGraphics[0].color);
