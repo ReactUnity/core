@@ -245,3 +245,7 @@ ModelManifest.xml
 # Ignore PDB files
 *.pdb
 *.pdb.meta
+
+# Ignore .Generated.cs files
+*.Generated.cs
+*.Generated.cs.meta
