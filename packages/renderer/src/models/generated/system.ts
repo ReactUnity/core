@@ -1,10 +1,20 @@
 //
-// Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
-// Generated 23/05/2022 15:31:45
+// Types in assemblies: mscorlib, System.Core, System
+// Generated 27/12/2022 02:34:09
 //
 /* eslint-disable */
 
+interface Pointer<T> {
+  type?: T;
+  __pointer: true;
+}
 
+interface Ref<T> {
+  type?: T;
+  __ref: true;
+}
+
+type Byte = number;
 
 export declare namespace System {
   export class String {
@@ -12,7 +22,6 @@ export declare namespace System {
     constructor(value: System.Char[], startIndex: number, length: number);
     constructor(c: System.Char, count: number);
     constructor(value: System.ReadOnlySpan<System.Char>);
-    [key: string]: any;
     Length: number;
     static Empty: string;
     static Compare(strA: string, strB: string): number;
@@ -251,7 +260,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16): void;
-    BeginInvoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -267,7 +276,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16): TResult;
-    BeginInvoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): TResult;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -283,7 +292,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(x: T, y: T): number;
-    BeginInvoke(x: T, y: T, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(x: T, y: T, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -299,7 +308,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(input: TInput): TOutput;
-    BeginInvoke(input: TInput, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(input: TInput, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): TOutput;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -315,7 +324,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(obj: T): boolean;
-    BeginInvoke(obj: T, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(obj: T, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): boolean;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -345,7 +354,7 @@ export declare namespace System {
     HResult: number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     GetBaseException(): System.Exception;
-    Handle(predicate: ((arg0: System.Exception) => boolean)): void;
+    Handle(predicate: ((arg: System.Exception) => boolean)): void;
     Flatten(): System.AggregateException;
     ToString(): string;
     GetType(): System.Type;
@@ -465,7 +474,6 @@ export declare namespace System {
   export class ArraySegment<T = any> {
     constructor(array: T[]);
     constructor(array: T[], offset: number, count: number);
-    [key: string]: any;
     static Empty: any[];
     Array: T[];
     Offset: number;
@@ -516,7 +524,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sender: any, args: System.AssemblyLoadEventArgs): void;
-    BeginInvoke(sender: any, args: System.AssemblyLoadEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sender: any, args: System.AssemblyLoadEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -532,7 +540,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(ar: System.IAsyncResult): void;
-    BeginInvoke(ar: System.IAsyncResult, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(ar: System.IAsyncResult, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -587,51 +595,51 @@ export declare namespace System {
   }
   export class BitConverter {
     static IsLittleEndian: boolean;
-    static GetBytes(value: boolean): System.Byte[];
+    static GetBytes(value: boolean): Byte[];
     static TryWriteBytes(destination: any, value: boolean): boolean;
-    static GetBytes(value: System.Char): System.Byte[];
+    static GetBytes(value: System.Char): Byte[];
     static TryWriteBytes(destination: any, value: System.Char): boolean;
-    static GetBytes(value: System.Int16): System.Byte[];
-    static TryWriteBytes(destination: any, value: System.Int16): boolean;
-    static GetBytes(value: number): System.Byte[];
+    static GetBytes(value: number): Byte[];
     static TryWriteBytes(destination: any, value: number): boolean;
-    static GetBytes(value: System.Int64): System.Byte[];
-    static TryWriteBytes(destination: any, value: System.Int64): boolean;
-    static GetBytes(value: System.UInt16): System.Byte[];
-    static TryWriteBytes(destination: any, value: System.UInt16): boolean;
-    static GetBytes(value: System.UInt32): System.Byte[];
-    static TryWriteBytes(destination: any, value: System.UInt32): boolean;
-    static GetBytes(value: System.UInt64): System.Byte[];
-    static TryWriteBytes(destination: any, value: System.UInt64): boolean;
-    static GetBytes(value: number): System.Byte[];
+    static GetBytes(value: number): Byte[];
     static TryWriteBytes(destination: any, value: number): boolean;
-    static GetBytes(value: number): System.Byte[];
+    static GetBytes(value: number): Byte[];
     static TryWriteBytes(destination: any, value: number): boolean;
-    static ToChar(value: System.Byte[], startIndex: number): System.Char;
+    static GetBytes(value: number): Byte[];
+    static TryWriteBytes(destination: any, value: number): boolean;
+    static GetBytes(value: number): Byte[];
+    static TryWriteBytes(destination: any, value: number): boolean;
+    static GetBytes(value: number): Byte[];
+    static TryWriteBytes(destination: any, value: number): boolean;
+    static GetBytes(value: number): Byte[];
+    static TryWriteBytes(destination: any, value: number): boolean;
+    static GetBytes(value: number): Byte[];
+    static TryWriteBytes(destination: any, value: number): boolean;
+    static ToChar(value: Byte[], startIndex: number): System.Char;
     static ToChar(value: any): System.Char;
-    static ToInt16(value: System.Byte[], startIndex: number): System.Int16;
-    static ToInt16(value: any): System.Int16;
-    static ToInt32(value: System.Byte[], startIndex: number): number;
+    static ToInt16(value: Byte[], startIndex: number): number;
+    static ToInt16(value: any): number;
+    static ToInt32(value: Byte[], startIndex: number): number;
     static ToInt32(value: any): number;
-    static ToInt64(value: System.Byte[], startIndex: number): System.Int64;
-    static ToInt64(value: any): System.Int64;
-    static ToUInt16(value: System.Byte[], startIndex: number): System.UInt16;
-    static ToUInt16(value: any): System.UInt16;
-    static ToUInt32(value: System.Byte[], startIndex: number): System.UInt32;
-    static ToUInt32(value: any): System.UInt32;
-    static ToUInt64(value: System.Byte[], startIndex: number): System.UInt64;
-    static ToUInt64(value: any): System.UInt64;
-    static ToSingle(value: System.Byte[], startIndex: number): number;
+    static ToInt64(value: Byte[], startIndex: number): number;
+    static ToInt64(value: any): number;
+    static ToUInt16(value: Byte[], startIndex: number): number;
+    static ToUInt16(value: any): number;
+    static ToUInt32(value: Byte[], startIndex: number): number;
+    static ToUInt32(value: any): number;
+    static ToUInt64(value: Byte[], startIndex: number): number;
+    static ToUInt64(value: any): number;
+    static ToSingle(value: Byte[], startIndex: number): number;
     static ToSingle(value: any): number;
-    static ToDouble(value: System.Byte[], startIndex: number): number;
+    static ToDouble(value: Byte[], startIndex: number): number;
     static ToDouble(value: any): number;
-    static ToString(value: System.Byte[], startIndex: number, length: number): string;
-    static ToString(value: System.Byte[]): string;
-    static ToString(value: System.Byte[], startIndex: number): string;
-    static ToBoolean(value: System.Byte[], startIndex: number): boolean;
+    static ToString(value: Byte[], startIndex: number, length: number): string;
+    static ToString(value: Byte[]): string;
+    static ToString(value: Byte[], startIndex: number): string;
+    static ToBoolean(value: Byte[], startIndex: number): boolean;
     static ToBoolean(value: any): boolean;
-    static DoubleToInt64Bits(value: number): System.Int64;
-    static Int64BitsToDouble(value: System.Int64): number;
+    static DoubleToInt64Bits(value: number): number;
+    static Int64BitsToDouble(value: number): number;
     static SingleToInt32Bits(value: number): number;
     static Int32BitsToSingle(value: number): number;
     Equals(obj: any): boolean;
@@ -655,18 +663,18 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class Byte {
-    static MaxValue: System.Byte;
-    static MinValue: System.Byte;
+    static MaxValue: Byte;
+    static MinValue: Byte;
     CompareTo(value: any): number;
-    CompareTo(value: System.Byte): number;
+    CompareTo(value: Byte): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.Byte): boolean;
+    Equals(obj: Byte): boolean;
     GetHashCode(): number;
-    static Parse(s: string): System.Byte;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.Byte;
-    static Parse(s: string, provider: System.IFormatProvider): System.Byte;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.Byte;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.Byte;
+    static Parse(s: string): Byte;
+    static Parse(s: string, style: System.Globalization.NumberStyles): Byte;
+    static Parse(s: string, provider: System.IFormatProvider): Byte;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): Byte;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): Byte;
     ToString(): string;
     ToString(format: string): string;
     ToString(provider: System.IFormatProvider): string;
@@ -756,195 +764,195 @@ export declare namespace System {
     static ToBoolean(value: boolean): boolean;
     static ToBoolean(value: System.SByte): boolean;
     static ToBoolean(value: System.Char): boolean;
-    static ToBoolean(value: System.Byte): boolean;
-    static ToBoolean(value: System.Int16): boolean;
-    static ToBoolean(value: System.UInt16): boolean;
+    static ToBoolean(value: Byte): boolean;
     static ToBoolean(value: number): boolean;
-    static ToBoolean(value: System.UInt32): boolean;
-    static ToBoolean(value: System.Int64): boolean;
-    static ToBoolean(value: System.UInt64): boolean;
+    static ToBoolean(value: number): boolean;
+    static ToBoolean(value: number): boolean;
+    static ToBoolean(value: number): boolean;
+    static ToBoolean(value: number): boolean;
+    static ToBoolean(value: number): boolean;
     static ToBoolean(value: string): boolean;
     static ToBoolean(value: string, provider: System.IFormatProvider): boolean;
     static ToBoolean(value: number): boolean;
     static ToBoolean(value: number): boolean;
-    static ToBoolean(value: System.Decimal): boolean;
+    static ToBoolean(value: number): boolean;
     static ToBoolean(value: System.DateTime): boolean;
     static ToChar(value: any): System.Char;
     static ToChar(value: any, provider: System.IFormatProvider): System.Char;
     static ToChar(value: boolean): System.Char;
     static ToChar(value: System.Char): System.Char;
     static ToChar(value: System.SByte): System.Char;
-    static ToChar(value: System.Byte): System.Char;
-    static ToChar(value: System.Int16): System.Char;
-    static ToChar(value: System.UInt16): System.Char;
+    static ToChar(value: Byte): System.Char;
     static ToChar(value: number): System.Char;
-    static ToChar(value: System.UInt32): System.Char;
-    static ToChar(value: System.Int64): System.Char;
-    static ToChar(value: System.UInt64): System.Char;
+    static ToChar(value: number): System.Char;
+    static ToChar(value: number): System.Char;
+    static ToChar(value: number): System.Char;
+    static ToChar(value: number): System.Char;
+    static ToChar(value: number): System.Char;
     static ToChar(value: string): System.Char;
     static ToChar(value: string, provider: System.IFormatProvider): System.Char;
     static ToChar(value: number): System.Char;
     static ToChar(value: number): System.Char;
-    static ToChar(value: System.Decimal): System.Char;
+    static ToChar(value: number): System.Char;
     static ToChar(value: System.DateTime): System.Char;
     static ToSByte(value: any): System.SByte;
     static ToSByte(value: any, provider: System.IFormatProvider): System.SByte;
     static ToSByte(value: boolean): System.SByte;
     static ToSByte(value: System.SByte): System.SByte;
     static ToSByte(value: System.Char): System.SByte;
-    static ToSByte(value: System.Byte): System.SByte;
-    static ToSByte(value: System.Int16): System.SByte;
-    static ToSByte(value: System.UInt16): System.SByte;
-    static ToSByte(value: number): System.SByte;
-    static ToSByte(value: System.UInt32): System.SByte;
-    static ToSByte(value: System.Int64): System.SByte;
-    static ToSByte(value: System.UInt64): System.SByte;
+    static ToSByte(value: Byte): System.SByte;
     static ToSByte(value: number): System.SByte;
     static ToSByte(value: number): System.SByte;
-    static ToSByte(value: System.Decimal): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
+    static ToSByte(value: number): System.SByte;
     static ToSByte(value: string): System.SByte;
     static ToSByte(value: string, provider: System.IFormatProvider): System.SByte;
     static ToSByte(value: System.DateTime): System.SByte;
-    static ToByte(value: any): System.Byte;
-    static ToByte(value: any, provider: System.IFormatProvider): System.Byte;
-    static ToByte(value: boolean): System.Byte;
-    static ToByte(value: System.Byte): System.Byte;
-    static ToByte(value: System.Char): System.Byte;
-    static ToByte(value: System.SByte): System.Byte;
-    static ToByte(value: System.Int16): System.Byte;
-    static ToByte(value: System.UInt16): System.Byte;
-    static ToByte(value: number): System.Byte;
-    static ToByte(value: System.UInt32): System.Byte;
-    static ToByte(value: System.Int64): System.Byte;
-    static ToByte(value: System.UInt64): System.Byte;
-    static ToByte(value: number): System.Byte;
-    static ToByte(value: number): System.Byte;
-    static ToByte(value: System.Decimal): System.Byte;
-    static ToByte(value: string): System.Byte;
-    static ToByte(value: string, provider: System.IFormatProvider): System.Byte;
-    static ToByte(value: System.DateTime): System.Byte;
-    static ToInt16(value: any): System.Int16;
-    static ToInt16(value: any, provider: System.IFormatProvider): System.Int16;
-    static ToInt16(value: boolean): System.Int16;
-    static ToInt16(value: System.Char): System.Int16;
-    static ToInt16(value: System.SByte): System.Int16;
-    static ToInt16(value: System.Byte): System.Int16;
-    static ToInt16(value: System.UInt16): System.Int16;
-    static ToInt16(value: number): System.Int16;
-    static ToInt16(value: System.UInt32): System.Int16;
-    static ToInt16(value: System.Int16): System.Int16;
-    static ToInt16(value: System.Int64): System.Int16;
-    static ToInt16(value: System.UInt64): System.Int16;
-    static ToInt16(value: number): System.Int16;
-    static ToInt16(value: number): System.Int16;
-    static ToInt16(value: System.Decimal): System.Int16;
-    static ToInt16(value: string): System.Int16;
-    static ToInt16(value: string, provider: System.IFormatProvider): System.Int16;
-    static ToInt16(value: System.DateTime): System.Int16;
-    static ToUInt16(value: any): System.UInt16;
-    static ToUInt16(value: any, provider: System.IFormatProvider): System.UInt16;
-    static ToUInt16(value: boolean): System.UInt16;
-    static ToUInt16(value: System.Char): System.UInt16;
-    static ToUInt16(value: System.SByte): System.UInt16;
-    static ToUInt16(value: System.Byte): System.UInt16;
-    static ToUInt16(value: System.Int16): System.UInt16;
-    static ToUInt16(value: number): System.UInt16;
-    static ToUInt16(value: System.UInt16): System.UInt16;
-    static ToUInt16(value: System.UInt32): System.UInt16;
-    static ToUInt16(value: System.Int64): System.UInt16;
-    static ToUInt16(value: System.UInt64): System.UInt16;
-    static ToUInt16(value: number): System.UInt16;
-    static ToUInt16(value: number): System.UInt16;
-    static ToUInt16(value: System.Decimal): System.UInt16;
-    static ToUInt16(value: string): System.UInt16;
-    static ToUInt16(value: string, provider: System.IFormatProvider): System.UInt16;
-    static ToUInt16(value: System.DateTime): System.UInt16;
+    static ToByte(value: any): Byte;
+    static ToByte(value: any, provider: System.IFormatProvider): Byte;
+    static ToByte(value: boolean): Byte;
+    static ToByte(value: Byte): Byte;
+    static ToByte(value: System.Char): Byte;
+    static ToByte(value: System.SByte): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: number): Byte;
+    static ToByte(value: string): Byte;
+    static ToByte(value: string, provider: System.IFormatProvider): Byte;
+    static ToByte(value: System.DateTime): Byte;
+    static ToInt16(value: any): number;
+    static ToInt16(value: any, provider: System.IFormatProvider): number;
+    static ToInt16(value: boolean): number;
+    static ToInt16(value: System.Char): number;
+    static ToInt16(value: System.SByte): number;
+    static ToInt16(value: Byte): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: number): number;
+    static ToInt16(value: string): number;
+    static ToInt16(value: string, provider: System.IFormatProvider): number;
+    static ToInt16(value: System.DateTime): number;
+    static ToUInt16(value: any): number;
+    static ToUInt16(value: any, provider: System.IFormatProvider): number;
+    static ToUInt16(value: boolean): number;
+    static ToUInt16(value: System.Char): number;
+    static ToUInt16(value: System.SByte): number;
+    static ToUInt16(value: Byte): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt16(value: string): number;
+    static ToUInt16(value: string, provider: System.IFormatProvider): number;
+    static ToUInt16(value: System.DateTime): number;
     static ToInt32(value: any): number;
     static ToInt32(value: any, provider: System.IFormatProvider): number;
     static ToInt32(value: boolean): number;
     static ToInt32(value: System.Char): number;
     static ToInt32(value: System.SByte): number;
-    static ToInt32(value: System.Byte): number;
-    static ToInt32(value: System.Int16): number;
-    static ToInt32(value: System.UInt16): number;
-    static ToInt32(value: System.UInt32): number;
-    static ToInt32(value: number): number;
-    static ToInt32(value: System.Int64): number;
-    static ToInt32(value: System.UInt64): number;
+    static ToInt32(value: Byte): number;
     static ToInt32(value: number): number;
     static ToInt32(value: number): number;
-    static ToInt32(value: System.Decimal): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
+    static ToInt32(value: number): number;
     static ToInt32(value: string): number;
     static ToInt32(value: string, provider: System.IFormatProvider): number;
     static ToInt32(value: System.DateTime): number;
-    static ToUInt32(value: any): System.UInt32;
-    static ToUInt32(value: any, provider: System.IFormatProvider): System.UInt32;
-    static ToUInt32(value: boolean): System.UInt32;
-    static ToUInt32(value: System.Char): System.UInt32;
-    static ToUInt32(value: System.SByte): System.UInt32;
-    static ToUInt32(value: System.Byte): System.UInt32;
-    static ToUInt32(value: System.Int16): System.UInt32;
-    static ToUInt32(value: System.UInt16): System.UInt32;
-    static ToUInt32(value: number): System.UInt32;
-    static ToUInt32(value: System.UInt32): System.UInt32;
-    static ToUInt32(value: System.Int64): System.UInt32;
-    static ToUInt32(value: System.UInt64): System.UInt32;
-    static ToUInt32(value: number): System.UInt32;
-    static ToUInt32(value: number): System.UInt32;
-    static ToUInt32(value: System.Decimal): System.UInt32;
-    static ToUInt32(value: string): System.UInt32;
-    static ToUInt32(value: string, provider: System.IFormatProvider): System.UInt32;
-    static ToUInt32(value: System.DateTime): System.UInt32;
-    static ToInt64(value: any): System.Int64;
-    static ToInt64(value: any, provider: System.IFormatProvider): System.Int64;
-    static ToInt64(value: boolean): System.Int64;
-    static ToInt64(value: System.Char): System.Int64;
-    static ToInt64(value: System.SByte): System.Int64;
-    static ToInt64(value: System.Byte): System.Int64;
-    static ToInt64(value: System.Int16): System.Int64;
-    static ToInt64(value: System.UInt16): System.Int64;
-    static ToInt64(value: number): System.Int64;
-    static ToInt64(value: System.UInt32): System.Int64;
-    static ToInt64(value: System.UInt64): System.Int64;
-    static ToInt64(value: System.Int64): System.Int64;
-    static ToInt64(value: number): System.Int64;
-    static ToInt64(value: number): System.Int64;
-    static ToInt64(value: System.Decimal): System.Int64;
-    static ToInt64(value: string): System.Int64;
-    static ToInt64(value: string, provider: System.IFormatProvider): System.Int64;
-    static ToInt64(value: System.DateTime): System.Int64;
-    static ToUInt64(value: any): System.UInt64;
-    static ToUInt64(value: any, provider: System.IFormatProvider): System.UInt64;
-    static ToUInt64(value: boolean): System.UInt64;
-    static ToUInt64(value: System.Char): System.UInt64;
-    static ToUInt64(value: System.SByte): System.UInt64;
-    static ToUInt64(value: System.Byte): System.UInt64;
-    static ToUInt64(value: System.Int16): System.UInt64;
-    static ToUInt64(value: System.UInt16): System.UInt64;
-    static ToUInt64(value: number): System.UInt64;
-    static ToUInt64(value: System.UInt32): System.UInt64;
-    static ToUInt64(value: System.Int64): System.UInt64;
-    static ToUInt64(value: System.UInt64): System.UInt64;
-    static ToUInt64(value: number): System.UInt64;
-    static ToUInt64(value: number): System.UInt64;
-    static ToUInt64(value: System.Decimal): System.UInt64;
-    static ToUInt64(value: string): System.UInt64;
-    static ToUInt64(value: string, provider: System.IFormatProvider): System.UInt64;
-    static ToUInt64(value: System.DateTime): System.UInt64;
+    static ToUInt32(value: any): number;
+    static ToUInt32(value: any, provider: System.IFormatProvider): number;
+    static ToUInt32(value: boolean): number;
+    static ToUInt32(value: System.Char): number;
+    static ToUInt32(value: System.SByte): number;
+    static ToUInt32(value: Byte): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: number): number;
+    static ToUInt32(value: string): number;
+    static ToUInt32(value: string, provider: System.IFormatProvider): number;
+    static ToUInt32(value: System.DateTime): number;
+    static ToInt64(value: any): number;
+    static ToInt64(value: any, provider: System.IFormatProvider): number;
+    static ToInt64(value: boolean): number;
+    static ToInt64(value: System.Char): number;
+    static ToInt64(value: System.SByte): number;
+    static ToInt64(value: Byte): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: number): number;
+    static ToInt64(value: string): number;
+    static ToInt64(value: string, provider: System.IFormatProvider): number;
+    static ToInt64(value: System.DateTime): number;
+    static ToUInt64(value: any): number;
+    static ToUInt64(value: any, provider: System.IFormatProvider): number;
+    static ToUInt64(value: boolean): number;
+    static ToUInt64(value: System.Char): number;
+    static ToUInt64(value: System.SByte): number;
+    static ToUInt64(value: Byte): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: number): number;
+    static ToUInt64(value: string): number;
+    static ToUInt64(value: string, provider: System.IFormatProvider): number;
+    static ToUInt64(value: System.DateTime): number;
     static ToSingle(value: any): number;
     static ToSingle(value: any, provider: System.IFormatProvider): number;
     static ToSingle(value: System.SByte): number;
-    static ToSingle(value: System.Byte): number;
+    static ToSingle(value: Byte): number;
     static ToSingle(value: System.Char): number;
-    static ToSingle(value: System.Int16): number;
-    static ToSingle(value: System.UInt16): number;
-    static ToSingle(value: number): number;
-    static ToSingle(value: System.UInt32): number;
-    static ToSingle(value: System.Int64): number;
-    static ToSingle(value: System.UInt64): number;
     static ToSingle(value: number): number;
     static ToSingle(value: number): number;
-    static ToSingle(value: System.Decimal): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
+    static ToSingle(value: number): number;
     static ToSingle(value: string): number;
     static ToSingle(value: string, provider: System.IFormatProvider): number;
     static ToSingle(value: boolean): number;
@@ -952,57 +960,57 @@ export declare namespace System {
     static ToDouble(value: any): number;
     static ToDouble(value: any, provider: System.IFormatProvider): number;
     static ToDouble(value: System.SByte): number;
-    static ToDouble(value: System.Byte): number;
-    static ToDouble(value: System.Int16): number;
+    static ToDouble(value: Byte): number;
+    static ToDouble(value: number): number;
     static ToDouble(value: System.Char): number;
-    static ToDouble(value: System.UInt16): number;
-    static ToDouble(value: number): number;
-    static ToDouble(value: System.UInt32): number;
-    static ToDouble(value: System.Int64): number;
-    static ToDouble(value: System.UInt64): number;
     static ToDouble(value: number): number;
     static ToDouble(value: number): number;
-    static ToDouble(value: System.Decimal): number;
+    static ToDouble(value: number): number;
+    static ToDouble(value: number): number;
+    static ToDouble(value: number): number;
+    static ToDouble(value: number): number;
+    static ToDouble(value: number): number;
+    static ToDouble(value: number): number;
     static ToDouble(value: string): number;
     static ToDouble(value: string, provider: System.IFormatProvider): number;
     static ToDouble(value: boolean): number;
     static ToDouble(value: System.DateTime): number;
-    static ToDecimal(value: any): System.Decimal;
-    static ToDecimal(value: any, provider: System.IFormatProvider): System.Decimal;
-    static ToDecimal(value: System.SByte): System.Decimal;
-    static ToDecimal(value: System.Byte): System.Decimal;
-    static ToDecimal(value: System.Char): System.Decimal;
-    static ToDecimal(value: System.Int16): System.Decimal;
-    static ToDecimal(value: System.UInt16): System.Decimal;
-    static ToDecimal(value: number): System.Decimal;
-    static ToDecimal(value: System.UInt32): System.Decimal;
-    static ToDecimal(value: System.Int64): System.Decimal;
-    static ToDecimal(value: System.UInt64): System.Decimal;
-    static ToDecimal(value: number): System.Decimal;
-    static ToDecimal(value: number): System.Decimal;
-    static ToDecimal(value: string): System.Decimal;
-    static ToDecimal(value: string, provider: System.IFormatProvider): System.Decimal;
-    static ToDecimal(value: System.Decimal): System.Decimal;
-    static ToDecimal(value: boolean): System.Decimal;
-    static ToDecimal(value: System.DateTime): System.Decimal;
+    static ToDecimal(value: any): number;
+    static ToDecimal(value: any, provider: System.IFormatProvider): number;
+    static ToDecimal(value: System.SByte): number;
+    static ToDecimal(value: Byte): number;
+    static ToDecimal(value: System.Char): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: string): number;
+    static ToDecimal(value: string, provider: System.IFormatProvider): number;
+    static ToDecimal(value: number): number;
+    static ToDecimal(value: boolean): number;
+    static ToDecimal(value: System.DateTime): number;
     static ToDateTime(value: System.DateTime): System.DateTime;
     static ToDateTime(value: any): System.DateTime;
     static ToDateTime(value: any, provider: System.IFormatProvider): System.DateTime;
     static ToDateTime(value: string): System.DateTime;
     static ToDateTime(value: string, provider: System.IFormatProvider): System.DateTime;
     static ToDateTime(value: System.SByte): System.DateTime;
-    static ToDateTime(value: System.Byte): System.DateTime;
-    static ToDateTime(value: System.Int16): System.DateTime;
-    static ToDateTime(value: System.UInt16): System.DateTime;
+    static ToDateTime(value: Byte): System.DateTime;
     static ToDateTime(value: number): System.DateTime;
-    static ToDateTime(value: System.UInt32): System.DateTime;
-    static ToDateTime(value: System.Int64): System.DateTime;
-    static ToDateTime(value: System.UInt64): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
     static ToDateTime(value: boolean): System.DateTime;
     static ToDateTime(value: System.Char): System.DateTime;
     static ToDateTime(value: number): System.DateTime;
     static ToDateTime(value: number): System.DateTime;
-    static ToDateTime(value: System.Decimal): System.DateTime;
+    static ToDateTime(value: number): System.DateTime;
     static ToString(value: any): string;
     static ToString(value: any, provider: System.IFormatProvider): string;
     static ToString(value: boolean): string;
@@ -1011,51 +1019,51 @@ export declare namespace System {
     static ToString(value: System.Char, provider: System.IFormatProvider): string;
     static ToString(value: System.SByte): string;
     static ToString(value: System.SByte, provider: System.IFormatProvider): string;
-    static ToString(value: System.Byte): string;
-    static ToString(value: System.Byte, provider: System.IFormatProvider): string;
-    static ToString(value: System.Int16): string;
-    static ToString(value: System.Int16, provider: System.IFormatProvider): string;
-    static ToString(value: System.UInt16): string;
-    static ToString(value: System.UInt16, provider: System.IFormatProvider): string;
-    static ToString(value: number): string;
-    static ToString(value: number, provider: System.IFormatProvider): string;
-    static ToString(value: System.UInt32): string;
-    static ToString(value: System.UInt32, provider: System.IFormatProvider): string;
-    static ToString(value: System.Int64): string;
-    static ToString(value: System.Int64, provider: System.IFormatProvider): string;
-    static ToString(value: System.UInt64): string;
-    static ToString(value: System.UInt64, provider: System.IFormatProvider): string;
+    static ToString(value: Byte): string;
+    static ToString(value: Byte, provider: System.IFormatProvider): string;
     static ToString(value: number): string;
     static ToString(value: number, provider: System.IFormatProvider): string;
     static ToString(value: number): string;
     static ToString(value: number, provider: System.IFormatProvider): string;
-    static ToString(value: System.Decimal): string;
-    static ToString(value: System.Decimal, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
+    static ToString(value: number): string;
+    static ToString(value: number, provider: System.IFormatProvider): string;
     static ToString(value: System.DateTime): string;
     static ToString(value: System.DateTime, provider: System.IFormatProvider): string;
     static ToString(value: string): string;
     static ToString(value: string, provider: System.IFormatProvider): string;
-    static ToByte(value: string, fromBase: number): System.Byte;
+    static ToByte(value: string, fromBase: number): Byte;
     static ToSByte(value: string, fromBase: number): System.SByte;
-    static ToInt16(value: string, fromBase: number): System.Int16;
-    static ToUInt16(value: string, fromBase: number): System.UInt16;
+    static ToInt16(value: string, fromBase: number): number;
+    static ToUInt16(value: string, fromBase: number): number;
     static ToInt32(value: string, fromBase: number): number;
-    static ToUInt32(value: string, fromBase: number): System.UInt32;
-    static ToInt64(value: string, fromBase: number): System.Int64;
-    static ToUInt64(value: string, fromBase: number): System.UInt64;
-    static ToString(value: System.Byte, toBase: number): string;
-    static ToString(value: System.Int16, toBase: number): string;
+    static ToUInt32(value: string, fromBase: number): number;
+    static ToInt64(value: string, fromBase: number): number;
+    static ToUInt64(value: string, fromBase: number): number;
+    static ToString(value: Byte, toBase: number): string;
     static ToString(value: number, toBase: number): string;
-    static ToString(value: System.Int64, toBase: number): string;
-    static ToBase64String(inArray: System.Byte[]): string;
-    static ToBase64String(inArray: System.Byte[], options: System.Base64FormattingOptions): string;
-    static ToBase64String(inArray: System.Byte[], offset: number, length: number): string;
-    static ToBase64String(inArray: System.Byte[], offset: number, length: number, options: System.Base64FormattingOptions): string;
+    static ToString(value: number, toBase: number): string;
+    static ToString(value: number, toBase: number): string;
+    static ToBase64String(inArray: Byte[]): string;
+    static ToBase64String(inArray: Byte[], options: System.Base64FormattingOptions): string;
+    static ToBase64String(inArray: Byte[], offset: number, length: number): string;
+    static ToBase64String(inArray: Byte[], offset: number, length: number, options: System.Base64FormattingOptions): string;
     static ToBase64String(bytes: any, options?: System.Base64FormattingOptions): string;
-    static ToBase64CharArray(inArray: System.Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number): number;
-    static ToBase64CharArray(inArray: System.Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number, options: System.Base64FormattingOptions): number;
-    static FromBase64String(s: string): System.Byte[];
-    static FromBase64CharArray(inArray: System.Char[], offset: number, length: number): System.Byte[];
+    static ToBase64CharArray(inArray: Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number): number;
+    static ToBase64CharArray(inArray: Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number, options: System.Base64FormattingOptions): number;
+    static FromBase64String(s: string): Byte[];
+    static FromBase64CharArray(inArray: System.Char[], offset: number, length: number): Byte[];
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -1096,8 +1104,8 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class DateTime {
-    constructor(ticks: System.Int64);
-    constructor(ticks: System.Int64, kind: System.DateTimeKind);
+    constructor(ticks: number);
+    constructor(ticks: number, kind: System.DateTimeKind);
     constructor(year: number, month: number, day: number);
     constructor(year: number, month: number, day: number, calendar: System.Globalization.Calendar);
     constructor(year: number, month: number, day: number, hour: number, minute: number, second: number);
@@ -1118,7 +1126,7 @@ export declare namespace System {
     Month: number;
     static Now: System.DateTime;
     Second: number;
-    Ticks: System.Int64;
+    Ticks: number;
     TimeOfDay: System.TimeSpan;
     static Today: System.DateTime;
     Year: number;
@@ -1133,7 +1141,7 @@ export declare namespace System {
     AddMinutes(value: number): System.DateTime;
     AddMonths(months: number): System.DateTime;
     AddSeconds(value: number): System.DateTime;
-    AddTicks(value: System.Int64): System.DateTime;
+    AddTicks(value: number): System.DateTime;
     AddYears(value: number): System.DateTime;
     static Compare(t1: System.DateTime, t2: System.DateTime): number;
     CompareTo(value: any): number;
@@ -1142,13 +1150,13 @@ export declare namespace System {
     Equals(value: any): boolean;
     Equals(value: System.DateTime): boolean;
     static Equals(t1: System.DateTime, t2: System.DateTime): boolean;
-    static FromBinary(dateData: System.Int64): System.DateTime;
-    static FromFileTime(fileTime: System.Int64): System.DateTime;
-    static FromFileTimeUtc(fileTime: System.Int64): System.DateTime;
+    static FromBinary(dateData: number): System.DateTime;
+    static FromFileTime(fileTime: number): System.DateTime;
+    static FromFileTimeUtc(fileTime: number): System.DateTime;
     static FromOADate(d: number): System.DateTime;
     IsDaylightSavingTime(): boolean;
     static SpecifyKind(value: System.DateTime, kind: System.DateTimeKind): System.DateTime;
-    ToBinary(): System.Int64;
+    ToBinary(): number;
     GetHashCode(): number;
     static IsLeapYear(year: number): boolean;
     static Parse(s: string): System.DateTime;
@@ -1163,8 +1171,8 @@ export declare namespace System {
     Subtract(value: System.DateTime): System.TimeSpan;
     Subtract(value: System.TimeSpan): System.DateTime;
     ToOADate(): number;
-    ToFileTime(): System.Int64;
-    ToFileTimeUtc(): System.Int64;
+    ToFileTime(): number;
+    ToFileTimeUtc(): number;
     ToLocalTime(): System.DateTime;
     ToLongDateString(): string;
     ToLongTimeString(): string;
@@ -1188,7 +1196,7 @@ export declare namespace System {
     Local = 2,
   }
   export class DateTimeOffset {
-    constructor(ticks: System.Int64, offset: System.TimeSpan);
+    constructor(ticks: number, offset: System.TimeSpan);
     constructor(dateTime: System.DateTime);
     constructor(dateTime: System.DateTime, offset: System.TimeSpan);
     constructor(year: number, month: number, day: number, hour: number, minute: number, second: number, offset: System.TimeSpan);
@@ -1209,8 +1217,8 @@ export declare namespace System {
     Month: number;
     Offset: System.TimeSpan;
     Second: number;
-    Ticks: System.Int64;
-    UtcTicks: System.Int64;
+    Ticks: number;
+    UtcTicks: number;
     TimeOfDay: System.TimeSpan;
     Year: number;
     static MinValue: System.DateTimeOffset;
@@ -1224,7 +1232,7 @@ export declare namespace System {
     AddMinutes(minutes: number): System.DateTimeOffset;
     AddMonths(months: number): System.DateTimeOffset;
     AddSeconds(seconds: number): System.DateTimeOffset;
-    AddTicks(ticks: System.Int64): System.DateTimeOffset;
+    AddTicks(ticks: number): System.DateTimeOffset;
     AddYears(years: number): System.DateTimeOffset;
     static Compare(first: System.DateTimeOffset, second: System.DateTimeOffset): number;
     CompareTo(other: System.DateTimeOffset): number;
@@ -1232,9 +1240,9 @@ export declare namespace System {
     Equals(other: System.DateTimeOffset): boolean;
     EqualsExact(other: System.DateTimeOffset): boolean;
     static Equals(first: System.DateTimeOffset, second: System.DateTimeOffset): boolean;
-    static FromFileTime(fileTime: System.Int64): System.DateTimeOffset;
-    static FromUnixTimeSeconds(seconds: System.Int64): System.DateTimeOffset;
-    static FromUnixTimeMilliseconds(milliseconds: System.Int64): System.DateTimeOffset;
+    static FromFileTime(fileTime: number): System.DateTimeOffset;
+    static FromUnixTimeSeconds(seconds: number): System.DateTimeOffset;
+    static FromUnixTimeMilliseconds(milliseconds: number): System.DateTimeOffset;
     GetHashCode(): number;
     static Parse(input: string): System.DateTimeOffset;
     static Parse(input: string, formatProvider: System.IFormatProvider): System.DateTimeOffset;
@@ -1247,9 +1255,9 @@ export declare namespace System {
     static ParseExact(input: any, formats: string[], formatProvider: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
     Subtract(value: System.DateTimeOffset): System.TimeSpan;
     Subtract(value: System.TimeSpan): System.DateTimeOffset;
-    ToFileTime(): System.Int64;
-    ToUnixTimeSeconds(): System.Int64;
-    ToUnixTimeMilliseconds(): System.Int64;
+    ToFileTime(): number;
+    ToUnixTimeSeconds(): number;
+    ToUnixTimeMilliseconds(): number;
     ToLocalTime(): System.DateTimeOffset;
     ToString(): string;
     ToString(format: string): string;
@@ -1396,7 +1404,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sender: any, e: TEventArgs): void;
-    BeginInvoke(sender: any, e: TEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sender: any, e: TEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -1480,11 +1488,11 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class Guid {
-    constructor(b: System.Byte[]);
-    constructor(b: System.ReadOnlySpan<System.Byte>);
-    constructor(a: System.UInt32, b: System.UInt16, c: System.UInt16, d: System.Byte, e: System.Byte, f: System.Byte, g: System.Byte, h: System.Byte, i: System.Byte, j: System.Byte, k: System.Byte);
-    constructor(a: number, b: System.Int16, c: System.Int16, d: System.Byte[]);
-    constructor(a: number, b: System.Int16, c: System.Int16, d: System.Byte, e: System.Byte, f: System.Byte, g: System.Byte, h: System.Byte, i: System.Byte, j: System.Byte, k: System.Byte);
+    constructor(b: Byte[]);
+    constructor(b: System.ReadOnlySpan<Byte>);
+    constructor(a: number, b: number, c: number, d: Byte, e: Byte, f: Byte, g: Byte, h: Byte, i: Byte, j: Byte, k: Byte);
+    constructor(a: number, b: number, c: number, d: Byte[]);
+    constructor(a: number, b: number, c: number, d: Byte, e: Byte, f: Byte, g: Byte, h: Byte, i: Byte, j: Byte, k: Byte);
     constructor(g: string);
     static Empty: System.Guid;
     static NewGuid(): System.Guid;
@@ -1492,8 +1500,8 @@ export declare namespace System {
     static Parse(input: any): System.Guid;
     static ParseExact(input: string, format: string): System.Guid;
     static ParseExact(input: any, format: any): System.Guid;
-    ToByteArray(): System.Byte[];
-    TryWriteBytes(destination: System.Span<System.Byte>): boolean;
+    ToByteArray(): Byte[];
+    TryWriteBytes(destination: System.Span<Byte>): boolean;
     ToString(): string;
     GetHashCode(): number;
     Equals(o: any): boolean;
@@ -1531,16 +1539,16 @@ export declare namespace System {
     ToBoolean(provider: System.IFormatProvider): boolean;
     ToChar(provider: System.IFormatProvider): System.Char;
     ToSByte(provider: System.IFormatProvider): System.SByte;
-    ToByte(provider: System.IFormatProvider): System.Byte;
-    ToInt16(provider: System.IFormatProvider): System.Int16;
-    ToUInt16(provider: System.IFormatProvider): System.UInt16;
+    ToByte(provider: System.IFormatProvider): Byte;
+    ToInt16(provider: System.IFormatProvider): number;
+    ToUInt16(provider: System.IFormatProvider): number;
     ToInt32(provider: System.IFormatProvider): number;
-    ToUInt32(provider: System.IFormatProvider): System.UInt32;
-    ToInt64(provider: System.IFormatProvider): System.Int64;
-    ToUInt64(provider: System.IFormatProvider): System.UInt64;
+    ToUInt32(provider: System.IFormatProvider): number;
+    ToInt64(provider: System.IFormatProvider): number;
+    ToUInt64(provider: System.IFormatProvider): number;
     ToSingle(provider: System.IFormatProvider): number;
     ToDouble(provider: System.IFormatProvider): number;
-    ToDecimal(provider: System.IFormatProvider): System.Decimal;
+    ToDecimal(provider: System.IFormatProvider): number;
     ToDateTime(provider: System.IFormatProvider): System.DateTime;
     ToString(provider: System.IFormatProvider): string;
     ToType(conversionType: System.Type, provider: System.IFormatProvider): any;
@@ -1627,22 +1635,22 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class Int16 {
-    static MaxValue: System.Int16;
-    static MinValue: System.Int16;
+    static MaxValue: number;
+    static MinValue: number;
     CompareTo(value: any): number;
-    CompareTo(value: System.Int16): number;
+    CompareTo(value: number): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.Int16): boolean;
+    Equals(obj: number): boolean;
     GetHashCode(): number;
     ToString(): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.Int16;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.Int16;
-    static Parse(s: string, provider: System.IFormatProvider): System.Int16;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.Int16;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.Int16;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1667,22 +1675,22 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class Int64 {
-    static MaxValue: System.Int64;
-    static MinValue: System.Int64;
+    static MaxValue: number;
+    static MinValue: number;
     CompareTo(value: any): number;
-    CompareTo(value: System.Int64): number;
+    CompareTo(value: number): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.Int64): boolean;
+    Equals(obj: number): boolean;
     GetHashCode(): number;
     ToString(): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.Int64;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.Int64;
-    static Parse(s: string, provider: System.IFormatProvider): System.Int64;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.Int64;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.Int64;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1785,65 +1793,65 @@ export declare namespace System {
   export class Math {
     static E: number;
     static PI: number;
-    static Abs(value: System.Int16): System.Int16;
     static Abs(value: number): number;
-    static Abs(value: System.Int64): System.Int64;
+    static Abs(value: number): number;
+    static Abs(value: number): number;
     static Abs(value: System.SByte): System.SByte;
-    static Abs(value: System.Decimal): System.Decimal;
-    static BigMul(a: number, b: number): System.Int64;
-    static Ceiling(d: System.Decimal): System.Decimal;
-    static Clamp(value: System.Byte, min: System.Byte, max: System.Byte): System.Byte;
-    static Clamp(value: System.Decimal, min: System.Decimal, max: System.Decimal): System.Decimal;
+    static Abs(value: number): number;
+    static BigMul(a: number, b: number): number;
+    static Ceiling(d: number): number;
+    static Clamp(value: Byte, min: Byte, max: Byte): Byte;
     static Clamp(value: number, min: number, max: number): number;
-    static Clamp(value: System.Int16, min: System.Int16, max: System.Int16): System.Int16;
     static Clamp(value: number, min: number, max: number): number;
-    static Clamp(value: System.Int64, min: System.Int64, max: System.Int64): System.Int64;
+    static Clamp(value: number, min: number, max: number): number;
+    static Clamp(value: number, min: number, max: number): number;
+    static Clamp(value: number, min: number, max: number): number;
     static Clamp(value: System.SByte, min: System.SByte, max: System.SByte): System.SByte;
     static Clamp(value: number, min: number, max: number): number;
-    static Clamp(value: System.UInt16, min: System.UInt16, max: System.UInt16): System.UInt16;
-    static Clamp(value: System.UInt32, min: System.UInt32, max: System.UInt32): System.UInt32;
-    static Clamp(value: System.UInt64, min: System.UInt64, max: System.UInt64): System.UInt64;
-    static Floor(d: System.Decimal): System.Decimal;
+    static Clamp(value: number, min: number, max: number): number;
+    static Clamp(value: number, min: number, max: number): number;
+    static Clamp(value: number, min: number, max: number): number;
+    static Floor(d: number): number;
     static IEEERemainder(x: number, y: number): number;
     static Log(a: number, newBase: number): number;
-    static Max(val1: System.Byte, val2: System.Byte): System.Byte;
-    static Max(val1: System.Decimal, val2: System.Decimal): System.Decimal;
+    static Max(val1: Byte, val2: Byte): Byte;
     static Max(val1: number, val2: number): number;
-    static Max(val1: System.Int16, val2: System.Int16): System.Int16;
     static Max(val1: number, val2: number): number;
-    static Max(val1: System.Int64, val2: System.Int64): System.Int64;
+    static Max(val1: number, val2: number): number;
+    static Max(val1: number, val2: number): number;
+    static Max(val1: number, val2: number): number;
     static Max(val1: System.SByte, val2: System.SByte): System.SByte;
     static Max(val1: number, val2: number): number;
-    static Max(val1: System.UInt16, val2: System.UInt16): System.UInt16;
-    static Max(val1: System.UInt32, val2: System.UInt32): System.UInt32;
-    static Max(val1: System.UInt64, val2: System.UInt64): System.UInt64;
-    static Min(val1: System.Byte, val2: System.Byte): System.Byte;
-    static Min(val1: System.Decimal, val2: System.Decimal): System.Decimal;
+    static Max(val1: number, val2: number): number;
+    static Max(val1: number, val2: number): number;
+    static Max(val1: number, val2: number): number;
+    static Min(val1: Byte, val2: Byte): Byte;
     static Min(val1: number, val2: number): number;
-    static Min(val1: System.Int16, val2: System.Int16): System.Int16;
     static Min(val1: number, val2: number): number;
-    static Min(val1: System.Int64, val2: System.Int64): System.Int64;
+    static Min(val1: number, val2: number): number;
+    static Min(val1: number, val2: number): number;
+    static Min(val1: number, val2: number): number;
     static Min(val1: System.SByte, val2: System.SByte): System.SByte;
     static Min(val1: number, val2: number): number;
-    static Min(val1: System.UInt16, val2: System.UInt16): System.UInt16;
-    static Min(val1: System.UInt32, val2: System.UInt32): System.UInt32;
-    static Min(val1: System.UInt64, val2: System.UInt64): System.UInt64;
-    static Round(d: System.Decimal): System.Decimal;
-    static Round(d: System.Decimal, decimals: number): System.Decimal;
-    static Round(d: System.Decimal, mode: System.MidpointRounding): System.Decimal;
-    static Round(d: System.Decimal, decimals: number, mode: System.MidpointRounding): System.Decimal;
+    static Min(val1: number, val2: number): number;
+    static Min(val1: number, val2: number): number;
+    static Min(val1: number, val2: number): number;
+    static Round(d: number): number;
+    static Round(d: number, decimals: number): number;
+    static Round(d: number, mode: System.MidpointRounding): number;
+    static Round(d: number, decimals: number, mode: System.MidpointRounding): number;
     static Round(a: number): number;
     static Round(value: number, digits: number): number;
     static Round(value: number, mode: System.MidpointRounding): number;
     static Round(value: number, digits: number, mode: System.MidpointRounding): number;
-    static Sign(value: System.Decimal): number;
     static Sign(value: number): number;
-    static Sign(value: System.Int16): number;
     static Sign(value: number): number;
-    static Sign(value: System.Int64): number;
+    static Sign(value: number): number;
+    static Sign(value: number): number;
+    static Sign(value: number): number;
     static Sign(value: System.SByte): number;
     static Sign(value: number): number;
-    static Truncate(d: System.Decimal): System.Decimal;
+    static Truncate(d: number): number;
     static Truncate(d: number): number;
     static Abs(value: number): number;
     static Abs(value: number): number;
@@ -2233,7 +2241,7 @@ export declare namespace System {
   }
   export class Progress<T = any> {
     constructor();
-    constructor(handler: ((arg0: T) => void));
+    constructor(handler: ((obj: T) => void));
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2246,8 +2254,8 @@ export declare namespace System {
     Next(minValue: number, maxValue: number): number;
     Next(maxValue: number): number;
     NextDouble(): number;
-    NextBytes(buffer: System.Byte[]): void;
-    NextBytes(buffer: System.Span<System.Byte>): void;
+    NextBytes(buffer: Byte[]): void;
+    NextBytes(buffer: System.Span<Byte>): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2309,7 +2317,6 @@ export declare namespace System {
   export class ReadOnlySpan<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
-    [key: string]: any;
     Length: number;
     IsEmpty: boolean;
     static Empty: any; // System.ReadOnlySpan`1[T]
@@ -2339,7 +2346,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sender: any, args: System.ResolveEventArgs): System.Reflection.Assembly;
-    BeginInvoke(sender: any, args: System.ResolveEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sender: any, args: System.ResolveEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): System.Reflection.Assembly;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -2405,7 +2412,6 @@ export declare namespace System {
   export class Span<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
-    [key: string]: any;
     Length: number;
     IsEmpty: boolean;
     static Empty: any; // System.Span`1[T]
@@ -2521,11 +2527,11 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class TimeSpan {
-    constructor(ticks: System.Int64);
+    constructor(ticks: number);
     constructor(hours: number, minutes: number, seconds: number);
     constructor(days: number, hours: number, minutes: number, seconds: number);
     constructor(days: number, hours: number, minutes: number, seconds: number, milliseconds: number);
-    Ticks: System.Int64;
+    Ticks: number;
     Days: number;
     Hours: number;
     Milliseconds: number;
@@ -2536,11 +2542,11 @@ export declare namespace System {
     TotalMilliseconds: number;
     TotalMinutes: number;
     TotalSeconds: number;
-    static TicksPerMillisecond: System.Int64;
-    static TicksPerSecond: System.Int64;
-    static TicksPerMinute: System.Int64;
-    static TicksPerHour: System.Int64;
-    static TicksPerDay: System.Int64;
+    static TicksPerMillisecond: number;
+    static TicksPerSecond: number;
+    static TicksPerMinute: number;
+    static TicksPerHour: number;
+    static TicksPerDay: number;
     static Zero: System.TimeSpan;
     static MaxValue: System.TimeSpan;
     static MinValue: System.TimeSpan;
@@ -2563,7 +2569,7 @@ export declare namespace System {
     Multiply(factor: number): System.TimeSpan;
     Divide(divisor: number): System.TimeSpan;
     Divide(ts: System.TimeSpan): number;
-    static FromTicks(value: System.Int64): System.TimeSpan;
+    static FromTicks(value: number): System.TimeSpan;
     static Parse(s: string): System.TimeSpan;
     static Parse(input: string, formatProvider: System.IFormatProvider): System.TimeSpan;
     static Parse(input: any, formatProvider?: System.IFormatProvider): System.TimeSpan;
@@ -2730,14 +2736,14 @@ export declare namespace System {
     static Delimiter: System.Char;
     static EmptyTypes: System.Type[];
     static Missing: any; // System.Object
-    static FilterAttribute: System.Reflection.MemberFilter;
-    static FilterName: System.Reflection.MemberFilter;
-    static FilterNameIgnoreCase: System.Reflection.MemberFilter;
+    static FilterAttribute: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean);
+    static FilterName: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean);
+    static FilterNameIgnoreCase: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean);
     IsEnumDefined(value: any): boolean;
     GetEnumName(value: any): string;
     GetEnumNames(): string[];
-    FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-    FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+    FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+    FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
     IsSubclassOf(c: System.Type): boolean;
     IsAssignableFrom(c: System.Type): boolean;
     GetType(): System.Type;
@@ -2825,9 +2831,9 @@ export declare namespace System {
     static GetType(typeName: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
     static GetType(typeName: string, throwOnError: boolean): System.Type;
     static GetType(typeName: string): System.Type;
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type)): System.Type;
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type), throwOnError: boolean): System.Type;
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type), throwOnError: boolean, ignoreCase: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg1: System.Reflection.Assembly, arg2: string, arg3: boolean) => System.Type)): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg1: System.Reflection.Assembly, arg2: string, arg3: boolean) => System.Type), throwOnError: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg1: System.Reflection.Assembly, arg2: string, arg3: boolean) => System.Type), throwOnError: boolean, ignoreCase: boolean): System.Type;
     static ReflectionOnlyGetType(typeName: string, throwIfNotFound: boolean, ignoreCase: boolean): System.Type;
     static GetTypeFromCLSID(clsid: System.Guid, server: string, throwOnError: boolean): System.Type;
     static GetTypeFromProgID(progID: string, server: string, throwOnError: boolean): System.Type;
@@ -2835,7 +2841,7 @@ export declare namespace System {
     IsDefined(attributeType: System.Type, inherit: boolean): boolean;
     GetCustomAttributes(inherit: boolean): any[];
     GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-    GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+    GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
     GetType(): System.Type;
   }
   export class TypeAccessException {
@@ -2919,62 +2925,62 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class UInt16 {
-    static MaxValue: System.UInt16;
-    static MinValue: System.UInt16;
+    static MaxValue: number;
+    static MinValue: number;
     CompareTo(value: any): number;
-    CompareTo(value: System.UInt16): number;
+    CompareTo(value: number): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.UInt16): boolean;
+    Equals(obj: number): boolean;
     GetHashCode(): number;
     ToString(): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.UInt16;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.UInt16;
-    static Parse(s: string, provider: System.IFormatProvider): System.UInt16;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.UInt16;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.UInt16;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
   export class UInt32 {
-    static MaxValue: System.UInt32;
-    static MinValue: System.UInt32;
+    static MaxValue: number;
+    static MinValue: number;
     CompareTo(value: any): number;
-    CompareTo(value: System.UInt32): number;
+    CompareTo(value: number): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.UInt32): boolean;
+    Equals(obj: number): boolean;
     GetHashCode(): number;
     ToString(): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.UInt32;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.UInt32;
-    static Parse(s: string, provider: System.IFormatProvider): System.UInt32;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.UInt32;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.UInt32;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
   export class UInt64 {
-    static MaxValue: System.UInt64;
-    static MinValue: System.UInt64;
+    static MaxValue: number;
+    static MinValue: number;
     CompareTo(value: any): number;
-    CompareTo(value: System.UInt64): number;
+    CompareTo(value: number): number;
     Equals(obj: any): boolean;
-    Equals(obj: System.UInt64): boolean;
+    Equals(obj: number): boolean;
     GetHashCode(): number;
     ToString(): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.UInt64;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.UInt64;
-    static Parse(s: string, provider: System.IFormatProvider): System.UInt64;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.UInt64;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.UInt64;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -3012,7 +3018,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sender: any, e: System.UnhandledExceptionEventArgs): void;
-    BeginInvoke(sender: any, e: System.UnhandledExceptionEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sender: any, e: System.UnhandledExceptionEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -3050,8 +3056,8 @@ export declare namespace System {
     Minor: number;
     Build: number;
     Revision: number;
-    MajorRevision: System.Int16;
-    MinorRevision: System.Int16;
+    MajorRevision: number;
+    MinorRevision: number;
     Clone(): any;
     CompareTo(version: any): number;
     CompareTo(value: System.Version): number;
@@ -3078,7 +3084,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(sender: any, e: System.ConsoleCancelEventArgs): void;
-    BeginInvoke(sender: any, e: System.ConsoleCancelEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(sender: any, e: System.ConsoleCancelEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -3312,12 +3318,12 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class ApplicationId {
-    constructor(publicKeyToken: System.Byte[], name: string, version: System.Version, processorArchitecture: string, culture: string);
+    constructor(publicKeyToken: Byte[], name: string, version: System.Version, processorArchitecture: string, culture: string);
     Culture: string;
     Name: string;
     ProcessorArchitecture: string;
     Version: System.Version;
-    PublicKeyToken: System.Byte[];
+    PublicKeyToken: Byte[];
     Copy(): System.ApplicationId;
     ToString(): string;
     Equals(o: any): boolean;
@@ -3448,25 +3454,25 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class Array {
-    LongLength: System.Int64;
+    LongLength: number;
     IsFixedSize: boolean;
     IsReadOnly: boolean;
     IsSynchronized: boolean;
     SyncRoot: any; // System.Object
     Length: number;
     Rank: number;
-    static CreateInstance(elementType: System.Type, ...lengths: System.Int64[]): System.Array;
+    static CreateInstance(elementType: System.Type, ...lengths: number[]): System.Array;
     CopyTo(array: System.Array, index: number): void;
     Clone(): any;
     static BinarySearch(array: System.Array, value: any): number;
-    static Copy(sourceArray: System.Array, destinationArray: System.Array, length: System.Int64): void;
-    static Copy(sourceArray: System.Array, sourceIndex: System.Int64, destinationArray: System.Array, destinationIndex: System.Int64, length: System.Int64): void;
-    CopyTo(array: System.Array, index: System.Int64): void;
-    GetLongLength(dimension: number): System.Int64;
-    GetValue(index: System.Int64): any;
-    GetValue(index1: System.Int64, index2: System.Int64): any;
-    GetValue(index1: System.Int64, index2: System.Int64, index3: System.Int64): any;
-    GetValue(...indices: System.Int64[]): any;
+    static Copy(sourceArray: System.Array, destinationArray: System.Array, length: number): void;
+    static Copy(sourceArray: System.Array, sourceIndex: number, destinationArray: System.Array, destinationIndex: number, length: number): void;
+    CopyTo(array: System.Array, index: number): void;
+    GetLongLength(dimension: number): number;
+    GetValue(index: number): any;
+    GetValue(index1: number, index2: number): any;
+    GetValue(index1: number, index2: number, index3: number): any;
+    GetValue(...indices: number[]): any;
     static BinarySearch(array: System.Array, index: number, length: number, value: any): number;
     static BinarySearch(array: System.Array, value: any, comparer: System.Collections.IComparer): number;
     static BinarySearch(array: System.Array, index: number, length: number, value: any, comparer: System.Collections.IComparer): number;
@@ -3478,10 +3484,10 @@ export declare namespace System {
     static LastIndexOf(array: System.Array, value: any, startIndex: number, count: number): number;
     static Reverse(array: System.Array): void;
     static Reverse(array: System.Array, index: number, length: number): void;
-    SetValue(value: any, index: System.Int64): void;
-    SetValue(value: any, index1: System.Int64, index2: System.Int64): void;
-    SetValue(value: any, index1: System.Int64, index2: System.Int64, index3: System.Int64): void;
-    SetValue(value: any, ...indices: System.Int64[]): void;
+    SetValue(value: any, index: number): void;
+    SetValue(value: any, index1: number, index2: number): void;
+    SetValue(value: any, index1: number, index2: number, index3: number): void;
+    SetValue(value: any, ...indices: number[]): void;
     static Sort(array: System.Array): void;
     static Sort(array: System.Array, index: number, length: number): void;
     static Sort(array: System.Array, comparer: System.Collections.IComparer): void;
@@ -3555,7 +3561,7 @@ export declare namespace System {
     static CreateInstanceFrom(domain: System.AppDomain, assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[], securityAttributes: System.Security.Policy.Evidence): System.Runtime.Remoting.ObjectHandle;
     static CreateInstanceFrom(domain: System.AppDomain, assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[]): System.Runtime.Remoting.ObjectHandle;
     static CreateComInstanceFrom(assemblyName: string, typeName: string): System.Runtime.Remoting.ObjectHandle;
-    static CreateComInstanceFrom(assemblyName: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: any): System.Runtime.Remoting.ObjectHandle;
+    static CreateComInstanceFrom(assemblyName: string, typeName: string, hashValue: Byte[], hashAlgorithm: any): System.Runtime.Remoting.ObjectHandle;
     static GetObject(type: System.Type, url: string): any;
     static GetObject(type: System.Type, url: string, state: any): any;
     static CreateInstance(activationContext: System.ActivationContext): System.Runtime.Remoting.ObjectHandle;
@@ -3567,8 +3573,8 @@ export declare namespace System {
   }
   export class Buffer {
     static ByteLength(array: System.Array): number;
-    static GetByte(array: System.Array, index: number): System.Byte;
-    static SetByte(array: System.Array, index: number, value: System.Byte): void;
+    static GetByte(array: System.Array, index: number): Byte;
+    static SetByte(array: System.Array, index: number, value: Byte): void;
     static BlockCopy(src: System.Array, srcOffset: number, dst: System.Array, dstOffset: number, count: number): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -3624,13 +3630,13 @@ export declare namespace System {
     HasFlag(flag: System.Enum): boolean;
     GetTypeCode(): System.TypeCode;
     static ToObject(enumType: System.Type, value: System.SByte): any;
-    static ToObject(enumType: System.Type, value: System.Int16): any;
     static ToObject(enumType: System.Type, value: number): any;
-    static ToObject(enumType: System.Type, value: System.Byte): any;
-    static ToObject(enumType: System.Type, value: System.UInt16): any;
-    static ToObject(enumType: System.Type, value: System.UInt32): any;
-    static ToObject(enumType: System.Type, value: System.Int64): any;
-    static ToObject(enumType: System.Type, value: System.UInt64): any;
+    static ToObject(enumType: System.Type, value: number): any;
+    static ToObject(enumType: System.Type, value: Byte): any;
+    static ToObject(enumType: System.Type, value: number): any;
+    static ToObject(enumType: System.Type, value: number): any;
+    static ToObject(enumType: System.Type, value: number): any;
+    static ToObject(enumType: System.Type, value: number): any;
     GetType(): System.Type;
   }
   export class Exception {
@@ -3667,9 +3673,9 @@ export declare namespace System {
   }
   export class GC {
     static MaxGeneration: number;
-    static GetAllocatedBytesForCurrentThread(): System.Int64;
-    static AddMemoryPressure(bytesAllocated: System.Int64): void;
-    static RemoveMemoryPressure(bytesAllocated: System.Int64): void;
+    static GetAllocatedBytesForCurrentThread(): number;
+    static AddMemoryPressure(bytesAllocated: number): void;
+    static RemoveMemoryPressure(bytesAllocated: number): void;
     static GetGeneration(obj: any): number;
     static Collect(generation: number): void;
     static Collect(): void;
@@ -3682,17 +3688,17 @@ export declare namespace System {
     static WaitForPendingFinalizers(): void;
     static SuppressFinalize(obj: any): void;
     static ReRegisterForFinalize(obj: any): void;
-    static GetTotalMemory(forceFullCollection: boolean): System.Int64;
+    static GetTotalMemory(forceFullCollection: boolean): number;
     static RegisterForFullGCNotification(maxGenerationThreshold: number, largeObjectHeapThreshold: number): void;
     static CancelFullGCNotification(): void;
     static WaitForFullGCApproach(): System.GCNotificationStatus;
     static WaitForFullGCApproach(millisecondsTimeout: number): System.GCNotificationStatus;
     static WaitForFullGCComplete(): System.GCNotificationStatus;
     static WaitForFullGCComplete(millisecondsTimeout: number): System.GCNotificationStatus;
-    static TryStartNoGCRegion(totalSize: System.Int64): boolean;
-    static TryStartNoGCRegion(totalSize: System.Int64, lohSize: System.Int64): boolean;
-    static TryStartNoGCRegion(totalSize: System.Int64, disallowFullBlockingGC: boolean): boolean;
-    static TryStartNoGCRegion(totalSize: System.Int64, lohSize: System.Int64, disallowFullBlockingGC: boolean): boolean;
+    static TryStartNoGCRegion(totalSize: number): boolean;
+    static TryStartNoGCRegion(totalSize: number, lohSize: number): boolean;
+    static TryStartNoGCRegion(totalSize: number, disallowFullBlockingGC: boolean): boolean;
+    static TryStartNoGCRegion(totalSize: number, lohSize: number, disallowFullBlockingGC: boolean): boolean;
     static EndNoGCRegion(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -3706,7 +3712,7 @@ export declare namespace System {
     ShadowCopyFiles: boolean;
     DynamicDirectory: string;
     Evidence: System.Security.Policy.Evidence;
-    GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+    GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
     ToString(): string;
     Equals(other: any): boolean;
     GetHashCode(): number;
@@ -3730,9 +3736,9 @@ export declare namespace System {
     CreateInstanceFrom(assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[], securityAttributes: System.Security.Policy.Evidence): System.Runtime.Remoting.ObjectHandle;
     Load(assemblyRef: System.Reflection.AssemblyName): System.Reflection.Assembly;
     Load(assemblyString: string): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[]): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[]): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[], rawSymbolStore: Byte[]): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[], rawSymbolStore: Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
     Load(assemblyRef: System.Reflection.AssemblyName, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
     Load(assemblyString: string, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
     ExecuteAssembly(assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence): number;
@@ -3746,7 +3752,7 @@ export declare namespace System {
     SetCachePath(s: string): void;
     SetData(name: string, data: any): void;
     GetData(name: string): any;
-    DoCallBack(theDelegate: System.CrossAppDomainDelegate): void;
+    DoCallBack(theDelegate: (() => void)): void;
     SetAppDomainPolicy(domainPolicy: System.Security.Policy.PolicyLevel): void;
     SetPrincipalPolicy(policy: System.Security.Principal.PrincipalPolicy): void;
     SetThreadPrincipal(principal: System.Security.Principal.IPrincipal): void;
@@ -3813,15 +3819,15 @@ export declare namespace System {
     ApplicationIdentity: System.ApplicationIdentity;
     Id: number;
     static MonitoringIsEnabled: boolean;
-    MonitoringSurvivedMemorySize: System.Int64;
-    static MonitoringSurvivedProcessMemorySize: System.Int64;
-    MonitoringTotalAllocatedMemorySize: System.Int64;
+    MonitoringSurvivedMemorySize: number;
+    static MonitoringSurvivedProcessMemorySize: number;
+    MonitoringTotalAllocatedMemorySize: number;
     MonitoringTotalProcessorTime: System.TimeSpan;
     AppendPrivatePath(path: string): void;
     ClearPrivatePath(): void;
     ClearShadowCopyPath(): void;
     CreateComInstanceFrom(assemblyName: string, typeName: string): System.Runtime.Remoting.ObjectHandle;
-    CreateComInstanceFrom(assemblyFile: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: any): System.Runtime.Remoting.ObjectHandle;
+    CreateComInstanceFrom(assemblyFile: string, typeName: string, hashValue: Byte[], hashAlgorithm: any): System.Runtime.Remoting.ObjectHandle;
     CreateInstance(assemblyName: string, typeName: string): System.Runtime.Remoting.ObjectHandle;
     CreateInstance(assemblyName: string, typeName: string, activationAttributes: any[]): System.Runtime.Remoting.ObjectHandle;
     CreateInstance(assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[], securityAttributes: System.Security.Policy.Evidence): System.Runtime.Remoting.ObjectHandle;
@@ -3851,13 +3857,13 @@ export declare namespace System {
     DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>): System.Reflection.Emit.AssemblyBuilder;
     DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, isSynchronized: boolean, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>): System.Reflection.Emit.AssemblyBuilder;
     DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>, securityContextSource: System.Security.SecurityContextSource): System.Reflection.Emit.AssemblyBuilder;
-    DoCallBack(callBackDelegate: System.CrossAppDomainDelegate): void;
+    DoCallBack(callBackDelegate: (() => void)): void;
     ExecuteAssembly(assemblyFile: string): number;
     ExecuteAssembly(assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence): number;
     ExecuteAssembly(assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[]): number;
-    ExecuteAssembly(assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[], hashValue: System.Byte[], hashAlgorithm: any): number;
+    ExecuteAssembly(assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[], hashValue: Byte[], hashAlgorithm: any): number;
     ExecuteAssembly(assemblyFile: string, args: string[]): number;
-    ExecuteAssembly(assemblyFile: string, args: string[], hashValue: System.Byte[], hashAlgorithm: any): number;
+    ExecuteAssembly(assemblyFile: string, args: string[], hashValue: Byte[], hashAlgorithm: any): number;
     GetAssemblies(): System.Reflection.Assembly[];
     GetData(name: string): any;
     GetType(): System.Type;
@@ -3866,9 +3872,9 @@ export declare namespace System {
     Load(assemblyRef: System.Reflection.AssemblyName, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
     Load(assemblyString: string): System.Reflection.Assembly;
     Load(assemblyString: string, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[]): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Assembly;
-    Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[]): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[], rawSymbolStore: Byte[]): System.Reflection.Assembly;
+    Load(rawAssembly: Byte[], rawSymbolStore: Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
     SetAppDomainPolicy(domainPolicy: System.Security.Policy.PolicyLevel): void;
     SetCachePath(path: string): void;
     SetPrincipalPolicy(policy: System.Security.Principal.PrincipalPolicy): void;
@@ -3888,7 +3894,7 @@ export declare namespace System {
     static GetCurrentThreadId(): number;
     ToString(): string;
     ApplyPolicy(assemblyName: string): string;
-    static CreateDomain(friendlyName: string, securityInfo: System.Security.Policy.Evidence, appBasePath: string, appRelativeSearchPath: string, shadowCopyFiles: boolean, adInit: System.AppDomainInitializer, adInitArgs: string[]): System.AppDomain;
+    static CreateDomain(friendlyName: string, securityInfo: System.Security.Policy.Evidence, appBasePath: string, appRelativeSearchPath: string, shadowCopyFiles: boolean, adInit: ((args: string[]) => void), adInitArgs: string[]): System.AppDomain;
     ExecuteAssemblyByName(assemblyName: string): number;
     ExecuteAssemblyByName(assemblyName: string, assemblySecurity: System.Security.Policy.Evidence): number;
     ExecuteAssemblyByName(assemblyName: string, assemblySecurity: System.Security.Policy.Evidence, ...args: string[]): number;
@@ -3897,7 +3903,7 @@ export declare namespace System {
     ExecuteAssemblyByName(assemblyName: System.Reflection.AssemblyName, ...args: string[]): number;
     IsDefaultAppDomain(): boolean;
     ReflectionOnlyGetAssemblies(): System.Reflection.Assembly[];
-    IsCompatibilitySwitchSet(value: string): boolean;
+    IsCompatibilitySwitchSet(value: string): boolean | undefined;
     CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
     GetLifetimeService(): any;
     Equals(obj: any): boolean;
@@ -3920,7 +3926,7 @@ export declare namespace System {
     static UserInteractive: boolean;
     static UserName: string;
     static Version: System.Version;
-    static WorkingSet: System.Int64;
+    static WorkingSet: number;
     static Is64BitOperatingSystem: boolean;
     static SystemPageSize: number;
     static Is64BitProcess: boolean;
@@ -4001,8 +4007,8 @@ export declare namespace System {
   export class ActivationContext {
     Form: System.ActivationContext_ContextForm;
     Identity: System.ApplicationIdentity;
-    ApplicationManifestBytes: System.Byte[];
-    DeploymentManifestBytes: System.Byte[];
+    ApplicationManifestBytes: Byte[];
+    DeploymentManifestBytes: Byte[];
     static CreatePartialActivationContext(identity: System.ApplicationIdentity): System.ActivationContext;
     static CreatePartialActivationContext(identity: System.ApplicationIdentity, manifestPaths: string[]): System.ActivationContext;
     Dispose(): void;
@@ -4020,7 +4026,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(args: string[]): void;
-    BeginInvoke(args: string[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(args: string[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -4072,13 +4078,13 @@ export declare namespace System {
     DisallowCodeDownload: boolean;
     TargetFrameworkName: string;
     ActivationArguments: System.Runtime.Hosting.ActivationArguments;
-    AppDomainInitializer: System.AppDomainInitializer;
+    AppDomainInitializer: ((args: string[]) => void);
     AppDomainInitializerArguments: string[];
     ApplicationTrust: System.Security.Policy.ApplicationTrust;
     DisallowApplicationBaseProbing: boolean;
     SandboxInterop: boolean;
-    GetConfigurationBytes(): System.Byte[];
-    SetConfigurationBytes(value: System.Byte[]): void;
+    GetConfigurationBytes(): Byte[];
+    SetConfigurationBytes(value: Byte[]): void;
     SetCompatibilitySwitches(switches: System.Collections.Generic.IEnumerable<string>): void;
     SetNativeFunction(functionName: string, functionVersion: number, functionPointer: System.IntPtr): void;
     Equals(obj: any): boolean;
@@ -4147,15 +4153,15 @@ export declare namespace System {
     static Write(value: boolean): void;
     static Write(value: System.Char): void;
     static Write(buffer: System.Char[]): void;
-    static Write(value: System.Decimal): void;
     static Write(value: number): void;
     static Write(value: number): void;
-    static Write(value: System.Int64): void;
+    static Write(value: number): void;
+    static Write(value: number): void;
     static Write(value: any): void;
     static Write(value: number): void;
     static Write(value: string): void;
-    static Write(value: System.UInt32): void;
-    static Write(value: System.UInt64): void;
+    static Write(value: number): void;
+    static Write(value: number): void;
     static Write(format: string, arg0: any): void;
     static Write(format: string, ...arg: any[]): void;
     static Write(buffer: System.Char[], index: number, count: number): void;
@@ -4166,15 +4172,15 @@ export declare namespace System {
     static WriteLine(value: boolean): void;
     static WriteLine(value: System.Char): void;
     static WriteLine(buffer: System.Char[]): void;
-    static WriteLine(value: System.Decimal): void;
     static WriteLine(value: number): void;
     static WriteLine(value: number): void;
-    static WriteLine(value: System.Int64): void;
+    static WriteLine(value: number): void;
+    static WriteLine(value: number): void;
     static WriteLine(value: any): void;
     static WriteLine(value: number): void;
     static WriteLine(value: string): void;
-    static WriteLine(value: System.UInt32): void;
-    static WriteLine(value: System.UInt64): void;
+    static WriteLine(value: number): void;
+    static WriteLine(value: number): void;
     static WriteLine(format: string, arg0: any): void;
     static WriteLine(format: string, ...arg: any[]): void;
     static WriteLine(buffer: System.Char[], index: number, count: number): void;
@@ -4205,7 +4211,7 @@ export declare namespace System {
     Method: System.Reflection.MethodInfo;
     Target: any; // System.Object
     Invoke(): void;
-    BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
     EndInvoke(result: System.IAsyncResult): void;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: any): boolean;
@@ -4253,13 +4259,13 @@ export declare namespace System {
   }
   export class IntPtr {
     constructor(value: number);
-    constructor(value: System.Int64);
+    constructor(value: number);
     static Size: number;
     static Zero: System.IntPtr;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     ToInt32(): number;
-    ToInt64(): System.Int64;
+    ToInt64(): number;
     ToString(): string;
     ToString(format: string): string;
     static Add(pointer: System.IntPtr, offset: number): System.IntPtr;
@@ -4359,14 +4365,14 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class UIntPtr {
-    constructor(value: System.UInt64);
-    constructor(value: System.UInt32);
+    constructor(value: number);
+    constructor(value: number);
     static Size: number;
     static Zero: System.UIntPtr;
     Equals(obj: any): boolean;
     GetHashCode(): number;
-    ToUInt32(): System.UInt32;
-    ToUInt64(): System.UInt64;
+    ToUInt32(): number;
+    ToUInt64(): number;
     ToString(): string;
     static Add(pointer: System.UIntPtr, offset: number): System.UIntPtr;
     static Subtract(pointer: System.UIntPtr, offset: number): System.UIntPtr;
@@ -4390,60 +4396,60 @@ export declare namespace System {
   }
   export class Decimal {
     constructor(value: number);
-    constructor(value: System.UInt32);
-    constructor(value: System.Int64);
-    constructor(value: System.UInt64);
+    constructor(value: number);
+    constructor(value: number);
+    constructor(value: number);
     constructor(value: number);
     constructor(value: number);
     constructor(bits: number[]);
-    constructor(lo: number, mid: number, hi: number, isNegative: boolean, scale: System.Byte);
-    static Zero: System.Decimal;
-    static One: System.Decimal;
-    static MinusOne: System.Decimal;
-    static MaxValue: System.Decimal;
-    static MinValue: System.Decimal;
-    static FromOACurrency(cy: System.Int64): System.Decimal;
-    static ToOACurrency(value: System.Decimal): System.Int64;
-    static Add(d1: System.Decimal, d2: System.Decimal): System.Decimal;
-    static Ceiling(d: System.Decimal): System.Decimal;
-    static Compare(d1: System.Decimal, d2: System.Decimal): number;
+    constructor(lo: number, mid: number, hi: number, isNegative: boolean, scale: Byte);
+    static Zero: number;
+    static One: number;
+    static MinusOne: number;
+    static MaxValue: number;
+    static MinValue: number;
+    static FromOACurrency(cy: number): number;
+    static ToOACurrency(value: number): number;
+    static Add(d1: number, d2: number): number;
+    static Ceiling(d: number): number;
+    static Compare(d1: number, d2: number): number;
     CompareTo(value: any): number;
-    CompareTo(value: System.Decimal): number;
-    static Divide(d1: System.Decimal, d2: System.Decimal): System.Decimal;
+    CompareTo(value: number): number;
+    static Divide(d1: number, d2: number): number;
     Equals(value: any): boolean;
-    Equals(value: System.Decimal): boolean;
+    Equals(value: number): boolean;
     GetHashCode(): number;
-    static Equals(d1: System.Decimal, d2: System.Decimal): boolean;
-    static Floor(d: System.Decimal): System.Decimal;
+    static Equals(d1: number, d2: number): boolean;
+    static Floor(d: number): number;
     ToString(): string;
     ToString(format: string): string;
     ToString(provider: System.IFormatProvider): string;
     ToString(format: string, provider: System.IFormatProvider): string;
-    static Parse(s: string): System.Decimal;
-    static Parse(s: string, style: System.Globalization.NumberStyles): System.Decimal;
-    static Parse(s: string, provider: System.IFormatProvider): System.Decimal;
-    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.Decimal;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.Decimal;
-    static GetBits(d: System.Decimal): number[];
-    static Remainder(d1: System.Decimal, d2: System.Decimal): System.Decimal;
-    static Multiply(d1: System.Decimal, d2: System.Decimal): System.Decimal;
-    static Negate(d: System.Decimal): System.Decimal;
-    static Round(d: System.Decimal): System.Decimal;
-    static Round(d: System.Decimal, decimals: number): System.Decimal;
-    static Round(d: System.Decimal, mode: System.MidpointRounding): System.Decimal;
-    static Round(d: System.Decimal, decimals: number, mode: System.MidpointRounding): System.Decimal;
-    static Subtract(d1: System.Decimal, d2: System.Decimal): System.Decimal;
-    static ToByte(value: System.Decimal): System.Byte;
-    static ToSByte(value: System.Decimal): System.SByte;
-    static ToInt16(value: System.Decimal): System.Int16;
-    static ToDouble(d: System.Decimal): number;
-    static ToInt32(d: System.Decimal): number;
-    static ToInt64(d: System.Decimal): System.Int64;
-    static ToUInt16(value: System.Decimal): System.UInt16;
-    static ToUInt32(d: System.Decimal): System.UInt32;
-    static ToUInt64(d: System.Decimal): System.UInt64;
-    static ToSingle(d: System.Decimal): number;
-    static Truncate(d: System.Decimal): System.Decimal;
+    static Parse(s: string): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles): number;
+    static Parse(s: string, provider: System.IFormatProvider): number;
+    static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
+    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static GetBits(d: number): number[];
+    static Remainder(d1: number, d2: number): number;
+    static Multiply(d1: number, d2: number): number;
+    static Negate(d: number): number;
+    static Round(d: number): number;
+    static Round(d: number, decimals: number): number;
+    static Round(d: number, mode: System.MidpointRounding): number;
+    static Round(d: number, decimals: number, mode: System.MidpointRounding): number;
+    static Subtract(d1: number, d2: number): number;
+    static ToByte(value: number): Byte;
+    static ToSByte(value: number): System.SByte;
+    static ToInt16(value: number): number;
+    static ToDouble(d: number): number;
+    static ToInt32(d: number): number;
+    static ToInt64(d: number): number;
+    static ToUInt16(value: number): number;
+    static ToUInt32(d: number): number;
+    static ToUInt64(d: number): number;
+    static ToSingle(d: number): number;
+    static Truncate(d: number): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -4741,7 +4747,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(span: System.Span<T>, arg: TArg): void;
-      BeginInvoke(span: System.Span<T>, arg: TArg, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(span: System.Span<T>, arg: TArg, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -4757,7 +4763,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(span: System.ReadOnlySpan<T>, arg: TArg): void;
-      BeginInvoke(span: System.ReadOnlySpan<T>, arg: TArg, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(span: System.ReadOnlySpan<T>, arg: TArg, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -4835,7 +4841,7 @@ export declare namespace System {
       constructor(array: T[]);
       constructor(array: T[], start: number, length: number);
       constructor(memory: System.ReadOnlyMemory<T>);
-      Length: System.Int64;
+      Length: number;
       IsEmpty: boolean;
       IsSingleSegment: boolean;
       First: System.ReadOnlyMemory<T>;
@@ -4843,19 +4849,19 @@ export declare namespace System {
       Start: System.SequencePosition;
       End: System.SequencePosition;
       static Empty: any; // System.Buffers.ReadOnlySequence`1[T]
-      Slice(start: System.Int64, length: System.Int64): System.Buffers.ReadOnlySequence<T>;
-      Slice(start: System.Int64, end: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
-      Slice(start: System.SequencePosition, length: System.Int64): System.Buffers.ReadOnlySequence<T>;
+      Slice(start: number, length: number): System.Buffers.ReadOnlySequence<T>;
+      Slice(start: number, end: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
+      Slice(start: System.SequencePosition, length: number): System.Buffers.ReadOnlySequence<T>;
       Slice(start: number, length: number): System.Buffers.ReadOnlySequence<T>;
       Slice(start: number, end: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
       Slice(start: System.SequencePosition, length: number): System.Buffers.ReadOnlySequence<T>;
       Slice(start: System.SequencePosition, end: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
       Slice(start: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
-      Slice(start: System.Int64): System.Buffers.ReadOnlySequence<T>;
+      Slice(start: number): System.Buffers.ReadOnlySequence<T>;
       ToString(): string;
       GetEnumerator(): System.Buffers.ReadOnlySequence<T>;
-      GetPosition(offset: System.Int64): System.SequencePosition;
-      GetPosition(offset: System.Int64, origin: System.SequencePosition): System.SequencePosition;
+      GetPosition(offset: number): System.SequencePosition;
+      GetPosition(offset: number, origin: System.SequencePosition): System.SequencePosition;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4863,20 +4869,20 @@ export declare namespace System {
     export class ReadOnlySequenceSegment<T = any> {
       Memory: System.ReadOnlyMemory<T>;
       Next: System.Buffers.ReadOnlySequenceSegment<T>;
-      RunningIndex: System.Int64;
+      RunningIndex: number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class StandardFormat {
-      constructor(symbol: System.Char, precision?: System.Byte);
+      constructor(symbol: System.Char, precision?: Byte);
       Symbol: System.Char;
-      Precision: System.Byte;
+      Precision: Byte;
       HasPrecision: boolean;
       IsDefault: boolean;
-      static NoPrecision: System.Byte;
-      static MaxPrecision: System.Byte;
+      static NoPrecision: Byte;
+      static MaxPrecision: Byte;
       static Parse(format: any): System.Buffers.StandardFormat;
       static Parse(format: string): System.Buffers.StandardFormat;
       Equals(obj: any): boolean;
@@ -4910,20 +4916,20 @@ export declare namespace System {
       CurrentSpan: System.ReadOnlySpan<T>;
       CurrentSpanIndex: number;
       UnreadSpan: System.ReadOnlySpan<T>;
-      Consumed: System.Int64;
-      Remaining: System.Int64;
-      Length: System.Int64;
+      Consumed: number;
+      Remaining: number;
+      Length: number;
       TryAdvanceTo(delimiter: T, advancePastDelimiter?: boolean): boolean;
       TryAdvanceToAny(delimiters: System.ReadOnlySpan<T>, advancePastDelimiter?: boolean): boolean;
-      AdvancePast(value: T): System.Int64;
-      AdvancePastAny(values: System.ReadOnlySpan<T>): System.Int64;
-      AdvancePastAny(value0: T, value1: T, value2: T, value3: T): System.Int64;
-      AdvancePastAny(value0: T, value1: T, value2: T): System.Int64;
-      AdvancePastAny(value0: T, value1: T): System.Int64;
+      AdvancePast(value: T): number;
+      AdvancePastAny(values: System.ReadOnlySpan<T>): number;
+      AdvancePastAny(value0: T, value1: T, value2: T, value3: T): number;
+      AdvancePastAny(value0: T, value1: T, value2: T): number;
+      AdvancePastAny(value0: T, value1: T): number;
       IsNext(next: T, advancePast?: boolean): boolean;
       IsNext(next: System.ReadOnlySpan<T>, advancePast?: boolean): boolean;
-      Rewind(count: System.Int64): void;
-      Advance(count: System.Int64): void;
+      Rewind(count: number): void;
+      Advance(count: number): void;
       TryCopyTo(destination: System.Span<T>): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -4939,49 +4945,49 @@ export declare namespace System {
     export namespace Binary {
       export class BinaryPrimitives {
         static ReverseEndianness(value: System.SByte): System.SByte;
-        static ReverseEndianness(value: System.Int16): System.Int16;
         static ReverseEndianness(value: number): number;
-        static ReverseEndianness(value: System.Int64): System.Int64;
-        static ReverseEndianness(value: System.Byte): System.Byte;
-        static ReverseEndianness(value: System.UInt16): System.UInt16;
-        static ReverseEndianness(value: System.UInt32): System.UInt32;
-        static ReverseEndianness(value: System.UInt64): System.UInt64;
-        static ReadInt16BigEndian(source: any): System.Int16;
+        static ReverseEndianness(value: number): number;
+        static ReverseEndianness(value: number): number;
+        static ReverseEndianness(value: Byte): Byte;
+        static ReverseEndianness(value: number): number;
+        static ReverseEndianness(value: number): number;
+        static ReverseEndianness(value: number): number;
+        static ReadInt16BigEndian(source: any): number;
         static ReadInt32BigEndian(source: any): number;
-        static ReadInt64BigEndian(source: any): System.Int64;
-        static ReadUInt16BigEndian(source: any): System.UInt16;
-        static ReadUInt32BigEndian(source: any): System.UInt32;
-        static ReadUInt64BigEndian(source: any): System.UInt64;
-        static ReadInt16LittleEndian(source: any): System.Int16;
+        static ReadInt64BigEndian(source: any): number;
+        static ReadUInt16BigEndian(source: any): number;
+        static ReadUInt32BigEndian(source: any): number;
+        static ReadUInt64BigEndian(source: any): number;
+        static ReadInt16LittleEndian(source: any): number;
         static ReadInt32LittleEndian(source: any): number;
-        static ReadInt64LittleEndian(source: any): System.Int64;
-        static ReadUInt16LittleEndian(source: any): System.UInt16;
-        static ReadUInt32LittleEndian(source: any): System.UInt32;
-        static ReadUInt64LittleEndian(source: any): System.UInt64;
-        static WriteInt16BigEndian(destination: any, value: System.Int16): void;
+        static ReadInt64LittleEndian(source: any): number;
+        static ReadUInt16LittleEndian(source: any): number;
+        static ReadUInt32LittleEndian(source: any): number;
+        static ReadUInt64LittleEndian(source: any): number;
+        static WriteInt16BigEndian(destination: any, value: number): void;
         static WriteInt32BigEndian(destination: any, value: number): void;
-        static WriteInt64BigEndian(destination: any, value: System.Int64): void;
-        static WriteUInt16BigEndian(destination: any, value: System.UInt16): void;
-        static WriteUInt32BigEndian(destination: any, value: System.UInt32): void;
-        static WriteUInt64BigEndian(destination: any, value: System.UInt64): void;
-        static TryWriteInt16BigEndian(destination: any, value: System.Int16): boolean;
+        static WriteInt64BigEndian(destination: any, value: number): void;
+        static WriteUInt16BigEndian(destination: any, value: number): void;
+        static WriteUInt32BigEndian(destination: any, value: number): void;
+        static WriteUInt64BigEndian(destination: any, value: number): void;
+        static TryWriteInt16BigEndian(destination: any, value: number): boolean;
         static TryWriteInt32BigEndian(destination: any, value: number): boolean;
-        static TryWriteInt64BigEndian(destination: any, value: System.Int64): boolean;
-        static TryWriteUInt16BigEndian(destination: any, value: System.UInt16): boolean;
-        static TryWriteUInt32BigEndian(destination: any, value: System.UInt32): boolean;
-        static TryWriteUInt64BigEndian(destination: any, value: System.UInt64): boolean;
-        static WriteInt16LittleEndian(destination: any, value: System.Int16): void;
+        static TryWriteInt64BigEndian(destination: any, value: number): boolean;
+        static TryWriteUInt16BigEndian(destination: any, value: number): boolean;
+        static TryWriteUInt32BigEndian(destination: any, value: number): boolean;
+        static TryWriteUInt64BigEndian(destination: any, value: number): boolean;
+        static WriteInt16LittleEndian(destination: any, value: number): void;
         static WriteInt32LittleEndian(destination: any, value: number): void;
-        static WriteInt64LittleEndian(destination: any, value: System.Int64): void;
-        static WriteUInt16LittleEndian(destination: any, value: System.UInt16): void;
-        static WriteUInt32LittleEndian(destination: any, value: System.UInt32): void;
-        static WriteUInt64LittleEndian(destination: any, value: System.UInt64): void;
-        static TryWriteInt16LittleEndian(destination: any, value: System.Int16): boolean;
+        static WriteInt64LittleEndian(destination: any, value: number): void;
+        static WriteUInt16LittleEndian(destination: any, value: number): void;
+        static WriteUInt32LittleEndian(destination: any, value: number): void;
+        static WriteUInt64LittleEndian(destination: any, value: number): void;
+        static TryWriteInt16LittleEndian(destination: any, value: number): boolean;
         static TryWriteInt32LittleEndian(destination: any, value: number): boolean;
-        static TryWriteInt64LittleEndian(destination: any, value: System.Int64): boolean;
-        static TryWriteUInt16LittleEndian(destination: any, value: System.UInt16): boolean;
-        static TryWriteUInt32LittleEndian(destination: any, value: System.UInt32): boolean;
-        static TryWriteUInt64LittleEndian(destination: any, value: System.UInt64): boolean;
+        static TryWriteInt64LittleEndian(destination: any, value: number): boolean;
+        static TryWriteUInt16LittleEndian(destination: any, value: number): boolean;
+        static TryWriteUInt32LittleEndian(destination: any, value: number): boolean;
+        static TryWriteUInt64LittleEndian(destination: any, value: number): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -5049,7 +5055,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeReferenceCollection);
       constructor(value: System.CodeDom.CodeTypeReference[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeReference): number;
@@ -5156,7 +5161,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeArgumentCollection);
       constructor(value: System.CodeDom.CodeAttributeArgument[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeAttributeArgument): number;
@@ -5193,7 +5197,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeDeclarationCollection);
       constructor(value: System.CodeDom.CodeAttributeDeclaration[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeAttributeDeclaration): number;
@@ -5281,7 +5284,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeCatchClauseCollection);
       constructor(value: System.CodeDom.CodeCatchClause[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeCatchClause): number;
@@ -5302,10 +5304,10 @@ export declare namespace System {
     }
     export class CodeChecksumPragma {
       constructor();
-      constructor(fileName: string, checksumAlgorithmId: System.Guid, checksumData: System.Byte[]);
+      constructor(fileName: string, checksumAlgorithmId: System.Guid, checksumData: Byte[]);
       FileName: string;
       ChecksumAlgorithmId: System.Guid;
-      ChecksumData: System.Byte[];
+      ChecksumData: Byte[];
       UserData: System.Collections.IDictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5343,7 +5345,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeCommentStatementCollection);
       constructor(value: System.CodeDom.CodeCommentStatement[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeCommentStatement): number;
@@ -5472,7 +5473,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeDirectiveCollection);
       constructor(value: System.CodeDom.CodeDirective[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeDirective): number;
@@ -5536,7 +5536,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeExpressionCollection);
       constructor(value: System.CodeDom.CodeExpression[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeExpression): number;
@@ -5769,7 +5768,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeNamespaceCollection);
       constructor(value: System.CodeDom.CodeNamespace[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeNamespace): number;
@@ -5801,7 +5799,6 @@ export declare namespace System {
     }
     export class CodeNamespaceImportCollection {
       constructor();
-      [key: string]: any;
       Count: number;
       Add(value: System.CodeDom.CodeNamespaceImport): void;
       AddRange(value: System.CodeDom.CodeNamespaceImport[]): void;
@@ -5844,7 +5841,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeParameterDeclarationExpressionCollection);
       constructor(value: System.CodeDom.CodeParameterDeclarationExpression[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeParameterDeclarationExpression): number;
@@ -5994,7 +5990,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeStatementCollection);
       constructor(value: System.CodeDom.CodeStatement[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeStatement): number;
@@ -6102,7 +6097,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeDeclarationCollection);
       constructor(value: System.CodeDom.CodeTypeDeclaration[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeDeclaration): number;
@@ -6167,7 +6161,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeMemberCollection);
       constructor(value: System.CodeDom.CodeTypeMember[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeMember): number;
@@ -6215,7 +6208,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeParameterCollection);
       constructor(value: System.CodeDom.CodeTypeParameter[]);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeParameter): number;
@@ -6393,7 +6385,6 @@ export declare namespace System {
       }
       export class CodeGeneratorOptions {
         constructor();
-        [key: string]: any;
         IndentString: string;
         BracingStyle: string;
         ElseOnClosing: boolean;
@@ -6429,7 +6420,6 @@ export declare namespace System {
         constructor();
         constructor(value: System.CodeDom.Compiler.CompilerErrorCollection);
         constructor(value: System.CodeDom.Compiler.CompilerError[]);
-        [key: string]: any;
         HasErrors: boolean;
         HasWarnings: boolean;
         Capacity: number;
@@ -6456,7 +6446,7 @@ export declare namespace System {
         GetLanguages(): string[];
         GetExtensions(): string[];
         CreateProvider(): System.CodeDom.Compiler.CodeDomProvider;
-        CreateProvider(providerOptions: System.Collections.Generic.IDictionary<string, string>): System.CodeDom.Compiler.CodeDomProvider;
+        CreateProvider(providerOptions: Record<string, string>): System.CodeDom.Compiler.CodeDomProvider;
         CreateDefaultCompilerParameters(): System.CodeDom.Compiler.CompilerParameters;
         GetHashCode(): number;
         Equals(o: any): boolean;
@@ -6578,7 +6568,7 @@ export declare namespace System {
         Write(value: number): void;
         Write(value: number): void;
         Write(value: number): void;
-        Write(value: System.Int64): void;
+        Write(value: number): void;
         Write(value: any): void;
         Write(format: string, arg0: any): void;
         Write(format: string, arg0: any, arg1: any): void;
@@ -6593,22 +6583,22 @@ export declare namespace System {
         WriteLine(value: number): void;
         WriteLine(value: number): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.Int64): void;
+        WriteLine(value: number): void;
         WriteLine(value: any): void;
         WriteLine(format: string, arg0: any): void;
         WriteLine(format: string, arg0: any, arg1: any): void;
         WriteLine(format: string, ...arg: any[]): void;
-        WriteLine(value: System.UInt32): void;
+        WriteLine(value: number): void;
         Dispose(): void;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         Write(buffer: System.ReadOnlySpan<System.Char>): void;
-        Write(value: System.UInt32): void;
-        Write(value: System.UInt64): void;
-        Write(value: System.Decimal): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
         Write(format: string, arg0: any, arg1: any, arg2: any): void;
         WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
-        WriteLine(value: System.UInt64): void;
-        WriteLine(value: System.Decimal): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
         WriteLine(format: string, arg0: any, arg1: any, arg2: any): void;
         WriteAsync(value: System.Char): System.Threading.Tasks.Task;
         WriteAsync(value: string): System.Threading.Tasks.Task;
@@ -6670,7 +6660,6 @@ export declare namespace System {
       Compare(x: any, y: any): number;
     }
     export interface IDictionary {
-      [key: string]: any;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
       IsReadOnly: boolean;
@@ -6699,7 +6688,6 @@ export declare namespace System {
       GetHashCode(obj: any): number;
     }
     export interface IList {
-      [key: string]: any;
       IsReadOnly: boolean;
       IsFixedSize: boolean;
       Add(value: any): number;
@@ -6799,7 +6787,6 @@ export declare namespace System {
       constructor(comparer: System.Collections.IComparer, capacity: number);
       constructor(d: System.Collections.IDictionary);
       constructor(d: System.Collections.IDictionary, comparer: System.Collections.IComparer);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Keys: System.Collections.ICollection;
@@ -6857,11 +6844,10 @@ export declare namespace System {
     export class BitArray {
       constructor(length: number);
       constructor(length: number, defaultValue: boolean);
-      constructor(bytes: System.Byte[]);
+      constructor(bytes: Byte[]);
       constructor(values: boolean[]);
       constructor(values: number[]);
       constructor(bits: System.Collections.BitArray);
-      [key: string]: any;
       Length: number;
       Count: number;
       SyncRoot: any; // System.Object
@@ -6896,7 +6882,6 @@ export declare namespace System {
       constructor();
       constructor(capacity: number);
       constructor(c: System.Collections.ICollection);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       IsFixedSize: boolean;
@@ -6966,7 +6951,6 @@ export declare namespace System {
       constructor(capacity: number, loadFactor: number, hcp: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
       constructor(d: System.Collections.IDictionary, loadFactor: number, hcp: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
       constructor(d: System.Collections.IDictionary, loadFactor: number, equalityComparer: System.Collections.IEqualityComparer);
-      [key: string]: any;
       IsReadOnly: boolean;
       IsFixedSize: boolean;
       IsSynchronized: boolean;
@@ -7018,7 +7002,6 @@ export declare namespace System {
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(concurrencyLevel: number, collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(concurrencyLevel: number, capacity: number, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
-        [key: string]: any;
         Count: number;
         IsEmpty: boolean;
         Keys: System.Collections.Generic.ICollection<TKey>;
@@ -7029,10 +7012,10 @@ export declare namespace System {
         Clear(): void;
         ToArray(): System.Collections.Generic.KeyValuePair<TKey, TValue>[];
         GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>;
-        GetOrAdd(key: TKey, valueFactory: ((arg0: TKey) => TValue)): TValue;
+        GetOrAdd(key: TKey, valueFactory: ((arg: TKey) => TValue)): TValue;
         GetOrAdd(key: TKey, value: TValue): TValue;
-        AddOrUpdate(key: TKey, addValueFactory: ((arg0: TKey) => TValue), updateValueFactory: ((arg0: TKey, arg1: TValue) => TValue)): TValue;
-        AddOrUpdate(key: TKey, addValue: TValue, updateValueFactory: ((arg0: TKey, arg1: TValue) => TValue)): TValue;
+        AddOrUpdate(key: TKey, addValueFactory: ((arg: TKey) => TValue), updateValueFactory: ((arg1: TKey, arg2: TValue) => TValue)): TValue;
+        AddOrUpdate(key: TKey, addValue: TValue, updateValueFactory: ((arg1: TKey, arg2: TValue) => TValue)): TValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -7067,9 +7050,9 @@ export declare namespace System {
         KeysOrderedAcrossPartitions: boolean;
         KeysNormalized: boolean;
         SupportsDynamicPartitions: boolean;
-        GetOrderablePartitions(partitionCount: number): System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<System.Int64, TSource>>>;
-        GetOrderableDynamicPartitions(): System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.Int64, TSource>>;
-        GetPartitions(partitionCount: number): System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<TSource>>;
+        GetOrderablePartitions(partitionCount: number): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<number, TSource>>[];
+        GetOrderableDynamicPartitions(): System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<number, TSource>>;
+        GetPartitions(partitionCount: number): System.Collections.Generic.IEnumerator<TSource>[];
         GetDynamicPartitions(): System.Collections.Generic.IEnumerable<TSource>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -7078,7 +7061,7 @@ export declare namespace System {
       }
       export class Partitioner<TSource = any> {
         SupportsDynamicPartitions: boolean;
-        GetPartitions(partitionCount: number): System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<TSource>>;
+        GetPartitions(partitionCount: number): System.Collections.Generic.IEnumerator<TSource>[];
         GetDynamicPartitions(): System.Collections.Generic.IEnumerable<TSource>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -7149,7 +7132,6 @@ export declare namespace System {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
-        [key: string]: any;
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
         Keys: System.Collections.Generic.Dictionary<TKey, TValue>;
@@ -7191,7 +7173,6 @@ export declare namespace System {
         Compare(x: T, y: T): number;
       }
       export interface IDictionary<TKey = any, TValue = any> {
-        [key: string]: any;
         Keys: System.Collections.Generic.ICollection<TKey>;
         Values: System.Collections.Generic.ICollection<TValue>;
         ContainsKey(key: TKey): boolean;
@@ -7209,7 +7190,6 @@ export declare namespace System {
         GetHashCode(obj: T): number;
       }
       export interface IList<T = any> {
-        [key: string]: any;
         IndexOf(item: T): number;
         Insert(index: number, item: T): void;
         RemoveAt(index: number): void;
@@ -7218,13 +7198,11 @@ export declare namespace System {
         Count: number;
       }
       export interface IReadOnlyDictionary<TKey = any, TValue = any> {
-        [key: string]: any;
         Keys: System.Collections.Generic.IEnumerable<TKey>;
         Values: System.Collections.Generic.IEnumerable<TValue>;
         ContainsKey(key: TKey): boolean;
       }
       export interface IReadOnlyList<T = any> {
-        [key: string]: any;
       }
       export class KeyNotFoundException {
         constructor();
@@ -7259,7 +7237,6 @@ export declare namespace System {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
-        [key: string]: any;
         Capacity: number;
         Count: number;
         Add(item: T): void;
@@ -7273,17 +7250,17 @@ export declare namespace System {
         CopyTo(array: T[]): void;
         CopyTo(index: number, array: T[], arrayIndex: number, count: number): void;
         CopyTo(array: T[], arrayIndex: number): void;
-        Exists(match: System.Predicate<T>): boolean;
-        Find(match: System.Predicate<T>): T;
-        FindAll(match: System.Predicate<T>): T[];
-        FindIndex(match: System.Predicate<T>): number;
-        FindIndex(startIndex: number, match: System.Predicate<T>): number;
-        FindIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
-        FindLast(match: System.Predicate<T>): T;
-        FindLastIndex(match: System.Predicate<T>): number;
-        FindLastIndex(startIndex: number, match: System.Predicate<T>): number;
-        FindLastIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
-        ForEach(action: ((arg0: T) => void)): void;
+        Exists(match: ((obj: T) => boolean)): boolean;
+        Find(match: ((obj: T) => boolean)): T;
+        FindAll(match: ((obj: T) => boolean)): T[];
+        FindIndex(match: ((obj: T) => boolean)): number;
+        FindIndex(startIndex: number, match: ((obj: T) => boolean)): number;
+        FindIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
+        FindLast(match: ((obj: T) => boolean)): T;
+        FindLastIndex(match: ((obj: T) => boolean)): number;
+        FindLastIndex(startIndex: number, match: ((obj: T) => boolean)): number;
+        FindLastIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
+        ForEach(action: ((obj: T) => void)): void;
         GetEnumerator(): System.Collections.Generic.List<T>;
         GetRange(index: number, count: number): T[];
         IndexOf(item: T): number;
@@ -7295,7 +7272,7 @@ export declare namespace System {
         LastIndexOf(item: T, index: number): number;
         LastIndexOf(item: T, index: number, count: number): number;
         Remove(item: T): boolean;
-        RemoveAll(match: System.Predicate<T>): number;
+        RemoveAll(match: ((obj: T) => boolean)): number;
         RemoveAt(index: number): void;
         RemoveRange(index: number, count: number): void;
         Reverse(): void;
@@ -7303,10 +7280,10 @@ export declare namespace System {
         Sort(): void;
         Sort(comparer: System.Collections.Generic.IComparer<T>): void;
         Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<T>): void;
-        Sort(comparison: System.Comparison<T>): void;
+        Sort(comparison: ((x: T, y: T) => number)): void;
         ToArray(): T[];
         TrimExcess(): void;
-        TrueForAll(match: System.Predicate<T>): boolean;
+        TrueForAll(match: ((obj: T) => boolean)): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -7358,7 +7335,7 @@ export declare namespace System {
       }
       export class Comparer<T = any> {
         static Default: any; // System.Collections.Generic.Comparer`1[T]
-        static Create(comparison: any): any;
+        static Create(comparison: ((x: any, y: any) => number)): any;
         Compare(x: T, y: T): number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -7403,7 +7380,7 @@ export declare namespace System {
         SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
         CopyTo(array: T[]): void;
         CopyTo(array: T[], arrayIndex: number, count: number): void;
-        RemoveWhere(match: System.Predicate<T>): number;
+        RemoveWhere(match: ((obj: T) => boolean)): number;
         EnsureCapacity(capacity: number): number;
         TrimExcess(): void;
         static CreateSetComparer(): any;
@@ -7459,7 +7436,6 @@ export declare namespace System {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
         constructor(comparer: System.Collections.Generic.IComparer<TKey>);
-        [key: string]: any;
         Count: number;
         Comparer: System.Collections.Generic.IComparer<TKey>;
         Keys: System.Collections.Generic.SortedDictionary<TKey, TValue>;
@@ -7483,12 +7459,11 @@ export declare namespace System {
         constructor(capacity: number, comparer: System.Collections.Generic.IComparer<TKey>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
-        [key: string]: any;
         Capacity: number;
         Comparer: System.Collections.Generic.IComparer<TKey>;
         Count: number;
-        Keys: System.Collections.Generic.IList<TKey>;
-        Values: System.Collections.Generic.IList<TValue>;
+        Keys: TKey[];
+        Values: TValue[];
         Add(key: TKey, value: TValue): void;
         Clear(): void;
         ContainsKey(key: TKey): boolean;
@@ -7533,7 +7508,7 @@ export declare namespace System {
         IsProperSupersetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
         SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
         Overlaps(other: System.Collections.Generic.IEnumerable<T>): boolean;
-        RemoveWhere(match: System.Predicate<T>): number;
+        RemoveWhere(match: ((obj: T) => boolean)): number;
         Reverse(): System.Collections.Generic.IEnumerable<T>;
         GetViewBetween(lowerValue: T, upperValue: T): System.Collections.Generic.SortedSet<T>;
         Equals(obj: any): boolean;
@@ -7558,8 +7533,7 @@ export declare namespace System {
     export namespace ObjectModel {
       export class Collection<T = any> {
         constructor();
-        constructor(list: System.Collections.Generic.IList<T>);
-        [key: string]: any;
+        constructor(list: T[]);
         Count: number;
         Add(item: T): void;
         Clear(): void;
@@ -7576,8 +7550,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class ReadOnlyCollection<T = any> {
-        constructor(list: System.Collections.Generic.IList<T>);
-        [key: string]: any;
+        constructor(list: T[]);
         Count: number;
         Contains(value: T): boolean;
         CopyTo(array: T[], index: number): void;
@@ -7589,7 +7562,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class KeyedCollection<TKey = any, TItem = any> {
-        [key: string]: any;
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
         Contains(key: TKey): boolean;
@@ -7610,7 +7582,6 @@ export declare namespace System {
       }
       export class ReadOnlyDictionary<TKey = any, TValue = any> {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
-        [key: string]: any;
         Keys: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
         Values: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
         Count: number;
@@ -7625,7 +7596,6 @@ export declare namespace System {
         constructor();
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
         constructor(list: T[]);
-        [key: string]: any;
         Count: number;
         Move(oldIndex: number, newIndex: number): void;
         Add(item: T): void;
@@ -7644,7 +7614,6 @@ export declare namespace System {
       }
       export class ReadOnlyObservableCollection<T = any> {
         constructor(list: T[]);
-        [key: string]: any;
         Count: number;
         Contains(value: T): boolean;
         CopyTo(array: T[], index: number): void;
@@ -7671,12 +7640,11 @@ export declare namespace System {
       export class BitVector32 {
         constructor(data: number);
         constructor(value: System.Collections.Specialized.BitVector32);
-        [key: string]: any;
         Data: number;
         static CreateMask(): number;
         static CreateMask(previous: number): number;
-        static CreateSection(maxValue: System.Int16): System.Collections.Specialized.BitVector32_Section;
-        static CreateSection(maxValue: System.Int16, previous: System.Collections.Specialized.BitVector32_Section): System.Collections.Specialized.BitVector32_Section;
+        static CreateSection(maxValue: number): System.Collections.Specialized.BitVector32_Section;
+        static CreateSection(maxValue: number, previous: System.Collections.Specialized.BitVector32_Section): System.Collections.Specialized.BitVector32_Section;
         Equals(o: any): boolean;
         GetHashCode(): number;
         static ToString(value: System.Collections.Specialized.BitVector32): string;
@@ -7684,8 +7652,8 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class BitVector32_Section {
-        Mask: System.Int16;
-        Offset: System.Int16;
+        Mask: number;
+        Offset: number;
         Equals(o: any): boolean;
         Equals(obj: System.Collections.Specialized.BitVector32_Section): boolean;
         GetHashCode(): number;
@@ -7698,7 +7666,6 @@ export declare namespace System {
         constructor(initialSize: number);
         constructor(caseInsensitive: boolean);
         constructor(initialSize: number, caseInsensitive: boolean);
-        [key: string]: any;
         Count: number;
         Keys: System.Collections.ICollection;
         IsReadOnly: boolean;
@@ -7718,7 +7685,6 @@ export declare namespace System {
         ToString(): string;
       }
       export interface IOrderedDictionary {
-        [key: string]: any;
         GetEnumerator(): System.Collections.IDictionaryEnumerator;
         Insert(index: number, key: any, value: any): void;
         RemoveAt(index: number): void;
@@ -7726,7 +7692,6 @@ export declare namespace System {
       export class ListDictionary {
         constructor();
         constructor(comparer: System.Collections.IComparer);
-        [key: string]: any;
         Count: number;
         Keys: System.Collections.ICollection;
         IsReadOnly: boolean;
@@ -7764,7 +7729,6 @@ export declare namespace System {
         constructor(capacity: number, equalityComparer: System.Collections.IEqualityComparer);
         constructor(capacity: number, col: System.Collections.Specialized.NameValueCollection);
         constructor(capacity: number, hashProvider: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
-        [key: string]: any;
         AllKeys: string[];
         Count: number;
         Keys: System.Collections.Specialized.NameObjectCollectionBase_KeysCollection;
@@ -7793,7 +7757,6 @@ export declare namespace System {
         constructor(capacity: number);
         constructor(comparer: System.Collections.IEqualityComparer);
         constructor(capacity: number, comparer: System.Collections.IEqualityComparer);
-        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         Keys: System.Collections.ICollection;
@@ -7815,7 +7778,6 @@ export declare namespace System {
       }
       export class StringCollection {
         constructor();
-        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         IsSynchronized: boolean;
@@ -7846,7 +7808,6 @@ export declare namespace System {
       }
       export class StringDictionary {
         constructor();
-        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         Keys: System.Collections.ICollection;
@@ -7900,7 +7861,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.Collections.Specialized.NotifyCollectionChangedEventArgs): void;
-        BeginInvoke(sender: any, e: System.Collections.Specialized.NotifyCollectionChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.Collections.Specialized.NotifyCollectionChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -7923,7 +7884,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class NameObjectCollectionBase_KeysCollection {
-        [key: string]: any;
         Count: number;
         Get(index: number): string;
         GetEnumerator(): System.Collections.IEnumerator;
@@ -7943,8 +7903,8 @@ export declare namespace System {
     export class AsyncOperation {
       UserSuppliedState: any; // System.Object
       SynchronizationContext: System.Threading.SynchronizationContext;
-      Post(d: System.Threading.SendOrPostCallback, arg: any): void;
-      PostOperationCompleted(d: System.Threading.SendOrPostCallback, arg: any): void;
+      Post(d: ((state: any) => void), arg: any): void;
+      PostOperationCompleted(d: ((state: any) => void), arg: any): void;
       OperationCompleted(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -7983,7 +7943,6 @@ export declare namespace System {
     }
     export class ComponentCollection {
       constructor(components: System.ComponentModel.IComponent[]);
-      [key: string]: any;
       Count: number;
       CopyTo(array: System.ComponentModel.IComponent[], index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -7999,7 +7958,6 @@ export declare namespace System {
     }
     export class EventHandlerList {
       constructor();
-      [key: string]: any;
       AddHandler(key: any, value: System.Delegate): void;
       AddHandlers(listToAddFrom: System.ComponentModel.EventHandlerList): void;
       Dispose(): void;
@@ -8067,7 +8025,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.AddingNewEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.AddingNewEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.AddingNewEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -8122,7 +8080,6 @@ export declare namespace System {
     }
     export class AttributeCollection {
       constructor(...attributes: any[]);
-      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.AttributeCollection;
       static FromExisting(existing: System.ComponentModel.AttributeCollection, ...newAttributes: any[]): System.ComponentModel.AttributeCollection;
@@ -8197,8 +8154,7 @@ export declare namespace System {
     }
     export class BindingList<T = any> {
       constructor();
-      constructor(list: System.Collections.Generic.IList<T>);
-      [key: string]: any;
+      constructor(list: T[]);
       RaiseListChangedEvents: boolean;
       AllowNew: boolean;
       AllowEdit: boolean;
@@ -8312,7 +8268,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.CancelEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.CancelEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.CancelEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -8384,7 +8340,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.CollectionChangeEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.CollectionChangeEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.CollectionChangeEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -8648,7 +8604,6 @@ export declare namespace System {
     export class EventDescriptorCollection {
       constructor(events: System.ComponentModel.EventDescriptor[]);
       constructor(events: System.ComponentModel.EventDescriptor[], readOnly: boolean);
-      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.EventDescriptorCollection;
       Add(value: System.ComponentModel.EventDescriptor): number;
@@ -8767,7 +8722,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.HandledEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.HandledEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.HandledEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -8834,7 +8789,6 @@ export declare namespace System {
       GetPropertyOwner(pd: System.ComponentModel.PropertyDescriptor): any;
     }
     export interface IDataErrorInfo {
-      [key: string]: any;
       Error: string;
     }
     export interface IExtenderProvider {
@@ -9098,7 +9052,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.ListChangedEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.ListChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.ListChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -9131,7 +9085,6 @@ export declare namespace System {
     export class ListSortDescriptionCollection {
       constructor();
       constructor(sorts: System.ComponentModel.ListSortDescription[]);
-      [key: string]: any;
       Count: number;
       Contains(value: any): boolean;
       IndexOf(value: any): number;
@@ -9165,7 +9118,6 @@ export declare namespace System {
       constructor(mask: string, passwordChar: System.Char, allowPromptAsInput: boolean);
       constructor(mask: string, culture: System.Globalization.CultureInfo, passwordChar: System.Char, allowPromptAsInput: boolean);
       constructor(mask: string, culture: System.Globalization.CultureInfo, allowPromptAsInput: boolean, promptChar: System.Char, passwordChar: System.Char, restrictToAscii: boolean);
-      [key: string]: any;
       AllowPromptAsInput: boolean;
       AssignedEditPositionCount: number;
       AvailableEditPositionCount: number;
@@ -9360,7 +9312,7 @@ export declare namespace System {
       Name: string;
       DesignTimeOnly: boolean;
       DisplayName: string;
-      AddValueChanged(component: any, handler: System.EventHandler): void;
+      AddValueChanged(component: any, handler: ((sender: any, e: System.EventArgs) => void)): void;
       CanResetValue(component: any): boolean;
       Equals(obj: any): boolean;
       GetChildProperties(): System.ComponentModel.PropertyDescriptorCollection;
@@ -9370,7 +9322,7 @@ export declare namespace System {
       GetEditor(editorBaseType: System.Type): any;
       GetHashCode(): number;
       GetValue(component: any): any;
-      RemoveValueChanged(component: any, handler: System.EventHandler): void;
+      RemoveValueChanged(component: any, handler: ((sender: any, e: System.EventArgs) => void)): void;
       ResetValue(component: any): void;
       SetValue(component: any, value: any): void;
       ShouldSerializeValue(component: any): boolean;
@@ -9380,7 +9332,6 @@ export declare namespace System {
     export class PropertyDescriptorCollection {
       constructor(properties: System.ComponentModel.PropertyDescriptor[]);
       constructor(properties: System.ComponentModel.PropertyDescriptor[], readOnly: boolean);
-      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.PropertyDescriptorCollection;
       Add(value: System.ComponentModel.PropertyDescriptor): number;
@@ -9459,7 +9410,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(e: System.ComponentModel.RefreshEventArgs): void;
-      BeginInvoke(e: System.ComponentModel.RefreshEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(e: System.ComponentModel.RefreshEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -9912,7 +9863,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.PropertyChangedEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.PropertyChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.PropertyChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -9936,7 +9887,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.PropertyChangingEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.PropertyChangingEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.PropertyChangingEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -9963,7 +9914,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.AsyncCompletedEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.AsyncCompletedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.AsyncCompletedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -10140,7 +10091,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.DoWorkEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.DoWorkEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.DoWorkEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -10245,7 +10196,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.ProgressChangedEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.ProgressChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.ProgressChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -10272,7 +10223,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ComponentModel.RunWorkerCompletedEventArgs): void;
-      BeginInvoke(sender: any, e: System.ComponentModel.RunWorkerCompletedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ComponentModel.RunWorkerCompletedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -10327,7 +10278,6 @@ export declare namespace System {
     }
     export class TypeConverter_StandardValuesCollection {
       constructor(values: System.Collections.ICollection);
-      [key: string]: any;
       Count: number;
       CopyTo(array: System.Array, index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -10452,7 +10402,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.ActiveDesignerEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.ActiveDesignerEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.ActiveDesignerEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10511,7 +10461,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.ComponentChangedEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10536,7 +10486,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.ComponentChangingEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentChangingEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentChangingEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10560,7 +10510,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.ComponentEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10586,7 +10536,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.ComponentRenameEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentRenameEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.ComponentRenameEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10623,7 +10573,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.DesignerTransactionCloseEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.DesignerTransactionCloseEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.DesignerTransactionCloseEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10635,8 +10585,8 @@ export declare namespace System {
         ToString(): string;
       }
       export class DesignerVerb {
-        constructor(text: string, handler: System.EventHandler);
-        constructor(text: string, handler: System.EventHandler, startCommandID: System.ComponentModel.Design.CommandID);
+        constructor(text: string, handler: ((sender: any, e: System.EventArgs) => void));
+        constructor(text: string, handler: ((sender: any, e: System.EventArgs) => void), startCommandID: System.ComponentModel.Design.CommandID);
         Description: string;
         Text: string;
         Checked: boolean;
@@ -10656,7 +10606,6 @@ export declare namespace System {
       export class DesignerVerbCollection {
         constructor();
         constructor(value: System.ComponentModel.Design.DesignerVerb[]);
-        [key: string]: any;
         Capacity: number;
         Count: number;
         Add(value: System.ComponentModel.Design.DesignerVerb): number;
@@ -10696,7 +10645,6 @@ export declare namespace System {
       export class DesignerCollection {
         constructor(designers: System.ComponentModel.Design.IDesignerHost[]);
         constructor(designers: System.Collections.IList);
-        [key: string]: any;
         Count: number;
         GetEnumerator(): System.Collections.IEnumerator;
         Equals(obj: any): boolean;
@@ -10717,7 +10665,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.ComponentModel.Design.DesignerEventArgs): void;
-        BeginInvoke(sender: any, e: System.ComponentModel.Design.DesignerEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.ComponentModel.Design.DesignerEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10862,8 +10810,8 @@ export declare namespace System {
       export interface IServiceContainer {
         AddService(serviceType: System.Type, serviceInstance: any): void;
         AddService(serviceType: System.Type, serviceInstance: any, promote: boolean): void;
-        AddService(serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback): void;
-        AddService(serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback, promote: boolean): void;
+        AddService(serviceType: System.Type, callback: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type) => any)): void;
+        AddService(serviceType: System.Type, callback: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type) => any), promote: boolean): void;
         RemoveService(serviceType: System.Type): void;
         RemoveService(serviceType: System.Type, promote: boolean): void;
       }
@@ -10889,7 +10837,7 @@ export declare namespace System {
         GetPathOfAssembly(name: System.Reflection.AssemblyName): string;
       }
       export class MenuCommand {
-        constructor(handler: System.EventHandler, command: System.ComponentModel.Design.CommandID);
+        constructor(handler: ((sender: any, e: System.EventArgs) => void), command: System.ComponentModel.Design.CommandID);
         Checked: boolean;
         Enabled: boolean;
         Properties: System.Collections.IDictionary;
@@ -10922,7 +10870,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type): any;
-        BeginInvoke(container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): any;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -10938,8 +10886,8 @@ export declare namespace System {
         constructor(parentProvider: System.IServiceProvider);
         AddService(serviceType: System.Type, serviceInstance: any): void;
         AddService(serviceType: System.Type, serviceInstance: any, promote: boolean): void;
-        AddService(serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback): void;
-        AddService(serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback, promote: boolean): void;
+        AddService(serviceType: System.Type, callback: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type) => any)): void;
+        AddService(serviceType: System.Type, callback: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type) => any), promote: boolean): void;
         Dispose(): void;
         GetService(serviceType: System.Type): any;
         RemoveService(serviceType: System.Type): void;
@@ -11047,7 +10995,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class DesignerOptionService_DesignerOptionCollection {
-        [key: string]: any;
         Count: number;
         Name: string;
         Parent: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
@@ -11081,7 +11028,6 @@ export declare namespace System {
         }
         export class ContextStack {
           constructor();
-          [key: string]: any;
           Current: any; // System.Object
           Append(context: any): void;
           Pop(): any;
@@ -11152,7 +11098,6 @@ export declare namespace System {
           ToString(): string;
         }
         export class MemberRelationshipService {
-          [key: string]: any;
           SupportsRelationship(source: System.ComponentModel.Design.Serialization.MemberRelationship, relationship: System.ComponentModel.Design.Serialization.MemberRelationship): boolean;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -11184,7 +11129,7 @@ export declare namespace System {
           Method: System.Reflection.MethodInfo;
           Target: any; // System.Object
           Invoke(sender: any, e: System.ComponentModel.Design.Serialization.ResolveNameEventArgs): void;
-          BeginInvoke(sender: any, e: System.ComponentModel.Design.Serialization.ResolveNameEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+          BeginInvoke(sender: any, e: System.ComponentModel.Design.Serialization.ResolveNameEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
           EndInvoke(result: System.IAsyncResult): void;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
           Equals(obj: any): boolean;
@@ -11212,9 +11157,9 @@ export declare namespace System {
       export class InternalActivationContextHelper {
         static GetActivationContextData(appInfo: System.ActivationContext): any;
         static GetApplicationComponentManifest(appInfo: System.ActivationContext): any;
-        static GetApplicationManifestBytes(appInfo: System.ActivationContext): System.Byte[];
+        static GetApplicationManifestBytes(appInfo: System.ActivationContext): Byte[];
         static GetDeploymentComponentManifest(appInfo: System.ActivationContext): any;
-        static GetDeploymentManifestBytes(appInfo: System.ActivationContext): System.Byte[];
+        static GetDeploymentManifestBytes(appInfo: System.ActivationContext): Byte[];
         static IsFirstRun(appInfo: System.ActivationContext): boolean;
         static PrepareForExecution(appInfo: System.ActivationContext): void;
         Equals(obj: any): boolean;
@@ -11295,10 +11240,10 @@ export declare namespace System {
       constructor(fileName: string, name: string);
       constructor(fileName: string, name: string, bufferSize: number);
       constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption);
-      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: System.Int64);
-      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: System.Int64, maximumNumberOfFiles: number);
+      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: number);
+      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: number, maximumNumberOfFiles: number);
       BufferSize: number;
-      MaximumFileSize: System.Int64;
+      MaximumFileSize: number;
       MaximumNumberOfFiles: number;
       TraceLogRetentionOption: System.Diagnostics.TraceLogRetentionOption;
       Writer: System.IO.TextWriter;
@@ -11650,7 +11595,7 @@ export declare namespace System {
       DateTime: System.DateTime;
       ProcessId: number;
       ThreadId: string;
-      Timestamp: System.Int64;
+      Timestamp: number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -11718,7 +11663,6 @@ export declare namespace System {
       ToString(): string;
     }
     export class TraceListenerCollection {
-      [key: string]: any;
       Count: number;
       Add(listener: System.Diagnostics.TraceListener): number;
       AddRange(value: System.Diagnostics.TraceListener[]): void;
@@ -11860,12 +11804,12 @@ export declare namespace System {
       PeakPagedMemorySize: number;
       PeakVirtualMemorySize: number;
       PeakWorkingSet: number;
-      NonpagedSystemMemorySize64: System.Int64;
-      PagedMemorySize64: System.Int64;
-      PagedSystemMemorySize64: System.Int64;
-      PeakPagedMemorySize64: System.Int64;
-      PeakVirtualMemorySize64: System.Int64;
-      PeakWorkingSet64: System.Int64;
+      NonpagedSystemMemorySize64: number;
+      PagedMemorySize64: number;
+      PagedSystemMemorySize64: number;
+      PeakPagedMemorySize64: number;
+      PeakVirtualMemorySize64: number;
+      PeakWorkingSet64: number;
       PriorityBoostEnabled: boolean;
       PrivateMemorySize: number;
       SessionId: number;
@@ -11875,9 +11819,9 @@ export declare namespace System {
       Threads: System.Diagnostics.ProcessThreadCollection;
       VirtualMemorySize: number;
       WorkingSet: number;
-      PrivateMemorySize64: System.Int64;
-      VirtualMemorySize64: System.Int64;
-      WorkingSet64: System.Int64;
+      PrivateMemorySize64: number;
+      VirtualMemorySize64: number;
+      WorkingSet64: number;
       Site: System.ComponentModel.ISite;
       Container: System.ComponentModel.IContainer;
       Close(): void;
@@ -11918,7 +11862,6 @@ export declare namespace System {
     }
     export class ProcessModuleCollection {
       constructor(processModules: System.Diagnostics.ProcessModule[]);
-      [key: string]: any;
       Count: number;
       IndexOf(module: System.Diagnostics.ProcessModule): number;
       Contains(module: System.Diagnostics.ProcessModule): boolean;
@@ -11938,7 +11881,7 @@ export declare namespace System {
       Arguments: string;
       CreateNoWindow: boolean;
       EnvironmentVariables: System.Collections.Specialized.StringDictionary;
-      Environment: System.Collections.Generic.IDictionary<string, string>;
+      Environment: Record<string, string>;
       RedirectStandardInput: boolean;
       RedirectStandardOutput: boolean;
       RedirectStandardError: boolean;
@@ -11964,7 +11907,6 @@ export declare namespace System {
     }
     export class ProcessThreadCollection {
       constructor(processThreads: System.Diagnostics.ProcessThread[]);
-      [key: string]: any;
       Count: number;
       Add(thread: System.Diagnostics.ProcessThread): number;
       Insert(index: number, thread: System.Diagnostics.ProcessThread): void;
@@ -11993,7 +11935,6 @@ export declare namespace System {
       constructor();
       constructor(value: System.Diagnostics.CounterCreationData[]);
       constructor(value: System.Diagnostics.CounterCreationDataCollection);
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.CounterCreationData): number;
@@ -12013,16 +11954,16 @@ export declare namespace System {
       ToString(): string;
     }
     export class CounterSample {
-      constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType);
-      constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType, counterTimeStamp: System.Int64);
-      BaseValue: System.Int64;
-      CounterFrequency: System.Int64;
-      CounterTimeStamp: System.Int64;
+      constructor(rawValue: number, baseValue: number, counterFrequency: number, systemFrequency: number, timeStamp: number, timeStamp100nSec: number, counterType: System.Diagnostics.PerformanceCounterType);
+      constructor(rawValue: number, baseValue: number, counterFrequency: number, systemFrequency: number, timeStamp: number, timeStamp100nSec: number, counterType: System.Diagnostics.PerformanceCounterType, counterTimeStamp: number);
+      BaseValue: number;
+      CounterFrequency: number;
+      CounterTimeStamp: number;
       CounterType: System.Diagnostics.PerformanceCounterType;
-      RawValue: System.Int64;
-      SystemFrequency: System.Int64;
-      TimeStamp: System.Int64;
-      TimeStamp100nSec: System.Int64;
+      RawValue: number;
+      SystemFrequency: number;
+      TimeStamp: number;
+      TimeStamp100nSec: number;
       static Empty: System.Diagnostics.CounterSample;
       static Calculate(counterSample: System.Diagnostics.CounterSample): number;
       static Calculate(counterSample: System.Diagnostics.CounterSample, nextCounterSample: System.Diagnostics.CounterSample): number;
@@ -12052,7 +11993,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.Diagnostics.DataReceivedEventArgs): void;
-      BeginInvoke(sender: any, e: System.Diagnostics.DataReceivedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.Diagnostics.DataReceivedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -12123,7 +12064,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.Diagnostics.EntryWrittenEventArgs): void;
-      BeginInvoke(sender: any, e: System.Diagnostics.EntryWrittenEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.Diagnostics.EntryWrittenEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -12135,11 +12076,11 @@ export declare namespace System {
       ToString(): string;
     }
     export class EventInstance {
-      constructor(instanceId: System.Int64, categoryId: number);
-      constructor(instanceId: System.Int64, categoryId: number, entryType: System.Diagnostics.EventLogEntryType);
+      constructor(instanceId: number, categoryId: number);
+      constructor(instanceId: number, categoryId: number, entryType: System.Diagnostics.EventLogEntryType);
       CategoryId: number;
       EntryType: System.Diagnostics.EventLogEntryType;
-      InstanceId: System.Int64;
+      InstanceId: number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -12159,11 +12100,11 @@ export declare namespace System {
       SynchronizingObject: System.ComponentModel.ISynchronizeInvoke;
       OverflowAction: System.Diagnostics.OverflowAction;
       MinimumRetentionDays: number;
-      MaximumKilobytes: System.Int64;
+      MaximumKilobytes: number;
       Site: System.ComponentModel.ISite;
       Container: System.ComponentModel.IContainer;
       ModifyOverflowPolicy(action: System.Diagnostics.OverflowAction, retentionDays: number): void;
-      RegisterDisplayName(resourceFile: string, resourceId: System.Int64): void;
+      RegisterDisplayName(resourceFile: string, resourceId: number): void;
       BeginInit(): void;
       Clear(): void;
       Close(): void;
@@ -12185,17 +12126,17 @@ export declare namespace System {
       WriteEntry(message: string): void;
       WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType): void;
       WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType, eventID: number): void;
-      WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16): void;
-      WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16, rawData: System.Byte[]): void;
+      WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: number): void;
+      WriteEntry(message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: number, rawData: Byte[]): void;
       static WriteEntry(source: string, message: string): void;
       static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType): void;
       static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number): void;
-      static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16): void;
-      static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16, rawData: System.Byte[]): void;
+      static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: number): void;
+      static WriteEntry(source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: number, rawData: Byte[]): void;
       WriteEvent(instance: System.Diagnostics.EventInstance, ...values: any[]): void;
-      WriteEvent(instance: System.Diagnostics.EventInstance, data: System.Byte[], ...values: any[]): void;
+      WriteEvent(instance: System.Diagnostics.EventInstance, data: Byte[], ...values: any[]): void;
       static WriteEvent(source: string, instance: System.Diagnostics.EventInstance, ...values: any[]): void;
-      static WriteEvent(source: string, instance: System.Diagnostics.EventInstance, data: System.Byte[], ...values: any[]): void;
+      static WriteEvent(source: string, instance: System.Diagnostics.EventInstance, data: Byte[], ...values: any[]): void;
       Dispose(): void;
       ToString(): string;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -12207,12 +12148,12 @@ export declare namespace System {
     }
     export class EventLogEntry {
       Category: string;
-      CategoryNumber: System.Int16;
-      Data: System.Byte[];
+      CategoryNumber: number;
+      Data: Byte[];
       EntryType: System.Diagnostics.EventLogEntryType;
       EventID: number;
       Index: number;
-      InstanceId: System.Int64;
+      InstanceId: number;
       MachineName: string;
       Message: string;
       ReplacementStrings: string[];
@@ -12233,7 +12174,6 @@ export declare namespace System {
       GetType(): System.Type;
     }
     export class EventLogEntryCollection {
-      [key: string]: any;
       Count: number;
       CopyTo(entries: System.Diagnostics.EventLogEntry[], index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -12289,7 +12229,6 @@ export declare namespace System {
       ToString(): string;
     }
     export class EventLogPermissionEntryCollection {
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.EventLogPermissionEntry): number;
@@ -12401,7 +12340,7 @@ export declare namespace System {
     export class InstanceData {
       constructor(instanceName: string, sample: System.Diagnostics.CounterSample);
       InstanceName: string;
-      RawValue: System.Int64;
+      RawValue: number;
       Sample: System.Diagnostics.CounterSample;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -12410,7 +12349,6 @@ export declare namespace System {
     }
     export class InstanceDataCollection {
       constructor(counterName: string);
-      [key: string]: any;
       CounterName: string;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
@@ -12427,7 +12365,6 @@ export declare namespace System {
     }
     export class InstanceDataCollectionCollection {
       constructor();
-      [key: string]: any;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
       Count: number;
@@ -12460,7 +12397,7 @@ export declare namespace System {
       InstanceLifetime: System.Diagnostics.PerformanceCounterInstanceLifetime;
       InstanceName: string;
       MachineName: string;
-      RawValue: System.Int64;
+      RawValue: number;
       ReadOnly: boolean;
       Site: System.ComponentModel.ISite;
       Container: System.ComponentModel.IContainer;
@@ -12469,9 +12406,9 @@ export declare namespace System {
       EndInit(): void;
       Close(): void;
       static CloseSharedResources(): void;
-      Decrement(): System.Int64;
-      Increment(): System.Int64;
-      IncrementBy(value: System.Int64): System.Int64;
+      Decrement(): number;
+      Increment(): number;
+      IncrementBy(value: number): number;
       NextSample(): System.Diagnostics.CounterSample;
       NextValue(): number;
       RemoveInstance(): void;
@@ -12573,7 +12510,6 @@ export declare namespace System {
       ToString(): string;
     }
     export class PerformanceCounterPermissionEntryCollection {
-      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.PerformanceCounterPermissionEntry): number;
@@ -12684,12 +12620,12 @@ export declare namespace System {
     export class Stopwatch {
       constructor();
       Elapsed: System.TimeSpan;
-      ElapsedMilliseconds: System.Int64;
-      ElapsedTicks: System.Int64;
+      ElapsedMilliseconds: number;
+      ElapsedTicks: number;
       IsRunning: boolean;
-      static Frequency: System.Int64;
+      static Frequency: number;
       static IsHighResolution: boolean;
-      static GetTimestamp(): System.Int64;
+      static GetTimestamp(): number;
       static StartNew(): System.Diagnostics.Stopwatch;
       Reset(): void;
       Start(): void;
@@ -12747,8 +12683,8 @@ export declare namespace System {
         static Ensures(condition: boolean, userMessage: string): void;
         static Invariant(condition: boolean): void;
         static Invariant(condition: boolean, userMessage: string): void;
-        static ForAll(fromInclusive: number, toExclusive: number, predicate: any): boolean;
-        static Exists(fromInclusive: number, toExclusive: number, predicate: any): boolean;
+        static ForAll(fromInclusive: number, toExclusive: number, predicate: ((obj: number) => boolean)): boolean;
+        static Exists(fromInclusive: number, toExclusive: number, predicate: ((obj: number) => boolean)): boolean;
         static EndContractBlock(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -12791,14 +12727,14 @@ export declare namespace System {
     }
     export namespace Eventing {
       export class EventDescriptor {
-        constructor(id: number, version: System.Byte, channel: System.Byte, level: System.Byte, opcode: System.Byte, task: number, keywords: System.Int64);
-        Channel: System.Byte;
+        constructor(id: number, version: Byte, channel: Byte, level: Byte, opcode: Byte, task: number, keywords: number);
+        Channel: Byte;
         EventId: number;
-        Keywords: System.Int64;
-        Level: System.Byte;
-        Opcode: System.Byte;
+        Keywords: number;
+        Level: Byte;
+        Opcode: Byte;
         Task: number;
-        Version: System.Byte;
+        Version: Byte;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -12811,9 +12747,9 @@ export declare namespace System {
         Dispose(): void;
         static GetLastWriteEventError(): System.Diagnostics.Eventing.EventProvider_WriteEventErrorCode;
         IsEnabled(): boolean;
-        IsEnabled(level: System.Byte, keywords: System.Int64): boolean;
+        IsEnabled(level: Byte, keywords: number): boolean;
         WriteMessageEvent(eventMessage: string): boolean;
-        WriteMessageEvent(eventMessage: string, eventLevel: System.Byte, eventKeywords: System.Int64): boolean;
+        WriteMessageEvent(eventMessage: string, eventLevel: Byte, eventKeywords: number): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -12873,7 +12809,7 @@ export declare namespace System {
         export class EventKeyword {
           DisplayName: string;
           Name: string;
-          Value: System.Int64;
+          Value: number;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -12898,15 +12834,15 @@ export declare namespace System {
           LogMode: System.Diagnostics.Eventing.Reader.EventLogMode;
           LogName: string;
           LogType: System.Diagnostics.Eventing.Reader.EventLogType;
-          MaximumSizeInBytes: System.Int64;
+          MaximumSizeInBytes: number;
           OwningProviderName: string;
-          ProviderBufferSize?: number;
-          ProviderControlGuid?: System.Nullable<System.Guid>;
-          ProviderKeywords?: System.Nullable<System.Int64>;
-          ProviderLatency?: number;
-          ProviderLevel?: number;
-          ProviderMaximumNumberOfBuffers?: number;
-          ProviderMinimumNumberOfBuffers?: number;
+          ProviderBufferSize?: number | undefined;
+          ProviderControlGuid?: System.Guid | undefined;
+          ProviderKeywords?: number | undefined;
+          ProviderLatency?: number | undefined;
+          ProviderLevel?: number | undefined;
+          ProviderMaximumNumberOfBuffers?: number | undefined;
+          ProviderMinimumNumberOfBuffers?: number | undefined;
           ProviderNames: System.Collections.Generic.IEnumerable<string>;
           SecurityDescriptor: string;
           Dispose(): void;
@@ -12948,14 +12884,14 @@ export declare namespace System {
           LogName = 1,
         }
         export class EventLogInformation {
-          Attributes?: number;
-          CreationTime?: System.Nullable<System.DateTime>;
-          FileSize?: System.Nullable<System.Int64>;
-          IsLogFull?: boolean;
-          LastAccessTime?: System.Nullable<System.DateTime>;
-          LastWriteTime?: System.Nullable<System.DateTime>;
-          OldestRecordNumber?: System.Nullable<System.Int64>;
-          RecordCount?: System.Nullable<System.Int64>;
+          Attributes?: number | undefined;
+          CreationTime?: System.DateTime | undefined;
+          FileSize?: number | undefined;
+          IsLogFull?: boolean | undefined;
+          LastAccessTime?: System.DateTime | undefined;
+          LastWriteTime?: System.DateTime | undefined;
+          OldestRecordNumber?: number | undefined;
+          RecordCount?: number | undefined;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -13091,14 +13027,14 @@ export declare namespace System {
           constructor(path: string);
           constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType);
           BatchSize: number;
-          LogStatus: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLogStatus>;
+          LogStatus: System.Diagnostics.Eventing.Reader.EventLogStatus[];
           CancelReading(): void;
           Dispose(): void;
           ReadEvent(): System.Diagnostics.Eventing.Reader.EventRecord;
           ReadEvent(timeout: System.TimeSpan): System.Diagnostics.Eventing.Reader.EventRecord;
           Seek(bookmark: System.Diagnostics.Eventing.Reader.EventBookmark): void;
-          Seek(bookmark: System.Diagnostics.Eventing.Reader.EventBookmark, offset: System.Int64): void;
-          Seek(origin: System.IO.SeekOrigin, offset: System.Int64): void;
+          Seek(bookmark: System.Diagnostics.Eventing.Reader.EventBookmark, offset: number): void;
+          Seek(origin: System.IO.SeekOrigin, offset: number): void;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -13113,30 +13049,30 @@ export declare namespace System {
           ToString(): string;
         }
         export class EventRecord {
-          ActivityId?: System.Nullable<System.Guid>;
+          ActivityId?: System.Guid | undefined;
           Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
           Id: number;
-          Keywords?: System.Nullable<System.Int64>;
+          Keywords?: number | undefined;
           KeywordsDisplayNames: System.Collections.Generic.IEnumerable<string>;
-          Level?: System.Nullable<System.Byte>;
+          Level?: Byte | undefined;
           LevelDisplayName: string;
           LogName: string;
           MachineName: string;
-          Opcode?: System.Nullable<System.Int16>;
+          Opcode?: number | undefined;
           OpcodeDisplayName: string;
-          ProcessId?: number;
-          Properties: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventProperty>;
-          ProviderId?: System.Nullable<System.Guid>;
+          ProcessId?: number | undefined;
+          Properties: System.Diagnostics.Eventing.Reader.EventProperty[];
+          ProviderId?: System.Guid | undefined;
           ProviderName: string;
-          Qualifiers?: number;
-          RecordId?: System.Nullable<System.Int64>;
-          RelatedActivityId?: System.Nullable<System.Guid>;
-          Task?: number;
+          Qualifiers?: number | undefined;
+          RecordId?: number | undefined;
+          RelatedActivityId?: System.Guid | undefined;
+          Task?: number | undefined;
           TaskDisplayName: string;
-          ThreadId?: number;
-          TimeCreated?: System.Nullable<System.DateTime>;
+          ThreadId?: number | undefined;
+          TimeCreated?: System.DateTime | undefined;
           UserId: System.Security.Principal.SecurityIdentifier;
-          Version?: System.Nullable<System.Byte>;
+          Version?: Byte | undefined;
           Dispose(): void;
           FormatDescription(): string;
           FormatDescription(values: System.Collections.Generic.IEnumerable<any>): string;
@@ -13174,35 +13110,35 @@ export declare namespace System {
           GetType(): System.Type;
         }
         export class EventLogRecord {
-          ActivityId?: System.Nullable<System.Guid>;
+          ActivityId?: System.Guid | undefined;
           Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
           ContainerLog: string;
           Id: number;
-          Keywords?: System.Nullable<System.Int64>;
+          Keywords?: number | undefined;
           KeywordsDisplayNames: System.Collections.Generic.IEnumerable<string>;
-          Level?: System.Nullable<System.Byte>;
+          Level?: Byte | undefined;
           LevelDisplayName: string;
           LogName: string;
           MachineName: string;
           MatchedQueryIds: System.Collections.Generic.IEnumerable<number>;
-          Opcode?: System.Nullable<System.Int16>;
+          Opcode?: number | undefined;
           OpcodeDisplayName: string;
-          ProcessId?: number;
-          Properties: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventProperty>;
-          ProviderId?: System.Nullable<System.Guid>;
+          ProcessId?: number | undefined;
+          Properties: System.Diagnostics.Eventing.Reader.EventProperty[];
+          ProviderId?: System.Guid | undefined;
           ProviderName: string;
-          Qualifiers?: number;
-          RecordId?: System.Nullable<System.Int64>;
-          RelatedActivityId?: System.Nullable<System.Guid>;
-          Task?: number;
+          Qualifiers?: number | undefined;
+          RecordId?: number | undefined;
+          RelatedActivityId?: System.Guid | undefined;
+          Task?: number | undefined;
           TaskDisplayName: string;
-          ThreadId?: number;
-          TimeCreated?: System.Nullable<System.DateTime>;
+          ThreadId?: number | undefined;
+          TimeCreated?: System.DateTime | undefined;
           UserId: System.Security.Principal.SecurityIdentifier;
-          Version?: System.Nullable<System.Byte>;
+          Version?: Byte | undefined;
           FormatDescription(): string;
           FormatDescription(values: System.Collections.Generic.IEnumerable<any>): string;
-          GetPropertyValues(propertySelector: System.Diagnostics.Eventing.Reader.EventLogPropertySelector): System.Collections.Generic.IList<any>;
+          GetPropertyValues(propertySelector: System.Diagnostics.Eventing.Reader.EventLogPropertySelector): any[];
           ToXml(): string;
           Dispose(): void;
           Equals(obj: any): boolean;
@@ -13232,14 +13168,14 @@ export declare namespace System {
         }
         export class EventMetadata {
           Description: string;
-          Id: System.Int64;
+          Id: number;
           Keywords: System.Collections.Generic.IEnumerable<System.Diagnostics.Eventing.Reader.EventKeyword>;
           Level: System.Diagnostics.Eventing.Reader.EventLevel;
           LogLink: System.Diagnostics.Eventing.Reader.EventLogLink;
           Opcode: System.Diagnostics.Eventing.Reader.EventOpcode;
           Task: System.Diagnostics.Eventing.Reader.EventTask;
           Template: string;
-          Version: System.Byte;
+          Version: Byte;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -13271,15 +13207,15 @@ export declare namespace System {
           Events: System.Collections.Generic.IEnumerable<System.Diagnostics.Eventing.Reader.EventMetadata>;
           HelpLink: System.Uri;
           Id: System.Guid;
-          Keywords: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventKeyword>;
-          Levels: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLevel>;
-          LogLinks: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLogLink>;
+          Keywords: System.Diagnostics.Eventing.Reader.EventKeyword[];
+          Levels: System.Diagnostics.Eventing.Reader.EventLevel[];
+          LogLinks: System.Diagnostics.Eventing.Reader.EventLogLink[];
           MessageFilePath: string;
           Name: string;
-          Opcodes: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventOpcode>;
+          Opcodes: System.Diagnostics.Eventing.Reader.EventOpcode[];
           ParameterFilePath: string;
           ResourceFilePath: string;
-          Tasks: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventTask>;
+          Tasks: System.Diagnostics.Eventing.Reader.EventTask[];
           Dispose(): void;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -13326,11 +13262,11 @@ export declare namespace System {
     }
     export namespace PerformanceData {
       export class CounterData {
-        RawValue: System.Int64;
-        Value: System.Int64;
+        RawValue: number;
+        Value: number;
         Decrement(): void;
         Increment(): void;
-        IncrementBy(value: System.Int64): void;
+        IncrementBy(value: number): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -13402,7 +13338,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class CounterSetInstanceCounterDataSet {
-        [key: string]: any;
         Dispose(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -13435,12 +13370,12 @@ export declare namespace System {
         SourceLength: number;
         URL: string;
         FindClosestLine(line: number): number;
-        GetCheckSum(): System.Byte[];
-        GetSourceRange(startLine: number, startColumn: number, endLine: number, endColumn: number): System.Byte[];
+        GetCheckSum(): Byte[];
+        GetSourceRange(startLine: number, startColumn: number, endLine: number, endColumn: number): Byte[];
       }
       export interface ISymbolDocumentWriter {
-        SetCheckSum(algorithmId: System.Guid, checkSum: System.Byte[]): void;
-        SetSource(source: System.Byte[]): void;
+        SetCheckSum(algorithmId: System.Guid, checkSum: Byte[]): void;
+        SetSource(source: Byte[]): void;
       }
       export interface ISymbolMethod {
         RootScope: System.Diagnostics.SymbolStore.ISymbolScope;
@@ -13468,7 +13403,7 @@ export declare namespace System {
         GetMethod(method: System.Diagnostics.SymbolStore.SymbolToken, version: number): System.Diagnostics.SymbolStore.ISymbolMethod;
         GetMethodFromDocumentPosition(document: System.Diagnostics.SymbolStore.ISymbolDocument, line: number, column: number): System.Diagnostics.SymbolStore.ISymbolMethod;
         GetNamespaces(): System.Diagnostics.SymbolStore.ISymbolNamespace[];
-        GetSymAttribute(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string): System.Byte[];
+        GetSymAttribute(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string): Byte[];
         GetVariables(parent: System.Diagnostics.SymbolStore.SymbolToken): System.Diagnostics.SymbolStore.ISymbolVariable[];
       }
       export interface ISymbolScope {
@@ -13489,7 +13424,7 @@ export declare namespace System {
         EndOffset: number;
         Name: string;
         StartOffset: number;
-        GetSignature(): System.Byte[];
+        GetSignature(): Byte[];
       }
       export interface ISymbolWriter {
         Close(): void;
@@ -13497,9 +13432,9 @@ export declare namespace System {
         CloseNamespace(): void;
         CloseScope(endOffset: number): void;
         DefineDocument(url: string, language: System.Guid, languageVendor: System.Guid, documentType: System.Guid): System.Diagnostics.SymbolStore.ISymbolDocumentWriter;
-        DefineField(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string, attributes: System.Reflection.FieldAttributes, signature: System.Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number): void;
-        DefineGlobalVariable(name: string, attributes: System.Reflection.FieldAttributes, signature: System.Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number): void;
-        DefineLocalVariable(name: string, attributes: System.Reflection.FieldAttributes, signature: System.Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number, startOffset: number, endOffset: number): void;
+        DefineField(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string, attributes: System.Reflection.FieldAttributes, signature: Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number): void;
+        DefineGlobalVariable(name: string, attributes: System.Reflection.FieldAttributes, signature: Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number): void;
+        DefineLocalVariable(name: string, attributes: System.Reflection.FieldAttributes, signature: Byte[], addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number, startOffset: number, endOffset: number): void;
         DefineParameter(name: string, attributes: System.Reflection.ParameterAttributes, sequence: number, addrKind: System.Diagnostics.SymbolStore.SymAddressKind, addr1: number, addr2: number, addr3: number): void;
         DefineSequencePoints(document: System.Diagnostics.SymbolStore.ISymbolDocumentWriter, offsets: number[], lines: number[], columns: number[], endLines: number[], endColumns: number[]): void;
         Initialize(emitter: System.IntPtr, filename: string, fFullBuild: boolean): void;
@@ -13508,7 +13443,7 @@ export declare namespace System {
         OpenScope(startOffset: number): number;
         SetMethodSourceRange(startDoc: System.Diagnostics.SymbolStore.ISymbolDocumentWriter, startLine: number, startColumn: number, endDoc: System.Diagnostics.SymbolStore.ISymbolDocumentWriter, endLine: number, endColumn: number): void;
         SetScopeRange(scopeID: number, startOffset: number, endOffset: number): void;
-        SetSymAttribute(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string, data: System.Byte[]): void;
+        SetSymAttribute(parent: System.Diagnostics.SymbolStore.SymbolToken, name: string, data: Byte[]): void;
         SetUnderlyingWriter(underlyingWriter: System.IntPtr): void;
         SetUserEntryPoint(entryMethod: System.Diagnostics.SymbolStore.SymbolToken): void;
         UsingNamespace(fullName: string): void;
@@ -13651,7 +13586,7 @@ export declare namespace System {
         Disable = -3,
       }
       export class EventCommandEventArgs {
-        Arguments: System.Collections.Generic.IDictionary<string, string>;
+        Arguments: Record<string, string>;
         Command: System.Diagnostics.Tracing.EventCommand;
         DisableEvent(eventId: number): boolean;
         EnableEvent(eventId: number): boolean;
@@ -13692,7 +13627,7 @@ export declare namespace System {
         static EventSourceIndex(eventSource: System.Diagnostics.Tracing.EventSource): number;
         EnableEvents(eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel): void;
         EnableEvents(eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords): void;
-        EnableEvents(eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords, argumentsCS: System.Collections.Generic.IDictionary<string, string>): void;
+        EnableEvents(eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords, argumentsCS: Record<string, string>): void;
         DisableEvents(eventSource: System.Diagnostics.Tracing.EventSource): void;
         Dispose(): void;
         Equals(obj: any): boolean;
@@ -13753,7 +13688,7 @@ export declare namespace System {
         ActivityId: System.Guid;
         Channel: System.Diagnostics.Tracing.EventChannel;
         EventId: number;
-        OSThreadId: System.Int64;
+        OSThreadId: number;
         TimeStamp: System.DateTime;
         EventName: string;
         EventSource: System.Diagnostics.Tracing.EventSource;
@@ -13766,7 +13701,7 @@ export declare namespace System {
         RelatedActivityId: System.Guid;
         Tags: System.Diagnostics.Tracing.EventTags;
         Task: System.Diagnostics.Tracing.EventTask;
-        Version: System.Byte;
+        Version: Byte;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -13850,7 +13785,7 @@ export declare namespace System {
       static GetTypeRestriction(expression: System.Linq.Expressions.Expression, type: System.Type): System.Dynamic.BindingRestrictions;
       static GetInstanceRestriction(expression: System.Linq.Expressions.Expression, instance: any): System.Dynamic.BindingRestrictions;
       static GetExpressionRestriction(expression: System.Linq.Expressions.Expression): System.Dynamic.BindingRestrictions;
-      static Combine(contributingObjects: any): System.Dynamic.BindingRestrictions;
+      static Combine(contributingObjects: System.Dynamic.DynamicMetaObject[]): System.Dynamic.BindingRestrictions;
       ToExpression(): System.Linq.Expressions.Expression;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -14205,7 +14140,7 @@ export declare namespace System {
       constructor(message: string, invalidCultureName: string, innerException: System.Exception);
       constructor(message: string, invalidCultureId: number, innerException: System.Exception);
       constructor(paramName: string, invalidCultureId: number, message: string);
-      InvalidCultureId?: number;
+      InvalidCultureId?: number | undefined;
       InvalidCultureName: string;
       Message: string;
       ParamName: string;
@@ -15325,7 +15260,7 @@ export declare namespace System {
     }
     export class SortKey {
       OriginalString: string;
-      KeyData: System.Byte[];
+      KeyData: Byte[];
       static Compare(sortkey1: System.Globalization.SortKey, sortkey2: System.Globalization.SortKey): number;
       Equals(value: any): boolean;
       GetHashCode(): number;
@@ -15561,38 +15496,38 @@ export declare namespace System {
     export class MemoryStream {
       constructor();
       constructor(capacity: number);
-      constructor(buffer: System.Byte[]);
-      constructor(buffer: System.Byte[], writable: boolean);
-      constructor(buffer: System.Byte[], index: number, count: number);
-      constructor(buffer: System.Byte[], index: number, count: number, writable: boolean);
-      constructor(buffer: System.Byte[], index: number, count: number, writable: boolean, publiclyVisible: boolean);
+      constructor(buffer: Byte[]);
+      constructor(buffer: Byte[], writable: boolean);
+      constructor(buffer: Byte[], index: number, count: number);
+      constructor(buffer: Byte[], index: number, count: number, writable: boolean);
+      constructor(buffer: Byte[], index: number, count: number, writable: boolean, publiclyVisible: boolean);
       CanRead: boolean;
       CanSeek: boolean;
       CanWrite: boolean;
       Capacity: number;
-      Length: System.Int64;
-      Position: System.Int64;
+      Length: number;
+      Position: number;
       CanTimeout: boolean;
       ReadTimeout: number;
       WriteTimeout: number;
       Flush(): void;
       FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      GetBuffer(): System.Byte[];
-      Read(buffer: System.Byte[], offset: number, count: number): number;
-      Read(buffer: System.Span<System.Byte>): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+      GetBuffer(): Byte[];
+      Read(buffer: Byte[], offset: number, count: number): number;
+      Read(buffer: System.Span<Byte>): number;
+      ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
       ReadByte(): number;
       CopyTo(destination: System.IO.Stream, bufferSize: number): void;
       CopyToAsync(destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      Seek(offset: System.Int64, loc: System.IO.SeekOrigin): System.Int64;
-      SetLength(value: System.Int64): void;
-      ToArray(): System.Byte[];
-      Write(buffer: System.Byte[], offset: number, count: number): void;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-      WriteByte(value: System.Byte): void;
+      Seek(offset: number, loc: System.IO.SeekOrigin): number;
+      SetLength(value: number): void;
+      ToArray(): Byte[];
+      Write(buffer: Byte[], offset: number, count: number): void;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
+      WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+      WriteByte(value: Byte): void;
       WriteTo(stream: System.IO.Stream): void;
       CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
@@ -15601,12 +15536,12 @@ export declare namespace System {
       Close(): void;
       Dispose(): void;
       FlushAsync(): System.Threading.Tasks.Task;
-      BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndRead(asyncResult: System.IAsyncResult): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-      BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+      BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndWrite(asyncResult: System.IAsyncResult): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+      WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
       GetLifetimeService(): any;
@@ -15720,12 +15655,12 @@ export declare namespace System {
       Dispose(): void;
       Write(value: boolean): void;
       Write(value: number): void;
-      Write(value: System.UInt32): void;
-      Write(value: System.Int64): void;
-      Write(value: System.UInt64): void;
       Write(value: number): void;
       Write(value: number): void;
-      Write(value: System.Decimal): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
       Write(value: any): void;
       Write(format: string, arg0: any): void;
       Write(format: string, arg0: any, arg1: any): void;
@@ -15737,12 +15672,12 @@ export declare namespace System {
       WriteLine(buffer: System.Char[], index: number, count: number): void;
       WriteLine(value: boolean): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.UInt32): void;
-      WriteLine(value: System.Int64): void;
-      WriteLine(value: System.UInt64): void;
       WriteLine(value: number): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.Decimal): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
       WriteLine(value: any): void;
       WriteLine(format: string, arg0: any): void;
       WriteLine(format: string, arg0: any, arg1: any): void;
@@ -15800,12 +15735,12 @@ export declare namespace System {
       Write(buffer: System.ReadOnlySpan<System.Char>): void;
       Write(value: boolean): void;
       Write(value: number): void;
-      Write(value: System.UInt32): void;
-      Write(value: System.Int64): void;
-      Write(value: System.UInt64): void;
       Write(value: number): void;
       Write(value: number): void;
-      Write(value: System.Decimal): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
       Write(value: string): void;
       Write(value: any): void;
       Write(format: string, arg0: any): void;
@@ -15819,12 +15754,12 @@ export declare namespace System {
       WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
       WriteLine(value: boolean): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.UInt32): void;
-      WriteLine(value: System.Int64): void;
-      WriteLine(value: System.UInt64): void;
       WriteLine(value: number): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.Decimal): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
       WriteLine(value: string): void;
       WriteLine(value: any): void;
       WriteLine(format: string, arg0: any): void;
@@ -15853,69 +15788,69 @@ export declare namespace System {
       ToString(): string;
     }
     export class UnmanagedMemoryAccessor {
-      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, capacity: System.Int64);
-      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, capacity: System.Int64, access: System.IO.FileAccess);
-      Capacity: System.Int64;
+      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: number, capacity: number);
+      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: number, capacity: number, access: System.IO.FileAccess);
+      Capacity: number;
       CanRead: boolean;
       CanWrite: boolean;
       Dispose(): void;
-      ReadBoolean(position: System.Int64): boolean;
-      ReadByte(position: System.Int64): System.Byte;
-      ReadChar(position: System.Int64): System.Char;
-      ReadInt16(position: System.Int64): System.Int16;
-      ReadInt32(position: System.Int64): number;
-      ReadInt64(position: System.Int64): System.Int64;
-      ReadDecimal(position: System.Int64): System.Decimal;
-      ReadSingle(position: System.Int64): number;
-      ReadDouble(position: System.Int64): number;
-      ReadSByte(position: System.Int64): System.SByte;
-      ReadUInt16(position: System.Int64): System.UInt16;
-      ReadUInt32(position: System.Int64): System.UInt32;
-      ReadUInt64(position: System.Int64): System.UInt64;
-      Write(position: System.Int64, value: boolean): void;
-      Write(position: System.Int64, value: System.Byte): void;
-      Write(position: System.Int64, value: System.Char): void;
-      Write(position: System.Int64, value: System.Int16): void;
-      Write(position: System.Int64, value: number): void;
-      Write(position: System.Int64, value: System.Int64): void;
-      Write(position: System.Int64, value: System.Decimal): void;
-      Write(position: System.Int64, value: number): void;
-      Write(position: System.Int64, value: number): void;
-      Write(position: System.Int64, value: System.SByte): void;
-      Write(position: System.Int64, value: System.UInt16): void;
-      Write(position: System.Int64, value: System.UInt32): void;
-      Write(position: System.Int64, value: System.UInt64): void;
+      ReadBoolean(position: number): boolean;
+      ReadByte(position: number): Byte;
+      ReadChar(position: number): System.Char;
+      ReadInt16(position: number): number;
+      ReadInt32(position: number): number;
+      ReadInt64(position: number): number;
+      ReadDecimal(position: number): number;
+      ReadSingle(position: number): number;
+      ReadDouble(position: number): number;
+      ReadSByte(position: number): System.SByte;
+      ReadUInt16(position: number): number;
+      ReadUInt32(position: number): number;
+      ReadUInt64(position: number): number;
+      Write(position: number, value: boolean): void;
+      Write(position: number, value: Byte): void;
+      Write(position: number, value: System.Char): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: System.SByte): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
+      Write(position: number, value: number): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class UnmanagedMemoryStream {
-      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, length: System.Int64);
-      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, length: System.Int64, access: System.IO.FileAccess);
+      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: number, length: number);
+      constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: number, length: number, access: System.IO.FileAccess);
       CanRead: boolean;
       CanSeek: boolean;
       CanWrite: boolean;
-      Length: System.Int64;
-      Capacity: System.Int64;
-      Position: System.Int64;
+      Length: number;
+      Capacity: number;
+      Position: number;
       CanTimeout: boolean;
       ReadTimeout: number;
       WriteTimeout: number;
       Flush(): void;
       FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      Read(buffer: System.Byte[], offset: number, count: number): number;
-      Read(buffer: System.Span<System.Byte>): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+      Read(buffer: Byte[], offset: number, count: number): number;
+      Read(buffer: System.Span<Byte>): number;
+      ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
       ReadByte(): number;
-      Seek(offset: System.Int64, loc: System.IO.SeekOrigin): System.Int64;
-      SetLength(value: System.Int64): void;
-      Write(buffer: System.Byte[], offset: number, count: number): void;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-      WriteByte(value: System.Byte): void;
+      Seek(offset: number, loc: System.IO.SeekOrigin): number;
+      SetLength(value: number): void;
+      Write(buffer: Byte[], offset: number, count: number): void;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
+      WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+      WriteByte(value: Byte): void;
       CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -15925,12 +15860,12 @@ export declare namespace System {
       Close(): void;
       Dispose(): void;
       FlushAsync(): System.Threading.Tasks.Task;
-      BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndRead(asyncResult: System.IAsyncResult): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-      BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+      BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndWrite(asyncResult: System.IAsyncResult): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+      WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
       GetLifetimeService(): any;
@@ -16132,8 +16067,8 @@ export declare namespace System {
       static ReadAllText(path: string, encoding: System.Text.Encoding): string;
       static WriteAllText(path: string, contents: string): void;
       static WriteAllText(path: string, contents: string, encoding: System.Text.Encoding): void;
-      static ReadAllBytes(path: string): System.Byte[];
-      static WriteAllBytes(path: string, bytes: System.Byte[]): void;
+      static ReadAllBytes(path: string): Byte[];
+      static WriteAllBytes(path: string, bytes: Byte[]): void;
       static ReadAllLines(path: string): string[];
       static ReadAllLines(path: string, encoding: System.Text.Encoding): string[];
       static ReadLines(path: string): any;
@@ -16156,7 +16091,7 @@ export declare namespace System {
       static WriteAllTextAsync(path: string, contents: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static WriteAllTextAsync(path: string, contents: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static ReadAllBytesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): any;
-      static WriteAllBytesAsync(path: string, bytes: System.Byte[], cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static WriteAllBytesAsync(path: string, bytes: Byte[], cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static ReadAllLinesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): any;
       static ReadAllLinesAsync(path: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): any;
       static WriteAllLinesAsync(path: string, contents: any, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -16176,7 +16111,7 @@ export declare namespace System {
     }
     export class FileInfo {
       constructor(fileName: string);
-      Length: System.Int64;
+      Length: number;
       DirectoryName: string;
       Directory: System.IO.DirectoryInfo;
       IsReadOnly: boolean;
@@ -16265,30 +16200,30 @@ export declare namespace System {
       CanRead: boolean;
       CanWrite: boolean;
       CanSeek: boolean;
-      Length: System.Int64;
-      Position: System.Int64;
+      Length: number;
+      Position: number;
       CanTimeout: boolean;
       ReadTimeout: number;
       WriteTimeout: number;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       Flush(): void;
       FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      Read(array: System.Byte[], offset: number, count: number): number;
-      Read(destination: System.Span<System.Byte>): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-      BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      Read(array: Byte[], offset: number, count: number): number;
+      Read(destination: System.Span<Byte>): number;
+      ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+      BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndRead(asyncResult: System.IAsyncResult): number;
       ReadByte(): number;
-      Write(array: System.Byte[], offset: number, count: number): void;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-      BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      Write(array: Byte[], offset: number, count: number): void;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
+      WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+      BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndWrite(asyncResult: System.IAsyncResult): void;
-      WriteByte(value: System.Byte): void;
-      Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-      SetLength(value: System.Int64): void;
+      WriteByte(value: Byte): void;
+      Seek(offset: number, origin: System.IO.SeekOrigin): number;
+      SetLength(value: number): void;
       CopyTo(destination: System.IO.Stream, bufferSize: number): void;
       CopyToAsync(destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -16298,8 +16233,8 @@ export declare namespace System {
       Close(): void;
       Dispose(): void;
       FlushAsync(): System.Threading.Tasks.Task;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+      ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+      WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
       GetLifetimeService(): any;
       InitializeLifetimeService(): any;
@@ -16331,8 +16266,8 @@ export declare namespace System {
       CanSeek: boolean;
       CanTimeout: boolean;
       CanWrite: boolean;
-      Length: System.Int64;
-      Position: System.Int64;
+      Length: number;
+      Position: number;
       ReadTimeout: number;
       WriteTimeout: number;
       static Null: System.IO.Stream;
@@ -16347,24 +16282,24 @@ export declare namespace System {
       Flush(): void;
       FlushAsync(): System.Threading.Tasks.Task;
       FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndRead(asyncResult: System.IAsyncResult): number;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-      BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+      ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+      BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
       EndWrite(asyncResult: System.IAsyncResult): void;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-      Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-      SetLength(value: System.Int64): void;
-      Read(buffer: System.Byte[], offset: number, count: number): number;
-      Read(buffer: System.Span<System.Byte>): number;
+      WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+      WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+      Seek(offset: number, origin: System.IO.SeekOrigin): number;
+      SetLength(value: number): void;
+      Read(buffer: Byte[], offset: number, count: number): number;
+      Read(buffer: System.Span<Byte>): number;
       ReadByte(): number;
-      Write(buffer: System.Byte[], offset: number, count: number): void;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-      WriteByte(value: System.Byte): void;
+      Write(buffer: Byte[], offset: number, count: number): void;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
+      WriteByte(value: Byte): void;
       static Synchronized(stream: System.IO.Stream): System.IO.Stream;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -16385,25 +16320,25 @@ export declare namespace System {
       PeekChar(): number;
       Read(): number;
       ReadBoolean(): boolean;
-      ReadByte(): System.Byte;
+      ReadByte(): Byte;
       ReadSByte(): System.SByte;
       ReadChar(): System.Char;
-      ReadInt16(): System.Int16;
-      ReadUInt16(): System.UInt16;
+      ReadInt16(): number;
+      ReadUInt16(): number;
       ReadInt32(): number;
-      ReadUInt32(): System.UInt32;
-      ReadInt64(): System.Int64;
-      ReadUInt64(): System.UInt64;
+      ReadUInt32(): number;
+      ReadInt64(): number;
+      ReadUInt64(): number;
       ReadSingle(): number;
       ReadDouble(): number;
-      ReadDecimal(): System.Decimal;
+      ReadDecimal(): number;
       ReadString(): string;
       Read(buffer: System.Char[], index: number, count: number): number;
       ReadChars(count: number): System.Char[];
       Read(buffer: System.Span<System.Char>): number;
-      Read(buffer: System.Span<System.Byte>): number;
-      Read(buffer: System.Byte[], index: number, count: number): number;
-      ReadBytes(count: number): System.Byte[];
+      Read(buffer: System.Span<Byte>): number;
+      Read(buffer: Byte[], index: number, count: number): number;
+      ReadBytes(count: number): Byte[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -16418,26 +16353,26 @@ export declare namespace System {
       Close(): void;
       Dispose(): void;
       Flush(): void;
-      Seek(offset: number, origin: System.IO.SeekOrigin): System.Int64;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
+      Seek(offset: number, origin: System.IO.SeekOrigin): number;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
       Write(buffer: System.ReadOnlySpan<System.Char>): void;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       Write(value: boolean): void;
-      Write(value: System.Byte): void;
+      Write(value: Byte): void;
       Write(value: System.SByte): void;
-      Write(buffer: System.Byte[]): void;
-      Write(buffer: System.Byte[], index: number, count: number): void;
+      Write(buffer: Byte[]): void;
+      Write(buffer: Byte[], index: number, count: number): void;
       Write(ch: System.Char): void;
       Write(chars: System.Char[]): void;
       Write(chars: System.Char[], index: number, count: number): void;
       Write(value: number): void;
-      Write(value: System.Decimal): void;
-      Write(value: System.Int16): void;
-      Write(value: System.UInt16): void;
       Write(value: number): void;
-      Write(value: System.UInt32): void;
-      Write(value: System.Int64): void;
-      Write(value: System.UInt64): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
       Write(value: number): void;
       Write(value: string): void;
       Equals(obj: any): boolean;
@@ -16499,12 +16434,12 @@ export declare namespace System {
       Write(buffer: System.ReadOnlySpan<System.Char>): void;
       Write(value: boolean): void;
       Write(value: number): void;
-      Write(value: System.UInt32): void;
-      Write(value: System.Int64): void;
-      Write(value: System.UInt64): void;
       Write(value: number): void;
       Write(value: number): void;
-      Write(value: System.Decimal): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
+      Write(value: number): void;
       Write(value: any): void;
       Write(format: string, arg0: any): void;
       Write(format: string, arg0: any, arg1: any): void;
@@ -16517,12 +16452,12 @@ export declare namespace System {
       WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
       WriteLine(value: boolean): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.UInt32): void;
-      WriteLine(value: System.Int64): void;
-      WriteLine(value: System.UInt64): void;
       WriteLine(value: number): void;
       WriteLine(value: number): void;
-      WriteLine(value: System.Decimal): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
+      WriteLine(value: number): void;
       WriteLine(value: string): void;
       WriteLine(value: any): void;
       WriteLine(format: string, arg0: any): void;
@@ -16543,9 +16478,9 @@ export declare namespace System {
     }
     export class DriveInfo {
       constructor(driveName: string);
-      AvailableFreeSpace: System.Int64;
-      TotalFreeSpace: System.Int64;
-      TotalSize: System.Int64;
+      AvailableFreeSpace: number;
+      TotalFreeSpace: number;
+      TotalSize: number;
       VolumeLabel: string;
       DriveFormat: string;
       DriveType: System.IO.DriveType;
@@ -16579,32 +16514,32 @@ export declare namespace System {
       CanSeek: boolean;
       IsAsync: boolean;
       Name: string;
-      Length: System.Int64;
-      Position: System.Int64;
+      Length: number;
+      Position: number;
       Handle: System.IntPtr;
       SafeFileHandle: any; // Microsoft.Win32.SafeHandles.SafeFileHandle
       CanTimeout: boolean;
       ReadTimeout: number;
       WriteTimeout: number;
       ReadByte(): number;
-      WriteByte(value: System.Byte): void;
-      Read(array: System.Byte[], offset: number, count: number): number;
-      BeginRead(array: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: any): System.IAsyncResult;
+      WriteByte(value: Byte): void;
+      Read(array: Byte[], offset: number, count: number): number;
+      BeginRead(array: Byte[], offset: number, numBytes: number, userCallback: ((ar: System.IAsyncResult) => void), stateObject: any): System.IAsyncResult;
       EndRead(asyncResult: System.IAsyncResult): number;
-      Write(array: System.Byte[], offset: number, count: number): void;
-      BeginWrite(array: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: any): System.IAsyncResult;
+      Write(array: Byte[], offset: number, count: number): void;
+      BeginWrite(array: Byte[], offset: number, numBytes: number, userCallback: ((ar: System.IAsyncResult) => void), stateObject: any): System.IAsyncResult;
       EndWrite(asyncResult: System.IAsyncResult): void;
-      Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-      SetLength(value: System.Int64): void;
+      Seek(offset: number, origin: System.IO.SeekOrigin): number;
+      SetLength(value: number): void;
       Flush(): void;
       Flush(flushToDisk: boolean): void;
-      Lock(position: System.Int64, length: System.Int64): void;
-      Unlock(position: System.Int64, length: System.Int64): void;
+      Lock(position: number, length: number): void;
+      Unlock(position: number, length: number): void;
       GetAccessControl(): System.Security.AccessControl.FileSecurity;
       SetAccessControl(fileSecurity: System.Security.AccessControl.FileSecurity): void;
       FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+      WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
       CopyToAsync(destination: System.IO.Stream, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -16614,12 +16549,12 @@ export declare namespace System {
       Close(): void;
       Dispose(): void;
       FlushAsync(): System.Threading.Tasks.Task;
-      ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-      ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-      WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-      WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-      Read(buffer: System.Span<System.Byte>): number;
-      Write(buffer: System.ReadOnlySpan<System.Byte>): void;
+      ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+      ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+      WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+      WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+      Read(buffer: System.Span<Byte>): number;
+      Write(buffer: System.ReadOnlySpan<Byte>): void;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
       GetLifetimeService(): any;
@@ -16690,7 +16625,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.IO.FileSystemEventArgs): void;
-      BeginInvoke(sender: any, e: System.IO.FileSystemEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.IO.FileSystemEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -16718,7 +16653,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.IO.RenamedEventArgs): void;
-      BeginInvoke(sender: any, e: System.IO.RenamedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.IO.RenamedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -16752,7 +16687,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.IO.ErrorEventArgs): void;
-      BeginInvoke(sender: any, e: System.IO.ErrorEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.IO.ErrorEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -16864,29 +16799,29 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         BaseStream: System.IO.Stream;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
         Flush(): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-        SetLength(value: System.Int64): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
+        SetLength(value: number): void;
         ReadByte(): number;
-        BeginRead(array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: any): System.IAsyncResult;
+        BeginRead(array: Byte[], offset: number, count: number, asyncCallback: ((ar: System.IAsyncResult) => void), asyncState: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Read(array: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        BeginWrite(array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: any): System.IAsyncResult;
+        Read(array: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        BeginWrite(array: Byte[], offset: number, count: number, asyncCallback: ((ar: System.IAsyncResult) => void), asyncState: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
-        Write(array: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
+        Write(array: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
         CopyTo(destination: System.IO.Stream, bufferSize: number): void;
-        ReadAsync(array: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        WriteAsync(array: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        ReadAsync(array: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        WriteAsync(array: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -16896,9 +16831,9 @@ export declare namespace System {
         Close(): void;
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-        WriteByte(value: System.Byte): void;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        WriteByte(value: Byte): void;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -16917,20 +16852,20 @@ export declare namespace System {
         CanRead: boolean;
         CanSeek: boolean;
         CanWrite: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
-        Read(array: System.Byte[], offset: number, count: number): number;
-        Write(array: System.Byte[], offset: number, count: number): void;
+        Read(array: Byte[], offset: number, count: number): number;
+        Write(array: Byte[], offset: number, count: number): void;
         Flush(): void;
-        BeginRead(array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: any): System.IAsyncResult;
-        BeginWrite(array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: any): System.IAsyncResult;
+        BeginRead(array: Byte[], offset: number, count: number, asyncCallback: ((ar: System.IAsyncResult) => void), asyncState: any): System.IAsyncResult;
+        BeginWrite(array: Byte[], offset: number, count: number, asyncCallback: ((ar: System.IAsyncResult) => void), asyncState: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
         EndWrite(asyncResult: System.IAsyncResult): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-        SetLength(value: System.Int64): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
+        SetLength(value: number): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -16941,16 +16876,16 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        Read(buffer: System.Span<System.Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        Read(buffer: System.Span<Byte>): number;
         ReadByte(): number;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteByte(value: System.Byte): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteByte(value: Byte): void;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -16997,7 +16932,7 @@ export declare namespace System {
         OriginalRootDirectory: System.ReadOnlySpan<System.Char>;
         FileName: System.ReadOnlySpan<System.Char>;
         Attributes: System.IO.FileAttributes;
-        Length: System.Int64;
+        Length: number;
         CreationTimeUtc: System.DateTimeOffset;
         LastAccessTimeUtc: System.DateTimeOffset;
         LastWriteTimeUtc: System.DateTimeOffset;
@@ -17012,9 +16947,9 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class FileSystemEnumerable<TResult = any> {
-        constructor(directory: string, transform: System.IO.Enumeration.FileSystemEnumerable<TResult>, options?: System.IO.EnumerationOptions);
-        ShouldIncludePredicate: System.IO.Enumeration.FileSystemEnumerable<TResult>;
-        ShouldRecursePredicate: System.IO.Enumeration.FileSystemEnumerable<TResult>;
+        constructor(directory: string, transform: ((entry: Ref<System.IO.Enumeration.FileSystemEntry>) => TResult), options?: System.IO.EnumerationOptions);
+        ShouldIncludePredicate: ((entry: Ref<System.IO.Enumeration.FileSystemEntry>) => boolean);
+        ShouldRecursePredicate: ((entry: Ref<System.IO.Enumeration.FileSystemEntry>) => boolean);
         GetEnumerator(): System.Collections.Generic.IEnumerator<TResult>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -17058,15 +16993,15 @@ export declare namespace System {
       export class IsolatedStorage {
         ApplicationIdentity: any; // System.Object
         AssemblyIdentity: any; // System.Object
-        CurrentSize: System.UInt64;
+        CurrentSize: number;
         DomainIdentity: any; // System.Object
-        MaximumSize: System.UInt64;
+        MaximumSize: number;
         Scope: System.IO.IsolatedStorage.IsolatedStorageScope;
-        AvailableFreeSpace: System.Int64;
-        Quota: System.Int64;
-        UsedSize: System.Int64;
+        AvailableFreeSpace: number;
+        Quota: number;
+        UsedSize: number;
         Remove(): void;
-        IncreaseQuotaTo(newQuotaSize: System.Int64): boolean;
+        IncreaseQuotaTo(newQuotaSize: number): boolean;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
         InitializeLifetimeService(): any;
@@ -17096,11 +17031,11 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class IsolatedStorageFile {
-        CurrentSize: System.UInt64;
-        MaximumSize: System.UInt64;
-        AvailableFreeSpace: System.Int64;
-        Quota: System.Int64;
-        UsedSize: System.Int64;
+        CurrentSize: number;
+        MaximumSize: number;
+        AvailableFreeSpace: number;
+        Quota: number;
+        UsedSize: number;
         static IsEnabled: boolean;
         ApplicationIdentity: any; // System.Object
         AssemblyIdentity: any; // System.Object
@@ -17137,7 +17072,7 @@ export declare namespace System {
         GetDirectoryNames(): string[];
         GetFileNames(searchPattern: string): string[];
         GetFileNames(): string[];
-        IncreaseQuotaTo(newQuotaSize: System.Int64): boolean;
+        IncreaseQuotaTo(newQuotaSize: number): boolean;
         MoveDirectory(sourceDirectoryName: string, destinationDirectoryName: string): void;
         MoveFile(sourceFileName: string, destinationFileName: string): void;
         OpenFile(path: string, mode: System.IO.FileMode): System.IO.IsolatedStorage.IsolatedStorageFileStream;
@@ -17167,31 +17102,31 @@ export declare namespace System {
         SafeFileHandle: any; // Microsoft.Win32.SafeHandles.SafeFileHandle
         Handle: System.IntPtr;
         IsAsync: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         Name: string;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
-        BeginRead(buffer: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: any): System.IAsyncResult;
-        BeginWrite(buffer: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: any): System.IAsyncResult;
+        BeginRead(buffer: Byte[], offset: number, numBytes: number, userCallback: ((ar: System.IAsyncResult) => void), stateObject: any): System.IAsyncResult;
+        BeginWrite(buffer: Byte[], offset: number, numBytes: number, userCallback: ((ar: System.IAsyncResult) => void), stateObject: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
         EndWrite(asyncResult: System.IAsyncResult): void;
         Flush(): void;
         Flush(flushToDisk: boolean): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
+        Read(buffer: Byte[], offset: number, count: number): number;
         ReadByte(): number;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-        SetLength(value: System.Int64): void;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        WriteByte(value: System.Byte): void;
-        Lock(position: System.Int64, length: System.Int64): void;
-        Unlock(position: System.Int64, length: System.Int64): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
+        SetLength(value: number): void;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        WriteByte(value: Byte): void;
+        Lock(position: number, length: number): void;
+        Unlock(position: number, length: number): void;
         GetAccessControl(): System.Security.AccessControl.FileSecurity;
         SetAccessControl(fileSecurity: System.Security.AccessControl.FileSecurity): void;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -17201,12 +17136,12 @@ export declare namespace System {
         Close(): void;
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        Read(buffer: System.Span<System.Byte>): number;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        Read(buffer: System.Span<Byte>): number;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17221,8 +17156,8 @@ export declare namespace System {
       }
       export class IsolatedStorageSecurityState {
         Options: System.IO.IsolatedStorage.IsolatedStorageSecurityOptions;
-        Quota: System.Int64;
-        UsedSize: System.Int64;
+        Quota: number;
+        UsedSize: number;
         EnsureState(): void;
         IsStateAvailable(): boolean;
         Equals(obj: any): boolean;
@@ -17285,7 +17220,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -17293,8 +17228,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -17304,38 +17239,38 @@ export declare namespace System {
       }
       export class MemoryMappedViewAccessor {
         SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
-        PointerOffset: System.Int64;
-        Capacity: System.Int64;
+        PointerOffset: number;
+        Capacity: number;
         CanRead: boolean;
         CanWrite: boolean;
         Flush(): void;
         Dispose(): void;
-        ReadBoolean(position: System.Int64): boolean;
-        ReadByte(position: System.Int64): System.Byte;
-        ReadChar(position: System.Int64): System.Char;
-        ReadInt16(position: System.Int64): System.Int16;
-        ReadInt32(position: System.Int64): number;
-        ReadInt64(position: System.Int64): System.Int64;
-        ReadDecimal(position: System.Int64): System.Decimal;
-        ReadSingle(position: System.Int64): number;
-        ReadDouble(position: System.Int64): number;
-        ReadSByte(position: System.Int64): System.SByte;
-        ReadUInt16(position: System.Int64): System.UInt16;
-        ReadUInt32(position: System.Int64): System.UInt32;
-        ReadUInt64(position: System.Int64): System.UInt64;
-        Write(position: System.Int64, value: boolean): void;
-        Write(position: System.Int64, value: System.Byte): void;
-        Write(position: System.Int64, value: System.Char): void;
-        Write(position: System.Int64, value: System.Int16): void;
-        Write(position: System.Int64, value: number): void;
-        Write(position: System.Int64, value: System.Int64): void;
-        Write(position: System.Int64, value: System.Decimal): void;
-        Write(position: System.Int64, value: number): void;
-        Write(position: System.Int64, value: number): void;
-        Write(position: System.Int64, value: System.SByte): void;
-        Write(position: System.Int64, value: System.UInt16): void;
-        Write(position: System.Int64, value: System.UInt32): void;
-        Write(position: System.Int64, value: System.UInt64): void;
+        ReadBoolean(position: number): boolean;
+        ReadByte(position: number): Byte;
+        ReadChar(position: number): System.Char;
+        ReadInt16(position: number): number;
+        ReadInt32(position: number): number;
+        ReadInt64(position: number): number;
+        ReadDecimal(position: number): number;
+        ReadSingle(position: number): number;
+        ReadDouble(position: number): number;
+        ReadSByte(position: number): System.SByte;
+        ReadUInt16(position: number): number;
+        ReadUInt32(position: number): number;
+        ReadUInt64(position: number): number;
+        Write(position: number, value: boolean): void;
+        Write(position: number, value: Byte): void;
+        Write(position: number, value: System.Char): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: System.SByte): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
+        Write(position: number, value: number): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -17343,30 +17278,30 @@ export declare namespace System {
       }
       export class MemoryMappedViewStream {
         SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
-        PointerOffset: System.Int64;
+        PointerOffset: number;
         CanRead: boolean;
         CanSeek: boolean;
         CanWrite: boolean;
-        Length: System.Int64;
-        Capacity: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Capacity: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
-        SetLength(value: System.Int64): void;
+        SetLength(value: number): void;
         Flush(): void;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
         ReadByte(): number;
-        Seek(offset: System.Int64, loc: System.IO.SeekOrigin): System.Int64;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        WriteByte(value: System.Byte): void;
+        Seek(offset: number, loc: System.IO.SeekOrigin): number;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        WriteByte(value: Byte): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
@@ -17376,12 +17311,12 @@ export declare namespace System {
         Close(): void;
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17396,27 +17331,27 @@ export declare namespace System {
         static CreateFromFile(path: string): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static CreateFromFile(path: string, mode: System.IO.FileMode): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static CreateFromFile(path: string, mode: System.IO.FileMode, mapName: string): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateFromFile(path: string, mode: System.IO.FileMode, mapName: string, capacity: System.Int64): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateFromFile(path: string, mode: System.IO.FileMode, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateFromFile(fileStream: System.IO.FileStream, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, inheritability: System.IO.HandleInheritability, leaveOpen: boolean): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateFromFile(fileStream: System.IO.FileStream, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability, leaveOpen: boolean): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateNew(mapName: string, capacity: System.Int64): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateNew(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateNew(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateNew(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateOrOpen(mapName: string, capacity: System.Int64): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateOrOpen(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateOrOpen(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
-        static CreateOrOpen(mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateFromFile(path: string, mode: System.IO.FileMode, mapName: string, capacity: number): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateFromFile(path: string, mode: System.IO.FileMode, mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateFromFile(fileStream: System.IO.FileStream, mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, inheritability: System.IO.HandleInheritability, leaveOpen: boolean): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateFromFile(fileStream: System.IO.FileStream, mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability, leaveOpen: boolean): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateNew(mapName: string, capacity: number): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateNew(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateNew(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateNew(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateOrOpen(mapName: string, capacity: number): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateOrOpen(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateOrOpen(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
+        static CreateOrOpen(mapName: string, capacity: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static OpenExisting(mapName: string): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static OpenExisting(mapName: string, desiredAccessRights: System.IO.MemoryMappedFiles.MemoryMappedFileRights): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static OpenExisting(mapName: string, desiredAccessRights: System.IO.MemoryMappedFiles.MemoryMappedFileRights, inheritability: System.IO.HandleInheritability): System.IO.MemoryMappedFiles.MemoryMappedFile;
         CreateViewStream(): System.IO.MemoryMappedFiles.MemoryMappedViewStream;
-        CreateViewStream(offset: System.Int64, size: System.Int64): System.IO.MemoryMappedFiles.MemoryMappedViewStream;
-        CreateViewStream(offset: System.Int64, size: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedViewStream;
+        CreateViewStream(offset: number, size: number): System.IO.MemoryMappedFiles.MemoryMappedViewStream;
+        CreateViewStream(offset: number, size: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedViewStream;
         CreateViewAccessor(): System.IO.MemoryMappedFiles.MemoryMappedViewAccessor;
-        CreateViewAccessor(offset: System.Int64, size: System.Int64): System.IO.MemoryMappedFiles.MemoryMappedViewAccessor;
-        CreateViewAccessor(offset: System.Int64, size: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedViewAccessor;
+        CreateViewAccessor(offset: number, size: number): System.IO.MemoryMappedFiles.MemoryMappedViewAccessor;
+        CreateViewAccessor(offset: number, size: number, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess): System.IO.MemoryMappedFiles.MemoryMappedViewAccessor;
         Dispose(): void;
         GetAccessControl(): System.IO.MemoryMappedFiles.MemoryMappedFileSecurity;
         SetAccessControl(memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity): void;
@@ -17442,29 +17377,29 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
         WaitForPipeDrain(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
+        WriteByte(value: Byte): void;
         Flush(): void;
-        SetLength(value: System.Int64): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
+        SetLength(value: number): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
         GetAccessControl(): System.IO.Pipes.PipeSecurity;
         SetAccessControl(pipeSecurity: System.IO.Pipes.PipeSecurity): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -17477,8 +17412,8 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17507,31 +17442,31 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
         GetClientHandleAsString(): string;
         DisposeLocalCopyOfClientHandle(): void;
         WaitForPipeDrain(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
+        WriteByte(value: Byte): void;
         Flush(): void;
-        SetLength(value: System.Int64): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
+        SetLength(value: number): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
         GetAccessControl(): System.IO.Pipes.PipeSecurity;
         SetAccessControl(pipeSecurity: System.IO.Pipes.PipeSecurity): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -17544,8 +17479,8 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17576,8 +17511,8 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
@@ -17588,23 +17523,23 @@ export declare namespace System {
         ConnectAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         ConnectAsync(timeout: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WaitForPipeDrain(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
+        WriteByte(value: Byte): void;
         Flush(): void;
-        SetLength(value: System.Int64): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
+        SetLength(value: number): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
         GetAccessControl(): System.IO.Pipes.PipeSecurity;
         SetAccessControl(pipeSecurity: System.IO.Pipes.PipeSecurity): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -17617,8 +17552,8 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17650,8 +17585,8 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
@@ -17660,28 +17595,28 @@ export declare namespace System {
         WaitForConnectionAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         Disconnect(): void;
         GetImpersonationUserName(): string;
-        RunAsClient(impersonationWorker: System.IO.Pipes.PipeStreamImpersonationWorker): void;
+        RunAsClient(impersonationWorker: (() => void)): void;
         WaitForConnectionAsync(): System.Threading.Tasks.Task;
-        BeginWaitForConnection(callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        BeginWaitForConnection(callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWaitForConnection(asyncResult: System.IAsyncResult): void;
         WaitForPipeDrain(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
+        WriteByte(value: Byte): void;
         Flush(): void;
-        SetLength(value: System.Int64): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
+        SetLength(value: number): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
         GetAccessControl(): System.IO.Pipes.PipeSecurity;
         SetAccessControl(pipeSecurity: System.IO.Pipes.PipeSecurity): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -17694,8 +17629,8 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17710,7 +17645,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(): void;
-        BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -17804,7 +17739,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -17812,8 +17747,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -17833,29 +17768,29 @@ export declare namespace System {
         CanRead: boolean;
         CanWrite: boolean;
         CanSeek: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         CanTimeout: boolean;
         ReadTimeout: number;
         WriteTimeout: number;
         WaitForPipeDrain(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        Read(buffer: System.Span<System.Byte>): number;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        Read(buffer: System.Span<Byte>): number;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Write(buffer: Byte[], offset: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
+        WriteByte(value: Byte): void;
         Flush(): void;
-        SetLength(value: System.Int64): void;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
+        SetLength(value: number): void;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
         GetAccessControl(): System.IO.Pipes.PipeSecurity;
         SetAccessControl(pipeSecurity: System.IO.Pipes.PipeSecurity): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
@@ -17868,8 +17803,8 @@ export declare namespace System {
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -17954,7 +17889,7 @@ export declare namespace System {
         IsOpen: boolean;
         NewLine: string;
         Parity: System.IO.Ports.Parity;
-        ParityReplace: System.Byte;
+        ParityReplace: Byte;
         PortName: string;
         ReadBufferSize: number;
         ReadTimeout: number;
@@ -17971,7 +17906,7 @@ export declare namespace System {
         DiscardOutBuffer(): void;
         static GetPortNames(): string[];
         Open(): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
+        Read(buffer: Byte[], offset: number, count: number): number;
         Read(buffer: System.Char[], offset: number, count: number): number;
         ReadByte(): number;
         ReadChar(): number;
@@ -17979,7 +17914,7 @@ export declare namespace System {
         ReadLine(): string;
         ReadTo(value: string): string;
         Write(text: string): void;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
+        Write(buffer: Byte[], offset: number, count: number): void;
         Write(buffer: System.Char[], offset: number, count: number): void;
         WriteLine(text: string): void;
         Dispose(): void;
@@ -17996,7 +17931,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.IO.Ports.SerialDataReceivedEventArgs): void;
-        BeginInvoke(sender: any, e: System.IO.Ports.SerialDataReceivedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.IO.Ports.SerialDataReceivedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -18012,7 +17947,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.IO.Ports.SerialPinChangedEventArgs): void;
-        BeginInvoke(sender: any, e: System.IO.Ports.SerialPinChangedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.IO.Ports.SerialPinChangedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -18028,7 +17963,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(sender: any, e: System.IO.Ports.SerialErrorReceivedEventArgs): void;
-        BeginInvoke(sender: any, e: System.IO.Ports.SerialErrorReceivedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(sender: any, e: System.IO.Ports.SerialErrorReceivedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -18082,45 +18017,45 @@ export declare namespace System {
       static AsParallel(source: System.Collections.IEnumerable): System.Linq.ParallelQuery;
       static Range(start: number, count: number): any;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): System.Int64;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): number;
-      static Sum(source: any): System.Decimal;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
-      static Min(source: any): System.Int64;
-      static Min(source: any): any;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
-      static Min(source: any): number;
-      static Min(source: any): System.Decimal;
-      static Min(source: any): any;
+      static Min(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
-      static Max(source: any): System.Int64;
-      static Max(source: any): any;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
-      static Max(source: any): number;
-      static Max(source: any): System.Decimal;
-      static Max(source: any): any;
+      static Max(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): System.Decimal;
-      static Average(source: any): any;
+      static Average(source: any): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18154,25 +18089,25 @@ export declare namespace System {
     export class Queryable {
       static AsQueryable(source: System.Collections.IEnumerable): System.Linq.IQueryable;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): System.Int64;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): number;
-      static Sum(source: any): System.Decimal;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): System.Decimal;
-      static Average(source: any): any;
+      static Average(source: any): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18180,46 +18115,46 @@ export declare namespace System {
     }
     export class Enumerable {
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
+      static Average(source: any): number | undefined;
       static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): number;
-      static Average(source: any): System.Decimal;
-      static Average(source: any): any;
+      static Average(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
-      static Max(source: any): System.Int64;
-      static Max(source: any): any;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
+      static Max(source: any): number | undefined;
       static Max(source: any): number;
-      static Max(source: any): number;
-      static Max(source: any): System.Decimal;
-      static Max(source: any): any;
+      static Max(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
-      static Min(source: any): System.Int64;
-      static Min(source: any): any;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
+      static Min(source: any): number | undefined;
       static Min(source: any): number;
-      static Min(source: any): number;
-      static Min(source: any): System.Decimal;
-      static Min(source: any): any;
+      static Min(source: any): number | undefined;
       static Range(start: number, count: number): any;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): System.Int64;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
+      static Sum(source: any): number | undefined;
       static Sum(source: any): number;
-      static Sum(source: any): number;
-      static Sum(source: any): System.Decimal;
-      static Sum(source: any): any;
+      static Sum(source: any): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18229,12 +18164,10 @@ export declare namespace System {
       Key: TKey;
     }
     export interface ILookup<TKey = any, TElement = any> {
-      [key: string]: any;
       Count: number;
       Contains(key: TKey): boolean;
     }
     export class Lookup<TKey = any, TElement = any> {
-      [key: string]: any;
       Count: number;
       Contains(key: TKey): boolean;
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Linq.IGrouping<TKey, TElement>>;
@@ -19027,7 +18960,6 @@ export declare namespace System {
       constructor(values: T[]);
       constructor(values: System.Span<T>);
       constructor(values: T[], index: number);
-      [key: string]: any;
       static Count: number;
       static Zero: any; // System.Numerics.Vector`1[T]
       static One: any; // System.Numerics.Vector`1[T]
@@ -19163,7 +19095,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -19224,7 +19156,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -19297,7 +19229,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -19391,7 +19323,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(m: System.Reflection.MemberInfo, filterCriteria: any): boolean;
-      BeginInvoke(m: System.Reflection.MemberInfo, filterCriteria: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(m: System.Reflection.MemberInfo, filterCriteria: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): boolean;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -19414,7 +19346,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -19504,7 +19436,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -19579,7 +19511,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -19600,11 +19532,11 @@ export declare namespace System {
       ModuleHandle: System.ModuleHandle;
       CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
-      static FilterTypeName: System.Reflection.TypeFilter;
-      static FilterTypeNameIgnoreCase: System.Reflection.TypeFilter;
+      static FilterTypeName: ((m: System.Type, filterCriteria: any) => boolean);
+      static FilterTypeNameIgnoreCase: ((m: System.Type, filterCriteria: any) => boolean);
       IsResource(): boolean;
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
       GetMethod(name: string): System.Reflection.MethodInfo;
@@ -19620,14 +19552,14 @@ export declare namespace System {
       GetType(className: string): System.Type;
       GetType(className: string, ignoreCase: boolean): System.Type;
       GetType(className: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
-      FindTypes(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
+      FindTypes(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
       ResolveField(metadataToken: number): System.Reflection.FieldInfo;
       ResolveField(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Reflection.FieldInfo;
       ResolveMember(metadataToken: number): System.Reflection.MemberInfo;
       ResolveMember(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Reflection.MemberInfo;
       ResolveMethod(metadataToken: number): System.Reflection.MethodBase;
       ResolveMethod(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Reflection.MethodBase;
-      ResolveSignature(metadataToken: number): System.Byte[];
+      ResolveSignature(metadataToken: number): Byte[];
       ResolveString(metadataToken: number): string;
       ResolveType(metadataToken: number): System.Type;
       ResolveType(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Type;
@@ -19643,7 +19575,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.ResolveEventArgs): System.Reflection.Module;
-      BeginInvoke(sender: any, e: System.ResolveEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.ResolveEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): System.Reflection.Module;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -19684,7 +19616,7 @@ export declare namespace System {
       CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
       GetOptionalCustomModifiers(): System.Type[];
@@ -19697,7 +19629,6 @@ export declare namespace System {
     }
     export class ParameterModifier {
       constructor(parameterCount: number);
-      [key: string]: any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -19773,7 +19704,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -20022,8 +19953,8 @@ export declare namespace System {
       IsEnumDefined(value: any): boolean;
       GetEnumName(value: any): string;
       GetEnumNames(): string[];
-      FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-      FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+      FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+      FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
       IsSubclassOf(c: System.Type): boolean;
       IsAssignableFrom(c: System.Type): boolean;
       GetType(): System.Type;
@@ -20080,7 +20011,7 @@ export declare namespace System {
       GetHashCode(): number;
       Equals(o: System.Type): boolean;
       HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
     }
     export class TypeFilter {
@@ -20088,7 +20019,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(m: System.Type, filterCriteria: any): boolean;
-      BeginInvoke(m: System.Type, filterCriteria: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(m: System.Type, filterCriteria: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): boolean;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -20191,8 +20122,8 @@ export declare namespace System {
       IsEnumDefined(value: any): boolean;
       GetEnumName(value: any): string;
       GetEnumNames(): string[];
-      FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-      FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+      FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+      FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
       IsSubclassOf(c: System.Type): boolean;
       IsAssignableFrom(c: System.Type): boolean;
       GetType(): System.Type;
@@ -20269,7 +20200,7 @@ export declare namespace System {
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
       GetCustomAttributes(inherit: boolean): any[];
       GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(): System.Type;
     }
     export class TypeExtensions {
@@ -20475,7 +20406,7 @@ export declare namespace System {
       Evidence: System.Security.Policy.Evidence;
       Location: string;
       ImageRuntimeVersion: string;
-      HostContext: System.Int64;
+      HostContext: number;
       ReflectionOnly: boolean;
       PermissionSet: System.Security.PermissionSet;
       SecurityRuleSet: System.Security.SecurityRuleSet;
@@ -20508,8 +20439,8 @@ export declare namespace System {
       static GetEntryAssembly(): System.Reflection.Assembly;
       static LoadFrom(assemblyFile: string): System.Reflection.Assembly;
       static LoadFrom(assemblyFile: string, securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
-      static LoadFrom(assemblyFile: string, securityEvidence: System.Security.Policy.Evidence, hashValue: System.Byte[], hashAlgorithm: any): System.Reflection.Assembly;
-      static LoadFrom(assemblyFile: string, hashValue: System.Byte[], hashAlgorithm: any): System.Reflection.Assembly;
+      static LoadFrom(assemblyFile: string, securityEvidence: System.Security.Policy.Evidence, hashValue: Byte[], hashAlgorithm: any): System.Reflection.Assembly;
+      static LoadFrom(assemblyFile: string, hashValue: Byte[], hashAlgorithm: any): System.Reflection.Assembly;
       static UnsafeLoadFrom(assemblyFile: string): System.Reflection.Assembly;
       static LoadFile(path: string, securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
       static LoadFile(path: string): System.Reflection.Assembly;
@@ -20517,16 +20448,16 @@ export declare namespace System {
       static Load(assemblyString: string, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
       static Load(assemblyRef: System.Reflection.AssemblyName): System.Reflection.Assembly;
       static Load(assemblyRef: System.Reflection.AssemblyName, assemblySecurity: System.Security.Policy.Evidence): System.Reflection.Assembly;
-      static Load(rawAssembly: System.Byte[]): System.Reflection.Assembly;
-      static Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Assembly;
-      static Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
-      static Load(rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityContextSource: System.Security.SecurityContextSource): System.Reflection.Assembly;
-      static ReflectionOnlyLoad(rawAssembly: System.Byte[]): System.Reflection.Assembly;
+      static Load(rawAssembly: Byte[]): System.Reflection.Assembly;
+      static Load(rawAssembly: Byte[], rawSymbolStore: Byte[]): System.Reflection.Assembly;
+      static Load(rawAssembly: Byte[], rawSymbolStore: Byte[], securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
+      static Load(rawAssembly: Byte[], rawSymbolStore: Byte[], securityContextSource: System.Security.SecurityContextSource): System.Reflection.Assembly;
+      static ReflectionOnlyLoad(rawAssembly: Byte[]): System.Reflection.Assembly;
       static ReflectionOnlyLoad(assemblyString: string): System.Reflection.Assembly;
       static ReflectionOnlyLoadFrom(assemblyFile: string): System.Reflection.Assembly;
       static LoadWithPartialName(partialName: string): System.Reflection.Assembly;
-      LoadModule(moduleName: string, rawModule: System.Byte[]): System.Reflection.Module;
-      LoadModule(moduleName: string, rawModule: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Module;
+      LoadModule(moduleName: string, rawModule: Byte[]): System.Reflection.Module;
+      LoadModule(moduleName: string, rawModule: Byte[], rawSymbolStore: Byte[]): System.Reflection.Module;
       static LoadWithPartialName(partialName: string, securityEvidence: System.Security.Policy.Evidence): System.Reflection.Assembly;
       CreateInstance(typeName: string): any;
       CreateInstance(typeName: string, ignoreCase: boolean): any;
@@ -20539,7 +20470,7 @@ export declare namespace System {
       GetManifestResourceInfo(resourceName: string): System.Reflection.ManifestResourceInfo;
       GetHashCode(): number;
       Equals(o: any): boolean;
-      GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+      GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
       GetType(name: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
       GetModule(name: string): System.Reflection.Module;
       GetReferencedAssemblies(): System.Reflection.AssemblyName[];
@@ -20567,11 +20498,11 @@ export declare namespace System {
       CultureName: string;
       ContentType: System.Reflection.AssemblyContentType;
       ToString(): string;
-      GetPublicKey(): System.Byte[];
-      GetPublicKeyToken(): System.Byte[];
+      GetPublicKey(): Byte[];
+      GetPublicKeyToken(): Byte[];
       static ReferenceMatchesDefinition(reference: System.Reflection.AssemblyName, definition: System.Reflection.AssemblyName): boolean;
-      SetPublicKey(publicKey: System.Byte[]): void;
-      SetPublicKeyToken(publicKeyToken: System.Byte[]): void;
+      SetPublicKey(publicKey: Byte[]): void;
+      SetPublicKeyToken(publicKeyToken: Byte[]): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Clone(): any;
       OnDeserialization(sender: any): void;
@@ -20582,13 +20513,13 @@ export declare namespace System {
     }
     export class CustomAttributeData {
       Constructor: System.Reflection.ConstructorInfo;
-      ConstructorArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeTypedArgument>;
-      NamedArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeNamedArgument>;
+      ConstructorArguments: System.Reflection.CustomAttributeTypedArgument[];
+      NamedArguments: System.Reflection.CustomAttributeNamedArgument[];
       AttributeType: System.Type;
-      static GetCustomAttributes(target: System.Reflection.Assembly): any;
-      static GetCustomAttributes(target: System.Reflection.MemberInfo): any;
-      static GetCustomAttributes(target: System.Reflection.Module): any;
-      static GetCustomAttributes(target: System.Reflection.ParameterInfo): any;
+      static GetCustomAttributes(target: System.Reflection.Assembly): System.Reflection.CustomAttributeData[];
+      static GetCustomAttributes(target: System.Reflection.MemberInfo): System.Reflection.CustomAttributeData[];
+      static GetCustomAttributes(target: System.Reflection.Module): System.Reflection.CustomAttributeData[];
+      static GetCustomAttributes(target: System.Reflection.ParameterInfo): System.Reflection.CustomAttributeData[];
       ToString(): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -20617,22 +20548,22 @@ export declare namespace System {
       GetType(): System.Type;
     }
     export class MethodBody {
-      ExceptionHandlingClauses: System.Collections.Generic.IList<System.Reflection.ExceptionHandlingClause>;
-      LocalVariables: System.Collections.Generic.IList<System.Reflection.LocalVariableInfo>;
+      ExceptionHandlingClauses: System.Reflection.ExceptionHandlingClause[];
+      LocalVariables: System.Reflection.LocalVariableInfo[];
       InitLocals: boolean;
       LocalSignatureMetadataToken: number;
       MaxStackSize: number;
-      GetILAsByteArray(): System.Byte[];
+      GetILAsByteArray(): Byte[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class StrongNameKeyPair {
-      constructor(keyPairArray: System.Byte[]);
+      constructor(keyPairArray: Byte[]);
       constructor(keyPairFile: System.IO.FileStream);
       constructor(keyPairContainer: string);
-      PublicKey: System.Byte[];
+      PublicKey: Byte[];
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -20745,7 +20676,7 @@ export declare namespace System {
         IsDynamic: boolean;
         FullName: string;
         Evidence: System.Security.Policy.Evidence;
-        HostContext: System.Int64;
+        HostContext: number;
         PermissionSet: System.Security.PermissionSet;
         SecurityRuleSet: System.Security.SecurityRuleSet;
         IsFullyTrusted: boolean;
@@ -20763,7 +20694,7 @@ export declare namespace System {
         DefineDynamicModule(name: string, fileName: string, emitSymbolInfo: boolean): System.Reflection.Emit.ModuleBuilder;
         DefineResource(name: string, description: string, fileName: string): System.Resources.IResourceWriter;
         DefineResource(name: string, description: string, fileName: string, attribute: System.Reflection.ResourceAttributes): System.Resources.IResourceWriter;
-        DefineUnmanagedResource(resource: System.Byte[]): void;
+        DefineUnmanagedResource(resource: Byte[]): void;
         DefineUnmanagedResource(resourceFileName: string): void;
         DefineVersionInfoResource(): void;
         DefineVersionInfoResource(product: string, productVersion: string, company: string, copyright: string, trademark: string): void;
@@ -20780,7 +20711,7 @@ export declare namespace System {
         SetEntryPoint(entryMethod: System.Reflection.MethodInfo): void;
         SetEntryPoint(entryMethod: System.Reflection.MethodInfo, fileKind: System.Reflection.Emit.PEFileKinds): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         GetType(name: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
         GetModule(name: string): System.Reflection.Module;
         GetModules(getResourceModules: boolean): System.Reflection.Module[];
@@ -20801,14 +20732,14 @@ export declare namespace System {
         GetType(name: string, throwOnError: boolean): System.Type;
         GetType(name: string): System.Type;
         GetName(): System.Reflection.AssemblyName;
-        LoadModule(moduleName: string, rawModule: System.Byte[]): System.Reflection.Module;
-        LoadModule(moduleName: string, rawModule: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Module;
+        LoadModule(moduleName: string, rawModule: Byte[]): System.Reflection.Module;
+        LoadModule(moduleName: string, rawModule: Byte[], rawSymbolStore: Byte[]): System.Reflection.Module;
         CreateInstance(typeName: string): any;
         CreateInstance(typeName: string, ignoreCase: boolean): any;
         CreateInstance(typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[]): any;
         GetLoadedModules(): System.Reflection.Module[];
         GetModules(): System.Reflection.Module[];
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetForwardedTypes(): System.Type[];
         GetType(): System.Type;
       }
@@ -20865,13 +20796,13 @@ export declare namespace System {
         GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
         GetILGenerator(): System.Reflection.Emit.ILGenerator;
         GetILGenerator(streamSize: number): System.Reflection.Emit.ILGenerator;
-        SetMethodBody(il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>): void;
+        SetMethodBody(il: Byte[], maxStack: number, localSignature: Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         SetImplementationFlags(attributes: System.Reflection.MethodImplAttributes): void;
         GetModule(): System.Reflection.Module;
         GetToken(): System.Reflection.Emit.MethodToken;
-        SetSymCustomAttribute(name: string, data: System.Byte[]): void;
+        SetSymCustomAttribute(name: string, data: Byte[]): void;
         ToString(): string;
         Invoke(parameters: any[]): any;
         Equals(obj: any): boolean;
@@ -20880,7 +20811,7 @@ export declare namespace System {
         GetGenericArguments(): System.Type[];
         Invoke(obj: any, parameters: any[]): any;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class CustomAttributeBuilder {
@@ -20895,7 +20826,7 @@ export declare namespace System {
       }
       export class DynamicILInfo {
         DynamicMethod: System.Reflection.Emit.DynamicMethod;
-        GetTokenFor(signature: System.Byte[]): number;
+        GetTokenFor(signature: Byte[]): number;
         GetTokenFor(method: System.Reflection.Emit.DynamicMethod): number;
         GetTokenFor(field: System.RuntimeFieldHandle): number;
         GetTokenFor(method: System.RuntimeMethodHandle): number;
@@ -20903,9 +20834,9 @@ export declare namespace System {
         GetTokenFor(literal: string): number;
         GetTokenFor(method: System.RuntimeMethodHandle, contextType: System.RuntimeTypeHandle): number;
         GetTokenFor(field: System.RuntimeFieldHandle, contextType: System.RuntimeTypeHandle): number;
-        SetCode(code: System.Byte[], maxStackSize: number): void;
-        SetExceptions(exceptions: System.Byte[]): void;
-        SetLocalSignature(localSignature: System.Byte[]): void;
+        SetCode(code: Byte[], maxStackSize: number): void;
+        SetExceptions(exceptions: Byte[]): void;
+        SetLocalSignature(localSignature: Byte[]): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -20977,7 +20908,7 @@ export declare namespace System {
         GetMethodBody(): System.Reflection.MethodBody;
         Invoke(obj: any, parameters: any[]): any;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class EnumBuilder {
@@ -21092,7 +21023,7 @@ export declare namespace System {
         MakeByRefType(): System.Type;
         MakePointerType(): System.Type;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         IsAssignableFrom(typeInfo: System.Reflection.TypeInfo): boolean;
         AsType(): System.Type;
         GetDeclaredEvent(name: string): System.Reflection.EventInfo;
@@ -21104,8 +21035,8 @@ export declare namespace System {
         IsEnumDefined(value: any): boolean;
         GetEnumName(value: any): string;
         GetEnumNames(): string[];
-        FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+        FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
         IsSubclassOf(c: System.Type): boolean;
         IsAssignableFrom(c: System.Type): boolean;
         GetType(): System.Type;
@@ -21157,7 +21088,7 @@ export declare namespace System {
         GetHashCode(): number;
         Equals(o: System.Type): boolean;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class EventBuilder {
@@ -21167,7 +21098,7 @@ export declare namespace System {
         SetRaiseMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
         SetRemoveOnMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -21215,7 +21146,7 @@ export declare namespace System {
         IsDefined(attributeType: System.Type, inherit: boolean): boolean;
         SetConstant(defaultValue: any): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         SetMarshal(unmanagedMarshal: System.Reflection.Emit.UnmanagedMarshal): void;
         SetOffset(iOffset: number): void;
         SetValue(obj: any, val: any, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, culture: System.Globalization.CultureInfo): void;
@@ -21228,7 +21159,7 @@ export declare namespace System {
         GetOptionalCustomModifiers(): System.Type[];
         GetRequiredCustomModifiers(): System.Type[];
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
         ToString(): string;
       }
@@ -21364,7 +21295,7 @@ export declare namespace System {
         GetGenericTypeDefinition(): System.Type;
         GetGenericParameterConstraints(): System.Type[];
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         ToString(): string;
         Equals(o: any): boolean;
         GetHashCode(): number;
@@ -21383,8 +21314,8 @@ export declare namespace System {
         IsEnumDefined(value: any): boolean;
         GetEnumName(value: any): string;
         GetEnumNames(): string[];
-        FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+        FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
         GetType(): System.Type;
         GetArrayRank(): number;
         GetConstructor(types: System.Type[]): System.Reflection.ConstructorInfo;
@@ -21427,7 +21358,7 @@ export declare namespace System {
         GetEnumValues(): System.Array;
         Equals(o: System.Type): boolean;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class ILGenerator {
@@ -21442,13 +21373,13 @@ export declare namespace System {
         DeclareLocal(localType: System.Type, pinned: boolean): System.Reflection.Emit.LocalBuilder;
         DefineLabel(): System.Reflection.Emit.Label;
         Emit(opcode: System.Reflection.Emit.OpCode): void;
-        Emit(opcode: System.Reflection.Emit.OpCode, arg: System.Byte): void;
+        Emit(opcode: System.Reflection.Emit.OpCode, arg: Byte): void;
         Emit(opcode: System.Reflection.Emit.OpCode, con: System.Reflection.ConstructorInfo): void;
         Emit(opcode: System.Reflection.Emit.OpCode, arg: number): void;
         Emit(opcode: System.Reflection.Emit.OpCode, field: System.Reflection.FieldInfo): void;
-        Emit(opcode: System.Reflection.Emit.OpCode, arg: System.Int16): void;
         Emit(opcode: System.Reflection.Emit.OpCode, arg: number): void;
-        Emit(opcode: System.Reflection.Emit.OpCode, arg: System.Int64): void;
+        Emit(opcode: System.Reflection.Emit.OpCode, arg: number): void;
+        Emit(opcode: System.Reflection.Emit.OpCode, arg: number): void;
         Emit(opcode: System.Reflection.Emit.OpCode, label: System.Reflection.Emit.Label): void;
         Emit(opcode: System.Reflection.Emit.OpCode, labels: System.Reflection.Emit.Label[]): void;
         Emit(opcode: System.Reflection.Emit.OpCode, local: System.Reflection.Emit.LocalBuilder): void;
@@ -21535,8 +21466,8 @@ export declare namespace System {
         GetMethodImplementationFlags(): System.Reflection.MethodImplAttributes;
         GetParameters(): System.Reflection.ParameterInfo[];
         GetModule(): System.Reflection.Module;
-        CreateMethodBody(il: System.Byte[], count: number): void;
-        SetMethodBody(il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>): void;
+        CreateMethodBody(il: Byte[], count: number): void;
+        SetMethodBody(il: Byte[], maxStack: number, localSignature: Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>): void;
         Invoke(obj: any, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, parameters: any[], culture: System.Globalization.CultureInfo): any;
         IsDefined(attributeType: System.Type, inherit: boolean): boolean;
         GetCustomAttributes(inherit: boolean): any[];
@@ -21545,11 +21476,11 @@ export declare namespace System {
         GetILGenerator(size: number): System.Reflection.Emit.ILGenerator;
         DefineParameter(position: number, attributes: System.Reflection.ParameterAttributes, strParamName: string): System.Reflection.Emit.ParameterBuilder;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         SetImplementationFlags(attributes: System.Reflection.MethodImplAttributes): void;
         AddDeclarativeSecurity(action: System.Security.Permissions.SecurityAction, pset: System.Security.PermissionSet): void;
         SetMarshal(unmanagedMarshal: System.Reflection.Emit.UnmanagedMarshal): void;
-        SetSymCustomAttribute(name: string, data: System.Byte[]): void;
+        SetSymCustomAttribute(name: string, data: Byte[]): void;
         ToString(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -21565,7 +21496,7 @@ export declare namespace System {
         GetMethodBody(): System.Reflection.MethodBody;
         Invoke(obj: any, parameters: any[]): any;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class MethodRental {
@@ -21598,7 +21529,7 @@ export declare namespace System {
         CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         IsTransient(): boolean;
         CreateGlobalFunctions(): void;
-        DefineInitializedData(name: string, data: System.Byte[], attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
+        DefineInitializedData(name: string, data: Byte[], attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
         DefineUninitializedData(name: string, size: number, attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
         DefineGlobalMethod(name: string, attributes: System.Reflection.MethodAttributes, returnType: System.Type, parameterTypes: System.Type[]): System.Reflection.Emit.MethodBuilder;
         DefineGlobalMethod(name: string, attributes: System.Reflection.MethodAttributes, callingConvention: System.Reflection.CallingConventions, returnType: System.Type, parameterTypes: System.Type[]): System.Reflection.Emit.MethodBuilder;
@@ -21618,16 +21549,16 @@ export declare namespace System {
         GetType(className: string, ignoreCase: boolean): System.Type;
         GetType(className: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         GetSymWriter(): System.Diagnostics.SymbolStore.ISymbolWriter;
         DefineDocument(url: string, language: System.Guid, languageVendor: System.Guid, documentType: System.Guid): System.Diagnostics.SymbolStore.ISymbolDocumentWriter;
         GetTypes(): System.Type[];
         DefineResource(name: string, description: string, attribute: System.Reflection.ResourceAttributes): System.Resources.IResourceWriter;
         DefineResource(name: string, description: string): System.Resources.IResourceWriter;
-        DefineUnmanagedResource(resource: System.Byte[]): void;
+        DefineUnmanagedResource(resource: Byte[]): void;
         DefineUnmanagedResource(resourceFileName: string): void;
         DefineManifestResource(name: string, stream: System.IO.Stream, attribute: System.Reflection.ResourceAttributes): void;
-        SetSymCustomAttribute(name: string, data: System.Byte[]): void;
+        SetSymCustomAttribute(name: string, data: Byte[]): void;
         SetUserEntryPoint(entryPoint: System.Reflection.MethodInfo): void;
         GetMethodToken(method: System.Reflection.MethodInfo): System.Reflection.Emit.MethodToken;
         GetMethodToken(method: System.Reflection.MethodInfo, optionalParameterTypes: System.Collections.Generic.IEnumerable<System.Type>): System.Reflection.Emit.MethodToken;
@@ -21635,7 +21566,7 @@ export declare namespace System {
         GetConstructorToken(con: System.Reflection.ConstructorInfo): System.Reflection.Emit.MethodToken;
         GetConstructorToken(constructor: System.Reflection.ConstructorInfo, optionalParameterTypes: System.Collections.Generic.IEnumerable<System.Type>): System.Reflection.Emit.MethodToken;
         GetFieldToken(field: System.Reflection.FieldInfo): System.Reflection.Emit.FieldToken;
-        GetSignatureToken(sigBytes: System.Byte[], sigLength: number): System.Reflection.Emit.SignatureToken;
+        GetSignatureToken(sigBytes: Byte[], sigLength: number): System.Reflection.Emit.SignatureToken;
         GetSignatureToken(sigHelper: System.Reflection.Emit.SignatureHelper): System.Reflection.Emit.SignatureToken;
         GetStringConstant(str: string): System.Reflection.Emit.StringToken;
         GetTypeToken(type: System.Type): System.Reflection.Emit.TypeToken;
@@ -21645,7 +21576,7 @@ export declare namespace System {
         ResolveMember(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Reflection.MemberInfo;
         ResolveMethod(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Reflection.MethodBase;
         ResolveString(metadataToken: number): string;
-        ResolveSignature(metadataToken: number): System.Byte[];
+        ResolveSignature(metadataToken: number): Byte[];
         ResolveType(metadataToken: number, genericTypeArguments: System.Type[], genericMethodArguments: System.Type[]): System.Type;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -21655,14 +21586,14 @@ export declare namespace System {
         GetField(name: string, bindingAttr: System.Reflection.BindingFlags): System.Reflection.FieldInfo;
         GetFields(bindingFlags: System.Reflection.BindingFlags): System.Reflection.FieldInfo[];
         GetMethods(bindingFlags: System.Reflection.BindingFlags): System.Reflection.MethodInfo[];
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetMethod(name: string): System.Reflection.MethodInfo;
         GetMethod(name: string, types: System.Type[]): System.Reflection.MethodInfo;
         GetMethod(name: string, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, callConvention: System.Reflection.CallingConventions, types: System.Type[], modifiers: System.Reflection.ParameterModifier[]): System.Reflection.MethodInfo;
         GetMethods(): System.Reflection.MethodInfo[];
         GetField(name: string): System.Reflection.FieldInfo;
         GetFields(): System.Reflection.FieldInfo[];
-        FindTypes(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
+        FindTypes(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
         ResolveField(metadataToken: number): System.Reflection.FieldInfo;
         ResolveMember(metadataToken: number): System.Reflection.MemberInfo;
         ResolveMethod(metadataToken: number): System.Reflection.MethodBase;
@@ -21680,7 +21611,7 @@ export declare namespace System {
         FlowControl: System.Reflection.Emit.FlowControl;
         StackBehaviourPop: System.Reflection.Emit.StackBehaviour;
         StackBehaviourPush: System.Reflection.Emit.StackBehaviour;
-        Value: System.Int16;
+        Value: number;
         GetHashCode(): number;
         Equals(obj: any): boolean;
         Equals(obj: System.Reflection.Emit.OpCode): boolean;
@@ -21935,7 +21866,7 @@ export declare namespace System {
         GetToken(): System.Reflection.Emit.ParameterToken;
         SetConstant(defaultValue: any): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         SetMarshal(unmanagedMarshal: System.Reflection.Emit.UnmanagedMarshal): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -21979,7 +21910,7 @@ export declare namespace System {
         IsDefined(attributeType: System.Type, inherit: boolean): boolean;
         SetConstant(defaultValue: any): void;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         SetGetMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
         SetSetMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
         SetValue(obj: any, value: any, index: any[]): void;
@@ -21996,7 +21927,7 @@ export declare namespace System {
         Equals(obj: any): boolean;
         GetHashCode(): number;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
         ToString(): string;
       }
@@ -22028,7 +21959,7 @@ export declare namespace System {
         AddSentinel(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
-        GetSignature(): System.Byte[];
+        GetSignature(): Byte[];
         ToString(): string;
         GetType(): System.Type;
       }
@@ -22190,9 +22121,9 @@ export declare namespace System {
         MakeGenericType(...typeArguments: System.Type[]): System.Type;
         MakePointerType(): System.Type;
         SetCustomAttribute(customBuilder: System.Reflection.Emit.CustomAttributeBuilder): void;
-        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]): void;
+        SetCustomAttribute(con: System.Reflection.ConstructorInfo, binaryAttribute: Byte[]): void;
         DefineEvent(name: string, attributes: System.Reflection.EventAttributes, eventtype: System.Type): System.Reflection.Emit.EventBuilder;
-        DefineInitializedData(name: string, data: System.Byte[], attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
+        DefineInitializedData(name: string, data: Byte[], attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
         DefineUninitializedData(name: string, size: number, attributes: System.Reflection.FieldAttributes): System.Reflection.Emit.FieldBuilder;
         SetParent(parent: System.Type): void;
         GetInterfaceMap(interfaceType: System.Type): System.Reflection.InterfaceMapping;
@@ -22216,8 +22147,8 @@ export declare namespace System {
         IsEnumDefined(value: any): boolean;
         GetEnumName(value: any): string;
         GetEnumNames(): string[];
-        FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
-        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+        FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
+        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
         GetType(): System.Type;
         GetArrayRank(): number;
         GetGenericParameterConstraints(): System.Type[];
@@ -22264,7 +22195,7 @@ export declare namespace System {
         GetHashCode(): number;
         Equals(o: System.Type): boolean;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
       }
       export class TypeToken {
@@ -22355,7 +22286,7 @@ export declare namespace System {
     export interface IResourceWriter {
       AddResource(name: string, value: string): void;
       AddResource(name: string, value: any): void;
-      AddResource(name: string, value: System.Byte[]): void;
+      AddResource(name: string, value: Byte[]): void;
       Close(): void;
       Generate(): void;
     }
@@ -22414,13 +22345,13 @@ export declare namespace System {
     export class ResourceWriter {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
-      TypeNameConverter: ((arg0: System.Type) => string);
+      TypeNameConverter: ((arg: System.Type) => string);
       AddResource(name: string, value: string): void;
       AddResource(name: string, value: any): void;
       AddResource(name: string, value: System.IO.Stream): void;
       AddResource(name: string, value: System.IO.Stream, closeAfterWrite: boolean): void;
-      AddResource(name: string, value: System.Byte[]): void;
-      AddResourceData(name: string, typeName: string, serializedData: System.Byte[]): void;
+      AddResource(name: string, value: Byte[]): void;
+      AddResourceData(name: string, typeName: string, serializedData: Byte[]): void;
       Close(): void;
       Dispose(): void;
       Generate(): void;
@@ -22564,7 +22495,6 @@ export declare namespace System {
         UnsafeOnCompleted(continuation: (() => void)): void;
       }
       export interface ITuple {
-        [key: string]: any;
         Length: number;
       }
       export class IsConst {
@@ -22817,7 +22747,7 @@ export declare namespace System {
         Add(key: TKey, value: TValue): void;
         Remove(key: TKey): boolean;
         GetOrCreateValue(key: TKey): TValue;
-        GetValue(key: TKey, createValueCallback: System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>): TValue;
+        GetValue(key: TKey, createValueCallback: ((key: TKey) => TValue)): TValue;
         Clear(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -22833,7 +22763,7 @@ export declare namespace System {
         static RunClassConstructor(type: System.RuntimeTypeHandle): void;
         static EnsureSufficientExecutionStack(): void;
         static TryEnsureSufficientExecutionStack(): boolean;
-        static ExecuteCodeWithGuaranteedCleanup(code: System.Runtime.CompilerServices.RuntimeHelpers_TryCode, backoutCode: System.Runtime.CompilerServices.RuntimeHelpers_CleanupCode, userData: any): void;
+        static ExecuteCodeWithGuaranteedCleanup(code: ((userData: any) => void), backoutCode: ((userData: any, exceptionThrown: boolean) => void), userData: any): void;
         static PrepareConstrainedRegions(): void;
         static PrepareConstrainedRegionsNoOP(): void;
         static ProbeForSufficientStack(): void;
@@ -22853,7 +22783,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(userData: any): void;
-        BeginInvoke(userData: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(userData: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -22869,7 +22799,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(userData: any, exceptionThrown: boolean): void;
-        BeginInvoke(userData: any, exceptionThrown: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(userData: any, exceptionThrown: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -22910,7 +22840,7 @@ export declare namespace System {
         static ExpandoPromoteClass(expando: Record<string, any>, oldClass: any, newClass: any): void;
         static Quote(expression: System.Linq.Expressions.Expression, hoistedLocals: any, locals: any[]): System.Linq.Expressions.Expression;
         static MergeRuntimeVariables(first: System.Runtime.CompilerServices.IRuntimeVariables, second: System.Runtime.CompilerServices.IRuntimeVariables, indexes: number[]): System.Runtime.CompilerServices.IRuntimeVariables;
-        static CreateRuntimeVariables(data: any[], indexes: System.Int64[]): System.Runtime.CompilerServices.IRuntimeVariables;
+        static CreateRuntimeVariables(data: any[], indexes: number[]): System.Runtime.CompilerServices.IRuntimeVariables;
         static CreateRuntimeVariables(): System.Runtime.CompilerServices.IRuntimeVariables;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -22969,14 +22899,12 @@ export declare namespace System {
         ToString(): string;
       }
       export interface IRuntimeVariables {
-        [key: string]: any;
         Count: number;
       }
       export class ReadOnlyCollectionBuilder<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
-        [key: string]: any;
         Capacity: number;
         Count: number;
         IndexOf(item: T): number;
@@ -23213,11 +23141,11 @@ export declare namespace System {
         Pinned = 3,
       }
       export class SafeBuffer {
-        ByteLength: System.UInt64;
+        ByteLength: number;
         IsInvalid: boolean;
         IsClosed: boolean;
-        Initialize(numBytes: System.UInt64): void;
-        Initialize(numElements: System.UInt32, sizeOfEachElement: System.UInt32): void;
+        Initialize(numBytes: number): void;
+        Initialize(numElements: number, sizeOfEachElement: number): void;
         ReleasePointer(): void;
         DangerousGetHandle(): System.IntPtr;
         Close(): void;
@@ -23266,9 +23194,9 @@ export declare namespace System {
         PropSet = 2,
       }
       export class CurrencyWrapper {
-        constructor(obj: System.Decimal);
+        constructor(obj: number);
         constructor(obj: any);
-        WrappedObject: System.Decimal;
+        WrappedObject: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -23637,7 +23565,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(aggregator: System.IntPtr): System.IntPtr;
-        BeginInvoke(aggregator: System.IntPtr, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(aggregator: System.IntPtr, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): System.IntPtr;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -23730,14 +23658,14 @@ export declare namespace System {
         lpstrSchema: System.IntPtr;
         cbSizeInstance: number;
         typekind: System.Runtime.InteropServices.TYPEKIND;
-        cFuncs: System.Int16;
-        cVars: System.Int16;
-        cImplTypes: System.Int16;
-        cbSizeVft: System.Int16;
-        cbAlignment: System.Int16;
+        cFuncs: number;
+        cVars: number;
+        cImplTypes: number;
+        cbSizeVft: number;
+        cbAlignment: number;
         wTypeFlags: System.Runtime.InteropServices.TYPEFLAGS;
-        wMajorVerNum: System.Int16;
-        wMinorVerNum: System.Int16;
+        wMajorVerNum: number;
+        wMinorVerNum: number;
         tdescAlias: System.Runtime.InteropServices.TYPEDESC;
         idldescType: System.Runtime.InteropServices.IDLDESC;
         Equals(obj: any): boolean;
@@ -23752,12 +23680,12 @@ export declare namespace System {
         funckind: System.Runtime.InteropServices.FUNCKIND;
         invkind: System.Runtime.InteropServices.INVOKEKIND;
         callconv: System.Runtime.InteropServices.CALLCONV;
-        cParams: System.Int16;
-        cParamsOpt: System.Int16;
-        oVft: System.Int16;
-        cScodes: System.Int16;
+        cParams: number;
+        cParamsOpt: number;
+        oVft: number;
+        cScodes: number;
         elemdescFunc: System.Runtime.InteropServices.ELEMDESC;
-        wFuncFlags: System.Int16;
+        wFuncFlags: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -23798,7 +23726,7 @@ export declare namespace System {
       }
       export class TYPEDESC {
         lpValue: System.IntPtr;
-        vt: System.Int16;
+        vt: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -23824,7 +23752,7 @@ export declare namespace System {
         memid: number;
         lpstrSchema: string;
         elemdescVar: System.Runtime.InteropServices.ELEMDESC;
-        wVarFlags: System.Int16;
+        wVarFlags: number;
         varkind: System.Runtime.InteropServices.VarEnum;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -23850,8 +23778,8 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class EXCEPINFO {
-        wCode: System.Int16;
-        wReserved: System.Int16;
+        wCode: number;
+        wReserved: number;
         bstrSource: string;
         bstrDescription: string;
         bstrHelpFile: string;
@@ -23976,7 +23904,7 @@ export declare namespace System {
         ERROR_REFTOINVALIDASSEMBLY = 2,
       }
       export class ExtensibleClassFactory {
-        static RegisterObjectCreationCallback(callback: System.Runtime.InteropServices.ObjectCreationDelegate): void;
+        static RegisterObjectCreationCallback(callback: ((aggregator: System.IntPtr) => System.IntPtr)): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -24006,8 +23934,8 @@ export declare namespace System {
       }
       export interface ITypeLibConverter {
         ConvertAssemblyToTypeLib(assembly: System.Reflection.Assembly, typeLibName: string, flags: System.Runtime.InteropServices.TypeLibExporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibExporterNotifySink): any;
-        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean): System.Reflection.Emit.AssemblyBuilder;
-        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: System.Runtime.InteropServices.TypeLibImporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, asmNamespace: string, asmVersion: System.Version): System.Reflection.Emit.AssemblyBuilder;
+        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean): System.Reflection.Emit.AssemblyBuilder;
+        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: System.Runtime.InteropServices.TypeLibImporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: Byte[], keyPair: System.Reflection.StrongNameKeyPair, asmNamespace: string, asmVersion: System.Version): System.Reflection.Emit.AssemblyBuilder;
       }
       export interface ITypeLibExporterNameProvider {
         GetNames(): string[];
@@ -24042,19 +23970,19 @@ export declare namespace System {
         static AllocHGlobal(cb: number): System.IntPtr;
         static BindToMoniker(monikerName: string): any;
         static ChangeWrapperHandleStrength(otp: any, fIsWeak: boolean): void;
-        static Copy(source: System.Byte[], startIndex: number, destination: System.IntPtr, length: number): void;
+        static Copy(source: Byte[], startIndex: number, destination: System.IntPtr, length: number): void;
         static Copy(source: System.Char[], startIndex: number, destination: System.IntPtr, length: number): void;
-        static Copy(source: System.Int16[], startIndex: number, destination: System.IntPtr, length: number): void;
         static Copy(source: number[], startIndex: number, destination: System.IntPtr, length: number): void;
-        static Copy(source: System.Int64[], startIndex: number, destination: System.IntPtr, length: number): void;
+        static Copy(source: number[], startIndex: number, destination: System.IntPtr, length: number): void;
+        static Copy(source: number[], startIndex: number, destination: System.IntPtr, length: number): void;
         static Copy(source: number[], startIndex: number, destination: System.IntPtr, length: number): void;
         static Copy(source: number[], startIndex: number, destination: System.IntPtr, length: number): void;
         static Copy(source: System.IntPtr[], startIndex: number, destination: System.IntPtr, length: number): void;
-        static Copy(source: System.IntPtr, destination: System.Byte[], startIndex: number, length: number): void;
+        static Copy(source: System.IntPtr, destination: Byte[], startIndex: number, length: number): void;
         static Copy(source: System.IntPtr, destination: System.Char[], startIndex: number, length: number): void;
-        static Copy(source: System.IntPtr, destination: System.Int16[], startIndex: number, length: number): void;
         static Copy(source: System.IntPtr, destination: number[], startIndex: number, length: number): void;
-        static Copy(source: System.IntPtr, destination: System.Int64[], startIndex: number, length: number): void;
+        static Copy(source: System.IntPtr, destination: number[], startIndex: number, length: number): void;
+        static Copy(source: System.IntPtr, destination: number[], startIndex: number, length: number): void;
         static Copy(source: System.IntPtr, destination: number[], startIndex: number, length: number): void;
         static Copy(source: System.IntPtr, destination: number[], startIndex: number, length: number): void;
         static Copy(source: System.IntPtr, destination: System.IntPtr[], startIndex: number, length: number): void;
@@ -24128,18 +24056,18 @@ export declare namespace System {
         static PtrToStringBSTR(ptr: System.IntPtr): string;
         static PtrToStructure(ptr: System.IntPtr, structure: any): void;
         static PtrToStructure(ptr: System.IntPtr, structureType: System.Type): any;
-        static ReadByte(ptr: System.IntPtr): System.Byte;
-        static ReadByte(ptr: System.IntPtr, ofs: number): System.Byte;
-        static ReadByte(ptr: any, ofs: number): System.Byte;
-        static ReadInt16(ptr: System.IntPtr): System.Int16;
-        static ReadInt16(ptr: System.IntPtr, ofs: number): System.Int16;
-        static ReadInt16(ptr: any, ofs: number): System.Int16;
+        static ReadByte(ptr: System.IntPtr): Byte;
+        static ReadByte(ptr: System.IntPtr, ofs: number): Byte;
+        static ReadByte(ptr: any, ofs: number): Byte;
+        static ReadInt16(ptr: System.IntPtr): number;
+        static ReadInt16(ptr: System.IntPtr, ofs: number): number;
+        static ReadInt16(ptr: any, ofs: number): number;
         static ReadInt32(ptr: System.IntPtr): number;
         static ReadInt32(ptr: System.IntPtr, ofs: number): number;
         static ReadInt32(ptr: any, ofs: number): number;
-        static ReadInt64(ptr: System.IntPtr): System.Int64;
-        static ReadInt64(ptr: System.IntPtr, ofs: number): System.Int64;
-        static ReadInt64(ptr: any, ofs: number): System.Int64;
+        static ReadInt64(ptr: System.IntPtr): number;
+        static ReadInt64(ptr: System.IntPtr, ofs: number): number;
+        static ReadInt64(ptr: any, ofs: number): number;
         static ReadIntPtr(ptr: System.IntPtr): System.IntPtr;
         static ReadIntPtr(ptr: System.IntPtr, ofs: number): System.IntPtr;
         static ReadIntPtr(ptr: any, ofs: number): System.IntPtr;
@@ -24168,21 +24096,21 @@ export declare namespace System {
         static ThrowExceptionForHR(errorCode: number): void;
         static ThrowExceptionForHR(errorCode: number, errorInfo: System.IntPtr): void;
         static UnsafeAddrOfPinnedArrayElement(arr: System.Array, index: number): System.IntPtr;
-        static WriteByte(ptr: System.IntPtr, val: System.Byte): void;
-        static WriteByte(ptr: System.IntPtr, ofs: number, val: System.Byte): void;
-        static WriteByte(ptr: any, ofs: number, val: System.Byte): void;
-        static WriteInt16(ptr: System.IntPtr, val: System.Int16): void;
-        static WriteInt16(ptr: System.IntPtr, ofs: number, val: System.Int16): void;
-        static WriteInt16(ptr: any, ofs: number, val: System.Int16): void;
+        static WriteByte(ptr: System.IntPtr, val: Byte): void;
+        static WriteByte(ptr: System.IntPtr, ofs: number, val: Byte): void;
+        static WriteByte(ptr: any, ofs: number, val: Byte): void;
+        static WriteInt16(ptr: System.IntPtr, val: number): void;
+        static WriteInt16(ptr: System.IntPtr, ofs: number, val: number): void;
+        static WriteInt16(ptr: any, ofs: number, val: number): void;
         static WriteInt16(ptr: System.IntPtr, val: System.Char): void;
         static WriteInt16(ptr: System.IntPtr, ofs: number, val: System.Char): void;
         static WriteInt16(ptr: any, ofs: number, val: System.Char): void;
         static WriteInt32(ptr: System.IntPtr, val: number): void;
         static WriteInt32(ptr: System.IntPtr, ofs: number, val: number): void;
         static WriteInt32(ptr: any, ofs: number, val: number): void;
-        static WriteInt64(ptr: System.IntPtr, val: System.Int64): void;
-        static WriteInt64(ptr: System.IntPtr, ofs: number, val: System.Int64): void;
-        static WriteInt64(ptr: any, ofs: number, val: System.Int64): void;
+        static WriteInt64(ptr: System.IntPtr, val: number): void;
+        static WriteInt64(ptr: System.IntPtr, ofs: number, val: number): void;
+        static WriteInt64(ptr: any, ofs: number, val: number): void;
         static WriteIntPtr(ptr: System.IntPtr, val: System.IntPtr): void;
         static WriteIntPtr(ptr: System.IntPtr, ofs: number, val: System.IntPtr): void;
         static WriteIntPtr(ptr: any, ofs: number, val: System.IntPtr): void;
@@ -24236,7 +24164,7 @@ export declare namespace System {
       export class STATSTG {
         pwcsName: string;
         type: number;
-        cbSize: System.Int64;
+        cbSize: number;
         mtime: System.Runtime.InteropServices.FILETIME;
         ctime: System.Runtime.InteropServices.FILETIME;
         atime: System.Runtime.InteropServices.FILETIME;
@@ -24259,8 +24187,8 @@ export declare namespace System {
         guid: System.Guid;
         lcid: number;
         syskind: System.Runtime.InteropServices.SYSKIND;
-        wMajorVerNum: System.Int16;
-        wMinorVerNum: System.Int16;
+        wMajorVerNum: number;
+        wMinorVerNum: number;
         wLibFlags: System.Runtime.InteropServices.LIBFLAGS;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -24270,8 +24198,8 @@ export declare namespace System {
       export class TypeLibConverter {
         constructor();
         ConvertAssemblyToTypeLib(assembly: System.Reflection.Assembly, strTypeLibName: string, flags: System.Runtime.InteropServices.TypeLibExporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibExporterNotifySink): any;
-        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean): System.Reflection.Emit.AssemblyBuilder;
-        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: System.Runtime.InteropServices.TypeLibImporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, asmNamespace: string, asmVersion: System.Version): System.Reflection.Emit.AssemblyBuilder;
+        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean): System.Reflection.Emit.AssemblyBuilder;
+        ConvertTypeLibToAssembly(typeLib: any, asmFileName: string, flags: System.Runtime.InteropServices.TypeLibImporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: Byte[], keyPair: System.Reflection.StrongNameKeyPair, asmNamespace: string, asmVersion: System.Version): System.Reflection.Emit.AssemblyBuilder;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -24349,15 +24277,15 @@ export declare namespace System {
         IsRunning(pmkObjectName: System.Runtime.InteropServices.UCOMIMoniker): void;
       }
       export interface UCOMIStream {
-        Read(pv: System.Byte[], cb: number, pcbRead: System.IntPtr): void;
-        Write(pv: System.Byte[], cb: number, pcbWritten: System.IntPtr): void;
-        Seek(dlibMove: System.Int64, dwOrigin: number, plibNewPosition: System.IntPtr): void;
-        SetSize(libNewSize: System.Int64): void;
-        CopyTo(pstm: System.Runtime.InteropServices.UCOMIStream, cb: System.Int64, pcbRead: System.IntPtr, pcbWritten: System.IntPtr): void;
+        Read(pv: Byte[], cb: number, pcbRead: System.IntPtr): void;
+        Write(pv: Byte[], cb: number, pcbWritten: System.IntPtr): void;
+        Seek(dlibMove: number, dwOrigin: number, plibNewPosition: System.IntPtr): void;
+        SetSize(libNewSize: number): void;
+        CopyTo(pstm: System.Runtime.InteropServices.UCOMIStream, cb: number, pcbRead: System.IntPtr, pcbWritten: System.IntPtr): void;
         Commit(grfCommitFlags: number): void;
         Revert(): void;
-        LockRegion(libOffset: System.Int64, cb: System.Int64, dwLockType: number): void;
-        UnlockRegion(libOffset: System.Int64, cb: System.Int64, dwLockType: number): void;
+        LockRegion(libOffset: number, cb: number, dwLockType: number): void;
+        UnlockRegion(libOffset: number, cb: number, dwLockType: number): void;
       }
       export interface UCOMITypeComp {
       }
@@ -24367,7 +24295,7 @@ export declare namespace System {
         ReleaseTLibAttr(pTLibAttr: System.IntPtr): void;
       }
       export interface _Activator {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _Assembly {
         CodeBase: string;
@@ -24401,8 +24329,8 @@ export declare namespace System {
         GetType(name: string, throwOnError: boolean, ignoreCase: boolean): System.Type;
         GetSatelliteAssembly(culture: System.Globalization.CultureInfo): System.Reflection.Assembly;
         GetSatelliteAssembly(culture: System.Globalization.CultureInfo, version: System.Version): System.Reflection.Assembly;
-        LoadModule(moduleName: string, rawModule: System.Byte[]): System.Reflection.Module;
-        LoadModule(moduleName: string, rawModule: System.Byte[], rawSymbolStore: System.Byte[]): System.Reflection.Module;
+        LoadModule(moduleName: string, rawModule: Byte[]): System.Reflection.Module;
+        LoadModule(moduleName: string, rawModule: Byte[], rawSymbolStore: Byte[]): System.Reflection.Module;
         CreateInstance(typeName: string): any;
         CreateInstance(typeName: string, ignoreCase: boolean): any;
         CreateInstance(typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: any[], culture: System.Globalization.CultureInfo, activationAttributes: any[]): any;
@@ -24414,16 +24342,16 @@ export declare namespace System {
         GetReferencedAssemblies(): System.Reflection.AssemblyName[];
       }
       export interface _AssemblyBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _AssemblyName {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _Attribute {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _ConstructorBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _ConstructorInfo {
         Attributes: System.Reflection.MethodAttributes;
@@ -24452,7 +24380,7 @@ export declare namespace System {
         GetHashCode(): number;
         GetMethodImplementationFlags(): System.Reflection.MethodImplAttributes;
         GetParameters(): System.Reflection.ParameterInfo[];
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         GetType(): System.Type;
         Invoke_5(parameters: any[]): any;
         Invoke_3(obj: any, parameters: any[]): any;
@@ -24462,13 +24390,13 @@ export declare namespace System {
         ToString(): string;
       }
       export interface _CustomAttributeBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _EnumBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _EventBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _EventInfo {
         Attributes: System.Reflection.EventAttributes;
@@ -24486,7 +24414,7 @@ export declare namespace System {
         GetCustomAttributes(inherit: boolean): any[];
         GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
         GetHashCode(): number;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         GetRaiseMethod(): System.Reflection.MethodInfo;
         GetRaiseMethod(nonPublic: boolean): System.Reflection.MethodInfo;
         GetRemoveMethod(): System.Reflection.MethodInfo;
@@ -24511,7 +24439,7 @@ export declare namespace System {
         ToString(): string;
       }
       export interface _FieldBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _FieldInfo {
         Attributes: System.Reflection.FieldAttributes;
@@ -24538,7 +24466,7 @@ export declare namespace System {
         GetCustomAttributes(attributeType: System.Type, inherit: boolean): any[];
         GetHashCode(): number;
         GetType(): System.Type;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         GetValue(obj: any): any;
         GetValueDirect(obj: System.TypedReference): any;
         IsDefined(attributeType: System.Type, inherit: boolean): boolean;
@@ -24548,10 +24476,10 @@ export declare namespace System {
         ToString(): string;
       }
       export interface _ILGenerator {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _LocalBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _MemberInfo {
         DeclaringType: System.Type;
@@ -24565,7 +24493,7 @@ export declare namespace System {
         GetType(): System.Type;
         IsDefined(attributeType: System.Type, inherit: boolean): boolean;
         ToString(): string;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _MethodBase {
         Attributes: System.Reflection.MethodAttributes;
@@ -24594,7 +24522,7 @@ export declare namespace System {
         GetHashCode(): number;
         GetMethodImplementationFlags(): System.Reflection.MethodImplAttributes;
         GetParameters(): System.Reflection.ParameterInfo[];
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         GetType(): System.Type;
         Invoke(obj: any, parameters: any[]): any;
         Invoke(obj: any, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, parameters: any[], culture: System.Globalization.CultureInfo): any;
@@ -24602,7 +24530,7 @@ export declare namespace System {
         ToString(): string;
       }
       export interface _MethodBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _MethodInfo {
         MemberType: System.Reflection.MemberTypes;
@@ -24627,7 +24555,7 @@ export declare namespace System {
         IsConstructor: boolean;
         ReturnType: System.Type;
         ReturnTypeCustomAttributes: System.Reflection.ICustomAttributeProvider;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         ToString(): string;
         Equals(other: any): boolean;
         GetHashCode(): number;
@@ -24642,22 +24570,22 @@ export declare namespace System {
         GetBaseDefinition(): System.Reflection.MethodInfo;
       }
       export interface _MethodRental {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _Module {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _ModuleBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _ParameterBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _ParameterInfo {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _PropertyBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _PropertyInfo {
         Attributes: System.Reflection.PropertyAttributes;
@@ -24680,7 +24608,7 @@ export declare namespace System {
         GetIndexParameters(): System.Reflection.ParameterInfo[];
         GetSetMethod(): System.Reflection.MethodInfo;
         GetSetMethod(nonPublic: boolean): System.Reflection.MethodInfo;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         GetType(): System.Type;
         GetValue(obj: any, index: any[]): any;
         GetValue(obj: any, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, index: any[], culture: System.Globalization.CultureInfo): any;
@@ -24690,10 +24618,10 @@ export declare namespace System {
         ToString(): string;
       }
       export interface _SignatureHelper {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _Thread {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export interface _Type {
         MemberType: System.Reflection.MemberTypes;
@@ -24742,7 +24670,7 @@ export declare namespace System {
         HasElementType: boolean;
         IsContextful: boolean;
         IsMarshalByRef: boolean;
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
         ToString(): string;
         Equals(other: any): boolean;
         GetHashCode(): number;
@@ -24754,7 +24682,7 @@ export declare namespace System {
         GetConstructors(bindingAttr: System.Reflection.BindingFlags): System.Reflection.ConstructorInfo[];
         GetInterface(name: string, ignoreCase: boolean): System.Type;
         GetInterfaces(): System.Type[];
-        FindInterfaces(filter: System.Reflection.TypeFilter, filterCriteria: any): System.Type[];
+        FindInterfaces(filter: ((m: System.Type, filterCriteria: any) => boolean), filterCriteria: any): System.Type[];
         GetEvent(name: string, bindingAttr: System.Reflection.BindingFlags): System.Reflection.EventInfo;
         GetEvents(): System.Reflection.EventInfo[];
         GetEvents(bindingAttr: System.Reflection.BindingFlags): System.Reflection.EventInfo[];
@@ -24762,7 +24690,7 @@ export declare namespace System {
         GetNestedType(name: string, bindingAttr: System.Reflection.BindingFlags): System.Type;
         GetMember(name: string, type: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags): System.Reflection.MemberInfo[];
         GetDefaultMembers(): System.Reflection.MemberInfo[];
-        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: System.Reflection.MemberFilter, filterCriteria: any): System.Reflection.MemberInfo[];
+        FindMembers(memberType: System.Reflection.MemberTypes, bindingAttr: System.Reflection.BindingFlags, filter: ((m: System.Reflection.MemberInfo, filterCriteria: any) => boolean), filterCriteria: any): System.Reflection.MemberInfo[];
         GetElementType(): System.Type;
         IsSubclassOf(c: System.Type): boolean;
         IsInstanceOfType(o: any): boolean;
@@ -24807,7 +24735,7 @@ export declare namespace System {
         Equals(o: System.Type): boolean;
       }
       export interface _TypeBuilder {
-        GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
+        GetTypeInfo(iTInfo: number, lcid: number, ppTInfo: System.IntPtr): void;
       }
       export class ComAwareEventInfo {
         constructor(type: System.Type, eventName: string);
@@ -24841,7 +24769,7 @@ export declare namespace System {
         Equals(obj: any): boolean;
         GetHashCode(): number;
         HasSameMetadataDefinitionAs(other: System.Reflection.MemberInfo): boolean;
-        GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
+        GetCustomAttributesData(): System.Reflection.CustomAttributeData[];
         GetType(): System.Type;
         ToString(): string;
       }
@@ -24954,7 +24882,7 @@ export declare namespace System {
         export class STATSTG {
           pwcsName: string;
           type: number;
-          cbSize: System.Int64;
+          cbSize: number;
           mtime: System.Runtime.InteropServices.ComTypes.FILETIME;
           ctime: System.Runtime.InteropServices.ComTypes.FILETIME;
           atime: System.Runtime.InteropServices.ComTypes.FILETIME;
@@ -24969,15 +24897,15 @@ export declare namespace System {
           GetType(): System.Type;
         }
         export interface IStream {
-          Read(pv: System.Byte[], cb: number, pcbRead: System.IntPtr): void;
-          Write(pv: System.Byte[], cb: number, pcbWritten: System.IntPtr): void;
-          Seek(dlibMove: System.Int64, dwOrigin: number, plibNewPosition: System.IntPtr): void;
-          SetSize(libNewSize: System.Int64): void;
-          CopyTo(pstm: System.Runtime.InteropServices.ComTypes.IStream, cb: System.Int64, pcbRead: System.IntPtr, pcbWritten: System.IntPtr): void;
+          Read(pv: Byte[], cb: number, pcbRead: System.IntPtr): void;
+          Write(pv: Byte[], cb: number, pcbWritten: System.IntPtr): void;
+          Seek(dlibMove: number, dwOrigin: number, plibNewPosition: System.IntPtr): void;
+          SetSize(libNewSize: number): void;
+          CopyTo(pstm: System.Runtime.InteropServices.ComTypes.IStream, cb: number, pcbRead: System.IntPtr, pcbWritten: System.IntPtr): void;
           Commit(grfCommitFlags: number): void;
           Revert(): void;
-          LockRegion(libOffset: System.Int64, cb: System.Int64, dwLockType: number): void;
-          UnlockRegion(libOffset: System.Int64, cb: System.Int64, dwLockType: number): void;
+          LockRegion(libOffset: number, cb: number, dwLockType: number): void;
+          UnlockRegion(libOffset: number, cb: number, dwLockType: number): void;
         }
         export enum DESCKIND {
           DESCKIND_NONE = 0,
@@ -25042,14 +24970,14 @@ export declare namespace System {
           lpstrSchema: System.IntPtr;
           cbSizeInstance: number;
           typekind: System.Runtime.InteropServices.ComTypes.TYPEKIND;
-          cFuncs: System.Int16;
-          cVars: System.Int16;
-          cImplTypes: System.Int16;
-          cbSizeVft: System.Int16;
-          cbAlignment: System.Int16;
+          cFuncs: number;
+          cVars: number;
+          cImplTypes: number;
+          cbSizeVft: number;
+          cbAlignment: number;
           wTypeFlags: System.Runtime.InteropServices.ComTypes.TYPEFLAGS;
-          wMajorVerNum: System.Int16;
-          wMinorVerNum: System.Int16;
+          wMajorVerNum: number;
+          wMinorVerNum: number;
           tdescAlias: System.Runtime.InteropServices.ComTypes.TYPEDESC;
           idldescType: System.Runtime.InteropServices.ComTypes.IDLDESC;
           Equals(obj: any): boolean;
@@ -25064,12 +24992,12 @@ export declare namespace System {
           funckind: System.Runtime.InteropServices.ComTypes.FUNCKIND;
           invkind: System.Runtime.InteropServices.ComTypes.INVOKEKIND;
           callconv: System.Runtime.InteropServices.ComTypes.CALLCONV;
-          cParams: System.Int16;
-          cParamsOpt: System.Int16;
-          oVft: System.Int16;
-          cScodes: System.Int16;
+          cParams: number;
+          cParamsOpt: number;
+          oVft: number;
+          cScodes: number;
           elemdescFunc: System.Runtime.InteropServices.ComTypes.ELEMDESC;
-          wFuncFlags: System.Int16;
+          wFuncFlags: number;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           ToString(): string;
@@ -25110,7 +25038,7 @@ export declare namespace System {
         }
         export class TYPEDESC {
           lpValue: System.IntPtr;
-          vt: System.Int16;
+          vt: number;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           ToString(): string;
@@ -25143,7 +25071,7 @@ export declare namespace System {
           lpstrSchema: string;
           desc: System.Runtime.InteropServices.ComTypes.VARDESC_DESCUNION;
           elemdescVar: System.Runtime.InteropServices.ComTypes.ELEMDESC;
-          wVarFlags: System.Int16;
+          wVarFlags: number;
           varkind: System.Runtime.InteropServices.ComTypes.VARKIND;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -25169,8 +25097,8 @@ export declare namespace System {
           GetType(): System.Type;
         }
         export class EXCEPINFO {
-          wCode: System.Int16;
-          wReserved: System.Int16;
+          wCode: number;
+          wReserved: number;
           bstrSource: string;
           bstrDescription: string;
           bstrHelpFile: string;
@@ -25273,8 +25201,8 @@ export declare namespace System {
           guid: System.Guid;
           lcid: number;
           syskind: System.Runtime.InteropServices.ComTypes.SYSKIND;
-          wMajorVerNum: System.Int16;
-          wMinorVerNum: System.Int16;
+          wMajorVerNum: number;
+          wMinorVerNum: number;
           wLibFlags: System.Runtime.InteropServices.ComTypes.LIBFLAGS;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -25312,7 +25240,7 @@ export declare namespace System {
           DVASPECT_DOCPRINT = 8,
         }
         export class FORMATETC {
-          cfFormat: System.Int16;
+          cfFormat: number;
           dwAspect: System.Runtime.InteropServices.ComTypes.DVASPECT;
           lindex: number;
           ptd: System.IntPtr;
@@ -25402,7 +25330,7 @@ export declare namespace System {
           ActivateInstance(): any;
         }
         export class WindowsRuntimeMarshal {
-          static RemoveAllEventHandlers(removeMethod: ((arg0: System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken) => void)): void;
+          static RemoveAllEventHandlers(removeMethod: ((obj: System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken) => void)): void;
           static GetActivationFactory(type: System.Type): System.Runtime.InteropServices.WindowsRuntime.IActivationFactory;
           static StringToHString(s: string): System.IntPtr;
           static PtrToStringHString(ptr: System.IntPtr): string;
@@ -25733,7 +25661,6 @@ export declare namespace System {
       }
       export namespace Channels {
         export class BaseChannelObjectWithProperties {
-          [key: string]: any;
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -25754,7 +25681,6 @@ export declare namespace System {
           ToString(): string;
         }
         export class BaseChannelSinkWithProperties {
-          [key: string]: any;
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -25775,7 +25701,6 @@ export declare namespace System {
           ToString(): string;
         }
         export class BaseChannelWithProperties {
-          [key: string]: any;
           Properties: System.Collections.IDictionary;
           Count: number;
           IsFixedSize: boolean;
@@ -25797,7 +25722,6 @@ export declare namespace System {
         }
         export class ChannelDataStore {
           constructor(channelURIs: string[]);
-          [key: string]: any;
           ChannelUris: string[];
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -25838,7 +25762,6 @@ export declare namespace System {
           ChannelPriority: number;
         }
         export interface IChannelDataStore {
-          [key: string]: any;
           ChannelUris: string[];
         }
         export interface IChannelReceiver {
@@ -25908,7 +25831,6 @@ export declare namespace System {
           GetResponseStream(msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders): System.IO.Stream;
         }
         export interface ITransportHeaders {
-          [key: string]: any;
           GetEnumerator(): System.Collections.IEnumerator;
         }
         export class ServerChannelSinkStack {
@@ -25942,7 +25864,6 @@ export declare namespace System {
         }
         export class TransportHeaders {
           constructor();
-          [key: string]: any;
           GetEnumerator(): System.Collections.IEnumerator;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -25962,7 +25883,7 @@ export declare namespace System {
           SetProperty(prop: System.Runtime.Remoting.Contexts.IContextProperty): void;
           Freeze(): void;
           ToString(): string;
-          DoCallBack(deleg: System.Runtime.Remoting.Contexts.CrossContextDelegate): void;
+          DoCallBack(deleg: (() => void)): void;
           static AllocateDataSlot(): System.LocalDataStoreSlot;
           static AllocateNamedDataSlot(name: string): System.LocalDataStoreSlot;
           static FreeNamedDataSlot(name: string): void;
@@ -25986,7 +25907,7 @@ export declare namespace System {
           Method: System.Reflection.MethodInfo;
           Target: any; // System.Object
           Invoke(): void;
-          BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+          BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
           EndInvoke(result: System.IAsyncResult): void;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
           Equals(obj: any): boolean;
@@ -26212,7 +26133,7 @@ export declare namespace System {
           Method: System.Reflection.MethodInfo;
           Target: any; // System.Object
           Invoke(headers: System.Runtime.Remoting.Messaging.Header[]): any;
-          BeginInvoke(headers: System.Runtime.Remoting.Messaging.Header[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+          BeginInvoke(headers: System.Runtime.Remoting.Messaging.Header[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
           EndInvoke(result: System.IAsyncResult): any;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
           Equals(obj: any): boolean;
@@ -26262,7 +26183,7 @@ export declare namespace System {
           GetOutArgName(index: number): string;
         }
         export interface IRemotingFormatter {
-          Deserialize(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler): any;
+          Deserialize(serializationStream: System.IO.Stream, handler: ((headers: System.Runtime.Remoting.Messaging.Header[]) => any)): any;
           Serialize(serializationStream: System.IO.Stream, graph: any, headers: System.Runtime.Remoting.Messaging.Header[]): void;
         }
         export class InternalMessageWrapper {
@@ -26277,7 +26198,7 @@ export declare namespace System {
           Method: System.Reflection.MethodInfo;
           Target: any; // System.Object
           Invoke(key: string, value: any): boolean;
-          BeginInvoke(key: string, value: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+          BeginInvoke(key: string, value: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
           EndInvoke(result: System.IAsyncResult): boolean;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
           Equals(obj: any): boolean;
@@ -26395,7 +26316,7 @@ export declare namespace System {
         }
         export class RemotingSurrogateSelector {
           constructor();
-          Filter: System.Runtime.Remoting.Messaging.MessageSurrogateFilter;
+          Filter: ((key: string, value: any) => boolean);
           ChainSelector(selector: System.Runtime.Serialization.ISurrogateSelector): void;
           GetNextSelector(): System.Runtime.Serialization.ISurrogateSelector;
           GetRootObject(): any;
@@ -26465,8 +26386,8 @@ export declare namespace System {
           }
           export class SoapBase64Binary {
             constructor();
-            constructor(value: System.Byte[]);
-            Value: System.Byte[];
+            constructor(value: Byte[]);
+            Value: Byte[];
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapBase64Binary;
@@ -26547,8 +26468,8 @@ export declare namespace System {
           }
           export class SoapHexBinary {
             constructor();
-            constructor(value: System.Byte[]);
-            Value: System.Byte[];
+            constructor(value: Byte[]);
+            Value: Byte[];
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapHexBinary;
@@ -26595,8 +26516,8 @@ export declare namespace System {
           }
           export class SoapInteger {
             constructor();
-            constructor(value: System.Decimal);
-            Value: System.Decimal;
+            constructor(value: number);
+            Value: number;
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapInteger;
@@ -26667,8 +26588,8 @@ export declare namespace System {
           }
           export class SoapNegativeInteger {
             constructor();
-            constructor(value: System.Decimal);
-            Value: System.Decimal;
+            constructor(value: number);
+            Value: number;
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapNegativeInteger;
@@ -26703,8 +26624,8 @@ export declare namespace System {
           }
           export class SoapNonNegativeInteger {
             constructor();
-            constructor(value: System.Decimal);
-            Value: System.Decimal;
+            constructor(value: number);
+            Value: number;
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapNonNegativeInteger;
@@ -26715,8 +26636,8 @@ export declare namespace System {
           }
           export class SoapNonPositiveInteger {
             constructor();
-            constructor(value: System.Decimal);
-            Value: System.Decimal;
+            constructor(value: number);
+            Value: number;
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapNonPositiveInteger;
@@ -26751,8 +26672,8 @@ export declare namespace System {
           }
           export class SoapPositiveInteger {
             constructor();
-            constructor(value: System.Decimal);
-            Value: System.Decimal;
+            constructor(value: number);
+            Value: number;
             static XsdType: string;
             GetXsdType(): string;
             static Parse(value: string): System.Runtime.Remoting.Metadata.W3cXsd2001.SoapPositiveInteger;
@@ -26887,16 +26808,16 @@ export declare namespace System {
         ToBoolean(value: any): boolean;
         ToChar(value: any): System.Char;
         ToSByte(value: any): System.SByte;
-        ToByte(value: any): System.Byte;
-        ToInt16(value: any): System.Int16;
-        ToUInt16(value: any): System.UInt16;
+        ToByte(value: any): Byte;
+        ToInt16(value: any): number;
+        ToUInt16(value: any): number;
         ToInt32(value: any): number;
-        ToUInt32(value: any): System.UInt32;
-        ToInt64(value: any): System.Int64;
-        ToUInt64(value: any): System.UInt64;
+        ToUInt32(value: any): number;
+        ToInt64(value: any): number;
+        ToUInt64(value: any): number;
         ToSingle(value: any): number;
         ToDouble(value: any): number;
-        ToDecimal(value: any): System.Decimal;
+        ToDecimal(value: any): number;
         ToDateTime(value: any): System.DateTime;
         ToString(value: any): string;
       }
@@ -26952,7 +26873,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(context: System.Runtime.Serialization.StreamingContext): void;
-        BeginInvoke(context: System.Runtime.Serialization.StreamingContext, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(context: System.Runtime.Serialization.StreamingContext, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): void;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -26981,16 +26902,16 @@ export declare namespace System {
         ToBoolean(value: any): boolean;
         ToChar(value: any): System.Char;
         ToSByte(value: any): System.SByte;
-        ToByte(value: any): System.Byte;
-        ToInt16(value: any): System.Int16;
-        ToUInt16(value: any): System.UInt16;
+        ToByte(value: any): Byte;
+        ToInt16(value: any): number;
+        ToUInt16(value: any): number;
         ToInt32(value: any): number;
-        ToUInt32(value: any): System.UInt32;
-        ToInt64(value: any): System.Int64;
-        ToUInt64(value: any): System.UInt64;
+        ToUInt32(value: any): number;
+        ToInt64(value: any): number;
+        ToUInt64(value: any): number;
         ToSingle(value: any): number;
         ToDouble(value: any): number;
-        ToDecimal(value: any): System.Decimal;
+        ToDecimal(value: any): number;
         ToDateTime(value: any): System.DateTime;
         ToString(value: any): string;
         Equals(obj: any): boolean;
@@ -27053,16 +26974,16 @@ export declare namespace System {
       }
       export class ObjectManager {
         constructor(selector: System.Runtime.Serialization.ISurrogateSelector, context: System.Runtime.Serialization.StreamingContext);
-        GetObject(objectID: System.Int64): any;
-        RegisterObject(obj: any, objectID: System.Int64): void;
-        RegisterObject(obj: any, objectID: System.Int64, info: System.Runtime.Serialization.SerializationInfo): void;
-        RegisterObject(obj: any, objectID: System.Int64, info: System.Runtime.Serialization.SerializationInfo, idOfContainingObj: System.Int64, member: System.Reflection.MemberInfo): void;
-        RegisterObject(obj: any, objectID: System.Int64, info: System.Runtime.Serialization.SerializationInfo, idOfContainingObj: System.Int64, member: System.Reflection.MemberInfo, arrayIndex: number[]): void;
+        GetObject(objectID: number): any;
+        RegisterObject(obj: any, objectID: number): void;
+        RegisterObject(obj: any, objectID: number, info: System.Runtime.Serialization.SerializationInfo): void;
+        RegisterObject(obj: any, objectID: number, info: System.Runtime.Serialization.SerializationInfo, idOfContainingObj: number, member: System.Reflection.MemberInfo): void;
+        RegisterObject(obj: any, objectID: number, info: System.Runtime.Serialization.SerializationInfo, idOfContainingObj: number, member: System.Reflection.MemberInfo, arrayIndex: number[]): void;
         DoFixups(): void;
-        RecordFixup(objectToBeFixed: System.Int64, member: System.Reflection.MemberInfo, objectRequired: System.Int64): void;
-        RecordDelayedFixup(objectToBeFixed: System.Int64, memberName: string, objectRequired: System.Int64): void;
-        RecordArrayElementFixup(arrayToBeFixed: System.Int64, index: number, objectRequired: System.Int64): void;
-        RecordArrayElementFixup(arrayToBeFixed: System.Int64, indices: number[], objectRequired: System.Int64): void;
+        RecordFixup(objectToBeFixed: number, member: System.Reflection.MemberInfo, objectRequired: number): void;
+        RecordDelayedFixup(objectToBeFixed: number, memberName: string, objectRequired: number): void;
+        RecordArrayElementFixup(arrayToBeFixed: number, index: number, objectRequired: number): void;
+        RecordArrayElementFixup(arrayToBeFixed: number, indices: number[], objectRequired: number): void;
         RaiseDeserializationEvent(): void;
         RaiseOnDeserializingEvent(obj: any): void;
         Equals(obj: any): boolean;
@@ -27097,31 +27018,31 @@ export declare namespace System {
         AddValue(name: string, value: boolean): void;
         AddValue(name: string, value: System.Char): void;
         AddValue(name: string, value: System.SByte): void;
-        AddValue(name: string, value: System.Byte): void;
-        AddValue(name: string, value: System.Int16): void;
-        AddValue(name: string, value: System.UInt16): void;
-        AddValue(name: string, value: number): void;
-        AddValue(name: string, value: System.UInt32): void;
-        AddValue(name: string, value: System.Int64): void;
-        AddValue(name: string, value: System.UInt64): void;
+        AddValue(name: string, value: Byte): void;
         AddValue(name: string, value: number): void;
         AddValue(name: string, value: number): void;
-        AddValue(name: string, value: System.Decimal): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
+        AddValue(name: string, value: number): void;
         AddValue(name: string, value: System.DateTime): void;
         GetValue(name: string, type: System.Type): any;
         GetBoolean(name: string): boolean;
         GetChar(name: string): System.Char;
         GetSByte(name: string): System.SByte;
-        GetByte(name: string): System.Byte;
-        GetInt16(name: string): System.Int16;
-        GetUInt16(name: string): System.UInt16;
+        GetByte(name: string): Byte;
+        GetInt16(name: string): number;
+        GetUInt16(name: string): number;
         GetInt32(name: string): number;
-        GetUInt32(name: string): System.UInt32;
-        GetInt64(name: string): System.Int64;
-        GetUInt64(name: string): System.UInt64;
+        GetUInt32(name: string): number;
+        GetInt64(name: string): number;
+        GetUInt64(name: string): number;
         GetSingle(name: string): number;
         GetDouble(name: string): number;
-        GetDecimal(name: string): System.Decimal;
+        GetDecimal(name: string): number;
         GetDateTime(name: string): System.DateTime;
         GetString(name: string): string;
         Equals(obj: any): boolean;
@@ -27255,10 +27176,10 @@ export declare namespace System {
             Binder: System.Runtime.Serialization.SerializationBinder;
             Context: System.Runtime.Serialization.StreamingContext;
             Deserialize(serializationStream: System.IO.Stream): any;
-            Deserialize(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler): any;
-            DeserializeMethodResponse(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler, methodCallMessage: System.Runtime.Remoting.Messaging.IMethodCallMessage): any;
-            UnsafeDeserialize(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler): any;
-            UnsafeDeserializeMethodResponse(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler, methodCallMessage: System.Runtime.Remoting.Messaging.IMethodCallMessage): any;
+            Deserialize(serializationStream: System.IO.Stream, handler: ((headers: System.Runtime.Remoting.Messaging.Header[]) => any)): any;
+            DeserializeMethodResponse(serializationStream: System.IO.Stream, handler: ((headers: System.Runtime.Remoting.Messaging.Header[]) => any), methodCallMessage: System.Runtime.Remoting.Messaging.IMethodCallMessage): any;
+            UnsafeDeserialize(serializationStream: System.IO.Stream, handler: ((headers: System.Runtime.Remoting.Messaging.Header[]) => any)): any;
+            UnsafeDeserializeMethodResponse(serializationStream: System.IO.Stream, handler: ((headers: System.Runtime.Remoting.Messaging.Header[]) => any), methodCallMessage: System.Runtime.Remoting.Messaging.IMethodCallMessage): any;
             Serialize(serializationStream: System.IO.Stream, graph: any): void;
             Serialize(serializationStream: System.IO.Stream, graph: any, headers: System.Runtime.Remoting.Messaging.Header[]): void;
             Equals(obj: any): boolean;
@@ -27422,7 +27343,7 @@ export declare namespace System {
       static IsFlowSuppressed(): boolean;
       static IsWindowsIdentityFlowSuppressed(): boolean;
       static RestoreFlow(): void;
-      static Run(securityContext: System.Security.SecurityContext, callback: System.Threading.ContextCallback, state: any): void;
+      static Run(securityContext: System.Security.SecurityContext, callback: ((state: any) => void), state: any): void;
       static SuppressFlow(): System.Threading.AsyncFlowControl;
       static SuppressFlowWindowsIdentity(): System.Threading.AsyncFlowControl;
       Equals(obj: any): boolean;
@@ -27553,7 +27474,7 @@ export declare namespace System {
       IsSubsetOf(target: System.Security.PermissionSet): boolean;
       PermitOnly(): void;
       ContainsNonCodeAccessPermissions(): boolean;
-      static ConvertPermissionSet(inFormat: string, inData: System.Byte[], outFormat: string): System.Byte[];
+      static ConvertPermissionSet(inFormat: string, inData: Byte[], outFormat: string): Byte[];
       GetPermission(permClass: System.Type): System.Security.IPermission;
       Intersect(other: System.Security.PermissionSet): System.Security.PermissionSet;
       IsEmpty(): boolean;
@@ -27748,7 +27669,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -27756,8 +27677,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -27937,7 +27858,6 @@ export declare namespace System {
       }
       export class AuthorizationRuleCollection {
         constructor();
-        [key: string]: any;
         Count: number;
         AddRule(rule: System.Security.AccessControl.AuthorizationRule): void;
         CopyTo(rules: System.Security.AccessControl.AuthorizationRule[], index: number): void;
@@ -27948,7 +27868,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class CommonAce {
-        constructor(flags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, isCallback: boolean, opaque: System.Byte[]);
+        constructor(flags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, isCallback: boolean, opaque: Byte[]);
         BinaryLength: number;
         AceQualifier: System.Security.AccessControl.AceQualifier;
         IsCallback: boolean;
@@ -27961,10 +27881,10 @@ export declare namespace System {
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         static MaxOpaqueLength(isCallback: boolean): number;
-        GetOpaque(): System.Byte[];
-        SetOpaque(opaque: System.Byte[]): void;
+        GetOpaque(): Byte[];
+        SetOpaque(opaque: Byte[]): void;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
         GetHashCode(): number;
@@ -27972,16 +27892,15 @@ export declare namespace System {
         ToString(): string;
       }
       export class CommonAcl {
-        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
         IsContainer: boolean;
         IsDS: boolean;
-        Revision: System.Byte;
+        Revision: Byte;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         Purge(sid: System.Security.Principal.SecurityIdentifier): void;
         RemoveInheritedAces(): void;
         CopyTo(array: System.Security.AccessControl.GenericAce[], index: number): void;
@@ -28005,7 +27924,7 @@ export declare namespace System {
         AuditRuleFactory(identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags): System.Security.AccessControl.AuditRule;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28013,8 +27932,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28025,7 +27944,7 @@ export declare namespace System {
       export class CommonSecurityDescriptor {
         constructor(isContainer: boolean, isDS: boolean, rawSecurityDescriptor: System.Security.AccessControl.RawSecurityDescriptor);
         constructor(isContainer: boolean, isDS: boolean, sddlForm: string);
-        constructor(isContainer: boolean, isDS: boolean, binaryForm: System.Byte[], offset: number);
+        constructor(isContainer: boolean, isDS: boolean, binaryForm: Byte[], offset: number);
         constructor(isContainer: boolean, isDS: boolean, flags: System.Security.AccessControl.ControlFlags, owner: System.Security.Principal.SecurityIdentifier, group: System.Security.Principal.SecurityIdentifier, systemAcl: System.Security.AccessControl.SystemAcl, discretionaryAcl: System.Security.AccessControl.DiscretionaryAcl);
         ControlFlags: System.Security.AccessControl.ControlFlags;
         DiscretionaryAcl: System.Security.AccessControl.DiscretionaryAcl;
@@ -28041,9 +27960,9 @@ export declare namespace System {
         PurgeAudit(sid: System.Security.Principal.SecurityIdentifier): void;
         SetDiscretionaryAclProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetSystemAclProtection(isProtected: boolean, preserveInheritance: boolean): void;
-        AddDiscretionaryAcl(revision: System.Byte, trusted: number): void;
-        AddSystemAcl(revision: System.Byte, trusted: number): void;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        AddDiscretionaryAcl(revision: Byte, trusted: number): void;
+        AddSystemAcl(revision: Byte, trusted: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -28062,7 +27981,7 @@ export declare namespace System {
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
         GetHashCode(): number;
@@ -28164,7 +28083,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28172,8 +28091,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28182,7 +28101,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class CustomAce {
-        constructor(type: System.Security.AccessControl.AceType, flags: System.Security.AccessControl.AceFlags, opaque: System.Byte[]);
+        constructor(type: System.Security.AccessControl.AceType, flags: System.Security.AccessControl.AceFlags, opaque: Byte[]);
         BinaryLength: number;
         OpaqueLength: number;
         AceFlags: System.Security.AccessControl.AceFlags;
@@ -28192,9 +28111,9 @@ export declare namespace System {
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
         static MaxOpaqueLength: number;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
-        GetOpaque(): System.Byte[];
-        SetOpaque(opaque: System.Byte[]): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
+        GetOpaque(): Byte[];
+        SetOpaque(opaque: Byte[]): void;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
         GetHashCode(): number;
@@ -28217,7 +28136,7 @@ export declare namespace System {
         AuditRuleFactory(identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags): System.Security.AccessControl.AuditRule;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28225,8 +28144,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28261,7 +28180,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28269,8 +28188,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28281,14 +28200,13 @@ export declare namespace System {
       export class DiscretionaryAcl {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
-        constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
-        [key: string]: any;
+        constructor(isContainer: boolean, isDS: boolean, revision: Byte, capacity: number);
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
         IsContainer: boolean;
         IsDS: boolean;
-        Revision: System.Byte;
+        Revision: Byte;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
         AddAccess(accessType: System.Security.AccessControl.AccessControlType, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags): void;
@@ -28303,7 +28221,7 @@ export declare namespace System {
         SetAccess(accessType: System.Security.AccessControl.AccessControlType, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags): void;
         SetAccess(accessType: System.Security.AccessControl.AccessControlType, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, objectFlags: System.Security.AccessControl.ObjectAceFlags, objectType: System.Guid, inheritedObjectType: System.Guid): void;
         SetAccess(accessType: System.Security.AccessControl.AccessControlType, sid: System.Security.Principal.SecurityIdentifier, rule: System.Security.AccessControl.ObjectAccessRule): void;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         Purge(sid: System.Security.Principal.SecurityIdentifier): void;
         RemoveInheritedAces(): void;
         CopyTo(array: System.Security.AccessControl.GenericAce[], index: number): void;
@@ -28375,7 +28293,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28383,8 +28301,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28419,7 +28337,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28427,8 +28345,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28518,7 +28436,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28526,8 +28444,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28544,25 +28462,24 @@ export declare namespace System {
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
         Copy(): System.Security.AccessControl.GenericAce;
-        static CreateFromBinaryForm(binaryForm: System.Byte[], offset: number): System.Security.AccessControl.GenericAce;
+        static CreateFromBinaryForm(binaryForm: Byte[], offset: number): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class GenericAcl {
-        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsSynchronized: boolean;
-        Revision: System.Byte;
+        Revision: Byte;
         SyncRoot: any; // System.Object
-        static AclRevision: System.Byte;
-        static AclRevisionDS: System.Byte;
+        static AclRevision: Byte;
+        static AclRevisionDS: Byte;
         static MaxBinaryLength: number;
         CopyTo(array: System.Security.AccessControl.GenericAce[], index: number): void;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetEnumerator(): System.Security.AccessControl.AceEnumerator;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -28574,8 +28491,8 @@ export declare namespace System {
         ControlFlags: System.Security.AccessControl.ControlFlags;
         Group: System.Security.Principal.SecurityIdentifier;
         Owner: System.Security.Principal.SecurityIdentifier;
-        static Revision: System.Byte;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        static Revision: Byte;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         static IsSddlConversionSupported(): boolean;
         Equals(obj: any): boolean;
@@ -28600,7 +28517,7 @@ export declare namespace System {
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
@@ -28668,7 +28585,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28676,8 +28593,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28699,7 +28616,7 @@ export declare namespace System {
         AuditRuleFactory(identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags): System.Security.AccessControl.AuditRule;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28707,8 +28624,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28731,7 +28648,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class ObjectAce {
-        constructor(aceFlags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, flags: System.Security.AccessControl.ObjectAceFlags, type: System.Guid, inheritedType: System.Guid, isCallback: boolean, opaque: System.Byte[]);
+        constructor(aceFlags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, flags: System.Security.AccessControl.ObjectAceFlags, type: System.Guid, inheritedType: System.Guid, isCallback: boolean, opaque: Byte[]);
         BinaryLength: number;
         InheritedObjectAceType: System.Guid;
         ObjectAceFlags: System.Security.AccessControl.ObjectAceFlags;
@@ -28747,10 +28664,10 @@ export declare namespace System {
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         static MaxOpaqueLength(isCallback: boolean): number;
-        GetOpaque(): System.Byte[];
-        SetOpaque(opaque: System.Byte[]): void;
+        GetOpaque(): Byte[];
+        SetOpaque(opaque: Byte[]): void;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
         GetHashCode(): number;
@@ -28801,7 +28718,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -28809,8 +28726,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -28836,25 +28753,24 @@ export declare namespace System {
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
         IsInherited: boolean;
         PropagationFlags: System.Security.AccessControl.PropagationFlags;
-        GetOpaque(): System.Byte[];
-        SetOpaque(opaque: System.Byte[]): void;
+        GetOpaque(): Byte[];
+        SetOpaque(opaque: Byte[]): void;
         Copy(): System.Security.AccessControl.GenericAce;
         Equals(o: any): boolean;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class RawAcl {
-        constructor(revision: System.Byte, capacity: number);
-        constructor(binaryForm: System.Byte[], offset: number);
-        [key: string]: any;
+        constructor(revision: Byte, capacity: number);
+        constructor(binaryForm: Byte[], offset: number);
         BinaryLength: number;
         Count: number;
-        Revision: System.Byte;
+        Revision: Byte;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         InsertAce(index: number, ace: System.Security.AccessControl.GenericAce): void;
         RemoveAce(index: number): void;
         CopyTo(array: System.Security.AccessControl.GenericAce[], index: number): void;
@@ -28866,17 +28782,17 @@ export declare namespace System {
       }
       export class RawSecurityDescriptor {
         constructor(sddlForm: string);
-        constructor(binaryForm: System.Byte[], offset: number);
+        constructor(binaryForm: Byte[], offset: number);
         constructor(flags: System.Security.AccessControl.ControlFlags, owner: System.Security.Principal.SecurityIdentifier, group: System.Security.Principal.SecurityIdentifier, systemAcl: System.Security.AccessControl.RawAcl, discretionaryAcl: System.Security.AccessControl.RawAcl);
         ControlFlags: System.Security.AccessControl.ControlFlags;
         DiscretionaryAcl: System.Security.AccessControl.RawAcl;
         Group: System.Security.Principal.SecurityIdentifier;
         Owner: System.Security.Principal.SecurityIdentifier;
-        ResourceManagerControl: System.Byte;
+        ResourceManagerControl: Byte;
         SystemAcl: System.Security.AccessControl.RawAcl;
         BinaryLength: number;
         SetFlags(flags: System.Security.AccessControl.ControlFlags): void;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -28923,14 +28839,13 @@ export declare namespace System {
       export class SystemAcl {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
-        constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
-        [key: string]: any;
+        constructor(isContainer: boolean, isDS: boolean, revision: Byte, capacity: number);
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
         IsContainer: boolean;
         IsDS: boolean;
-        Revision: System.Byte;
+        Revision: Byte;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
         AddAudit(auditFlags: System.Security.AccessControl.AuditFlags, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags): void;
@@ -28945,7 +28860,7 @@ export declare namespace System {
         SetAudit(auditFlags: System.Security.AccessControl.AuditFlags, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags): void;
         SetAudit(auditFlags: System.Security.AccessControl.AuditFlags, sid: System.Security.Principal.SecurityIdentifier, accessMask: number, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, objectFlags: System.Security.AccessControl.ObjectAceFlags, objectType: System.Guid, inheritedObjectType: System.Guid): void;
         SetAudit(sid: System.Security.Principal.SecurityIdentifier, rule: System.Security.AccessControl.ObjectAuditRule): void;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         Purge(sid: System.Security.Principal.SecurityIdentifier): void;
         RemoveInheritedAces(): void;
         CopyTo(array: System.Security.AccessControl.GenericAce[], index: number): void;
@@ -29018,7 +28933,7 @@ export declare namespace System {
         GetAuditRules(includeExplicit: boolean, includeInherited: boolean, targetType: System.Type): System.Security.AccessControl.AuthorizationRuleCollection;
         GetGroup(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetOwner(targetType: System.Type): System.Security.Principal.IdentityReference;
-        GetSecurityDescriptorBinaryForm(): System.Byte[];
+        GetSecurityDescriptorBinaryForm(): Byte[];
         GetSecurityDescriptorSddlForm(includeSections: System.Security.AccessControl.AccessControlSections): string;
         PurgeAccessRules(identity: System.Security.Principal.IdentityReference): void;
         PurgeAuditRules(identity: System.Security.Principal.IdentityReference): void;
@@ -29026,8 +28941,8 @@ export declare namespace System {
         SetAuditRuleProtection(isProtected: boolean, preserveInheritance: boolean): void;
         SetGroup(identity: System.Security.Principal.IdentityReference): void;
         SetOwner(identity: System.Security.Principal.IdentityReference): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[]): void;
-        SetSecurityDescriptorBinaryForm(binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[]): void;
+        SetSecurityDescriptorBinaryForm(binaryForm: Byte[], includeSections: System.Security.AccessControl.AccessControlSections): void;
         SetSecurityDescriptorSddlForm(sddlForm: string): void;
         SetSecurityDescriptorSddlForm(sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections): void;
         Equals(obj: any): boolean;
@@ -29132,7 +29047,7 @@ export declare namespace System {
         }
         export class TokenBinding {
           BindingType: System.Security.Authentication.ExtendedProtection.TokenBindingType;
-          GetRawTokenBindingId(): System.Byte[];
+          GetRawTokenBindingId(): Byte[];
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -29261,7 +29176,6 @@ export declare namespace System {
           }
           export class ServiceNameElementCollection {
             constructor();
-            [key: string]: any;
             CollectionType: any; // System.Configuration.ConfigurationElementCollectionType
             Count: number;
             EmitClear: boolean;
@@ -29362,7 +29276,7 @@ export declare namespace System {
         constructor(type: string, value: string, valueType: string, issuer: string, originalIssuer: string, subject: System.Security.Claims.ClaimsIdentity);
         Issuer: string;
         OriginalIssuer: string;
-        Properties: System.Collections.Generic.IDictionary<string, string>;
+        Properties: Record<string, string>;
         Subject: System.Security.Claims.ClaimsIdentity;
         Type: string;
         Value: string;
@@ -29436,11 +29350,11 @@ export declare namespace System {
         AddClaims(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>): void;
         TryRemoveClaim(claim: System.Security.Claims.Claim): boolean;
         RemoveClaim(claim: System.Security.Claims.Claim): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
         WriteTo(writer: System.IO.BinaryWriter): void;
         Equals(obj: any): boolean;
@@ -29454,7 +29368,7 @@ export declare namespace System {
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(principal: System.Security.Principal.IPrincipal);
         constructor(reader: System.IO.BinaryReader);
-        static PrimaryIdentitySelector: ((arg0: any) => System.Security.Claims.ClaimsIdentity);
+        static PrimaryIdentitySelector: ((arg: any) => System.Security.Claims.ClaimsIdentity);
         static ClaimsPrincipalSelector: (() => System.Security.Claims.ClaimsPrincipal);
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         static Current: System.Security.Claims.ClaimsPrincipal;
@@ -29463,11 +29377,11 @@ export declare namespace System {
         Clone(): System.Security.Claims.ClaimsPrincipal;
         AddIdentity(identity: System.Security.Claims.ClaimsIdentity): void;
         AddIdentities(identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
         IsInRole(role: string): boolean;
         WriteTo(writer: System.IO.BinaryWriter): void;
@@ -29486,19 +29400,19 @@ export declare namespace System {
     }
     export namespace Cryptography {
       export class Rfc2898DeriveBytes {
-        constructor(password: System.Byte[], salt: System.Byte[], iterations: number);
-        constructor(password: System.Byte[], salt: System.Byte[], iterations: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName);
-        constructor(password: string, salt: System.Byte[]);
-        constructor(password: string, salt: System.Byte[], iterations: number);
-        constructor(password: string, salt: System.Byte[], iterations: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName);
+        constructor(password: Byte[], salt: Byte[], iterations: number);
+        constructor(password: Byte[], salt: Byte[], iterations: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName);
+        constructor(password: string, salt: Byte[]);
+        constructor(password: string, salt: Byte[], iterations: number);
+        constructor(password: string, salt: Byte[], iterations: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName);
         constructor(password: string, saltSize: number);
         constructor(password: string, saltSize: number, iterations: number);
         constructor(password: string, saltSize: number, iterations: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName);
         HashAlgorithm: System.Security.Cryptography.HashAlgorithmName;
         IterationCount: number;
-        Salt: System.Byte[];
-        GetBytes(cb: number): System.Byte[];
-        CryptDeriveKey(algname: string, alghashname: string, keySize: number, rgbIV: System.Byte[]): System.Byte[];
+        Salt: Byte[];
+        GetBytes(cb: number): Byte[];
+        CryptDeriveKey(algname: string, alghashname: string, keySize: number, rgbIV: Byte[]): Byte[];
         Reset(): void;
         Dispose(): void;
         Equals(obj: any): boolean;
@@ -29508,8 +29422,8 @@ export declare namespace System {
       }
       export interface ICspAsymmetricAlgorithm {
         CspKeyContainerInfo: System.Security.Cryptography.CspKeyContainerInfo;
-        ExportCspBlob(includePrivateParameters: boolean): System.Byte[];
-        ImportCspBlob(rawData: System.Byte[]): void;
+        ExportCspBlob(includePrivateParameters: boolean): Byte[];
+        ImportCspBlob(rawData: Byte[]): void;
       }
       export enum KeyNumber {
         Exchange = 1,
@@ -29521,8 +29435,8 @@ export declare namespace System {
         CanRead: boolean;
         CanSeek: boolean;
         CanWrite: boolean;
-        Length: System.Int64;
-        Position: System.Int64;
+        Length: number;
+        Position: number;
         HasFlushedFinalBlock: boolean;
         CanTimeout: boolean;
         ReadTimeout: number;
@@ -29530,18 +29444,18 @@ export declare namespace System {
         FlushFinalBlock(): void;
         Flush(): void;
         FlushAsync(cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        Seek(offset: System.Int64, origin: System.IO.SeekOrigin): System.Int64;
-        SetLength(value: System.Int64): void;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
-        BeginRead(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        Seek(offset: number, origin: System.IO.SeekOrigin): number;
+        SetLength(value: number): void;
+        ReadAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<number>;
+        BeginRead(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndRead(asyncResult: System.IAsyncResult): number;
         ReadByte(): number;
-        WriteByte(value: System.Byte): void;
-        Read(buffer: System.Byte[], offset: number, count: number): number;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        BeginWrite(buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: any): System.IAsyncResult;
+        WriteByte(value: Byte): void;
+        Read(buffer: Byte[], offset: number, count: number): number;
+        WriteAsync(buffer: Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        BeginWrite(buffer: Byte[], offset: number, count: number, callback: ((ar: System.IAsyncResult) => void), state: any): System.IAsyncResult;
         EndWrite(asyncResult: System.IAsyncResult): void;
-        Write(buffer: System.Byte[], offset: number, count: number): void;
+        Write(buffer: Byte[], offset: number, count: number): void;
         Clear(): void;
         CopyToAsync(destination: System.IO.Stream): System.Threading.Tasks.Task;
         CopyToAsync(destination: System.IO.Stream, bufferSize: number): System.Threading.Tasks.Task;
@@ -29552,12 +29466,12 @@ export declare namespace System {
         Close(): void;
         Dispose(): void;
         FlushAsync(): System.Threading.Tasks.Task;
-        ReadAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
-        ReadAsync(buffer: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
-        WriteAsync(buffer: System.Byte[], offset: number, count: number): System.Threading.Tasks.Task;
-        WriteAsync(buffer: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
-        Read(buffer: System.Span<System.Byte>): number;
-        Write(buffer: System.ReadOnlySpan<System.Byte>): void;
+        ReadAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task<number>;
+        ReadAsync(buffer: System.Memory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask<number>;
+        WriteAsync(buffer: Byte[], offset: number, count: number): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<Byte>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.ValueTask;
+        Read(buffer: System.Span<Byte>): number;
+        Write(buffer: System.ReadOnlySpan<Byte>): void;
         DisposeAsync(): System.Threading.Tasks.ValueTask;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -29581,20 +29495,20 @@ export declare namespace System {
       }
       export class HashAlgorithm {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.HashAlgorithm;
         static Create(hashName: string): System.Security.Cryptography.HashAlgorithm;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -29651,8 +29565,8 @@ export declare namespace System {
       export class Aes {
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
@@ -29664,9 +29578,9 @@ export declare namespace System {
         Clear(): void;
         ValidKeySize(bitLength: number): boolean;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -29685,10 +29599,10 @@ export declare namespace System {
         static Create(algName: string): System.Security.Cryptography.AsymmetricAlgorithm;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29697,7 +29611,7 @@ export declare namespace System {
       export class AsymmetricKeyExchangeDeformatter {
         Parameters: string;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        DecryptKeyExchange(rgb: System.Byte[]): System.Byte[];
+        DecryptKeyExchange(rgb: Byte[]): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29706,8 +29620,8 @@ export declare namespace System {
       export class AsymmetricKeyExchangeFormatter {
         Parameters: string;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        CreateKeyExchange(data: System.Byte[]): System.Byte[];
-        CreateKeyExchange(data: System.Byte[], symAlgType: System.Type): System.Byte[];
+        CreateKeyExchange(data: Byte[]): Byte[];
+        CreateKeyExchange(data: Byte[], symAlgType: System.Type): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29716,8 +29630,8 @@ export declare namespace System {
       export class AsymmetricSignatureDeformatter {
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
-        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: System.Byte[]): boolean;
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
+        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: Byte[]): boolean;
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29726,8 +29640,8 @@ export declare namespace System {
       export class AsymmetricSignatureFormatter {
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
-        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): System.Byte[];
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
+        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): Byte[];
+        CreateSignature(rgbHash: Byte[]): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29743,8 +29657,8 @@ export declare namespace System {
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Dispose(): void;
         Clear(): void;
         Equals(obj: any): boolean;
@@ -29759,8 +29673,8 @@ export declare namespace System {
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Dispose(): void;
         Clear(): void;
         Equals(obj: any): boolean;
@@ -29867,7 +29781,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class DeriveBytes {
-        GetBytes(cb: number): System.Byte[];
+        GetBytes(cb: number): Byte[];
         Reset(): void;
         Dispose(): void;
         Equals(obj: any): boolean;
@@ -29876,10 +29790,10 @@ export declare namespace System {
         ToString(): string;
       }
       export class DES {
-        Key: System.Byte[];
+        Key: Byte[];
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
@@ -29887,15 +29801,15 @@ export declare namespace System {
         Padding: System.Security.Cryptography.PaddingMode;
         static Create(): System.Security.Cryptography.DES;
         static Create(algName: string): System.Security.Cryptography.DES;
-        static IsWeakKey(rgbKey: System.Byte[]): boolean;
-        static IsSemiWeakKey(rgbKey: System.Byte[]): boolean;
+        static IsWeakKey(rgbKey: Byte[]): boolean;
+        static IsSemiWeakKey(rgbKey: Byte[]): boolean;
         Dispose(): void;
         Clear(): void;
         ValidKeySize(bitLength: number): boolean;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -29905,17 +29819,17 @@ export declare namespace System {
       }
       export class DESCryptoServiceProvider {
         constructor();
-        Key: System.Byte[];
+        Key: Byte[];
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Dispose(): void;
@@ -29929,13 +29843,13 @@ export declare namespace System {
         ToString(): string;
       }
       export class DSAParameters {
-        P: System.Byte[];
-        Q: System.Byte[];
-        G: System.Byte[];
-        Y: System.Byte[];
-        J: System.Byte[];
-        X: System.Byte[];
-        Seed: System.Byte[];
+        P: Byte[];
+        Q: Byte[];
+        G: Byte[];
+        Y: Byte[];
+        J: Byte[];
+        X: Byte[];
+        Seed: Byte[];
         Counter: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -29949,28 +29863,28 @@ export declare namespace System {
         KeyExchangeAlgorithm: string;
         static Create(): System.Security.Cryptography.DSA;
         static Create(algName: string): System.Security.Cryptography.DSA;
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        CreateSignature(rgbHash: Byte[]): Byte[];
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.DSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.DSAParameters): void;
         static Create(keySizeInBits: number): System.Security.Cryptography.DSA;
         static Create(parameters: System.Security.Cryptography.DSAParameters): System.Security.Cryptography.DSA;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifySignature(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>): boolean;
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifySignature(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>): boolean;
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29981,8 +29895,8 @@ export declare namespace System {
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: System.Byte[]): boolean;
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
+        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: Byte[]): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29993,18 +29907,18 @@ export declare namespace System {
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
-        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): System.Byte[];
+        CreateSignature(rgbHash: Byte[]): Byte[];
+        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class HMAC {
-        Key: System.Byte[];
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
@@ -30012,13 +29926,13 @@ export declare namespace System {
         static Create(): System.Security.Cryptography.HMAC;
         static Create(algorithmName: string): System.Security.Cryptography.HMAC;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30026,23 +29940,23 @@ export declare namespace System {
       }
       export class HMACMD5 {
         constructor();
-        constructor(key: System.Byte[]);
-        Key: System.Byte[];
+        constructor(key: Byte[]);
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30050,23 +29964,23 @@ export declare namespace System {
       }
       export class HMACRIPEMD160 {
         constructor();
-        constructor(key: System.Byte[]);
-        Key: System.Byte[];
+        constructor(key: Byte[]);
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30074,24 +29988,24 @@ export declare namespace System {
       }
       export class HMACSHA1 {
         constructor();
-        constructor(key: System.Byte[]);
-        constructor(key: System.Byte[], useManagedSha1: boolean);
-        Key: System.Byte[];
+        constructor(key: Byte[]);
+        constructor(key: Byte[], useManagedSha1: boolean);
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30099,23 +30013,23 @@ export declare namespace System {
       }
       export class HMACSHA256 {
         constructor();
-        constructor(key: System.Byte[]);
-        Key: System.Byte[];
+        constructor(key: Byte[]);
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30123,24 +30037,24 @@ export declare namespace System {
       }
       export class HMACSHA384 {
         constructor();
-        constructor(key: System.Byte[]);
+        constructor(key: Byte[]);
         ProduceLegacyHmacValues: boolean;
-        Key: System.Byte[];
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30148,24 +30062,24 @@ export declare namespace System {
       }
       export class HMACSHA512 {
         constructor();
-        constructor(key: System.Byte[]);
+        constructor(key: Byte[]);
         ProduceLegacyHmacValues: boolean;
-        Key: System.Byte[];
+        Key: Byte[];
         HashName: string;
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30176,26 +30090,26 @@ export declare namespace System {
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
       }
       export class KeyedHashAlgorithm {
-        Key: System.Byte[];
+        Key: Byte[];
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.KeyedHashAlgorithm;
         static Create(algName: string): System.Security.Cryptography.KeyedHashAlgorithm;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30204,31 +30118,31 @@ export declare namespace System {
       }
       export class MACTripleDES {
         constructor();
-        constructor(rgbKey: System.Byte[]);
-        constructor(strTripleDES: string, rgbKey: System.Byte[]);
+        constructor(rgbKey: Byte[]);
+        constructor(strTripleDES: string, rgbKey: Byte[]);
         Padding: System.Security.Cryptography.PaddingMode;
-        Key: System.Byte[];
+        Key: Byte[];
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class MaskGenerationMethod {
-        GenerateMask(rgbSeed: System.Byte[], cbReturn: number): System.Byte[];
+        GenerateMask(rgbSeed: Byte[], cbReturn: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30236,20 +30150,20 @@ export declare namespace System {
       }
       export class MD5 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.MD5;
         static Create(algName: string): System.Security.Cryptography.MD5;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30257,20 +30171,20 @@ export declare namespace System {
         ToString(): string;
       }
       export class PasswordDeriveBytes {
-        constructor(strPassword: string, rgbSalt: System.Byte[]);
-        constructor(password: System.Byte[], salt: System.Byte[]);
-        constructor(strPassword: string, rgbSalt: System.Byte[], strHashName: string, iterations: number);
-        constructor(password: System.Byte[], salt: System.Byte[], hashName: string, iterations: number);
-        constructor(strPassword: string, rgbSalt: System.Byte[], cspParams: System.Security.Cryptography.CspParameters);
-        constructor(password: System.Byte[], salt: System.Byte[], cspParams: System.Security.Cryptography.CspParameters);
-        constructor(strPassword: string, rgbSalt: System.Byte[], strHashName: string, iterations: number, cspParams: System.Security.Cryptography.CspParameters);
-        constructor(password: System.Byte[], salt: System.Byte[], hashName: string, iterations: number, cspParams: System.Security.Cryptography.CspParameters);
+        constructor(strPassword: string, rgbSalt: Byte[]);
+        constructor(password: Byte[], salt: Byte[]);
+        constructor(strPassword: string, rgbSalt: Byte[], strHashName: string, iterations: number);
+        constructor(password: Byte[], salt: Byte[], hashName: string, iterations: number);
+        constructor(strPassword: string, rgbSalt: Byte[], cspParams: System.Security.Cryptography.CspParameters);
+        constructor(password: Byte[], salt: Byte[], cspParams: System.Security.Cryptography.CspParameters);
+        constructor(strPassword: string, rgbSalt: Byte[], strHashName: string, iterations: number, cspParams: System.Security.Cryptography.CspParameters);
+        constructor(password: Byte[], salt: Byte[], hashName: string, iterations: number, cspParams: System.Security.Cryptography.CspParameters);
         HashName: string;
         IterationCount: number;
-        Salt: System.Byte[];
-        GetBytes(cb: number): System.Byte[];
+        Salt: Byte[];
+        GetBytes(cb: number): Byte[];
         Reset(): void;
-        CryptDeriveKey(algname: string, alghashname: string, keySize: number, rgbIV: System.Byte[]): System.Byte[];
+        CryptDeriveKey(algname: string, alghashname: string, keySize: number, rgbIV: Byte[]): Byte[];
         Dispose(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30280,7 +30194,7 @@ export declare namespace System {
       export class PKCS1MaskGenerationMethod {
         constructor();
         HashName: string;
-        GenerateMask(rgbSeed: System.Byte[], cbReturn: number): System.Byte[];
+        GenerateMask(rgbSeed: Byte[], cbReturn: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30290,12 +30204,12 @@ export declare namespace System {
         static Create(): System.Security.Cryptography.RandomNumberGenerator;
         static Create(rngName: string): System.Security.Cryptography.RandomNumberGenerator;
         Dispose(): void;
-        GetBytes(data: System.Byte[]): void;
-        GetBytes(data: System.Byte[], offset: number, count: number): void;
-        GetNonZeroBytes(data: System.Byte[]): void;
+        GetBytes(data: Byte[]): void;
+        GetBytes(data: Byte[], offset: number, count: number): void;
+        GetNonZeroBytes(data: Byte[]): void;
         static Fill(data: any): void;
-        GetBytes(data: System.Span<System.Byte>): void;
-        GetNonZeroBytes(data: System.Span<System.Byte>): void;
+        GetBytes(data: System.Span<Byte>): void;
+        GetNonZeroBytes(data: System.Span<Byte>): void;
         static GetInt32(fromInclusive: number, toExclusive: number): number;
         static GetInt32(toExclusive: number): number;
         Equals(obj: any): boolean;
@@ -30308,8 +30222,8 @@ export declare namespace System {
         KeySize: number;
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         Mode: System.Security.Cryptography.CipherMode;
@@ -30320,9 +30234,9 @@ export declare namespace System {
         Clear(): void;
         ValidKeySize(bitLength: number): boolean;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -30337,14 +30251,14 @@ export declare namespace System {
         KeySize: number;
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Dispose(): void;
@@ -30360,8 +30274,8 @@ export declare namespace System {
       export class Rijndael {
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
@@ -30373,9 +30287,9 @@ export declare namespace System {
         Clear(): void;
         ValidKeySize(bitLength: number): boolean;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -30387,15 +30301,15 @@ export declare namespace System {
         constructor();
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Dispose(): void;
@@ -30416,8 +30330,8 @@ export declare namespace System {
         CanReuseTransform: boolean;
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Reset(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30426,20 +30340,20 @@ export declare namespace System {
       }
       export class RIPEMD160 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.RIPEMD160;
         static Create(hashName: string): System.Security.Cryptography.RIPEMD160;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30449,33 +30363,33 @@ export declare namespace System {
       export class RIPEMD160Managed {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class RSAParameters {
-        Exponent: System.Byte[];
-        Modulus: System.Byte[];
-        P: System.Byte[];
-        Q: System.Byte[];
-        DP: System.Byte[];
-        DQ: System.Byte[];
-        InverseQ: System.Byte[];
-        D: System.Byte[];
+        Exponent: Byte[];
+        Modulus: Byte[];
+        P: Byte[];
+        Q: Byte[];
+        DP: Byte[];
+        DQ: Byte[];
+        InverseQ: Byte[];
+        D: Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -30488,34 +30402,34 @@ export declare namespace System {
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         static Create(): System.Security.Cryptography.RSA;
         static Create(algName: string): System.Security.Cryptography.RSA;
-        Encrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        Decrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        SignHash(hash: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyHash(hash: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        DecryptValue(rgb: System.Byte[]): System.Byte[];
-        EncryptValue(rgb: System.Byte[]): System.Byte[];
+        Encrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        Decrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        SignHash(hash: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyHash(hash: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        DecryptValue(rgb: Byte[]): Byte[];
+        EncryptValue(rgb: Byte[]): Byte[];
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.RSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.RSAParameters): void;
         static Create(keySizeInBits: number): System.Security.Cryptography.RSA;
         static Create(parameters: System.Security.Cryptography.RSAParameters): System.Security.Cryptography.RSA;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyHash(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        ExportRSAPrivateKey(): System.Byte[];
-        ExportRSAPublicKey(): System.Byte[];
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyHash(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        ExportRSAPrivateKey(): Byte[];
+        ExportRSAPublicKey(): Byte[];
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30534,42 +30448,42 @@ export declare namespace System {
         PublicOnly: boolean;
         CspKeyContainerInfo: System.Security.Cryptography.CspKeyContainerInfo;
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
-        Encrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        Decrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        SignHash(hash: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyHash(hash: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        Decrypt(rgb: System.Byte[], fOAEP: boolean): System.Byte[];
-        DecryptValue(rgb: System.Byte[]): System.Byte[];
-        Encrypt(rgb: System.Byte[], fOAEP: boolean): System.Byte[];
-        EncryptValue(rgb: System.Byte[]): System.Byte[];
+        Encrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        Decrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        SignHash(hash: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyHash(hash: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        Decrypt(rgb: Byte[], fOAEP: boolean): Byte[];
+        DecryptValue(rgb: Byte[]): Byte[];
+        Encrypt(rgb: Byte[], fOAEP: boolean): Byte[];
+        EncryptValue(rgb: Byte[]): Byte[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.RSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.RSAParameters): void;
-        SignData(buffer: System.Byte[], halg: any): System.Byte[];
-        SignData(inputStream: System.IO.Stream, halg: any): System.Byte[];
-        SignData(buffer: System.Byte[], offset: number, count: number, halg: any): System.Byte[];
-        SignHash(rgbHash: System.Byte[], str: string): System.Byte[];
-        VerifyData(buffer: System.Byte[], halg: any, signature: System.Byte[]): boolean;
-        VerifyHash(rgbHash: System.Byte[], str: string, rgbSignature: System.Byte[]): boolean;
-        ExportCspBlob(includePrivateParameters: boolean): System.Byte[];
-        ImportCspBlob(keyBlob: System.Byte[]): void;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        SignData(buffer: Byte[], halg: any): Byte[];
+        SignData(inputStream: System.IO.Stream, halg: any): Byte[];
+        SignData(buffer: Byte[], offset: number, count: number, halg: any): Byte[];
+        SignHash(rgbHash: Byte[], str: string): Byte[];
+        VerifyData(buffer: Byte[], halg: any, signature: Byte[]): boolean;
+        VerifyHash(rgbHash: Byte[], str: string, rgbSignature: Byte[]): boolean;
+        ExportCspBlob(includePrivateParameters: boolean): Byte[];
+        ImportCspBlob(keyBlob: Byte[]): void;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyHash(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        ExportRSAPrivateKey(): System.Byte[];
-        ExportRSAPublicKey(): System.Byte[];
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyHash(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        ExportRSAPrivateKey(): Byte[];
+        ExportRSAPublicKey(): Byte[];
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30579,7 +30493,7 @@ export declare namespace System {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         Parameters: string;
-        DecryptKeyExchange(rgbData: System.Byte[]): System.Byte[];
+        DecryptKeyExchange(rgbData: Byte[]): Byte[];
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30589,12 +30503,12 @@ export declare namespace System {
       export class RSAOAEPKeyExchangeFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
-        Parameter: System.Byte[];
+        Parameter: Byte[];
         Parameters: string;
         Rng: System.Security.Cryptography.RandomNumberGenerator;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        CreateKeyExchange(rgbData: System.Byte[]): System.Byte[];
-        CreateKeyExchange(rgbData: System.Byte[], symAlgType: System.Type): System.Byte[];
+        CreateKeyExchange(rgbData: Byte[]): Byte[];
+        CreateKeyExchange(rgbData: Byte[], symAlgType: System.Type): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30605,7 +30519,7 @@ export declare namespace System {
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         RNG: System.Security.Cryptography.RandomNumberGenerator;
         Parameters: string;
-        DecryptKeyExchange(rgbIn: System.Byte[]): System.Byte[];
+        DecryptKeyExchange(rgbIn: Byte[]): Byte[];
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30618,8 +30532,8 @@ export declare namespace System {
         Parameters: string;
         Rng: System.Security.Cryptography.RandomNumberGenerator;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        CreateKeyExchange(rgbData: System.Byte[]): System.Byte[];
-        CreateKeyExchange(rgbData: System.Byte[], symAlgType: System.Type): System.Byte[];
+        CreateKeyExchange(rgbData: Byte[]): Byte[];
+        CreateKeyExchange(rgbData: Byte[], symAlgType: System.Type): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30627,20 +30541,20 @@ export declare namespace System {
       }
       export class SHA1 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.SHA1;
         static Create(hashName: string): System.Security.Cryptography.SHA1;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30650,19 +30564,19 @@ export declare namespace System {
       export class SHA1Managed {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30670,20 +30584,20 @@ export declare namespace System {
       }
       export class SHA256 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.SHA256;
         static Create(hashName: string): System.Security.Cryptography.SHA256;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30693,19 +30607,19 @@ export declare namespace System {
       export class SHA256Managed {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30713,20 +30627,20 @@ export declare namespace System {
       }
       export class SHA384 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.SHA384;
         static Create(hashName: string): System.Security.Cryptography.SHA384;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30736,19 +30650,19 @@ export declare namespace System {
       export class SHA384Managed {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30756,20 +30670,20 @@ export declare namespace System {
       }
       export class SHA512 {
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         static Create(): System.Security.Cryptography.SHA512;
         static Create(hashName: string): System.Security.Cryptography.SHA512;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Initialize(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30779,19 +30693,19 @@ export declare namespace System {
       export class SHA512Managed {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30815,8 +30729,8 @@ export declare namespace System {
       export class SymmetricAlgorithm {
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
@@ -30828,9 +30742,9 @@ export declare namespace System {
         static Create(): System.Security.Cryptography.SymmetricAlgorithm;
         static Create(algName: string): System.Security.Cryptography.SymmetricAlgorithm;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -30839,10 +30753,10 @@ export declare namespace System {
         ToString(): string;
       }
       export class TripleDES {
-        Key: System.Byte[];
+        Key: Byte[];
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
@@ -30850,14 +30764,14 @@ export declare namespace System {
         Padding: System.Security.Cryptography.PaddingMode;
         static Create(): System.Security.Cryptography.TripleDES;
         static Create(str: string): System.Security.Cryptography.TripleDES;
-        static IsWeakKey(rgbKey: System.Byte[]): boolean;
+        static IsWeakKey(rgbKey: Byte[]): boolean;
         Dispose(): void;
         Clear(): void;
         ValidKeySize(bitLength: number): boolean;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Equals(obj: any): boolean;
@@ -30867,17 +30781,17 @@ export declare namespace System {
       }
       export class TripleDESCryptoServiceProvider {
         constructor();
-        Key: System.Byte[];
+        Key: Byte[];
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         KeySize: number;
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateKey(): void;
         GenerateIV(): void;
         Dispose(): void;
@@ -30898,8 +30812,8 @@ export declare namespace System {
         OutputBlockSize: number;
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Reset(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -30914,7 +30828,7 @@ export declare namespace System {
         static CreateFromName(name: string, ...args: any[]): any;
         static MapNameToOID(name: string): string;
         static AddAlgorithm(algorithm: System.Type, ...names: string[]): void;
-        static EncodeOID(str: string): System.Byte[];
+        static EncodeOID(str: string): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30955,32 +30869,32 @@ export declare namespace System {
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.DSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.DSAParameters): void;
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
-        SignData(buffer: System.Byte[]): System.Byte[];
-        SignData(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        SignData(inputStream: System.IO.Stream): System.Byte[];
-        SignHash(rgbHash: System.Byte[], str: string): System.Byte[];
-        VerifyData(rgbData: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        VerifyHash(rgbHash: System.Byte[], str: string, rgbSignature: System.Byte[]): boolean;
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        ExportCspBlob(includePrivateParameters: boolean): System.Byte[];
-        ImportCspBlob(keyBlob: System.Byte[]): void;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        CreateSignature(rgbHash: Byte[]): Byte[];
+        SignData(buffer: Byte[]): Byte[];
+        SignData(buffer: Byte[], offset: number, count: number): Byte[];
+        SignData(inputStream: System.IO.Stream): Byte[];
+        SignHash(rgbHash: Byte[], str: string): Byte[];
+        VerifyData(rgbData: Byte[], rgbSignature: Byte[]): boolean;
+        VerifyHash(rgbHash: Byte[], str: string, rgbSignature: Byte[]): boolean;
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
+        ExportCspBlob(includePrivateParameters: boolean): Byte[];
+        ImportCspBlob(keyBlob: Byte[]): void;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifySignature(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>): boolean;
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifySignature(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>): boolean;
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30989,19 +30903,19 @@ export declare namespace System {
       export class MD5CryptoServiceProvider {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31009,15 +30923,15 @@ export declare namespace System {
       }
       export class RNGCryptoServiceProvider {
         constructor();
-        constructor(rgb: System.Byte[]);
+        constructor(rgb: Byte[]);
         constructor(cspParams: System.Security.Cryptography.CspParameters);
         constructor(str: string);
-        GetBytes(data: System.Byte[]): void;
-        GetNonZeroBytes(data: System.Byte[]): void;
+        GetBytes(data: Byte[]): void;
+        GetNonZeroBytes(data: Byte[]): void;
         Dispose(): void;
-        GetBytes(data: System.Byte[], offset: number, count: number): void;
-        GetBytes(data: System.Span<System.Byte>): void;
-        GetNonZeroBytes(data: System.Span<System.Byte>): void;
+        GetBytes(data: Byte[], offset: number, count: number): void;
+        GetBytes(data: System.Span<Byte>): void;
+        GetNonZeroBytes(data: System.Span<Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31028,8 +30942,8 @@ export declare namespace System {
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetHashAlgorithm(strName: string): void;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: System.Byte[]): boolean;
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
+        VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: Byte[]): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31038,10 +30952,10 @@ export declare namespace System {
       export class RSAPKCS1SignatureFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
+        CreateSignature(rgbHash: Byte[]): Byte[];
         SetHashAlgorithm(strName: string): void;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
-        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): System.Byte[];
+        CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31050,49 +30964,49 @@ export declare namespace System {
       export class SHA1CryptoServiceProvider {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class AesCcm {
-        constructor(key: System.Byte[]);
-        constructor(key: System.ReadOnlySpan<System.Byte>);
+        constructor(key: Byte[]);
+        constructor(key: System.ReadOnlySpan<Byte>);
         static NonceByteSizes: System.Security.Cryptography.KeySizes;
         static TagByteSizes: System.Security.Cryptography.KeySizes;
-        Decrypt(nonce: System.Byte[], ciphertext: System.Byte[], tag: System.Byte[], plaintext: System.Byte[], associatedData?: System.Byte[]): void;
-        Decrypt(nonce: System.ReadOnlySpan<System.Byte>, ciphertext: System.ReadOnlySpan<System.Byte>, tag: System.ReadOnlySpan<System.Byte>, plaintext: System.Span<System.Byte>, associatedData?: System.ReadOnlySpan<System.Byte>): void;
+        Decrypt(nonce: Byte[], ciphertext: Byte[], tag: Byte[], plaintext: Byte[], associatedData?: Byte[]): void;
+        Decrypt(nonce: System.ReadOnlySpan<Byte>, ciphertext: System.ReadOnlySpan<Byte>, tag: System.ReadOnlySpan<Byte>, plaintext: System.Span<Byte>, associatedData?: System.ReadOnlySpan<Byte>): void;
         Dispose(): void;
-        Encrypt(nonce: System.Byte[], plaintext: System.Byte[], ciphertext: System.Byte[], tag: System.Byte[], associatedData?: System.Byte[]): void;
-        Encrypt(nonce: System.ReadOnlySpan<System.Byte>, plaintext: System.ReadOnlySpan<System.Byte>, ciphertext: System.Span<System.Byte>, tag: System.Span<System.Byte>, associatedData?: System.ReadOnlySpan<System.Byte>): void;
+        Encrypt(nonce: Byte[], plaintext: Byte[], ciphertext: Byte[], tag: Byte[], associatedData?: Byte[]): void;
+        Encrypt(nonce: System.ReadOnlySpan<Byte>, plaintext: System.ReadOnlySpan<Byte>, ciphertext: System.Span<Byte>, tag: System.Span<Byte>, associatedData?: System.ReadOnlySpan<Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
       export class AesGcm {
-        constructor(key: System.Byte[]);
-        constructor(key: System.ReadOnlySpan<System.Byte>);
+        constructor(key: Byte[]);
+        constructor(key: System.ReadOnlySpan<Byte>);
         static NonceByteSizes: System.Security.Cryptography.KeySizes;
         static TagByteSizes: System.Security.Cryptography.KeySizes;
-        Decrypt(nonce: System.Byte[], ciphertext: System.Byte[], tag: System.Byte[], plaintext: System.Byte[], associatedData?: System.Byte[]): void;
-        Decrypt(nonce: System.ReadOnlySpan<System.Byte>, ciphertext: System.ReadOnlySpan<System.Byte>, tag: System.ReadOnlySpan<System.Byte>, plaintext: System.Span<System.Byte>, associatedData?: System.ReadOnlySpan<System.Byte>): void;
+        Decrypt(nonce: Byte[], ciphertext: Byte[], tag: Byte[], plaintext: Byte[], associatedData?: Byte[]): void;
+        Decrypt(nonce: System.ReadOnlySpan<Byte>, ciphertext: System.ReadOnlySpan<Byte>, tag: System.ReadOnlySpan<Byte>, plaintext: System.Span<Byte>, associatedData?: System.ReadOnlySpan<Byte>): void;
         Dispose(): void;
-        Encrypt(nonce: System.Byte[], plaintext: System.Byte[], ciphertext: System.Byte[], tag: System.Byte[], associatedData?: System.Byte[]): void;
-        Encrypt(nonce: System.ReadOnlySpan<System.Byte>, plaintext: System.ReadOnlySpan<System.Byte>, ciphertext: System.Span<System.Byte>, tag: System.Span<System.Byte>, associatedData?: System.ReadOnlySpan<System.Byte>): void;
+        Encrypt(nonce: Byte[], plaintext: Byte[], ciphertext: Byte[], tag: Byte[], associatedData?: Byte[]): void;
+        Encrypt(nonce: System.ReadOnlySpan<Byte>, plaintext: System.ReadOnlySpan<Byte>, ciphertext: System.Span<Byte>, tag: System.Span<Byte>, associatedData?: System.ReadOnlySpan<Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31121,16 +31035,16 @@ export declare namespace System {
         IsCharacteristic2: boolean;
         IsExplicit: boolean;
         IsNamed: boolean;
-        A: System.Byte[];
-        B: System.Byte[];
+        A: Byte[];
+        B: Byte[];
         G: System.Security.Cryptography.ECPoint;
-        Order: System.Byte[];
-        Cofactor: System.Byte[];
-        Seed: System.Byte[];
+        Order: Byte[];
+        Cofactor: Byte[];
+        Seed: Byte[];
         CurveType: System.Security.Cryptography.ECCurve_ECCurveType;
-        Hash?: System.Nullable<System.Security.Cryptography.HashAlgorithmName>;
-        Polynomial: System.Byte[];
-        Prime: System.Byte[];
+        Hash?: System.Security.Cryptography.HashAlgorithmName | undefined;
+        Polynomial: Byte[];
+        Prime: Byte[];
         static CreateFromOid(curveOid: System.Security.Cryptography.Oid): System.Security.Cryptography.ECCurve;
         static CreateFromFriendlyName(oidFriendlyName: string): System.Security.Cryptography.ECCurve;
         static CreateFromValue(oidValue: string): System.Security.Cryptography.ECCurve;
@@ -31173,7 +31087,7 @@ export declare namespace System {
       }
       export class ECParameters {
         Q: System.Security.Cryptography.ECPoint;
-        D: System.Byte[];
+        D: Byte[];
         Curve: System.Security.Cryptography.ECCurve;
         Validate(): void;
         Equals(obj: any): boolean;
@@ -31182,8 +31096,8 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class ECPoint {
-        X: System.Byte[];
-        Y: System.Byte[];
+        X: Byte[];
+        Y: Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -31191,13 +31105,13 @@ export declare namespace System {
       }
       export class IncrementalHash {
         AlgorithmName: System.Security.Cryptography.HashAlgorithmName;
-        AppendData(data: System.Byte[]): void;
-        AppendData(data: System.Byte[], offset: number, count: number): void;
-        GetHashAndReset(): System.Byte[];
+        AppendData(data: Byte[]): void;
+        AppendData(data: Byte[], offset: number, count: number): void;
+        GetHashAndReset(): Byte[];
         Dispose(): void;
         static CreateHash(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Security.Cryptography.IncrementalHash;
-        static CreateHMAC(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, key: System.Byte[]): System.Security.Cryptography.IncrementalHash;
-        AppendData(data: System.ReadOnlySpan<System.Byte>): void;
+        static CreateHMAC(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, key: Byte[]): System.Security.Cryptography.IncrementalHash;
+        AppendData(data: System.ReadOnlySpan<Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31206,8 +31120,8 @@ export declare namespace System {
       export class AesManaged {
         constructor();
         FeedbackSize: number;
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         KeySize: number;
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
@@ -31215,9 +31129,9 @@ export declare namespace System {
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(key: System.Byte[], iv: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(key: Byte[], iv: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(key: System.Byte[], iv: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(key: Byte[], iv: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateIV(): void;
         GenerateKey(): void;
         Dispose(): void;
@@ -31293,9 +31207,9 @@ export declare namespace System {
         static Exists(keyName: string): boolean;
         static Exists(keyName: string, provider: System.Security.Cryptography.CngProvider): boolean;
         static Exists(keyName: string, provider: System.Security.Cryptography.CngProvider, options: System.Security.Cryptography.CngKeyOpenOptions): boolean;
-        static Import(keyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat): System.Security.Cryptography.CngKey;
-        static Import(keyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat, provider: System.Security.Cryptography.CngProvider): System.Security.Cryptography.CngKey;
-        Export(format: System.Security.Cryptography.CngKeyBlobFormat): System.Byte[];
+        static Import(keyBlob: Byte[], format: System.Security.Cryptography.CngKeyBlobFormat): System.Security.Cryptography.CngKey;
+        static Import(keyBlob: Byte[], format: System.Security.Cryptography.CngKeyBlobFormat, provider: System.Security.Cryptography.CngProvider): System.Security.Cryptography.CngKey;
+        Export(format: System.Security.Cryptography.CngKeyBlobFormat): Byte[];
         GetProperty(name: string, options: System.Security.Cryptography.CngPropertyOptions): System.Security.Cryptography.CngProperty;
         HasProperty(name: string, options: System.Security.Cryptography.CngPropertyOptions): boolean;
         static Open(keyName: string): System.Security.Cryptography.CngKey;
@@ -31327,11 +31241,11 @@ export declare namespace System {
       }
       export class CngKeyCreationParameters {
         constructor();
-        ExportPolicy?: System.Nullable<System.Security.Cryptography.CngExportPolicies>;
+        ExportPolicy?: System.Security.Cryptography.CngExportPolicies | undefined;
         KeyCreationOptions: System.Security.Cryptography.CngKeyCreationOptions;
-        KeyUsage?: System.Nullable<System.Security.Cryptography.CngKeyUsages>;
+        KeyUsage?: System.Security.Cryptography.CngKeyUsages | undefined;
         ParentWindowHandle: System.IntPtr;
-        Parameters: System.Security.Cryptography.CngPropertyCollection;
+        Parameters: System.Security.Cryptography.CngProperty[];
         Provider: System.Security.Cryptography.CngProvider;
         UIPolicy: System.Security.Cryptography.CngUIPolicy;
         Equals(obj: any): boolean;
@@ -31340,10 +31254,10 @@ export declare namespace System {
         ToString(): string;
       }
       export class CngProperty {
-        constructor(name: string, value: System.Byte[], options: System.Security.Cryptography.CngPropertyOptions);
+        constructor(name: string, value: Byte[], options: System.Security.Cryptography.CngPropertyOptions);
         Name: string;
         Options: System.Security.Cryptography.CngPropertyOptions;
-        GetValue(): System.Byte[];
+        GetValue(): Byte[];
         Equals(obj: any): boolean;
         Equals(other: System.Security.Cryptography.CngProperty): boolean;
         GetHashCode(): number;
@@ -31352,7 +31266,6 @@ export declare namespace System {
       }
       export class CngPropertyCollection {
         constructor();
-        [key: string]: any;
         Count: number;
         Add(item: System.Security.Cryptography.CngProperty): void;
         Clear(): void;
@@ -31405,25 +31318,25 @@ export declare namespace System {
         static Create(algorithm: string): System.Security.Cryptography.ECDiffieHellman;
         static Create(curve: System.Security.Cryptography.ECCurve): System.Security.Cryptography.ECDiffieHellman;
         static Create(parameters: System.Security.Cryptography.ECParameters): System.Security.Cryptography.ECDiffieHellman;
-        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey): System.Byte[];
-        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: System.Byte[], secretAppend: System.Byte[]): System.Byte[];
-        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[]): System.Byte[];
-        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[], secretPrepend: System.Byte[], secretAppend: System.Byte[]): System.Byte[];
-        DeriveKeyTls(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: System.Byte[], prfSeed: System.Byte[]): System.Byte[];
+        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey): Byte[];
+        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: Byte[], secretAppend: Byte[]): Byte[];
+        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: Byte[]): Byte[];
+        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: Byte[], secretPrepend: Byte[], secretAppend: Byte[]): Byte[];
+        DeriveKeyTls(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: Byte[], prfSeed: Byte[]): Byte[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ImportParameters(parameters: System.Security.Cryptography.ECParameters): void;
         GenerateKey(curve: System.Security.Cryptography.ECCurve): void;
-        ExportECPrivateKey(): System.Byte[];
+        ExportECPrivateKey(): Byte[];
         Dispose(): void;
         Clear(): void;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31431,7 +31344,7 @@ export declare namespace System {
       }
       export class ECDiffieHellmanPublicKey {
         Dispose(): void;
-        ToByteArray(): System.Byte[];
+        ToByteArray(): Byte[];
         ToXmlString(): string;
         ExportParameters(): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(): System.Security.Cryptography.ECParameters;
@@ -31449,29 +31362,29 @@ export declare namespace System {
         static Create(algorithm: string): System.Security.Cryptography.ECDsa;
         static Create(curve: System.Security.Cryptography.ECCurve): System.Security.Cryptography.ECDsa;
         static Create(parameters: System.Security.Cryptography.ECParameters): System.Security.Cryptography.ECDsa;
-        SignHash(hash: System.Byte[]): System.Byte[];
-        VerifyHash(hash: System.Byte[], signature: System.Byte[]): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        SignHash(hash: Byte[]): Byte[];
+        VerifyHash(hash: Byte[], signature: Byte[]): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ImportParameters(parameters: System.Security.Cryptography.ECParameters): void;
         GenerateKey(curve: System.Security.Cryptography.ECCurve): void;
-        VerifyHash(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>): boolean;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        ExportECPrivateKey(): System.Byte[];
+        VerifyHash(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>): boolean;
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        ExportECPrivateKey(): Byte[];
         Dispose(): void;
         Clear(): void;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31488,37 +31401,37 @@ export declare namespace System {
         SignatureAlgorithm: string;
         KeySize: number;
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
-        SignHash(hash: System.Byte[]): System.Byte[];
-        VerifyHash(hash: System.Byte[], signature: System.Byte[]): boolean;
+        SignHash(hash: Byte[]): Byte[];
+        VerifyHash(hash: Byte[], signature: Byte[]): boolean;
         FromXmlString(xml: string, format: System.Security.Cryptography.ECKeyXmlFormat): void;
-        SignData(data: System.Byte[]): System.Byte[];
-        SignData(data: System.IO.Stream): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number): System.Byte[];
+        SignData(data: Byte[]): Byte[];
+        SignData(data: System.IO.Stream): Byte[];
+        SignData(data: Byte[], offset: number, count: number): Byte[];
         ToXmlString(format: System.Security.Cryptography.ECKeyXmlFormat): string;
-        VerifyData(data: System.Byte[], signature: System.Byte[]): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[]): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[]): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], signature: Byte[]): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[]): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[]): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ImportParameters(parameters: System.Security.Cryptography.ECParameters): void;
         GenerateKey(curve: System.Security.Cryptography.ECCurve): void;
-        VerifyHash(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>): boolean;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        ExportECPrivateKey(): System.Byte[];
+        VerifyHash(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>): boolean;
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        ExportECPrivateKey(): Byte[];
         Dispose(): void;
         Clear(): void;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31573,30 +31486,30 @@ export declare namespace System {
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.RSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.RSAParameters): void;
-        Encrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        Decrypt(data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): System.Byte[];
-        SignHash(hash: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyHash(hash: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        DecryptValue(rgb: System.Byte[]): System.Byte[];
-        EncryptValue(rgb: System.Byte[]): System.Byte[];
+        Encrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        Decrypt(data: Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding): Byte[];
+        SignHash(hash: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyHash(hash: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        DecryptValue(rgb: Byte[]): Byte[];
+        EncryptValue(rgb: Byte[]): Byte[];
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        VerifyHash(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
-        ExportRSAPrivateKey(): System.Byte[];
-        ExportRSAPublicKey(): System.Byte[];
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        VerifyHash(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding): boolean;
+        ExportRSAPrivateKey(): Byte[];
+        ExportRSAPublicKey(): Byte[];
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31607,19 +31520,19 @@ export declare namespace System {
         constructor(keyName: string);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider, openOptions: System.Security.Cryptography.CngKeyOpenOptions);
-        Key: System.Byte[];
+        Key: Byte[];
         KeySize: number;
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateIV(): void;
         GenerateKey(): void;
         Dispose(): void;
@@ -31632,8 +31545,8 @@ export declare namespace System {
       }
       export class AesCryptoServiceProvider {
         constructor();
-        IV: System.Byte[];
-        Key: System.Byte[];
+        IV: Byte[];
+        Key: Byte[];
         KeySize: number;
         FeedbackSize: number;
         Mode: System.Security.Cryptography.CipherMode;
@@ -31643,8 +31556,8 @@ export declare namespace System {
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         GenerateIV(): void;
         GenerateKey(): void;
-        CreateDecryptor(key: System.Byte[], iv: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(key: System.Byte[], iv: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(key: Byte[], iv: Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(key: Byte[], iv: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
         Dispose(): void;
@@ -31658,19 +31571,19 @@ export declare namespace System {
       export class MD5Cng {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31679,19 +31592,19 @@ export declare namespace System {
       export class SHA1Cng {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31700,19 +31613,19 @@ export declare namespace System {
       export class SHA256Cng {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31721,19 +31634,19 @@ export declare namespace System {
       export class SHA256CryptoServiceProvider {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31742,19 +31655,19 @@ export declare namespace System {
       export class SHA384Cng {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31763,19 +31676,19 @@ export declare namespace System {
       export class SHA384CryptoServiceProvider {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31784,19 +31697,19 @@ export declare namespace System {
       export class SHA512Cng {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31805,19 +31718,19 @@ export declare namespace System {
       export class SHA512CryptoServiceProvider {
         constructor();
         HashSize: number;
-        Hash: System.Byte[];
+        Hash: Byte[];
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
         CanReuseTransform: boolean;
         Initialize(): void;
-        ComputeHash(buffer: System.Byte[]): System.Byte[];
-        ComputeHash(buffer: System.Byte[], offset: number, count: number): System.Byte[];
-        ComputeHash(inputStream: System.IO.Stream): System.Byte[];
+        ComputeHash(buffer: Byte[]): Byte[];
+        ComputeHash(buffer: Byte[], offset: number, count: number): Byte[];
+        ComputeHash(inputStream: System.IO.Stream): Byte[];
         Dispose(): void;
         Clear(): void;
-        TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
-        TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
+        TransformBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number, outputBuffer: Byte[], outputOffset: number): number;
+        TransformFinalBlock(inputBuffer: Byte[], inputOffset: number, inputCount: number): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31828,19 +31741,19 @@ export declare namespace System {
         constructor(keyName: string);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider, openOptions: System.Security.Cryptography.CngKeyOpenOptions);
-        Key: System.Byte[];
+        Key: Byte[];
         KeySize: number;
         BlockSize: number;
         FeedbackSize: number;
-        IV: System.Byte[];
+        IV: Byte[];
         LegalBlockSizes: System.Security.Cryptography.KeySizes[];
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         Mode: System.Security.Cryptography.CipherMode;
         Padding: System.Security.Cryptography.PaddingMode;
         CreateDecryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateDecryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateDecryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         CreateEncryptor(): System.Security.Cryptography.ICryptoTransform;
-        CreateEncryptor(rgbKey: System.Byte[], rgbIV: System.Byte[]): System.Security.Cryptography.ICryptoTransform;
+        CreateEncryptor(rgbKey: Byte[], rgbIV: Byte[]): System.Security.Cryptography.ICryptoTransform;
         GenerateIV(): void;
         GenerateKey(): void;
         Dispose(): void;
@@ -31860,26 +31773,26 @@ export declare namespace System {
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         SignatureAlgorithm: string;
         KeyExchangeAlgorithm: string;
-        CreateSignature(rgbHash: System.Byte[]): System.Byte[];
+        CreateSignature(rgbHash: Byte[]): Byte[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.DSAParameters;
         ImportParameters(parameters: System.Security.Cryptography.DSAParameters): void;
-        VerifySignature(rgbHash: System.Byte[], rgbSignature: System.Byte[]): boolean;
-        SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        VerifyData(data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifyData(data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifySignature(rgbHash: Byte[], rgbSignature: Byte[]): boolean;
+        SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        SignData(data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        VerifyData(data: Byte[], signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: Byte[], offset: number, count: number, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifyData(data: System.IO.Stream, signature: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        VerifyData(data: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
-        VerifySignature(hash: System.ReadOnlySpan<System.Byte>, signature: System.ReadOnlySpan<System.Byte>): boolean;
+        VerifyData(data: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): boolean;
+        VerifySignature(hash: System.ReadOnlySpan<Byte>, signature: System.ReadOnlySpan<Byte>): boolean;
         Dispose(): void;
         Clear(): void;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31891,43 +31804,43 @@ export declare namespace System {
         constructor(key: System.Security.Cryptography.CngKey);
         constructor(curve: System.Security.Cryptography.ECCurve);
         HashAlgorithm: System.Security.Cryptography.CngAlgorithm;
-        HmacKey: System.Byte[];
+        HmacKey: Byte[];
         Key: System.Security.Cryptography.CngKey;
         KeyDerivationFunction: System.Security.Cryptography.ECDiffieHellmanKeyDerivationFunction;
-        Label: System.Byte[];
+        Label: Byte[];
         PublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey;
-        SecretAppend: System.Byte[];
-        SecretPrepend: System.Byte[];
-        Seed: System.Byte[];
+        SecretAppend: Byte[];
+        SecretPrepend: Byte[];
+        Seed: Byte[];
         UseSecretAgreementAsHmacKey: boolean;
         KeyExchangeAlgorithm: string;
         SignatureAlgorithm: string;
         KeySize: number;
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
-        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.CngKey): System.Byte[];
+        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.CngKey): Byte[];
         DeriveSecretAgreementHandle(otherPartyPublicKey: System.Security.Cryptography.CngKey): any;
         DeriveSecretAgreementHandle(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey): any;
         FromXmlString(xml: string, format: System.Security.Cryptography.ECKeyXmlFormat): void;
         ToXmlString(format: System.Security.Cryptography.ECKeyXmlFormat): string;
-        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey): System.Byte[];
-        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: System.Byte[], secretAppend: System.Byte[]): System.Byte[];
-        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[]): System.Byte[];
-        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[], secretPrepend: System.Byte[], secretAppend: System.Byte[]): System.Byte[];
-        DeriveKeyTls(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: System.Byte[], prfSeed: System.Byte[]): System.Byte[];
+        DeriveKeyMaterial(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey): Byte[];
+        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+        DeriveKeyFromHash(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: Byte[], secretAppend: Byte[]): Byte[];
+        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: Byte[]): Byte[];
+        DeriveKeyFromHmac(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: Byte[], secretPrepend: Byte[], secretAppend: Byte[]): Byte[];
+        DeriveKeyTls(otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: Byte[], prfSeed: Byte[]): Byte[];
         ExportParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(includePrivateParameters: boolean): System.Security.Cryptography.ECParameters;
         ImportParameters(parameters: System.Security.Cryptography.ECParameters): void;
         GenerateKey(curve: System.Security.Cryptography.ECCurve): void;
-        ExportECPrivateKey(): System.Byte[];
+        ExportECPrivateKey(): Byte[];
         Dispose(): void;
         Clear(): void;
         FromXmlString(xmlString: string): void;
         ToXmlString(includePrivateParameters: boolean): string;
-        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<System.Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): System.Byte[];
-        ExportPkcs8PrivateKey(): System.Byte[];
-        ExportSubjectPublicKeyInfo(): System.Byte[];
+        ExportEncryptedPkcs8PrivateKey(passwordBytes: System.ReadOnlySpan<Byte>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportEncryptedPkcs8PrivateKey(password: System.ReadOnlySpan<System.Char>, pbeParameters: System.Security.Cryptography.PbeParameters): Byte[];
+        ExportPkcs8PrivateKey(): Byte[];
+        ExportSubjectPublicKeyInfo(): Byte[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -31940,11 +31853,11 @@ export declare namespace System {
       }
       export class ECDiffieHellmanCngPublicKey {
         BlobFormat: System.Security.Cryptography.CngKeyBlobFormat;
-        static FromByteArray(publicKeyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat): System.Security.Cryptography.ECDiffieHellmanPublicKey;
+        static FromByteArray(publicKeyBlob: Byte[], format: System.Security.Cryptography.CngKeyBlobFormat): System.Security.Cryptography.ECDiffieHellmanPublicKey;
         static FromXmlString(xml: string): System.Security.Cryptography.ECDiffieHellmanCngPublicKey;
         Import(): System.Security.Cryptography.CngKey;
         Dispose(): void;
-        ToByteArray(): System.Byte[];
+        ToByteArray(): Byte[];
         ToXmlString(): string;
         ExportParameters(): System.Security.Cryptography.ECParameters;
         ExportExplicitParameters(): System.Security.Cryptography.ECParameters;
@@ -31957,9 +31870,9 @@ export declare namespace System {
         AuthenticodeSignature: System.Security.Cryptography.X509Certificates.AuthenticodeSignatureInformation;
         Manifest: System.Security.ManifestKinds;
         StrongNameSignature: System.Security.Cryptography.StrongNameSignatureInformation;
-        static VerifySignature(application: System.ActivationContext): System.Security.Cryptography.ManifestSignatureInformationCollection;
-        static VerifySignature(application: System.ActivationContext, manifests: System.Security.ManifestKinds): System.Security.Cryptography.ManifestSignatureInformationCollection;
-        static VerifySignature(application: System.ActivationContext, manifests: System.Security.ManifestKinds, revocationFlag: System.Security.Cryptography.X509Certificates.X509RevocationFlag, revocationMode: System.Security.Cryptography.X509Certificates.X509RevocationMode): System.Security.Cryptography.ManifestSignatureInformationCollection;
+        static VerifySignature(application: System.ActivationContext): System.Security.Cryptography.ManifestSignatureInformation[];
+        static VerifySignature(application: System.ActivationContext, manifests: System.Security.ManifestKinds): System.Security.Cryptography.ManifestSignatureInformation[];
+        static VerifySignature(application: System.ActivationContext, manifests: System.Security.ManifestKinds, revocationFlag: System.Security.Cryptography.X509Certificates.X509RevocationFlag, revocationMode: System.Security.Cryptography.X509Certificates.X509RevocationMode): System.Security.Cryptography.ManifestSignatureInformation[];
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -32015,7 +31928,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class ManifestSignatureInformationCollection {
-        [key: string]: any;
         Count: number;
         Contains(value: System.Security.Cryptography.ManifestSignatureInformation): boolean;
         CopyTo(array: System.Security.Cryptography.ManifestSignatureInformation[], index: number): void;
@@ -32029,7 +31941,6 @@ export declare namespace System {
       export class AsnEncodedDataCollection {
         constructor();
         constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
-        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -32067,7 +31978,6 @@ export declare namespace System {
       }
       export class OidCollection {
         constructor();
-        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -32102,12 +32012,12 @@ export declare namespace System {
         KeyDerivationFunction = 10,
       }
       export class AsnEncodedData {
-        constructor(oid: string, rawData: System.Byte[]);
-        constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[]);
+        constructor(oid: string, rawData: Byte[]);
+        constructor(oid: System.Security.Cryptography.Oid, rawData: Byte[]);
         constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
-        constructor(rawData: System.Byte[]);
+        constructor(rawData: Byte[]);
         Oid: System.Security.Cryptography.Oid;
-        RawData: System.Byte[];
+        RawData: Byte[];
         CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
         Format(multiLine: boolean): string;
         Equals(obj: any): boolean;
@@ -32137,11 +32047,11 @@ export declare namespace System {
         }
         export class X509Certificate {
           constructor();
-          constructor(data: System.Byte[]);
-          constructor(rawData: System.Byte[], password: string);
-          constructor(rawData: System.Byte[], password: System.Security.SecureString);
-          constructor(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
-          constructor(rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(data: Byte[]);
+          constructor(rawData: Byte[], password: string);
+          constructor(rawData: Byte[], password: System.Security.SecureString);
+          constructor(rawData: Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(rawData: Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
           constructor(handle: System.IntPtr);
           constructor(fileName: string);
           constructor(fileName: string, password: string);
@@ -32159,33 +32069,33 @@ export declare namespace System {
           Dispose(): void;
           Equals(obj: any): boolean;
           Equals(other: System.Security.Cryptography.X509Certificates.X509Certificate): boolean;
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): System.Byte[];
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): System.Byte[];
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: System.Security.SecureString): System.Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: System.Security.SecureString): Byte[];
           GetRawCertDataString(): string;
-          GetCertHash(): System.Byte[];
-          GetCertHash(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
+          GetCertHash(): Byte[];
+          GetCertHash(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
           GetCertHashString(): string;
           GetCertHashString(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): string;
           GetEffectiveDateString(): string;
           GetExpirationDateString(): string;
           GetFormat(): string;
           GetPublicKeyString(): string;
-          GetRawCertData(): System.Byte[];
+          GetRawCertData(): Byte[];
           GetHashCode(): number;
           GetKeyAlgorithm(): string;
-          GetKeyAlgorithmParameters(): System.Byte[];
+          GetKeyAlgorithmParameters(): Byte[];
           GetKeyAlgorithmParametersString(): string;
-          GetPublicKey(): System.Byte[];
-          GetSerialNumber(): System.Byte[];
+          GetPublicKey(): Byte[];
+          GetSerialNumber(): Byte[];
           GetSerialNumberString(): string;
           GetName(): string;
           GetIssuerName(): string;
           ToString(): string;
           ToString(fVerbose: boolean): string;
-          Import(rawData: System.Byte[]): void;
-          Import(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
-          Import(rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
+          Import(rawData: Byte[]): void;
+          Import(rawData: Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
+          Import(rawData: Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Import(fileName: string): void;
           Import(fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Import(fileName: string, password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
@@ -32413,13 +32323,13 @@ export declare namespace System {
         }
         export class X500DistinguishedName {
           constructor(encodedDistinguishedName: System.Security.Cryptography.AsnEncodedData);
-          constructor(encodedDistinguishedName: System.Byte[]);
+          constructor(encodedDistinguishedName: Byte[]);
           constructor(distinguishedName: string);
           constructor(distinguishedName: string, flag: System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags);
           constructor(distinguishedName: System.Security.Cryptography.X509Certificates.X500DistinguishedName);
           Name: string;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           Decode(flag: System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags): string;
           Format(multiLine: boolean): string;
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
@@ -32437,7 +32347,7 @@ export declare namespace System {
           PathLengthConstraint: number;
           Critical: boolean;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
           Format(multiLine: boolean): string;
           Equals(obj: any): boolean;
@@ -32447,11 +32357,11 @@ export declare namespace System {
         }
         export class X509Certificate2 {
           constructor();
-          constructor(rawData: System.Byte[]);
-          constructor(rawData: System.Byte[], password: string);
-          constructor(rawData: System.Byte[], password: System.Security.SecureString);
-          constructor(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
-          constructor(rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(rawData: Byte[]);
+          constructor(rawData: Byte[], password: string);
+          constructor(rawData: Byte[], password: System.Security.SecureString);
+          constructor(rawData: Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(rawData: Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
           constructor(handle: System.IntPtr);
           constructor(fileName: string);
           constructor(fileName: string, password: string);
@@ -32468,7 +32378,7 @@ export declare namespace System {
           NotAfter: System.DateTime;
           NotBefore: System.DateTime;
           PublicKey: System.Security.Cryptography.X509Certificates.PublicKey;
-          RawData: System.Byte[];
+          RawData: Byte[];
           SerialNumber: string;
           SignatureAlgorithm: System.Security.Cryptography.Oid;
           SubjectName: System.Security.Cryptography.X509Certificates.X500DistinguishedName;
@@ -32478,14 +32388,14 @@ export declare namespace System {
           Issuer: string;
           Subject: string;
           Reset(): void;
-          static GetCertContentType(rawData: System.Byte[]): System.Security.Cryptography.X509Certificates.X509ContentType;
+          static GetCertContentType(rawData: Byte[]): System.Security.Cryptography.X509Certificates.X509ContentType;
           static GetCertContentType(fileName: string): System.Security.Cryptography.X509Certificates.X509ContentType;
           GetNameInfo(nameType: System.Security.Cryptography.X509Certificates.X509NameType, forIssuer: boolean): string;
           ToString(): string;
           ToString(verbose: boolean): string;
-          Import(rawData: System.Byte[]): void;
-          Import(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
-          Import(rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
+          Import(rawData: Byte[]): void;
+          Import(rawData: Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
+          Import(rawData: Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Import(fileName: string): void;
           Import(fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Import(fileName: string, password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
@@ -32493,25 +32403,25 @@ export declare namespace System {
           Dispose(): void;
           Equals(obj: any): boolean;
           Equals(other: System.Security.Cryptography.X509Certificates.X509Certificate): boolean;
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): System.Byte[];
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): System.Byte[];
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: System.Security.SecureString): System.Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: System.Security.SecureString): Byte[];
           GetRawCertDataString(): string;
-          GetCertHash(): System.Byte[];
-          GetCertHash(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
+          GetCertHash(): Byte[];
+          GetCertHash(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
           GetCertHashString(): string;
           GetCertHashString(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): string;
           GetEffectiveDateString(): string;
           GetExpirationDateString(): string;
           GetFormat(): string;
           GetPublicKeyString(): string;
-          GetRawCertData(): System.Byte[];
+          GetRawCertData(): Byte[];
           GetHashCode(): number;
           GetKeyAlgorithm(): string;
-          GetKeyAlgorithmParameters(): System.Byte[];
+          GetKeyAlgorithmParameters(): Byte[];
           GetKeyAlgorithmParametersString(): string;
-          GetPublicKey(): System.Byte[];
-          GetSerialNumber(): System.Byte[];
+          GetPublicKey(): Byte[];
+          GetSerialNumber(): Byte[];
           GetSerialNumberString(): string;
           GetName(): string;
           GetIssuerName(): string;
@@ -32522,19 +32432,18 @@ export declare namespace System {
           constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection);
           constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2);
           constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]);
-          [key: string]: any;
           Capacity: number;
           Count: number;
           Add(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): number;
           AddRange(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]): void;
           AddRange(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection): void;
           Contains(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): boolean;
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): System.Byte[];
-          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): System.Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType): Byte[];
+          Export(contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string): Byte[];
           Find(findType: System.Security.Cryptography.X509Certificates.X509FindType, findValue: any, validOnly: boolean): System.Security.Cryptography.X509Certificates.X509Certificate2Collection;
           GetEnumerator(): System.Security.Cryptography.X509Certificates.X509Certificate2Enumerator;
-          Import(rawData: System.Byte[]): void;
-          Import(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
+          Import(rawData: Byte[]): void;
+          Import(rawData: Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Import(fileName: string): void;
           Import(fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags): void;
           Insert(index: number, certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): void;
@@ -32571,7 +32480,6 @@ export declare namespace System {
           constructor();
           constructor(value: System.Security.Cryptography.X509Certificates.X509Certificate[]);
           constructor(value: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
-          [key: string]: any;
           Capacity: number;
           Count: number;
           Add(value: System.Security.Cryptography.X509Certificates.X509Certificate): number;
@@ -32629,7 +32537,6 @@ export declare namespace System {
           ToString(): string;
         }
         export class X509ChainElementCollection {
-          [key: string]: any;
           Count: number;
           IsSynchronized: boolean;
           SyncRoot: any; // System.Object
@@ -32680,7 +32587,7 @@ export declare namespace System {
           EnhancedKeyUsages: System.Security.Cryptography.OidCollection;
           Critical: boolean;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
           Format(multiLine: boolean): string;
           Equals(obj: any): boolean;
@@ -32690,11 +32597,11 @@ export declare namespace System {
         }
         export class X509Extension {
           constructor(encodedExtension: System.Security.Cryptography.AsnEncodedData, critical: boolean);
-          constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[], critical: boolean);
-          constructor(oid: string, rawData: System.Byte[], critical: boolean);
+          constructor(oid: System.Security.Cryptography.Oid, rawData: Byte[], critical: boolean);
+          constructor(oid: string, rawData: Byte[], critical: boolean);
           Critical: boolean;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
           Format(multiLine: boolean): string;
           Equals(obj: any): boolean;
@@ -32704,7 +32611,6 @@ export declare namespace System {
         }
         export class X509ExtensionCollection {
           constructor();
-          [key: string]: any;
           Count: number;
           IsSynchronized: boolean;
           SyncRoot: any; // System.Object
@@ -32732,7 +32638,7 @@ export declare namespace System {
           KeyUsages: System.Security.Cryptography.X509Certificates.X509KeyUsageFlags;
           Critical: boolean;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
           Format(multiLine: boolean): string;
           Equals(obj: any): boolean;
@@ -32770,14 +32676,14 @@ export declare namespace System {
         export class X509SubjectKeyIdentifierExtension {
           constructor();
           constructor(encodedSubjectKeyIdentifier: System.Security.Cryptography.AsnEncodedData, critical: boolean);
-          constructor(subjectKeyIdentifier: System.Byte[], critical: boolean);
+          constructor(subjectKeyIdentifier: Byte[], critical: boolean);
           constructor(subjectKeyIdentifier: string, critical: boolean);
           constructor(key: System.Security.Cryptography.X509Certificates.PublicKey, critical: boolean);
           constructor(key: System.Security.Cryptography.X509Certificates.PublicKey, algorithm: System.Security.Cryptography.X509Certificates.X509SubjectKeyIdentifierHashAlgorithm, critical: boolean);
           SubjectKeyIdentifier: string;
           Critical: boolean;
           Oid: System.Security.Cryptography.Oid;
-          RawData: System.Byte[];
+          RawData: Byte[];
           CopyFrom(asnEncodedData: System.Security.Cryptography.AsnEncodedData): void;
           Format(multiLine: boolean): string;
           Equals(obj: any): boolean;
@@ -32795,11 +32701,11 @@ export declare namespace System {
           HashAlgorithm: System.Security.Cryptography.HashAlgorithmName;
           PublicKey: System.Security.Cryptography.X509Certificates.PublicKey;
           SubjectName: System.Security.Cryptography.X509Certificates.X500DistinguishedName;
-          Create(issuerName: System.Security.Cryptography.X509Certificates.X500DistinguishedName, generator: System.Security.Cryptography.X509Certificates.X509SignatureGenerator, notBefore: System.DateTimeOffset, notAfter: System.DateTimeOffset, serialNumber: System.Byte[]): System.Security.Cryptography.X509Certificates.X509Certificate2;
-          Create(issuerCertificate: System.Security.Cryptography.X509Certificates.X509Certificate2, notBefore: System.DateTimeOffset, notAfter: System.DateTimeOffset, serialNumber: System.Byte[]): System.Security.Cryptography.X509Certificates.X509Certificate2;
+          Create(issuerName: System.Security.Cryptography.X509Certificates.X500DistinguishedName, generator: System.Security.Cryptography.X509Certificates.X509SignatureGenerator, notBefore: System.DateTimeOffset, notAfter: System.DateTimeOffset, serialNumber: Byte[]): System.Security.Cryptography.X509Certificates.X509Certificate2;
+          Create(issuerCertificate: System.Security.Cryptography.X509Certificates.X509Certificate2, notBefore: System.DateTimeOffset, notAfter: System.DateTimeOffset, serialNumber: Byte[]): System.Security.Cryptography.X509Certificates.X509Certificate2;
           CreateSelfSigned(notBefore: System.DateTimeOffset, notAfter: System.DateTimeOffset): System.Security.Cryptography.X509Certificates.X509Certificate2;
-          CreateSigningRequest(): System.Byte[];
-          CreateSigningRequest(signatureGenerator: System.Security.Cryptography.X509Certificates.X509SignatureGenerator): System.Byte[];
+          CreateSigningRequest(): Byte[];
+          CreateSigningRequest(signatureGenerator: System.Security.Cryptography.X509Certificates.X509SignatureGenerator): Byte[];
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -32809,8 +32715,8 @@ export declare namespace System {
           PublicKey: System.Security.Cryptography.X509Certificates.PublicKey;
           static CreateForECDsa(key: System.Security.Cryptography.ECDsa): System.Security.Cryptography.X509Certificates.X509SignatureGenerator;
           static CreateForRSA(key: System.Security.Cryptography.RSA, signaturePadding: System.Security.Cryptography.RSASignaturePadding): System.Security.Cryptography.X509Certificates.X509SignatureGenerator;
-          GetSignatureAlgorithmIdentifier(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
-          SignData(data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): System.Byte[];
+          GetSignatureAlgorithmIdentifier(hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
+          SignData(data: Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName): Byte[];
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -32990,7 +32896,7 @@ export declare namespace System {
       }
       export class IsolatedStorageFilePermission {
         constructor(state: System.Security.Permissions.PermissionState);
-        UserQuota: System.Int64;
+        UserQuota: number;
         UsageAllowed: System.Security.Permissions.IsolatedStorageContainment;
         Copy(): System.Security.IPermission;
         Intersect(target: System.Security.IPermission): System.Security.IPermission;
@@ -33009,7 +32915,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class IsolatedStoragePermission {
-        UserQuota: System.Int64;
+        UserQuota: number;
         UsageAllowed: System.Security.Permissions.IsolatedStorageContainment;
         IsUnrestricted(): boolean;
         ToXml(): System.Security.SecurityElement;
@@ -33065,7 +32971,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class KeyContainerPermissionAccessEntryCollection {
-        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -33272,7 +33177,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class StrongNamePublicKeyBlob {
-        constructor(publicKey: System.Byte[]);
+        constructor(publicKey: Byte[]);
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -33534,7 +33439,7 @@ export declare namespace System {
         ExtraInfo: any; // System.Object
         IsApplicationTrustedToRun: boolean;
         Persist: boolean;
-        FullTrustAssemblies: System.Collections.Generic.IList<System.Security.Policy.StrongName>;
+        FullTrustAssemblies: System.Security.Policy.StrongName[];
         FromXml(element: System.Security.SecurityElement): void;
         ToXml(): System.Security.SecurityElement;
         Clone(): System.Security.Policy.EvidenceBase;
@@ -33544,7 +33449,6 @@ export declare namespace System {
         ToString(): string;
       }
       export class ApplicationTrustCollection {
-        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -33719,24 +33623,24 @@ export declare namespace System {
       }
       export class Hash {
         constructor(assembly: System.Reflection.Assembly);
-        MD5: System.Byte[];
-        SHA1: System.Byte[];
-        SHA256: System.Byte[];
-        GenerateHash(hashAlg: System.Security.Cryptography.HashAlgorithm): System.Byte[];
+        MD5: Byte[];
+        SHA1: Byte[];
+        SHA256: Byte[];
+        GenerateHash(hashAlg: System.Security.Cryptography.HashAlgorithm): Byte[];
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         ToString(): string;
-        static CreateMD5(md5: System.Byte[]): System.Security.Policy.Hash;
-        static CreateSHA1(sha1: System.Byte[]): System.Security.Policy.Hash;
-        static CreateSHA256(sha256: System.Byte[]): System.Security.Policy.Hash;
+        static CreateMD5(md5: Byte[]): System.Security.Policy.Hash;
+        static CreateSHA1(sha1: Byte[]): System.Security.Policy.Hash;
+        static CreateSHA256(sha256: Byte[]): System.Security.Policy.Hash;
         Clone(): System.Security.Policy.EvidenceBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
       }
       export class HashMembershipCondition {
-        constructor(hashAlg: System.Security.Cryptography.HashAlgorithm, value: System.Byte[]);
+        constructor(hashAlg: System.Security.Cryptography.HashAlgorithm, value: Byte[]);
         HashAlgorithm: System.Security.Cryptography.HashAlgorithm;
-        HashValue: System.Byte[];
+        HashValue: Byte[];
         Check(evidence: System.Security.Policy.Evidence): boolean;
         Copy(): System.Security.Policy.IMembershipCondition;
         Equals(o: any): boolean;
@@ -34026,11 +33930,11 @@ export declare namespace System {
         AddClaims(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>): void;
         TryRemoveClaim(claim: System.Security.Claims.Claim): boolean;
         RemoveClaim(claim: System.Security.Claims.Claim): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
         WriteTo(writer: System.IO.BinaryWriter): void;
         Equals(obj: any): boolean;
@@ -34083,11 +33987,11 @@ export declare namespace System {
         Clone(): System.Security.Claims.ClaimsPrincipal;
         AddIdentity(identity: System.Security.Claims.ClaimsIdentity): void;
         AddIdentities(identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
         WriteTo(writer: System.IO.BinaryWriter): void;
         Equals(obj: any): boolean;
@@ -34128,7 +34032,6 @@ export declare namespace System {
       export class IdentityReferenceCollection {
         constructor();
         constructor(capacity: number);
-        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         Add(identity: System.Security.Principal.IdentityReference): void;
@@ -34157,7 +34060,7 @@ export declare namespace System {
       }
       export class SecurityIdentifier {
         constructor(sddlForm: string);
-        constructor(binaryForm: System.Byte[], offset: number);
+        constructor(binaryForm: Byte[], offset: number);
         constructor(binaryForm: System.IntPtr);
         constructor(sidType: System.Security.Principal.WellKnownSidType, domainSid: System.Security.Principal.SecurityIdentifier);
         AccountDomainSid: System.Security.Principal.SecurityIdentifier;
@@ -34168,7 +34071,7 @@ export declare namespace System {
         CompareTo(sid: System.Security.Principal.SecurityIdentifier): number;
         Equals(o: any): boolean;
         Equals(sid: System.Security.Principal.SecurityIdentifier): boolean;
-        GetBinaryForm(binaryForm: System.Byte[], offset: number): void;
+        GetBinaryForm(binaryForm: Byte[], offset: number): void;
         GetHashCode(): number;
         IsAccountSid(): boolean;
         IsEqualDomainSid(sid: System.Security.Principal.SecurityIdentifier): boolean;
@@ -34335,11 +34238,11 @@ export declare namespace System {
         AddClaims(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>): void;
         TryRemoveClaim(claim: System.Security.Claims.Claim): boolean;
         RemoveClaim(claim: System.Security.Claims.Claim): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
         WriteTo(writer: System.IO.BinaryWriter): void;
         Equals(obj: any): boolean;
@@ -34369,11 +34272,11 @@ export declare namespace System {
         Clone(): System.Security.Claims.ClaimsPrincipal;
         AddIdentity(identity: System.Security.Claims.ClaimsIdentity): void;
         AddIdentities(identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>): void;
-        FindAll(match: System.Predicate<System.Security.Claims.Claim>): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        FindAll(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         FindAll(type: string): System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
-        FindFirst(match: System.Predicate<System.Security.Claims.Claim>): System.Security.Claims.Claim;
+        FindFirst(match: ((obj: System.Security.Claims.Claim) => boolean)): System.Security.Claims.Claim;
         FindFirst(type: string): System.Security.Claims.Claim;
-        HasClaim(match: System.Predicate<System.Security.Claims.Claim>): boolean;
+        HasClaim(match: ((obj: System.Security.Claims.Claim) => boolean)): boolean;
         HasClaim(type: string, value: string): boolean;
         WriteTo(writer: System.IO.BinaryWriter): void;
         Equals(obj: any): boolean;
@@ -34387,7 +34290,7 @@ export declare namespace System {
     export class ASCIIEncoding {
       constructor();
       IsSingleByte: boolean;
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34403,36 +34306,36 @@ export declare namespace System {
       CodePage: number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(chars: string): number;
-      GetBytes(chars: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetString(bytes: System.Byte[], byteIndex: number, byteCount: number): string;
+      GetBytes(chars: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetString(bytes: Byte[], byteIndex: number, byteCount: number): string;
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
       GetDecoder(): System.Text.Decoder;
       GetEncoder(): System.Text.Encoder;
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(s: string): System.Byte[];
-      GetCharCount(bytes: System.Byte[]): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(s: string): Byte[];
+      GetCharCount(bytes: Byte[]): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
-      GetString(bytes: System.Byte[]): string;
+      GetString(bytes: Byte[]): string;
       Equals(value: any): boolean;
       GetHashCode(): number;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -34440,12 +34343,12 @@ export declare namespace System {
       Fallback: System.Text.DecoderFallback;
       FallbackBuffer: System.Text.DecoderFallbackBuffer;
       Reset(): void;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number, flush: boolean): number;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>, flush: boolean): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number, flush: boolean): number;
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>, flush: boolean): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number, flush: boolean): number;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>, flush: boolean): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number, flush: boolean): number;
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>, flush: boolean): number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -34463,7 +34366,7 @@ export declare namespace System {
     export class DecoderExceptionFallbackBuffer {
       constructor();
       Remaining: number;
-      Fallback(bytesUnknown: System.Byte[], index: number): boolean;
+      Fallback(bytesUnknown: Byte[], index: number): boolean;
       GetNextChar(): System.Char;
       MovePrevious(): boolean;
       Reset(): void;
@@ -34476,8 +34379,8 @@ export declare namespace System {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
-      constructor(message: string, bytesUnknown: System.Byte[], index: number);
-      BytesUnknown: System.Byte[];
+      constructor(message: string, bytesUnknown: Byte[], index: number);
+      BytesUnknown: Byte[];
       Index: number;
       Message: string;
       ParamName: string;
@@ -34508,7 +34411,7 @@ export declare namespace System {
     }
     export class DecoderFallbackBuffer {
       Remaining: number;
-      Fallback(bytesUnknown: System.Byte[], index: number): boolean;
+      Fallback(bytesUnknown: Byte[], index: number): boolean;
       GetNextChar(): System.Char;
       MovePrevious(): boolean;
       Reset(): void;
@@ -34531,7 +34434,7 @@ export declare namespace System {
     export class DecoderReplacementFallbackBuffer {
       constructor(fallback: System.Text.DecoderReplacementFallback);
       Remaining: number;
-      Fallback(bytesUnknown: System.Byte[], index: number): boolean;
+      Fallback(bytesUnknown: Byte[], index: number): boolean;
       GetNextChar(): System.Char;
       MovePrevious(): boolean;
       Reset(): void;
@@ -34546,8 +34449,8 @@ export declare namespace System {
       Reset(): void;
       GetByteCount(chars: System.Char[], index: number, count: number, flush: boolean): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>, flush: boolean): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number, flush: boolean): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>, flush: boolean): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number, flush: boolean): number;
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>, flush: boolean): number;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -34681,7 +34584,6 @@ export declare namespace System {
       constructor(value: string, capacity: number);
       constructor(value: string, startIndex: number, length: number, capacity: number);
       constructor(capacity: number, maxCapacity: number);
-      [key: string]: any;
       Capacity: number;
       MaxCapacity: number;
       Length: number;
@@ -34704,16 +34606,16 @@ export declare namespace System {
       Append(value: boolean): System.Text.StringBuilder;
       Append(value: System.Char): System.Text.StringBuilder;
       Append(value: System.SByte): System.Text.StringBuilder;
-      Append(value: System.Byte): System.Text.StringBuilder;
-      Append(value: System.Int16): System.Text.StringBuilder;
-      Append(value: number): System.Text.StringBuilder;
-      Append(value: System.Int64): System.Text.StringBuilder;
+      Append(value: Byte): System.Text.StringBuilder;
       Append(value: number): System.Text.StringBuilder;
       Append(value: number): System.Text.StringBuilder;
-      Append(value: System.Decimal): System.Text.StringBuilder;
-      Append(value: System.UInt16): System.Text.StringBuilder;
-      Append(value: System.UInt32): System.Text.StringBuilder;
-      Append(value: System.UInt64): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
+      Append(value: number): System.Text.StringBuilder;
       Append(value: any): System.Text.StringBuilder;
       Append(value: System.Char[]): System.Text.StringBuilder;
       Append(value: System.ReadOnlySpan<System.Char>): System.Text.StringBuilder;
@@ -34724,19 +34626,19 @@ export declare namespace System {
       Insert(index: number, value: string): System.Text.StringBuilder;
       Insert(index: number, value: boolean): System.Text.StringBuilder;
       Insert(index: number, value: System.SByte): System.Text.StringBuilder;
-      Insert(index: number, value: System.Byte): System.Text.StringBuilder;
-      Insert(index: number, value: System.Int16): System.Text.StringBuilder;
+      Insert(index: number, value: Byte): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
       Insert(index: number, value: System.Char): System.Text.StringBuilder;
       Insert(index: number, value: System.Char[]): System.Text.StringBuilder;
       Insert(index: number, value: System.Char[], startIndex: number, charCount: number): System.Text.StringBuilder;
       Insert(index: number, value: number): System.Text.StringBuilder;
-      Insert(index: number, value: System.Int64): System.Text.StringBuilder;
       Insert(index: number, value: number): System.Text.StringBuilder;
       Insert(index: number, value: number): System.Text.StringBuilder;
-      Insert(index: number, value: System.Decimal): System.Text.StringBuilder;
-      Insert(index: number, value: System.UInt16): System.Text.StringBuilder;
-      Insert(index: number, value: System.UInt32): System.Text.StringBuilder;
-      Insert(index: number, value: System.UInt64): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
+      Insert(index: number, value: number): System.Text.StringBuilder;
       Insert(index: number, value: any): System.Text.StringBuilder;
       Insert(index: number, value: System.ReadOnlySpan<System.Char>): System.Text.StringBuilder;
       AppendFormat(format: string, arg0: any): System.Text.StringBuilder;
@@ -34761,7 +34663,7 @@ export declare namespace System {
       constructor();
       constructor(bigEndian: boolean, byteOrderMark: boolean);
       constructor(bigEndian: boolean, byteOrderMark: boolean, throwOnInvalidCharacters: boolean);
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34778,43 +34680,43 @@ export declare namespace System {
       CodePage: number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(s: string): number;
-      GetBytes(s: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetString(bytes: System.Byte[], index: number, count: number): string;
+      GetBytes(s: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetString(bytes: Byte[], index: number, count: number): string;
       GetDecoder(): System.Text.Decoder;
       GetEncoder(): System.Text.Encoder;
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       Equals(value: any): boolean;
       GetHashCode(): number;
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(s: string): System.Byte[];
-      GetCharCount(bytes: System.Byte[]): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(s: string): Byte[];
+      GetCharCount(bytes: Byte[]): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
-      GetString(bytes: System.Byte[]): string;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetString(bytes: Byte[]): string;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
     export class UTF7Encoding {
       constructor();
       constructor(allowOptionals: boolean);
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34833,34 +34735,34 @@ export declare namespace System {
       GetHashCode(): number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(s: string): number;
-      GetBytes(s: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetString(bytes: System.Byte[], index: number, count: number): string;
+      GetBytes(s: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetString(bytes: Byte[], index: number, count: number): string;
       GetDecoder(): System.Text.Decoder;
       GetEncoder(): System.Text.Encoder;
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(s: string): System.Byte[];
-      GetCharCount(bytes: System.Byte[]): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(s: string): Byte[];
+      GetCharCount(bytes: Byte[]): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
-      GetString(bytes: System.Byte[]): string;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetString(bytes: Byte[]): string;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -34868,7 +34770,7 @@ export declare namespace System {
       constructor();
       constructor(encoderShouldEmitUTF8Identifier: boolean);
       constructor(encoderShouldEmitUTF8Identifier: boolean, throwOnInvalidBytes: boolean);
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34885,36 +34787,36 @@ export declare namespace System {
       CodePage: number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(chars: string): number;
-      GetBytes(s: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetString(bytes: System.Byte[], index: number, count: number): string;
+      GetBytes(s: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetString(bytes: Byte[], index: number, count: number): string;
       GetDecoder(): System.Text.Decoder;
       GetEncoder(): System.Text.Encoder;
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       Equals(value: any): boolean;
       GetHashCode(): number;
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(s: string): System.Byte[];
-      GetCharCount(bytes: System.Byte[]): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(s: string): Byte[];
+      GetCharCount(bytes: Byte[]): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
-      GetString(bytes: System.Byte[]): string;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetString(bytes: Byte[]): string;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -34922,7 +34824,7 @@ export declare namespace System {
       constructor();
       constructor(bigEndian: boolean, byteOrderMark: boolean);
       constructor(bigEndian: boolean, byteOrderMark: boolean, throwOnInvalidBytes: boolean);
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34940,14 +34842,14 @@ export declare namespace System {
       static CharSize: number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(s: string): number;
-      GetBytes(s: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetString(bytes: System.Byte[], index: number, count: number): string;
+      GetBytes(s: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetString(bytes: Byte[], index: number, count: number): string;
       GetEncoder(): System.Text.Encoder;
       GetDecoder(): System.Text.Decoder;
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
       Equals(value: any): boolean;
@@ -34955,26 +34857,26 @@ export declare namespace System {
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(s: string): System.Byte[];
-      GetCharCount(bytes: System.Byte[]): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(s: string): Byte[];
+      GetCharCount(bytes: Byte[]): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
-      GetString(bytes: System.Byte[]): string;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetString(bytes: Byte[]): string;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
     export class Encoding {
-      Preamble: System.ReadOnlySpan<System.Byte>;
+      Preamble: System.ReadOnlySpan<Byte>;
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -34996,46 +34898,46 @@ export declare namespace System {
       static UTF7: System.Text.Encoding;
       static UTF8: System.Text.Encoding;
       static UTF32: System.Text.Encoding;
-      static Convert(srcEncoding: System.Text.Encoding, dstEncoding: System.Text.Encoding, bytes: System.Byte[]): System.Byte[];
-      static Convert(srcEncoding: System.Text.Encoding, dstEncoding: System.Text.Encoding, bytes: System.Byte[], index: number, count: number): System.Byte[];
+      static Convert(srcEncoding: System.Text.Encoding, dstEncoding: System.Text.Encoding, bytes: Byte[]): Byte[];
+      static Convert(srcEncoding: System.Text.Encoding, dstEncoding: System.Text.Encoding, bytes: Byte[], index: number, count: number): Byte[];
       static RegisterProvider(provider: System.Text.EncodingProvider): void;
       static GetEncoding(codepage: number): System.Text.Encoding;
       static GetEncoding(codepage: number, encoderFallback: System.Text.EncoderFallback, decoderFallback: System.Text.DecoderFallback): System.Text.Encoding;
       static GetEncoding(name: string): System.Text.Encoding;
       static GetEncoding(name: string, encoderFallback: System.Text.EncoderFallback, decoderFallback: System.Text.DecoderFallback): System.Text.Encoding;
       static GetEncodings(): System.Text.EncodingInfo[];
-      GetPreamble(): System.Byte[];
+      GetPreamble(): Byte[];
       Clone(): any;
       GetByteCount(chars: System.Char[]): number;
       GetByteCount(s: string): number;
       GetByteCount(chars: System.Char[], index: number, count: number): number;
       GetByteCount(str: string, index: number, count: number): number;
-      GetBytes(chars: System.Char[]): System.Byte[];
-      GetBytes(chars: System.Char[], index: number, count: number): System.Byte[];
-      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetBytes(s: string): System.Byte[];
-      GetBytes(s: string, charIndex: number, charCount: number, bytes: System.Byte[], byteIndex: number): number;
-      GetCharCount(bytes: System.Byte[]): number;
-      GetCharCount(bytes: System.Byte[], index: number, count: number): number;
-      GetChars(bytes: System.Byte[]): System.Char[];
-      GetChars(bytes: System.Byte[], index: number, count: number): System.Char[];
-      GetChars(bytes: System.Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
-      GetChars(bytes: System.ReadOnlySpan<System.Byte>, chars: System.Span<System.Char>): number;
-      GetString(bytes: System.ReadOnlySpan<System.Byte>): string;
+      GetBytes(chars: System.Char[]): Byte[];
+      GetBytes(chars: System.Char[], index: number, count: number): Byte[];
+      GetBytes(chars: System.Char[], charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetBytes(s: string): Byte[];
+      GetBytes(s: string, charIndex: number, charCount: number, bytes: Byte[], byteIndex: number): number;
+      GetCharCount(bytes: Byte[]): number;
+      GetCharCount(bytes: Byte[], index: number, count: number): number;
+      GetChars(bytes: Byte[]): System.Char[];
+      GetChars(bytes: Byte[], index: number, count: number): System.Char[];
+      GetChars(bytes: Byte[], byteIndex: number, byteCount: number, chars: System.Char[], charIndex: number): number;
+      GetChars(bytes: System.ReadOnlySpan<Byte>, chars: System.Span<System.Char>): number;
+      GetString(bytes: System.ReadOnlySpan<Byte>): string;
       IsAlwaysNormalized(): boolean;
       IsAlwaysNormalized(form: System.Text.NormalizationForm): boolean;
       GetDecoder(): System.Text.Decoder;
       GetEncoder(): System.Text.Encoder;
       GetMaxByteCount(charCount: number): number;
       GetMaxCharCount(byteCount: number): number;
-      GetString(bytes: System.Byte[]): string;
-      GetString(bytes: System.Byte[], index: number, count: number): string;
+      GetString(bytes: Byte[]): string;
+      GetString(bytes: Byte[], index: number, count: number): string;
       Equals(value: any): boolean;
       GetHashCode(): number;
-      GetCharCount(bytes: System.ReadOnlySpan<System.Byte>): number;
+      GetCharCount(bytes: System.ReadOnlySpan<Byte>): number;
       GetByteCount(chars: System.ReadOnlySpan<System.Char>): number;
-      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<System.Byte>): number;
-      GetBytes(s: string, index: number, count: number): System.Byte[];
+      GetBytes(chars: System.ReadOnlySpan<System.Char>, bytes: System.Span<Byte>): number;
+      GetBytes(s: string, index: number, count: number): Byte[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -35050,7 +34952,6 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class CaptureCollection {
-        [key: string]: any;
         IsReadOnly: boolean;
         Count: number;
         IsSynchronized: boolean;
@@ -35066,7 +34967,7 @@ export declare namespace System {
       export class Group {
         Success: boolean;
         Name: string;
-        Captures: System.Text.RegularExpressions.CaptureCollection;
+        Captures: System.Text.RegularExpressions.Capture[];
         Index: number;
         Length: number;
         Value: string;
@@ -35077,7 +34978,6 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class GroupCollection {
-        [key: string]: any;
         IsReadOnly: boolean;
         Count: number;
         IsSynchronized: boolean;
@@ -35092,10 +34992,10 @@ export declare namespace System {
       }
       export class Match {
         static Empty: System.Text.RegularExpressions.Match;
-        Groups: System.Text.RegularExpressions.GroupCollection;
+        Groups: System.Text.RegularExpressions.Group[];
         Success: boolean;
         Name: string;
-        Captures: System.Text.RegularExpressions.CaptureCollection;
+        Captures: System.Text.RegularExpressions.Capture[];
         Index: number;
         Length: number;
         Value: string;
@@ -35108,7 +35008,6 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class MatchCollection {
-        [key: string]: any;
         IsReadOnly: boolean;
         Count: number;
         IsSynchronized: boolean;
@@ -35141,23 +35040,23 @@ export declare namespace System {
         Match(input: string): System.Text.RegularExpressions.Match;
         Match(input: string, startat: number): System.Text.RegularExpressions.Match;
         Match(input: string, beginning: number, length: number): System.Text.RegularExpressions.Match;
-        static Matches(input: string, pattern: string): System.Text.RegularExpressions.MatchCollection;
-        static Matches(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions): System.Text.RegularExpressions.MatchCollection;
-        static Matches(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): System.Text.RegularExpressions.MatchCollection;
-        Matches(input: string): System.Text.RegularExpressions.MatchCollection;
-        Matches(input: string, startat: number): System.Text.RegularExpressions.MatchCollection;
+        static Matches(input: string, pattern: string): System.Text.RegularExpressions.Match[];
+        static Matches(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions): System.Text.RegularExpressions.Match[];
+        static Matches(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): System.Text.RegularExpressions.Match[];
+        Matches(input: string): System.Text.RegularExpressions.Match[];
+        Matches(input: string, startat: number): System.Text.RegularExpressions.Match[];
         static Replace(input: string, pattern: string, replacement: string): string;
         static Replace(input: string, pattern: string, replacement: string, options: System.Text.RegularExpressions.RegexOptions): string;
         static Replace(input: string, pattern: string, replacement: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): string;
         Replace(input: string, replacement: string): string;
         Replace(input: string, replacement: string, count: number): string;
         Replace(input: string, replacement: string, count: number, startat: number): string;
-        static Replace(input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator): string;
-        static Replace(input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, options: System.Text.RegularExpressions.RegexOptions): string;
-        static Replace(input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): string;
-        Replace(input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator): string;
-        Replace(input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, count: number): string;
-        Replace(input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, count: number, startat: number): string;
+        static Replace(input: string, pattern: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string)): string;
+        static Replace(input: string, pattern: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string), options: System.Text.RegularExpressions.RegexOptions): string;
+        static Replace(input: string, pattern: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string), options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): string;
+        Replace(input: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string)): string;
+        Replace(input: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string), count: number): string;
+        Replace(input: string, evaluator: ((match: System.Text.RegularExpressions.Match) => string), count: number, startat: number): string;
         static Split(input: string, pattern: string): string[];
         static Split(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions): string[];
         static Split(input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan): string[];
@@ -35183,7 +35082,7 @@ export declare namespace System {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(match: System.Text.RegularExpressions.Match): string;
-        BeginInvoke(match: System.Text.RegularExpressions.Match, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(match: System.Text.RegularExpressions.Match, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): string;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -35291,7 +35190,7 @@ export declare namespace System {
     }
     export class AsyncLocal<T = any> {
       constructor();
-      constructor(valueChangedHandler: ((arg0: System.Threading.AsyncLocalValueChangedArgs<T>) => void));
+      constructor(valueChangedHandler: ((obj: System.Threading.AsyncLocalValueChangedArgs<T>) => void));
       Value: T;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -35393,7 +35292,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(obj: any): void;
-      BeginInvoke(obj: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(obj: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -35429,7 +35328,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(state: any): void;
-      BeginInvoke(state: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(state: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -35472,7 +35371,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(): void;
-      BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -35594,9 +35493,9 @@ export declare namespace System {
       WaitHandle: System.Threading.WaitHandle;
       Register(callback: (() => void)): System.Threading.CancellationTokenRegistration;
       Register(callback: (() => void), useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
-      Register(callback: ((arg0: any) => void), state: any): System.Threading.CancellationTokenRegistration;
-      Register(callback: ((arg0: any) => void), state: any, useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
-      Register(callback: ((arg0: any) => void), state: any, useSynchronizationContext: boolean, useExecutionContext: boolean): System.Threading.CancellationTokenRegistration;
+      Register(callback: ((obj: any) => void), state: any): System.Threading.CancellationTokenRegistration;
+      Register(callback: ((obj: any) => void), state: any, useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
+      Register(callback: ((obj: any) => void), state: any, useSynchronizationContext: boolean, useExecutionContext: boolean): System.Threading.CancellationTokenRegistration;
       Equals(other: System.Threading.CancellationToken): boolean;
       Equals(other: any): boolean;
       GetHashCode(): number;
@@ -35697,7 +35596,7 @@ export declare namespace System {
       ToString(): string;
     }
     export class PreAllocatedOverlapped {
-      constructor(callback: System.Threading.IOCompletionCallback, state: any, pinData: any);
+      constructor(callback: ((errorCode: number, numBytes: number, pOVERLAP: Pointer<System.Threading.NativeOverlapped>) => void), state: any, pinData: any);
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -35756,7 +35655,7 @@ export declare namespace System {
       constructor(valueFactory: (() => T));
       constructor(valueFactory: (() => T), trackAllValues: boolean);
       Value: T;
-      Values: System.Collections.Generic.IList<T>;
+      Values: T[];
       IsValueCreated: boolean;
       Dispose(): void;
       ToString(): string;
@@ -35795,7 +35694,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(state: any): void;
-      BeginInvoke(state: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(state: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -35817,7 +35716,7 @@ export declare namespace System {
     }
     export class ExecutionContext {
       Dispose(): void;
-      static Run(executionContext: System.Threading.ExecutionContext, callback: System.Threading.ContextCallback, state: any): void;
+      static Run(executionContext: System.Threading.ExecutionContext, callback: ((state: any) => void), state: any): void;
       CreateCopy(): System.Threading.ExecutionContext;
       static SuppressFlow(): System.Threading.AsyncFlowControl;
       static RestoreFlow(): void;
@@ -35852,8 +35751,8 @@ export declare namespace System {
       constructor();
       static Current: System.Threading.SynchronizationContext;
       IsWaitNotificationRequired(): boolean;
-      Send(d: System.Threading.SendOrPostCallback, state: any): void;
-      Post(d: System.Threading.SendOrPostCallback, state: any): void;
+      Send(d: ((state: any) => void), state: any): void;
+      Post(d: ((state: any) => void), state: any): void;
       OperationStarted(): void;
       OperationCompleted(): void;
       Wait(waitHandles: System.IntPtr[], waitAll: boolean, millisecondsTimeout: number): number;
@@ -35865,10 +35764,10 @@ export declare namespace System {
       ToString(): string;
     }
     export class Thread {
-      constructor(start: System.Threading.ThreadStart);
-      constructor(start: System.Threading.ThreadStart, maxStackSize: number);
-      constructor(start: System.Threading.ParameterizedThreadStart);
-      constructor(start: System.Threading.ParameterizedThreadStart, maxStackSize: number);
+      constructor(start: (() => void));
+      constructor(start: (() => void), maxStackSize: number);
+      constructor(start: ((obj: any) => void));
+      constructor(start: ((obj: any) => void), maxStackSize: number);
       ExecutionContext: System.Threading.ExecutionContext;
       Priority: System.Threading.ThreadPriority;
       CurrentUICulture: System.Globalization.CultureInfo;
@@ -35966,7 +35865,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(state: any): void;
-      BeginInvoke(state: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(state: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -35982,7 +35881,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(state: any, timedOut: boolean): void;
-      BeginInvoke(state: any, timedOut: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(state: any, timedOut: boolean, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -36010,17 +35909,17 @@ export declare namespace System {
     export class ThreadPool {
       static SetMaxThreads(workerThreads: number, completionPortThreads: number): boolean;
       static SetMinThreads(workerThreads: number, completionPortThreads: number): boolean;
-      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: System.UInt32, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: System.UInt32, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: System.Int64, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, millisecondsTimeOutInterval: System.Int64, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, timeout: System.TimeSpan, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: any, timeout: System.TimeSpan, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
-      static QueueUserWorkItem(callBack: System.Threading.WaitCallback, state: any): boolean;
-      static QueueUserWorkItem(callBack: System.Threading.WaitCallback): boolean;
-      static UnsafeQueueUserWorkItem(callBack: System.Threading.WaitCallback, state: any): boolean;
+      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, millisecondsTimeOutInterval: number, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, timeout: System.TimeSpan, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static UnsafeRegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: ((state: any, timedOut: boolean) => void), state: any, timeout: System.TimeSpan, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
+      static QueueUserWorkItem(callBack: ((state: any) => void), state: any): boolean;
+      static QueueUserWorkItem(callBack: ((state: any) => void)): boolean;
+      static UnsafeQueueUserWorkItem(callBack: ((state: any) => void), state: any): boolean;
       static BindHandle(osHandle: System.IntPtr): boolean;
       static BindHandle(osHandle: System.Runtime.InteropServices.SafeHandle): boolean;
       Equals(obj: any): boolean;
@@ -36073,7 +35972,7 @@ export declare namespace System {
       static Capture(): System.Threading.CompressedStack;
       static GetCompressedStack(): System.Threading.CompressedStack;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
-      static Run(compressedStack: System.Threading.CompressedStack, callback: System.Threading.ContextCallback, state: any): void;
+      static Run(compressedStack: System.Threading.CompressedStack, callback: ((state: any) => void), state: any): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -36187,16 +36086,16 @@ export declare namespace System {
       ToString(): string;
     }
     export class Timer {
-      constructor(callback: System.Threading.TimerCallback, state: any, dueTime: number, period: number);
-      constructor(callback: System.Threading.TimerCallback, state: any, dueTime: System.Int64, period: System.Int64);
-      constructor(callback: System.Threading.TimerCallback, state: any, dueTime: System.TimeSpan, period: System.TimeSpan);
-      constructor(callback: System.Threading.TimerCallback, state: any, dueTime: System.UInt32, period: System.UInt32);
-      constructor(callback: System.Threading.TimerCallback);
+      constructor(callback: ((state: any) => void), state: any, dueTime: number, period: number);
+      constructor(callback: ((state: any) => void), state: any, dueTime: number, period: number);
+      constructor(callback: ((state: any) => void), state: any, dueTime: System.TimeSpan, period: System.TimeSpan);
+      constructor(callback: ((state: any) => void), state: any, dueTime: number, period: number);
+      constructor(callback: ((state: any) => void));
       Change(dueTime: number, period: number): boolean;
       Change(dueTime: System.TimeSpan, period: System.TimeSpan): boolean;
-      Change(dueTime: System.UInt32, period: System.UInt32): boolean;
+      Change(dueTime: number, period: number): boolean;
       Dispose(): void;
-      Change(dueTime: System.Int64, period: System.Int64): boolean;
+      Change(dueTime: number, period: number): boolean;
       Dispose(notifyObject: System.Threading.WaitHandle): boolean;
       DisposeAsync(): System.Threading.Tasks.ValueTask;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -36212,7 +36111,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(state: any): void;
-      BeginInvoke(state: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(state: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -36288,12 +36187,12 @@ export declare namespace System {
     }
     export class Barrier {
       constructor(participantCount: number);
-      constructor(participantCount: number, postPhaseAction: ((arg0: System.Threading.Barrier) => void));
+      constructor(participantCount: number, postPhaseAction: ((obj: System.Threading.Barrier) => void));
       ParticipantsRemaining: number;
       ParticipantCount: number;
-      CurrentPhaseNumber: System.Int64;
-      AddParticipant(): System.Int64;
-      AddParticipants(participantCount: number): System.Int64;
+      CurrentPhaseNumber: number;
+      AddParticipant(): number;
+      AddParticipants(participantCount: number): number;
       RemoveParticipant(): void;
       RemoveParticipants(participantCount: number): void;
       SignalAndWait(): void;
@@ -36347,7 +36246,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.Threading.ThreadExceptionEventArgs): void;
-      BeginInvoke(sender: any, e: System.Threading.ThreadExceptionEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.Threading.ThreadExceptionEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -36427,7 +36326,7 @@ export declare namespace System {
       export class ValueTask<TResult = any> {
         constructor(result: TResult);
         constructor(task: System.Threading.Tasks.Task<TResult>);
-        constructor(source: System.Threading.Tasks.Sources.IValueTaskSource<TResult>, token: System.Int16);
+        constructor(source: System.Threading.Tasks.Sources.IValueTaskSource<TResult>, token: number);
         IsCompleted: boolean;
         IsCompletedSuccessfully: boolean;
         IsFaulted: boolean;
@@ -36456,14 +36355,14 @@ export declare namespace System {
       export class Parallel {
         static Invoke(...actions: (() => void)[]): void;
         static Invoke(parallelOptions: System.Threading.Tasks.ParallelOptions, ...actions: (() => void)[]): void;
-        static For(fromInclusive: number, toExclusive: number, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, body: ((arg0: number, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: ((arg0: System.Int64, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: number, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: System.Int64, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((obj: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((obj: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((obj: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((obj: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((arg1: number, arg2: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((arg1: number, arg2: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg1: number, arg2: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg1: number, arg2: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -36473,7 +36372,7 @@ export declare namespace System {
         ShouldExitCurrentIteration: boolean;
         IsStopped: boolean;
         IsExceptional: boolean;
-        LowestBreakIteration?: System.Nullable<System.Int64>;
+        LowestBreakIteration?: number | undefined;
         Stop(): void;
         Break(): void;
         Equals(obj: any): boolean;
@@ -36483,7 +36382,7 @@ export declare namespace System {
       }
       export class ParallelLoopResult {
         IsCompleted: boolean;
-        LowestBreakIteration?: System.Nullable<System.Int64>;
+        LowestBreakIteration?: number | undefined;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -36508,10 +36407,10 @@ export declare namespace System {
         constructor(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken);
         constructor(functionCS: (() => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions);
         constructor(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(functionCS: ((arg0: any) => TResult), state: any);
-        constructor(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken);
-        constructor(functionCS: ((arg0: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg: any) => TResult), state: any);
+        constructor(functionCS: ((arg: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken);
+        constructor(functionCS: ((arg: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
         Result: TResult;
         static Factory: any; // System.Threading.Tasks.TaskFactory`1[TResult]
         Id: number;
@@ -36525,16 +36424,16 @@ export declare namespace System {
         IsFaulted: boolean;
         GetAwaiter(): System.Runtime.CompilerServices.TaskAwaiter<TResult>;
         ConfigureAwait(continueOnCapturedContext: boolean): System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void)): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task<TResult>) => void)): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task<TResult>) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task<TResult>) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task<TResult>, arg2: any) => void), state: any): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task<TResult>, arg2: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task<TResult>, arg2: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task<TResult>, arg2: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task<TResult>, arg2: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
         Start(): void;
         Start(scheduler: System.Threading.Tasks.TaskScheduler): void;
         RunSynchronously(): void;
@@ -36547,16 +36446,16 @@ export declare namespace System {
         Wait(cancellationToken: System.Threading.CancellationToken): void;
         Wait(millisecondsTimeout: number): boolean;
         Wait(millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken): boolean;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void)): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task) => void)): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((obj: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task, arg2: any) => void), state: any): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task, arg2: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task, arg2: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task, arg2: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg1: System.Threading.Tasks.Task, arg2: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
         MarkAborted(e: System.Threading.ThreadAbortException): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -36577,23 +36476,23 @@ export declare namespace System {
         StartNew(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
         StartNew(functionCS: (() => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
         StartNew(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult)): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
-        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult)): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult)): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg: any) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg: System.IAsyncResult) => TResult)): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        FromAsync(beginMethod: ((arg1: ((ar: System.IAsyncResult) => void), arg2: any) => System.IAsyncResult), endMethod: ((arg: System.IAsyncResult) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
+        FromAsync(beginMethod: ((arg1: ((ar: System.IAsyncResult) => void), arg2: any) => System.IAsyncResult), endMethod: ((arg: System.IAsyncResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task[]) => TResult)): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task[]) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task) => TResult)): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -36683,19 +36582,19 @@ export declare namespace System {
           Canceled = 3,
         }
         export interface IValueTaskSource<TResult = any> {
-          GetStatus(token: System.Int16): System.Threading.Tasks.Sources.ValueTaskSourceStatus;
-          OnCompleted(continuation: ((arg0: any) => void), state: any, token: System.Int16, flags: System.Threading.Tasks.Sources.ValueTaskSourceOnCompletedFlags): void;
-          GetResult(token: System.Int16): TResult;
+          GetStatus(token: number): System.Threading.Tasks.Sources.ValueTaskSourceStatus;
+          OnCompleted(continuation: ((obj: any) => void), state: any, token: number, flags: System.Threading.Tasks.Sources.ValueTaskSourceOnCompletedFlags): void;
+          GetResult(token: number): TResult;
         }
         export class ManualResetValueTaskSourceCore<TResult = any> {
           RunContinuationsAsynchronously: boolean;
-          Version: System.Int16;
+          Version: number;
           Reset(): void;
           SetResult(result: TResult): void;
           SetException(error: System.Exception): void;
-          GetStatus(token: System.Int16): System.Threading.Tasks.Sources.ValueTaskSourceStatus;
-          GetResult(token: System.Int16): TResult;
-          OnCompleted(continuation: ((arg0: any) => void), state: any, token: System.Int16, flags: System.Threading.Tasks.Sources.ValueTaskSourceOnCompletedFlags): void;
+          GetStatus(token: number): System.Threading.Tasks.Sources.ValueTaskSourceStatus;
+          GetResult(token: number): TResult;
+          OnCompleted(continuation: ((obj: any) => void), state: any, token: number, flags: System.Threading.Tasks.Sources.ValueTaskSourceOnCompletedFlags): void;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           ToString(): string;
@@ -36710,7 +36609,7 @@ export declare namespace System {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(sender: any, e: System.Timers.ElapsedEventArgs): void;
-      BeginInvoke(sender: any, e: System.Timers.ElapsedEventArgs, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(sender: any, e: System.Timers.ElapsedEventArgs, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -36759,22 +36658,22 @@ export declare namespace System {
       static HtmlAttributeEncode(s: string): string;
       static UrlDecode(str: string): string;
       static UrlDecode(str: string, e: System.Text.Encoding): string;
-      static UrlDecode(bytes: System.Byte[], e: System.Text.Encoding): string;
-      static UrlDecode(bytes: System.Byte[], offset: number, count: number, e: System.Text.Encoding): string;
-      static UrlDecodeToBytes(bytes: System.Byte[]): System.Byte[];
-      static UrlDecodeToBytes(str: string): System.Byte[];
-      static UrlDecodeToBytes(str: string, e: System.Text.Encoding): System.Byte[];
-      static UrlDecodeToBytes(bytes: System.Byte[], offset: number, count: number): System.Byte[];
+      static UrlDecode(bytes: Byte[], e: System.Text.Encoding): string;
+      static UrlDecode(bytes: Byte[], offset: number, count: number, e: System.Text.Encoding): string;
+      static UrlDecodeToBytes(bytes: Byte[]): Byte[];
+      static UrlDecodeToBytes(str: string): Byte[];
+      static UrlDecodeToBytes(str: string, e: System.Text.Encoding): Byte[];
+      static UrlDecodeToBytes(bytes: Byte[], offset: number, count: number): Byte[];
       static UrlEncode(str: string): string;
       static UrlEncode(str: string, e: System.Text.Encoding): string;
-      static UrlEncode(bytes: System.Byte[]): string;
-      static UrlEncode(bytes: System.Byte[], offset: number, count: number): string;
-      static UrlEncodeToBytes(str: string): System.Byte[];
-      static UrlEncodeToBytes(str: string, e: System.Text.Encoding): System.Byte[];
-      static UrlEncodeToBytes(bytes: System.Byte[]): System.Byte[];
-      static UrlEncodeToBytes(bytes: System.Byte[], offset: number, count: number): System.Byte[];
+      static UrlEncode(bytes: Byte[]): string;
+      static UrlEncode(bytes: Byte[], offset: number, count: number): string;
+      static UrlEncodeToBytes(str: string): Byte[];
+      static UrlEncodeToBytes(str: string, e: System.Text.Encoding): Byte[];
+      static UrlEncodeToBytes(bytes: Byte[]): Byte[];
+      static UrlEncodeToBytes(bytes: Byte[], offset: number, count: number): Byte[];
       static UrlEncodeUnicode(str: string): string;
-      static UrlEncodeUnicodeToBytes(str: string): System.Byte[];
+      static UrlEncodeUnicodeToBytes(str: string): Byte[];
       static HtmlDecode(s: string): string;
       static HtmlDecode(s: string, output: System.IO.TextWriter): void;
       static HtmlEncode(s: string): string;

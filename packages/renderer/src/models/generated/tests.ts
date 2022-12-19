@@ -1,10 +1,12 @@
 //
 // Types in assemblies: nunit.framework
-// Generated 23/05/2022 15:31:53
+// Generated 27/12/2022 02:34:10
 //
 /* eslint-disable */
 
 import { System } from './system';
+
+type Byte = number;
 
 export declare namespace NUnit {
   export namespace Framework {
@@ -20,20 +22,20 @@ export declare namespace NUnit {
       Fixtures = 4,
     }
     export class Assert {
-      static Throws(expression: NUnit.Framework.Constraints.IResolveConstraint, code: NUnit.Framework.TestDelegate, message: string, ...args: any[]): System.Exception;
-      static Throws(expression: NUnit.Framework.Constraints.IResolveConstraint, code: NUnit.Framework.TestDelegate): System.Exception;
-      static Throws(expectedExceptionType: System.Type, code: NUnit.Framework.TestDelegate, message: string, ...args: any[]): System.Exception;
-      static Throws(expectedExceptionType: System.Type, code: NUnit.Framework.TestDelegate): System.Exception;
-      static Catch(code: NUnit.Framework.TestDelegate, message: string, ...args: any[]): System.Exception;
-      static Catch(code: NUnit.Framework.TestDelegate): System.Exception;
-      static Catch(expectedExceptionType: System.Type, code: NUnit.Framework.TestDelegate, message: string, ...args: any[]): System.Exception;
-      static Catch(expectedExceptionType: System.Type, code: NUnit.Framework.TestDelegate): System.Exception;
-      static DoesNotThrow(code: NUnit.Framework.TestDelegate, message: string, ...args: any[]): void;
-      static DoesNotThrow(code: NUnit.Framework.TestDelegate): void;
+      static Throws(expression: NUnit.Framework.Constraints.IResolveConstraint, code: (() => void), message: string, ...args: any[]): System.Exception;
+      static Throws(expression: NUnit.Framework.Constraints.IResolveConstraint, code: (() => void)): System.Exception;
+      static Throws(expectedExceptionType: System.Type, code: (() => void), message: string, ...args: any[]): System.Exception;
+      static Throws(expectedExceptionType: System.Type, code: (() => void)): System.Exception;
+      static Catch(code: (() => void), message: string, ...args: any[]): System.Exception;
+      static Catch(code: (() => void)): System.Exception;
+      static Catch(expectedExceptionType: System.Type, code: (() => void), message: string, ...args: any[]): System.Exception;
+      static Catch(expectedExceptionType: System.Type, code: (() => void)): System.Exception;
+      static DoesNotThrow(code: (() => void), message: string, ...args: any[]): void;
+      static DoesNotThrow(code: (() => void)): void;
       static AreEqual(expected: number, actual: number, delta: number, message: string, ...args: any[]): void;
       static AreEqual(expected: number, actual: number, delta: number): void;
-      static AreEqual(expected: number, actual: number, delta: number, message: string, ...args: any[]): void;
-      static AreEqual(expected: number, actual: number, delta: number): void;
+      static AreEqual(expected: number, actual: number | undefined, delta: number, message: string, ...args: any[]): void;
+      static AreEqual(expected: number, actual: number | undefined, delta: number): void;
       static AreEqual(expected: any, actual: any, message: string, ...args: any[]): void;
       static AreEqual(expected: any, actual: any): void;
       static AreNotEqual(expected: any, actual: any, message: string, ...args: any[]): void;
@@ -56,21 +58,21 @@ export declare namespace NUnit {
       static That(condition: (() => boolean), message: string, ...args: any[]): void;
       static That(condition: (() => boolean)): void;
       static That(condition: (() => boolean), getExceptionMessage: (() => string)): void;
-      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
-      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint, message: string, ...args: any[]): void;
-      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint, getExceptionMessage: (() => string)): void;
+      static That(code: (() => void), constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
+      static That(code: (() => void), constraint: NUnit.Framework.Constraints.IResolveConstraint, message: string, ...args: any[]): void;
+      static That(code: (() => void), constraint: NUnit.Framework.Constraints.IResolveConstraint, getExceptionMessage: (() => string)): void;
       static ByVal(actual: any, expression: NUnit.Framework.Constraints.IResolveConstraint): void;
       static ByVal(actual: any, expression: NUnit.Framework.Constraints.IResolveConstraint, message: string, ...args: any[]): void;
       static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static Greater(arg1: number, arg2: number): void;
-      static Greater(arg1: System.UInt32, arg2: System.UInt32, message: string, ...args: any[]): void;
-      static Greater(arg1: System.UInt32, arg2: System.UInt32): void;
-      static Greater(arg1: System.Int64, arg2: System.Int64, message: string, ...args: any[]): void;
-      static Greater(arg1: System.Int64, arg2: System.Int64): void;
-      static Greater(arg1: System.UInt64, arg2: System.UInt64, message: string, ...args: any[]): void;
-      static Greater(arg1: System.UInt64, arg2: System.UInt64): void;
-      static Greater(arg1: System.Decimal, arg2: System.Decimal, message: string, ...args: any[]): void;
-      static Greater(arg1: System.Decimal, arg2: System.Decimal): void;
+      static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Greater(arg1: number, arg2: number): void;
+      static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Greater(arg1: number, arg2: number): void;
+      static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Greater(arg1: number, arg2: number): void;
+      static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Greater(arg1: number, arg2: number): void;
       static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static Greater(arg1: number, arg2: number): void;
       static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
@@ -79,14 +81,14 @@ export declare namespace NUnit {
       static Greater(arg1: System.IComparable, arg2: System.IComparable): void;
       static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static Less(arg1: number, arg2: number): void;
-      static Less(arg1: System.UInt32, arg2: System.UInt32, message: string, ...args: any[]): void;
-      static Less(arg1: System.UInt32, arg2: System.UInt32): void;
-      static Less(arg1: System.Int64, arg2: System.Int64, message: string, ...args: any[]): void;
-      static Less(arg1: System.Int64, arg2: System.Int64): void;
-      static Less(arg1: System.UInt64, arg2: System.UInt64, message: string, ...args: any[]): void;
-      static Less(arg1: System.UInt64, arg2: System.UInt64): void;
-      static Less(arg1: System.Decimal, arg2: System.Decimal, message: string, ...args: any[]): void;
-      static Less(arg1: System.Decimal, arg2: System.Decimal): void;
+      static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Less(arg1: number, arg2: number): void;
+      static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Less(arg1: number, arg2: number): void;
+      static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Less(arg1: number, arg2: number): void;
+      static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static Less(arg1: number, arg2: number): void;
       static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static Less(arg1: number, arg2: number): void;
       static Less(arg1: number, arg2: number, message: string, ...args: any[]): void;
@@ -95,14 +97,14 @@ export declare namespace NUnit {
       static Less(arg1: System.IComparable, arg2: System.IComparable): void;
       static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static GreaterOrEqual(arg1: number, arg2: number): void;
-      static GreaterOrEqual(arg1: System.UInt32, arg2: System.UInt32, message: string, ...args: any[]): void;
-      static GreaterOrEqual(arg1: System.UInt32, arg2: System.UInt32): void;
-      static GreaterOrEqual(arg1: System.Int64, arg2: System.Int64, message: string, ...args: any[]): void;
-      static GreaterOrEqual(arg1: System.Int64, arg2: System.Int64): void;
-      static GreaterOrEqual(arg1: System.UInt64, arg2: System.UInt64, message: string, ...args: any[]): void;
-      static GreaterOrEqual(arg1: System.UInt64, arg2: System.UInt64): void;
-      static GreaterOrEqual(arg1: System.Decimal, arg2: System.Decimal, message: string, ...args: any[]): void;
-      static GreaterOrEqual(arg1: System.Decimal, arg2: System.Decimal): void;
+      static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static GreaterOrEqual(arg1: number, arg2: number): void;
+      static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static GreaterOrEqual(arg1: number, arg2: number): void;
+      static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static GreaterOrEqual(arg1: number, arg2: number): void;
+      static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static GreaterOrEqual(arg1: number, arg2: number): void;
       static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static GreaterOrEqual(arg1: number, arg2: number): void;
       static GreaterOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
@@ -111,35 +113,35 @@ export declare namespace NUnit {
       static GreaterOrEqual(arg1: System.IComparable, arg2: System.IComparable): void;
       static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static LessOrEqual(arg1: number, arg2: number): void;
-      static LessOrEqual(arg1: System.UInt32, arg2: System.UInt32, message: string, ...args: any[]): void;
-      static LessOrEqual(arg1: System.UInt32, arg2: System.UInt32): void;
-      static LessOrEqual(arg1: System.Int64, arg2: System.Int64, message: string, ...args: any[]): void;
-      static LessOrEqual(arg1: System.Int64, arg2: System.Int64): void;
-      static LessOrEqual(arg1: System.UInt64, arg2: System.UInt64, message: string, ...args: any[]): void;
-      static LessOrEqual(arg1: System.UInt64, arg2: System.UInt64): void;
-      static LessOrEqual(arg1: System.Decimal, arg2: System.Decimal, message: string, ...args: any[]): void;
-      static LessOrEqual(arg1: System.Decimal, arg2: System.Decimal): void;
+      static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static LessOrEqual(arg1: number, arg2: number): void;
+      static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static LessOrEqual(arg1: number, arg2: number): void;
+      static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static LessOrEqual(arg1: number, arg2: number): void;
+      static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
+      static LessOrEqual(arg1: number, arg2: number): void;
       static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static LessOrEqual(arg1: number, arg2: number): void;
       static LessOrEqual(arg1: number, arg2: number, message: string, ...args: any[]): void;
       static LessOrEqual(arg1: number, arg2: number): void;
       static LessOrEqual(arg1: System.IComparable, arg2: System.IComparable, message: string, ...args: any[]): void;
       static LessOrEqual(arg1: System.IComparable, arg2: System.IComparable): void;
+      static True(condition: boolean | undefined, message: string, ...args: any[]): void;
       static True(condition: boolean, message: string, ...args: any[]): void;
-      static True(condition: boolean, message: string, ...args: any[]): void;
+      static True(condition: boolean | undefined): void;
       static True(condition: boolean): void;
-      static True(condition: boolean): void;
+      static IsTrue(condition: boolean | undefined, message: string, ...args: any[]): void;
       static IsTrue(condition: boolean, message: string, ...args: any[]): void;
-      static IsTrue(condition: boolean, message: string, ...args: any[]): void;
+      static IsTrue(condition: boolean | undefined): void;
       static IsTrue(condition: boolean): void;
-      static IsTrue(condition: boolean): void;
+      static False(condition: boolean | undefined, message: string, ...args: any[]): void;
       static False(condition: boolean, message: string, ...args: any[]): void;
-      static False(condition: boolean, message: string, ...args: any[]): void;
+      static False(condition: boolean | undefined): void;
       static False(condition: boolean): void;
-      static False(condition: boolean): void;
+      static IsFalse(condition: boolean | undefined, message: string, ...args: any[]): void;
       static IsFalse(condition: boolean, message: string, ...args: any[]): void;
-      static IsFalse(condition: boolean, message: string, ...args: any[]): void;
-      static IsFalse(condition: boolean): void;
+      static IsFalse(condition: boolean | undefined): void;
       static IsFalse(condition: boolean): void;
       static NotNull(anObject: any, message: string, ...args: any[]): void;
       static NotNull(anObject: any): void;
@@ -151,8 +153,8 @@ export declare namespace NUnit {
       static IsNull(anObject: any): void;
       static IsNaN(aDouble: number, message: string, ...args: any[]): void;
       static IsNaN(aDouble: number): void;
-      static IsNaN(aDouble: number, message: string, ...args: any[]): void;
-      static IsNaN(aDouble: number): void;
+      static IsNaN(aDouble: number | undefined, message: string, ...args: any[]): void;
+      static IsNaN(aDouble: number | undefined): void;
       static IsEmpty(aString: string, message: string, ...args: any[]): void;
       static IsEmpty(aString: string): void;
       static IsEmpty(collection: System.Collections.IEnumerable, message: string, ...args: any[]): void;
@@ -163,56 +165,56 @@ export declare namespace NUnit {
       static IsNotEmpty(collection: System.Collections.IEnumerable): void;
       static Zero(actual: number): void;
       static Zero(actual: number, message: string, ...args: any[]): void;
-      static Zero(actual: System.UInt32): void;
-      static Zero(actual: System.UInt32, message: string, ...args: any[]): void;
-      static Zero(actual: System.Int64): void;
-      static Zero(actual: System.Int64, message: string, ...args: any[]): void;
-      static Zero(actual: System.UInt64): void;
-      static Zero(actual: System.UInt64, message: string, ...args: any[]): void;
-      static Zero(actual: System.Decimal): void;
-      static Zero(actual: System.Decimal, message: string, ...args: any[]): void;
+      static Zero(actual: number): void;
+      static Zero(actual: number, message: string, ...args: any[]): void;
+      static Zero(actual: number): void;
+      static Zero(actual: number, message: string, ...args: any[]): void;
+      static Zero(actual: number): void;
+      static Zero(actual: number, message: string, ...args: any[]): void;
+      static Zero(actual: number): void;
+      static Zero(actual: number, message: string, ...args: any[]): void;
       static Zero(actual: number): void;
       static Zero(actual: number, message: string, ...args: any[]): void;
       static Zero(actual: number): void;
       static Zero(actual: number, message: string, ...args: any[]): void;
       static NotZero(actual: number): void;
       static NotZero(actual: number, message: string, ...args: any[]): void;
-      static NotZero(actual: System.UInt32): void;
-      static NotZero(actual: System.UInt32, message: string, ...args: any[]): void;
-      static NotZero(actual: System.Int64): void;
-      static NotZero(actual: System.Int64, message: string, ...args: any[]): void;
-      static NotZero(actual: System.UInt64): void;
-      static NotZero(actual: System.UInt64, message: string, ...args: any[]): void;
-      static NotZero(actual: System.Decimal): void;
-      static NotZero(actual: System.Decimal, message: string, ...args: any[]): void;
+      static NotZero(actual: number): void;
+      static NotZero(actual: number, message: string, ...args: any[]): void;
+      static NotZero(actual: number): void;
+      static NotZero(actual: number, message: string, ...args: any[]): void;
+      static NotZero(actual: number): void;
+      static NotZero(actual: number, message: string, ...args: any[]): void;
+      static NotZero(actual: number): void;
+      static NotZero(actual: number, message: string, ...args: any[]): void;
       static NotZero(actual: number): void;
       static NotZero(actual: number, message: string, ...args: any[]): void;
       static NotZero(actual: number): void;
       static NotZero(actual: number, message: string, ...args: any[]): void;
       static Positive(actual: number): void;
       static Positive(actual: number, message: string, ...args: any[]): void;
-      static Positive(actual: System.UInt32): void;
-      static Positive(actual: System.UInt32, message: string, ...args: any[]): void;
-      static Positive(actual: System.Int64): void;
-      static Positive(actual: System.Int64, message: string, ...args: any[]): void;
-      static Positive(actual: System.UInt64): void;
-      static Positive(actual: System.UInt64, message: string, ...args: any[]): void;
-      static Positive(actual: System.Decimal): void;
-      static Positive(actual: System.Decimal, message: string, ...args: any[]): void;
+      static Positive(actual: number): void;
+      static Positive(actual: number, message: string, ...args: any[]): void;
+      static Positive(actual: number): void;
+      static Positive(actual: number, message: string, ...args: any[]): void;
+      static Positive(actual: number): void;
+      static Positive(actual: number, message: string, ...args: any[]): void;
+      static Positive(actual: number): void;
+      static Positive(actual: number, message: string, ...args: any[]): void;
       static Positive(actual: number): void;
       static Positive(actual: number, message: string, ...args: any[]): void;
       static Positive(actual: number): void;
       static Positive(actual: number, message: string, ...args: any[]): void;
       static Negative(actual: number): void;
       static Negative(actual: number, message: string, ...args: any[]): void;
-      static Negative(actual: System.UInt32): void;
-      static Negative(actual: System.UInt32, message: string, ...args: any[]): void;
-      static Negative(actual: System.Int64): void;
-      static Negative(actual: System.Int64, message: string, ...args: any[]): void;
-      static Negative(actual: System.UInt64): void;
-      static Negative(actual: System.UInt64, message: string, ...args: any[]): void;
-      static Negative(actual: System.Decimal): void;
-      static Negative(actual: System.Decimal, message: string, ...args: any[]): void;
+      static Negative(actual: number): void;
+      static Negative(actual: number, message: string, ...args: any[]): void;
+      static Negative(actual: number): void;
+      static Negative(actual: number, message: string, ...args: any[]): void;
+      static Negative(actual: number): void;
+      static Negative(actual: number, message: string, ...args: any[]): void;
+      static Negative(actual: number): void;
+      static Negative(actual: number, message: string, ...args: any[]): void;
       static Negative(actual: number): void;
       static Negative(actual: number, message: string, ...args: any[]): void;
       static Negative(actual: number): void;
@@ -321,7 +323,7 @@ export declare namespace NUnit {
       Method: System.Reflection.MethodInfo;
       Target: any; // System.Object
       Invoke(): void;
-      BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
       EndInvoke(result: System.IAsyncResult): void;
       GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
       Equals(obj: any): boolean;
@@ -357,7 +359,7 @@ export declare namespace NUnit {
       Ordered: NUnit.Framework.Constraints.CollectionOrderedConstraint;
       Expect(condition: boolean, message: string, ...args: any[]): void;
       Expect(condition: boolean): void;
-      Expect(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
+      Expect(code: (() => void), constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
       Map(original: System.Collections.ICollection): NUnit.Framework.ListMapper;
       Property(name: string): NUnit.Framework.Constraints.ResolvableConstraintExpression;
       Attribute(expectedType: System.Type): NUnit.Framework.Constraints.ResolvableConstraintExpression;
@@ -413,7 +415,7 @@ export declare namespace NUnit {
       static That(condition: (() => boolean), message: string, ...args: any[]): void;
       static That(condition: (() => boolean)): void;
       static That(condition: (() => boolean), getExceptionMessage: (() => string)): void;
-      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
+      static That(code: (() => void), constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -757,13 +759,13 @@ export declare namespace NUnit {
       static Write(value: System.Char[]): void;
       static Write(value: number): void;
       static Write(value: number): void;
-      static Write(value: System.Int64): void;
-      static Write(value: System.Decimal): void;
+      static Write(value: number): void;
+      static Write(value: number): void;
       static Write(value: any): void;
       static Write(value: number): void;
       static Write(value: string): void;
-      static Write(value: System.UInt32): void;
-      static Write(value: System.UInt64): void;
+      static Write(value: number): void;
+      static Write(value: number): void;
       static Write(format: string, arg1: any): void;
       static Write(format: string, arg1: any, arg2: any): void;
       static Write(format: string, arg1: any, arg2: any, arg3: any): void;
@@ -774,18 +776,18 @@ export declare namespace NUnit {
       static WriteLine(value: System.Char[]): void;
       static WriteLine(value: number): void;
       static WriteLine(value: number): void;
-      static WriteLine(value: System.Int64): void;
-      static WriteLine(value: System.Decimal): void;
+      static WriteLine(value: number): void;
+      static WriteLine(value: number): void;
       static WriteLine(value: any): void;
       static WriteLine(value: number): void;
       static WriteLine(value: string): void;
-      static WriteLine(value: System.UInt32): void;
-      static WriteLine(value: System.UInt64): void;
+      static WriteLine(value: number): void;
+      static WriteLine(value: number): void;
       static WriteLine(format: string, arg1: any): void;
       static WriteLine(format: string, arg1: any, arg2: any): void;
       static WriteLine(format: string, arg1: any, arg2: any, arg3: any): void;
       static WriteLine(format: string, ...args: any[]): void;
-      static AddFormatter(formatterFactory: NUnit.Framework.Constraints.ValueFormatterFactory): void;
+      static AddFormatter(formatterFactory: ((next: ((val: any) => string)) => ((val: any) => string))): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -793,7 +795,6 @@ export declare namespace NUnit {
     }
     export class TestParameters {
       constructor();
-      [key: string]: any;
       Count: number;
       Names: System.Collections.Generic.ICollection<string>;
       Exists(name: string): boolean;
@@ -860,7 +861,7 @@ export declare namespace NUnit {
         LoadTests(): string;
         ExploreTests(filter: string): string;
         RunTests(filter: string): string;
-        RunTests(callback: ((arg0: string) => void), filter: string): string;
+        RunTests(callback: ((obj: string) => void), filter: string): string;
         StopRun(force: boolean): void;
         CountTests(filter: string): number;
         static InsertEnvironmentElement(targetNode: NUnit.Framework.Interfaces.TNode): NUnit.Framework.Interfaces.TNode;
@@ -880,8 +881,8 @@ export declare namespace NUnit {
         IsTestLoaded: boolean;
         IsTestRunning: boolean;
         IsTestComplete: boolean;
-        Load(assemblyName: string, settings: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
-        Load(assembly: System.Reflection.Assembly, settings: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
+        Load(assemblyName: string, settings: Record<string, any>): NUnit.Framework.Interfaces.ITest;
+        Load(assembly: System.Reflection.Assembly, settings: Record<string, any>): NUnit.Framework.Interfaces.ITest;
         CountTestCases(filter: NUnit.Framework.Interfaces.ITestFilter): number;
         Run(listener: NUnit.Framework.Interfaces.ITestListener, filter: NUnit.Framework.Interfaces.ITestFilter): NUnit.Framework.Interfaces.ITestResult;
         RunAsync(listener: NUnit.Framework.Interfaces.ITestListener, filter: NUnit.Framework.Interfaces.ITestFilter): void;
@@ -893,8 +894,8 @@ export declare namespace NUnit {
         ToString(): string;
       }
       export interface ITestAssemblyBuilder {
-        Build(assembly: System.Reflection.Assembly, options: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
-        Build(assemblyName: string, options: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
+        Build(assembly: System.Reflection.Assembly, options: Record<string, any>): NUnit.Framework.Interfaces.ITest;
+        Build(assemblyName: string, options: Record<string, any>): NUnit.Framework.Interfaces.ITest;
       }
       export interface ITestAssemblyRunner {
         LoadedTest: NUnit.Framework.Interfaces.ITest;
@@ -902,8 +903,8 @@ export declare namespace NUnit {
         IsTestLoaded: boolean;
         IsTestRunning: boolean;
         IsTestComplete: boolean;
-        Load(assemblyName: string, settings: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
-        Load(assembly: System.Reflection.Assembly, settings: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
+        Load(assemblyName: string, settings: Record<string, any>): NUnit.Framework.Interfaces.ITest;
+        Load(assembly: System.Reflection.Assembly, settings: Record<string, any>): NUnit.Framework.Interfaces.ITest;
         CountTestCases(filter: NUnit.Framework.Interfaces.ITestFilter): number;
         Run(listener: NUnit.Framework.Interfaces.ITestListener, filter: NUnit.Framework.Interfaces.ITestFilter): NUnit.Framework.Interfaces.ITestResult;
         RunAsync(listener: NUnit.Framework.Interfaces.ITestListener, filter: NUnit.Framework.Interfaces.ITestFilter): void;
@@ -912,8 +913,8 @@ export declare namespace NUnit {
       }
       export class DefaultTestAssemblyBuilder {
         constructor();
-        Build(assembly: System.Reflection.Assembly, options: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
-        Build(assemblyName: string, options: System.Collections.Generic.IDictionary<string, any>): NUnit.Framework.Interfaces.ITest;
+        Build(assembly: System.Reflection.Assembly, options: Record<string, any>): NUnit.Framework.Interfaces.ITest;
+        Build(assemblyName: string, options: Record<string, any>): NUnit.Framework.Interfaces.ITest;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1458,7 +1459,7 @@ export declare namespace NUnit {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(): TActual;
-        BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): TActual;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -1783,7 +1784,7 @@ export declare namespace NUnit {
         Tolerance: NUnit.Framework.Constraints.Tolerance;
         CaseInsensitive: boolean;
         ClipStrings: boolean;
-        FailurePoints: System.Collections.Generic.IList<NUnit.Framework.Constraints.NUnitEqualityComparer_FailurePoint>;
+        FailurePoints: NUnit.Framework.Constraints.NUnitEqualityComparer_FailurePoint[];
         IgnoreCase: NUnit.Framework.Constraints.EqualConstraint;
         NoClip: NUnit.Framework.Constraints.EqualConstraint;
         AsCollection: NUnit.Framework.Constraints.EqualConstraint;
@@ -1860,11 +1861,11 @@ export declare namespace NUnit {
       }
       export class FloatingPointNumerics {
         static AreAlmostEqualUlps(left: number, right: number, maxUlps: number): boolean;
-        static AreAlmostEqualUlps(left: number, right: number, maxUlps: System.Int64): boolean;
+        static AreAlmostEqualUlps(left: number, right: number, maxUlps: number): boolean;
         static ReinterpretAsInt(value: number): number;
-        static ReinterpretAsLong(value: number): System.Int64;
+        static ReinterpretAsLong(value: number): number;
         static ReinterpretAsFloat(value: number): number;
-        static ReinterpretAsDouble(value: System.Int64): number;
+        static ReinterpretAsDouble(value: number): number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1997,7 +1998,7 @@ export declare namespace NUnit {
         DisplayStringDifferences(expected: string, actual: string, mismatch: number, ignoreCase: boolean, clipping: boolean): void;
         WriteActualValue(actual: any): void;
         WriteValue(val: any): void;
-        WriteCollectionElements(collection: System.Collections.IEnumerable, start: System.Int64, max: number): void;
+        WriteCollectionElements(collection: System.Collections.IEnumerable, start: number, max: number): void;
         Close(): void;
         GetStringBuilder(): System.Text.StringBuilder;
         Write(value: System.Char): void;
@@ -2018,12 +2019,12 @@ export declare namespace NUnit {
         Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
-        Write(value: System.UInt32): void;
-        Write(value: System.Int64): void;
-        Write(value: System.UInt64): void;
         Write(value: number): void;
         Write(value: number): void;
-        Write(value: System.Decimal): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
         Write(value: any): void;
         Write(format: string, arg0: any): void;
         Write(format: string, arg0: any, arg1: any): void;
@@ -2036,12 +2037,12 @@ export declare namespace NUnit {
         WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.UInt32): void;
-        WriteLine(value: System.Int64): void;
-        WriteLine(value: System.UInt64): void;
         WriteLine(value: number): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.Decimal): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
         WriteLine(value: string): void;
         WriteLine(value: any): void;
         WriteLine(format: string, arg0: any): void;
@@ -2065,7 +2066,7 @@ export declare namespace NUnit {
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
         Invoke(val: any): string;
-        BeginInvoke(val: any, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+        BeginInvoke(val: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
         EndInvoke(result: System.IAsyncResult): string;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
@@ -2080,9 +2081,9 @@ export declare namespace NUnit {
         constructor(object: any, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: any; // System.Object
-        Invoke(next: NUnit.Framework.Constraints.ValueFormatter): NUnit.Framework.Constraints.ValueFormatter;
-        BeginInvoke(next: NUnit.Framework.Constraints.ValueFormatter, callback: System.AsyncCallback, object: any): System.IAsyncResult;
-        EndInvoke(result: System.IAsyncResult): NUnit.Framework.Constraints.ValueFormatter;
+        Invoke(next: ((val: any) => string)): ((val: any) => string);
+        BeginInvoke(next: ((val: any) => string), callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): ((val: any) => string);
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -2184,8 +2185,8 @@ export declare namespace NUnit {
         static Default: NUnit.Framework.Constraints.NUnitEqualityComparer;
         IgnoreCase: boolean;
         CompareAsCollection: boolean;
-        ExternalComparers: System.Collections.Generic.IList<NUnit.Framework.Constraints.EqualityAdapter>;
-        FailurePoints: System.Collections.Generic.IList<NUnit.Framework.Constraints.NUnitEqualityComparer_FailurePoint>;
+        ExternalComparers: NUnit.Framework.Constraints.EqualityAdapter[];
+        FailurePoints: NUnit.Framework.Constraints.NUnitEqualityComparer_FailurePoint[];
         WithSameOffset: boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -2375,7 +2376,7 @@ export declare namespace NUnit {
         GetType(): System.Type;
       }
       export class PredicateConstraint<T = any> {
-        constructor(predicate: System.Predicate<T>);
+        constructor(predicate: ((obj: T) => boolean));
         Description: string;
         DisplayName: string;
         Arguments: any[];
@@ -2885,7 +2886,7 @@ export declare namespace NUnit {
       }
       export class NUnitEqualityComparer_FailurePoint {
         constructor();
-        Position: System.Int64;
+        Position: number;
         ExpectedValue: any; // System.Object
         ActualValue: any; // System.Object
         ExpectedHasData: boolean;
@@ -2972,7 +2973,6 @@ export declare namespace NUnit {
         GetData(parameter: NUnit.Framework.Interfaces.IParameterInfo): System.Collections.IEnumerable;
       }
       export interface IPropertyBag {
-        [key: string]: any;
         Keys: System.Collections.Generic.ICollection<string>;
         Add(key: string, value: any): void;
         Set(key: string, value: any): void;
@@ -2993,7 +2993,7 @@ export declare namespace NUnit {
         Parent: NUnit.Framework.Interfaces.ITest;
         IsSuite: boolean;
         HasChildren: boolean;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         Fixture: any; // System.Object
       }
       export interface ITestData {
@@ -3096,7 +3096,7 @@ export declare namespace NUnit {
         Value: string;
         ValueIsCDATA: boolean;
         Attributes: NUnit.Framework.Interfaces.AttributeDictionary;
-        ChildNodes: NUnit.Framework.Interfaces.NodeList;
+        ChildNodes: NUnit.Framework.Interfaces.TNode[];
         FirstChild: NUnit.Framework.Interfaces.TNode;
         OuterXml: string;
         static FromXml(xmlText: string): NUnit.Framework.Interfaces.TNode;
@@ -3105,7 +3105,7 @@ export declare namespace NUnit {
         AddElementWithCDATA(name: string, value: string): NUnit.Framework.Interfaces.TNode;
         AddAttribute(name: string, value: string): void;
         SelectSingleNode(xpath: string): NUnit.Framework.Interfaces.TNode;
-        SelectNodes(xpath: string): NUnit.Framework.Interfaces.NodeList;
+        SelectNodes(xpath: string): NUnit.Framework.Interfaces.TNode[];
         WriteTo(writer: any): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -3114,7 +3114,6 @@ export declare namespace NUnit {
       }
       export class NodeList {
         constructor();
-        [key: string]: any;
         Capacity: number;
         Count: number;
         Add(item: NUnit.Framework.Interfaces.TNode): void;
@@ -3128,17 +3127,17 @@ export declare namespace NUnit {
         CopyTo(array: NUnit.Framework.Interfaces.TNode[]): void;
         CopyTo(index: number, array: NUnit.Framework.Interfaces.TNode[], arrayIndex: number, count: number): void;
         CopyTo(array: NUnit.Framework.Interfaces.TNode[], arrayIndex: number): void;
-        Exists(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): boolean;
-        Find(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): NUnit.Framework.Interfaces.TNode;
-        FindAll(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): NUnit.Framework.Interfaces.TNode[];
-        FindIndex(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        FindIndex(startIndex: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        FindIndex(startIndex: number, count: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        FindLast(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): NUnit.Framework.Interfaces.TNode;
-        FindLastIndex(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        FindLastIndex(startIndex: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        FindLastIndex(startIndex: number, count: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        ForEach(action: ((arg0: NUnit.Framework.Interfaces.TNode) => void)): void;
+        Exists(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): boolean;
+        Find(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): NUnit.Framework.Interfaces.TNode;
+        FindAll(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): NUnit.Framework.Interfaces.TNode[];
+        FindIndex(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        FindIndex(startIndex: number, match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        FindIndex(startIndex: number, count: number, match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        FindLast(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): NUnit.Framework.Interfaces.TNode;
+        FindLastIndex(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        FindLastIndex(startIndex: number, match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        FindLastIndex(startIndex: number, count: number, match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
+        ForEach(action: ((obj: NUnit.Framework.Interfaces.TNode) => void)): void;
         GetEnumerator(): System.Collections.Generic.List<NUnit.Framework.Interfaces.TNode>;
         GetRange(index: number, count: number): NUnit.Framework.Interfaces.TNode[];
         IndexOf(item: NUnit.Framework.Interfaces.TNode): number;
@@ -3150,7 +3149,7 @@ export declare namespace NUnit {
         LastIndexOf(item: NUnit.Framework.Interfaces.TNode, index: number): number;
         LastIndexOf(item: NUnit.Framework.Interfaces.TNode, index: number, count: number): number;
         Remove(item: NUnit.Framework.Interfaces.TNode): boolean;
-        RemoveAll(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
+        RemoveAll(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): number;
         RemoveAt(index: number): void;
         RemoveRange(index: number, count: number): void;
         Reverse(): void;
@@ -3158,10 +3157,10 @@ export declare namespace NUnit {
         Sort(): void;
         Sort(comparer: System.Collections.Generic.IComparer<NUnit.Framework.Interfaces.TNode>): void;
         Sort(index: number, count: number, comparer: System.Collections.Generic.IComparer<NUnit.Framework.Interfaces.TNode>): void;
-        Sort(comparison: System.Comparison<NUnit.Framework.Interfaces.TNode>): void;
+        Sort(comparison: ((x: NUnit.Framework.Interfaces.TNode, y: NUnit.Framework.Interfaces.TNode) => number)): void;
         ToArray(): NUnit.Framework.Interfaces.TNode[];
         TrimExcess(): void;
-        TrueForAll(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): boolean;
+        TrueForAll(match: ((obj: NUnit.Framework.Interfaces.TNode) => boolean)): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3169,7 +3168,6 @@ export declare namespace NUnit {
       }
       export class AttributeDictionary {
         constructor();
-        [key: string]: any;
         Comparer: System.Collections.Generic.IEqualityComparer<string>;
         Count: number;
         Keys: Record<string, string>;
@@ -3278,12 +3276,12 @@ export declare namespace NUnit {
         Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
-        Write(value: System.UInt32): void;
-        Write(value: System.Int64): void;
-        Write(value: System.UInt64): void;
         Write(value: number): void;
         Write(value: number): void;
-        Write(value: System.Decimal): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
         Write(value: any): void;
         Write(format: string, arg0: any): void;
         Write(format: string, arg0: any, arg1: any): void;
@@ -3296,12 +3294,12 @@ export declare namespace NUnit {
         WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.UInt32): void;
-        WriteLine(value: System.Int64): void;
-        WriteLine(value: System.UInt64): void;
         WriteLine(value: number): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.Decimal): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
         WriteLine(value: any): void;
         WriteLine(format: string, arg0: any): void;
         WriteLine(format: string, arg0: any, arg1: any): void;
@@ -3444,7 +3442,7 @@ export declare namespace NUnit {
         DisplayStringDifferences(expected: string, actual: string, mismatch: number, ignoreCase: boolean, clipping: boolean): void;
         WriteActualValue(actual: any): void;
         WriteValue(val: any): void;
-        WriteCollectionElements(collection: System.Collections.IEnumerable, start: System.Int64, max: number): void;
+        WriteCollectionElements(collection: System.Collections.IEnumerable, start: number, max: number): void;
         WriteMessageLine(message: string, ...args: any[]): void;
         Close(): void;
         GetStringBuilder(): System.Text.StringBuilder;
@@ -3466,12 +3464,12 @@ export declare namespace NUnit {
         Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
-        Write(value: System.UInt32): void;
-        Write(value: System.Int64): void;
-        Write(value: System.UInt64): void;
         Write(value: number): void;
         Write(value: number): void;
-        Write(value: System.Decimal): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
+        Write(value: number): void;
         Write(value: any): void;
         Write(format: string, arg0: any): void;
         Write(format: string, arg0: any, arg1: any): void;
@@ -3484,12 +3482,12 @@ export declare namespace NUnit {
         WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.UInt32): void;
-        WriteLine(value: System.Int64): void;
-        WriteLine(value: System.UInt64): void;
         WriteLine(value: number): void;
         WriteLine(value: number): void;
-        WriteLine(value: System.Decimal): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
+        WriteLine(value: number): void;
         WriteLine(value: string): void;
         WriteLine(value: any): void;
         WriteLine(format: string, arg0: any): void;
@@ -3544,24 +3542,24 @@ export declare namespace NUnit {
         static GetRandomizer(member: System.Reflection.MemberInfo): NUnit.Framework.Internal.Randomizer;
         static GetRandomizer(parameter: System.Reflection.ParameterInfo): NUnit.Framework.Internal.Randomizer;
         static CreateRandomizer(): NUnit.Framework.Internal.Randomizer;
-        NextUInt(): System.UInt32;
-        NextUInt(max: System.UInt32): System.UInt32;
-        NextUInt(min: System.UInt32, max: System.UInt32): System.UInt32;
-        NextShort(): System.Int16;
-        NextShort(max: System.Int16): System.Int16;
-        NextShort(min: System.Int16, max: System.Int16): System.Int16;
-        NextUShort(): System.UInt16;
-        NextUShort(max: System.UInt16): System.UInt16;
-        NextUShort(min: System.UInt16, max: System.UInt16): System.UInt16;
-        NextLong(): System.Int64;
-        NextLong(max: System.Int64): System.Int64;
-        NextLong(min: System.Int64, max: System.Int64): System.Int64;
-        NextULong(): System.UInt64;
-        NextULong(max: System.UInt64): System.UInt64;
-        NextULong(min: System.UInt64, max: System.UInt64): System.UInt64;
-        NextByte(): System.Byte;
-        NextByte(max: System.Byte): System.Byte;
-        NextByte(min: System.Byte, max: System.Byte): System.Byte;
+        NextUInt(): number;
+        NextUInt(max: number): number;
+        NextUInt(min: number, max: number): number;
+        NextShort(): number;
+        NextShort(max: number): number;
+        NextShort(min: number, max: number): number;
+        NextUShort(): number;
+        NextUShort(max: number): number;
+        NextUShort(min: number, max: number): number;
+        NextLong(): number;
+        NextLong(max: number): number;
+        NextLong(min: number, max: number): number;
+        NextULong(): number;
+        NextULong(max: number): number;
+        NextULong(min: number, max: number): number;
+        NextByte(): Byte;
+        NextByte(max: Byte): Byte;
+        NextByte(min: Byte, max: Byte): Byte;
         NextSByte(): System.SByte;
         NextSByte(max: System.SByte): System.SByte;
         NextSByte(min: System.SByte, max: System.SByte): System.SByte;
@@ -3576,15 +3574,15 @@ export declare namespace NUnit {
         GetString(outputLength: number, allowedChars: string): string;
         GetString(outputLength: number): string;
         GetString(): string;
-        NextDecimal(): System.Decimal;
-        NextDecimal(max: System.Decimal): System.Decimal;
-        NextDecimal(min: System.Decimal, max: System.Decimal): System.Decimal;
+        NextDecimal(): number;
+        NextDecimal(max: number): number;
+        NextDecimal(min: number, max: number): number;
         Next(): number;
         Next(minValue: number, maxValue: number): number;
         Next(maxValue: number): number;
         NextDouble(): number;
-        NextBytes(buffer: System.Byte[]): void;
-        NextBytes(buffer: System.Span<System.Byte>): void;
+        NextBytes(buffer: Byte[]): void;
+        NextBytes(buffer: System.Span<Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3819,7 +3817,6 @@ export declare namespace NUnit {
       }
       export class PropertyBag {
         constructor();
-        [key: string]: any;
         Keys: System.Collections.Generic.ICollection<string>;
         Add(key: string, value: any): void;
         Set(key: string, value: any): void;
@@ -3833,8 +3830,8 @@ export declare namespace NUnit {
         ToString(): string;
       }
       export class Reflect {
-        static MethodCallWrapper: ((arg0: (() => any)) => any);
-        static ConstructorCallWrapper: ((arg0: System.Type, arg1: any[]) => any);
+        static MethodCallWrapper: ((arg: (() => any)) => any);
+        static ConstructorCallWrapper: ((arg1: System.Type, arg2: any[]) => any);
         static GetMethodsWithAttribute(fixtureType: System.Type, attributeType: System.Type, inherit: boolean): System.Reflection.MethodInfo[];
         static HasMethodWithAttribute(fixtureType: System.Type, attributeType: System.Type): boolean;
         static Construct(type: System.Type): any;
@@ -3907,7 +3904,7 @@ export declare namespace NUnit {
       export interface ITestExecutionContext {
         CurrentTest: NUnit.Framework.Internal.Test;
         StartTime: System.DateTime;
-        StartTicks: System.Int64;
+        StartTicks: number;
         CurrentResult: NUnit.Framework.Internal.TestResult;
         OutWriter: System.IO.TextWriter;
         TestObject: any; // System.Object
@@ -3922,10 +3919,10 @@ export declare namespace NUnit {
         UpstreamActions: NUnit.Framework.ITestAction[];
         CurrentCulture: System.Globalization.CultureInfo;
         CurrentUICulture: System.Globalization.CultureInfo;
-        CurrentValueFormatter: NUnit.Framework.Constraints.ValueFormatter;
+        CurrentValueFormatter: ((val: any) => string);
         IsSingleThreaded: boolean;
         IncrementAssertCount(): void;
-        AddFormatter(formatterFactory: NUnit.Framework.Constraints.ValueFormatterFactory): void;
+        AddFormatter(formatterFactory: ((next: ((val: any) => string)) => ((val: any) => string))): void;
       }
       export class TestExecutionContext {
         constructor();
@@ -3933,7 +3930,7 @@ export declare namespace NUnit {
         static CurrentContext: NUnit.Framework.Internal.ITestExecutionContext;
         CurrentTest: NUnit.Framework.Internal.Test;
         StartTime: System.DateTime;
-        StartTicks: System.Int64;
+        StartTicks: number;
         CurrentResult: NUnit.Framework.Internal.TestResult;
         OutWriter: System.IO.TextWriter;
         TestObject: any; // System.Object
@@ -3949,7 +3946,7 @@ export declare namespace NUnit {
         CurrentCulture: System.Globalization.CultureInfo;
         CurrentUICulture: System.Globalization.CultureInfo;
         CurrentPrincipal: System.Security.Principal.IPrincipal;
-        CurrentValueFormatter: NUnit.Framework.Constraints.ValueFormatter;
+        CurrentValueFormatter: ((val: any) => string);
         IsSingleThreaded: boolean;
         static GetTestExecutionContext(): NUnit.Framework.Internal.TestExecutionContext;
         static ClearCurrentContext(): void;
@@ -3957,7 +3954,7 @@ export declare namespace NUnit {
         EstablishExecutionEnvironment(): void;
         IncrementAssertCount(): void;
         IncrementAssertCount(count: number): void;
-        AddFormatter(formatterFactory: NUnit.Framework.Constraints.ValueFormatterFactory): void;
+        AddFormatter(formatterFactory: ((next: ((val: any) => string)) => ((val: any) => string))): void;
         InitializeLifetimeService(): any;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -4006,7 +4003,7 @@ export declare namespace NUnit {
       export class ParameterizedFixtureSuite {
         constructor(typeInfo: NUnit.Framework.Interfaces.ITypeInfo);
         TestType: string;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4039,7 +4036,7 @@ export declare namespace NUnit {
       export class ParameterizedMethodSuite {
         constructor(method: NUnit.Framework.Interfaces.IMethodInfo);
         TestType: string;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4071,7 +4068,7 @@ export declare namespace NUnit {
       }
       export class SetUpFixture {
         constructor(type: NUnit.Framework.Interfaces.ITypeInfo);
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4118,7 +4115,7 @@ export declare namespace NUnit {
         IsSuite: boolean;
         HasChildren: boolean;
         Parent: NUnit.Framework.Interfaces.ITest;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         Fixture: any; // System.Object
         static IdPrefix: string;
         Seed: number;
@@ -4137,7 +4134,7 @@ export declare namespace NUnit {
         constructor(path: string);
         Assembly: System.Reflection.Assembly;
         TestType: string;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4169,7 +4166,7 @@ export declare namespace NUnit {
       }
       export class TestFixture {
         constructor(fixtureType: NUnit.Framework.Interfaces.ITypeInfo);
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4204,7 +4201,7 @@ export declare namespace NUnit {
         constructor(method: NUnit.Framework.Interfaces.IMethodInfo);
         constructor(method: NUnit.Framework.Interfaces.IMethodInfo, parentSuite: NUnit.Framework.Internal.Test);
         HasChildren: boolean;
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         XmlElementName: string;
         MethodName: string;
         Id: string;
@@ -4237,7 +4234,7 @@ export declare namespace NUnit {
         constructor(parentSuiteName: string, name: string);
         constructor(fixtureType: NUnit.Framework.Interfaces.ITypeInfo);
         constructor(fixtureType: System.Type);
-        Tests: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITest>;
+        Tests: NUnit.Framework.Interfaces.ITest[];
         TestCaseCount: number;
         Arguments: any[];
         HasChildren: boolean;
@@ -4394,7 +4391,7 @@ export declare namespace NUnit {
         export class NamespaceTreeBuilder {
           constructor(rootSuite: NUnit.Framework.Internal.TestSuite);
           RootSuite: NUnit.Framework.Internal.TestSuite;
-          Add(fixtures: System.Collections.Generic.IList<NUnit.Framework.Internal.Test>): void;
+          Add(fixtures: NUnit.Framework.Internal.Test[]): void;
           Add(fixture: NUnit.Framework.Internal.TestSuite): void;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -4466,7 +4463,7 @@ export declare namespace NUnit {
       }
       export namespace Commands {
         export class SetUpTearDownItem {
-          constructor(setUpMethods: System.Collections.Generic.IList<System.Reflection.MethodInfo>, tearDownMethods: System.Collections.Generic.IList<System.Reflection.MethodInfo>);
+          constructor(setUpMethods: System.Reflection.MethodInfo[], tearDownMethods: System.Reflection.MethodInfo[]);
           HasMethods: boolean;
           RunSetUp(context: NUnit.Framework.Internal.ITestExecutionContext): void;
           RunTearDown(context: NUnit.Framework.Internal.ITestExecutionContext): void;
@@ -4614,12 +4611,12 @@ export declare namespace NUnit {
           Write(buffer: System.ReadOnlySpan<System.Char>): void;
           Write(value: boolean): void;
           Write(value: number): void;
-          Write(value: System.UInt32): void;
-          Write(value: System.Int64): void;
-          Write(value: System.UInt64): void;
           Write(value: number): void;
           Write(value: number): void;
-          Write(value: System.Decimal): void;
+          Write(value: number): void;
+          Write(value: number): void;
+          Write(value: number): void;
+          Write(value: number): void;
           Write(value: any): void;
           Write(format: string, arg0: any): void;
           Write(format: string, arg0: any, arg1: any): void;
@@ -4632,12 +4629,12 @@ export declare namespace NUnit {
           WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
           WriteLine(value: boolean): void;
           WriteLine(value: number): void;
-          WriteLine(value: System.UInt32): void;
-          WriteLine(value: System.Int64): void;
-          WriteLine(value: System.UInt64): void;
           WriteLine(value: number): void;
           WriteLine(value: number): void;
-          WriteLine(value: System.Decimal): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
           WriteLine(value: any): void;
           WriteLine(format: string, arg0: any): void;
           WriteLine(format: string, arg0: any, arg1: any): void;
@@ -4704,12 +4701,12 @@ export declare namespace NUnit {
           Write(buffer: System.ReadOnlySpan<System.Char>): void;
           Write(value: boolean): void;
           Write(value: number): void;
-          Write(value: System.UInt32): void;
-          Write(value: System.Int64): void;
-          Write(value: System.UInt64): void;
           Write(value: number): void;
           Write(value: number): void;
-          Write(value: System.Decimal): void;
+          Write(value: number): void;
+          Write(value: number): void;
+          Write(value: number): void;
+          Write(value: number): void;
           Write(value: any): void;
           Write(format: string, arg0: any): void;
           Write(format: string, arg0: any, arg1: any): void;
@@ -4722,12 +4719,12 @@ export declare namespace NUnit {
           WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
           WriteLine(value: boolean): void;
           WriteLine(value: number): void;
-          WriteLine(value: System.UInt32): void;
-          WriteLine(value: System.Int64): void;
-          WriteLine(value: System.UInt64): void;
           WriteLine(value: number): void;
           WriteLine(value: number): void;
-          WriteLine(value: System.Decimal): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
+          WriteLine(value: number): void;
           WriteLine(value: any): void;
           WriteLine(format: string, arg0: any): void;
           WriteLine(format: string, arg0: any, arg1: any): void;
@@ -4824,7 +4821,7 @@ export declare namespace NUnit {
         export class CompositeFilter {
           constructor();
           constructor(...filters: NUnit.Framework.Interfaces.ITestFilter[]);
-          Filters: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITestFilter>;
+          Filters: NUnit.Framework.Interfaces.ITestFilter[];
           IsEmpty: boolean;
           TopLevel: boolean;
           Add(filter: NUnit.Framework.Interfaces.ITestFilter): void;
@@ -4944,7 +4941,7 @@ export declare namespace NUnit {
         export class AndFilter {
           constructor();
           constructor(...filters: NUnit.Framework.Interfaces.ITestFilter[]);
-          Filters: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITestFilter>;
+          Filters: NUnit.Framework.Interfaces.ITestFilter[];
           IsEmpty: boolean;
           TopLevel: boolean;
           Pass(test: NUnit.Framework.Interfaces.ITest): boolean;
@@ -4995,7 +4992,7 @@ export declare namespace NUnit {
         export class OrFilter {
           constructor();
           constructor(...filters: NUnit.Framework.Interfaces.ITestFilter[]);
-          Filters: System.Collections.Generic.IList<NUnit.Framework.Interfaces.ITestFilter>;
+          Filters: NUnit.Framework.Interfaces.ITestFilter[];
           IsEmpty: boolean;
           TopLevel: boolean;
           Pass(test: NUnit.Framework.Interfaces.ITest): boolean;
