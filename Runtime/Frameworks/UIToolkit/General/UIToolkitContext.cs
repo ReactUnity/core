@@ -26,6 +26,7 @@ namespace ReactUnity.UIToolkit
             = new Dictionary<string, Func<string, string, UIToolkitContext, IReactComponent>>()
             {
                 { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false) },
+                { "br", (tag, text, context) => new BrComponent(context, tag) },
                 { "richtext", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false, true) },
                 { "label", (tag, text, context) => new TextComponent<Label>(text, context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent<Button>(context, tag) },

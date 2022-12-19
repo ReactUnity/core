@@ -9,6 +9,9 @@ namespace ReactUnity.UIToolkit
         public TextComponent(string text, UIToolkitContext context, string tag, bool isContainer = true, bool richText = true) : base(context, tag, isContainer)
         {
             Element.text = text;
+#if UNITY_2021_1_OR_NEWER
+            Element.enableRichText = richText;
+#endif
         }
 
         public void SetText(string text)

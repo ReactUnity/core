@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using UnityEditor;
 #if REACT_UNITY_DEVELOPER
 using System.Reflection;
 #endif
@@ -12,7 +13,7 @@ namespace ReactUnity.Editor.Developer
     public static class TypescriptModelsGeneratorPresets
     {
 #if REACT_UNITY_DEVELOPER
-        [UnityEditor.MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
         public static void GenerateUnity()
         {
             var assemblies = new List<Assembly> {
@@ -68,16 +69,18 @@ namespace ReactUnity.Editor.Developer
             generator.PickFileAndGenerate();
         }
 
-        [UnityEditor.MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
             var generator = new TypescriptModelsGenerator
             {
-                Assemblies = new List<Assembly> { typeof(UnityEditor.EditorWindow).Assembly },
+                Assemblies = new List<Assembly> {
+                    typeof(UnityEditor.EditorWindow).Assembly,
+                },
                 IncludedNamespaces = new List<string> { "UnityEditor" },
                 ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
                 ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
-                ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
+                ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer", "UnityEngine.AssetBundleManifest" },
                 ExportAsClass = true,
                 AllowGeneric = true,
                 Members = TypescriptModelsGenerator.MemberFlags.All,
@@ -87,7 +90,7 @@ namespace ReactUnity.Editor.Developer
             generator.PickFileAndGenerate();
         }
 
-        [UnityEditor.MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
         public static void GenerateReactUnity()
         {
             var generator = new TypescriptModelsGenerator
@@ -106,7 +109,7 @@ namespace ReactUnity.Editor.Developer
             generator.PickFileAndGenerate();
         }
 
-        [UnityEditor.MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
         public static void GenerateYoga()
         {
             var generator = new TypescriptModelsGenerator
@@ -125,7 +128,7 @@ namespace ReactUnity.Editor.Developer
             generator.PickFileAndGenerate();
         }
 
-        [UnityEditor.MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
         public static void GenerateSystem()
         {
             var generator = new TypescriptModelsGenerator
@@ -152,7 +155,7 @@ namespace ReactUnity.Editor.Developer
         }
 
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
-        [UnityEditor.MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
+        [MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
         public static void GenerateQuickJS()
         {
             var generator =
@@ -178,7 +181,7 @@ namespace ReactUnity.Editor.Developer
 #endif
 #endif
 
-        [UnityEditor.MenuItem("React/Generate Project Typescript Models", priority = 0)]
+        [MenuItem("React/Generate Project Typescript Models", priority = 0)]
         public static void GenerateCurrentProject()
         {
             var compiledAssemblies = UnityEditor.Compilation.CompilationPipeline.GetAssemblies(UnityEditor.Compilation.AssembliesType.Editor);

@@ -23,6 +23,7 @@ namespace ReactUnity.UGUI
             {
                 { "view", (tag, text, context) => new ContainerComponent(context, tag) },
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
+                { "br", (tag, text, context) => new BrComponent(context, tag) },
                 { "richtext", (tag, text, context) => new RichTextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
                 { "button", (tag, text, context) => new ButtonComponent(context) },

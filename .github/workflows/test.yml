@@ -230,7 +230,7 @@ jobs:
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v3
-        if: always() && matrix.main && matrix.coverage
+        if: always() && matrix.main && matrix.coverage && contains(github.event.head_commit.message, '[coverage]')
         with:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Code Coverage"
           path: CodeCoverage

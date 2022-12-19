@@ -652,7 +652,7 @@ namespace ReactUnity.Editor.Developer
             if (!type.IsEnum && propertyType.Contains("`")) return "any";
             if (type.DeclaringType != null)
             {
-                var parent = getTypesScriptType(type.DeclaringType, withNs, skipKnownTypes, allowGeneric);
+                var parent = getTypesScriptType(type.DeclaringType, withNs, true, allowGeneric);
                 if (parent == "any") return "any";
                 return parent + "_" + type.Name;
             }
