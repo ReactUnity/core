@@ -228,6 +228,13 @@ jobs:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v3
+        if: always() && matrix.main && matrix.coverage
+        with:
+          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Code Coverage"
+          path: CodeCoverage
+
       - name: Fail workflow if tests failed
         if: steps.testRunner.outcome == 'failure' && (fromJSON(steps.test-results.outputs.json).conclusion == 'failure' || fromJSON(steps.test-results.outputs.json).stats.tests == 0)
         uses: actions/github-script@v3
