@@ -192,7 +192,8 @@ namespace ReactUnity.UGUI.Internal
             var min = new Vector2(-borderLeft, -borderBottom);
             var max = new Vector2(borderRight, borderTop);
 
-            if (!hasBorder && !borderRoot) return;
+            // TODO: enable below line to not create borders when not necessary
+            //if (!borderRoot && !hasBorder) return;
 
             var br = BorderRoot;
             br.offsetMin = -min;
@@ -207,8 +208,8 @@ namespace ReactUnity.UGUI.Internal
             bg.Border.RightWidth = borderRight;
             bg.Border.BottomWidth = borderBottom;
             bg.Border.LeftWidth = borderLeft;
-            bg.SetVerticesDirty();
             bg.RefreshInsetBorder();
+            bg.SetVerticesDirty();
 
             RootGraphic?.SetVerticesDirty();
         }
