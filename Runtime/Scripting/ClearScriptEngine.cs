@@ -22,6 +22,7 @@ namespace ReactUnity.Scripting
 
         public V8ScriptEngine Engine { get; private set; }
         public object NativeEngine => Engine;
+        private bool ShouldAwait = false;
 
         static string GetPluginFolder()
         {
@@ -52,7 +53,6 @@ namespace ReactUnity.Scripting
 
                 (debug ? (
                     V8ScriptEngineFlags.EnableDebugging |
-                    (awaitDebugger ? V8ScriptEngineFlags.AwaitDebuggerAndPauseOnStart : V8ScriptEngineFlags.None) |
                     V8ScriptEngineFlags.None)
                     : V8ScriptEngineFlags.None),
                 9222
@@ -71,16 +71,37 @@ namespace ReactUnity.Scripting
             Engine.UseReflectionBindFallback = true;
             Engine.EnableNullResultWrapping = false;
 
-            SetGlobal("host", new ExtendedHostFunctions());
+            ShouldAwait = debug && awaitDebugger;
 
-            if (debug && awaitDebugger)
+            SetGlobal("host", new ExtendedHostFunctions());
+        }
+
+        public object Evaluate(string code, string fileName = null)
+        {
+            return Engine.Evaluate(AddFilenameExtension(fileName), fileName == null, code);
+        }
+
+        public void Execute(string code, string fileName = null)
+        {
+            var isMainFile = fileName == "ReactUnity/main";
+
+            var document = new DocumentInfo(AddFilenameExtension(fileName))
+            {
+                Flags =
+                        (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
+                        (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None),
+            };
+
+            if (ShouldAwait && isMainFile)
             {
                 bool connected = false;
+                var message = "Debugger connection timed out after 10 seconds. You can uncheck AwaitDebugger if you are not planning to connect a debugger.";
+
                 var timer = new System.Threading.Timer(_ => {
                     if (!connected)
                     {
                         Engine.CancelAwaitDebugger();
-                        Debug.LogWarning("Debugger connection timed out after 10 seconds. You can uncheck AwaitDebugger if you are not planning to connect a debugger.");
+                        Debug.LogWarning(message);
                     }
                 }, null, 10000, System.Threading.Timeout.Infinite);
 
@@ -88,26 +109,27 @@ namespace ReactUnity.Scripting
                 {
                     try
                     {
-                        Engine.Execute("void 0;");
+                        Engine.Execute(document, code);
                         connected = true;
                     }
                     catch (ScriptInterruptedException)
                     {
-                        if (!connected)
-                            Debug.LogWarning("Debugger connection timed out after 10 seconds. You can uncheck AwaitDebugger if you are not planning to connect a debugger.");
+                        if (!connected) Debug.LogWarning(message);
                     }
                 }
             }
+            else
+            {
+                Engine.Execute(document, code);
+            }
         }
 
-        public object Evaluate(string code, string fileName = null)
+        private string AddFilenameExtension(string fileName)
         {
-            return Engine.Evaluate(fileName, fileName == null, code);
-        }
+            if (string.IsNullOrWhiteSpace(fileName)) return fileName;
 
-        public void Execute(string code, string fileName = null)
-        {
-            Engine.Execute(fileName, fileName == null, code);
+            if (!fileName.EndsWith(".js")) return fileName + ".js";
+            return fileName;
         }
 
         public Exception TryExecute(string code, string fileName = null)
