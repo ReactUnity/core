@@ -196,6 +196,15 @@
             Script engines honor this attribute.
             </summary>
         </member>
+        <member name="F:Microsoft.ClearScript.DocumentFlags.AwaitDebuggerAndPause">
+            <summary>
+            Specifies that the script engine is to wait for a debugger connection and schedule a
+            pause before executing the first line of the document. Windows Script engines do not
+            honor this attribute. For it to be effective, debugging features must be enabled, a
+            debugger must not already be connected, and the script engine must not already have
+            waited for a debugger connection.
+            </summary>
+        </member>
         <member name="T:Microsoft.ClearScript.DocumentInfo">
             <summary>
             Contains meta-information for a document.
@@ -526,6 +535,27 @@
             </summary>
             <typeparam name="T">The type whose members are to be made accessible from script code.</typeparam>
             <param name="target">The object to convert to a host object for use with script code.</param>
+            <param name="engine">The script engine in which the host object will be used.</param>
+            <returns>A host object with the specified type restriction.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.Extensions.ToRestrictedHostObject(System.Object,System.Type)">
+            <summary>
+            Converts an object to a host object with a type restriction specified as a
+            <see cref="T:System.Type"/> instance, for use with script code currently running on the calling
+            thread.
+            </summary>
+            <param name="target">The object to convert to a host object for use with script code.</param>
+            <param name="type">The type whose members are to be made accessible from script code.</param>
+            <returns>A host object with the specified type restriction.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.Extensions.ToRestrictedHostObject(System.Object,System.Type,Microsoft.ClearScript.ScriptEngine)">
+            <summary>
+            Converts an object to a host object with a type restriction specified as a
+            <see cref="T:System.Type"/> instance, for use with script code running in the specified script
+            engine.
+            </summary>
+            <param name="target">The object to convert to a host object for use with script code.</param>
+            <param name="type">The type whose members are to be made accessible from script code.</param>
             <param name="engine">The script engine in which the host object will be used.</param>
             <returns>A host object with the specified type restriction.</returns>
         </member>
@@ -4380,25 +4410,34 @@
             The <c><see cref="T:Microsoft.ClearScript.Undefined"/></c> version of this method returns "[undefined]".
             </remarks>
         </member>
-        <member name="T:Microsoft.ClearScript.Util.IDisposableEnumerator">
+        <member name="T:Microsoft.ClearScript.Util.IScriptableEnumerator">
             <exclude/>
         </member>
-        <member name="T:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1">
+        <member name="P:Microsoft.ClearScript.Util.IScriptableEnumerator.ScriptableCurrent">
             <exclude/>
         </member>
-        <member name="P:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1.Current">
+        <member name="M:Microsoft.ClearScript.Util.IScriptableEnumerator.ScriptableMoveNext">
             <exclude/>
         </member>
-        <member name="M:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1.MoveNextAsync">
+        <member name="M:Microsoft.ClearScript.Util.IScriptableEnumerator.ScriptableDispose">
             <exclude/>
         </member>
-        <member name="M:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1.DisposeAsync">
+        <member name="T:Microsoft.ClearScript.Util.IScriptableEnumerator`1">
             <exclude/>
         </member>
-        <member name="M:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1.MoveNextPromise">
+        <member name="P:Microsoft.ClearScript.Util.IScriptableEnumerator`1.ScriptableCurrent">
             <exclude/>
         </member>
-        <member name="M:Microsoft.ClearScript.Util.IAsyncEnumeratorPromise`1.DisposePromise">
+        <member name="T:Microsoft.ClearScript.Util.IScriptableAsyncEnumerator`1">
+            <exclude/>
+        </member>
+        <member name="P:Microsoft.ClearScript.Util.IScriptableAsyncEnumerator`1.ScriptableCurrent">
+            <exclude/>
+        </member>
+        <member name="M:Microsoft.ClearScript.Util.IScriptableAsyncEnumerator`1.ScriptableMoveNextAsync">
+            <exclude/>
+        </member>
+        <member name="M:Microsoft.ClearScript.Util.IScriptableAsyncEnumerator`1.ScriptableDisposeAsync">
             <exclude/>
         </member>
         <member name="T:Microsoft.ClearScript.VoidResult">
