@@ -31,14 +31,78 @@ namespace ReactUnity.UGUI.Internal
         private WebBorder borderGraphic;
         public WebBorder BorderGraphic => borderGraphic ?? (borderGraphic = EnsureBorderRoot().GetComponent<WebBorder>());
 
-        private WebRect RootGraphic;
-        private Mask RootMask;
-        private RectTransform MaskRoot;
+        private WebRect rootGraphic;
+        private Mask rootMask;
+        private RectTransform maskRoot;
 
         public List<WebShadow> ShadowGraphics { get; private set; }
         public List<WebBackgroundImage> BackgroundGraphics { get; private set; }
         public List<WebBackgroundImage> MaskGraphics { get; private set; }
         public WebBackgroundImage LastMask => MaskGraphics == null || MaskGraphics.Count == 0 ? null : MaskGraphics[MaskGraphics.Count - 1];
+
+        private WebOutlineSizes borderSize;
+        public WebOutlineSizes BorderSize
+        {
+            get => borderSize;
+            set
+            {
+                borderSize = value;
+
+                var hasBorder = value.Top > 0 || value.Right > 0 || value.Bottom > 0 || value.Left > 0;
+
+                var min = new Vector2(-value.Left, -value.Bottom);
+                var max = new Vector2(value.Right, value.Top);
+
+                if (root)
+                {
+                    root.offsetMin = -min;
+                    root.offsetMax = -max;
+                }
+
+                if (backgroundRoot)
+                {
+                    backgroundRoot.offsetMin = min;
+                    backgroundRoot.offsetMax = max;
+                }
+
+                if (shadowRoot)
+                {
+                    shadowRoot.offsetMin = min;
+                    shadowRoot.offsetMax = max;
+                }
+
+                if (!borderRoot && !hasBorder) return;
+
+                var br = BorderRoot;
+
+                br.offsetMin = -min;
+                br.offsetMax = -max;
+
+                var bg = BorderGraphic;
+                bg.enabled = hasBorder;
+
+                bg.Border.Sizes = value;
+
+                bg.RefreshInnerRounding();
+                bg.SetVerticesDirty();
+            }
+        }
+
+        private WebOutlineColors borderColors;
+        public WebOutlineColors BorderColors
+        {
+            get => borderColors;
+            set
+            {
+                borderColors = value;
+
+                if (!borderGraphic) return;
+                var bg = borderGraphic;
+
+                bg.Border.Colors = value;
+                bg.SetVerticesDirty();
+            }
+        }
 
         private BackgroundBlendMode blendMode;
         public BackgroundBlendMode BlendMode
@@ -92,13 +156,16 @@ namespace ReactUnity.UGUI.Internal
 
             var rootObj = Context.CreateNativeObject("[GraphicRoot]", typeof(RectTransform), typeof(WebRect));
 
-            RootGraphic = rootObj.GetComponent<WebRect>();
-            RootGraphic.raycastTarget = false;
+            rootGraphic = rootObj.GetComponent<WebRect>();
+            rootGraphic.raycastTarget = false;
+            if (borderGraphic) borderGraphic.InsetBorder = rootGraphic;
 
-            RootMask = rootObj.AddComponent<Mask>();
-            RootMask.showMaskGraphic = false;
+            rootMask = rootObj.AddComponent<Mask>();
+            rootMask.showMaskGraphic = false;
             root = rootObj.transform as RectTransform;
             FullStretch(root, transform as RectTransform, 0);
+
+            BorderSize = BorderSize;
 
             return root;
         }
@@ -110,6 +177,8 @@ namespace ReactUnity.UGUI.Internal
             var sr = Context.CreateNativeObject("[Shadows]", typeof(RectTransform));
             shadowRoot = sr.transform as RectTransform;
             FullStretch(shadowRoot, Root, 0);
+
+            BorderSize = BorderSize;
 
             return shadowRoot;
         }
@@ -125,6 +194,8 @@ namespace ReactUnity.UGUI.Internal
             backgroundRoot = bg.transform as RectTransform;
             FullStretch(backgroundRoot, Root, 1);
 
+            BorderSize = BorderSize;
+
             return backgroundRoot;
         }
 
@@ -134,10 +205,15 @@ namespace ReactUnity.UGUI.Internal
 
             var border = Context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorder));
             borderGraphic = border.GetComponent<WebBorder>();
-            borderGraphic.InsetBorder = RootGraphic;
+            borderGraphic.InsetBorder = rootGraphic;
 
             borderRoot = border.transform as RectTransform;
             FullStretch(borderRoot, transform as RectTransform, root != null ? 1 : 0);
+
+            // Refresh border properties
+            BorderSize = BorderSize;
+            BorderColors = BorderColors;
+
             return borderRoot;
         }
 
@@ -182,36 +258,18 @@ namespace ReactUnity.UGUI.Internal
             var bidiLeft = layout.LayoutDirection == YogaDirection.LTR ? layout.BorderStartWidth : layout.BorderEndWidth;
             var bidiRight = layout.LayoutDirection == YogaDirection.RTL ? layout.BorderStartWidth : layout.BorderEndWidth;
 
-            var borderLeft = GetFirstDefinedSize(bidiLeft, layout.BorderLeftWidth, layout.BorderWidth);
-            var borderRight = GetFirstDefinedSize(bidiRight, layout.BorderRightWidth, layout.BorderWidth);
-            var borderTop = GetFirstDefinedSize(layout.BorderTopWidth, layout.BorderWidth);
-            var borderBottom = GetFirstDefinedSize(layout.BorderBottomWidth, layout.BorderWidth);
+            var top = GetFirstDefinedSize(layout.BorderTopWidth, layout.BorderWidth);
+            var right = GetFirstDefinedSize(bidiRight, layout.BorderRightWidth, layout.BorderWidth);
+            var bottom = GetFirstDefinedSize(layout.BorderBottomWidth, layout.BorderWidth);
+            var left = GetFirstDefinedSize(bidiLeft, layout.BorderLeftWidth, layout.BorderWidth);
 
-            var hasBorder = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
-
-            var min = new Vector2(-borderLeft, -borderBottom);
-            var max = new Vector2(borderRight, borderTop);
-
-            // TODO: enable below line to not create borders when not necessary
-            //if (!borderRoot && !hasBorder) return;
-
-            var br = BorderRoot;
-            br.offsetMin = -min;
-            br.offsetMax = -max;
-
-
-            var bg = BorderGraphic;
-            bg.enabled = hasBorder;
-
-            if (bg.Border == null) bg.Border = new WebOutlineProperties();
-            bg.Border.TopWidth = borderTop;
-            bg.Border.RightWidth = borderRight;
-            bg.Border.BottomWidth = borderBottom;
-            bg.Border.LeftWidth = borderLeft;
-            bg.RefreshInsetBorder();
-            bg.SetVerticesDirty();
-
-            RootGraphic?.SetVerticesDirty();
+            BorderSize = new WebOutlineSizes()
+            {
+                Top = top,
+                Right = right,
+                Bottom = bottom,
+                Left = left,
+            };
         }
 
         private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
@@ -243,14 +301,13 @@ namespace ReactUnity.UGUI.Internal
 
         private void SetBorderColor(Color top, Color right, Color bottom, Color left)
         {
-            if (!borderGraphic) return;
-            var bg = borderGraphic;
-            if (bg.Border == null) bg.Border = new WebOutlineProperties();
-            bg.Border.TopColor = top;
-            bg.Border.RightColor = right;
-            bg.Border.BottomColor = bottom;
-            bg.Border.LeftColor = left;
-            bg.SetVerticesDirty();
+            BorderColors = new WebOutlineColors()
+            {
+                Top = top,
+                Right = right,
+                Bottom = bottom,
+                Left = left,
+            };
         }
 
         private void SetBackground(
@@ -413,20 +470,20 @@ namespace ReactUnity.UGUI.Internal
         {
             if (MaskGraphics.Count == 0)
             {
-                if (MaskRoot == null)
+                if (maskRoot == null)
                 {
                     var mr = Context.CreateNativeObject("[MaskRoot]", typeof(RectTransform), typeof(WebBackgroundImage), typeof(Mask));
-                    MaskRoot = mr.transform as RectTransform;
+                    maskRoot = mr.transform as RectTransform;
                     var children = Component.RectTransform.OfType<RectTransform>().ToList();
-                    FullStretch(MaskRoot, Component.RectTransform);
-                    foreach (var item in children) item.SetParent(MaskRoot);
+                    FullStretch(maskRoot, Component.RectTransform);
+                    foreach (var item in children) item.SetParent(maskRoot);
 
-                    if (Component.RectTransform == Component.Container) SetContainer(MaskRoot);
+                    if (Component.RectTransform == Component.Container) SetContainer(maskRoot);
                 }
 
-                var mask = MaskRoot.GetComponent<Mask>();
+                var mask = maskRoot.GetComponent<Mask>();
                 mask.showMaskGraphic = false;
-                var img = MaskRoot.GetComponent<WebBackgroundImage>();
+                var img = maskRoot.GetComponent<WebBackgroundImage>();
                 img.color = Color.clear;
                 img.Context = Context;
                 mask.enabled = img.enabled = true;
@@ -458,8 +515,8 @@ namespace ReactUnity.UGUI.Internal
 
             if (i == 0)
             {
-                var mask = MaskRoot.GetComponent<Mask>();
-                var img = MaskRoot.GetComponent<WebBackgroundImage>();
+                var mask = maskRoot.GetComponent<Mask>();
+                var img = maskRoot.GetComponent<WebBackgroundImage>();
                 mask.enabled = img.enabled = false;
             }
             else

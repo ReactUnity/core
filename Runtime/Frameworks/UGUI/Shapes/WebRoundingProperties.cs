@@ -7,7 +7,7 @@ namespace ReactUnity.UGUI.Shapes
     [System.Serializable]
     public class WebRoundingProperties
     {
-        static WebOutlineProperties DefaultOutline = new WebOutlineProperties();
+        static WebOutlineSizes DefaultOutlineSizes = new WebOutlineSizes();
 
         public enum RoundedType
         {
@@ -64,9 +64,9 @@ namespace ReactUnity.UGUI.Shapes
             BLRadius = borders[3];
         }
 
-        public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineProperties outline = null, WebRoundingProperties matchRounding = null)
+        public void UpdateAdjusted(Vector2 size, Vector2 innerSize, WebOutlineSizes? outline = null, WebRoundingProperties matchRounding = null)
         {
-            outline = outline ?? DefaultOutline;
+            var ot = outline ?? DefaultOutlineSizes;
 
             var br = new YogaValue2[4];
 
@@ -123,18 +123,18 @@ namespace ReactUnity.UGUI.Shapes
 
             // Final sizes of corner border radii (horizontal)
             brx = new Vector4(
-                Mathf.Min(innerSize.x + outline.LeftWidth, brx.x * pixelUnits.x),
-                Mathf.Min(innerSize.x + outline.RightWidth, brx.y * pixelUnits.y),
-                Mathf.Min(innerSize.x + outline.RightWidth, brx.z * pixelUnits.z),
-                Mathf.Min(innerSize.x + outline.LeftWidth, brx.w * pixelUnits.w)
+                Mathf.Min(innerSize.x + ot.Left, brx.x * pixelUnits.x),
+                Mathf.Min(innerSize.x + ot.Right, brx.y * pixelUnits.y),
+                Mathf.Min(innerSize.x + ot.Right, brx.z * pixelUnits.z),
+                Mathf.Min(innerSize.x + ot.Left, brx.w * pixelUnits.w)
             );
 
             // Final sizes of corner border radii (vertical)
             bry = new Vector4(
-                Mathf.Min(innerSize.y + outline.TopWidth, bry.x * pixelUnits.x),
-                Mathf.Min(innerSize.y + outline.TopWidth, bry.y * pixelUnits.y),
-                Mathf.Min(innerSize.y + outline.BottomWidth, bry.z * pixelUnits.z),
-                Mathf.Min(innerSize.y + outline.BottomWidth, bry.w * pixelUnits.w)
+                Mathf.Min(innerSize.y + ot.Top, bry.x * pixelUnits.x),
+                Mathf.Min(innerSize.y + ot.Top, bry.y * pixelUnits.y),
+                Mathf.Min(innerSize.y + ot.Bottom, bry.z * pixelUnits.z),
+                Mathf.Min(innerSize.y + ot.Bottom, bry.w * pixelUnits.w)
             );
 
             // Average border radii
@@ -178,17 +178,17 @@ namespace ReactUnity.UGUI.Shapes
 
         public WebRoundingProperties OffsetBorder(Vector2 size, Vector4 borderSizes)
         {
-            var border = new WebOutlineProperties()
+            var border = new WebOutlineSizes()
             {
-                TopWidth = borderSizes.x,
-                RightWidth = borderSizes.y,
-                BottomWidth = borderSizes.z,
-                LeftWidth = borderSizes.w,
+                Top = borderSizes.x,
+                Right = borderSizes.y,
+                Bottom = borderSizes.z,
+                Left = borderSizes.w,
             };
 
             var offsetSize = new Vector2(
-                size.x + border.LeftWidth + border.RightWidth,
-                size.y + border.BottomWidth + border.TopWidth
+                size.x + border.Left + border.Right,
+                size.y + border.Bottom + border.Top
             );
             UpdateAdjusted(offsetSize, size, border);
 

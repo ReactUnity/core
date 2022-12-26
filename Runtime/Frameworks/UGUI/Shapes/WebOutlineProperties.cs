@@ -1,18 +1,54 @@
+using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace ReactUnity.UGUI.Shapes
 {
-    [System.Serializable]
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WebOutlineColors
+    {
+        public Color Top;
+        public Color Right;
+        public Color Bottom;
+        public Color Left;
+
+        public WebOutlineColors(
+            Color top,
+            Color right,
+            Color bottom,
+            Color left
+        )
+        {
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+            Left = left;
+        }
+    }
+
+    [Serializable]
+    [StructLayout(LayoutKind.Explicit)]
+    public struct WebOutlineSizes
+    {
+        [NonSerialized]
+        [FieldOffset(0)]
+        public Vector4 Vector;
+
+        [FieldOffset(0)]
+        [Min(0)] public float Top;
+        [FieldOffset(4)]
+        [Min(0)] public float Right;
+        [FieldOffset(8)]
+        [Min(0)] public float Bottom;
+        [FieldOffset(12)]
+        [Min(0)] public float Left;
+    }
+
+    [Serializable]
     public class WebOutlineProperties
     {
-        public Color TopColor = Color.black;
-        public Color RightColor = Color.black;
-        public Color BottomColor = Color.black;
-        public Color LeftColor = Color.black;
-
-        [Min(0)] public float TopWidth = 0;
-        [Min(0)] public float RightWidth = 0;
-        [Min(0)] public float BottomWidth = 0;
-        [Min(0)] public float LeftWidth = 0;
+        public WebOutlineColors Colors;
+        public WebOutlineSizes Sizes;
     }
 }

@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 rounding = value;
-                RefreshInsetBorder();
+                RefreshInnerRounding();
                 SetVerticesDirty();
             }
         }
@@ -29,7 +29,7 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 border = value;
-                RefreshInsetBorder();
+                RefreshInnerRounding();
                 SetVerticesDirty();
             }
         }
@@ -76,12 +76,13 @@ namespace ReactUnity.UGUI.Shapes
         Rect GetOuterRect()
         {
             var pixelRect = GetInnerRect();
+            var size = Border.Sizes;
 
             return new Rect(
-                pixelRect.x - Border.LeftWidth,
-                pixelRect.y - Border.BottomWidth,
-                pixelRect.width + Border.LeftWidth + Border.RightWidth,
-                pixelRect.height + Border.BottomWidth + Border.TopWidth
+                pixelRect.x - size.Left,
+                pixelRect.y - size.Bottom,
+                pixelRect.width + size.Left + size.Right,
+                pixelRect.height + size.Bottom + size.Top
             );
         }
 
@@ -92,7 +93,7 @@ namespace ReactUnity.UGUI.Shapes
             var pixelRect = GetInnerRect();
             var outerRect = GetOuterRect();
 
-            Rounding.UpdateAdjusted(outerRect.size, pixelRect.size, Border);
+            Rounding.UpdateAdjusted(outerRect.size, pixelRect.size, Border.Sizes);
             InnerRounding.UpdateAdjusted(pixelRect.size, pixelRect.size);
 
             AddRoundedRectLine(
@@ -125,19 +126,14 @@ namespace ReactUnity.UGUI.Shapes
 
         protected virtual void RefreshSize()
         {
-            RefreshInsetBorder();
+            RefreshInnerRounding();
             SetVerticesDirty();
         }
 
 
-        internal void RefreshInsetBorder()
+        internal void RefreshInnerRounding()
         {
-            var borderSizes = new Vector4(
-                Border.TopWidth,
-                Border.RightWidth,
-                Border.BottomWidth,
-                Border.LeftWidth
-            );
+            var borderSizes = Border.Sizes.Vector;
 
             InnerRounding = Rounding.OffsetBorder(GetInnerRect().size, borderSizes);
         }
@@ -157,8 +153,8 @@ namespace ReactUnity.UGUI.Shapes
             ref RoundedCornerUnitPositionData cornerUnitPositions
         )
         {
-            float fullWidth = width + outline.LeftWidth + outline.RightWidth;
-            float fullHeight = height + outline.TopWidth + outline.BottomWidth;
+            float fullWidth = width + outline.Sizes.Left + outline.Sizes.Right;
+            float fullHeight = height + outline.Sizes.Top + outline.Sizes.Bottom;
 
             if (rounding.Type == WebRoundingProperties.RoundedType.None)
             {
@@ -170,10 +166,7 @@ namespace ReactUnity.UGUI.Shapes
                     center,
                     width,
                     height,
-                    outline.TopColor,
-                    outline.RightColor,
-                    outline.BottomColor,
-                    outline.LeftColor,
+                    outline.Colors,
                     uv
                 );
 
@@ -203,17 +196,17 @@ namespace ReactUnity.UGUI.Shapes
                 innerRounding.AdjustedBLRadius,
                 innerRounding.AdjustedBLRadius,
                 cornerUnitPositions,
-                outline.TopColor,
-                outline.RightColor,
-                outline.BottomColor,
-                outline.LeftColor,
+                outline.Colors.Top,
+                outline.Colors.Right,
+                outline.Colors.Bottom,
+                outline.Colors.Left,
                 uv,
                 false
             );
 
             var outCenter = new Vector2(
-                center.x + (outline.RightWidth - outline.LeftWidth) / 2,
-                center.y + (outline.TopWidth - outline.BottomWidth) / 2
+                center.x + (outline.Sizes.Right - outline.Sizes.Left) / 2,
+                center.y + (outline.Sizes.Top - outline.Sizes.Bottom) / 2
             );
 
             WebRect.AddRoundedRectVerticesRing(
@@ -232,10 +225,10 @@ namespace ReactUnity.UGUI.Shapes
                 rounding.AdjustedBLRadius,
                 rounding.AdjustedBLRadius,
                 cornerUnitPositions,
-                outline.TopColor,
-                outline.RightColor,
-                outline.BottomColor,
-                outline.LeftColor,
+                outline.Colors.Top,
+                outline.Colors.Right,
+                outline.Colors.Bottom,
+                outline.Colors.Left,
                 uv,
                 true
             );
@@ -248,41 +241,35 @@ namespace ReactUnity.UGUI.Shapes
             Vector2 center,
             float width,
             float height,
-            Color32 topColor,
-            Color32 rightColor,
-            Color32 bottomColor,
-            Color32 leftColor,
+            WebOutlineColors colors,
             Vector2 uv
         )
         {
-            byte alpha = topColor.a;
-
-            float fullWidth = width + outline.LeftWidth + outline.RightWidth;
-            float fullHeight = height + outline.TopWidth + outline.BottomWidth;
+            float fullWidth = width + outline.Sizes.Left + outline.Sizes.Right;
+            float fullHeight = height + outline.Sizes.Top + outline.Sizes.Bottom;
 
             AddRectVertRing(
                 ref vh,
                 center,
                 width,
                 height,
-                topColor,
-                rightColor,
-                bottomColor,
-                leftColor,
+                colors,
                 fullWidth,
                 fullHeight,
                 false
             );
 
+            var outCenter = new Vector2(
+                center.x + (outline.Sizes.Right - outline.Sizes.Left) / 2,
+                center.y + (outline.Sizes.Top - outline.Sizes.Bottom) / 2
+            );
+
             AddRectVertRing(
                 ref vh,
-                center,
+                outCenter,
                 fullWidth,
                 fullHeight,
-                topColor,
-                rightColor,
-                bottomColor,
-                leftColor,
+                colors,
                 fullWidth,
                 fullHeight,
                 true
@@ -294,10 +281,7 @@ namespace ReactUnity.UGUI.Shapes
             Vector2 center,
             float width,
             float height,
-            Color32 topColor,
-            Color32 rightColor,
-            Color32 bottomColor,
-            Color32 leftColor,
+            WebOutlineColors colors,
             float totalWidth,
             float totalHeight,
             bool addRingIndices = false
@@ -313,38 +297,45 @@ namespace ReactUnity.UGUI.Shapes
             tmpPos.y = center.y + height * 0.5f;
             tmpUVPos.x = uvXInset;
             tmpUVPos.y = 1.0f - uvYInset;
-            vh.AddVert(tmpPos, topColor, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
             // TR
             tmpPos.x += width;
             tmpUVPos.x = 1.0f - uvXInset;
-            vh.AddVert(tmpPos, topColor, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
+            vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
             // BR
             tmpPos.y -= height;
             tmpUVPos.y = uvYInset;
-            vh.AddVert(tmpPos, topColor, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
+            vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
             // BL
             tmpPos.x -= width;
             tmpUVPos.x = uvXInset;
-            vh.AddVert(tmpPos, topColor, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
+            vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
             if (addRingIndices)
             {
-                int baseIndex = vh.currentVertCount - 8;
+                int baseIndex = vh.currentVertCount - 16;
 
-                vh.AddTriangle(baseIndex + 4, baseIndex + 5, baseIndex);
-                vh.AddTriangle(baseIndex, baseIndex + 5, baseIndex + 1);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 9, baseIndex + 10);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 10, baseIndex + 2);
 
-                vh.AddTriangle(baseIndex + 1, baseIndex + 5, baseIndex + 6);
-                vh.AddTriangle(baseIndex + 1, baseIndex + 6, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 3, baseIndex + 11, baseIndex + 12);
+                vh.AddTriangle(baseIndex + 3, baseIndex + 12, baseIndex + 4);
 
-                vh.AddTriangle(baseIndex + 2, baseIndex + 6, baseIndex + 7);
-                vh.AddTriangle(baseIndex + 7, baseIndex + 3, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 5, baseIndex + 13, baseIndex + 14);
+                vh.AddTriangle(baseIndex + 5, baseIndex + 14, baseIndex + 6);
 
-                vh.AddTriangle(baseIndex + 4, baseIndex + 3, baseIndex + 7);
-                vh.AddTriangle(baseIndex + 4, baseIndex, baseIndex + 3);
+                vh.AddTriangle(baseIndex + 7, baseIndex + 15, baseIndex + 8);
+                vh.AddTriangle(baseIndex + 7, baseIndex + 8, baseIndex);
             }
         }
 
