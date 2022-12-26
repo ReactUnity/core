@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEditor;
+using System.IO;
 #if REACT_UNITY_DEVELOPER
 using System.Reflection;
 #endif
@@ -13,8 +14,29 @@ namespace ReactUnity.Editor.Developer
     public static class TypescriptModelsGeneratorPresets
     {
 #if REACT_UNITY_DEVELOPER
-        [MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
-        public static void GenerateUnity()
+        [MenuItem("React/Typescript Generator/Generate All", priority = 0)]
+        public static string GenerateAll() => GenerateAll(null);
+        public static string GenerateAll(string directory = null)
+        {
+            if (string.IsNullOrWhiteSpace(directory))
+            {
+                directory = EditorUtility.OpenFolderPanel("Directory to save all files", "", "");
+                if (string.IsNullOrWhiteSpace(directory)) return directory;
+            }
+
+            GenerateUnity(Path.Combine(directory, "unity.ts"));
+            GenerateEditor(Path.Combine(directory, "editor.ts"));
+            GenerateReactUnity(Path.Combine(directory, "react.ts"));
+            GenerateYoga(Path.Combine(directory, "yoga.ts"));
+            GenerateSystem(Path.Combine(directory, "system.ts"));
+            GenerateNUnit(Path.Combine(directory, "tests.ts"));
+
+            return directory;
+        }
+
+        [MenuItem("React/Typescript Generator/Generate Unity", priority = 0)]
+        public static string GenerateUnity() => GenerateUnity(null);
+        public static string GenerateUnity(string filePath = null)
         {
             var assemblies = new List<Assembly> {
                     typeof(UnityEngine.GameObject).Assembly,
@@ -66,11 +88,12 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
         }
 
-        [MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
-        public static void GenerateEditor()
+        [MenuItem("React/Typescript Generator/Generate Editor", priority = 0)]
+        public static string GenerateEditor() => GenerateEditor(null);
+        public static string GenerateEditor(string filePath = null)
         {
             var generator = new TypescriptModelsGenerator
             {
@@ -78,7 +101,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEditor.EditorWindow).Assembly,
                 },
                 IncludedNamespaces = new List<string> { "UnityEditor" },
-                ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
+                ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEditor.TerrainTools", "UnityEngine.TextCore" },
                 ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 ExcludedTypes = new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer", "UnityEngine.AssetBundleManifest" },
                 ExportAsClass = true,
@@ -87,11 +110,12 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
         }
 
-        [MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
-        public static void GenerateReactUnity()
+        [MenuItem("React/Typescript Generator/Generate React Unity", priority = 0)]
+        public static string GenerateReactUnity() => GenerateReactUnity(null);
+        public static string GenerateReactUnity(string filePath = null)
         {
             var generator = new TypescriptModelsGenerator
             {
@@ -106,11 +130,12 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
         }
 
-        [MenuItem("React/Developer/Generate Yoga Typescript Models", priority = 0)]
-        public static void GenerateYoga()
+        [MenuItem("React/Typescript Generator/Generate Yoga", priority = 0)]
+        public static string GenerateYoga() => GenerateYoga(null);
+        public static string GenerateYoga(string filePath = null)
         {
             var generator = new TypescriptModelsGenerator
             {
@@ -125,11 +150,12 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
         }
 
-        [MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
-        public static void GenerateSystem()
+        [MenuItem("React/Typescript Generator/Generate System", priority = 0)]
+        public static string GenerateSystem() => GenerateSystem(null);
+        public static string GenerateSystem(string filePath = null)
         {
             var generator = new TypescriptModelsGenerator
             {
@@ -151,12 +177,31 @@ namespace ReactUnity.Editor.Developer
                 AllowPointer = false,
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
+        }
+
+        [MenuItem("React/Typescript Generator/Generate NUnit", priority = 0)]
+        public static string GenerateNUnit() => GenerateNUnit(null);
+        public static string GenerateNUnit(string filePath = null)
+        {
+            var generator = new TypescriptModelsGenerator
+            {
+                Assemblies = new List<Assembly> { typeof(NUnit.Framework.Assert).Assembly },
+                IncludedNamespaces = new List<string> { "NUnit.Framework" },
+                ExcludedNamespaces = new List<string> { "System.Configuration", "System.Xml", "System.Net", "System.Web" },
+                ImportNamespaces = new Dictionary<string, string> { { "System", "./system" } },
+                ExcludedTypes = new List<string> { },
+                ExportAsClass = true,
+                AllowGeneric = true,
+            };
+
+            return PickFileAndGenerate(generator, filePath);
         }
 
 #if !REACT_DISABLE_QUICKJS && REACT_QUICKJS_AVAILABLE
-        [MenuItem("React/Developer/Generate QuickJS Typescript Models", priority = 0)]
-        public static void GenerateQuickJS()
+        [MenuItem("React/Typescript Generator/Generate QuickJS", priority = 0)]
+        public static string GenerateQuickJS() => GenerateQuickJS(null);
+        public static string GenerateQuickJS(string filePath = null)
         {
             var generator =
                 new TypescriptModelsGenerator()
@@ -176,13 +221,15 @@ namespace ReactUnity.Editor.Developer
                     WriteDocs = true,
                     IncludeExterns = true,
                 };
-            generator.PickFileAndGenerate();
+
+            return PickFileAndGenerate(generator, filePath);
         }
 #endif
 #endif
 
         [MenuItem("React/Generate Project Typescript Models", priority = 0)]
-        public static void GenerateCurrentProject()
+        public static string GenerateCurrentProject() => GenerateCurrentProject(null);
+        public static string GenerateCurrentProject(string filePath = null)
         {
             var compiledAssemblies = UnityEditor.Compilation.CompilationPipeline.GetAssemblies(UnityEditor.Compilation.AssembliesType.Editor);
             var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(f => f.StartsWith("Assets/")));
@@ -210,14 +257,16 @@ namespace ReactUnity.Editor.Developer
                 IsExternal = true,
             };
 
-            generator.PickFileAndGenerate();
+            return PickFileAndGenerate(generator, filePath);
         }
 
-
-        public static string PickFileAndGenerate(this TypescriptModelsGenerator generator)
+        public static string PickFileAndGenerate(this TypescriptModelsGenerator generator, string filePath = null)
         {
-            var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
-            if (string.IsNullOrWhiteSpace(filePath)) return filePath;
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                filePath = EditorUtility.OpenFilePanel("Typescript file", "", "ts");
+                if (string.IsNullOrWhiteSpace(filePath)) return filePath;
+            }
 
             generator.GenerateTo(filePath);
             UnityEngine.Debug.Log("Saved typescript models to: " + filePath);
