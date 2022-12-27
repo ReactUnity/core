@@ -7,6 +7,8 @@ namespace ReactUnity.Tests
 {
     public static class Assertions
     {
+        public static float SnapshotFailRatio = 0.005f;
+
         public static void AssertListExhaustive<T>(this List<T> list, params T[] expectedItems)
         {
             Assert.AreEqual(expectedItems, list);
@@ -79,24 +81,38 @@ namespace ReactUnity.Tests
 
                     if (TestHelpers.ShouldOverwriteSnapshots)
                     {
+                        var failed = false;
+                        var failMessage = "";
                         try
                         {
-                            CompareTexture(expectedTexture, croppedCapture, name);
+                            var diff = CompareTexture(expectedTexture, croppedCapture, name);
+                            failed = diff > 0;
+                            if (diff > 0) failMessage = $"{diff} pixels were different.";
                         }
                         catch (AssertionException ex)
                         {
+                            failed = true;
+                            failMessage = ex.Message;
+                        }
 
+                        if (failed)
+                        {
                             File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
                             File.WriteAllText(lockfile, "updated");
 
                             Assert.Inconclusive(
-                                "Snapshots were different. Overwriting old snapshots as per the preferences. The message was:\n" +
-                                ex.Message);
+                                $"Snapshot failed ({name}). Overwriting old snapshots as per the preferences." +
+                                (string.IsNullOrWhiteSpace(failMessage) ? "" : $" The message was:\n{failMessage}"));
+                        }
+                        else if (!string.IsNullOrWhiteSpace(failMessage))
+                        {
+                            Debug.Log($"Snapshot ({name}): {failMessage}");
                         }
                     }
                     else
                     {
-                        CompareTexture(expectedTexture, croppedCapture, name);
+                        var diff = CompareTexture(expectedTexture, croppedCapture, name);
+                        if (diff > 0) Debug.Log($"Snapshot ({name}): {diff} pixels were different.");
                     }
                 }
             }
@@ -125,7 +141,7 @@ namespace ReactUnity.Tests
             return screenshot;
         }
 
-        private static void CompareTexture(Texture2D first, Texture2D second, string name)
+        private static float CompareTexture(Texture2D first, Texture2D second, string name)
         {
             Assert.AreEqual(first.width, second.width, $"Snapshot failed ({name}): Textures should have same width");
             Assert.AreEqual(first.height, second.height, $"Snapshot failed ({name}): Textures should have same height");
@@ -135,11 +151,22 @@ namespace ReactUnity.Tests
 
             Assert.AreEqual(firstPix.Length, secondPix.Length, $"Snapshot failed ({name}): Textures should have same size");
 
+            var failCount = 0f;
+            var totalCount = first.width * first.height;
+
             for (int i = 0; i < firstPix.Length; i++)
             {
-                if (firstPix[i] != secondPix[i])
-                    Assert.Fail($"Snapshot failed ({name}): Textures should have same color at {i % first.width}x{Mathf.FloorToInt(i / first.width)}");
+                if (firstPix[i] != secondPix[i]) failCount++;
             }
+
+            var failRatio = failCount / totalCount;
+
+            if (failRatio > SnapshotFailRatio)
+            {
+                Assert.Fail($"Snapshot failed ({name}): {failCount} pixels were different.");
+            }
+
+            return failCount;
         }
     }
 }

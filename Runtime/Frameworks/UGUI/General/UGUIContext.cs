@@ -159,7 +159,7 @@ namespace ReactUnity.UGUI
             source.PlayOneShot(clip);
         }
 
-        internal GameObject CreateNativeObject(string name, params Type[] components)
+        public GameObject CreateNativeObject(string name, params Type[] components)
         {
             var go = new GameObject(name, components);
             go.layer = (Host as HostComponent).GameObject.layer;

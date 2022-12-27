@@ -8,7 +8,7 @@ namespace ReactUnity.UGUI.Behaviours
     public class ScrollContentResizer : MonoBehaviour
     {
         private RectTransform rt;
-        public YogaNode Layout { get; internal set; }
+        public YogaNode Layout { get; set; }
 
         private ScrollDirection direction = ScrollDirection.Both;
         public ScrollDirection Direction
