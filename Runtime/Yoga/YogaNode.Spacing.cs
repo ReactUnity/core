@@ -456,12 +456,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.All);
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.All);
             }
 
             set
             {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGap.All, value);
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value);
             }
         }
 
@@ -469,12 +469,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.Row);
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Row);
             }
 
             set
             {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGap.Row, value);
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value);
             }
         }
 
@@ -482,12 +482,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGap.Column);
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Column);
             }
 
             set
             {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGap.Column, value);
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value);
             }
         }
 

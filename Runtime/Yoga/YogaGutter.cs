@@ -7,7 +7,7 @@
 
 namespace Facebook.Yoga
 {
-    public enum YogaGap
+    public enum YogaGutter
     {
         Column,
         Row,

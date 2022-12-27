@@ -322,10 +322,10 @@ namespace Facebook.Yoga
         public static float YGNodeStyleGetGap(YGNodeHandle node, YogaGap gap) { return 0f; }
 #else
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGap gap, float position);
+        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gap, float position);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGap gap);
+        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gap);
 #endif
 
         #endregion
