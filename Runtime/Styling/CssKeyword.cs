@@ -9,6 +9,6 @@ namespace ReactUnity.Styling
         None = 5,
         Unset = 6,
         Default = 7,
+        Revert = 8,
     }
-
 }

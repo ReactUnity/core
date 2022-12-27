@@ -8,11 +8,18 @@ namespace ReactUnity.Styling.Converters
     {
         public SortingLayerConverter() { }
 
-        private bool FromInt(int value, out IComputedValue result)
+        internal static SortingLayer FromIndex(int value)
         {
-            var i = (int) value;
-            if (i < SortingLayer.layers.Length)
-                return Constant(SortingLayer.layers[i], out result);
+            if (value >= 0 && value < SortingLayer.layers.Length)
+                return SortingLayer.layers[value];
+
+            return default(SortingLayer);
+        }
+
+        internal static bool FromIndex(int value, out IComputedValue result)
+        {
+            if (value >= 0 && value < SortingLayer.layers.Length)
+                return Constant(SortingLayer.layers[value], out result);
 
             result = null;
             return false;
@@ -31,7 +38,7 @@ namespace ReactUnity.Styling.Converters
                 case TypeCode.Int32:
                 case TypeCode.Int64:
                 case TypeCode.Decimal:
-                    return FromInt((int) value, out result);
+                    return FromIndex((int) value, out result);
                 default:
                     break;
             }
@@ -43,11 +50,11 @@ namespace ReactUnity.Styling.Converters
         {
             if (int.TryParse(value, out var intResult))
             {
-                if (FromInt(intResult, out result)) return true;
+                if (FromIndex(intResult, out result)) return true;
             }
 
             var layerValue = SortingLayer.GetLayerValueFromName(StringConverter.Normalize(value));
-            return FromInt(layerValue, out result);
+            return FromIndex(layerValue, out result);
         }
     }
 }

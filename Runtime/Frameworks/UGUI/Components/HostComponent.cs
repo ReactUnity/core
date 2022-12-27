@@ -62,7 +62,7 @@ namespace ReactUnity.UGUI
                 Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
                 deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
                 deltaPosition.Scale(scaleBefore);                       // apply scaling
-                deltaPosition = rotBefore * deltaPosition; // apply rotation
+                deltaPosition = rotBefore * deltaPosition;              // apply rotation
 
                 RectTransform.pivot = pivot;                            // change the pivot
                 RectTransform.localPosition -= deltaPosition;           // reverse the position change

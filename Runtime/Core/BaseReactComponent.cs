@@ -7,6 +7,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ namespace ReactUnity
         public InlineStyles Style { get; protected set; } = new InlineStyles();
         public StyleSheet InlineStylesheet { get; protected set; }
         public Dictionary<string, object> CustomProperties { get; protected set; }
+        public IRevertCalculator RevertCalculator { get; protected set; }
 
         public int ParentIndex { get; protected set; } = -1;
         public int CurrentOrder { get; protected set; } = 0;
@@ -482,7 +484,7 @@ namespace ReactUnity
             cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            var resolvedStyle = new NodeStyle(Context, null, cssStyles);
+            var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator);
 
             StyleState.SetCurrent(resolvedStyle);
             MarkForStyleApply(true);

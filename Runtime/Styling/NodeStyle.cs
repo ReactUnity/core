@@ -12,14 +12,16 @@ namespace ReactUnity.Styling
 {
     public class NodeStyle
     {
-        Dictionary<string, object> StyleMap;
-        List<IDictionary<IStyleProperty, object>> CssStyles;
-        NodeStyle Fallback;
+        private Dictionary<string, object> StyleMap;
+        private List<IDictionary<IStyleProperty, object>> CssStyles;
+        private NodeStyle Fallback;
+        private Dictionary<IStyleProperty, object> Cache;
+
         public bool HasInheritedChanges { get; private set; } = false;
 
-        public ReactContext Context;
-        public NodeStyle Parent;
-        Dictionary<IStyleProperty, object> Cache;
+        public ReactContext Context { get; }
+        public NodeStyle Parent { get; private set; }
+        public IRevertCalculator RevertCalculator { get; }
 
         #region Getters
 
@@ -109,12 +111,18 @@ namespace ReactUnity.Styling
 
         #endregion
 
-        public NodeStyle(ReactContext context, NodeStyle fallback = null, List<IDictionary<IStyleProperty, object>> cssStyles = null)
+        public NodeStyle(
+            ReactContext context,
+            NodeStyle fallback = null,
+            List<IDictionary<IStyleProperty, object>> cssStyles = null,
+            IRevertCalculator revertCalculator = null
+        )
         {
             Context = context;
             StyleMap = new Dictionary<string, object>();
             Fallback = fallback;
             CssStyles = cssStyles;
+            RevertCalculator = revertCalculator;
         }
 
         public void UpdateParent(NodeStyle parent)
@@ -159,8 +167,15 @@ namespace ReactUnity.Styling
             {
                 if (ck == CssKeyword.NoKeyword) return null;
                 else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop, true);
-                else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Unset || ck == CssKeyword.Default)
+                else if (ck == CssKeyword.Unset)
+                {
+                    if (prop != null && prop.inherited) return Parent?.GetRawStyleValue(prop, true);
                     return prop?.defaultValue;
+                }
+                else if (ck == CssKeyword.Auto || ck == CssKeyword.None || ck == CssKeyword.Initial || ck == CssKeyword.Default)
+                    return prop?.defaultValue;
+                else if (ck == CssKeyword.Revert)
+                    return ComputedKeyword.Revert;
             }
             return value;
         }

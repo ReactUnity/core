@@ -86,7 +86,7 @@ namespace ReactUnity.Types
             if (val.Unit == YogaUnit.Undefined) return "none";
             if (val.Unit == YogaUnit.Percent) return val.Value + "%";
             if (val.Unit == YogaUnit.Point) return val.Value + "px";
-            return "initial";
+            return "unset";
         }
 
         public YogaValue2 Negate()

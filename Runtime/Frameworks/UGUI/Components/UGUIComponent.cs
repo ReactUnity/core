@@ -74,6 +74,7 @@ namespace ReactUnity.UGUI
 
         protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
+            RevertCalculator = new UGUIRevertCalculator(this);
             GameObject = context.CreateNativeObject(DefaultName);
             RectTransform = AddComponent<RectTransform>();
 
@@ -90,6 +91,7 @@ namespace ReactUnity.UGUI
 
         protected UGUIComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
+            RevertCalculator = new UGUIRevertCalculator(this);
             GameObject = existing.gameObject;
             RectTransform = existing;
             Container = existing;

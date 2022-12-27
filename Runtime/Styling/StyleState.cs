@@ -126,7 +126,7 @@ namespace ReactUnity.Styling
 
             if (hasTransition || hasAnimation)
             {
-                Active = new NodeStyle(Context, Current);
+                Active = new NodeStyle(Context, Current, null, Current.RevertCalculator);
                 Active.UpdateParent(Parent?.Active);
 
                 var switchTransitions = hasTransition && activeTransitions != transition;
