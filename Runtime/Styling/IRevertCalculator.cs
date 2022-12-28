@@ -4,6 +4,6 @@ namespace ReactUnity.Styling
 {
     public interface IRevertCalculator
     {
-        public object GetRevertValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter);
+        object GetRevertValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter);
     }
 }
