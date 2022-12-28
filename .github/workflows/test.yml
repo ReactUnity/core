@@ -228,13 +228,6 @@ jobs:
           name: "${{ matrix.suite.name }} ${{ matrix.unity.version }}"
           path: ${{ steps.testRunner.outputs.artifactsPath }}
 
-      - name: Upload Code Coverage Artifacts
-        uses: actions/upload-artifact@v3
-        if: always() && matrix.main && matrix.coverage && contains(github.event.head_commit.message, '[coverage]')
-        with:
-          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Code Coverage"
-          path: CodeCoverage
-
       - name: Fail workflow if tests failed
         if: steps.testRunner.outcome == 'failure' && (fromJSON(steps.test-results.outputs.json).conclusion == 'failure' || fromJSON(steps.test-results.outputs.json).stats.tests == 0)
         uses: actions/github-script@v3
@@ -247,8 +240,16 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           working-directory: ./core
-          files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
+          files: ../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0001.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml,../CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0001.xml
+          path_to_write_report: ../CodeCoverage/codecov_report.txt
           flags: unittests
+
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v3
+        if: always() && matrix.main && matrix.coverage && contains(github.event.head_commit.message, '[coverage]')
+        with:
+          name: "${{ matrix.suite.name }} ${{ matrix.unity.version }} Code Coverage"
+          path: CodeCoverage
 
       - name: Setup Github Pages
         if: github.ref == 'refs/heads/main' && matrix.performance && always()

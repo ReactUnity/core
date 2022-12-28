@@ -1,5 +1,6 @@
 codecov:
   disable_default_path_fixes: true
+  require_ci_to_pass: false
 
 fixes:
    - "/github/workspace/core/::"
