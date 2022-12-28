@@ -1,6 +1,5 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Converters;
-using UnityEngine;
 
 namespace ReactUnity.UGUI.Internal
 {
@@ -16,11 +15,15 @@ namespace ReactUnity.UGUI.Internal
         public object GetRevertValue(IStyleProperty prop, NodeStyle style, IStyleConverter converter)
         {
             if (prop?.name == StyleProperties.zIndex.name)
-                return cmp.Canvas?.sortingOrder;
+            {
+                var canvas = cmp.Canvas;
+                if (canvas) return canvas.sortingOrder;
+            }
 
             if (prop?.name == StyleProperties.sortingLayer.name)
             {
-                if (cmp.Canvas) return SortingLayerConverter.FromIndex(SortingLayer.GetLayerValueFromID(cmp.Canvas.sortingLayerID));
+                var canvas = cmp.Canvas;
+                if (canvas) return SortingLayerConverter.FromId(canvas.sortingLayerID);
             }
 
             return null;

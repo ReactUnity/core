@@ -8,6 +8,11 @@ namespace ReactUnity.Styling.Converters
     {
         public SortingLayerConverter() { }
 
+        internal static SortingLayer FromId(int id)
+        {
+            return FromIndex(SortingLayer.GetLayerValueFromID(id));
+        }
+
         internal static SortingLayer FromIndex(int value)
         {
             if (value >= 0 && value < SortingLayer.layers.Length)
