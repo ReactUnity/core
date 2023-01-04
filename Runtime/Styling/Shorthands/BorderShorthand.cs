@@ -32,12 +32,16 @@ namespace ReactUnity.Styling.Shorthands
                     {
                         LayoutProperties.BorderTopWidth,
                         StyleProperties.borderTopColor,
+                        StyleProperties.borderTopStyle,
                         LayoutProperties.BorderRightWidth,
                         StyleProperties.borderRightColor,
+                        StyleProperties.borderRightStyle,
                         LayoutProperties.BorderBottomWidth,
                         StyleProperties.borderBottomColor,
+                        StyleProperties.borderBottomStyle,
                         LayoutProperties.BorderLeftWidth,
                         StyleProperties.borderLeftColor,
+                        StyleProperties.borderLeftStyle,
                     };
                     break;
                 case BorderSide.Top:
@@ -45,6 +49,7 @@ namespace ReactUnity.Styling.Shorthands
                     {
                         LayoutProperties.BorderTopWidth,
                         StyleProperties.borderTopColor,
+                        StyleProperties.borderTopStyle,
                     };
                     break;
                 case BorderSide.Right:
@@ -52,6 +57,7 @@ namespace ReactUnity.Styling.Shorthands
                     {
                         LayoutProperties.BorderRightWidth,
                         StyleProperties.borderRightColor,
+                        StyleProperties.borderRightStyle,
                     };
                     break;
                 case BorderSide.Bottom:
@@ -59,6 +65,7 @@ namespace ReactUnity.Styling.Shorthands
                     {
                         LayoutProperties.BorderBottomWidth,
                         StyleProperties.borderBottomColor,
+                        StyleProperties.borderBottomStyle,
                     };
                     break;
                 case BorderSide.Left:
@@ -66,6 +73,7 @@ namespace ReactUnity.Styling.Shorthands
                     {
                         LayoutProperties.BorderLeftWidth,
                         StyleProperties.borderLeftColor,
+                        StyleProperties.borderLeftStyle,
                     };
                     break;
                 default:
@@ -133,11 +141,15 @@ namespace ReactUnity.Styling.Shorthands
                 if (colorSet)
                     collection[StyleProperties.borderTopColor] = collection[StyleProperties.borderRightColor] =
                     collection[StyleProperties.borderBottomColor] = collection[StyleProperties.borderLeftColor] = color;
+                if (styleSet)
+                    collection[StyleProperties.borderTopStyle] = collection[StyleProperties.borderRightStyle] =
+                    collection[StyleProperties.borderBottomStyle] = collection[StyleProperties.borderLeftStyle] = style;
             }
             else
             {
                 if (sizeSet) collection[ModifiedProperties[0]] = size;
                 if (colorSet) collection[ModifiedProperties[1]] = color;
+                if (styleSet) collection[ModifiedProperties[2]] = style;
             }
 
             return ModifiedProperties;

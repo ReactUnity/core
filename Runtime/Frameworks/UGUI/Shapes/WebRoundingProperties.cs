@@ -211,5 +211,18 @@ namespace ReactUnity.UGUI.Shapes
                 UniformResolution = UniformResolution,
             };
         }
+
+        public bool HasRounding()
+        {
+            if (Type == RoundedType.None) return false;
+
+            if (Type == RoundedType.Uniform) return !UniformRadius.IsZero();
+
+            return !(
+                TLRadius.IsZero() &&
+                TRRadius.IsZero() &&
+                BRRadius.IsZero() &&
+                BLRadius.IsZero());
+        }
     }
 }

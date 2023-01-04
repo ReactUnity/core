@@ -11,6 +11,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
         internal static readonly StyleShorthand BorderWidth = new FourDirectionalShorthand("border-width", FourDirectionalShorthand.PropertyType.BorderWidth);
         internal static readonly StyleShorthand BorderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
+        internal static readonly StyleShorthand BorderStyle = new FourDirectionalShorthand("border-style", FourDirectionalShorthand.PropertyType.BorderStyle);
         internal static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
         internal static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
         internal static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
@@ -41,6 +42,7 @@ namespace ReactUnity.Styling.Shorthands
             { "inset", Inset },
             { "borderWidth", BorderWidth },
             { "borderColor", BorderColor },
+            { "borderStyle", BorderStyle },
             { "borderRadius", BorderRadius },
             { "border", Border },
             { "borderTop", BorderTop },
@@ -66,6 +68,7 @@ namespace ReactUnity.Styling.Shorthands
 
             { "border-width", BorderWidth },
             { "border-color", BorderColor },
+            { "border-style", BorderStyle },
             { "border-radius", BorderRadius },
             { "border-top", BorderTop },
             { "border-right", BorderRight },

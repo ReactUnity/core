@@ -31,6 +31,10 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);
         public static readonly StyleProperty<Color> borderTopColor = new StyleProperty<Color>("borderTopColor", Color.black, true);
         public static readonly StyleProperty<Color> borderBottomColor = new StyleProperty<Color>("borderBottomColor", Color.black, true);
+        public static readonly StyleProperty<BorderStyle> borderLeftStyle = new StyleProperty<BorderStyle>("borderLeftStyle", BorderStyle.Solid, false);
+        public static readonly StyleProperty<BorderStyle> borderRightStyle = new StyleProperty<BorderStyle>("borderRightStyle", BorderStyle.Solid, false);
+        public static readonly StyleProperty<BorderStyle> borderTopStyle = new StyleProperty<BorderStyle>("borderTopStyle", BorderStyle.Solid, false);
+        public static readonly StyleProperty<BorderStyle> borderBottomStyle = new StyleProperty<BorderStyle>("borderBottomStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<YogaValue> translateZ = new StyleProperty<YogaValue>("translateZ", YogaValue.Point(0), true);
@@ -118,6 +122,10 @@ namespace ReactUnity.Styling
             { "borderRightColor", borderRightColor },
             { "borderTopColor", borderTopColor },
             { "borderBottomColor", borderBottomColor },
+            { "borderLeftStyle", borderLeftStyle },
+            { "borderRightStyle", borderRightStyle},
+            { "borderTopStyle", borderTopStyle},
+            { "borderBottomStyle", borderBottomStyle},
             { "boxShadow", boxShadow },
             { "transformOrigin", transformOrigin },
             { "translate", translate },
@@ -235,6 +243,10 @@ namespace ReactUnity.Styling
             { "border-right-color", borderRightColor },
             { "border-top-color", borderTopColor },
             { "border-bottom-color", borderBottomColor },
+            { "border-left-style", borderLeftStyle },
+            { "border-right-style", borderRightStyle},
+            { "border-top-style", borderTopStyle},
+            { "border-bottom-style", borderBottomStyle},
             { "box-shadow", boxShadow },
             { "transform-origin", transformOrigin },
             { "translate-z", translateZ },

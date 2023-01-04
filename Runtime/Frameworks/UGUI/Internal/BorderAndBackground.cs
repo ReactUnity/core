@@ -104,6 +104,22 @@ namespace ReactUnity.UGUI.Internal
             }
         }
 
+        private WebOutlineStyles borderStyles;
+        public WebOutlineStyles BorderStyles
+        {
+            get => borderStyles;
+            set
+            {
+                borderStyles = value;
+
+                if (!borderGraphic) return;
+                var bg = borderGraphic;
+
+                bg.Border.Styles = value;
+                bg.SetVerticesDirty();
+            }
+        }
+
         private BackgroundBlendMode blendMode;
         public BackgroundBlendMode BlendMode
         {
@@ -213,6 +229,7 @@ namespace ReactUnity.UGUI.Internal
             // Refresh border properties
             BorderSize = BorderSize;
             BorderColors = BorderColors;
+            BorderStyles = BorderStyles;
 
             return borderRoot;
         }
@@ -244,6 +261,8 @@ namespace ReactUnity.UGUI.Internal
             SetBoxShadow(style.boxShadow);
             SetBorderColor(style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor);
             SetBorderRadius(style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius);
+
+            BorderStyles = new WebOutlineStyles(style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle);
 
             SetMask(style.maskImage, style.maskPositionX, style.maskPositionY, style.maskSize, style.maskRepeatX, style.maskRepeatY);
         }

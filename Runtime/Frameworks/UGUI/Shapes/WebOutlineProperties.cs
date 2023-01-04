@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.UGUI.Shapes
@@ -18,6 +19,29 @@ namespace ReactUnity.UGUI.Shapes
             Color right,
             Color bottom,
             Color left
+        )
+        {
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+            Left = left;
+        }
+    }
+
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WebOutlineStyles
+    {
+        public BorderStyle Top;
+        public BorderStyle Right;
+        public BorderStyle Bottom;
+        public BorderStyle Left;
+
+        public WebOutlineStyles(
+            BorderStyle top,
+            BorderStyle right,
+            BorderStyle bottom,
+            BorderStyle left
         )
         {
             Top = top;
@@ -50,5 +74,6 @@ namespace ReactUnity.UGUI.Shapes
     {
         public WebOutlineColors Colors;
         public WebOutlineSizes Sizes;
+        public WebOutlineStyles Styles;
     }
 }

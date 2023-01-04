@@ -1,3 +1,5 @@
+using ReactUnity.Helpers;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,12 +63,15 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
+        Texture2D borderTexture;
+        public override Texture mainTexture => borderTexture;
 
         RoundedCornerUnitPositionData unitPositionData;
 
         protected override void OnEnable()
         {
             base.OnEnable();
+            borderTexture = ResourcesHelper.BorderTexture;
             SetVerticesDirty();
         }
 
@@ -156,7 +161,7 @@ namespace ReactUnity.UGUI.Shapes
             float fullWidth = width + outline.Sizes.Left + outline.Sizes.Right;
             float fullHeight = height + outline.Sizes.Top + outline.Sizes.Bottom;
 
-            if (rounding.Type == WebRoundingProperties.RoundedType.None)
+            if (!rounding.HasRounding())
             {
                 if (width <= 0 || height <= 0) return;
 
@@ -167,6 +172,7 @@ namespace ReactUnity.UGUI.Shapes
                     width,
                     height,
                     outline.Colors,
+                    outline.Styles,
                     uv
                 );
 
@@ -242,6 +248,7 @@ namespace ReactUnity.UGUI.Shapes
             float width,
             float height,
             WebOutlineColors colors,
+            WebOutlineStyles styles,
             Vector2 uv
         )
         {
@@ -254,9 +261,11 @@ namespace ReactUnity.UGUI.Shapes
                 width,
                 height,
                 colors,
+                styles,
                 fullWidth,
                 fullHeight,
-                false
+                false,
+                true
             );
 
             var outCenter = new Vector2(
@@ -270,9 +279,11 @@ namespace ReactUnity.UGUI.Shapes
                 fullWidth,
                 fullHeight,
                 colors,
+                styles,
                 fullWidth,
                 fullHeight,
-                true
+                true,
+                false
             );
         }
 
@@ -282,43 +293,62 @@ namespace ReactUnity.UGUI.Shapes
             float width,
             float height,
             WebOutlineColors colors,
+            WebOutlineStyles styles,
             float totalWidth,
             float totalHeight,
-            bool addRingIndices = false
+            bool addRingIndices,
+            bool isInner
         )
         {
             Debug.Assert(totalWidth > 0 && totalHeight > 0);
 
-            float uvXInset = 0.5f - width / totalWidth * 0.5f;
-            float uvYInset = 0.5f - height / totalHeight * 0.5f;
+            // TODO: calculate based on style
+            var uvTileCount = 25;
+
+            var topUvs = GetBorderStyleTextureUVs(styles.Top, false);
+            var rightUvs = GetBorderStyleTextureUVs(styles.Right, true);
+            var bottomUvs = GetBorderStyleTextureUVs(styles.Bottom, true);
+            var leftUvs = GetBorderStyleTextureUVs(styles.Left, false);
 
             // TL
             tmpPos.x = center.x - width * 0.5f;
             tmpPos.y = center.y + height * 0.5f;
-            tmpUVPos.x = uvXInset;
-            tmpUVPos.y = 1.0f - uvYInset;
+            tmpUVPos.x = uvTileCount;
+            tmpUVPos.y = isInner ? leftUvs.x : leftUvs.y;
             vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
+            tmpUVPos.x = 0;
+            tmpUVPos.y = isInner ? topUvs.x : topUvs.y;
             vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
 
             // TR
             tmpPos.x += width;
-            tmpUVPos.x = 1.0f - uvXInset;
+            tmpUVPos.x = uvTileCount;
             vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
+            tmpUVPos.x = 0;
+            tmpUVPos.y = isInner ? rightUvs.x : rightUvs.y;
             vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
 
             // BR
             tmpPos.y -= height;
-            tmpUVPos.y = uvYInset;
+            tmpUVPos.x = uvTileCount;
             vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
+            tmpUVPos.x = 0;
+            tmpUVPos.y = isInner ? bottomUvs.x : bottomUvs.y;
             vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+
 
             // BL
             tmpPos.x -= width;
-            tmpUVPos.x = uvXInset;
+            tmpUVPos.x = uvTileCount;
             vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
+            tmpUVPos.x = 0;
+            tmpUVPos.y = isInner ? leftUvs.x : leftUvs.y;
             vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
 
             if (addRingIndices)
@@ -336,6 +366,40 @@ namespace ReactUnity.UGUI.Shapes
 
                 vh.AddTriangle(baseIndex + 7, baseIndex + 15, baseIndex + 8);
                 vh.AddTriangle(baseIndex + 7, baseIndex + 8, baseIndex);
+            }
+        }
+
+        public static Vector2 GetBorderStyleTextureUVs(BorderStyle style, bool inverted)
+        {
+            switch (style)
+            {
+                case BorderStyle.Solid:
+                    return new Vector2(34f / 64f, 38f / 64f);
+                case BorderStyle.Dotted:
+                    return new Vector2(0, 0.5f);
+                case BorderStyle.Dashed:
+                    return new Vector2(46f / 64f, 50f / 64f);
+                case BorderStyle.Double:
+                    return new Vector2(52f / 64f, 55f / 64f);
+                case BorderStyle.Groove:
+                    return inverted ?
+                        new Vector2(40f / 64f, 44f / 64f) :
+                        new Vector2(44f / 64f, 40f / 64f);
+                case BorderStyle.Ridge:
+                    return inverted ?
+                        new Vector2(44f / 64f, 40f / 64f) :
+                        new Vector2(40f / 64f, 44f / 64f);
+                case BorderStyle.Outset:
+                    return inverted ?
+                        new Vector2(58f / 64f, 62f / 64f) :
+                        new Vector2(34f / 64f, 38f / 64f);
+                case BorderStyle.Inset:
+                    return inverted ?
+                        new Vector2(34f / 64f, 38f / 64f) :
+                        new Vector2(58f / 64f, 62f / 64f);
+                case BorderStyle.None:
+                default:
+                    return new Vector2(63f / 64f, 1);
             }
         }
 

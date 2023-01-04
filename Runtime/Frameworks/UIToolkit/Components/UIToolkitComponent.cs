@@ -84,10 +84,21 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
             TargetElement.style.bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
 
-            TargetElement.style.borderLeftWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
-            TargetElement.style.borderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
-            TargetElement.style.borderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
-            TargetElement.style.borderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
+            TargetElement.style.borderLeftWidth =
+                computed.borderLeftStyle == BorderStyle.None ? 0 :
+                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+
+            TargetElement.style.borderRightWidth =
+                computed.borderRightStyle == BorderStyle.None ? 0 :
+                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+
+            TargetElement.style.borderTopWidth =
+                computed.borderTopStyle == BorderStyle.None ? 0 :
+                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
+
+            TargetElement.style.borderBottomWidth =
+                computed.borderBottomStyle == BorderStyle.None ? 0 :
+                StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
             TargetElement.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(computed, LayoutProperties.Display);
 

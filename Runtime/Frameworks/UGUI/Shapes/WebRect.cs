@@ -94,7 +94,7 @@ namespace ReactUnity.UGUI.Shapes
         {
             if (width <= 0 || height <= 0) return;
 
-            if (roundedProperties.Type == WebRoundingProperties.RoundedType.None)
+            if (!roundedProperties.HasRounding())
             {
                 RectUtils.AddRect(
                     ref vh,

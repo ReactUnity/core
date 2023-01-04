@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
+using ReactUnity.Types;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -15,7 +16,8 @@ namespace ReactUnity.Styling.Shorthands
             Inset = 3,
             BorderWidth = 4,
             BorderColor = 5,
-            BorderRadius = 6,
+            BorderStyle = 6,
+            BorderRadius = 7,
         }
 
 
@@ -80,6 +82,16 @@ namespace ReactUnity.Styling.Shorthands
                         StyleProperties.borderLeftColor,
                     };
                     Converter = AllConverters.ColorConverter;
+                    break;
+                case PropertyType.BorderStyle:
+                    ModifiedProperties = new List<IStyleProperty>
+                    {
+                        StyleProperties.borderTopStyle,
+                        StyleProperties.borderRightStyle,
+                        StyleProperties.borderBottomStyle,
+                        StyleProperties.borderLeftStyle,
+                    };
+                    Converter = AllConverters.Get<BorderStyle>();
                     break;
                 case PropertyType.BorderRadius:
                     ModifiedProperties = new List<IStyleProperty>

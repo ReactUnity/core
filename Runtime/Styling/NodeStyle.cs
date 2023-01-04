@@ -42,6 +42,10 @@ namespace ReactUnity.Styling
         public Color borderRightColor => GetStyleValue(StyleProperties.borderRightColor);
         public Color borderTopColor => GetStyleValue(StyleProperties.borderTopColor);
         public Color borderBottomColor => GetStyleValue(StyleProperties.borderBottomColor);
+        public BorderStyle borderLeftStyle => GetStyleValue(StyleProperties.borderLeftStyle);
+        public BorderStyle borderRightStyle => GetStyleValue(StyleProperties.borderRightStyle);
+        public BorderStyle borderTopStyle => GetStyleValue(StyleProperties.borderTopStyle);
+        public BorderStyle borderBottomStyle => GetStyleValue(StyleProperties.borderBottomStyle);
         public ICssValueList<BoxShadow> boxShadow => GetStyleValue(StyleProperties.boxShadow);
         public YogaValue2 transformOrigin => GetStyleValue(StyleProperties.transformOrigin);
         public YogaValue2 translate => GetStyleValue(StyleProperties.translate);
