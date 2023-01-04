@@ -14,6 +14,8 @@ export type NavigationMode = 'none' | 'horizontal' | 'vertical' | 'automatic' | 
 export type WhiteSpace = 'normal' | 'nowrap';
 export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 
+export type BorderStyle = 'solid' | 'none' | 'hidden' | 'dotted' | 'dashed' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset';
+
 export type BackgroundBlendMode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten'
   | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue'
   | 'saturation' | 'color' | 'luminosity';

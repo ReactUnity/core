@@ -1,14 +1,14 @@
-import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, BorderStyle, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
 import { Array2Aux, AssetReference, AssetReferenceOrHttp, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
   opacity?: NumberAux;
-  zIndex?: number | string;
-  sortingLayer?: number | string;
-  order?: number | string;
+  zIndex?: number;
+  sortingLayer?: number;
+  order?: number;
   visibility?: Visibility | boolean;
-  cursor?: CursorType | string;
+  cursor?: CursorType;
   pointerEvents?: PointerEvents;
   content?: string;
   appearance?: Appearance;
@@ -30,17 +30,20 @@ export interface RenderStyle {
   maskRepeatX?: YogaValueAux;
   maskRepeatY?: YogaValueAux;
 
-  borderRadius?: Array2Aux<YogaValueAux> | string;
   borderTopLeftRadius?: Array2Aux<YogaValueAux>;
   borderTopRightRadius?: Array2Aux<YogaValueAux>;
   borderBottomRightRadius?: Array2Aux<YogaValueAux>;
   borderBottomLeftRadius?: Array2Aux<YogaValueAux>;
 
-  borderColor?: ColorAux;
   borderTopColor?: ColorAux;
   borderRightColor?: ColorAux;
   borderBottomColor?: ColorAux;
   borderLeftColor?: ColorAux;
+
+  borderTopStyle?: BorderStyle;
+  borderRightStyle?: BorderStyle;
+  borderBottomStyle?: BorderStyle;
+  borderLeftStyle?: BorderStyle;
 
   boxShadow?: string;
   objectFit?: ObjectFit;
@@ -52,7 +55,7 @@ export interface RenderStyle {
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
 
-  stateDuration?: number | string;
+  stateDuration?: number;
 
   // Inherited styles
   color?: ColorAux;
@@ -67,30 +70,30 @@ export interface RenderStyle {
   whiteSpace?: WhiteSpace;
   textStrokeWidth?: NumberAux;
   textStrokeColor?: ColorAux;
-  lineHeight?: number | string;
-  letterSpacing?: number | string;
-  wordSpacing?: number | string;
-  maxLines?: number | string;
+  lineHeight?: number;
+  letterSpacing?: number;
+  wordSpacing?: number;
+  maxLines?: number;
 
-  transitionProperty?: keyof RenderStyle | string;
-  transitionDuration?: number | string;
-  transitionTimingFunction?: TimingFunctionType | string;
-  transitionDelay?: number | string;
-  transitionPlayState?: AnimationPlayState | string;
-  motionDuration?: number | string;
-  motionTimingFunction?: TimingFunctionType | string;
-  motionDelay?: number | string;
-  animationDelay?: number | string;
-  animationDirection?: AnimationDirection | string;
-  animationDuration?: number | string;
-  animationFillMode?: AnimationFillMode | string;
-  animationIterationCount?: number | string;
-  animationName?: string | string;
-  animationPlayState?: AnimationPlayState | string;
-  animationTimingFunction?: TimingFunctionType | string;
+  transitionProperty?: keyof RenderStyle;
+  transitionDuration?: number;
+  transitionTimingFunction?: TimingFunctionType;
+  transitionDelay?: number;
+  transitionPlayState?: AnimationPlayState;
+  motionDuration?: number;
+  motionTimingFunction?: TimingFunctionType;
+  motionDelay?: number;
+  animationDelay?: number;
+  animationDirection?: AnimationDirection;
+  animationDuration?: number;
+  animationFillMode?: AnimationFillMode;
+  animationIterationCount?: number;
+  animationName?: string;
+  animationPlayState?: AnimationPlayState;
+  animationTimingFunction?: TimingFunctionType;
   audioClip?: AssetReferenceOrHttp;
-  audioIterationCount?: number | string;
-  audioDelay?: number | string;
+  audioIterationCount?: number;
+  audioDelay?: number;
 
   // Shorthands
   all?: string;
@@ -103,6 +106,9 @@ export interface RenderStyle {
   borderBottom?: string;
   borderLeft?: string;
   borderWidth?: string;
+  borderStyle?: BorderStyle;
+  borderColor?: ColorAux;
+  borderRadius?: Array2Aux<YogaValueAux>;
   margin?: string | number;
   mask?: string;
   maskPosition?: string;

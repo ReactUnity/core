@@ -6,7 +6,7 @@ import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign,
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
 // % is mapped to percentage, e.g. 50% -> 50 Percent
-export type YogaValueAux = 'auto' | string | number | null | undefined | boolean;
+export type YogaValueAux = 'auto' | number | null | undefined | boolean;
 export type YogaValue2Aux = Array2Aux<YogaValueAux> | PositioningLiteral;
 export type YogaValue4Aux = Array4Aux<YogaValueAux>;
 
@@ -21,17 +21,17 @@ export interface Layout {
   alignContent?: YogaAlign;
   alignSelf?: YogaAlign;
   alignItems?: YogaAlign;
-  borderWidth?: number | string;
-  borderStartWidth?: number | string;
-  borderEndWidth?: number | string;
-  borderTopWidth?: number | string;
-  borderRightWidth?: number | string;
-  borderBottomWidth?: number | string;
-  borderLeftWidth?: number | string;
-  aspectRatio?: number | string;
+  borderWidth?: number;
+  borderStartWidth?: number;
+  borderEndWidth?: number;
+  borderTopWidth?: number;
+  borderRightWidth?: number;
+  borderBottomWidth?: number;
+  borderLeftWidth?: number;
+  aspectRatio?: number;
   flexDirection?: FlexDirection;
-  flexShrink?: number | string;
-  flexGrow?: number | string;
+  flexShrink?: number;
+  flexGrow?: number;
   flexBasis?: YogaValueAux;
   minHeight?: YogaValueAux;
   minWidth?: YogaValueAux;
@@ -63,8 +63,8 @@ export interface Layout {
   paddingTop?: YogaValueAux;
   paddingEnd?: YogaValueAux;
   paddingLeft?: YogaValueAux;
-  rowGap?: number | string;
-  columnGap?: number | string;
+  rowGap?: number;
+  columnGap?: number;
 }
 
 export interface LayoutExtended {

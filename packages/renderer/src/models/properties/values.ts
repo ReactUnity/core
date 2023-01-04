@@ -22,7 +22,7 @@ export type RectOffsetAux = Array4Aux<number>;
 
 export type KnownColor = keyof KnownColors;
 
-export type HexColor = string; // `#${string}`;
+export type HexColor = (string | {}); // `#${string}`;
 export type ColorAux = KnownColor | HexColor | number | Array4Aux<number> | UnityEngine.Color;
 export type NumberAux = string | number;
 

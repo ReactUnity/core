@@ -8,7 +8,7 @@ export interface RichTextVoidTag extends React.Attributes {
 }
 
 export interface RichTextValueTag<T = string | number> extends React.Attributes {
-  value?: T | string;
+  value?: T | (string & {});
   children?: any;
 }
 
