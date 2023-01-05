@@ -71,7 +71,6 @@ namespace ReactUnity.UGUI.Shapes
         protected override void OnEnable()
         {
             base.OnEnable();
-            borderTexture = ResourcesHelper.BorderTexture;
             SetVerticesDirty();
         }
 
@@ -100,6 +99,8 @@ namespace ReactUnity.UGUI.Shapes
 
             Rounding.UpdateAdjusted(outerRect.size, pixelRect.size, Border.Sizes);
             InnerRounding.UpdateAdjusted(pixelRect.size, pixelRect.size);
+
+            borderTexture = Rounding.HasRounding() ? null : ResourcesHelper.BorderTexture;
 
             AddRoundedRectLine(
                 ref vh,
