@@ -13,18 +13,6 @@ namespace ReactUnity.Helpers
         public static TextAsset UseragentStylesheet => useragentStylesheet = useragentStylesheet ??
             Resources.Load<TextAsset>("ReactUnity/styles/ugui/useragent");
 
-        private static Material borderRadiusMaterial;
-        public static Material BorderRadiusMaterial => borderRadiusMaterial = borderRadiusMaterial ??
-            Resources.Load<Material>("ReactUnity/materials/RoundedBorder");
-
-        private static Material coloredBorderMaterial;
-        public static Material ColoredBorderMaterial => coloredBorderMaterial = coloredBorderMaterial ??
-            Resources.Load<Material>("ReactUnity/materials/RoundedColoredBorder");
-
-        private static Material boxShadowMaterial;
-        public static Material BoxShadowMaterial => boxShadowMaterial = boxShadowMaterial ??
-            Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
-
         private static Material backgroundImageMaterial;
         public static Material BackgroundImageMaterial => backgroundImageMaterial = backgroundImageMaterial ??
             Resources.Load<Material>("ReactUnity/materials/BackgroundImage");
