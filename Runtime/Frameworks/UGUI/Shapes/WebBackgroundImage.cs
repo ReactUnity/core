@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Types;
@@ -7,59 +6,9 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
-#if (NET_STANDARD_2_0 && !NET_STANDARD_2_1) || (NET_4_6 && !UNITY_2021_2_OR_NEWER)
-    using HashCode = ReactUnity.Helpers.HashCode;
-#else
-    using HashCode = System.HashCode;
-#endif
-
     [RequireComponent(typeof(CanvasRenderer))]
     public class WebBackgroundImage : Image
     {
-        private struct ShaderProps
-        {
-            public Material BaseMaterial;
-            public Vector4 Size;
-            public Vector4 Pos;
-            public int RepeatX;
-            public int RepeatY;
-            public float Aspect;
-
-            public override bool Equals(object obj)
-            {
-                return obj is ShaderProps props &&
-                       EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
-                       Size.Equals(props.Size) &&
-                       Pos.Equals(props.Pos) &&
-                       RepeatX == props.RepeatX &&
-                       RepeatY == props.RepeatY &&
-                       Aspect == props.Aspect;
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(BaseMaterial, Size, Pos, RepeatX, RepeatY, Aspect);
-            }
-
-            public void SetToMaterial(Material mat)
-            {
-                mat.SetVector(SizeProp, Size);
-                mat.SetVector(PosProp, Pos);
-                mat.SetFloat(RepeatXProp, RepeatX);
-                mat.SetFloat(RepeatYProp, RepeatY);
-                mat.SetFloat(AspectProp, Aspect);
-            }
-        }
-
-        static Dictionary<ShaderProps, Material> CachedMaterials = new Dictionary<ShaderProps, Material>();
-
-
-        public static readonly int SizeProp = Shader.PropertyToID("_size");
-        public static readonly int PosProp = Shader.PropertyToID("_pos");
-        public static readonly int RepeatXProp = Shader.PropertyToID("_repeatX");
-        public static readonly int RepeatYProp = Shader.PropertyToID("_repeatY");
-        public static readonly int AspectProp = Shader.PropertyToID("_aspect");
-
         private RectTransform rt;
 
         public Vector2 Size => new Vector2(rt.rect.width, rt.rect.height);
@@ -131,31 +80,11 @@ namespace ReactUnity.UGUI.Shapes
             get
             {
                 var baseMat = base.materialForRendering;
-                if (Definition?.DoesNotModifyMaterial ?? true) return baseMat;
+                if (Definition == null || Definition.DoesNotModifyMaterial) return baseMat;
 
                 var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
-                var sz = new Vector2(szPoint.x / Size.x, szPoint.y / Size.y);
-                var psPoint = BackgroundPosition.GetPointValue(Size - szPoint, 0, false);
-                var ps = new Vector2(psPoint.x / Size.x, psPoint.y / Size.y);
 
-                var props = new ShaderProps
-                {
-                    BaseMaterial = baseMat,
-                    Size = sz,
-                    Pos = ps,
-                    RepeatX = (int) BackgroundRepeatX,
-                    RepeatY = (int) BackgroundRepeatY,
-                    Aspect = szPoint.x / szPoint.y,
-                };
-
-                if (!CachedMaterials.TryGetValue(props, out var result) || !result)
-                {
-                    result = new Material(props.BaseMaterial);
-                    props.SetToMaterial(result);
-                    CachedMaterials[props] = result;
-                }
-
-                result = Definition?.ModifyMaterial(Context, result, szPoint);
+                var result = Definition?.ModifyMaterial(Context, baseMat, szPoint);
 
                 return result;
             }

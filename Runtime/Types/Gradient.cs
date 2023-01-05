@@ -315,22 +315,25 @@ namespace ReactUnity.Types
         {
             internal Material BaseMaterial;
             public float Angle;
+            public float Aspect;
 
             public void SetMaterialProps(Material mat)
             {
                 mat.SetFloat("_angle", Angle);
+                mat.SetFloat("_aspect", Aspect);
             }
 
             public override bool Equals(object obj)
             {
                 return obj is ShaderProps props &&
                        EqualityComparer<Material>.Default.Equals(BaseMaterial, props.BaseMaterial) &&
-                       Angle == props.Angle;
+                       Angle == props.Angle &&
+                       Aspect == props.Aspect;
             }
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(BaseMaterial, Angle);
+                return HashCode.Combine(BaseMaterial, Angle, Aspect);
             }
         }
 
@@ -352,6 +355,7 @@ namespace ReactUnity.Types
             {
                 BaseMaterial = material,
                 Angle = Angle,
+                Aspect = size.x / size.y,
             };
 
             if (!CachedMaterials.TryGetValue(props, out var result) || !result)
@@ -395,6 +399,7 @@ namespace ReactUnity.Types
             public int SizeHint;
             public int Shape;
             public float Radius;
+            public float Aspect;
 
             public void SetMaterialProps(Material mat)
             {
@@ -402,6 +407,7 @@ namespace ReactUnity.Types
                 mat.SetFloat("_sizeHint", SizeHint);
                 mat.SetFloat("_shape", Shape);
                 mat.SetFloat("_radius", Radius);
+                mat.SetFloat("_aspect", Aspect);
             }
 
             public override bool Equals(object obj)
@@ -411,12 +417,13 @@ namespace ReactUnity.Types
                        At.Equals(props.At) &&
                        SizeHint == props.SizeHint &&
                        Shape == props.Shape &&
-                       Radius == props.Radius;
+                       Radius == props.Radius &&
+                       Aspect == props.Aspect;
             }
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(BaseMaterial, At, SizeHint, Shape, Radius);
+                return HashCode.Combine(BaseMaterial, At, SizeHint, Shape, Radius, Aspect);
             }
         }
 
@@ -450,6 +457,7 @@ namespace ReactUnity.Types
                 SizeHint = (int) SizeHint,
                 Shape = (int) Shape,
                 Radius = CalculateRadius(size) * Mathf.Max(1, calc.Length),
+                Aspect = size.x / size.y,
             };
 
             if (!CachedMaterials.TryGetValue(props, out var result) || !result)

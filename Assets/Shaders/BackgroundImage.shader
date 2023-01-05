@@ -2,8 +2,6 @@ Shader "ReactUnity/BackgroundImage"
 {
   Properties{
     _MainTex("Texture", 2D) = "white" {}
-    _pos("background Position", Vector) = (1,1,1,1)
-    _size("Background Size", Vector) = (1,1,1,1)
     _angle("Angle", Float) = 0
     _from("From", Float) = 0
     _offset("Offset", Float) = 0
@@ -15,8 +13,6 @@ Shader "ReactUnity/BackgroundImage"
     [Toggle()] _repeating("Gradient Repeating", Int) = 0
     [Enum(ReactUnity.Types.GradientType)] _gradientType("Gradient Type", Int) = 0
     [Enum(ReactUnity.Types.RadialGradientShape)] _shape("Gradient Shape", Int) = 0
-    [Enum(ReactUnity.Types.BackgroundRepeat)] _repeatX("Repeat X", Int) = 0
-    [Enum(ReactUnity.Types.BackgroundRepeat)] _repeatY("Repeat Y", Int) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8
     _Stencil("Stencil ID", Float) = 0
@@ -80,11 +76,7 @@ Shader "ReactUnity/BackgroundImage"
       float _radius;
       float _aspect;
       int _shape;
-      int _repeatX;
-      int _repeatY;
       float2 _at;
-      float2 _pos;
-      float2 _size;
       sampler2D _MainTex;
       float4 _MainTex_ST;
       float4 _ClipRect;
@@ -140,74 +132,63 @@ Shader "ReactUnity/BackgroundImage"
 
       fixed4 frag(v2f i) : SV_Target
       {
-        bool visibleX, visibleY;
-        float tx = calculateRepeat(i.uv.x, _size.x, _pos.x, _repeatX, visibleX);
-        float ty = calculateRepeat(1 - i.uv.y, _size.y, _pos.y, _repeatY, visibleY);
+        float2 uv = i.uv;
+        float2 txPos = uv;
 
-        fixed4 res;
+        if (_gradientType == 1) {
+          float maxY = 1 / _aspect;
+          float y = uv.y;
+          float x = uv.x;
 
-        if(!(visibleX && visibleY)) {
-          res = fixed4(0,0,0,0);
+          float sa = sin(_angle);
+          float ca = cos(_angle);
+
+          float ratioX = 0;
+          if (ca == 0) {
+            ratioX = sa < 0 ? 1 - x : x;
+          }
+          else if (sa == 0) {
+            ratioX = ca < 0 ? 1 - y : y;
+          }
+          else {
+            float zx = sa < 0 ? 1 : 0;
+            float zy = ca < 0 ? maxY : 0;
+
+            float2 A = float2(x, y / _aspect);
+            float2 B = A + float2(ca, -sa);
+
+            float2 C = float2(zx, zy);
+            float2 D = float2(1 - zx, maxY - zy);
+
+            ratioX = ((B.x*A.y - A.x*B.y) * (D.x - C.x) - (B.x - A.x) * (D.x * C.y - D.y * C.x))
+            / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
+
+            ratioX = (sa < 0) ? 1 - ratioX : ratioX;
+          }
+
+          txPos = float2(ratioX, 0);
         }
-        else {
-          float2 uv = i.uv;
-          float2 txPos = uv;
+        else if (_gradientType == 2) {
+          float2 r2 = uv - _at;
 
-          if (_gradientType == 1) {
-            float maxY = 1 / _aspect;
-            float y = uv.y;
-            float x = uv.x;
-
-            float sa = sin(_angle);
-            float ca = cos(_angle);
-
-            float ratioX = 0;
-            if (ca == 0) {
-              ratioX = sa < 0 ? 1 - x : x;
-            }
-            else if (sa == 0) {
-              ratioX = ca < 0 ? 1 - y : y;
-            }
-            else {
-              float zx = sa < 0 ? 1 : 0;
-              float zy = ca < 0 ? maxY : 0;
-
-              float2 A = float2(x, y / _aspect);
-              float2 B = A + float2(ca, -sa);
-
-              float2 C = float2(zx, zy);
-              float2 D = float2(1 - zx, maxY - zy);
-
-              ratioX = ((B.x*A.y - A.x*B.y) * (D.x - C.x) - (B.x - A.x) * (D.x * C.y - D.y * C.x))
-              / ((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x));
-
-              ratioX = (sa < 0) ? 1 - ratioX : ratioX;
-            }
-
-            txPos = float2(ratioX, 0);
-          }
-          else if (_gradientType == 2) {
-            float2 r2 = uv - _at;
-
-            if (_shape == 1) {
-              r2 = float2(r2.x, r2.y / _aspect);
-            }
-
-            txPos = float2(length(r2) / _radius, 0);
-          }
-          else if (_gradientType == 3) {
-            float2 r2 = uv - _at;
-            float angle = (atan2(r2.x, r2.y) - _from) / pi2;
-            txPos = float2(angle - floor(angle), 0);
+          if (_shape == 1) {
+            r2 = float2(r2.x, r2.y / _aspect);
           }
 
-          if (_gradientType != 0 && _repeating) {
-            float x = (txPos.x - _offset) / _length;
-            txPos = float2(x, txPos.y);
-          }
-
-          res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
+          txPos = float2(length(r2) / _radius, 0);
         }
+        else if (_gradientType == 3) {
+          float2 r2 = uv - _at;
+          float angle = (atan2(r2.x, r2.y) - _from) / pi2;
+          txPos = float2(angle - floor(angle), 0);
+        }
+
+        if (_gradientType != 0 && _repeating) {
+          float x = (txPos.x - _offset) / _length;
+          txPos = float2(x, txPos.y);
+        }
+
+        fixed4 res = mixAlpha(tex2D(_MainTex, txPos), i.color, 1);
 
         #ifdef UNITY_UI_CLIP_RECT
           res.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
