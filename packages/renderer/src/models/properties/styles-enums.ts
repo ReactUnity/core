@@ -1,3 +1,7 @@
+export type SafeString = string & {};
+
+export type CssKeyword = 'initial' | 'inherit' | 'auto' | 'none' | 'unset' | 'default' | 'revert';
+
 export type FontWeight = 'thin' | 100 | 'extra-light' | 200 | 'light' | 300 | 'regular' | 400
   | 'medium' | 500 | 'semi-bold' | 600 | 'bold' | 700 | 'heavy' | 800 | 'black' | 900;
 
@@ -40,3 +44,5 @@ export type AnimationFillMode = 'none' | 'both' | 'forwards' | 'backwards';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationPlayState = 'running' | 'paused';
 export type BackgroundSize = 'cover' | 'contain';
+export type BackgroundRepeat = 'repeat' | 'space' | 'round' | 'no-repeat';
+export type BorderImageRepeat = 'stretch' | 'repeat' | 'space' | 'round';

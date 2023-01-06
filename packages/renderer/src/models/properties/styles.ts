@@ -1,4 +1,4 @@
-import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundSize, BorderStyle, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundRepeat, BackgroundSize, BorderImageRepeat, BorderStyle, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, SafeString, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
 import { Array2Aux, AssetReference, AssetReferenceOrHttp, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
@@ -10,7 +10,7 @@ export interface RenderStyle {
   visibility?: Visibility | boolean;
   cursor?: CursorType;
   pointerEvents?: PointerEvents;
-  content?: string;
+  content?: SafeString;
   appearance?: Appearance;
   navigation?: NavigationMode;
 
@@ -20,8 +20,8 @@ export interface RenderStyle {
   backgroundPositionX?: YogaValueAux;
   backgroundPositionY?: YogaValueAux;
   backgroundSize?: BackgroundSize | YogaValue2Aux;
-  backgroundRepeatX?: YogaValueAux;
-  backgroundRepeatY?: YogaValueAux;
+  backgroundRepeatX?: BackgroundRepeat;
+  backgroundRepeatY?: BackgroundRepeat;
 
   maskImage?: AssetReferenceOrHttp;
   maskPositionX?: YogaValueAux;
@@ -45,7 +45,13 @@ export interface RenderStyle {
   borderBottomStyle?: BorderStyle;
   borderLeftStyle?: BorderStyle;
 
-  boxShadow?: string;
+  borderImageSource?: AssetReferenceOrHttp;
+  borderImageSlice?: YogaValueAux;
+  borderImageRepeat?: BorderImageRepeat;
+  borderImageOutset?: YogaValueAux;
+  borderImageWidth?: YogaValueAux;
+
+  boxShadow?: SafeString;
   objectFit?: ObjectFit;
   objectPosition?: YogaValue2Aux;
 
@@ -88,7 +94,7 @@ export interface RenderStyle {
   animationDuration?: number;
   animationFillMode?: AnimationFillMode;
   animationIterationCount?: number;
-  animationName?: string;
+  animationName?: SafeString;
   animationPlayState?: AnimationPlayState;
   animationTimingFunction?: TimingFunctionType;
   audioClip?: AssetReferenceOrHttp;
@@ -96,35 +102,36 @@ export interface RenderStyle {
   audioDelay?: number;
 
   // Shorthands
-  all?: string;
-  background?: string;
-  backgroundPosition?: string;
-  backgroundRepeat?: string;
-  border?: string;
-  borderTop?: string;
-  borderRight?: string;
-  borderBottom?: string;
-  borderLeft?: string;
-  borderWidth?: string;
+  all?: SafeString;
+  background?: SafeString;
+  backgroundPosition?: SafeString;
+  backgroundRepeat?: BackgroundRepeat;
+  border?: SafeString;
+  borderTop?: SafeString;
+  borderRight?: SafeString;
+  borderBottom?: SafeString;
+  borderLeft?: SafeString;
+  borderWidth?: SafeString;
   borderStyle?: BorderStyle;
   borderColor?: ColorAux;
   borderRadius?: Array2Aux<YogaValueAux>;
-  margin?: string | number;
-  mask?: string;
-  maskPosition?: string;
-  maskRepeat?: string;
-  padding?: string | number;
-  inset?: string | number;
-  flex?: string;
-  flexFlow?: string;
-  font?: string;
-  textStroke?: string;
-  animation?: string;
-  transition?: string;
-  motion?: string;
-  audio?: string;
-  transform?: string;
-  gap?: string | number;
+  borderImage?: SafeString;
+  margin?: SafeString | number;
+  mask?: SafeString;
+  maskPosition?: SafeString;
+  maskRepeat?: SafeString;
+  padding?: SafeString | number;
+  inset?: SafeString | number;
+  flex?: SafeString;
+  flexFlow?: SafeString;
+  font?: SafeString;
+  textStroke?: SafeString;
+  animation?: SafeString;
+  transition?: SafeString;
+  motion?: SafeString;
+  audio?: SafeString;
+  transform?: SafeString;
+  gap?: SafeString | number;
 
   // Custom CSS variables
   [variable: `--${string}`]: any;

@@ -6,7 +6,7 @@ import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign,
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
 // % is mapped to percentage, e.g. 50% -> 50 Percent
-export type YogaValueAux = 'auto' | number | null | undefined | boolean;
+export type YogaValueAux = 'auto' | number | null | undefined | boolean | (string & {});
 export type YogaValue2Aux = Array2Aux<YogaValueAux> | PositioningLiteral;
 export type YogaValue4Aux = Array4Aux<YogaValueAux>;
 

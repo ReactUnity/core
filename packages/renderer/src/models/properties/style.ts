@@ -1,10 +1,11 @@
 import { ReactUnity } from '../generated';
 import { RenderStyle } from './styles';
+import { CssKeyword } from './styles-enums';
 import { LayoutCssCompatible } from './yoga';
 
-type AllPropsAsString<T> = {
-  [Key in keyof T]: T[Key] | (string & {});
+type AllPropsAsStringOrKeyword<T> = {
+  [Key in keyof T]: T[Key] | (string & {}) | CssKeyword;
 }
 
-export type Style = AllPropsAsString<RenderStyle & LayoutCssCompatible>;
+export type Style = AllPropsAsStringOrKeyword<RenderStyle & LayoutCssCompatible>;
 export type InlineStyleRemap = Style & ReactUnity.Styling.InlineStyles;
