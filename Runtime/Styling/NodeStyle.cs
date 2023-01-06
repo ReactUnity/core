@@ -75,6 +75,12 @@ namespace ReactUnity.Styling
         public ObjectFit objectFit => GetStyleValue(StyleProperties.objectFit);
         public YogaValue2 objectPosition => GetStyleValue(StyleProperties.objectPosition);
 
+        public ImageDefinition borderImageSource => GetStyleValue(StyleProperties.borderImageSource);
+        public BorderImageSlice borderImageSlice => GetStyleValue(StyleProperties.borderImageSlice);
+        public ICssFourDirectional<BackgroundRepeat> borderImageRepeat => GetStyleValue(StyleProperties.borderImageRepeat);
+        public ICssFourDirectional<YogaValue> borderImageOutset => GetStyleValue(StyleProperties.borderImageOutset);
+        public ICssFourDirectional<YogaValue> borderImageWidth => GetStyleValue(StyleProperties.borderImageWidth);
+
         public Color backgroundColor => GetStyleValue(StyleProperties.backgroundColor);
         public ICssValueList<ImageDefinition> backgroundImage => GetStyleValue(StyleProperties.backgroundImage);
         public ICssValueList<YogaValue> backgroundPositionX => GetStyleValue(StyleProperties.backgroundPositionX);

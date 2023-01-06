@@ -65,6 +65,12 @@ namespace ReactUnity.Styling
 
         public static readonly ValueListStyleProperty<BoxShadow> boxShadow = new ValueListStyleProperty<BoxShadow>("boxShadow", BoxShadow.Default, true);
 
+        public static readonly StyleProperty<ImageDefinition> borderImageSource = new StyleProperty<ImageDefinition>("borderImageSource");
+        public static readonly StyleProperty<BorderImageSlice> borderImageSlice = new StyleProperty<BorderImageSlice>("borderImageSlice", BorderImageSlice.Auto, true);
+        public static readonly FourDirectionalStyleProperty<BackgroundRepeat> borderImageRepeat = new FourDirectionalStyleProperty<BackgroundRepeat>("borderImageRepeat", BackgroundRepeat.Stretch, false);
+        public static readonly FourDirectionalStyleProperty<YogaValue> borderImageOutset = new FourDirectionalStyleProperty<YogaValue>("borderImageOutset", YogaValue.Point(0), true);
+        public static readonly FourDirectionalStyleProperty<YogaValue> borderImageWidth = new FourDirectionalStyleProperty<YogaValue>("borderImageWidth", YogaValue.Auto(), true);
+
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly ValueListStyleProperty<ImageDefinition> backgroundImage = new ValueListStyleProperty<ImageDefinition>("backgroundImage");
         public static readonly ValueListStyleProperty<YogaValue> backgroundPositionX = new ValueListStyleProperty<YogaValue>("backgroundPositionX");
@@ -156,6 +162,12 @@ namespace ReactUnity.Styling
             { "objectFit", objectFit },
             { "objectPosition", objectPosition },
 
+            { "borderImageSource", borderImageSource },
+            { "borderImageSlice", borderImageSlice },
+            { "borderImageRepeat", borderImageRepeat },
+            { "borderImageOutset", borderImageOutset },
+            { "borderImageWidth", borderImageWidth },
+
             { "backgroundColor", backgroundColor },
             { "backgroundImage", backgroundImage },
             { "backgroundPositionX", backgroundPositionX },
@@ -217,6 +229,12 @@ namespace ReactUnity.Styling
             { "audio-clip", audioClip },
             { "audio-delay", audioDelay },
             { "audio-iteration-count", audioIterationCount },
+
+            { "border-image-source", borderImageSource },
+            { "border-image-slice", borderImageSlice },
+            { "border-image-repeat", borderImageRepeat },
+            { "border-image-outset", borderImageOutset },
+            { "border-image-width", borderImageWidth },
 
             { "z-index", zIndex },
             { "sorting-layer", sortingLayer },

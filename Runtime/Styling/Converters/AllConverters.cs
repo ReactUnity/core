@@ -50,6 +50,7 @@ namespace ReactUnity.Styling.Converters
         static public StyleConverterBase ImageDefinitionConverter = new ImageDefinition.Converter();
         static public StyleConverterBase BackgroundSizeConverter = new BackgroundSize.Converter();
         static public StyleConverterBase SortingLayerConverter = new SortingLayerConverter();
+        static public StyleConverterBase BorderImageSliceConverter = new BorderImageSlice.Converter();
 
 
         private static Dictionary<Type, StyleConverterBase> Map = new Dictionary<Type, StyleConverterBase>()
@@ -77,6 +78,7 @@ namespace ReactUnity.Styling.Converters
             { typeof(ImageDefinition), ImageDefinitionConverter },
             { typeof(BackgroundSize), BackgroundSizeConverter },
             { typeof(SortingLayer), SortingLayerConverter },
+            { typeof(BorderImageSlice), BorderImageSliceConverter }
         };
 
         public static StyleConverterBase Get<T>() => Get(typeof(T));

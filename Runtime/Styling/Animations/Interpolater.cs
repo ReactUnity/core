@@ -24,6 +24,11 @@ namespace ReactUnity.Styling.Animations
         {
             return Mathf.RoundToInt(TimingFunctions.Linear(t, from, to));
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Interpolate(bool from, bool to, float t)
+        {
+            return t > 0.5f ? to : from;
+        }
         public static Color Interpolate(Color from, Color to, float t)
         {
             if (from == Color.clear || to == Color.clear)

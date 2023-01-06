@@ -1,9 +1,13 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
     public static class GeoUtils
     {
+        public static readonly Color32 White = Color.white;
+
         public static readonly Vector3 UpV3 = Vector3.up;
         public static readonly Vector3 DownV3 = Vector3.down;
         public static readonly Vector3 LeftV3 = Vector3.left;
@@ -19,5 +23,10 @@ namespace ReactUnity.UGUI.Shapes
         public static readonly float HalfPI = Mathf.PI * 0.5f;
         public static readonly float TwoPI = Mathf.PI * 2.0f;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddVert(this VertexHelper vh, Vector2 position, Vector2 uv0)
+        {
+            vh.AddVert(position, White, uv0, ZeroV2, Vector4.zero, Vector4.zero, UINormal, UITangent);
+        }
     }
 }

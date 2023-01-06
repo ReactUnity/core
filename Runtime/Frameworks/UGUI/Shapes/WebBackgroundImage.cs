@@ -231,7 +231,7 @@ namespace ReactUnity.UGUI.Shapes
 #endif
 
 
-        private static (float, float, int, float) CalculateRepeat(float size, float totalSize, float pos, BackgroundRepeat repeat)
+        public static (float, float, int, float) CalculateRepeat(float size, float totalSize, float pos, BackgroundRepeat repeat)
         {
             var rt = totalSize / size;
 
@@ -243,6 +243,11 @@ namespace ReactUnity.UGUI.Shapes
             if (repeat == BackgroundRepeat.NoRepeat)
             {
                 count = 1;
+            }
+            else if (repeat == BackgroundRepeat.Stretch)
+            {
+                count = 1;
+                tile = totalSize;
             }
             else if (repeat == BackgroundRepeat.Round)
             {

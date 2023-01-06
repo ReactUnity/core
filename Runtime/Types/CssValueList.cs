@@ -101,7 +101,7 @@ namespace ReactUnity.Types
 
             protected override bool ParseInternal(string value, out IComputedValue result)
             {
-                var splits = ParserHelpers.Split(value, ',');
+                var splits = ParserHelpers.SplitComma(value);
 
                 return ComputedList.Create(out result, splits.OfType<object>().ToList(), BaseConverter,
                     (resolvedValues) => {
@@ -119,7 +119,7 @@ namespace ReactUnity.Types
         }
     }
 
-    public struct CssValueListInterpolated<T> : ICssValueList<T>
+    public struct CssValueListInterpolated<T> : ICssValueList<T>, Interpolatable
     {
         public ICssValueList<T> From;
         public ICssValueList<T> To;
@@ -140,5 +140,12 @@ namespace ReactUnity.Types
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Get(int index, T defaultValue) => Interpolater.ForceTypedInterpolate<T>(From.Get(index, defaultValue), To.Get(index, defaultValue), Ratio);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public object Interpolate(object to, float t)
+        {
+            if (to is ICssValueList<T> tto) return new CssValueListInterpolated<T>(this, tto, t);
+            return t > 0.5f ? to : this;
+        }
     }
 }

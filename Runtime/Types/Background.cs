@@ -112,6 +112,7 @@ namespace ReactUnity.Types
         Space = 1,
         Round = 2,
         NoRepeat = 3,
+        Stretch = 4,
     }
 
     public enum BackgroundBox
