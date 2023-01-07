@@ -169,6 +169,9 @@ namespace ReactUnity.Styling.Converters
         public static List<string> SplitComma(string val) => Split(val, ',');
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<string> SplitSlash(string val) => Split(val, '/');
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<string> SplitWhitespace(string val, char isolateCharacter = default) => Split(val, ' ', isolateCharacter);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

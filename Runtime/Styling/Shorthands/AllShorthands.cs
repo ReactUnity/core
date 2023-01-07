@@ -13,6 +13,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
         internal static readonly StyleShorthand BorderStyle = new FourDirectionalShorthand("border-style", FourDirectionalShorthand.PropertyType.BorderStyle);
         internal static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
+        internal static readonly StyleShorthand BorderImage = new BorderImageShorthand("border-image");
         internal static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
         internal static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
         internal static readonly StyleShorthand BorderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
@@ -49,6 +50,7 @@ namespace ReactUnity.Styling.Shorthands
             { "borderRight", BorderRight },
             { "borderBottom", BorderBottom },
             { "borderLeft", BorderLeft },
+            { "borderImage", BorderImage },
             { "flex", Flex },
             { "flexFlow", FlexFlow },
             { "font", Font },
@@ -74,6 +76,7 @@ namespace ReactUnity.Styling.Shorthands
             { "border-right", BorderRight },
             { "border-bottom", BorderBottom },
             { "border-left", BorderLeft },
+            { "border-image", BorderImage },
             { "flex-flow", FlexFlow },
             { "background-position", BackgroundPosition },
             { "background-repeat", BackgroundRepeat },
