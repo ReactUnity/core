@@ -32,6 +32,9 @@ namespace ReactUnity.Tests
 
         const string DataUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJElEQVQoU2P8z8DwnwEJMKLwGBhAfForYGD4j24rI4qbaK8AAClEFAHkdZU1AAAAAElFTkSuQmCC";
 
+        const string StarUrl = "res:ReactUnity/tests/sprites/star";
+        const string DiamondsUrl = "res:ReactUnity/tests/sprites/border-diamonds";
+
         private UGUIComponent View => Q("#test");
 
         public GraphicalTests(JavascriptEngineType engineType) : base(engineType) { }
@@ -339,23 +342,23 @@ namespace ReactUnity.Tests
 
 
         protected static Tuple<string, string>[] backgrounds = new Tuple<string, string>[] {
-            Tuple.Create("01", "url(res:ReactUnity/tests/sprites/star)"),
-            Tuple.Create("02", "url(res:ReactUnity/tests/sprites/star) 100% 0"),
-            Tuple.Create("03", "url(res:ReactUnity/tests/sprites/star) 0 100%"),
-            Tuple.Create("04", "url(res:ReactUnity/tests/sprites/star) 0 0/cover"),
-            Tuple.Create("05", "url(res:ReactUnity/tests/sprites/star) center/cover"),
-            Tuple.Create("06", "url(res:ReactUnity/tests/sprites/star) center/contain"),
-            Tuple.Create("07", "url(res:ReactUnity/tests/sprites/star) bottom right / contain"),
-            Tuple.Create("08", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10% 10%"),
-            Tuple.Create("09", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10%"),
-            Tuple.Create("10", "url(res:ReactUnity/tests/sprites/star) 20% 90% / 500px 500px"),
-            Tuple.Create("11", "url(res:ReactUnity/tests/sprites/star) top /100px 20px"),
-            Tuple.Create("12", "url(res:ReactUnity/tests/sprites/star) space round top / 35% 35%"),
-            Tuple.Create("13", "url(res:ReactUnity/tests/sprites/star) round space top / 35%"),
-            Tuple.Create("14", "url(res:ReactUnity/tests/sprites/star) repeat-y top / 35%"),
-            Tuple.Create("15", "url(res:ReactUnity/tests/sprites/star) repeat-x top / 35%"),
-            Tuple.Create("16", "url(res:ReactUnity/tests/sprites/star) space bottom right / cover"),
-            Tuple.Create("17", "url(res:ReactUnity/tests/sprites/star) space bottom right / contain"),
+            Tuple.Create("01", $"url({StarUrl})"),
+            Tuple.Create("02", $"url({StarUrl}) 100% 0"),
+            Tuple.Create("03", $"url({StarUrl}) 0 100%"),
+            Tuple.Create("04", $"url({StarUrl}) 0 0/cover"),
+            Tuple.Create("05", $"url({StarUrl}) center/cover"),
+            Tuple.Create("06", $"url({StarUrl}) center/contain"),
+            Tuple.Create("07", $"url({StarUrl}) bottom right / contain"),
+            Tuple.Create("08", $"url({StarUrl}) 0 0 / 10% 10%"),
+            Tuple.Create("09", $"url({StarUrl}) 0 0 / 10%"),
+            Tuple.Create("10", $"url({StarUrl}) 20% 90% / 500px 500px"),
+            Tuple.Create("11", $"url({StarUrl}) top /100px 20px"),
+            Tuple.Create("12", $"url({StarUrl}) space round top / 35% 35%"),
+            Tuple.Create("13", $"url({StarUrl}) round space top / 35%"),
+            Tuple.Create("14", $"url({StarUrl}) repeat-y top / 35%"),
+            Tuple.Create("15", $"url({StarUrl}) repeat-x top / 35%"),
+            Tuple.Create("16", $"url({StarUrl}) space bottom right / cover"),
+            Tuple.Create("17", $"url({StarUrl}) space bottom right / contain"),
             Tuple.Create("18", $"url({DataUrl})"),
             Tuple.Create("19", $"url(\"{DataUrl}\")"),
         };
@@ -373,24 +376,24 @@ namespace ReactUnity.Tests
 
 
         protected static Tuple<string, string>[] masks = new Tuple<string, string>[] {
-            Tuple.Create("01", "url(res:ReactUnity/tests/sprites/star)"),
-            Tuple.Create("02", "url(res:ReactUnity/tests/sprites/star) 100% 0"),
-            Tuple.Create("03", "url(res:ReactUnity/tests/sprites/star) 0 100%"),
-            Tuple.Create("04", "url(res:ReactUnity/tests/sprites/star) 0 0/cover"),
-            Tuple.Create("05", "url(res:ReactUnity/tests/sprites/star) center/cover"),
-            Tuple.Create("06", "url(res:ReactUnity/tests/sprites/star) center/contain"),
-            Tuple.Create("07", "url(res:ReactUnity/tests/sprites/star) bottom right / contain"),
-            Tuple.Create("08", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10% 10%"),
-            Tuple.Create("09", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10%"),
-            Tuple.Create("10", "url(res:ReactUnity/tests/sprites/star) 20% 90% / 500px 500px"),
-            Tuple.Create("11", "url(res:ReactUnity/tests/sprites/star) top /100px 20px"),
-            Tuple.Create("12", "url(res:ReactUnity/tests/sprites/star) space round top / 35% 35%"),
-            Tuple.Create("13", "url(res:ReactUnity/tests/sprites/star) round space top / 35%"),
-            Tuple.Create("14", "url(res:ReactUnity/tests/sprites/star) repeat-y top / 35%"),
-            Tuple.Create("15", "url(res:ReactUnity/tests/sprites/star) repeat-x top / 35%"),
-            Tuple.Create("16", "url(res:ReactUnity/tests/sprites/star) space bottom right / cover"),
-            Tuple.Create("17", "url(res:ReactUnity/tests/sprites/star) space bottom right / contain"),
-            Tuple.Create("18", "url(res:ReactUnity/tests/sprites/star) no-repeat bottom right / 70%, url(res:ReactUnity/tests/sprites/star) no-repeat bottom left / 70%"),
+            Tuple.Create("01", $"url({StarUrl})"),
+            Tuple.Create("02", $"url({StarUrl}) 100% 0"),
+            Tuple.Create("03", $"url({StarUrl}) 0 100%"),
+            Tuple.Create("04", $"url({StarUrl}) 0 0/cover"),
+            Tuple.Create("05", $"url({StarUrl}) center/cover"),
+            Tuple.Create("06", $"url({StarUrl}) center/contain"),
+            Tuple.Create("07", $"url({StarUrl}) bottom right / contain"),
+            Tuple.Create("08", $"url({StarUrl}) 0 0 / 10% 10%"),
+            Tuple.Create("09", $"url({StarUrl}) 0 0 / 10%"),
+            Tuple.Create("10", $"url({StarUrl}) 20% 90% / 500px 500px"),
+            Tuple.Create("11", $"url({StarUrl}) top /100px 20px"),
+            Tuple.Create("12", $"url({StarUrl}) space round top / 35% 35%"),
+            Tuple.Create("13", $"url({StarUrl}) round space top / 35%"),
+            Tuple.Create("14", $"url({StarUrl}) repeat-y top / 35%"),
+            Tuple.Create("15", $"url({StarUrl}) repeat-x top / 35%"),
+            Tuple.Create("16", $"url({StarUrl}) space bottom right / cover"),
+            Tuple.Create("17", $"url({StarUrl}) space bottom right / contain"),
+            Tuple.Create("18", $"url({StarUrl}) no-repeat bottom right / 70%, url({StarUrl}) no-repeat bottom left / 70%"),
         };
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
@@ -403,5 +406,30 @@ namespace ReactUnity.Tests
             yield return null;
             Assertions.Snapshot("masks/mask", bg.Item1);
         }
+
+
+        protected static Tuple<string, string>[] borderImages = new Tuple<string, string>[] {
+            Tuple.Create("01", $"url({DiamondsUrl}) 30px / 30px"),
+            Tuple.Create("02", $"url({DiamondsUrl}) 30px / 30px / stretch"),
+            Tuple.Create("03", $"url({DiamondsUrl}) 30px / 30px / round"),
+            Tuple.Create("04", $"url({DiamondsUrl}) 30px / 30px / space"),
+            Tuple.Create("05", $"url({DiamondsUrl}) 30px / 30px / repeat"),
+            Tuple.Create("06", $"url({DiamondsUrl}) 30px / 30px / stretch round"),
+            Tuple.Create("07", $"url({DiamondsUrl}) 44px / 30px / repeat"),
+            Tuple.Create("08", $"url({DiamondsUrl}) 30px fill / 30px / stretch"),
+            Tuple.Create("09", $"url({DiamondsUrl}) 44px fill / 44px / repeat"),
+        };
+
+        [UGUITest(Script = BaseScript, Style = BaseStyle)]
+        public IEnumerator BorderImageSnapshots([ValueSource("borderImages")] Tuple<string, string> bg)
+        {
+            View.Style["width"] = "160px";
+            View.Style["height"] = "250px";
+            View.Style["border-image"] = bg.Item2;
+            yield return null;
+            Assertions.Snapshot("border-images/bi", bg.Item1);
+        }
+
+
     }
 }
