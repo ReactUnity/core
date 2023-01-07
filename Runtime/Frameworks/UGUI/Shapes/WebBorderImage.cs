@@ -64,7 +64,7 @@ namespace ReactUnity.UGUI.Shapes
                 var baseMat = base.materialForRendering;
                 if (Definition == null || Definition.DoesNotModifyMaterial) return baseMat;
 
-                var szPoint = CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
+                var szPoint = WebBackgroundImage.CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
 
                 var result = Definition?.ModifyMaterial(Context, baseMat, szPoint);
 
@@ -121,77 +121,6 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
-        static private Vector2 CalculateSize(Vector2 containerSize, Vector2 intrinsicSize, float intinsicProportions, BackgroundSize size)
-        {
-            var ix = float.IsNaN(intrinsicSize.x);
-            var iy = float.IsNaN(intrinsicSize.y);
-            var ip = float.IsNaN(intinsicProportions);
-
-            var width = containerSize.x;
-            var height = containerSize.y;
-
-            if (size.IsCustom)
-            {
-                var val = size.Value;
-                var autoX = val.X.Unit == YogaUnit.Auto || val.X.Unit == YogaUnit.Undefined;
-                var autoY = val.Y.Unit == YogaUnit.Auto || val.Y.Unit == YogaUnit.Undefined;
-
-                if (autoX)
-                {
-                    if (autoY)
-                    {
-                        if (ix && iy)
-                        {
-                            if (ip) return containerSize;
-                            else return CalculateSize(containerSize, intrinsicSize, intinsicProportions, BackgroundSize.Contain);
-                        }
-                        if (ix) return new Vector2(width, intrinsicSize.y);
-                        if (iy) return new Vector2(intrinsicSize.x, height);
-                        return new Vector2(intrinsicSize.x, intrinsicSize.y);
-                    }
-                    else
-                    {
-                        var yVal = val.Y.GetPointValue(containerSize.y, containerSize.y);
-                        var xVal = ip ? containerSize.x : yVal * intinsicProportions;
-                        return new Vector2(xVal, yVal);
-                    }
-                }
-                else if (autoY)
-                {
-                    var xVal = val.X.GetPointValue(containerSize.x, containerSize.x);
-                    var yVal = ip ? containerSize.y : xVal / intinsicProportions;
-                    return new Vector2(xVal, yVal);
-                }
-                else
-                {
-                    return val.GetPointValue(containerSize, containerSize, false);
-                }
-            }
-            else
-            {
-                var rw = ix ? containerSize.x : intrinsicSize.x;
-                var rh = iy ? containerSize.y : intrinsicSize.y;
-
-                if ((size.Keyword == BackgroundSizeKeyword.Cover && rw < width)
-                    || (size.Keyword == BackgroundSizeKeyword.Contain && rw != width))
-                {
-                    var scale = width / rw;
-                    rw = width;
-                    rh *= scale;
-                }
-
-                if ((size.Keyword == BackgroundSizeKeyword.Cover && rh < height)
-                    || (size.Keyword == BackgroundSizeKeyword.Contain && rh > height))
-                {
-                    var scale = height / rh;
-                    rh = height;
-                    rw *= scale;
-                }
-
-                return new Vector2(rw, rh);
-            }
-        }
-
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
@@ -206,7 +135,8 @@ namespace ReactUnity.UGUI.Shapes
             var rect = RectTransformUtility.PixelAdjustRect(rectTransform, canvas);
             var size = rect.size;
             var center = rect.position;
-            var imageSize = !texture ? Vector2.zero : new Vector2(texture.width, texture.height);
+
+            var imageSize = WebBackgroundImage.CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
 
             var topSlice = Slice.Top.GetPointValue(imageSize.y, 0);
             var leftSlice = Slice.Left.GetPointValue(imageSize.x, 0);
@@ -255,87 +185,109 @@ namespace ReactUnity.UGUI.Shapes
 
 
             // TL
-            var baseIndex = vh.currentVertCount;
-            vh.AddVert(new Vector2(x0, y0), new Vector2(u0, v0));
-            vh.AddVert(new Vector2(x1, y0), new Vector2(u1, v0));
-            vh.AddVert(new Vector2(x0, y1), new Vector2(u0, v1));
-            vh.AddVert(new Vector2(x1, y1), new Vector2(u1, v1));
-            vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
-            vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            if (leftWidth > 0 && topWidth > 0 && topSlice > 0 && leftSlice > 0)
+            {
+                var baseIndex = vh.currentVertCount;
+                vh.AddVert(new Vector2(x0, y0), new Vector2(u0, v0));
+                vh.AddVert(new Vector2(x1, y0), new Vector2(u1, v0));
+                vh.AddVert(new Vector2(x0, y1), new Vector2(u0, v1));
+                vh.AddVert(new Vector2(x1, y1), new Vector2(u1, v1));
+                vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            }
 
 
             // TR
-            baseIndex = vh.currentVertCount;
-            vh.AddVert(new Vector2(x2, y0), new Vector2(u2, v0));
-            vh.AddVert(new Vector2(x3, y0), new Vector2(u3, v0));
-            vh.AddVert(new Vector2(x2, y1), new Vector2(u2, v1));
-            vh.AddVert(new Vector2(x3, y1), new Vector2(u3, v1));
-            vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
-            vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            if (topWidth > 0 && rightWidth > 0 && topSlice > 0 && rightSlice > 0)
+            {
+                var baseIndex = vh.currentVertCount;
+                vh.AddVert(new Vector2(x2, y0), new Vector2(u2, v0));
+                vh.AddVert(new Vector2(x3, y0), new Vector2(u3, v0));
+                vh.AddVert(new Vector2(x2, y1), new Vector2(u2, v1));
+                vh.AddVert(new Vector2(x3, y1), new Vector2(u3, v1));
+                vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            }
 
 
             // BR
-            baseIndex = vh.currentVertCount;
-            vh.AddVert(new Vector2(x2, y2), new Vector2(u2, v2));
-            vh.AddVert(new Vector2(x3, y2), new Vector2(u3, v2));
-            vh.AddVert(new Vector2(x2, y3), new Vector2(u2, v3));
-            vh.AddVert(new Vector2(x3, y3), new Vector2(u3, v3));
-            vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
-            vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
-
+            if (bottomWidth > 0 && rightWidth > 0 && bottomSlice > 0 && rightSlice > 0)
+            {
+                var baseIndex = vh.currentVertCount;
+                vh.AddVert(new Vector2(x2, y2), new Vector2(u2, v2));
+                vh.AddVert(new Vector2(x3, y2), new Vector2(u3, v2));
+                vh.AddVert(new Vector2(x2, y3), new Vector2(u2, v3));
+                vh.AddVert(new Vector2(x3, y3), new Vector2(u3, v3));
+                vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            }
 
             // BL
-            baseIndex = vh.currentVertCount;
-            vh.AddVert(new Vector2(x0, y2), new Vector2(u0, v2));
-            vh.AddVert(new Vector2(x1, y2), new Vector2(u1, v2));
-            vh.AddVert(new Vector2(x0, y3), new Vector2(u0, v3));
-            vh.AddVert(new Vector2(x1, y3), new Vector2(u1, v3));
-            vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
-            vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            if (bottomWidth > 0 && leftWidth > 0 && bottomSlice > 0 && leftSlice > 0)
+            {
+                var baseIndex = vh.currentVertCount;
+                vh.AddVert(new Vector2(x0, y2), new Vector2(u0, v2));
+                vh.AddVert(new Vector2(x1, y2), new Vector2(u1, v2));
+                vh.AddVert(new Vector2(x0, y3), new Vector2(u0, v3));
+                vh.AddVert(new Vector2(x1, y3), new Vector2(u1, v3));
+                vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                vh.AddTriangle(baseIndex + 1, baseIndex + 3, baseIndex + 2);
+            }
 
 
-            // TOP
-            var tileArea = new Vector2(fillWidth, topWidth);
-            var tileOffset = new Vector2(leftWidth - leftOutset, size.y - topWidth + topOutset);
-            var tileSize = new Vector2(fillXSlice, topSlice);
-            var tileUv = new Rect(u1, v1, u2 - u1, v0 - v1);
+            // Top
+            if (fillWidth > 0 && topWidth > 0 && topSlice > 0 && fillXSlice > 0)
+            {
+                var tileArea = new Vector2(fillWidth, topWidth);
+                var tileOffset = new Vector2(leftWidth - leftOutset, size.y - topWidth + topOutset);
+                var tileSize = new Vector2(fillXSlice, topSlice);
+                var tileUv = new Rect(u1, v1, u2 - u1, v0 - v1);
 
-            WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
+                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
+            }
 
 
-            // RIGHT
-            tileArea = new Vector2(rightWidth, fillHeight);
-            tileOffset = new Vector2(size.x - rightWidth + rightOutset, bottomWidth - bottomOutset);
-            tileSize = new Vector2(rightSlice, fillYSlice);
-            tileUv = new Rect(u2, v2, u3 - u2, v1 - v2);
+            // Right
+            if (rightWidth > 0 && fillHeight > 0 && rightSlice > 0 && fillYSlice > 0)
+            {
+                var tileArea = new Vector2(rightWidth, fillHeight);
+                var tileOffset = new Vector2(size.x - rightWidth + rightOutset, bottomWidth - bottomOutset);
+                var tileSize = new Vector2(rightSlice, fillYSlice);
+                var tileUv = new Rect(u2, v2, u3 - u2, v1 - v2);
 
-            WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Right, color, tileUv);
+                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Right, color, tileUv);
+            }
 
 
             // Bottom
-            tileArea = new Vector2(fillWidth, bottomWidth);
-            tileOffset = new Vector2(leftWidth - leftOutset, -bottomOutset);
-            tileSize = new Vector2(fillXSlice, bottomSlice);
-            tileUv = new Rect(u1, v3, u2 - u1, v2 - v3);
+            if (fillWidth > 0 && bottomWidth > 0 && bottomSlice > 0 && fillXSlice > 0)
+            {
+                var tileArea = new Vector2(fillWidth, bottomWidth);
+                var tileOffset = new Vector2(leftWidth - leftOutset, -bottomOutset);
+                var tileSize = new Vector2(fillXSlice, bottomSlice);
+                var tileUv = new Rect(u1, v3, u2 - u1, v2 - v3);
 
-            WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
-
+                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
+            }
 
             // Left
-            tileArea = new Vector2(leftWidth, fillHeight);
-            tileOffset = new Vector2(-leftOutset, bottomWidth - bottomOutset);
-            tileSize = new Vector2(leftSlice, fillYSlice);
-            tileUv = new Rect(u0, v2, u1 - u0, v1 - v2);
-
-            WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Left, color, tileUv);
-
-
-            if (Slice.Fill)
+            if (leftWidth > 0 && fillHeight > 0 && leftSlice > 0 && fillYSlice > 0)
             {
-                tileArea = new Vector2(fillWidth, fillHeight);
-                tileOffset = new Vector2(leftWidth - leftOutset, bottomWidth - bottomOutset);
-                tileSize = new Vector2(fillXSlice, fillYSlice);
-                tileUv = new Rect(u1, v2, u2 - u1, v1 - v2);
+                var tileArea = new Vector2(leftWidth, fillHeight);
+                var tileOffset = new Vector2(-leftOutset, bottomWidth - bottomOutset);
+                var tileSize = new Vector2(leftSlice, fillYSlice);
+                var tileUv = new Rect(u0, v2, u1 - u0, v1 - v2);
+
+                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Left, color, tileUv);
+            }
+
+            // Fill
+            if (Slice.Fill && fillWidth > 0 && fillHeight > 0 && fillXSlice > 0 && fillYSlice > 0)
+            {
+                var tileArea = new Vector2(fillWidth, fillHeight);
+                var tileOffset = new Vector2(leftWidth - leftOutset, bottomWidth - bottomOutset);
+                var tileSize = new Vector2(fillXSlice, fillYSlice);
+                var tileUv = new Rect(u1, v2, u2 - u1, v1 - v2);
 
                 WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, Repeat.Right, color, tileUv);
             }

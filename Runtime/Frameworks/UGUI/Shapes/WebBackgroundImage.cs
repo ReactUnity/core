@@ -151,7 +151,7 @@ namespace ReactUnity.UGUI.Shapes
             color = BlendMode == BackgroundBlendMode.Normal && sprite != null ? Color.white : TintColor;
         }
 
-        static private Vector2 CalculateSize(Vector2 containerSize, Vector2 intrinsicSize, float intinsicProportions, BackgroundSize size)
+        public static Vector2 CalculateSize(Vector2 containerSize, Vector2 intrinsicSize, float intinsicProportions, BackgroundSize size)
         {
             var ix = float.IsNaN(intrinsicSize.x);
             var iy = float.IsNaN(intrinsicSize.y);

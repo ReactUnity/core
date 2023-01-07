@@ -95,7 +95,7 @@ namespace ReactUnity.Types
                 if (splits.Count == 0) return Constant(new BorderImageSlice(fill), out result);
 
 
-                return ComputedMapper.Create(out result, string.Join(' ', splits), FourDirectionalConverter,
+                return ComputedMapper.Create(out result, string.Join(" ", splits), FourDirectionalConverter,
                     (resolvedValue) => {
                         if (resolvedValue is CssFourDirectional<YogaValue> fl1)
                             return new BorderImageSlice(fl1, fill);

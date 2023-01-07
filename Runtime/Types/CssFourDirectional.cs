@@ -76,10 +76,10 @@ namespace ReactUnity.Types
                 DefaultValue = Default;
             }
 
-            public Converter(StyleConverterBase baseConverter = null, T emptyValue = default)
+            public Converter(StyleConverterBase baseConverter, T emptyValue)
             {
                 BaseConverter = baseConverter ?? AllConverters.Get<T>();
-                DefaultValue = new CssFourDirectional<T>();
+                DefaultValue = new CssFourDirectional<T>(emptyValue, emptyValue, emptyValue, emptyValue);
             }
 
 
