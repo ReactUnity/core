@@ -14,6 +14,7 @@ namespace ReactUnity.UGUI.Internal
     {
         private RectTransform root;
         private RectTransform borderRoot;
+        private RectTransform borderImageRoot;
         private RectTransform backgroundRoot;
         private RectTransform shadowRoot;
         public RectTransform Root => EnsureRoot();
@@ -30,6 +31,9 @@ namespace ReactUnity.UGUI.Internal
 
         private WebBorder borderGraphic;
         public WebBorder BorderGraphic => borderGraphic ?? (borderGraphic = EnsureBorderRoot().GetComponent<WebBorder>());
+
+        private WebBorderImage borderImage;
+        public WebBorderImage BorderImage => borderImage ?? (borderImage = EnsureBorderImage().GetComponent<WebBorderImage>());
 
         private WebRect rootGraphic;
         private Mask rootMask;
@@ -219,7 +223,7 @@ namespace ReactUnity.UGUI.Internal
         {
             if (borderRoot) return borderRoot;
 
-            var border = Context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorder));
+            var border = Context.CreateNativeObject("[Border]", typeof(RectTransform), typeof(WebBorder));
             borderGraphic = border.GetComponent<WebBorder>();
             borderGraphic.InsetBorder = rootGraphic;
 
@@ -232,6 +236,22 @@ namespace ReactUnity.UGUI.Internal
             BorderStyles = BorderStyles;
 
             return borderRoot;
+        }
+
+        private RectTransform EnsureBorderImage()
+        {
+            if (borderImageRoot) return borderImageRoot;
+
+            var border = Context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorderImage));
+            borderImage = border.GetComponent<WebBorderImage>();
+
+            borderImageRoot = border.transform as RectTransform;
+
+            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0);
+
+            FullStretch(borderImageRoot, transform as RectTransform, ind);
+
+            return borderImageRoot;
         }
 
         private void UpdateBgColor()
@@ -265,6 +285,25 @@ namespace ReactUnity.UGUI.Internal
             BorderStyles = new WebOutlineStyles(style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle);
 
             SetMask(style.maskImage, style.maskPositionX, style.maskPositionY, style.maskSize, style.maskRepeatX, style.maskRepeatY);
+
+            var borderImageSource = style.borderImageSource;
+
+            if (borderImageSource != null && borderImageSource != ImageDefinition.NoImage)
+            {
+                var img = BorderImage;
+                img.SetBorderImage(borderImageSource);
+                img.Slice = style.borderImageSlice;
+                img.Width = style.borderImageWidth;
+                img.Repeat = style.borderImageRepeat;
+                img.Outset = style.borderImageOutset;
+                img.SetVerticesDirty();
+                if (!img.gameObject.activeSelf) img.gameObject.SetActive(true);
+            }
+            else if (borderImage)
+            {
+                borderImage.SetBorderImage(ImageDefinition.NoImage);
+                if (borderImage.gameObject.activeSelf) borderImage.gameObject.SetActive(false);
+            }
         }
 
         public void UpdateLayout(YogaNode layout)

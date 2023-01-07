@@ -290,18 +290,10 @@ namespace ReactUnity.UGUI.Shapes
             return (tile, spacing, count, startPos);
         }
 
-        protected override void OnPopulateMesh(VertexHelper vh)
+        public static void CreateTiledImageMesh(VertexHelper vh, Vector2 szPoint, Vector2 psPoint, Vector2 size, Vector2 offset, BackgroundRepeat repeatX, BackgroundRepeat repeatY, Color32 color, Rect uvRect)
         {
-            vh.Clear();
-            var size = RectTransformUtility.PixelAdjustRect(rectTransform, canvas).size;
-
-            var szPoint = CalculateSize(size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
-            var psPoint = BackgroundPosition.GetPointValue(size - szPoint, 0, true);
-
-            var (tileX, spacingX, countX, startPosX) = CalculateRepeat(szPoint.x, size.x, psPoint.x, BackgroundRepeatX);
-            var (tileY, spacingY, countY, startPosY) = CalculateRepeat(szPoint.y, size.y, psPoint.y, BackgroundRepeatY);
-
-            var offset = size * rectTransform.pivot;
+            var (tileX, spacingX, countX, startPosX) = CalculateRepeat(szPoint.x, size.x, psPoint.x, repeatX);
+            var (tileY, spacingY, countY, startPosY) = CalculateRepeat(szPoint.y, size.y, psPoint.y, repeatY);
 
             for (int x = 0; x < countX; x++)
             {
@@ -311,23 +303,22 @@ namespace ReactUnity.UGUI.Shapes
                 var x0 = tx + spx + startPosX;
                 var x1 = x0 + tileX;
 
-                var ux0 = 0f;
-                var ux1 = 1f;
+                var uMin = 0f;
+                var uMax = 1f;
 
                 if (x1 <= 0 || x0 >= size.x) continue;
 
                 if (x1 > size.x)
                 {
-                    ux1 = (size.x - x0) / tileX;
+                    uMax -= (x1 - size.x) / tileX;
                     x1 = size.x;
                 }
 
                 if (x0 < 0)
                 {
-                    ux0 = -x0 / tileX;
+                    uMin -= x0 / tileX;
                     x0 = 0;
                 }
-
 
                 for (int y = 0; y < countY; y++)
                 {
@@ -337,46 +328,58 @@ namespace ReactUnity.UGUI.Shapes
                     var y0 = ty + spy + startPosY;
                     var y1 = y0 + tileY;
 
-                    var uy0 = 0f;
-                    var uy1 = 1f;
+                    var vMin = 0f;
+                    var vMax = 1f;
 
                     if (y1 <= 0 || y0 >= size.y) continue;
 
                     if (y1 > size.y)
                     {
-                        uy1 = (size.y - y0) / tileY;
+                        vMax -= (y1 - size.y) / tileY;
                         y1 = size.y;
                     }
 
                     if (y0 < 0)
                     {
-                        uy0 = -y0 / tileY;
+                        vMin -= y0 / tileY;
                         y0 = 0;
                     }
 
+                    var p00 = new Vector2(x0, y0) + offset;
+                    var p01 = new Vector2(x0, y1) + offset;
+                    var p10 = new Vector2(x1, y0) + offset;
+                    var p11 = new Vector2(x1, y1) + offset;
 
-                    var p00 = new Vector2(x0, y0) - offset;
-                    var p01 = new Vector2(x0, y1) - offset;
-                    var p10 = new Vector2(x1, y0) - offset;
-                    var p11 = new Vector2(x1, y1) - offset;
-
-                    var u00 = new Vector2(ux0, uy0);
-                    var u01 = new Vector2(ux0, uy1);
-                    var u10 = new Vector2(ux1, uy0);
-                    var u11 = new Vector2(ux1, uy1);
+                    // Scale and shift uvs
+                    var u00 = uvRect.position + new Vector2(uMin, vMin) * uvRect.size;
+                    var u01 = uvRect.position + new Vector2(uMin, vMax) * uvRect.size;
+                    var u10 = uvRect.position + new Vector2(uMax, vMin) * uvRect.size;
+                    var u11 = uvRect.position + new Vector2(uMax, vMax) * uvRect.size;
 
 
                     var ind = vh.currentVertCount;
 
-                    vh.AddVert(p00, color, u00, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                    vh.AddVert(p01, color, u01, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                    vh.AddVert(p10, color, u10, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
-                    vh.AddVert(p11, color, u11, Vector2.zero, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(p00, color, u00);
+                    vh.AddVert(p01, color, u01);
+                    vh.AddVert(p10, color, u10);
+                    vh.AddVert(p11, color, u11);
 
-                    vh.AddTriangle(ind, ind + 1, ind + 2);
+                    vh.AddTriangle(ind + 0, ind + 1, ind + 2);
                     vh.AddTriangle(ind + 1, ind + 3, ind + 2);
                 }
             }
+        }
+
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            vh.Clear();
+            var size = RectTransformUtility.PixelAdjustRect(rectTransform, canvas).size;
+            var offset = -size * rectTransform.pivot;
+
+            var szPoint = CalculateSize(size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, backgroundSize);
+            var psPoint = BackgroundPosition.GetPointValue(size - szPoint, 0, true);
+
+            CreateTiledImageMesh(vh, szPoint, psPoint, size, offset, BackgroundRepeatX, BackgroundRepeatY, color, new Rect(0, 0, 1, 1));
         }
     }
 }
