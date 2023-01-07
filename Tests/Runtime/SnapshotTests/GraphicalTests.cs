@@ -320,11 +320,11 @@ namespace ReactUnity.Tests
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundBlendSnapshots()
         {
-            View.Style["background"] = "url(res:star)";
+            View.Style["background"] = "url(res:ReactUnity/tests/sprites/star)";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/colorless");
 
-            View.Style["background"] = "url(res:star) rgba(0, 0, 200, 0.4)";
+            View.Style["background"] = "url(res:ReactUnity/tests/sprites/star) rgba(0, 0, 200, 0.4)";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/normal-blend");
 
@@ -339,23 +339,23 @@ namespace ReactUnity.Tests
 
 
         protected static Tuple<string, string>[] backgrounds = new Tuple<string, string>[] {
-            Tuple.Create("01", "url(res:star)"),
-            Tuple.Create("02", "url(res:star) 100% 0"),
-            Tuple.Create("03", "url(res:star) 0 100%"),
-            Tuple.Create("04", "url(res:star) 0 0/cover"),
-            Tuple.Create("05", "url(res:star) center/cover"),
-            Tuple.Create("06", "url(res:star) center/contain"),
-            Tuple.Create("07", "url(res:star) bottom right / contain"),
-            Tuple.Create("08", "url(res:star) 0 0 / 10% 10%"),
-            Tuple.Create("09", "url(res:star) 0 0 / 10%"),
-            Tuple.Create("10", "url(res:star) 20% 90% / 500px 500px"),
-            Tuple.Create("11", "url(res:star) top /100px 20px"),
-            Tuple.Create("12", "url(res:star) space round top / 35% 35%"),
-            Tuple.Create("13", "url(res:star) round space top / 35%"),
-            Tuple.Create("14", "url(res:star) repeat-y top / 35%"),
-            Tuple.Create("15", "url(res:star) repeat-x top / 35%"),
-            Tuple.Create("16", "url(res:star) space bottom right / cover"),
-            Tuple.Create("17", "url(res:star) space bottom right / contain"),
+            Tuple.Create("01", "url(res:ReactUnity/tests/sprites/star)"),
+            Tuple.Create("02", "url(res:ReactUnity/tests/sprites/star) 100% 0"),
+            Tuple.Create("03", "url(res:ReactUnity/tests/sprites/star) 0 100%"),
+            Tuple.Create("04", "url(res:ReactUnity/tests/sprites/star) 0 0/cover"),
+            Tuple.Create("05", "url(res:ReactUnity/tests/sprites/star) center/cover"),
+            Tuple.Create("06", "url(res:ReactUnity/tests/sprites/star) center/contain"),
+            Tuple.Create("07", "url(res:ReactUnity/tests/sprites/star) bottom right / contain"),
+            Tuple.Create("08", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10% 10%"),
+            Tuple.Create("09", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10%"),
+            Tuple.Create("10", "url(res:ReactUnity/tests/sprites/star) 20% 90% / 500px 500px"),
+            Tuple.Create("11", "url(res:ReactUnity/tests/sprites/star) top /100px 20px"),
+            Tuple.Create("12", "url(res:ReactUnity/tests/sprites/star) space round top / 35% 35%"),
+            Tuple.Create("13", "url(res:ReactUnity/tests/sprites/star) round space top / 35%"),
+            Tuple.Create("14", "url(res:ReactUnity/tests/sprites/star) repeat-y top / 35%"),
+            Tuple.Create("15", "url(res:ReactUnity/tests/sprites/star) repeat-x top / 35%"),
+            Tuple.Create("16", "url(res:ReactUnity/tests/sprites/star) space bottom right / cover"),
+            Tuple.Create("17", "url(res:ReactUnity/tests/sprites/star) space bottom right / contain"),
             Tuple.Create("18", $"url({DataUrl})"),
             Tuple.Create("19", $"url(\"{DataUrl}\")"),
         };
@@ -373,24 +373,24 @@ namespace ReactUnity.Tests
 
 
         protected static Tuple<string, string>[] masks = new Tuple<string, string>[] {
-            Tuple.Create("01", "url(res:star)"),
-            Tuple.Create("02", "url(res:star) 100% 0"),
-            Tuple.Create("03", "url(res:star) 0 100%"),
-            Tuple.Create("04", "url(res:star) 0 0/cover"),
-            Tuple.Create("05", "url(res:star) center/cover"),
-            Tuple.Create("06", "url(res:star) center/contain"),
-            Tuple.Create("07", "url(res:star) bottom right / contain"),
-            Tuple.Create("08", "url(res:star) 0 0 / 10% 10%"),
-            Tuple.Create("09", "url(res:star) 0 0 / 10%"),
-            Tuple.Create("10", "url(res:star) 20% 90% / 500px 500px"),
-            Tuple.Create("11", "url(res:star) top /100px 20px"),
-            Tuple.Create("12", "url(res:star) space round top / 35% 35%"),
-            Tuple.Create("13", "url(res:star) round space top / 35%"),
-            Tuple.Create("14", "url(res:star) repeat-y top / 35%"),
-            Tuple.Create("15", "url(res:star) repeat-x top / 35%"),
-            Tuple.Create("16", "url(res:star) space bottom right / cover"),
-            Tuple.Create("17", "url(res:star) space bottom right / contain"),
-            Tuple.Create("18", "url(res:star) no-repeat bottom right / 70%, url(res:star) no-repeat bottom left / 70%"),
+            Tuple.Create("01", "url(res:ReactUnity/tests/sprites/star)"),
+            Tuple.Create("02", "url(res:ReactUnity/tests/sprites/star) 100% 0"),
+            Tuple.Create("03", "url(res:ReactUnity/tests/sprites/star) 0 100%"),
+            Tuple.Create("04", "url(res:ReactUnity/tests/sprites/star) 0 0/cover"),
+            Tuple.Create("05", "url(res:ReactUnity/tests/sprites/star) center/cover"),
+            Tuple.Create("06", "url(res:ReactUnity/tests/sprites/star) center/contain"),
+            Tuple.Create("07", "url(res:ReactUnity/tests/sprites/star) bottom right / contain"),
+            Tuple.Create("08", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10% 10%"),
+            Tuple.Create("09", "url(res:ReactUnity/tests/sprites/star) 0 0 / 10%"),
+            Tuple.Create("10", "url(res:ReactUnity/tests/sprites/star) 20% 90% / 500px 500px"),
+            Tuple.Create("11", "url(res:ReactUnity/tests/sprites/star) top /100px 20px"),
+            Tuple.Create("12", "url(res:ReactUnity/tests/sprites/star) space round top / 35% 35%"),
+            Tuple.Create("13", "url(res:ReactUnity/tests/sprites/star) round space top / 35%"),
+            Tuple.Create("14", "url(res:ReactUnity/tests/sprites/star) repeat-y top / 35%"),
+            Tuple.Create("15", "url(res:ReactUnity/tests/sprites/star) repeat-x top / 35%"),
+            Tuple.Create("16", "url(res:ReactUnity/tests/sprites/star) space bottom right / cover"),
+            Tuple.Create("17", "url(res:ReactUnity/tests/sprites/star) space bottom right / contain"),
+            Tuple.Create("18", "url(res:ReactUnity/tests/sprites/star) no-repeat bottom right / 70%, url(res:ReactUnity/tests/sprites/star) no-repeat bottom left / 70%"),
         };
 
         [UGUITest(Script = BaseScript, Style = BaseStyle)]

@@ -85,9 +85,9 @@ namespace ReactUnity.Tests
 
         [UGUITest(Style = @"
           #test {
-            background: red url(res:star);
+            background: red url(res:ReactUnity/tests/sprites/star);
             background-blend-mode: color;
-            mask: url(res:star) space round 50px 60px / cover, url(res:star) repeat-y top right / 50% 50%;
+            mask: url(res:ReactUnity/tests/sprites/star) space round 50px 60px / cover, url(res:ReactUnity/tests/sprites/star) repeat-y top right / 50% 50%;
             background-repeat: space round, repeat-x, repeat-y, space, no-repeat;
           }
 ")]

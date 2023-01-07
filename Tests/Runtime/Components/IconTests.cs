@@ -72,7 +72,7 @@ namespace ReactUnity.Tests
         {
             InsertStyle(@"icon {
                 overflow: hidden;
-                mask-image: url(res:star);
+                mask-image: url(res:ReactUnity/tests/sprites/star);
             }");
             yield return null;
             Assert.IsNotNull(Icon);
