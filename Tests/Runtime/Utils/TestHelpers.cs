@@ -15,6 +15,11 @@ namespace ReactUnity.Tests
         public const string UIToolkitSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_UIToolkit.unity";
         public const string WorldSceneName = "Packages/com.reactunity.core/Tests/Scenes/TestScene_World.unity";
 
+        public const string DataUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJElEQVQoU2P8z8DwnwEJMKLwGBhAfForYGD4j24rI4qbaK8AAClEFAHkdZU1AAAAAElFTkSuQmCC";
+        public const string StarUrl = "res:ReactUnity/tests/sprites/star";
+        public const string DiamondsUrl = "res:ReactUnity/tests/sprites/border-diamonds";
+        public const string ClickUrl = "res:ReactUnity/tests/click";
+
         public static (InlineStyles, NodeStyle) CreateStyle()
         {
             var collection = new InlineStyles();

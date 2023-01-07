@@ -14,13 +14,13 @@ namespace ReactUnity.Tests
         {
             var view = Q("#test");
 
-            view.Style.Set("audio", "url(res:click) 3s 5, url(https://example.com/file.ogg) infinite 2s, url(res:something)");
+            view.Style.Set("audio", $"url({TestHelpers.ClickUrl}) 3s 5, url(https://example.com/file.ogg) infinite 2s, url(res:something)");
             yield return null;
 
             var st = view.ComputedStyle;
 
             Assert.AreEqual(AssetReferenceType.Resource, st.audioClip.Get(0).Type);
-            Assert.AreEqual("click", st.audioClip.Get(0).Value);
+            Assert.AreEqual("ReactUnity/tests/click", st.audioClip.Get(0).Value);
             Assert.AreEqual(3, st.audioDelay.Get(0));
             Assert.AreEqual(5, st.audioIterationCount.Get(0));
 

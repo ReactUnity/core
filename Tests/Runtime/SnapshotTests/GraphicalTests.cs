@@ -30,10 +30,9 @@ namespace ReactUnity.Tests
             }
         ";
 
-        const string DataUrl = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJElEQVQoU2P8z8DwnwEJMKLwGBhAfForYGD4j24rI4qbaK8AAClEFAHkdZU1AAAAAElFTkSuQmCC";
-
-        const string StarUrl = "res:ReactUnity/tests/sprites/star";
-        const string DiamondsUrl = "res:ReactUnity/tests/sprites/border-diamonds";
+        const string DataUrl = TestHelpers.DataUrl;
+        const string StarUrl = TestHelpers.StarUrl;
+        const string DiamondsUrl = TestHelpers.DiamondsUrl;
 
         private UGUIComponent View => Q("#test");
 
