@@ -12,7 +12,7 @@ namespace ReactUnity.Tests
         const string BaseScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
-                return <image source='resource(star)' />;
+                return <image source='resource(ReactUnity/tests/sprites/star)' />;
             }
 ";
 
