@@ -64,7 +64,7 @@ namespace ReactUnity.UGUI.Shapes
                 var baseMat = base.materialForRendering;
                 if (Definition == null || Definition.DoesNotModifyMaterial) return baseMat;
 
-                var szPoint = WebBackgroundImage.CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
+                var szPoint = ImageUtils.CalculateImageSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
 
                 var result = Definition?.ModifyMaterial(Context, baseMat, szPoint);
 
@@ -136,7 +136,7 @@ namespace ReactUnity.UGUI.Shapes
             var size = rect.size;
             var center = rect.position;
 
-            var imageSize = WebBackgroundImage.CalculateSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
+            var imageSize = ImageUtils.CalculateImageSize(Size, Resolved?.IntrinsicSize ?? Vector2.zero, Resolved?.IntrinsicProportions ?? 1, BackgroundSize.Auto);
 
             var topSlice = Slice.Top.GetPointValue(imageSize.y, 0);
             var leftSlice = Slice.Left.GetPointValue(imageSize.x, 0);
@@ -243,7 +243,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(fillXSlice, topSlice);
                 var tileUv = new Rect(u1, v1, u2 - u1, v0 - v1);
 
-                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, BackgroundRepeat.Stretch, color, tileUv);
             }
 
 
@@ -255,7 +255,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(rightSlice, fillYSlice);
                 var tileUv = new Rect(u2, v2, u3 - u2, v1 - v2);
 
-                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Right, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Right, color, tileUv);
             }
 
 
@@ -267,7 +267,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(fillXSlice, bottomSlice);
                 var tileUv = new Rect(u1, v3, u2 - u1, v2 - v3);
 
-                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Bottom, BackgroundRepeat.Stretch, color, tileUv);
             }
 
             // Left
@@ -278,7 +278,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(leftSlice, fillYSlice);
                 var tileUv = new Rect(u0, v2, u1 - u0, v1 - v2);
 
-                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Left, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, BackgroundRepeat.Stretch, Repeat.Left, color, tileUv);
             }
 
             // Fill
@@ -289,7 +289,7 @@ namespace ReactUnity.UGUI.Shapes
                 var tileSize = new Vector2(fillXSlice, fillYSlice);
                 var tileUv = new Rect(u1, v2, u2 - u1, v1 - v2);
 
-                WebBackgroundImage.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, Repeat.Right, color, tileUv);
+                ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset + center, Repeat.Top, Repeat.Right, color, tileUv);
             }
         }
     }

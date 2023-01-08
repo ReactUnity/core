@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
-    public static class RectUtils
+    internal static class RectUtils
     {
         static Vector3 tmpPos = Vector3.zero;
         static Vector2 tmpUVPos = Vector2.zero;

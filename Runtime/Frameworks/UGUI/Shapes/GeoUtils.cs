@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Shapes
 {
-    public static class GeoUtils
+    internal static class GeoUtils
     {
         public static readonly Color32 White = Color.white;
 
