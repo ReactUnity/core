@@ -36,7 +36,7 @@ type onItemsRenderedCallback = ({
   visibleStopIndex: number;
 }) => void;
 
-type onScrollCallback = ({
+type onScrollCallback = (opts: {
   scrollDirection: ScrollDirection,
   scrollOffset: number,
   scrollUpdateWasRequested: boolean,
