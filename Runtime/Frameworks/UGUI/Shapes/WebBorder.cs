@@ -103,6 +103,7 @@ namespace ReactUnity.UGUI.Shapes
 
             AddRoundedRectLine(
                 ref vh,
+                pixelRect,
                 pixelRect.center,
                 pixelRect.width,
                 pixelRect.height,
@@ -145,6 +146,7 @@ namespace ReactUnity.UGUI.Shapes
 
         public static void AddRoundedRectLine(
             ref VertexHelper vh,
+            Rect rect,
             Vector2 center,
             float width,
             float height,
@@ -165,9 +167,7 @@ namespace ReactUnity.UGUI.Shapes
                 BorderUtils.AddNonRoundedOutline(
                     ref vh,
                     outline,
-                    center,
-                    width,
-                    height,
+                    rect,
                     outline.Colors,
                     outline.Styles,
                     uv

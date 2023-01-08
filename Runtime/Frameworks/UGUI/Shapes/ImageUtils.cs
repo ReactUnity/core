@@ -88,13 +88,14 @@ namespace ReactUnity.UGUI.Shapes
             float imageSize,
             float totalSize,
             float imagePos,
-            BackgroundRepeat repeat
+            BackgroundRepeat repeat,
+            float minSpacing = 0
         )
         {
-            var rt = totalSize / imageSize;
+            var rt = totalSize / (imageSize + minSpacing);
 
             var tile = imageSize;
-            var spacing = 0f;
+            var spacing = minSpacing;
             var count = Mathf.CeilToInt(rt);
             var startPos = imagePos;
 
@@ -110,7 +111,7 @@ namespace ReactUnity.UGUI.Shapes
             else if (repeat == BackgroundRepeat.Round)
             {
                 count = Mathf.Max(1, Mathf.RoundToInt(rt));
-                tile = totalSize / count;
+                tile = (totalSize - (count - 1) * spacing) / count;
             }
             else if (repeat == BackgroundRepeat.Space)
             {
@@ -118,7 +119,7 @@ namespace ReactUnity.UGUI.Shapes
 
                 if (count > 1)
                 {
-                    spacing = (totalSize - tile * count) / (count - 1);
+                    spacing = minSpacing + (totalSize - (tile + minSpacing) * count) / (count - 1);
                     startPos = 0;
                 }
                 else
@@ -157,11 +158,14 @@ namespace ReactUnity.UGUI.Shapes
             BackgroundRepeat repeatX,
             BackgroundRepeat repeatY,
             Color32 color,
-            Rect uvRect
+            Rect uvRect,
+            float minSpacing = 0
         )
         {
-            var (tileX, spacingX, countX, startPosX) = CalculateRepeat(imageSize.x, totalSize.x, imagePos.x, repeatX);
-            var (tileY, spacingY, countY, startPosY) = CalculateRepeat(imageSize.y, totalSize.y, imagePos.y, repeatY);
+            if (totalSize.x <= 0 || totalSize.y <= 0) return;
+
+            var (tileX, spacingX, countX, startPosX) = CalculateRepeat(imageSize.x, totalSize.x, imagePos.x, repeatX, minSpacing);
+            var (tileY, spacingY, countY, startPosY) = CalculateRepeat(imageSize.y, totalSize.y, imagePos.y, repeatY, minSpacing);
 
             for (int x = 0; x < countX; x++)
             {

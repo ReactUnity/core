@@ -13,12 +13,13 @@ namespace ReactUnity.UGUI.Shapes
         {
             switch (style)
             {
+                case BorderStyle.Dashed:
                 case BorderStyle.Solid:
                     return new Vector2(34f / 64f, 38f / 64f);
                 case BorderStyle.Dotted:
                     return new Vector2(0, 0.5f);
-                case BorderStyle.Dashed:
-                    return new Vector2(46f / 64f, 50f / 64f);
+                //case BorderStyle.Dashed:
+                //    return new Vector2(46f / 64f, 50f / 64f);
                 case BorderStyle.Double:
                     return new Vector2(52f / 64f, 55f / 64f);
                 case BorderStyle.Groove:
@@ -43,140 +44,226 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
-
+        private static (bool, BackgroundRepeat, float, float, float) GetStyleParams(BorderStyle style, float size)
+        {
+            // Can merge, Repeat, Size, Spacing, Initial Spacing
+            switch (style)
+            {
+                case BorderStyle.Dotted:
+                    return (false, BackgroundRepeat.Space, size, size, size);
+                case BorderStyle.Dashed:
+                    return (false, BackgroundRepeat.Round, Mathf.Max(6, size * 3f), Mathf.Max(4, size * 2f), 0);
+                case BorderStyle.Solid:
+                case BorderStyle.Double:
+                case BorderStyle.Groove:
+                case BorderStyle.Ridge:
+                case BorderStyle.Outset:
+                case BorderStyle.Inset:
+                case BorderStyle.None:
+                default:
+                    return (true, BackgroundRepeat.Stretch, size, 0, 0);
+            }
+        }
 
         public static void AddNonRoundedOutline(
             ref VertexHelper vh,
             WebOutlineProperties outline,
-            Vector2 center,
-            float width,
-            float height,
+            Rect rect,
             WebOutlineColors colors,
             WebOutlineStyles styles,
             Vector2 uv
         )
         {
-            float fullWidth = width + outline.Sizes.Left + outline.Sizes.Right;
-            float fullHeight = height + outline.Sizes.Top + outline.Sizes.Bottom;
+            var size = rect.size;
+            var center = rect.position;
 
-            AddNonRoundedOutlineRing(
-                ref vh,
-                center,
-                width,
-                height,
-                outline.Sizes,
-                colors,
-                styles,
-                fullWidth,
-                fullHeight,
-                false,
-                true
-            );
+            var topWidth = outline.Sizes.Top;
+            var leftWidth = outline.Sizes.Left;
+            var bottomWidth = outline.Sizes.Bottom;
+            var rightWidth = outline.Sizes.Right;
 
-            var outCenter = new Vector2(
-                center.x + (outline.Sizes.Right - outline.Sizes.Left) / 2,
-                center.y + (outline.Sizes.Top - outline.Sizes.Bottom) / 2
-            );
+            var topOutset = 0;
+            var leftOutset = 0;
+            var bottomOutset = 0;
+            var rightOutset = 0;
 
-            AddNonRoundedOutlineRing(
-                ref vh,
-                outCenter,
-                fullWidth,
-                fullHeight,
-                outline.Sizes,
-                colors,
-                styles,
-                fullWidth,
-                fullHeight,
-                true,
-                false
-            );
-        }
 
-        private static void AddNonRoundedOutlineRing(
-            ref VertexHelper vh,
-            Vector2 center,
-            float width,
-            float height,
-            WebOutlineSizes sizes,
-            WebOutlineColors colors,
-            WebOutlineStyles styles,
-            float totalWidth,
-            float totalHeight,
-            bool addRingIndices,
-            bool isInner
-        )
-        {
-            Debug.Assert(totalWidth > 0 && totalHeight > 0);
+            // Positions
+            var x0 = center.x - leftOutset - leftWidth;
+            var x1 = x0 + leftWidth;
+            var x2 = center.x + rightOutset + size.x;
+            var x3 = x2 + rightWidth;
+
+            var y0 = center.y + size.y + topOutset + topWidth;
+            var y1 = y0 - topWidth;
+            var y2 = center.y - bottomOutset;
+            var y3 = y2 - bottomWidth;
+
+            var fillWidth = x2 - x1;
+            var fillHeight = y1 - y2;
+
 
             var topUvs = GetBorderStyleTextureUVs(styles.Top, false);
             var rightUvs = GetBorderStyleTextureUVs(styles.Right, true);
             var bottomUvs = GetBorderStyleTextureUVs(styles.Bottom, true);
             var leftUvs = GetBorderStyleTextureUVs(styles.Left, false);
 
-
-            // Left-Top
-            tmpPos.x = center.x - width * 0.5f;
-            tmpPos.y = center.y + height * 0.5f;
-            tmpUVPos.x = totalHeight / sizes.Left / 4;
-            tmpUVPos.y = isInner ? leftUvs.x : leftUvs.y;
-            vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            var topParams = GetStyleParams(styles.Top, topWidth);
+            var rightParams = GetStyleParams(styles.Right, rightWidth);
+            var bottomParams = GetStyleParams(styles.Bottom, bottomWidth);
+            var leftParams = GetStyleParams(styles.Left, leftWidth);
 
 
-            // Top 
-            tmpUVPos.x = 0;
-            tmpUVPos.y = isInner ? topUvs.x : topUvs.y;
-            vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            // Top
+            if (topWidth > 0)
+            {
+                if (topParams.Item1)
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y0), colors.Top, new Vector2(0, topUvs.y));
+                    vh.AddVert(new Vector2(x1, y1), colors.Top, new Vector2(0, topUvs.x));
+                    vh.AddVert(new Vector2(x2, y1), colors.Top, new Vector2(1, topUvs.x));
+                    vh.AddVert(new Vector2(x3, y0), colors.Top, new Vector2(1, topUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 2, baseIndex + 1);
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 3, baseIndex + 2);
+                }
+                else
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y0), colors.Top, new Vector2(0, topUvs.y));
+                    vh.AddVert(new Vector2(x1, y1), colors.Top, new Vector2(1, topUvs.x));
+                    vh.AddVert(new Vector2(x1, y0), colors.Top, new Vector2(1, topUvs.y));
 
-            tmpPos.x += width;
-            tmpUVPos.x = totalWidth / sizes.Top / 4;
-            vh.AddVert(tmpPos, colors.Top, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(new Vector2(x2, y1), colors.Top, new Vector2(0, topUvs.x));
+                    vh.AddVert(new Vector2(x3, y0), colors.Top, new Vector2(1, topUvs.y));
+                    vh.AddVert(new Vector2(x2, y0), colors.Top, new Vector2(0, topUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                    vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
+
+                    var tileArea = new Vector2(fillWidth - topParams.Item5, topWidth);
+                    var tileOffset = new Vector2(x1 + topParams.Item5, y1);
+                    var tileSize = new Vector2(topParams.Item3, 1);
+                    var tileUv = new Rect(0, topUvs.x, 1, topUvs.y - topUvs.x);
+                    var minSpacing = topParams.Item4;
+
+                    ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset,
+                        topParams.Item2, BackgroundRepeat.Stretch, colors.Top, tileUv, minSpacing);
+                }
+            }
 
 
             // Right
-            tmpUVPos.x = 0;
-            tmpUVPos.y = isInner ? rightUvs.x : rightUvs.y;
-            vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+            if (rightWidth > 0)
+            {
+                if (rightParams.Item1)
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x3, y0), colors.Right, new Vector2(0, rightUvs.y));
+                    vh.AddVert(new Vector2(x2, y1), colors.Right, new Vector2(0, rightUvs.x));
+                    vh.AddVert(new Vector2(x2, y2), colors.Right, new Vector2(1, rightUvs.x));
+                    vh.AddVert(new Vector2(x3, y3), colors.Right, new Vector2(1, rightUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 2, baseIndex + 1);
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 3, baseIndex + 2);
+                }
+                else
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x3, y0), colors.Right, new Vector2(1, rightUvs.y));
+                    vh.AddVert(new Vector2(x2, y1), colors.Right, new Vector2(0, rightUvs.x));
+                    vh.AddVert(new Vector2(x3, y1), colors.Right, new Vector2(1, rightUvs.x));
 
-            tmpPos.y -= height;
-            tmpUVPos.x = totalHeight / sizes.Right / 4;
-            vh.AddVert(tmpPos, colors.Right, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
+                    vh.AddVert(new Vector2(x3, y3), colors.Right, new Vector2(1, rightUvs.y));
+                    vh.AddVert(new Vector2(x2, y2), colors.Right, new Vector2(0, rightUvs.x));
+                    vh.AddVert(new Vector2(x3, y2), colors.Right, new Vector2(1, rightUvs.x));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                    vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
+
+                    var tileArea = new Vector2(rightWidth, fillHeight - rightParams.Item5);
+                    var tileOffset = new Vector2(x2, y2 + rightParams.Item5);
+                    var tileSize = new Vector2(1, rightParams.Item3);
+                    var tileUv = new Rect(0, rightUvs.x, 1, rightUvs.y - rightUvs.x);
+                    var minSpacing = rightParams.Item4;
+
+                    ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset,
+                        BackgroundRepeat.Stretch, rightParams.Item2, colors.Right, tileUv, minSpacing);
+                }
+            }
 
 
             // Bottom
-            tmpUVPos.x = 0;
-            tmpUVPos.y = isInner ? bottomUvs.x : bottomUvs.y;
-            vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
-
-            tmpPos.x -= width;
-            tmpUVPos.x = totalWidth / sizes.Bottom / 4;
-            vh.AddVert(tmpPos, colors.Bottom, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
-
-
-            // Left-Bottom
-            tmpUVPos.x = 0;
-            tmpUVPos.y = isInner ? leftUvs.x : leftUvs.y;
-            vh.AddVert(tmpPos, colors.Left, tmpUVPos, GeoUtils.ZeroV2, GeoUtils.UINormal, GeoUtils.UITangent);
-
-
-            if (addRingIndices)
+            if (bottomWidth > 0)
             {
-                int baseIndex = vh.currentVertCount - 16;
+                if (bottomParams.Item1)
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y3), colors.Bottom, new Vector2(0, bottomUvs.y));
+                    vh.AddVert(new Vector2(x1, y2), colors.Bottom, new Vector2(0, bottomUvs.x));
+                    vh.AddVert(new Vector2(x2, y2), colors.Bottom, new Vector2(1, bottomUvs.x));
+                    vh.AddVert(new Vector2(x3, y3), colors.Bottom, new Vector2(1, bottomUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 2, baseIndex + 1);
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 3, baseIndex + 2);
+                }
+                else
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y3), colors.Bottom, new Vector2(0, bottomUvs.y));
+                    vh.AddVert(new Vector2(x1, y2), colors.Bottom, new Vector2(1, bottomUvs.x));
+                    vh.AddVert(new Vector2(x1, y3), colors.Bottom, new Vector2(1, bottomUvs.y));
 
-                vh.AddTriangle(baseIndex + 1, baseIndex + 9, baseIndex + 10);
-                vh.AddTriangle(baseIndex + 1, baseIndex + 10, baseIndex + 2);
+                    vh.AddVert(new Vector2(x2, y2), colors.Bottom, new Vector2(0, bottomUvs.x));
+                    vh.AddVert(new Vector2(x3, y3), colors.Bottom, new Vector2(1, bottomUvs.y));
+                    vh.AddVert(new Vector2(x2, y3), colors.Bottom, new Vector2(0, bottomUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                    vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
 
-                vh.AddTriangle(baseIndex + 3, baseIndex + 11, baseIndex + 12);
-                vh.AddTriangle(baseIndex + 3, baseIndex + 12, baseIndex + 4);
+                    var tileArea = new Vector2(fillWidth - bottomParams.Item5, bottomWidth);
+                    var tileOffset = new Vector2(x1 + bottomParams.Item5, y3);
+                    var tileSize = new Vector2(bottomParams.Item3, 1);
+                    var tileUv = new Rect(0, bottomUvs.x, 1, bottomUvs.y - bottomUvs.x);
+                    var minSpacing = bottomParams.Item4;
 
-                vh.AddTriangle(baseIndex + 5, baseIndex + 13, baseIndex + 14);
-                vh.AddTriangle(baseIndex + 5, baseIndex + 14, baseIndex + 6);
+                    ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset,
+                        bottomParams.Item2, BackgroundRepeat.Stretch, colors.Bottom, tileUv, minSpacing);
+                }
+            }
 
-                vh.AddTriangle(baseIndex + 7, baseIndex + 15, baseIndex + 8);
-                vh.AddTriangle(baseIndex + 7, baseIndex + 8, baseIndex);
+
+            // Left
+            if (leftWidth > 0)
+            {
+                if (leftParams.Item1)
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y0), colors.Left, new Vector2(0, leftUvs.y));
+                    vh.AddVert(new Vector2(x1, y1), colors.Left, new Vector2(0, leftUvs.x));
+                    vh.AddVert(new Vector2(x1, y2), colors.Left, new Vector2(1, leftUvs.x));
+                    vh.AddVert(new Vector2(x0, y3), colors.Left, new Vector2(1, leftUvs.y));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 2, baseIndex + 1);
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 3, baseIndex + 2);
+                }
+                else
+                {
+                    var baseIndex = vh.currentVertCount;
+                    vh.AddVert(new Vector2(x0, y0), colors.Left, new Vector2(1, leftUvs.y));
+                    vh.AddVert(new Vector2(x1, y1), colors.Left, new Vector2(0, leftUvs.x));
+                    vh.AddVert(new Vector2(x0, y1), colors.Left, new Vector2(1, leftUvs.x));
+
+                    vh.AddVert(new Vector2(x0, y3), colors.Left, new Vector2(1, leftUvs.y));
+                    vh.AddVert(new Vector2(x1, y2), colors.Left, new Vector2(0, leftUvs.x));
+                    vh.AddVert(new Vector2(x0, y2), colors.Left, new Vector2(1, leftUvs.x));
+                    vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
+                    vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
+
+                    var tileArea = new Vector2(leftWidth, fillHeight - leftParams.Item5);
+                    var tileOffset = new Vector2(x0, y2 + leftParams.Item5);
+                    var tileSize = new Vector2(1, leftParams.Item3);
+                    var tileUv = new Rect(0, leftUvs.x, 1, leftUvs.y - leftUvs.x);
+                    var minSpacing = leftParams.Item4;
+
+                    ImageUtils.CreateTiledImageMesh(vh, tileSize, Vector2.zero, tileArea, tileOffset,
+                        BackgroundRepeat.Stretch, leftParams.Item2, colors.Left, tileUv, minSpacing);
+                }
             }
         }
-
-
     }
 }
