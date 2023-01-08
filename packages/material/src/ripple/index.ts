@@ -48,6 +48,7 @@ export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, press
     ripple.Style.Set('height', maxDimension);
   }
 
+  containerElement.ClassList.Add(style.rippleParent);
   UnityBridge.appendChild(containerElement, ripple);
   return ripple;
 }
