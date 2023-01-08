@@ -322,11 +322,11 @@ namespace ReactUnity.Tests
         [UGUITest(Script = BaseScript, Style = BaseStyle)]
         public IEnumerator BackgroundBlendSnapshots()
         {
-            View.Style["background"] = "url(res:ReactUnity/tests/sprites/star)";
+            View.Style["background"] = $"url({StarUrl})";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/colorless");
 
-            View.Style["background"] = "url(res:ReactUnity/tests/sprites/star) rgba(0, 0, 200, 0.4)";
+            View.Style["background"] = $"url({StarUrl}) rgba(0, 0, 200, 0.4)";
             yield return null;
             Assertions.Snapshot("backgrounds/blend/normal-blend");
 
