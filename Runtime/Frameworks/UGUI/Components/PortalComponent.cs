@@ -136,14 +136,15 @@ namespace ReactUnity.UGUI
 
         protected override void DestroySelf()
         {
-            base.DestroySelf();
             SetTarget(null, null);
+            if (GameObject) GameObject.DestroyImmediate(GameObject);
+            base.DestroySelf();
         }
 
         public override bool Pool()
         {
-            if (!base.Pool()) return false;
             SetTarget(null, null);
+            if (!base.Pool()) return false;
             return true;
         }
 
