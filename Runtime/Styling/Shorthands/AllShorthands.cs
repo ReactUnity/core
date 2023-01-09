@@ -14,6 +14,7 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand BorderStyle = new FourDirectionalShorthand("border-style", FourDirectionalShorthand.PropertyType.BorderStyle);
         internal static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
         internal static readonly StyleShorthand BorderImage = new BorderImageShorthand("border-image");
+        internal static readonly StyleShorthand Outline = new BorderShorthand("outline", BorderShorthand.BorderSide.Outline);
         internal static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
         internal static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
         internal static readonly StyleShorthand BorderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
@@ -45,6 +46,7 @@ namespace ReactUnity.Styling.Shorthands
             { "borderColor", BorderColor },
             { "borderStyle", BorderStyle },
             { "borderRadius", BorderRadius },
+            { "outline", Outline },
             { "border", Border },
             { "borderTop", BorderTop },
             { "borderRight", BorderRight },

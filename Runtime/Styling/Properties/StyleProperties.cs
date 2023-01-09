@@ -35,6 +35,10 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<BorderStyle> borderRightStyle = new StyleProperty<BorderStyle>("borderRightStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<BorderStyle> borderTopStyle = new StyleProperty<BorderStyle>("borderTopStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<BorderStyle> borderBottomStyle = new StyleProperty<BorderStyle>("borderBottomStyle", BorderStyle.Solid, false);
+        public static readonly StyleProperty<float> outlineOffset = new StyleProperty<float>("outlineOffset", 0f, true);
+        public static readonly StyleProperty<float> outlineWidth = new StyleProperty<float>("outlineWidth", 0f, true);
+        public static readonly StyleProperty<Color> outlineColor = new StyleProperty<Color>("outlineColor", Color.black, true);
+        public static readonly StyleProperty<BorderStyle> outlineStyle = new StyleProperty<BorderStyle>("outlineStyle", BorderStyle.Solid, false);
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<YogaValue> translateZ = new StyleProperty<YogaValue>("translateZ", YogaValue.Point(0), true);
@@ -132,6 +136,10 @@ namespace ReactUnity.Styling
             { "borderRightStyle", borderRightStyle},
             { "borderTopStyle", borderTopStyle},
             { "borderBottomStyle", borderBottomStyle},
+            { "outlineOffset", outlineOffset },
+            { "outlineWidth", outlineWidth },
+            { "outlineColor", outlineColor },
+            { "outlineStyle", outlineStyle },
             { "boxShadow", boxShadow },
             { "transformOrigin", transformOrigin },
             { "translate", translate },
@@ -265,6 +273,10 @@ namespace ReactUnity.Styling
             { "border-right-style", borderRightStyle},
             { "border-top-style", borderTopStyle},
             { "border-bottom-style", borderBottomStyle},
+            { "outline-offset", outlineOffset },
+            { "outline-width", outlineWidth },
+            { "outline-color", outlineColor },
+            { "outline-style", outlineStyle },
             { "box-shadow", boxShadow },
             { "transform-origin", transformOrigin },
             { "translate-z", translateZ },

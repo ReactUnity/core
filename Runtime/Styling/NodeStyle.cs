@@ -38,6 +38,10 @@ namespace ReactUnity.Styling
         public YogaValue2 borderTopRightRadius => GetStyleValue(StyleProperties.borderTopRightRadius);
         public YogaValue2 borderBottomLeftRadius => GetStyleValue(StyleProperties.borderBottomLeftRadius);
         public YogaValue2 borderBottomRightRadius => GetStyleValue(StyleProperties.borderBottomRightRadius);
+        public float outlineOffset => GetStyleValue(StyleProperties.outlineOffset);
+        public float outlineWidth => GetStyleValue(StyleProperties.outlineWidth);
+        public Color outlineColor => GetStyleValue(StyleProperties.outlineColor);
+        public BorderStyle outlineStyle => GetStyleValue(StyleProperties.outlineStyle);
         public Color borderLeftColor => GetStyleValue(StyleProperties.borderLeftColor);
         public Color borderRightColor => GetStyleValue(StyleProperties.borderRightColor);
         public Color borderTopColor => GetStyleValue(StyleProperties.borderTopColor);

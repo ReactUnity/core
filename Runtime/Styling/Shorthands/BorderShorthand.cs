@@ -17,6 +17,7 @@ namespace ReactUnity.Styling.Shorthands
             Right = 2,
             Bottom = 3,
             Left = 4,
+            Outline = 5,
         }
 
         public override List<IStyleProperty> ModifiedProperties { get; }
@@ -74,6 +75,14 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.BorderLeftWidth,
                         StyleProperties.borderLeftColor,
                         StyleProperties.borderLeftStyle,
+                    };
+                    break;
+                case BorderSide.Outline:
+                    ModifiedProperties = new List<IStyleProperty>
+                    {
+                        StyleProperties.outlineWidth,
+                        StyleProperties.outlineColor,
+                        StyleProperties.outlineStyle,
                     };
                     break;
                 default:
