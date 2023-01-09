@@ -16,10 +16,13 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 rounding = value;
+                borderTexture = HasRounding ? null : ResourcesHelper.BorderTexture;
                 RefreshInnerRounding();
                 SetVerticesDirty();
             }
         }
+
+        bool HasRounding => rounding != null && rounding.HasRounding();
 
         [SerializeField]
         private WebOutlineProperties border = new WebOutlineProperties();
@@ -96,23 +99,33 @@ namespace ReactUnity.UGUI.Shapes
             var pixelRect = GetInnerRect();
             var outerRect = GetOuterRect();
 
-            Rounding.UpdateAdjusted(outerRect.size, pixelRect.size, Border.Sizes);
-            InnerRounding.UpdateAdjusted(pixelRect.size, pixelRect.size);
+            Rounding?.UpdateAdjusted(outerRect.size, pixelRect.size, Border.Sizes);
+            InnerRounding?.UpdateAdjusted(pixelRect.size, pixelRect.size);
 
-            borderTexture = Rounding.HasRounding() ? null : ResourcesHelper.BorderTexture;
-
-            AddRoundedRectLine(
-                ref vh,
-                pixelRect,
-                pixelRect.center,
-                pixelRect.width,
-                pixelRect.height,
-                Border,
-                InnerRounding,
-                Rounding,
-                GeoUtils.ZeroV2,
-                ref unitPositionData
-            );
+            if (!HasRounding)
+            {
+                BorderUtils.AddNonRoundedOutline(
+                    ref vh,
+                    Border,
+                    pixelRect,
+                    Border.Colors,
+                    Border.Styles
+                );
+            }
+            else
+            {
+                AddRoundedRectLine(
+                    ref vh,
+                    pixelRect.center,
+                    pixelRect.width,
+                    pixelRect.height,
+                    Border,
+                    InnerRounding,
+                    Rounding,
+                    GeoUtils.ZeroV2,
+                    ref unitPositionData
+                );
+            }
         }
 
         protected override void OnRectTransformDimensionsChange()
@@ -146,7 +159,6 @@ namespace ReactUnity.UGUI.Shapes
 
         public static void AddRoundedRectLine(
             ref VertexHelper vh,
-            Rect rect,
             Vector2 center,
             float width,
             float height,
@@ -159,22 +171,6 @@ namespace ReactUnity.UGUI.Shapes
         {
             float fullWidth = width + outline.Sizes.Left + outline.Sizes.Right;
             float fullHeight = height + outline.Sizes.Top + outline.Sizes.Bottom;
-
-            if (!rounding.HasRounding())
-            {
-                if (width <= 0 || height <= 0) return;
-
-                BorderUtils.AddNonRoundedOutline(
-                    ref vh,
-                    outline,
-                    rect,
-                    outline.Colors,
-                    outline.Styles,
-                    uv
-                );
-
-                return;
-            }
 
             if (fullWidth <= 0 || fullHeight <= 0) return;
 

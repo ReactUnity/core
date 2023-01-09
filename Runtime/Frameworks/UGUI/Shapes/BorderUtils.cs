@@ -70,8 +70,7 @@ namespace ReactUnity.UGUI.Shapes
             WebOutlineProperties outline,
             Rect rect,
             WebOutlineColors colors,
-            WebOutlineStyles styles,
-            Vector2 uv
+            WebOutlineStyles styles
         )
         {
             var size = rect.size;
