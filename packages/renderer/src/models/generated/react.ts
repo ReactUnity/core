@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 27/12/2022 02:34:07
+// Generated 15/01/2023 19:33:28
 //
 /* eslint-disable */
 
@@ -23,6 +23,7 @@ export declare namespace ReactUnity {
     Style: InlineStyleRemap;
     InlineStylesheet: ReactUnity.Styling.StyleSheet;
     CustomProperties: Record<string, any>;
+    RevertCalculator: ReactUnity.Styling.IRevertCalculator;
     ParentIndex: number;
     CurrentOrder: number;
     Entering: boolean;
@@ -1465,6 +1466,7 @@ export declare namespace ReactUnity {
         Style: InlineStyleRemap;
         InlineStylesheet: ReactUnity.Styling.StyleSheet;
         CustomProperties: Record<string, any>;
+        RevertCalculator: ReactUnity.Styling.IRevertCalculator;
         ParentIndex: number;
         CurrentOrder: number;
         Entering: boolean;
@@ -1705,6 +1707,7 @@ export declare namespace ReactUnity {
         Style: InlineStyleRemap;
         InlineStylesheet: ReactUnity.Styling.StyleSheet;
         CustomProperties: Record<string, any>;
+        RevertCalculator: ReactUnity.Styling.IRevertCalculator;
         ParentIndex: number;
         CurrentOrder: number;
         Entering: boolean;
@@ -1792,6 +1795,7 @@ export declare namespace ReactUnity {
         Style: InlineStyleRemap;
         InlineStylesheet: ReactUnity.Styling.StyleSheet;
         CustomProperties: Record<string, any>;
+        RevertCalculator: ReactUnity.Styling.IRevertCalculator;
         ParentIndex: number;
         CurrentOrder: number;
         Entering: boolean;
@@ -1883,6 +1887,7 @@ export declare namespace ReactUnity {
         Style: InlineStyleRemap;
         InlineStylesheet: ReactUnity.Styling.StyleSheet;
         CustomProperties: Record<string, any>;
+        RevertCalculator: ReactUnity.Styling.IRevertCalculator;
         ParentIndex: number;
         CurrentOrder: number;
         Entering: boolean;
@@ -3737,6 +3742,7 @@ export declare namespace ReactUnity {
       None = 5,
       Unset = 6,
       Default = 7,
+      Revert = 8,
     }
     export class CssProperties {
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
@@ -3853,13 +3859,19 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export interface IRevertCalculator {
+      GetRevertValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+    }
     export interface IStyleKey {
       ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
       Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
     }
     export class NodeStyle {
-      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle, cssStyles?: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[]);
+      constructor(context: ReactUnity.ReactContext, fallback?: ReactUnity.Styling.NodeStyle, cssStyles?: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>[], revertCalculator?: ReactUnity.Styling.IRevertCalculator);
       HasInheritedChanges: boolean;
+      Context: ReactUnity.ReactContext;
+      Parent: ReactUnity.Styling.NodeStyle;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       order: number;
       opacity: number;
       zIndex: number;
@@ -3873,10 +3885,18 @@ export declare namespace ReactUnity {
       borderTopRightRadius: ReactUnity.Types.YogaValue2;
       borderBottomLeftRadius: ReactUnity.Types.YogaValue2;
       borderBottomRightRadius: ReactUnity.Types.YogaValue2;
+      outlineOffset: number;
+      outlineWidth: number;
+      outlineColor: UnityEngine.Color;
+      outlineStyle: ReactUnity.Types.BorderStyle;
       borderLeftColor: UnityEngine.Color;
       borderRightColor: UnityEngine.Color;
       borderTopColor: UnityEngine.Color;
       borderBottomColor: UnityEngine.Color;
+      borderLeftStyle: ReactUnity.Types.BorderStyle;
+      borderRightStyle: ReactUnity.Types.BorderStyle;
+      borderTopStyle: ReactUnity.Types.BorderStyle;
+      borderBottomStyle: ReactUnity.Types.BorderStyle;
       boxShadow: ReactUnity.Types.ICssValueList<ReactUnity.Types.BoxShadow>;
       transformOrigin: ReactUnity.Types.YogaValue2;
       translate: ReactUnity.Types.YogaValue2;
@@ -3905,6 +3925,11 @@ export declare namespace ReactUnity {
       stateDuration: number;
       objectFit: ReactUnity.Types.ObjectFit;
       objectPosition: ReactUnity.Types.YogaValue2;
+      borderImageSource: ReactUnity.Types.ImageDefinition;
+      borderImageSlice: ReactUnity.Types.BorderImageSlice;
+      borderImageRepeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
+      borderImageOutset: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
+      borderImageWidth: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
       backgroundPositionX: ReactUnity.Types.ICssValueList<Facebook.Yoga.YogaValue>;
@@ -3938,8 +3963,6 @@ export declare namespace ReactUnity {
       audioClip: ReactUnity.Types.ICssValueList<ReactUnity.Types.AudioReference>;
       audioIterationCount: ReactUnity.Types.ICssValueList<number>;
       audioDelay: ReactUnity.Types.ICssValueList<number>;
-      Context: ReactUnity.ReactContext;
-      Parent: ReactUnity.Styling.NodeStyle;
       UpdateParent(parent: ReactUnity.Styling.NodeStyle): void;
       GetRawStyleValue(prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean, activeStyle?: ReactUnity.Styling.NodeStyle): any;
       SetStyleValue(prop: ReactUnity.Styling.IStyleProperty, value: any): void;
@@ -3947,6 +3970,29 @@ export declare namespace ReactUnity {
       HasValue(prop: ReactUnity.Styling.IStyleProperty): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class FourDirectionalStyleProperty<T = any> {
+      constructor(name: string, initialValue: any, transitionable: boolean, inherited: boolean, converter: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(name: string, initialValue?: ReactUnity.Types.CssFourDirectional<T>, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(name: string, emptyValue: T, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      Converter: ReactUnity.Types.CssFourDirectional<T>;
+      name: string;
+      type: System.Type;
+      defaultValue: any; // System.Object
+      transitionable: boolean;
+      inherited: boolean;
+      affectsLayout: boolean;
+      ModifiedProperties: ReactUnity.Styling.IStyleProperty[];
+      converter: ReactUnity.Styling.Converters.StyleConverterBase;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      GetHashCode(): number;
+      Equals(obj: any): boolean;
+      GetStyle(style: ReactUnity.Styling.NodeStyle): any;
+      Modify(collection: System.Collections.Generic.IDictionary<ReactUnity.Styling.IStyleProperty, any>, value: any): ReactUnity.Styling.IStyleProperty[];
       GetType(): System.Type;
       ToString(): string;
     }
@@ -4058,6 +4104,14 @@ export declare namespace ReactUnity {
       static borderRightColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderTopColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderBottomColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static borderLeftStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
+      static borderRightStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
+      static borderTopStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
+      static borderBottomStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
+      static outlineOffset: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
+      static outlineWidth: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
+      static outlineColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static outlineStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
       static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translateZ: any; // ReactUnity.Styling.StyleProperty`1[Facebook.Yoga.YogaValue]
@@ -4086,6 +4140,11 @@ export declare namespace ReactUnity {
       static objectFit: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ObjectFit]
       static objectPosition: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static boxShadow: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BoxShadow]
+      static borderImageSource: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageDefinition]
+      static borderImageSlice: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderImageSlice]
+      static borderImageRepeat: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
+      static borderImageOutset: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[Facebook.Yoga.YogaValue]
+      static borderImageWidth: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[Facebook.Yoga.YogaValue]
       static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static backgroundImage: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.ImageDefinition]
       static backgroundPositionX: any; // ReactUnity.Styling.ValueListStyleProperty`1[Facebook.Yoga.YogaValue]
@@ -4422,6 +4481,7 @@ export declare namespace ReactUnity {
         static Interpolate(t: number, mirror?: boolean): number;
         static Interpolate(from: number, to: number, t: number): number;
         static Interpolate(from: number, to: number, t: number): number;
+        static Interpolate(from: boolean, to: boolean, t: number): boolean;
         static Interpolate(from: UnityEngine.Color, to: UnityEngine.Color, t: number): UnityEngine.Color;
         static Interpolate(from: UnityEngine.Vector2, to: UnityEngine.Vector2, t: number): UnityEngine.Vector2;
         static Interpolate(from: UnityEngine.Vector3, to: UnityEngine.Vector3, t: number): UnityEngine.Vector3;
@@ -4634,6 +4694,7 @@ export declare namespace ReactUnity {
       export class ComputedKeyword {
         constructor(keyword: ReactUnity.Styling.CssKeyword);
         Keyword: ReactUnity.Styling.CssKeyword;
+        static Revert: ReactUnity.Styling.Computed.ComputedKeyword;
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -4668,6 +4729,14 @@ export declare namespace ReactUnity {
       export class ComputedPercentage {
         constructor(value: number);
         Value: number;
+        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ComputedRevert {
+        static Instance: ReactUnity.Styling.Computed.ComputedRevert;
         GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -4846,6 +4915,7 @@ export declare namespace ReactUnity {
         static ImageDefinitionConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static BackgroundSizeConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static SortingLayerConverter: ReactUnity.Styling.Converters.StyleConverterBase;
+        static BorderImageSliceConverter: ReactUnity.Styling.Converters.StyleConverterBase;
         static Get(type: System.Type): ReactUnity.Styling.Converters.StyleConverterBase;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -5484,6 +5554,7 @@ export declare namespace ReactUnity {
       Space = 1,
       Round = 2,
       NoRepeat = 3,
+      Stretch = 4,
     }
     export enum BackgroundBox {
       BorderBox = 0,
@@ -5513,17 +5584,33 @@ export declare namespace ReactUnity {
       Saturation = 14,
       Luminosity = 15,
     }
+    export class BorderImageSlice {
+      constructor(top: Facebook.Yoga.YogaValue, right: Facebook.Yoga.YogaValue, bottom: Facebook.Yoga.YogaValue, left: Facebook.Yoga.YogaValue, fill: boolean);
+      constructor(values: ReactUnity.Types.CssFourDirectional<Facebook.Yoga.YogaValue>, fill: boolean);
+      constructor(fill: boolean);
+      static Auto: ReactUnity.Types.BorderImageSlice;
+      Top: Facebook.Yoga.YogaValue;
+      Right: Facebook.Yoga.YogaValue;
+      Bottom: Facebook.Yoga.YogaValue;
+      Left: Facebook.Yoga.YogaValue;
+      Fill: boolean;
+      Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export enum BorderStyle {
-      None = 0,
+      Solid = 0,
+      None = 1,
       Hidden = 1,
       Dotted = 2,
       Dashed = 3,
-      Solid = 4,
-      Double = 5,
-      Groove = 6,
-      Ridge = 7,
-      Inset = 8,
-      Outset = 9,
+      Double = 4,
+      Groove = 5,
+      Ridge = 6,
+      Inset = 7,
+      Outset = 8,
     }
     export class BoxShadow {
       constructor(offset: UnityEngine.Vector2, blur: UnityEngine.Vector2, spread: UnityEngine.Vector2, color: UnityEngine.Color, inset?: boolean);
@@ -5540,6 +5627,41 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export interface ICssFourDirectional<T = any> {
+      Top: T;
+      Right: T;
+      Bottom: T;
+      Left: T;
+    }
+    export class CssFourDirectional<T = any> {
+      constructor();
+      constructor(top: T, right: T, bottom: T, left: T);
+      Top: T;
+      Right: T;
+      Bottom: T;
+      Left: T;
+      static Default: any; // ReactUnity.Types.CssFourDirectional`1[T]
+      Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CssFourDirectionalInterpolated<T = any> {
+      constructor(from: ReactUnity.Types.ICssFourDirectional<T>, to: ReactUnity.Types.ICssFourDirectional<T>, ratio: number);
+      Top: T;
+      Right: T;
+      Bottom: T;
+      Left: T;
+      From: ReactUnity.Types.ICssFourDirectional<T>;
+      To: ReactUnity.Types.ICssFourDirectional<T>;
+      Ratio: number;
+      Interpolate(to: any, t: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
     }
     export interface ICssValueList<T = any> {
       Count: number;
@@ -5619,6 +5741,7 @@ export declare namespace ReactUnity {
       Ratio: number;
       Get(index: number): T;
       Get(index: number, defaultValue: T): T;
+      Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -5958,6 +6081,17 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class BorderImageSlice_Converter {
+      constructor();
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      StringifyInternal(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class BoxShadow_Converter {
       constructor();
       static ColorParser: ReactUnity.Styling.Converters.StyleConverterBase;
@@ -6123,6 +6257,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6220,6 +6355,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6319,6 +6455,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6420,6 +6557,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6517,6 +6655,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6611,6 +6750,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6707,6 +6847,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6806,6 +6947,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -6905,6 +7047,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7008,6 +7151,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7104,6 +7248,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7204,6 +7349,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7300,6 +7446,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7396,6 +7543,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7492,6 +7640,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7591,6 +7740,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7689,6 +7839,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7782,6 +7933,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7883,6 +8035,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -7980,6 +8133,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8076,6 +8230,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8177,6 +8332,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8279,6 +8435,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8379,6 +8536,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8473,6 +8631,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8572,6 +8731,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -8780,6 +8940,7 @@ export declare namespace ReactUnity {
       static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.UGUI.UGUIComponent);
       static textCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
       PlayAudio(clip: UnityEngine.AudioClip): void;
+      CreateNativeObject(name: string, ...components: System.Type[]): UnityEngine.GameObject;
       UpdateElementsRecursively(): void;
       LateUpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
@@ -11075,12 +11236,15 @@ export declare namespace ReactUnity {
         ShadowRoot: UnityEngine.RectTransform;
         BgImage: UnityEngine.UI.RawImage;
         BorderGraphic: ReactUnity.UGUI.Shapes.WebBorder;
+        OutlineGraphic: ReactUnity.UGUI.Shapes.WebBorder;
+        BorderImage: ReactUnity.UGUI.Shapes.WebBorderImage;
         ShadowGraphics: ReactUnity.UGUI.Shapes.WebShadow[];
         BackgroundGraphics: ReactUnity.UGUI.Shapes.WebBackgroundImage[];
         MaskGraphics: ReactUnity.UGUI.Shapes.WebBackgroundImage[];
         LastMask: ReactUnity.UGUI.Shapes.WebBackgroundImage;
         BorderSize: ReactUnity.UGUI.Shapes.WebOutlineSizes;
         BorderColors: ReactUnity.UGUI.Shapes.WebOutlineColors;
+        BorderStyles: ReactUnity.UGUI.Shapes.WebOutlineStyles;
         BlendMode: ReactUnity.Types.BackgroundBlendMode;
         BgColor: UnityEngine.Color;
         PointerEvents: ReactUnity.Types.PointerEvents;
@@ -11228,6 +11392,14 @@ export declare namespace ReactUnity {
         Equals(other: any): boolean;
         ToString(): string;
         GetType(): System.Type;
+      }
+      export class UGUIRevertCalculator {
+        constructor(cmp: ReactUnity.UGUI.UGUIComponent);
+        GetRevertValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
       }
     }
     export namespace Measurers {
@@ -11458,29 +11630,6 @@ export declare namespace ReactUnity {
       }
     }
     export namespace Shapes {
-      export class GeoUtils {
-        static UpV3: UnityEngine.Vector3;
-        static DownV3: UnityEngine.Vector3;
-        static LeftV3: UnityEngine.Vector3;
-        static RightV3: UnityEngine.Vector3;
-        static ZeroV3: UnityEngine.Vector3;
-        static ZeroV2: UnityEngine.Vector2;
-        static UINormal: UnityEngine.Vector3;
-        static UITangent: UnityEngine.Vector4;
-        static QuarterPI: number;
-        static HalfPI: number;
-        static TwoPI: number;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
-      export class RectUtils {
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
       export class RoundedCornerUnitPositionData {
         TLUnitPositions: UnityEngine.Vector2[];
         TRUnitPositions: UnityEngine.Vector2[];
@@ -11555,11 +11704,6 @@ export declare namespace ReactUnity {
         particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        static SizeProp: number;
-        static PosProp: number;
-        static RepeatXProp: number;
-        static RepeatYProp: number;
-        static AspectProp: number;
         Context: ReactUnity.ReactContext;
         BackgroundPosition: ReactUnity.Types.YogaValue2;
         BackgroundRepeatX: ReactUnity.Types.BackgroundRepeat;
@@ -11654,6 +11798,7 @@ export declare namespace ReactUnity {
         Border: ReactUnity.UGUI.Shapes.WebOutlineProperties;
         InnerRounding: ReactUnity.UGUI.Shapes.WebRoundingProperties;
         InsetBorder: ReactUnity.UGUI.Shapes.WebRect;
+        mainTexture: UnityEngine.Texture;
         onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
         maskable: boolean;
         isMaskingGraphic: boolean;
@@ -11667,7 +11812,6 @@ export declare namespace ReactUnity {
         defaultMaterial: UnityEngine.Material;
         material: UnityEngine.Material;
         materialForRendering: UnityEngine.Material;
-        mainTexture: UnityEngine.Texture;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
         runInEditMode: boolean;
@@ -11769,12 +11913,147 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class WebBorderImage {
+        constructor();
+        Size: UnityEngine.Vector2;
+        Definition: ReactUnity.Types.ImageDefinition;
+        mainTexture: UnityEngine.Texture;
+        materialForRendering: UnityEngine.Material;
+        onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
+        maskable: boolean;
+        isMaskingGraphic: boolean;
+        color: UnityEngine.Color;
+        raycastTarget: boolean;
+        raycastPadding: UnityEngine.Vector4;
+        depth: number;
+        rectTransform: UnityEngine.RectTransform;
+        canvas: UnityEngine.Canvas;
+        canvasRenderer: UnityEngine.CanvasRenderer;
+        defaultMaterial: UnityEngine.Material;
+        material: UnityEngine.Material;
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Slice: ReactUnity.Types.BorderImageSlice;
+        Repeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
+        Outset: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
+        Width: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
+        Context: ReactUnity.ReactContext;
+        SetBorderImage(image: ReactUnity.Types.ImageDefinition): void;
+        GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
+        Cull(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipRect(clipRect: UnityEngine.Rect, validRect: boolean): void;
+        SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
+        ParentMaskStateChanged(): void;
+        RecalculateClipping(): void;
+        RecalculateMasking(): void;
+        SetAllDirty(): void;
+        SetLayoutDirty(): void;
+        SetVerticesDirty(): void;
+        SetMaterialDirty(): void;
+        SetRaycastDirty(): void;
+        OnCullingChanged(): void;
+        Rebuild(update: UnityEngine.UI.CanvasUpdate): void;
+        LayoutComplete(): void;
+        GraphicUpdateComplete(): void;
+        OnRebuildRequested(): void;
+        SetNativeSize(): void;
+        Raycast(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
+        PixelAdjustPoint(point: UnityEngine.Vector2): UnityEngine.Vector2;
+        GetPixelAdjustedRect(): UnityEngine.Rect;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean): void;
+        CrossFadeColor(targetColor: UnityEngine.Color, duration: number, ignoreTimeScale: boolean, useAlpha: boolean, useRGB: boolean): void;
+        CrossFadeAlpha(alpha: number, duration: number, ignoreTimeScale: boolean): void;
+        RegisterDirtyLayoutCallback(action: (() => void)): void;
+        UnregisterDirtyLayoutCallback(action: (() => void)): void;
+        RegisterDirtyVerticesCallback(action: (() => void)): void;
+        UnregisterDirtyVerticesCallback(action: (() => void)): void;
+        RegisterDirtyMaterialCallback(action: (() => void)): void;
+        UnregisterDirtyMaterialCallback(action: (() => void)): void;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class WebOutlineColors {
         constructor(top: UnityEngine.Color, right: UnityEngine.Color, bottom: UnityEngine.Color, left: UnityEngine.Color);
         Top: UnityEngine.Color;
         Right: UnityEngine.Color;
         Bottom: UnityEngine.Color;
         Left: UnityEngine.Color;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class WebOutlineStyles {
+        constructor(top: ReactUnity.Types.BorderStyle, right: ReactUnity.Types.BorderStyle, bottom: ReactUnity.Types.BorderStyle, left: ReactUnity.Types.BorderStyle);
+        Top: ReactUnity.Types.BorderStyle;
+        Right: ReactUnity.Types.BorderStyle;
+        Bottom: ReactUnity.Types.BorderStyle;
+        Left: ReactUnity.Types.BorderStyle;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -11795,6 +12074,7 @@ export declare namespace ReactUnity {
         constructor();
         Colors: ReactUnity.UGUI.Shapes.WebOutlineColors;
         Sizes: ReactUnity.UGUI.Shapes.WebOutlineSizes;
+        Styles: ReactUnity.UGUI.Shapes.WebOutlineStyles;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -11940,6 +12220,7 @@ export declare namespace ReactUnity {
         UpdateAdjusted(size: UnityEngine.Vector2, innerSize: UnityEngine.Vector2, outline?: ReactUnity.UGUI.Shapes.WebOutlineSizes | undefined, matchRounding?: ReactUnity.UGUI.Shapes.WebRoundingProperties): void;
         OnCheck(): void;
         OffsetBorder(size: UnityEngine.Vector2, borderSizes: UnityEngine.Vector4): ReactUnity.UGUI.Shapes.WebRoundingProperties;
+        HasRounding(): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -12638,6 +12919,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -12726,6 +13008,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -12819,6 +13102,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -12914,6 +13198,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13004,6 +13289,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13089,6 +13375,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13174,6 +13461,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13260,6 +13548,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13344,6 +13633,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13428,6 +13718,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13517,6 +13808,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13609,6 +13901,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13694,6 +13987,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13786,6 +14080,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13871,6 +14166,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -13960,6 +14256,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -14052,6 +14349,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;
@@ -14138,6 +14436,7 @@ export declare namespace ReactUnity {
       Style: InlineStyleRemap;
       InlineStylesheet: ReactUnity.Styling.StyleSheet;
       CustomProperties: Record<string, any>;
+      RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       ParentIndex: number;
       CurrentOrder: number;
       Entering: boolean;

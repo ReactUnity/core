@@ -1,6 +1,6 @@
 //
 // Types in assemblies: Facebook.Yoga
-// Generated 27/12/2022 02:34:07
+// Generated 15/01/2023 19:33:28
 //
 /* eslint-disable */
 
@@ -146,7 +146,7 @@ export declare namespace Facebook {
       Row = 2,
       RowReverse = 3,
     }
-    export enum YogaGap {
+    export enum YogaGutter {
       Column = 0,
       Row = 1,
       All = 2,
