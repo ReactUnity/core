@@ -68,6 +68,16 @@ export function ImagesPage() {
     </section>
 
     <section>
+      <h2>Border Image</h2>
+
+      <row>
+        <view className={styles.borderImage}>
+          This is a border image
+        </view>
+      </row>
+    </section>
+
+    <section>
       <h2>Video</h2>
 
       <row>

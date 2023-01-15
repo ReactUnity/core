@@ -1,4 +1,5 @@
 .host {
+
   image,
   svg,
   svgimage {
@@ -34,4 +35,24 @@
     border: 2px solid rgb(188, 188, 188);
     border-radius: 6px;
   }
+}
+
+.borderImage {
+  border: 1px solid transparent;
+  border-image-source: url('resource:border-image');
+  border-image-width: calc(80 / 2) calc(72 / 2) calc(84 / 2);
+  border-image-slice: 80 72 84 fill;
+  border-image-repeat: round repeat;
+
+  width: 400px;
+  text-transform: uppercase;
+  font-style: bold;
+  font-size: 50px;
+  color: white;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  white-space: normal;
+  word-wrap: normal;
+  padding: 40px;
 }
