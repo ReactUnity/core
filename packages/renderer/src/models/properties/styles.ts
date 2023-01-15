@@ -30,6 +30,11 @@ export interface RenderStyle {
   maskRepeatX?: YogaValueAux;
   maskRepeatY?: YogaValueAux;
 
+  outlineColor?: ColorAux;
+  outlineStyle?: BorderStyle;
+  outlineWidth?: number;
+  outlineOffset?: number;
+
   borderTopLeftRadius?: Array2Aux<YogaValueAux>;
   borderTopRightRadius?: Array2Aux<YogaValueAux>;
   borderBottomRightRadius?: Array2Aux<YogaValueAux>;
@@ -106,6 +111,7 @@ export interface RenderStyle {
   background?: SafeString;
   backgroundPosition?: SafeString;
   backgroundRepeat?: BackgroundRepeat;
+  outline?: SafeString;
   border?: SafeString;
   borderTop?: SafeString;
   borderRight?: SafeString;
