@@ -60,13 +60,13 @@ namespace ReactUnity.UGUI.Shapes
         public Vector4 Vector;
 
         [FieldOffset(0)]
-        [Min(0)] public float Top;
+        public float Top;
         [FieldOffset(4)]
-        [Min(0)] public float Right;
+        public float Right;
         [FieldOffset(8)]
-        [Min(0)] public float Bottom;
+        public float Bottom;
         [FieldOffset(12)]
-        [Min(0)] public float Left;
+        public float Left;
     }
 
     [Serializable]

@@ -14,6 +14,7 @@ namespace ReactUnity.UGUI.Internal
     {
         private RectTransform root;
         private RectTransform borderRoot;
+        private RectTransform outlineRoot;
         private RectTransform borderImageRoot;
         private RectTransform backgroundRoot;
         private RectTransform shadowRoot;
@@ -31,6 +32,9 @@ namespace ReactUnity.UGUI.Internal
 
         private WebBorder borderGraphic;
         public WebBorder BorderGraphic => borderGraphic ?? (borderGraphic = EnsureBorderRoot().GetComponent<WebBorder>());
+
+        private WebBorder outlineGraphic;
+        public WebBorder OutlineGraphic => outlineGraphic ?? (outlineGraphic = EnsureOutlineRoot().GetComponent<WebBorder>());
 
         private WebBorderImage borderImage;
         public WebBorderImage BorderImage => borderImage ?? (borderImage = EnsureBorderImage().GetComponent<WebBorderImage>());
@@ -254,6 +258,22 @@ namespace ReactUnity.UGUI.Internal
             return borderImageRoot;
         }
 
+        private RectTransform EnsureOutlineRoot()
+        {
+            if (outlineRoot) return outlineRoot;
+
+            var outline = Context.CreateNativeObject("[Outline]", typeof(RectTransform), typeof(WebBorder));
+            outlineGraphic = outline.GetComponent<WebBorder>();
+
+            outlineRoot = outline.transform as RectTransform;
+
+            var ind = (root != null ? 1 : 0) + (borderRoot != null ? 1 : 0) + (borderImageRoot != null ? 1 : 0);
+
+            FullStretch(outlineRoot, transform as RectTransform, ind);
+
+            return outlineRoot;
+        }
+
         private void UpdateBgColor()
         {
             var hasBlend = blendMode == BackgroundBlendMode.Normal || blendMode == BackgroundBlendMode.Color;
@@ -279,6 +299,8 @@ namespace ReactUnity.UGUI.Internal
 
             SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
             SetBoxShadow(style.boxShadow);
+
+            UpdateOutline(style);
             SetBorderColor(style.borderTopColor, style.borderRightColor, style.borderBottomColor, style.borderLeftColor);
             SetBorderRadius(style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius);
 
@@ -330,6 +352,35 @@ namespace ReactUnity.UGUI.Internal
             };
         }
 
+        private void UpdateOutline(NodeStyle style)
+        {
+            var outlineWidth = style.outlineWidth;
+            var outlineStyle = style.outlineStyle;
+
+            if (outlineWidth > 0 && outlineStyle != BorderStyle.None)
+            {
+                var outlineColor = style.outlineColor;
+                var img = OutlineGraphic;
+                var offset = style.outlineOffset + outlineWidth;
+                outlineRoot.offsetMin = new Vector2(-offset, -offset);
+                outlineRoot.offsetMax = new Vector2(offset, offset);
+                img.SetVerticesDirty();
+
+                img.Border = new WebOutlineProperties
+                {
+                    Styles = new WebOutlineStyles(outlineStyle, outlineStyle, outlineStyle, outlineStyle),
+                    Sizes = new WebOutlineSizes()
+                    {
+                        Top = -outlineWidth,
+                        Right = -outlineWidth,
+                        Bottom = -outlineWidth,
+                        Left = -outlineWidth,
+                    },
+                    Colors = new WebOutlineColors(outlineColor, outlineColor, outlineColor, outlineColor),
+                };
+            }
+        }
+
         private void SetBorderRadius(YogaValue2 tl, YogaValue2 tr, YogaValue2 br, YogaValue2 bl)
         {
             var v = new YogaValue2[4] { tl, tr, br, bl };
@@ -342,6 +393,9 @@ namespace ReactUnity.UGUI.Internal
 
             if (borderGraphic)
                 borderGraphic.Rounding = new WebRoundingProperties(v);
+
+            if (outlineGraphic)
+                outlineGraphic.Rounding = new WebRoundingProperties(v);
 
             if (ShadowGraphics != null)
             {

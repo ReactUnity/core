@@ -72,5 +72,13 @@ namespace ReactUnity.UGUI
             pos.y = Screen.height - pos.y - ((1.0f - transform.pivot.y) * size.y);
             return new Rect(pos, size);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
     }
 }

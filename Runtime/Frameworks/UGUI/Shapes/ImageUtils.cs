@@ -162,7 +162,7 @@ namespace ReactUnity.UGUI.Shapes
             float minSpacing = 0
         )
         {
-            if (totalSize.x <= 0 || totalSize.y <= 0) return;
+            if (totalSize.x == 0 || totalSize.y == 0) return;
 
             var (tileX, spacingX, countX, startPosX) = CalculateRepeat(imageSize.x, totalSize.x, imagePos.x, repeatX, minSpacing);
             var (tileY, spacingY, countY, startPosY) = CalculateRepeat(imageSize.y, totalSize.y, imagePos.y, repeatY, minSpacing);

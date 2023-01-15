@@ -16,7 +16,7 @@ namespace ReactUnity.UGUI.Shapes
             set
             {
                 rounding = value;
-                borderTexture = HasRounding ? null : ResourcesHelper.BorderTexture;
+                BorderTexture = HasRounding ? null : ResourcesHelper.BorderTexture;
                 RefreshInnerRounding();
                 SetVerticesDirty();
             }
@@ -66,7 +66,19 @@ namespace ReactUnity.UGUI.Shapes
         }
 
         Texture2D borderTexture;
-        public override Texture mainTexture => borderTexture;
+        Texture2D BorderTexture
+        {
+            get => borderTexture;
+            set
+            {
+                if (borderTexture != value)
+                {
+                    borderTexture = value;
+                    SetMaterialDirty();
+                }
+            }
+        }
+        public override Texture mainTexture => BorderTexture;
 
         RoundedCornerUnitPositionData unitPositionData;
 

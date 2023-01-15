@@ -6,9 +6,6 @@ namespace ReactUnity.UGUI.Shapes
 {
     internal static class BorderUtils
     {
-        static Vector3 tmpPos = Vector3.zero;
-        static Vector2 tmpUVPos = Vector2.zero;
-
         public static Vector2 GetBorderStyleTextureUVs(BorderStyle style, bool inverted)
         {
             switch (style)
@@ -44,15 +41,17 @@ namespace ReactUnity.UGUI.Shapes
             }
         }
 
+        // Tuple: <Can merge, Repeat, Size, Spacing, Initial Spacing>
         private static (bool, BackgroundRepeat, float, float, float) GetStyleParams(BorderStyle style, float size)
         {
-            // Can merge, Repeat, Size, Spacing, Initial Spacing
+            var absSize = Mathf.Abs(size);
+
             switch (style)
             {
                 case BorderStyle.Dotted:
-                    return (false, BackgroundRepeat.Space, size, size, size);
+                    return (false, BackgroundRepeat.Space, absSize, absSize, absSize);
                 case BorderStyle.Dashed:
-                    return (false, BackgroundRepeat.Round, Mathf.Max(6, size * 3f), Mathf.Max(4, size * 2f), 0);
+                    return (false, BackgroundRepeat.Round, Mathf.Max(6, absSize * 3f), Mathf.Max(4, absSize * 2f), 0);
                 case BorderStyle.Solid:
                 case BorderStyle.Double:
                 case BorderStyle.Groove:
@@ -61,7 +60,7 @@ namespace ReactUnity.UGUI.Shapes
                 case BorderStyle.Inset:
                 case BorderStyle.None:
                 default:
-                    return (true, BackgroundRepeat.Stretch, size, 0, 0);
+                    return (true, BackgroundRepeat.Stretch, absSize, 0, 0);
             }
         }
 
@@ -93,10 +92,16 @@ namespace ReactUnity.UGUI.Shapes
             var x2 = center.x + rightOutset + size.x;
             var x3 = x2 + rightWidth;
 
+            if (x0 > x1) StylingHelpers.Swap(ref x0, ref x1);
+            if (x2 > x3) StylingHelpers.Swap(ref x2, ref x3);
+
             var y0 = center.y + size.y + topOutset + topWidth;
             var y1 = y0 - topWidth;
             var y2 = center.y - bottomOutset;
             var y3 = y2 - bottomWidth;
+
+            if (y0 < y1) StylingHelpers.Swap(ref y0, ref y1);
+            if (y2 < y3) StylingHelpers.Swap(ref y2, ref y3);
 
             var fillWidth = x2 - x1;
             var fillHeight = y1 - y2;
@@ -114,7 +119,7 @@ namespace ReactUnity.UGUI.Shapes
 
 
             // Top
-            if (topWidth > 0)
+            if (topWidth != 0)
             {
                 if (topParams.Item1)
                 {
@@ -139,7 +144,7 @@ namespace ReactUnity.UGUI.Shapes
                     vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
                     vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
 
-                    var tileArea = new Vector2(fillWidth - topParams.Item5, topWidth);
+                    var tileArea = new Vector2(fillWidth - topParams.Item5, Mathf.Abs(topWidth));
                     var tileOffset = new Vector2(x1 + topParams.Item5, y1);
                     var tileSize = new Vector2(topParams.Item3, 1);
                     var tileUv = new Rect(0, topUvs.x, 1, topUvs.y - topUvs.x);
@@ -152,7 +157,7 @@ namespace ReactUnity.UGUI.Shapes
 
 
             // Right
-            if (rightWidth > 0)
+            if (rightWidth != 0)
             {
                 if (rightParams.Item1)
                 {
@@ -177,7 +182,7 @@ namespace ReactUnity.UGUI.Shapes
                     vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
                     vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
 
-                    var tileArea = new Vector2(rightWidth, fillHeight - rightParams.Item5);
+                    var tileArea = new Vector2(Mathf.Abs(rightWidth), fillHeight - rightParams.Item5);
                     var tileOffset = new Vector2(x2, y2 + rightParams.Item5);
                     var tileSize = new Vector2(1, rightParams.Item3);
                     var tileUv = new Rect(0, rightUvs.x, 1, rightUvs.y - rightUvs.x);
@@ -190,7 +195,7 @@ namespace ReactUnity.UGUI.Shapes
 
 
             // Bottom
-            if (bottomWidth > 0)
+            if (bottomWidth != 0)
             {
                 if (bottomParams.Item1)
                 {
@@ -215,7 +220,7 @@ namespace ReactUnity.UGUI.Shapes
                     vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
                     vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
 
-                    var tileArea = new Vector2(fillWidth - bottomParams.Item5, bottomWidth);
+                    var tileArea = new Vector2(fillWidth - bottomParams.Item5, Mathf.Abs(bottomWidth));
                     var tileOffset = new Vector2(x1 + bottomParams.Item5, y3);
                     var tileSize = new Vector2(bottomParams.Item3, 1);
                     var tileUv = new Rect(0, bottomUvs.x, 1, bottomUvs.y - bottomUvs.x);
@@ -228,7 +233,7 @@ namespace ReactUnity.UGUI.Shapes
 
 
             // Left
-            if (leftWidth > 0)
+            if (leftWidth != 0)
             {
                 if (leftParams.Item1)
                 {
@@ -253,7 +258,7 @@ namespace ReactUnity.UGUI.Shapes
                     vh.AddTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 2);
                     vh.AddTriangle(baseIndex + 3, baseIndex + 4, baseIndex + 5);
 
-                    var tileArea = new Vector2(leftWidth, fillHeight - leftParams.Item5);
+                    var tileArea = new Vector2(Mathf.Abs(leftWidth), fillHeight - leftParams.Item5);
                     var tileOffset = new Vector2(x0, y2 + leftParams.Item5);
                     var tileSize = new Vector2(1, leftParams.Item3);
                     var tileUv = new Rect(0, leftUvs.x, 1, leftUvs.y - leftUvs.x);
