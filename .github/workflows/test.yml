@@ -13,6 +13,10 @@ on:
   repository_dispatch:
     types: [run-tests]
   workflow_dispatch:
+    inputs:
+      overwrite-snapshots:
+        type: boolean
+        description: Overwrite snapshots
 
 jobs:
   tests:
@@ -132,7 +136,7 @@ jobs:
             ${{ matrix.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }}
             -assemblyNames ${{ matrix.suite.assemblies }}
             ${{ matrix.performance && '-profiler-enable' || '' }}
-            ${{ contains(github.event.head_commit.message, '[snapshots]') && '-reactOverwriteSnapshots' || '' }}
+            ${{ (contains(github.event.head_commit.message, '[snapshots]') || github.event.inputs.overwrite-snapshots == 'true') && '-reactOverwriteSnapshots' || '' }}
 
       - name: Cache Performance Test Results
         if: matrix.performance

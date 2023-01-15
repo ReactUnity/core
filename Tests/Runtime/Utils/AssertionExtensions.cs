@@ -100,7 +100,7 @@ namespace ReactUnity.Tests
                             File.WriteAllBytes(filePath, croppedCapture.EncodeToPNG());
                             File.WriteAllText(lockfile, "updated");
 
-                            Assert.Inconclusive(
+                            System.Console.WriteLine(
                                 $"Snapshot failed ({name}). Overwriting old snapshots as per the preferences." +
                                 (string.IsNullOrWhiteSpace(failMessage) ? "" : $" The message was:\n{failMessage}"));
                         }
