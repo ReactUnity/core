@@ -1,3 +1,3 @@
 import './app';
 
-if (module) module?.hot?.accept?.();
+if (typeof module !== 'undefined') module?.hot?.accept?.();
