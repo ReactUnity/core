@@ -35,6 +35,9 @@ export interface RichTextElements {
   'nbsp': RichTextVoidTag;
   'zwsp': RichTextVoidTag;
   'br': RichTextVoidTag;
+  'shy': RichTextVoidTag;
+  'cr': RichTextVoidTag;
+  'lf': RichTextVoidTag;
 
   'align': RichTextValueTag<'right' | 'center' | 'left'>;
   'alpha': RichTextValueTag<string>;
@@ -60,6 +63,7 @@ export interface RichTextElements {
   'nobr': RichTextVoidTag;
   'page': RichTextVoidTag;
   'pos': RichTextValueTag<number>;
+  'scale': RichTextValueTag<number>;
   'size': RichTextValueTag<number>;
   'space': RichTextValueTag<number>;
   'sprite': RichTextSpriteTag;
