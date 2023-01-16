@@ -189,28 +189,23 @@ namespace ReactUnity.UGUI
 
             if (!Text.font) return;
 
-            if (weight == FontWeight.Bold)
+            var finalStyle = styles;
+
+            var weightIndex = ((int) weight / 100) - 1;
+            var isItalic = styles.HasFlag(FontStyles.Italic);
+            var assignedWeight = Text.font.fontWeightTable[weightIndex];
+            var wg = isItalic ? assignedWeight.italicTypeface : assignedWeight.regularTypeface;
+
+            if (!wg && weightIndex >= 6)
             {
-                var boldWeight = Text.font.fontWeightTable[6];
-
-                var isItalic = styles.HasFlag(FontStyles.Italic);
-                var wg = isItalic ? boldWeight.italicTypeface : boldWeight.regularTypeface;
-
-                if (wg)
-                {
-                    Text.fontWeight = weight;
-                    Text.fontStyle = styles;
-                }
-                else
-                {
-                    Text.fontWeight = FontWeight.Regular;
-                    Text.fontStyle = styles | FontStyles.Bold;
-                }
+                finalStyle = finalStyle | FontStyles.Bold;
             }
 
-            if (transform == TextTransform.UpperCase) Text.fontStyle = styles | FontStyles.UpperCase;
-            else if (transform == TextTransform.LowerCase) Text.fontStyle = styles | FontStyles.LowerCase;
-            else if (transform == TextTransform.SmallCaps) Text.fontStyle = styles | FontStyles.SmallCaps;
+            if (transform == TextTransform.UpperCase) finalStyle = finalStyle | FontStyles.UpperCase;
+            else if (transform == TextTransform.LowerCase) finalStyle = finalStyle | FontStyles.LowerCase;
+            else if (transform == TextTransform.SmallCaps) finalStyle = finalStyle | FontStyles.SmallCaps;
+
+            Text.fontStyle = finalStyle;
         }
 
         private void RecalculateLineHeight()

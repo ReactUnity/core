@@ -47,7 +47,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", ComputedCurrentColor.Instance, true, false);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
-        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
+        public static readonly StyleProperty<FontStyles> fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true, converter: new EnumConverter(typeof(FontStyles), true, new Dictionary<string, object> { { "linethrough", FontStyles.Strikethrough }, { "solid", FontStyles.Underline } }));
         public static readonly StyleProperty<TextTransform> textTransform = new StyleProperty<TextTransform>("textTransform", TextTransform.None, false, true);
         public static readonly StyleProperty<float> fontSize = new StyleProperty<float>("fontSize", ComputedFontSize.Default, true, false, AllConverters.FontSizeConverter);
         public static readonly StyleProperty<float> lineHeight = new StyleProperty<float>("lineHeight", new ComputedFontProperty(1, ComputedFontProperty.FontPropertyType.LineHeight), true, true, AllConverters.FontSizeConverter);

@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
@@ -9,6 +9,8 @@ namespace ReactUnity.Styling.Converters
         public Type EnumType { get; }
         public bool AllowFlags { get; }
         public bool KeywordOnly { get; }
+
+        public Dictionary<string, object> Mappings { get; }
 
         protected override Type TargetType => EnumType;
 
@@ -21,18 +23,20 @@ namespace ReactUnity.Styling.Converters
         }
 
 
-        public EnumConverter(Type enumType, bool keywordOnly)
+        public EnumConverter(Type enumType, bool keywordOnly, Dictionary<string, object> mappings = null)
         {
             EnumType = enumType;
             AllowFlags = enumType.GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
             KeywordOnly = keywordOnly;
+            Mappings = mappings;
         }
 
-        public EnumConverter(Type enumType, bool allowFlags, bool keywordOnly)
+        public EnumConverter(Type enumType, bool allowFlags, bool keywordOnly, Dictionary<string, object> mappings = null)
         {
             EnumType = enumType;
             AllowFlags = allowFlags;
             KeywordOnly = keywordOnly;
+            Mappings = mappings;
         }
 
 
@@ -48,7 +52,7 @@ namespace ReactUnity.Styling.Converters
             return false;
         }
 
-        public static bool FromString(Type type, string value, bool allowFlags, bool keywordOnly, out IComputedValue result)
+        public static bool FromString(Type type, string value, bool allowFlags, bool keywordOnly, Dictionary<string, object> mappings, out IComputedValue result)
         {
             if (allowFlags && value.Contains(","))
             {
@@ -60,7 +64,7 @@ namespace ReactUnity.Styling.Converters
                 {
                     var split = splits[i];
 
-                    var parsed = TryParseEnum(type, split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
+                    var parsed = TryParseEnum(type, split.Replace("-", "").ToLowerInvariant(), true, mappings, out var splitRes);
 
                     if (parsed &&
                         (!keywordOnly || !int.TryParse(value, out _)) &&
@@ -79,7 +83,7 @@ namespace ReactUnity.Styling.Converters
 
 
             if ((!keywordOnly || !int.TryParse(value, out _)) &&
-                TryParseEnum(type, value.Replace("-", "").ToLowerInvariant(), true, out var res) &&
+                TryParseEnum(type, value.Replace("-", "").ToLowerInvariant(), true, mappings, out var res) &&
                 Enum.IsDefined(type, res))
             {
                 result = new ComputedConstant(res);
@@ -97,14 +101,15 @@ namespace ReactUnity.Styling.Converters
 
         protected override bool ParseInternal(string value, out IComputedValue result)
         {
-            return FromString(EnumType, value, AllowFlags, KeywordOnly, out result);
+            return FromString(EnumType, value, AllowFlags, KeywordOnly, Mappings, out result);
         }
 
-        private static bool TryParseEnum(Type enumType, string value, bool ignoreCase, out object result)
+        private static bool TryParseEnum(Type enumType, string value, bool ignoreCase, Dictionary<string, object> mappings, out object result)
         {
             try
             {
-                var res = Enum.Parse(enumType, value, ignoreCase);
+                if (mappings == null || !mappings.TryGetValue(value, out var res))
+                    res = Enum.Parse(enumType, value, ignoreCase);
                 result = Enum.ToObject(enumType, res);
                 return true;
             }
