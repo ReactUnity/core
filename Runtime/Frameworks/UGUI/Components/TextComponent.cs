@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
+using ReactUnity.UGUI.Internal;
 using ReactUnity.UGUI.Measurers;
 using TMPro;
 using UnityEngine;
@@ -125,8 +126,6 @@ namespace ReactUnity.UGUI
                 Text.verticalAlignment = style.verticalAlign;
 
             Text.overflowMode = style.textOverflow;
-            Text.outlineWidth = style.textStrokeWidth;
-            Text.outlineColor = style.textStrokeColor;
 
             Font = style.fontFamily;
             RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
@@ -172,6 +171,14 @@ namespace ReactUnity.UGUI
 
             // Fixes garbled text after color change
             Text.UpdateFontAsset();
+
+            var effect = new TextEffects
+            {
+                BaseMaterial = Text.fontSharedMaterial,
+                TextStrokeWidth = style.textStrokeWidth,
+                TextStrokeColor = style.textStrokeColor,
+            };
+            Text.fontMaterial = effect.GetModifiedMaterial();
         }
 
         protected override void DestroySelf()
