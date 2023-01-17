@@ -29,8 +29,9 @@ namespace ReactUnity.Types
                 try
                 {
                     var fileData = realValue as byte[];
-                    var texture = new Texture2D(1, 1);
+                    var texture = new Texture2D(1, 1, TextureFormat.RGBA32, true);
                     texture.LoadImage(fileData);
+                    texture.Apply();
                     callback(texture);
                 }
                 catch
@@ -47,8 +48,9 @@ namespace ReactUnity.Types
                 if (File.Exists(filePath))
                 {
                     fileData = File.ReadAllBytes(filePath);
-                    texture = new Texture2D(1, 1);
+                    texture = new Texture2D(1, 1, TextureFormat.RGBA32, true);
                     texture.LoadImage(fileData);
+                    texture.Apply();
                 }
                 callback(texture);
             }
