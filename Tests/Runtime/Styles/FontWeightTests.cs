@@ -18,7 +18,8 @@ namespace ReactUnity.Tests
 
         public FontWeightTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        private TextMeshProUGUI GetText(int i) => Q($"view:nth-child({i})").GameObject.GetComponentInChildren<TextMeshProUGUI>();
+        private TextMeshProUGUI GetText(int i) =>
+            Q($"view:nth-child({i})").GameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         [UGUITest(Script = @"
             function App() {
@@ -54,7 +55,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            Assert.AreEqual(FontWeight.Regular, GetText(1).fontWeight);
+            Assert.AreEqual(FontWeight.Bold, GetText(1).fontWeight);
             Assert.AreEqual(FontStyles.Bold, GetText(1).fontStyle);
 
             Assert.AreEqual(FontWeight.Medium, GetText(2).fontWeight);
@@ -64,15 +65,15 @@ namespace ReactUnity.Tests
             Assert.AreEqual(FontStyles.Normal, GetText(3).fontStyle);
 
             Assert.AreEqual(FontWeight.Heavy, GetText(4).fontWeight);
-            Assert.AreEqual(FontStyles.Normal, GetText(4).fontStyle);
+            Assert.AreEqual(FontStyles.Bold, GetText(4).fontStyle);
 
-            Assert.AreEqual(FontWeight.Regular, GetText(5).fontWeight);
+            Assert.AreEqual(FontWeight.Bold, GetText(5).fontWeight);
             Assert.AreEqual(FontStyles.Bold, GetText(5).fontStyle);
 
-            Assert.AreEqual(FontWeight.Regular, GetText(6).fontWeight);
+            Assert.AreEqual(FontWeight.Bold, GetText(6).fontWeight);
             Assert.AreEqual(FontStyles.Bold, GetText(6).fontStyle);
 
-            Assert.AreEqual(FontWeight.Regular, GetText(7).fontWeight);
+            Assert.AreEqual(FontWeight.Bold, GetText(7).fontWeight);
             Assert.AreEqual(FontStyles.Italic | FontStyles.Bold, GetText(7).fontStyle);
 
         }

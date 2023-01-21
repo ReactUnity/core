@@ -75,7 +75,7 @@ namespace ReactUnity.Tests
             var tt = text.RectTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
             Assert.AreEqual(FontStyles.Italic | FontStyles.Bold, tt.fontStyle);
-            Assert.AreEqual(FontWeight.Regular, tt.fontWeight);
+            Assert.AreEqual(FontWeight.Bold, tt.fontWeight);
             Assert.AreEqual("monospace", tt.font.name);
             Assert.AreEqual(23, tt.fontSize);
             Assert.AreEqual(1.33f, tt.margin.y, 0.1f);
