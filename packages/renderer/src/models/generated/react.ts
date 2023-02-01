@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/01/2023 19:33:28
+// Generated 01/02/2023 23:27:21
 //
 /* eslint-disable */
 
@@ -2083,6 +2083,7 @@ export declare namespace ReactUnity {
       Name: string;
       Count: number;
       IsReadOnly: boolean;
+      Value: System.Collections.Generic.HashSet<string>;
       ToString(): string;
       GetArray(): string[];
       Add(item: string): boolean;
@@ -2108,6 +2109,8 @@ export declare namespace ReactUnity {
       SetEquals(other: System.Collections.Generic.IEnumerable<string>): boolean;
       SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<string>): void;
       UnionWith(other: System.Collections.Generic.IEnumerable<string>): void;
+      Change(): void;
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2161,6 +2164,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
@@ -2179,6 +2183,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2238,6 +2243,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
@@ -2256,6 +2262,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2277,6 +2284,32 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class WatchableList<T = any> {
+      constructor();
+      [key: string]: any;
+      Count: number;
+      IsReadOnly: boolean;
+      Value: T[];
+      GetArray(): T[];
+      Add(item: T): void;
+      AddWithoutNotify(item: T): void;
+      Remove(item: T): boolean;
+      RemoveWithoutNotify(item: T): boolean;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      Contains(item: T): boolean;
+      CopyTo(array: T[], arrayIndex: number): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      IndexOf(item: T): number;
+      Insert(index: number, item: T): void;
+      RemoveAt(index: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class WatchableDictionary<TKey = any, T = any> {
       constructor();
       constructor(dict: System.Collections.Generic.IDictionary<TKey, T>);
@@ -2285,6 +2318,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       Set(key: TKey, value: T): void;
       SetWithoutNotify(key: TKey, value: T): void;
       Add(key: TKey, value: T): void;
@@ -2299,6 +2333,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2310,6 +2345,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2334,6 +2370,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2345,6 +2382,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
@@ -2370,6 +2408,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2382,6 +2421,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<string, T>;
       Set(key: string, value: T): void;
       SetWithoutNotify(key: string, value: T): void;
       Add(key: string, value: T): void;
@@ -2396,6 +2436,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: string, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
       GetValueOrDefault(key: string): T;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2408,6 +2449,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
@@ -2423,6 +2465,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2432,6 +2475,7 @@ export declare namespace ReactUnity {
       constructor();
       Count: number;
       IsReadOnly: boolean;
+      Value: System.Collections.Generic.HashSet<T>;
       GetArray(): T[];
       Add(item: T): boolean;
       Toggle(item: T): boolean;
@@ -2456,6 +2500,8 @@ export declare namespace ReactUnity {
       SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
       SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
       UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      Change(): void;
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3785,6 +3831,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<ReactUnity.Styling.CursorPair>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       Set(key: string, value: ReactUnity.Styling.CursorPair): void;
@@ -3801,6 +3848,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: string, arg2: ReactUnity.Styling.CursorPair, arg3: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3829,6 +3877,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      Value: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>;
       OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
@@ -3854,6 +3903,7 @@ export declare namespace ReactUnity {
       AddListener(listener: ((arg1: ReactUnity.Styling.IStyleProperty, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
+      Change(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4952,6 +5002,7 @@ export declare namespace ReactUnity {
         EnumType: System.Type;
         AllowFlags: boolean;
         KeywordOnly: boolean;
+        Mappings: Record<string, any>;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;
