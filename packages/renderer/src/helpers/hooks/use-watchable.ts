@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
-import { ReactUnity } from '../models/generated';
+import { ReactUnity } from '../../models/generated';
 
 type IsEqual<T = any> = (a: T, b: T) => boolean;
 
