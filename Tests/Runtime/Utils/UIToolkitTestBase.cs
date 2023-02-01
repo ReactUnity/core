@@ -31,7 +31,7 @@ namespace ReactUnity.Tests
 #if REACT_JINT
     [TestFixture(JavascriptEngineType.Jint, Category = "Jint")]
 #endif
-#if REACT_CLEARSCRIPT && !UNITY_2021_2_OR_NEWER
+#if REACT_CLEARSCRIPT
     [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
 #endif
 #if REACT_QUICKJS
