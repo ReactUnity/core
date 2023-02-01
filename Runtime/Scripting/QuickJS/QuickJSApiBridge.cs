@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using QuickJS;
 using QuickJS.Experimental;
 using QuickJS.Native;
-using static UnityEngine.GraphicsBuffer;
 using QScriptContext = QuickJS.ScriptContext;
 
 namespace ReactUnity.Scripting
