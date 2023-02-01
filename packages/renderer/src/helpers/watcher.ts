@@ -1,19 +1,35 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { ReactUnity } from '../models/generated';
 
-export function useWatchable<T>(obj: ReactUnity.Helpers.IWatchable<T>) {
-  const isWatchable = useMemo(() => obj && typeof obj === 'object' && ('Value' in obj), [obj]);
+type IsEqual<T = any> = (a: T, b: T) => boolean;
 
-  const subscribe = useCallback((onStoreChange: () => void) => {
-    if (isWatchable && 'AddListener' in obj) {
-      const unsub = obj.AddListener(() => onStoreChange());
-      return () => unsub?.();
-    }
-    return () => { };
-  }, [obj, isWatchable]);
+const createSubscriber = <T>(obj: ReactUnity.Helpers.IWatchable<T>, isEqual?: IsEqual<T>) => {
+  const isWatchable = obj && typeof obj === 'object' && ('Value' in obj);
+  let snapshot = isWatchable ? obj.Value : undefined;
 
-  const getSnapshot = useCallback(() => isWatchable ? obj.Value : undefined, [obj, isWatchable]);
+  return {
+    subscribe: (onStoreChange: () => void) => {
+      snapshot = isWatchable ? obj.Value : undefined;
 
-  return useSyncExternalStore(subscribe, getSnapshot);
+      const remove = obj?.AddListener((key, value, dic) => {
+        const prev = snapshot;
+        snapshot = isWatchable ? obj.Value : undefined;
+
+        if (isEqual ? !isEqual(prev, snapshot) : (prev !== snapshot)) {
+          onStoreChange();
+        }
+      });
+
+      if (!remove) console.warn(`The watchable does not provide a change listener`);
+
+      return () => remove?.();
+    },
+    getSnapshot: () => snapshot,
+  };
+};
+
+export function useWatchable<T>(obj: ReactUnity.Helpers.IWatchable<T>, isEqual?: IsEqual<T>) {
+  const sb = useMemo(() => createSubscriber(obj, isEqual), [obj, isEqual]);
+  return useSyncExternalStore(sb.subscribe, sb.getSnapshot);
 }
