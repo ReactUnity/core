@@ -63,7 +63,7 @@
   "devDependencies": {
     "@reactunity/scripts": "^0.14.0",
     "@types/react-reconciler": "^0.28.2",
-    "rimraf": "^4.0.6",
-    "typescript": "^4.9.4"
+    "rimraf": "^4.1.2",
+    "typescript": "^4.9.5"
   }
 }
