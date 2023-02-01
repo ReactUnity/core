@@ -121,5 +121,124 @@ namespace ReactUnity.Tests
             Assert.AreEqual("undefined", text.text);
         }
 
+
+        [UGUITest(Script = @"
+            export function App() {
+                const globals = ReactUnity.useGlobals();
+                const val = ReactUnity.useWatchable(globals.testWatchable);
+                return <text>{val?.x + ''}</text>;
+            }
+        ")]
+        public IEnumerator TestWatchableStruct()
+        {
+            yield return null;
+
+            var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
+            Assert.AreEqual("undefined", text.text);
+
+            var watchable = new Watchable<Rect>(new Rect(1, 2, 3, 4));
+
+            Globals.Set("testWatchable", watchable);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("1", text.text);
+
+            watchable.Value = new Rect(5, 6, 7, 8);
+            yield return null;
+            Assert.AreEqual("5", text.text);
+
+            watchable = new Watchable<Rect>();
+            Globals.Set("testWatchable", watchable);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("0", text.text);
+
+            Globals.Set("testWatchable", null);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("undefined", text.text);
+
+            Globals.Set("testWatchable", 5);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("undefined", text.text);
+        }
+
+        [UGUITest(Script = @"
+            export function App() {
+                const globals = ReactUnity.useGlobals();
+                const w = ReactUnity.useWatchable(globals.testWatchable);
+                const val = [...w || []];
+                return <text>{val?.length + ''}</text>;
+            }
+        ")]
+        public IEnumerator TestWatchableList()
+        {
+            yield return null;
+
+            var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
+            Assert.AreEqual("0", text.text);
+
+            var watchable = new WatchableList<int>() { 1, 2, 3, 4 };
+
+            Globals.Set("testWatchable", watchable);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("4", text.text);
+
+            watchable.Add(5);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("5", text.text);
+
+            watchable.RemoveAt(0);
+            watchable.RemoveAt(0);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("3", text.text);
+
+            Globals.Set("testWatchable", null);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("0", text.text);
+        }
+
+        [UGUITest(Script = @"
+            export function App() {
+                const globals = ReactUnity.useGlobals();
+                const w = ReactUnity.useWatchable(globals.testWatchable);
+                return <text>{w?.Count + ''}</text>;
+            }
+        ")]
+        public IEnumerator TestWatchableSet()
+        {
+            yield return null;
+
+            var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
+            Assert.AreEqual("undefined", text.text);
+
+            var watchable = new WatchableSet<int>() { 1, 2, 3, 4 };
+
+            Globals.Set("testWatchable", watchable);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("4", text.text);
+
+            watchable.Add(5);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("5", text.text);
+
+            watchable.Remove(1);
+            watchable.Remove(2);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("3", text.text);
+
+            Globals.Set("testWatchable", null);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("undefined", text.text);
+        }
     }
 }

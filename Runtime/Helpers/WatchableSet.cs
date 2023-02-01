@@ -1,21 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ReactUnity.Helpers
 {
-    public class WatchableSet<T> : ICollection<T>, ISet<T>
+    public class WatchableSet<T> : ICollection<T>, ISet<T>, IWatchable<HashSet<T>>
     {
+        private event Action<HashSet<T>> changed;
+
         HashSet<T> original = new HashSet<T>();
 
         public int Count => original.Count;
 
         public bool IsReadOnly => false;
 
-        internal virtual void OnAdd(T item) { }
-        internal virtual void OnRemove(T item) { }
+        public HashSet<T> Value => new HashSet<T>(original);
+
+        internal virtual void OnAdd(T item)
+        {
+            Change();
+        }
+        internal virtual void OnRemove(T item)
+        {
+            Change();
+        }
         internal virtual void OnBeforeChange() { }
-        internal virtual void OnAfterChange() { }
+        internal virtual void OnAfterChange()
+        {
+            Change();
+        }
 
         #region Main Functions
 
@@ -139,6 +153,19 @@ namespace ReactUnity.Helpers
         }
 
         IEnumerator IEnumerable.GetEnumerator() => original.GetEnumerator();
+
+        public void Change()
+        {
+            changed?.Invoke(Value);
+        }
+
+        public Action AddListener(object cb)
+        {
+            var callback = Callback.From(cb);
+            var listener = new Action<HashSet<T>>((val) => callback.Call(val));
+            changed += listener;
+            return () => changed -= listener;
+        }
 
         #endregion
     }

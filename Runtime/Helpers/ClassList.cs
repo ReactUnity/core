@@ -37,23 +37,27 @@ namespace ReactUnity.Helpers
 
         internal override void OnAdd(string item)
         {
+            base.OnAdd(item);
             name = null;
             Component.OnClassChange();
         }
 
         internal override void OnRemove(string item)
         {
+            base.OnRemove(item);
             name = null;
             Component.OnClassChange();
         }
 
         internal override void OnBeforeChange()
         {
+            base.OnBeforeChange();
             name = null;
         }
 
         internal override void OnAfterChange()
         {
+            base.OnAfterChange();
             Component.OnClassChange();
         }
 

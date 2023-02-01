@@ -7216,10 +7216,10 @@ __webpack_require__.d(renderer_dist_namespaceObject, {
   "batchedUpdates": () => (batchedUpdates),
   "createDictionaryWatcher": () => (createDictionaryWatcher),
   "flushSync": () => (flushSync),
-  "globalsWatcher": () => (globalsWatcher),
   "icon": () => (icon),
   "unstable_batchedUpdates": () => (batchedUpdates),
   "useGlobals": () => (useGlobals),
+  "useGlobalsContext": () => (useGlobalsContext),
   "useGlobalsSelector": () => (useGlobalsSelector),
   "useWatchable": () => (useWatchable)
 });
@@ -9271,78 +9271,7 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.0';
-// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__("../../../node_modules/use-sync-external-store/shim/index.js");
-// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__("../../../node_modules/use-sync-external-store/with-selector.js");
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
-var dictionary_watcher_assign = undefined && undefined.__assign || function () {
-  dictionary_watcher_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return dictionary_watcher_assign.apply(this, arguments);
-};
-
-
-
-/**
- * Creates a context that updates its value when the values in the dictionary change
- * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
- * @param displayName A displayName to identify this context easier in case of problems
- */
-function createDictionaryWatcher(dictionary, displayName) {
-  var ctx = (0,react.createContext)(undefined);
-  if (displayName) ctx.displayName = displayName;
-  var snapshot = dictionary_watcher_assign({}, dictionary);
-  var subscribe = function subscribe(onStoreChange) {
-    snapshot = dictionary_watcher_assign({}, dictionary);
-    var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
-      snapshot = dictionary_watcher_assign({}, dictionary);
-      onStoreChange();
-    });
-    if (!remove) {
-      if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
-    }
-    return function () {
-      return remove === null || remove === void 0 ? void 0 : remove();
-    };
-  };
-  var getSnapshot = function getSnapshot() {
-    return snapshot;
-  };
-  var Provider = function GlobalsProvider(_a) {
-    var children = _a.children;
-    var value = (0,shim.useSyncExternalStore)(subscribe, getSnapshot, getSnapshot);
-    return (0,react.createElement)(ctx.Provider, {
-      value: value
-    }, children);
-  };
-  function useSelector(selector, isEqual) {
-    return (0,with_selector.useSyncExternalStoreWithSelector)(subscribe, getSnapshot, getSnapshot, selector, isEqual);
-  }
-  function useDictionaryContext() {
-    var context = (0,react.useContext)(ctx);
-    if (context === undefined) {
-      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
-    }
-    return context;
-  }
-  return {
-    context: ctx,
-    Provider: Provider,
-    useContext: useDictionaryContext,
-    useSelector: useSelector
-  };
-}
-var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
-var useGlobals = globalsWatcher.useContext;
-var useGlobalsSelector = globalsWatcher.useSelector;
-var GlobalsProvider = globalsWatcher.Provider;
+var version = '0.14.2';
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -9425,15 +9354,12 @@ var ErrorBoundary = /** @class */function (_super) {
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
 
 
-
 function DefaultView(_a) {
   var children = _a.children,
     withHelpers = _a.withHelpers;
   return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: !withHelpers ? children : (0,jsx_runtime.jsx)(ErrorBoundary, {
-      children: (0,jsx_runtime.jsx)(GlobalsProvider, {
-        children: children
-      })
+      children: children
     })
   });
 }
@@ -12346,6 +12272,144 @@ var VariableSizeList = createListComponent({
 ;// CONCATENATED MODULE: ../../../material/dist/index.js
 
 //# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__("../../../node_modules/use-sync-external-store/shim/index.js");
+// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
+var with_selector = __webpack_require__("../../../node_modules/use-sync-external-store/with-selector.js");
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
+var dictionary_watcher_assign = undefined && undefined.__assign || function () {
+  dictionary_watcher_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
+  };
+  return dictionary_watcher_assign.apply(this, arguments);
+};
+
+
+
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = (0,react.createContext)(undefined);
+  if (displayName) ctx.displayName = displayName;
+  var createSubscriber = function createSubscriber(fields, isEqual) {
+    var snapshot = dictionary_watcher_assign({}, dictionary);
+    return {
+      subscribe: function subscribe(onStoreChange) {
+        snapshot = dictionary_watcher_assign({}, dictionary);
+        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+          var prev = snapshot;
+          snapshot = dictionary_watcher_assign({}, dictionary);
+          if (!fields) onStoreChange();else {
+            for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
+              var field = fields_1[_i];
+              if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
+                onStoreChange();
+                break;
+              }
+            }
+          }
+        });
+        if (!remove) {
+          if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
+        }
+        return function () {
+          return remove === null || remove === void 0 ? void 0 : remove();
+        };
+      },
+      getSnapshot: function getSnapshot() {
+        return snapshot;
+      }
+    };
+  };
+  var defaultSubscriber = createSubscriber();
+  var Provider = function GlobalsProvider(_a) {
+    var children = _a.children;
+    var value = (0,shim.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
+    return (0,react.createElement)(ctx.Provider, {
+      value: value
+    }, children);
+  };
+  function useDictionaryContext() {
+    var context = (0,react.useContext)(ctx);
+    if (context === undefined) {
+      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
+    }
+    return context;
+  }
+  function useValue(subscribeToAllFields, fieldEqual) {
+    if (subscribeToAllFields === void 0) {
+      subscribeToAllFields = false;
+    }
+    var fields = (0,react.useRef)([]);
+    var subscriber = (0,react.useMemo)(function () {
+      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fields.current, fieldEqual);
+    }, [subscribeToAllFields, fieldEqual]);
+    var value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
+    var proxy = new Proxy(value, {
+      get: function get(target, p, receiver) {
+        fields.current.push(p);
+        return value[p];
+      }
+    });
+    return proxy;
+  }
+  function useSelector(selector, isEqual) {
+    return (0,with_selector.useSyncExternalStoreWithSelector)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot, selector, isEqual);
+  }
+  return {
+    context: ctx,
+    Provider: Provider,
+    useValue: useValue,
+    useContext: useDictionaryContext,
+    useSelector: useSelector
+  };
+}
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/hooks/use-globals.js
+
+var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
+var useGlobals = globalsWatcher.useValue;
+var useGlobalsContext = globalsWatcher.useContext;
+var useGlobalsSelector = globalsWatcher.useSelector;
+var GlobalsProvider = globalsWatcher.Provider;
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/hooks/use-watchable.js
+
+
+function createSubscriber(obj, isEqual) {
+  var isWatchable = obj && typeof obj === 'object' && 'Value' in obj;
+  var snapshot = isWatchable ? obj.Value : undefined;
+  return {
+    subscribe: function subscribe(onStoreChange) {
+      snapshot = isWatchable ? obj.Value : undefined;
+      var remove = isWatchable && typeof obj.AddListener === 'function' && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function (key, value, dic) {
+        var prev = snapshot;
+        snapshot = isWatchable ? obj.Value : undefined;
+        if (typeof isEqual !== 'function' || !isEqual(prev, snapshot)) {
+          onStoreChange();
+        }
+      }));
+      if (isWatchable && typeof remove !== 'function') console.warn("The watchable does not provide a change listener");
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    },
+    getSnapshot: function getSnapshot() {
+      return snapshot;
+    }
+  };
+}
+function useWatchable(obj, isEqual) {
+  var sb = (0,react.useMemo)(function () {
+    return createSubscriber(obj, isEqual);
+  }, [obj, isEqual]);
+  return (0,shim.useSyncExternalStore)(sb.subscribe, sb.getSnapshot, sb.getSnapshot);
+}
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/icons.js
 var icons_assign = undefined && undefined.__assign || function () {
   icons_assign = Object.assign || function (t) {
@@ -12377,30 +12441,8 @@ var icon = new Proxy({}, {
     return cmp;
   }
 });
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/watcher.js
-
-
-function useWatchable(obj) {
-  var isWatchable = (0,react.useMemo)(function () {
-    return obj && typeof obj === 'object' && 'Value' in obj;
-  }, [obj]);
-  var subscribe = (0,react.useCallback)(function (onStoreChange) {
-    if (isWatchable && 'AddListener' in obj) {
-      var unsub_1 = obj.AddListener(function () {
-        return onStoreChange();
-      });
-      return function () {
-        return unsub_1 === null || unsub_1 === void 0 ? void 0 : unsub_1();
-      };
-    }
-    return function () {};
-  }, [obj, isWatchable]);
-  var getSnapshot = (0,react.useCallback)(function () {
-    return isWatchable ? obj.Value : undefined;
-  }, [obj, isWatchable]);
-  return (0,shim.useSyncExternalStore)(subscribe, getSnapshot);
-}
 ;// CONCATENATED MODULE: ../../../renderer/dist/index.js
+
 
 
 
