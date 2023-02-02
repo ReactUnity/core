@@ -1,4 +1,4 @@
-import { createContext, createElement, useContext, useMemo, useRef } from 'react';
+import { createContext, createElement, useContext, useMemo, useState } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
 import { ReactUnity } from '../models/generated';
@@ -82,20 +82,20 @@ export function createDictionaryWatcher<
   if (displayName) ctx.displayName = displayName;
 
 
-  const createSubscriber = (fields?: Prop[], isEqual?: IsEqual) => {
+  const createSubscriber = (fields?: Set<Prop>, isEqual?: IsEqual) => {
     let snapshot: RecordType = ({ ...dictionary }) as any;
 
     return {
       subscribe: (onStoreChange: () => void) => {
         snapshot = ({ ...dictionary }) as any;
 
-        const remove = dictionary?.AddListener((key, value, dic) => {
+        const remove = dictionary?.AddListener(() => {
           const prev = snapshot;
           snapshot = ({ ...dictionary }) as any;
 
           if (!fields) onStoreChange();
           else {
-            for (const field of fields) {
+            for (var it = fields.values(), field = null; field = it.next().value;) {
               if (isEqual ? !isEqual(prev[field], snapshot[field]) : (prev[field] !== snapshot[field])) {
                 onStoreChange();
                 break;
@@ -132,15 +132,29 @@ export function createDictionaryWatcher<
   }
 
   function useValue(subscribeToAllFields = false, fieldEqual?: IsEqual) {
-    const fields = useRef<Prop[]>([]);
-    const subscriber = useMemo(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fields.current, fieldEqual), [subscribeToAllFields, fieldEqual]);
+    const fields = useMemo(() => new Set<Prop>(), []);
+    const [allFieldsSubscribed, setAllFieldsSubscribed] = useState(false);
+    subscribeToAllFields ||= allFieldsSubscribed;
+    const subscriber = useMemo(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fields, fieldEqual), [subscribeToAllFields, fieldEqual]);
     const value: any = useSyncExternalStore(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
 
     const proxy = new Proxy(value, {
       get(target, p, receiver) {
-        fields.current.push(p);
+        fields.add(p);
         return value[p];
       },
+      ownKeys(target) {
+        if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
+        return Reflect.ownKeys(target);
+      },
+      getOwnPropertyDescriptor(target, p) {
+        fields.add(p);
+
+        return {
+          ...Reflect.getOwnPropertyDescriptor(target, p),
+          value: value[p],
+        };
+      }
     });
 
     return proxy as RecordType;

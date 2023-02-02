@@ -13,7 +13,7 @@ function createSubscriber<T>(obj: ReactUnity.Helpers.IWatchable<T>, isEqual?: Is
       snapshot = isWatchable ? obj.Value : undefined;
 
       const remove = isWatchable && typeof obj.AddListener === 'function' &&
-        obj?.AddListener((key, value, dic) => {
+        obj?.AddListener(() => {
           const prev = snapshot;
           snapshot = isWatchable ? obj.Value : undefined;
 
