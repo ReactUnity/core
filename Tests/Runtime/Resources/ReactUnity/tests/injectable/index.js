@@ -9271,7 +9271,7 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.2';
+var version = '0.14.3';
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -12303,12 +12303,11 @@ function createDictionaryWatcher(dictionary, displayName) {
     return {
       subscribe: function subscribe(onStoreChange) {
         snapshot = dictionary_watcher_assign({}, dictionary);
-        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function () {
           var prev = snapshot;
           snapshot = dictionary_watcher_assign({}, dictionary);
           if (!fields) onStoreChange();else {
-            for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
-              var field = fields_1[_i];
+            for (var it = fields.values(), field = null; field = it.next().value;) {
               if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
                 onStoreChange();
                 break;
@@ -12347,15 +12346,31 @@ function createDictionaryWatcher(dictionary, displayName) {
     if (subscribeToAllFields === void 0) {
       subscribeToAllFields = false;
     }
-    var fields = (0,react.useRef)([]);
+    var fields = (0,react.useMemo)(function () {
+      return new Set();
+    }, []);
+    var _a = (0,react.useState)(false),
+      allFieldsSubscribed = _a[0],
+      setAllFieldsSubscribed = _a[1];
+    subscribeToAllFields || (subscribeToAllFields = allFieldsSubscribed);
     var subscriber = (0,react.useMemo)(function () {
-      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fields.current, fieldEqual);
+      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fields, fieldEqual);
     }, [subscribeToAllFields, fieldEqual]);
     var value = (0,shim.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
     var proxy = new Proxy(value, {
       get: function get(target, p, receiver) {
-        fields.current.push(p);
+        fields.add(p);
         return value[p];
+      },
+      ownKeys: function ownKeys(target) {
+        if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
+        return Reflect.ownKeys(target);
+      },
+      getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, p) {
+        fields.add(p);
+        return dictionary_watcher_assign(dictionary_watcher_assign({}, Reflect.getOwnPropertyDescriptor(target, p)), {
+          value: value[p]
+        });
       }
     });
     return proxy;
@@ -12387,7 +12402,7 @@ function createSubscriber(obj, isEqual) {
   return {
     subscribe: function subscribe(onStoreChange) {
       snapshot = isWatchable ? obj.Value : undefined;
-      var remove = isWatchable && typeof obj.AddListener === 'function' && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function (key, value, dic) {
+      var remove = isWatchable && typeof obj.AddListener === 'function' && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function () {
         var prev = snapshot;
         snapshot = isWatchable ? obj.Value : undefined;
         if (typeof isEqual !== 'function' || !isEqual(prev, snapshot)) {

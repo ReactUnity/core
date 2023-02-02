@@ -13,7 +13,7 @@ namespace ReactUnity.Tests
             }
 
             function App() {
-                const { list, ...globals } = ReactUnity.useGlobals(true);
+                const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
                     <button {...globals}
                         onClick={() => addEvent('click')}
@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
             }
 
             function App() {
-                const { list, ...globals } = ReactUnity.useGlobals(true);
+                const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
                     <anchor {...globals}
                         onClick={() => addEvent('click')}

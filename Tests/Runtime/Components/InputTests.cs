@@ -16,7 +16,7 @@ namespace ReactUnity.Tests
             }
 
             function App() {
-                const { list, ...globals } = ReactUnity.useGlobals(true);
+                const { list, ...globals } = ReactUnity.useGlobals();
                 return <>
                     <input {...globals}
                         onEndEdit={() => addEvent('endEdit')}
