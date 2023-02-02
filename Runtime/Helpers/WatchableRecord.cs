@@ -14,7 +14,7 @@ using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTabl
 namespace ReactUnity.Helpers
 {
     [UnityEngine.Scripting.Preserve]
-    public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable, IWatchable<WatchableDictionary<TKey, T>>
+    public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable, IWatchable<Dictionary<TKey, T>>
     {
         protected Dictionary<TKey, T> collection;
 
@@ -48,7 +48,7 @@ namespace ReactUnity.Helpers
 
         public bool IsReadOnly => false;
 
-        public WatchableDictionary<TKey, T> Value => this;
+        Dictionary<TKey, T> IWatchable<Dictionary<TKey, T>>.Value => collection;
 
         public void Add(TKey key, T value)
         {
