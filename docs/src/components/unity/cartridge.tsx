@@ -7,8 +7,9 @@ import styles from './index.module.scss';
 
 interface Props {
   script?: string | null;
-  style?: string | null;
+  css?: string | null;
   className?: string;
+  style?: React.CSSProperties;
   autoActivate?: boolean;
   hideActivateButton?: boolean;
 }
@@ -19,14 +20,20 @@ export interface UnityCardridgeRef {
 }
 
 export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
-  function UnityCardridge({ script, style, className, hideActivateButton, autoActivate = true }, ref) {
+  function UnityCardridge(
+    { script, css, style, className, hideActivateButton, autoActivate = true },
+    ref
+  ) {
     const latestScript = React.useRef(script);
-    const latestStyle = React.useRef(style);
+    const latestStyle = React.useRef(css);
 
     const unityContainer = React.useRef<HTMLDivElement | null>(null);
-    const setRef = useCallback((el: HTMLDivElement | null) => {
-      if (el) unityContainer.current = el;
-    }, [unityContainer]);
+    const setRef = useCallback(
+      (el: HTMLDivElement | null) => {
+        if (el) unityContainer.current = el;
+      },
+      [unityContainer]
+    );
     const { instance, insertTo, insertedToRef, setLoaded } = useGlobalUnity();
     useEffect(() => setLoaded(true), [setLoaded]);
 
@@ -36,33 +43,57 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
       return unityContainer.current === insertedToRef.current;
     }, [insertedToRef, unityContainer]);
 
-    const activate = useCallback((reset = false) => {
-      if (unityContainer.current && !isActive())
-        insertTo(unityContainer.current)
+    const activate = useCallback(
+      (reset = false) => {
+        if (unityContainer.current && !isActive())
+          insertTo(unityContainer.current);
 
-      if (reset)
-        instanceRef.current?.SetReactScript(latestScript.current || '', latestStyle.current || '');
-    }, [insertTo, unityContainer, isActive, instanceRef, latestStyle, latestScript]);
+        if (reset)
+          instanceRef.current?.SetReactScript(
+            latestScript.current || '',
+            latestStyle.current || ''
+          );
+      },
+      [
+        insertTo,
+        unityContainer,
+        isActive,
+        instanceRef,
+        latestStyle,
+        latestScript,
+      ]
+    );
 
-    React.useImperativeHandle(ref, () => ({ activate, isActive }), [activate, isActive]);
+    React.useImperativeHandle(ref, () => ({ activate, isActive }), [
+      activate,
+      isActive,
+    ]);
 
     // Set instance style after style changes (except first time)
-    useEffectSkipFirst(() => {
-      latestStyle.current = style;
-      if (autoActivate) {
-        instance?.ReplaceCSS(style || '');
-        activate();
-      }
-    }, [style, instance, autoActivate, activate], () => !instance);
+    useEffectSkipFirst(
+      () => {
+        latestStyle.current = css;
+        if (autoActivate) {
+          instance?.ReplaceCSS(css || '');
+          activate();
+        }
+      },
+      [css, instance, autoActivate, activate],
+      () => !instance
+    );
 
     // Set instance script after script changes (except first time)
-    useEffectSkipFirst(() => {
-      latestScript.current = script;
-      if (autoActivate) {
-        instance?.SetReactScript(script || '', latestStyle.current || '');
-        activate();
-      }
-    }, [script, latestStyle, instance, autoActivate, activate], () => !instance);
+    useEffectSkipFirst(
+      () => {
+        latestScript.current = script;
+        if (autoActivate) {
+          instance?.SetReactScript(script || '', latestStyle.current || '');
+          activate();
+        }
+      },
+      [script, latestStyle, instance, autoActivate, activate],
+      () => !instance
+    );
 
     // Insert cartridge if none is installed yet
     useEffect(() => {
@@ -73,7 +104,8 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
 
       return () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        if (insertedToRef.current === unityContainer.current) insertTo(undefined);
+        if (insertedToRef.current === unityContainer.current)
+          insertTo(undefined);
       };
     }, [insertedToRef, insertTo, activate, unityContainer]);
 
@@ -82,10 +114,12 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
       if (instance && isActive()) activate(true);
     }, [activate, instance, isActive]);
 
-    return <div ref={setRef} className={classNames(className, styles.cartridge)}>
-      {!hideActivateButton && !isActive() &&
-        <button onClick={() => activate(true)}>
-          Show Preview
-        </button>}
-    </div>;
-  });
+    return (
+      <div ref={setRef} style={style} className={classNames(className, styles.cartridge)}>
+        {!hideActivateButton && !isActive() && (
+          <button onClick={() => activate(true)}>Show Preview</button>
+        )}
+      </div>
+    );
+  }
+);

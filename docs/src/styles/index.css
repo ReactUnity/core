@@ -17,7 +17,8 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Lt.woff2') format('woff2');
+    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Lt.woff2')
+      format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -25,7 +26,8 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Md.woff2') format('woff2');
+    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Md.woff2')
+      format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -33,7 +35,8 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Bd.woff2') format('woff2');
+    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Bd.woff2')
+      format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -69,15 +72,14 @@
 
   html,
   body {
-    height: 100%;
     padding: 0;
     margin: 0;
   }
 
-  body,
-  html,
-  #__next {
-    height: 100%;
+  @media screen and (max-width: 1023px) {
+    body {
+      overflow-x: hidden;
+    }
   }
 
   /* Start purging... */
@@ -96,13 +98,13 @@
     }
   }
 
-  a>code {
-    color: #575fb7 !important;
+  a > code {
+    color: #087ea4 !important; /* blue-50 */
     text-decoration: none !important;
   }
 
-  html.dark a>code {
-    color: #6b75db !important;
+  html.dark a > code {
+    color: #149eca !important; /* blue-40 */
   }
 
   .text-code {
@@ -121,7 +123,6 @@
   .text-gradient-electric-blue {
     background-image: linear-gradient(45deg, #61dafb, #0072ff);
   }
-
   /* Stop purging. */
   /* Your own custom utilities */
 
@@ -148,44 +149,35 @@
     max-width: calc(min(700px, 100%));
   }
 
-  @keyframes nav-fadein {
-    from {
-      opacity: 0.5;
-    }
-
-    to {
-      opacity: 1;
-    }
+  summary::-webkit-details-marker {
+    display: none;
   }
 
   /*
-    * Hopefully when scrollbar-color lands everywhere,
-    * (and not just in FF), we'll be able to keep just this.
-    */
+   * Hopefully when scrollbar-color lands everywhere,
+   * (and not just in FF), we'll be able to keep just this.
+   */
   html .no-bg-scrollbar {
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
   }
-
   html.dark .no-bg-scrollbar {
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
   }
-
   /*
-    * Until then, we have ... this.
-    * If you're changing this, make sure you've tested:
-    * - Different browsers (Chrome, Safari, FF)
-    * - Dark and light modes
-    * - System scrollbar settings ("always on" vs "when scrolling")
-    * - Switching between modes should never jump width
-    * - When you interact with a sidebar, it should always be visible
-    * - For each combination, test overflowing and non-overflowing sidebar
-    * I've spent hours picking these so I expect no less diligence from you.
-    */
+   * Until then, we have ... this.
+   * If you're changing this, make sure you've tested:
+   * - Different browsers (Chrome, Safari, FF)
+   * - Dark and light modes
+   * - System scrollbar settings ("always on" vs "when scrolling")
+   * - Switching between modes should never jump width
+   * - When you interact with a sidebar, it should always be visible
+   * - For each combination, test overflowing and non-overflowing sidebar
+   * I've spent hours picking these so I expect no less diligence from you.
+   */
   html .no-bg-scrollbar::-webkit-scrollbar,
   html .no-bg-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;
   }
-
   html .no-bg-scrollbar:hover::-webkit-scrollbar-thumb,
   html .no-bg-scrollbar:focus::-webkit-scrollbar-thumb,
   html .no-bg-scrollbar:focus-within::-webkit-scrollbar-thumb,
@@ -195,19 +187,16 @@
     background-clip: content-box;
     border-radius: 10px;
   }
-
   html .no-bg-scrollbar::-webkit-scrollbar-thumb:hover,
   html .no-bg-scrollbar::-webkit-scrollbar-thumb:active {
     background-color: rgba(0, 0, 0, 0.35) !important;
   }
-
   html.dark .no-bg-scrollbar:hover::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:focus::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:focus-within::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:active::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
   }
-
   html.dark .no-bg-scrollbar::-webkit-scrollbar-thumb:hover,
   html.dark .no-bg-scrollbar::-webkit-scrollbar-thumb:active {
     background-color: rgba(255, 255, 255, 0.35) !important;
@@ -215,22 +204,27 @@
 }
 
 .code-step * {
-  color: black !important;
+  color: inherit !important;
 }
 
 .code-step code {
   background: none !important;
   padding: 2px !important;
 }
-
 html.dark .code-step * {
-  color: white !important;
+  color: inherit !important;
 }
 
 .mdx-heading {
-  scroll-margin-top: 2.5em;
+  scroll-margin-top: 3.5em;
   /* Space for the anchor */
   padding-right: 1em;
+}
+
+@media (min-width: 1024px) {
+  .mdx-heading {
+    scroll-margin-top: 1em;
+  }
 }
 
 .mdx-heading:before {
@@ -239,38 +233,31 @@ html.dark .code-step * {
   visibility: hidden;
   content: '';
 }
-
 .mdx-heading .mdx-header-anchor {
   /* Prevent the anchor from
-      overflowing to its own line */
+     overflowing to its own line */
   height: 0px;
   width: 0px;
 }
-
 .mdx-heading .mdx-header-anchor svg {
   display: inline;
 }
-
 .mdx-heading .mdx-header-anchor svg {
   visibility: hidden;
 }
-
 .mdx-heading:hover .mdx-header-anchor svg {
   visibility: visible;
 }
-
 .mdx-heading .mdx-header-anchor:focus svg {
   visibility: visible;
 }
 
-.mdx-blockquote>span>p:first-of-type {
+.mdx-blockquote > span > p:first-of-type {
   margin-bottom: 0;
 }
-
-.mdx-blockquote>span>p:last-of-type {
+.mdx-blockquote > span > p:last-of-type {
   margin-bottom: 1rem;
 }
-
 .mdx-illustration-block {
   display: flex;
   flex-direction: row;
@@ -280,11 +267,9 @@ html.dark .code-step * {
   align-items: stretch;
   gap: 42px;
 }
-
 ol.mdx-illustration-block {
   gap: 60px;
 }
-
 .mdx-illustration-block li {
   display: flex;
   align-items: flex-start;
@@ -293,7 +278,6 @@ ol.mdx-illustration-block {
   position: relative;
   padding: 1rem;
 }
-
 .mdx-illustration-block figure {
   display: flex;
   flex-direction: column;
@@ -304,7 +288,6 @@ ol.mdx-illustration-block {
   position: relative;
   height: 100%;
 }
-
 .mdx-illustration-block li:after {
   content: ' ';
   display: block;
@@ -316,27 +299,22 @@ ol.mdx-illustration-block {
   height: 49px;
   background: center / contain no-repeat url('/images/g_arrow.png');
 }
-
 .mdx-illustration-block li:first-child:after {
   content: ' ';
   display: none;
 }
-
 .mdx-illustration-block img {
   max-height: 250px;
   width: 100%;
 }
-
 @media (max-width: 680px) {
   .mdx-illustration-block {
     flex-direction: column;
   }
-
   .mdx-illustration-block img {
     max-height: 200px;
     width: auto;
   }
-
   .mdx-illustration-block li:after {
     top: 0;
     left: 50%;

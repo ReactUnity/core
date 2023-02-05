@@ -11,11 +11,14 @@ export function usePromise<T = any>(pr: PromiseLike<T>): T | undefined;
  * @param defaultValue Before promise completes, this value will be used
  */
 export function usePromise<T = any>(pr: PromiseLike<T>, defaultValue: T): T;
-export function usePromise<T = any>(pr: PromiseLike<T>, defaultValue?: T): T | undefined {
+export function usePromise<T = any>(
+  pr: PromiseLike<T>,
+  defaultValue?: T
+): T | undefined {
   const [val, setVal] = useState<T | undefined>(defaultValue);
 
   useEffect(() => {
-    pr?.then(x => setVal(x));
+    pr?.then((x) => setVal(x));
   }, [pr]);
 
   return val;
@@ -26,7 +29,10 @@ export function usePromise<T = any>(pr: PromiseLike<T>, defaultValue?: T): T | u
  * @param deps If present, observable will be re-created when the values in the list change.
  * @returns The value emited from the created observable
  */
-export function useObservable<ResType>(callback: () => Observable<ResType>, deps?: DependencyList): ResType | undefined;
+export function useObservable<ResType>(
+  callback: () => Observable<ResType>,
+  deps?: DependencyList
+): ResType | undefined;
 
 /**
  * @param callback Callback which creates the observable to be subscribed
@@ -34,14 +40,22 @@ export function useObservable<ResType>(callback: () => Observable<ResType>, deps
  * @param initialValue Before observable emits any value, this value will be used
  * @returns The value emited from the created observable
  */
-export function useObservable<ResType>(callback: () => Observable<ResType>, deps: DependencyList, initialValue: ResType): ResType;
+export function useObservable<ResType>(
+  callback: () => Observable<ResType>,
+  deps: DependencyList,
+  initialValue: ResType
+): ResType;
 
-export function useObservable<ResType>(callback: () => Observable<ResType>, deps?: DependencyList, initialValue?: ResType) {
+export function useObservable<ResType>(
+  callback: () => Observable<ResType>,
+  deps?: DependencyList,
+  initialValue?: ResType
+) {
   const [state, setState] = useState(initialValue);
 
   useEffect(() => {
     const obs = callback();
-    const sub = obs.subscribe(x => setState(x));
+    const sub = obs.subscribe((x) => setState(x));
     return () => sub.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps || []);

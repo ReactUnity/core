@@ -2,20 +2,20 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import { memo } from 'react';
 import cn from 'classnames';
-import * as React from 'react';
 
-export const IconChevron = React.memo<
+export const IconChevron = memo<
   JSX.IntrinsicElements['svg'] & {
     displayDirection: 'up' | 'down' | 'left' | 'right';
   }
->(function IconChevron({ className, displayDirection, ...rest }) {
+>(function IconChevron({ className, displayDirection }) {
   const classes = cn(
     {
-      'transform rotate-0': displayDirection === 'down',
-      'transform rotate-90': displayDirection === 'left',
-      'transform rotate-180': displayDirection === 'up',
-      'transform -rotate-90': displayDirection === 'right',
+      'rotate-0': displayDirection === 'down',
+      'rotate-90': displayDirection === 'left',
+      'rotate-180': displayDirection === 'up',
+      '-rotate-90': displayDirection === 'right',
     },
     className
   );
@@ -38,5 +38,3 @@ export const IconChevron = React.memo<
     </svg>
   );
 });
-
-IconChevron.displayName = 'IconChevron';

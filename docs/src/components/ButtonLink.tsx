@@ -4,7 +4,6 @@
 
 import cn from 'classnames';
 import NextLink from 'next/link';
-import * as React from 'react';
 
 interface ButtonLinkProps {
   size?: 'md' | 'lg';

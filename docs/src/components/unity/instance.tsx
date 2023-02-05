@@ -1,10 +1,14 @@
-
 import cn from 'classnames';
 import Head from 'next/head';
 import { LegacyRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from './index.module.scss';
-import { defaultUnityInstanceName, isLoaderScriptLoaded, UnityAPI, UnityInstance } from './types';
+import {
+  defaultUnityInstanceName,
+  isLoaderScriptLoaded,
+  UnityAPI,
+  UnityInstance,
+} from './types';
 
 interface Props {
   className?: string;
@@ -13,46 +17,69 @@ interface Props {
   unityRef?: (unityInstance: UnityAPI | undefined) => void;
 }
 
-export function Unity({ className, sampleName = defaultUnityInstanceName, unityRef, innerRef }: Props) {
+export function Unity({
+  className,
+  sampleName = defaultUnityInstanceName,
+  unityRef,
+  innerRef,
+}: Props) {
   const [progress, setProgress] = useState(0);
   const [scriptLoaded, setScriptLoaded] = useState(isLoaderScriptLoaded());
   const [unityInstance, setUnityInstance] = useState<UnityAPI>();
 
-  const id = useMemo(() => `unity-canvas-ref-${Math.round(Math.random() * 10000)}`, []);
+  const id = useMemo(
+    () => `unity-canvas-ref-${Math.round(Math.random() * 10000)}`,
+    []
+  );
 
   const portal = useMemo(() => {
-    return createPortal(<div style={{ width: 0, height: 0 }} id={id} />, document.body, id);
-  }, [id])
+    return createPortal(
+      <div style={{ width: 0, height: 0 }} id={id} />,
+      document.body,
+      id
+    );
+  }, [id]);
 
-  const setCanvasRef = useCallback(async (canvas: HTMLCanvasElement | null) => {
-    if (!canvas || !scriptLoaded) { return; }
+  const setCanvasRef = useCallback(
+    async (canvas: HTMLCanvasElement | null) => {
+      if (!canvas || !scriptLoaded) {
+        return;
+      }
 
-    const unityInstance: UnityInstance = await global.createUnityInstance(canvas, {
-      dataUrl: `/Unity/${sampleName}/Build/WebInjectable.data`,
-      frameworkUrl: `/Unity/${sampleName}/Build/WebInjectable.framework.js`,
-      codeUrl: `/Unity/${sampleName}/Build/WebInjectable.wasm`,
-      streamingAssetsUrl: 'StreamingAssets',
-      companyName: 'reactunity',
-      productName: sampleName,
-      productVersion: '0.1',
-    }, setProgress);
+      const unityInstance: UnityInstance = await global.createUnityInstance(
+        canvas,
+        {
+          dataUrl: `/Unity/${sampleName}/Build/WebInjectable.data`,
+          frameworkUrl: `/Unity/${sampleName}/Build/WebInjectable.framework.js`,
+          codeUrl: `/Unity/${sampleName}/Build/WebInjectable.wasm`,
+          streamingAssetsUrl: 'StreamingAssets',
+          companyName: 'reactunity',
+          productName: sampleName,
+          productVersion: '0.1',
+        },
+        setProgress
+      );
 
-    setUnityInstance({
-      SendMessage: unityInstance.SendMessage.bind(unityInstance),
-      SetFullscreen: unityInstance.SetFullscreen.bind(unityInstance),
-      Quit: unityInstance.Quit.bind(unityInstance),
-      SetReactScript: (jsx, css) => {
-        unityInstance.SendMessage('ReactCanvas', 'SetJSX', jsx);
-        if (css) unityInstance.SendMessage('ReactCanvas', 'SetCSS', css);
-        unityInstance.SendMessage('ReactCanvas', 'RenderBridge');
-      },
-      ReplaceCSS: (css) => {
-        unityInstance.SendMessage('ReactCanvas', 'ReplaceCSS', css);
-      },
-      LoadScene: (sceneName) => unityInstance.SendMessage('ReactCanvas', 'LoadScene', sceneName),
-      ReloadScene: () => unityInstance.SendMessage('ReactCanvas', 'ReloadScene'),
-    });
-  }, [sampleName, scriptLoaded, setUnityInstance]);
+      setUnityInstance({
+        SendMessage: unityInstance.SendMessage.bind(unityInstance),
+        SetFullscreen: unityInstance.SetFullscreen.bind(unityInstance),
+        Quit: unityInstance.Quit.bind(unityInstance),
+        SetReactScript: (jsx, css) => {
+          unityInstance.SendMessage('ReactCanvas', 'SetJSX', jsx);
+          if (css) unityInstance.SendMessage('ReactCanvas', 'SetCSS', css);
+          unityInstance.SendMessage('ReactCanvas', 'RenderBridge');
+        },
+        ReplaceCSS: (css) => {
+          unityInstance.SendMessage('ReactCanvas', 'ReplaceCSS', css);
+        },
+        LoadScene: (sceneName) =>
+          unityInstance.SendMessage('ReactCanvas', 'LoadScene', sceneName),
+        ReloadScene: () =>
+          unityInstance.SendMessage('ReactCanvas', 'ReloadScene'),
+      });
+    },
+    [sampleName, scriptLoaded, setUnityInstance]
+  );
 
   useEffect(() => {
     unityRef?.(unityInstance);
@@ -77,21 +104,31 @@ export function Unity({ className, sampleName = defaultUnityInstanceName, unityR
     };
   }, [unityInstance]);
 
-  return <>
-    <Head>
-      <script src="/Unity/injectable/Build/WebInjectable.loader.js" async />
-    </Head>
+  return (
+    <>
+      <Head>
+        <script src="/Unity/injectable/Build/WebInjectable.loader.js" async />
+      </Head>
 
-    <div className={cn(className, style.host, 'unity')} ref={innerRef}>
-      <canvas id={id} className={style.canvas} ref={setCanvasRef} tabIndex={-1} />
+      <div className={cn(className, style.host, 'unity')} ref={innerRef}>
+        <canvas
+          id={id}
+          className={style.canvas}
+          ref={setCanvasRef}
+          tabIndex={-1}
+        />
 
-      {progress < 1 &&
-        <div className={style.progress}>
-          <div className={style.spinner}></div>
-          <div className={style.progressBar} style={{ paddingRight: ((1 - progress) * 80) + '%' }}></div>
-        </div>}
-    </div>
+        {progress < 1 && (
+          <div className={style.progress}>
+            <div className={style.spinner}></div>
+            <div
+              className={style.progressBar}
+              style={{ paddingRight: (1 - progress) * 80 + '%' }}></div>
+          </div>
+        )}
+      </div>
 
-    {portal}
-  </>;
+      {portal}
+    </>
+  );
 }

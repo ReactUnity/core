@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          NEXT_PUBLIC_GA_ID: ${{ secrets.ANALYTICS_ID }}
+          NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1

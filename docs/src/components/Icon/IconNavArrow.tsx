@@ -2,20 +2,20 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import { memo } from 'react';
 import cn from 'classnames';
-import * as React from 'react';
 
-export const IconNavArrow = React.memo<
+export const IconNavArrow = memo<
   JSX.IntrinsicElements['svg'] & {
     displayDirection: 'right' | 'down' | 'left';
   }
->(function IconNavArrow({ displayDirection = 'right', className, ...rest }) {
+>(function IconNavArrow({ displayDirection = 'right', className }) {
   const classes = cn(
     'duration-100 ease-in transition',
     {
-      'transform rotate-0': displayDirection === 'down',
-      'transform -rotate-90': displayDirection === 'right',
-      'transform rotate-90': displayDirection === 'left',
+      'rotate-0': displayDirection === 'down',
+      '-rotate-90': displayDirection === 'right',
+      'rotate-90': displayDirection === 'left',
     },
     className
   );
@@ -40,5 +40,3 @@ export const IconNavArrow = React.memo<
     </svg>
   );
 });
-
-IconNavArrow.displayName = 'IconNavArrow';

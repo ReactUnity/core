@@ -1,6 +1,9 @@
-
 export interface UnityInstance {
-  SendMessage: (objectName: string, methodName: string, argument?: string | number) => void;
+  SendMessage: (
+    objectName: string,
+    methodName: string,
+    argument?: string | number
+  ) => void;
   SetFullscreen: (toggle: 0 | 1) => void;
   Quit: () => Promise<void>;
 }
@@ -13,7 +16,11 @@ export interface UnityAPI extends UnityInstance {
 }
 
 declare global {
-  function createUnityInstance(canvas: any, props: any, progressCallback: (progress: number) => void): Promise<UnityInstance>;
+  function createUnityInstance(
+    canvas: any,
+    props: any,
+    progressCallback: (progress: number) => void
+  ): Promise<UnityInstance>;
 }
 
 export function isLoaderScriptLoaded() {

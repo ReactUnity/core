@@ -2,9 +2,9 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import * as React from 'react';
 import ButtonLink from 'components/ButtonLink';
 import { IconNavArrow } from 'components/Icon/IconNavArrow';
-import * as React from 'react';
 
 interface YouWillLearnCardProps {
   title: string;
@@ -14,7 +14,7 @@ interface YouWillLearnCardProps {
 
 function YouWillLearnCard({ title, path, children }: YouWillLearnCardProps) {
   return (
-    <div className="flex flex-col h-full bg-card dark:bg-card-dark shadow-inner justify-between rounded-lg pb-8 p-6 xl:p-8">
+    <div className="flex flex-col h-full bg-card dark:bg-card-dark shadow-inner justify-between rounded-lg pb-8 p-6 xl:p-8 mt-3">
       <div>
         <h4 className="text-primary dark:text-primary-dark font-bold text-2xl leading-tight">
           {title}

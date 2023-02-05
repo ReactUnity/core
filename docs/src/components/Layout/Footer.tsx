@@ -6,16 +6,14 @@ import cn from 'classnames';
 import { ExternalLink } from 'components/ExternalLink';
 import NextLink from 'next/link';
 import * as React from 'react';
+import { siteConfig } from 'siteConfig';
 
 export function Footer() {
   return (
     <>
-      <div className="self-stretch w-full sm:pl-0 lg:pl-80 sm:pr-0 2xl:pr-80 pl-0 pr-0">
-        <div className="mx-auto w-full px-5 sm:px-12 md:px-12 pt-10 md:pt-12 lg:pt-10">
-          <hr className="max-w-7xl mx-auto border-border dark:border-border-dark" />
-        </div>
+      <div className="self-stretch w-full">
         <footer className="text-secondary dark:text-secondary-dark py-12 px-5 sm:px-12 md:px-12 sm:py-12 md:py-16 lg:py-14">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-8 max-w-7xl mx-auto ">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 gap-x-12 gap-y-8 max-w-7xl mx-auto ">
             <div className="flex flex-col">
               <FooterLink href="/" isHeader={true}>
                 Community
@@ -29,6 +27,9 @@ export function Footer() {
               <FooterLink href="/acknowledgements">
                 Acknowledgements
               </FooterLink>
+              <FooterLink href={siteConfig.feedbackUrl}>
+                Leave Feedback
+              </FooterLink>
             </div>
             <div className="flex flex-col">
               <FooterLink href="/learn" isHeader={true}>
@@ -41,7 +42,7 @@ export function Footer() {
                 API Reference
               </FooterLink>
               <FooterLink href="/reference">ReactUnity APIs</FooterLink>
-              <FooterLink href="/reference/css">Components</FooterLink>
+              <FooterLink href="/reference/components">Components</FooterLink>
               <FooterLink href="/reference/css">CSS Reference</FooterLink>
               <FooterLink href="/reference/material">Material Design</FooterLink>
             </div>

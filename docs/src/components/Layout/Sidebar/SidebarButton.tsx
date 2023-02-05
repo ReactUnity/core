@@ -2,9 +2,9 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
+import * as React from 'react';
 import cn from 'classnames';
 import { IconNavArrow } from 'components/Icon/IconNavArrow';
-import * as React from 'react';
 
 interface SidebarButtonProps {
   title: string;

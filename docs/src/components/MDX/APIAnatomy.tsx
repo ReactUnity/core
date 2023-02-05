@@ -96,8 +96,6 @@ export function AnatomyStep({
   title,
   stepNumber,
   children,
-  activeStep,
-  handleStepChange,
 }: AnatomyStepProps) {
   const color = colors[stepNumber - 1];
   return (

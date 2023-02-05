@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
 node_modules
 
@@ -27,6 +29,7 @@ node_modules
 # misc
 .DS_Store
 *.pem
+tsconfig.tsbuildinfo
 
 # debug
 npm-debug.log*
@@ -41,3 +44,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# external fonts
+public/fonts/Optimistic_Display_W_Lt.woff2
+public/fonts/Optimistic_Display_W_Md.woff2
+public/fonts/Optimistic_Display_W_Bd.woff2

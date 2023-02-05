@@ -1,0 +1,18 @@
+{
+  "github": {
+    "silent": true
+  },
+  "trailingSlash": false,
+  "redirects": [],
+  "headers": [
+    {
+      "source": "/fonts/(.*).woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

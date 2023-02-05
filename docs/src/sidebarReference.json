@@ -22,6 +22,10 @@
           ]
         },
         {
+          "hasSectionHeader": true,
+          "sectionHeader": "Components"
+        },
+        {
           "title": "Components",
           "path": "/reference/components",
           "routes": [
@@ -72,7 +76,11 @@
           ]
         },
         {
-          "title": "CSS",
+          "hasSectionHeader": true,
+          "sectionHeader": "Styling"
+        },
+        {
+          "title": "CSS Properties",
           "path": "/reference/css",
           "routes": [
             {
@@ -168,6 +176,10 @@
         {
           "title": "CSS Media Queries",
           "path": "/reference/media-queries"
+        },
+        {
+          "hasSectionHeader": true,
+          "sectionHeader": "Mayerial Components"
         },
         {
           "title": "Material Components",

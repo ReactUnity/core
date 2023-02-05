@@ -5,7 +5,7 @@
 import {
   clearAllBodyScrollLocks,
   disableBodyScroll,
-  enableBodyScroll
+  enableBodyScroll,
 } from 'body-scroll-lock';
 import { useRouter } from 'next/router';
 import * as React from 'react';

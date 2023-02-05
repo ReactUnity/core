@@ -2,8 +2,8 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import cn from 'classnames';
 import * as React from 'react';
+import cn from 'classnames';
 import { H3 } from './Heading';
 
 interface SimpleCalloutProps {
