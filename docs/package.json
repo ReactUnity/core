@@ -7,6 +7,7 @@
     "analyze": "ANALYZE=true next build",
     "dev": "next-remote-watch ./src/content",
     "build": "next build && node ./scripts/downloadFonts.js",
+    "export": "next export",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format:source": "prettier --config .prettierrc --write \"{plugins,src}/**/*.{js,ts,jsx,tsx,css}\"",

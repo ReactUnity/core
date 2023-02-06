@@ -14,6 +14,9 @@ const nextConfig = {
     legacyBrowsers: false,
     browsersListForSwc: true,
   },
+  images: {
+    unoptimized: true,
+  },
   env: {
     SANDPACK_BARE_COMPONENTS: process.env.SANDPACK_BARE_COMPONENTS,
   },
