@@ -163,6 +163,11 @@ namespace ReactUnity.Helpers
         {
             var callback = Callback.From(cb);
             var listener = new Action<HashSet<T>>((val) => callback.Call(val));
+            return AddListener(listener);
+        }
+
+        public Action AddListener(Action<HashSet<T>> listener)
+        {
             changed += listener;
             return () => changed -= listener;
         }

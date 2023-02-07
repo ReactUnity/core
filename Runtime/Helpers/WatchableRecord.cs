@@ -124,9 +124,15 @@ namespace ReactUnity.Helpers
         public Action AddListener(object cb)
         {
             var callback = Callback.From(cb);
-            var listener = new Action<TKey, T, WatchableDictionary<TKey, T>>((key, value, dc) => callback.Call(key, value, dc));
-            changed += listener;
-            return () => changed -= listener;
+            var listener = new Action<Dictionary<TKey, T>>((dc) => callback.Call(dc));
+            return AddListener(listener);
+        }
+
+        public Action AddListener(Action<Dictionary<TKey, T>> listener)
+        {
+            var cb = new Action<TKey, T, WatchableDictionary<TKey, T>>((key, value, dc) => listener.Invoke(dc.collection));
+            changed += cb;
+            return () => changed -= cb;
         }
 
         public Action AddListener(Action<TKey, T, WatchableDictionary<TKey, T>> listener)

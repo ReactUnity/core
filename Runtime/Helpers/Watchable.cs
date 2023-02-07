@@ -7,6 +7,7 @@ namespace ReactUnity.Helpers
         T Value { get; }
         void Change();
         Action AddListener(object cb);
+        Action AddListener(Action<T> listener);
     }
 
 
@@ -42,6 +43,11 @@ namespace ReactUnity.Helpers
         {
             var callback = Callback.From(cb);
             var listener = new Action<T>((val) => callback.Call(val));
+            return AddListener(listener);
+        }
+
+        public Action AddListener(Action<T> listener)
+        {
             changed += listener;
             return () => changed -= listener;
         }

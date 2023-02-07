@@ -100,6 +100,11 @@ namespace ReactUnity.Helpers
         {
             var callback = Callback.From(cb);
             var listener = new Action<IList<T>>((val) => callback.Call(val));
+            return AddListener(listener);
+        }
+
+        public Action AddListener(Action<IList<T>> listener)
+        {
             changed += listener;
             return () => changed -= listener;
         }
