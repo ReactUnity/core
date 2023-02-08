@@ -2,9 +2,9 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import * as React from 'react';
 import Head from 'next/head';
-import { withRouter, Router } from 'next/router';
+import { Router, withRouter } from 'next/router';
+import * as React from 'react';
 
 export interface SeoProps {
   title: string;
@@ -17,8 +17,8 @@ export interface SeoProps {
 
 export const Seo = withRouter(
   ({
-    title,
-    description = 'A JavaScript library for building user interfaces',
+    title = 'ReactUnity',
+    description = 'A JavaScript library for building user interfaces in Unity',
     image = '/logo-og.png',
     router,
     children,
@@ -86,10 +86,10 @@ export const Seo = withRouter(
         key="twitter:image"
         content={`https://beta.reactjs.org${image}`}
       />
-      <meta
+      {/* <meta
         name="google-site-verification"
         content="j1duf8XRaKuZyGvhPd8GkYXHG7LI4GYbIvAXBsqTC9U"
-      />
+      /> */}
       <link
         rel="preload"
         href="/fonts/Source-Code-Pro-Regular.woff2"

@@ -47,13 +47,7 @@ const thumbsDownIcon = (
 function sendGAEvent(isPositive: boolean) {
   // Fragile. Don't change unless you've tested the network payload
   // and verified that the right events actually show up in GA.
-  window.gtag(
-    'event',
-    'feedback',
-    {
-      value: isPositive ? 1 : 0,
-    }
-  );
+  window.gtag?.('event', 'feedback', { value: isPositive ? 1 : 0 });
 }
 
 function SendFeedback({ onSubmit }: { onSubmit: () => void }) {

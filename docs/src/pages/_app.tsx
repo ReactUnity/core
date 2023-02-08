@@ -34,7 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       const cleanedUrl = url.split(/[\?\#]/)[0];
-      window.gtag('config', GA_TRACKING_ID, { page_path: cleanedUrl });
+      window.gtag?.('config', GA_TRACKING_ID, { page_path: cleanedUrl });
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
