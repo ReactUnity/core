@@ -3,7 +3,6 @@
  */
 
 import { Head, Html, Main, NextScript } from 'next/document';
-import { AnalyticsScript } from 'utils/analytics';
 
 const MyDocument = () => {
   //  @todo specify language in HTML?
@@ -56,7 +55,6 @@ const MyDocument = () => {
         />
         <Main />
         <NextScript />
-        <AnalyticsScript />
       </body>
     </Html>
   );

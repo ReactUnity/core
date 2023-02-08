@@ -5,7 +5,7 @@
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { GA_TRACKING_ID } from '../utils/analytics';
+import { AnalyticsScript, GA_TRACKING_ID } from '../utils/analytics';
 
 import '@docsearch/css';
 import { GlobalUnityProvider } from 'components/unity';
@@ -45,6 +45,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GlobalUnityProvider>
       <Component {...pageProps} />
+      <AnalyticsScript />
     </GlobalUnityProvider>
   );
 }
