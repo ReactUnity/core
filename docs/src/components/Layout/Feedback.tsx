@@ -2,11 +2,10 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ga } from '../../utils/analytics';
+import { useState } from 'react';
 
-export function Feedback({ onSubmit = () => {} }: { onSubmit?: () => void }) {
+export function Feedback({ onSubmit = () => { } }: { onSubmit?: () => void }) {
   const { asPath } = useRouter();
   const cleanedPath = asPath.split(/[\?\#]/)[0];
   // Reset on route changes.
@@ -48,13 +47,12 @@ const thumbsDownIcon = (
 function sendGAEvent(isPositive: boolean) {
   // Fragile. Don't change unless you've tested the network payload
   // and verified that the right events actually show up in GA.
-  ga(
-    'send',
+  window.gtag(
     'event',
-    'button',
     'feedback',
-    window.location.pathname,
-    isPositive ? '1' : '0'
+    {
+      value: isPositive ? 1 : 0,
+    }
   );
 }
 

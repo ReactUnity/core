@@ -5,23 +5,13 @@
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { ga } from '../utils/analytics';
+import { GA_TRACKING_ID } from '../utils/analytics';
 
 import '@docsearch/css';
 import { GlobalUnityProvider } from 'components/unity';
 import '../styles/algolia.css';
 import '../styles/index.css';
 import '../styles/sandpack.css';
-
-if (typeof window !== 'undefined') {
-  if (process.env.NODE_ENV === 'production') {
-    ga('create', process.env.NEXT_PUBLIC_GA_TRACKING_ID, 'auto');
-  }
-  const terminationEvent = 'onpagehide' in window ? 'pagehide' : 'unload';
-  window.addEventListener(terminationEvent, function () {
-    ga('send', 'timing', 'JS Dependencies', 'unload');
-  });
-}
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -44,8 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       const cleanedUrl = url.split(/[\?\#]/)[0];
-      ga('set', 'page', cleanedUrl);
-      ga('send', 'pageview');
+      window.gtag('config', GA_TRACKING_ID, { page_path: cleanedUrl });
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
