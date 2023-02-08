@@ -3,30 +3,13 @@
  */
 
 import { Head, Html, Main, NextScript } from 'next/document';
-import Script from 'next/script';
-import { GA_TRACKING_ID } from 'utils/analytics';
+import { AnalyticsScript } from 'utils/analytics';
 
 const MyDocument = () => {
   //  @todo specify language in HTML?
   return (
     <Html lang="en">
-      <Head>
-        {!!GA_TRACKING_ID && <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){window.dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', '${GA_TRACKING_ID}');
-            `}
-          </Script>
-        </>}
-      </Head>
+      <Head />
       <body className="font-sans antialiased text-lg bg-wash dark:bg-wash-dark text-secondary dark:text-secondary-dark leading-base">
         <script
           dangerouslySetInnerHTML={{
@@ -73,6 +56,7 @@ const MyDocument = () => {
         />
         <Main />
         <NextScript />
+        <AnalyticsScript />
       </body>
     </Html>
   );
