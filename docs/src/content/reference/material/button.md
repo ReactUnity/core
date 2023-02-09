@@ -3,6 +3,8 @@ title: Button
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active

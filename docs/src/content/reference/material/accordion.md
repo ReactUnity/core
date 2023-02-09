@@ -3,6 +3,8 @@ title: Accordion
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active

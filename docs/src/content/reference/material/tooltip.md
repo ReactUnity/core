@@ -3,6 +3,8 @@ title: Tooltip
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active

@@ -3,6 +3,8 @@ title: Paper
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active

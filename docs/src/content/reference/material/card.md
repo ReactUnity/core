@@ -3,6 +3,8 @@ title: Card
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active

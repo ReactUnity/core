@@ -3,6 +3,8 @@ title: Slider
 layout: API
 ---
 
+<></>
+
 <Sandpack>
 
 ```js App.js active
