@@ -318,8 +318,8 @@ namespace Facebook.Yoga
         public static extern float YGNodeStyleGetBorder(YGNodeHandle node, YogaEdge edge);
 
 #if YOGA_LEGACY
-        public static void YGNodeStyleSetGap(YGNodeHandle node, YogaGap gap, float position) { }
-        public static float YGNodeStyleGetGap(YGNodeHandle node, YogaGap gap) { return 0f; }
+        public static void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gap, float position) { }
+        public static float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gap) { return 0f; }
 #else
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gap, float position);

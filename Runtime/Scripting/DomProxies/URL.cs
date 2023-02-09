@@ -8,16 +8,23 @@ namespace ReactUnity.Scripting.DomProxies
     {
         private static string[] PathSplitArray = new string[] { "/" };
 
-        public string href { get; }
-        public string protocol { get; }
-        public string hostname { get; }
-        public string origin { get; }
-        public string host { get; }
-        public string port { get; }
-        public string search { get; }
-        public string hash { get; }
-        public string pathname { get; }
-        public string rawPathname { get; }
+        public string baseUrl { get; protected set; }
+
+        string _href;
+        public string href
+        {
+            get => _href;
+            set => SetHref(value);
+        }
+        public string protocol { get; protected set; }
+        public string hostname { get; protected set; }
+        public string origin { get; protected set; }
+        public string host { get; protected set; }
+        public string port { get; protected set; }
+        public string search { get; protected set; }
+        public string hash { get; protected set; }
+        public string pathname { get; protected set; }
+        public string rawPathname { get; protected set; }
 
 
         public URL(string url) : this(url, null)
@@ -25,6 +32,12 @@ namespace ReactUnity.Scripting.DomProxies
         }
 
         public URL(string url, string baseUrl)
+        {
+            this.baseUrl = baseUrl;
+            SetHref(url);
+        }
+
+        protected void SetHref(string url)
         {
             string href;
 
@@ -103,7 +116,7 @@ namespace ReactUnity.Scripting.DomProxies
 
             var newHref = (origin ?? "") + pathName + search + hash;
 
-            this.href = newHref;
+            this._href = newHref;
             this.protocol = protocol;
             this.hostname = hostName;
             this.origin = origin;
