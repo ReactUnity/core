@@ -250,6 +250,7 @@ const UnityJSBPlugin: PluginType = {
         deleteRecord(id) {
           const rec = record[id];
           delete record[id];
+          res.clearPayload(rec.value);
           map.delete(rec.value);
         },
         payloadMap,
@@ -380,6 +381,7 @@ const UnityJSBPlugin: PluginType = {
       id,
       contexts: {},
       refs,
+      isDestroyed: false,
       garbageCollect() {
         const lastId = refs.lastId;
         const record = refs.record;
@@ -430,10 +432,11 @@ const UnityJSBPlugin: PluginType = {
       const ctxId = ctxIds[index];
       const context = runtime.contexts[ctxId];
       context.free();
-
     }
 
     const aliveItemCount = runtime.garbageCollect();
+
+    runtime.isDestroyed = true;
     delete unityJsbState.runtimes[runtime.id];
 
     return aliveItemCount === 0;
@@ -462,6 +465,43 @@ const UnityJSBPlugin: PluginType = {
 
     let baseTag: HTMLBaseElement = null;
 
+
+    // #region Promise monkey patch
+
+    // This patches the Promise so that microtasks are not run after the context is destroyed
+
+    const Promise = contentWindow.Promise;
+    const originalThen = Promise.prototype.then;
+    const originalCatch = Promise.prototype.catch;
+    const originalFinally = Promise.prototype.finally;
+
+    Promise.prototype.then = function promiseThenPatch(onFulfilled, onRejected) {
+      return originalThen.call(
+        this,
+        !onFulfilled ? undefined : function onFulfilledPatch() { if (!context.isDestroyed) return onFulfilled.apply(this, arguments); },
+        !onRejected ? undefined : function onRejectedPatch() { if (!context.isDestroyed) return onRejected.apply(this, arguments); },
+      );
+    };
+
+    Promise.prototype.catch = function promiseCatchPatch(onRejected) {
+      return originalCatch.call(
+        this,
+        !onRejected ? undefined : function onRejectedPatch() { if (!context.isDestroyed) return onRejected.apply(this, arguments); },
+      );
+    };
+
+    if (originalFinally) {
+      Promise.prototype.finally = function promiseFinallyPatch(onFinally) {
+        return originalFinally.call(
+          this,
+          !onFinally ? undefined : function onFinallyPatch() { if (!context.isDestroyed) return onFinally.apply(this, arguments); },
+        );
+      };
+    }
+
+    // #endregion
+
+
     const extraGlobals: any = {
       location: undefined,
       document: undefined,
@@ -474,6 +514,7 @@ const UnityJSBPlugin: PluginType = {
       URL,
       XMLHttpRequest,
       XMLHttpRequestUpload,
+      Promise,
     };
 
     const globals: typeof window = new Proxy(extraGlobals, {
@@ -520,10 +561,12 @@ const UnityJSBPlugin: PluginType = {
       evaluate,
       iframe,
       contentWindow,
+      isDestroyed: false,
 
       free() {
         if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
 
+        context.isDestroyed = true;
         delete runtime.contexts[context.id];
         delete unityJsbState.contexts[context.id];
       },

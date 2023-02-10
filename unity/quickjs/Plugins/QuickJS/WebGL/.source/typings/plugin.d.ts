@@ -27,6 +27,7 @@ declare global {
     opaque?: any;
     contexts: Record<string, PluginContext | undefined>;
     refs: ObjectReferences;
+    isDestroyed: boolean;
     garbageCollect(): number;
   };
 
@@ -35,6 +36,7 @@ declare global {
     opaque?: any;
     runtime: PluginRuntime;
     runtimeId: number;
+    isDestroyed: boolean;
 
     window: Window;
     iframe: HTMLIFrameElement;

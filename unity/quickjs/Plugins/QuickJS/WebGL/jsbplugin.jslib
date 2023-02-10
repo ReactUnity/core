@@ -227,6 +227,7 @@ var UnityJSBPlugin = {
                 deleteRecord: function (id) {
                     var rec = record[id];
                     delete record[id];
+                    res.clearPayload(rec.value);
                     map.delete(rec.value);
                 },
                 payloadMap: payloadMap,
@@ -349,6 +350,7 @@ var UnityJSBPlugin = {
             id: id,
             contexts: {},
             refs: refs,
+            isDestroyed: false,
             garbageCollect: function () {
                 var lastId = refs.lastId;
                 var record = refs.record;
@@ -390,6 +392,7 @@ var UnityJSBPlugin = {
             context.free();
         }
         var aliveItemCount = runtime.garbageCollect();
+        runtime.isDestroyed = true;
         delete unityJsbState.runtimes[runtime.id];
         return aliveItemCount === 0;
     },
@@ -412,6 +415,28 @@ var UnityJSBPlugin = {
         var XMLHttpRequestUpload = contentWindow.XMLHttpRequestUpload;
         var WebSocket = contentWindow.WebSocket;
         var baseTag = null;
+        // #region Promise monkey patch
+        // This patches the Promise so that microtasks are not run after the context is destroyed
+        var Promise = contentWindow.Promise;
+        var originalThen = Promise.prototype.then;
+        var originalCatch = Promise.prototype.catch;
+        var originalFinally = Promise.prototype.finally;
+        Promise.prototype.then = function promiseThenPatch(onFulfilled, onRejected) {
+            return originalThen.call(this, !onFulfilled ? undefined : function onFulfilledPatch() { if (!context.isDestroyed)
+                return onFulfilled.apply(this, arguments); }, !onRejected ? undefined : function onRejectedPatch() { if (!context.isDestroyed)
+                return onRejected.apply(this, arguments); });
+        };
+        Promise.prototype.catch = function promiseCatchPatch(onRejected) {
+            return originalCatch.call(this, !onRejected ? undefined : function onRejectedPatch() { if (!context.isDestroyed)
+                return onRejected.apply(this, arguments); });
+        };
+        if (originalFinally) {
+            Promise.prototype.finally = function promiseFinallyPatch(onFinally) {
+                return originalFinally.call(this, !onFinally ? undefined : function onFinallyPatch() { if (!context.isDestroyed)
+                    return onFinally.apply(this, arguments); });
+            };
+        }
+        // #endregion
         var extraGlobals = {
             location: undefined,
             document: undefined,
@@ -424,6 +449,7 @@ var UnityJSBPlugin = {
             URL: URL,
             XMLHttpRequest: XMLHttpRequest,
             XMLHttpRequestUpload: XMLHttpRequestUpload,
+            Promise: Promise,
         };
         var globals = new Proxy(extraGlobals, {
             get: function (target, p, receiver) {
@@ -465,9 +491,11 @@ var UnityJSBPlugin = {
             evaluate: evaluate,
             iframe: iframe,
             contentWindow: contentWindow,
+            isDestroyed: false,
             free: function () {
                 if (iframe.parentNode)
                     iframe.parentNode.removeChild(iframe);
+                context.isDestroyed = true;
                 delete runtime.contexts[context.id];
                 delete unityJsbState.contexts[context.id];
             },
