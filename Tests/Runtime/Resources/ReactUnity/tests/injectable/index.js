@@ -9271,7 +9271,7 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.3';
+var version = '0.14.4';
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -9356,11 +9356,12 @@ var ErrorBoundary = /** @class */function (_super) {
 
 function DefaultView(_a) {
   var children = _a.children,
-    withHelpers = _a.withHelpers;
+    withHelpers = _a.withHelpers,
+    renderCount = _a.renderCount;
   return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: !withHelpers ? children : (0,jsx_runtime.jsx)(ErrorBoundary, {
       children: children
-    })
+    }, renderCount)
   });
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
@@ -10216,11 +10217,13 @@ var syncReconciler = react_reconciler(reconciler_hostConfig);
 
 
 var containerMap = new Map();
+var renderCount = 0;
 var Renderer = {
   render: function render(element, options) {
     if (options === void 0) {
       options = {};
     }
+    renderCount++;
     var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
     var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
     var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
@@ -10255,7 +10258,7 @@ var Renderer = {
           }
           return Array.prototype.push.apply(commands_1, args);
         };
-        var hostContainerInstance = {
+        var hostContainerInstance_1 = {
           type: 'native',
           commands: commands_1,
           component: hostContainer,
@@ -10267,9 +10270,9 @@ var Renderer = {
           if (!commands_1.length) return;
           var serialized = JSON.stringify(commands_1);
           commands_1.length = 0;
-          hostContainer.Context.FlushCommands(serialized);
+          hostContainerInstance_1.context.FlushCommands(serialized);
         };
-        hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', function (error) {
+        hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
           return console.error(error);
         }, null);
       } else {
@@ -10285,7 +10288,8 @@ var Renderer = {
     var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
     if (shouldWrapWithHelpers) {
       var viewWrapperProps = {
-        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers)
+        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
+        renderCount: renderCount
       };
       element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
     }
@@ -12469,7 +12473,7 @@ var icon = new Proxy({}, {
 ;// CONCATENATED MODULE: ./src/app.tsx
 var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__("../../../material/dist/src/styles/index.js");};/*INJECTABLE_START*/
 (function (react, ReactUnity, Material, MaterialStyles) {
-  var __originalRender = ReactUnity.Renderer.render;
+  var __originalRender = ReactUnity.Renderer.__originalRender || ReactUnity.Renderer.render;
 
   var renderCalled = false;
   function render(element, options) {
@@ -12477,8 +12481,13 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
     __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
+  ReactUnity = Object.assign({}, ReactUnity, {
+    Renderer: Object.assign({}, ReactUnity.Renderer, {
+      render: render,
+      __originalRender: __originalRender
+    })
+  });
 
-  ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
   var ReactUnityRenderer = ReactUnity.Renderer;
   var Renderer = ReactUnity.Renderer;
   var React = react;
@@ -12514,20 +12523,14 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
   })(module, exports, render, require);
 
 
-  if (renderCalled) {
-    // No need to do anything
-  } else if (exports.default) {
-    render(react.createElement(exports.default));
-  } else if (result) {
-    render(react.createElement(result));
-  } else if (exports.App) {
-    render(react.createElement(exports.App));
-  } else if (exports.Example) {
-    render(react.createElement(exports.Example));
-  } else if (defaultComponent) {
-    render(react.createElement(defaultComponent));
-  } else {
-    console.error('Nothing was rendered');
+  if (!renderCalled) {
+    const renderElement = exports.default || result || exports.App || exports.Example || defaultComponent;
+
+    if (renderElement) {
+      render(react.createElement(renderElement));
+    } else {
+      console.error('Nothing was rendered');
+    }
   }
 })(react, ReactUnity, Material, MaterialStyles);
 

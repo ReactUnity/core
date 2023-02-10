@@ -1,5 +1,5 @@
 (function (react, ReactUnity, Material, MaterialStyles) {
-  var __originalRender = ReactUnity.Renderer.render;
+  var __originalRender = ReactUnity.Renderer.__originalRender || ReactUnity.Renderer.render;
 
   var renderCalled = false;
   function render(element, options) {
@@ -7,8 +7,13 @@
     __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
+  ReactUnity = Object.assign({}, ReactUnity, {
+    Renderer: Object.assign({}, ReactUnity.Renderer, {
+      render: render,
+      __originalRender: __originalRender
+    })
+  });
 
-  ReactUnity = Object.assign({}, ReactUnity, { Renderer: Object.assign({}, ReactUnity.Renderer, { render: render }) });
   var ReactUnityRenderer = ReactUnity.Renderer;
   var Renderer = ReactUnity.Renderer;
   var React = react;
@@ -44,19 +49,13 @@
   })(module, exports, render, require);
 
 
-  if (renderCalled) {
-    // No need to do anything
-  } else if (exports.default) {
-    render(react.createElement(exports.default));
-  } else if (result) {
-    render(react.createElement(result));
-  } else if (exports.App) {
-    render(react.createElement(exports.App));
-  } else if (exports.Example) {
-    render(react.createElement(exports.Example));
-  } else if (defaultComponent) {
-    render(react.createElement(defaultComponent));
-  } else {
-    console.error('Nothing was rendered');
+  if (!renderCalled) {
+    const renderElement = exports.default || result || exports.App || exports.Example || defaultComponent;
+
+    if (renderElement) {
+      render(react.createElement(renderElement));
+    } else {
+      console.error('Nothing was rendered');
+    }
   }
 })(react, ReactUnity, Material, MaterialStyles);

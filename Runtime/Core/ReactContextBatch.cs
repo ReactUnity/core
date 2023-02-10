@@ -137,6 +137,8 @@ namespace ReactUnity
 
         public void FlushCommands(string serializedCommands = null)
         {
+            if (IsDisposed) return;
+
             if (serializedCommands == null)
             {
                 if (CommandsCallback == null) return;
