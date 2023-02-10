@@ -4,12 +4,13 @@ import { ErrorBoundary } from './error-boundary';
 interface Props {
   children?: ReactNode;
   withHelpers: boolean;
+  renderCount: number;
 }
 
-export function DefaultView({ children, withHelpers }: Props) {
+export function DefaultView({ children, withHelpers, renderCount }: Props) {
   return <>
     {!withHelpers ? children :
-      <ErrorBoundary>
+      <ErrorBoundary key={renderCount}>
         {children}
       </ErrorBoundary>}
   </>;

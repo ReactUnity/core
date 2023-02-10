@@ -30,11 +30,14 @@ interface RenderOptions {
   disableBatchRendering?: boolean;
 }
 
+let renderCount = 0;
+
 export const Renderer = {
   render(
     element: React.ReactNode,
     options: RenderOptions = {},
   ) {
+    renderCount++;
     const hostContainer = options?.hostContainer || HostContainer;
     const cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
 
@@ -79,7 +82,7 @@ export const Renderer = {
 
           const serialized = JSON.stringify(commands);
           commands.length = 0;
-          hostContainer.Context.FlushCommands(serialized);
+          hostContainerInstance.context.FlushCommands(serialized);
         };
 
         hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', (error) => console.error(error), null)
@@ -95,6 +98,7 @@ export const Renderer = {
     if (shouldWrapWithHelpers) {
       const viewWrapperProps: React.ComponentProps<typeof DefaultView> = {
         withHelpers: !options?.disableHelpers,
+        renderCount,
       };
       element = createElement(DefaultView, viewWrapperProps, element);
     }
