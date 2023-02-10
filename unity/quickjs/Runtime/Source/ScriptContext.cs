@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using QuickJS.Binding;
@@ -592,7 +589,7 @@ namespace QuickJS
             {
                 return ctx.ThrowException(exception);
             }
-#else 
+#else
             try
             {
                 var context = ScriptEngine.GetContext(ctx);
@@ -623,7 +620,7 @@ namespace QuickJS
             return require_obj;
         }
 
-        // this method will consume the module_obj refcount 
+        // this method will consume the module_obj refcount
         public unsafe JSValue LoadModuleFromSource(byte[] source, string resolved_id, string filename, JSValue module_obj)
         {
             object unused;
@@ -852,6 +849,7 @@ namespace QuickJS
             if (JSApi.JS_IsException(jsValue))
             {
                 var ex = _ctx.GetExceptionString();
+                JSApi.JS_FreeValue(_ctx, jsValue);
                 throw new JSException(ex, fileName);
             }
             object retObject;
