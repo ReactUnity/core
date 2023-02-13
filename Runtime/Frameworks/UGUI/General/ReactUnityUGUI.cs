@@ -27,7 +27,7 @@ namespace ReactUnity.UGUI
                 HostElement = Root,
                 Globals = Globals,
                 Source = script,
-                Timer = timer ?? UnityTimer.Instance,
+                Timer = Timer ?? UnscaledTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = () => Render(),
                 IconSets = IconSets,

@@ -12,5 +12,10 @@ namespace ReactUnity.Editor
         public float TimeScale { get; set; } = 1;
 
         private EditorTimer() { }
+
+        public object Yield(float advanceBy)
+        {
+            return null;
+        }
     }
 }

@@ -4,5 +4,6 @@ namespace ReactUnity.Scheduling
     {
         float AnimationTime { get; }
         float TimeScale { get; }
+        object Yield(float advanceBy);
     }
 }

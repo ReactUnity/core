@@ -9,5 +9,11 @@ namespace ReactUnity.Scheduling
         {
             AnimationTime += TimeScale * advanceBy;
         }
+
+        public object Yield(float advanceBy)
+        {
+            AdvanceTime(advanceBy);
+            return null;
+        }
     }
 }

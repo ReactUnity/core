@@ -11,5 +11,10 @@ namespace ReactUnity.Scheduling
         public float TimeScale => Time.timeScale;
 
         private UnityTimer() { }
+
+        public object Yield(float advanceBy)
+        {
+            return new WaitForSeconds(advanceBy);
+        }
     }
 }

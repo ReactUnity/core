@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Helpers;
-using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
@@ -74,15 +73,7 @@ namespace ReactUnity.Tests
             (scope ?? Host).QuerySelectorAll(query).OfType<UGUIComponent>().ToList();
         public IEnumerator AdvanceTime(float advanceBy)
         {
-            if (Context.Timer is ControlledTimer ct)
-            {
-                ct.AdvanceTime(advanceBy);
-                yield return null;
-            }
-            else if (Context.Timer is UnityTimer)
-            {
-                yield return new WaitForSeconds(advanceBy);
-            }
+            yield return Context.Timer.Yield(advanceBy);
         }
 
         [OneTimeSetUp]

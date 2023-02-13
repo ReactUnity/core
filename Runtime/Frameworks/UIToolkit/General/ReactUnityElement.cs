@@ -63,7 +63,7 @@ namespace ReactUnity.UIToolkit
                 HostElement = this,
                 Globals = Globals,
                 Source = script,
-                Timer = Timer ?? UnityTimer.Instance,
+                Timer = Timer ?? UnscaledTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = Restart,
                 Debug = Debug,

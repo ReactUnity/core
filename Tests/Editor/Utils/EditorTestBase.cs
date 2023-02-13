@@ -18,7 +18,6 @@ using ReactUnity.Editor;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
-using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
@@ -63,14 +62,13 @@ namespace ReactUnity.Tests.Editor
             (scope ?? Host).QuerySelectorAll(query).OfType<BaseReactComponent<UIToolkitContext>>().ToList();
         public IEnumerator AdvanceTime(float advanceBy)
         {
-            if (Context.Timer is ControlledTimer ct)
-            {
-                ct.AdvanceTime(advanceBy);
-                yield return null;
-            }
-            else if (Context.Timer is EditorTimer)
+            if (Context.Timer is EditorTimer)
             {
                 yield return new EditModeWaitForSeconds(advanceBy).Perform();
+            }
+            else
+            {
+                yield return Context.Timer.Yield(advanceBy);
             }
         }
 

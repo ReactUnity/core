@@ -34,7 +34,7 @@ namespace ReactUnity.Tests
             while (script.MoveNext()) yield return null;
 
             var ru = CreateReactUnity(engineType, script.Current);
-            ru.timer = RealTimer ? null : new ControlledTimer();
+            ru.Timer = RealTimer ? null : new ControlledTimer();
             ru.AdvancedOptions.Pooling = Pooling;
             ru.AdvancedOptions.BeforeStart.AddListener(() => BeforeStart(ru.Context.Script));
             ru.AdvancedOptions.AfterStart.AddListener(() => {

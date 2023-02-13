@@ -43,7 +43,7 @@ namespace ReactUnity
 
         public IMediaProvider MediaProvider { get; private set; }
         public ReactContext Context { get; private set; }
-        public ITimer timer { get; set; }
+        public ITimer Timer { get; set; }
 
         public SerializableDictionary Globals = new SerializableDictionary();
         public ReactAdvancedOptions AdvancedOptions = new ReactAdvancedOptions();
