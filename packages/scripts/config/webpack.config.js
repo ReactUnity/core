@@ -408,15 +408,17 @@ const baseConfigFactory = function (webpackEnv) {
                 ),
                 presets: [
                   [
-                    require.resolve('babel-preset-react-app'),
+                    require.resolve('./babel-preset-extended'),
                     {
                       runtime: modules.hasJsxRuntime ? 'automatic' : 'classic',
+                      flow: false,
+                      typescript: true,
                     },
                   ],
-                ],
+                ].filter(Boolean),
                 // @remove-on-eject-begin
-                babelrc: false,
-                configFile: false,
+                babelrc: true,
+                configFile: true,
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
@@ -455,8 +457,8 @@ const baseConfigFactory = function (webpackEnv) {
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               loader: require.resolve('babel-loader'),
               options: {
-                babelrc: false,
-                configFile: false,
+                babelrc: true,
+                configFile: true,
                 compact: false,
                 presets: [
                   [
