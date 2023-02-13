@@ -27,10 +27,13 @@ Environment variables of CRA can be used with React Unity. However, there are so
 - `GENERATE_SOURCEMAP` - `false` by default.
 - `FAST_REFRESH` - This can be set to `false` to disable `react-refresh` if you are having problems with hot reload
 - `IMAGE_INLINE_SIZE_LIMIT` - `0` by default. Because non-inlined images will be faster in Unity. However, if users still want to inline images, they should increase this limit.
+- `JSX_IMPORT_SOURCE` - Can be used to allow some custom JSX transformations. For example, set this variable to `@emotion/react` for Emotion.
 
 Environment variables can also be defined by having `.env`, `.env.local`, `.env.<development|production>` in project folder.
 
 Custom environment variables are also possible as in [CRA](https://create-react-app.dev/docs/adding-custom-environment-variables).
+
+`.babelrc` can be used to modify some Babel options.
 
 ## Multiple Entry Points
 
