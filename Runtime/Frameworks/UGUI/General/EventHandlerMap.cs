@@ -28,6 +28,22 @@ namespace ReactUnity.UGUI
             { "onDrop", typeof(DropHandler) },
             { "onKeyDown", typeof(KeyDownHandler) },
             { "onResize", typeof(ResizeHandler) },
+
+            // Custom events
+            { "onDoubleClick", typeof(DoubleClickHandler) },
+            { "onContextMenu", typeof(ContextMenuHandler) },
+
+            // Aliases
+            { "onClick", typeof(PointerClickHandler) },
+            { "onMouseUp", typeof(PointerUpHandler) },
+            { "onMouseDown", typeof(PointerDownHandler) },
+            { "onMouseEnter", typeof(PointerEnterHandler) },
+            { "onMouseLeave", typeof(PointerExitHandler) },
+            { "onMouseOver", typeof(PointerEnterHandler) },
+            { "onMouseOut", typeof(PointerExitHandler) },
+            { "onMouseMove", typeof(PointerMoveHandler) },
+            { "onFocus", typeof(SelectHandler) },
+            { "onBlur", typeof(DeselectHandler) },
         };
 
         public static Type GetEventType(string eventName)

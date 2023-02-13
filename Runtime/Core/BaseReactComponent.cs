@@ -7,7 +7,6 @@ using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
 
@@ -449,9 +448,7 @@ namespace ReactUnity
                     }
                     return;
                 default:
-#if UNITY_EDITOR
-                    Debug.LogWarning($"Unknown property name specified, '{propertyName}'");
-#endif
+                    Context.HandleUnknownProperty(this, propertyName, value);
                     return;
             }
         }

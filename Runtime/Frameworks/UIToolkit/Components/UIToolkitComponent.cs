@@ -284,6 +284,9 @@ namespace ReactUnity.UIToolkit
 
         public override Action AddEventListener(string eventName, Callback fun)
         {
+            var shouldCapture = eventName != "onPointerCapture" && eventName != "onMouseCapture" && eventName.EndsWith("Capture");
+            if (shouldCapture) eventName = eventName.Substring(0, eventName.Length - 7);
+
             var (register, unregister, priority) = EventHandlerMap.GetEventMethods(eventName);
 
             if (register == null)
@@ -293,8 +296,9 @@ namespace ReactUnity.UIToolkit
 
             EventCallback<EventBase> callAction = (e) => fun.CallWithPriority(priority, e, this);
 
-            register.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
-            return () => unregister.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
+            var trickle = shouldCapture ? TrickleDown.TrickleDown : TrickleDown.NoTrickleDown;
+            register.Invoke(Element, new object[] { callAction, trickle });
+            return () => unregister.Invoke(Element, new object[] { callAction, trickle });
         }
 
         public override void SetProperty(string property, object value)

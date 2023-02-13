@@ -34,6 +34,7 @@ namespace ReactUnity.UIToolkit
                 BeforeStart = AdvancedOptions.BeforeStart.Invoke,
                 AfterStart = AdvancedOptions.AfterStart.Invoke,
                 Pooling = AdvancedOptions.Pooling,
+                UnknownPropertyHandling = AdvancedOptions.UnknownPropertyHandling,
             });
             ctx.Initialize();
             return ctx;

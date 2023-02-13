@@ -28,6 +28,7 @@ namespace ReactUnity
             public float MediaUpdateInterval = 0.5f;
             [Tooltip("Serve debugging protocol on port 9222")]
             public DebugMode DebugMode = DebugMode.None;
+            public ReactContext.UnknownPropertyHandling UnknownPropertyHandling = ReactContext.UnknownPropertyHandling.Log;
             public bool AutoRender = true;
             public List<TextAsset> Stylesheets = new List<TextAsset>();
             [Space(10)]

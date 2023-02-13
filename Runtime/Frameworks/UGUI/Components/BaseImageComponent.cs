@@ -30,6 +30,7 @@ namespace ReactUnity.UGUI
         {
             switch (propertyName)
             {
+                case "src":
                 case "source":
                     Source = value;
                     return;

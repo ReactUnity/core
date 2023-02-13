@@ -82,6 +82,7 @@ namespace ReactUnity.UIToolkit
                 case "innerContent":
                     InnerContent = value?.ToString();
                     break;
+                case "src":
                 case "source":
                     Source = value;
                     break;

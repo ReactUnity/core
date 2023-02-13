@@ -59,6 +59,7 @@ namespace ReactUnity
                 case "content":
                     Content = value?.ToString();
                     break;
+                case "src":
                 case "source":
                     Source = value;
                     break;

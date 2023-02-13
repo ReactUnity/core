@@ -23,6 +23,15 @@ namespace ReactUnity
             All = 2,
         }
 
+        public enum UnknownPropertyHandling
+        {
+            None = 0,
+            Log = 1,
+            Warn = 2,
+            Error = 3,
+            Exception = 4,
+        }
+
         public class Options
         {
             public SerializableDictionary Globals;
@@ -36,6 +45,7 @@ namespace ReactUnity
             public Action BeforeStart;
             public Action AfterStart;
             public PoolingType Pooling;
+            public UnknownPropertyHandling UnknownPropertyHandling;
 
             public virtual bool CalculatesLayout { get; }
         }
@@ -203,5 +213,28 @@ namespace ReactUnity
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying && !IsEditorContext ?
             RuntimeDispatcherBehavior.Create(this) as IDispatcher :
             new EditorDispatcher(this);
+
+        public virtual void HandleUnknownProperty(IReactComponent cmp, string propertyName, object value)
+        {
+            switch (options.UnknownPropertyHandling)
+            {
+#if UNITY_EDITOR
+                case UnknownPropertyHandling.Log:
+                    Debug.LogWarning($"Unknown property name specified, '{propertyName}'");
+                    break;
+#endif
+                case UnknownPropertyHandling.Warn:
+                    Debug.LogWarning($"Unknown property name specified, '{propertyName}'");
+                    break;
+                case UnknownPropertyHandling.Error:
+                    Debug.LogError($"Unknown property name specified, '{propertyName}'");
+                    break;
+                case UnknownPropertyHandling.Exception:
+                    throw new ArgumentException($"Unknown property name specified, '{propertyName}'");
+                default:
+                case UnknownPropertyHandling.None:
+                    break;
+            }
+        }
     }
 }

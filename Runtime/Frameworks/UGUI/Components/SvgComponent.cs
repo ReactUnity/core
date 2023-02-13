@@ -70,6 +70,7 @@ namespace ReactUnity.UGUI
                 case "innerContent":
                     InnerContent = value?.ToString();
                     break;
+                case "src":
                 case "source":
                     Source = value;
                     break;

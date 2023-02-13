@@ -39,6 +39,7 @@ namespace ReactUnity.UGUI
                 BeforeStart = AdvancedOptions.BeforeStart.Invoke,
                 AfterStart = AdvancedOptions.AfterStart.Invoke,
                 Pooling = AdvancedOptions.Pooling,
+                UnknownPropertyHandling = AdvancedOptions.UnknownPropertyHandling,
             });
         }
 

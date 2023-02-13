@@ -13,7 +13,7 @@ namespace ReactUnity.UIToolkit
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "source") SetSource(value);
+            if (property == "source" || property == "src") SetSource(value);
             else base.SetProperty(property, value);
         }
 

@@ -28,6 +28,7 @@ namespace ReactUnity.UGUI
         {
             switch (propertyName)
             {
+                case "src":
                 case "source":
                     if (!AllConverters.VideoReferenceConverter.TryGetConstantValue<VideoReference>(value, out var source))
                         source = VideoReference.None;
