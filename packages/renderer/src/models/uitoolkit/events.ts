@@ -1,4 +1,3 @@
-import { BaseEvents } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
 
 import ui = UnityEngine.UIElements;
@@ -8,7 +7,7 @@ export type Handler<T, TSender = BaseCmp> = (ev: T, sender: TSender) => void;
 export type ActionCallback<TSender = BaseCmp> = (sender: TSender) => void;
 export type BaseEventCallback = (e: ui.EventBase) => void;
 
-export interface Events<TSender = BaseCmp> extends BaseEvents<TSender> {
+type EventMap<TSender = BaseCmp> = {
   onClick?: Handler<ui.ClickEvent, TSender>;
   onPointerUp?: Handler<ui.PointerUpEvent, TSender>;
   onPointerDown?: Handler<ui.PointerDownEvent, TSender>;
@@ -64,4 +63,12 @@ export interface Events<TSender = BaseCmp> extends BaseEvents<TSender> {
 
   /** Editor only */
   onDragUpdated?: Handler<ui.DragUpdatedEvent, TSender>;
+};
+
+type EventMapCapture<TSender = BaseCmp> = {
+  [eventName in keyof EventMap as `${eventName}Capture`]: EventMap<TSender>[eventName];
+};
+
+
+export interface Events<TSender = BaseCmp> extends EventMap<TSender>, EventMapCapture<TSender> {
 }

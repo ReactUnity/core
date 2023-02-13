@@ -26,7 +26,7 @@ export type PoolKey = string | number | boolean | null | undefined;
 
 export type Textable = string | number | boolean | null | undefined;
 
-export interface BaseCmpProps {
+export interface BaseCmpProps extends JSX.IntrinsicAttributes {
   id?: string;
   name?: string;
   class?: string;

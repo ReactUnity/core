@@ -32,7 +32,7 @@ export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
   smoothness?: number;
 }
 
-export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {
+export interface Button extends Omit<View<ReactUnity.UGUI.ButtonComponent>, 'onClick'> {
   onClick?: ActionCallback<ReactUnity.UGUI.ButtonComponent>;
   disabled?: boolean;
 }
@@ -53,7 +53,9 @@ export interface Anchor extends View<ReactUnity.UGUI.AnchorComponent> {
 }
 
 export interface BaseImage<T = ReactUnity.UGUI.ImageComponent> extends View<T> {
+  src?: AssetReferenceOrHttp;
   source?: AssetReferenceOrHttp;
+  alt?: string;
 }
 
 export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> {
@@ -62,6 +64,7 @@ export interface Image<T = ReactUnity.UGUI.ImageComponent> extends BaseImage<T> 
 
 export interface RawImage extends BaseImage<ReactUnity.UGUI.RawImageComponent> { }
 export interface Video extends BaseImage<ReactUnity.UGUI.VideoComponent> {
+  src?: AssetReference;
   source?: AssetReference;
 }
 export interface SvgImage<T = ReactUnity.UGUI.SvgImageComponent> extends Image<T> { }
@@ -69,6 +72,7 @@ export interface SvgImage<T = ReactUnity.UGUI.SvgImageComponent> extends Image<T
 export interface Render<T = ReactUnity.UGUI.RenderComponent> extends BaseImage<T> {
   width: number;
   height: number;
+  src?: never;
   source?: never;
   camera?: UnityEngine.Camera | UnityEngine.GameObject;
   onMount?: (camera: UnityEngine.Camera, sender: T) => void;

@@ -30,4 +30,57 @@ export interface Events<T = BaseCmp> extends BaseEvents<T> {
   onDrop?: PointerEventCallback<T>;
   onKeyDown?: KeyEventCallback<T>;
   onResize?: ResizeEventCallback<T>;
+
+  onDoubleClick?: PointerEventCallback<T>;
+  onContextMenu?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerClick
+   */
+  onClick?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerUp
+   */
+  onMouseUp?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerDown
+   */
+  onMouseDown?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerEnter
+   */
+  onMouseEnter?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerExit
+   */
+  onMouseLeave?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerMove
+   */
+  onMouseMove?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerEnter
+   */
+  onMouseOver?: PointerEventCallback<T>;
+
+  /**
+   * @alias onPointerExit
+   */
+  onMouseOut?: PointerEventCallback<T>;
+
+  /**
+   * @alias onSelect
+   */
+  onFocus?: BaseEventCallback<T>;
+
+  /**
+   * @alias onDeselect
+   */
+  onBlur?: BaseEventCallback<T>;
 };

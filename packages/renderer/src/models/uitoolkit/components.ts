@@ -65,7 +65,9 @@ export interface Anchor extends View {
 }
 
 export interface Image extends View<Cmp.ImageComponent> {
+  src?: AssetReference;
   source?: AssetReference;
+  alt?: string;
 }
 
 export type ToggleEvent = (val: boolean) => void;
