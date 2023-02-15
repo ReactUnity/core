@@ -17,8 +17,7 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Lt.woff2')
-      format('woff2');
+    src: url('/fonts/Optimistic_Display_W_Lt.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -26,8 +25,7 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Md.woff2')
-      format('woff2');
+    src: url('/fonts/Optimistic_Display_W_Md.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -35,8 +33,7 @@
 
   @font-face {
     font-family: 'Optimistic Display';
-    src: url('https://beta.reactjs.org/fonts/Optimistic_Display_W_Bd.woff2')
-      format('woff2');
+    src: url('/fonts/Optimistic_Display_W_Bd.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -98,13 +95,15 @@
     }
   }
 
-  a > code {
-    color: #087ea4 !important; /* blue-50 */
+  a>code {
+    color: #087ea4 !important;
+    /* blue-50 */
     text-decoration: none !important;
   }
 
-  html.dark a > code {
-    color: #149eca !important; /* blue-40 */
+  html.dark a>code {
+    color: #149eca !important;
+    /* blue-40 */
   }
 
   .text-code {
@@ -123,6 +122,7 @@
   .text-gradient-electric-blue {
     background-image: linear-gradient(45deg, #61dafb, #0072ff);
   }
+
   /* Stop purging. */
   /* Your own custom utilities */
 
@@ -160,9 +160,11 @@
   html .no-bg-scrollbar {
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
   }
+
   html.dark .no-bg-scrollbar {
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
   }
+
   /*
    * Until then, we have ... this.
    * If you're changing this, make sure you've tested:
@@ -178,6 +180,7 @@
   html .no-bg-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;
   }
+
   html .no-bg-scrollbar:hover::-webkit-scrollbar-thumb,
   html .no-bg-scrollbar:focus::-webkit-scrollbar-thumb,
   html .no-bg-scrollbar:focus-within::-webkit-scrollbar-thumb,
@@ -187,16 +190,19 @@
     background-clip: content-box;
     border-radius: 10px;
   }
+
   html .no-bg-scrollbar::-webkit-scrollbar-thumb:hover,
   html .no-bg-scrollbar::-webkit-scrollbar-thumb:active {
     background-color: rgba(0, 0, 0, 0.35) !important;
   }
+
   html.dark .no-bg-scrollbar:hover::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:focus::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:focus-within::-webkit-scrollbar-thumb,
   html.dark .no-bg-scrollbar:active::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
   }
+
   html.dark .no-bg-scrollbar::-webkit-scrollbar-thumb:hover,
   html.dark .no-bg-scrollbar::-webkit-scrollbar-thumb:active {
     background-color: rgba(255, 255, 255, 0.35) !important;
@@ -211,6 +217,7 @@
   background: none !important;
   padding: 2px !important;
 }
+
 html.dark .code-step * {
   color: inherit !important;
 }
@@ -233,31 +240,38 @@ html.dark .code-step * {
   visibility: hidden;
   content: '';
 }
+
 .mdx-heading .mdx-header-anchor {
   /* Prevent the anchor from
      overflowing to its own line */
   height: 0px;
   width: 0px;
 }
+
 .mdx-heading .mdx-header-anchor svg {
   display: inline;
 }
+
 .mdx-heading .mdx-header-anchor svg {
   visibility: hidden;
 }
+
 .mdx-heading:hover .mdx-header-anchor svg {
   visibility: visible;
 }
+
 .mdx-heading .mdx-header-anchor:focus svg {
   visibility: visible;
 }
 
-.mdx-blockquote > span > p:first-of-type {
+.mdx-blockquote>span>p:first-of-type {
   margin-bottom: 0;
 }
-.mdx-blockquote > span > p:last-of-type {
+
+.mdx-blockquote>span>p:last-of-type {
   margin-bottom: 1rem;
 }
+
 .mdx-illustration-block {
   display: flex;
   flex-direction: row;
@@ -267,9 +281,11 @@ html.dark .code-step * {
   align-items: stretch;
   gap: 42px;
 }
+
 ol.mdx-illustration-block {
   gap: 60px;
 }
+
 .mdx-illustration-block li {
   display: flex;
   align-items: flex-start;
@@ -278,6 +294,7 @@ ol.mdx-illustration-block {
   position: relative;
   padding: 1rem;
 }
+
 .mdx-illustration-block figure {
   display: flex;
   flex-direction: column;
@@ -288,6 +305,7 @@ ol.mdx-illustration-block {
   position: relative;
   height: 100%;
 }
+
 .mdx-illustration-block li:after {
   content: ' ';
   display: block;
@@ -299,22 +317,27 @@ ol.mdx-illustration-block {
   height: 49px;
   background: center / contain no-repeat url('/images/g_arrow.png');
 }
+
 .mdx-illustration-block li:first-child:after {
   content: ' ';
   display: none;
 }
+
 .mdx-illustration-block img {
   max-height: 250px;
   width: 100%;
 }
+
 @media (max-width: 680px) {
   .mdx-illustration-block {
     flex-direction: column;
   }
+
   .mdx-illustration-block img {
     max-height: 200px;
     width: auto;
   }
+
   .mdx-illustration-block li:after {
     top: 0;
     left: 50%;

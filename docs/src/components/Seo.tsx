@@ -19,7 +19,7 @@ export const Seo = withRouter(
   ({
     title = 'ReactUnity',
     description = 'A JavaScript library for building user interfaces in Unity',
-    image = '/logo-og.png',
+    image = '/images/logo.png',
     router,
     children,
     isHomePage,
@@ -43,7 +43,7 @@ export const Seo = withRouter(
       <meta
         property="og:url"
         key="og:url"
-        content={`https://beta.reactjs.org${router.asPath.split(/[\?\#]/)[0]}`}
+        content={`https://reactunity.github.io${router.asPath.split(/[\?\#]/)[0]}`}
       />
       {title != null && (
         <meta property="og:title" content={title} key="og:title" />
@@ -59,7 +59,7 @@ export const Seo = withRouter(
       <meta
         property="og:image"
         key="og:image"
-        content={`https://beta.reactjs.org${image}`}
+        content={`https://reactunity.github.io${image}`}
       />
 
       {/* TWITTER */}
@@ -84,7 +84,7 @@ export const Seo = withRouter(
       <meta
         name="twitter:image"
         key="twitter:image"
-        content={`https://beta.reactjs.org${image}`}
+        content={`https://reactunity.github.io${image}`}
       />
       {/* <meta
         name="google-site-verification"
@@ -99,14 +99,14 @@ export const Seo = withRouter(
       />
       <link
         rel="preload"
-        href="https://beta.reactjs.org/fonts/Optimistic_Display_W_Md.woff2"
+        href="https://reactunity.github.io/fonts/Optimistic_Display_W_Md.woff2"
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
       />
       <link
         rel="preload"
-        href="https://beta.reactjs.org/fonts/Optimistic_Display_W_Bd.woff2"
+        href="https://reactunity.github.io/fonts/Optimistic_Display_W_Bd.woff2"
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
