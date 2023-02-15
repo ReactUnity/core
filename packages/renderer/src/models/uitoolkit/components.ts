@@ -1,6 +1,6 @@
 import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEditor, UnityEngine } from '../generated';
-import { Style } from '../properties';
+import { AnchorTarget, Style } from '../properties';
 import { AssetReference } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
@@ -62,6 +62,8 @@ export interface Button<TSender = Cmp.ButtonComponent> extends View<TSender> {
 
 export interface Anchor extends View {
   url?: string;
+  /** Works in WebGL only */
+  target?: AnchorTarget;
 }
 
 export interface Image extends View<Cmp.ImageComponent> {

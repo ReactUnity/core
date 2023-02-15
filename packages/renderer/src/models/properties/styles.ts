@@ -1,4 +1,5 @@
-import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundRepeat, BackgroundSize, BorderImageRepeat, BorderStyle, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, SafeString, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
+import { SafeString } from './common';
+import { AnimationDirection, AnimationFillMode, AnimationPlayState, Appearance, BackgroundBlendMode, BackgroundRepeat, BackgroundSize, BorderImageRepeat, BorderStyle, CursorType, FontStyles, FontWeight, NavigationMode, ObjectFit, PointerEvents, TextAlign, TextOverflowModes, TextTransform, TimingFunctionType, VerticalAlign, Visibility, WhiteSpace } from './styles-enums';
 import { Array2Aux, AssetReference, AssetReferenceOrHttp, ColorAux, NumberAux, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 

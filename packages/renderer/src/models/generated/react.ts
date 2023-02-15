@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 01/02/2023 23:27:21
+// Generated 15/02/2023 19:15:04
 //
 /* eslint-disable */
 
@@ -372,6 +372,7 @@ export declare namespace ReactUnity {
     PlayAudio(clip: UnityEngine.AudioClip): void;
     Start(afterStart?: (() => void)): void;
     Dispose(): void;
+    HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
     BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
     GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -389,7 +390,7 @@ export declare namespace ReactUnity {
   export class ReactUnityBase {
     MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
     Context: ReactUnity.ReactContext;
-    timer: ReactUnity.Scheduling.ITimer;
+    Timer: ReactUnity.Scheduling.ITimer;
     destroyCancellationToken: System.Threading.CancellationToken;
     useGUILayout: boolean;
     runInEditMode: boolean;
@@ -647,6 +648,13 @@ export declare namespace ReactUnity {
     Basic = 1,
     All = 2,
   }
+  export enum ReactContext_UnknownPropertyHandling {
+    None = 0,
+    Log = 1,
+    Warn = 2,
+    Error = 3,
+    Exception = 4,
+  }
   export class ReactContext_Options {
     constructor();
     CalculatesLayout: boolean;
@@ -661,6 +669,7 @@ export declare namespace ReactUnity {
     BeforeStart: (() => void);
     AfterStart: (() => void);
     Pooling: ReactUnity.ReactContext_PoolingType;
+    UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -676,6 +685,7 @@ export declare namespace ReactUnity {
     Pooling: ReactUnity.ReactContext_PoolingType;
     MediaUpdateInterval: number;
     DebugMode: ReactUnity.ReactUnityBase_DebugMode;
+    UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
     AutoRender: boolean;
     Stylesheets: UnityEngine.TextAsset[];
     BeforeStart: UnityEngine.Events.UnityEvent;
@@ -1001,6 +1011,7 @@ export declare namespace ReactUnity {
       static Instance: ReactUnity.Editor.EditorTimer;
       AnimationTime: number;
       TimeScale: number;
+      Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -1225,6 +1236,7 @@ export declare namespace ReactUnity {
         CreateStaticScript(path: string): ReactUnity.ScriptSource;
         Start(afterStart?: (() => void)): void;
         Dispose(): void;
+        HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
         BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
         GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -1443,6 +1455,7 @@ export declare namespace ReactUnity {
         BeforeStart: (() => void);
         AfterStart: (() => void);
         Pooling: ReactUnity.ReactContext_PoolingType;
+        UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -1456,6 +1469,7 @@ export declare namespace ReactUnity {
         Element: ReactUnity.Editor.UIToolkit.DialogElement;
         ClientWidth: number;
         ClientHeight: number;
+        Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -1505,6 +1519,7 @@ export declare namespace ReactUnity {
         ReleaseMouse(): void;
         HasMouseCapture(): boolean;
         UpdateOrder(prev: number, current: number): boolean;
+        Activate(): void;
         Update(): void;
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
@@ -1697,6 +1712,7 @@ export declare namespace ReactUnity {
         TargetElement: UnityEngine.UIElements.VisualElement;
         ClientWidth: number;
         ClientHeight: number;
+        Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -1745,6 +1761,7 @@ export declare namespace ReactUnity {
         ReleaseMouse(): void;
         HasMouseCapture(): boolean;
         UpdateOrder(prev: number, current: number): boolean;
+        Activate(): void;
         Update(): void;
         MarkForStyleResolving(recursive: boolean): void;
         Remove(): void;
@@ -1779,12 +1796,12 @@ export declare namespace ReactUnity {
       export class EnumComponent<T = any> {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
         Indeterminate: boolean;
-        Disabled: boolean;
         Value: System.Enum;
         Element: T;
         TargetElement: UnityEngine.UIElements.VisualElement;
         ClientWidth: number;
         ClientHeight: number;
+        Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -1871,12 +1888,12 @@ export declare namespace ReactUnity {
       export class ObjectComponent {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext);
         Indeterminate: boolean;
-        Disabled: boolean;
         Value: UnityEngine.Object;
         Element: any; // UnityEditor.UIElements.ObjectField
         TargetElement: UnityEngine.UIElements.VisualElement;
         ClientWidth: number;
         ClientHeight: number;
+        Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -2111,6 +2128,7 @@ export declare namespace ReactUnity {
       UnionWith(other: System.Collections.Generic.IEnumerable<string>): void;
       Change(): void;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.HashSet<string>) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2164,7 +2182,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
@@ -2180,6 +2197,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
@@ -2243,7 +2261,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((obj: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
@@ -2259,6 +2276,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
@@ -2272,6 +2290,7 @@ export declare namespace ReactUnity {
       Value: T;
       Change(): void;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T) => void)): (() => void);
     }
     export class Watchable<T = any> {
       constructor();
@@ -2279,6 +2298,7 @@ export declare namespace ReactUnity {
       Value: T;
       Change(): void;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2302,6 +2322,7 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
       Change(): void;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T[]) => void)): (() => void);
       IndexOf(item: T): number;
       Insert(index: number, item: T): void;
       RemoveAt(index: number): void;
@@ -2318,7 +2339,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       Set(key: TKey, value: T): void;
       SetWithoutNotify(key: TKey, value: T): void;
       Add(key: TKey, value: T): void;
@@ -2330,6 +2350,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
@@ -2345,7 +2366,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
@@ -2367,6 +2387,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
@@ -2382,7 +2403,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<TKey, T>;
       OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
@@ -2405,6 +2425,7 @@ export declare namespace ReactUnity {
       Remove(key: TKey): boolean;
       RemoveWithoutNotify(key: TKey): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
       AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
       GetValueOrDefault(key: TKey): T;
       Dispose(): void;
@@ -2421,7 +2442,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<T>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<string, T>;
       Set(key: string, value: T): void;
       SetWithoutNotify(key: string, value: T): void;
       Add(key: string, value: T): void;
@@ -2433,6 +2453,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, T>) => void)): (() => void);
       AddListener(listener: ((arg1: string, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
       GetValueOrDefault(key: string): T;
       Dispose(): void;
@@ -2449,7 +2470,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<string, any>;
       OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
@@ -2462,6 +2482,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
       AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
@@ -2502,6 +2523,7 @@ export declare namespace ReactUnity {
       UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
       Change(): void;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.HashSet<T>) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2651,6 +2673,7 @@ export declare namespace ReactUnity {
       AnimationTime: number;
       TimeScale: number;
       AdvanceTime(advanceBy: number): void;
+      Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2793,6 +2816,7 @@ export declare namespace ReactUnity {
     export interface ITimer {
       AnimationTime: number;
       TimeScale: number;
+      Yield(advanceBy: number): any;
     }
     export class NoScheduler {
       constructor();
@@ -2885,6 +2909,17 @@ export declare namespace ReactUnity {
       static Instance: ReactUnity.Scheduling.UnityTimer;
       AnimationTime: number;
       TimeScale: number;
+      Yield(advanceBy: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class UnscaledTimer {
+      static Instance: ReactUnity.Scheduling.UnscaledTimer;
+      AnimationTime: number;
+      TimeScale: number;
+      Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3436,6 +3471,7 @@ export declare namespace ReactUnity {
       export class Location {
         constructor(href: string);
         constructor(ctx: ReactUnity.ReactContext);
+        baseUrl: string;
         href: string;
         protocol: string;
         hostname: string;
@@ -3447,6 +3483,7 @@ export declare namespace ReactUnity {
         pathname: string;
         rawPathname: string;
         reload(): void;
+        assign(href: string): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3476,6 +3513,7 @@ export declare namespace ReactUnity {
       export class URL {
         constructor(url: string);
         constructor(url: string, baseUrl: string);
+        baseUrl: string;
         href: string;
         protocol: string;
         hostname: string;
@@ -3831,7 +3869,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<ReactUnity.Styling.CursorPair>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       Set(key: string, value: ReactUnity.Styling.CursorPair): void;
@@ -3845,6 +3882,7 @@ export declare namespace ReactUnity {
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       AddListener(listener: ((arg1: string, arg2: ReactUnity.Styling.CursorPair, arg3: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
@@ -3877,7 +3915,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      Value: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>;
       OnExposedToScriptCode(engine: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
@@ -3900,6 +3937,7 @@ export declare namespace ReactUnity {
       Remove(key: ReactUnity.Styling.IStyleProperty): boolean;
       RemoveWithoutNotify(key: ReactUnity.Styling.IStyleProperty): boolean;
       AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       AddListener(listener: ((arg1: ReactUnity.Styling.IStyleProperty, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
@@ -6283,7 +6321,7 @@ export declare namespace ReactUnity {
     export class AnchorComponent {
       constructor(context: ReactUnity.UGUI.UGUIContext);
       Url: string;
-      OpenInThisTab: boolean;
+      Target: string;
       Disabled: boolean;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
@@ -6337,8 +6375,8 @@ export declare namespace ReactUnity {
       ScrollWidth: number;
       ScrollHeight: number;
       SetProperty(propertyName: string, value: any): void;
-      OpenUrl(openInNewTab: boolean): void;
       Activate(): void;
+      OpenUrl(target?: string): void;
       Revive(): boolean;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
@@ -8868,7 +8906,7 @@ export declare namespace ReactUnity {
       Root: UnityEngine.RectTransform;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Context: ReactUnity.ReactContext;
-      timer: ReactUnity.Scheduling.ITimer;
+      Timer: ReactUnity.Scheduling.ITimer;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -9002,6 +9040,7 @@ export declare namespace ReactUnity {
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Start(afterStart?: (() => void)): void;
       Dispose(): void;
+      HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -9046,6 +9085,7 @@ export declare namespace ReactUnity {
       BeforeStart: (() => void);
       AfterStart: (() => void);
       Pooling: ReactUnity.ReactContext_PoolingType;
+      UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -9948,6 +9988,78 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ContextMenuHandler {
+        constructor();
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        ClearListeners(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class DeselectHandler {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
@@ -9974,6 +10086,78 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         OnDeselect(eventData: UnityEngine.EventSystems.BaseEventData): void;
+        ClearListeners(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class DoubleClickHandler {
+        constructor();
+        destroyCancellationToken: System.Threading.CancellationToken;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerClick(eventData: UnityEngine.EventSystems.PointerEventData): void;
         ClearListeners(): void;
         IsInvoking(): boolean;
         CancelInvoke(): void;
@@ -12956,10 +13140,13 @@ export declare namespace ReactUnity {
   export namespace UIToolkit {
     export class AnchorComponent {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
+      Url: string;
+      Target: string;
       Element: UnityEngine.UIElements.Button;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -12998,8 +13185,9 @@ export declare namespace ReactUnity {
       ScrollTop: number;
       ScrollWidth: number;
       ScrollHeight: number;
-      url: string;
       SetProperty(propertyName: string, value: any): void;
+      Activate(): void;
+      OpenUrl(target?: string): void;
       Pool(): boolean;
       AddEventListener(eventName: string, fun: ReactUnity.Helpers.Callback): (() => void);
       GetComponent(type: System.Type): any;
@@ -13043,12 +13231,12 @@ export declare namespace ReactUnity {
     export class BaseFieldComponent<TElementType = any, TValueType = any> {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: TValueType;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13137,12 +13325,12 @@ export declare namespace ReactUnity {
       ReadOnly: boolean;
       PlaceholderShown: boolean;
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: string;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13233,12 +13421,12 @@ export declare namespace ReactUnity {
       ReadOnly: boolean;
       PlaceholderShown: boolean;
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: string;
       Element: UnityEngine.UIElements.TextField;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13330,6 +13518,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13377,6 +13566,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13416,6 +13606,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13464,6 +13655,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13502,6 +13694,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13549,6 +13742,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13589,6 +13783,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13636,6 +13831,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13674,6 +13870,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13721,6 +13918,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13759,6 +13957,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13808,6 +14007,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -13843,12 +14043,12 @@ export declare namespace ReactUnity {
     export class RangeComponent {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: UnityEngine.Vector2;
       Element: UnityEngine.UIElements.MinMaxSlider;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13942,6 +14142,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -13987,6 +14188,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -14022,12 +14224,12 @@ export declare namespace ReactUnity {
     export class BaseSliderComponent<S = any, TValueType = any> {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: TValueType;
       Element: S;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14121,6 +14323,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14169,6 +14372,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
       Destroy(recursive?: boolean): void;
@@ -14207,6 +14411,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14255,6 +14460,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -14291,12 +14497,12 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
       Checked: boolean;
       Indeterminate: boolean;
-      Disabled: boolean;
       Value: boolean;
       Element: T;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14390,6 +14596,7 @@ export declare namespace ReactUnity {
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14437,6 +14644,7 @@ export declare namespace ReactUnity {
       ReleaseMouse(): void;
       HasMouseCapture(): boolean;
       UpdateOrder(prev: number, current: number): boolean;
+      Activate(): void;
       Update(): void;
       MarkForStyleResolving(recursive: boolean): void;
       Remove(): void;
@@ -14471,12 +14679,12 @@ export declare namespace ReactUnity {
     }
     export class ValueComponent<TElementType = any, TValueType = any> {
       constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag: string);
-      Disabled: boolean;
       Value: TValueType;
       Element: TElementType;
       TargetElement: UnityEngine.UIElements.VisualElement;
       ClientWidth: number;
       ClientHeight: number;
+      Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Helpers.WatchableObjectRecord;
@@ -14660,7 +14868,7 @@ export declare namespace ReactUnity {
       Root: UnityEngine.UIElements.VisualElement;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Context: ReactUnity.ReactContext;
-      timer: ReactUnity.Scheduling.ITimer;
+      Timer: ReactUnity.Scheduling.ITimer;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -14803,6 +15011,7 @@ export declare namespace ReactUnity {
       CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Start(afterStart?: (() => void)): void;
       Dispose(): void;
+      HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
       GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
@@ -14925,6 +15134,7 @@ export declare namespace ReactUnity {
       BeforeStart: (() => void);
       AfterStart: (() => void);
       Pooling: ReactUnity.ReactContext_PoolingType;
+      UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

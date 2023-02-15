@@ -1,5 +1,6 @@
 import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
+import { AnchorTarget } from '../properties';
 import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
@@ -49,7 +50,7 @@ export interface Anchor extends View<ReactUnity.UGUI.AnchorComponent> {
   url?: string;
   disabled?: boolean;
   /** Works in WebGL only */
-  openInThisTab?: boolean;
+  target?: AnchorTarget;
 }
 
 export interface BaseImage<T = ReactUnity.UGUI.ImageComponent> extends View<T> {

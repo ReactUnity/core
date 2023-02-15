@@ -1,5 +1,3 @@
-export type SafeString = string & {};
-
 export type CssKeyword = 'initial' | 'inherit' | 'auto' | 'none' | 'unset' | 'default' | 'revert';
 
 export type FontWeight = 'thin' | 100 | 'extra-light' | 200 | 'light' | 300 | 'regular' | 400

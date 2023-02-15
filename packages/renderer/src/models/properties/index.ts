@@ -1,3 +1,4 @@
+export * from './common';
 export * from './style';
 export * from './styles';
 export * from './styles-enums';
