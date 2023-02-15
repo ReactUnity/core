@@ -84,6 +84,7 @@ namespace ReactUnity.Scripting
                     Context.MediaProvider.SetValue("engine", engine.Key);
 
                     engine.Execute(@"
+                        global.Blob = undefined;
                         global.postMessage = function() {};
 
                         // Required for JSS

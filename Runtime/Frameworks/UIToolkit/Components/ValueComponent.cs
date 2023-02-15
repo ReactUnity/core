@@ -6,12 +6,6 @@ namespace ReactUnity.UIToolkit
 {
     public class ValueComponent<TElementType, TValueType> : BindableComponent<TElementType>, IActivatableComponent where TElementType : VisualElement, IBindable, INotifyValueChanged<TValueType>, new()
     {
-        public bool Disabled
-        {
-            get => !Element.enabledSelf;
-            set => Element.SetEnabled(!value);
-        }
-
         public TValueType Value
         {
             get => Element.value;
@@ -58,7 +52,7 @@ namespace ReactUnity.UIToolkit
             Element.SetValueWithoutNotify(value);
         }
 
-        public void Activate()
+        public override void Activate()
         {
             Element.Focus();
         }

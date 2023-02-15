@@ -24,7 +24,7 @@ namespace ReactUnity.UIToolkit
         VisualElement TargetElement { get; }
     }
 
-    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent, IUIToolkitComponent<T> where T : VisualElement, new()
+    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IActivatableComponent, IUIToolkitComponent, IUIToolkitComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
         VisualElement IUIToolkitComponent.Element => Element;
@@ -32,6 +32,12 @@ namespace ReactUnity.UIToolkit
 
         public override float ClientWidth => Element.layout.width;
         public override float ClientHeight => Element.layout.height;
+
+        public bool Disabled
+        {
+            get => !Element.enabledSelf;
+            set => Element.SetEnabled(!value);
+        }
 
         protected Dictionary<Type, IManipulator> Manipulators = new Dictionary<Type, IManipulator>();
         private string currentCursor = null;
@@ -323,6 +329,9 @@ namespace ReactUnity.UIToolkit
                 case "viewDataKey":
                     Element.viewDataKey = value?.ToString();
                     return;
+                case "disabled":
+                    Disabled = Convert.ToBoolean(value);
+                    return;
                 default:
                     base.SetProperty(property, value);
                     return;
@@ -442,6 +451,8 @@ namespace ReactUnity.UIToolkit
             }
             return false;
         }
+
+        public virtual void Activate() { }
 
         public class UITClassList : ClassList
         {

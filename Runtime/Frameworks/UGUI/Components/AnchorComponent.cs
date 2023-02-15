@@ -10,7 +10,7 @@ namespace ReactUnity.UGUI
         AnchorClickHandler clickHandler;
 
         public string Url { get; set; } = "";
-        public bool OpenInThisTab { get; set; } = false;
+        public string Target { get; set; } = "_blank";
 
         private bool disabled;
         public bool Disabled
@@ -40,8 +40,8 @@ namespace ReactUnity.UGUI
                 case "url":
                     Url = Convert.ToString(value);
                     return;
-                case "openInThisTab":
-                    OpenInThisTab = Convert.ToBoolean(value);
+                case "target":
+                    Target = Convert.ToString(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -54,33 +54,32 @@ namespace ReactUnity.UGUI
             if (Disabled) return;
             // BUG: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
             if (ev.used) return;
-            if (string.IsNullOrWhiteSpace(Url)) return;
 
             var pe = ev as PointerEventData;
 
-            var openInNewTab = pe.button != PointerEventData.InputButton.Left || !OpenInThisTab;
-            OpenUrl(openInNewTab);
-        }
-
-        public void OpenUrl(bool openInNewTab)
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (openInNewTab) openWindow(Url);
-            else Application.OpenURL(Url);
-#else
-            Application.OpenURL(Url);
-#endif
+            var target = pe.button == PointerEventData.InputButton.Middle ? "_blank" : Target;
+            OpenUrl(target);
         }
 
         public void Activate()
         {
             if (Disabled) return;
-            OpenUrl(!OpenInThisTab);
+            OpenUrl(Target);
+        }
+
+        public void OpenUrl(string target = "_blank")
+        {
+            if (string.IsNullOrWhiteSpace(Url)) return;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            openWindow(Url, target);
+#else
+            Application.OpenURL(Url);
+#endif
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         [System.Runtime.InteropServices.DllImport("__Internal")]
-        private static extern void openWindow(string url);
+        private static extern void openWindow(string url, string target);
 #endif
     }
 }

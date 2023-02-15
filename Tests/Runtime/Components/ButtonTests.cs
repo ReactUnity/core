@@ -67,12 +67,10 @@ namespace ReactUnity.Tests
         public IEnumerator AnchorPropertiesCanBeSet()
         {
             Globals["disabled"] = true;
-            Globals["openInThisTab"] = true;
             Globals["url"] = "https://github.com/ReactUnity/core";
             yield return null;
 
             Assert.IsTrue(Anchor.Disabled);
-            Assert.IsTrue(Anchor.OpenInThisTab);
             Assert.AreEqual("https://github.com/ReactUnity/core", Anchor.Url);
 
             Globals["disabled"] = null;

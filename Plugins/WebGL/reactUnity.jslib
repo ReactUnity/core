@@ -3,11 +3,12 @@
     stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
   },
 
-  openWindow: function (link) {
+  openWindow: function (link, target) {
     var url = reactUnityState.stringify(link);
+    var tg = reactUnityState.stringify(target);
 
     var openUrl = function () {
-      window.open(url);
+      window.open(url, tg || '_blank', 'noopener');
       document.removeEventListener('mouseup', openUrl);
       document.removeEventListener('touchend', openUrl);
     };

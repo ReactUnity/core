@@ -372,6 +372,7 @@ namespace ReactUnity.Styling.Rules
                     framework,
                     "all",
                     "screen",
+                    "reactunity",
                     isEditor ? "editor" : "runtime",
                 });
         }
