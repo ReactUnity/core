@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Scripting.DomProxies
 {
-    public class EventHandler
+    public class EventTarget
     {
         static private List<object> Empty = new List<object>();
 
@@ -34,6 +35,16 @@ namespace ReactUnity.Scripting.DomProxies
             return null;
         }
 
+        public virtual List<object> GetAllEventListeners(string eventName)
+        {
+            if (HandlerLists.TryGetValue(eventName, out var existingHandlers))
+            {
+                return existingHandlers;
+            }
+
+            return Empty;
+        }
+
         public virtual Action AddEventListener(string eventName, object fun)
         {
             if (!HandlerLists.TryGetValue(eventName, out var list))
@@ -49,14 +60,11 @@ namespace ReactUnity.Scripting.DomProxies
                 list.Remove(fun);
         }
 
-        public virtual List<object> GetHandlers(string eventName)
+        public void DispatchEvent(string eventName, ReactContext context, params object[] arguments)
         {
-            if (HandlerLists.TryGetValue(eventName, out var existingHandlers))
-            {
-                return existingHandlers;
-            }
-
-            return Empty;
+            var handlers = GetAllEventListeners(eventName);
+            foreach (var loadHandler in handlers)
+                Callback.From(loadHandler, context).Call(arguments);
         }
     }
 }

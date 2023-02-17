@@ -17,43 +17,43 @@ namespace ReactUnity.Scripting.DomProxies
 
         public object onload
         {
-            get => eventHandler.GetEventListener("load");
-            set => eventHandler.SetEventListener("load", value);
+            get => eventTarget.GetEventListener("load");
+            set => eventTarget.SetEventListener("load", value);
         }
         public object onloadstart
         {
-            get => eventHandler.GetEventListener("loadstart");
-            set => eventHandler.SetEventListener("loadstart", value);
+            get => eventTarget.GetEventListener("loadstart");
+            set => eventTarget.SetEventListener("loadstart", value);
         }
         public object onloadend
         {
-            get => eventHandler.GetEventListener("loadend");
-            set => eventHandler.SetEventListener("loadend", value);
+            get => eventTarget.GetEventListener("loadend");
+            set => eventTarget.SetEventListener("loadend", value);
         }
         public object onerror
         {
-            get => eventHandler.GetEventListener("error");
-            set => eventHandler.SetEventListener("error", value);
+            get => eventTarget.GetEventListener("error");
+            set => eventTarget.SetEventListener("error", value);
         }
         public object onreadystatechange
         {
-            get => eventHandler.GetEventListener("readystatechange");
-            set => eventHandler.SetEventListener("readystatechange", value);
+            get => eventTarget.GetEventListener("readystatechange");
+            set => eventTarget.SetEventListener("readystatechange", value);
         }
         public object ontimeout
         {
-            get => eventHandler.GetEventListener("timeout");
-            set => eventHandler.SetEventListener("timeout", value);
+            get => eventTarget.GetEventListener("timeout");
+            set => eventTarget.SetEventListener("timeout", value);
         }
         public object onabort
         {
-            get => eventHandler.GetEventListener("abort");
-            set => eventHandler.SetEventListener("abort", value);
+            get => eventTarget.GetEventListener("abort");
+            set => eventTarget.SetEventListener("abort", value);
         }
         public object onprogress
         {
-            get => eventHandler.GetEventListener("progress");
-            set => eventHandler.SetEventListener("progress", value);
+            get => eventTarget.GetEventListener("progress");
+            set => eventTarget.SetEventListener("progress", value);
         }
 
         public bool withCredentials { get; set; }
@@ -69,7 +69,7 @@ namespace ReactUnity.Scripting.DomProxies
         private UnityWebRequest request;
         private DisposableHandle requestHandle;
 
-        private EventHandler eventHandler = new EventHandler();
+        private EventTarget eventTarget = new EventTarget();
 
         public int readyState =>
             request == null ? 0 :
@@ -146,8 +146,7 @@ namespace ReactUnity.Scripting.DomProxies
             request = UnityWebRequest.Get(setUrl.href);
             request.method = method;
 
-            var rdHandlers = eventHandler.GetHandlers("readystatechange");
-            foreach (var rdHandler in rdHandlers) Callback.From(rdHandler, context).Call();
+            eventTarget.DispatchEvent("readystatechange", context);
         }
 
         public void append(object name, object value)
@@ -179,14 +178,9 @@ namespace ReactUnity.Scripting.DomProxies
             requestHandle?.Dispose();
             requestHandle = null;
 
-            var handlers = eventHandler.GetHandlers("abort");
-            foreach (var handler in handlers) Callback.From(handler, context).Call();
-
-            var loadHandlers = eventHandler.GetHandlers("loadend");
-            foreach (var loadHandler in loadHandlers) Callback.From(loadHandler, context).Call();
-
-            var rdHandlers = eventHandler.GetHandlers("readystatechange");
-            foreach (var rdHandler in rdHandlers) Callback.From(rdHandler, context).Call();
+            eventTarget.DispatchEvent("abort", context);
+            eventTarget.DispatchEvent("loadend", context);
+            eventTarget.DispatchEvent("readystatechange", context);
         }
 
         public void setRequestHeader(string header, string value)
@@ -233,12 +227,12 @@ namespace ReactUnity.Scripting.DomProxies
 
         public void addEventListener(string eventType, object callback, bool capture = false)
         {
-            eventHandler.AddEventListener(eventType, callback);
+            eventTarget.AddEventListener(eventType, callback);
         }
 
         public void removeEventListener(string eventType, object callback, bool capture = false)
         {
-            eventHandler.RemoveEventListener(eventType, callback);
+            eventTarget.RemoveEventListener(eventType, callback);
         }
 
         private IEnumerator SendWebRequest(UnityWebRequest request)
@@ -252,11 +246,8 @@ namespace ReactUnity.Scripting.DomProxies
                 {
                     hasProgress = true;
 
-                    var prHandlers = eventHandler.GetHandlers("progress");
-                    foreach (var prHandler in prHandlers) Callback.From(prHandler, context).Call();
-
-                    var rdHandlers = eventHandler.GetHandlers("readystatechange");
-                    foreach (var rdHandler in rdHandlers) Callback.From(rdHandler, context).Call();
+                    eventTarget.DispatchEvent("progress", context);
+                    eventTarget.DispatchEvent("readystatechange", context);
                 }
 
                 yield return null;
@@ -264,25 +255,15 @@ namespace ReactUnity.Scripting.DomProxies
 
             if (isError)
             {
-                var errorHandlers = eventHandler.GetHandlers("error");
-                foreach (var errorHandler in errorHandlers) Callback.From(errorHandler, context).Call();
-
-                var loadHandlers = eventHandler.GetHandlers("loadend");
-                foreach (var loadHandler in loadHandlers) Callback.From(loadHandler, context).Call();
-
-                var rdHandlers = eventHandler.GetHandlers("readystatechange");
-                foreach (var rdHandler in rdHandlers) Callback.From(rdHandler, context).Call();
+                eventTarget.DispatchEvent("error", context);
+                eventTarget.DispatchEvent("loadend", context);
+                eventTarget.DispatchEvent("readystatechange", context);
             }
             else
             {
-                var loadHandlers = eventHandler.GetHandlers("load");
-                foreach (var loadHandler in loadHandlers) Callback.From(loadHandler, context).Call();
-
-                loadHandlers = eventHandler.GetHandlers("loadend");
-                foreach (var loadHandler in loadHandlers) Callback.From(loadHandler, context).Call();
-
-                var rdHandlers = eventHandler.GetHandlers("readystatechange");
-                foreach (var rdHandler in rdHandlers) Callback.From(rdHandler, context).Call();
+                eventTarget.DispatchEvent("load", context);
+                eventTarget.DispatchEvent("loadend", context);
+                eventTarget.DispatchEvent("readystatechange", context);
             }
         }
 

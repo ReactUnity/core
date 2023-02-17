@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Helpers;
 
 namespace ReactUnity.Scripting.DomProxies
 {
@@ -16,41 +15,65 @@ namespace ReactUnity.Scripting.DomProxies
 
         private ReactContext context;
 
-        public object onmessage
-        {
-            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') })); }
-            get => null;
-        }
-
-        public object onclose
-        {
-            set
-            {
-                socket.OnClose += (code, reason) => {
-                    if (context.IsDisposed) return;
-                    context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { code, reason }));
-                };
-            }
-            get => null;
-        }
-
         public object onopen
         {
-            set { socket.OnOpen += () => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call()); }
-            get => null;
+            get => eventTarget.GetEventListener("open");
+            set => eventTarget.SetEventListener("open", value);
+        }
+
+        public object onmessage
+        {
+            get => eventTarget.GetEventListener("message");
+            set => eventTarget.SetEventListener("message", value);
         }
 
         public object onerror
         {
-            set { socket.OnError += (message) => context.Dispatcher.OnceUpdate(() => Callback.From(value, context)?.Call(new { message })); }
-            get => null;
+            get => eventTarget.GetEventListener("error");
+            set => eventTarget.SetEventListener("error", value);
         }
+
+        public object onclose
+        {
+            get => eventTarget.GetEventListener("close");
+            set => eventTarget.SetEventListener("close", value);
+        }
+
+        private EventTarget eventTarget = new EventTarget();
 
         public WebSocketProxy(ReactContext context, string url)
         {
             socket = WebSocketFactory.CreateInstance(url);
             this.context = context;
             context.Disposables.Add(Dispose);
+
+            socket.OnOpen += () => {
+                if (context.IsDisposed) return;
+                context.Dispatcher.OnceUpdate(() =>
+                    eventTarget.DispatchEvent("open", context));
+            };
+
+            socket.OnMessage += (rawData) => {
+                if (context.IsDisposed) return;
+                var arg = new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') };
+                context.Dispatcher.OnceUpdate(() =>
+                    eventTarget.DispatchEvent("message", context, arg));
+            };
+
+            socket.OnError += (message) => {
+                if (context.IsDisposed) return;
+                var arg = new { message };
+                context.Dispatcher.OnceUpdate(() =>
+                    eventTarget.DispatchEvent("error", context, arg));
+            };
+
+            socket.OnClose += (code, reason) => {
+                if (context.IsDisposed) return;
+                var arg = new { code, reason };
+                context.Dispatcher.OnceUpdate(() =>
+                    eventTarget.DispatchEvent("close", context, arg));
+            };
+
             socket.Connect();
         }
 
@@ -61,6 +84,11 @@ namespace ReactUnity.Scripting.DomProxies
             socket.Close((WebSocketCloseCode) code, reason);
         }
 
+        public void send(byte[] data)
+        {
+            socket.Send(data);
+        }
+
         public void Dispose()
         {
             if (socket != null && socket.GetState() == WebSocketState.Open)
@@ -68,6 +96,16 @@ namespace ReactUnity.Scripting.DomProxies
                 socket.Close(WebSocketCloseCode.Normal, "dispose");
                 socket = null;
             }
+        }
+
+        public void addEventListener(string eventType, object callback, bool capture = false)
+        {
+            eventTarget.AddEventListener(eventType, callback);
+        }
+
+        public void removeEventListener(string eventType, object callback, bool capture = false)
+        {
+            eventTarget.RemoveEventListener(eventType, callback);
         }
     }
 }
