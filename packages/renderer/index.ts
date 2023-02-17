@@ -10,6 +10,7 @@ export {
   batchedUpdates,
   batchedUpdates as unstable_batchedUpdates,
   flushSync,
+  render,
   Renderer
 } from './src/renderer/renderer';
 
