@@ -325,6 +325,9 @@ const baseConfigFactory = function (webpackEnv) {
         // Allows replacing react-dom with @reactunity/renderer to support some functionality like `unstable_batchedUpdates`
         'react-dom': '@reactunity/renderer',
 
+        // Replaces react-unity-webgl with @reactunity/renderer/webgl-compat to support its functionality
+        'react-unity-webgl': '@reactunity/renderer/webgl-compat',
+
         ...(modules.webpackAliases || {}),
       },
       plugins: [
