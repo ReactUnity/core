@@ -1,22 +1,12 @@
 {
-  "compileOnSave": false,
+  "extends": "@reactunity/scripts",
   "compilerOptions": {
     "outDir": "./dist",
-    "sourceMap": false,
-    "allowJs": true,
-    "pretty": true,
-    "declaration": true,
-    "module": "ES2015",
-    "moduleResolution": "node",
-    "preserveSymlinks": true,
-    "importHelpers": false,
-    "strict": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "jsx": "react-jsx",
     "target": "ES5",
-    "skipLibCheck": true,
-    "preserveConstEnums": true,
+    "esModuleInterop": false,
+    "noEmit": false,
+    "declaration": true,
+    "module": "es6",
     "lib": [
       "ES2019"
     ],
@@ -24,6 +14,7 @@
   },
   "files": [
     "index.ts",
-    "tests.ts"
+    "tests.ts",
+    "webgl-compat.ts"
   ]
 }

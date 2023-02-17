@@ -1,3 +1,4 @@
+import type { UnityInstance } from 'react-unity-webgl/typings/unity-instance';
 import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from '../generated';
 
 export type NamespaceMap = {
@@ -21,4 +22,8 @@ declare global {
   }
 
   var Interop: ReactUnity.Helpers.ReactInterop & DefaultInterop;
+
+  var ReactUnityWebGLCompat: UnityInstance;
+
+  var $$webglWindow: typeof globalThis | undefined;
 }

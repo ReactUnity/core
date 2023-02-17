@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 15/02/2023 19:15:04
+// Generated 18/02/2023 03:06:07
 //
 /* eslint-disable */
 
@@ -2529,6 +2529,17 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class ReactUnityWebGLCompat {
+      constructor();
+      Module: ReactUnity.Helpers.ReactUnityWebGLCompat_WebGLCompatModule;
+      SendMessage(gameObjectName: string, methodName: string, parameter: any): void;
+      SetFullscreen(fullScreen: number): void;
+      Quit(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class YogaHelpers {
       static IsLegacyYoga: boolean;
       static HasValue(val: Facebook.Yoga.YogaValue): boolean;
@@ -2539,6 +2550,26 @@ export declare namespace ReactUnity {
       static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
       static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: UnityEngine.Vector2, yInverted?: boolean): UnityEngine.Vector2;
       static GetRatioValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactUnityWebGLCompat_WebGLCompatModule {
+      constructor();
+      canvas: ReactUnity.Helpers.ReactUnityWebGLCompat_WebGLCompatModule_WebGLCompatCanvas;
+      SetFullscreen(fullScreen: number): void;
+      Pointer_stringify(pointer: number, length: number): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactUnityWebGLCompat_WebGLCompatModule_WebGLCompatCanvas {
+      constructor();
+      requestPointerLock(): void;
+      exitPointerLock(): void;
+      toDataUrl(type: string, quality: number): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3212,6 +3243,7 @@ export declare namespace ReactUnity {
       EngineInitialized: boolean;
       Debug: boolean;
       AwaitDebugger: boolean;
+      WebGLCompat: ReactUnity.Helpers.ReactUnityWebGLCompat;
       Context: ReactUnity.ReactContext;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       EngineFactory: ReactUnity.Scripting.IJavaScriptEngineFactory;
@@ -3221,6 +3253,7 @@ export declare namespace ReactUnity {
       ExecuteScript(code: string, fileName?: string): void;
       EvaluateScript(code: string, fileName?: string): any;
       CreateEventCallback(code: string, thisVal: any): ReactUnity.Helpers.Callback;
+      WebGLCompatDispatchEvent(eventName: string, ...args: any[]): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -3444,13 +3477,14 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export class EventHandler {
+      export class EventTarget {
         constructor();
         SetEventListener(eventName: string, fun: any): void;
         GetEventListener(eventName: string): any;
+        GetAllEventListeners(eventName: string): any[];
         AddEventListener(eventName: string, fun: any): (() => void);
         RemoveEventListener(eventName: string, fun: any): void;
-        GetHandlers(eventName: string): any[];
+        DispatchEvent(eventName: string, context: ReactUnity.ReactContext, ...argumentsCS: any[]): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3730,10 +3764,10 @@ export declare namespace ReactUnity {
       export class WebSocketProxy {
         constructor(context: ReactUnity.ReactContext, url: string);
         constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
-        onmessage: any; // System.Object
-        onclose: any; // System.Object
         onopen: any; // System.Object
+        onmessage: any; // System.Object
         onerror: any; // System.Object
+        onclose: any; // System.Object
         socket: ReactUnity.Scripting.DomProxies.WebSocket;
         static CONNECTING: number;
         static OPEN: number;
@@ -3741,7 +3775,10 @@ export declare namespace ReactUnity {
         static CLOSED: number;
         binaryType: string;
         close(code?: number, reason?: string): void;
+        send(data: Byte[]): void;
         Dispose(): void;
+        addEventListener(eventType: string, callback: any, capture?: boolean): void;
+        removeEventListener(eventType: string, callback: any, capture?: boolean): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
