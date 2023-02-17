@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 namespace ReactUnity.Scripting.DomProxies
 {
@@ -11,7 +10,7 @@ namespace ReactUnity.Scripting.DomProxies
         {
         }
 
-        public Location(ReactContext ctx) : this("/#" + ctx.Source.GetResolvedSourceUrl().Split('#').ElementAtOrDefault(1) ?? "")
+        public Location(ReactContext ctx) : this(ctx.Source.GetResolvedSourceUrl())
         {
             OnReload += () => {
                 ctx.Dispatcher.OnceUpdate(ctx.OnRestart);
