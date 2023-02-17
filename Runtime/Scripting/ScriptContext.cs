@@ -28,6 +28,9 @@ namespace ReactUnity.Scripting
         public bool Debug { get; set; }
         public bool AwaitDebugger { get; set; }
 
+        public ReactUnityWebGLCompat WebGLCompat { get; } = new ReactUnityWebGLCompat();
+        private Callback WebGLCompatDispatchEventCallback { get; set; }
+
         public ScriptContext(ReactContext context, JavascriptEngineType engineType, bool debug = false, bool awaitDebugger = false)
         {
             Context = context;
@@ -75,6 +78,7 @@ namespace ReactUnity.Scripting
                     engine.SetGlobal("HostContainer", Context.Host);
                     engine.SetGlobal("Globals", Context.Globals);
                     engine.SetGlobal("localStorage", Context.LocalStorage);
+                    engine.SetGlobal("ReactUnityWebGLCompat", WebGLCompat);
 
                     CreateDOMShims(engine, Context);
                     CreateConsole(engine);
@@ -85,15 +89,26 @@ namespace ReactUnity.Scripting
 
                     engine.Execute(@"
                         global.Blob = undefined;
-                        global.postMessage = function() {};
+                        global.postMessage = function postMessage () {};
 
                         // Required for JSS
-                        global.getComputedStyle = function() { return {}; };
+                        global.getComputedStyle = function getComputedStyle () { return {}; };
 
                         // Required for styled-components
                         global.HTMLElement = {};
                         void 0;
+
+                        global.dispatchWebGLCompatEvent = function dispatchWebGLCompatEvent (name, args) {
+                            var ev = global.dispatchReactUnityEvent;
+                            if (typeof ev === 'function') ev.call(null, name, ...args);
+
+                            ev = typeof $$webglWindow !== 'undefined' && $$webglWindow.dispatchReactUnityEvent;
+                            if (typeof ev === 'function') ev.apply(null, name, ...args);
+                        };
                     ", "ReactUnity/shims/dom");
+
+                    var dispatchWebGLCompatCallback = engine.GetGlobal("dispatchWebGLCompatEvent");
+                    WebGLCompatDispatchEventCallback = new Callback(dispatchWebGLCompatCallback, Context);
 
                     EngineInitialized = true;
 
@@ -246,8 +261,15 @@ namespace ReactUnity.Scripting
             }
         }
 
+        public void WebGLCompatDispatchEvent(string eventName, params object[] args)
+        {
+            WebGLCompatDispatchEventCallback.Call(eventName, args);
+        }
+
         public void Dispose()
         {
+            WebGLCompatDispatchEventCallback?.Dispose();
+            WebGLCompatDispatchEventCallback = null;
             Interop?.Dispose();
             Interop = null;
             engine?.Dispose();
