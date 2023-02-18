@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Reactive;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 
@@ -40,7 +41,7 @@ namespace ReactUnity
         public string ClassName { get; set; }
         public ClassList ClassList { get; }
         public StateStyles StateStyles { get; }
-        public WatchableObjectRecord Data { get; } = new WatchableObjectRecord();
+        public ReactiveObjectRecord Data { get; } = new ReactiveObjectRecord();
         public int ParentIndex { get; }
         public int CurrentOrder { get; }
         public float ScrollLeft { get; set; }

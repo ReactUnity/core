@@ -1,8 +1,8 @@
-using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 
 namespace ReactUnity.Styling
 {
-    public class InlineStyles : WatchableAdaptibleRecordBag<IStyleProperty, object>
+    public class InlineStyles : ReactiveAdaptibleRecordBag<IStyleProperty, object>
     {
         protected override object RetrieveValue(IStyleProperty key)
         {

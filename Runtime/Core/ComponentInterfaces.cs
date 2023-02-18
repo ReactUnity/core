@@ -4,6 +4,7 @@ using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Reactive;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 
@@ -31,7 +32,7 @@ namespace ReactUnity
         string ClassName { get; set; }
         ClassList ClassList { get; }
         StateStyles StateStyles { get; }
-        WatchableObjectRecord Data { get; }
+        ReactiveObjectRecord Data { get; }
         int ParentIndex { get; }
         int CurrentOrder { get; }
         int RefId { get; set; }

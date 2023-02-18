@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Helpers;
 
-namespace ReactUnity.Helpers
+namespace ReactUnity.Reactive
 {
-    public class WatchableSet<T> : ICollection<T>, ISet<T>, IWatchable<HashSet<T>>
+    public class ReactiveSet<T> : ICollection<T>, ISet<T>, IReactive<HashSet<T>>
     {
         private event Action<HashSet<T>> changed;
 

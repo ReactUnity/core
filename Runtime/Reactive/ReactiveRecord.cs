@@ -8,17 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 #if REACT_CLEARSCRIPT
 using Microsoft.ClearScript;
-using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTable<Microsoft.ClearScript.ScriptEngine, ReactUnity.Helpers.PrototypeEntry>;
+using ReactUnity.Helpers;
+using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTable<Microsoft.ClearScript.ScriptEngine, ReactUnity.Reactive.PrototypeEntry>;
 #endif
 
-namespace ReactUnity.Helpers
+namespace ReactUnity.Reactive
 {
     [UnityEngine.Scripting.Preserve]
-    public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable, IWatchable<Dictionary<TKey, T>>
+    public class ReactiveDictionary<TKey, T> : IDictionary<TKey, T>, IDisposable, IReactive<Dictionary<TKey, T>>
     {
         protected Dictionary<TKey, T> collection;
 
-        internal event Action<TKey, T, WatchableDictionary<TKey, T>> changed;
+        internal event Action<TKey, T, ReactiveDictionary<TKey, T>> changed;
 
         public T this[TKey key]
         {
@@ -26,12 +27,12 @@ namespace ReactUnity.Helpers
             set => SaveValue(key, value, true);
         }
 
-        public WatchableDictionary()
+        public ReactiveDictionary()
         {
             collection = new Dictionary<TKey, T>();
         }
 
-        public WatchableDictionary(IDictionary<TKey, T> dict)
+        public ReactiveDictionary(IDictionary<TKey, T> dict)
         {
             collection = new Dictionary<TKey, T>(dict);
         }
@@ -48,7 +49,7 @@ namespace ReactUnity.Helpers
 
         public bool IsReadOnly => false;
 
-        Dictionary<TKey, T> IWatchable<Dictionary<TKey, T>>.Value => collection;
+        Dictionary<TKey, T> IReactive<Dictionary<TKey, T>>.Value => collection;
 
         public void Add(TKey key, T value)
         {
@@ -130,12 +131,12 @@ namespace ReactUnity.Helpers
 
         public Action AddListener(Action<Dictionary<TKey, T>> listener)
         {
-            var cb = new Action<TKey, T, WatchableDictionary<TKey, T>>((key, value, dc) => listener.Invoke(dc.collection));
+            var cb = new Action<TKey, T, ReactiveDictionary<TKey, T>>((key, value, dc) => listener.Invoke(dc.collection));
             changed += cb;
             return () => changed -= cb;
         }
 
-        public Action AddListener(Action<TKey, T, WatchableDictionary<TKey, T>> listener)
+        public Action AddListener(Action<TKey, T, ReactiveDictionary<TKey, T>> listener)
         {
             changed += listener;
             return () => changed -= listener;
@@ -175,7 +176,7 @@ namespace ReactUnity.Helpers
         }
     }
 
-    public abstract class WatchableAdaptibleRecord<TKey, T> : WatchableDictionary<TKey, T>, IDictionary<string, object>
+    public abstract class ReactiveAdaptibleRecord<TKey, T> : ReactiveDictionary<TKey, T>, IDictionary<string, object>
     {
         public object this[string key]
         {
@@ -253,7 +254,7 @@ namespace ReactUnity.Helpers
         public object GetValueOrDefault(string key) => GetValueOrDefault(StringToKey(key));
     }
 
-    public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>
+    public abstract class ReactiveAdaptibleRecordBag<TKey, T> : ReactiveAdaptibleRecord<TKey, T>
 #if REACT_CLEARSCRIPT
         , IPropertyBag
         , IScriptableObject
@@ -265,15 +266,15 @@ namespace ReactUnity.Helpers
         public void OnExposedToScriptCode(ScriptEngine engine)
         {
             var entry = map.GetOrCreateValue(engine);
-            entry.ExposeObject<WatchableAdaptibleRecord<TKey, T>>(this, engine);
+            entry.ExposeObject<ReactiveAdaptibleRecord<TKey, T>>(this, engine);
         }
 #endif
     }
 
 
-    public class WatchableRecord<T> : WatchableDictionary<string, T> { }
+    public class ReactiveRecord<T> : ReactiveDictionary<string, T> { }
 
-    public class WatchableObjectRecord : WatchableRecord<object>
+    public class ReactiveObjectRecord : ReactiveRecord<object>
 #if REACT_CLEARSCRIPT
         , IPropertyBag
         , IScriptableObject
@@ -285,7 +286,7 @@ namespace ReactUnity.Helpers
         public void OnExposedToScriptCode(ScriptEngine engine)
         {
             var entry = map.GetOrCreateValue(engine);
-            entry.ExposeObject<WatchableRecord<object>>(this, engine);
+            entry.ExposeObject<ReactiveRecord<object>>(this, engine);
         }
 #endif
     }

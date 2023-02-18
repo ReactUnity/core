@@ -1,15 +1,15 @@
 using NUnit.Framework;
-using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 
 namespace ReactUnity.Tests.Editor
 {
     [TestFixture]
-    public class WatchableSetTests
+    public class ReactiveSetTests
     {
         [Test]
         public void TestMainFunctions()
         {
-            var dc = new WatchableSet<string>();
+            var dc = new ReactiveSet<string>();
 
             dc.Add("test1");
             Assert.True(dc.Contains("test1"));

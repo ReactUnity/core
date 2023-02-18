@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 using UnityEngine;
 
 namespace ReactUnity.Styling
@@ -21,7 +21,7 @@ namespace ReactUnity.Styling
     }
 
     [System.Serializable]
-    public class CursorRecord : WatchableRecord<CursorPair>, ISerializationCallbackReceiver
+    public class CursorRecord : ReactiveRecord<CursorPair>, ISerializationCallbackReceiver
     {
         [SerializeField] List<CursorPair> Entries = new List<CursorPair>();
 

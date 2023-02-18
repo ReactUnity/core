@@ -1,8 +1,9 @@
+using ReactUnity.Reactive;
 using ReactUnity.Scheduling;
 
 namespace ReactUnity.Helpers
 {
-    public class GlobalRecord : WatchableObjectRecord
+    public class GlobalRecord : ReactiveObjectRecord
     {
         private System.Action removeStringDictionaryListener;
         private IDispatcher dispatcher;
@@ -26,7 +27,7 @@ namespace ReactUnity.Helpers
 
             removeStringDictionaryListener = dict.AddListener((key, value, dc) => {
                 if (key != null) this[key] = value;
-                else UpdateStringObjectDictionary(dc as WatchableRecord<object>, false);
+                else UpdateStringObjectDictionary(dc as ReactiveRecord<object>, false);
             });
 
             dict.AddReserializeListener((dc) => {
@@ -35,7 +36,7 @@ namespace ReactUnity.Helpers
         }
 
 
-        public void UpdateStringObjectDictionary(WatchableRecord<object> dict, bool isSerializing)
+        public void UpdateStringObjectDictionary(ReactiveRecord<object> dict, bool isSerializing)
         {
             ClearWithoutNotify();
             foreach (var entry in dict)

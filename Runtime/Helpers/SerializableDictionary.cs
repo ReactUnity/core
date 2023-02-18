@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Reactive;
 using UnityEngine;
 
 namespace ReactUnity.Helpers
@@ -16,7 +17,7 @@ namespace ReactUnity.Helpers
     }
 
     [System.Serializable]
-    public class SerializableDictionary : WatchableObjectRecord, ISerializationCallbackReceiver
+    public class SerializableDictionary : ReactiveObjectRecord, ISerializationCallbackReceiver
     {
         [SerializeField] List<StringObjectPair> Entries = new List<StringObjectPair>();
 

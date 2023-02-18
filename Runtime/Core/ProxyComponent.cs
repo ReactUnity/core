@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Reactive;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 
@@ -76,7 +77,7 @@ namespace ReactUnity
 
         public StateStyles StateStyles => Proxy.StateStyles;
 
-        public WatchableObjectRecord Data => Proxy.Data;
+        public ReactiveObjectRecord Data => Proxy.Data;
 
         public int ParentIndex => Proxy.ParentIndex;
 

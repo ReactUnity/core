@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 
-namespace ReactUnity.Helpers
+namespace ReactUnity.Reactive
 {
-    public class WatchableList<T> : IList<T>, IWatchable<IList<T>>
+    public class ReactiveList<T> : IList<T>, IReactive<IList<T>>
     {
         private event Action<IList<T>> changed;
 

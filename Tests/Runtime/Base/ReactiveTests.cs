@@ -1,14 +1,15 @@
 using System.Collections;
 using NUnit.Framework;
 using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 using ReactUnity.Scripting;
 using UnityEngine;
 
 namespace ReactUnity.Tests
 {
-    public class WatchableTests : TestBase
+    public class ReactiveTests : TestBase
     {
-        public WatchableTests(JavascriptEngineType engineType) : base(engineType) { }
+        public ReactiveTests(JavascriptEngineType engineType) : base(engineType) { }
 
 
         [UGUITest(Script = @"
@@ -82,40 +83,40 @@ namespace ReactUnity.Tests
         [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
-                const val = ReactUnity.useWatchable(globals.testWatchable);
+                const val = ReactUnity.useReactiveValue(globals.testReactive);
                 return <text>{val + ''}</text>;
             }
         ")]
-        public IEnumerator TestWatchableProperty()
+        public IEnumerator TestReactiveProperty()
         {
             yield return null;
 
             var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
             Assert.AreEqual("undefined", text.text);
 
-            var watchable = new Watchable<string>("hey");
+            var reactive = new ReactiveValue<string>("hey");
 
-            Globals.Set("testWatchable", watchable);
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("hey", text.text);
 
-            watchable.Value = "wah";
+            reactive.Value = "wah";
             yield return null;
             Assert.AreEqual("wah", text.text);
 
-            watchable = new Watchable<string>();
-            Globals.Set("testWatchable", watchable);
+            reactive = new ReactiveValue<string>();
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("null", text.text);
 
-            Globals.Set("testWatchable", null);
+            Globals.Set("testReactive", null);
             yield return null;
             yield return null;
             Assert.AreEqual("undefined", text.text);
 
-            Globals.Set("testWatchable", 5);
+            Globals.Set("testReactive", 5);
             yield return null;
             yield return null;
             Assert.AreEqual("undefined", text.text);
@@ -125,40 +126,40 @@ namespace ReactUnity.Tests
         [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
-                const val = ReactUnity.useWatchable(globals.testWatchable);
+                const val = ReactUnity.useReactiveValue(globals.testReactive);
                 return <text>{val?.x + ''}</text>;
             }
         ")]
-        public IEnumerator TestWatchableStruct()
+        public IEnumerator TestReactiveStruct()
         {
             yield return null;
 
             var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
             Assert.AreEqual("undefined", text.text);
 
-            var watchable = new Watchable<Rect>(new Rect(1, 2, 3, 4));
+            var reactive = new ReactiveValue<Rect>(new Rect(1, 2, 3, 4));
 
-            Globals.Set("testWatchable", watchable);
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("1", text.text);
 
-            watchable.Value = new Rect(5, 6, 7, 8);
+            reactive.Value = new Rect(5, 6, 7, 8);
             yield return null;
             Assert.AreEqual("5", text.text);
 
-            watchable = new Watchable<Rect>();
-            Globals.Set("testWatchable", watchable);
+            reactive = new ReactiveValue<Rect>();
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("0", text.text);
 
-            Globals.Set("testWatchable", null);
+            Globals.Set("testReactive", null);
             yield return null;
             yield return null;
             Assert.AreEqual("undefined", text.text);
 
-            Globals.Set("testWatchable", 5);
+            Globals.Set("testReactive", 5);
             yield return null;
             yield return null;
             Assert.AreEqual("undefined", text.text);
@@ -167,37 +168,37 @@ namespace ReactUnity.Tests
         [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
-                const w = ReactUnity.useWatchable(globals.testWatchable);
+                const w = ReactUnity.useReactiveValue(globals.testReactive);
                 const val = [...w || []];
                 return <text>{val?.length + ''}</text>;
             }
         ")]
-        public IEnumerator TestWatchableList()
+        public IEnumerator TestReactiveList()
         {
             yield return null;
 
             var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
             Assert.AreEqual("0", text.text);
 
-            var watchable = new WatchableList<int>() { 1, 2, 3, 4 };
+            var reactive = new ReactiveList<int>() { 1, 2, 3, 4 };
 
-            Globals.Set("testWatchable", watchable);
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("4", text.text);
 
-            watchable.Add(5);
+            reactive.Add(5);
             yield return null;
             yield return null;
             Assert.AreEqual("5", text.text);
 
-            watchable.RemoveAt(0);
-            watchable.RemoveAt(0);
+            reactive.RemoveAt(0);
+            reactive.RemoveAt(0);
             yield return null;
             yield return null;
             Assert.AreEqual("3", text.text);
 
-            Globals.Set("testWatchable", null);
+            Globals.Set("testReactive", null);
             yield return null;
             yield return null;
             Assert.AreEqual("0", text.text);
@@ -206,36 +207,36 @@ namespace ReactUnity.Tests
         [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
-                const w = ReactUnity.useWatchable(globals.testWatchable);
+                const w = ReactUnity.useReactiveValue(globals.testReactive);
                 return <text>{w?.Count + ''}</text>;
             }
         ")]
-        public IEnumerator TestWatchableSet()
+        public IEnumerator TestReactiveSet()
         {
             yield return null;
 
             var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
             Assert.AreEqual("undefined", text.text);
 
-            var watchable = new WatchableSet<int>() { 1, 2, 3, 4 };
+            var reactive = new ReactiveSet<int>() { 1, 2, 3, 4 };
 
-            Globals.Set("testWatchable", watchable);
+            Globals.Set("testReactive", reactive);
             yield return null;
             yield return null;
             Assert.AreEqual("4", text.text);
 
-            watchable.Add(5);
+            reactive.Add(5);
             yield return null;
             yield return null;
             Assert.AreEqual("5", text.text);
 
-            watchable.Remove(1);
-            watchable.Remove(2);
+            reactive.Remove(1);
+            reactive.Remove(2);
             yield return null;
             yield return null;
             Assert.AreEqual("3", text.text);
 
-            Globals.Set("testWatchable", null);
+            Globals.Set("testReactive", null);
             yield return null;
             yield return null;
             Assert.AreEqual("undefined", text.text);

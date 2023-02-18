@@ -6,6 +6,7 @@ using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers.Visitors;
+using ReactUnity.Reactive;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace ReactUnity
         ReactContext IReactComponent.Context => Context;
         public IContainerComponent Parent { get; private set; }
 
-        public WatchableObjectRecord Data { get; private set; } = new WatchableObjectRecord();
+        public ReactiveObjectRecord Data { get; private set; } = new ReactiveObjectRecord();
         public YogaNode Layout { get; }
         public NodeStyle ComputedStyle => StyleState.Active;
         public StyleState StyleState { get; private set; }
@@ -199,13 +200,13 @@ namespace ReactUnity
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void DataChanged(string key, object value, WatchableDictionary<string, object> style)
+        protected void DataChanged(string key, object value, ReactiveDictionary<string, object> style)
         {
             MarkForStyleResolvingWithSiblings(true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void StyleChanged(IStyleProperty key, object value, WatchableDictionary<IStyleProperty, object> style)
+        protected void StyleChanged(IStyleProperty key, object value, ReactiveDictionary<IStyleProperty, object> style)
         {
             MarkForStyleResolving(key == null || key.inherited);
         }

@@ -1,17 +1,9 @@
 using System;
+using ReactUnity.Helpers;
 
-namespace ReactUnity.Helpers
+namespace ReactUnity.Reactive
 {
-    public interface IWatchable<T>
-    {
-        T Value { get; }
-        void Change();
-        Action AddListener(object cb);
-        Action AddListener(Action<T> listener);
-    }
-
-
-    public class Watchable<T> : IWatchable<T>
+    public class ReactiveValue<T> : IReactive<T>
     {
         private event Action<T> changed;
 
@@ -27,9 +19,9 @@ namespace ReactUnity.Helpers
             }
         }
 
-        public Watchable() { }
+        public ReactiveValue() { }
 
-        public Watchable(T value)
+        public ReactiveValue(T value)
         {
             current = value;
         }

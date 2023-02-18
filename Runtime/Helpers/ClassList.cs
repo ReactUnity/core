@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.Reactive;
 
 namespace ReactUnity.Helpers
 {
@@ -7,7 +8,7 @@ namespace ReactUnity.Helpers
         void OnClassChange();
     }
 
-    public class ClassList : WatchableSet<string>
+    public class ClassList : ReactiveSet<string>
     {
         private readonly IClassChangeHandler Component;
 
