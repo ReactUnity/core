@@ -45,7 +45,7 @@ namespace ReactUnity.Tests
 
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected Canvas CanvasCmp => Canvas.GetComponent<Canvas>();
-        protected ReactUnityUGUI Component => Canvas?.GetComponentInChildren<ReactUnityUGUI>();
+        protected ReactRendererUGUI Component => Canvas?.GetComponentInChildren<ReactRendererUGUI>();
         protected RectTransform RectTransform => Component.transform as RectTransform;
         protected ReactContext Context => Component?.Context;
         protected UGUIContext UGUIContext => Context as UGUIContext;

@@ -1,28 +1,24 @@
-using System.Collections.Generic;
 using ReactUnity.Scheduling;
-using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
 
-namespace ReactUnity.UGUI
+namespace ReactUnity.Noop
 {
-    public class ReactUnityUGUI : ReactUnityBase
+    [AddComponentMenu("")]
+    internal class ReactRendererNoop : ReactRendererBase
     {
         public RectTransform Root => transform as RectTransform;
-        public CursorSet CursorSet;
-        public IconSet DefaultIconSet;
-        public List<IconSet> IconSets;
 
         protected override void ClearRoot()
         {
             if (!Root) return;
             for (int i = Root.childCount - 1; i >= 0; i--)
-                GameObject.DestroyImmediate(Root.GetChild(i).gameObject);
+                DestroyImmediate(Root.GetChild(i).gameObject);
         }
 
         protected override ReactContext CreateContext(ScriptSource script)
         {
-            return new UGUIContext(new UGUIContext.Options
+            return new NoopContext(new NoopContext.Options
             {
                 HostElement = Root,
                 Globals = Globals,
@@ -30,9 +26,6 @@ namespace ReactUnity.UGUI
                 Timer = Timer ?? UnscaledTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = () => Render(),
-                IconSets = IconSets,
-                DefaultIconSet = DefaultIconSet,
-                CursorSet = CursorSet,
                 EngineType = EngineType,
                 Debug = AdvancedOptions.DebugMode != DebugMode.None,
                 AwaitDebugger = AdvancedOptions.DebugMode == DebugMode.DebugAndAwait,
@@ -43,9 +36,6 @@ namespace ReactUnity.UGUI
             });
         }
 
-        protected override IMediaProvider CreateMediaProvider()
-        {
-            return DefaultMediaProvider.CreateMediaProvider("runtime", "ugui", false);
-        }
+        protected override IMediaProvider CreateMediaProvider() => DefaultMediaProvider.CreateMediaProvider("runtime", "noop", false);
     }
 }

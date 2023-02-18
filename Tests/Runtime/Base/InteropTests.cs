@@ -17,7 +17,7 @@ namespace ReactUnity.Tests
             public bool started;
             public void Start()
             {
-                var component = GetComponent<UGUI.ReactUnityUGUI>();
+                var component = GetComponent<UGUI.ReactRendererUGUI>();
                 if (type == "start_before" || type == "update_before") component.Render();
 
                 if (type != "update_before")
@@ -32,7 +32,7 @@ namespace ReactUnity.Tests
             {
                 if (!started)
                 {
-                    var component = GetComponent<UGUI.ReactUnityUGUI>();
+                    var component = GetComponent<UGUI.ReactRendererUGUI>();
                     if (type == "update_before")
                     {
                         component.Globals["myComponent"] = this;

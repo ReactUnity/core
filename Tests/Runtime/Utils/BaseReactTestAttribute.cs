@@ -23,7 +23,7 @@ namespace ReactUnity.Tests
         public override IEnumerator BeforeTest(ITest test)
         {
             var canvas = GameObject.Find("REACT_CANVAS");
-            var cmp = canvas?.GetComponentInChildren<ReactUnityBase>();
+            var cmp = canvas?.GetComponentInChildren<ReactRendererBase>();
             if (cmp?.Context != null && SkipIfExisting) yield break;
 
             yield return base.BeforeTest(test);
@@ -45,18 +45,18 @@ namespace ReactUnity.Tests
             if (AutoRender) ru.Render();
         }
 
-        static public ReactUnityBase CreateReactUnity(JavascriptEngineType engineType, ScriptSource script)
+        static public ReactRendererBase CreateReactUnity(JavascriptEngineType engineType, ScriptSource script)
         {
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
-            var ru = canvas.GetComponentInChildren<ReactUnityBase>();
+            var ru = canvas.GetComponentInChildren<ReactRendererBase>();
 
             ru.EngineType = engineType;
             ru.Source = script;
             ru.AdvancedOptions.AutoRender = false;
             ru.enabled = true;
 
-            ru.AdvancedOptions.DebugMode = TestHelpers.IsDebugEnabled ? ReactUnityBase.DebugMode.DebugAndAwait : ReactUnityBase.DebugMode.None;
+            ru.AdvancedOptions.DebugMode = TestHelpers.IsDebugEnabled ? ReactRendererBase.DebugMode.DebugAndAwait : ReactRendererBase.DebugMode.None;
 
             return ru;
         }

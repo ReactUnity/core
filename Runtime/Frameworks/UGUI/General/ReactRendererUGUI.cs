@@ -1,25 +1,28 @@
-#if UNITY_2021_2_OR_NEWER
+using System.Collections.Generic;
 using ReactUnity.Scheduling;
+using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace ReactUnity.UIToolkit
+namespace ReactUnity.UGUI
 {
-    [RequireComponent(typeof(UIDocument))]
-    [RequireComponent(typeof(AudioSource))]
-    public class ReactUnityUIDocument : ReactUnityBase
+    public class ReactRendererUGUI : ReactRendererBase
     {
-        public VisualElement Root => GetComponent<UIDocument>()?.rootVisualElement;
+        public RectTransform Root => transform as RectTransform;
+        public CursorSet CursorSet;
+        public IconSet DefaultIconSet;
+        public List<IconSet> IconSets;
 
         protected override void ClearRoot()
         {
-            Root?.Clear();
+            if (!Root) return;
+            for (int i = Root.childCount - 1; i >= 0; i--)
+                DestroyImmediate(Root.GetChild(i).gameObject);
         }
 
         protected override ReactContext CreateContext(ScriptSource script)
         {
-            var ctx = new UIToolkitContext(new UIToolkitContext.Options
+            return new UGUIContext(new UGUIContext.Options
             {
                 HostElement = Root,
                 Globals = Globals,
@@ -27,7 +30,9 @@ namespace ReactUnity.UIToolkit
                 Timer = Timer ?? UnscaledTimer.Instance,
                 MediaProvider = MediaProvider,
                 OnRestart = () => Render(),
-                OnAudioPlayback = PlayAudio,
+                IconSets = IconSets,
+                DefaultIconSet = DefaultIconSet,
+                CursorSet = CursorSet,
                 EngineType = EngineType,
                 Debug = AdvancedOptions.DebugMode != DebugMode.None,
                 AwaitDebugger = AdvancedOptions.DebugMode == DebugMode.DebugAndAwait,
@@ -36,20 +41,11 @@ namespace ReactUnity.UIToolkit
                 Pooling = AdvancedOptions.Pooling,
                 UnknownPropertyHandling = AdvancedOptions.UnknownPropertyHandling,
             });
-            ctx.Initialize();
-            return ctx;
-        }
-
-        public void PlayAudio(AudioClip clip)
-        {
-            var source = GetComponent<AudioSource>();
-            source.PlayOneShot(clip);
         }
 
         protected override IMediaProvider CreateMediaProvider()
         {
-            return DefaultMediaProvider.CreateMediaProvider("runtime", "uitoolkit", false);
+            return DefaultMediaProvider.CreateMediaProvider("runtime", "ugui", false);
         }
     }
 }
-#endif

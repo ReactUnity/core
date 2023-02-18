@@ -215,9 +215,9 @@ namespace ReactUnity.Editor
 
             foreach (var obj in objects)
             {
-                if (obj.GetComponentInChildren<UGUI.ReactUnityUGUI>()) return true;
+                if (obj.GetComponentInChildren<UGUI.ReactRendererUGUI>()) return true;
 #if UNITY_2021_2_OR_NEWER
-                if (obj.GetComponentInChildren<ReactUnity.UIToolkit.ReactUnityUIDocument>()) return true;
+                if (obj.GetComponentInChildren<ReactUnity.UIToolkit.ReactRendererUIToolkit>()) return true;
 #endif
             }
 
@@ -230,7 +230,7 @@ namespace ReactUnity.Editor
             var method = type.GetMethod("AddCanvas");
             method.Invoke(null, new[] { new MenuCommand(null) });
             var go = Selection.activeGameObject;
-            go.AddComponent<UGUI.ReactUnityUGUI>();
+            go.AddComponent<UGUI.ReactRendererUGUI>();
             go.name = "React Canvas";
         }
 
@@ -238,7 +238,7 @@ namespace ReactUnity.Editor
         {
             var objects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-            var canvas = objects.Select(x => x.GetComponentInChildren<UGUI.ReactUnityUGUI>()).FirstOrDefault(x => x != null);
+            var canvas = objects.Select(x => x.GetComponentInChildren<UGUI.ReactRendererUGUI>()).FirstOrDefault(x => x != null);
 
             if (canvas) Selection.activeObject = canvas.gameObject;
         }

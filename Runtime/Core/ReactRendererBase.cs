@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace ReactUnity
 {
-    public abstract class ReactUnityBase : MonoBehaviour
+    public abstract class ReactRendererBase : MonoBehaviour
     {
         public enum DebugMode
         {
