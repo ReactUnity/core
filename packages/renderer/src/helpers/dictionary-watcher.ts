@@ -75,7 +75,7 @@ export function createDictionaryWatcher<
   ValueType = any,
   RecordType = Record<string, ValueType>
 >(
-  dictionary: ReactUnity.Helpers.WatchableRecord<ValueType>,
+  dictionary: ReactUnity.Reactive.ReactiveRecord<ValueType>,
   displayName?: string,
 ): DictionaryWatcher<RecordType> {
   const ctx = createContext<RecordType>(undefined);

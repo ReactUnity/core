@@ -44,7 +44,7 @@ declare global {
     [key: string]: any;
   }
 
-  var Globals: ReactUnity.Helpers.WatchableRecord<any> & DefaultGlobals;
+  var Globals: ReactUnity.Reactive.ReactiveRecord<any> & DefaultGlobals;
 
   // Scheduling
   var setImmediate: (callback: () => void) => number;

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 18/02/2023 03:06:07
+// Generated 19/02/2023 00:02:06
 //
 /* eslint-disable */
 
@@ -15,7 +15,7 @@ export declare namespace ReactUnity {
   export class BaseReactComponent<ContextType = any> {
     Context: ContextType;
     Parent: ReactUnity.IContainerComponent;
-    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Data: ReactUnity.Reactive.ReactiveObjectRecord;
     Layout: Facebook.Yoga.YogaNode;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     StyleState: ReactUnity.Styling.StyleState;
@@ -111,7 +111,7 @@ export declare namespace ReactUnity {
     ClassName: string;
     ClassList: ReactUnity.Helpers.ClassList;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Data: ReactUnity.Reactive.ReactiveObjectRecord;
     ParentIndex: number;
     CurrentOrder: number;
     RefId: number;
@@ -218,7 +218,7 @@ export declare namespace ReactUnity {
     ClassName: string;
     ClassList: ReactUnity.Helpers.ClassList;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Data: ReactUnity.Reactive.ReactiveObjectRecord;
     ParentIndex: number;
     CurrentOrder: number;
     ScrollLeft: number;
@@ -293,7 +293,7 @@ export declare namespace ReactUnity {
     Content: string;
     ClassList: ReactUnity.Helpers.ClassList;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Data: ReactUnity.Reactive.ReactiveObjectRecord;
     ParentIndex: number;
     CurrentOrder: number;
     ScrollLeft: number;
@@ -387,7 +387,7 @@ export declare namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export class ReactUnityBase {
+  export class ReactRendererBase {
     MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
     Context: ReactUnity.ReactContext;
     Timer: ReactUnity.Scheduling.ITimer;
@@ -417,8 +417,8 @@ export declare namespace ReactUnity {
     Source: ReactUnity.ScriptSource;
     EngineType: ReactUnity.Scripting.JavascriptEngineType;
     Globals: ReactUnity.Helpers.SerializableDictionary;
-    AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
-    Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
+    AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
+    Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
     IsInvoking(): boolean;
     CancelInvoke(): void;
     Invoke(methodName: string, time: number): void;
@@ -503,8 +503,8 @@ export declare namespace ReactUnity {
     ResourcesPath: string;
     UseDevServer: ReactUnity.ScriptSource_DevServerType;
     DevServer: string;
-    static Resource(path: string): ReactUnity.ScriptSource;
-    static Text(path: string): ReactUnity.ScriptSource;
+    static Resource(path: string, language?: ReactUnity.ScriptSourceLanguage): ReactUnity.ScriptSource;
+    static Text(path: string, language?: ReactUnity.ScriptSourceLanguage): ReactUnity.ScriptSource;
     GetResolvedSourceUrl(useDevServer?: boolean): string;
     GetScript(callback: ((obj: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
     static WatchFileSystem(path: string, callback: ((obj: string) => void)): System.IDisposable;
@@ -552,7 +552,7 @@ export declare namespace ReactUnity {
     ClassName: string;
     ClassList: ReactUnity.Helpers.ClassList;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: ReactUnity.Helpers.WatchableObjectRecord;
+    Data: ReactUnity.Reactive.ReactiveObjectRecord;
     ParentIndex: number;
     CurrentOrder: number;
     ScrollLeft: number;
@@ -675,16 +675,16 @@ export declare namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export enum ReactUnityBase_DebugMode {
+  export enum ReactRendererBase_DebugMode {
     None = 0,
     Debug = 1,
     DebugAndAwait = 2,
   }
-  export class ReactUnityBase_ReactAdvancedOptions {
+  export class ReactRendererBase_ReactAdvancedOptions {
     constructor();
     Pooling: ReactUnity.ReactContext_PoolingType;
     MediaUpdateInterval: number;
-    DebugMode: ReactUnity.ReactUnityBase_DebugMode;
+    DebugMode: ReactUnity.ReactRendererBase_DebugMode;
     UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
     AutoRender: boolean;
     Stylesheets: UnityEngine.TextAsset[];
@@ -695,7 +695,7 @@ export declare namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export class ReactUnityBase_WaitForRenderToComplete {
+  export class ReactRendererBase_WaitForRenderToComplete {
     constructor();
     rendered: boolean;
     keepWaiting: boolean;
@@ -1472,7 +1472,7 @@ export declare namespace ReactUnity {
         Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Helpers.WatchableObjectRecord;
+        Data: ReactUnity.Reactive.ReactiveObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -1715,7 +1715,7 @@ export declare namespace ReactUnity {
         Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Helpers.WatchableObjectRecord;
+        Data: ReactUnity.Reactive.ReactiveObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -1804,7 +1804,7 @@ export declare namespace ReactUnity {
         Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Helpers.WatchableObjectRecord;
+        Data: ReactUnity.Reactive.ReactiveObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -1896,7 +1896,7 @@ export declare namespace ReactUnity {
         Disabled: boolean;
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
-        Data: ReactUnity.Helpers.WatchableObjectRecord;
+        Data: ReactUnity.Reactive.ReactiveObjectRecord;
         Layout: Facebook.Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
@@ -2184,7 +2184,7 @@ export declare namespace ReactUnity {
       IsReadOnly: boolean;
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
-      UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
+      UpdateStringObjectDictionary(dict: ReactUnity.Reactive.ReactiveRecord<any>, isSerializing: boolean): void;
       OnExposedToScriptCode(engine: any): void;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
@@ -2198,7 +2198,7 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
       AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
-      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Reactive.ReactiveDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Change(): void;
@@ -2277,253 +2277,10 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
       AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
-      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Reactive.ReactiveDictionary<string, any>) => void)): (() => void);
       GetValueOrDefault(key: string): any;
       Dispose(): void;
       Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export interface IWatchable<T = any> {
-      Value: T;
-      Change(): void;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: T) => void)): (() => void);
-    }
-    export class Watchable<T = any> {
-      constructor();
-      constructor(value: T);
-      Value: T;
-      Change(): void;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: T) => void)): (() => void);
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableList<T = any> {
-      constructor();
-      [key: string]: any;
-      Count: number;
-      IsReadOnly: boolean;
-      Value: T[];
-      GetArray(): T[];
-      Add(item: T): void;
-      AddWithoutNotify(item: T): void;
-      Remove(item: T): boolean;
-      RemoveWithoutNotify(item: T): boolean;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      Contains(item: T): boolean;
-      CopyTo(array: T[], arrayIndex: number): void;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
-      Change(): void;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: T[]) => void)): (() => void);
-      IndexOf(item: T): number;
-      Insert(index: number, item: T): void;
-      RemoveAt(index: number): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableDictionary<TKey = any, T = any> {
-      constructor();
-      constructor(dict: System.Collections.Generic.IDictionary<TKey, T>);
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<TKey>;
-      Values: System.Collections.Generic.ICollection<T>;
-      Count: number;
-      IsReadOnly: boolean;
-      Set(key: TKey, value: T): void;
-      SetWithoutNotify(key: TKey, value: T): void;
-      Add(key: TKey, value: T): void;
-      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: TKey): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
-      Remove(key: TKey): boolean;
-      RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
-      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
-      GetValueOrDefault(key: TKey): T;
-      Dispose(): void;
-      Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableAdaptibleRecord<TKey = any, T = any> {
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<TKey>;
-      Values: System.Collections.Generic.ICollection<T>;
-      Count: number;
-      IsReadOnly: boolean;
-      Add(key: string, value: any): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
-      Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
-      ContainsKey(key: string): boolean;
-      CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
-      Remove(key: string): boolean;
-      Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
-      Set(key: string, value: any): void;
-      SetWithoutNotify(key: string, value: any): void;
-      GetValueOrDefault(key: string): any;
-      Set(key: TKey, value: T): void;
-      SetWithoutNotify(key: TKey, value: T): void;
-      Add(key: TKey, value: T): void;
-      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: TKey): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
-      Remove(key: TKey): boolean;
-      RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
-      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
-      GetValueOrDefault(key: TKey): T;
-      Dispose(): void;
-      Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableAdaptibleRecordBag<TKey = any, T = any> {
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<TKey>;
-      Values: System.Collections.Generic.ICollection<T>;
-      Count: number;
-      IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
-      Add(key: string, value: any): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
-      Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
-      ContainsKey(key: string): boolean;
-      CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
-      Remove(key: string): boolean;
-      Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
-      Set(key: string, value: any): void;
-      SetWithoutNotify(key: string, value: any): void;
-      GetValueOrDefault(key: string): any;
-      Set(key: TKey, value: T): void;
-      SetWithoutNotify(key: TKey, value: T): void;
-      Add(key: TKey, value: T): void;
-      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: TKey): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
-      Remove(key: TKey): boolean;
-      RemoveWithoutNotify(key: TKey): boolean;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
-      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<TKey, T>) => void)): (() => void);
-      GetValueOrDefault(key: TKey): T;
-      Dispose(): void;
-      Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableRecord<T = any> {
-      constructor();
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<T>;
-      Count: number;
-      IsReadOnly: boolean;
-      Set(key: string, value: T): void;
-      SetWithoutNotify(key: string, value: T): void;
-      Add(key: string, value: T): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, T>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
-      Remove(key: string): boolean;
-      RemoveWithoutNotify(key: string): boolean;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: Record<string, T>) => void)): (() => void);
-      AddListener(listener: ((arg1: string, arg2: T, arg3: ReactUnity.Helpers.WatchableDictionary<string, T>) => void)): (() => void);
-      GetValueOrDefault(key: string): T;
-      Dispose(): void;
-      Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableObjectRecord {
-      constructor();
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<any>;
-      Count: number;
-      IsReadOnly: boolean;
-      OnExposedToScriptCode(engine: any): void;
-      Set(key: string, value: any): void;
-      SetWithoutNotify(key: string, value: any): void;
-      Add(key: string, value: any): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      Remove(key: string): boolean;
-      RemoveWithoutNotify(key: string): boolean;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
-      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<string, any>) => void)): (() => void);
-      GetValueOrDefault(key: string): any;
-      Dispose(): void;
-      Change(): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class WatchableSet<T = any> {
-      constructor();
-      Count: number;
-      IsReadOnly: boolean;
-      Value: System.Collections.Generic.HashSet<T>;
-      GetArray(): T[];
-      Add(item: T): boolean;
-      Toggle(item: T): boolean;
-      ToggleWithoutNotify(item: T): boolean;
-      Toggle(item: T, toggle: boolean): boolean;
-      ToggleWithoutNotify(item: T, toggle: boolean): boolean;
-      AddWithoutNotify(item: T): boolean;
-      Remove(item: T): boolean;
-      RemoveWithoutNotify(item: T): boolean;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      Contains(item: T): boolean;
-      CopyTo(array: T[], arrayIndex: number): void;
-      ExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
-      IntersectWith(other: System.Collections.Generic.IEnumerable<T>): void;
-      IsProperSubsetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      IsProperSupersetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      IsSubsetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      IsSupersetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      Overlaps(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
-      SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
-      UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
-      Change(): void;
-      AddListener(cb: any): (() => void);
-      AddListener(listener: ((obj: System.Collections.Generic.HashSet<T>) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2613,7 +2370,7 @@ export declare namespace ReactUnity {
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       ParentIndex: number;
       CurrentOrder: number;
       ScrollLeft: number;
@@ -2671,6 +2428,251 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.Html.HtmlContext);
       Context: ReactUnity.Html.HtmlContext;
       Parse(html: string, root: ReactUnity.IContainerComponent): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
+  export namespace Reactive {
+    export interface IReactive<T = any> {
+      Value: T;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T) => void)): (() => void);
+    }
+    export class ReactiveList<T = any> {
+      constructor();
+      [key: string]: any;
+      Count: number;
+      IsReadOnly: boolean;
+      Value: T[];
+      GetArray(): T[];
+      Add(item: T): void;
+      AddWithoutNotify(item: T): void;
+      Remove(item: T): boolean;
+      RemoveWithoutNotify(item: T): boolean;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      Contains(item: T): boolean;
+      CopyTo(array: T[], arrayIndex: number): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T[]) => void)): (() => void);
+      IndexOf(item: T): number;
+      Insert(index: number, item: T): void;
+      RemoveAt(index: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveDictionary<TKey = any, T = any> {
+      constructor();
+      constructor(dict: System.Collections.Generic.IDictionary<TKey, T>);
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<TKey>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      Set(key: TKey, value: T): void;
+      SetWithoutNotify(key: TKey, value: T): void;
+      Add(key: TKey, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: TKey): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
+      Remove(key: TKey): boolean;
+      RemoveWithoutNotify(key: TKey): boolean;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Reactive.ReactiveDictionary<TKey, T>) => void)): (() => void);
+      GetValueOrDefault(key: TKey): T;
+      Dispose(): void;
+      Change(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveAdaptibleRecord<TKey = any, T = any> {
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<TKey>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      ContainsKey(key: string): boolean;
+      CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
+      Remove(key: string): boolean;
+      Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      GetValueOrDefault(key: string): any;
+      Set(key: TKey, value: T): void;
+      SetWithoutNotify(key: TKey, value: T): void;
+      Add(key: TKey, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: TKey): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
+      Remove(key: TKey): boolean;
+      RemoveWithoutNotify(key: TKey): boolean;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Reactive.ReactiveDictionary<TKey, T>) => void)): (() => void);
+      GetValueOrDefault(key: TKey): T;
+      Dispose(): void;
+      Change(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveAdaptibleRecordBag<TKey = any, T = any> {
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<TKey>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Contains(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      ContainsKey(key: string): boolean;
+      CopyTo(array: System.Collections.Generic.KeyValuePair<string, any>[], arrayIndex: number): void;
+      Remove(key: string): boolean;
+      Remove(item: System.Collections.Generic.KeyValuePair<string, any>): boolean;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      GetValueOrDefault(key: string): any;
+      Set(key: TKey, value: T): void;
+      SetWithoutNotify(key: TKey, value: T): void;
+      Add(key: TKey, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<TKey, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: TKey): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, T>>;
+      Remove(key: TKey): boolean;
+      RemoveWithoutNotify(key: TKey): boolean;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.Dictionary<TKey, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: TKey, arg2: T, arg3: ReactUnity.Reactive.ReactiveDictionary<TKey, T>) => void)): (() => void);
+      GetValueOrDefault(key: TKey): T;
+      Dispose(): void;
+      Change(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveRecord<T = any> {
+      constructor();
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      Set(key: string, value: T): void;
+      SetWithoutNotify(key: string, value: T): void;
+      Add(key: string, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, T>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: T, arg3: ReactUnity.Reactive.ReactiveDictionary<string, T>) => void)): (() => void);
+      GetValueOrDefault(key: string): T;
+      Dispose(): void;
+      Change(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveObjectRecord {
+      constructor();
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
+      Count: number;
+      IsReadOnly: boolean;
+      OnExposedToScriptCode(engine: any): void;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: Record<string, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: any, arg3: ReactUnity.Reactive.ReactiveDictionary<string, any>) => void)): (() => void);
+      GetValueOrDefault(key: string): any;
+      Dispose(): void;
+      Change(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveSet<T = any> {
+      constructor();
+      Count: number;
+      IsReadOnly: boolean;
+      Value: System.Collections.Generic.HashSet<T>;
+      GetArray(): T[];
+      Add(item: T): boolean;
+      Toggle(item: T): boolean;
+      ToggleWithoutNotify(item: T): boolean;
+      Toggle(item: T, toggle: boolean): boolean;
+      ToggleWithoutNotify(item: T, toggle: boolean): boolean;
+      AddWithoutNotify(item: T): boolean;
+      Remove(item: T): boolean;
+      RemoveWithoutNotify(item: T): boolean;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      Contains(item: T): boolean;
+      CopyTo(array: T[], arrayIndex: number): void;
+      ExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<T>;
+      IntersectWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      IsProperSubsetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      IsProperSupersetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      IsSubsetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      IsSupersetOf(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      Overlaps(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      SetEquals(other: System.Collections.Generic.IEnumerable<T>): boolean;
+      SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.HashSet<T>) => void)): (() => void);
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactiveValue<T = any> {
+      constructor();
+      constructor(value: T);
+      Value: T;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: T) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3190,7 +3192,7 @@ export declare namespace ReactUnity {
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       ParentIndex: number;
       CurrentOrder: number;
       ScrollLeft: number;
@@ -3920,7 +3922,7 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: string): boolean;
       AddListener(cb: any): (() => void);
       AddListener(listener: ((obj: Record<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
-      AddListener(listener: ((arg1: string, arg2: ReactUnity.Styling.CursorPair, arg3: ReactUnity.Helpers.WatchableDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
+      AddListener(listener: ((arg1: string, arg2: ReactUnity.Styling.CursorPair, arg3: ReactUnity.Reactive.ReactiveDictionary<string, ReactUnity.Styling.CursorPair>) => void)): (() => void);
       GetValueOrDefault(key: string): ReactUnity.Styling.CursorPair;
       Dispose(): void;
       Change(): void;
@@ -3975,7 +3977,7 @@ export declare namespace ReactUnity {
       RemoveWithoutNotify(key: ReactUnity.Styling.IStyleProperty): boolean;
       AddListener(cb: any): (() => void);
       AddListener(listener: ((obj: System.Collections.Generic.Dictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
-      AddListener(listener: ((arg1: ReactUnity.Styling.IStyleProperty, arg2: any, arg3: ReactUnity.Helpers.WatchableDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
+      AddListener(listener: ((arg1: ReactUnity.Styling.IStyleProperty, arg2: any, arg3: ReactUnity.Reactive.ReactiveDictionary<ReactUnity.Styling.IStyleProperty, any>) => void)): (() => void);
       GetValueOrDefault(key: ReactUnity.Styling.IStyleProperty): any;
       Dispose(): void;
       Change(): void;
@@ -4425,7 +4427,7 @@ export declare namespace ReactUnity {
       ClassName: string;
       ClassList: ReactUnity.Helpers.ClassList;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       ParentIndex: number;
       CurrentOrder: number;
       ScrollLeft: number;
@@ -6375,7 +6377,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6473,7 +6475,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6573,7 +6575,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6675,7 +6677,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6773,7 +6775,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6868,7 +6870,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -6965,7 +6967,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7065,7 +7067,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7165,7 +7167,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7269,7 +7271,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7366,7 +7368,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7467,7 +7469,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7564,7 +7566,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7661,7 +7663,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7758,7 +7760,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7858,7 +7860,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -7957,7 +7959,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8051,7 +8053,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8153,7 +8155,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8251,7 +8253,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8348,7 +8350,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8450,7 +8452,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8553,7 +8555,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8654,7 +8656,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8749,7 +8751,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8849,7 +8851,7 @@ export declare namespace ReactUnity {
       ResolvedEventViewport: UnityEngine.RectTransform;
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -8938,7 +8940,7 @@ export declare namespace ReactUnity {
     export interface IEventHandler {
       ClearListeners(): void;
     }
-    export class ReactUnityUGUI {
+    export class ReactRendererUGUI {
       constructor();
       Root: UnityEngine.RectTransform;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
@@ -8973,8 +8975,8 @@ export declare namespace ReactUnity {
       Source: ReactUnity.ScriptSource;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Globals: ReactUnity.Helpers.SerializableDictionary;
-      AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
-      Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
+      AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
+      Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -13186,7 +13188,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13276,7 +13278,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13370,7 +13372,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13466,7 +13468,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13558,7 +13560,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13646,7 +13648,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13734,7 +13736,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13823,7 +13825,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13910,7 +13912,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -13997,7 +13999,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14088,7 +14090,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14182,7 +14184,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14269,7 +14271,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14363,7 +14365,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14451,7 +14453,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14542,7 +14544,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14636,7 +14638,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14724,7 +14726,7 @@ export declare namespace ReactUnity {
       Disabled: boolean;
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
-      Data: ReactUnity.Helpers.WatchableObjectRecord;
+      Data: ReactUnity.Reactive.ReactiveObjectRecord;
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
@@ -14813,6 +14815,86 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class ReactRendererUIToolkit {
+      constructor();
+      Root: UnityEngine.UIElements.VisualElement;
+      MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
+      Context: ReactUnity.ReactContext;
+      Timer: ReactUnity.Scheduling.ITimer;
+      destroyCancellationToken: System.Threading.CancellationToken;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Source: ReactUnity.ScriptSource;
+      EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      Globals: ReactUnity.Helpers.SerializableDictionary;
+      AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
+      PlayAudio(clip: UnityEngine.AudioClip): void;
+      Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: any): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: any): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class ReactUnityElement {
       constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.SerializableDictionary, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.Styling.Rules.IMediaProvider, engineType?: ReactUnity.Scripting.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
       [key: string]: any;
@@ -14898,86 +14980,6 @@ export declare namespace ReactUnity {
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
-      GetType(): System.Type;
-    }
-    export class ReactUnityUIDocument {
-      constructor();
-      Root: UnityEngine.UIElements.VisualElement;
-      MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
-      Context: ReactUnity.ReactContext;
-      Timer: ReactUnity.Scheduling.ITimer;
-      destroyCancellationToken: System.Threading.CancellationToken;
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      Source: ReactUnity.ScriptSource;
-      EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
-      AdvancedOptions: ReactUnity.ReactUnityBase_ReactAdvancedOptions;
-      PlayAudio(clip: UnityEngine.AudioClip): void;
-      Render(): ReactUnity.ReactUnityBase_WaitForRenderToComplete;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: any): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: any): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: any): boolean;
-      ToString(): string;
       GetType(): System.Type;
     }
     export class ResourcesHelper {
