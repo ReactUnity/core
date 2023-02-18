@@ -1,4 +1,4 @@
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
 import check, { ReactComponent as CheckSVG } from 'src/assets/check.svg';
@@ -59,4 +59,4 @@ export function App() {
   </scroll>;
 };
 
-Renderer.render(<App />);
+render(<App />);
