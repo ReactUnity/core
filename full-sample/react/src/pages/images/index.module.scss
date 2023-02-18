@@ -46,7 +46,7 @@
 
   width: 400px;
   text-transform: uppercase;
-  font-style: bold;
+  font-weight: bold;
   font-size: 50px;
   color: white;
   flex-direction: column;
@@ -55,4 +55,6 @@
   white-space: normal;
   word-wrap: normal;
   padding: 40px;
+
+  text-stroke: 0.3px black;
 }

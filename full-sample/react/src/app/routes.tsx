@@ -12,6 +12,7 @@ import EmotionPage from "src/pages/style-frameworks/emotion";
 import JSSPage from "src/pages/style-frameworks/jss";
 import StyledComponentsPage from "src/pages/style-frameworks/styled-components";
 import SvgsPage from "src/pages/svgs";
+import TodoPage from "src/pages/todo";
 
 const TailwindPage = React.lazy(() => import('src/pages/style-frameworks/tailwind'));
 
@@ -24,6 +25,7 @@ export function AppRoutes() {
     <Route path={'bg-patterns'} element={<BgPatternsPage />} />
     <Route path={'svgs'} element={<SvgsPage />} />
     <Route path={'interop'} element={<InteropPage />} />
+    <Route path={'todo'} element={<TodoPage />} />
 
     <Route path={'style-frameworks'} element={< StyleFrameworksPage />}>
       <Route path={'jss'} element={<JSSPage />} />

@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Attach to V8 on port 9222",
-      "type": "pwa-node",
+      "type": "node",
       "port": 9222,
       "request": "attach",
       "sourceMaps": true,

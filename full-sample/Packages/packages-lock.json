@@ -15,7 +15,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.14.0",
+      "version": "0.14.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -32,7 +32,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.quickjs": {
-      "version": "0.14.0",
+      "version": "0.14.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

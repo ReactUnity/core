@@ -1,4 +1,4 @@
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import { Suspense } from 'react';
 import { MemoryRouter, useNavigate } from 'react-router';
 import styles from './index.module.scss';
@@ -17,6 +17,7 @@ function App() {
       <button onClick={() => nav('svgs')}>SVGs</button>
       <button onClick={() => nav('style-frameworks/jss')}>Style Frameworks</button>
       <button onClick={() => nav('interop')}>Interop</button>
+      <button onClick={() => nav('todo')}>Todo App Example</button>
     </scroll>
 
     <scroll className={styles.scroll}>
@@ -27,7 +28,7 @@ function App() {
   </view>;
 }
 
-Renderer.render(
+render(
   <Suspense fallback={<view>Loading</view>}>
     <MemoryRouter initialEntries={['/' + global.location.hash.replace(/^#/, '')]} initialIndex={0}>
       <App />

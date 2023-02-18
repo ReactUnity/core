@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
@@ -8,6 +9,7 @@ namespace MyInterop
     public class InteropTest : MonoBehaviour
     {
         public event Action<string> OnKeyPress;
+        IDisposable dispose;
 
         public Action AddKeyPressListener(object callback)
         {
@@ -19,9 +21,23 @@ namespace MyInterop
             return () => OnKeyPress -= listener;
         }
 
-        void Start()
+
+        void OnEnable()
         {
-            InputSystem.onAnyButtonPress.Call(x => OnKeyPress?.Invoke(x.displayName));
+            var ctx = GetComponent<ReactUnityUGUI>();
+            if (ctx)
+                ctx.AdvancedOptions.AfterStart.AddListener(() => {
+
+                    dispose = InputSystem.onAnyButtonPress.Call(x => {
+                        OnKeyPress?.Invoke(x.displayName);
+                        ctx.Context.Script.WebGLCompatDispatchEvent("OnKeyPress", x.displayName);
+                    });
+                });
+        }
+
+        private void OnDestroy()
+        {
+            dispose?.Dispose();
         }
 
         public static void TestDebug()

@@ -1,0 +1,74 @@
+.todo-root {
+  flex-direction: column;
+  align-self: center;
+  align-items: stretch;
+  margin: 40px;
+  padding: 40px;
+
+  background-color: #dedede;
+  border-radius: 8px;
+  box-shadow: 1px 1px 6px -2px black;
+}
+
+.todo-header {
+  color: cornflowerblue;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.todo-input-section {
+  flex-direction: row;
+  align-items: stretch;
+  width: 360px;
+  margin-bottom: 18px;
+}
+
+.todo-input {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.todo-item {
+  flex-direction: row;
+  align-items: center;
+  transition: rotate 400ms, margin-bottom 400ms;
+  rotate: 0 0 0;
+  width: 360px;
+  padding: 4px 0 4px 8px;
+  margin-bottom: 0px;
+  transform-origin: top;
+
+  background-color: white;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+}
+
+.todo-item:not(:first-child) {
+  margin-top: 10px;
+}
+
+.todo-item:enter {
+  rotate: 90deg 0 0;
+  margin-bottom: -66px;
+}
+
+.todo-item:leave {
+  rotate: 90deg 0 0;
+  margin-bottom: -66px;
+  pointer-events: none;
+  state-duration: 400ms;
+}
+
+.todo-item-name {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.todo-add-button,
+.todo-remove-button {
+  width: 50px;
+  height: 50px;
+  margin-left: 8px;
+}

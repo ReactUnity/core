@@ -10,7 +10,7 @@ const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function ImagesPage() {
   const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
-  const Globals = useGlobals();
+  const { customPrefab, renderCamera, cameraRoot, portalRoot, portalCamera } = useGlobals();
 
   useEffect(() => {
     if (videoRef) {
@@ -27,9 +27,7 @@ export function ImagesPage() {
   const [renderRef, setRenderRef] = useState<ReactUnity.UGUI.RenderComponent>();
 
   return <view className={styles.host}>
-
-
-    <portal id='pt' target={(Globals.portalRoot)} eventCamera={Globals.portalCamera} style={{ scale: 1 / 200, translateZ: -0.55 }} eventViewport={renderRef}>
+    <portal id='pt' target={(portalRoot)} eventCamera={portalCamera} style={{ scale: 1 / 200, translateZ: -0.55 }} eventViewport={renderRef}>
       This is a portal
 
       <button>
@@ -63,7 +61,7 @@ export function ImagesPage() {
       <h2>Prefab</h2>
 
       <row>
-        <prefab target={Globals.customPrefab} />
+        <prefab target={customPrefab} />
       </row>
     </section>
 
@@ -91,14 +89,14 @@ export function ImagesPage() {
       <row>
         <render width={900} height={400} style={{ flexGrow: 1 }} ref={setRenderRef}
           onDrag={(ev) => {
-            Globals.cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
+            cameraRoot.transform.Rotate(new Interop.UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
           }}
           onScroll={(ev: UnityEngine.EventSystems.PointerEventData) => {
-            Globals.renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), Interop.UnityEngine.Space.Self);
+            renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), Interop.UnityEngine.Space.Self);
           }}
           onMount={ev => ev.gameObject.SetActive(true)}
           onUnmount={ev => ev.gameObject.SetActive(false)}
-          camera={Globals.renderCamera}
+          camera={renderCamera}
         />
       </row>
     </section>
