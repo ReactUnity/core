@@ -8,7 +8,7 @@ layout: API
 `render` renders a piece of JSX into the `ReactUnityUGUI` component. It instructs React to change the UI so that it matches the passed JSX.
 
 ```js
-Renderer.render(<App />);
+render(<App />);
 ```
 
 </Intro>
@@ -20,13 +20,13 @@ In apps fully built with React, you will do this once at the top level of your a
 <Sandpack>
 
 ```js App.js active
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 
 function Hello() {
   return <h1>Hello, world!</h1>;
 }
 
-Renderer.render(<Hello />);
+render(<Hello />);
 ```
 
 </Sandpack>

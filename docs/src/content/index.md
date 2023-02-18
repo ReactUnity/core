@@ -16,7 +16,7 @@ Here is a sample _Todo App_ to show off some React and CSS features of ReactUnit
 <Sandpack>
 
 ```js App.js active
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import { useRef, useState } from 'react';
 
 export function TodoItem(props) {
@@ -79,7 +79,7 @@ export function TodoPage() {
   </scroll>;
 }
 
-Renderer.render(<TodoPage />);
+render(<TodoPage />);
 ```
 
 ```css style.css

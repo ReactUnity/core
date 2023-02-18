@@ -12,6 +12,7 @@ Boolean properties are either true or false. There is no comparison required, on
 
 | Property      | Description                                          |
 | ------------- | ---------------------------------------------------- |
+| `reactunity`  | Always true                                          |
 | `all`         | Always true                                          |
 | `screen`      | Always true, added for compatibility with browsers.  |
 | `editor`      | True for editor UIs                                  |

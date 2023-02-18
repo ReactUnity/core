@@ -5,7 +5,7 @@
   "license": "CC",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "dev": "next-remote-watch ./src/content",
+    "start": "next-remote-watch ./src/content",
     "build": "next build && node ./scripts/downloadFonts.js",
     "export": "next export",
     "lint": "next lint",
@@ -18,7 +18,7 @@
     "fix-headings": "node scripts/headingIdLinter.js --fix",
     "ci-check": "npm-run-all prettier:diff --parallel lint tsc lint-heading-ids",
     "tsc": "tsc --noEmit",
-    "start": "next start",
+    "preview": "next start",
     "postinstall": "patch-package && (is-ci || (cd .. && husky install beta/.husky))",
     "check-all": "npm-run-all prettier lint:fix tsc"
   },
