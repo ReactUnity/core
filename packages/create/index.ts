@@ -55,7 +55,7 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
   }
 
   // Copy project template
-  await fse.copy(scaffoldDir, targetDir, { recursive: true, filter: src => !src.includes(reactScaffoldNodeModules) });
+  await fse.copy(scaffoldDir, targetDir, { filter: src => !src.includes(reactScaffoldNodeModules) });
 }
 
 async function runOpenUPM() {

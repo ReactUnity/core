@@ -1,4 +1,4 @@
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import './index.scss';
 
 function App() {
@@ -7,4 +7,4 @@ function App() {
   </scroll>;
 }
 
-Renderer.render(<App />);
+render(<App />);
