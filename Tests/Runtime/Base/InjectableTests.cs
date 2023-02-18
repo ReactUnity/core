@@ -18,15 +18,6 @@ namespace ReactUnity.Tests
         }
 
         [UGUITest(Script = @"
-            ReactUnity.Renderer.render(<view>Hello world</view>);
-        ")]
-        public IEnumerator ReactUnityRendererRender()
-        {
-            yield return null;
-            Assert.AreEqual("Hello world", Host.TextContent);
-        }
-
-        [UGUITest(Script = @"
             render(<view>Hello world</view>);
         ")]
         public IEnumerator RenderDirectly()

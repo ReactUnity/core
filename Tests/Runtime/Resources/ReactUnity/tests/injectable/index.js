@@ -7217,11 +7217,20 @@ __webpack_require__.d(renderer_dist_namespaceObject, {
   "createDictionaryWatcher": () => (createDictionaryWatcher),
   "flushSync": () => (flushSync),
   "icon": () => (icon),
+  "render": () => (_render),
   "unstable_batchedUpdates": () => (batchedUpdates),
   "useGlobals": () => (useGlobals),
   "useGlobalsContext": () => (useGlobalsContext),
   "useGlobalsSelector": () => (useGlobalsSelector),
   "useWatchable": () => (useWatchable)
+});
+
+// NAMESPACE OBJECT: ../../../renderer/dist/webgl-compat.js
+var dist_webgl_compat_namespaceObject = {};
+__webpack_require__.r(dist_webgl_compat_namespaceObject);
+__webpack_require__.d(dist_webgl_compat_namespaceObject, {
+  "Unity": () => (Unity),
+  "useUnityContext": () => (useUnityContext)
 });
 
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
@@ -9271,7 +9280,7 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.4';
+var version = '0.14.6';
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -10218,93 +10227,103 @@ var syncReconciler = react_reconciler(reconciler_hostConfig);
 
 var containerMap = new Map();
 var renderCount = 0;
+function _render(element, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  renderCount++;
+  var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+  var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
+  var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
+  var _a = containerMap.get(cacheKey) || {},
+    hostRoot = _a.hostRoot,
+    asyncJobCallback = _a.asyncJobCallback;
+  var findFiberByHostInstance = function findFiberByHostInstance() {
+    return null;
+  };
+  if (!hostRoot) {
+    var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
+    if (isAsync) {
+      var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
+      if (isDevelopment) {
+        findFiberByHostInstance = function findFiberByHostInstance(instance) {
+          return !instance ? null : fiberCache_1.getObject(instance.refId);
+        };
+      }
+      var scheduled_1 = false;
+      var commands_1 = [];
+      commands_1.push = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        if (!scheduled_1) {
+          scheduled_1 = true;
+          Promise.resolve().then(function () {
+            asyncJobCallback();
+            scheduled_1 = false;
+          });
+        }
+        return Array.prototype.push.apply(commands_1, args);
+      };
+      var hostContainerInstance_1 = {
+        type: 'native',
+        commands: commands_1,
+        component: hostContainer,
+        context: hostContainer.Context,
+        refId: hostContainer.RefId,
+        fiberCache: fiberCache_1
+      };
+      asyncJobCallback = function asyncJobCallback() {
+        if (!commands_1.length) return;
+        var serialized = JSON.stringify(commands_1);
+        commands_1.length = 0;
+        hostContainerInstance_1.context.FlushCommands(serialized);
+      };
+      hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    } else {
+      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    }
+    containerMap.set(cacheKey, {
+      hostRoot: hostRoot,
+      asyncJobCallback: asyncJobCallback
+    });
+  }
+  var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
+  if (shouldWrapWithHelpers) {
+    var viewWrapperProps = {
+      withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
+      renderCount: renderCount
+    };
+    element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
+  }
+  var rc = isAsync ? asyncReconciler : syncReconciler;
+  rc.updateContainer(element, hostRoot, null);
+  rc.injectIntoDevTools({
+    bundleType: isDevelopment ? 1 : 0,
+    version: version,
+    rendererPackageName: '@reactunity/renderer',
+    rendererConfig: {
+      isAsync: isAsync
+    },
+    findFiberByHostInstance: findFiberByHostInstance
+  });
+  return rc;
+}
+/**
+ * @deprecated Instead, import `render` directly from `@reactunity/renderer`
+ */
+
 var Renderer = {
   render: function render(element, options) {
     if (options === void 0) {
       options = {};
     }
-    renderCount++;
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
-    var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
-    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-    var _a = containerMap.get(cacheKey) || {},
-      hostRoot = _a.hostRoot,
-      asyncJobCallback = _a.asyncJobCallback;
-    var findFiberByHostInstance = function findFiberByHostInstance() {
-      return null;
-    };
-    if (!hostRoot) {
-      var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
-      if (isAsync) {
-        var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
-        if (isDevelopment) {
-          findFiberByHostInstance = function findFiberByHostInstance(instance) {
-            return !instance ? null : fiberCache_1.getObject(instance.refId);
-          };
-        }
-        var scheduled_1 = false;
-        var commands_1 = [];
-        commands_1.push = function () {
-          var args = [];
-          for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-          }
-          if (!scheduled_1) {
-            scheduled_1 = true;
-            Promise.resolve().then(function () {
-              asyncJobCallback();
-              scheduled_1 = false;
-            });
-          }
-          return Array.prototype.push.apply(commands_1, args);
-        };
-        var hostContainerInstance_1 = {
-          type: 'native',
-          commands: commands_1,
-          component: hostContainer,
-          context: hostContainer.Context,
-          refId: hostContainer.RefId,
-          fiberCache: fiberCache_1
-        };
-        asyncJobCallback = function asyncJobCallback() {
-          if (!commands_1.length) return;
-          var serialized = JSON.stringify(commands_1);
-          commands_1.length = 0;
-          hostContainerInstance_1.context.FlushCommands(serialized);
-        };
-        hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      } else {
-        hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      }
-      containerMap.set(cacheKey, {
-        hostRoot: hostRoot,
-        asyncJobCallback: asyncJobCallback
-      });
-    }
-    var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
-    if (shouldWrapWithHelpers) {
-      var viewWrapperProps = {
-        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
-        renderCount: renderCount
-      };
-      element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
-    }
-    var rc = isAsync ? asyncReconciler : syncReconciler;
-    rc.updateContainer(element, hostRoot, null);
-    rc.injectIntoDevTools({
-      bundleType: isDevelopment ? 1 : 0,
-      version: version,
-      rendererPackageName: '@reactunity/renderer',
-      rendererConfig: {
-        isAsync: isAsync
-      },
-      findFiberByHostInstance: findFiberByHostInstance
-    });
-    return rc;
+    return _render(element, options);
   }
 };
 var batchedUpdates = asyncReconciler.batchedUpdates;
@@ -12470,26 +12489,198 @@ var icon = new Proxy({}, {
 
 
 
+;// CONCATENATED MODULE: ../../../renderer/dist/src/webgl-compat/error-messages.js
+// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/constants/error-messages.ts
+var errorMessages = {
+  genericNoUnityInstance: "No Unity Instance found.",
+  requestFullscreenNoUnityInstance: "Unable to Set Fullscreen while Unity is not Instantiated.",
+  requestPointerLockNoUnityInstanceOrCanvas: "Unable to Request Pointer Lock while Unity is not Instantiated or the Canvas is not found.",
+  sendMessageNoUnityInstance: "Unable to Send Message while Unity is not Instantiated.",
+  quitNoUnityInstance: "Unable to Quit Unity while Unity is not Instantiated.",
+  screenshotNoUnityInstanceOrCanvas: "Unable to Take Screenshot while Unity is not Instantiated or Canvas is not available.",
+  noEventListener: "Unable to find Event Listener in Event System for Event"
+};
+;// CONCATENATED MODULE: ../../../renderer/dist/src/webgl-compat/use-event-system.js
+// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-event-system.ts
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+
+
+var mountedEventDispatchers = [];
+var dispatchReactUnityEvent = function dispatchReactUnityEvent(eventName) {
+  var parameters = [];
+  for (var _i = 1; _i < arguments.length; _i++) {
+    parameters[_i - 1] = arguments[_i];
+  }
+  var returnValue = undefined;
+  mountedEventDispatchers.forEach(function (dispatchEvent) {
+    returnValue = dispatchEvent.apply(void 0, __spreadArray([eventName], parameters, false));
+  });
+  return returnValue;
+};
+if (typeof globalThis !== "undefined" || typeof window !== "undefined") {
+  (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
+}
+var useEventSystem = function useEventSystem() {
+  var eventListeners = (0,react.useRef)([]);
+  var addEventListener = (0,react.useCallback)(function (eventName, callback) {
+    eventListeners.current = __spreadArray(__spreadArray([], eventListeners.current, true), [{
+      eventName: eventName,
+      callback: callback
+    }], false);
+  }, [eventListeners]);
+  var removeEventListener = (0,react.useCallback)(function (eventName, callback) {
+    eventListeners.current = eventListeners.current.filter(function (eventListener) {
+      return eventListener.eventName !== eventName && eventListener.callback !== callback;
+    });
+  }, [eventListeners]);
+  var dispatchEvent = (0,react.useCallback)(function (eventName) {
+    var parameters = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+      parameters[_i - 1] = arguments[_i];
+    }
+    var eventListener = eventListeners.current.find(function (eventListener) {
+      return eventListener.eventName === eventName;
+    });
+    if (typeof eventListener === "undefined") {
+      console.warn(errorMessages.noEventListener, {
+        eventName: eventName
+      });
+      return;
+    }
+    return eventListener.callback.apply(eventListener, parameters);
+  }, [eventListeners]);
+  (0,react.useEffect)(function () {
+    mountedEventDispatchers.push(dispatchEvent);
+    return function () {
+      mountedEventDispatchers.splice(mountedEventDispatchers.indexOf(dispatchEvent), 1);
+    };
+  }, [dispatchEvent]);
+  return {
+    addEventListener: addEventListener,
+    removeEventListener: removeEventListener
+  };
+};
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/webgl-compat/use-unity-context.js
+// Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-unity-context.ts
+
+
+
+var useUnityContext = function useUnityContext(unityConfig) {
+  var _a = (0,react.useState)(typeof ReactUnityWebGLCompat !== 'undefined' ? ReactUnityWebGLCompat : null),
+    unityInstance = _a[0],
+    setUnityInstance = _a[1];
+  var _b = (0,react.useState)(1),
+    loadingProgression = _b[0],
+    setLoadingProgression = _b[1];
+  var _c = (0,react.useState)(true),
+    isLoaded = _c[0],
+    setIsLoaded = _c[1];
+  var _d = (0,react.useState)(null),
+    initialisationError = _d[0],
+    setInitialisationError = _d[1];
+  var eventSystem = useEventSystem();
+  var unityProvider = (0,react.useRef)({
+    setLoadingProgression: setLoadingProgression,
+    setInitialisationError: setInitialisationError,
+    setUnityInstance: setUnityInstance,
+    setIsLoaded: setIsLoaded,
+    unityConfig: unityConfig
+  });
+  var requestFullscreen = (0,react.useCallback)(function (enabled) {
+    if (unityInstance === null) {
+      console.warn(errorMessages.requestFullscreenNoUnityInstance);
+      return;
+    }
+    unityInstance.SetFullscreen(enabled === true ? 1 : 0);
+  }, [unityInstance]);
+  var requestPointerLock = (0,react.useCallback)(function () {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
+      console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
+      return;
+    }
+    return unityInstance.Module.canvas.requestPointerLock();
+  }, [unityInstance]);
+  var sendMessage = (0,react.useCallback)(function (gameObjectName, methodName, parameter) {
+    if (unityInstance === null) {
+      console.warn(errorMessages.sendMessageNoUnityInstance);
+      return;
+    }
+    unityInstance.SendMessage(gameObjectName, methodName, parameter);
+  }, [unityInstance]);
+  var takeScreenshot = (0,react.useCallback)(function (dataType, quality) {
+    if (unityInstance === null || typeof unityInstance.Module.canvas === "undefined") {
+      console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
+      return;
+    }
+    return unityInstance.Module.canvas.toDataURL(dataType, quality);
+  }, [unityInstance]);
+  var unload = (0,react.useCallback)(function () {
+    if (unityInstance === null) {
+      console.warn(errorMessages.quitNoUnityInstance);
+      return Promise.reject();
+    }
+    return unityInstance.Quit();
+  }, [unityInstance]);
+  (0,react.useEffect)(function () {
+    setIsLoaded(loadingProgression === 1);
+  }, [loadingProgression]);
+  return {
+    unityProvider: unityProvider.current,
+    loadingProgression: loadingProgression,
+    initialisationError: initialisationError,
+    isLoaded: isLoaded,
+    UNSAFE__detachAndUnloadImmediate: function UNSAFE__detachAndUnloadImmediate() {
+      return Promise.resolve();
+    },
+    UNSAFE__unityInstance: unityInstance,
+    requestFullscreen: requestFullscreen,
+    requestPointerLock: requestPointerLock,
+    sendMessage: sendMessage,
+    unload: unload,
+    takeScreenshot: takeScreenshot,
+    addEventListener: eventSystem.addEventListener,
+    removeEventListener: eventSystem.removeEventListener
+  };
+};
+
+;// CONCATENATED MODULE: ../../../renderer/dist/src/webgl-compat/index.js
+
+// <reference types="react-unity-webgl" />
+
+
+var Unity = (0,react.forwardRef)(function Unity(props, ref) {
+  (0,react.useImperativeHandle)(ref, function () {
+    return {};
+  });
+  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {});
+});
+;// CONCATENATED MODULE: ../../../renderer/dist/webgl-compat.js
+
 ;// CONCATENATED MODULE: ./src/app.tsx
 var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;var MaterialStyles=function MaterialStyles(){return __webpack_require__("../../../material/dist/src/styles/index.js");};/*INJECTABLE_START*/
-(function (react, ReactUnity, Material, MaterialStyles) {
-  var __originalRender = ReactUnity.Renderer.__originalRender || ReactUnity.Renderer.render;
+(function (react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) {
+  var __originalRender = ReactUnity.__originalRender || ReactUnity.render;
 
   var renderCalled = false;
   function render(element, options) {
     renderCalled = true;
-    __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
+    __originalRender.apply(null, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
   ReactUnity = Object.assign({}, ReactUnity, {
-    Renderer: Object.assign({}, ReactUnity.Renderer, {
-      render: render,
-      __originalRender: __originalRender
-    })
+    render: render,
+    __originalRender: __originalRender,
   });
 
-  var ReactUnityRenderer = ReactUnity.Renderer;
-  var Renderer = ReactUnity.Renderer;
   var React = react;
 
   var exports = {};
@@ -12498,6 +12689,8 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
   var require = function (module) {
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === 'react-unity-webgl') return ReactUnityWebGLCompat;
+    if (module === '@reactunity/renderer/webgl-compat') return ReactUnityWebGLCompat;
     if (module === '@reactunity/material/styles') return MaterialStyles();
     if (module === '@reactunity/material') return Material;
     if (module.startsWith('@reactunity/material/')) return Material;
@@ -12506,7 +12699,6 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
 
   globalThis.react = globalThis.React = react;
   globalThis.render = render;
-  globalThis.Renderer = globalThis.ReactUnityRenderer = Renderer;
   globalThis.ReactUnity = ReactUnity;
   globalThis.Material = Material;
   globalThis.MaterialStyles = MaterialStyles;
@@ -12532,7 +12724,7 @@ var ReactUnity=renderer_dist_namespaceObject;var Material=dist_namespaceObject;v
       console.error('Nothing was rendered');
     }
   }
-})(react, ReactUnity, Material, MaterialStyles);
+})(react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat);
 
 /*INJECTABLE_END*/
 ;// CONCATENATED MODULE: ./src/index.ts

@@ -1,21 +1,17 @@
-(function (react, ReactUnity, Material, MaterialStyles) {
-  var __originalRender = ReactUnity.Renderer.__originalRender || ReactUnity.Renderer.render;
+(function (react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat) {
+  var __originalRender = ReactUnity.__originalRender || ReactUnity.render;
 
   var renderCalled = false;
   function render(element, options) {
     renderCalled = true;
-    __originalRender.apply(ReactUnity.Renderer, [element, Object.assign({ mode: 'legacy' }, options || {})]);
+    __originalRender.apply(null, [element, Object.assign({ mode: 'legacy' }, options || {})]);
   }
 
   ReactUnity = Object.assign({}, ReactUnity, {
-    Renderer: Object.assign({}, ReactUnity.Renderer, {
-      render: render,
-      __originalRender: __originalRender
-    })
+    render: render,
+    __originalRender: __originalRender,
   });
 
-  var ReactUnityRenderer = ReactUnity.Renderer;
-  var Renderer = ReactUnity.Renderer;
   var React = react;
 
   var exports = {};
@@ -24,6 +20,8 @@
   var require = function (module) {
     if (module === 'react') return react;
     if (module === '@reactunity/renderer') return ReactUnity;
+    if (module === 'react-unity-webgl') return ReactUnityWebGLCompat;
+    if (module === '@reactunity/renderer/webgl-compat') return ReactUnityWebGLCompat;
     if (module === '@reactunity/material/styles') return MaterialStyles();
     if (module === '@reactunity/material') return Material;
     if (module.startsWith('@reactunity/material/')) return Material;
@@ -32,7 +30,6 @@
 
   globalThis.react = globalThis.React = react;
   globalThis.render = render;
-  globalThis.Renderer = globalThis.ReactUnityRenderer = Renderer;
   globalThis.ReactUnity = ReactUnity;
   globalThis.Material = Material;
   globalThis.MaterialStyles = MaterialStyles;
@@ -58,4 +55,4 @@
       console.error('Nothing was rendered');
     }
   }
-})(react, ReactUnity, Material, MaterialStyles);
+})(react, ReactUnity, Material, MaterialStyles, ReactUnityWebGLCompat);

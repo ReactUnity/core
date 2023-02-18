@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@reactunity/material": "^0.14.0",
-    "@reactunity/renderer": "^0.14.4",
+    "@reactunity/renderer": "^0.14.6",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.14.0",
+    "@reactunity/scripts": "^0.14.2",
     "typescript": "^4.9.5"
   }
 }
