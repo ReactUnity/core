@@ -1,3 +1,4 @@
+using ReactUnity;
 using ReactUnity.Styling;
 using ReactUnity.UGUI;
 using UnityEngine;
@@ -14,11 +15,13 @@ public class ReactWebBridge : MonoBehaviour
     private string ScriptContent;
     private bool Rendered;
 
+    public ScriptSourceLanguage ScriptLanguage = ScriptSourceLanguage.JavaScript;
+
     [Multiline(10)]
     public string TestScript = "";
 
     [Multiline(10)]
-    public string TestStyle = "button {\n}\n";
+    public string TestStyle = "";
 
     public TextAsset InjectableScript;
     public TextAsset RerenderScript;
@@ -44,7 +47,8 @@ public class ReactWebBridge : MonoBehaviour
     [ContextMenu("Test")]
     public void Test()
     {
-        SetJSX(TestScript);
+        if (ScriptLanguage == ScriptSourceLanguage.Html) SetHTML(TestScript);
+        else SetJSX(TestScript);
         SetCSS(TestStyle);
         RenderBridge();
     }
@@ -54,8 +58,21 @@ public class ReactWebBridge : MonoBehaviour
         var text = InjectableScript.text;
 
         ScriptContent = script;
+
+        // If an html document was rendered previously, rerender will fail
+        if (ScriptLanguage == ScriptSourceLanguage.Html)
+            Rendered = false;
+
+        ScriptLanguage = ScriptSourceLanguage.JavaScript;
         var injectedScript = text.Replace(ReplaceSnippet, script);
-        ReactCanvas.Source = ReactUnity.ScriptSource.Text(injectedScript);
+        ReactCanvas.Source = ScriptSource.Text(injectedScript, ScriptSourceLanguage.JavaScript);
+    }
+
+    public void SetHTML(string script)
+    {
+        ScriptContent = script;
+        ScriptLanguage = ScriptSourceLanguage.Html;
+        ReactCanvas.Source = ScriptSource.Text(script, ScriptSourceLanguage.Html);
     }
 
     public void SetCSS(string script)
@@ -82,7 +99,7 @@ public class ReactWebBridge : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(ScriptContent)) return;
 
-        if (!Rendered || ReactCanvas.Context == null)
+        if (!Rendered || ReactCanvas.Context == null || ScriptLanguage == ScriptSourceLanguage.Html)
         {
             StyleSheet = null;
             ReactCanvas.Context?.Style.StyleTree.Children.Clear();

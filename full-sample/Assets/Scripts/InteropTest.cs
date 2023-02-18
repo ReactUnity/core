@@ -26,6 +26,7 @@ namespace MyInterop
         {
             var ctx = GetComponent<ReactUnityUGUI>();
             if (ctx)
+            {
                 ctx.AdvancedOptions.AfterStart.AddListener(() => {
 
                     dispose = InputSystem.onAnyButtonPress.Call(x => {
@@ -33,6 +34,7 @@ namespace MyInterop
                         ctx.Context.Script.WebGLCompatDispatchEvent("OnKeyPress", x.displayName);
                     });
                 });
+            }
         }
 
         private void OnDestroy()

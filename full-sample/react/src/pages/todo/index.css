@@ -33,7 +33,7 @@
 .todo-item {
   flex-direction: row;
   align-items: center;
-  transition: rotate 400ms, margin-bottom 400ms;
+  transition: rotate var(--item-animation-duration), margin-bottom var(--item-animation-duration);
   rotate: 0 0 0;
   width: 360px;
   padding: 4px 0 4px 8px;
@@ -43,6 +43,8 @@
   background-color: white;
   border: 1px solid #dedede;
   border-radius: 8px;
+
+  --item-animation-duration: 400ms;
 }
 
 .todo-item:not(:first-child) {
@@ -58,7 +60,7 @@
   rotate: 90deg 0 0;
   margin-bottom: -66px;
   pointer-events: none;
-  state-duration: 400ms;
+  state-duration: var(--item-animation-duration);
 }
 
 .todo-item-name {
