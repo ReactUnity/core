@@ -1,4 +1,4 @@
-import { PositioningLiteral, ReactUnity, Renderer, YogaValue2Aux } from '@reactunity/renderer';
+import { PositioningLiteral, ReactUnity, render, YogaValue2Aux } from '@reactunity/renderer';
 import clsx from 'clsx';
 import React, { ReactNode, useCallback, useLayoutEffect, useRef } from 'react';
 import { useAutoRef } from '../util/hooks/use-auto-ref';
@@ -159,7 +159,7 @@ function addTooltip(target: ReactUnity.UGUI.UGUIComponent, props: TooltipProps, 
   }
 
   UnityBridge.appendChild(anchor, tooltip);
-  Renderer.render(props.content, { disableHelpers: true, hostContainer: tooltip });
+  render(props.content, { disableHelpers: true, hostContainer: tooltip });
 
   UnityBridge.appendChild(target, anchor);
 
@@ -252,7 +252,7 @@ export function useDataTooltip(trigger: TooltipTrigger = 'hover') {
   return useTooltip(props, trigger);
 }
 
-function propsProxy(data: ReactUnity.Helpers.WatchableObjectRecord) {
+function propsProxy(data: ReactUnity.Reactive.ReactiveObjectRecord) {
   return new Proxy(data, {
     get(tg, prop) {
       if (typeof prop === 'symbol') return data[prop as any];
