@@ -35,7 +35,7 @@ namespace ReactUnity
             DevServer = source.DevServer;
         }
 
-        public static ScriptSource Resource(string path)
+        public static ScriptSource Resource(string path, ScriptSourceLanguage language = ScriptSourceLanguage.JavaScript)
         {
             return new ScriptSource()
             {
@@ -43,10 +43,11 @@ namespace ReactUnity
                 SourcePath = path,
                 UseDevServer = DevServerType.Never,
                 Watch = false,
+                Language = language,
             };
         }
 
-        public static ScriptSource Text(string path)
+        public static ScriptSource Text(string path, ScriptSourceLanguage language = ScriptSourceLanguage.JavaScript)
         {
             return new ScriptSource()
             {
@@ -54,6 +55,7 @@ namespace ReactUnity
                 SourceText = path,
                 UseDevServer = DevServerType.Never,
                 Watch = false,
+                Language = language,
             };
         }
 
