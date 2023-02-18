@@ -118,7 +118,7 @@ render(<TodoPage />);
 .todo-item {
   flex-direction: row;
   align-items: center;
-  transition: rotate 400ms, margin-bottom 400ms;
+  transition: rotate var(--item-animation-duration), margin-bottom var(--item-animation-duration);
   rotate: 0 0 0;
   width: 360px;
   padding: 4px 0 4px 8px;
@@ -128,6 +128,8 @@ render(<TodoPage />);
   background-color: white;
   border: 1px solid #dedede;
   border-radius: 8px;
+
+  --item-animation-duration: 400ms;
 }
 
 .todo-item:not(:first-child) {
@@ -143,7 +145,7 @@ render(<TodoPage />);
   rotate: 90deg 0 0;
   margin-bottom: -66px;
   pointer-events: none;
-  state-duration: 400ms;
+  state-duration: var(--item-animation-duration);
 }
 
 .todo-item-name {
@@ -161,3 +163,12 @@ render(<TodoPage />);
 
 </Sandpack>
 
+## How does ReactUnity work?
+
+React library is built in a way so that the React paradigm can be used in different platforms. In fact, all platforms which can run Javascript can have a framework like ReactUnity. There are actually more [Awesome React Renderers](https://github.com/chentsulin/awesome-react-renderer) you probably haven't heard of.
+
+The same way you use `react-dom` for web applications, and React Native for mobile applications; you can use ReactUnity for Unity UIs.
+
+## How can I learn ReactUnity?
+
+To learn ReactUnity, you need to learn React first. You can start by the [official React documentation](https://reactjs.org/). If you already feel confident with React, you can keep reading this documentation.

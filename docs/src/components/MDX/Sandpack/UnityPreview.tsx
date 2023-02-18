@@ -130,13 +130,16 @@ export function UnityPreview({
 
   const code = sandpack.files['/App.js']?.code;
   const css = sandpack.files['/styles.css']?.code;
+  const html = sandpack.files['/index.html']?.code;
 
   const compiledCode = React.useMemo(() => compile(code || '', 'jsx') || '', [code]);
   const compiledCss = React.useMemo(() => compile(css || '', 'css') || '', [css]);
+  const compiledHtml = React.useMemo(() => compile(html || '', 'html') || '', [html]);
 
   const ccError: any = compiledCode.error || compiledCss.error || undefined;
 
   const delayedCss = useDebounce(compiledCss.compiledCode, 300);
+  const delayedHtml = useDebounce(compiledHtml.compiledCode, 500);
 
   const codeSubj = useSubject(compiledCode);
 
@@ -180,6 +183,7 @@ export function UnityPreview({
         )}>
         <UnityCardridge
           script={delayedCode}
+          html={delayedHtml}
           css={sandboxStyle + delayedCss}
           ref={cartridgeRef}
           className={cn(

@@ -7,7 +7,7 @@ import {
   defaultUnityInstanceName,
   isLoaderScriptLoaded,
   UnityAPI,
-  UnityInstance,
+  UnityInstance
 } from './types';
 
 interface Props {
@@ -64,8 +64,9 @@ export function Unity({
         SendMessage: unityInstance.SendMessage.bind(unityInstance),
         SetFullscreen: unityInstance.SetFullscreen.bind(unityInstance),
         Quit: unityInstance.Quit.bind(unityInstance),
-        SetReactScript: (jsx, css) => {
-          unityInstance.SendMessage('ReactCanvas', 'SetJSX', jsx);
+        SetReactScript: (jsx, html, css) => {
+          if (jsx) unityInstance.SendMessage('ReactCanvas', 'SetJSX', jsx);
+          if (html) unityInstance.SendMessage('ReactCanvas', 'SetHTML', html);
           if (css) unityInstance.SendMessage('ReactCanvas', 'SetCSS', css);
           unityInstance.SendMessage('ReactCanvas', 'RenderBridge');
         },

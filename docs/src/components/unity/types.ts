@@ -9,7 +9,7 @@ export interface UnityInstance {
 }
 
 export interface UnityAPI extends UnityInstance {
-  SetReactScript: (jsx: string, css: string) => void;
+  SetReactScript: (jsx: string, html: string, css: string) => void;
   ReplaceCSS: (css: string) => void;
   LoadScene: (sceneName: string) => void;
   ReloadScene: () => void;

@@ -27,6 +27,11 @@ function SandpackRoot(props: SandpackProps) {
     ...files['/styles.css'],
   };
 
+  if (!Object.values(files).some((x: any) => x.active)) {
+    if (files['/index.html']) files['/index.html'].active = true;
+    else if (files['/App.js']) files['/App.js'].active = true;
+  }
+
   return (
     <div className="sandpack sandpack--playground my-8">
       <SandpackProvider
@@ -37,7 +42,6 @@ function SandpackRoot(props: SandpackProps) {
           autorun,
           initMode: 'user-visible',
           initModeObserverOptions: { rootMargin: '1400px 0px' },
-          bundlerURL: 'https://dad0ba0e.sandpack-bundler-4bw.pages.dev',
           logLevel: SandpackLogLevel.None,
         }}>
         <CustomPreset

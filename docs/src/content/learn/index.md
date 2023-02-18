@@ -38,14 +38,26 @@ export default function App() {
 
 </Sandpack>
 
-### What is ReactUnity?
+## Rendering XML code
 
-ReactUnity is a framework that lets you code UI using React and show it inside Unity.
+Instead of using React, ReactUnity lets you write HTMl-like code for static UIs. This UI can later be modified from code.
 
-ReactUnity is not a hack or a workaround. It is a legitimate way to use React. React framework is built in a way so that the React logic can be used in different platforms. In fact, all platforms which can run Javascript can have a framework like ReactUnity.
+<Sandpack>
 
-In Web development, it is ReactDOM. In native mobile (and desktop) applications, it is React Native. And in Unity, it is ReactUnity. There are actually more [Awesome React Renderers](https://github.com/chentsulin/awesome-react-renderer) you probably haven't heard of.
+```html
+<view class="items">
+  <text>Hello, Divyesh!</text>
+  <text>Hello, Sarah!</text>
+  <text>Hello, Taylor!</text>
+</view>
+```
 
-## How can I learn ReactUnity
+```css
+.items {
+  font-size: 32px;
+}
+```
 
-To learn ReactUnity, you need to learn React first. You can start by the [official React documentation](https://reactjs.org/). If you already feel confident with React, you can keep reading this documentation.
+</Sandpack>
+
+XML code can also be embedded inside React code. See [`html` component reference](/reference/components/html) for details.

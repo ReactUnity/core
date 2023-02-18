@@ -7,6 +7,7 @@ import styles from './index.module.scss';
 
 interface Props {
   script?: string | null;
+  html?: string | null;
   css?: string | null;
   className?: string;
   style?: React.CSSProperties;
@@ -21,10 +22,11 @@ export interface UnityCardridgeRef {
 
 export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
   function UnityCardridge(
-    { script, css, style, className, hideActivateButton, autoActivate = true },
+    { script, html, css, style, className, hideActivateButton, autoActivate = true },
     ref
   ) {
     const latestScript = React.useRef(script);
+    const latestHtml = React.useRef(html);
     const latestStyle = React.useRef(css);
 
     const unityContainer = React.useRef<HTMLDivElement | null>(null);
@@ -51,6 +53,7 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
         if (reset)
           instanceRef.current?.SetReactScript(
             latestScript.current || '',
+            latestHtml.current || '',
             latestStyle.current || ''
           );
       },
@@ -61,6 +64,7 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
         instanceRef,
         latestStyle,
         latestScript,
+        latestHtml,
       ]
     );
 
@@ -87,11 +91,11 @@ export const UnityCardridge = forwardRef<UnityCardridgeRef, Props>(
       () => {
         latestScript.current = script;
         if (autoActivate) {
-          instance?.SetReactScript(script || '', latestStyle.current || '');
+          instance?.SetReactScript(script || '', html || '', latestStyle.current || '');
           activate();
         }
       },
-      [script, latestStyle, instance, autoActivate, activate],
+      [script, html, latestStyle, instance, autoActivate, activate],
       () => !instance
     );
 
