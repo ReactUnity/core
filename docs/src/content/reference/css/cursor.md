@@ -12,40 +12,52 @@ Valid values are:
 
 <Sandpack>
 
-```js
+```js active
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    Hover the boxes to see cursor
+
+    <view className="items">
+      <view style={{ cursor: 'pointer' }} />
+      <view style={{ cursor: 'none' }} />
+      <view style={{ cursor: 'move' }} />
+      <view style={{ cursor: 'url(res:ReactUnity/sprites/check) 5 5' }} />
+    </view>
   </>;
 }
 ```
 
-```css active
-view {
-  flex-grow: 1;
+```css
+
+:root {
+  align-items: center;
 }
 
-view:nth-child(1) {
+.items {
+  flex-direction: row;
+  align-items: center;
+}
+
+.items > view {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+}
+
+.items > view:nth-child(1) {
   background-color: coral;
-  cursor: pointer;
 }
 
-view:nth-child(2) {
-  background-color: limegreen;
-  cursor: none;
+.items > view:nth-child(2) {
+  background-color: slategray;
 }
 
-view:nth-child(3) {
+.items > view:nth-child(3) {
   background-color: aqua;
-  cursor: move;
 }
 
-view:nth-child(4) {
+.items > view:nth-child(4) {
   background-color: dodgerblue;
-  cursor: url(res:ReactUnity/sprites/check) 5 5;
 }
 ```
 

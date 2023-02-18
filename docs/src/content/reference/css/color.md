@@ -21,9 +21,8 @@ export default function App() {
 ```css active
 view {
   flex-grow: 1;
-  align-items: center;
   justify-content: center;
-  background-color: white;
+  font-size: 48px;
 }
 
 view:nth-child(1) {

@@ -12,7 +12,7 @@ The value must be a string enclosed in quotes, like `"Hello world!"`.
 ```js
 export default function App() {
   return <>
-    <view>
+    <view className="test">
       <text>Hover to see different content</text>
     </view>
   </>;
@@ -20,25 +20,24 @@ export default function App() {
 ```
 
 ```css active
-:root {
-  justify-content: center;
-  align-items: center;
-  background-color: white;
+.test {
+  border: 1px solid black;
+  padding: 12px;
   flex-direction: row;
 }
 
-view:before {
+.test:hover text {
+  content: "Inside content!";
+}
+
+.test:before {
   content: "Before content!";
   margin-right: 10px;
 }
 
-view:after {
+.test:after {
   content: "After content!";
   margin-left: 10px;
-}
-
-view:hover text {
-  content: "Inside content!";
 }
 ```
 

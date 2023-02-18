@@ -14,39 +14,48 @@ Valid values are:
 ```js
 export default function App() {
   return <>
-    <view>Fancy Text</view>
-    <view>Fancy Text</view>
-    <view>Fancy Text</view>
-    <view>Fancy Text</view>
+    Hover the boxes to make them transparent
+
+    <view className="items">
+      <view className="item1" style={{ background: 'coral' }} />
+      <view className="item2" style={{ background: 'slategray' }} />
+      <view className="item3" style={{ background: 'aqua' }} />
+    </view>
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
+
+:root {
   align-items: center;
-  justify-content: center;
-  background-color: coral;
+}
+
+.items {
+  flex-direction: row;
+  align-items: center;
+}
+
+.item1, .item2, .item3 {
+  width: 100px;
+  height: 100px;
+  transition: opacity 200ms;
+  cursor: pointer;
   margin: 20px;
-  color: black;
 }
 
-view:nth-child(1) {
-  opacity: 0.15;
+.item1:hover {
+  opacity: 0.4;
 }
 
-view:nth-child(2) {
-  opacity: 0.45;
+.item2:hover {
+  opacity: 80%;
 }
 
-view:nth-child(3) {
-  opacity: 90%;
+.item3:hover {
+  opacity: 5%;
 }
 
-view:nth-child(4) {
-  opacity: 1;
-}
 ```
 
 </Sandpack>

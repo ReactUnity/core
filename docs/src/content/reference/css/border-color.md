@@ -17,40 +17,48 @@ Alternatively, each side can be set separately with the following properties:
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    <view className="test" />
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
-  margin: 20px;
-  background-color: lightblue;
-  border-width: 10px;
+.test {
+  width: 240px;
+  height: 160px;
+  margin: 40px auto;
+  background-color: cornflowerblue;
+  border-width: 30px;
+  animation: borderColorAnim 8s infinite;
 }
 
-view:nth-child(1) {
-  border-color: black;
-}
+@keyframes borderColorAnim {
+  0% {
+    border-color: black;
+  }
 
-view:nth-child(2) {
-  border-color: transparent;
-  border-bottom-color: #ff7edb;
-}
+  25% {
+    border-color: transparent;
+    border-bottom-color: #ff7edb;
+  }
 
-view:nth-child(3) {
-  border-right-color: rgba(130, 85, 255, 0.363);
-  border-bottom-color: hsla(46, 100%, 50%, 0.8);
-}
+  50% {
+    border-color: black;
+    border-right-color: rgba(130, 85, 255, 0.363);
+    border-bottom-color: hsla(46, 100%, 50%, 0.8);
+    border-radius: 0;
+  }
 
-view:nth-child(4) {
-  border-color: gold;
-  border-bottom-color: red;
-  border-radius: 20px;
+  75% {
+    border-color: gold;
+    border-bottom-color: red;
+    border-radius: 60px;
+  }
+
+  100% {
+    border-color: black;
+    border-radius: 0;
+  }
 }
 ```
 

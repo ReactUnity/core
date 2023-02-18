@@ -15,37 +15,36 @@ Valid values are:
 ```js
 export default function App() {
   return <>
-    <button>Pointer-events: all</button>
-    <button>Pointer-events: none</button>
-
     Try clicking the buttons
+
+    <view className="test">
+      <button style={{ pointerEvents: 'all' }}>
+        Pointer-events: all
+      </button>
+
+      <button style={{ pointerEvents: 'none' }}>
+        Pointer-events: none
+      </button>
+    </view>
   </>;
 }
 ```
 
 ```css active
+
 :root {
-  justify-content: space-around;
   align-items: center;
-  background-color: white;
 }
 
-button {
-  background-color: cornflowerblue;
-  color: white;
+.test {
+  flex-direction: row;
+  align-items: center;
 }
 
-button:active {
-  background-color: red;
+.test > button {
+  margin: 20px;
 }
 
-button:nth-child(1) {
-  pointer-events: all;
-}
-
-button:nth-child(2) {
-  pointer-events: none;
-}
 ```
 
 </Sandpack>

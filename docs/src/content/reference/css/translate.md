@@ -13,47 +13,48 @@ Valid values are:
 
 ```js
 export default function App() {
-  return <>
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-  </>;
+  return <view className="items">
+    <view className="item" />
+  </view>;
 }
 ```
 
 ```css active
-hr {
-  border-bottom-width: 5px;
-  z-index: 1;
+.items {
+  flex-direction: column;
+  align-self: flex-start;
+  margin: 100px auto;
+  border: 1px solid gray;
 }
 
-view {
-  flex-grow: 1;
-  width: 50%;
-}
-
-view:nth-child(1) {
+.item {
+  width: 100px;
+  height: 100px;
   background-color: coral;
-  translate: 10px 10px;
+
+  animation: translateAnim 4s infinite;
 }
 
-view:nth-child(3) {
-  background-color: limegreen;
-  translate: 10% -5px;
-}
+@keyframes translateAnim {
+  0% {
+    translate: 0px 0px;
+  }
 
-view:nth-child(5) {
-  background-color: aqua;
-  translate: 20px 50px;
-}
+  25% {
+    translate: 220px 40px;
+  }
 
-view:nth-child(7) {
-  background-color: dodgerblue;
-  translate: -50% 0;
+  50% {
+    translate: 200px 200px;
+  }
+
+  75% {
+    translate: -50px 80px;
+  }
+
+  100% {
+    translate: 0px 0px;
+  }
 }
 ```
 

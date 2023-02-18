@@ -17,42 +17,43 @@ Alternatively, each corner can be set separately with the following properties:
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    <view className="test" />
   </>;
 }
 ```
 
 ```css active
-:root {
-  background-color: #fafafa;
-  padding: 10px;
+.test {
+  width: 240px;
+  height: 160px;
+  margin: 40px auto;
+  background-color: cornflowerblue;
+  animation: borderRadiusAnim 6s infinite;
 }
 
-view {
-  flex-grow: 1;
-  margin: 20px;
-  background-color: coral;
-}
+@keyframes borderRadiusAnim {
+  0% {
+    border-radius: 20%;
+  }
 
-view:nth-child(1) {
-  border-radius: 10px;
-}
+  25% {
+    border-radius: 50%;
+  }
 
-view:nth-child(2) {
-  border-radius: 50%;
-}
+  50% {
+    border-radius: 50%;
+    border-top-left-radius: 20%;
+    border-bottom-right-radius: 20%;
+  }
 
-view:nth-child(3) {
-  border-top-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-}
+  75% {
+    border-radius: 20%;
+    border-bottom-left-radius: 0;
+  }
 
-view:nth-child(4) {
-  border-radius: 40px;
-  border-bottom-left-radius: 0;
+  100% {
+    border-radius: 20%;
+  }
 }
 ```
 

@@ -17,40 +17,47 @@ Alternatively, each side can be set separately with the following properties:
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    <view className="test" />
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
-  margin: 20px;
-  background-color: cornflowerblue;
+.test {
+  width: 240px;
+  height: 160px;
+  margin: 40px auto;
+  background-color: coral;
+  animation: borderWidthAnim 4s infinite;
 }
 
-view:nth-child(1) {
-  border-width: 10px;
+@keyframes borderWidthAnim {
+  0% {
+    border-width: 20px;
+  }
+
+  25% {
+    border-width: 20px;
+    border-bottom-width: 0;
+  }
+
+  50% {
+    border-width: 20px 60px 0 20px;
+    border-radius: 0;
+  }
+
+  75% {
+    border-width: 10px;
+    border-bottom-width: 40px;
+    border-radius: 40px;
+  }
+
+  100% {
+    border-width: 20px;
+    border-radius: 0;
+  }
 }
 
-view:nth-child(2) {
-  border-width: 10px;
-  border-bottom-width: 0;
-}
-
-view:nth-child(3) {
-  border-right-width: 14px;
-  border-bottom-width: 4px;
-}
-
-view:nth-child(4) {
-  border-width: 4px;
-  border-bottom-width: 20px;
-  border-radius: 20px;
-}
 ```
 
 </Sandpack>

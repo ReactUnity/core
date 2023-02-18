@@ -22,7 +22,7 @@ export default function App() {
 :root {
   justify-content: space-around;
   text-align: center;
-  background-color: #a9b2ba;
+  background-color: #fefefe;
 }
 
 view {

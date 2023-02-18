@@ -12,51 +12,41 @@ Valid values are:
 
 <Sandpack>
 
-```js
+```js active
 export default function App() {
-  return <>
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-  </>;
+  return <view className="items">
+    <view style={{ transformOrigin: "initial" }} />
+    <view style={{ transformOrigin: "40px 40px" }} />
+    <view style={{ transformOrigin: "top left" }} />
+    <view style={{ transformOrigin: "bottom right" }} />
+  </view>;
 }
 ```
 
-```css active
-hr {
-  border-bottom-width: 5px;
-  z-index: 1;
+```css
+
+.items {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-view {
-  flex-grow: 1;
+.items > view {
+  width: 50px;
+  height: 50px;
+  margin: 25px;
+  background-color: black;
+
+  animation: rotate 2s infinite;
 }
 
-view:nth-child(1) {
-  background-color: coral;
-  scale: 0.9;
-}
-
-view:nth-child(3) {
-  background-color: limegreen;
-  transform-origin: 30px 30px;
-  scale: 0.8;
-}
-
-view:nth-child(5) {
-  background-color: aqua;
-  transform-origin: top left;
-  scale: 0.9 1.2;
-}
-
-view:nth-child(7) {
-  background-color: dodgerblue;
-  transform-origin: bottom right;
-  scale: 0.5;
+@keyframes rotate {
+  from {
+    rotate: 0;
+  }
+  to {
+    rotate: 1turn;
+  }
 }
 ```
 

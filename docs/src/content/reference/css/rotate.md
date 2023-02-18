@@ -14,55 +14,52 @@ Valid values are:
 
 ```js
 export default function App() {
-  return <>
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-    <hr />
-    <view />
-  </>;
+  return <view className="items">
+    <view className="item" />
+  </view>;
 }
 ```
 
 ```css active
-hr {
-  border-bottom-width: 5px;
-  z-index: 1;
-  width: 100%;
+.items {
+  flex-direction: column;
+  align-self: flex-start;
+  margin: 100px auto;
+  border: 1px solid gray;
 }
 
-:root {
-  align-items: center;
-  justify-content: space-around;
-}
-
-view {
-  width: 50px;
-  height: 50px;
-}
-
-view:nth-child(1) {
+.item {
+  width: 100px;
+  height: 100px;
   background-color: coral;
-  rotate: 30deg;
+
+  animation: rotateAnim 5s infinite;
 }
 
-view:nth-child(3) {
-  background-color: limegreen;
-  rotate: 1rad;
-}
+@keyframes rotateAnim {
+  0% {
+    rotate: 1;
+  }
 
-view:nth-child(5) {
-  background-color: aqua;
-  transform-origin: top left;
-  rotate: 0.125turn;
-}
+  20% {
+    rotate: 30deg;
+  }
 
-view:nth-child(7) {
-  background-color: dodgerblue;
-  transform-origin: bottom right;
-  rotate: 45deg 45deg 0;
+  40% {
+    rotate: 1.2rad;
+  }
+
+  60% {
+    rotate: 0.625turn;
+  }
+
+  80% {
+    rotate: 45deg 45deg 0.625turn;
+  }
+
+  100% {
+    rotate: 1;
+  }
 }
 ```
 

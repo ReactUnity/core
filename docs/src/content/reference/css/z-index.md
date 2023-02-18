@@ -13,42 +13,51 @@ Valid values are:
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    Hover the box to bring it forward
+
+    <view className="items">
+      <view className="item1" />
+      <view className="item2" />
+    </view>
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
-  margin: 20px;
+
+:root {
+  align-items: center;
 }
 
-view:nth-child(1) {
+.items {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.item1 {
+  width: 100px;
+  height: 100px;
   background-color: coral;
-  scale: 3;
-  opacity: 0.5;
-  z-index: 20;
 }
 
-view:nth-child(2) {
-  background-color: limegreen;
-  z-index: 15;
+.item2 {
+  width: 80px;
+  height: 80px;
+  margin-left: -20px;
+  background-color: slategray;
 }
 
-view:nth-child(3) {
-  background-color: aqua;
-  opacity: 0.5;
-  scale: 3;
-  z-index: 5;
+.item1, .item2 {
+  transition: scale 200ms;
 }
 
-view:nth-child(4) {
-  background-color: dodgerblue;
+.item1:hover, .item2:hover {
+  cursor: pointer;
+  z-index: 10;
+  scale: 1.1;
 }
+
 ```
 
 </Sandpack>

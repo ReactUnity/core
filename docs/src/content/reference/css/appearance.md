@@ -9,34 +9,36 @@ Valid values are `none` or `button`.
 
 <Sandpack>
 
-```js
+```js active
 export default function App() {
   return <>
-    <button>Appearance: button</button>
-    <button>Appearance: none</button>
     Click the buttons to see style differences
+
+    <view className="test">
+      <button style={{ appearance: 'button' }}>
+        Appearance: button
+      </button>
+
+      <button style={{ appearance: 'none' }}>
+        Appearance: none
+      </button>
+    </view>
   </>;
 }
 ```
 
-```css active
+```css
 :root {
-  justify-content: space-around;
   align-items: center;
-  background-color: white;
 }
 
-button {
-  background-color: cornflowerblue;
-  color: white;
+.test {
+  flex-direction: row;
+  align-items: center;
 }
 
-button:nth-child(1) {
-  appearance: button;
-}
-
-button:nth-child(2) {
-  appearance: none;
+.test > button {
+  margin: 20px;
 }
 ```
 

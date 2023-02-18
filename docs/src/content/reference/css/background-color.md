@@ -17,33 +17,40 @@ Sets the background color of a component.
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    <view className="test" />
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
+.test {
+  width: 240px;
+  height: 160px;
+  margin: 40px auto;
+  border: 1px solid black;
+  animation: backgroundColorAnim 8s infinite;
 }
 
-view:nth-child(1) {
-  background-color: crimson;
-}
+@keyframes backgroundColorAnim {
+  0% {
+    background-color: crimson;
+  }
 
-view:nth-child(2) {
-  background-color: #a5a5a5;
-}
+  25% {
+    background-color: #a5a5a5;
+  }
 
-view:nth-child(3) {
-  background-color: rgba(10, 10, 235, 0.4);
-}
+  50% {
+    background-color: rgba(10, 10, 235, 0.4);
+  }
 
-view:nth-child(4) {
-  background-color: #00ff0033;
+  75% {
+    background-color: #00ff0033;
+  }
+
+  100% {
+    background-color: crimson;
+  }
 }
 ```
 

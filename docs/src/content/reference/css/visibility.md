@@ -14,38 +14,41 @@ Valid values are:
 ```js
 export default function App() {
   return <>
-    <view />
-    <view />
-    <view />
-    <view />
+    Hover a box to make the other invisible
+
+    <view className="items">
+      <view style={{ background: 'coral' }} />
+      <view style={{ background: 'slategray' }} />
+      <view style={{ background: 'azure' }} />
+    </view>
   </>;
 }
 ```
 
 ```css active
-view {
-  flex-grow: 1;
+
+:root {
+  align-items: center;
 }
 
-view:nth-child(1) {
-  background-color: coral;
-  visibility: visible;
+.items {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
-view:nth-child(2) {
-  background-color: limegreen;
+.items > * {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+}
+
+.items:hover :not(:hover) {
   visibility: hidden;
 }
 
-view:nth-child(3) {
-  background-color: aqua;
-  visibility: visible;
-}
-
-view:nth-child(4) {
-  background-color: dodgerblue;
-  visibility: hidden;
-}
 ```
+
 
 </Sandpack>

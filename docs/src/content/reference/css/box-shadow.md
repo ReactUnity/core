@@ -22,14 +22,14 @@ export default function App() {
 
 ```css active
 :root {
-  background-color: #fafafa;
   padding: 10px;
 }
 
 view {
   flex-grow: 1;
-  margin: 20px;
+  margin: 20px auto;
   background-color: white;
+  width: 300px;
 }
 
 view:nth-child(1) {
@@ -46,7 +46,7 @@ view:nth-child(3) {
 }
 
 view:nth-child(4) {
-  box-shadow: 0 0 4px 15px 3px -5px black;
+  box-shadow: 0 0 4px 3px black;
 }
 ```
 
