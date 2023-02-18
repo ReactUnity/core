@@ -1,4 +1,4 @@
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
 import { check, error, info, packageName, SetIsLoadingContext, warn, Window } from './common';
 import { EnginePlugins } from './engine-plugins';
@@ -171,4 +171,4 @@ function App() {
   </SetIsLoadingContext.Provider>;
 }
 
-Renderer.render(<App />);
+render(<App />);

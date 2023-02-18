@@ -9,15 +9,6 @@ namespace ReactUnity.Tests
         public InjectableTests(JavascriptEngineType engineType) : base(engineType) { }
 
         [UGUITest(Script = @"
-            Renderer.render(<view>Hello world</view>);
-        ")]
-        public IEnumerator RendererRender()
-        {
-            yield return null;
-            Assert.AreEqual("Hello world", Host.TextContent);
-        }
-
-        [UGUITest(Script = @"
             render(<view>Hello world</view>);
         ")]
         public IEnumerator RenderDirectly()

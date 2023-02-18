@@ -1,4 +1,4 @@
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
 import { SelectionProvider, useSelection } from '../context/selection';
 import { StyleContext } from '../context/style';
 import { Classes } from './classes';
@@ -30,7 +30,7 @@ function NotSelectedView() {
   </view>;
 }
 
-Renderer.render(
+render(
   <StyleContext>
     <SelectionProvider>
       <App />

@@ -6092,176 +6092,6 @@ if (true) {
 
 /***/ }),
 
-/***/ "../../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js":
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-/**
- * @license React
- * use-sync-external-store-shim.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var e = __webpack_require__("../../../node_modules/react/index.js");
-function h(a, b) {
-  return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
-}
-var k = "function" === typeof Object.is ? Object.is : h,
-  l = e.useState,
-  m = e.useEffect,
-  n = e.useLayoutEffect,
-  p = e.useDebugValue;
-function q(a, b) {
-  var d = b(),
-    f = l({
-      inst: {
-        value: d,
-        getSnapshot: b
-      }
-    }),
-    c = f[0].inst,
-    g = f[1];
-  n(function () {
-    c.value = d;
-    c.getSnapshot = b;
-    r(c) && g({
-      inst: c
-    });
-  }, [a, d, b]);
-  m(function () {
-    r(c) && g({
-      inst: c
-    });
-    return a(function () {
-      r(c) && g({
-        inst: c
-      });
-    });
-  }, [a]);
-  p(d);
-  return d;
-}
-function r(a) {
-  var b = a.getSnapshot;
-  a = a.value;
-  try {
-    var d = b();
-    return !k(a, d);
-  } catch (f) {
-    return !0;
-  }
-}
-function t(a, b) {
-  return b();
-}
-var u = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? t : q;
-exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExternalStore : u;
-
-/***/ }),
-
-/***/ "../../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-/**
- * @license React
- * use-sync-external-store-with-selector.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var g = __webpack_require__("../../../node_modules/react/index.js");
-function n(a, b) {
-  return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
-}
-var p = "function" === typeof Object.is ? Object.is : n,
-  q = g.useSyncExternalStore,
-  r = g.useRef,
-  t = g.useEffect,
-  u = g.useMemo,
-  v = g.useDebugValue;
-exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
-  var c = r(null);
-  if (null === c.current) {
-    var f = {
-      hasValue: !1,
-      value: null
-    };
-    c.current = f;
-  } else f = c.current;
-  c = u(function () {
-    function a(a) {
-      if (!c) {
-        c = !0;
-        d = a;
-        a = l(a);
-        if (void 0 !== h && f.hasValue) {
-          var b = f.value;
-          if (h(b, a)) return k = b;
-        }
-        return k = a;
-      }
-      b = k;
-      if (p(d, a)) return b;
-      var e = l(a);
-      if (void 0 !== h && h(b, e)) return b;
-      d = a;
-      return k = e;
-    }
-    var c = !1,
-      d,
-      k,
-      m = void 0 === e ? null : e;
-    return [function () {
-      return a(b());
-    }, null === m ? void 0 : function () {
-      return a(m());
-    }];
-  }, [b, e, l, h]);
-  var d = q(a, c[0], c[1]);
-  t(function () {
-    f.hasValue = !0;
-    f.value = d;
-  }, [d]);
-  v(d);
-  return d;
-};
-
-/***/ }),
-
-/***/ "../../../node_modules/use-sync-external-store/shim/index.js":
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__("../../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js");
-} else {}
-
-/***/ }),
-
-/***/ "../../../node_modules/use-sync-external-store/with-selector.js":
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__("../../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
-} else {}
-
-/***/ }),
-
 /***/ "../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/index.module.scss":
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -6731,80 +6561,9 @@ var react = __webpack_require__("../../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.0';
+var version = '0.14.6';
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../../node_modules/react/jsx-runtime.js");
-// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__("../../../node_modules/use-sync-external-store/shim/index.js");
-// EXTERNAL MODULE: ../../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__("../../../node_modules/use-sync-external-store/with-selector.js");
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/dictionary-watcher.js
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return __assign.apply(this, arguments);
-};
-
-
-
-/**
- * Creates a context that updates its value when the values in the dictionary change
- * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
- * @param displayName A displayName to identify this context easier in case of problems
- */
-function createDictionaryWatcher(dictionary, displayName) {
-  var ctx = (0,react.createContext)(undefined);
-  if (displayName) ctx.displayName = displayName;
-  var snapshot = __assign({}, dictionary);
-  var subscribe = function subscribe(onStoreChange) {
-    snapshot = __assign({}, dictionary);
-    var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
-      snapshot = __assign({}, dictionary);
-      onStoreChange();
-    });
-    if (!remove) {
-      if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
-    }
-    return function () {
-      return remove === null || remove === void 0 ? void 0 : remove();
-    };
-  };
-  var getSnapshot = function getSnapshot() {
-    return snapshot;
-  };
-  var Provider = function GlobalsProvider(_a) {
-    var children = _a.children;
-    var value = (0,shim.useSyncExternalStore)(subscribe, getSnapshot, getSnapshot);
-    return (0,react.createElement)(ctx.Provider, {
-      value: value
-    }, children);
-  };
-  function useSelector(selector, isEqual) {
-    return (0,with_selector.useSyncExternalStoreWithSelector)(subscribe, getSnapshot, getSnapshot, selector, isEqual);
-  }
-  function useDictionaryContext() {
-    var context = (0,react.useContext)(ctx);
-    if (context === undefined) {
-      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
-    }
-    return context;
-  }
-  return {
-    context: ctx,
-    Provider: Provider,
-    useContext: useDictionaryContext,
-    useSelector: useSelector
-  };
-}
-var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
-var useGlobals = globalsWatcher.useContext;
-var useGlobalsSelector = globalsWatcher.useSelector;
-var GlobalsProvider = globalsWatcher.Provider;
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -6826,15 +6585,15 @@ var __extends = undefined && undefined.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-var error_boundary_assign = undefined && undefined.__assign || function () {
-  error_boundary_assign = Object.assign || function (t) {
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
       s = arguments[i];
       for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
     }
     return t;
   };
-  return error_boundary_assign.apply(this, arguments);
+  return __assign.apply(this, arguments);
 };
 
 
@@ -6862,13 +6621,13 @@ var ErrorBoundary = /** @class */function (_super) {
   ErrorBoundary.prototype.render = function () {
     var _a, _b;
     if (this.state.hasError) {
-      return (0,jsx_runtime.jsxs)("view", error_boundary_assign({
+      return (0,jsx_runtime.jsxs)("view", __assign({
         style: {
           color: 'crimson',
           padding: 20
         }
       }, {
-        children: [(0,jsx_runtime.jsx)("view", error_boundary_assign({
+        children: [(0,jsx_runtime.jsx)("view", __assign({
           style: {
             marginBottom: '12px'
           }
@@ -6887,16 +6646,14 @@ var ErrorBoundary = /** @class */function (_super) {
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
 
 
-
 function DefaultView(_a) {
   var children = _a.children,
-    withHelpers = _a.withHelpers;
+    withHelpers = _a.withHelpers,
+    renderCount = _a.renderCount;
   return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
     children: !withHelpers ? children : (0,jsx_runtime.jsx)(ErrorBoundary, {
-      children: (0,jsx_runtime.jsx)(GlobalsProvider, {
-        children: children
-      })
-    })
+      children: children
+    }, renderCount)
   });
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
@@ -7752,91 +7509,104 @@ var syncReconciler = react_reconciler(reconciler_hostConfig);
 
 
 var containerMap = new Map();
+var renderCount = 0;
+function _render(element, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  renderCount++;
+  var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+  var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
+  var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
+  var _a = containerMap.get(cacheKey) || {},
+    hostRoot = _a.hostRoot,
+    asyncJobCallback = _a.asyncJobCallback;
+  var findFiberByHostInstance = function findFiberByHostInstance() {
+    return null;
+  };
+  if (!hostRoot) {
+    var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
+    if (isAsync) {
+      var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
+      if (isDevelopment) {
+        findFiberByHostInstance = function findFiberByHostInstance(instance) {
+          return !instance ? null : fiberCache_1.getObject(instance.refId);
+        };
+      }
+      var scheduled_1 = false;
+      var commands_1 = [];
+      commands_1.push = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        if (!scheduled_1) {
+          scheduled_1 = true;
+          Promise.resolve().then(function () {
+            asyncJobCallback();
+            scheduled_1 = false;
+          });
+        }
+        return Array.prototype.push.apply(commands_1, args);
+      };
+      var hostContainerInstance_1 = {
+        type: 'native',
+        commands: commands_1,
+        component: hostContainer,
+        context: hostContainer.Context,
+        refId: hostContainer.RefId,
+        fiberCache: fiberCache_1
+      };
+      asyncJobCallback = function asyncJobCallback() {
+        if (!commands_1.length) return;
+        var serialized = JSON.stringify(commands_1);
+        commands_1.length = 0;
+        hostContainerInstance_1.context.FlushCommands(serialized);
+      };
+      hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    } else {
+      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    }
+    containerMap.set(cacheKey, {
+      hostRoot: hostRoot,
+      asyncJobCallback: asyncJobCallback
+    });
+  }
+  var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
+  if (shouldWrapWithHelpers) {
+    var viewWrapperProps = {
+      withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
+      renderCount: renderCount
+    };
+    element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
+  }
+  var rc = isAsync ? asyncReconciler : syncReconciler;
+  rc.updateContainer(element, hostRoot, null);
+  rc.injectIntoDevTools({
+    bundleType: isDevelopment ? 1 : 0,
+    version: version,
+    rendererPackageName: '@reactunity/renderer',
+    rendererConfig: {
+      isAsync: isAsync
+    },
+    findFiberByHostInstance: findFiberByHostInstance
+  });
+  return rc;
+}
+/**
+ * @deprecated Instead, import `render` directly from `@reactunity/renderer`
+ */
+
 var Renderer = {
   render: function render(element, options) {
     if (options === void 0) {
       options = {};
     }
-    var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
-    var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
-    var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-    var _a = containerMap.get(cacheKey) || {},
-      hostRoot = _a.hostRoot,
-      asyncJobCallback = _a.asyncJobCallback;
-    var findFiberByHostInstance = function findFiberByHostInstance() {
-      return null;
-    };
-    if (!hostRoot) {
-      var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
-      if (isAsync) {
-        var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
-        if (isDevelopment) {
-          findFiberByHostInstance = function findFiberByHostInstance(instance) {
-            return !instance ? null : fiberCache_1.getObject(instance.refId);
-          };
-        }
-        var scheduled_1 = false;
-        var commands_1 = [];
-        commands_1.push = function () {
-          var args = [];
-          for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-          }
-          if (!scheduled_1) {
-            scheduled_1 = true;
-            Promise.resolve().then(function () {
-              asyncJobCallback();
-              scheduled_1 = false;
-            });
-          }
-          return Array.prototype.push.apply(commands_1, args);
-        };
-        var hostContainerInstance = {
-          type: 'native',
-          commands: commands_1,
-          component: hostContainer,
-          context: hostContainer.Context,
-          refId: hostContainer.RefId,
-          fiberCache: fiberCache_1
-        };
-        asyncJobCallback = function asyncJobCallback() {
-          if (!commands_1.length) return;
-          var serialized = JSON.stringify(commands_1);
-          commands_1.length = 0;
-          hostContainer.Context.FlushCommands(serialized);
-        };
-        hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      } else {
-        hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
-          return console.error(error);
-        }, null);
-      }
-      containerMap.set(cacheKey, {
-        hostRoot: hostRoot,
-        asyncJobCallback: asyncJobCallback
-      });
-    }
-    var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
-    if (shouldWrapWithHelpers) {
-      var viewWrapperProps = {
-        withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers)
-      };
-      element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
-    }
-    var rc = isAsync ? asyncReconciler : syncReconciler;
-    rc.updateContainer(element, hostRoot, null);
-    rc.injectIntoDevTools({
-      bundleType: isDevelopment ? 1 : 0,
-      version: version,
-      rendererPackageName: '@reactunity/renderer',
-      rendererConfig: {
-        isAsync: isAsync
-      },
-      findFiberByHostInstance: findFiberByHostInstance
-    });
-    return rc;
+    return _render(element, options);
   }
 };
 var batchedUpdates = asyncReconciler.batchedUpdates;
@@ -7958,7 +7728,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
 ;// CONCATENATED MODULE: ./src/unity-plugins.tsx
 var pluginTypes=[{packageName:'com.unity.editorcoroutines',name:'Unity Editor Coroutines',required:true,tooltip:"Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed."},{packageName:'com.unity.vectorgraphics',name:'Unity Vector Graphics',required:false,tooltip:"Required for SVG rendering."},{packageName:'com.nosuchstudio.rtltmpro',name:'RTLTMPro',required:false,scoped:true,tooltip:"Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro."}];function initPlugins(){return new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(pluginTypes),_step;try{var _loop=function _loop(){var type=_step.value;var resolveFunc=function resolveFunc(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===pluginTypes.length){resolve();}};Window.CheckVersion(type.packageName,resolveFunc);};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});}function AdditionalPlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),plugins=_useState2[0],setPlugins=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),loadingPlugin=_useState4[0],setLoadingPlugin=_useState4[1];var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),updatePlugins=_useState6[0],setUpdatePlugins=_useState6[1];var setIsLoading=(0,react.useContext)(SetIsLoadingContext);var installPlugin=(0,react.useCallback)(function(x){var update=function update(){setIsLoading(false);setUpdatePlugins(function(x){return x+1;});};if(x.scoped)Window.InstallScopedPlugin(x.packageName,update);else Window.InstallUnityPlugin(x.packageName,update);setLoadingPlugin(x.packageName);setIsLoading(true);},[]);(0,react.useEffect)(function(){setPlugins(null);initPlugins().then(function(){return setPlugins(pluginTypes);});},[updatePlugins]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["Additional Plugins",!plugins&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!plugins&&plugins.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.required?' (Required)':' (Optional)'),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_index_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.required?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.required&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.required?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:(loadingPlugin===x.packageName?'Updating to ':'Update to ')+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:loadingPlugin===x.packageName?'Installing':'Install'})})]},i);})]});}
 ;// CONCATENATED MODULE: ./src/main.tsx
-var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var createLearnUrl='https://github.com/ReactUnity/create#readme';var fullProjectPath=Window.GetProjectFullPath();function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(false),_useState14=_slicedToArray(_useState13,2),isLoading=_useState14[0],setIsLoading=_useState14[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(packageName,function(cur,latest,hasUpdate){setPackageVersion(cur);setLatestVersion(latest);setHasUpdate(hasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};return/*#__PURE__*/(0,jsx_runtime.jsx)(SetIsLoadingContext.Provider,{value:setIsLoading,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js was not detected in this computer. Make sure it is installed or ignore this message if it already is."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallScopedPlugin(packageName);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:[projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]}),!projectOk&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"React project does not exist at the default path."}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,tooltip:"The default project path is \"".concat(fullProjectPath,"\".\nYou can ignore this message if you have a project created in another path."),children:info})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:createLearnUrl,children:"Learn How To Create"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)(EnginePlugins,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(AdditionalPlugins,{}),isLoading&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{"class":src_index_module.loadingOverlay,children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})})]})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var createLearnUrl='https://github.com/ReactUnity/create#readme';var fullProjectPath=Window.GetProjectFullPath();function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(false),_useState14=_slicedToArray(_useState13,2),isLoading=_useState14[0],setIsLoading=_useState14[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(packageName,function(cur,latest,hasUpdate){setPackageVersion(cur);setLatestVersion(latest);setHasUpdate(hasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};return/*#__PURE__*/(0,jsx_runtime.jsx)(SetIsLoadingContext.Provider,{value:setIsLoading,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js was not detected in this computer. Make sure it is installed or ignore this message if it already is."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallScopedPlugin(packageName);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:[projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]}),!projectOk&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"React project does not exist at the default path."}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,tooltip:"The default project path is \"".concat(fullProjectPath,"\".\nYou can ignore this message if you have a project created in another path."),children:info})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:createLearnUrl,children:"Learn How To Create"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)(EnginePlugins,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(AdditionalPlugins,{}),isLoading&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{"class":src_index_module.loadingOverlay,children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})})]})});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();
