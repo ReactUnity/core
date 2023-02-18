@@ -1,5 +1,5 @@
 
-import { Attributes, ClassAttributes, RefAttributes } from 'react';
+import { RefAttributes } from 'react';
 import { BaseElements, Textable } from '../base';
 import { ReactUnity } from '../generated';
 import { SVGEelement } from '../svg';
@@ -33,18 +33,26 @@ export interface UGUIElements extends BaseElements<BaseCmp> {
   portal: Components.Portal & RefAttributes<NS.PortalComponent> & Children;
 }
 
-declare module 'react/jsx-runtime' {
+declare global {
+  interface ReactUnityCustomElements { }
+
+  interface DefaultComponentProps extends Components.View {
+    ref?: React.Ref<ReactUnity.UGUI.UGUIComponent>;
+  }
+
   namespace JSX {
-    interface ElementAttributesProperty { props: {} }
-    interface ElementChildrenAttribute { children: {} }
-    interface IntrinsicAttributes extends Attributes { }
-    interface IntrinsicClassAttributes<T> extends ClassAttributes<T> { }
-    interface IntrinsicElements extends UGUIElements { }
+    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
   }
 }
 
-declare global {
-  interface DefaultComponentProps extends Components.View {
-    ref?: React.Ref<ReactUnity.UGUI.UGUIComponent>;
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
+  }
+}
+
+declare module 'react/jsx-runtime' {
+  namespace JSX {
+    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
   }
 }

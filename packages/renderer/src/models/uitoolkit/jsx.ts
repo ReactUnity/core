@@ -39,18 +39,26 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   progress: Components.ValueComponent<number>;
 }
 
-declare module 'react/jsx-runtime' {
+declare global {
+  interface ReactUnityCustomElements { }
+
+  interface DefaultComponentProps extends Components.View {
+    ref?: React.Ref<ReactUnity.UIToolkit.UIToolkitComponent>;
+  }
+
   namespace JSX {
-    interface ElementAttributesProperty { props: {} }
-    interface ElementChildrenAttribute { children: {} }
-    interface IntrinsicAttributes extends React.Attributes { }
-    interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> { }
-    interface IntrinsicElements extends UIToolkitElements { }
+    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements { }
   }
 }
 
-declare global {
-  interface DefaultComponentProps extends Components.View {
-    ref?: React.Ref<ReactUnity.UIToolkit.UIToolkitComponent>;
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements { }
+  }
+}
+
+declare module 'react/jsx-runtime' {
+  namespace JSX {
+    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements { }
   }
 }

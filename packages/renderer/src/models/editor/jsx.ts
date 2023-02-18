@@ -80,18 +80,26 @@ export interface EditorElements extends BaseElements<BaseElement<any>> {
   'tb-toggle': BaseElement;
 }
 
-declare module 'react/jsx-runtime' {
+declare global {
+  interface ReactUnityCustomElements { }
+
+  interface DefaultComponentProps extends Components.View {
+    ref?: React.Ref<ReactUnity.UIToolkit.UIToolkitComponent>;
+  }
+
   namespace JSX {
-    interface ElementAttributesProperty { props: {} }
-    interface ElementChildrenAttribute { children: {} }
-    interface IntrinsicAttributes extends React.Attributes { }
-    interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> { }
-    interface IntrinsicElements extends EditorElements { }
+    interface IntrinsicElements extends EditorElements, ReactUnityCustomElements { }
   }
 }
 
-declare global {
-  interface DefaultComponentProps extends Components.View {
-    ref?: React.Ref<ReactUnity.UIToolkit.UIToolkitComponent>;
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements extends EditorElements, ReactUnityCustomElements { }
+  }
+}
+
+declare module 'react/jsx-runtime' {
+  namespace JSX {
+    interface IntrinsicElements extends EditorElements, ReactUnityCustomElements { }
   }
 }

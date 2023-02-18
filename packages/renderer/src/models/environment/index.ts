@@ -1,6 +1,7 @@
 
 import { ReactUnity } from '../generated';
 import './dom/global';
+import './jsx';
 export * from './interop';
 
 interface Console {

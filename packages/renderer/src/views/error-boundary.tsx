@@ -18,7 +18,9 @@ export class ErrorBoundary extends React.Component<any, any> {
 
   render() {
     if (this.state.hasError) {
-      return <view style={{ color: 'crimson', padding: 20 }}>
+      return <view
+        id='__react-unity-error-boundary'
+        style={{ color: 'crimson', padding: 20, fontSize: 16 }}>
         <view style={{ marginBottom: '12px' }}>
           {this.state.error?.message || ''}
         </view>
