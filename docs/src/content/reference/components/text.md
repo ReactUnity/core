@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js
+```js
 const name = 'John Doe';
 
 export default function App() {
@@ -25,7 +25,7 @@ By default, text component allows [rich-text](http://digitalnativestudios.com/te
 
 <Sandpack>
 
-```js App.js
+```js
 const name = 'John Doe';
 
 export default function App() {

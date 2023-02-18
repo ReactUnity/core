@@ -19,7 +19,7 @@ In apps fully built with React, you will do this once at the top level of your a
 
 <Sandpack>
 
-```js App.js active
+```js
 import { render } from '@reactunity/renderer';
 
 function Hello() {

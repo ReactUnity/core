@@ -12,7 +12,7 @@ Valid values are:
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <button>Pointer-events: all</button>
@@ -23,7 +23,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: space-around;
   align-items: center;

@@ -6,7 +6,6 @@ import { Page } from 'components/Layout/Page';
 import { MDXComponents } from 'components/MDX/MDXComponents';
 import { useRouter } from 'next/router';
 import { Fragment, useMemo } from 'react';
-import sidebarHome from '../sidebarHome.json';
 import sidebarLearn from '../sidebarLearn.json';
 import sidebarReference from '../sidebarReference.json';
 
@@ -17,7 +16,7 @@ export default function Layout({ content, toc, meta }) {
   );
   const parsedToc = useMemo(() => JSON.parse(toc, reviveNodeOnClient), [toc]);
   const section = useActiveSection();
-  let routeTree = sidebarHome;
+  let routeTree = sidebarLearn;
   switch (section) {
     case 'learn':
       routeTree = sidebarLearn;
@@ -42,7 +41,7 @@ function useActiveSection() {
   } else if (asPath.startsWith('/blog')) {
     return 'learn';
   } else {
-    return 'home';
+    return 'learn';
   }
 }
 
@@ -152,7 +151,7 @@ export async function getStaticProps(context) {
       (await import('remark-frontmatter')).default,
     ],
     rehypePlugins: [
-      // Support stuff like ```js App.js {1-5} active by passing it through.
+      // Support stuff like ```js {1-5} active by passing it through.
       function rehypeMetaAsAttributes() {
         return (tree) => {
           visit(tree, 'element', (node) => {

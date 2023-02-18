@@ -7,7 +7,7 @@ ReactUnity allows you to style elements using CSS. The CSS properties works the 
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <view />
@@ -15,7 +15,7 @@ export default function App() {
 };
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: space-around;
   text-align: center;

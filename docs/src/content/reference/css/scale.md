@@ -11,7 +11,7 @@ Valid values are:
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <view />
@@ -25,7 +25,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 hr {
   border-bottom-width: 5px;
   z-index: 1;

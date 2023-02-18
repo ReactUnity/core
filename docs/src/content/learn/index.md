@@ -14,7 +14,7 @@ This is a tiny ReactUnity app. To get your first taste of ReactUnity, **edit the
 
 <Sandpack>
 
-```js App.js active
+```js
 function Greeting({ name }) {
   return <text>Hello, {name}!</text>;
 }
@@ -27,6 +27,12 @@ export default function App() {
       <Greeting name="Taylor" />
     </view>
   );
+}
+```
+
+```css
+:root {
+  font-size: 32px;
 }
 ```
 

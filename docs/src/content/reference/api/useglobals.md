@@ -13,7 +13,7 @@ The hook will rerender the component it is used in when the `Globals` object cha
 
 <Sandpack>
 
-```js App.js active
+```js
 import { useGlobals } from '@reactunity/renderer';
 
 Globals.testCount = 0;

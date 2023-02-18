@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <scroll style={{
     backgroundColor: 'white',

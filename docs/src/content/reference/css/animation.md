@@ -9,7 +9,7 @@ This property is completely compatible with [CSS animation](https://developer.mo
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     Click and hold the box to see a different animation
@@ -18,7 +18,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: space-around;
   text-align: center;

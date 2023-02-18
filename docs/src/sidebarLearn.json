@@ -1,12 +1,16 @@
 {
   "title": "Learn ReactUnity",
   "heading": true,
-  "path": "/learn",
+  "path": "/",
   "routes": [
     {
       "heading": true,
       "path": "",
       "routes": [
+        {
+          "title": "Overview",
+          "path": "/"
+        },
         {
           "title": "Quick Start",
           "path": "/learn"
@@ -18,6 +22,18 @@
         {
           "title": "Supported UI Backends",
           "path": "/learn/ui-backends"
+        },
+        {
+          "hasSectionHeader": true,
+          "sectionHeader": "Misc"
+        },
+        {
+          "title": "About the documentation",
+          "path": "/learn/about"
+        },
+        {
+          "title": "FAQ",
+          "path": "/learn/faq"
         }
       ]
     }

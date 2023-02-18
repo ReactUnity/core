@@ -2,7 +2,7 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { lazy, memo, Children, Suspense } from 'react';
+import { Children, lazy, memo, Suspense } from 'react';
 import { createFileMap } from './createFileMap';
 
 const SandpackRoot = lazy(() => import('./SandpackRoot'));
@@ -57,7 +57,7 @@ export default memo(function SandpackWrapper(props: any): any {
   );
   let activeCode;
   if (!activeCodeSnippet.length) {
-    activeCode = codeSnippet['/App.js'].code;
+    activeCode = codeSnippet['/App.js']?.code ?? codeSnippet['/index.html']?.code;
   } else {
     activeCode = codeSnippet[activeCodeSnippet[0]].code;
   }

@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js active
+```js
 import { Button, AlertDialog, ConfirmDialog, PromptDialog } from '@reactunity/material';
 import '@reactunity/material/styles';
 
@@ -48,7 +48,7 @@ export default function App() {
 }
 ```
 
-```css style.css
+```css
 .main > * {
   margin: 10px 20px;
 }

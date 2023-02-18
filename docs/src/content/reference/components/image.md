@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <image
     style={{ height: 200, objectFit: 'scale-down' }}

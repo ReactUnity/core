@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js active
+```js
 import { TextField } from '@reactunity/material';
 import '@reactunity/material/styles';
 
@@ -21,7 +21,7 @@ export default function App() {
 }
 ```
 
-```css style.css
+```css
 :root {
   background: white;
 }

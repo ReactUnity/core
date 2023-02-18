@@ -9,7 +9,7 @@ Check out the [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow)
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <view />
@@ -20,7 +20,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   background-color: #fafafa;
   padding: 10px;

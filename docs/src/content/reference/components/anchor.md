@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <anchor url="https://github.com/ReactUnity"
     style={{ margin: 20 }}>

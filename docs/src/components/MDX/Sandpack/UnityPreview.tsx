@@ -24,6 +24,12 @@ type CustomPreviewProps = {
   lintErrors: LintDiagnostic;
 };
 
+const sandboxStyle = `
+:root {
+  padding: 24px;
+}
+`;
+
 export function UnityPreview({
   isExpanded,
   className,
@@ -123,7 +129,7 @@ export function UnityPreview({
   );
 
   const code = sandpack.files['/App.js']?.code;
-  const css = sandpack.files['/style.css']?.code;
+  const css = sandpack.files['/styles.css']?.code;
 
   const compiledCode = React.useMemo(() => compile(code || '', 'jsx') || '', [code]);
   const compiledCss = React.useMemo(() => compile(css || '', 'css') || '', [css]);
@@ -174,7 +180,7 @@ export function UnityPreview({
         )}>
         <UnityCardridge
           script={delayedCode}
-          css={delayedCss}
+          css={sandboxStyle + delayedCss}
           ref={cartridgeRef}
           className={cn(
             'rounded-t-none bg-white md:shadow-md w-full max-w-full transition-opacity h-full absolute inset-0',

@@ -9,7 +9,7 @@ This property is completely compatible with [CSS transition](https://developer.m
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     Hover the box to see the transition
@@ -18,7 +18,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: space-around;
   text-align: center;

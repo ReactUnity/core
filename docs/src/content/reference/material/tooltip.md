@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js active
+```js
 import { useDataTooltip, Button } from '@reactunity/material';
 import '@reactunity/material/styles';
 
@@ -53,7 +53,7 @@ export default function App() {
 }
 ```
 
-```css style.css
+```css
 .tooltip-triggers > * {
   alignItems: center;
   margin: 10px;

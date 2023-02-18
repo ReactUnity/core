@@ -97,7 +97,7 @@ export default function Nav({
 }: {
   routeTree: RouteItem;
   breadcrumbs: RouteItem[];
-  section: 'learn' | 'reference' | 'home';
+  section: 'learn' | 'reference';
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -116,12 +116,12 @@ export default function Nav({
   }
   if (isOpen) {
     switch (tab) {
-      case 'home':
-      case 'learn':
-        routeTree = sidebarLearn as RouteItem;
-        break;
       case 'reference':
         routeTree = sidebarReference as RouteItem;
+        break;
+      case 'learn':
+      default:
+        routeTree = sidebarLearn as RouteItem;
         break;
     }
   }
@@ -188,7 +188,7 @@ export default function Nav({
       });
   }, [showFeedback]);
 
-  function selectTab(nextTab: 'home' | 'learn' | 'reference') {
+  function selectTab(nextTab: 'learn' | 'reference') {
     setTab(nextTab);
     scrollParentRef.current!.scrollTop = 0;
   }
@@ -245,9 +245,6 @@ export default function Nav({
           </div>
         )}
         <div className="px-0 pt-2 w-full 2xl:max-w-xs hidden lg:flex items-center self-center border-b-0 lg:border-b border-border dark:border-border-dark">
-          <NavLink href="/" isActive={section === 'home'}>
-            Home
-          </NavLink>
           <NavLink href="/learn" isActive={section === 'learn'}>
             Learn
           </NavLink>
@@ -311,11 +308,6 @@ export default function Nav({
 
       {isOpen && (
         <div className="bg-wash dark:bg-wash-dark px-5 flex justify-end border-b border-border dark:border-border-dark items-center self-center w-full z-10">
-          <TabButton
-            isActive={tab === 'home'}
-            onClick={() => selectTab('home')}>
-            Home
-          </TabButton>
           <TabButton
             isActive={tab === 'learn'}
             onClick={() => selectTab('learn')}>

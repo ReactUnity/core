@@ -9,7 +9,7 @@ The value must be a string enclosed in quotes, like `"Hello world!"`.
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <view>
@@ -19,7 +19,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: center;
   align-items: center;

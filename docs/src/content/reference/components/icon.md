@@ -10,7 +10,7 @@ The list of default icons can be seen at [Google Fonts](https://fonts.google.com
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <view style={{ flexDirection: 'row' }}>
     <icon>person</icon>
@@ -24,7 +24,7 @@ export default function App() {
 };
 ```
 
-```css style.css
+```css
 icon {
   font-size: 32px;
 }

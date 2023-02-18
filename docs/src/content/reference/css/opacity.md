@@ -11,7 +11,7 @@ Valid values are:
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <view>Fancy Text</view>
@@ -22,7 +22,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 view {
   flex-grow: 1;
   align-items: center;

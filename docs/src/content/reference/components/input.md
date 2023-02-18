@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js
+```js
 const defaultValue = 'Default value';
 
 export default function App() {

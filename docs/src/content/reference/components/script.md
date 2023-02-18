@@ -8,7 +8,7 @@ It is recommended to use this sparingly in other situations.
 
 <Sandpack>
 
-```js App.js
+```js
 const scriptContent = `
   let count = 0;
 
@@ -37,7 +37,7 @@ The content of this component can be loaded from a URL by defining the `source` 
 
 <Sandpack>
 
-```js App.js
+```js
 
 const url = 'https://reactunity.github.io/examples/script-content.js';
 

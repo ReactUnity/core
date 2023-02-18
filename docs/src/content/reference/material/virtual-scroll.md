@@ -7,7 +7,7 @@ layout: API
 
 <Sandpack>
 
-```js App.js active
+```js
 import { FixedSizeList } from '@reactunity/material';
 import '@reactunity/material/styles';
 
@@ -31,7 +31,7 @@ export default function App() {
 }
 ```
 
-```css style.css
+```css
 scroll::scrollbar-thumb {
   box-shadow: 0 0 0 3px black;
   background-color: black;

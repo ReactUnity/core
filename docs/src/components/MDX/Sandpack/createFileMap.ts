@@ -16,19 +16,28 @@ export const createFileMap = (codeSnippets: any) => {
       let fileActive = false; // if the file tab is shown by default
 
       if (props.meta) {
-        const [name, ...params] = props.meta.split(' ');
-        filePath = '/' + name;
+        const params = props.meta.split(' ');
         if (params.includes('hidden')) {
           fileHidden = true;
+          params.splice(params.indexOf('hidden'), 1);
         }
         if (params.includes('active')) {
           fileActive = true;
+          params.splice(params.indexOf('active'), 1);
         }
-      } else {
-        if (props.className === 'language-js') {
+
+        if (params[0]) {
+          filePath = '/' + params[0];
+        }
+      }
+
+      if (!filePath) {
+        if (props.className.includes('language-js')) {
           filePath = '/App.js';
-        } else if (props.className === 'language-css') {
+        } else if (props.className.includes('language-css')) {
           filePath = '/styles.css';
+        } else if (props.className.includes('language-html')) {
+          filePath = '/index.html';
         } else {
           throw new Error(
             `Code block is missing a filename: ${props.children}`

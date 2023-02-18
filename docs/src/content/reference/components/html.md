@@ -11,7 +11,7 @@ It can be used for high performance solutions where React is not needed.
 
 <Sandpack>
 
-```js App.js
+```js
 const htmlContent = `
   <view>
     <button onClick="console.log('hello there')"
@@ -34,7 +34,7 @@ The content of this component can be loaded from a URL by defining the `source` 
 
 <Sandpack>
 
-```js App.js
+```js
 
 const url = 'https://reactunity.github.io/examples/html-content.html';
 

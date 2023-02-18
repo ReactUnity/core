@@ -9,7 +9,7 @@ Valid values are `none` or `button`.
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     <button>Appearance: button</button>
@@ -19,7 +19,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 :root {
   justify-content: space-around;
   align-items: center;

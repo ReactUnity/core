@@ -11,7 +11,7 @@ The property must have the format `<url> <delay> <iteration-count | infinite>`
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   return <>
     Click the button to hear the audio
@@ -22,7 +22,7 @@ export default function App() {
 }
 ```
 
-```css style.css active
+```css active
 button {
   align-self: center;
   background-color: coral;

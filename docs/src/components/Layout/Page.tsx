@@ -23,7 +23,7 @@ interface PageProps {
   toc: Array<TocItem>;
   routeTree: RouteItem;
   meta: { title?: string; description?: string };
-  section: 'learn' | 'reference' | 'home';
+  section: 'learn' | 'reference';
 }
 
 export function Page({ children, toc, routeTree, meta, section }: PageProps) {

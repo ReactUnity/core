@@ -22,6 +22,11 @@ function SandpackRoot(props: SandpackProps) {
   const codeSnippets = Children.toArray(children) as React.ReactElement[];
   const files = createFileMap(codeSnippets);
 
+  files['/styles.css'] = {
+    code: '',
+    ...files['/styles.css'],
+  };
+
   return (
     <div className="sandpack sandpack--playground my-8">
       <SandpackProvider

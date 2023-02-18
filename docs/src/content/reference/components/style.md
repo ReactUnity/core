@@ -8,7 +8,7 @@ It is recommended to use this sparingly in other situations.
 
 <Sandpack>
 
-```js App.js
+```js
 const styleContent = `
   #style-this {
     color: crimson;
@@ -34,7 +34,7 @@ The content of this component can be loaded from a URL by defining the `source` 
 
 <Sandpack>
 
-```js App.js
+```js
 
 const url = 'https://reactunity.github.io/examples/style-content.css';
 
@@ -57,7 +57,7 @@ The styles defined in this component can be scoped to another element with a sel
 
 <Sandpack>
 
-```js App.js
+```js
 const styleContent = `
   :scope .style-this {
     color: crimson;

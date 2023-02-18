@@ -27,7 +27,7 @@ API reference for `useGlobals` can be found [here](/reference/api/useglobals).
 
 <Sandpack>
 
-```js App.js
+```js
 export default function App() {
   const ref = React.useRef();
   const randomize = () => {
