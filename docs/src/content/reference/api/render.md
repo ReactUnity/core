@@ -5,7 +5,7 @@ layout: API
 
 <Intro>
 
-`render` renders a piece of JSX into the `ReactUnityUGUI` component. It instructs React to change the UI so that it matches the passed JSX.
+`render` renders a piece of JSX into the `ReactRendererUGUI` component. It instructs React to change the UI so that it matches the passed JSX.
 
 ```js
 render(<App />);

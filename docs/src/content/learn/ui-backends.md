@@ -21,7 +21,7 @@ In the React project, `tsconfig.json` must contain the following `types` array i
 ]
 ```
 
-`ugui` backend can be used by adding `ReactUnityUGUI` component to a GameObject and configuring it via inspector. Similarly, `uitoolkit` backend can be used by adding `ReactUnityUIDocument` to a GameObject.
+`ugui` backend can be used by adding `ReactRendererUGUI` component to a GameObject and configuring it via inspector. Similarly, `uitoolkit` backend can be used by adding `ReactRendererUIToolkit` to a GameObject.
 
 In order to use the `editor` backend, you must extend a class from either `ReactWindow`, `ReactInspector` or `ReactProperty`, and then implement its `GetScript` method to load the React script
 
