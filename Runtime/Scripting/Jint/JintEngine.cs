@@ -101,7 +101,9 @@ namespace ReactUnity.Scripting
         public void SetProperty<T>(object obj, string key, T value)
         {
             if (obj is ObjectInstance so)
-                so.FastAddProperty(key, CreateValue(value), true, false, true);
+                so.FastSetProperty(key,
+                    new Jint.Runtime.Descriptors.PropertyDescriptor(
+                        CreateValue(value), true, false, true));
         }
 
         public void SetGlobal<T>(string key, T value)
@@ -132,7 +134,7 @@ namespace ReactUnity.Scripting
 
         public object CreateScriptObject(IEnumerable<KeyValuePair<string, object>> props)
         {
-            var obj = new ObjectInstance(Engine);
+            var obj = new JsObject(Engine);
 
             foreach (var item in props)
             {
