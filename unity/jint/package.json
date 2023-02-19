@@ -6,7 +6,7 @@
     "url": "https://github.com/KurtGokhan"
   },
   "displayName": "React Unity Jint",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "unity": "2019.4",
   "description": "Jint Plugin for ReactUnity",
   "keywords": [
