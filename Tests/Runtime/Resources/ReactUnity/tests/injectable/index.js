@@ -30,15 +30,15 @@ var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTrans
 var globals = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!../../../material/dist/src/styles/globals.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/styles/globals.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var options = {};
 
@@ -46,7 +46,7 @@ options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
 
       options.insert = insertBySelector_default().bind(null, "head");
-
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7105,7 +7105,7 @@ module.exports = styleTagTransform;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7119,14 +7119,14 @@ module.exports = styleTagTransform;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -7139,7 +7139,7 @@ module.exports = styleTagTransform;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -7151,12 +7151,12 @@ module.exports = styleTagTransform;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -7167,12 +7167,12 @@ module.exports = styleTagTransform;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -7287,15 +7287,15 @@ var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTrans
 var index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/accordion/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/accordion/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var options = {};
 
@@ -7303,7 +7303,7 @@ options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
 
       options.insert = insertBySelector_default().bind(null, "head");
-
+    
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
@@ -7420,15 +7420,15 @@ Accordion.Content = _Content;
 var ripple_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/ripple/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/ripple/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var index_module_options = {};
 
@@ -7436,7 +7436,7 @@ index_module_options.styleTagTransform = (styleTagTransform_default());
 index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 index_module_options.domAPI = (styleDomAPI_default());
 index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -7517,15 +7517,15 @@ function useRipple(_a) {
 var button_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/button/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/button/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var button_index_module_options = {};
 
@@ -7533,7 +7533,7 @@ button_index_module_options.styleTagTransform = (styleTagTransform_default());
 button_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       button_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 button_index_module_options.domAPI = (styleDomAPI_default());
 button_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -7624,15 +7624,15 @@ function useRootClass(className) {
 var modal_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/modal/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/modal/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var modal_index_module_options = {};
 
@@ -7640,7 +7640,7 @@ modal_index_module_options.styleTagTransform = (styleTagTransform_default());
 modal_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       modal_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 modal_index_module_options.domAPI = (styleDomAPI_default());
 modal_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -7724,15 +7724,15 @@ function Modal(_a) {
 var alert_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/alert/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/alert/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var alert_index_module_options = {};
 
@@ -7740,7 +7740,7 @@ alert_index_module_options.styleTagTransform = (styleTagTransform_default());
 alert_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       alert_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 alert_index_module_options.domAPI = (styleDomAPI_default());
 alert_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -7819,15 +7819,15 @@ function AlertDialog(_a) {
 var card_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/card/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/card/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var card_index_module_options = {};
 
@@ -7835,7 +7835,7 @@ card_index_module_options.styleTagTransform = (styleTagTransform_default());
 card_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       card_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 card_index_module_options.domAPI = (styleDomAPI_default());
 card_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -7898,15 +7898,15 @@ Card.Content = card_Content;
 var confirm_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/confirm/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/confirm/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var confirm_index_module_options = {};
 
@@ -7914,7 +7914,7 @@ confirm_index_module_options.styleTagTransform = (styleTagTransform_default());
 confirm_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       confirm_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 confirm_index_module_options.domAPI = (styleDomAPI_default());
 confirm_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8015,15 +8015,15 @@ function ConfirmDialog(_a) {
 var input_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/input/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/input/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var input_index_module_options = {};
 
@@ -8031,7 +8031,7 @@ input_index_module_options.styleTagTransform = (styleTagTransform_default());
 input_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       input_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 input_index_module_options.domAPI = (styleDomAPI_default());
 input_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8123,15 +8123,15 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
 var paper_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/paper/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/paper/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var paper_index_module_options = {};
 
@@ -8139,7 +8139,7 @@ paper_index_module_options.styleTagTransform = (styleTagTransform_default());
 paper_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       paper_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 paper_index_module_options.domAPI = (styleDomAPI_default());
 paper_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8192,15 +8192,15 @@ var Paper = react.memo(_Paper);
 var text_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/text/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/text/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var text_index_module_options = {};
 
@@ -8208,7 +8208,7 @@ text_index_module_options.styleTagTransform = (styleTagTransform_default());
 text_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       text_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 text_index_module_options.domAPI = (styleDomAPI_default());
 text_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8313,15 +8313,15 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
 var prompt_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/prompt/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/prompt/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var prompt_index_module_options = {};
 
@@ -8329,7 +8329,7 @@ prompt_index_module_options.styleTagTransform = (styleTagTransform_default());
 prompt_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       prompt_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 prompt_index_module_options.domAPI = (styleDomAPI_default());
 prompt_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8575,15 +8575,15 @@ var SelectionState = /** @class */function () {
 var toggle_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/toggle/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/toggle/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var toggle_index_module_options = {};
 
@@ -8591,7 +8591,7 @@ toggle_index_module_options.styleTagTransform = (styleTagTransform_default());
 toggle_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       toggle_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 toggle_index_module_options.domAPI = (styleDomAPI_default());
 toggle_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -8757,15 +8757,15 @@ var ToggleGroup = react.memo(_ToggleGroup);
 var select_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/select/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/select/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var select_index_module_options = {};
 
@@ -8773,7 +8773,7 @@ select_index_module_options.styleTagTransform = (styleTagTransform_default());
 select_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       select_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 select_index_module_options.domAPI = (styleDomAPI_default());
 select_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -9050,15 +9050,15 @@ function useControlCheck(_a) {
 var slider_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/slider/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/slider/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var slider_index_module_options = {};
 
@@ -9066,7 +9066,7 @@ slider_index_module_options.styleTagTransform = (styleTagTransform_default());
 slider_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       slider_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 slider_index_module_options.domAPI = (styleDomAPI_default());
 slider_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -9280,7 +9280,7 @@ var Slider = react.memo(_Slider);
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.14.6';
+var version = '0.15.0';
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -9339,9 +9339,11 @@ var ErrorBoundary = /** @class */function (_super) {
     var _a, _b;
     if (this.state.hasError) {
       return (0,jsx_runtime.jsxs)("view", error_boundary_assign({
+        id: '__react-unity-error-boundary',
         style: {
           color: 'crimson',
-          padding: 20
+          padding: 20,
+          fontSize: 16
         }
       }, {
         children: [(0,jsx_runtime.jsx)("view", error_boundary_assign({
@@ -10332,15 +10334,15 @@ var flushSync = asyncReconciler.flushSync;
 var tooltip_index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../../material/dist/src/tooltip/index.module.scss");
 ;// CONCATENATED MODULE: ../../../material/dist/src/tooltip/index.module.scss
 
-
-
-
-
-
-
-
-
-
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 var tooltip_index_module_options = {};
 
@@ -10348,7 +10350,7 @@ tooltip_index_module_options.styleTagTransform = (styleTagTransform_default());
 tooltip_index_module_options.setAttributes = (setAttributesWithoutAttributes_default());
 
       tooltip_index_module_options.insert = insertBySelector_default().bind(null, "head");
-
+    
 tooltip_index_module_options.domAPI = (styleDomAPI_default());
 tooltip_index_module_options.insertStyleElement = (insertStyleElement_default());
 
@@ -10477,7 +10479,7 @@ function addTooltip(target, props, withBackdrop, hide) {
     UnityBridge.appendChild(anchor, backdrop);
   }
   UnityBridge.appendChild(anchor, tooltip);
-  Renderer.render(props.content, {
+  _render(props.content, {
     disableHelpers: true,
     hostContainer: tooltip
   });
@@ -12416,7 +12418,7 @@ var useGlobals = globalsWatcher.useValue;
 var useGlobalsContext = globalsWatcher.useContext;
 var useGlobalsSelector = globalsWatcher.useSelector;
 var GlobalsProvider = globalsWatcher.Provider;
-;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/hooks/use-reactive.js
+;// CONCATENATED MODULE: ../../../renderer/dist/src/helpers/hooks/use-reactive-value.js
 
 
 function createSubscriber(obj, isEqual) {
@@ -12432,7 +12434,7 @@ function createSubscriber(obj, isEqual) {
           onStoreChange();
         }
       }));
-      if (isReactive && typeof remove !== 'function') console.warn("The reactive does not provide a change listener");
+      if (isReactive && typeof remove !== 'function') console.warn("The reactive value does not provide a change listener");
       return function () {
         return remove === null || remove === void 0 ? void 0 : remove();
       };
