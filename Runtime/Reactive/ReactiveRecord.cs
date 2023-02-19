@@ -6,9 +6,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Helpers;
 #if REACT_CLEARSCRIPT
 using Microsoft.ClearScript;
-using ReactUnity.Helpers;
 using EnginePrototypeTable = System.Runtime.CompilerServices.ConditionalWeakTable<Microsoft.ClearScript.ScriptEngine, ReactUnity.Reactive.PrototypeEntry>;
 #endif
 
