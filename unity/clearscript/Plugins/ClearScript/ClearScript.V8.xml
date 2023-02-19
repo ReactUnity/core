@@ -845,15 +845,7 @@
             </remarks>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8Runtime.Dispose">
-            <summary>
-            Releases all resources used by the V8 runtime.
-            </summary>
-            <remarks>
-            Call <c>Dispose()</c> when you are finished using the V8 runtime. <c>Dispose()</c>
-            leaves the V8 runtime in an unusable state. After calling <c>Dispose()</c>, you must
-            release all references to the V8 runtime so the garbage collector can reclaim the
-            memory that the V8 runtime was occupying.
-            </remarks>
+            <inheritdoc/>
         </member>
         <member name="T:Microsoft.ClearScript.V8.V8RuntimeConstraints">
             <summary>
@@ -1606,25 +1598,10 @@
             </remarks>
         </member>
         <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.Script">
-            <summary>
-            Allows the host to access script resources dynamically.
-            </summary>
-            <remarks>
-            The value of this property is an object that is bound to the script engine's root
-            namespace. It dynamically supports properties and methods that correspond to global
-            script objects and functions.
-            </remarks>
+            <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.Global">
-            <summary>
-            Allows the host to access script resources.
-            </summary>
-            <remarks>
-            The value of this property is an object that is bound to the script engine's root
-            namespace. It allows you to access global script resources via the
-            <c><see cref="T:Microsoft.ClearScript.ScriptObject"/></c> class interface. Doing so is likely to perform better than
-            dynamic access via <c><see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.Script"/></c>.
-            </remarks>
+            <inheritdoc/>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.ExecuteCommand(System.String)">
             <summary>
@@ -1647,14 +1624,7 @@
             </remarks>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.GetStackTrace">
-            <summary>
-            Gets a string representation of the script call stack.
-            </summary>
-            <returns>The script call stack formatted as a string.</returns>
-            <remarks>
-            This method returns an empty string if the script engine is not executing script code.
-            The stack trace text format is defined by the script engine.
-            </remarks>
+            <inheritdoc/>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Interrupt">
             <summary>
@@ -1666,10 +1636,7 @@
             <c><seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.CancelInterrupt"/></c>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CollectGarbage(System.Boolean)">
-            <summary>
-            Performs garbage collection.
-            </summary>
-            <param name="exhaustive"><c>True</c> to perform exhaustive garbage collection, <c>false</c> to favor speed over completeness.</param>
+            <inheritdoc/>
         </member>
         <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Dispose(System.Boolean)">
             <summary>
