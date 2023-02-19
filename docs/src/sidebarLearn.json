@@ -16,12 +16,20 @@
           "path": "/learn"
         },
         {
+          "title": "Supported UI Backends",
+          "path": "/learn/ui-backends"
+        },
+        {
+          "hasSectionHeader": true,
+          "sectionHeader": "How to"
+        },
+        {
           "title": "React - C# communication (Interop)",
           "path": "/learn/interop"
         },
         {
-          "title": "Supported UI Backends",
-          "path": "/learn/ui-backends"
+          "title": "Debugging React code",
+          "path": "/learn/debug"
         },
         {
           "hasSectionHeader": true,
