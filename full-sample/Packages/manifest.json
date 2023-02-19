@@ -2,7 +2,7 @@
   "dependencies": {
     "com.nosuchstudio.rtltmpro": "3.4.5",
     "com.reactunity.clearscript": "0.15.0",
-    "com.reactunity.core": "0.15.0",
+    "com.reactunity.core": "0.15.1",
     "com.reactunity.jint": "0.15.0",
     "com.reactunity.quickjs": "0.15.0",
     "com.unity.2d.sprite": "1.0.0",
