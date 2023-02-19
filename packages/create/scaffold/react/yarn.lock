@@ -1412,10 +1412,10 @@
     react-reconciler "^0.29.0"
     use-sync-external-store "^1.2.0"
 
-"@reactunity/scripts@^0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.15.0.tgz#3c23f8bb57fc25d19c185cc70046c6cf28f261e3"
-  integrity sha512-VbD25FWf/ssJvg6lLXmRfj5Elw4kshyjVrakQ12bnp2kwZ922kG5qH09PNY8JQQ7NDoVC3pP81K6u2OMK8fW+Q==
+"@reactunity/scripts@^0.15.1":
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.15.1.tgz#4301320e28fd5ce52332f82eef0b5472518ac5fa"
+  integrity sha512-eWGRnE83eZCb6Wwf1r4RxbVUDajjBvToz4jg8m5CawHXLhzCY/4BK9u4niqmk3uh6oWzn5WTrj+nIksna44P5g==
   dependencies:
     "@babel/core" "^7.20.12"
     "@babel/eslint-parser" "^7.19.1"

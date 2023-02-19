@@ -14,7 +14,7 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.15.0",
+    "@reactunity/scripts": "^0.15.1",
     "typescript": "^4.9.5"
   }
 }
