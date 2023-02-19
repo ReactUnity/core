@@ -452,7 +452,7 @@ const UnityJSBPlugin: PluginType = {
     const runtime = unityJsbState.getRuntime(rtId);
 
     const iframe = document.createElement('iframe');
-    iframe.name = 'unity-jsb-context-' + id;
+    iframe.name = 'reactunity-context-' + id;
     iframe.style.display = 'none';
     document.head.appendChild(iframe);
 
@@ -541,14 +541,14 @@ const UnityJSBPlugin: PluginType = {
       globals;
 
     const evaluate = function (code: string, filename?: string) {
-      const sourceMap = !filename ? '' : '\n//# sourceURL=unity-jsb:///' + filename;
+      const sourceUrlSuffix = !filename ? '' : '\n//# sourceURL=reactunity:///' + filename;
 
       return (function (evalCode) {
         //@ts-ignore
         with (globals) {
           return eval(evalCode);
         }
-      }).call(globals, code + sourceMap);
+      }).call(globals, code + sourceUrlSuffix);
     };
 
 

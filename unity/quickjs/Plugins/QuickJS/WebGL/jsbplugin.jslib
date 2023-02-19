@@ -405,7 +405,7 @@ var UnityJSBPlugin = {
         var id = unityJsbState.lastContextId++;
         var runtime = unityJsbState.getRuntime(rtId);
         var iframe = document.createElement('iframe');
-        iframe.name = 'unity-jsb-context-' + id;
+        iframe.name = 'reactunity-context-' + id;
         iframe.style.display = 'none';
         document.head.appendChild(iframe);
         var contentWindow = iframe.contentWindow;
@@ -474,13 +474,13 @@ var UnityJSBPlugin = {
                             extraGlobals.this =
                                 globals;
         var evaluate = function (code, filename) {
-            var sourceMap = !filename ? '' : '\n//# sourceURL=unity-jsb:///' + filename;
+            var sourceUrlSuffix = !filename ? '' : '\n//# sourceURL=reactunity:///' + filename;
             return (function (evalCode) {
                 //@ts-ignore
                 with (globals) {
                     return eval(evalCode);
                 }
-            }).call(globals, code + sourceMap);
+            }).call(globals, code + sourceUrlSuffix);
         };
         var context = {
             id: id,
