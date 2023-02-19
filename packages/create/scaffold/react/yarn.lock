@@ -1404,18 +1404,18 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.14.6.tgz#7250c545b08c556610458ba9cae77d9c0a89ad06"
-  integrity sha512-jyQ6M3nv/2rv8eiIwsxAuhYq0NQJWeef6U3jVnPDpqpwAmX6DWyHfGGdGVCN9pAbzWYc0CA7D19lnqGhjFimvA==
+"@reactunity/renderer@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.15.0.tgz#8772fd27f157e68eda1e8bf7012c1e66e06748c3"
+  integrity sha512-f+z4ksExYofNjNJSZ+9gEyjuVN6gCMnoYHTccYsEZWn7YxhQx5Q7IbmlYsmQtv13GDlTFktcRLqUMioQcMHn7w==
   dependencies:
     react-reconciler "^0.29.0"
     use-sync-external-store "^1.2.0"
 
-"@reactunity/scripts@^0.14.2":
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.14.2.tgz#d9b080bfee1600a11dd5998ffaf0731524902fe3"
-  integrity sha512-yHhvJnnc9iLMEb8UyBVl5UxErKV3dNUhdwJxYaHvTxWM8zOA87JVjAjrBoWA4c086GtwXou14fBZyFvoEVJl8g==
+"@reactunity/scripts@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.15.0.tgz#3c23f8bb57fc25d19c185cc70046c6cf28f261e3"
+  integrity sha512-VbD25FWf/ssJvg6lLXmRfj5Elw4kshyjVrakQ12bnp2kwZ922kG5qH09PNY8JQQ7NDoVC3pP81K6u2OMK8fW+Q==
   dependencies:
     "@babel/core" "^7.20.12"
     "@babel/eslint-parser" "^7.19.1"
@@ -1460,7 +1460,7 @@
     react-refresh "^0.14.0"
     resolve "^1.22.1"
     resolve-url-loader "^5.0.0"
-    sass "^1.58.2"
+    sass "^1.58.3"
     sass-loader "^13.2.0"
     semver "^7.3.8"
     source-map-loader "^4.0.1"
@@ -5938,7 +5938,7 @@ sass-loader@^13.2.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass@^1.58.2:
+sass@^1.58.3:
   version "1.58.3"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.58.3.tgz#2348cc052061ba4f00243a208b09c40e031f270d"
   integrity sha512-Q7RaEtYf6BflYrQ+buPudKR26/lH+10EmO9bBqbmPh/KeLqv8bjpTNqxe71ocONqXq+jYiCbpPUmQMS+JJPk4A==

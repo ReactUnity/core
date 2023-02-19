@@ -6482,7 +6482,7 @@ var react = __webpack_require__("./node_modules/react/index.js");
 // EXTERNAL MODULE: ./node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("./node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/version.js
-var version = '0.14.6';
+var version = '0.15.0';
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("./node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/views/error-boundary.js
@@ -6543,9 +6543,11 @@ var ErrorBoundary = /** @class */function (_super) {
     var _a, _b;
     if (this.state.hasError) {
       return (0,jsx_runtime.jsxs)("view", __assign({
+        id: '__react-unity-error-boundary',
         style: {
           color: 'crimson',
-          padding: 20
+          padding: 20,
+          fontSize: 16
         }
       }, {
         children: [(0,jsx_runtime.jsx)("view", __assign({
