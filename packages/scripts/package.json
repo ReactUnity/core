@@ -18,7 +18,8 @@
     "config",
     "lib",
     "scripts",
-    "utils"
+    "utils",
+    "tsconfig.json"
   ],
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
