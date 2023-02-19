@@ -38,7 +38,7 @@
     "twin.macro": "^3.1.0"
   },
   "devDependencies": {
-    "@reactunity/previewer": "^0.14.1",
+    "@reactunity/previewer": "^0.15.0",
     "@reactunity/scripts": "^0.15.0",
     "@types/react-redux": "^7.1.25",
     "babel-plugin-twin": "^1.1.0",
