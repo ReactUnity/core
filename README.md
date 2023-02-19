@@ -32,12 +32,12 @@ https://github.com/ReactUnity/core.git#latest
 
 ## Usage
 
-- Create a canvas and add `ReactUnity` component to it
-- Run `npx @reactunity/create` in your Unity project root to create a React project
+- Create a canvas and add `ReactRendererUGUI` component to it
+- Run [`npx @reactunity/create@latest`](https://github.com/ReactUnity/create) in your Unity project root to create a React project
 - Run `npm start` from React project
 - Click play in Unity
 
-The documentation on the [main website](https://reactunity.github.io) is under development.
+Visit the documentation on the [main website](https://reactunity.github.io) to learn more.
 
 ## Known Issues
 
@@ -50,5 +50,4 @@ The documentation on the [main website](https://reactunity.github.io) is under d
 
 - [Sample Project](https://github.com/ReactUnity/full-sample)
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
-- [`npx @reactunity/create`](https://github.com/ReactUnity/create)
 - [Acknowledgements](./.github/acknowledgements.md)
