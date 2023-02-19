@@ -14,6 +14,7 @@ type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttrib
 export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   view: BaseElement & { tag?: string };
   box: BaseElement;
+  a: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   anchor: Components.Anchor & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
   text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   richtext: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;

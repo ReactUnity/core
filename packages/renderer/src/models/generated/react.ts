@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 19/02/2023 00:02:06
+// Generated 19/02/2023 03:24:44
 //
 /* eslint-disable */
 
@@ -6358,7 +6358,7 @@ export declare namespace ReactUnity {
   }
   export namespace UGUI {
     export class AnchorComponent {
-      constructor(context: ReactUnity.UGUI.UGUIContext);
+      constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       Url: string;
       Target: string;
       Disabled: boolean;
@@ -13178,7 +13178,7 @@ export declare namespace ReactUnity {
   }
   export namespace UIToolkit {
     export class AnchorComponent {
-      constructor(context: ReactUnity.UIToolkit.UIToolkitContext);
+      constructor(context: ReactUnity.UIToolkit.UIToolkitContext, tag?: string);
       Url: string;
       Target: string;
       Element: UnityEngine.UIElements.Button;

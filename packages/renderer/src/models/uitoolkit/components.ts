@@ -61,6 +61,7 @@ export interface Button<TSender = Cmp.ButtonComponent> extends View<TSender> {
 }
 
 export interface Anchor extends View {
+  href?: string;
   url?: string;
   /** Works in WebGL only */
   target?: AnchorTarget;

@@ -48,6 +48,7 @@ export interface Toggle extends View<ReactUnity.UGUI.ToggleComponent> {
 
 export interface Anchor extends View<ReactUnity.UGUI.AnchorComponent> {
   url?: string;
+  href?: string;
   disabled?: boolean;
   /** Works in WebGL only */
   target?: AnchorTarget;

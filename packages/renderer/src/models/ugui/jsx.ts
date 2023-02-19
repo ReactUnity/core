@@ -12,6 +12,7 @@ type BaseCmp = Components.View<any> & RefAttributes<NS.UGUIComponent> & Children
 
 export interface UGUIElements extends BaseElements<BaseCmp> {
   view: Components.View & RefAttributes<NS.ContainerComponent> & { tag?: string } & Children;
+  a: Components.Anchor & RefAttributes<NS.AnchorComponent> & Children;
   anchor: Components.Anchor & RefAttributes<NS.AnchorComponent> & Children;
   text: Components.Text & RefAttributes<NS.TextComponent> & Children<Textable | Textable[]>;
   richtext: Components.Text & RefAttributes<NS.TextComponent> & Children<any>;
