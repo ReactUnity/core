@@ -129,10 +129,23 @@ namespace ReactUnity
         {
             if (useDevServer && IsDevServer) return DevServer;
 
-            if (Type == ScriptSourceType.File || Type == ScriptSourceType.Resource)
+            if (Type == ScriptSourceType.File)
+            {
                 return SourcePath;
+            }
+            else if (Type == ScriptSourceType.Resource)
+            {
+                return string.IsNullOrEmpty(ResourcesPath) ? ("Assets/Resources/" + SourcePath) : ResourcesPath;
+            }
             else if (Type == ScriptSourceType.TextAsset)
-                return ResourcesPath ?? "Assets/Resources/react/index.js";
+            {
+#if UNITY_EDITOR
+                var srcAsset = UnityEditor.AssetDatabase.GetAssetPath(SourceAsset);
+                if (!string.IsNullOrWhiteSpace(srcAsset)) return srcAsset;
+#endif
+
+                return string.IsNullOrEmpty(ResourcesPath) ? "Assets/Resources/react/index.js" : ResourcesPath;
+            }
             else if (Type == ScriptSourceType.Url)
             {
                 var href = SourcePath;
@@ -142,6 +155,48 @@ namespace ReactUnity
                 return url.href;
             }
             return "";
+        }
+
+        public Uri GetRemoteUrl(bool useDevServer = true)
+        {
+            Uri uri = null;
+
+            if (useDevServer && IsDevServer)
+            {
+                Uri.TryCreate(DevServerFile, UriKind.Absolute, out uri);
+            }
+            else if (Type == ScriptSourceType.File)
+            {
+                Uri.TryCreate(SourcePath, UriKind.RelativeOrAbsolute, out uri);
+            }
+            else if (Type == ScriptSourceType.Resource)
+            {
+                var url = string.IsNullOrEmpty(ResourcesPath) ? ("Assets/Resources/" + SourcePath) : ResourcesPath;
+                Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri);
+            }
+            else if (Type == ScriptSourceType.TextAsset)
+            {
+                string url = "";
+#if UNITY_EDITOR
+                var srcAsset = UnityEditor.AssetDatabase.GetAssetPath(SourceAsset);
+                if (!string.IsNullOrWhiteSpace(srcAsset))
+                    url = srcAsset;
+#endif
+
+                if (string.IsNullOrWhiteSpace(url))
+                    url = string.IsNullOrEmpty(ResourcesPath) ? "Assets/Resources/react/index.js" : ResourcesPath;
+
+                Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri);
+            }
+            else if (Type == ScriptSourceType.Url)
+            {
+                var href = SourcePath;
+
+                var abs = Application.absoluteURL;
+                var url = new URL(href, abs);
+                Uri.TryCreate(url.href, UriKind.Absolute, out uri);
+            }
+            return uri;
         }
 
         private string StripHashAndSearch(string url)

@@ -24,6 +24,8 @@ namespace ReactUnity.Scripting
         public object NativeEngine => Engine;
         private bool ShouldAwait = false;
 
+        private ReactContext Context { get; }
+
         static string GetPluginFolder()
         {
             if (SystemInfo.processorType.IndexOf("ARM", StringComparison.InvariantCultureIgnoreCase) >= 0)
@@ -40,6 +42,8 @@ namespace ReactUnity.Scripting
 
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
+            Context = context;
+
             HostSettings.AuxiliarySearchPath =
                 Application.dataPath + ";" +
                 Application.dataPath + "/Plugins;" +
@@ -85,12 +89,16 @@ namespace ReactUnity.Scripting
         {
             var isMainFile = fileName == "ReactUnity/main";
 
-            var document = new DocumentInfo(AddFilenameExtension(fileName))
-            {
-                Flags =
-                        (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
-                        (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None),
-            };
+            Uri remoteUrl;
+
+            var document = isMainFile &&
+                (remoteUrl = Context.Source.GetRemoteUrl()) != null ?
+                new DocumentInfo(remoteUrl) :
+                new DocumentInfo(AddFilenameExtension(fileName));
+
+            document.Flags =
+                (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
+                (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None);
 
             if (ShouldAwait && isMainFile)
             {
