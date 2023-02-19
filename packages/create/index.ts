@@ -57,13 +57,7 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
   // Copy project template
   await fse.copy(scaffoldDir, targetDir, { filter: src => !src.includes(reactScaffoldNodeModules) });
 
-  // In some versions of npm, .gitignore is renamed to .npmignore automatically
-  // Rename .npmignore to .gitignore if this has happened
-  const npmIgnorePath = path.join(targetDir, '.npmignore');
-  const gitIgnorePath = path.join(targetDir, '.gitignore');
-  if (await fse.exists(npmIgnorePath) && !(await fse.exists(gitIgnorePath))) {
-    await fse.move(npmIgnorePath, gitIgnorePath);
-  }
+  await fixGitignore(targetDir);
 }
 
 async function runOpenUPM() {
@@ -71,10 +65,21 @@ async function runOpenUPM() {
   return await run_script(cmd, ['-y', 'openupm-cli', 'add', 'com.reactunity.core', 'com.reactunity.quickjs'], { cwd: unityDir });
 }
 
+// In some versions of npm, .gitignore is renamed to .npmignore automatically
+// Rename .npmignore to .gitignore if this has happened
+async function fixGitignore(targetDir: string) {
+  const npmIgnorePath = path.join(targetDir, '.npmignore');
+  const gitIgnorePath = path.join(targetDir, '.gitignore');
+  if (await fse.exists(npmIgnorePath) && !(await fse.exists(gitIgnorePath))) {
+    await fse.move(npmIgnorePath, gitIgnorePath);
+  }
+}
+
 async function create() {
   try {
     if (createUnity) {
       await copyScaffold(unityScaffold, unityDir);
+      await fixGitignore(reactDir);
       await runOpenUPM();
     } else {
       await copyScaffold(reactScaffold, reactDir);
