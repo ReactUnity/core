@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CustomComponentInitializer : MonoBehaviour
 {
-    public ReactUnityUGUI reactUnity;
+    public ReactRendererUGUI reactUnity;
     public Color customButtonColor;
 
     void Start()

@@ -803,12 +803,13 @@ MonoBehaviour:
   Source:
     Type: 3
     Language: 0
-    SourceAsset: {fileID: 4900000, guid: 7624f5153498b8249bc319430a2a9f3a, type: 3}
+    SourceAsset: {fileID: 2811297602134710623, guid: 8d86c5991535adc4da83c664d50624bb,
+      type: 3}
     Watch: 1
     SourcePath: react/index
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 2
+    UseDevServer: 1
     DevServer: http://localhost:3100
   EngineType: 0
   Globals:

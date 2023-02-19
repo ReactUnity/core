@@ -24,7 +24,7 @@ namespace MyInterop
 
         void OnEnable()
         {
-            var ctx = GetComponent<ReactUnityUGUI>();
+            var ctx = GetComponent<ReactRendererUGUI>();
             if (ctx)
             {
                 ctx.AdvancedOptions.AfterStart.AddListener(() => {

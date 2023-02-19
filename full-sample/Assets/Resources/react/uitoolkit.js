@@ -6765,7 +6765,7 @@ var react_namespaceObject = /*#__PURE__*/__webpack_require__.t(react, 2);
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.14.6';
+var version = '0.15.0';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/error-boundary.js
@@ -6826,9 +6826,11 @@ var ErrorBoundary = /** @class */function (_super) {
     var _a, _b;
     if (this.state.hasError) {
       return (0,jsx_runtime.jsxs)("view", __assign({
+        id: '__react-unity-error-boundary',
         style: {
           color: 'crimson',
-          padding: 20
+          padding: 20,
+          fontSize: 16
         }
       }, {
         children: [(0,jsx_runtime.jsx)("view", __assign({
@@ -9786,7 +9788,7 @@ function jsxs(type, props, key) {
 }
 
 ;// CONCATENATED MODULE: ./src/uitoolkit/index.tsx
-var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){return jsx("scroll",{children:jsxs("view",{className:uitoolkit_index_module.app,children:[jsx("h1",{children:"React Unity Showcase"}),jsx(ForwardRef,{}),jsx("svg",{source:check}),jsx("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),jsx("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),jsxs("section",{children:[jsx("h2",{children:"Button"}),jsx("button",{className:uitoolkit_index_module.clickButton,children:"Click"})]}),jsxs("section",{children:[jsx("h2",{children:"Anchor"}),jsx("anchor",{url:"https://www.google.com",children:"Open Google"})]}),jsxs("section",{children:[jsx("h2",{children:"Input"}),jsx("input",{})]}),jsxs("section",{children:[jsx("h2",{children:"Toggle"}),jsxs("row",{children:[jsx("toggle",{}),"Toggle"]})]}),jsxs("section",{children:[jsx("h2",{children:"Image"}),jsxs("row",{children:[jsx("image",{source:bg_namespaceObject}),jsx("image",{source:base64Image}),jsx("image",{source:webImage})]})]})]})});};Renderer.render(jsx(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){return jsx("scroll",{children:jsxs("view",{className:uitoolkit_index_module.app,children:[jsx("h1",{children:"React Unity Showcase"}),jsx(ForwardRef,{}),jsx("svg",{source:check}),jsx("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),jsx("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),jsxs("section",{children:[jsx("h2",{children:"Button"}),jsx("button",{className:uitoolkit_index_module.clickButton,children:"Click"})]}),jsxs("section",{children:[jsx("h2",{children:"Anchor"}),jsx("anchor",{url:"https://www.google.com",children:"Open Google"})]}),jsxs("section",{children:[jsx("h2",{children:"Input"}),jsx("input",{})]}),jsxs("section",{children:[jsx("h2",{children:"Toggle"}),jsxs("row",{children:[jsx("toggle",{}),"Toggle"]})]}),jsxs("section",{children:[jsx("h2",{children:"Image"}),jsxs("row",{children:[jsx("image",{source:bg_namespaceObject}),jsx("image",{source:base64Image}),jsx("image",{source:webImage})]})]})]})});};_render(jsx(App,{}));
 ;// CONCATENATED MODULE: ./src/entry/uitoolkit.tsx
 
 })();

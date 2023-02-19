@@ -8,10 +8,15 @@ declare global {
 }
 
 
-declare module 'react/jsx-runtime' {
-  namespace JSX {
-    interface IntrinsicElements {
-      // Add your custom elements here
-    }
+declare global {
+  interface ReactUnityCustomElements {
+    // Add your custom native elements here
+    // mycomp: { myprop?: number };
+  }
+
+  interface ReactUnityCustomAttributes {
+    // Add your custom native elements here. May be required for some libraries like @emotion/react.
+    // See twin.d.ts file for an example.
+    // css?: CSSProp;
   }
 }

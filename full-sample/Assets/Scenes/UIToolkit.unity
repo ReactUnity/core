@@ -163,7 +163,7 @@ MonoBehaviour:
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3000
+    DevServer: http://localhost:3100
   EngineType: 0
   Globals:
     Entries: []
@@ -171,6 +171,7 @@ MonoBehaviour:
     Pooling: 1
     MediaUpdateInterval: 0.5
     DebugMode: 0
+    UnknownPropertyHandling: 1
     AutoRender: 1
     Stylesheets: []
     BeforeStart:

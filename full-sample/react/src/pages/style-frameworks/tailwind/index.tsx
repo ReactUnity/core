@@ -13,8 +13,9 @@ export function TailwindPage() {
       </button>
     </div>
 
-    <div tw='flex-row'>
-      <button tw={'bg-blue-400 hover:bg-red-400 p-3 m-3 transition-colors hover:translate-y-1'}>
+    <div css='flex-row'>
+      <button tw={'bg-blue-400 hover:bg-red-400 p-3 m-3 transition-colors hover:translate-y-1'}
+        css={{ fontSize: 20 }}>
         Twin Macro also works
       </button>
     </div>

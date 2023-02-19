@@ -8,7 +8,7 @@ public class ReactWebBridge : MonoBehaviour
 {
     public const string ReplaceSnippet = "/*INJECT_CODE*/";
     public bool AutoRender;
-    public ReactUnityUGUI ReactCanvas;
+    public ReactRendererUGUI ReactCanvas;
     private string CssContent;
     private string PendingCssContent;
     private StyleSheet StyleSheet;

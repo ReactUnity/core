@@ -12,7 +12,7 @@ var react_namespaceObject = /*#__PURE__*/__webpack_require__.t(react, 2);
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.14.6';
+var version = '0.15.0';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/error-boundary.js
@@ -73,9 +73,11 @@ var ErrorBoundary = /** @class */function (_super) {
     var _a, _b;
     if (this.state.hasError) {
       return (0,jsx_runtime.jsxs)("view", __assign({
+        id: '__react-unity-error-boundary',
         style: {
           color: 'crimson',
-          padding: 20
+          padding: 20,
+          fontSize: 16
         }
       }, {
         children: [(0,jsx_runtime.jsx)("view", __assign({
@@ -9606,7 +9608,7 @@ function addTooltip(target, props, withBackdrop, hide) {
     UnityBridge.appendChild(anchor, backdrop);
   }
   UnityBridge.appendChild(anchor, tooltip);
-  Renderer.render(props.content, {
+  _render(props.content, {
     disableHelpers: true,
     hostContainer: tooltip
   });
@@ -68309,7 +68311,7 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".todo-root {\n  flex-direction: column;\n  align-self: center;\n  align-items: stretch;\n  margin: 40px;\n  padding: 40px;\n\n  background-color: #dedede;\n  border-radius: 8px;\n  box-shadow: 1px 1px 6px -2px black;\n}\n\n.todo-header {\n  color: cornflowerblue;\n  font-size: 30px;\n  font-weight: bold;\n  margin-bottom: 18px;\n  text-align: center;\n}\n\n.todo-input-section {\n  flex-direction: row;\n  align-items: stretch;\n  width: 360px;\n  margin-bottom: 18px;\n}\n\n.todo-input {\n  flex-shrink: 1;\n  flex-grow: 1;\n}\n\n.todo-item {\n  flex-direction: row;\n  align-items: center;\n  transition: rotate 400ms, margin-bottom 400ms;\n  rotate: 0 0 0;\n  width: 360px;\n  padding: 4px 0 4px 8px;\n  margin-bottom: 0px;\n  transform-origin: top;\n\n  background-color: white;\n  border: 1px solid #dedede;\n  border-radius: 8px;\n}\n\n.todo-item:not(:first-child) {\n  margin-top: 10px;\n}\n\n.todo-item:enter {\n  rotate: 90deg 0 0;\n  margin-bottom: -66px;\n}\n\n.todo-item:leave {\n  rotate: 90deg 0 0;\n  margin-bottom: -66px;\n  pointer-events: none;\n  state-duration: 400ms;\n}\n\n.todo-item-name {\n  flex-shrink: 1;\n  flex-grow: 1;\n}\n\n.todo-add-button,\n.todo-remove-button {\n  width: 50px;\n  height: 50px;\n  margin-left: 8px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".todo-root {\n  flex-direction: column;\n  align-self: center;\n  align-items: stretch;\n  margin: 40px;\n  padding: 40px;\n\n  background-color: #dedede;\n  border-radius: 8px;\n  box-shadow: 1px 1px 6px -2px black;\n}\n\n.todo-header {\n  color: cornflowerblue;\n  font-size: 30px;\n  font-weight: bold;\n  margin-bottom: 18px;\n  text-align: center;\n}\n\n.todo-input-section {\n  flex-direction: row;\n  align-items: stretch;\n  width: 360px;\n  margin-bottom: 18px;\n}\n\n.todo-input {\n  flex-shrink: 1;\n  flex-grow: 1;\n}\n\n.todo-item {\n  flex-direction: row;\n  align-items: center;\n  transition: rotate var(--item-animation-duration), margin-bottom var(--item-animation-duration);\n  rotate: 0 0 0;\n  width: 360px;\n  padding: 4px 0 4px 8px;\n  margin-bottom: 0px;\n  transform-origin: top;\n\n  background-color: white;\n  border: 1px solid #dedede;\n  border-radius: 8px;\n\n  --item-animation-duration: 400ms;\n}\n\n.todo-item:not(:first-child) {\n  margin-top: 10px;\n}\n\n.todo-item:enter {\n  rotate: 90deg 0 0;\n  margin-bottom: -66px;\n}\n\n.todo-item:leave {\n  rotate: 90deg 0 0;\n  margin-bottom: -66px;\n  pointer-events: none;\n  state-duration: var(--item-animation-duration);\n}\n\n.todo-item-name {\n  flex-shrink: 1;\n  flex-grow: 1;\n}\n\n.todo-add-button,\n.todo-remove-button {\n  width: 50px;\n  height: 50px;\n  margin-left: 8px;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);

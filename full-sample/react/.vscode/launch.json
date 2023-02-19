@@ -5,14 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to V8 on port 9222",
+      "name": "Attach to ClearScript on port 9222",
       "type": "node",
       "port": 9222,
       "request": "attach",
-      "sourceMaps": true,
       "pauseForSourceMap": true,
-      "localRoot": "${workspaceFolder}",
-      "cwd": "${workspaceFolder}",
+      "resolveSourceMapLocations": null,
       "skipFiles": [
         "<node_internals>/**",
         "node_modules/**"

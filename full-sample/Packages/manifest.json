@@ -1,10 +1,10 @@
 {
   "dependencies": {
     "com.nosuchstudio.rtltmpro": "3.4.5",
-    "com.reactunity.clearscript": "0.14.0",
-    "com.reactunity.core": "0.14.5",
-    "com.reactunity.jint": "0.14.0",
-    "com.reactunity.quickjs": "0.14.1",
+    "com.reactunity.clearscript": "0.15.0",
+    "com.reactunity.core": "0.15.0",
+    "com.reactunity.jint": "0.15.0",
+    "com.reactunity.quickjs": "0.15.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "1.1.1",
     "com.unity.device-simulator.devices": "1.0.0",
