@@ -129,13 +129,9 @@ namespace ReactUnity
         {
             if (useDevServer && IsDevServer) return DevServer;
 
-            if (Type == ScriptSourceType.File)
+            if (Type == ScriptSourceType.File || Type == ScriptSourceType.Resource)
             {
                 return SourcePath;
-            }
-            else if (Type == ScriptSourceType.Resource)
-            {
-                return string.IsNullOrEmpty(ResourcesPath) ? ("Assets/Resources/" + SourcePath) : ResourcesPath;
             }
             else if (Type == ScriptSourceType.TextAsset)
             {
