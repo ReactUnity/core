@@ -23,7 +23,7 @@ namespace ReactUnity.UGUI
             }
         }
 
-        public AnchorComponent(UGUIContext context) : base(context, "anchor")
+        public AnchorComponent(UGUIContext context, string tag = "anchor") : base(context, tag)
         {
             clickHandler = AddComponent<AnchorClickHandler>();
             clickHandler.OnEvent += OnClick;
@@ -37,6 +37,7 @@ namespace ReactUnity.UGUI
                 case "disabled":
                     Disabled = System.Convert.ToBoolean(value);
                     return;
+                case "href":
                 case "url":
                     Url = Convert.ToString(value);
                     return;

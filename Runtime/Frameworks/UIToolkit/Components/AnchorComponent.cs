@@ -9,7 +9,7 @@ namespace ReactUnity.UIToolkit
         public string Url { get; set; } = "";
         public string Target { get; set; } = "_blank";
 
-        public AnchorComponent(UIToolkitContext context) : base(context, "anchor")
+        public AnchorComponent(UIToolkitContext context, string tag = "anchor") : base(context, tag)
         {
             Element.clicked += Activate;
         }
@@ -18,6 +18,7 @@ namespace ReactUnity.UIToolkit
         {
             switch (propertyName)
             {
+                case "href":
                 case "url":
                     Url = Convert.ToString(value);
                     return;
