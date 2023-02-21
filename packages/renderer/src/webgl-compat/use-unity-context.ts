@@ -5,7 +5,7 @@ import type { UnityConfig } from "react-unity-webgl";
 import { UnityProvider } from "react-unity-webgl/distribution/types/unity-provider";
 import type { UnityInstance } from "react-unity-webgl/typings/unity-instance";
 import { errorMessages } from './error-messages';
-import { ReactUnityEventParameter, UnityContextType } from "./types";
+import { EventCallback, ReactUnityEventParameter, UnityContextType } from "./types";
 import { createEventSystem } from "./use-event-system";
 
 const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
@@ -125,8 +125,8 @@ export class UnityContext implements UnityContextType {
     Object.assign(this, createUnityContext(unityConfig));
   }
 
-  addEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback: (...parameters: (string | number)[]) => string | number) => void);
-  removeEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback?: (...parameters: (string | number)[]) => string | number) => void);
+  addEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback: EventCallback) => void);
+  removeEventListener: ((eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void) & ((eventName: string, callback?: EventCallback) => void);
   unityProvider: UnityProvider;
   loadingProgression: number;
   isLoaded: boolean;
@@ -138,14 +138,14 @@ export class UnityContext implements UnityContextType {
   requestPointerLock: () => void;
   unload: () => Promise<void>;
   UNSAFE__detachAndUnloadImmediate: () => Promise<void>;
-  on: (eventName: string, callback: (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter) => void;
+  on: (eventName: string, callback: EventCallback) => void;
   removeAllEventListeners: () => void;
   dispatchEvent: (eventName: string, ...parameters: any) => void;
+  onMount: () => () => void;
   unityConfig: UnityConfig;
   unityInstance: UnityInstance;
   htmlCanvasElement: any;
   send: (gameObjectName: string, methodName: string, parameter?: ReactUnityEventParameter) => void;
   setFullscreen: (enabled: boolean) => void;
   quitUnityInstance: () => Promise<void>;
-  onMount: () => () => void;
 }

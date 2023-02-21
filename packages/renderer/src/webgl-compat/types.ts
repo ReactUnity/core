@@ -2,8 +2,10 @@ import { UnityConfig } from "react-unity-webgl";
 import { UnityContextHook } from "react-unity-webgl/distribution/types/unity-context-hook";
 import { UnityInstance } from "react-unity-webgl/typings/unity-instance";
 
-export type EventCallback = (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter;
-export type ReactUnityEventParameter = string | number | boolean | undefined;
+export type ReactUnityEventParameter = string | number | boolean | null | undefined | void;
+
+export type EventCallback = (...parameters: any[]) => ReactUnityEventParameter;
+
 export type EventSystemHook = {
   readonly on: (eventName: string, callback: EventCallback) => void;
   readonly addEventListener: (eventName: string, callback: EventCallback) => void;
