@@ -1,22 +1,12 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-event-system.ts
 
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { errorMessages } from './error-messages';
-
-type ReactUnityEventParameter = string | number | undefined;
-type Callback = (...parameters: ReactUnityEventParameter[]) => ReactUnityEventParameter;
+import { EventCallback, EventSystemHook, ReactUnityEventParameter } from './types';
 
 type EventListener = {
   eventName: string;
-  callback: Callback;
-};
-
-export type EventSystemHook = {
-  readonly on: (eventName: string, callback: Callback) => void;
-  readonly addEventListener: (eventName: string, callback: Callback) => void;
-  readonly removeEventListener: (eventName: string, callback?: Callback) => void;
-  readonly removeAllEventListeners: () => void;
-  readonly dispatchEvent: (eventName: string, ...parameters: any) => void;
+  callback: EventCallback;
 };
 
 const mountedEventDispatchers: ((
@@ -41,49 +31,43 @@ if (typeof globalThis !== "undefined" || typeof window !== "undefined") {
   (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
 }
 
-const useEventSystem = (): EventSystemHook => {
-  const eventListeners = useRef<EventListener[]>([]);
+export const createEventSystem = (): EventSystemHook => {
+  let eventListeners: EventListener[] = [];
 
-  const addEventListener = useCallback(
+  const addEventListener =
     (
       eventName: string,
-      callback: Callback
+      callback: EventCallback
     ) => {
-      eventListeners.current = [
-        ...eventListeners.current,
+      eventListeners = [
+        ...eventListeners,
         { eventName, callback },
       ];
-    },
-    [eventListeners]
-  );
+    };
 
-  const removeEventListener = useCallback(
+  const removeEventListener =
     (
       eventName: string,
-      callback?: Callback
+      callback?: EventCallback
     ) => {
-      eventListeners.current = eventListeners.current.filter(
+      eventListeners = eventListeners.filter(
         (eventListener) => !(
           eventListener.eventName === eventName &&
           (!callback || eventListener.callback === callback)
         ));
-    },
-    [eventListeners]
-  );
+    };
 
-  const removeAllEventListeners = useCallback(
+  const removeAllEventListeners =
     () => {
-      eventListeners.current = [];
-    },
-    [eventListeners]
-  );
+      eventListeners = [];
+    };
 
-  const dispatchEvent = useCallback(
+  const dispatchEvent =
     (
       eventName: string,
       ...parameters: ReactUnityEventParameter[]
     ): ReactUnityEventParameter => {
-      const eventListener = eventListeners.current.find(
+      const eventListener = eventListeners.find(
         (eventListener) => eventListener.eventName === eventName
       );
       if (typeof eventListener === "undefined") {
@@ -91,11 +75,9 @@ const useEventSystem = (): EventSystemHook => {
         return;
       }
       return eventListener.callback(...parameters);
-    },
-    [eventListeners]
-  );
+    };
 
-  useEffect(() => {
+  const onMount = () => {
     mountedEventDispatchers.push(dispatchEvent);
     return () => {
       mountedEventDispatchers.splice(
@@ -103,7 +85,7 @@ const useEventSystem = (): EventSystemHook => {
         1
       );
     };
-  }, [dispatchEvent]);
+  };
 
   return {
     on: addEventListener,
@@ -111,7 +93,17 @@ const useEventSystem = (): EventSystemHook => {
     removeEventListener,
     dispatchEvent,
     removeAllEventListeners,
+    onMount,
   };
 };
 
-export { useEventSystem };
+export const useEventSystem = () => {
+  const ref = useRef<EventSystemHook>();
+  if (!ref.current) {
+    ref.current = createEventSystem();
+  }
+
+  useEffect(ref.current.onMount, []);
+
+  return ref.current;
+};

@@ -3,8 +3,8 @@
 import { forwardRef, useImperativeHandle } from "react";
 import type { UnityConfig, UnityProps, WebGLContextAttributes } from 'react-unity-webgl';
 
-export { useUnityContext } from './use-unity-context';
-export type { UnityProps, UnityConfig, WebGLContextAttributes };
+export { UnityContext, useUnityContext } from './use-unity-context';
+export type { UnityProps, UnityConfig, WebGLContextAttributes, UnityConfig as IUnityConfig };
 
 export const Unity = forwardRef<{}, UnityProps>(
   function Unity(props, ref) {
