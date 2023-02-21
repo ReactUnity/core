@@ -6,11 +6,24 @@ import type { UnityContextHook } from "react-unity-webgl/distribution/types/unit
 import type { UnityProvider } from "react-unity-webgl/distribution/types/unity-provider";
 import type { UnityInstance } from "react-unity-webgl/typings/unity-instance";
 import { errorMessages } from './error-messages';
-import { useEventSystem } from "./use-event-system";
+import { EventSystemHook, useEventSystem } from "./use-event-system";
+
+type IUnityConfig = UnityConfig;
 
 type ReactUnityEventParameter = string | number | undefined;
 
-const useUnityContext = (unityConfig: UnityConfig): UnityContextHook => {
+type UnityContextType = UnityContextHook & EventSystemHook & {
+  unityConfig: IUnityConfig;
+  unityInstance: UnityInstance | null;
+  htmlCanvasElement: any | undefined | null;
+  send(gameObjectName: string, methodName: string, parameter?: string | number | boolean): void;
+  setFullscreen(enabled: boolean): void;
+  quitUnityInstance(): Promise<void>;
+};
+
+
+
+const useUnityContext = (unityConfig: UnityConfig): UnityContextType => {
   const [unityInstance, setUnityInstance] = useState<UnityInstance | null>(typeof ReactUnityWebGLCompat !== 'undefined' ? ReactUnityWebGLCompat : null);
   const [loadingProgression, setLoadingProgression] = useState(1);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -93,19 +106,26 @@ const useUnityContext = (unityConfig: UnityConfig): UnityContextHook => {
 
   return {
     unityProvider: unityProvider.current,
+    htmlCanvasElement: unityInstance?.Module?.canvas,
     loadingProgression,
     initialisationError,
     isLoaded,
     UNSAFE__detachAndUnloadImmediate: () => Promise.resolve(),
+    unityInstance,
     UNSAFE__unityInstance: unityInstance,
+    setFullscreen: requestFullscreen,
     requestFullscreen,
     requestPointerLock,
     sendMessage,
     unload,
     takeScreenshot,
-    addEventListener: eventSystem.addEventListener,
-    removeEventListener: eventSystem.removeEventListener,
+    quitUnityInstance: unload,
+    send: sendMessage,
+    unityConfig,
+    ...eventSystem,
   };
 };
 
 export { useUnityContext };
+export type { IUnityConfig, UnityConfig };
+

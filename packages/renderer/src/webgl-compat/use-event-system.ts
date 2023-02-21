@@ -11,16 +11,12 @@ type EventListener = {
   callback: Callback;
 };
 
-type EventSystemHook = {
-  readonly addEventListener: (
-    eventName: string,
-    callback: Callback
-  ) => void;
-
-  readonly removeEventListener: (
-    eventName: string,
-    callback: Callback
-  ) => void;
+export type EventSystemHook = {
+  readonly on: (eventName: string, callback: Callback) => void;
+  readonly addEventListener: (eventName: string, callback: Callback) => void;
+  readonly removeEventListener: (eventName: string, callback?: Callback) => void;
+  readonly removeAllEventListeners: () => void;
+  readonly dispatchEvent: (eventName: string, ...parameters: any) => void;
 };
 
 const mountedEventDispatchers: ((
@@ -64,13 +60,20 @@ const useEventSystem = (): EventSystemHook => {
   const removeEventListener = useCallback(
     (
       eventName: string,
-      callback: Callback
+      callback?: Callback
     ) => {
       eventListeners.current = eventListeners.current.filter(
-        (eventListener) =>
-          eventListener.eventName !== eventName &&
-          eventListener.callback !== callback
-      );
+        (eventListener) => !(
+          eventListener.eventName === eventName &&
+          (!callback || eventListener.callback === callback)
+        ));
+    },
+    [eventListeners]
+  );
+
+  const removeAllEventListeners = useCallback(
+    () => {
+      eventListeners.current = [];
     },
     [eventListeners]
   );
@@ -103,8 +106,11 @@ const useEventSystem = (): EventSystemHook => {
   }, [dispatchEvent]);
 
   return {
+    on: addEventListener,
     addEventListener,
     removeEventListener,
+    dispatchEvent,
+    removeAllEventListeners,
   };
 };
 
