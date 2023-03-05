@@ -427,8 +427,8 @@ namespace ReactUnity.UGUI
             if (!canvas) canvas = InitializeCanvas();
 
             canvas.overrideSorting = !defaultSorting;
-            canvas.sortingOrder = z;
-            canvas.sortingLayerID = layer.id;
+            if (z != 0) canvas.sortingOrder = z;
+            if (!layerIsDefault) canvas.sortingLayerID = layer.id;
         }
 
         protected Canvas InitializeCanvas()
@@ -436,6 +436,27 @@ namespace ReactUnity.UGUI
             if (Destroyed) return null;
 
             var canvas = AddComponent<Canvas>();
+            var root = Context.RootCanvas;
+            if (root)
+            {
+                canvas.additionalShaderChannels = root.additionalShaderChannels;
+                canvas.referencePixelsPerUnit = root.referencePixelsPerUnit;
+                canvas.normalizedSortingGridSize = root.normalizedSortingGridSize;
+
+
+                if (root.sortingOrder != 0 || root.sortingLayerID != 0)
+                {
+                    canvas.overrideSorting = true;
+                    canvas.sortingLayerID = root.sortingLayerID;
+                    canvas.sortingOrder = root.sortingOrder;
+                }
+
+                canvas.pixelPerfect = root.pixelPerfect;
+
+                canvas.targetDisplay = root.targetDisplay;
+                canvas.updateRectTransformForStandalone = root.updateRectTransformForStandalone;
+                canvas.worldCamera = root.worldCamera;
+            }
 
             var resolvedEventViewport = ResolvedEventViewport;
             if (resolvedEventViewport)
