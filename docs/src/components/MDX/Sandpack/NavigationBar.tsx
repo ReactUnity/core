@@ -33,7 +33,6 @@ const getFileName = (filePath: string): string => {
 };
 
 export function NavigationBar({
-  providedFiles,
 }: {
   providedFiles: Array<string>;
 }) {

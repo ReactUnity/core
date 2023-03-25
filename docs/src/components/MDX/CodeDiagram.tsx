@@ -2,8 +2,8 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import { Children } from 'react';
 import * as React from 'react';
+import { Children } from 'react';
 import CodeBlock from './CodeBlock';
 
 interface CodeDiagramProps {
@@ -15,14 +15,17 @@ export function CodeDiagram({ children, flip = false }: CodeDiagramProps) {
   const illustration = Children.toArray(children).filter((child: any) => {
     return child.type === 'img';
   });
-  const content = Children.toArray(children).map((child: any) => {
+  const content = Children.toArray(children).map((child: any, i) => {
+    let ch = null;
     if (child.type?.mdxName === 'pre') {
-      return <CodeBlock {...child.props} noMargin={true} noMarkers={true} />;
+      ch = <CodeBlock {...child.props} noMargin={true} noMarkers={true} />;
     } else if (child.type === 'img') {
-      return null;
+      ch = null;
     } else {
-      return child;
+      ch = child;
     }
+
+    return <React.Fragment key={i}>{ch}</React.Fragment>;
   });
   if (flip) {
     return (

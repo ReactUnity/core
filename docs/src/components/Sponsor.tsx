@@ -28,10 +28,11 @@ export function Sponsor({
         className,
         'text-base flex-row leading-tight font-bold border rounded-md py-5 px-5 inline-flex items-center my-1',
       )}>
-      <img src={image} className='w-16 h-16 mr-4' />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={image} alt={title} className='w-16 h-16 mr-4' />
       <div className={'flex-col'}>
         <div className={'text-lg font-bold'}>{title}</div>
-        <div className={'text-sm'}>{children}</div>
+        {!!children && <div className={'text-sm'}>{children}</div>}
       </div>
     </a>
   );

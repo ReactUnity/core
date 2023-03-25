@@ -192,7 +192,7 @@ function AuthorCredit({
 }) {
   return (
     <div className="sr-only group-hover:not-sr-only group-focus-within:not-sr-only hover:sr-only">
-      <p className="bg-card dark:bg-card-dark text-center text-sm text-secondary dark:text-secondary-dark leading-tight dark:text-secondary-dark p-2 rounded-lg absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full group-hover:flex group-hover:opacity-100 after:content-[''] after:absolute after:left-1/2 after:top-[95%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-card after:dark:border-t-card-dark opacity-0 transition-opacity duration-300">
+      <p className="bg-card dark:bg-card-dark text-center text-sm text-secondary dark:text-secondary-dark leading-tight p-2 rounded-lg absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full group-hover:flex group-hover:opacity-100 after:content-[''] after:absolute after:left-1/2 after:top-[95%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-card after:dark:border-t-card-dark opacity-0 transition-opacity duration-300">
         <cite>
           Illustrated by{' '}
           {authorLink ? (
@@ -236,6 +236,7 @@ function Illustration({
   return (
     <div className="relative group before:absolute before:-inset-y-16 before:inset-x-0 my-16 mx-0 2xl:mx-auto max-w-4xl 2xl:max-w-6xl">
       <figure className="my-8 flex justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
@@ -272,6 +273,7 @@ function IllustrationBlock({
   const images = imageInfos.map((info, index) => (
     <figure key={index}>
       <div className="bg-white rounded-lg p-4 flex-1 flex xl:p-6 justify-center items-center my-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={info.src} alt={info.alt} height={info.height} />
       </div>
       {info.caption ? (

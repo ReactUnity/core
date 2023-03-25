@@ -3,7 +3,7 @@
  */
 
 import { useRouter } from 'next/router';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const usePendingRoute = () => {
   const { events } = useRouter();
@@ -33,7 +33,7 @@ const usePendingRoute = () => {
       events.off('routeChangeComplete', handleRouteChangeComplete);
       clearTimeout(routeTransitionTimer);
     };
-  }, []);
+  }, [events]);
 
   return pendingRoute;
 };
