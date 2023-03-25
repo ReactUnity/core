@@ -21,8 +21,8 @@ Please use [this GitHub discussion](https://github.com/ReactUnity/core/discussio
 
 ## Acknowledgements
 
-This website was built by forking the source code of the React documentation website at [beta.reactjs.org](https://beta.reactjs.org).
-We are thankful to all of the people who helped create React and the documentation website as mentioned in [the original website](https://beta.reactjs.org/community/acknowledgements).
+This website was built by forking the source code of the React documentation website at [react.dev](https://react.dev).
+We are thankful to all of the people who helped create React and the documentation website as mentioned in [the original website](https://react.dev/community/acknowledgements).
 
 ## Disclaimer
 
