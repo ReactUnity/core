@@ -7,6 +7,7 @@ import * as React from 'react';
 import { Children, useContext, useMemo } from 'react';
 
 import ButtonLink from 'components/ButtonLink';
+import { Sponsor } from 'components/Sponsor';
 import { IconNavArrow } from '../Icon/IconNavArrow';
 import { Challenges, Hint, Solution } from './Challenges';
 import CodeBlock from './CodeBlock';
@@ -424,6 +425,7 @@ export const MDXComponents = {
   Solution,
   CodeStep,
   YouTubeIframe,
+  Sponsor,
 };
 
 for (let key in MDXComponents) {

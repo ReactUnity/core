@@ -19,9 +19,8 @@ This repo contains the source code and documentation powering [react.dev](https:
 
 ### Running locally
 
-1. Make sure you're in the `beta` folder
 1. `yarn dev` to start the development server (powered by [Next.js](https://nextjs.org/))
-1. `open http://localhost:3000` to open the site in your favorite browser
+2. `open http://localhost:3000` to open the site in your favorite browser
 
 ## Contributing
 
@@ -46,7 +45,7 @@ The documentation is divided into several sections with a different tone and pur
 ### Test the change
 
 1. If possible, test any visual changes in all latest versions of common browsers, on both desktop and mobile.
-2. Run `yarn check-all` from the `beta` folder. (This will run Prettier, ESLint and validate types.)
+2. Run `yarn check-all`. (This will run Prettier, ESLint and validate types.)
 
 ### Push it
 

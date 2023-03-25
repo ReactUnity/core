@@ -23,6 +23,7 @@ Please use [this GitHub discussion](https://github.com/ReactUnity/core/discussio
 
 This website was built by forking the source code of the React documentation website at [react.dev](https://react.dev).
 We are thankful to all of the people who helped create React and the documentation website as mentioned in [the original website](https://react.dev/community/acknowledgements).
+We are also thankful to [all sponsors](/learn/misc/sponsors) who have donated to ReactUnity.
 
 ## Disclaimer
 

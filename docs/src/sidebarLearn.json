@@ -25,23 +25,31 @@
         },
         {
           "title": "React - C# communication (Interop)",
-          "path": "/learn/interop"
+          "path": "/learn/howto/interop"
         },
         {
           "title": "Debugging React code",
-          "path": "/learn/debug"
+          "path": "/learn/howto/debug"
+        },
+        {
+          "title": "Using custom fonts",
+          "path": "/learn/howto/fonts"
         },
         {
           "hasSectionHeader": true,
           "sectionHeader": "Misc"
         },
         {
+          "title": "Sponsors & Donations",
+          "path": "/learn/misc/sponsors"
+        },
+        {
           "title": "About the documentation",
-          "path": "/learn/about"
+          "path": "/learn/misc/about"
         },
         {
           "title": "FAQ",
-          "path": "/learn/faq"
+          "path": "/learn/misc/faq"
         }
       ]
     }

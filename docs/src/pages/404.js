@@ -15,7 +15,7 @@ export default function NotFound() {
         <Intro>
           <P>This page doesn’t exist.</P>
           <P>
-            Quite possibly, it hasn’t been written yet. This beta is a{' '}
+            Quite possibly, it hasn’t been written yet. This is a{' '}
             <A href="/#how-much-content-is-ready">work in progress!</A>
           </P>
           <P>Please check back later.</P>
