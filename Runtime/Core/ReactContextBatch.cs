@@ -147,6 +147,11 @@ namespace ReactUnity
             }
             var jo = JArray.Parse(serializedCommands);
 
+            // Temporarily hold a reference of all created items
+            // Otherwise, under stress, items may be disposed before this method completes
+            // See https://github.com/ReactUnity/core/issues/88
+            var recentCreatedElements = new LinkedList<object>();
+
             for (int i = 0; i < jo.Count; i++)
             {
                 var cmd = jo[i];
@@ -160,14 +165,22 @@ namespace ReactUnity
                     var type = val["t"].ToString();
                     var poolKey = val["k"]?.ToString();
                     var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
-                    if (refId > 0) SetRef(refId, el);
+                    if (refId > 0)
+                    {
+                        SetRef(refId, el);
+                        recentCreatedElements.AddLast(el);
+                    }
                 }
                 else if (key == "t")
                 {
                     var refId = val["r"].Value<int>();
                     var children = val["c"].ToString();
                     var el = ReactUnityBridge.Instance.createText(children, Host);
-                    if (refId > 0) SetRef(refId, el);
+                    if (refId > 0)
+                    {
+                        SetRef(refId, el);
+                        recentCreatedElements.AddLast(el);
+                    }
                 }
                 else if (key == "a")
                 {
@@ -222,6 +235,8 @@ namespace ReactUnity
                     ReactUnityBridge.Instance.clearContainer(Host);
                 }
             }
+
+            recentCreatedElements.Clear();
         }
     }
 }
