@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { Renderer } from '@reactunity/renderer';
+import { render } from '@reactunity/renderer';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import './index.scss';
 import { Inventory } from './inventory';
-import { Provider } from 'react-redux';
 import { persistor, store } from './store';
-import { PersistGate } from 'redux-persist/integration/react';
 
 function Root() {
   return <view>
@@ -22,4 +21,4 @@ function Main() {
   </PersistGate>;
 }
 
-Renderer.render(<Main />);
+render(<Main />);

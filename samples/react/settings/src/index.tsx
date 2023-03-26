@@ -1,6 +1,5 @@
 import '@reactunity/material/styles';
-import { Renderer } from '@reactunity/renderer';
-import * as React from 'react';
+import { render } from '@reactunity/renderer';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import './index.scss';
 import { MainMenu } from './menu';
@@ -17,4 +16,4 @@ function App() {
   </MemoryRouter>;
 }
 
-Renderer.render(<App />);
+render(<App />);

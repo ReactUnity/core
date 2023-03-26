@@ -1,10 +1,12 @@
 {
   "dependencies": {
-    "com.reactunity.core": "0.9.2",
+    "com.reactunity.core": "0.15.1",
+    "com.reactunity.quickjs": "0.15.0",
+    "com.unity.ai.navigation": "1.1.1",
     "com.unity.editorcoroutines": "1.0.0",
-    "com.unity.ide.visualstudio": "2.0.14",
-    "com.unity.ide.vscode": "1.2.4",
-    "com.unity.inputsystem": "1.2.0",
+    "com.unity.ide.visualstudio": "2.0.16",
+    "com.unity.ide.vscode": "1.2.5",
+    "com.unity.inputsystem": "1.4.4",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -45,7 +47,9 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.openupm",
-        "com.reactunity.core"
+        "com.reactunity.core",
+        "com.reactunity",
+        "com.reactunity.quickjs"
       ]
     }
   ]
