@@ -16,8 +16,8 @@ namespace ReactUnity.Styling
     public static class StyleProperties
     {
         public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: AllConverters.PercentageConverter);
-        public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
-        public static readonly StyleProperty<SortingLayer> sortingLayer = new StyleProperty<SortingLayer>("sortingLayer", default(SortingLayer), false);
+        public static readonly StyleProperty<int?> zIndex = new StyleProperty<int?>("zIndex", null, false);
+        public static readonly StyleProperty<SortingLayer?> sortingLayer = new StyleProperty<SortingLayer?>("sortingLayer", null, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<PositionType> position = new StyleProperty<PositionType>("position", PositionType.Relative);
         public static readonly ValueListStyleProperty<Cursor> cursor = new ValueListStyleProperty<Cursor>("cursor");

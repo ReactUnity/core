@@ -87,10 +87,22 @@ namespace ReactUnity.Styling.Converters
         {
             var hasValue = Map.TryGetValue(type, out var converter);
 
-            if (!hasValue && type.IsEnum)
-                converter = new EnumConverter(type, true);
+            if (!hasValue)
+            {
+                if (type.IsEnum) converter = new EnumConverter(type, true);
+                else
+                {
+                    var underlyingType = Nullable.GetUnderlyingType(type);
+                    if (underlyingType != null)
+                    {
+                        converter = Get(underlyingType);
+                    }
+                }
 
-            return Map[type] = converter;
+                return Map[type] = converter;
+            }
+
+            return converter;
         }
     }
 }

@@ -145,6 +145,4 @@ label {
 portal {
   transform-origin: top left;
   position: absolute;
-  z-index: revert;
-  sorting-layer: revert;
 }
