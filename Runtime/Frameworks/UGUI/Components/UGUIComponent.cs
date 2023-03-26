@@ -454,8 +454,10 @@ namespace ReactUnity.UGUI
                 canvas.pixelPerfect = root.pixelPerfect;
 
                 canvas.targetDisplay = root.targetDisplay;
-                canvas.updateRectTransformForStandalone = root.updateRectTransformForStandalone;
                 canvas.worldCamera = root.worldCamera;
+#if UNITY_2022_1_OR_NEWER
+                canvas.updateRectTransformForStandalone = root.updateRectTransformForStandalone;
+#endif
             }
 
             var resolvedEventViewport = ResolvedEventViewport;
