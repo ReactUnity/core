@@ -25,10 +25,12 @@ const updateSubContext = (instance: AsyncSubContext) => {
   var content = rend(root.subContext.node);
 
   if (instance.type === 'richtext') {
-    instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+    // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+    instance.hostContext.commands.push([6, root.refId, content]);
   }
   else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+    // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+    instance.hostContext.commands.push([5, root.refId, 'svg', convertPropsToSerializable({ innerContent: content })]);
   }
 };
 
@@ -128,7 +130,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     const aProps = getAllowedProps(props, type);
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
+      // ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
+      ctx.commands.push([0, refId, type, convertPropsToSerializable(aProps), stringizePoolKey(props.pool)]);
 
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -179,7 +182,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   createTextInstance(text, rootContainer, ctx, internalHandle) {
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['t', { r: refId, c: text }]);
+      // ctx.commands.push(['t', { r: refId, c: text }]);
+      ctx.commands.push([1, refId, text]);
 
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
 
@@ -198,7 +202,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
 
     if (parent.type === 'native' && child.type === 'native') {
-      parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      parent.commands.push([2, parent.refId, child.refId]);
     }
     else if (
       (parent.type === 'richtext' && child.type === 'richtext') ||
@@ -226,7 +231,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   commitUpdate(instance, updatePayload, type) {
     const props = getAllowedProps(updatePayload, type);
     if (instance.type === 'native') {
-      instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+      // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+      instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);
     }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       if ('attributes' in instance.node)
@@ -238,7 +244,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
 
   commitTextUpdate(instance, oldText, newText) {
     if (instance.type === 'native') {
-      instance.commands.push(['x', { r: instance.refId, c: newText }]);
+      // instance.commands.push(['x', { r: instance.refId, c: newText }]);
+      instance.commands.push([6, instance.refId, newText]);
     }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node = { text: newText };
@@ -251,7 +258,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
 
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
     }
     else if (
       (parent.type === 'richtext' && child.type === 'richtext') ||
@@ -266,14 +274,16 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   },
   appendChildToContainer(parent, child) {
     if (child.type === 'native')
-      child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
   },
   insertBefore(parent, child, beforeChild) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
 
     if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
     }
     else if (
       (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext') ||
@@ -290,14 +300,16 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   },
   insertInContainerBefore(parent, child, beforeChild) {
     if (child.type === 'native' && beforeChild.type === 'native')
-      child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
   },
   removeChild(parent, child) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
 
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
     }
     else if (
       (parent.type === 'richtext' && child.type === 'richtext') ||
@@ -312,7 +324,8 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   },
   removeChildFromContainer(parent, child) {
     if (child.type === 'native')
-      child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
   },
 
   resetTextContent: () => { },
@@ -322,32 +335,40 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
   // Required for Suspense
 
   hideInstance: (instance) => {
-    if (instance.type === 'native')
-      instance.commands.push(['h', { r: instance.refId, h: true }]);
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   hideTextInstance: (instance) => {
-    if (instance.type === 'native')
-      instance.commands.push(['h', { r: instance.refId, h: true }]);
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   unhideInstance: (instance) => {
-    if (instance.type === 'native')
-      instance.commands.push(['h', { r: instance.refId, h: false }]);
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   },
   unhideTextInstance: (instance) => {
-    if (instance.type === 'native')
-      instance.commands.push(['h', { r: instance.refId, h: false }]);
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
