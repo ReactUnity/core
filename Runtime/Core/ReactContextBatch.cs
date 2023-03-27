@@ -112,9 +112,9 @@ namespace ReactUnity
         {
             if (val == null) yield break;
 
+            var events = val["e"];
             var props = val["p"];
             var objs = val["o"];
-            var events = val["e"];
 
             if (events != null)
             {
@@ -156,83 +156,173 @@ namespace ReactUnity
             {
                 var cmd = jo[i];
 
-                var key = cmd[0].ToString();
-                var val = cmd[1];
-
-                if (key == "c")
+                // Shorter commands serialization, but more obscure
+                if (cmd[0].Type == JTokenType.Integer)
                 {
-                    var refId = val["r"].Value<int>();
-                    var type = val["t"].ToString();
-                    var poolKey = val["k"]?.ToString();
-                    var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
-                    if (refId > 0)
+                    var key = cmd[0].Value<int>();
+
+                    if (key == 0)
                     {
-                        SetRef(refId, el);
-                        recentCreatedElements.AddLast(el);
+                        var refId = cmd[1].Value<int>();
+                        var type = cmd[2].ToString();
+                        var props = cmd[3];
+                        var poolKey = cmd[4]?.ToString();
+                        var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(props), poolKey);
+                        if (refId > 0)
+                        {
+                            SetRef(refId, el);
+                            recentCreatedElements.AddLast(el);
+                        }
+                    }
+                    else if (key == 1)
+                    {
+                        var refId = cmd[1].Value<int>();
+                        var children = cmd[2]?.ToString();
+                        var el = ReactUnityBridge.Instance.createText(children, Host);
+                        if (refId > 0)
+                        {
+                            SetRef(refId, el);
+                            recentCreatedElements.AddLast(el);
+                        }
+                    }
+                    else if (key == 2)
+                    {
+                        var parentRef = cmd[1].Value<int>();
+                        var childRef = cmd[2].Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        ReactUnityBridge.Instance.appendChild(parent, child);
+                    }
+                    else if (key == 3)
+                    {
+                        var parentRef = cmd[1].Value<int>();
+                        var childRef = cmd[2].Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        ReactUnityBridge.Instance.removeChild(parent, child);
+                    }
+                    else if (key == 4)
+                    {
+                        var parentRef = cmd[1].Value<int>();
+                        var childRef = cmd[2].Value<int>();
+                        var insertRef = cmd[3]?.Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        if (insertRef.HasValue)
+                        {
+                            var insert = GetRef(insertRef.Value);
+                            ReactUnityBridge.Instance.insertBefore(parent, child, insert);
+                        }
+                        else ReactUnityBridge.Instance.appendChild(parent, child);
+                    }
+                    else if (key == 5)
+                    {
+                        var refId = cmd[1].Value<int>();
+                        var el = GetRef(refId);
+                        var type = cmd[2].ToString();
+                        var props = cmd[3];
+
+                        ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(props), type);
+                    }
+                    else if (key == 6)
+                    {
+                        var elRef = cmd[1].Value<int>();
+                        var el = GetRef(elRef);
+                        var text = cmd[2]?.ToString();
+                        ReactUnityBridge.Instance.setText(el, text);
+                    }
+                    else if (key == 7)
+                    {
+                        var elRef = cmd[1].Value<int>();
+                        var el = GetRef(elRef);
+                        var hidden = cmd[2].Value<bool>();
+                        el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
+                    }
+                    else if (key == 8)
+                    {
+                        ReactUnityBridge.Instance.clearContainer(Host);
                     }
                 }
-                else if (key == "t")
+                else
                 {
-                    var refId = val["r"].Value<int>();
-                    var children = val["c"].ToString();
-                    var el = ReactUnityBridge.Instance.createText(children, Host);
-                    if (refId > 0)
-                    {
-                        SetRef(refId, el);
-                        recentCreatedElements.AddLast(el);
-                    }
-                }
-                else if (key == "a")
-                {
-                    var parentRef = val["p"].Value<int>();
-                    var childRef = val["c"].Value<int>();
-                    var parent = GetRef(parentRef);
-                    var child = GetRef(childRef);
-                    ReactUnityBridge.Instance.appendChild(parent, child);
-                }
-                else if (key == "r")
-                {
-                    var parentRef = val["p"].Value<int>();
-                    var childRef = val["c"].Value<int>();
-                    var parent = GetRef(parentRef);
-                    var child = GetRef(childRef);
-                    ReactUnityBridge.Instance.removeChild(parent, child);
-                }
-                else if (key == "i")
-                {
-                    var parentRef = val["p"].Value<int>();
-                    var childRef = val["c"].Value<int>();
-                    var insertRef = val["i"].Value<int>();
-                    var parent = GetRef(parentRef);
-                    var child = GetRef(childRef);
-                    var insert = GetRef(insertRef);
-                    ReactUnityBridge.Instance.insertBefore(parent, child, insert);
-                }
-                else if (key == "u")
-                {
-                    var refId = val["r"].Value<int>();
-                    var el = GetRef(refId);
-                    var type = val["t"].ToString();
+                    var key = cmd[0].ToString();
+                    var val = cmd[1];
 
-                    ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(val), type);
-                }
-                else if (key == "x")
-                {
-                    var elRef = val["r"].Value<int>();
-                    var el = GetRef(elRef);
-                    var text = val["c"]?.ToString();
-                    ReactUnityBridge.Instance.setText(el, text);
-                }
-                else if (key == "h")
-                {
-                    var elRef = val["r"].Value<int>();
-                    var el = GetRef(elRef);
-                    var hidden = val["h"].Value<bool>();
-                    el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
-                }
-                else if (key == "o")
-                {
-                    ReactUnityBridge.Instance.clearContainer(Host);
+                    if (key == "c")
+                    {
+                        var refId = val["r"].Value<int>();
+                        var type = val["t"].ToString();
+                        var poolKey = val["k"]?.ToString();
+                        var el = ReactUnityBridge.Instance.createElement(type, null, Host, MultiEnumerator(val), poolKey);
+                        if (refId > 0)
+                        {
+                            SetRef(refId, el);
+                            recentCreatedElements.AddLast(el);
+                        }
+                    }
+                    else if (key == "t")
+                    {
+                        var refId = val["r"].Value<int>();
+                        var children = val["c"].ToString();
+                        var el = ReactUnityBridge.Instance.createText(children, Host);
+                        if (refId > 0)
+                        {
+                            SetRef(refId, el);
+                            recentCreatedElements.AddLast(el);
+                        }
+                    }
+                    else if (key == "a")
+                    {
+                        var parentRef = val["p"].Value<int>();
+                        var childRef = val["c"].Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        ReactUnityBridge.Instance.appendChild(parent, child);
+                    }
+                    else if (key == "r")
+                    {
+                        var parentRef = val["p"].Value<int>();
+                        var childRef = val["c"].Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        ReactUnityBridge.Instance.removeChild(parent, child);
+                    }
+                    else if (key == "i")
+                    {
+                        var parentRef = val["p"].Value<int>();
+                        var childRef = val["c"].Value<int>();
+                        var insertRef = val["i"].Value<int>();
+                        var parent = GetRef(parentRef);
+                        var child = GetRef(childRef);
+                        var insert = GetRef(insertRef);
+                        ReactUnityBridge.Instance.insertBefore(parent, child, insert);
+                    }
+                    else if (key == "u")
+                    {
+                        var refId = val["r"].Value<int>();
+                        var el = GetRef(refId);
+                        var type = val["t"].ToString();
+
+                        ReactUnityBridge.Instance.applyUpdate(el, MultiEnumerator(val), type);
+                    }
+                    else if (key == "x")
+                    {
+                        var elRef = val["r"].Value<int>();
+                        var el = GetRef(elRef);
+                        var text = val["c"]?.ToString();
+                        ReactUnityBridge.Instance.setText(el, text);
+                    }
+                    else if (key == "h")
+                    {
+                        var elRef = val["r"].Value<int>();
+                        var el = GetRef(elRef);
+                        var hidden = val["h"].Value<bool>();
+                        el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
+                    }
+                    else if (key == "o")
+                    {
+                        ReactUnityBridge.Instance.clearContainer(Host);
+                    }
                 }
             }
 
