@@ -25,15 +25,19 @@ Some packages that work are:
 
 - React I18Next
 - React Icons
-- React Router (must use `MemoryRouter`)
+- React Router (must use `MemoryRouter`) (`react-router` must be used instead of `react-router-dom`)
 - Redux Toolkit
 - Axios
 - Typescript
+- Styling libraries mentioned above
 
-Packages depending on DOM or other platform-specific APIs will not work.
+Packages depending on DOM or other platform-specific APIs will not work. Some of these are:
 
-- Component libraries will not work because they need DOM. For example: MUI, Mantine, Ant Design
-- Packages depending on browser APIs will not work. For example: Luxon, Google Analytics
+- `react-dom` and all packages depending on it
+- `react-router-dom` (Use `react-router` instead)
+- Component libraries: e.g. MUI, Mantine, Ant Design
+- Packages depending on browser APIs: e.g. Google Analytics
+- Packages depending on Intl: e.g. `react-intl`, Luxon
 
 If you confirm a package is working or not working, please let us know.
 
