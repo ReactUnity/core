@@ -1,1 +1,1 @@
-import '../uitoolkit';
+import '../uitoolkit/home';

@@ -8,6 +8,8 @@
   background-color: #dedede;
   border-radius: 8px;
   box-shadow: 1px 1px 6px -2px black;
+
+  --item-animation-duration: 400ms;
 }
 
 .todo-header {
@@ -44,7 +46,11 @@
   border: 1px solid #dedede;
   border-radius: 8px;
 
-  --item-animation-duration: 400ms;
+  /* --item-animation-duration: 400ms; */
+}
+
+.todo-item:before {
+  content: var(--item-animation-duration);
 }
 
 .todo-item:not(:first-child) {

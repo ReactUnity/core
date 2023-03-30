@@ -2,7 +2,6 @@ import './index.css';
 
 export function TailwindPage() {
   return <div className={'tailwind-root flex-row'}>
-
     <div className={'flex-row'}>
       <button className={'bg-blue-400 hover:bg-red-400 p-3 m-3 transition-colors hover:translate-y-1'}>
         Tailwind Button

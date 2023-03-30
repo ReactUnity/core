@@ -1,4 +1,5 @@
 using System;
+using ReactUnity.Helpers;
 using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,19 +9,11 @@ namespace MyInterop
 {
     public class InteropTest : MonoBehaviour
     {
-        public event Action<string> OnKeyPress;
+        public ReactAction<string> OnKeyPress = new ReactAction<string>();
         IDisposable dispose;
 
-        public Action AddKeyPressListener(object callback)
-        {
-            var cb = ReactUnity.Helpers.Callback.From(callback);
-            Action<string> listener = (val) => cb.Call(val);
-
-            OnKeyPress += listener;
-
-            return () => OnKeyPress -= listener;
-        }
-
+        [Obsolete]
+        public Action AddKeyPressListener(object callback) => OnKeyPress.AddListener(callback);
 
         void OnEnable()
         {
