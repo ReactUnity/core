@@ -150,7 +150,7 @@ namespace ReactUnity
             // Temporarily hold a reference of all created items
             // Otherwise, under stress, items may be disposed before this method completes
             // See https://github.com/ReactUnity/core/issues/88
-            var recentCreatedElements = new LinkedList<object>();
+            var recentCreatedElements = new LinkedList<IReactComponent>();
 
             for (int i = 0; i < jo.Count; i++)
             {
@@ -326,7 +326,14 @@ namespace ReactUnity
                 }
             }
 
+            foreach (var item in recentCreatedElements)
+            {
+                if (item.Parent == null) HandleOrphanElement(item);
+            }
+
             recentCreatedElements.Clear();
         }
+
+        protected virtual void HandleOrphanElement(IReactComponent element) { }
     }
 }

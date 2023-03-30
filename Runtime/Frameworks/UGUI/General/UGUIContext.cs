@@ -91,6 +91,7 @@ namespace ReactUnity.UGUI
             Host.ResolveStyle(true);
 
             PoolRoot = CreateNativeObject("[Pool]", typeof(RectTransform)).GetComponent<RectTransform>();
+            PoolRoot.gameObject.SetActive(false);
             PoolRoot.SetParent(options.HostElement, false);
             PoolRoot.localPosition = Vector2.zero;
             PoolRoot.pivot = Vector2.up;
@@ -100,9 +101,9 @@ namespace ReactUnity.UGUI
             PoolRoot.offsetMax = Vector2.zero;
             PoolRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
             PoolRoot.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-            PoolRoot.gameObject.SetActive(false);
 
             OffscreenRoot = CreateNativeObject("[Offscreen]", typeof(RectTransform)).GetComponent<RectTransform>();
+            OffscreenRoot.gameObject.SetActive(false);
             OffscreenRoot.SetParent(options.HostElement, false);
             OffscreenRoot.localPosition = Vector2.zero;
             OffscreenRoot.pivot = Vector2.up;
@@ -165,6 +166,12 @@ namespace ReactUnity.UGUI
             var go = new GameObject(name, components);
             go.layer = (Host as HostComponent).GameObject.layer;
             return go;
+        }
+
+        protected override void HandleOrphanElement(IReactComponent element)
+        {
+            if (element is UGUIComponent uc && uc.RectTransform)
+                uc.RectTransform.SetParent(OffscreenRoot, false);
         }
     }
 }
