@@ -483,6 +483,7 @@ namespace ReactUnity
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
             var resolvedStyle = new NodeStyle(Context, null, cssStyles, RevertCalculator);
+            resolvedStyle.UpdateParent(Parent?.ComputedStyle);
 
             StyleState.SetCurrent(resolvedStyle);
             MarkForStyleApply(true);
