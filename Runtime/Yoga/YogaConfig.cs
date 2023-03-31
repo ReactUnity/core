@@ -1,11 +1,12 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 #if __IOS__
 using ObjCRuntime;
@@ -54,7 +55,7 @@ namespace Facebook.Yoga
         }
 
 #if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-        [AOT.MonoPInvokeCallback(typeof(YogaLogger))]
+        [MonoPInvokeCallback(typeof(YogaLogger))]
 #endif
         private static void LoggerInternal(
             IntPtr unmanagedConfigPtr,
@@ -115,6 +116,19 @@ namespace Facebook.Yoga
             set
             {
                 Native.YGConfigSetUseWebDefaults(_ygConfig, value);
+            }
+        }
+
+        public bool UseLegacyStretchBehaviour
+        {
+            get
+            {
+                return Native.YGConfigGetUseLegacyStretchBehaviour(_ygConfig);
+            }
+
+            set
+            {
+                Native.YGConfigSetUseLegacyStretchBehaviour(_ygConfig, value);
             }
         }
 

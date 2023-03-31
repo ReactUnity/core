@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 #if __IOS__
@@ -449,6 +450,45 @@ namespace Facebook.Yoga
             }
         }
 
+        public float Gap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.All);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value);
+            }
+        }
+
+        public float ColumnGap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Column);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value);
+            }
+        }
+
+        public float RowGap
+        {
+            get
+            {
+                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Row);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value);
+            }
+        }
+
         public float LayoutX
         {
             get
@@ -534,6 +574,19 @@ namespace Facebook.Yoga
         public void MarkLayoutSeen()
         {
             Native.YGNodeSetHasNewLayout(_ygNode, false);
+        }
+
+        public bool IsReferenceBaseline
+        {
+            get
+            {
+                return Native.YGNodeIsReferenceBaseline(_ygNode);
+            }
+
+            set
+            {
+                Native.YGNodeSetIsReferenceBaseline(_ygNode, value);
+            }
         }
 
         public bool ValuesEqual(float f1, float f2)
@@ -622,7 +675,7 @@ namespace Facebook.Yoga
         }
 
 #if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-        [AOT.MonoPInvokeCallback(typeof(YogaMeasureFunc))]
+        [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
 #endif
         private static YogaSize MeasureInternal(
             IntPtr unmanagedNodePtr,
@@ -640,7 +693,7 @@ namespace Facebook.Yoga
         }
 
 #if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-        [AOT.MonoPInvokeCallback(typeof(YogaBaselineFunc))]
+        [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
 #endif
         private static float BaselineInternal(
             IntPtr unmanagedNodePtr,
