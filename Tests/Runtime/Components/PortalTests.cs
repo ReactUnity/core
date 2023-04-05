@@ -274,12 +274,12 @@ namespace ReactUnity.Tests
                     <portal target={globals.portalTarget} />
                     <portal target={globals.portalTarget} />
                         
-                    {!!globals.showPortal && <portal />}
+                    {!!globals.insertElement && <view id='element' />}
                     <view />
                 </>;
             }
         ")]
-        public IEnumerator PortalDoesntCrash()
+        public IEnumerator PortalReplacesItsLayoutWithDummyLayoutAfterTargeting()
         {
             yield return null;
 
@@ -288,7 +288,12 @@ namespace ReactUnity.Tests
 
             yield return null;
 
-            Globals["showPortal"] = true;
+            Globals["insertElement"] = true;
+            yield return null;
+
+            var el = Q("#element");
+
+            Assert.AreEqual(4, el.Layout.Parent.IndexOf(el.Layout));
         }
     }
 }
