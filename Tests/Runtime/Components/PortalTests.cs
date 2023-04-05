@@ -263,5 +263,32 @@ namespace ReactUnity.Tests
             Assert.AreEqual(null, t1t1t1.GetComponent<CustomViewportRaycaster>());
             Assert.AreEqual(rect2, t1t2.GetComponent<CustomViewportRaycaster>()?.EventViewport);
         }
+
+        [UGUITest(Script = @"
+
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <>
+                    <view />
+                    <portal target={globals.portalTarget} />
+                    <portal target={globals.portalTarget} />
+                    <portal target={globals.portalTarget} />
+                        
+                    {!!globals.showPortal && <portal />}
+                    <view />
+                </>;
+            }
+        ")]
+        public IEnumerator PortalDoesntCrash()
+        {
+            yield return null;
+
+            var target1 = new GameObject("portalTarget1", typeof(RectTransform));
+            Globals["portalTarget"] = target1;
+
+            yield return null;
+
+            Globals["showPortal"] = true;
+        }
     }
 }

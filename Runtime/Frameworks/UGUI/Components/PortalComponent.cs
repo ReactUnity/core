@@ -1,3 +1,4 @@
+using Facebook.Yoga;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 
@@ -12,11 +13,14 @@ namespace ReactUnity.UGUI
         Camera currentCamera;
 
         public bool Detached { get; private set; }
+        public YogaNode ReplacedLayout { get; } = new YogaNode();
 
         public PortalComponent(UGUIContext context, string tag = "portal") : base(context, tag)
         {
             ShadowParent = Context.Host;
             currentTarget = DefaultTarget;
+            ReplacedLayout.Display = YogaDisplay.None;
+            ReplacedLayout.Data = this;
             InitializeCanvas();
             SetCamera(null);
         }
@@ -55,7 +59,28 @@ namespace ReactUnity.UGUI
 
         public override void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
+            if (Parent != null)
+            {
+                Parent.Layout?.RemoveChild(ReplacedLayout);
+            }
+
             base.SetParent(newParent, relativeTo, insertAfter);
+
+            if (Parent != null)
+            {
+                var oldParent = Parent.Layout;
+                if (oldParent != null)
+                {
+                    var layoutIndex = oldParent.IndexOf(Layout);
+
+                    if (layoutIndex >= 0)
+                    {
+                        oldParent.RemoveAt(layoutIndex);
+                        oldParent.Insert(layoutIndex, ReplacedLayout);
+                    }
+                }
+            }
+
             Attach();
         }
 
@@ -67,6 +92,7 @@ namespace ReactUnity.UGUI
                 {
                     Container.SetParent(null);
                     Layout.Parent?.RemoveChild(Layout);
+                    ReplacedLayout.Parent?.RemoveChild(ReplacedLayout);
                     Context.DetachedRoots.Remove(this);
                 }
                 return;
