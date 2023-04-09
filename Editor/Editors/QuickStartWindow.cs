@@ -155,7 +155,7 @@ namespace ReactUnity.Editor
                     "Create ReactUnity Project",
                     "Failed to automatically create the React project.\n" +
                     "Please create it manually by going to root folder of this project and running the following command: \n" +
-                    "    npx @reactunity/create",
+                    "    npx @reactunity/create@latest",
                     "OK");
             }
         }
