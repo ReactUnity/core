@@ -604,7 +604,10 @@ namespace ReactUnity.Editor.Developer
                 {
                     if (type.IsArray) return getTypesScriptType(type.GetElementType(), withNs, skipKnownTypes, allowGeneric) + "[]";
                     var isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>);
+                    var isReactiveList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ReactiveList<>);
                     var hasGenericArguments = genArgs.Any();
+                    if (isReactiveList && hasGenericArguments)
+                        return $"ReactUnity.Reactive.ReactiveList<{getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric)}>";
                     if (isList && hasGenericArguments)
                         return getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric) + "[]";
 
