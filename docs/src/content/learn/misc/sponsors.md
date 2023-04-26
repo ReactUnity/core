@@ -11,3 +11,5 @@ Visit [the developer's Github Sponsors page](https://github.com/sponsors/KurtGok
 Here are some of the kind individuals and companies who have donated significant amounts to ReactUnity.
 
 <Sponsor title="Prographers" image="/images/sponsors/prographers.png" link="https://prographers.com/" />
+
+<Sponsor title="Spatial" image="/images/sponsors/spatial.png" link="https://spatial.io/" />
