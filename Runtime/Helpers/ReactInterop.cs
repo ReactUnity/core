@@ -35,6 +35,7 @@ namespace ReactUnity.Helpers
 #endif
             Add("GetType", new Func<string, object>(GetType));
             Add("GetNamespace", new Func<string, object>(GetNamespace));
+            Add("MakeGenericType", new Func<Type, Type[], object>(MakeGenericType));
         }
 
         public object GetType(string typeName)
@@ -69,6 +70,11 @@ namespace ReactUnity.Helpers
             var nsRef = Engine.CreateNamespaceReference(nsName, assemblies);
             this[name] = nsRef;
             return nsRef;
+        }
+
+        public object MakeGenericType(Type type, Type[] types)
+        {
+            return Engine.CreateTypeReference(type.MakeGenericType(types));
         }
 
         public void Dispose()

@@ -456,7 +456,7 @@ namespace ReactUnity.UGUI
 
                 canvas.targetDisplay = root.targetDisplay;
 
-                if(!canvas.worldCamera) {
+                if (!canvas.worldCamera) {
                     canvas.worldCamera = root.worldCamera;
                 }
 

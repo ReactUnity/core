@@ -77,7 +77,7 @@ namespace ReactUnity.Scripting
                 }
 
                 var lastPeriodPos = path.LastIndexOf(".", StringComparison.Ordinal);
-                var trimPath = path.Substring(0, lastPeriodPos);
+                var trimPath = path.Substring(lastPeriodPos + 1);
                 type = GetType(assembly, trimPath);
                 if (type != null)
                 {

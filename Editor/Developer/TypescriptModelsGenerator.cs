@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 using ReactUnity.Helpers.TypescriptUtils;
+using ReactUnity.Reactive;
 
 namespace ReactUnity.Editor.Developer
 {
@@ -603,19 +604,22 @@ namespace ReactUnity.Editor.Developer
                 if (!isRecord)
                 {
                     if (type.IsArray) return getTypesScriptType(type.GetElementType(), withNs, skipKnownTypes, allowGeneric) + "[]";
-                    var isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IList<>);
-                    var isReactiveList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ReactiveList<>);
+
+                    var isList = type.IsGenericType &&
+                        type.GetGenericTypeDefinition() == typeof(IList<>) &&
+                        type.GetGenericTypeDefinition() != typeof(IReactive<>);
+
                     var hasGenericArguments = genArgs.Any();
-                    if (isReactiveList && hasGenericArguments)
-                        return $"ReactUnity.Reactive.ReactiveList<{getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric)}>";
+
                     if (isList && hasGenericArguments)
                         return getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric) + "[]";
-
 
                     var interfaces = type.GetTypeInfo().ImplementedInterfaces;
                     foreach (var intr in interfaces)
                     {
-                        var intrIsList = intr.GetTypeInfo().IsGenericType && intr.GetGenericTypeDefinition() == typeof(IList<>);
+                        var intrIsList = intr.GetTypeInfo().IsGenericType &&
+                            intr.GetGenericTypeDefinition() == typeof(IList<>) &&
+                            intr.GetGenericTypeDefinition() != typeof(IReactive<>);
 
                         var intrGenArgs = intr.GetGenericArguments();
 
