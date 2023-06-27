@@ -36,6 +36,7 @@ namespace ReactUnity.Scheduling
         public class RuntimeDispatcher : BaseDispatcher<Coroutine>
         {
             public RuntimeDispatcherBehavior Behavior;
+            public ITimer Timer;
 #if REACT_UNITY_DEVELOPER
             public CurrentLifecycle CurrentLifecycle { get; internal set; }
 #endif
@@ -45,17 +46,18 @@ namespace ReactUnity.Scheduling
                 Behavior = behavior;
                 Behavior.Dispatcher = this;
                 Scheduler = new DefaultScheduler(this, ctx);
+                Timer = ctx.Timer;
             }
 
             protected override IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
             {
-                yield return new WaitForSeconds(time);
+                yield return Timer.Yield(time);
                 if (!ToStop.Contains(handle)) callback();
             }
 
             protected override IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
             {
-                var br = new WaitForSeconds(interval);
+                var br = Timer.Yield(interval);
 
                 while (true)
                 {

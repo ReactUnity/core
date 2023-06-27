@@ -259,7 +259,7 @@ namespace ReactUnity.Scripting
 
         public void Update()
         {
-            if (Initialized) Runtime.Update((int) (Time.deltaTime * 1000));
+            if (Initialized) Runtime.Update((int) (Context.Timer.DeltaTime * 1000));
         }
     }
 

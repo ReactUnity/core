@@ -9,6 +9,7 @@ namespace ReactUnity.Scheduling
 
         public float AnimationTime => Time.unscaledTime;
         public float TimeScale => 1;
+        public float DeltaTime => Time.unscaledDeltaTime;
 
         private UnscaledTimer() { }
 

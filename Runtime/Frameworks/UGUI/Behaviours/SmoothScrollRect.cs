@@ -108,7 +108,7 @@ namespace ReactUnity.UGUI.Behaviours
             while (true)
             {
                 yield return null;
-                passed += Time.deltaTime;
+                passed += Time.unscaledDeltaTime;
                 if (passed < smoothness)
                     normalizedPosition = Vector2.Lerp(from, to, passed / smoothness);
                 else

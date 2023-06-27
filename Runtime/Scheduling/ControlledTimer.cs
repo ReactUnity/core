@@ -4,6 +4,7 @@ namespace ReactUnity.Scheduling
     {
         public float AnimationTime { get; set; } = 0;
         public float TimeScale { get; set; } = 1;
+        public float DeltaTime { get; set; } = 0.02f;
 
         public void AdvanceTime(float advanceBy)
         {

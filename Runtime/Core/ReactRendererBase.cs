@@ -116,7 +116,7 @@ namespace ReactUnity
 
         protected virtual IEnumerator UpdateMediaProvider()
         {
-            var wait = new WaitForSeconds(AdvancedOptions.MediaUpdateInterval);
+            var wait = new WaitForSecondsRealtime(AdvancedOptions.MediaUpdateInterval);
             while (true)
             {
                 yield return wait;
