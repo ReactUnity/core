@@ -9,11 +9,11 @@ namespace ReactUnity.Scheduling
     {
         RuntimeDispatcher Dispatcher;
 
-        public static RuntimeDispatcher Create(ReactContext ctx)
+        public static RuntimeDispatcher Create(ReactContext ctx, ITimer timer = null)
         {
             var go = new GameObject("React Unity Runtime Dispatcher");
             var behavior = go.AddComponent<RuntimeDispatcherBehavior>();
-            var dispatcher = new RuntimeDispatcher(ctx, behavior);
+            var dispatcher = new RuntimeDispatcher(ctx, behavior, timer);
             DontDestroyOnLoad(go);
 
 #if REACT_UNITY_DEVELOPER
@@ -41,23 +41,23 @@ namespace ReactUnity.Scheduling
             public CurrentLifecycle CurrentLifecycle { get; internal set; }
 #endif
 
-            public RuntimeDispatcher(ReactContext ctx, RuntimeDispatcherBehavior behavior)
+            public RuntimeDispatcher(ReactContext ctx, RuntimeDispatcherBehavior behavior, ITimer timer = null)
             {
                 Behavior = behavior;
                 Behavior.Dispatcher = this;
                 Scheduler = new DefaultScheduler(this, ctx);
-                Timer = ctx.Timer;
+                Timer = timer ?? ctx?.Timer;
             }
 
             protected override IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
             {
-                yield return Timer.Yield(time);
+                yield return Timer?.Yield(time);
                 if (!ToStop.Contains(handle)) callback();
             }
 
             protected override IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
             {
-                var br = Timer.Yield(interval);
+                var br = Timer?.Yield(interval);
 
                 while (true)
                 {

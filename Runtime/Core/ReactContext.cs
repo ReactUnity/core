@@ -211,7 +211,7 @@ namespace ReactUnity
         }
 
         protected virtual IDispatcher CreateDispatcher() => Application.isPlaying && !IsEditorContext ?
-            RuntimeDispatcherBehavior.Create(this) as IDispatcher :
+            RuntimeDispatcherBehavior.Create(this, Timer) as IDispatcher :
             new EditorDispatcher(this);
 
         public virtual void HandleUnknownProperty(IReactComponent cmp, string propertyName, object value)
