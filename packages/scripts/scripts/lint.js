@@ -30,8 +30,14 @@ const formatter = require('react-dev-utils/eslintFormatter');
 const { ESLint } = require('eslint');
 
 (async function main() {
-  const eslint = new ESLint(eslintConfig);
+  const fix = process.argv.includes('--fix');
+
+  const eslint = new ESLint({
+    ...eslintConfig,
+    fix,
+  });
   const results = await eslint.lintFiles([paths.appSrc]);
+  if(fix) await ESLint.outputFixes(results);
   const resultText = formatter(results);
   console.log(resultText);
 })().catch(error => {
