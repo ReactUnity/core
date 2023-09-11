@@ -1,4 +1,4 @@
-import type { UnityInstance } from 'react-unity-webgl/typings/unity-instance';
+import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
 import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from '../generated';
 
 export type NamespaceMap = {

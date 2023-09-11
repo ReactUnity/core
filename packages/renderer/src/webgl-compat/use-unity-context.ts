@@ -1,12 +1,12 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-unity-context.ts
 
-import { useEffect, useRef } from "react";
-import type { UnityConfig } from "react-unity-webgl";
-import { UnityProvider } from "react-unity-webgl/distribution/types/unity-provider";
-import type { UnityInstance } from "react-unity-webgl/typings/unity-instance";
+import { useEffect, useRef } from 'react';
+import type { UnityConfig } from 'react-unity-webgl';
+import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
+import { UnityProvider } from 'react-unity-webgl/distribution/types/unity-provider';
 import { errorMessages } from './error-messages';
-import { EventCallback, ReactUnityEventParameter, UnityContextType } from "./types";
-import { createEventSystem } from "./use-event-system";
+import { EventCallback, ReactUnityEventParameter, UnityContextType } from './types';
+import { createEventSystem } from './use-event-system';
 
 const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
   let unityInstance: UnityInstance | null = typeof ReactUnityWebGLCompat !== 'undefined' ? ReactUnityWebGLCompat : null;
@@ -15,7 +15,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
   let loadingProgression = 1;
   let setLoadingProgression = (progression: number) => loadingProgression = progression;
 
-  let isLoaded = loadingProgression == 1;
+  let isLoaded = loadingProgression === 1;
   let setIsLoaded = (loaded: boolean) => {
     isLoaded = loaded;
     if (loaded) setLoadingProgression(1);
@@ -45,7 +45,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
   const requestPointerLock = () => {
     if (
       unityInstance === null ||
-      typeof unityInstance.Module.canvas === "undefined"
+      typeof unityInstance.Module.canvas === 'undefined'
     ) {
       console.warn(errorMessages.requestPointerLockNoUnityInstanceOrCanvas);
       return;
@@ -70,7 +70,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     (dataType?: string, quality?: number): string | undefined => {
       if (
         unityInstance === null ||
-        typeof unityInstance.Module.canvas === "undefined"
+        typeof unityInstance.Module.canvas === 'undefined'
       ) {
         console.warn(errorMessages.screenshotNoUnityInstanceOrCanvas);
         return;
@@ -93,7 +93,6 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     loadingProgression,
     initialisationError,
     isLoaded,
-    UNSAFE__detachAndUnloadImmediate: () => Promise.resolve(),
     unityInstance,
     UNSAFE__unityInstance: unityInstance,
     setFullscreen: requestFullscreen,
@@ -115,6 +114,7 @@ export const useUnityContext = (unityConfig: UnityConfig) => {
     ref.current = createUnityContext(unityConfig);
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(ref.current.onMount, []);
 
   return ref.current;

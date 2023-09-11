@@ -36,24 +36,22 @@ export interface UGUIElements extends BaseElements<BaseCmp> {
 
 declare global {
   interface ReactUnityCustomElements { }
-
-  interface DefaultComponentProps extends Components.View {
-    ref?: React.Ref<ReactUnity.UGUI.UGUIComponent>;
-  }
+  interface ReactUnityCustomAttributes { }
 
   namespace JSX {
-    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
+    interface IntrinsicAttributes extends ReactUnityCustomAttributes {}
+    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements {}
   }
 }
 
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
-  }
-}
-
-declare module 'react/jsx-runtime' {
-  namespace JSX {
-    interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements { }
-  }
+export namespace JSX {
+  export type ElementType = React.JSX.ElementType;
+  export interface Element extends React.JSX.Element {}
+  export interface ElementClass extends React.JSX.ElementClass {}
+  export interface ElementAttributesProperty extends React.JSX.ElementAttributesProperty {}
+  export interface ElementChildrenAttribute extends React.JSX.ElementChildrenAttribute {}
+  export type LibraryManagedAttributes<C, P> = React.JSX.LibraryManagedAttributes<C, P>;
+  export interface IntrinsicAttributes extends React.JSX.IntrinsicAttributes, ReactUnityCustomAttributes {}
+  export interface IntrinsicClassAttributes<T> extends React.JSX.IntrinsicClassAttributes<T> {}
+  export interface IntrinsicElements extends UGUIElements, ReactUnityCustomElements {}
 }

@@ -1,4 +1,4 @@
-import { createContext, createElement, useContext, useMemo, useState } from 'react';
+import { createContext, createElement, useContext, useMemo, useRef, useState } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
 import { ReactUnity } from '../models/generated';
@@ -60,7 +60,7 @@ export interface DictionaryWatcher<T = Record<string, any>> {
    * }
    * ```
    */
-  useSelector<Res>(selector: (store: T) => Res, isEqual?: IsEqual<Res>): Res
+  useSelector<Res>(selector: (store: T) => Res, isEqual?: IsEqual<Res>): Res;
 }
 
 type Prop = (string | symbol | number);
@@ -95,7 +95,8 @@ export function createDictionaryWatcher<
 
           if (!fields) onStoreChange();
           else {
-            for (var it = fields.values(), field = null; field = it.next().value;) {
+            const it = fields.values();
+            for (let field = it.next().value; field; field = it.next().value) {
               if (isEqual ? !isEqual(prev[field], snapshot[field]) : (prev[field] !== snapshot[field])) {
                 onStoreChange();
                 break;
@@ -133,9 +134,10 @@ export function createDictionaryWatcher<
 
   function useValue(subscribeToAllFields = false, fieldEqual?: IsEqual) {
     const fields = useMemo(() => new Set<Prop>(), []);
+    const fieldsRef = useRef(fields);
     const [allFieldsSubscribed, setAllFieldsSubscribed] = useState(false);
     subscribeToAllFields ||= allFieldsSubscribed;
-    const subscriber = useMemo(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fields, fieldEqual), [subscribeToAllFields, fieldEqual]);
+    const subscriber = useMemo(() => subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual), [subscribeToAllFields, fieldEqual]);
     const value: any = useSyncExternalStore(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
 
     const proxy = new Proxy(value, {
@@ -154,7 +156,7 @@ export function createDictionaryWatcher<
           ...Reflect.getOwnPropertyDescriptor(target, p),
           value: value[p],
         };
-      }
+      },
     });
 
     return proxy as RecordType;

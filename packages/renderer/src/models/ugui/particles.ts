@@ -1,5 +1,5 @@
-import { ReactUnity, UnityEngine } from "../generated";
-import { View } from "./components";
+import { ReactUnity, UnityEngine } from '../generated';
+import { View } from './components';
 
 
 type PropertiesOnly<T> = {

@@ -1,7 +1,5 @@
-import * as Reconciler from 'react-reconciler';
 import { ContinuousEventPriority, DefaultEventPriority, DiscreteEventPriority, IdleEventPriority } from 'react-reconciler/constants';
 import { PoolKey } from '../models/base';
-import { NoTimeout, TimeoutHandle } from '../models/renderer';
 import { styleStringSymbol } from './diffing';
 
 declare const process;
@@ -46,8 +44,6 @@ export function getAllowedProps(props, type) {
 
 declare const queueMicrotask: (callback: ((...args: any[]) => any)) => void;
 
-
-type CommonConfig = Reconciler.HostConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, TimeoutHandle, NoTimeout>;
 
 export const commonReconciler = {
   // -------------------

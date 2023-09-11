@@ -84,10 +84,10 @@ export function render(
         hostContainerInstance.context.FlushCommands(serialized);
       };
 
-      hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', (error) => console.error(error), null)
+      hostRoot = asyncReconciler.createContainer(hostContainerInstance, mode, null, false, undefined, '', (error) => console.error(error), null);
     }
     else {
-      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', (error) => console.error(error), null)
+      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', (error) => console.error(error), null);
     }
     containerMap.set(cacheKey, { hostRoot, asyncJobCallback });
   }
@@ -103,7 +103,7 @@ export function render(
   }
 
   const rc = isAsync ? asyncReconciler : syncReconciler;
-  rc.updateContainer(element, hostRoot, null);
+  rc.updateContainer(element as any, hostRoot, null);
 
   rc.injectIntoDevTools({
     bundleType: isDevelopment ? 1 : 0,

@@ -1,7 +1,6 @@
 
 import { ReactUnity } from '../generated';
 import './dom/global';
-import './jsx';
 export * from './interop';
 
 interface Console {
@@ -38,10 +37,6 @@ declare global {
   function matchMedia(query: string): ReactUnity.Styling.Rules.MediaQueryList;
 
   interface DefaultGlobals {
-    [key: string]: any;
-  }
-
-  interface DefaultComponentProps {
     [key: string]: any;
   }
 

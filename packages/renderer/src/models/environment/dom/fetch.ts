@@ -1,7 +1,7 @@
 import { AbortSignal, Blob, FormData, URLSearchParams } from './common';
 
 export declare class Body {
-  constructor(body?: any, opts?: { size?: number | undefined; timeout?: number | undefined });
+  constructor(body?: any, opts?: { size?: number | undefined, timeout?: number | undefined });
   arrayBuffer(): Promise<ArrayBuffer>;
   blob(): Promise<Blob>;
   bodyUsed: boolean;
@@ -51,50 +51,50 @@ export interface RequestInit {
 }
 
 export type RequestContext =
-  "audio"
-  | "beacon"
-  | "cspreport"
-  | "download"
-  | "embed"
-  | "eventsource"
-  | "favicon"
-  | "fetch"
-  | "font"
-  | "form"
-  | "frame"
-  | "hyperlink"
-  | "iframe"
-  | "image"
-  | "imageset"
-  | "import"
-  | "internal"
-  | "location"
-  | "manifest"
-  | "object"
-  | "ping"
-  | "plugin"
-  | "prefetch"
-  | "script"
-  | "serviceworker"
-  | "sharedworker"
-  | "style"
-  | "subresource"
-  | "track"
-  | "video"
-  | "worker"
-  | "xmlhttprequest"
-  | "xslt";
-export type RequestMode = "cors" | "no-cors" | "same-origin";
-export type RequestRedirect = "error" | "follow" | "manual";
-export type RequestCredentials = "omit" | "include" | "same-origin";
+  'audio'
+  | 'beacon'
+  | 'cspreport'
+  | 'download'
+  | 'embed'
+  | 'eventsource'
+  | 'favicon'
+  | 'fetch'
+  | 'font'
+  | 'form'
+  | 'frame'
+  | 'hyperlink'
+  | 'iframe'
+  | 'image'
+  | 'imageset'
+  | 'import'
+  | 'internal'
+  | 'location'
+  | 'manifest'
+  | 'object'
+  | 'ping'
+  | 'plugin'
+  | 'prefetch'
+  | 'script'
+  | 'serviceworker'
+  | 'sharedworker'
+  | 'style'
+  | 'subresource'
+  | 'track'
+  | 'video'
+  | 'worker'
+  | 'xmlhttprequest'
+  | 'xslt';
+export type RequestMode = 'cors' | 'no-cors' | 'same-origin';
+export type RequestRedirect = 'error' | 'follow' | 'manual';
+export type RequestCredentials = 'omit' | 'include' | 'same-origin';
 
 export type RequestCache =
-  "default"
-  | "force-cache"
-  | "no-cache"
-  | "no-store"
-  | "only-if-cached"
-  | "reload";
+  'default'
+  | 'force-cache'
+  | 'no-cache'
+  | 'no-store'
+  | 'only-if-cached'
+  | 'reload';
 
 export declare class Headers implements Iterable<[string, string]> {
   constructor(init?: HeadersInit);
@@ -118,7 +118,7 @@ interface SystemError extends Error {
 }
 
 export declare class FetchError extends Error {
-  name: "FetchError";
+  name: 'FetchError';
   constructor(message: string, type: string, systemError?: SystemError);
   type: string;
   code?: string | undefined;
@@ -140,12 +140,12 @@ export declare class Response extends Body {
 }
 
 export type ResponseType =
-  "basic"
-  | "cors"
-  | "default"
-  | "error"
-  | "opaque"
-  | "opaqueredirect";
+  'basic'
+  | 'cors'
+  | 'default'
+  | 'error'
+  | 'opaque'
+  | 'opaqueredirect';
 
 export interface ResponseInit {
   headers?: HeadersInit | undefined;

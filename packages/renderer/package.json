@@ -8,38 +8,19 @@
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.js",
-    "./editor": "./dist/editor.js",
     "./test": "./dist/test.js",
-    "./ugui": "./dist/ugui.js",
-    "./uitoolkit": "./dist/uitoolkit.js",
+    "./ugui": "./dist/ugui/index.js",
+    "./ugui/*": "./dist/ugui/*",
+    "./uitoolkit": "./dist/uitoolkit/index.js",
+    "./uitoolkit/*": "./dist/uitoolkit/*",
+    "./editor": "./dist/editor/index.js",
+    "./editor/*": "./dist/editor/*",
     "./webgl-compat": "./dist/webgl-compat.js"
-  },
-  "typesVersions": {
-    "*": {
-      "editor": [
-        "./dist/editor.d.ts"
-      ],
-      "tests": [
-        "./dist/tests.d.ts"
-      ],
-      "ugui": [
-        "./dist/ugui.d.ts"
-      ],
-      "uitoolkit": [
-        "./dist/uitoolkit.d.ts"
-      ],
-      "webgl-compat": [
-        "./dist/webgl-compat.d.ts"
-      ]
-    }
   },
   "scripts": {
     "build:clean": "rimraf dist",
     "build:base": "tsc",
-    "build:editor": "tsc -p tsconfig.editor.json",
-    "build:ugui": "tsc -p tsconfig.ugui.json",
-    "build:uitoolkit": "tsc -p tsconfig.uitoolkit.json",
-    "build": "yarn build:clean && yarn build:base && yarn build:editor && yarn build:ugui && yarn build:uitoolkit",
+    "build": "yarn build:clean && yarn build:base",
     "prepare": "yarn build",
     "watch": "tsc --watch",
     "lint": "react-unity-scripts lint",
@@ -65,10 +46,10 @@
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.15.1",
-    "@types/react-reconciler": "^0.28.2",
-    "react-unity-webgl": "^9.4.0",
-    "rimraf": "^4.1.2",
-    "typescript": "^4.9.5"
+    "@reactunity/scripts": "^0.15.2",
+    "@types/react-reconciler": "^0.28.4",
+    "react-unity-webgl": "^9.4.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
   }
 }
