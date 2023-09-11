@@ -15,7 +15,7 @@ export const InteropPage = () => {
         setPressedKey(key);
       });
 
-      Interop.GetType('MyInterop.InteropTest').TestDebug()
+      Interop.GetType('MyInterop.InteropTest').TestDebug();
 
       return () => remove();
     }

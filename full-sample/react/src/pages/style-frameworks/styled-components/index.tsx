@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = styled.button`
+const Button = styled.button<{ toggled?: boolean }>`
   /* This renders the buttons above... Edit me! */
   display: inline-block;
   border-radius: 3px;

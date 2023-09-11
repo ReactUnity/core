@@ -5,7 +5,7 @@ function generatePolylineArray(arrayX: number[], arrayY: number[]) {
   let polyline = '';
   arrayX.map((coordX, i) => {
     return polyline += `${coordX}, ${arrayY[i]} `;
-  })
+  });
   return polyline;
 }
 
@@ -21,5 +21,5 @@ export const Graph = ({ arrayX, arrayY, lineWidth }: { arrayX: number[], arrayY:
       {arrayX.map((coordX, i) =>
         <circle key={i} cx={coordX} cy={arrayY[i]} r={6} fill={'red'} />)}
     </svg>
-  )
+  );
 };

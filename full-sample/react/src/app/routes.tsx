@@ -1,18 +1,18 @@
-import React, { Suspense } from "react";
-import { Route, Routes } from "react-router";
-import AnimationsPage from "src/pages/animations";
-import BgPatternsPage from "src/pages/bg-patterns";
-import HomePage from "src/pages/home";
-import ImagesPage from "src/pages/images";
-import InteropPage from "src/pages/interop";
-import MaterialPage from "src/pages/material";
-import StyleFrameworksPage from "src/pages/style-frameworks";
-import BootstrapPage from "src/pages/style-frameworks/bootstrap";
-import EmotionPage from "src/pages/style-frameworks/emotion";
-import JSSPage from "src/pages/style-frameworks/jss";
-import StyledComponentsPage from "src/pages/style-frameworks/styled-components";
-import SvgsPage from "src/pages/svgs";
-import TodoPage from "src/pages/todo";
+import React, { Suspense } from 'react';
+import { Route, Routes } from 'react-router';
+import AnimationsPage from 'src/pages/animations';
+import BgPatternsPage from 'src/pages/bg-patterns';
+import HomePage from 'src/pages/home';
+import ImagesPage from 'src/pages/images';
+import InteropPage from 'src/pages/interop';
+import MaterialPage from 'src/pages/material';
+import StyleFrameworksPage from 'src/pages/style-frameworks';
+import BootstrapPage from 'src/pages/style-frameworks/bootstrap';
+import EmotionPage from 'src/pages/style-frameworks/emotion';
+import JSSPage from 'src/pages/style-frameworks/jss';
+import StyledComponentsPage from 'src/pages/style-frameworks/styled-components';
+import SvgsPage from 'src/pages/svgs';
+import TodoPage from 'src/pages/todo';
 
 const TailwindPage = React.lazy(() => import('src/pages/style-frameworks/tailwind'));
 

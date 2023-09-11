@@ -13,8 +13,8 @@ const CustomNavLink = ({ to, children }: { to: To, children: ReactNode }) => {
     <button onClick={() => nav(to)} className={match && styles.active}>
       {children}
     </button>
-  )
-}
+  );
+};
 
 export function StyleFrameworksPage() {
   return <view className={clsx(styles.host)}>

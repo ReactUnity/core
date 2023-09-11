@@ -12,8 +12,8 @@ const Button = styled.button`
   &:hover {
     color: yellow;
   }
-`
-const color = 'white'
+`;
+const color = 'white';
 
 export function EmotionPage() {
   // const [toggled, setToggled] = useState(false);

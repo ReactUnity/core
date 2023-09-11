@@ -1,5 +1,5 @@
-import { render } from "@reactunity/renderer";
-import React, { useState } from "react";
+import { render } from '@reactunity/renderer';
+import React, { useState } from 'react';
 
 function ErrorChild2() {
   const [state, setState] = useState(null);
@@ -28,7 +28,7 @@ const createdRefs = new Set();
 function createRef(ref) {
   if (ref && !createdRefs.has(ref)) {
     createdRefs.add(ref);
-    console.log("Created ref", ref);
+    console.log('Created ref', ref);
   }
 }
 
