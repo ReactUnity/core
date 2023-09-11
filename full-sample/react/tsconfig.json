@@ -2,9 +2,9 @@
   "extends": "@reactunity/scripts",
   "compilerOptions": {
     "baseUrl": "./",
+    "jsxImportSource": "@reactunity/renderer/ugui",
     "types": [
-      "@reactunity/scripts/main",
-      "@reactunity/scripts/ugui"
+      "@reactunity/scripts/main"
     ]
   },
   "files": [

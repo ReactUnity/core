@@ -1,3 +1,5 @@
+/* @jsxImportSource @reactunity/renderer/uitoolkit */
+
 import { render } from '@reactunity/renderer';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
