@@ -6,9 +6,9 @@
     "target": "ES5",
     "sourceMap": true,
     "noEmit": false,
+    "jsxImportSource": "@reactunity/renderer/ugui",
     "types": [
-      "@reactunity/scripts/main",
-      "@reactunity/scripts/ugui"
+      "@reactunity/scripts/main"
     ]
   },
   "files": [

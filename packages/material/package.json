@@ -107,16 +107,16 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.15.0",
-    "concurrently": "^7.6.0",
+    "@reactunity/scripts": "^0.15.2",
+    "concurrently": "^8.2.1",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
-    "rimraf": "^4.1.2",
-    "typescript": "^4.9.5"
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "@reactunity/renderer": "*",

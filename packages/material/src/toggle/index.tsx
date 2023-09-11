@@ -130,6 +130,6 @@ const _ToggleGroup = React.forwardRef<SelectionState, ToggleGroupProps>(
     </ToggleGroupContext.Provider>;
   });
 
-export const ToggleGroup: (<T = any>(props: ToggleGroupProps<T>) => JSX.Element) = React.memo(_ToggleGroup);
+export const ToggleGroup: (<T = any>(props: ToggleGroupProps<T>) => ReactNode) = React.memo(_ToggleGroup);
 
 
