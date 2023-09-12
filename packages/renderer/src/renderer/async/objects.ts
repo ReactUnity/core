@@ -4,9 +4,6 @@ export class ObjectsRepo<T = any> {
   indices: {}[] = [{}];
   objects = new WeakMap<object, T>();
 
-  constructor() {
-  }
-
   setObject = (index: number, item: T) => {
     let it = this.indices[index];
     if (!it) {

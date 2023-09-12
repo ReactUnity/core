@@ -23,7 +23,7 @@ function createSubscriber<T>(obj: ReactUnity.Reactive.IReactive<T>, isEqual?: Is
         });
 
       if (isReactive && typeof remove !== 'function')
-        console.warn(`The reactive value does not provide a change listener`);
+        console.warn('The reactive value does not provide a change listener');
 
       return () => remove?.();
     },

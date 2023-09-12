@@ -21,8 +21,14 @@ export const icon = new Proxy({}, {
   },
 }) as IconsHelper;
 
+type Keyify<T extends string> = T extends `${number}${string}` ? `_${T}` : T;
+
+type IconsNames = {
+  [key in DefaultIconNames]: any;
+};
+
 type IconsHelper = {
-  [key in DefaultIconNames | `_${DefaultIconNames}`]: React.FunctionComponent<DefaultComponentProps>;
+  [Key in keyof IconsNames as Keyify<Key>]: React.FunctionComponent<JSX.IntrinsicElements['icon']>;
 };
 
 export type DefaultIconNames =

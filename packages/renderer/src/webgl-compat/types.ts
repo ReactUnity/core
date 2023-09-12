@@ -1,6 +1,6 @@
-import { UnityConfig } from "react-unity-webgl";
-import { UnityContextHook } from "react-unity-webgl/distribution/types/unity-context-hook";
-import { UnityInstance } from "react-unity-webgl/typings/unity-instance";
+import { UnityConfig } from 'react-unity-webgl';
+import { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
+import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
 
 export type ReactUnityEventParameter = string | number | boolean | null | undefined | void;
 

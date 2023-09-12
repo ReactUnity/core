@@ -1,7 +1,7 @@
-import { AddEventListenerOptions, Blob, BufferSource, EventInit, EventListenerOptions, EventListenerOrEventListenerObject, FormData, URL, URLSearchParams } from "./common";
+import { AddEventListenerOptions, Blob, BufferSource, EventInit, EventListenerOptions, EventListenerOrEventListenerObject, FormData, URL, URLSearchParams } from './common';
 
 type XMLHttpRequestBodyInit = Blob | BufferSource | FormData | URLSearchParams | string;
-type XMLHttpRequestResponseType = "" | "arraybuffer" | "blob" | "document" | "json" | "text";
+type XMLHttpRequestResponseType = '' | 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
 
 
 /** Use XMLHttpRequest (XHR) objects to interact with servers. You can retrieve data from a URL without having to do a full page refresh. This enables a Web page to update just part of a page without disrupting what the user is doing. */
@@ -109,17 +109,17 @@ export declare var XMLHttpRequest: {
 };
 
 interface XMLHttpRequestEventTargetEventMap {
-  "abort": ProgressEvent<XMLHttpRequestEventTarget>;
-  "error": ProgressEvent<XMLHttpRequestEventTarget>;
-  "load": ProgressEvent<XMLHttpRequestEventTarget>;
-  "loadend": ProgressEvent<XMLHttpRequestEventTarget>;
-  "loadstart": ProgressEvent<XMLHttpRequestEventTarget>;
-  "progress": ProgressEvent<XMLHttpRequestEventTarget>;
-  "timeout": ProgressEvent<XMLHttpRequestEventTarget>;
+  'abort': ProgressEvent<XMLHttpRequestEventTarget>;
+  'error': ProgressEvent<XMLHttpRequestEventTarget>;
+  'load': ProgressEvent<XMLHttpRequestEventTarget>;
+  'loadend': ProgressEvent<XMLHttpRequestEventTarget>;
+  'loadstart': ProgressEvent<XMLHttpRequestEventTarget>;
+  'progress': ProgressEvent<XMLHttpRequestEventTarget>;
+  'timeout': ProgressEvent<XMLHttpRequestEventTarget>;
 }
 
 interface XMLHttpRequestEventMap extends XMLHttpRequestEventTargetEventMap {
-  "readystatechange": Event;
+  'readystatechange': Event;
 }
 
 interface XMLHttpRequestEventTarget extends EventTarget {

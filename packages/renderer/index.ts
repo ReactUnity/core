@@ -7,11 +7,8 @@ export * from './src/models/generated';
 export * from './src/models/properties';
 export * from './src/models/renderer';
 export {
-  batchedUpdates,
-  batchedUpdates as unstable_batchedUpdates,
-  flushSync,
-  render,
-  Renderer
+  Renderer, batchedUpdates, flushSync,
+  render, batchedUpdates as unstable_batchedUpdates
 } from './src/renderer/renderer';
 
 

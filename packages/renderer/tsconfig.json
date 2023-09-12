@@ -15,6 +15,15 @@
   "files": [
     "index.ts",
     "tests.ts",
+    "ugui/index.ts",
+    "ugui/jsx-dev-runtime.ts",
+    "ugui/jsx-runtime.ts",
+    "uitoolkit/index.ts",
+    "uitoolkit/jsx-dev-runtime.ts",
+    "uitoolkit/jsx-runtime.ts",
+    "editor/index.ts",
+    "editor/jsx-dev-runtime.ts",
+    "editor/jsx-runtime.ts",
     "webgl-compat.ts"
   ]
 }

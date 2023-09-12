@@ -3,10 +3,6 @@ import { AsyncCallback } from './commands';
 import { ObjectsRepo } from './objects';
 
 export class CallbacksRepo extends ObjectsRepo<AsyncCallback> {
-  constructor() {
-    super();
-  }
-
   call = (ind: number, args: any[]) => {
     const cb = this.getObject(ind);
 

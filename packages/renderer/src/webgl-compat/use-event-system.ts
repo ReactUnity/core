@@ -1,6 +1,6 @@
 // Original file: https://github.com/jeffreylanters/react-unity-webgl/blob/main/module/source/hooks/use-event-system.ts
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { errorMessages } from './error-messages';
 import { EventCallback, EventSystemHook, ReactUnityEventParameter } from './types';
 
@@ -27,7 +27,7 @@ const dispatchReactUnityEvent = (
 
 declare var window;
 
-if (typeof globalThis !== "undefined" || typeof window !== "undefined") {
+if (typeof globalThis !== 'undefined' || typeof window !== 'undefined') {
   (globalThis || window).dispatchReactUnityEvent = dispatchReactUnityEvent;
 }
 
@@ -70,7 +70,7 @@ export const createEventSystem = (): EventSystemHook => {
       const eventListener = eventListeners.find(
         (eventListener) => eventListener.eventName === eventName
       );
-      if (typeof eventListener === "undefined") {
+      if (typeof eventListener === 'undefined') {
         console.warn(errorMessages.noEventListener, { eventName });
         return;
       }
@@ -103,6 +103,7 @@ export const useEventSystem = () => {
     ref.current = createEventSystem();
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(ref.current.onMount, []);
 
   return ref.current;

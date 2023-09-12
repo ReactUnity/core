@@ -1,4 +1,4 @@
-import { createDictionaryWatcher } from "../dictionary-watcher";
+import { createDictionaryWatcher } from '../dictionary-watcher';
 
 const globalsWatcher = createDictionaryWatcher<any, DefaultGlobals>(Globals, 'globalsContext');
 export const useGlobals = globalsWatcher.useValue;

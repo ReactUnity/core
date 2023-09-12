@@ -20,14 +20,14 @@ export interface EventInit {
 export interface AbortSignal {
   aborted: boolean;
 
-  addEventListener: (type: "abort", listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
-    capture?: boolean | undefined,
-    once?: boolean | undefined,
-    passive?: boolean | undefined
+  addEventListener: (type: 'abort', listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
+    capture?: boolean | undefined;
+    once?: boolean | undefined;
+    passive?: boolean | undefined;
   }) => void;
 
-  removeEventListener: (type: "abort", listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
-    capture?: boolean | undefined
+  removeEventListener: (type: 'abort', listener: ((this: AbortSignal, event: any) => any), options?: boolean | {
+    capture?: boolean | undefined;
   }) => void;
 
   dispatchEvent: (event: any) => boolean;
@@ -52,7 +52,7 @@ export interface EventListenerObject {
 
 export interface BlobOptions {
   type?: string | undefined;
-  endings?: "transparent" | "native" | undefined;
+  endings?: 'transparent' | 'native' | undefined;
 }
 
 export declare class Blob {
