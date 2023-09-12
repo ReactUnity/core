@@ -6097,7 +6097,7 @@ if (true) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../../node_modules/css-loader/dist/runtime/noSourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -6108,22 +6108,22 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__CsMZh{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__AIuJo{max-height:200px;max-width:200px;align-self:center;animation:src_appear__DPHQz 800ms 400ms both;transform-origin:center}@keyframes src_appear__DPHQz{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__xmMXU{background-color:rgba(0,0,0,0);border-width:0}.src_packageName__q\\+lcg{opacity:.6}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__j9jTI 800ms infinite;margin:10px auto;transform-origin:center}@keyframes src_spin__j9jTI{from{rotate:0deg}to{rotate:180deg}}.src_checkIcon__Itt\\+f,.src_warnIcon__kF2lo,.src_errorIcon__3-Lhv,.src_cancelIcon__4IfF2{flex-shrink:0;margin-right:6px}.src_infoButton__p7Ehn{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__3Zij3{width:20px;height:20px;flex-shrink:1}.src_checkIcon__Itt\\+f{color:#73ff00}.src_warnIcon__kF2lo{color:#fff200}.src_errorIcon__3-Lhv{color:crimson}.src_loadingOverlay__Z43tR{position:absolute;inset:0;background-color:rgba(0,0,0,.2);align-items:center;justify-content:center}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `*{white-space:normal}.src_host__DfQI5{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__BTD1d{max-height:200px;max-width:200px;align-self:center;animation:src_appear__uO2md 800ms 400ms both;transform-origin:center}@keyframes src_appear__uO2md{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__ckdJk{background-color:rgba(0,0,0,0);border-width:0}.src_packageName__8e1sS{opacity:.6}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__94wLO 800ms infinite;margin:10px auto;transform-origin:center}@keyframes src_spin__94wLO{from{rotate:0deg}to{rotate:180deg}}.src_checkIcon__FATu-,.src_warnIcon__slMGa,.src_errorIcon__hF0IW,.src_cancelIcon__IlMNe{flex-shrink:0;margin-right:6px}.src_infoButton__Cr9JN{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__Zfapc{width:20px;height:20px;flex-shrink:1}.src_checkIcon__FATu-{color:#73ff00}.src_warnIcon__slMGa{color:#fff200}.src_errorIcon__hF0IW{color:crimson}.src_loadingOverlay__IbEDV{position:absolute;inset:0;background-color:rgba(0,0,0,.2);align-items:center;justify-content:center}`, ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "src_host__CsMZh",
-	"logo": "src_logo__AIuJo",
-	"appear": "src_appear__DPHQz",
-	"projectPath": "src_projectPath__xmMXU",
-	"packageName": "src_packageName__q+lcg",
-	"spin": "src_spin__j9jTI",
-	"checkIcon": "src_checkIcon__Itt+f",
-	"warnIcon": "src_warnIcon__kF2lo",
-	"errorIcon": "src_errorIcon__3-Lhv",
-	"cancelIcon": "src_cancelIcon__4IfF2",
-	"infoButton": "src_infoButton__p7Ehn",
-	"infoIcon": "src_infoIcon__3Zij3",
-	"loadingOverlay": "src_loadingOverlay__Z43tR"
+	"host": `src_host__DfQI5`,
+	"logo": `src_logo__BTD1d`,
+	"appear": `src_appear__uO2md`,
+	"projectPath": `src_projectPath__ckdJk`,
+	"packageName": `src_packageName__8e1sS`,
+	"spin": `src_spin__94wLO`,
+	"checkIcon": `src_checkIcon__FATu-`,
+	"warnIcon": `src_warnIcon__slMGa`,
+	"errorIcon": `src_errorIcon__hF0IW`,
+	"cancelIcon": `src_cancelIcon__IlMNe`,
+	"infoButton": `src_infoButton__Cr9JN`,
+	"infoIcon": `src_infoIcon__Zfapc`,
+	"loadingOverlay": `src_loadingOverlay__IbEDV`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6137,24 +6137,19 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var stylesInDOM = [];
-
 function getIndexByIdentifier(identifier) {
   var result = -1;
-
   for (var i = 0; i < stylesInDOM.length; i++) {
     if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
   }
-
   return result;
 }
-
 function modulesToDom(list, options) {
   var idCountMap = {};
   var identifiers = [];
-
   for (var i = 0; i < list.length; i++) {
     var item = list[i];
     var id = options.base ? item[0] + options.base : item[0];
@@ -6169,7 +6164,6 @@ function modulesToDom(list, options) {
       supports: item[4],
       layer: item[5]
     };
-
     if (indexByIdentifier !== -1) {
       stylesInDOM[indexByIdentifier].references++;
       stylesInDOM[indexByIdentifier].updater(obj);
@@ -6182,59 +6176,45 @@ function modulesToDom(list, options) {
         references: 1
       });
     }
-
     identifiers.push(identifier);
   }
-
   return identifiers;
 }
-
 function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-
   var updater = function updater(newObj) {
     if (newObj) {
       if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
-
       api.update(obj = newObj);
     } else {
       api.remove();
     }
   };
-
   return updater;
 }
-
 module.exports = function (list, options) {
   options = options || {};
   list = list || [];
   var lastIdentifiers = modulesToDom(list, options);
   return function update(newList) {
     newList = newList || [];
-
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
       stylesInDOM[index].references--;
     }
-
     var newLastIdentifiers = modulesToDom(newList, options);
-
     for (var _i = 0; _i < lastIdentifiers.length; _i++) {
       var _identifier = lastIdentifiers[_i];
-
       var _index = getIndexByIdentifier(_identifier);
-
       if (stylesInDOM[_index].references === 0) {
         stylesInDOM[_index].updater();
-
         stylesInDOM.splice(_index, 1);
       }
     }
-
     lastIdentifiers = newLastIdentifiers;
   };
 };
@@ -6248,12 +6228,13 @@ module.exports = function (list, options) {
 
 
 var memo = {};
-/* istanbul ignore next  */
 
+/* istanbul ignore next  */
 function getTarget(target) {
   if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+    var styleTarget = document.querySelector(target);
 
+    // Special case to return head of iframe instead of iframe itself
     if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
       try {
         // This will throw an exception if access to iframe is blocked
@@ -6264,25 +6245,19 @@ function getTarget(target) {
         styleTarget = null;
       }
     }
-
     memo[target] = styleTarget;
   }
-
   return memo[target];
 }
+
 /* istanbul ignore next  */
-
-
 function insertBySelector(insert, style) {
   var target = getTarget(insert);
-
   if (!target) {
     throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
   }
-
   target.appendChild(style);
 }
-
 module.exports = insertBySelector;
 
 /***/ }),
@@ -6300,7 +6275,6 @@ function insertStyleElement(options) {
   options.insert(element, options.options);
   return element;
 }
-
 module.exports = insertStyleElement;
 
 /***/ }),
@@ -6314,12 +6288,10 @@ module.exports = insertStyleElement;
 /* istanbul ignore next  */
 function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
-
   if (nonce) {
     styleElement.setAttribute("nonce", nonce);
   }
 }
-
 module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
@@ -6333,59 +6305,51 @@ module.exports = setAttributesWithoutAttributes;
 /* istanbul ignore next  */
 function apply(styleElement, options, obj) {
   var css = "";
-
   if (obj.supports) {
     css += "@supports (".concat(obj.supports, ") {");
   }
-
   if (obj.media) {
     css += "@media ".concat(obj.media, " {");
   }
-
   var needLayer = typeof obj.layer !== "undefined";
-
   if (needLayer) {
     css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
   }
-
   css += obj.css;
-
   if (needLayer) {
     css += "}";
   }
-
   if (obj.media) {
     css += "}";
   }
-
   if (obj.supports) {
     css += "}";
   }
-
   var sourceMap = obj.sourceMap;
-
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  } // For old IE
+  }
 
+  // For old IE
   /* istanbul ignore if  */
-
-
   options.styleTagTransform(css, styleElement, options.options);
 }
-
 function removeStyleElement(styleElement) {
   // istanbul ignore if
   if (styleElement.parentNode === null) {
     return false;
   }
-
   styleElement.parentNode.removeChild(styleElement);
 }
+
 /* istanbul ignore next  */
-
-
 function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
   var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
@@ -6396,7 +6360,6 @@ function domAPI(options) {
     }
   };
 }
-
 module.exports = domAPI;
 
 /***/ }),
@@ -6415,11 +6378,9 @@ function styleTagTransform(css, styleElement) {
     while (styleElement.firstChild) {
       styleElement.removeChild(styleElement.firstChild);
     }
-
     styleElement.appendChild(document.createTextNode(css));
   }
 }
-
 module.exports = styleTagTransform;
 
 /***/ })
@@ -6561,7 +6522,7 @@ var react = __webpack_require__("../../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.15.0';
+var version = '0.15.2';
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
@@ -6585,16 +6546,6 @@ var __extends = undefined && undefined.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
-  };
-  return __assign.apply(this, arguments);
-};
 
 
 var ErrorBoundary = /** @class */function (_super) {
@@ -6621,24 +6572,22 @@ var ErrorBoundary = /** @class */function (_super) {
   ErrorBoundary.prototype.render = function () {
     var _a, _b;
     if (this.state.hasError) {
-      return (0,jsx_runtime.jsxs)("view", __assign({
+      return (0,jsx_runtime.jsxs)("view", {
         id: '__react-unity-error-boundary',
         style: {
           color: 'crimson',
           padding: 20,
           fontSize: 16
-        }
-      }, {
-        children: [(0,jsx_runtime.jsx)("view", __assign({
+        },
+        children: [(0,jsx_runtime.jsx)("view", {
           style: {
             marginBottom: '12px'
-          }
-        }, {
+          },
           children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
-        })), (0,jsx_runtime.jsx)("view", {
+        }), (0,jsx_runtime.jsx)("view", {
           children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
         })]
-      }));
+      });
     }
     return this.props.children;
   };
@@ -6959,8 +6908,8 @@ function stringifySVG(node) {
 
 
 var subContextRenderers = {
-  'richtext': stringifyRichText,
-  'svg': stringifySVG
+  richtext: stringifyRichText,
+  svg: stringifySVG
 };
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
@@ -6987,7 +6936,7 @@ var callbacks_extends = undefined && undefined.__extends || function () {
 var CallbacksRepo = /** @class */function (_super) {
   callbacks_extends(CallbacksRepo, _super);
   function CallbacksRepo() {
-    var _this = _super.call(this) || this;
+    var _this = _super !== null && _super.apply(this, arguments) || this;
     _this.call = function (ind, args) {
       var cb = _this.getObject(ind);
       var argsAsList = args;
@@ -7044,15 +6993,15 @@ function convertPropsToSerializable(props) {
   return res;
 }
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
-var reconciler_assign = undefined && undefined.__assign || function () {
-  reconciler_assign = Object.assign || function (t) {
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
       s = arguments[i];
       for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
     }
     return t;
   };
-  return reconciler_assign.apply(this, arguments);
+  return __assign.apply(this, arguments);
 };
 
 
@@ -7077,7 +7026,7 @@ var updateSubContext = function updateSubContext(instance) {
       c: content
     }]);
   } else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', reconciler_assign({
+    instance.hostContext.commands.push(['u', __assign({
       r: root.refId,
       t: 'svg'
     }, convertPropsToSerializable({
@@ -7085,7 +7034,7 @@ var updateSubContext = function updateSubContext(instance) {
     }))]);
   }
 };
-var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
+var hostConfig = __assign(__assign({}, commonReconciler), {
   getRootHostContext: function getRootHostContext(rootContainer) {
     var context = rootContainer.context;
     if (rootContainer.refId < 0) {
@@ -7162,13 +7111,13 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
     var aProps = getAllowedProps(props, type);
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['c', reconciler_assign({
+      ctx.commands.push(['c', __assign({
         t: type,
         r: refId,
         k: stringizePoolKey(props.pool)
       }, convertPropsToSerializable(aProps))]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      var res = reconciler_assign(reconciler_assign({}, ctx), {
+      var res = __assign(__assign({}, ctx), {
         refId: refId
       });
       if (type === 'richtext') {
@@ -7199,7 +7148,7 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
       }
       return res;
     } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
+      return __assign(__assign({}, ctx), {
         node: {
           tag: type,
           children: [],
@@ -7216,11 +7165,11 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
         c: text
       }]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      return reconciler_assign(reconciler_assign({}, ctx), {
+      return __assign(__assign({}, ctx), {
         refId: refId
       });
     } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
+      return __assign(__assign({}, ctx), {
         node: {
           text: text
         }
@@ -7258,12 +7207,12 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
     if (instance.type === 'native') {
-      instance.commands.push(['u', reconciler_assign({
+      instance.commands.push(['u', __assign({
         r: instance.refId,
         t: type
       }, convertPropsToSerializable(props))]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
+      if ('attributes' in instance.node) instance.node.attributes = __assign(__assign({}, instance.node.attributes), props);
       updateSubContext(instance);
     }
   },
@@ -7392,22 +7341,22 @@ var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
 });
 var asyncReconciler = react_reconciler(hostConfig);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
-var sync_reconciler_assign = undefined && undefined.__assign || function () {
-  sync_reconciler_assign = Object.assign || function (t) {
+var reconciler_assign = undefined && undefined.__assign || function () {
+  reconciler_assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
       s = arguments[i];
       for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
     }
     return t;
   };
-  return sync_reconciler_assign.apply(this, arguments);
+  return reconciler_assign.apply(this, arguments);
 };
 
 
 
 var hostContext = {};
 var childContext = {};
-var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, commonReconciler), {
+var reconciler_hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
   getRootHostContext: function getRootHostContext() {
     return hostContext;
   },
@@ -7668,7 +7617,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 
 
-       /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default */.Z.locals ? index_module/* default */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/common.tsx
 var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_index_module.warnIcon});var info=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_index_module.infoIcon});var Window=Globals.Window;var packageName="com.reactunity.core";var SetIsLoadingContext=/*#__PURE__*/(0,react.createContext)(undefined);
