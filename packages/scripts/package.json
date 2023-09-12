@@ -110,7 +110,7 @@
   },
   "peerDependencies": {
     "@reactunity/previewer": "*",
-    "@reactunity/renderer": "^0.15.0",
+    "@reactunity/renderer": "^0.16.0",
     "react": "^18.0.0",
     "typescript": ">=5"
   },
