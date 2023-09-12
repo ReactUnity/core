@@ -8,28 +8,31 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.clearscript": {
-      "version": "file:../../clearscript",
+      "version": "0.16.0",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "file:../../core",
+      "version": "0.16.0",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
-      }
+      },
+      "url": "https://package.openupm.com"
     },
     "com.reactunity.jint": {
-      "version": "file:../../jint",
+      "version": "0.15.0",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.reactunity.quickjs": {
-      "version": "0.15.0",
+      "version": "0.16.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
