@@ -6,309 +6,309 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- 'use strict';
+'use strict';
 
- const chalk = require('react-dev-utils/chalk');
- const fs = require('fs');
- const resolve = require('resolve');
- const path = require('path');
- const paths = require('../../config/paths');
- const os = require('os');
- const semver = require('semver');
- const immer = require('react-dev-utils/immer').produce;
- const globby = require('react-dev-utils/globby').sync;
+const chalk = require('react-dev-utils/chalk');
+const fs = require('fs');
+const resolve = require('resolve');
+const path = require('path');
+const paths = require('../../config/paths');
+const os = require('os');
+const semver = require('semver');
+const immer = require('react-dev-utils/immer').produce;
+const globby = require('react-dev-utils/globby').sync;
 
- const hasJsxRuntime = (() => {
-   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
-     return false;
-   }
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
 
-   try {
-     require.resolve('react/jsx-runtime', { paths: [paths.appPath] });
-     return true;
-   } catch (e) {
-     return false;
-   }
- })();
+  try {
+    require.resolve('react/jsx-runtime', { paths: [paths.appPath] });
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
 
- function writeJson(fileName, object) {
-   fs.writeFileSync(
-     fileName,
-     JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
-   );
- }
+function writeJson(fileName, object) {
+  fs.writeFileSync(
+    fileName,
+    JSON.stringify(object, null, 2).replace(/\n/g, os.EOL) + os.EOL
+  );
+}
 
- function verifyNoTypeScript() {
-   const typescriptFiles = globby(
-     ['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'],
-     { cwd: paths.appSrc }
-   );
-   if (typescriptFiles.length > 0) {
-     console.warn(
-       chalk.yellow(
-         `We detected TypeScript in your project (${chalk.bold(
-           `src${path.sep}${typescriptFiles[0]}`
-         )}) and created a ${chalk.bold('tsconfig.json')} file for you.`
-       )
-     );
-     console.warn();
-     return false;
-   }
-   return true;
- }
+function verifyNoTypeScript() {
+  const typescriptFiles = globby(
+    ['**/*.(ts|tsx)', '!**/node_modules', '!**/*.d.ts'],
+    { cwd: paths.appSrc }
+  );
+  if (typescriptFiles.length > 0) {
+    console.warn(
+      chalk.yellow(
+        `We detected TypeScript in your project (${chalk.bold(
+          `src${path.sep}${typescriptFiles[0]}`
+        )}) and created a ${chalk.bold('tsconfig.json')} file for you.`
+      )
+    );
+    console.warn();
+    return false;
+  }
+  return true;
+}
 
- function verifyTypeScriptSetup() {
-   let firstTimeSetup = false;
+function verifyTypeScriptSetup() {
+  let firstTimeSetup = false;
 
-   if (!fs.existsSync(paths.appTsConfig)) {
-     if (verifyNoTypeScript()) {
-       return;
-     }
-     writeJson(paths.appTsConfig, {});
-     firstTimeSetup = true;
-   }
+  if (!fs.existsSync(paths.appTsConfig)) {
+    if (verifyNoTypeScript()) {
+      return;
+    }
+    writeJson(paths.appTsConfig, {});
+    firstTimeSetup = true;
+  }
 
-   const isYarn = fs.existsSync(paths.yarnLockFile);
+  const isYarn = fs.existsSync(paths.yarnLockFile);
 
-   // Ensure typescript is installed
-   let ts;
-   try {
-     // TODO: Remove this hack once `globalThis` issue is resolved
-     // https://github.com/jsdom/jsdom/issues/2961
-     const globalThisWasDefined = !!global.globalThis;
+  // Ensure typescript is installed
+  let ts;
+  try {
+    // TODO: Remove this hack once `globalThis` issue is resolved
+    // https://github.com/jsdom/jsdom/issues/2961
+    const globalThisWasDefined = !!global.globalThis;
 
-     ts = require(resolve.sync('typescript', {
-       basedir: paths.appNodeModules,
-     }));
+    ts = require(resolve.sync('typescript', {
+      basedir: paths.appNodeModules,
+    }));
 
-     if (!globalThisWasDefined && !!global.globalThis) {
-       delete global.globalThis;
-     }
-   } catch (_) {
-     console.error(
-       chalk.bold.red(
-         `It looks like you're trying to use TypeScript but do not have ${chalk.bold(
-           'typescript'
-         )} installed.`
-       )
-     );
-     console.error(
-       chalk.bold(
-         'Please install',
-         chalk.cyan.bold('typescript'),
-         'by running',
-         chalk.cyan.bold(
-           isYarn ? 'yarn add typescript' : 'npm install typescript'
-         ) + '.'
-       )
-     );
-     console.error(
-       chalk.bold(
-         'If you are not trying to use TypeScript, please remove the ' +
-           chalk.cyan('tsconfig.json') +
-           ' file from your package root (and any TypeScript files).'
-       )
-     );
-     console.error();
-     process.exit(1);
-   }
+    if (!globalThisWasDefined && !!global.globalThis) {
+      delete global.globalThis;
+    }
+  } catch (_) {
+    console.error(
+      chalk.bold.red(
+        `It looks like you're trying to use TypeScript but do not have ${chalk.bold(
+          'typescript'
+        )} installed.`
+      )
+    );
+    console.error(
+      chalk.bold(
+        'Please install',
+        chalk.cyan.bold('typescript'),
+        'by running',
+        chalk.cyan.bold(
+          isYarn ? 'yarn add typescript' : 'npm install typescript'
+        ) + '.'
+      )
+    );
+    console.error(
+      chalk.bold(
+        'If you are not trying to use TypeScript, please remove the ' +
+        chalk.cyan('tsconfig.json') +
+        ' file from your package root (and any TypeScript files).'
+      )
+    );
+    console.error();
+    process.exit(1);
+  }
 
-   const compilerOptions = {
-     // These are suggested values and will be set when not present in the
-     // tsconfig.json
-     // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
-     target: {
-       parsedValue: ts.ScriptTarget.ES5,
-       suggested: 'es5',
-     },
-     lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
-     allowJs: { suggested: true },
-     skipLibCheck: { suggested: true },
-     esModuleInterop: { suggested: true },
-     allowSyntheticDefaultImports: { suggested: true },
-     strict: { suggested: true },
-     forceConsistentCasingInFileNames: { suggested: true },
-     noFallthroughCasesInSwitch: { suggested: true },
+  const compilerOptions = {
+    // These are suggested values and will be set when not present in the
+    // tsconfig.json
+    // 'parsedValue' matches the output value from ts.parseJsonConfigFileContent()
+    target: {
+      parsedValue: ts.ScriptTarget.ES5,
+      suggested: 'es5',
+    },
+    lib: { suggested: ['dom', 'dom.iterable', 'esnext'] },
+    allowJs: { suggested: true },
+    skipLibCheck: { suggested: true },
+    esModuleInterop: { suggested: true },
+    allowSyntheticDefaultImports: { suggested: true },
+    strict: { suggested: true },
+    forceConsistentCasingInFileNames: { suggested: true },
+    noFallthroughCasesInSwitch: { suggested: true },
 
-     // These values are required and cannot be changed by the user
-     // Keep this in sync with the webpack config
-     module: {
-       parsedValue: ts.ModuleKind.ESNext,
-       value: 'esnext',
-       reason: 'for import() and import/export',
-     },
-     moduleResolution: {
-       parsedValue: ts.ModuleResolutionKind.NodeJs,
-       value: 'node',
-       reason: 'to match webpack resolution',
-     },
-     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
-     isolatedModules: { value: true, reason: 'implementation limitation' },
-     noEmit: { value: true },
-     jsx: {
-       parsedValue:
-         hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
-           ? ts.JsxEmit.ReactJSX
-           : ts.JsxEmit.React,
-       value:
-         hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
-           ? 'react-jsx'
-           : 'react',
-       reason: 'to support the new JSX transform in React 17',
-     },
-     paths: { value: undefined, reason: 'aliased imports are not supported' },
-   };
+    // These values are required and cannot be changed by the user
+    // Keep this in sync with the webpack config
+    module: {
+      parsedValue: ts.ModuleKind.ESNext,
+      value: 'esnext',
+      reason: 'for import() and import/export',
+    },
+    moduleResolution: {
+      parsedValue: ts.ModuleResolutionKind.NodeJs,
+      value: 'node',
+      reason: 'to match webpack resolution',
+    },
+    resolveJsonModule: { value: true, reason: 'to match webpack loader' },
+    isolatedModules: { value: true, reason: 'implementation limitation' },
+    noEmit: { value: true },
+    jsx: {
+      parsedValue:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? ts.JsxEmit.ReactJSX
+          : ts.JsxEmit.React,
+      value:
+        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+          ? 'react-jsx'
+          : 'react',
+      reason: 'to support the new JSX transform in React 17',
+    },
+    paths: { value: undefined, reason: 'aliased imports are not supported' },
+  };
 
-   const formatDiagnosticHost = {
-     getCanonicalFileName: fileName => fileName,
-     getCurrentDirectory: ts.sys.getCurrentDirectory,
-     getNewLine: () => os.EOL,
-   };
+  const formatDiagnosticHost = {
+    getCanonicalFileName: fileName => fileName,
+    getCurrentDirectory: ts.sys.getCurrentDirectory,
+    getNewLine: () => os.EOL,
+  };
 
-   const messages = [];
-   let appTsConfig;
-   let parsedTsConfig;
-   let parsedCompilerOptions;
-   try {
-     const { config: readTsConfig, error } = ts.readConfigFile(
-       paths.appTsConfig,
-       ts.sys.readFile
-     );
+  const messages = [];
+  let appTsConfig;
+  let parsedTsConfig;
+  let parsedCompilerOptions;
+  try {
+    const { config: readTsConfig, error } = ts.readConfigFile(
+      paths.appTsConfig,
+      ts.sys.readFile
+    );
 
-     if (error) {
-       throw new Error(ts.formatDiagnostic(error, formatDiagnosticHost));
-     }
+    if (error) {
+      throw new Error(ts.formatDiagnostic(error, formatDiagnosticHost));
+    }
 
-     appTsConfig = readTsConfig;
+    appTsConfig = readTsConfig;
 
-     // Get TS to parse and resolve any "extends"
-     // Calling this function also mutates the tsconfig above,
-     // adding in "include" and "exclude", but the compilerOptions remain untouched
-     let result;
-     parsedTsConfig = immer(readTsConfig, config => {
-       result = ts.parseJsonConfigFileContent(
-         config,
-         ts.sys,
-         path.dirname(paths.appTsConfig)
-       );
-     });
+    // Get TS to parse and resolve any "extends"
+    // Calling this function also mutates the tsconfig above,
+    // adding in "include" and "exclude", but the compilerOptions remain untouched
+    let result;
+    parsedTsConfig = immer(readTsConfig, config => {
+      result = ts.parseJsonConfigFileContent(
+        config,
+        ts.sys,
+        path.dirname(paths.appTsConfig)
+      );
+    });
 
-     if (result.errors && result.errors.length) {
-       throw new Error(
-         ts.formatDiagnostic(result.errors[0], formatDiagnosticHost)
-       );
-     }
+    if (result.errors && result.errors.length) {
+      throw new Error(
+        ts.formatDiagnostic(result.errors[0], formatDiagnosticHost)
+      );
+    }
 
-     parsedCompilerOptions = result.options;
-   } catch (e) {
-     if (e && e.name === 'SyntaxError') {
-       console.error(
-         chalk.red.bold(
-           'Could not parse',
-           chalk.cyan('tsconfig.json') + '.',
-           'Please make sure it contains syntactically correct JSON.'
-         )
-       );
-     }
+    parsedCompilerOptions = result.options;
+  } catch (e) {
+    if (e && e.name === 'SyntaxError') {
+      console.error(
+        chalk.red.bold(
+          'Could not parse',
+          chalk.cyan('tsconfig.json') + '.',
+          'Please make sure it contains syntactically correct JSON.'
+        )
+      );
+    }
 
-     console.log(e && e.message ? `${e.message}` : '');
-     process.exit(1);
-   }
+    console.log(e && e.message ? `${e.message}` : '');
+    process.exit(1);
+  }
 
-   if (appTsConfig.compilerOptions == null) {
-     appTsConfig.compilerOptions = {};
-     firstTimeSetup = true;
-   }
+  if (appTsConfig.compilerOptions == null) {
+    appTsConfig.compilerOptions = {};
+    firstTimeSetup = true;
+  }
 
-   for (const option of Object.keys(compilerOptions)) {
-     const { parsedValue, value, suggested, reason } = compilerOptions[option];
+  for (const option of Object.keys(compilerOptions)) {
+    const { parsedValue, value, suggested, reason } = compilerOptions[option];
 
-     const valueToCheck = parsedValue === undefined ? value : parsedValue;
-     const coloredOption = chalk.cyan('compilerOptions.' + option);
+    const valueToCheck = parsedValue === undefined ? value : parsedValue;
+    const coloredOption = chalk.cyan('compilerOptions.' + option);
 
-     if (suggested != null) {
-       if (parsedCompilerOptions[option] === undefined) {
-         appTsConfig = immer(appTsConfig, config => {
-           config.compilerOptions[option] = suggested;
-         });
-         messages.push(
-           `${coloredOption} to be ${chalk.bold(
-             'suggested'
-           )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
-         );
-       }
-     } else if (parsedCompilerOptions[option] !== valueToCheck) {
-       appTsConfig = immer(appTsConfig, config => {
-         config.compilerOptions[option] = value;
-       });
-       messages.push(
-         `${coloredOption} ${chalk.bold(
-           valueToCheck == null ? 'must not' : 'must'
-         )} be ${valueToCheck == null ? 'set' : chalk.cyan.bold(value)}` +
-           (reason != null ? ` (${reason})` : '')
-       );
-     }
-   }
+    if (suggested != null) {
+      if (parsedCompilerOptions[option] === undefined) {
+        appTsConfig = immer(appTsConfig, config => {
+          config.compilerOptions[option] = suggested;
+        });
+        messages.push(
+          `${coloredOption} to be ${chalk.bold(
+            'suggested'
+          )} value: ${chalk.cyan.bold(suggested)} (this can be changed)`
+        );
+      }
+    } else if (parsedCompilerOptions[option] !== valueToCheck) {
+      appTsConfig = immer(appTsConfig, config => {
+        config.compilerOptions[option] = value;
+      });
+      messages.push(
+        `${coloredOption} ${chalk.bold(
+          valueToCheck == null ? 'must not' : 'must'
+        )} be ${valueToCheck == null ? 'set' : chalk.cyan.bold(value)}` +
+        (reason != null ? ` (${reason})` : '')
+      );
+    }
+  }
 
-   // tsconfig will have the merged "include" and "exclude" by this point
-   if (parsedTsConfig.include == null) {
-     appTsConfig = immer(appTsConfig, config => {
-       config.include = ['src'];
-     });
-     messages.push(
-       `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
-     );
-   }
+  // tsconfig will have the merged "include" and "exclude" by this point
+  if (parsedTsConfig.include == null) {
+    appTsConfig = immer(appTsConfig, config => {
+      config.include = ['src'];
+    });
+    messages.push(
+      `${chalk.cyan('include')} should be ${chalk.cyan.bold('src')}`
+    );
+  }
 
-   const types = appTsConfig.compilerOptions.types || (appTsConfig.compilerOptions.types = []);
+  const types = appTsConfig.compilerOptions.types || (appTsConfig.compilerOptions.types = []);
+  const importSource = appTsConfig.compilerOptions.jsxImportSource;
 
-   if (!types.includes('@reactunity/scripts/main')) {
-     types.push('@reactunity/scripts/main');
-     messages.push(
-       `${chalk.cyan('types')} should include ${chalk.cyan.bold('@reactunity/scripts/main')}`
-     );
-   }
+  if (!types.includes('@reactunity/scripts/main')) {
+    types.push('@reactunity/scripts/main');
+    messages.push(
+      `${chalk.cyan('types')} should include ${chalk.cyan.bold('@reactunity/scripts/main')}`
+    );
+  }
 
-   if (!types.includes('@reactunity/scripts/ugui') && !types.includes('@reactunity/scripts/uitoolkit')
-     && !types.includes('@reactunity/scripts/editor') && !types.includes('@reactunity/scripts/tests')) {
-     types.push('@reactunity/scripts/ugui');
-     messages.push(
-       `${chalk.cyan('types')} should include a valid platform target. Assuming ${chalk.cyan.bold('@reactunity/scripts/ugui')}`
-     );
-   }
+  if (!['@reactunity/scripts/ugui', '@reactunity/scripts/uitoolkit', '@reactunity/scripts/editor', '@reactunity/scripts/tests'].includes(importSource)) {
+    appTsConfig.compilerOptions.jsxImportSource = '@reactunity/scripts/ugui';
+    messages.push(
+      `${chalk.cyan('jsxImportSource')} should include a valid platform target. Assuming ${chalk.cyan.bold('@reactunity/scripts/ugui')}`
+    );
+  }
 
-   // Deprecate `react-unity-scripts` types
-   if (fs.existsSync(paths.appTypeDeclarations)) {
-     messages.push(
-       `References to ${chalk.cyan('@reactunity/scripts')} does not have to be in ${chalk.cyan.bold('react-unity.d.ts')} anymore. It can be removed.`
-     );
-   }
+  // Deprecate `react-unity-scripts` types
+  if (fs.existsSync(paths.appTypeDeclarations)) {
+    messages.push(
+      `References to ${chalk.cyan('@reactunity/scripts')} does not have to be in ${chalk.cyan.bold('react-unity.d.ts')} anymore. It can be removed.`
+    );
+  }
 
-   if (messages.length > 0) {
-     if (firstTimeSetup) {
-       console.log(
-         chalk.bold(
-           'Your',
-           chalk.cyan('tsconfig.json'),
-           'has been populated with default values.'
-         )
-       );
-       console.log();
-     } else {
-       console.warn(
-         chalk.bold(
-           'The following changes are being made to your',
-           chalk.cyan('tsconfig.json'),
-           'file:'
-         )
-       );
-       messages.forEach(message => {
-         console.warn('  - ' + message);
-       });
-       console.warn();
-     }
-     writeJson(paths.appTsConfig, appTsConfig);
-   }
- }
+  if (messages.length > 0) {
+    if (firstTimeSetup) {
+      console.log(
+        chalk.bold(
+          'Your',
+          chalk.cyan('tsconfig.json'),
+          'has been populated with default values.'
+        )
+      );
+      console.log();
+    } else {
+      console.warn(
+        chalk.bold(
+          'The following changes are being made to your',
+          chalk.cyan('tsconfig.json'),
+          'file:'
+        )
+      );
+      messages.forEach(message => {
+        console.warn('  - ' + message);
+      });
+      console.warn();
+    }
+    writeJson(paths.appTsConfig, appTsConfig);
+  }
+}
 
- module.exports = verifyTypeScriptSetup;
+module.exports = verifyTypeScriptSetup;
