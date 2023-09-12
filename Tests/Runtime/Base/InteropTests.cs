@@ -133,6 +133,33 @@ namespace ReactUnity.Tests
             Render();
         }
 
+        [UGUITest(Script = @"
+            function App() {  };
+
+            Assert.AreEqual(1, Globals.dict.a);
+            Assert.AreEqual(2, Globals.dict.b);
+            Assert.AreEqual(3, Globals.dict.c);
+
+            var res = Object.keys(Globals.dict);
+            Assert.AreEqual(3, res.length);
+            Assert.AreEqual('a,b,c', res.join(','));
+        ", AutoRender = false)]
+        public IEnumerator DictionaryKeysCanBeRetrieved()
+        {
+            IgnoreForEngine(JavascriptEngineType.ClearScript);
+
+            var dict = new Dictionary<string, object>{
+                { "a", 1 },
+                { "b", 2 },
+                { "c", 3 },
+            };
+
+
+            Globals["dict"] = dict;
+            yield return null;
+            Render();
+        }
+
 
         [UGUITest(Script = @"
             function App() {  };
