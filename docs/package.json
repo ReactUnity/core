@@ -41,7 +41,8 @@
     "react-collapsed": "npm:@gaearon/react-collapsed@3.1.0-forked.1",
     "react-dom": "^18.2.0",
     "remark-frontmatter": "^4.0.1",
-    "remark-gfm": "^3.0.1"
+    "remark-gfm": "^3.0.1",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
