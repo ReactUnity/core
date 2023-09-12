@@ -6108,10 +6108,10 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root>*{background-color:#fafafa}.home_app__ZcurS{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.home_app__ZcurS h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px}.home_app__ZcurS h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.home_app__ZcurS section{margin-top:10px;margin-bottom:10px}.home_app__ZcurS row{flex-direction:row;align-items:center}.home_app__ZcurS column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.home_app__ZcurS image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.home_app__ZcurS input{border-width:1px;border-color:#000}.home_app__ZcurS button:hover{audio:url(res:click)}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root>*{background-color:#fafafa}.home_app__RC13l{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.home_app__RC13l h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px}.home_app__RC13l h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.home_app__RC13l section{margin-top:10px;margin-bottom:10px}.home_app__RC13l row{flex-direction:row;align-items:center}.home_app__RC13l column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.home_app__RC13l image{flex-grow:1;flex-shrink:1;flex-basis:0;object-fit:scale-down;object-position:50%;transition:object-position 2s;align-self:stretch}.home_app__RC13l input{border-width:1px;border-color:#000}.home_app__RC13l button:hover{audio:url(res:click)}`, ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"app": `home_app__ZcurS`
+	"app": `home_app__RC13l`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6450,7 +6450,7 @@ var react = __webpack_require__("../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.15.2';
+var version = '0.16.0';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/error-boundary.js
@@ -6949,17 +6949,13 @@ var updateSubContext = function updateSubContext(instance) {
   if (!root) return;
   var content = rend(root.subContext.node);
   if (instance.type === 'richtext') {
-    instance.hostContext.commands.push(['x', {
-      r: root.refId,
-      c: content
-    }]);
+    // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+    instance.hostContext.commands.push([6, root.refId, content]);
   } else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', __assign({
-      r: root.refId,
-      t: 'svg'
-    }, convertPropsToSerializable({
+    // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+    instance.hostContext.commands.push([5, root.refId, 'svg', convertPropsToSerializable({
       innerContent: content
-    }))]);
+    })]);
   }
 };
 var hostConfig = __assign(__assign({}, commonReconciler), {
@@ -7039,11 +7035,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     var aProps = getAllowedProps(props, type);
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['c', __assign({
-        t: type,
-        r: refId,
-        k: stringizePoolKey(props.pool)
-      }, convertPropsToSerializable(aProps))]);
+      // ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
+      ctx.commands.push([0, refId, type, convertPropsToSerializable(aProps), stringizePoolKey(props.pool)]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
       var res = __assign(__assign({}, ctx), {
         refId: refId
@@ -7088,10 +7081,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['t', {
-        r: refId,
-        c: text
-      }]);
+      // ctx.commands.push(['t', { r: refId, c: text }]);
+      ctx.commands.push([1, refId, text]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
       return __assign(__assign({}, ctx), {
         refId: refId
@@ -7108,10 +7099,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      parent.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      parent.commands.push([2, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
@@ -7135,10 +7124,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
     if (instance.type === 'native') {
-      instance.commands.push(['u', __assign({
-        r: instance.refId,
-        t: type
-      }, convertPropsToSerializable(props))]);
+      // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+      instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
       if ('attributes' in instance.node) instance.node.attributes = __assign(__assign({}, instance.node.attributes), props);
       updateSubContext(instance);
@@ -7146,10 +7133,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   },
   commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
     if (instance.type === 'native') {
-      instance.commands.push(['x', {
-        r: instance.refId,
-        c: newText
-      }]);
+      // instance.commands.push(['x', { r: instance.refId, c: newText }]);
+      instance.commands.push([6, instance.refId, newText]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node = {
         text: newText
@@ -7161,10 +7146,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
@@ -7173,20 +7156,16 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (child.type === 'native')
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      child.commands.push(['i', {
-        p: parent.refId,
-        c: child.refId,
-        i: beforeChild.refId
-      }]);
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
       if ('children' in parent.node) {
         var index = parent.node.children.indexOf(beforeChild.node);
@@ -7198,20 +7177,16 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
+    if (child.type === 'native' && beforeChild.type === 'native')
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
   },
   removeChild: function removeChild(parent, child) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['r', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) {
         var index = parent.node.children.indexOf(child.node);
@@ -7221,47 +7196,46 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (child.type === 'native')
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
   },
   resetTextContent: function resetTextContent() {},
   preparePortalMount: function preparePortalMount() {},
   detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   unhideInstance: function unhideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
