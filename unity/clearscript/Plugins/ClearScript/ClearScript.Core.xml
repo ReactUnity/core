@@ -4,6 +4,18 @@
         <name>ClearScript.Core</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.ClearScript.AsyncDocumentLoadCallback">
+            <summary>
+            Represents a method to be called asynchronously when a document is loaded.
+            </summary>
+            <param name="info">A structure containing meta-information for the document.</param>
+            <param name="contents">A stream that provides read access to the document.</param>
+            <returns>A task that represents the method's asynchronous operation.</returns>
+            <remarks>
+            The callback can modify the document meta-information by specifying or overriding any of
+            its mutable properties.
+            </remarks>
+        </member>
         <member name="T:Microsoft.ClearScript.ContinuationCallback">
             <summary>
             Represents a method that specifies to a script engine whether script execution should continue.
@@ -152,6 +164,11 @@
             Relaxes the requirement that a loaded document must be of the requested category. 
             </summary>
         </member>
+        <member name="F:Microsoft.ClearScript.DocumentAccessFlags.UseAsyncLoadCallback">
+            <summary>
+            Enables the use of <c><see cref="P:Microsoft.ClearScript.DocumentSettings.AsyncLoadCallback"/></c> instead of <c><see cref="P:Microsoft.ClearScript.DocumentSettings.LoadCallback"/></c>.
+            </summary>
+        </member>
         <member name="T:Microsoft.ClearScript.DocumentCategory">
             <summary>
             Represents a document category.
@@ -176,6 +193,11 @@
         <member name="P:Microsoft.ClearScript.DocumentCategory.Script">
             <summary>
             Gets the document category for normal scripts.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.DocumentCategory.Json">
+            <summary>
+            Gets the document category for JSON documents.
             </summary>
         </member>
         <member name="T:Microsoft.ClearScript.DocumentContextCallback">
@@ -409,6 +431,11 @@
             Gets or set an optional method to be called when a document is loaded.
             </summary>
         </member>
+        <member name="P:Microsoft.ClearScript.DocumentSettings.AsyncLoadCallback">
+            <summary>
+            Gets or set an optional method to be called asynchronously when a document is loaded.
+            </summary>
+        </member>
         <member name="P:Microsoft.ClearScript.DocumentSettings.ContextCallback">
             <summary>
             Gets or sets an optional document context callback.
@@ -501,6 +528,241 @@
             <param name="name">The member name for which to search.</param>
             <param name="ignoreCase"><c>True</c> to perform a case-insensitive search, <c>false</c> otherwise.</param>
             <returns><c>True</c> if the named member was found, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.ExtendedHostFunctions">
+            <summary>
+            Provides optional script-callable utility functions. This extended version allows script
+            code to import host types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.#ctor">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.Object[])">
+            <summary>
+            Imports a host type by name.
+            </summary>
+            <param name="name">The fully qualified name of the host type to import.</param>
+            <param name="hostTypeArgs">Optional generic type arguments.</param>
+            <returns>The imported host type.</returns>
+            <remarks>
+            <para>
+            Host types are imported in the form of objects whose properties and methods are bound
+            to the host type's static members and nested types. If <paramref name="name"/> refers
+            to a generic type, the corresponding object will be invocable with type arguments to
+            yield a specific type.
+            </para>
+            <para>
+            For more information about the mapping between host members and script-callable
+            properties and methods, see
+            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
+            </para>
+            </remarks>
+            <example>
+            The following code imports the
+            <c><see href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2">Dictionary</see></c>
+            generic type and uses it to create a string dictionary.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var DictT = host.type("System.Collections.Generic.Dictionary");
+            var StringT = host.type("System.String");
+            var dict = host.newObj(DictT(StringT, StringT));
+            </code>
+            Another way to create a string dictionary is to import the specific type directly.
+            <code lang="JavaScript">
+            var StringT = host.type("System.String");
+            var StringDictT = host.type("System.Collections.Generic.Dictionary", StringT, StringT);
+            var dict = host.newObj(StringDictT);
+            </code>
+            </example>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.String,System.Object[])">
+            <summary>
+            Imports a host type by name from the specified assembly.
+            </summary>
+            <param name="name">The fully qualified name of the host type to import.</param>
+            <param name="assemblyName">The name of the assembly that contains the host type to import.</param>
+            <param name="hostTypeArgs">Optional generic type arguments.</param>
+            <returns>The imported host type.</returns>
+            <remarks>
+            <para>
+            Host types are imported in the form of objects whose properties and methods are bound
+            to the host type's static members and nested types. If <paramref name="name"/> refers
+            to a generic type, the corresponding object will be invocable with type arguments to
+            yield a specific type.
+            </para>
+            <para>
+            For more information about the mapping between host members and script-callable
+            properties and methods, see
+            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
+            </para>
+            </remarks>
+            <example>
+            The following code imports <c><see cref="T:System.Linq.Enumerable"/></c> and uses it to create
+            an array of strings.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var EnumerableT = host.type("System.Linq.Enumerable", "System.Core");
+            var Int32T = host.type("System.Int32");
+            var StringT = host.type("System.String");
+            var SelectorT = host.type("System.Func", Int32T, StringT);
+            var selector = host.del(SelectorT, function (num) { return StringT.Format("The number is {0}.", num); });
+            var array = EnumerableT.Range(0, 5).Select(selector).ToArray();
+            </code>
+            </example>
+            <c><seealso cref="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.Object[])"/></c>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.Type)">
+            <summary>
+            Imports the host type for the specified <c><see cref="T:System.Type"/></c>.
+            </summary>
+            <param name="type">The <c><see cref="T:System.Type"/></c> that specifies the host type to import.</param>
+            <returns>The imported host type.</returns>
+            <remarks>
+            <para>
+            Host types are imported in the form of objects whose properties and methods are bound
+            to the host type's static members and nested types. If <paramref name="type"/> refers
+            to a generic type, the corresponding object will be invocable with type arguments to
+            yield a specific type.
+            </para>
+            <para>
+            For more information about the mapping between host members and script-callable
+            properties and methods, see
+            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.arrType``1(System.Int32)">
+            <summary>
+            Imports the host array type for the specified element type.
+            </summary>
+            <typeparam name="T">The element type for the host array type to import.</typeparam>
+            <param name="rank">The number of dimensions for the host array type to import.</param>
+            <returns>The imported host array type.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.lib(System.String[])">
+            <summary>
+            Imports types from one or more host assemblies.
+            </summary>
+            <param name="assemblyNames">The names of the assemblies that contain the types to import.</param>
+            <returns>The imported host type collection.</returns>
+            <remarks>
+            Host type collections provide convenient scriptable access to all the types defined in one
+            or more host assemblies. They are hierarchical collections where leaf nodes represent types
+            and parent nodes represent namespaces. For example, if an assembly contains a type named
+            "Acme.Gadgets.Button", the corresponding collection will have a property named "Acme" whose
+            value is an object with a property named "Gadgets" whose value is an object with a property
+            named "Button" whose value represents the <c>Acme.Gadgets.Button</c> host type.
+            </remarks>
+            <example>
+            The following code imports types from several core assemblies and uses
+            <c><see cref="T:System.Linq.Enumerable"/></c> to create an array of integers.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var clr = host.lib("mscorlib", "System", "System.Core");
+            var array = clr.System.Linq.Enumerable.Range(0, 5).ToArray();
+            </code>
+            </example>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.lib(Microsoft.ClearScript.HostTypeCollection,System.String[])">
+            <summary>
+            Imports types from one or more host assemblies and merges them with an existing host type collection.
+            </summary>
+            <param name="collection">The host type collection with which to merge types from the specified assemblies.</param>
+            <param name="assemblyNames">The names of the assemblies that contain the types to import.</param>
+            <returns>A host type collection: <paramref name="collection"/> if it is not <c>null</c>, a new host type collection otherwise.</returns>
+            <remarks>
+            Host type collections provide convenient scriptable access to all the types defined in one
+            or more host assemblies. They are hierarchical collections where leaf nodes represent types
+            and parent nodes represent namespaces. For example, if an assembly contains a type named
+            "Acme.Gadgets.Button", the corresponding collection will have a property named "Acme" whose
+            value is an object with a property named "Gadgets" whose value is an object with a property
+            named "Button" whose value represents the <c>Acme.Gadgets.Button</c> host type.
+            </remarks>
+            <example>
+            The following code imports types from several core assemblies and uses
+            <c><see cref="T:System.Linq.Enumerable"/></c> to create an array of integers.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var clr = host.lib("mscorlib");
+            host.lib(clr, "System");
+            host.lib(clr, "System.Core");
+            var array = clr.System.Linq.Enumerable.Range(0, 5).ToArray();
+            </code>
+            </example>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.comType(System.String,System.String)">
+            <summary>
+            Imports a COM/ActiveX type.
+            </summary>
+            <param name="progID">The programmatic identifier (ProgID) of the registered class to import.</param>
+            <param name="serverName">An optional name that specifies the server from which to import the type.</param>
+            <returns>The imported COM/ActiveX type.</returns>
+            <remarks>
+            The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
+            GUID format with braces (e.g., "{0D43FE01-F093-11CF-8940-00A0C9054228}").
+            </remarks>
+            <example>
+            The following code imports the
+            <c><see href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/windows-scripting/x4k5wbx4(v=vs.84)">Scripting.Dictionary</see></c>
+            class and uses it to create and populate an instance.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var DictT = host.comType('Scripting.Dictionary');
+            var dict = host.newObj(DictT);
+            dict.Add('foo', 123);
+            dict.Add('bar', 456.789);
+            dict.Add('baz', 'abc');
+            </code>
+            </example>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.newComObj(System.String,System.String)">
+            <summary>
+            Creates a COM/ActiveX object of the specified type.
+            </summary>
+            <param name="progID">The programmatic identifier (ProgID) of the registered class to instantiate.</param>
+            <param name="serverName">An optional name that specifies the server on which to create the object.</param>
+            <returns>A new COM/ActiveX object of the specified type.</returns>
+            <remarks>
+            The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
+            GUID format with braces (e.g., "{0D43FE01-F093-11CF-8940-00A0C9054228}").
+            </remarks>
+            <example>
+            The following code creates a 
+            <c><see href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/windows-scripting/6kxy1a51(v=vs.84)">Scripting.FileSystemObject</see></c>
+            instance and uses it to list the drives on the local machine.
+            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
+            the name "host"
+            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
+            <code lang="JavaScript">
+            var fso = host.newComObj('Scripting.FileSystemObject');
+            var ConsoleT = host.type('System.Console');
+            for (en = fso.Drives.GetEnumerator(); en.MoveNext();) {
+                ConsoleT.WriteLine(en.Current.Path);
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.typeLibEnums``1(``0,Microsoft.ClearScript.HostTypeCollection)">
+            <summary>
+            Imports enumerations defined within or referenced from a COM/ActiveX type library.
+            </summary>
+            <typeparam name="T">The imported type whose parent library is to be searched for relevant enumerations.</typeparam>
+            <param name="obj">An instance of the representative type.</param>
+            <param name="collection">An optional host type collection with which to merge the imported enumerations.</param>
+            <returns>A host type collection: <paramref name="collection"/> if it is not <c>null</c>, a new host type collection otherwise.</returns>
         </member>
         <member name="T:Microsoft.ClearScript.Extensions">
             <summary>
@@ -1674,241 +1936,6 @@
             </example>
             <c><seealso cref="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.String,System.Object[])"/></c>
             <c><seealso cref="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.Object[])"/></c>
-        </member>
-        <member name="T:Microsoft.ClearScript.ExtendedHostFunctions">
-            <summary>
-            Provides optional script-callable utility functions. This extended version allows script
-            code to import host types.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.#ctor">
-            <summary>
-            Initializes a new <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> instance.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.Object[])">
-            <summary>
-            Imports a host type by name.
-            </summary>
-            <param name="name">The fully qualified name of the host type to import.</param>
-            <param name="hostTypeArgs">Optional generic type arguments.</param>
-            <returns>The imported host type.</returns>
-            <remarks>
-            <para>
-            Host types are imported in the form of objects whose properties and methods are bound
-            to the host type's static members and nested types. If <paramref name="name"/> refers
-            to a generic type, the corresponding object will be invocable with type arguments to
-            yield a specific type.
-            </para>
-            <para>
-            For more information about the mapping between host members and script-callable
-            properties and methods, see
-            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
-            </para>
-            </remarks>
-            <example>
-            The following code imports the
-            <c><see href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2">Dictionary</see></c>
-            generic type and uses it to create a string dictionary.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var DictT = host.type("System.Collections.Generic.Dictionary");
-            var StringT = host.type("System.String");
-            var dict = host.newObj(DictT(StringT, StringT));
-            </code>
-            Another way to create a string dictionary is to import the specific type directly.
-            <code lang="JavaScript">
-            var StringT = host.type("System.String");
-            var StringDictT = host.type("System.Collections.Generic.Dictionary", StringT, StringT);
-            var dict = host.newObj(StringDictT);
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.String,System.Object[])">
-            <summary>
-            Imports a host type by name from the specified assembly.
-            </summary>
-            <param name="name">The fully qualified name of the host type to import.</param>
-            <param name="assemblyName">The name of the assembly that contains the host type to import.</param>
-            <param name="hostTypeArgs">Optional generic type arguments.</param>
-            <returns>The imported host type.</returns>
-            <remarks>
-            <para>
-            Host types are imported in the form of objects whose properties and methods are bound
-            to the host type's static members and nested types. If <paramref name="name"/> refers
-            to a generic type, the corresponding object will be invocable with type arguments to
-            yield a specific type.
-            </para>
-            <para>
-            For more information about the mapping between host members and script-callable
-            properties and methods, see
-            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
-            </para>
-            </remarks>
-            <example>
-            The following code imports <c><see cref="T:System.Linq.Enumerable"/></c> and uses it to create
-            an array of strings.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var EnumerableT = host.type("System.Linq.Enumerable", "System.Core");
-            var Int32T = host.type("System.Int32");
-            var StringT = host.type("System.String");
-            var SelectorT = host.type("System.Func", Int32T, StringT);
-            var selector = host.del(SelectorT, function (num) { return StringT.Format("The number is {0}.", num); });
-            var array = EnumerableT.Range(0, 5).Select(selector).ToArray();
-            </code>
-            </example>
-            <c><seealso cref="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.String,System.Object[])"/></c>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.type(System.Type)">
-            <summary>
-            Imports the host type for the specified <c><see cref="T:System.Type"/></c>.
-            </summary>
-            <param name="type">The <c><see cref="T:System.Type"/></c> that specifies the host type to import.</param>
-            <returns>The imported host type.</returns>
-            <remarks>
-            <para>
-            Host types are imported in the form of objects whose properties and methods are bound
-            to the host type's static members and nested types. If <paramref name="type"/> refers
-            to a generic type, the corresponding object will be invocable with type arguments to
-            yield a specific type.
-            </para>
-            <para>
-            For more information about the mapping between host members and script-callable
-            properties and methods, see
-            <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,Microsoft.ClearScript.HostItemFlags,System.Object)">AddHostObject</see></c>.
-            </para>
-            </remarks>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.arrType``1(System.Int32)">
-            <summary>
-            Imports the host array type for the specified element type.
-            </summary>
-            <typeparam name="T">The element type for the host array type to import.</typeparam>
-            <param name="rank">The number of dimensions for the host array type to import.</param>
-            <returns>The imported host array type.</returns>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.lib(System.String[])">
-            <summary>
-            Imports types from one or more host assemblies.
-            </summary>
-            <param name="assemblyNames">The names of the assemblies that contain the types to import.</param>
-            <returns>The imported host type collection.</returns>
-            <remarks>
-            Host type collections provide convenient scriptable access to all the types defined in one
-            or more host assemblies. They are hierarchical collections where leaf nodes represent types
-            and parent nodes represent namespaces. For example, if an assembly contains a type named
-            "Acme.Gadgets.Button", the corresponding collection will have a property named "Acme" whose
-            value is an object with a property named "Gadgets" whose value is an object with a property
-            named "Button" whose value represents the <c>Acme.Gadgets.Button</c> host type.
-            </remarks>
-            <example>
-            The following code imports types from several core assemblies and uses
-            <c><see cref="T:System.Linq.Enumerable"/></c> to create an array of integers.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var clr = host.lib("mscorlib", "System", "System.Core");
-            var array = clr.System.Linq.Enumerable.Range(0, 5).ToArray();
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.lib(Microsoft.ClearScript.HostTypeCollection,System.String[])">
-            <summary>
-            Imports types from one or more host assemblies and merges them with an existing host type collection.
-            </summary>
-            <param name="collection">The host type collection with which to merge types from the specified assemblies.</param>
-            <param name="assemblyNames">The names of the assemblies that contain the types to import.</param>
-            <returns>A host type collection: <paramref name="collection"/> if it is not <c>null</c>, a new host type collection otherwise.</returns>
-            <remarks>
-            Host type collections provide convenient scriptable access to all the types defined in one
-            or more host assemblies. They are hierarchical collections where leaf nodes represent types
-            and parent nodes represent namespaces. For example, if an assembly contains a type named
-            "Acme.Gadgets.Button", the corresponding collection will have a property named "Acme" whose
-            value is an object with a property named "Gadgets" whose value is an object with a property
-            named "Button" whose value represents the <c>Acme.Gadgets.Button</c> host type.
-            </remarks>
-            <example>
-            The following code imports types from several core assemblies and uses
-            <c><see cref="T:System.Linq.Enumerable"/></c> to create an array of integers.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var clr = host.lib("mscorlib");
-            host.lib(clr, "System");
-            host.lib(clr, "System.Core");
-            var array = clr.System.Linq.Enumerable.Range(0, 5).ToArray();
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.comType(System.String,System.String)">
-            <summary>
-            Imports a COM/ActiveX type.
-            </summary>
-            <param name="progID">The programmatic identifier (ProgID) of the registered class to import.</param>
-            <param name="serverName">An optional name that specifies the server from which to import the type.</param>
-            <returns>The imported COM/ActiveX type.</returns>
-            <remarks>
-            The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
-            GUID format with braces (e.g., "{0D43FE01-F093-11CF-8940-00A0C9054228}").
-            </remarks>
-            <example>
-            The following code imports the
-            <c><see href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/windows-scripting/x4k5wbx4(v=vs.84)">Scripting.Dictionary</see></c>
-            class and uses it to create and populate an instance.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var DictT = host.comType('Scripting.Dictionary');
-            var dict = host.newObj(DictT);
-            dict.Add('foo', 123);
-            dict.Add('bar', 456.789);
-            dict.Add('baz', 'abc');
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.newComObj(System.String,System.String)">
-            <summary>
-            Creates a COM/ActiveX object of the specified type.
-            </summary>
-            <param name="progID">The programmatic identifier (ProgID) of the registered class to instantiate.</param>
-            <param name="serverName">An optional name that specifies the server on which to create the object.</param>
-            <returns>A new COM/ActiveX object of the specified type.</returns>
-            <remarks>
-            The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
-            GUID format with braces (e.g., "{0D43FE01-F093-11CF-8940-00A0C9054228}").
-            </remarks>
-            <example>
-            The following code creates a 
-            <c><see href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/windows-scripting/6kxy1a51(v=vs.84)">Scripting.FileSystemObject</see></c>
-            instance and uses it to list the drives on the local machine.
-            It assumes that an instance of <c><see cref="T:Microsoft.ClearScript.ExtendedHostFunctions"/></c> is exposed under
-            the name "host"
-            (see <c><see cref="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">AddHostObject</see></c>).
-            <code lang="JavaScript">
-            var fso = host.newComObj('Scripting.FileSystemObject');
-            var ConsoleT = host.type('System.Console');
-            for (en = fso.Drives.GetEnumerator(); en.MoveNext();) {
-                ConsoleT.WriteLine(en.Current.Path);
-            }
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.ClearScript.ExtendedHostFunctions.typeLibEnums``1(``0,Microsoft.ClearScript.HostTypeCollection)">
-            <summary>
-            Imports enumerations defined within or referenced from a COM/ActiveX type library.
-            </summary>
-            <typeparam name="T">The imported type whose parent library is to be searched for relevant enumerations.</typeparam>
-            <param name="obj">An instance of the representative type.</param>
-            <param name="collection">An optional host type collection with which to merge the imported enumerations.</param>
-            <returns>A host type collection: <paramref name="collection"/> if it is not <c>null</c>, a new host type collection otherwise.</returns>
         </member>
         <member name="T:Microsoft.ClearScript.HostItemFlags">
             <summary>
@@ -3815,10 +3842,28 @@
             <summary>
             Converts a
             <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</see>
-            to a <c><see cref="T:System.Threading.Tasks.Task`1"/></c> instance.
+            to a <c><see cref="T:System.Threading.Tasks.Task`1">Task&lt;Object&gt;</see></c> instance.
             </summary>
-            <param name="promise">The promise to convert to a task.</param>
+            <param name="promise">The promise to convert to a task (see remarks).</param>
             <returns>A task that represents the promise's asynchronous operation.</returns>
+            <remarks>
+            If the argument is a <c><see cref="T:System.Threading.Tasks.Task`1">Task&lt;Object&gt;</see></c> instance,
+            this method returns it as is.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.JavaScript.JavaScriptExtensions.ToEnumerable(System.Object)">
+            <summary>
+            Supports managed iteration over an
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol">iterable</see>
+            script object.
+            </summary>
+            <param name="iterable">An iterable script object (see remarks).</param>
+            <returns>An <c><see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;Object&gt;</see></c> implementation that supports managed iteration over <paramref name="iterable"/>.</returns>
+            <remarks>
+            If the argument implements
+            <c><see cref="T:System.Collections.Generic.IEnumerable`1">IEnumerable&lt;Object&gt;</see></c>, this method
+            returns it as is.
+            </remarks>
         </member>
         <member name="T:Microsoft.ClearScript.JavaScript.JavaScriptObjectFlags">
             <summary>
@@ -4154,10 +4199,10 @@
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.AccessContext">
-            <inheritdoc/>
+            <inheritdoc cref="T:Microsoft.ClearScript.ScriptEngine" />
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.DefaultAccess">
-            <inheritdoc/>
+            <inheritdoc cref="T:Microsoft.ClearScript.ScriptEngine" />
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.EnforceAnonymousTypeAccess">
             <inheritdoc/>
@@ -4780,6 +4825,33 @@
             <remarks>
             The <c><see cref="T:Microsoft.ClearScript.Undefined"/></c> version of this method returns "[undefined]".
             </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.ValueRef">
+            <summary>
+            Provides a factory method for <c><see cref="T:Microsoft.ClearScript.ValueRef`1"/></c>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.ValueRef.Create``1(``0)">
+            <summary>
+            Creates a <c><see cref="T:Microsoft.ClearScript.ValueRef`1"/></c> instance with the given value.
+            </summary>
+            <typeparam name="T">The value type.</typeparam>
+            <param name="value">The value to assign to the instance.</param>
+            <returns>A <c><see cref="T:Microsoft.ClearScript.ValueRef`1"/></c> instance holding the given value.</returns>
+        </member>
+        <member name="T:Microsoft.ClearScript.ValueRef`1">
+            <summary>
+            Holds a <see href="https://learn.microsoft.com/en-us/dotnet/api/system.valuetype">value</see> on the heap.
+            </summary>
+            <typeparam name="T">The value type.</typeparam>
+            <remarks>
+            This utility class can be used for passing mutable values to asynchronous methods.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.ClearScript.ValueRef`1.Value">
+            <summary>
+            The value currently held by the <c><see cref="T:Microsoft.ClearScript.ValueRef`1"/></c> instance.
+            </summary>
         </member>
         <member name="T:Microsoft.ClearScript.Util.IScriptableEnumerator">
             <exclude/>
