@@ -111,7 +111,7 @@
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.15.2",
+    "@reactunity/scripts": "^0.16.0",
     "concurrently": "^8.2.1",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",

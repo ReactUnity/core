@@ -1,7 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer';
 import { InputEvent, UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
-import React, { forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
+import { forwardRef, ReactNode, useCallback, useRef, useState } from 'react';
 import { Button } from '../button';
 import { InputField, InputFieldRef, InputFieldVariant } from '../input';
 import style from './index.module.scss';
