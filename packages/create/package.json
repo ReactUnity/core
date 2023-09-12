@@ -21,13 +21,13 @@
   },
   "dependencies": {
     "chalk": "4.x",
-    "commander": "^10.0.0",
-    "fs-extra": "^11.1.0"
+    "commander": "^11.0.0",
+    "fs-extra": "^11.1.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
-    "@types/node": "^18.14.0",
+    "@types/node": "^20.6.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.2.2"
   }
 }

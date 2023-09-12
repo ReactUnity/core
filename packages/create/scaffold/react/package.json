@@ -10,11 +10,11 @@
     "lint": "react-unity-scripts lint"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.15.2",
+    "@reactunity/renderer": "^0.16.0",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.15.2",
-    "typescript": "^5.0.4"
+    "@reactunity/scripts": "^0.16.0",
+    "typescript": "^5.2.2"
   }
 }
