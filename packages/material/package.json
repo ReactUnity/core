@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/material",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Material Design components and utilities for React Unity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -111,6 +111,7 @@
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
+    "@reactunity/renderer": "^0.16.0",
     "@reactunity/scripts": "^0.16.0",
     "concurrently": "^8.2.1",
     "copyfiles": "^2.4.1",
