@@ -12,12 +12,12 @@ The three supported UI backends are:
 
 `ugui` and `uitoolkit` can be used in runtime UI, whereas `editor` can be used to create editor UI such as windows and inspectors.
 
-In the React project, `tsconfig.json` must contain the following `types` array in order to show correct component types. (Replace `ugui` with desired UI backend)
+In the React project, `tsconfig.json` must contain the following config in order to show correct component types. (Replace `ugui` with desired UI backend)
 
 ```json
+"jsxImportSource": "@reactunity/renderer/ugui"
 "types": [
-    "@reactunity/scripts/main",
-    "@reactunity/scripts/ugui"
+    "@reactunity/scripts/main"
 ]
 ```
 
