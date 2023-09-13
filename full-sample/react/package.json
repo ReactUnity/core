@@ -19,7 +19,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@reactunity/material": "^0.16.0",
-    "@reactunity/renderer": "^0.16.0",
+    "@reactunity/renderer": "^0.16.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@reactunity/previewer": "^0.15.0",
-    "@reactunity/scripts": "^0.16.0",
+    "@reactunity/scripts": "^0.16.1",
     "@types/react-redux": "^7.1.26",
     "babel-plugin-twin": "^1.1.0",
     "tailwindcss": "^3.3.3",
