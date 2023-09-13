@@ -6,15 +6,18 @@
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./dist/index.js",
     "./test": "./dist/test.js",
     "./ugui": "./dist/ugui/index.js",
-    "./ugui/*": "./dist/ugui/*",
+    "./ugui/*": "./dist/ugui/*.js",
     "./uitoolkit": "./dist/uitoolkit/index.js",
-    "./uitoolkit/*": "./dist/uitoolkit/*",
+    "./uitoolkit/*": "./dist/uitoolkit/*.js",
     "./editor": "./dist/editor/index.js",
-    "./editor/*": "./dist/editor/*",
+    "./editor/*": "./dist/editor/*.js",
     "./webgl-compat": "./dist/webgl-compat.js"
   },
   "scripts": {
@@ -46,7 +49,7 @@
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.16.0",
+    "@reactunity/scripts": "^0.16.1",
     "@types/react-reconciler": "^0.28.4",
     "react-unity-webgl": "^9.4.3",
     "rimraf": "^5.0.1",

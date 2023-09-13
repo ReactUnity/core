@@ -6,7 +6,7 @@
     "esModuleInterop": false,
     "noEmit": false,
     "declaration": true,
-    "module": "es6",
+    "module": "NodeNext",
     "lib": [
       "ES2019"
     ],
