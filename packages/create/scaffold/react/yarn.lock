@@ -2298,21 +2298,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reactunity/renderer@npm:^0.16.0":
-  version: 0.16.0
-  resolution: "@reactunity/renderer@npm:0.16.0"
+"@reactunity/renderer@npm:^0.16.1":
+  version: 0.16.1
+  resolution: "@reactunity/renderer@npm:0.16.1"
   dependencies:
     react-reconciler: ^0.29.0
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^18.0.0
-  checksum: 3406cfe901c19d71b4366d37895d29b83ea83e0fbe5ba3c17ee3c905c8a8140b5c4e6a6491e3da108359e542bf71171dbf00c370c5c067f014471f96ddef8ff9
+  checksum: ff26e1066973a336315e6a17f3094895f4f5e7a5ad8098dcc4d891993d53898fc58fba0172a1c9a17db98a8b711ca453fe45e419f17b12c1b363126ed335e266
   languageName: node
   linkType: hard
 
-"@reactunity/scripts@npm:^0.16.0":
-  version: 0.16.0
-  resolution: "@reactunity/scripts@npm:0.16.0"
+"@reactunity/scripts@npm:^0.16.1":
+  version: 0.16.1
+  resolution: "@reactunity/scripts@npm:0.16.1"
   dependencies:
     "@babel/core": ^7.22.17
     "@babel/eslint-parser": ^7.22.15
@@ -2372,7 +2372,7 @@ __metadata:
     webpack-manifest-plugin: ^5.0.0
   peerDependencies:
     "@reactunity/previewer": "*"
-    "@reactunity/renderer": ^0.16.0
+    "@reactunity/renderer": ^0.16.1
     react: ^18.0.0
     typescript: ">=5"
   dependenciesMeta:
@@ -2385,7 +2385,7 @@ __metadata:
       optional: true
   bin:
     react-unity-scripts: bin/react-unity-scripts.js
-  checksum: 800e09115f62ceddc27f519fe9d9574a741b1ed56fdf5f75b059d8ca29994bf6018fc22aa646b8f3a9e98818dfc60fb18d20ff46055a4d54c59cc634e423eeaa
+  checksum: ca49ae23507d581a3872aecf17a52ae70f5c575c9e197304d7a4be1f87f7851bd415e530663b9266a9179b2b7b3c71dd3cf7f964db46b65b332053eb65c9ac0c
   languageName: node
   linkType: hard
 
@@ -8286,8 +8286,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "my-react-unity-ui@workspace:."
   dependencies:
-    "@reactunity/renderer": ^0.16.0
-    "@reactunity/scripts": ^0.16.0
+    "@reactunity/renderer": ^0.16.1
+    "@reactunity/scripts": ^0.16.1
     react: ^18.2.0
     typescript: ^5.2.2
   languageName: unknown
