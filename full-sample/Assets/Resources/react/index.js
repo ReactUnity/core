@@ -12,7 +12,7 @@ var react_namespaceObject = /*#__PURE__*/__webpack_require__.t(react, 2);
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.16.0';
+var version = '0.16.1';
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/error-boundary.js
@@ -7577,7 +7577,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
        /* harmony default export */ const app_index_module = (index_module/* default */.Z && index_module/* default */.Z.locals ? index_module/* default */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
+;// CONCATENATED MODULE: ../../node_modules/clsx/dist/clsx.mjs
 function r(e) {
   var t,
     f,
@@ -8147,19 +8147,6 @@ var interop_index_module_update = injectStylesIntoStyleTag_default()(interop_ind
 
 ;// CONCATENATED MODULE: ./src/pages/interop/index.tsx
 var InteropPage=function InteropPage(){var _useState=(0,react.useState)(true),_useState2=slicedToArray_slicedToArray(_useState,2),shouldListen=_useState2[0],setShouldListen=_useState2[1];var _useState3=(0,react.useState)(null),_useState4=slicedToArray_slicedToArray(_useState3,2),pressedKey=_useState4[0],setPressedKey=_useState4[1];var _useUnityContext=useUnityContext({}),addEventListener=_useUnityContext.addEventListener,removeEventListener=_useUnityContext.removeEventListener;(0,react.useEffect)(function(){if(shouldListen){var remove=Globals.InteropTest.AddKeyPressListener(function(key){setPressedKey(key);});Interop.GetType('MyInterop.InteropTest').TestDebug();return function(){return remove();};}},[shouldListen]);(0,react.useEffect)(function(){var fn=function fn(key){console.log('Pressed key is: '+key);};addEventListener('OnKeyPress',fn);return function(){return removeEventListener('OnKeyPress',fn);};},[addEventListener,removeEventListener]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:pages_interop_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return setShouldListen(function(x){return!x;});},children:shouldListen?'Remove Listener':'Add Listener'}),!!pressedKey&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Pressed key is: ",pressedKey]})})]});};/* harmony default export */ const interop = (InteropPage);
-;// CONCATENATED MODULE: ../../material/node_modules/clsx/dist/clsx.mjs
-function clsx_r(e) {
-  var t,
-    f,
-    n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == typeof e) if (Array.isArray(e)) for (t = 0; t < e.length; t++) e[t] && (f = clsx_r(e[t])) && (n && (n += " "), n += f);else for (t in e) e[t] && (n && (n += " "), n += t);
-  return n;
-}
-function clsx_clsx() {
-  for (var e, t, f = 0, n = ""; f < arguments.length;) (e = arguments[f++]) && (t = clsx_r(e)) && (n && (n += " "), n += t);
-  return n;
-}
-/* harmony default export */ const clsx_dist_clsx = (clsx_clsx);
 ;// CONCATENATED MODULE: ../../material/dist/src/util/helpers.js
 
 function getChildrenOfType(children, type) {
@@ -8259,11 +8246,11 @@ function _Accordion(_a) {
   }, [opened]);
   return (0,jsx_runtime.jsxs)("view", accordion_assign({
     name: "<Accordion>",
-    className: clsx_dist_clsx(className, src_accordion_index_module.host, opened && [src_accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
+    className: dist_clsx(className, src_accordion_index_module.host, opened && [src_accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
   }, props, {
     children: [(0,jsx_runtime.jsxs)("view", {
       name: "<AccordionHeader>",
-      className: clsx_dist_clsx(src_accordion_index_module.header, 'mat-accordion-header'),
+      className: dist_clsx(src_accordion_index_module.header, 'mat-accordion-header'),
       onPointerClick: function onPointerClick() {
         return setOpened(function (x) {
           return !x;
@@ -8273,7 +8260,7 @@ function _Accordion(_a) {
         children: "expand_more"
       })]
     }), (0,jsx_runtime.jsx)("view", {
-      className: clsx_dist_clsx(src_accordion_index_module.expander, 'mat-accordion-expander'),
+      className: dist_clsx(src_accordion_index_module.expander, 'mat-accordion-expander'),
       ref: expanderRef,
       style: expanderBaseStyle,
       children: (0,jsx_runtime.jsx)("view", {
@@ -8290,7 +8277,7 @@ function _Summary(_a) {
     props = accordion_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", accordion_assign({
     name: "<Accordion.Summary>",
-    className: clsx_dist_clsx(className, src_accordion_index_module.summary, 'mat-accordion-summary')
+    className: dist_clsx(className, src_accordion_index_module.summary, 'mat-accordion-summary')
   }, props));
 }
 function _Content(_a) {
@@ -8298,7 +8285,7 @@ function _Content(_a) {
     props = accordion_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", accordion_assign({
     name: "<Accordion.Content>",
-    className: clsx_dist_clsx(className, src_accordion_index_module.content, 'mat-accordion-content')
+    className: dist_clsx(className, src_accordion_index_module.content, 'mat-accordion-content')
   }, props));
 }
 var Accordion = react.memo(_Accordion);
@@ -8478,7 +8465,7 @@ var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
     name: "<Button>"
   }, props, ripple, {
     ref: ref,
-    className: clsx_dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant),
+    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant),
     children: children
   }));
 });
@@ -8488,7 +8475,7 @@ var Button = react.memo(_Button);
 
 
 function useRootClass(className) {
-  var classes = clsx_dist_clsx(className);
+  var classes = dist_clsx(className);
   (0,react.useEffect)(function () {
     var classArray = classes.split(' ').filter(function (x) {
       return x;
@@ -8575,14 +8562,14 @@ function Modal(_a) {
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", {
-    className: clsx_dist_clsx(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
+    className: dist_clsx(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
     onAnimationEnd: onAnimationEnd,
     ref: portalRef,
     children: (0,jsx_runtime.jsxs)("view", {
-      className: clsx_dist_clsx(src_modal_index_module.content, 'mat-modal-content'),
+      className: dist_clsx(src_modal_index_module.content, 'mat-modal-content'),
       onPointerClick: clickContent,
       children: [children, onCloseButton && (0,jsx_runtime.jsx)("button", {
         className: src_modal_index_module.close,
@@ -8664,18 +8651,18 @@ function AlertDialog(_a) {
     if (onClickBackdrop) onClickBackdrop();
   };
   return (0,jsx_runtime.jsxs)(Modal, alert_assign({}, props, {
-    className: clsx_dist_clsx('mat-alert-dialog', src_alert_index_module.host, props.className),
+    className: dist_clsx('mat-alert-dialog', src_alert_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-alert-dialog-title', src_alert_index_module.title),
+      className: dist_clsx('mat-alert-dialog-title', src_alert_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-alert-dialog-text', src_alert_index_module.text),
+      className: dist_clsx('mat-alert-dialog-text', src_alert_index_module.text),
       children: text
     }), button && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-alert-dialog-buttons', src_alert_index_module.buttons),
+      className: dist_clsx('mat-alert-dialog-buttons', src_alert_index_module.buttons),
       children: (0,jsx_runtime.jsx)(Button, {
-        className: clsx_dist_clsx(src_alert_index_module.button),
+        className: dist_clsx(src_alert_index_module.button),
         onClick: function onClick() {
           return onClose();
         },
@@ -8748,7 +8735,7 @@ function _Card(_a) {
     props = card_rest(_a, ["children", "className", "elevation"]);
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card>",
-    className: clsx_dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
+    className: dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
   }, props, {
     children: children
   }));
@@ -8758,7 +8745,7 @@ function card_Content(_a) {
     props = card_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card.Content>",
-    className: clsx_dist_clsx(className, src_card_index_module.content, 'mat-card-content')
+    className: dist_clsx(className, src_card_index_module.content, 'mat-card-content')
   }, props));
 }
 var Card = react.memo(_Card);
@@ -8848,22 +8835,22 @@ function ConfirmDialog(_a) {
     if (onClickBackdrop) onClickBackdrop();
   };
   return (0,jsx_runtime.jsxs)(Modal, confirm_assign({}, props, {
-    className: clsx_dist_clsx('mat-confirm-dialog', src_confirm_index_module.host, props.className),
+    className: dist_clsx('mat-confirm-dialog', src_confirm_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-confirm-dialog-title', src_confirm_index_module.title),
+      className: dist_clsx('mat-confirm-dialog-title', src_confirm_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-confirm-dialog-text', src_confirm_index_module.text),
+      className: dist_clsx('mat-confirm-dialog-text', src_confirm_index_module.text),
       children: text
     }), error && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-modal-dialog-error', src_confirm_index_module.error),
+      className: dist_clsx('mat-modal-dialog-error', src_confirm_index_module.error),
       children: error
     }), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-confirm-dialog-buttons', src_confirm_index_module.buttons),
+      className: dist_clsx('mat-confirm-dialog-buttons', src_confirm_index_module.buttons),
       children: buttons.map(function (btn, ind) {
         return (0,jsx_runtime.jsx)(Button, {
-          className: clsx_dist_clsx(src_confirm_index_module.button),
+          className: dist_clsx(src_confirm_index_module.button),
           onClick: function onClick() {
             return onClose(btn.value);
           },
@@ -8937,7 +8924,7 @@ function _Paper(_a) {
     props = paper_rest(_a, ["children", "className", "elevation"]);
   return (0,jsx_runtime.jsx)("view", paper_assign({
     name: "<Paper>",
-    className: clsx_dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
+    className: dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
   }, props, {
     children: children
   }));
@@ -9024,21 +9011,21 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
     name: "<InputField>"
   }, other, {
     ref: hostRef,
-    className: clsx_dist_clsx(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-".concat(_float || 'auto'), !emptyRef.current && [src_input_index_module["float"], 'float']),
+    className: dist_clsx(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-".concat(_float || 'auto'), !emptyRef.current && [src_input_index_module["float"], 'float']),
     children: [(0,jsx_runtime.jsx)("view", {
-      className: clsx_dist_clsx(src_input_index_module.content, 'mat-input-content'),
+      className: dist_clsx(src_input_index_module.content, 'mat-input-content'),
       children: children
     }), variant === 'outlined' && (0,jsx_runtime.jsx)("view", {
-      className: clsx_dist_clsx(src_input_index_module.inputFrame, 'mat-input-frame')
+      className: dist_clsx(src_input_index_module.inputFrame, 'mat-input-frame')
     }), !!placeholder && (0,jsx_runtime.jsxs)("view", {
-      className: clsx_dist_clsx(src_input_index_module.placeholder, 'mat-input-placeholder'),
+      className: dist_clsx(src_input_index_module.placeholder, 'mat-input-placeholder'),
       children: [(0,jsx_runtime.jsx)("view", {
-        className: clsx_dist_clsx(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost'),
+        className: dist_clsx(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost'),
         children: placeholder
       }), (0,jsx_runtime.jsx)("view", {
-        className: clsx_dist_clsx(src_input_index_module.placeholderContent, 'mat-input-placeholder-content'),
+        className: dist_clsx(src_input_index_module.placeholderContent, 'mat-input-placeholder-content'),
         children: (0,jsx_runtime.jsx)("view", {
-          className: clsx_dist_clsx(src_input_index_module.placeholderText, 'mat-input-placeholder-text'),
+          className: dist_clsx(src_input_index_module.placeholderText, 'mat-input-placeholder-text'),
           children: placeholder
         })
       })]
@@ -9137,14 +9124,14 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
     onValue === null || onValue === void 0 ? void 0 : onValue(val);
   }, [fieldRef, onChange, onValue]);
   return (0,jsx_runtime.jsxs)(InputField, {
-    className: clsx_dist_clsx(className, src_text_index_module.host, 'mat-text-field', src_text_index_module[variant]),
+    className: dist_clsx(className, src_text_index_module.host, 'mat-text-field', src_text_index_module[variant]),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
     ref: fieldRef,
     name: "<TextField>",
     children: [(0,jsx_runtime.jsx)("input", text_assign({
-      className: clsx_dist_clsx(src_text_index_module.input, 'mat-text-input', 'mat-input-field-target'),
+      className: dist_clsx(src_text_index_module.input, 'mat-text-input', 'mat-input-field-target'),
       contentType: realType,
       ref: ref,
       placeholder: ' ',
@@ -9157,7 +9144,7 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
           return !st;
         });
       },
-      className: clsx_dist_clsx(src_text_index_module.passwordToggle, 'mat-text-password-toggle'),
+      className: dist_clsx(src_text_index_module.passwordToggle, 'mat-text-password-toggle'),
       children: (0,jsx_runtime.jsx)("icon", {
         children: passwordShown ? 'visibility' : 'visibility_off'
       })
@@ -9243,23 +9230,23 @@ function PromptDialog(_a) {
   };
   return (0,jsx_runtime.jsxs)(Modal, {
     open: open,
-    className: clsx_dist_clsx('mat-prompt-dialog', src_prompt_index_module.host, className),
+    className: dist_clsx('mat-prompt-dialog', src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-prompt-dialog-title', src_prompt_index_module.title),
+      className: dist_clsx('mat-prompt-dialog-title', src_prompt_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-prompt-dialog-text', src_prompt_index_module.text),
+      className: dist_clsx('mat-prompt-dialog-text', src_prompt_index_module.text),
       children: text
     }), (0,jsx_runtime.jsx)(TextField, prompt_assign({
-      className: clsx_dist_clsx('mat-prompt-dialog-input', src_prompt_index_module.input),
+      className: dist_clsx('mat-prompt-dialog-input', src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
     }, inputProps)), error && (0,jsx_runtime.jsx)("div", {
-      className: clsx_dist_clsx('mat-prompt-dialog-error', src_prompt_index_module.error),
+      className: dist_clsx('mat-prompt-dialog-error', src_prompt_index_module.error),
       children: error
     }), (0,jsx_runtime.jsxs)("div", {
-      className: clsx_dist_clsx('mat-prompt-dialog-buttons', src_prompt_index_module.buttons),
+      className: dist_clsx('mat-prompt-dialog-buttons', src_prompt_index_module.buttons),
       children: [(0,jsx_runtime.jsx)(Button, {
         onClick: function onClick() {
           return onClose(inputRef.current.Value, false);
@@ -9529,20 +9516,20 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   }, [ctx, selectionRef]);
   var NativeToggle = 'toggle';
   return (0,jsx_runtime.jsxs)("label", toggle_assign({
-    className: clsx_dist_clsx(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
+    className: dist_clsx(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
   }, ripple, {
     children: [(0,jsx_runtime.jsx)(NativeToggle, toggle_assign({
       name: "<Toggle>",
       ref: innerRef
     }, ripple, {
-      className: clsx_dist_clsx(src_toggle_index_module.toggle, 'mat-toggle')
+      className: dist_clsx(src_toggle_index_module.toggle, 'mat-toggle')
     }, props, {
       children: (0,jsx_runtime.jsx)("view", {
-        className: clsx_dist_clsx(src_toggle_index_module.ring, 'mat-toggle-ring'),
+        className: dist_clsx(src_toggle_index_module.ring, 'mat-toggle-ring'),
         ref: ringRef
       })
     })), !!children && (0,jsx_runtime.jsx)("view", {
-      className: clsx_dist_clsx(src_toggle_index_module.labelContent, 'mat-toggle-label-content'),
+      className: dist_clsx(src_toggle_index_module.labelContent, 'mat-toggle-label-content'),
       children: children
     })]
   }));
@@ -9585,12 +9572,12 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_a, ref) {
     value: state,
     children: (0,jsx_runtime.jsxs)("view", {
       name: "<ToggleGroup>",
-      className: clsx_dist_clsx('mat-toggle-group'),
+      className: dist_clsx('mat-toggle-group'),
       children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, {
         ref: selectAllRef,
         independent: true,
         onChange: selectAllCallback,
-        className: clsx_dist_clsx('mat-toggle-select-all', src_toggle_index_module.selectAllToggle),
+        className: dist_clsx('mat-toggle-select-all', src_toggle_index_module.selectAllToggle),
         children: selectAllLabel || 'Select All'
       }), children]
     })
@@ -9728,7 +9715,7 @@ function _Select(_a) {
     (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? ((_b = init.current) === null || _b === void 0 ? void 0 : _b.length) === 0 : typeof init.current === 'undefined');
   }, [multiple]);
   return (0,jsx_runtime.jsxs)(InputField, {
-    className: clsx_dist_clsx(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
+    className: dist_clsx(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
@@ -9737,7 +9724,7 @@ function _Select(_a) {
     children: [(0,jsx_runtime.jsxs)("button", select_assign({
       name: "<Select>",
       onClick: toggle,
-      className: clsx_dist_clsx(src_select_index_module.trigger, 'mat-input-field-target')
+      className: dist_clsx(src_select_index_module.trigger, 'mat-input-field-target')
     }, otherProps, {
       children: [(0,jsx_runtime.jsx)("view", {
         className: src_select_index_module.triggerContent,
@@ -9750,22 +9737,22 @@ function _Select(_a) {
           }, i);
         })
       }), (0,jsx_runtime.jsxs)("view", {
-        className: clsx_dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
+        className: dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
         children: [(0,jsx_runtime.jsx)("button", {
           name: "<SelectBackdrop>",
           onClick: close,
-          className: clsx_dist_clsx(src_select_index_module.backdrop)
+          className: dist_clsx(src_select_index_module.backdrop)
         }), (0,jsx_runtime.jsx)(SelectContext.Provider, {
           value: state,
           children: (0,jsx_runtime.jsx)("scroll", {
             name: "<SelectMenu>",
-            className: clsx_dist_clsx(src_select_index_module.menu, getElevationClass(4)),
+            className: dist_clsx(src_select_index_module.menu, getElevationClass(4)),
             children: children
           })
         })]
       })]
     })), !hideCaret && (0,jsx_runtime.jsx)("icon", {
-      className: clsx_dist_clsx(src_select_index_module.caret, 'mat-select-caret'),
+      className: dist_clsx(src_select_index_module.caret, 'mat-select-caret'),
       children: 'keyboard_arrow_down'
     })]
   });
@@ -9833,9 +9820,9 @@ function _Option(_a) {
   return (0,jsx_runtime.jsxs)(Button, {
     onClick: onClick,
     variant: "text",
-    className: clsx_dist_clsx(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className),
+    className: dist_clsx(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className),
     children: [shouldShowToggle && (0,jsx_runtime.jsx)(Toggle, {
-      className: clsx_dist_clsx(src_select_index_module.toggle, 'mat-select-option-toggle'),
+      className: dist_clsx(src_select_index_module.toggle, 'mat-select-option-toggle'),
       type: ctx.allowMultiple ? 'checkbox' : 'radio',
       checked: selected,
       independent: true
@@ -10075,24 +10062,24 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
     onPotentialDrag: dragCallback,
     onMove: moveCallback,
     onScroll: scrollCallback,
-    className: clsx_dist_clsx(src_slider_index_module.host, otherProps.className, 'mat-slider'),
+    className: dist_clsx(src_slider_index_module.host, otherProps.className, 'mat-slider'),
     children: (0,jsx_runtime.jsx)("view", {
       name: "<Slider-Track>",
-      className: clsx_dist_clsx(src_slider_index_module.track, 'mat-slider-track'),
+      className: dist_clsx(src_slider_index_module.track, 'mat-slider-track'),
       children: (0,jsx_runtime.jsx)("view", {
         name: "<Slider-Fill>",
-        className: clsx_dist_clsx(src_slider_index_module.fill, 'mat-slider-fill'),
+        className: dist_clsx(src_slider_index_module.fill, 'mat-slider-fill'),
         ref: fillRef,
         style: (_b = {}, _b[sizeProp] = 100 * (curValue.current - min) / range + '%', _b),
         children: (0,jsx_runtime.jsx)("view", {
           name: "<Slider-Thumb-Container>",
-          className: clsx_dist_clsx(src_slider_index_module.thumbContainer, 'mat-slider-thumb-container'),
+          className: dist_clsx(src_slider_index_module.thumbContainer, 'mat-slider-thumb-container'),
           children: (0,jsx_runtime.jsx)("view", {
             name: "<Slider-Thumb>",
-            className: clsx_dist_clsx(src_slider_index_module.thumb, 'mat-slider-thumb'),
+            className: dist_clsx(src_slider_index_module.thumb, 'mat-slider-thumb'),
             children: (0,jsx_runtime.jsx)("view", {
               name: "<Slider-Value>",
-              className: clsx_dist_clsx(src_slider_index_module.value, 'mat-slider-value'),
+              className: dist_clsx(src_slider_index_module.value, 'mat-slider-value'),
               children: typeof children === 'function' ? (0,jsx_runtime.jsx)(SliderChild, {
                 defaultValue: curValue.current,
                 callback: children,
@@ -10272,10 +10259,10 @@ function addTooltip(target, props, withBackdrop, hide) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
   var anchor = UnityBridge.createElement('view', '', HostContainer);
-  anchor.ClassName = clsx_dist_clsx(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
+  anchor.ClassName = dist_clsx(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
   anchor.Name = '<TooltipAnchor>';
   var tooltip = UnityBridge.createElement('view', '', HostContainer);
-  tooltip.ClassName = clsx_dist_clsx(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
+  tooltip.ClassName = dist_clsx(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
   tooltip.Name = '<Tooltip>';
   var pos = positions[props.position];
   anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
@@ -10284,7 +10271,7 @@ function addTooltip(target, props, withBackdrop, hide) {
   tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
   if (withBackdrop) {
     var backdrop = UnityBridge.createElement('portal', '', HostContainer);
-    backdrop.ClassName = clsx_dist_clsx(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
+    backdrop.ClassName = dist_clsx(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
     backdrop.Name = '<TooltipBackdrop>';
     UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
     UnityBridge.appendChild(anchor, backdrop);
@@ -20561,7 +20548,7 @@ function Parser_declaration(value, root, parent, length, siblings) {
 
 
 var f = "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && (({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_ATTR || ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_ATTR) || "data-styled",
-  m = "6.0.7",
+  m = "6.0.8",
   y = "undefined" != typeof window && "HTMLElement" in window,
   v = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY : "production" !== "production"),
   g = {},
@@ -20575,7 +20562,7 @@ var f = "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","P
 function P(e, t, n) {
   return void 0 === n && (n = N), e.theme !== n.theme && e.theme || t || n.theme;
 }
-var _ = new Set(["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "use", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"]),
+var _ = new Set(["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "u", "ul", "use", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"]),
   C = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g,
   I = /(^-|-$)/g;
 function A(e) {
@@ -20605,12 +20592,12 @@ function x(e) {
 function V(e) {
   return  false || e.displayName || e.name || "Component";
 }
-function M(e) {
+function F(e) {
   return "string" == typeof e && ( true || 0);
 }
-var F = "function" == typeof Symbol && Symbol["for"],
-  $ = F ? Symbol["for"]("react.memo") : 60115,
-  z = F ? Symbol["for"]("react.forward_ref") : 60112,
+var M = "function" == typeof Symbol && Symbol["for"],
+  $ = M ? Symbol["for"]("react.memo") : 60115,
+  z = M ? Symbol["for"]("react.forward_ref") : 60112,
   B = {
     childContextTypes: !0,
     contextType: !0,
@@ -20759,7 +20746,7 @@ var le = function () {
   fe = function fe(e, t) {
     ue.set(e, t), pe.set(t, e);
   },
-  me = "style[".concat(f, "][").concat("data-styled-version", '="').concat("6.0.7", '"]'),
+  me = "style[".concat(f, "][").concat("data-styled-version", '="').concat("6.0.8", '"]'),
   ye = new RegExp("^".concat(f, '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)')),
   ve = function ve(e, t, n) {
     for (var o, r = n.split(","), s = 0, i = r.length; s < i; s++) (o = r[s]) && e.registerName(t, o);
@@ -20789,7 +20776,7 @@ var we = function we(e) {
         return t[t.length - 1];
       }(n),
       s = void 0 !== r ? r.nextSibling : null;
-    o.setAttribute(f, "active"), o.setAttribute("data-styled-version", "6.0.7");
+    o.setAttribute(f, "active"), o.setAttribute("data-styled-version", "6.0.8");
     var i = Se();
     return i && o.setAttribute("nonce", i), n.insertBefore(o, s), o;
   },
@@ -20960,7 +20947,7 @@ var Re = new Ce(),
 function Ve() {
   return (0,react.useContext)(ke);
 }
-function Me(e) {
+function Fe(e) {
   var t = (0,react.useState)(e.stylisPlugins),
     n = t[0],
     r = t[1],
@@ -20982,19 +20969,23 @@ function Me(e) {
         plugins: n
       });
     }, [e.enableVendorPrefixes, e.namespace, n]);
-  return (0,react.useEffect)(function () {
+  (0,react.useEffect)(function () {
     shallowequal_default()(n, e.stylisPlugins) || r(e.stylisPlugins);
-  }, [e.stylisPlugins]), react.createElement(ke.Provider, {
-    value: {
+  }, [e.stylisPlugins]);
+  var d = (0,react.useMemo)(function () {
+    return {
       shouldForwardProp: e.shouldForwardProp,
       styleSheet: l,
       stylis: u
-    }
+    };
+  }, [e.shouldForwardProp, l, u]);
+  return react.createElement(ke.Provider, {
+    value: d
   }, react.createElement(xe.Provider, {
     value: u
   }, e.children));
 }
-var Fe = function () {
+var Me = function () {
     function e(e, t) {
       var n = this;
       this.inject = function (e, t) {
@@ -21042,7 +21033,7 @@ function Ge(e, t, n, o) {
     return  true || 0, Ge(r, t, n, o);
   }
   var s;
-  return e instanceof Fe ? n ? (e.inject(n, o), [e.getName(o)]) : [e] : oe(e) ? Le(e) : Array.isArray(e) ? Array.prototype.concat.apply(E, e.map(function (e) {
+  return e instanceof Me ? n ? (e.inject(n, o), [e.getName(o)]) : [e] : oe(e) ? Le(e) : Array.isArray(e) ? Array.prototype.concat.apply(E, e.map(function (e) {
     return Ge(e, t, n, o);
   })) : [e.toString()];
 }
@@ -21053,7 +21044,7 @@ function Ye(e) {
   }
   return !0;
 }
-var We = j("6.0.7"),
+var We = j("6.0.8"),
   qe = function () {
     function e(e, t, n) {
       this.rules = e, this.staticRulesId = "", this.isStatic =  true && (void 0 === n || n.isStatic) && Ye(e), this.componentId = t, this.baseHash = k(We, t), this.baseStyle = n, Ce.registerId(t);
@@ -21075,7 +21066,7 @@ var We = j("6.0.7"),
           var u = this.rules[l];
           if ("string" == typeof u) c += u,  false && (0);else if (u) {
             var p = ne(Ge(u, e, t, n));
-            a = k(a, p), c += p;
+            a = k(a, p + l), c += p;
           }
         }
         if (c) {
@@ -21116,19 +21107,19 @@ var Ze = {},
 function Qe(e, r, s) {
   var i = ee(e),
     a = e,
-    c = !M(e),
+    c = !F(e),
     p = r.attrs,
     d = void 0 === p ? E : p,
     h = r.componentId,
     f = void 0 === h ? function (e, t) {
       var n = "string" != typeof e ? "sc" : A(e);
       Ze[n] = (Ze[n] || 0) + 1;
-      var o = "".concat(n, "-").concat(x("6.0.7" + n + Ze[n]));
+      var o = "".concat(n, "-").concat(x("6.0.8" + n + Ze[n]));
       return t ? "".concat(t, "-").concat(o) : o;
     }(r.displayName, r.parentComponentId) : h,
     m = r.displayName,
     y = void 0 === m ? function (e) {
-      return M(e) ? "styled.".concat(e) : "Styled(".concat(V(e), ")");
+      return F(e) ? "styled.".concat(e) : "Styled(".concat(V(e), ")");
     }(e) : m,
     v = r.displayName && r.componentId ? "".concat(A(r.displayName), "-").concat(r.componentId) : r.componentId || f,
     g = i && a.attrs ? a.attrs.concat(d).filter(Boolean) : d,
@@ -21175,7 +21166,7 @@ function Qe(e, r, s) {
       }(a, v);
        false && 0;
       var E = te(p, d);
-      return b && (E += " " + b), v.className && (E += " " + v.className), S[M(g) && !_.has(g) ? "class" : "className"] = E, S.ref = s, (0,react.createElement)(g, S);
+      return b && (E += " " + b), v.className && (E += " " + v.className), S[F(g) && !_.has(g) ? "class" : "className"] = E, S.ref = s, (0,react.createElement)(g, S);
     }(D, e, r);
   }
    false && (0);
@@ -21287,7 +21278,7 @@ function ct(t) {
    false && 0;
   var r = ne(nt.apply(void 0, e([t], n, !1))),
     s = x(r);
-  return new Fe(s, r);
+  return new Me(s, r);
 }
 function lt(e) {
   var n = o.forwardRef(function (n, r) {
@@ -21305,7 +21296,7 @@ var ut = function () {
       this._emitSheetCSS = function () {
         var t = e.instance.toString(),
           n = Se(),
-          o = ne([n && 'nonce="'.concat(n, '"'), "".concat(f, '="true"'), "".concat("data-styled-version", '="').concat("6.0.7", '"')].filter(Boolean), " ");
+          o = ne([n && 'nonce="'.concat(n, '"'), "".concat(f, '="true"'), "".concat("data-styled-version", '="').concat("6.0.8", '"')].filter(Boolean), " ");
         return "<style ".concat(o, ">").concat(t, "</style>");
       }, this.getStyleTags = function () {
         if (e.sealed) throw ce(2);
@@ -21313,7 +21304,7 @@ var ut = function () {
       }, this.getStyleElement = function () {
         var n;
         if (e.sealed) throw ce(2);
-        var r = ((n = {})[f] = "", n["data-styled-version"] = "6.0.7", n.dangerouslySetInnerHTML = {
+        var r = ((n = {})[f] = "", n["data-styled-version"] = "6.0.8", n.dangerouslySetInnerHTML = {
             __html: e.instance.toString()
           }, n),
           s = Se();
@@ -21328,7 +21319,7 @@ var ut = function () {
     }
     return e.prototype.collectStyles = function (e) {
       if (this.sealed) throw ce(2);
-      return react.createElement(Me, {
+      return react.createElement(Fe, {
         sheet: this.instance
       }, e);
     }, e.prototype.interleaveWithNodeStream = function (e) {

@@ -18,7 +18,7 @@
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@reactunity/material": "^0.16.0",
+    "@reactunity/material": "^0.16.2",
     "@reactunity/renderer": "^0.16.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
@@ -34,12 +34,12 @@
     "react-unity-webgl": "^9.4.3",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
-    "styled-components": "^6.0.7",
+    "styled-components": "^6.0.8",
     "twin.macro": "^3.4.0"
   },
   "devDependencies": {
     "@reactunity/previewer": "^0.15.0",
-    "@reactunity/scripts": "^0.16.1",
+    "@reactunity/scripts": "^0.16.3",
     "@types/react-redux": "^7.1.26",
     "babel-plugin-twin": "^1.1.0",
     "tailwindcss": "^3.3.3",
