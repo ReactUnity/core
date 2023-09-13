@@ -6,7 +6,7 @@
     "pretty": true,
     "declaration": false,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "preserveSymlinks": true,
     "importHelpers": false,
     "strict": true,

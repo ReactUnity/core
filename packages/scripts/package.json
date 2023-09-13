@@ -18,7 +18,6 @@
     "config",
     "lib",
     "scripts",
-    "utils",
     "tsconfig.json"
   ],
   "bin": {
@@ -110,7 +109,7 @@
   },
   "peerDependencies": {
     "@reactunity/previewer": "*",
-    "@reactunity/renderer": "^0.16.0",
+    "@reactunity/renderer": "^0.16.1",
     "react": "^18.0.0",
     "typescript": ">=5"
   },
