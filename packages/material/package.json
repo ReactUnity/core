@@ -32,6 +32,10 @@
   ],
   "exports": {
     ".": "./dist/index.js",
+    "./styles": {
+      "style": "./dist/src/styles/index.scss",
+      "default": "./dist/src/styles/index.js"
+    },
     "./*": "./dist/src/*/index.js"
   },
   "scripts": {
@@ -53,7 +57,7 @@
   },
   "devDependencies": {
     "@reactunity/renderer": "^0.16.1",
-    "@reactunity/scripts": "^0.16.2",
+    "@reactunity/scripts": "^0.16.3",
     "concurrently": "^8.2.1",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
