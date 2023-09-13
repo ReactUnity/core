@@ -111,7 +111,7 @@ module.exports = function (i) {
 "use strict";
 
 
-var reactIs = __webpack_require__("../node_modules/react-is/index.js");
+var reactIs = __webpack_require__("../node_modules/hoist-non-react-statics/node_modules/react-is/index.js");
 
 /**
  * Copyright 2015, Yahoo! Inc.
@@ -203,7 +203,7 @@ module.exports = hoistNonReactStatics;
 
 /***/ }),
 
-/***/ "../node_modules/react-is/cjs/react-is.production.min.js":
+/***/ "../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js":
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -327,6 +327,141 @@ exports.typeOf = z;
 
 /***/ }),
 
+/***/ "../node_modules/hoist-non-react-statics/node_modules/react-is/index.js":
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__("../node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js");
+} else {}
+
+/***/ }),
+
+/***/ "../node_modules/react-is/cjs/react-is.production.min.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+var __webpack_unused_export__;
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+var b = Symbol["for"]("react.element"),
+  c = Symbol["for"]("react.portal"),
+  d = Symbol["for"]("react.fragment"),
+  e = Symbol["for"]("react.strict_mode"),
+  f = Symbol["for"]("react.profiler"),
+  g = Symbol["for"]("react.provider"),
+  h = Symbol["for"]("react.context"),
+  k = Symbol["for"]("react.server_context"),
+  l = Symbol["for"]("react.forward_ref"),
+  m = Symbol["for"]("react.suspense"),
+  n = Symbol["for"]("react.suspense_list"),
+  p = Symbol["for"]("react.memo"),
+  q = Symbol["for"]("react.lazy"),
+  t = Symbol["for"]("react.offscreen"),
+  u;
+u = Symbol["for"]("react.module.reference");
+function v(a) {
+  if ("object" === typeof a && null !== a) {
+    var r = a.$$typeof;
+    switch (r) {
+      case b:
+        switch (a = a.type, a) {
+          case d:
+          case f:
+          case e:
+          case m:
+          case n:
+            return a;
+          default:
+            switch (a = a && a.$$typeof, a) {
+              case k:
+              case h:
+              case l:
+              case q:
+              case p:
+              case g:
+                return a;
+              default:
+                return r;
+            }
+        }
+      case c:
+        return r;
+    }
+  }
+}
+__webpack_unused_export__ = h;
+__webpack_unused_export__ = g;
+__webpack_unused_export__ = b;
+__webpack_unused_export__ = l;
+__webpack_unused_export__ = d;
+__webpack_unused_export__ = q;
+__webpack_unused_export__ = p;
+__webpack_unused_export__ = c;
+__webpack_unused_export__ = f;
+__webpack_unused_export__ = e;
+__webpack_unused_export__ = m;
+__webpack_unused_export__ = n;
+__webpack_unused_export__ = function () {
+  return !1;
+};
+__webpack_unused_export__ = function () {
+  return !1;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === h;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === g;
+};
+__webpack_unused_export__ = function (a) {
+  return "object" === typeof a && null !== a && a.$$typeof === b;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === l;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === d;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === q;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === p;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === c;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === f;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === e;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === m;
+};
+__webpack_unused_export__ = function (a) {
+  return v(a) === n;
+};
+__webpack_unused_export__ = function (a) {
+  return "string" === typeof a || "function" === typeof a || a === d || a === f || a === e || a === m || a === n || a === t || "object" === typeof a && null !== a && (a.$$typeof === q || a.$$typeof === p || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l || a.$$typeof === u || void 0 !== a.getModuleId) ? !0 : !1;
+};
+__webpack_unused_export__ = v;
+
+/***/ }),
+
 /***/ "../node_modules/react-is/index.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -334,7 +469,7 @@ exports.typeOf = z;
 
 
 if (true) {
-  module.exports = __webpack_require__("../node_modules/react-is/cjs/react-is.production.min.js");
+  /* unused reexport */ __webpack_require__("../node_modules/react-is/cjs/react-is.production.min.js");
 } else {}
 
 /***/ }),
@@ -614,138 +749,1852 @@ if (true) {
 
 /***/ }),
 
-/***/ "./node_modules/react-is/cjs/react-is.production.min.js":
-/***/ ((__unused_webpack_module, exports) => {
+/***/ "./node_modules/@reactunity/renderer/dist/index.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
-/**
- * @license React
- * react-is.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 
 
-var b = Symbol["for"]("react.element"),
-  c = Symbol["for"]("react.portal"),
-  d = Symbol["for"]("react.fragment"),
-  e = Symbol["for"]("react.strict_mode"),
-  f = Symbol["for"]("react.profiler"),
-  g = Symbol["for"]("react.provider"),
-  h = Symbol["for"]("react.context"),
-  k = Symbol["for"]("react.server_context"),
-  l = Symbol["for"]("react.forward_ref"),
-  m = Symbol["for"]("react.suspense"),
-  n = Symbol["for"]("react.suspense_list"),
-  p = Symbol["for"]("react.memo"),
-  q = Symbol["for"]("react.lazy"),
-  t = Symbol["for"]("react.offscreen"),
-  u;
-u = Symbol["for"]("react.module.reference");
-function v(a) {
-  if ("object" === typeof a && null !== a) {
-    var r = a.$$typeof;
-    switch (r) {
-      case b:
-        switch (a = a.type, a) {
-          case d:
-          case f:
-          case e:
-          case m:
-          case n:
-            return a;
-          default:
-            switch (a = a && a.$$typeof, a) {
-              case k:
-              case h:
-              case l:
-              case q:
-              case p:
-              case g:
-                return a;
-              default:
-                return r;
-            }
-        }
-      case c:
-        return r;
-    }
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
   }
-}
-__webpack_unused_export__ = h;
-__webpack_unused_export__ = g;
-__webpack_unused_export__ = b;
-__webpack_unused_export__ = l;
-__webpack_unused_export__ = d;
-__webpack_unused_export__ = q;
-__webpack_unused_export__ = p;
-__webpack_unused_export__ = c;
-__webpack_unused_export__ = f;
-__webpack_unused_export__ = e;
-__webpack_unused_export__ = m;
-__webpack_unused_export__ = n;
-__webpack_unused_export__ = function () {
-  return !1;
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __exportStar = this && this.__exportStar || function (m, exports) {
+  for (var p in m) {
+    if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+  }
 };
-__webpack_unused_export__ = function () {
-  return !1;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === h;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === g;
-};
-__webpack_unused_export__ = function (a) {
-  return "object" === typeof a && null !== a && a.$$typeof === b;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === l;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === d;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === q;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === p;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === c;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === f;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === e;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === m;
-};
-__webpack_unused_export__ = function (a) {
-  return v(a) === n;
-};
-__webpack_unused_export__ = function (a) {
-  return "string" === typeof a || "function" === typeof a || a === d || a === f || a === e || a === m || a === n || a === t || "object" === typeof a && null !== a && (a.$$typeof === q || a.$$typeof === p || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l || a.$$typeof === u || void 0 !== a.getModuleId) ? !0 : !1;
-};
-__webpack_unused_export__ = v;
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.unstable_batchedUpdates = exports.render = exports.flushSync = exports.batchedUpdates = exports.Renderer = void 0;
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/helpers/hooks/use-globals.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/helpers/hooks/use-reactive-value.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/helpers/icons.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/environment/index.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/index.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/index.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/renderer.js"), exports);
+var renderer_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js");
+Object.defineProperty(exports, "Renderer", ({
+  enumerable: true,
+  get: function get() {
+    return renderer_1.Renderer;
+  }
+}));
+Object.defineProperty(exports, "batchedUpdates", ({
+  enumerable: true,
+  get: function get() {
+    return renderer_1.batchedUpdates;
+  }
+}));
+Object.defineProperty(exports, "flushSync", ({
+  enumerable: true,
+  get: function get() {
+    return renderer_1.flushSync;
+  }
+}));
+Object.defineProperty(exports, "render", ({
+  enumerable: true,
+  get: function get() {
+    return renderer_1.render;
+  }
+}));
+Object.defineProperty(exports, "unstable_batchedUpdates", ({
+  enumerable: true,
+  get: function get() {
+    return renderer_1.batchedUpdates;
+  }
+}));
 
 /***/ }),
 
-/***/ "./node_modules/react-is/index.js":
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
 
-if (true) {
-  /* unused reexport */ __webpack_require__("./node_modules/react-is/cjs/react-is.production.min.js");
-} else {}
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.createDictionaryWatcher = void 0;
+var react_1 = __webpack_require__("./node_modules/react/index.js");
+var shim_1 = __webpack_require__("./node_modules/use-sync-external-store/shim/index.js");
+var with_selector_1 = __webpack_require__("./node_modules/use-sync-external-store/with-selector.js");
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = (0, react_1.createContext)(undefined);
+  if (displayName) ctx.displayName = displayName;
+  var createSubscriber = function createSubscriber(fields, isEqual) {
+    var snapshot = __assign({}, dictionary);
+    return {
+      subscribe: function subscribe(onStoreChange) {
+        snapshot = __assign({}, dictionary);
+        var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function () {
+          var prev = snapshot;
+          snapshot = __assign({}, dictionary);
+          if (!fields) onStoreChange();else {
+            var it = fields.values();
+            for (var field = it.next().value; field; field = it.next().value) {
+              if (isEqual ? !isEqual(prev[field], snapshot[field]) : prev[field] !== snapshot[field]) {
+                onStoreChange();
+                break;
+              }
+            }
+          }
+        });
+        if (!remove) {
+          if (displayName) console.warn("".concat(displayName, " dictionary does not provide a change listener"));else console.warn('The dictionary does not provide a change listener');
+        }
+        return function () {
+          return remove === null || remove === void 0 ? void 0 : remove();
+        };
+      },
+      getSnapshot: function getSnapshot() {
+        return snapshot;
+      }
+    };
+  };
+  var defaultSubscriber = createSubscriber();
+  var Provider = function GlobalsProvider(_a) {
+    var children = _a.children;
+    var value = (0, shim_1.useSyncExternalStore)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot);
+    return (0, react_1.createElement)(ctx.Provider, {
+      value: value
+    }, children);
+  };
+  function useDictionaryContext() {
+    var context = (0, react_1.useContext)(ctx);
+    if (context === undefined) {
+      if (displayName) throw new Error("".concat(displayName, ".useContext must be used within a ").concat(displayName, ".Provider"));else throw new Error('useContext must be used within a provider');
+    }
+    return context;
+  }
+  function useValue(subscribeToAllFields, fieldEqual) {
+    if (subscribeToAllFields === void 0) {
+      subscribeToAllFields = false;
+    }
+    var fields = (0, react_1.useMemo)(function () {
+      return new Set();
+    }, []);
+    var fieldsRef = (0, react_1.useRef)(fields);
+    var _a = (0, react_1.useState)(false),
+      allFieldsSubscribed = _a[0],
+      setAllFieldsSubscribed = _a[1];
+    subscribeToAllFields || (subscribeToAllFields = allFieldsSubscribed);
+    var subscriber = (0, react_1.useMemo)(function () {
+      return subscribeToAllFields ? defaultSubscriber : createSubscriber(fieldsRef.current, fieldEqual);
+    }, [subscribeToAllFields, fieldEqual]);
+    var value = (0, shim_1.useSyncExternalStore)(subscriber.subscribe, subscriber.getSnapshot, subscriber.getSnapshot);
+    var proxy = new Proxy(value, {
+      get: function get(target, p, receiver) {
+        fields.add(p);
+        return value[p];
+      },
+      ownKeys: function ownKeys(target) {
+        if (!allFieldsSubscribed) setAllFieldsSubscribed(true);
+        return Reflect.ownKeys(target);
+      },
+      getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, p) {
+        fields.add(p);
+        return __assign(__assign({}, Reflect.getOwnPropertyDescriptor(target, p)), {
+          value: value[p]
+        });
+      }
+    });
+    return proxy;
+  }
+  function useSelector(selector, isEqual) {
+    return (0, with_selector_1.useSyncExternalStoreWithSelector)(defaultSubscriber.subscribe, defaultSubscriber.getSnapshot, defaultSubscriber.getSnapshot, selector, isEqual);
+  }
+  return {
+    context: ctx,
+    Provider: Provider,
+    useValue: useValue,
+    useContext: useDictionaryContext,
+    useSelector: useSelector
+  };
+}
+exports.createDictionaryWatcher = createDictionaryWatcher;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/helpers/hooks/use-globals.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.GlobalsProvider = exports.useGlobalsSelector = exports.useGlobalsContext = exports.useGlobals = void 0;
+var dictionary_watcher_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js");
+var globalsWatcher = (0, dictionary_watcher_1.createDictionaryWatcher)(Globals, 'globalsContext');
+exports.useGlobals = globalsWatcher.useValue;
+exports.useGlobalsContext = globalsWatcher.useContext;
+exports.useGlobalsSelector = globalsWatcher.useSelector;
+exports.GlobalsProvider = globalsWatcher.Provider;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/helpers/hooks/use-reactive-value.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.useReactiveValue = void 0;
+var react_1 = __webpack_require__("./node_modules/react/index.js");
+var shim_1 = __webpack_require__("./node_modules/use-sync-external-store/shim/index.js");
+function createSubscriber(obj, isEqual) {
+  var isReactive = obj && typeof obj === 'object' && 'Value' in obj;
+  var snapshot = isReactive ? obj.Value : undefined;
+  return {
+    subscribe: function subscribe(onStoreChange) {
+      snapshot = isReactive ? obj.Value : undefined;
+      var remove = isReactive && typeof obj.AddListener === 'function' && (obj === null || obj === void 0 ? void 0 : obj.AddListener(function () {
+        var prev = snapshot;
+        snapshot = isReactive ? obj.Value : undefined;
+        if (typeof isEqual !== 'function' || !isEqual(prev, snapshot)) {
+          onStoreChange();
+        }
+      }));
+      if (isReactive && typeof remove !== 'function') console.warn('The reactive value does not provide a change listener');
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    },
+    getSnapshot: function getSnapshot() {
+      return snapshot;
+    }
+  };
+}
+function useReactiveValue(obj, isEqual) {
+  var sb = (0, react_1.useMemo)(function () {
+    return createSubscriber(obj, isEqual);
+  }, [obj, isEqual]);
+  return (0, shim_1.useSyncExternalStore)(sb.subscribe, sb.getSnapshot, sb.getSnapshot);
+}
+exports.useReactiveValue = useReactiveValue;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/helpers/icons.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.icon = void 0;
+var React = __webpack_require__("./node_modules/react/index.js");
+var componentCache = {};
+exports.icon = new Proxy({}, {
+  get: function get(target, key) {
+    if (typeof key === 'symbol') return target[key];
+    var icon = key.replace(/^_/, '');
+    var cmp = componentCache[icon];
+    if (cmp) return cmp;
+    cmp = function NamedIcon(props, ref) {
+      return React.createElement('icon', __assign(__assign({
+        name: "<icon ".concat(icon, ">")
+      }, props), {
+        ref: ref
+      }), icon);
+    };
+    cmp = React.forwardRef(cmp);
+    componentCache[icon] = cmp;
+    return cmp;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/environment/dom/global.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/environment/index.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __exportStar = this && this.__exportStar || function (m, exports) {
+  for (var p in m) {
+    if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+  }
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/environment/dom/global.js");
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/environment/interop.js"), exports);
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/environment/interop.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/editor.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: UnityEditor.CoreModule
+// Generated 18/02/2023 03:04:17
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/index.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __exportStar = this && this.__exportStar || function (m, exports) {
+  for (var p in m) {
+    if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+  }
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/editor.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/react.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/system.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/tests.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/unity.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/generated/yoga.js"), exports);
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/react.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
+// Generated 19/02/2023 03:24:44
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/system.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: mscorlib, System.Core, System
+// Generated 18/02/2023 03:04:19
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/tests.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: nunit.framework
+// Generated 18/02/2023 03:04:19
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/unity.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: UnityEngine.CoreModule, Unity.InputSystem, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.TextRenderingModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.UnityAnalyticsModule, UnityEngine.ParticleSystemModule, UnityEngine.PhysicsModule, UnityEngine.InputLegacyModule, UnityEngine.AIModule, UnityEngine.UI, UnityEngine.VideoModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule, UnityEngine.UIElementsModule, UnityEngine.XRModule
+// Generated 18/02/2023 03:04:15
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/generated/yoga.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+//
+// Types in assemblies: Facebook.Yoga
+// Generated 18/02/2023 03:04:17
+//
+/* eslint-disable */
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/common.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/index.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+var __exportStar = this && this.__exportStar || function (m, exports) {
+  for (var p in m) {
+    if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+  }
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/common.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/style.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/styles.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/styles-enums.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/values.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/yoga.js"), exports);
+__exportStar(__webpack_require__("./node_modules/@reactunity/renderer/dist/src/models/properties/yoga-enums.js"), exports);
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/style.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/styles-enums.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/styles.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/values.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/yoga-enums.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/properties/yoga.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/models/renderer.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+    return _extendStatics(d, b);
+  };
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    _extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.CallbacksRepo = void 0;
+var objects_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js");
+var CallbacksRepo = /** @class */function (_super) {
+  __extends(CallbacksRepo, _super);
+  function CallbacksRepo() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+    _this.call = function (ind, args) {
+      var cb = _this.getObject(ind);
+      var argsAsList = args;
+      var argsAsArray = args;
+      if (typeof argsAsArray.Length === 'number') {
+        // C# Array
+        args = [];
+        var length = argsAsArray.Length;
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsArray.GetValue(index));
+        }
+      } else if (typeof argsAsList.Count === 'number') {
+        // C# List
+        args = [];
+        var length = argsAsList.Count;
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsList[index]);
+        }
+      } else if (typeof argsAsList.Count === 'function') {
+        // C# IList
+        args = [];
+        var length = argsAsList.Count();
+        for (var index = 0; index < length; index++) {
+          args.push(argsAsArray.GetValue(index));
+        }
+      }
+      return cb.apply(null, args);
+    };
+    return _this;
+  }
+  return CallbacksRepo;
+}(objects_1.ObjectsRepo);
+exports.CallbacksRepo = CallbacksRepo;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.ObjectsRepo = void 0;
+var ObjectsRepo = /** @class */function () {
+  function ObjectsRepo() {
+    var _this = this;
+    this.indices = [{}];
+    this.objects = new WeakMap();
+    this.setObject = function (index, item) {
+      var it = _this.indices[index];
+      if (!it) {
+        it = _this.indices[index] = {};
+      }
+      _this.objects.set(it, item);
+    };
+    this.addObject = function (item) {
+      if (!item) return -1;
+      var it = {};
+      var ind = _this.indices.length;
+      _this.indices.push(it);
+      _this.objects.set(it, item);
+      return ind;
+    };
+    this.getObject = function (index) {
+      if (index < 0) return undefined;
+      var it = _this.indices[index];
+      return _this.objects.get(it);
+    };
+  }
+  return ObjectsRepo;
+}();
+exports.ObjectsRepo = ObjectsRepo;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.asyncReconciler = void 0;
+var Reconciler = __webpack_require__("./node_modules/react-reconciler/index.js");
+var constants_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/constants.js");
+var diffing_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js");
+var subcontexts_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/index.js");
+var serializer_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js");
+var refId = 0;
+var ctxMap = new Map();
+var updateSubContext = function updateSubContext(instance) {
+  var rend = subcontexts_1.subContextRenderers[instance.type];
+  var root = instance === null || instance === void 0 ? void 0 : instance.root;
+  var cur = instance;
+  while (cur && !root) {
+    root = cur.root;
+    cur = cur.parent;
+  }
+  if (!root) return;
+  var content = rend(root.subContext.node);
+  if (instance.type === 'richtext') {
+    // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+    instance.hostContext.commands.push([6, root.refId, content]);
+  } else if (instance.type === 'svg') {
+    // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+    instance.hostContext.commands.push([5, root.refId, 'svg', (0, serializer_1.convertPropsToSerializable)({
+      innerContent: content
+    })]);
+  }
+};
+var hostConfig = __assign(__assign({}, constants_1.commonReconciler), {
+  getRootHostContext: function getRootHostContext(rootContainer) {
+    var context = rootContainer.context;
+    if (rootContainer.refId < 0) {
+      refId++;
+      rootContainer.context.SetRef(refId, rootContainer.component);
+      rootContainer.refId = refId;
+    }
+    var existing = ctxMap.get(context);
+    if (existing) return existing;
+    var commands = rootContainer.commands;
+    var flushCommands = function flushCommands() {
+      var serialized = JSON.stringify(commands);
+      commands.length = 0;
+      return serialized;
+    };
+    var fireEventByRef = function fireEventByRef(ind, args) {
+      return serializer_1.callbacksRepo.call(ind, args);
+    };
+    var getObjectRef = function getObjectRef(ind) {
+      return serializer_1.objectsRepo.getObject(ind);
+    };
+    var getEventAsObjectRef = function getEventAsObjectRef(ind) {
+      return serializer_1.callbacksRepo.getObject(ind);
+    };
+    context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
+    var ctx = {
+      context: context,
+      commands: commands,
+      refId: rootContainer.refId,
+      type: 'native'
+    };
+    ctxMap.set(context, ctx);
+    return ctx;
+  },
+  getChildHostContext: function getChildHostContext(parentCtx, type) {
+    if (type === 'richtext' && parentCtx.type === 'native') return {
+      type: 'richtext',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
+    if (type === 'svg' && parentCtx.type === 'native') return {
+      type: 'svg',
+      hostContext: parentCtx,
+      node: null,
+      parent: null,
+      root: null
+    };
+    return parentCtx;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
+    return null;
+  },
+  supportsMutation: true,
+  supportsHydration: false,
+  supportsPersistence: false,
+  supportsMicrotasks: true,
+  supportsTestSelectors: false,
+  isPrimaryRenderer: true,
+  warnsIfNotActing: true,
+  prepareForCommit: function prepareForCommit() {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit() {},
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
+    return false;
+  },
+  clearContainer: function clearContainer(container) {
+    UnityBridge.clearContainer(container);
+  },
+  createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
+    var aProps = (0, constants_1.getAllowedProps)(props, type);
+    if (ctx.type === 'native') {
+      refId++;
+      // ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
+      ctx.commands.push([0, refId, type, (0, serializer_1.convertPropsToSerializable)(aProps), (0, constants_1.stringizePoolKey)(props.pool)]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      var res = __assign(__assign({}, ctx), {
+        refId: refId
+      });
+      if (type === 'richtext') {
+        res.subContext = {
+          type: 'richtext',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+      if (type === 'svg') {
+        res.subContext = {
+          type: 'svg',
+          node: {
+            tag: '',
+            children: [],
+            attributes: aProps
+          },
+          root: res,
+          hostContext: res,
+          parent: null
+        };
+      }
+      return res;
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return __assign(__assign({}, ctx), {
+        node: {
+          tag: type,
+          children: [],
+          attributes: aProps
+        }
+      });
+    }
+  },
+  createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
+    if (ctx.type === 'native') {
+      refId++;
+      // ctx.commands.push(['t', { r: refId, c: text }]);
+      ctx.commands.push([1, refId, text]);
+      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
+      return __assign(__assign({}, ctx), {
+        refId: refId
+      });
+    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
+      return __assign(__assign({}, ctx), {
+        node: {
+          text: text
+        }
+      });
+    }
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+    if (parent.type === 'native' && child.type === 'native') {
+      // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      parent.commands.push([2, parent.refId, child.refId]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
+  },
+  finalizeInitialChildren: function finalizeInitialChildren() {
+    return false;
+  },
+  commitMount: function commitMount(instance) {},
+  shouldSetTextContent: function shouldSetTextContent(type) {
+    return constants_1.textTypes[type];
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+    return (0, diffing_1.diffProperties)(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type) {
+    var props = (0, constants_1.getAllowedProps)(updatePayload, type);
+    if (instance.type === 'native') {
+      // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+      instance.commands.push([5, instance.refId, type, (0, serializer_1.convertPropsToSerializable)(props)]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      if ('attributes' in instance.node) instance.node.attributes = __assign(__assign({}, instance.node.attributes), props);
+      updateSubContext(instance);
+    }
+  },
+  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
+    if (instance.type === 'native') {
+      // instance.commands.push(['x', { r: instance.refId, c: newText }]);
+      instance.commands.push([6, instance.refId, newText]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node = {
+        text: newText
+      };
+      updateSubContext(instance);
+    }
+  },
+  appendChild: function appendChild(parent, child) {
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+    if (parent.type === 'native' && child.type === 'native') {
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) parent.node.children.push(child.node);
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    if (child.type === 'native')
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(beforeChild.node);
+        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
+      }
+      child.root = parent.root;
+      child.parent = parent;
+      updateSubContext(child);
+    }
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    if (child.type === 'native' && beforeChild.type === 'native')
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
+  },
+  removeChild: function removeChild(parent, child) {
+    if (!child) return;
+    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
+    if (parent.type === 'native' && child.type === 'native') {
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
+    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
+      if ('children' in parent.node) {
+        var index = parent.node.children.indexOf(child.node);
+        if (index >= 0) parent.node.children.splice(index, 1);
+      }
+      updateSubContext(parent);
+    }
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    if (child.type === 'native')
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
+  },
+  resetTextContent: function resetTextContent() {},
+  preparePortalMount: function preparePortalMount() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
+  // Required for Suspense
+  hideInstance: function hideInstance(instance) {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
+  },
+  hideTextInstance: function hideTextInstance(instance) {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = true;
+      updateSubContext(instance);
+    }
+  },
+  unhideInstance: function unhideInstance(instance) {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
+  },
+  unhideTextInstance: function unhideTextInstance(instance) {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
+      instance.node.hidden = false;
+      updateSubContext(instance);
+    }
+  }
+});
+exports.asyncReconciler = Reconciler(hostConfig);
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.convertPropsToSerializable = exports.objectsRepo = exports.callbacksRepo = void 0;
+var callbacks_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js");
+var objects_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js");
+exports.callbacksRepo = new callbacks_1.CallbacksRepo();
+exports.objectsRepo = new objects_1.ObjectsRepo();
+// Separates properties in 3 categories: regular props, callbacks and non-serializable objects
+function convertPropsToSerializable(props) {
+  var res = {};
+  for (var key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      var value = props[key];
+      if (value == null) {
+        (res.p || (res.p = {}))[key] = null;
+      } else if (key === 'style') {
+        (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);
+      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
+        var ind = exports.callbacksRepo.addObject(value);
+        (res.e || (res.e = {}))[key] = ind;
+      } else if (typeof value === 'object' || typeof value === 'function') {
+        var ind = exports.objectsRepo.addObject(value);
+        (res.o || (res.o = {}))[key] = ind;
+      } else {
+        (res.p || (res.p = {}))[key] = value;
+      }
+    }
+  }
+  return res;
+}
+exports.convertPropsToSerializable = convertPropsToSerializable;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/constants.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.isDevelopment = exports.commonReconciler = exports.getAllowedProps = exports.stringizePoolKey = exports.textTypes = exports.eventPriorities = exports.hideClass = void 0;
+var constants_1 = __webpack_require__("./node_modules/react-reconciler/constants.js");
+var diffing_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js");
+exports.hideClass = 'react-unity__renderer__hidden';
+exports.eventPriorities = {
+  discrete: constants_1.DiscreteEventPriority,
+  continuous: constants_1.ContinuousEventPriority,
+  "default": constants_1.DefaultEventPriority,
+  idle: constants_1.IdleEventPriority
+};
+exports.textTypes = {
+  text: true,
+  icon: true,
+  style: true,
+  script: true
+};
+function stringizePoolKey(key) {
+  switch (typeof key) {
+    case 'string':
+      return key;
+    case 'boolean':
+      return key ? 'default' : '';
+    case 'number':
+      return key.toString();
+    case 'undefined':
+      return null;
+    default:
+      return '';
+  }
+}
+exports.stringizePoolKey = stringizePoolKey;
+function getAllowedProps(props, type) {
+  var children = props.children,
+    tag = props.tag,
+    pool = props.pool,
+    rest = __rest(props, ["children", "tag", "pool"]);
+  if (exports.textTypes[type] && 'children' in props) {
+    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
+  }
+  if (typeof props.style === 'string') rest[diffing_1.styleStringSymbol] = props.style;
+  return rest;
+}
+exports.getAllowedProps = getAllowedProps;
+exports.commonReconciler = {
+  // -------------------
+  //     Scheduling
+  // -------------------
+  now: Date.now,
+  getCurrentEventPriority: function getCurrentEventPriority() {
+    return UnityBridge.CurrentEventPriority || exports.eventPriorities["default"];
+  },
+  noTimeout: -1,
+  scheduleTimeout: function scheduleTimeout(callback, delay) {
+    return setTimeout(callback, delay);
+  },
+  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
+    return Promise.resolve(null).then(callback)["catch"](function (error) {
+      return setTimeout(function () {
+        throw error;
+      }, 0);
+    });
+  },
+  cancelTimeout: function cancelTimeout(handle) {
+    return clearTimeout(handle);
+  },
+  beforeActiveInstanceBlur: function beforeActiveInstanceBlur() {},
+  afterActiveInstanceBlur: function afterActiveInstanceBlur() {},
+  getInstanceFromNode: function getInstanceFromNode(node) {
+    return undefined;
+  },
+  getInstanceFromScope: function getInstanceFromScope(scopeInstance) {
+    return undefined;
+  },
+  prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
+};
+exports.isDevelopment = "production" === 'development';
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.diffProperties = exports.styleStringSymbol = void 0;
+exports.styleStringSymbol = '__style_as_string__';
+var propDepths = {
+  style: 1,
+  data: 1,
+  custom: 1
+};
+function diffProperties(lastProps, nextProps, deepDiffing) {
+  if (deepDiffing === void 0) {
+    deepDiffing = 0;
+  }
+  if (lastProps === nextProps) return null;
+  var updatePayload = null;
+  var propKey;
+  for (propKey in lastProps) {
+    // This loop is for removing properties that existed in the previous properties, but not on current
+    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
+      continue;
+    }
+    var prop = null;
+    // If style existed in the previous properties as string, set it to null
+    if (propKey === 'style' && typeof lastProps.style === 'string') {
+      (updatePayload = updatePayload || {})[exports.styleStringSymbol] = null;
+    } else {
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
+      if (depth > 0) {
+        prop = diffProperties(lastProps[propKey], {}, depth - 1);
+        if (!prop) continue;
+      }
+      // For all other deleted properties we add it to the queue. We use
+      // the whitelist in the commit phase instead.
+      (updatePayload = updatePayload || {})[propKey] = prop;
+    }
+  }
+  for (propKey in nextProps) {
+    // This loop is for finding difference between current properties and previous properties
+    var nextProp = nextProps[propKey];
+    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
+    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
+      continue;
+    }
+    var prop = nextProp;
+    if (propKey === 'style') {
+      var prevWasString = typeof lastProp === 'string';
+      var curIsString = typeof prop === 'string';
+      if (prevWasString !== curIsString) {
+        (updatePayload = updatePayload || {})[exports.styleStringSymbol] = typeof prop === 'string' ? prop : null;
+        if (curIsString) {
+          // Current style is string while previous is object, so revert all changes from the previous one
+          prop = diffProperties(lastProp, {}, 0);
+          if (!prop) continue;
+        }
+      } else {
+        if (curIsString) {
+          // Both styles are string, style does not need changing
+          continue;
+        } else {
+          // Both styles are object, take the difference
+          prop = diffProperties(lastProp, nextProp, 0);
+          if (!prop) continue;
+        }
+      }
+    } else {
+      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
+      if (depth > 0) {
+        prop = diffProperties(lastProp, nextProp, depth - 1);
+        if (!prop) continue;
+      }
+    }
+    (updatePayload = updatePayload || {})[propKey] = prop;
+  }
+  return updatePayload;
+}
+exports.diffProperties = diffProperties;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.flushSync = exports.batchedUpdates = exports.Renderer = exports.render = void 0;
+var react_1 = __webpack_require__("./node_modules/react/index.js");
+var constants_1 = __webpack_require__("./node_modules/react-reconciler/constants.js");
+var version_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/version.js");
+var default_view_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/views/default-view.js");
+var objects_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js");
+var reconciler_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js");
+var constants_2 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/constants.js");
+var reconciler_2 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js");
+var containerMap = new Map();
+var renderCount = 0;
+function _render(element, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  renderCount++;
+  var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
+  var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
+  var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
+  var _a = containerMap.get(cacheKey) || {},
+    hostRoot = _a.hostRoot,
+    asyncJobCallback = _a.asyncJobCallback;
+  var findFiberByHostInstance = function findFiberByHostInstance() {
+    return null;
+  };
+  if (!hostRoot) {
+    var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants_1.LegacyRoot : constants_1.ConcurrentRoot;
+    if (isAsync) {
+      var fiberCache_1 = constants_2.isDevelopment ? new objects_1.ObjectsRepo() : null;
+      if (constants_2.isDevelopment) {
+        findFiberByHostInstance = function findFiberByHostInstance(instance) {
+          return !instance ? null : fiberCache_1.getObject(instance.refId);
+        };
+      }
+      var scheduled_1 = false;
+      var commands_1 = [];
+      commands_1.push = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        if (!scheduled_1) {
+          scheduled_1 = true;
+          Promise.resolve().then(function () {
+            asyncJobCallback();
+            scheduled_1 = false;
+          });
+        }
+        return Array.prototype.push.apply(commands_1, args);
+      };
+      var hostContainerInstance_1 = {
+        type: 'native',
+        commands: commands_1,
+        component: hostContainer,
+        context: hostContainer.Context,
+        refId: hostContainer.RefId,
+        fiberCache: fiberCache_1
+      };
+      asyncJobCallback = function asyncJobCallback() {
+        if (!commands_1.length) return;
+        var serialized = JSON.stringify(commands_1);
+        commands_1.length = 0;
+        hostContainerInstance_1.context.FlushCommands(serialized);
+      };
+      hostRoot = reconciler_1.asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    } else {
+      hostRoot = reconciler_2.syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
+        return console.error(error);
+      }, null);
+    }
+    containerMap.set(cacheKey, {
+      hostRoot: hostRoot,
+      asyncJobCallback: asyncJobCallback
+    });
+  }
+  var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
+  if (shouldWrapWithHelpers) {
+    var viewWrapperProps = {
+      withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
+      renderCount: renderCount
+    };
+    element = (0, react_1.createElement)(default_view_1.DefaultView, viewWrapperProps, element);
+  }
+  var rc = isAsync ? reconciler_1.asyncReconciler : reconciler_2.syncReconciler;
+  rc.updateContainer(element, hostRoot, null);
+  rc.injectIntoDevTools({
+    bundleType: constants_2.isDevelopment ? 1 : 0,
+    version: version_1.version,
+    rendererPackageName: '@reactunity/renderer',
+    rendererConfig: {
+      isAsync: isAsync
+    },
+    findFiberByHostInstance: findFiberByHostInstance
+  });
+  return rc;
+}
+exports.render = _render;
+/**
+ * @deprecated Instead, import `render` directly from `@reactunity/renderer`
+ */
+exports.Renderer = {
+  render: function render(element, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return _render(element, options);
+  }
+};
+exports.batchedUpdates = reconciler_1.asyncReconciler.batchedUpdates;
+exports.flushSync = reconciler_1.asyncReconciler.flushSync;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/index.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.subContextRenderers = void 0;
+var richtext_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/richtext.js");
+var svg_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/svg.js");
+exports.subContextRenderers = {
+  richtext: richtext_1.stringifyRichText,
+  svg: svg_1.stringifySVG
+};
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/richtext.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.stringifyRichText = exports.parametrizeValue = void 0;
+function parametrizeValue(value) {
+  if (typeof value === 'number') return value + '';
+  value = value + '';
+  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
+  return value;
+}
+exports.parametrizeValue = parametrizeValue;
+function stringifyRichText(node) {
+  var _a, _b, _c;
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
+      var value = (_b = node.attributes) === null || _b === void 0 ? void 0 : _b.value;
+      acc.push('=');
+      acc.push(parametrizeValue(value));
+    }
+    for (var key in node.attributes) {
+      if (key === 'value') continue;
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var value = node.attributes[key];
+        if (value != null) {
+          acc.push(' ');
+          acc.push(key);
+          acc.push('=');
+          acc.push(parametrizeValue(value));
+        }
+      }
+    }
+    acc.push('>');
+  }
+  if (((_c = node.children) === null || _c === void 0 ? void 0 : _c.length) > 0) {
+    for (var _i = 0, _d = node.children; _i < _d.length; _i++) {
+      var child = _d[_i];
+      acc.push(stringifyRichText(child));
+    }
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  }
+  return acc.join('');
+}
+exports.stringifyRichText = stringifyRichText;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/svg.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.stringifySVG = exports.stringifyStyle = void 0;
+function kebabize(str) {
+  return str.split('').map(function (letter, idx) {
+    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
+  }).join('');
+}
+;
+function stringifyStyle(style) {
+  if (typeof style === 'string') return style;
+  var acc = [];
+  for (var key in style) {
+    if (Object.prototype.hasOwnProperty.call(style, key)) {
+      var element = style[key];
+      if (element != null) {
+        acc.push(kebabize(key));
+        acc.push(':');
+        acc.push(element);
+        acc.push(';');
+      }
+    }
+  }
+  return acc.join('');
+}
+exports.stringifyStyle = stringifyStyle;
+function stringifySVG(node) {
+  var _a;
+  if (node.hidden) return '';
+  if ('text' in node) return node.text;
+  var acc = [];
+  var tag = node.tag;
+  if (tag) {
+    acc.push('<');
+    acc.push(tag);
+    for (var key in node.attributes) {
+      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
+        var element = node.attributes[key];
+        if (key === 'style') element = stringifyStyle(element);
+        if (element != null) {
+          acc.push(' ');
+          acc.push(kebabize(key));
+          acc.push('="');
+          acc.push(element);
+          acc.push('"');
+        }
+      }
+    }
+  }
+  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+    if (tag) acc.push('>');
+    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
+      var child = _b[_i];
+      acc.push(stringifySVG(child));
+    }
+    if (tag) {
+      acc.push('</');
+      acc.push(tag);
+      acc.push('>');
+    }
+  } else {
+    if (tag) acc.push(' />');
+  }
+  return acc.join('');
+}
+exports.stringifySVG = stringifySVG;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.syncReconciler = void 0;
+var Reconciler = __webpack_require__("./node_modules/react-reconciler/index.js");
+var constants_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/constants.js");
+var diffing_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js");
+var hostContext = {};
+var childContext = {};
+var hostConfig = __assign(__assign({}, constants_1.commonReconciler), {
+  getRootHostContext: function getRootHostContext() {
+    return hostContext;
+  },
+  getChildHostContext: function getChildHostContext() {
+    return childContext;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    return instance;
+  },
+  supportsMutation: true,
+  supportsHydration: false,
+  supportsPersistence: false,
+  supportsMicrotasks: true,
+  supportsTestSelectors: false,
+  isPrimaryRenderer: true,
+  warnsIfNotActing: true,
+  prepareForCommit: function prepareForCommit() {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit() {},
+  clearContainer: function clearContainer(container) {
+    return UnityBridge.clearContainer(container);
+  },
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
+    return false;
+  },
+  createInstance: function createInstance(type, props, rootContainerInstance) {
+    var aProps = (0, constants_1.getAllowedProps)(props, type);
+    var children = aProps.children || null;
+    delete aProps.children;
+    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, (0, constants_1.stringizePoolKey)(props.pool));
+  },
+  createTextInstance: function createTextInstance(text, rootContainerInstance) {
+    return UnityBridge.createText(text, rootContainerInstance);
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    UnityBridge.appendChild(parent, child);
+  },
+  finalizeInitialChildren: function finalizeInitialChildren() {
+    return false;
+  },
+  commitMount: function commitMount() {},
+  shouldSetTextContent: function shouldSetTextContent(type) {
+    return constants_1.textTypes[type];
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
+    return (0, diffing_1.diffProperties)(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type) {
+    UnityBridge.applyUpdate(instance, (0, constants_1.getAllowedProps)(updatePayload, type), type);
+  },
+  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+    UnityBridge.setText(textInstance, newText);
+  },
+  appendChild: function appendChild(parent, child) {
+    return UnityBridge.appendChild(parent, child);
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    return UnityBridge.appendChildToContainer(parent, child);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    return UnityBridge.insertBefore(parent, child, beforeChild);
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    return UnityBridge.insertBefore(parent, child, beforeChild);
+  },
+  removeChild: function removeChild(parent, child) {
+    return UnityBridge.removeChild(parent, child);
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    return UnityBridge.removeChild(parent, child);
+  },
+  resetTextContent: function resetTextContent() {},
+  preparePortalMount: function preparePortalMount() {},
+  detachDeletedInstance: function detachDeletedInstance() {},
+  // Required for Suspense
+  hideInstance: function hideInstance(instance) {
+    instance.ClassList.Add(constants_1.hideClass);
+  },
+  hideTextInstance: function hideTextInstance(instance) {
+    instance.ClassList.Add(constants_1.hideClass);
+  },
+  unhideInstance: function unhideInstance(instance) {
+    instance.ClassList.Remove(constants_1.hideClass);
+  },
+  unhideTextInstance: function unhideTextInstance(instance) {
+    instance.ClassList.Remove(constants_1.hideClass);
+  }
+});
+exports.syncReconciler = Reconciler(hostConfig);
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/version.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.version = void 0;
+exports.version = '0.16.1';
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/views/default-view.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.DefaultView = void 0;
+var jsx_runtime_1 = __webpack_require__("./node_modules/react/jsx-runtime.js");
+var error_boundary_1 = __webpack_require__("./node_modules/@reactunity/renderer/dist/src/views/error-boundary.js");
+function DefaultView(_a) {
+  var children = _a.children,
+    withHelpers = _a.withHelpers,
+    renderCount = _a.renderCount;
+  return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {
+    children: !withHelpers ? children : (0, jsx_runtime_1.jsx)(error_boundary_1.ErrorBoundary, {
+      children: children
+    }, renderCount)
+  });
+}
+exports.DefaultView = DefaultView;
+
+/***/ }),
+
+/***/ "./node_modules/@reactunity/renderer/dist/src/views/error-boundary.js":
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+    return _extendStatics(d, b);
+  };
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    _extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.ErrorBoundary = void 0;
+var jsx_runtime_1 = __webpack_require__("./node_modules/react/jsx-runtime.js");
+var React = __webpack_require__("./node_modules/react/index.js");
+var ErrorBoundary = /** @class */function (_super) {
+  __extends(ErrorBoundary, _super);
+  function ErrorBoundary(props) {
+    var _this = _super.call(this, props) || this;
+    _this.state = {
+      hasError: false,
+      error: null
+    };
+    return _this;
+  }
+  ErrorBoundary.getDerivedStateFromError = function (error) {
+    // Update state so the next render will show the fallback UI.
+    return {
+      hasError: true,
+      error: error
+    };
+  };
+  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {
+    // You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo);
+  };
+  ErrorBoundary.prototype.render = function () {
+    var _a, _b;
+    if (this.state.hasError) {
+      return (0, jsx_runtime_1.jsxs)("view", {
+        id: '__react-unity-error-boundary',
+        style: {
+          color: 'crimson',
+          padding: 20,
+          fontSize: 16
+        },
+        children: [(0, jsx_runtime_1.jsx)("view", {
+          style: {
+            marginBottom: '12px'
+          },
+          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
+        }), (0, jsx_runtime_1.jsx)("view", {
+          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
+        })]
+      });
+    }
+    return this.props.children;
+  };
+  return ErrorBoundary;
+}(React.Component);
+exports.ErrorBoundary = ErrorBoundary;
 
 /***/ }),
 
@@ -6746,6 +8595,80 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, g) {
 
 /***/ }),
 
+/***/ "./node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * use-sync-external-store-with-selector.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+var g = __webpack_require__("./node_modules/react/index.js");
+function n(a, b) {
+  return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
+}
+var p = "function" === typeof Object.is ? Object.is : n,
+  q = g.useSyncExternalStore,
+  r = g.useRef,
+  t = g.useEffect,
+  u = g.useMemo,
+  v = g.useDebugValue;
+exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
+  var c = r(null);
+  if (null === c.current) {
+    var f = {
+      hasValue: !1,
+      value: null
+    };
+    c.current = f;
+  } else f = c.current;
+  c = u(function () {
+    function a(a) {
+      if (!c) {
+        c = !0;
+        d = a;
+        a = l(a);
+        if (void 0 !== h && f.hasValue) {
+          var b = f.value;
+          if (h(b, a)) return k = b;
+        }
+        return k = a;
+      }
+      b = k;
+      if (p(d, a)) return b;
+      var e = l(a);
+      if (void 0 !== h && h(b, e)) return b;
+      d = a;
+      return k = e;
+    }
+    var c = !1,
+      d,
+      k,
+      m = void 0 === e ? null : e;
+    return [function () {
+      return a(b());
+    }, null === m ? void 0 : function () {
+      return a(m());
+    }];
+  }, [b, e, l, h]);
+  var d = q(a, c[0], c[1]);
+  t(function () {
+    f.hasValue = !0;
+    f.value = d;
+  }, [d]);
+  v(d);
+  return d;
+};
+
+/***/ }),
+
 /***/ "./node_modules/use-sync-external-store/shim/index.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -6770,12 +8693,24 @@ if (true) {
 
 /***/ }),
 
+/***/ "./node_modules/use-sync-external-store/with-selector.js":
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__("./node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
+} else {}
+
+/***/ }),
+
 /***/ "../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[1]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[6].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[6].use[3]!./src/index.scss":
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/css-loader/dist/runtime/noSourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -6786,7 +8721,7 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ``, ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -6799,7 +8734,7 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/css-loader/dist/runtime/noSourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -6810,15 +8745,15 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".inventory_host__UCXnh{position:absolute;left:10px;top:10px;width:380px;height:500px;overflow:hidden;border-radius:10px}.inventory_border__s9lfm{border-width:10px;border-color:#adadad;border-radius:10px;pointer-events:none;width:100%;height:100%;position:absolute}.inventory_frame__V3ron{padding:10px;flex-grow:1;max-height:100%;flex-direction:column;width:390px}.inventory_items__XwhLG{flex-direction:row;flex-wrap:wrap;padding:4px;background-color:#adadad}.inventory_itemSlot__69\\+HS{margin:4px;border-radius:4px;flex:0;width:80px;padding:5px;height:80px;background-color:#cacaca;border-width:2px;border-color:#9c9c9c;box-shadow:1px 1px 5px 5px 5px #000}.inventory_itemSlot__69\\+HS:hover{background-color:#ddd}.inventory_item__RGSof image{object-fit:fill}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.inventory_host__UCXnh{position:absolute;left:10px;top:10px;width:380px;height:500px;overflow:hidden;border-radius:10px}.inventory_border__s9lfm{border-width:10px;border-color:#adadad;border-radius:10px;pointer-events:none;width:100%;height:100%;position:absolute}.inventory_frame__V3ron{padding:10px;flex-grow:1;max-height:100%;flex-direction:column;width:390px}.inventory_items__XwhLG{flex-direction:row;flex-wrap:wrap;padding:4px;background-color:#adadad}.inventory_itemSlot__69\\+HS{margin:4px;border-radius:4px;flex:0;width:80px;padding:5px;height:80px;background-color:#cacaca;border-width:2px;border-color:#9c9c9c;box-shadow:1px 1px 5px 5px 5px #000}.inventory_itemSlot__69\\+HS:hover{background-color:#ddd}.inventory_item__RGSof image{object-fit:fill}`, ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"host": "inventory_host__UCXnh",
-	"border": "inventory_border__s9lfm",
-	"frame": "inventory_frame__V3ron",
-	"items": "inventory_items__XwhLG",
-	"itemSlot": "inventory_itemSlot__69+HS",
-	"item": "inventory_item__RGSof"
+	"host": `inventory_host__UCXnh`,
+	"border": `inventory_border__s9lfm`,
+	"frame": `inventory_frame__V3ron`,
+	"items": `inventory_items__XwhLG`,
+	"itemSlot": `inventory_itemSlot__69+HS`,
+	"item": `inventory_item__RGSof`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6832,24 +8767,19 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var stylesInDOM = [];
-
 function getIndexByIdentifier(identifier) {
   var result = -1;
-
   for (var i = 0; i < stylesInDOM.length; i++) {
     if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
   }
-
   return result;
 }
-
 function modulesToDom(list, options) {
   var idCountMap = {};
   var identifiers = [];
-
   for (var i = 0; i < list.length; i++) {
     var item = list[i];
     var id = options.base ? item[0] + options.base : item[0];
@@ -6864,7 +8794,6 @@ function modulesToDom(list, options) {
       supports: item[4],
       layer: item[5]
     };
-
     if (indexByIdentifier !== -1) {
       stylesInDOM[indexByIdentifier].references++;
       stylesInDOM[indexByIdentifier].updater(obj);
@@ -6877,59 +8806,45 @@ function modulesToDom(list, options) {
         references: 1
       });
     }
-
     identifiers.push(identifier);
   }
-
   return identifiers;
 }
-
 function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-
   var updater = function updater(newObj) {
     if (newObj) {
       if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
-
       api.update(obj = newObj);
     } else {
       api.remove();
     }
   };
-
   return updater;
 }
-
 module.exports = function (list, options) {
   options = options || {};
   list = list || [];
   var lastIdentifiers = modulesToDom(list, options);
   return function update(newList) {
     newList = newList || [];
-
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
       stylesInDOM[index].references--;
     }
-
     var newLastIdentifiers = modulesToDom(newList, options);
-
     for (var _i = 0; _i < lastIdentifiers.length; _i++) {
       var _identifier = lastIdentifiers[_i];
-
       var _index = getIndexByIdentifier(_identifier);
-
       if (stylesInDOM[_index].references === 0) {
         stylesInDOM[_index].updater();
-
         stylesInDOM.splice(_index, 1);
       }
     }
-
     lastIdentifiers = newLastIdentifiers;
   };
 };
@@ -6943,12 +8858,13 @@ module.exports = function (list, options) {
 
 
 var memo = {};
-/* istanbul ignore next  */
 
+/* istanbul ignore next  */
 function getTarget(target) {
   if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+    var styleTarget = document.querySelector(target);
 
+    // Special case to return head of iframe instead of iframe itself
     if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
       try {
         // This will throw an exception if access to iframe is blocked
@@ -6959,25 +8875,19 @@ function getTarget(target) {
         styleTarget = null;
       }
     }
-
     memo[target] = styleTarget;
   }
-
   return memo[target];
 }
+
 /* istanbul ignore next  */
-
-
 function insertBySelector(insert, style) {
   var target = getTarget(insert);
-
   if (!target) {
     throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
   }
-
   target.appendChild(style);
 }
-
 module.exports = insertBySelector;
 
 /***/ }),
@@ -6995,7 +8905,6 @@ function insertStyleElement(options) {
   options.insert(element, options.options);
   return element;
 }
-
 module.exports = insertStyleElement;
 
 /***/ }),
@@ -7009,12 +8918,10 @@ module.exports = insertStyleElement;
 /* istanbul ignore next  */
 function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
-
   if (nonce) {
     styleElement.setAttribute("nonce", nonce);
   }
 }
-
 module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
@@ -7028,59 +8935,51 @@ module.exports = setAttributesWithoutAttributes;
 /* istanbul ignore next  */
 function apply(styleElement, options, obj) {
   var css = "";
-
   if (obj.supports) {
     css += "@supports (".concat(obj.supports, ") {");
   }
-
   if (obj.media) {
     css += "@media ".concat(obj.media, " {");
   }
-
   var needLayer = typeof obj.layer !== "undefined";
-
   if (needLayer) {
     css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
   }
-
   css += obj.css;
-
   if (needLayer) {
     css += "}";
   }
-
   if (obj.media) {
     css += "}";
   }
-
   if (obj.supports) {
     css += "}";
   }
-
   var sourceMap = obj.sourceMap;
-
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  } // For old IE
+  }
 
+  // For old IE
   /* istanbul ignore if  */
-
-
   options.styleTagTransform(css, styleElement, options.options);
 }
-
 function removeStyleElement(styleElement) {
   // istanbul ignore if
   if (styleElement.parentNode === null) {
     return false;
   }
-
   styleElement.parentNode.removeChild(styleElement);
 }
+
 /* istanbul ignore next  */
-
-
 function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
   var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
@@ -7091,7 +8990,6 @@ function domAPI(options) {
     }
   };
 }
-
 module.exports = domAPI;
 
 /***/ }),
@@ -7110,11 +9008,9 @@ function styleTagTransform(css, styleElement) {
     while (styleElement.firstChild) {
       styleElement.removeChild(styleElement.firstChild);
     }
-
     styleElement.appendChild(document.createTextNode(css));
   }
 }
-
 module.exports = styleTagTransform;
 
 /***/ })
@@ -7139,7 +9035,7 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -7203,1094 +9099,67 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__("./node_modules/react/index.js");
-// EXTERNAL MODULE: ./node_modules/react-reconciler/constants.js
-var constants = __webpack_require__("./node_modules/react-reconciler/constants.js");
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/version.js
-var version = '0.15.2';
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__("./node_modules/react/jsx-runtime.js");
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/views/error-boundary.js
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-    return _extendStatics(d, b);
-  };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-    return t;
-  };
-  return __assign.apply(this, arguments);
-};
-
-
-var ErrorBoundary = /** @class */function (_super) {
-  __extends(ErrorBoundary, _super);
-  function ErrorBoundary(props) {
-    var _this = _super.call(this, props) || this;
-    _this.state = {
-      hasError: false,
-      error: null
-    };
-    return _this;
-  }
-  ErrorBoundary.getDerivedStateFromError = function (error) {
-    // Update state so the next render will show the fallback UI.
-    return {
-      hasError: true,
-      error: error
-    };
-  };
-  ErrorBoundary.prototype.componentDidCatch = function (error, errorInfo) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-  };
-  ErrorBoundary.prototype.render = function () {
-    var _a, _b;
-    if (this.state.hasError) {
-      return (0,jsx_runtime.jsxs)("view", __assign({
-        id: '__react-unity-error-boundary',
-        style: {
-          color: 'crimson',
-          padding: 20,
-          fontSize: 16
-        }
-      }, {
-        children: [(0,jsx_runtime.jsx)("view", __assign({
-          style: {
-            marginBottom: '12px'
-          }
-        }, {
-          children: ((_a = this.state.error) === null || _a === void 0 ? void 0 : _a.message) || ''
-        })), (0,jsx_runtime.jsx)("view", {
-          children: ((_b = this.state.error) === null || _b === void 0 ? void 0 : _b.stack) || ''
-        })]
-      }));
-    }
-    return this.props.children;
-  };
-  return ErrorBoundary;
-}(react.Component);
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/views/default-view.js
-
-
-function DefaultView(_a) {
-  var children = _a.children,
-    withHelpers = _a.withHelpers,
-    renderCount = _a.renderCount;
-  return (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
-    children: !withHelpers ? children : (0,jsx_runtime.jsx)(ErrorBoundary, {
-      children: children
-    }, renderCount)
-  });
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/objects.js
-var ObjectsRepo = /** @class */function () {
-  function ObjectsRepo() {
-    var _this = this;
-    this.indices = [{}];
-    this.objects = new WeakMap();
-    this.setObject = function (index, item) {
-      var it = _this.indices[index];
-      if (!it) {
-        it = _this.indices[index] = {};
-      }
-      _this.objects.set(it, item);
-    };
-    this.addObject = function (item) {
-      if (!item) return -1;
-      var it = {};
-      var ind = _this.indices.length;
-      _this.indices.push(it);
-      _this.objects.set(it, item);
-      return ind;
-    };
-    this.getObject = function (index) {
-      if (index < 0) return undefined;
-      var it = _this.indices[index];
-      return _this.objects.get(it);
-    };
-  }
-  return ObjectsRepo;
-}();
-
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__("./node_modules/react-reconciler/index.js");
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
-var styleStringSymbol = '__style_as_string__';
-var propDepths = {
-  style: 1,
-  data: 1,
-  custom: 1
-};
-function diffProperties(lastProps, nextProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
-  if (lastProps === nextProps) return null;
-  var updatePayload = null;
-  var propKey;
-  for (propKey in lastProps) {
-    // This loop is for removing properties that existed in the previous properties, but not on current
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue;
-    }
-    var prop = null;
-    // If style existed in the previous properties as string, set it to null
-    if (propKey === 'style' && typeof lastProps.style === 'string') {
-      (updatePayload = updatePayload || {})[styleStringSymbol] = null;
-    } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
-      if (depth > 0) {
-        prop = diffProperties(lastProps[propKey], {}, depth - 1);
-        if (!prop) continue;
-      }
-      // For all other deleted properties we add it to the queue. We use
-      // the whitelist in the commit phase instead.
-      (updatePayload = updatePayload || {})[propKey] = prop;
-    }
-  }
-  for (propKey in nextProps) {
-    // This loop is for finding difference between current properties and previous properties
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-    var prop = nextProp;
-    if (propKey === 'style') {
-      var prevWasString = typeof lastProp === 'string';
-      var curIsString = typeof prop === 'string';
-      if (prevWasString !== curIsString) {
-        (updatePayload = updatePayload || {})[styleStringSymbol] = typeof prop === 'string' ? prop : null;
-        if (curIsString) {
-          // Current style is string while previous is object, so revert all changes from the previous one
-          prop = diffProperties(lastProp, {}, 0);
-          if (!prop) continue;
-        }
-      } else {
-        if (curIsString) {
-          // Both styles are string, style does not need changing
-          continue;
-        } else {
-          // Both styles are object, take the difference
-          prop = diffProperties(lastProp, nextProp, 0);
-          if (!prop) continue;
-        }
-      }
-    } else {
-      var depth = deepDiffing > 0 ? deepDiffing : propDepths[propKey] || 0;
-      if (depth > 0) {
-        prop = diffProperties(lastProp, nextProp, depth - 1);
-        if (!prop) continue;
-      }
-    }
-    (updatePayload = updatePayload || {})[propKey] = prop;
-  }
-  return updatePayload;
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/constants.js
-var __rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-var hideClass = 'react-unity__renderer__hidden';
-var eventPriorities = {
-  discrete: constants.DiscreteEventPriority,
-  continuous: constants.ContinuousEventPriority,
-  "default": constants.DefaultEventPriority,
-  idle: constants.IdleEventPriority
-};
-var textTypes = {
-  text: true,
-  icon: true,
-  style: true,
-  script: true
-};
-function stringizePoolKey(key) {
-  switch (typeof key) {
-    case 'string':
-      return key;
-    case 'boolean':
-      return key ? 'default' : '';
-    case 'number':
-      return key.toString();
-    case 'undefined':
-      return null;
-    default:
-      return '';
-  }
-}
-function getAllowedProps(props, type) {
-  var children = props.children,
-    tag = props.tag,
-    pool = props.pool,
-    rest = __rest(props, ["children", "tag", "pool"]);
-  if (textTypes[type] && 'children' in props) {
-    rest.children = !children || typeof children === 'boolean' ? null : Array.isArray(children) ? children.join('') : children + '';
-  }
-  if (typeof props.style === 'string') rest[styleStringSymbol] = props.style;
-  return rest;
-}
-var commonReconciler = {
-  // -------------------
-  //     Scheduling
-  // -------------------
-  now: Date.now,
-  getCurrentEventPriority: function getCurrentEventPriority() {
-    return UnityBridge.CurrentEventPriority || eventPriorities["default"];
-  },
-  noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, delay) {
-    return setTimeout(callback, delay);
-  },
-  scheduleMicrotask: typeof queueMicrotask === 'function' ? queueMicrotask : function (callback) {
-    return Promise.resolve(null).then(callback)["catch"](function (error) {
-      return setTimeout(function () {
-        throw error;
-      }, 0);
-    });
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    return clearTimeout(handle);
-  },
-  beforeActiveInstanceBlur: function beforeActiveInstanceBlur() {},
-  afterActiveInstanceBlur: function afterActiveInstanceBlur() {},
-  getInstanceFromNode: function getInstanceFromNode(node) {
-    return undefined;
-  },
-  getInstanceFromScope: function getInstanceFromScope(scopeInstance) {
-    return undefined;
-  },
-  prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
-};
-var isDevelopment = "production" === 'development';
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/richtext.js
-function parametrizeValue(value) {
-  if (typeof value === 'number') return value + '';
-  value = value + '';
-  if (value.includes(' ') || value.includes('-')) return '"' + value + '"';
-  return value;
-}
-function stringifyRichText(node) {
-  var _a, _b, _c;
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
-  if (tag) {
-    acc.push('<');
-    acc.push(tag);
-    if (((_a = node.attributes) === null || _a === void 0 ? void 0 : _a.value) != null) {
-      var value = (_b = node.attributes) === null || _b === void 0 ? void 0 : _b.value;
-      acc.push('=');
-      acc.push(parametrizeValue(value));
-    }
-    for (var key in node.attributes) {
-      if (key === 'value') continue;
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
-        var value = node.attributes[key];
-        if (value != null) {
-          acc.push(' ');
-          acc.push(key);
-          acc.push('=');
-          acc.push(parametrizeValue(value));
-        }
-      }
-    }
-    acc.push('>');
-  }
-  if (((_c = node.children) === null || _c === void 0 ? void 0 : _c.length) > 0) {
-    for (var _i = 0, _d = node.children; _i < _d.length; _i++) {
-      var child = _d[_i];
-      acc.push(stringifyRichText(child));
-    }
-    if (tag) {
-      acc.push('</');
-      acc.push(tag);
-      acc.push('>');
-    }
-  }
-  return acc.join('');
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/svg.js
-function kebabize(str) {
-  return str.split('').map(function (letter, idx) {
-    return letter.toUpperCase() === letter ? "".concat(idx !== 0 ? '-' : '').concat(letter.toLowerCase()) : letter;
-  }).join('');
-}
-;
-function stringifyStyle(style) {
-  if (typeof style === 'string') return style;
-  var acc = [];
-  for (var key in style) {
-    if (Object.prototype.hasOwnProperty.call(style, key)) {
-      var element = style[key];
-      if (element != null) {
-        acc.push(kebabize(key));
-        acc.push(':');
-        acc.push(element);
-        acc.push(';');
-      }
-    }
-  }
-  return acc.join('');
-}
-function stringifySVG(node) {
-  var _a;
-  if (node.hidden) return '';
-  if ('text' in node) return node.text;
-  var acc = [];
-  var tag = node.tag;
-  if (tag) {
-    acc.push('<');
-    acc.push(tag);
-    for (var key in node.attributes) {
-      if (Object.prototype.hasOwnProperty.call(node.attributes, key)) {
-        var element = node.attributes[key];
-        if (key === 'style') element = stringifyStyle(element);
-        if (element != null) {
-          acc.push(' ');
-          acc.push(kebabize(key));
-          acc.push('="');
-          acc.push(element);
-          acc.push('"');
-        }
-      }
-    }
-  }
-  if (((_a = node.children) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-    if (tag) acc.push('>');
-    for (var _i = 0, _b = node.children; _i < _b.length; _i++) {
-      var child = _b[_i];
-      acc.push(stringifySVG(child));
-    }
-    if (tag) {
-      acc.push('</');
-      acc.push(tag);
-      acc.push('>');
-    }
-  } else {
-    if (tag) acc.push(' />');
-  }
-  return acc.join('');
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/subcontexts/index.js
-
-
-var subContextRenderers = {
-  'richtext': stringifyRichText,
-  'svg': stringifySVG
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/callbacks.js
-var callbacks_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-    return _extendStatics(d, b);
-  };
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    _extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var CallbacksRepo = /** @class */function (_super) {
-  callbacks_extends(CallbacksRepo, _super);
-  function CallbacksRepo() {
-    var _this = _super.call(this) || this;
-    _this.call = function (ind, args) {
-      var cb = _this.getObject(ind);
-      var argsAsList = args;
-      var argsAsArray = args;
-      if (typeof argsAsArray.Length === 'number') {
-        // C# Array
-        args = [];
-        var length = argsAsArray.Length;
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsArray.GetValue(index));
-        }
-      } else if (typeof argsAsList.Count === 'number') {
-        // C# List
-        args = [];
-        var length = argsAsList.Count;
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsList[index]);
-        }
-      } else if (typeof argsAsList.Count === 'function') {
-        // C# IList
-        args = [];
-        var length = argsAsList.Count();
-        for (var index = 0; index < length; index++) {
-          args.push(argsAsArray.GetValue(index));
-        }
-      }
-      return cb.apply(null, args);
-    };
-    return _this;
-  }
-  return CallbacksRepo;
-}(ObjectsRepo);
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/serializer.js
-
-
-var callbacksRepo = new CallbacksRepo();
-var objectsRepo = new ObjectsRepo();
-// Separates properties in 3 categories: regular props, callbacks and non-serializable objects
-function convertPropsToSerializable(props) {
-  var res = {};
-  for (var key in props) {
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      var value = props[key];
-      if (value == null) {
-        (res.p || (res.p = {}))[key] = null;
-      } else if (key === 'style') {
-        (res.p || (res.p = {}))[key] = convertPropsToSerializable(value);
-      } else if (key[0] === 'o' && key[1] === 'n' && typeof value === 'function') {
-        var ind = callbacksRepo.addObject(value);
-        (res.e || (res.e = {}))[key] = ind;
-      } else if (typeof value === 'object' || typeof value === 'function') {
-        var ind = objectsRepo.addObject(value);
-        (res.o || (res.o = {}))[key] = ind;
-      } else {
-        (res.p || (res.p = {}))[key] = value;
-      }
-    }
-  }
-  return res;
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/async/reconciler.js
-var reconciler_assign = undefined && undefined.__assign || function () {
-  reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-    return t;
-  };
-  return reconciler_assign.apply(this, arguments);
-};
-
-
-
-
-
-var refId = 0;
-var ctxMap = new Map();
-var updateSubContext = function updateSubContext(instance) {
-  var rend = subContextRenderers[instance.type];
-  var root = instance === null || instance === void 0 ? void 0 : instance.root;
-  var cur = instance;
-  while (cur && !root) {
-    root = cur.root;
-    cur = cur.parent;
-  }
-  if (!root) return;
-  var content = rend(root.subContext.node);
-  if (instance.type === 'richtext') {
-    instance.hostContext.commands.push(['x', {
-      r: root.refId,
-      c: content
-    }]);
-  } else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', reconciler_assign({
-      r: root.refId,
-      t: 'svg'
-    }, convertPropsToSerializable({
-      innerContent: content
-    }))]);
-  }
-};
-var hostConfig = reconciler_assign(reconciler_assign({}, commonReconciler), {
-  getRootHostContext: function getRootHostContext(rootContainer) {
-    var context = rootContainer.context;
-    if (rootContainer.refId < 0) {
-      refId++;
-      rootContainer.context.SetRef(refId, rootContainer.component);
-      rootContainer.refId = refId;
-    }
-    var existing = ctxMap.get(context);
-    if (existing) return existing;
-    var commands = rootContainer.commands;
-    var flushCommands = function flushCommands() {
-      var serialized = JSON.stringify(commands);
-      commands.length = 0;
-      return serialized;
-    };
-    var fireEventByRef = function fireEventByRef(ind, args) {
-      return callbacksRepo.call(ind, args);
-    };
-    var getObjectRef = function getObjectRef(ind) {
-      return objectsRepo.getObject(ind);
-    };
-    var getEventAsObjectRef = function getEventAsObjectRef(ind) {
-      return callbacksRepo.getObject(ind);
-    };
-    context.BindCommands(flushCommands, fireEventByRef, getObjectRef, getEventAsObjectRef);
-    var ctx = {
-      context: context,
-      commands: commands,
-      refId: rootContainer.refId,
-      type: 'native'
-    };
-    ctxMap.set(context, ctx);
-    return ctx;
-  },
-  getChildHostContext: function getChildHostContext(parentCtx, type) {
-    if (type === 'richtext' && parentCtx.type === 'native') return {
-      type: 'richtext',
-      hostContext: parentCtx,
-      node: null,
-      parent: null,
-      root: null
-    };
-    if (type === 'svg' && parentCtx.type === 'native') return {
-      type: 'svg',
-      hostContext: parentCtx,
-      node: null,
-      parent: null,
-      root: null
-    };
-    return parentCtx;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    if (instance.type === 'native') return instance.context.GetRef(instance.refId, instance.commands.length > 0);
-    return null;
-  },
-  supportsMutation: true,
-  supportsHydration: false,
-  supportsPersistence: false,
-  supportsMicrotasks: true,
-  supportsTestSelectors: false,
-  isPrimaryRenderer: true,
-  warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  clearContainer: function clearContainer(container) {
-    UnityBridge.clearContainer(container);
-  },
-  createInstance: function createInstance(type, props, rootContainer, ctx, internalHandle) {
-    var aProps = getAllowedProps(props, type);
-    if (ctx.type === 'native') {
-      refId++;
-      ctx.commands.push(['c', reconciler_assign({
-        t: type,
-        r: refId,
-        k: stringizePoolKey(props.pool)
-      }, convertPropsToSerializable(aProps))]);
-      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      var res = reconciler_assign(reconciler_assign({}, ctx), {
-        refId: refId
-      });
-      if (type === 'richtext') {
-        res.subContext = {
-          type: 'richtext',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-      if (type === 'svg') {
-        res.subContext = {
-          type: 'svg',
-          node: {
-            tag: '',
-            children: [],
-            attributes: aProps
-          },
-          root: res,
-          hostContext: res,
-          parent: null
-        };
-      }
-      return res;
-    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
-        node: {
-          tag: type,
-          children: [],
-          attributes: aProps
-        }
-      });
-    }
-  },
-  createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
-    if (ctx.type === 'native') {
-      refId++;
-      ctx.commands.push(['t', {
-        r: refId,
-        c: text
-      }]);
-      if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
-      return reconciler_assign(reconciler_assign({}, ctx), {
-        refId: refId
-      });
-    } else if (ctx.type === 'richtext' || ctx.type === 'svg') {
-      return reconciler_assign(reconciler_assign({}, ctx), {
-        node: {
-          text: text
-        }
-      });
-    }
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      parent.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
-      child.root = parent.root;
-      child.parent = parent;
-      updateSubContext(child);
-    }
-  },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount(instance) {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
-    return textTypes[type];
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
-    return diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type) {
-    var props = getAllowedProps(updatePayload, type);
-    if (instance.type === 'native') {
-      instance.commands.push(['u', reconciler_assign({
-        r: instance.refId,
-        t: type
-      }, convertPropsToSerializable(props))]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      if ('attributes' in instance.node) instance.node.attributes = reconciler_assign(reconciler_assign({}, instance.node.attributes), props);
-      updateSubContext(instance);
-    }
-  },
-  commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
-    if (instance.type === 'native') {
-      instance.commands.push(['x', {
-        r: instance.refId,
-        c: newText
-      }]);
-    } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node = {
-        text: newText
-      };
-      updateSubContext(instance);
-    }
-  },
-  appendChild: function appendChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) parent.node.children.push(child.node);
-      child.root = parent.root;
-      child.parent = parent;
-      updateSubContext(child);
-    }
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      child.commands.push(['i', {
-        p: parent.refId,
-        c: child.refId,
-        i: beforeChild.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
-      if ('children' in parent.node) {
-        var index = parent.node.children.indexOf(beforeChild.node);
-        if (index >= 0) parent.node.children.splice(index, 0, child.node);else parent.node.children.push(child.node);
-      }
-      child.root = parent.root;
-      child.parent = parent;
-      updateSubContext(child);
-    }
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
-  },
-  removeChild: function removeChild(parent, child) {
-    if (!child) return;
-    if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
-    if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['r', {
-        p: parent.refId,
-        c: child.refId
-      }]);
-    } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
-      if ('children' in parent.node) {
-        var index = parent.node.children.indexOf(child.node);
-        if (index >= 0) parent.node.children.splice(index, 1);
-      }
-      updateSubContext(parent);
-    }
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
-  },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
-  hideInstance: function hideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = true;
-      updateSubContext(instance);
-    }
-  },
-  hideTextInstance: function hideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = true;
-      updateSubContext(instance);
-    }
-  },
-  unhideInstance: function unhideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = false;
-      updateSubContext(instance);
-    }
-  },
-  unhideTextInstance: function unhideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node.hidden = false;
-      updateSubContext(instance);
-    }
-  }
-});
-var asyncReconciler = react_reconciler(hostConfig);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/sync/reconciler.js
-var sync_reconciler_assign = undefined && undefined.__assign || function () {
-  sync_reconciler_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-    return t;
-  };
-  return sync_reconciler_assign.apply(this, arguments);
-};
-
-
-
-var hostContext = {};
-var childContext = {};
-var reconciler_hostConfig = sync_reconciler_assign(sync_reconciler_assign({}, commonReconciler), {
-  getRootHostContext: function getRootHostContext() {
-    return hostContext;
-  },
-  getChildHostContext: function getChildHostContext() {
-    return childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
-  supportsMutation: true,
-  supportsHydration: false,
-  supportsPersistence: false,
-  supportsMicrotasks: true,
-  supportsTestSelectors: false,
-  isPrimaryRenderer: true,
-  warnsIfNotActing: true,
-  prepareForCommit: function prepareForCommit() {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit() {},
-  clearContainer: function clearContainer(container) {
-    return UnityBridge.clearContainer(container);
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree() {
-    return false;
-  },
-  createInstance: function createInstance(type, props, rootContainerInstance) {
-    var aProps = getAllowedProps(props, type);
-    var children = aProps.children || null;
-    delete aProps.children;
-    return UnityBridge.createElement(props.tag || type, children, rootContainerInstance, aProps, stringizePoolKey(props.pool));
-  },
-  createTextInstance: function createTextInstance(text, rootContainerInstance) {
-    return UnityBridge.createText(text, rootContainerInstance);
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    UnityBridge.appendChild(parent, child);
-  },
-  finalizeInitialChildren: function finalizeInitialChildren() {
-    return false;
-  },
-  commitMount: function commitMount() {},
-  shouldSetTextContent: function shouldSetTextContent(type) {
-    return textTypes[type];
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps) {
-    return diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type) {
-    UnityBridge.applyUpdate(instance, getAllowedProps(updatePayload, type), type);
-  },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    UnityBridge.setText(textInstance, newText);
-  },
-  appendChild: function appendChild(parent, child) {
-    return UnityBridge.appendChild(parent, child);
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    return UnityBridge.appendChildToContainer(parent, child);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  removeChild: function removeChild(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  resetTextContent: function resetTextContent() {},
-  preparePortalMount: function preparePortalMount() {},
-  detachDeletedInstance: function detachDeletedInstance() {},
-  // Required for Suspense
-  hideInstance: function hideInstance(instance) {
-    instance.ClassList.Add(hideClass);
-  },
-  hideTextInstance: function hideTextInstance(instance) {
-    instance.ClassList.Add(hideClass);
-  },
-  unhideInstance: function unhideInstance(instance) {
-    instance.ClassList.Remove(hideClass);
-  },
-  unhideTextInstance: function unhideTextInstance(instance) {
-    instance.ClassList.Remove(hideClass);
-  }
-});
-var syncReconciler = react_reconciler(reconciler_hostConfig);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
-
-
-
-
-
-
-
-
-var containerMap = new Map();
-var renderCount = 0;
-function _render(element, options) {
-  if (options === void 0) {
-    options = {};
-  }
-  renderCount++;
-  var hostContainer = (options === null || options === void 0 ? void 0 : options.hostContainer) || HostContainer;
-  var cacheKey = hostContainer.InstanceId >= 0 ? hostContainer.InstanceId : hostContainer;
-  var isAsync = !(options === null || options === void 0 ? void 0 : options.disableBatchRendering);
-  var _a = containerMap.get(cacheKey) || {},
-    hostRoot = _a.hostRoot,
-    asyncJobCallback = _a.asyncJobCallback;
-  var findFiberByHostInstance = function findFiberByHostInstance() {
-    return null;
-  };
-  if (!hostRoot) {
-    var mode = (options === null || options === void 0 ? void 0 : options.mode) === 'legacy' ? constants.LegacyRoot : constants.ConcurrentRoot;
-    if (isAsync) {
-      var fiberCache_1 = isDevelopment ? new ObjectsRepo() : null;
-      if (isDevelopment) {
-        findFiberByHostInstance = function findFiberByHostInstance(instance) {
-          return !instance ? null : fiberCache_1.getObject(instance.refId);
-        };
-      }
-      var scheduled_1 = false;
-      var commands_1 = [];
-      commands_1.push = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        if (!scheduled_1) {
-          scheduled_1 = true;
-          Promise.resolve().then(function () {
-            asyncJobCallback();
-            scheduled_1 = false;
-          });
-        }
-        return Array.prototype.push.apply(commands_1, args);
-      };
-      var hostContainerInstance_1 = {
-        type: 'native',
-        commands: commands_1,
-        component: hostContainer,
-        context: hostContainer.Context,
-        refId: hostContainer.RefId,
-        fiberCache: fiberCache_1
-      };
-      asyncJobCallback = function asyncJobCallback() {
-        if (!commands_1.length) return;
-        var serialized = JSON.stringify(commands_1);
-        commands_1.length = 0;
-        hostContainerInstance_1.context.FlushCommands(serialized);
-      };
-      hostRoot = asyncReconciler.createContainer(hostContainerInstance_1, mode, null, false, undefined, '', function (error) {
-        return console.error(error);
-      }, null);
-    } else {
-      hostRoot = syncReconciler.createContainer(hostContainer, mode, null, false, undefined, '', function (error) {
-        return console.error(error);
-      }, null);
-    }
-    containerMap.set(cacheKey, {
-      hostRoot: hostRoot,
-      asyncJobCallback: asyncJobCallback
-    });
-  }
-  var shouldWrapWithHelpers = !(options === null || options === void 0 ? void 0 : options.disableHelpers);
-  if (shouldWrapWithHelpers) {
-    var viewWrapperProps = {
-      withHelpers: !(options === null || options === void 0 ? void 0 : options.disableHelpers),
-      renderCount: renderCount
-    };
-    element = (0,react.createElement)(DefaultView, viewWrapperProps, element);
-  }
-  var rc = isAsync ? asyncReconciler : syncReconciler;
-  rc.updateContainer(element, hostRoot, null);
-  rc.injectIntoDevTools({
-    bundleType: isDevelopment ? 1 : 0,
-    version: version,
-    rendererPackageName: '@reactunity/renderer',
-    rendererConfig: {
-      isAsync: isAsync
-    },
-    findFiberByHostInstance: findFiberByHostInstance
-  });
-  return rc;
-}
-/**
- * @deprecated Instead, import `render` directly from `@reactunity/renderer`
- */
-
-var Renderer = {
-  render: function render(element, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return _render(element, options);
-  }
-};
-var batchedUpdates = asyncReconciler.batchedUpdates;
-var flushSync = asyncReconciler.flushSync;
+// EXTERNAL MODULE: ./node_modules/@reactunity/renderer/dist/index.js
+var dist = __webpack_require__("./node_modules/@reactunity/renderer/dist/index.js");
 // EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
 var shim = __webpack_require__("./node_modules/use-sync-external-store/shim/index.js");
 // EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/with-selector.js
 var with_selector = __webpack_require__("./node_modules/use-sync-external-store/shim/with-selector.js");
+;// CONCATENATED MODULE: ../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__("./node_modules/react/index.js");
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/components/Context.js
 
-var Context_ReactReduxContext = /*#__PURE__*/(0,react.createContext)(null);
-if (false) {}
+var ContextKey = Symbol["for"]("react-redux-context");
+var gT = typeof globalThis !== "undefined" ? globalThis : /* fall back to a per-module scope (pre-8.1 behaviour) if `globalThis` is not available */
+{};
+function getContext() {
+  var _gT$ContextKey;
+  if (!react.createContext) return {};
+  var contextMap = (_gT$ContextKey = gT[ContextKey]) != null ? _gT$ContextKey : gT[ContextKey] = new Map();
+  var realContext = contextMap.get(react.createContext);
+  if (!realContext) {
+    realContext = react.createContext(null);
+    if (false) {}
+    contextMap.set(react.createContext, realContext);
+  }
+  return realContext;
+}
+var Context_ReactReduxContext = /*#__PURE__*/getContext();
 /* harmony default export */ const Context = ((/* unused pure expression or super */ null && (Context_ReactReduxContext)));
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/hooks/useReduxContext.js
 
 
 
+/**
+ * Hook factory, which creates a `useReduxContext` hook bound to a given context. This is a low-level
+ * hook that you should usually not need to call directly.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useReduxContext` hook bound to the specified context.
+ */
+function createReduxContextHook() {
+  var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Context_ReactReduxContext;
+  return function useReduxContext() {
+    var contextValue = (0,react.useContext)(context);
+    if (false) {}
+    return contextValue;
+  };
+}
 /**
  * A hook to access the value of the `ReactReduxContext`. This is a low-level
  * hook that you should usually not need to call directly.
@@ -8307,13 +9176,10 @@ if (false) {}
  *   return <div>{store.getState()}</div>
  * }
  */
-function useReduxContext_useReduxContext() {
-  var contextValue = (0,react.useContext)(Context_ReactReduxContext);
-  if (false) {}
-  return contextValue;
-}
+
+var useReduxContext_useReduxContext = /*#__PURE__*/createReduxContextHook();
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/utils/useSyncExternalStore.js
-var notInitialized = function notInitialized() {
+var useSyncExternalStore_notInitialized = function notInitialized() {
   throw new Error('uSES not initialized!');
 };
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/hooks/useSelector.js
@@ -8321,7 +9187,8 @@ var notInitialized = function notInitialized() {
 
 
 
-var useSyncExternalStoreWithSelector = notInitialized;
+
+var useSyncExternalStoreWithSelector = useSyncExternalStore_notInitialized;
 var initializeUseSelector = function initializeUseSelector(fn) {
   useSyncExternalStoreWithSelector = fn;
 };
@@ -8337,17 +9204,32 @@ var refEquality = function refEquality(a, b) {
 
 function createSelectorHook() {
   var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Context_ReactReduxContext;
-  var useReduxContext = context === Context_ReactReduxContext ? useReduxContext_useReduxContext : function () {
-    return (0,react.useContext)(context);
-  };
+  var useReduxContext = context === Context_ReactReduxContext ? useReduxContext_useReduxContext : createReduxContextHook(context);
   return function useSelector(selector) {
-    var equalityFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : refEquality;
+    var equalityFnOrOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var _ref = typeof equalityFnOrOptions === 'function' ? {
+        equalityFn: equalityFnOrOptions
+      } : equalityFnOrOptions,
+      _ref$equalityFn = _ref.equalityFn,
+      equalityFn = _ref$equalityFn === void 0 ? refEquality : _ref$equalityFn,
+      _ref$stabilityCheck = _ref.stabilityCheck,
+      stabilityCheck = _ref$stabilityCheck === void 0 ? undefined : _ref$stabilityCheck,
+      _ref$noopCheck = _ref.noopCheck,
+      noopCheck = _ref$noopCheck === void 0 ? undefined : _ref$noopCheck;
     if (false) {}
     var _useReduxContext = useReduxContext(),
       store = _useReduxContext.store,
       subscription = _useReduxContext.subscription,
-      getServerState = _useReduxContext.getServerState;
-    var selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, selector, equalityFn);
+      getServerState = _useReduxContext.getServerState,
+      globalStabilityCheck = _useReduxContext.stabilityCheck,
+      globalNoopCheck = _useReduxContext.noopCheck;
+    var firstRun = (0,react.useRef)(true);
+    var wrappedSelector = (0,react.useCallback)(_defineProperty({}, selector.name, function (state) {
+      var selected = selector(state);
+      if (false) { var finalNoopCheck, toCompare, finalStabilityCheck; }
+      return selected;
+    })[selector.name], [selector, globalStabilityCheck, stabilityCheck]);
+    var selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, wrappedSelector, equalityFn);
     (0,react.useDebugValue)(selectedState);
     return selectedState;
   };
@@ -8379,8 +9261,8 @@ function createSelectorHook() {
 var useSelector = /*#__PURE__*/createSelectorHook();
 // EXTERNAL MODULE: ../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
 var hoist_non_react_statics_cjs = __webpack_require__("../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
-// EXTERNAL MODULE: ./node_modules/react-is/index.js
-var react_is = __webpack_require__("./node_modules/react-is/index.js");
+// EXTERNAL MODULE: ../node_modules/react-is/index.js
+var react_is = __webpack_require__("../node_modules/react-is/index.js");
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/utils/batch.js
 // Default to a dummy "batch" implementation that just runs the callback
 function defaultNoopBatch(callback) {
@@ -8541,7 +9423,7 @@ var _excluded = (/* unused pure expression or super */ null && (["reactReduxForw
 
 
 
-var useSyncExternalStore = notInitialized;
+var useSyncExternalStore = (/* unused pure expression or super */ null && (notInitialized));
 var initializeConnect = function initializeConnect(fn) {
   useSyncExternalStore = fn;
 }; // Define some constant arrays just to avoid re-creating these
@@ -8724,7 +9606,7 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
       areMergedPropsEqual: areMergedPropsEqual
     };
     function ConnectFunction(props) {
-      var _useMemo = useMemo(function () {
+      var _React$useMemo = React.useMemo(function () {
           // Distinguish between actual "data" props that were passed to the wrapper component,
           // and values needed to control behavior (forwarded refs, alternate context instances).
           // To maintain the wrapperProps object reference, memoize this destructuring.
@@ -8732,11 +9614,11 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
             wrapperProps = _objectWithoutPropertiesLoose(props, _excluded);
           return [props.context, reactReduxForwardedRef, wrapperProps];
         }, [props]),
-        _useMemo2 = _slicedToArray(_useMemo, 3),
-        propsContext = _useMemo2[0],
-        reactReduxForwardedRef = _useMemo2[1],
-        wrapperProps = _useMemo2[2];
-      var ContextToUse = useMemo(function () {
+        _React$useMemo2 = _slicedToArray(_React$useMemo, 3),
+        propsContext = _React$useMemo2[0],
+        reactReduxForwardedRef = _React$useMemo2[1],
+        wrapperProps = _React$useMemo2[2];
+      var ContextToUse = React.useMemo(function () {
         // Users may optionally pass in a custom context instance to use instead of our ReactReduxContext.
         // Memoize the check that determines which context instance we should use.
         return propsContext && propsContext.Consumer &&
@@ -8744,7 +9626,7 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
         isContextConsumer( /*#__PURE__*/React.createElement(propsContext.Consumer, null)) ? propsContext : Context;
       }, [propsContext, Context]); // Retrieve the store and ancestor subscription via context, if available
 
-      var contextValue = useContext(ContextToUse); // The store _must_ exist as either a prop or in context.
+      var contextValue = React.useContext(ContextToUse); // The store _must_ exist as either a prop or in context.
       // We'll check to see if it _looks_ like a Redux store first.
       // This allows us to pass through a `store` prop that is just a plain value.
 
@@ -8754,12 +9636,12 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
 
       var store = didStoreComeFromProps ? props.store : contextValue.store;
       var getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
-      var childPropsSelector = useMemo(function () {
+      var childPropsSelector = React.useMemo(function () {
         // The child props selector needs the store reference as an input.
         // Re-create this selector whenever the store changes.
         return defaultSelectorFactory(store.dispatch, selectorFactoryOptions);
       }, [store]);
-      var _useMemo3 = useMemo(function () {
+      var _React$useMemo3 = React.useMemo(function () {
           if (!shouldHandleStateChanges) return NO_SUBSCRIPTION_ARRAY; // This Subscription's source should match where store came from: props vs. context. A component
           // connected to the store via props shouldn't use subscription from context, or vice versa.
 
@@ -8779,12 +9661,12 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
           var notifyNestedSubs = subscription.notifyNestedSubs.bind(subscription);
           return [subscription, notifyNestedSubs];
         }, [store, didStoreComeFromProps, contextValue]),
-        _useMemo4 = _slicedToArray(_useMemo3, 2),
-        subscription = _useMemo4[0],
-        notifyNestedSubs = _useMemo4[1]; // Determine what {store, subscription} value should be put into nested context, if necessary,
+        _React$useMemo4 = _slicedToArray(_React$useMemo3, 2),
+        subscription = _React$useMemo4[0],
+        notifyNestedSubs = _React$useMemo4[1]; // Determine what {store, subscription} value should be put into nested context, if necessary,
       // and memoize that value to avoid unnecessary context updates.
 
-      var overriddenContextValue = useMemo(function () {
+      var overriddenContextValue = React.useMemo(function () {
         if (didStoreComeFromProps) {
           // This component is directly subscribed to a store from props.
           // We don't want descendants reading from this store - pass down whatever
@@ -8798,20 +9680,20 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
         });
       }, [didStoreComeFromProps, contextValue, subscription]); // Set up refs to coordinate values between the subscription effect and the render logic
 
-      var lastChildProps = useRef();
-      var lastWrapperProps = useRef(wrapperProps);
-      var childPropsFromStoreUpdate = useRef();
-      var renderIsScheduled = useRef(false);
-      var isProcessingDispatch = useRef(false);
-      var isMounted = useRef(false);
-      var latestSubscriptionCallbackError = useRef();
+      var lastChildProps = React.useRef();
+      var lastWrapperProps = React.useRef(wrapperProps);
+      var childPropsFromStoreUpdate = React.useRef();
+      var renderIsScheduled = React.useRef(false);
+      var isProcessingDispatch = React.useRef(false);
+      var isMounted = React.useRef(false);
+      var latestSubscriptionCallbackError = React.useRef();
       useIsomorphicLayoutEffect(function () {
         isMounted.current = true;
         return function () {
           isMounted.current = false;
         };
       }, []);
-      var actualChildPropsSelector = useMemo(function () {
+      var actualChildPropsSelector = React.useMemo(function () {
         var selector = function selector() {
           // Tricky logic here:
           // - This render may have been triggered by a Redux store update that produced new child props
@@ -8833,7 +9715,7 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
       // about useLayoutEffect in SSR, so we try to detect environment and fall back to
       // just useEffect instead to avoid the warning, since neither will run anyway.
 
-      var subscribeForReact = useMemo(function () {
+      var subscribeForReact = React.useMemo(function () {
         var subscribe = function subscribe(reactListener) {
           if (!subscription) {
             return function () {};
@@ -8869,7 +9751,7 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
       }); // Now that all that's done, we can finally try to actually render the child component.
       // We memoize the elements for the rendered child component as an optimization.
 
-      var renderedWrappedComponent = useMemo(function () {
+      var renderedWrappedComponent = React.useMemo(function () {
         return /*#__PURE__*/(
           // @ts-ignore
           React.createElement(WrappedComponent, _extends({}, actualChildProps, {
@@ -8879,7 +9761,7 @@ function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
       }, [reactReduxForwardedRef, WrappedComponent, actualChildProps]); // If React sees the exact same element reference as last time, it bails out of re-rendering
       // that child, same as if it was wrapped in React.memo() or returned false from shouldComponentUpdate.
 
-      var renderedChild = useMemo(function () {
+      var renderedChild = React.useMemo(function () {
         if (shouldHandleStateChanges) {
           // If this component is subscribed to store updates, we need to pass its own
           // subscription instance down to our descendants. That means rendering the same
@@ -8924,18 +9806,24 @@ function Provider(_ref) {
   var store = _ref.store,
     context = _ref.context,
     children = _ref.children,
-    serverState = _ref.serverState;
-  var contextValue = (0,react.useMemo)(function () {
+    serverState = _ref.serverState,
+    _ref$stabilityCheck = _ref.stabilityCheck,
+    stabilityCheck = _ref$stabilityCheck === void 0 ? 'once' : _ref$stabilityCheck,
+    _ref$noopCheck = _ref.noopCheck,
+    noopCheck = _ref$noopCheck === void 0 ? 'once' : _ref$noopCheck;
+  var contextValue = react.useMemo(function () {
     var subscription = Subscription_createSubscription(store);
     return {
       store: store,
       subscription: subscription,
       getServerState: serverState ? function () {
         return serverState;
-      } : undefined
+      } : undefined,
+      stabilityCheck: stabilityCheck,
+      noopCheck: noopCheck
     };
-  }, [store, serverState]);
-  var previousState = (0,react.useMemo)(function () {
+  }, [store, serverState, stabilityCheck, noopCheck]);
+  var previousState = react.useMemo(function () {
     return store.getState();
   }, [store]);
   useIsomorphicLayoutEffect_useIsomorphicLayoutEffect(function () {
@@ -8960,7 +9848,6 @@ function Provider(_ref) {
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/hooks/useStore.js
 
 
-
 /**
  * Hook factory, which creates a `useStore` hook bound to a given context.
  *
@@ -8972,9 +9859,9 @@ function createStoreHook() {
   var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Context_ReactReduxContext;
   var useReduxContext =
   // @ts-ignore
-  context === Context_ReactReduxContext ? useReduxContext_useReduxContext : function () {
-    return (0,react.useContext)(context);
-  };
+  context === Context_ReactReduxContext ? useReduxContext_useReduxContext :
+  // @ts-ignore
+  createReduxContextHook(context);
   return function useStore() {
     var _useReduxContext = useReduxContext(),
       store = _useReduxContext.store; // @ts-ignore
@@ -9140,7 +10027,7 @@ function _setPrototypeOf(o, p) {
   };
   return _setPrototypeOf(o, p);
 }
-function _defineProperty(obj, key, value) {
+function react_defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -9166,11 +10053,11 @@ function (_PureComponent) {
       args[_key] = arguments[_key];
     }
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PersistGate)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    react_defineProperty(_assertThisInitialized(_this), "state", {
       bootstrapped: false
     });
-    _defineProperty(_assertThisInitialized(_this), "_unsubscribe", void 0);
-    _defineProperty(_assertThisInitialized(_this), "handlePersistorState", function () {
+    react_defineProperty(_assertThisInitialized(_this), "_unsubscribe", void 0);
+    react_defineProperty(_assertThisInitialized(_this), "handlePersistorState", function () {
       var persistor = _this.props.persistor;
       var _persistor$getState = persistor.getState(),
         bootstrapped = _persistor$getState.bootstrapped;
@@ -9214,7 +10101,7 @@ function (_PureComponent) {
   }]);
   return PersistGate;
 }(react.PureComponent);
-_defineProperty(PersistGate, "defaultProps", {
+react_defineProperty(PersistGate, "defaultProps", {
   children: null,
   loading: null
 });
@@ -9265,7 +10152,7 @@ var update = injectStylesIntoStyleTag_default()(cjs_ruleSet_1_rules_0_oneOf_6_us
 
 
 
-       /* harmony default export */ const src = (cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default */.Z && cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default.locals */.Z.locals ? cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ const src = (cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default */.Z && cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default */.Z.locals ? cjs_ruleSet_1_rules_0_oneOf_6_use_3_src/* default */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./node_modules/immer/dist/immer.esm.mjs
 function n(n) {
@@ -10920,7 +11807,7 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 /* harmony default export */ const es = (thunk);
 ;// CONCATENATED MODULE: ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js
-var redux_toolkit_esm_extends = undefined && undefined.__extends || function () {
+var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -11159,7 +12046,7 @@ function getTimeMeasureUtils(maxDelay, fnName) {
   };
 }
 var MiddlewareArray = /** @class */function (_super) {
-  redux_toolkit_esm_extends(MiddlewareArray, _super);
+  __extends(MiddlewareArray, _super);
   function MiddlewareArray() {
     var args = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -11194,6 +12081,43 @@ var MiddlewareArray = /** @class */function (_super) {
     return new (MiddlewareArray.bind.apply(MiddlewareArray, __spreadArray([void 0], arr.concat(this))))();
   };
   return MiddlewareArray;
+}(Array);
+var EnhancerArray = /** @class */function (_super) {
+  __extends(EnhancerArray, _super);
+  function EnhancerArray() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+    var _this = _super.apply(this, args) || this;
+    Object.setPrototypeOf(_this, EnhancerArray.prototype);
+    return _this;
+  }
+  Object.defineProperty(EnhancerArray, Symbol.species, {
+    get: function get() {
+      return EnhancerArray;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  EnhancerArray.prototype.concat = function () {
+    var arr = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      arr[_i] = arguments[_i];
+    }
+    return _super.prototype.concat.apply(this, arr);
+  };
+  EnhancerArray.prototype.prepend = function () {
+    var arr = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      arr[_i] = arguments[_i];
+    }
+    if (arr.length === 1 && Array.isArray(arr[0])) {
+      return new (EnhancerArray.bind.apply(EnhancerArray, __spreadArray([void 0], arr[0].concat(this))))();
+    }
+    return new (EnhancerArray.bind.apply(EnhancerArray, __spreadArray([void 0], arr.concat(this))))();
+  };
+  return EnhancerArray;
 }(Array);
 function freezeDraftable(val) {
   return t(val) ? immer_esm(val, function () {}) : val;
@@ -11582,11 +12506,12 @@ function configureStore(options) {
       trace: !IS_PRODUCTION
     }, typeof devTools === "object" && devTools));
   }
-  var storeEnhancers = [middlewareEnhancer];
+  var defaultEnhancers = new EnhancerArray(middlewareEnhancer);
+  var storeEnhancers = defaultEnhancers;
   if (Array.isArray(enhancers)) {
     storeEnhancers = __spreadArray([middlewareEnhancer], enhancers);
   } else if (typeof enhancers === "function") {
-    storeEnhancers = enhancers(storeEnhancers);
+    storeEnhancers = enhancers(defaultEnhancers);
   }
   var composedEnhancer = finalCompose.apply(void 0, storeEnhancers);
   return createStore(rootReducer, preloadedState, composedEnhancer);
@@ -11626,8 +12551,11 @@ function createAction(type, prepareAction) {
   };
   return actionCreator;
 }
+function isAction(action) {
+  return redux_toolkit_esm_isPlainObject(action) && "type" in action;
+}
 function isFSA(action) {
-  return redux_toolkit_esm_isPlainObject(action) && typeof action.type === "string" && Object.keys(action).every(isValidKey);
+  return isAction(action) && typeof action.type === "string" && Object.keys(action).every(isValidKey);
 }
 function isValidKey(key) {
   return ["type", "payload", "error", "meta"].indexOf(key) > -1;
@@ -12970,6 +13898,9 @@ function createListenerMiddleware(middlewareOptions) {
   var middleware = function middleware(api) {
     return function (next) {
       return function (action) {
+        if (!isAction(action)) {
+          return next(action);
+        }
         if (addListener.match(action)) {
           return startListening(action.payload);
         }
@@ -13595,8 +14526,10 @@ var index_module_update = injectStylesIntoStyleTag_default()(index_module/* defa
 
 
 
-       /* harmony default export */ const inventory_index_module = (index_module/* default */.Z && index_module/* default.locals */.Z.locals ? index_module/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ const inventory_index_module = (index_module/* default */.Z && index_module/* default */.Z.locals ? index_module/* default */.Z.locals : undefined);
 
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__("./node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ./src/inventory/index.tsx
 var draggingItem;function Item(_ref){var item=_ref.item;var ref=(0,react.useRef)();var dragRef=(0,react.useRef)({startPoint:null});if(!item)return null;var beginDrag=function beginDrag(ev){dragRef.current.startPoint=ev.position;draggingItem=item;};var onDrag=function onDrag(ev){if(!dragRef.current.startPoint)return;var inline=ref.current.Style;inline.zIndex=5;inline.pointerEvents='none';inline.translate="".concat(ev.position.x-ev.pressPosition.x,"px ").concat(ev.pressPosition.y-ev.position.y);};var endDrag=function endDrag(ev){if(!dragRef.current.startPoint)return;dragRef.current.startPoint=null;draggingItem=null;var inline=ref.current.Style;inline.pointerEvents=null;inline.zIndex=null;inline.translate=null;};return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.item,onBeginDrag:beginDrag,onDrag:onDrag,onEndDrag:endDrag,ref:ref,children:/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:item.image})});}function Inventory(){var slotCount=useSelector(function(x){return x.inventory.size;});var items=useSelector(function(x){return x.inventory.items;});var slots=(0,react.useMemo)(function(){return new Array(slotCount).fill(null);},[slotCount]);var dispatch=useDispatch();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:inventory_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:inventory_index_module.frame,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.items,children:slots.map(function(x,i){var _itemInSlot$image;var itemInSlot=items.find(function(x){return x.slot===i;});return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.itemSlot,"data-index":i,onDrop:function onDrop(ev){if(draggingItem){dispatch(swapItems({slot1:draggingItem.slot,slot2:i}));draggingItem=null;}},children:/*#__PURE__*/(0,jsx_runtime.jsx)(Item,{item:itemInSlot},(_itemInSlot$image=itemInSlot===null||itemInSlot===void 0?void 0:itemInSlot.image)!==null&&_itemInSlot$image!==void 0?_itemInSlot$image:i)},i);})})}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.border})]});}
 ;// CONCATENATED MODULE: ./node_modules/redux-persist/es/persistStore.js
@@ -13752,7 +14685,7 @@ function persistStore(store, options, cb) {
 ;// CONCATENATED MODULE: ./src/store/index.ts
 var store=configureStore({reducer:{inventory:inventoryReducer},devTools:false,middleware:function middleware(getDefaultMiddleware){return getDefaultMiddleware({serializableCheck:false,thunk:true,immutableCheck:false});}});var persistor=persistStore(store);
 ;// CONCATENATED MODULE: ./src/index.tsx
-function Root(){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:/*#__PURE__*/(0,jsx_runtime.jsx)(Inventory,{})});}function Main(){return/*#__PURE__*/(0,jsx_runtime.jsx)(PersistGate,{persistor:persistor,children:/*#__PURE__*/(0,jsx_runtime.jsx)(components_Provider,{store:store,children:/*#__PURE__*/(0,jsx_runtime.jsx)(Root,{})})});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(Main,{}));
+function Root(){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:/*#__PURE__*/(0,jsx_runtime.jsx)(Inventory,{})});}function Main(){return/*#__PURE__*/(0,jsx_runtime.jsx)(PersistGate,{persistor:persistor,children:/*#__PURE__*/(0,jsx_runtime.jsx)(components_Provider,{store:store,children:/*#__PURE__*/(0,jsx_runtime.jsx)(Root,{})})});}(0,dist.render)(/*#__PURE__*/(0,jsx_runtime.jsx)(Main,{}));
 })();
 
 /******/ })()
