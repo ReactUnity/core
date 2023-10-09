@@ -1,6 +1,6 @@
 import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEditor, UnityEngine } from '../generated';
-import { AnchorTarget, Style } from '../properties';
+import { AnchorTarget, ScrollDirection, Style } from '../properties';
 import { AssetReference } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
@@ -18,6 +18,14 @@ export interface View<TSender = BaseCmp> extends Events<TSender>, BaseCmpProps {
 export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {
   richText?: boolean;
   displayTooltipWhenElided?: boolean;
+}
+
+export interface Scroll<TSender = Cmp.ScrollViewComponent> extends View<TSender> {
+  direction?: ScrollDirection;
+  alwaysShow?: ScrollDirection;
+  sensitivity?: number;
+  elasticity?: number;
+  smoothness?: number;
 }
 
 export interface Bindable<TSender = BaseCmp> extends View<TSender> {

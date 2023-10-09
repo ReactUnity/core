@@ -20,7 +20,7 @@ export interface UIToolkitElements extends BaseElements<BaseElement<any>> {
   richtext: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
   button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
-  scroll: BaseElement;
+  scroll: Components.Scroll & rc.RefAttributes<Cmp.ScrollViewComponent> & Children;
   svg: Components.Svg & rc.RefAttributes<Cmp.SvgComponent> & Children<any> & SVGEelement;
   img: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
   image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
@@ -45,19 +45,19 @@ declare global {
   interface ReactUnityCustomAttributes { }
 
   namespace JSX {
-    interface IntrinsicAttributes extends ReactUnityCustomAttributes {}
-    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements {}
+    interface IntrinsicAttributes extends ReactUnityCustomAttributes { }
+    interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements { }
   }
 }
 
 export namespace JSX {
   export type ElementType = React.JSX.ElementType;
-  export interface Element extends React.JSX.Element {}
-  export interface ElementClass extends React.JSX.ElementClass {}
-  export interface ElementAttributesProperty extends React.JSX.ElementAttributesProperty {}
-  export interface ElementChildrenAttribute extends React.JSX.ElementChildrenAttribute {}
+  export interface Element extends React.JSX.Element { }
+  export interface ElementClass extends React.JSX.ElementClass { }
+  export interface ElementAttributesProperty extends React.JSX.ElementAttributesProperty { }
+  export interface ElementChildrenAttribute extends React.JSX.ElementChildrenAttribute { }
   export type LibraryManagedAttributes<C, P> = React.JSX.LibraryManagedAttributes<C, P>;
-  export interface IntrinsicAttributes extends React.JSX.IntrinsicAttributes, ReactUnityCustomAttributes {}
-  export interface IntrinsicClassAttributes<T> extends React.JSX.IntrinsicClassAttributes<T> {}
-  export interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements {}
+  export interface IntrinsicAttributes extends React.JSX.IntrinsicAttributes, ReactUnityCustomAttributes { }
+  export interface IntrinsicClassAttributes<T> extends React.JSX.IntrinsicClassAttributes<T> { }
+  export interface IntrinsicElements extends UIToolkitElements, ReactUnityCustomElements { }
 }

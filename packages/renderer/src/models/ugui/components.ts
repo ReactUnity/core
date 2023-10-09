@@ -1,6 +1,6 @@
 import { BaseCmpProps, ContentSrcProps } from '../base';
 import { ReactUnity, UnityEngine } from '../generated';
-import { AnchorTarget } from '../properties';
+import { AnchorTarget, ScrollDirection } from '../properties';
 import { AssetReference, AssetReferenceOrHttp } from '../properties/values';
 import { ActionCallback, Events } from './events';
 
@@ -22,7 +22,6 @@ export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
   set?: ReactUnity.Styling.IconSet | string;
 }
 
-export type ScrollDirection = 'none' | 'horizontal' | 'vertical' | 'both';
 
 export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> {
   onValueChanged?: (ev: UnityEngine.Vector2, sender: ReactUnity.UGUI.ScrollComponent) => void;
