@@ -503,7 +503,7 @@ namespace ReactUnity.UGUI
 
         public override object GetComponent(Type type)
         {
-            var res = GameObject.GetComponent(type);
+            GameObject.TryGetComponent(type, out var res);
             if (res is MonoBehaviour mn && !mn.enabled) mn.enabled = true;
             return res;
         }

@@ -45,5 +45,23 @@ namespace ReactUnity.Styling
                 CharacterMap[name] = char.ConvertFromUtf32(parsed);
             }
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Generate Characters")]
+        public void GenerateCharactersFromCharacterMap() {
+            GenerateCharacterMap();
+
+            var chars = new System.Text.StringBuilder();
+            foreach (var pair in CharacterMap) {
+                chars.Append(pair.Value);
+            }
+
+            var path = System.IO.Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(this));
+            System.IO.File.WriteAllText(System.IO.Path.Combine(path, "characters.txt"), chars.ToString());
+
+            //var range = string.Join(",", CharacterMap.Select(x => x.Value[0]).Distinct().OrderBy(x => x).Select(x => ((int) x).ToString("X")).ToArray());
+            //System.IO.File.WriteAllText(System.IO.Path.Combine(path, "characters-range.txt"), range.ToString());
+        }
+#endif
     }
 }

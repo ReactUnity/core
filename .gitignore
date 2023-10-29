@@ -245,3 +245,5 @@ ModelManifest.xml
 # Ignore PDB files
 *.pdb
 *.pdb.meta
+
+.DS_Store

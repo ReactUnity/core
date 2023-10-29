@@ -105,7 +105,7 @@ namespace ReactUnity
             });
 
 #if UNITY_EDITOR
-            // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts 
+            // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts
             UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Dispose;
 #endif
         }
