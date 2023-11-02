@@ -65,6 +65,7 @@ export interface BaseSlider<T, TSender = Cmp.BaseSliderComponent<Slider, any>> e
 }
 
 export interface Button<TSender = Cmp.ButtonComponent> extends View<TSender> {
+  disabled?: boolean;
   onButtonClick?: ActionCallback<TSender>;
 }
 
