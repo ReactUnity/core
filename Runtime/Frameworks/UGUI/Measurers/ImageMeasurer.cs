@@ -83,7 +83,6 @@ namespace ReactUnity.UGUI.Measurers
 
             if (fitMode == ObjectFit.Cover)
             {
-                if (rw < width)
                 {
                     var scale = width / rw;
                     rw = width;
