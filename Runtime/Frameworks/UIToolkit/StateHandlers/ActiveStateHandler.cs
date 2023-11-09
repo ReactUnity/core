@@ -27,13 +27,15 @@ namespace ReactUnity.UIToolkit.StateHandlers
 
         protected override void RegisterCallbacksOnTarget()
         {
-            target.RegisterCallback<MouseDownEvent>(OnPointerDown);
+            target.RegisterCallback<MouseDownEvent>(OnPointerDown,
+                    target is Button ? TrickleDown.TrickleDown : TrickleDown.NoTrickleDown);
             target.RegisterCallback<MouseUpEvent>(OnPointerUp);
         }
 
         protected override void UnregisterCallbacksFromTarget()
         {
-            target.UnregisterCallback<MouseDownEvent>(OnPointerDown);
+            target.UnregisterCallback<MouseDownEvent>(OnPointerDown,
+                    target is Button ? TrickleDown.TrickleDown : TrickleDown.NoTrickleDown);
             target.UnregisterCallback<MouseUpEvent>(OnPointerUp);
         }
     }
