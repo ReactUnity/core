@@ -49,8 +49,10 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.Event).Assembly,
                     typeof(UnityEngine.BuildCompression).Assembly,
                     typeof(UnityEngine.Analytics.Analytics).Assembly,
+                    typeof(UnityEngine.Analytics.AnalyticsResult).Assembly,
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
                     typeof(UnityEngine.ParticleSystem).Assembly,
+                    typeof(UnityEngine.Networking.DownloadHandler).Assembly,
 #if UNITY_2022_1_OR_NEWER
                     typeof(UnityEngine.UIElements.LineJoin).Assembly,
 #endif
