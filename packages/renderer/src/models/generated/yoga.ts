@@ -1,6 +1,6 @@
 //
 // Types in assemblies: Facebook.Yoga
-// Generated 18/02/2023 03:04:17
+// Generated 12/11/2023 01:13:26
 //
 /* eslint-disable */
 
@@ -94,6 +94,7 @@ export declare namespace Facebook {
       constructor();
       Logger: ((config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string) => void);
       UseWebDefaults: boolean;
+      UseLegacyStretchBehaviour: boolean;
       PointScaleFactor: number;
       SetExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature, enabled: boolean): void;
       IsExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature): boolean;
@@ -139,6 +140,8 @@ export declare namespace Facebook {
     }
     export enum YogaExperimentalFeature {
       WebFlexBasis = 0,
+      AbsolutePercentageAgainstPaddingEdge = 1,
+      FixAbsoluteTrailingColumnMargin = 2,
     }
     export enum YogaFlexDirection {
       Column = 0,
@@ -233,6 +236,9 @@ export declare namespace Facebook {
       MinWidth: Facebook.Yoga.YogaValue;
       MinHeight: Facebook.Yoga.YogaValue;
       AspectRatio: number;
+      Gap: number;
+      ColumnGap: number;
+      RowGap: number;
       LayoutX: number;
       LayoutY: number;
       LayoutWidth: number;
@@ -241,6 +247,7 @@ export declare namespace Facebook {
       Overflow: Facebook.Yoga.YogaOverflow;
       Data: any; // System.Object
       Count: number;
+      IsReferenceBaseline: boolean;
       Left: Facebook.Yoga.YogaValue;
       Top: Facebook.Yoga.YogaValue;
       Right: Facebook.Yoga.YogaValue;
@@ -272,9 +279,6 @@ export declare namespace Facebook {
       BorderStartWidth: number;
       BorderEndWidth: number;
       BorderWidth: number;
-      Gap: number;
-      RowGap: number;
-      ColumnGap: number;
       LayoutMarginLeft: number;
       LayoutMarginTop: number;
       LayoutMarginRight: number;

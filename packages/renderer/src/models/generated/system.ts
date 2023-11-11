@@ -1,6 +1,6 @@
 //
 // Types in assemblies: mscorlib, System.Core, System
-// Generated 18/02/2023 03:04:19
+// Generated 12/11/2023 01:13:28
 //
 /* eslint-disable */
 
@@ -53,11 +53,26 @@ export declare namespace System {
     StartsWith(value: string, comparisonType: System.StringComparison): boolean;
     StartsWith(value: string, ignoreCase: boolean, culture: System.Globalization.CultureInfo): boolean;
     StartsWith(value: System.Char): boolean;
+    Clone(): any;
+    static Copy(str: string): string;
+    CopyTo(sourceIndex: number, destination: System.Char[], destinationIndex: number, count: number): void;
+    ToCharArray(): System.Char[];
+    ToCharArray(startIndex: number, length: number): System.Char[];
+    static IsNullOrEmpty(value: string): boolean;
+    static IsNullOrWhiteSpace(value: string): boolean;
+    ToString(): string;
+    ToString(provider: System.IFormatProvider): string;
+    GetEnumerator(): System.CharEnumerator;
+    GetTypeCode(): System.TypeCode;
+    IsNormalized(): boolean;
+    IsNormalized(normalizationForm: System.Text.NormalizationForm): boolean;
+    Normalize(): string;
+    Normalize(normalizationForm: System.Text.NormalizationForm): string;
     static Concat(arg0: any): string;
     static Concat(arg0: any, arg1: any): string;
     static Concat(arg0: any, arg1: any, arg2: any): string;
     static Concat(...args: any[]): string;
-    static Concat(values: any): string;
+    static Concat(values: System.Collections.Generic.IEnumerable): string;
     static Concat(str0: string, str1: string): string;
     static Concat(str0: string, str1: string, str2: string): string;
     static Concat(str0: string, str1: string, str2: string, str3: string): string;
@@ -76,7 +91,7 @@ export declare namespace System {
     static Join(separator: System.Char, value: string[], startIndex: number, count: number): string;
     static Join(separator: string, ...value: string[]): string;
     static Join(separator: string, ...values: any[]): string;
-    static Join(separator: string, values: any): string;
+    static Join(separator: string, values: System.Collections.Generic.IEnumerable): string;
     static Join(separator: string, value: string[], startIndex: number, count: number): string;
     PadLeft(totalWidth: number): string;
     PadLeft(totalWidth: number, paddingChar: System.Char): string;
@@ -144,21 +159,6 @@ export declare namespace System {
     LastIndexOf(value: string, comparisonType: System.StringComparison): number;
     LastIndexOf(value: string, startIndex: number, comparisonType: System.StringComparison): number;
     LastIndexOf(value: string, startIndex: number, count: number, comparisonType: System.StringComparison): number;
-    Clone(): any;
-    static Copy(str: string): string;
-    CopyTo(sourceIndex: number, destination: System.Char[], destinationIndex: number, count: number): void;
-    ToCharArray(): System.Char[];
-    ToCharArray(startIndex: number, length: number): System.Char[];
-    static IsNullOrEmpty(value: string): boolean;
-    static IsNullOrWhiteSpace(value: string): boolean;
-    ToString(): string;
-    ToString(provider: System.IFormatProvider): string;
-    GetEnumerator(): System.CharEnumerator;
-    GetTypeCode(): System.TypeCode;
-    IsNormalized(): boolean;
-    IsNormalized(normalizationForm: System.Text.NormalizationForm): boolean;
-    Normalize(): string;
-    Normalize(normalizationForm: System.Text.NormalizationForm): string;
     static Concat(arg0: any, arg1: any, arg2: any, arg3: any): string;
     static Intern(str: string): string;
     static IsInterned(str: string): string;
@@ -478,7 +478,7 @@ export declare namespace System {
     Array: T[];
     Offset: number;
     Count: number;
-    GetEnumerator(): System.ArraySegment<T>;
+    GetEnumerator(): System.ArraySegment_Enumerator<T>;
     GetHashCode(): number;
     CopyTo(destination: T[]): void;
     CopyTo(destination: T[], destinationIndex: number): void;
@@ -488,6 +488,15 @@ export declare namespace System {
     Slice(index: number): T[];
     Slice(index: number, count: number): T[];
     ToArray(): T[];
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ArraySegment_Enumerator<T = any> {
+    Current: T;
+    MoveNext(): boolean;
+    Dispose(): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
@@ -596,48 +605,48 @@ export declare namespace System {
   export class BitConverter {
     static IsLittleEndian: boolean;
     static GetBytes(value: boolean): Byte[];
-    static TryWriteBytes(destination: any, value: boolean): boolean;
+    static TryWriteBytes(destination: System.Span, value: boolean): boolean;
     static GetBytes(value: System.Char): Byte[];
-    static TryWriteBytes(destination: any, value: System.Char): boolean;
+    static TryWriteBytes(destination: System.Span, value: System.Char): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static GetBytes(value: number): Byte[];
-    static TryWriteBytes(destination: any, value: number): boolean;
+    static TryWriteBytes(destination: System.Span, value: number): boolean;
     static ToChar(value: Byte[], startIndex: number): System.Char;
-    static ToChar(value: any): System.Char;
+    static ToChar(value: System.ReadOnlySpan): System.Char;
     static ToInt16(value: Byte[], startIndex: number): number;
-    static ToInt16(value: any): number;
+    static ToInt16(value: System.ReadOnlySpan): number;
     static ToInt32(value: Byte[], startIndex: number): number;
-    static ToInt32(value: any): number;
+    static ToInt32(value: System.ReadOnlySpan): number;
     static ToInt64(value: Byte[], startIndex: number): number;
-    static ToInt64(value: any): number;
+    static ToInt64(value: System.ReadOnlySpan): number;
     static ToUInt16(value: Byte[], startIndex: number): number;
-    static ToUInt16(value: any): number;
+    static ToUInt16(value: System.ReadOnlySpan): number;
     static ToUInt32(value: Byte[], startIndex: number): number;
-    static ToUInt32(value: any): number;
+    static ToUInt32(value: System.ReadOnlySpan): number;
     static ToUInt64(value: Byte[], startIndex: number): number;
-    static ToUInt64(value: any): number;
+    static ToUInt64(value: System.ReadOnlySpan): number;
     static ToSingle(value: Byte[], startIndex: number): number;
-    static ToSingle(value: any): number;
+    static ToSingle(value: System.ReadOnlySpan): number;
     static ToDouble(value: Byte[], startIndex: number): number;
-    static ToDouble(value: any): number;
+    static ToDouble(value: System.ReadOnlySpan): number;
     static ToString(value: Byte[], startIndex: number, length: number): string;
     static ToString(value: Byte[]): string;
     static ToString(value: Byte[], startIndex: number): string;
     static ToBoolean(value: Byte[], startIndex: number): boolean;
-    static ToBoolean(value: any): boolean;
+    static ToBoolean(value: System.ReadOnlySpan): boolean;
     static DoubleToInt64Bits(value: number): number;
     static Int64BitsToDouble(value: number): number;
     static SingleToInt32Bits(value: number): number;
@@ -658,7 +667,7 @@ export declare namespace System {
     CompareTo(obj: any): number;
     CompareTo(value: boolean): number;
     static Parse(value: string): boolean;
-    static Parse(value: any): boolean;
+    static Parse(value: System.ReadOnlySpan): boolean;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -674,7 +683,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): Byte;
     static Parse(s: string, provider: System.IFormatProvider): Byte;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): Byte;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): Byte;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): Byte;
     ToString(): string;
     ToString(format: string): string;
     ToString(provider: System.IFormatProvider): string;
@@ -1059,7 +1068,7 @@ export declare namespace System {
     static ToBase64String(inArray: Byte[], options: System.Base64FormattingOptions): string;
     static ToBase64String(inArray: Byte[], offset: number, length: number): string;
     static ToBase64String(inArray: Byte[], offset: number, length: number, options: System.Base64FormattingOptions): string;
-    static ToBase64String(bytes: any, options?: System.Base64FormattingOptions): string;
+    static ToBase64String(bytes: System.ReadOnlySpan, options?: System.Base64FormattingOptions): string;
     static ToBase64CharArray(inArray: Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number): number;
     static ToBase64CharArray(inArray: Byte[], offsetIn: number, length: number, outArray: System.Char[], offsetOut: number, options: System.Base64FormattingOptions): number;
     static FromBase64String(s: string): Byte[];
@@ -1162,12 +1171,12 @@ export declare namespace System {
     static Parse(s: string): System.DateTime;
     static Parse(s: string, provider: System.IFormatProvider): System.DateTime;
     static Parse(s: string, provider: System.IFormatProvider, styles: System.Globalization.DateTimeStyles): System.DateTime;
-    static Parse(s: any, provider?: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTime;
+    static Parse(s: System.ReadOnlySpan, provider?: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTime;
     static ParseExact(s: string, format: string, provider: System.IFormatProvider): System.DateTime;
     static ParseExact(s: string, format: string, provider: System.IFormatProvider, style: System.Globalization.DateTimeStyles): System.DateTime;
-    static ParseExact(s: any, format: any, provider: System.IFormatProvider, style?: System.Globalization.DateTimeStyles): System.DateTime;
+    static ParseExact(s: System.ReadOnlySpan, format: System.ReadOnlySpan, provider: System.IFormatProvider, style?: System.Globalization.DateTimeStyles): System.DateTime;
     static ParseExact(s: string, formats: string[], provider: System.IFormatProvider, style: System.Globalization.DateTimeStyles): System.DateTime;
-    static ParseExact(s: any, formats: string[], provider: System.IFormatProvider, style?: System.Globalization.DateTimeStyles): System.DateTime;
+    static ParseExact(s: System.ReadOnlySpan, formats: string[], provider: System.IFormatProvider, style?: System.Globalization.DateTimeStyles): System.DateTime;
     Subtract(value: System.DateTime): System.TimeSpan;
     Subtract(value: System.TimeSpan): System.DateTime;
     ToOADate(): number;
@@ -1247,12 +1256,12 @@ export declare namespace System {
     static Parse(input: string): System.DateTimeOffset;
     static Parse(input: string, formatProvider: System.IFormatProvider): System.DateTimeOffset;
     static Parse(input: string, formatProvider: System.IFormatProvider, styles: System.Globalization.DateTimeStyles): System.DateTimeOffset;
-    static Parse(input: any, formatProvider?: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
+    static Parse(input: System.ReadOnlySpan, formatProvider?: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
     static ParseExact(input: string, format: string, formatProvider: System.IFormatProvider): System.DateTimeOffset;
     static ParseExact(input: string, format: string, formatProvider: System.IFormatProvider, styles: System.Globalization.DateTimeStyles): System.DateTimeOffset;
-    static ParseExact(input: any, format: any, formatProvider: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
+    static ParseExact(input: System.ReadOnlySpan, format: System.ReadOnlySpan, formatProvider: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
     static ParseExact(input: string, formats: string[], formatProvider: System.IFormatProvider, styles: System.Globalization.DateTimeStyles): System.DateTimeOffset;
-    static ParseExact(input: any, formats: string[], formatProvider: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
+    static ParseExact(input: System.ReadOnlySpan, formats: string[], formatProvider: System.IFormatProvider, styles?: System.Globalization.DateTimeStyles): System.DateTimeOffset;
     Subtract(value: System.DateTimeOffset): System.TimeSpan;
     Subtract(value: System.TimeSpan): System.DateTimeOffset;
     ToFileTime(): number;
@@ -1344,7 +1353,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1497,9 +1506,9 @@ export declare namespace System {
     static Empty: System.Guid;
     static NewGuid(): System.Guid;
     static Parse(input: string): System.Guid;
-    static Parse(input: any): System.Guid;
+    static Parse(input: System.ReadOnlySpan): System.Guid;
     static ParseExact(input: string, format: string): System.Guid;
-    static ParseExact(input: any, format: any): System.Guid;
+    static ParseExact(input: System.ReadOnlySpan, format: System.ReadOnlySpan): System.Guid;
     ToByteArray(): Byte[];
     TryWriteBytes(destination: System.Span<Byte>): boolean;
     ToString(): string;
@@ -1650,7 +1659,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1670,7 +1679,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1690,7 +1699,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -1944,7 +1953,7 @@ export declare namespace System {
   export class Memory<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
-    static Empty: any; // System.Memory`1[T]
+    static Empty: System.Memory;
     Length: number;
     IsEmpty: boolean;
     Span: System.Span<T>;
@@ -1961,34 +1970,34 @@ export declare namespace System {
     GetType(): System.Type;
   }
   export class MemoryExtensions {
-    static Contains(span: any, value: any, comparisonType: System.StringComparison): boolean;
-    static Equals(span: any, other: any, comparisonType: System.StringComparison): boolean;
-    static CompareTo(span: any, other: any, comparisonType: System.StringComparison): number;
-    static IndexOf(span: any, value: any, comparisonType: System.StringComparison): number;
-    static ToLower(source: any, destination: any, culture: System.Globalization.CultureInfo): number;
-    static ToLowerInvariant(source: any, destination: any): number;
-    static ToUpper(source: any, destination: any, culture: System.Globalization.CultureInfo): number;
-    static ToUpperInvariant(source: any, destination: any): number;
-    static EndsWith(span: any, value: any, comparisonType: System.StringComparison): boolean;
-    static StartsWith(span: any, value: any, comparisonType: System.StringComparison): boolean;
-    static AsSpan(text: string): any;
-    static AsSpan(text: string, start: number): any;
-    static AsSpan(text: string, start: number, length: number): any;
-    static AsMemory(text: string): any;
-    static AsMemory(text: string, start: number): any;
-    static AsMemory(text: string, startIndex: System.Index): any;
-    static AsMemory(text: string, start: number, length: number): any;
-    static AsMemory(text: string, range: System.Range): any;
-    static Trim(span: any): any;
-    static TrimStart(span: any): any;
-    static TrimEnd(span: any): any;
-    static Trim(span: any, trimChar: System.Char): any;
-    static TrimStart(span: any, trimChar: System.Char): any;
-    static TrimEnd(span: any, trimChar: System.Char): any;
-    static Trim(span: any, trimChars: any): any;
-    static TrimStart(span: any, trimChars: any): any;
-    static TrimEnd(span: any, trimChars: any): any;
-    static IsWhiteSpace(span: any): boolean;
+    static Contains(span: System.ReadOnlySpan, value: System.ReadOnlySpan, comparisonType: System.StringComparison): boolean;
+    static Equals(span: System.ReadOnlySpan, other: System.ReadOnlySpan, comparisonType: System.StringComparison): boolean;
+    static CompareTo(span: System.ReadOnlySpan, other: System.ReadOnlySpan, comparisonType: System.StringComparison): number;
+    static IndexOf(span: System.ReadOnlySpan, value: System.ReadOnlySpan, comparisonType: System.StringComparison): number;
+    static ToLower(source: System.ReadOnlySpan, destination: System.Span, culture: System.Globalization.CultureInfo): number;
+    static ToLowerInvariant(source: System.ReadOnlySpan, destination: System.Span): number;
+    static ToUpper(source: System.ReadOnlySpan, destination: System.Span, culture: System.Globalization.CultureInfo): number;
+    static ToUpperInvariant(source: System.ReadOnlySpan, destination: System.Span): number;
+    static EndsWith(span: System.ReadOnlySpan, value: System.ReadOnlySpan, comparisonType: System.StringComparison): boolean;
+    static StartsWith(span: System.ReadOnlySpan, value: System.ReadOnlySpan, comparisonType: System.StringComparison): boolean;
+    static AsSpan(text: string): System.ReadOnlySpan;
+    static AsSpan(text: string, start: number): System.ReadOnlySpan;
+    static AsSpan(text: string, start: number, length: number): System.ReadOnlySpan;
+    static AsMemory(text: string): System.ReadOnlyMemory;
+    static AsMemory(text: string, start: number): System.ReadOnlyMemory;
+    static AsMemory(text: string, startIndex: System.Index): System.ReadOnlyMemory;
+    static AsMemory(text: string, start: number, length: number): System.ReadOnlyMemory;
+    static AsMemory(text: string, range: System.Range): System.ReadOnlyMemory;
+    static Trim(span: System.ReadOnlySpan): System.ReadOnlySpan;
+    static TrimStart(span: System.ReadOnlySpan): System.ReadOnlySpan;
+    static TrimEnd(span: System.ReadOnlySpan): System.ReadOnlySpan;
+    static Trim(span: System.ReadOnlySpan, trimChar: System.Char): System.ReadOnlySpan;
+    static TrimStart(span: System.ReadOnlySpan, trimChar: System.Char): System.ReadOnlySpan;
+    static TrimEnd(span: System.ReadOnlySpan, trimChar: System.Char): System.ReadOnlySpan;
+    static Trim(span: System.ReadOnlySpan, trimChars: System.ReadOnlySpan): System.ReadOnlySpan;
+    static TrimStart(span: System.ReadOnlySpan, trimChars: System.ReadOnlySpan): System.ReadOnlySpan;
+    static TrimEnd(span: System.ReadOnlySpan, trimChars: System.ReadOnlySpan): System.ReadOnlySpan;
+    static IsWhiteSpace(span: System.ReadOnlySpan): boolean;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2298,7 +2307,7 @@ export declare namespace System {
   export class ReadOnlyMemory<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
-    static Empty: any; // System.ReadOnlyMemory`1[T]
+    static Empty: System.ReadOnlyMemory;
     Length: number;
     IsEmpty: boolean;
     Span: System.ReadOnlySpan<T>;
@@ -2319,7 +2328,7 @@ export declare namespace System {
     constructor(array: T[], start: number, length: number);
     Length: number;
     IsEmpty: boolean;
-    static Empty: any; // System.ReadOnlySpan`1[T]
+    static Empty: System.ReadOnlySpan;
     CopyTo(destination: System.Span<T>): void;
     TryCopyTo(destination: System.Span<T>): boolean;
     ToString(): string;
@@ -2328,7 +2337,15 @@ export declare namespace System {
     ToArray(): T[];
     Equals(obj: any): boolean;
     GetHashCode(): number;
-    GetEnumerator(): System.ReadOnlySpan<T>;
+    GetEnumerator(): System.ReadOnlySpan_Enumerator<T>;
+    GetType(): System.Type;
+  }
+  export class ReadOnlySpan_Enumerator<T = any> {
+    Current: Ref<T>;
+    MoveNext(): boolean;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
     GetType(): System.Type;
   }
   export class ResolveEventArgs {
@@ -2373,7 +2390,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): System.SByte;
     static Parse(s: string, provider: System.IFormatProvider): System.SByte;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): System.SByte;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.SByte;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): System.SByte;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -2405,7 +2422,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -2414,7 +2431,7 @@ export declare namespace System {
     constructor(array: T[], start: number, length: number);
     Length: number;
     IsEmpty: boolean;
-    static Empty: any; // System.Span`1[T]
+    static Empty: System.Span;
     Clear(): void;
     Fill(value: T): void;
     CopyTo(destination: System.Span<T>): void;
@@ -2425,7 +2442,15 @@ export declare namespace System {
     ToArray(): T[];
     Equals(obj: any): boolean;
     GetHashCode(): number;
-    GetEnumerator(): System.Span<T>;
+    GetEnumerator(): System.Span_Enumerator<T>;
+    GetType(): System.Type;
+  }
+  export class Span_Enumerator<T = any> {
+    Current: Ref<T>;
+    MoveNext(): boolean;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
     GetType(): System.Type;
   }
   export class StackOverflowException {
@@ -2572,13 +2597,13 @@ export declare namespace System {
     static FromTicks(value: number): System.TimeSpan;
     static Parse(s: string): System.TimeSpan;
     static Parse(input: string, formatProvider: System.IFormatProvider): System.TimeSpan;
-    static Parse(input: any, formatProvider?: System.IFormatProvider): System.TimeSpan;
+    static Parse(input: System.ReadOnlySpan, formatProvider?: System.IFormatProvider): System.TimeSpan;
     static ParseExact(input: string, format: string, formatProvider: System.IFormatProvider): System.TimeSpan;
     static ParseExact(input: string, formats: string[], formatProvider: System.IFormatProvider): System.TimeSpan;
     static ParseExact(input: string, format: string, formatProvider: System.IFormatProvider, styles: System.Globalization.TimeSpanStyles): System.TimeSpan;
-    static ParseExact(input: any, format: any, formatProvider: System.IFormatProvider, styles?: System.Globalization.TimeSpanStyles): System.TimeSpan;
+    static ParseExact(input: System.ReadOnlySpan, format: System.ReadOnlySpan, formatProvider: System.IFormatProvider, styles?: System.Globalization.TimeSpanStyles): System.TimeSpan;
     static ParseExact(input: string, formats: string[], formatProvider: System.IFormatProvider, styles: System.Globalization.TimeSpanStyles): System.TimeSpan;
-    static ParseExact(input: any, formats: string[], formatProvider: System.IFormatProvider, styles?: System.Globalization.TimeSpanStyles): System.TimeSpan;
+    static ParseExact(input: System.ReadOnlySpan, formats: string[], formatProvider: System.IFormatProvider, styles?: System.Globalization.TimeSpanStyles): System.TimeSpan;
     ToString(): string;
     ToString(format: string): string;
     ToString(format: string, formatProvider: System.IFormatProvider): string;
@@ -2940,7 +2965,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -2960,7 +2985,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -2980,7 +3005,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
@@ -3067,7 +3092,7 @@ export declare namespace System {
     ToString(): string;
     ToString(fieldCount: number): string;
     static Parse(input: string): System.Version;
-    static Parse(input: any): System.Version;
+    static Parse(input: System.ReadOnlySpan): System.Version;
     GetType(): System.Type;
   }
   export class Void {
@@ -4429,7 +4454,7 @@ export declare namespace System {
     static Parse(s: string, style: System.Globalization.NumberStyles): number;
     static Parse(s: string, provider: System.IFormatProvider): number;
     static Parse(s: string, style: System.Globalization.NumberStyles, provider: System.IFormatProvider): number;
-    static Parse(s: any, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
+    static Parse(s: System.ReadOnlySpan, style?: System.Globalization.NumberStyles, provider?: System.IFormatProvider): number;
     static GetBits(d: number): number[];
     static Remainder(d1: number, d2: number): number;
     static Multiply(d1: number, d2: number): number;
@@ -4775,9 +4800,9 @@ export declare namespace System {
       ToString(): string;
     }
     export class ArrayPool<T = any> {
-      static Shared: any; // System.Buffers.ArrayPool`1[T]
-      static Create(): any;
-      static Create(maxArrayLength: number, maxArraysPerBucket: number): any;
+      static Shared: System.Buffers.ArrayPool;
+      static Create(): System.Buffers.ArrayPool;
+      static Create(maxArrayLength: number, maxArraysPerBucket: number): System.Buffers.ArrayPool;
       Rent(minimumLength: number): T[];
       Return(array: T[], clearArray?: boolean): void;
       Equals(obj: any): boolean;
@@ -4821,7 +4846,7 @@ export declare namespace System {
       GetSpan(sizeHint?: number): System.Span<T>;
     }
     export class MemoryPool<T = any> {
-      static Shared: any; // System.Buffers.MemoryPool`1[T]
+      static Shared: System.Buffers.MemoryPool;
       MaxBufferSize: number;
       Rent(minBufferSize?: number): System.Buffers.IMemoryOwner<T>;
       Dispose(): void;
@@ -4848,7 +4873,7 @@ export declare namespace System {
       FirstSpan: System.ReadOnlySpan<T>;
       Start: System.SequencePosition;
       End: System.SequencePosition;
-      static Empty: any; // System.Buffers.ReadOnlySequence`1[T]
+      static Empty: System.Buffers.ReadOnlySequence;
       Slice(start: number, length: number): System.Buffers.ReadOnlySequence<T>;
       Slice(start: number, end: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
       Slice(start: System.SequencePosition, length: number): System.Buffers.ReadOnlySequence<T>;
@@ -4859,11 +4884,19 @@ export declare namespace System {
       Slice(start: System.SequencePosition): System.Buffers.ReadOnlySequence<T>;
       Slice(start: number): System.Buffers.ReadOnlySequence<T>;
       ToString(): string;
-      GetEnumerator(): System.Buffers.ReadOnlySequence<T>;
+      GetEnumerator(): System.Buffers.ReadOnlySequence_Enumerator<T>;
       GetPosition(offset: number): System.SequencePosition;
       GetPosition(offset: number, origin: System.SequencePosition): System.SequencePosition;
       Equals(obj: any): boolean;
       GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class ReadOnlySequence_Enumerator<T = any> {
+      Current: System.ReadOnlyMemory<T>;
+      MoveNext(): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
       GetType(): System.Type;
     }
     export class ReadOnlySequenceSegment<T = any> {
@@ -4883,7 +4916,7 @@ export declare namespace System {
       IsDefault: boolean;
       static NoPrecision: Byte;
       static MaxPrecision: Byte;
-      static Parse(format: any): System.Buffers.StandardFormat;
+      static Parse(format: System.ReadOnlySpan): System.Buffers.StandardFormat;
       static Parse(format: string): System.Buffers.StandardFormat;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -4952,42 +4985,42 @@ export declare namespace System {
         static ReverseEndianness(value: number): number;
         static ReverseEndianness(value: number): number;
         static ReverseEndianness(value: number): number;
-        static ReadInt16BigEndian(source: any): number;
-        static ReadInt32BigEndian(source: any): number;
-        static ReadInt64BigEndian(source: any): number;
-        static ReadUInt16BigEndian(source: any): number;
-        static ReadUInt32BigEndian(source: any): number;
-        static ReadUInt64BigEndian(source: any): number;
-        static ReadInt16LittleEndian(source: any): number;
-        static ReadInt32LittleEndian(source: any): number;
-        static ReadInt64LittleEndian(source: any): number;
-        static ReadUInt16LittleEndian(source: any): number;
-        static ReadUInt32LittleEndian(source: any): number;
-        static ReadUInt64LittleEndian(source: any): number;
-        static WriteInt16BigEndian(destination: any, value: number): void;
-        static WriteInt32BigEndian(destination: any, value: number): void;
-        static WriteInt64BigEndian(destination: any, value: number): void;
-        static WriteUInt16BigEndian(destination: any, value: number): void;
-        static WriteUInt32BigEndian(destination: any, value: number): void;
-        static WriteUInt64BigEndian(destination: any, value: number): void;
-        static TryWriteInt16BigEndian(destination: any, value: number): boolean;
-        static TryWriteInt32BigEndian(destination: any, value: number): boolean;
-        static TryWriteInt64BigEndian(destination: any, value: number): boolean;
-        static TryWriteUInt16BigEndian(destination: any, value: number): boolean;
-        static TryWriteUInt32BigEndian(destination: any, value: number): boolean;
-        static TryWriteUInt64BigEndian(destination: any, value: number): boolean;
-        static WriteInt16LittleEndian(destination: any, value: number): void;
-        static WriteInt32LittleEndian(destination: any, value: number): void;
-        static WriteInt64LittleEndian(destination: any, value: number): void;
-        static WriteUInt16LittleEndian(destination: any, value: number): void;
-        static WriteUInt32LittleEndian(destination: any, value: number): void;
-        static WriteUInt64LittleEndian(destination: any, value: number): void;
-        static TryWriteInt16LittleEndian(destination: any, value: number): boolean;
-        static TryWriteInt32LittleEndian(destination: any, value: number): boolean;
-        static TryWriteInt64LittleEndian(destination: any, value: number): boolean;
-        static TryWriteUInt16LittleEndian(destination: any, value: number): boolean;
-        static TryWriteUInt32LittleEndian(destination: any, value: number): boolean;
-        static TryWriteUInt64LittleEndian(destination: any, value: number): boolean;
+        static ReadInt16BigEndian(source: System.ReadOnlySpan): number;
+        static ReadInt32BigEndian(source: System.ReadOnlySpan): number;
+        static ReadInt64BigEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt16BigEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt32BigEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt64BigEndian(source: System.ReadOnlySpan): number;
+        static ReadInt16LittleEndian(source: System.ReadOnlySpan): number;
+        static ReadInt32LittleEndian(source: System.ReadOnlySpan): number;
+        static ReadInt64LittleEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt16LittleEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt32LittleEndian(source: System.ReadOnlySpan): number;
+        static ReadUInt64LittleEndian(source: System.ReadOnlySpan): number;
+        static WriteInt16BigEndian(destination: System.Span, value: number): void;
+        static WriteInt32BigEndian(destination: System.Span, value: number): void;
+        static WriteInt64BigEndian(destination: System.Span, value: number): void;
+        static WriteUInt16BigEndian(destination: System.Span, value: number): void;
+        static WriteUInt32BigEndian(destination: System.Span, value: number): void;
+        static WriteUInt64BigEndian(destination: System.Span, value: number): void;
+        static TryWriteInt16BigEndian(destination: System.Span, value: number): boolean;
+        static TryWriteInt32BigEndian(destination: System.Span, value: number): boolean;
+        static TryWriteInt64BigEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt16BigEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt32BigEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt64BigEndian(destination: System.Span, value: number): boolean;
+        static WriteInt16LittleEndian(destination: System.Span, value: number): void;
+        static WriteInt32LittleEndian(destination: System.Span, value: number): void;
+        static WriteInt64LittleEndian(destination: System.Span, value: number): void;
+        static WriteUInt16LittleEndian(destination: System.Span, value: number): void;
+        static WriteUInt32LittleEndian(destination: System.Span, value: number): void;
+        static WriteUInt64LittleEndian(destination: System.Span, value: number): void;
+        static TryWriteInt16LittleEndian(destination: System.Span, value: number): boolean;
+        static TryWriteInt32LittleEndian(destination: System.Span, value: number): boolean;
+        static TryWriteInt64LittleEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt16LittleEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt32LittleEndian(destination: System.Span, value: number): boolean;
+        static TryWriteUInt64LittleEndian(destination: System.Span, value: number): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -6337,7 +6370,7 @@ export declare namespace System {
         LanguageOptions: System.CodeDom.Compiler.LanguageOptions;
         Site: System.ComponentModel.ISite;
         Container: System.ComponentModel.IContainer;
-        static CreateProvider(language: string, providerOptions: any): System.CodeDom.Compiler.CodeDomProvider;
+        static CreateProvider(language: string, providerOptions: System.Collections.Generic.IDictionary): System.CodeDom.Compiler.CodeDomProvider;
         static CreateProvider(language: string): System.CodeDom.Compiler.CodeDomProvider;
         static GetLanguageFromExtension(extension: string): string;
         static IsDefinedLanguage(language: string): boolean;
@@ -7089,12 +7122,12 @@ export declare namespace System {
         TryAdd(item: T, millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken): boolean;
         Take(): T;
         Take(cancellationToken: System.Threading.CancellationToken): T;
-        static AddToAny(collections: any[], item: any): number;
-        static AddToAny(collections: any[], item: any, cancellationToken: System.Threading.CancellationToken): number;
-        static TryAddToAny(collections: any[], item: any): number;
-        static TryAddToAny(collections: any[], item: any, timeout: System.TimeSpan): number;
-        static TryAddToAny(collections: any[], item: any, millisecondsTimeout: number): number;
-        static TryAddToAny(collections: any[], item: any, millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken): number;
+        static AddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any): number;
+        static AddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any, cancellationToken: System.Threading.CancellationToken): number;
+        static TryAddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any): number;
+        static TryAddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any, timeout: System.TimeSpan): number;
+        static TryAddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any, millisecondsTimeout: number): number;
+        static TryAddToAny(collections: System.Collections.Concurrent.BlockingCollection[], item: any, millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken): number;
         CompleteAdding(): void;
         Dispose(): void;
         ToArray(): T[];
@@ -7134,13 +7167,13 @@ export declare namespace System {
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
-        Keys: System.Collections.Generic.Dictionary<TKey, TValue>;
-        Values: System.Collections.Generic.Dictionary<TKey, TValue>;
+        Keys: System.Collections.Generic.Dictionary_KeyCollection<TKey, TValue>;
+        Values: System.Collections.Generic.Dictionary_ValueCollection<TKey, TValue>;
         Add(key: TKey, value: TValue): void;
         Clear(): void;
         ContainsKey(key: TKey): boolean;
         ContainsValue(value: TValue): boolean;
-        GetEnumerator(): System.Collections.Generic.Dictionary<TKey, TValue>;
+        GetEnumerator(): System.Collections.Generic.Dictionary_Enumerator<TKey, TValue>;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         OnDeserialization(sender: any): void;
         Remove(key: TKey): boolean;
@@ -7152,6 +7185,53 @@ export declare namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class Dictionary_Enumerator<TKey = any, TValue = any> {
+        Current: System.Collections.Generic.KeyValuePair<TKey, TValue>;
+        MoveNext(): boolean;
+        Dispose(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class Dictionary_KeyCollection<TKey = any, TValue = any> {
+        constructor(dictionary: System.Collections.Generic.Dictionary<TKey, TValue>);
+        Count: number;
+        GetEnumerator(): System.Collections.Generic.Dictionary_KeyCollection_Enumerator<TKey, TValue>;
+        CopyTo(array: TKey[], index: number): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Dictionary_KeyCollection_Enumerator<TKey = any, TValue = any> {
+        Current: TKey;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class Dictionary_ValueCollection<TKey = any, TValue = any> {
+        constructor(dictionary: System.Collections.Generic.Dictionary<TKey, TValue>);
+        Count: number;
+        GetEnumerator(): System.Collections.Generic.Dictionary_ValueCollection_Enumerator<TKey, TValue>;
+        CopyTo(array: TValue[], index: number): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Dictionary_ValueCollection_Enumerator<TKey = any, TValue = any> {
+        Current: TValue;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export interface IAsyncEnumerable<T = any> {
         GetAsyncEnumerator(cancellationToken?: System.Threading.CancellationToken): System.Collections.Generic.IAsyncEnumerator<T>;
@@ -7261,7 +7341,7 @@ export declare namespace System {
         FindLastIndex(startIndex: number, match: ((obj: T) => boolean)): number;
         FindLastIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
         ForEach(action: ((obj: T) => void)): void;
-        GetEnumerator(): System.Collections.Generic.List<T>;
+        GetEnumerator(): System.Collections.Generic.List_Enumerator<T>;
         GetRange(index: number, count: number): T[];
         IndexOf(item: T): number;
         IndexOf(item: T, index: number): number;
@@ -7289,6 +7369,15 @@ export declare namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class List_Enumerator<T = any> {
+        Current: T;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class CollectionExtensions {
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -7303,7 +7392,7 @@ export declare namespace System {
         Clear(): void;
         CopyTo(array: T[], arrayIndex: number): void;
         Enqueue(item: T): void;
-        GetEnumerator(): System.Collections.Generic.Queue<T>;
+        GetEnumerator(): System.Collections.Generic.Queue_Enumerator<T>;
         Dequeue(): T;
         Peek(): T;
         Contains(item: T): boolean;
@@ -7314,6 +7403,15 @@ export declare namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class Queue_Enumerator<T = any> {
+        Current: T;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class Stack<T = any> {
         constructor();
         constructor(capacity: number);
@@ -7322,7 +7420,7 @@ export declare namespace System {
         Clear(): void;
         Contains(item: T): boolean;
         CopyTo(array: T[], arrayIndex: number): void;
-        GetEnumerator(): System.Collections.Generic.Stack<T>;
+        GetEnumerator(): System.Collections.Generic.Stack_Enumerator<T>;
         TrimExcess(): void;
         Peek(): T;
         Pop(): T;
@@ -7333,9 +7431,18 @@ export declare namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class Stack_Enumerator<T = any> {
+        Current: T;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
       export class Comparer<T = any> {
-        static Default: any; // System.Collections.Generic.Comparer`1[T]
-        static Create(comparison: ((x: any, y: any) => number)): any;
+        static Default: System.Collections.Generic.Comparer;
+        static Create(comparison: ((x: any, y: any) => number)): System.Collections.Generic.Comparer;
         Compare(x: T, y: T): number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -7343,7 +7450,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class EqualityComparer<T = any> {
-        static Default: any; // System.Collections.Generic.EqualityComparer`1[T]
+        static Default: System.Collections.Generic.EqualityComparer;
         Equals(x: T, y: T): boolean;
         GetHashCode(obj: T): number;
         Equals(obj: any): boolean;
@@ -7364,7 +7471,7 @@ export declare namespace System {
         Contains(item: T): boolean;
         CopyTo(array: T[], arrayIndex: number): void;
         Remove(item: T): boolean;
-        GetEnumerator(): System.Collections.Generic.HashSet<T>;
+        GetEnumerator(): System.Collections.Generic.HashSet_Enumerator<T>;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
         OnDeserialization(sender: any): void;
         Add(item: T): boolean;
@@ -7383,11 +7490,20 @@ export declare namespace System {
         RemoveWhere(match: ((obj: T) => boolean)): number;
         EnsureCapacity(capacity: number): number;
         TrimExcess(): void;
-        static CreateSetComparer(): any;
+        static CreateSetComparer(): System.Collections.Generic.IEqualityComparer;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class HashSet_Enumerator<T = any> {
+        Current: T;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export class LinkedList<T = any> {
         constructor();
@@ -7408,7 +7524,7 @@ export declare namespace System {
         CopyTo(array: T[], index: number): void;
         Find(value: T): System.Collections.Generic.LinkedListNode<T>;
         FindLast(value: T): System.Collections.Generic.LinkedListNode<T>;
-        GetEnumerator(): System.Collections.Generic.LinkedList<T>;
+        GetEnumerator(): System.Collections.Generic.LinkedList_Enumerator<T>;
         Remove(value: T): boolean;
         Remove(node: System.Collections.Generic.LinkedListNode<T>): void;
         RemoveFirst(): void;
@@ -7419,6 +7535,15 @@ export declare namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class LinkedList_Enumerator<T = any> {
+        Current: T;
+        MoveNext(): boolean;
+        Dispose(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export class LinkedListNode<T = any> {
         constructor(value: T);
@@ -7438,19 +7563,66 @@ export declare namespace System {
         constructor(comparer: System.Collections.Generic.IComparer<TKey>);
         Count: number;
         Comparer: System.Collections.Generic.IComparer<TKey>;
-        Keys: System.Collections.Generic.SortedDictionary<TKey, TValue>;
-        Values: System.Collections.Generic.SortedDictionary<TKey, TValue>;
+        Keys: System.Collections.Generic.SortedDictionary_KeyCollection<TKey, TValue>;
+        Values: System.Collections.Generic.SortedDictionary_ValueCollection<TKey, TValue>;
         Add(key: TKey, value: TValue): void;
         Clear(): void;
         ContainsKey(key: TKey): boolean;
         ContainsValue(value: TValue): boolean;
         CopyTo(array: System.Collections.Generic.KeyValuePair<TKey, TValue>[], index: number): void;
-        GetEnumerator(): System.Collections.Generic.SortedDictionary<TKey, TValue>;
+        GetEnumerator(): System.Collections.Generic.SortedDictionary_Enumerator<TKey, TValue>;
         Remove(key: TKey): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class SortedDictionary_Enumerator<TKey = any, TValue = any> {
+        Current: System.Collections.Generic.KeyValuePair<TKey, TValue>;
+        MoveNext(): boolean;
+        Dispose(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class SortedDictionary_KeyCollection<TKey = any, TValue = any> {
+        constructor(dictionary: System.Collections.Generic.SortedDictionary<TKey, TValue>);
+        Count: number;
+        GetEnumerator(): System.Collections.Generic.SortedDictionary_KeyCollection_Enumerator<TKey, TValue>;
+        CopyTo(array: TKey[], index: number): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class SortedDictionary_KeyCollection_Enumerator<TKey = any, TValue = any> {
+        Current: TKey;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class SortedDictionary_ValueCollection<TKey = any, TValue = any> {
+        constructor(dictionary: System.Collections.Generic.SortedDictionary<TKey, TValue>);
+        Count: number;
+        GetEnumerator(): System.Collections.Generic.SortedDictionary_ValueCollection_Enumerator<TKey, TValue>;
+        CopyTo(array: TValue[], index: number): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class SortedDictionary_ValueCollection_Enumerator<TKey = any, TValue = any> {
+        Current: TValue;
+        Dispose(): void;
+        MoveNext(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export class SortedList<TKey = any, TValue = any> {
         constructor();
@@ -7495,9 +7667,9 @@ export declare namespace System {
         CopyTo(array: T[]): void;
         CopyTo(array: T[], index: number): void;
         CopyTo(array: T[], index: number, count: number): void;
-        GetEnumerator(): System.Collections.Generic.SortedSet<T>;
-        static CreateSetComparer(): any;
-        static CreateSetComparer(memberEqualityComparer: any): any;
+        GetEnumerator(): System.Collections.Generic.SortedSet_Enumerator<T>;
+        static CreateSetComparer(): System.Collections.Generic.IEqualityComparer;
+        static CreateSetComparer(memberEqualityComparer: System.Collections.Generic.IEqualityComparer): System.Collections.Generic.IEqualityComparer;
         UnionWith(other: System.Collections.Generic.IEnumerable<T>): void;
         IntersectWith(other: System.Collections.Generic.IEnumerable<T>): void;
         ExceptWith(other: System.Collections.Generic.IEnumerable<T>): void;
@@ -7515,6 +7687,15 @@ export declare namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export class SortedSet_Enumerator<T = any> {
+        Current: T;
+        MoveNext(): boolean;
+        Dispose(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
       }
       export interface ISet<T = any> {
         Add(item: T): boolean;
@@ -7582,11 +7763,29 @@ export declare namespace System {
       }
       export class ReadOnlyDictionary<TKey = any, TValue = any> {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
-        Keys: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
-        Values: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
+        Keys: System.Collections.ObjectModel.ReadOnlyDictionary_KeyCollection<TKey, TValue>;
+        Values: System.Collections.ObjectModel.ReadOnlyDictionary_ValueCollection<TKey, TValue>;
         Count: number;
         ContainsKey(key: TKey): boolean;
         GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ReadOnlyDictionary_KeyCollection<TKey = any, TValue = any> {
+        Count: number;
+        CopyTo(array: TKey[], arrayIndex: number): void;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<TKey>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ReadOnlyDictionary_ValueCollection<TKey = any, TValue = any> {
+        Count: number;
+        CopyTo(array: TValue[], arrayIndex: number): void;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<TValue>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -13662,8 +13861,8 @@ export declare namespace System {
         static GenerateManifest(eventSourceType: System.Type, assemblyPathToIncludeInManifest: string, flags: System.Diagnostics.Tracing.EventManifestOptions): string;
         static GetGuid(eventSourceType: System.Type): System.Guid;
         static GetName(eventSourceType: System.Type): string;
-        static GetSources(): any;
-        static SendCommand(eventSource: System.Diagnostics.Tracing.EventSource, command: System.Diagnostics.Tracing.EventCommand, commandArguments: any): void;
+        static GetSources(): System.Collections.Generic.IEnumerable;
+        static SendCommand(eventSource: System.Diagnostics.Tracing.EventSource, command: System.Diagnostics.Tracing.EventCommand, commandArguments: System.Collections.Generic.IDictionary): void;
         static SetCurrentThreadActivityId(activityId: System.Guid): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -15932,18 +16131,18 @@ export declare namespace System {
       static GetFileSystemEntries(path: string, searchPattern: string): string[];
       static GetFileSystemEntries(path: string, searchPattern: string, searchOption: System.IO.SearchOption): string[];
       static GetFileSystemEntries(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): string[];
-      static EnumerateDirectories(path: string): any;
-      static EnumerateDirectories(path: string, searchPattern: string): any;
-      static EnumerateDirectories(path: string, searchPattern: string, searchOption: System.IO.SearchOption): any;
-      static EnumerateDirectories(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): any;
-      static EnumerateFiles(path: string): any;
-      static EnumerateFiles(path: string, searchPattern: string): any;
-      static EnumerateFiles(path: string, searchPattern: string, searchOption: System.IO.SearchOption): any;
-      static EnumerateFiles(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): any;
-      static EnumerateFileSystemEntries(path: string): any;
-      static EnumerateFileSystemEntries(path: string, searchPattern: string): any;
-      static EnumerateFileSystemEntries(path: string, searchPattern: string, searchOption: System.IO.SearchOption): any;
-      static EnumerateFileSystemEntries(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): any;
+      static EnumerateDirectories(path: string): System.Collections.Generic.IEnumerable;
+      static EnumerateDirectories(path: string, searchPattern: string): System.Collections.Generic.IEnumerable;
+      static EnumerateDirectories(path: string, searchPattern: string, searchOption: System.IO.SearchOption): System.Collections.Generic.IEnumerable;
+      static EnumerateDirectories(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): System.Collections.Generic.IEnumerable;
+      static EnumerateFiles(path: string): System.Collections.Generic.IEnumerable;
+      static EnumerateFiles(path: string, searchPattern: string): System.Collections.Generic.IEnumerable;
+      static EnumerateFiles(path: string, searchPattern: string, searchOption: System.IO.SearchOption): System.Collections.Generic.IEnumerable;
+      static EnumerateFiles(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): System.Collections.Generic.IEnumerable;
+      static EnumerateFileSystemEntries(path: string): System.Collections.Generic.IEnumerable;
+      static EnumerateFileSystemEntries(path: string, searchPattern: string): System.Collections.Generic.IEnumerable;
+      static EnumerateFileSystemEntries(path: string, searchPattern: string, searchOption: System.IO.SearchOption): System.Collections.Generic.IEnumerable;
+      static EnumerateFileSystemEntries(path: string, searchPattern: string, enumerationOptions: System.IO.EnumerationOptions): System.Collections.Generic.IEnumerable;
       static GetDirectoryRoot(path: string): string;
       static GetCurrentDirectory(): string;
       static SetCurrentDirectory(path: string): void;
@@ -16071,35 +16270,35 @@ export declare namespace System {
       static WriteAllBytes(path: string, bytes: Byte[]): void;
       static ReadAllLines(path: string): string[];
       static ReadAllLines(path: string, encoding: System.Text.Encoding): string[];
-      static ReadLines(path: string): any;
-      static ReadLines(path: string, encoding: System.Text.Encoding): any;
+      static ReadLines(path: string): System.Collections.Generic.IEnumerable;
+      static ReadLines(path: string, encoding: System.Text.Encoding): System.Collections.Generic.IEnumerable;
       static WriteAllLines(path: string, contents: string[]): void;
-      static WriteAllLines(path: string, contents: any): void;
+      static WriteAllLines(path: string, contents: System.Collections.Generic.IEnumerable): void;
       static WriteAllLines(path: string, contents: string[], encoding: System.Text.Encoding): void;
-      static WriteAllLines(path: string, contents: any, encoding: System.Text.Encoding): void;
+      static WriteAllLines(path: string, contents: System.Collections.Generic.IEnumerable, encoding: System.Text.Encoding): void;
       static AppendAllText(path: string, contents: string): void;
       static AppendAllText(path: string, contents: string, encoding: System.Text.Encoding): void;
-      static AppendAllLines(path: string, contents: any): void;
-      static AppendAllLines(path: string, contents: any, encoding: System.Text.Encoding): void;
+      static AppendAllLines(path: string, contents: System.Collections.Generic.IEnumerable): void;
+      static AppendAllLines(path: string, contents: System.Collections.Generic.IEnumerable, encoding: System.Text.Encoding): void;
       static Replace(sourceFileName: string, destinationFileName: string, destinationBackupFileName: string): void;
       static Replace(sourceFileName: string, destinationFileName: string, destinationBackupFileName: string, ignoreMetadataErrors: boolean): void;
       static Move(sourceFileName: string, destFileName: string): void;
       static Encrypt(path: string): void;
       static Decrypt(path: string): void;
-      static ReadAllTextAsync(path: string, cancellationToken?: System.Threading.CancellationToken): any;
-      static ReadAllTextAsync(path: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): any;
+      static ReadAllTextAsync(path: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static ReadAllTextAsync(path: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static WriteAllTextAsync(path: string, contents: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static WriteAllTextAsync(path: string, contents: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      static ReadAllBytesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): any;
+      static ReadAllBytesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static WriteAllBytesAsync(path: string, bytes: Byte[], cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      static ReadAllLinesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): any;
-      static ReadAllLinesAsync(path: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): any;
-      static WriteAllLinesAsync(path: string, contents: any, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      static WriteAllLinesAsync(path: string, contents: any, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static ReadAllLinesAsync(path: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static ReadAllLinesAsync(path: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static WriteAllLinesAsync(path: string, contents: System.Collections.Generic.IEnumerable, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static WriteAllLinesAsync(path: string, contents: System.Collections.Generic.IEnumerable, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static AppendAllTextAsync(path: string, contents: string, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static AppendAllTextAsync(path: string, contents: string, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      static AppendAllLinesAsync(path: string, contents: any, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-      static AppendAllLinesAsync(path: string, contents: any, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static AppendAllLinesAsync(path: string, contents: System.Collections.Generic.IEnumerable, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+      static AppendAllLinesAsync(path: string, contents: System.Collections.Generic.IEnumerable, encoding: System.Text.Encoding, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
       static Create(path: string, bufferSize: number, options: System.IO.FileOptions, fileSecurity: System.Security.AccessControl.FileSecurity): System.IO.FileStream;
       static GetAccessControl(path: string): System.Security.AccessControl.FileSecurity;
       static GetAccessControl(path: string, includeSections: System.Security.AccessControl.AccessControlSections): System.Security.AccessControl.FileSecurity;
@@ -16573,7 +16772,7 @@ export declare namespace System {
       static ChangeExtension(path: string, extension: string): string;
       static Combine(path1: string, path2: string): string;
       static GetDirectoryName(path: string): string;
-      static GetDirectoryName(path: any): any;
+      static GetDirectoryName(path: System.ReadOnlySpan): System.ReadOnlySpan;
       static GetExtension(path: string): string;
       static GetFileName(path: string): string;
       static GetFileNameWithoutExtension(path: string): string;
@@ -16582,7 +16781,7 @@ export declare namespace System {
       static GetTempFileName(): string;
       static GetTempPath(): string;
       static HasExtension(path: string): boolean;
-      static IsPathRooted(path: any): boolean;
+      static IsPathRooted(path: System.ReadOnlySpan): boolean;
       static IsPathRooted(path: string): boolean;
       static GetInvalidFileNameChars(): System.Char[];
       static GetInvalidPathChars(): System.Char[];
@@ -16590,16 +16789,16 @@ export declare namespace System {
       static Combine(...paths: string[]): string;
       static Combine(path1: string, path2: string, path3: string): string;
       static Combine(path1: string, path2: string, path3: string, path4: string): string;
-      static GetFileName(path: any): any;
-      static Join(path1: any, path2: any): string;
-      static Join(path1: any, path2: any, path3: any): string;
-      static GetExtension(path: any): any;
-      static GetFileNameWithoutExtension(path: any): any;
-      static GetPathRoot(path: any): any;
-      static HasExtension(path: any): boolean;
+      static GetFileName(path: System.ReadOnlySpan): System.ReadOnlySpan;
+      static Join(path1: System.ReadOnlySpan, path2: System.ReadOnlySpan): string;
+      static Join(path1: System.ReadOnlySpan, path2: System.ReadOnlySpan, path3: System.ReadOnlySpan): string;
+      static GetExtension(path: System.ReadOnlySpan): System.ReadOnlySpan;
+      static GetFileNameWithoutExtension(path: System.ReadOnlySpan): System.ReadOnlySpan;
+      static GetPathRoot(path: System.ReadOnlySpan): System.ReadOnlySpan;
+      static HasExtension(path: System.ReadOnlySpan): boolean;
       static GetRelativePath(relativeTo: string, path: string): string;
       static IsPathFullyQualified(path: string): boolean;
-      static IsPathFullyQualified(path: any): boolean;
+      static IsPathFullyQualified(path: System.ReadOnlySpan): boolean;
       static GetFullPath(path: string, basePath: string): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -16956,6 +17155,32 @@ export declare namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class FileSystemEnumerable_FindPredicate<TResult = any> {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FileSystemEnumerable_FindTransform<TResult = any> {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class FileSystemEnumerator<TResult = any> {
         constructor(directory: string, options?: System.IO.EnumerationOptions);
         Current: TResult;
@@ -16969,8 +17194,8 @@ export declare namespace System {
       }
       export class FileSystemName {
         static TranslateWin32Expression(expression: string): string;
-        static MatchesWin32Expression(expression: any, name: any, ignoreCase?: boolean): boolean;
-        static MatchesSimpleExpression(expression: any, name: any, ignoreCase?: boolean): boolean;
+        static MatchesWin32Expression(expression: System.ReadOnlySpan, name: System.ReadOnlySpan, ignoreCase?: boolean): boolean;
+        static MatchesSimpleExpression(expression: System.ReadOnlySpan, name: System.ReadOnlySpan, ignoreCase?: boolean): boolean;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -18015,47 +18240,47 @@ export declare namespace System {
     export class ParallelEnumerable {
       static AsOrdered(source: System.Linq.ParallelQuery): System.Linq.ParallelQuery;
       static AsParallel(source: System.Collections.IEnumerable): System.Linq.ParallelQuery;
-      static Range(start: number, count: number): any;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
+      static Range(start: number, count: number): System.Linq.ParallelQuery;
+      static Sum(source: System.Linq.ParallelQuery): number;
+      static Sum(source: System.Linq.ParallelQuery): number | undefined;
+      static Sum(source: System.Linq.ParallelQuery): number;
+      static Sum(source: System.Linq.ParallelQuery): number | undefined;
+      static Sum(source: System.Linq.ParallelQuery): number;
+      static Sum(source: System.Linq.ParallelQuery): number | undefined;
+      static Sum(source: System.Linq.ParallelQuery): number;
+      static Sum(source: System.Linq.ParallelQuery): number | undefined;
+      static Sum(source: System.Linq.ParallelQuery): number;
+      static Sum(source: System.Linq.ParallelQuery): number | undefined;
+      static Min(source: System.Linq.ParallelQuery): number;
+      static Min(source: System.Linq.ParallelQuery): number | undefined;
+      static Min(source: System.Linq.ParallelQuery): number;
+      static Min(source: System.Linq.ParallelQuery): number | undefined;
+      static Min(source: System.Linq.ParallelQuery): number;
+      static Min(source: System.Linq.ParallelQuery): number | undefined;
+      static Min(source: System.Linq.ParallelQuery): number;
+      static Min(source: System.Linq.ParallelQuery): number | undefined;
+      static Min(source: System.Linq.ParallelQuery): number;
+      static Min(source: System.Linq.ParallelQuery): number | undefined;
+      static Max(source: System.Linq.ParallelQuery): number;
+      static Max(source: System.Linq.ParallelQuery): number | undefined;
+      static Max(source: System.Linq.ParallelQuery): number;
+      static Max(source: System.Linq.ParallelQuery): number | undefined;
+      static Max(source: System.Linq.ParallelQuery): number;
+      static Max(source: System.Linq.ParallelQuery): number | undefined;
+      static Max(source: System.Linq.ParallelQuery): number;
+      static Max(source: System.Linq.ParallelQuery): number | undefined;
+      static Max(source: System.Linq.ParallelQuery): number;
+      static Max(source: System.Linq.ParallelQuery): number | undefined;
+      static Average(source: System.Linq.ParallelQuery): number;
+      static Average(source: System.Linq.ParallelQuery): number | undefined;
+      static Average(source: System.Linq.ParallelQuery): number;
+      static Average(source: System.Linq.ParallelQuery): number | undefined;
+      static Average(source: System.Linq.ParallelQuery): number;
+      static Average(source: System.Linq.ParallelQuery): number | undefined;
+      static Average(source: System.Linq.ParallelQuery): number;
+      static Average(source: System.Linq.ParallelQuery): number | undefined;
+      static Average(source: System.Linq.ParallelQuery): number;
+      static Average(source: System.Linq.ParallelQuery): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18088,73 +18313,73 @@ export declare namespace System {
     }
     export class Queryable {
       static AsQueryable(source: System.Collections.IEnumerable): System.Linq.IQueryable;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
+      static Sum(source: System.Linq.IQueryable): number;
+      static Sum(source: System.Linq.IQueryable): number | undefined;
+      static Sum(source: System.Linq.IQueryable): number;
+      static Sum(source: System.Linq.IQueryable): number | undefined;
+      static Sum(source: System.Linq.IQueryable): number;
+      static Sum(source: System.Linq.IQueryable): number | undefined;
+      static Sum(source: System.Linq.IQueryable): number;
+      static Sum(source: System.Linq.IQueryable): number | undefined;
+      static Sum(source: System.Linq.IQueryable): number;
+      static Sum(source: System.Linq.IQueryable): number | undefined;
+      static Average(source: System.Linq.IQueryable): number;
+      static Average(source: System.Linq.IQueryable): number | undefined;
+      static Average(source: System.Linq.IQueryable): number;
+      static Average(source: System.Linq.IQueryable): number | undefined;
+      static Average(source: System.Linq.IQueryable): number;
+      static Average(source: System.Linq.IQueryable): number | undefined;
+      static Average(source: System.Linq.IQueryable): number;
+      static Average(source: System.Linq.IQueryable): number | undefined;
+      static Average(source: System.Linq.IQueryable): number;
+      static Average(source: System.Linq.IQueryable): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class Enumerable {
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Average(source: any): number;
-      static Average(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Max(source: any): number;
-      static Max(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Min(source: any): number;
-      static Min(source: any): number | undefined;
-      static Range(start: number, count: number): any;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
-      static Sum(source: any): number;
-      static Sum(source: any): number | undefined;
+      static Average(source: System.Collections.Generic.IEnumerable): number;
+      static Average(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Average(source: System.Collections.Generic.IEnumerable): number;
+      static Average(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Average(source: System.Collections.Generic.IEnumerable): number;
+      static Average(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Average(source: System.Collections.Generic.IEnumerable): number;
+      static Average(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Average(source: System.Collections.Generic.IEnumerable): number;
+      static Average(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Max(source: System.Collections.Generic.IEnumerable): number;
+      static Max(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Max(source: System.Collections.Generic.IEnumerable): number;
+      static Max(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Max(source: System.Collections.Generic.IEnumerable): number;
+      static Max(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Max(source: System.Collections.Generic.IEnumerable): number;
+      static Max(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Max(source: System.Collections.Generic.IEnumerable): number;
+      static Max(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Min(source: System.Collections.Generic.IEnumerable): number;
+      static Min(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Min(source: System.Collections.Generic.IEnumerable): number;
+      static Min(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Min(source: System.Collections.Generic.IEnumerable): number;
+      static Min(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Min(source: System.Collections.Generic.IEnumerable): number;
+      static Min(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Min(source: System.Collections.Generic.IEnumerable): number;
+      static Min(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Range(start: number, count: number): System.Collections.Generic.IEnumerable;
+      static Sum(source: System.Collections.Generic.IEnumerable): number;
+      static Sum(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Sum(source: System.Collections.Generic.IEnumerable): number;
+      static Sum(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Sum(source: System.Collections.Generic.IEnumerable): number;
+      static Sum(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Sum(source: System.Collections.Generic.IEnumerable): number;
+      static Sum(source: System.Collections.Generic.IEnumerable): number | undefined;
+      static Sum(source: System.Collections.Generic.IEnumerable): number;
+      static Sum(source: System.Collections.Generic.IEnumerable): number | undefined;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18320,12 +18545,12 @@ export declare namespace System {
         Reduce(): System.Linq.Expressions.Expression;
         Update(argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>): System.Linq.Expressions.DynamicExpression;
         static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, ...argumentsCS: System.Linq.Expressions.Expression[]): System.Linq.Expressions.DynamicExpression;
-        static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, argumentsCS: any): System.Linq.Expressions.DynamicExpression;
+        static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, argumentsCS: System.Collections.Generic.IEnumerable): System.Linq.Expressions.DynamicExpression;
         static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
         static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
         static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
         static Dynamic(binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression, arg3: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
-        static MakeDynamic(delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, argumentsCS: any): System.Linq.Expressions.DynamicExpression;
+        static MakeDynamic(delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, argumentsCS: System.Collections.Generic.IEnumerable): System.Linq.Expressions.DynamicExpression;
         static MakeDynamic(delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, ...argumentsCS: System.Linq.Expressions.Expression[]): System.Linq.Expressions.DynamicExpression;
         static MakeDynamic(delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
         static MakeDynamic(delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression): System.Linq.Expressions.DynamicExpression;
@@ -18961,8 +19186,8 @@ export declare namespace System {
       constructor(values: System.Span<T>);
       constructor(values: T[], index: number);
       static Count: number;
-      static Zero: any; // System.Numerics.Vector`1[T]
-      static One: any; // System.Numerics.Vector`1[T]
+      static Zero: System.Numerics.Vector;
+      static One: System.Numerics.Vector;
       CopyTo(destination: T[]): void;
       CopyTo(destination: T[], startIndex: number): void;
       Equals(obj: any): boolean;
@@ -20310,10 +20535,10 @@ export declare namespace System {
       ToString(): string;
     }
     export class RuntimeReflectionExtensions {
-      static GetRuntimeFields(type: System.Type): any;
-      static GetRuntimeMethods(type: System.Type): any;
-      static GetRuntimeProperties(type: System.Type): any;
-      static GetRuntimeEvents(type: System.Type): any;
+      static GetRuntimeFields(type: System.Type): System.Collections.Generic.IEnumerable;
+      static GetRuntimeMethods(type: System.Type): System.Collections.Generic.IEnumerable;
+      static GetRuntimeProperties(type: System.Type): System.Collections.Generic.IEnumerable;
+      static GetRuntimeEvents(type: System.Type): System.Collections.Generic.IEnumerable;
       static GetRuntimeField(type: System.Type, name: string): System.Reflection.FieldInfo;
       static GetRuntimeMethod(type: System.Type, name: string, parameters: System.Type[]): System.Reflection.MethodInfo;
       static GetRuntimeProperty(type: System.Type, name: string): System.Reflection.PropertyInfo;
@@ -20375,18 +20600,18 @@ export declare namespace System {
       static GetCustomAttribute(element: System.Reflection.ParameterInfo, attributeType: System.Type): any;
       static GetCustomAttribute(element: System.Reflection.MemberInfo, attributeType: System.Type, inherit: boolean): any;
       static GetCustomAttribute(element: System.Reflection.ParameterInfo, attributeType: System.Type, inherit: boolean): any;
-      static GetCustomAttributes(element: System.Reflection.Assembly): any;
-      static GetCustomAttributes(element: System.Reflection.Module): any;
-      static GetCustomAttributes(element: System.Reflection.MemberInfo): any;
-      static GetCustomAttributes(element: System.Reflection.ParameterInfo): any;
-      static GetCustomAttributes(element: System.Reflection.MemberInfo, inherit: boolean): any;
-      static GetCustomAttributes(element: System.Reflection.ParameterInfo, inherit: boolean): any;
-      static GetCustomAttributes(element: System.Reflection.Assembly, attributeType: System.Type): any;
-      static GetCustomAttributes(element: System.Reflection.Module, attributeType: System.Type): any;
-      static GetCustomAttributes(element: System.Reflection.MemberInfo, attributeType: System.Type): any;
-      static GetCustomAttributes(element: System.Reflection.ParameterInfo, attributeType: System.Type): any;
-      static GetCustomAttributes(element: System.Reflection.MemberInfo, attributeType: System.Type, inherit: boolean): any;
-      static GetCustomAttributes(element: System.Reflection.ParameterInfo, attributeType: System.Type, inherit: boolean): any;
+      static GetCustomAttributes(element: System.Reflection.Assembly): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.Module): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.MemberInfo): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.ParameterInfo): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.MemberInfo, inherit: boolean): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.ParameterInfo, inherit: boolean): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.Assembly, attributeType: System.Type): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.Module, attributeType: System.Type): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.MemberInfo, attributeType: System.Type): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.ParameterInfo, attributeType: System.Type): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.MemberInfo, attributeType: System.Type, inherit: boolean): System.Collections.Generic.IEnumerable;
+      static GetCustomAttributes(element: System.Reflection.ParameterInfo, attributeType: System.Type, inherit: boolean): System.Collections.Generic.IEnumerable;
       static IsDefined(element: System.Reflection.Assembly, attributeType: System.Type): boolean;
       static IsDefined(element: System.Reflection.Module, attributeType: System.Type): boolean;
       static IsDefined(element: System.Reflection.MemberInfo, attributeType: System.Type): boolean;
@@ -20687,7 +20912,7 @@ export declare namespace System {
         AddResourceFile(name: string, fileName: string): void;
         AddResourceFile(name: string, fileName: string, attribute: System.Reflection.ResourceAttributes): void;
         static DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess): System.Reflection.Emit.AssemblyBuilder;
-        static DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: any): System.Reflection.Emit.AssemblyBuilder;
+        static DefineDynamicAssembly(name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: System.Collections.Generic.IEnumerable): System.Reflection.Emit.AssemblyBuilder;
         DefineDynamicModule(name: string): System.Reflection.Emit.ModuleBuilder;
         DefineDynamicModule(name: string, emitSymbolInfo: boolean): System.Reflection.Emit.ModuleBuilder;
         DefineDynamicModule(name: string, fileName: string): System.Reflection.Emit.ModuleBuilder;
@@ -22435,7 +22660,7 @@ export declare namespace System {
       }
       export class AsyncValueTaskMethodBuilder<TResult = any> {
         Task: System.Threading.Tasks.ValueTask<TResult>;
-        static Create(): any;
+        static Create(): System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder;
         SetStateMachine(stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine): void;
         SetResult(result: TResult): void;
         SetException(exception: System.Exception): void;
@@ -22454,22 +22679,31 @@ export declare namespace System {
       export class ConfiguredCancelableAsyncEnumerable<T = any> {
         ConfigureAwait(continueOnCapturedContext: boolean): System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable<T>;
         WithCancellation(cancellationToken: System.Threading.CancellationToken): System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable<T>;
-        GetAsyncEnumerator(): System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable<T>;
+        GetAsyncEnumerator(): System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable_Enumerator<T>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ConfiguredCancelableAsyncEnumerable_Enumerator<T = any> {
+        Current: T;
+        MoveNextAsync(): System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<boolean>;
+        DisposeAsync(): System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
       export class ConfiguredValueTaskAwaitable<TResult = any> {
-        GetAwaiter(): System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<TResult>;
+        GetAwaiter(): System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable_ConfiguredValueTaskAwaiter<TResult>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export class ConfiguredValueTaskAwaitable_ConfiguredValueTaskAwaiter {
+      export class ConfiguredValueTaskAwaitable_ConfiguredValueTaskAwaiter<TResult = any> {
         IsCompleted: boolean;
-        GetResult(): void;
+        GetResult(): TResult;
         OnCompleted(continuation: (() => void)): void;
         UnsafeOnCompleted(continuation: (() => void)): void;
         Equals(obj: any): boolean;
@@ -22560,17 +22794,17 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class ConfiguredTaskAwaitable<TResult = any> {
-        GetAwaiter(): System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>;
+        GetAwaiter(): System.Runtime.CompilerServices.ConfiguredTaskAwaitable_ConfiguredTaskAwaiter<TResult>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export class ConfiguredTaskAwaitable_ConfiguredTaskAwaiter {
+      export class ConfiguredTaskAwaitable_ConfiguredTaskAwaiter<TResult = any> {
         IsCompleted: boolean;
         OnCompleted(continuation: (() => void)): void;
         UnsafeOnCompleted(continuation: (() => void)): void;
-        GetResult(): void;
+        GetResult(): TResult;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         ToString(): string;
@@ -22596,7 +22830,7 @@ export declare namespace System {
       }
       export class AsyncTaskMethodBuilder<TResult = any> {
         Task: System.Threading.Tasks.Task<TResult>;
-        static Create(): any;
+        static Create(): System.Runtime.CompilerServices.AsyncTaskMethodBuilder;
         SetStateMachine(stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine): void;
         SetResult(result: TResult): void;
         SetException(exception: System.Exception): void;
@@ -22754,6 +22988,22 @@ export declare namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class ConditionalWeakTable_CreateValueCallback<TKey = any, TValue = any> {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(key: TKey): TValue;
+        BeginInvoke(key: TKey, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): TValue;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class RuntimeHelpers {
         static OffsetToStringData: number;
         static InitializeArray(array: System.Array, fldHandle: System.RuntimeFieldHandle): void;
@@ -22851,7 +23101,7 @@ export declare namespace System {
         Update: T;
         Binder: System.Runtime.CompilerServices.CallSiteBinder;
         Target: T;
-        static Create(binder: System.Runtime.CompilerServices.CallSiteBinder): any;
+        static Create(binder: System.Runtime.CompilerServices.CallSiteBinder): System.Runtime.CompilerServices.CallSite;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -22981,7 +23231,7 @@ export declare namespace System {
         Name: string;
         GetAssembly(assemblyName: string): System.Reflection.Assembly;
         GetType(typeName: string): System.Type;
-        static InitializeSharedContext(paths: any): void;
+        static InitializeSharedContext(paths: System.Collections.Generic.IEnumerable): void;
         static SetIterationContext(context: System.Runtime.DesignerServices.WindowsRuntimeDesignerContext): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -25360,8 +25610,8 @@ export declare namespace System {
           ToString(): string;
         }
         export class WindowsRuntimeMetadata {
-          static ResolveNamespace(namespaceName: string, packageGraphFilePaths: any): any;
-          static ResolveNamespace(namespaceName: string, windowsSdkFilePath: string, packageGraphFilePaths: any): any;
+          static ResolveNamespace(namespaceName: string, packageGraphFilePaths: System.Collections.Generic.IEnumerable): System.Collections.Generic.IEnumerable;
+          static ResolveNamespace(namespaceName: string, windowsSdkFilePath: string, packageGraphFilePaths: System.Collections.Generic.IEnumerable): System.Collections.Generic.IEnumerable;
           Equals(obj: any): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -29368,7 +29618,7 @@ export declare namespace System {
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(principal: System.Security.Principal.IPrincipal);
         constructor(reader: System.IO.BinaryReader);
-        static PrimaryIdentitySelector: ((arg: any) => System.Security.Claims.ClaimsIdentity);
+        static PrimaryIdentitySelector: ((arg: System.Collections.Generic.IEnumerable) => System.Security.Claims.ClaimsIdentity);
         static ClaimsPrincipalSelector: (() => System.Security.Claims.ClaimsPrincipal);
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         static Current: System.Security.Claims.ClaimsPrincipal;
@@ -29391,7 +29641,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class DynamicRoleClaimProvider {
-        static AddDynamicRoleClaims(claimsIdentity: System.Security.Claims.ClaimsIdentity, claims: any): void;
+        static AddDynamicRoleClaims(claimsIdentity: System.Security.Claims.ClaimsIdentity, claims: System.Collections.Generic.IEnumerable): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -29486,8 +29736,8 @@ export declare namespace System {
         Write = 1,
       }
       export class CryptographicOperations {
-        static FixedTimeEquals(left: any, right: any): boolean;
-        static ZeroMemory(buffer: any): void;
+        static FixedTimeEquals(left: System.ReadOnlySpan, right: System.ReadOnlySpan): boolean;
+        static ZeroMemory(buffer: System.Span): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -30207,7 +30457,7 @@ export declare namespace System {
         GetBytes(data: Byte[]): void;
         GetBytes(data: Byte[], offset: number, count: number): void;
         GetNonZeroBytes(data: Byte[]): void;
-        static Fill(data: any): void;
+        static Fill(data: System.Span): void;
         GetBytes(data: System.Span<Byte>): void;
         GetNonZeroBytes(data: System.Span<Byte>): void;
         static GetInt32(fromInclusive: number, toExclusive: number): number;
@@ -36412,7 +36662,7 @@ export declare namespace System {
         constructor(functionCS: ((arg: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions);
         constructor(functionCS: ((arg: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
         Result: TResult;
-        static Factory: any; // System.Threading.Tasks.TaskFactory`1[TResult]
+        static Factory: System.Threading.Tasks.TaskFactory;
         Id: number;
         Exception: System.AggregateException;
         Status: System.Threading.Tasks.TaskStatus;
@@ -36563,7 +36813,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class TaskExtensions {
-        static Unwrap(task: any): System.Threading.Tasks.Task;
+        static Unwrap(task: System.Threading.Tasks.Task): System.Threading.Tasks.Task;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;

@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 19/02/2023 03:24:44
+// Generated 12/11/2023 01:13:26
 //
 /* eslint-disable */
 
@@ -393,6 +393,8 @@ export declare namespace ReactUnity {
     Timer: ReactUnity.Scheduling.ITimer;
     destroyCancellationToken: System.Threading.CancellationToken;
     useGUILayout: boolean;
+    didStart: boolean;
+    didAwake: boolean;
     runInEditMode: boolean;
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -506,6 +508,7 @@ export declare namespace ReactUnity {
     static Resource(path: string, language?: ReactUnity.ScriptSourceLanguage): ReactUnity.ScriptSource;
     static Text(path: string, language?: ReactUnity.ScriptSourceLanguage): ReactUnity.ScriptSource;
     GetResolvedSourceUrl(useDevServer?: boolean): string;
+    GetRemoteUrl(useDevServer?: boolean): System.Uri;
     GetScript(callback: ((obj: string) => void), dispatcher?: ReactUnity.Scheduling.IDispatcher, useDevServer?: boolean): System.IDisposable;
     static WatchFileSystem(path: string, callback: ((obj: string) => void)): System.IDisposable;
     Equals(obj: any): boolean;
@@ -755,6 +758,7 @@ export declare namespace ReactUnity {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
+      preferredLabel: string;
       OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
       GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
       CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
@@ -768,6 +772,7 @@ export declare namespace ReactUnity {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
+      preferredLabel: string;
       OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
       GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
       CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
@@ -781,6 +786,7 @@ export declare namespace ReactUnity {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
+      preferredLabel: string;
       OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
       GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
       CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
@@ -794,6 +800,7 @@ export declare namespace ReactUnity {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
+      preferredLabel: string;
       OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
       GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
       CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
@@ -1011,6 +1018,8 @@ export declare namespace ReactUnity {
       static Instance: ReactUnity.Editor.EditorTimer;
       AnimationTime: number;
       TimeScale: number;
+      DeltaTime: number;
+      static EditorUpdate(): void;
       Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -1185,7 +1194,7 @@ export declare namespace ReactUnity {
       }
       export class RuntimeT4Generator {
         constructor();
-        static Sessions: any; // System.Collections.Generic.Dictionary`2[System.String,System.Collections.Generic.Dictionary`2[System.String,System.Object]]
+        static Sessions: System.Collections.Generic.Dictionary;
         static GenerateFromTemplates(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -1223,7 +1232,7 @@ export declare namespace ReactUnity {
         CursorSet: ReactUnity.Styling.CursorSet;
         CursorAPI: ReactUnity.Helpers.CursorAPI;
         Disposables: (() => void)[];
-        static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.UIToolkit.IUIToolkitComponent`1[UnityEngine.UIElements.VisualElement]]]
+        static ComponentCreators: System.Collections.Generic.Dictionary;
         Initialize(): void;
         PlayAudio(clip: UnityEngine.AudioClip): void;
         UpdateElementsRecursively(): void;
@@ -1364,6 +1373,7 @@ export declare namespace ReactUnity {
       export class ReactProperty {
         attribute: any; // UnityEngine.PropertyAttribute
         fieldInfo: System.Reflection.FieldInfo;
+        preferredLabel: string;
         CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
         OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
         GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
@@ -1623,7 +1633,6 @@ export declare namespace ReactUnity {
         Shown: boolean;
         Type: ReactUnity.Editor.UIToolkit.DialogType;
         Context: ReactUnity.Editor.Renderer.EditorContext;
-        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
@@ -1639,6 +1648,7 @@ export declare namespace ReactUnity {
         name: string;
         enabledInHierarchy: boolean;
         enabledSelf: boolean;
+        languageDirection: UnityEngine.UIElements.LanguageDirection;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
@@ -1650,6 +1660,7 @@ export declare namespace ReactUnity {
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
+        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         customStyle: UnityEngine.UIElements.ICustomStyle;
         styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
         tooltip: string;
@@ -1697,7 +1708,6 @@ export declare namespace ReactUnity {
         Contains(child: UnityEngine.UIElements.VisualElement): boolean;
         FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
         Blur(): void;
-        HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
         HasTrickleDownHandlers(): boolean;
         HasBubbleUpHandlers(): boolean;
         Equals(obj: any): boolean;
@@ -1989,7 +1999,6 @@ export declare namespace ReactUnity {
         Script: ReactUnity.ScriptSource;
         Globals: ReactUnity.Helpers.SerializableDictionary;
         EngineType: ReactUnity.Scripting.JavascriptEngineType;
-        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
@@ -2005,6 +2014,7 @@ export declare namespace ReactUnity {
         name: string;
         enabledInHierarchy: boolean;
         enabledSelf: boolean;
+        languageDirection: UnityEngine.UIElements.LanguageDirection;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
@@ -2017,6 +2027,7 @@ export declare namespace ReactUnity {
         childCount: number;
         schedule: UnityEngine.UIElements.IVisualElementScheduler;
         style: UnityEngine.UIElements.IStyle;
+        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
         customStyle: UnityEngine.UIElements.ICustomStyle;
         styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
         tooltip: string;
@@ -2060,7 +2071,6 @@ export declare namespace ReactUnity {
         Contains(child: UnityEngine.UIElements.VisualElement): boolean;
         FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
         Blur(): void;
-        HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
         HasTrickleDownHandlers(): boolean;
         HasBubbleUpHandlers(): boolean;
         Equals(obj: any): boolean;
@@ -2220,6 +2230,7 @@ export declare namespace ReactUnity {
       GetNamespace(nsName: string, assembly: System.Reflection.Assembly): any;
       AddType(name: string, type: System.Type): any;
       AddNamespace(name: string, nsName: string, ...assemblies: System.Reflection.Assembly[]): any;
+      MakeGenericType(type: System.Type, types: System.Type[]): any;
       Dispose(): void;
       Add(key: string, value: any): void;
       Clear(): void;
@@ -2705,6 +2716,7 @@ export declare namespace ReactUnity {
       constructor();
       AnimationTime: number;
       TimeScale: number;
+      DeltaTime: number;
       AdvanceTime(advanceBy: number): void;
       Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
@@ -2718,6 +2730,8 @@ export declare namespace ReactUnity {
       StateID: number;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
+      didStart: boolean;
+      didAwake: boolean;
       runInEditMode: boolean;
       enabled: boolean;
       isActiveAndEnabled: boolean;
@@ -2848,6 +2862,7 @@ export declare namespace ReactUnity {
     }
     export interface ITimer {
       AnimationTime: number;
+      DeltaTime: number;
       TimeScale: number;
       Yield(advanceBy: number): any;
     }
@@ -2871,6 +2886,8 @@ export declare namespace ReactUnity {
       constructor();
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
+      didStart: boolean;
+      didAwake: boolean;
       runInEditMode: boolean;
       enabled: boolean;
       isActiveAndEnabled: boolean;
@@ -2892,7 +2909,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      static Create(ctx: ReactUnity.ReactContext): ReactUnity.Scheduling.RuntimeDispatcherBehavior_RuntimeDispatcher;
+      static Create(ctx: ReactUnity.ReactContext, timer?: ReactUnity.Scheduling.ITimer): ReactUnity.Scheduling.RuntimeDispatcherBehavior_RuntimeDispatcher;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -2942,6 +2959,7 @@ export declare namespace ReactUnity {
       static Instance: ReactUnity.Scheduling.UnityTimer;
       AnimationTime: number;
       TimeScale: number;
+      DeltaTime: number;
       Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -2952,6 +2970,7 @@ export declare namespace ReactUnity {
       static Instance: ReactUnity.Scheduling.UnscaledTimer;
       AnimationTime: number;
       TimeScale: number;
+      DeltaTime: number;
       Yield(advanceBy: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -2959,10 +2978,11 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class RuntimeDispatcherBehavior_RuntimeDispatcher {
-      constructor(ctx: ReactUnity.ReactContext, behavior: ReactUnity.Scheduling.RuntimeDispatcherBehavior);
+      constructor(ctx: ReactUnity.ReactContext, behavior: ReactUnity.Scheduling.RuntimeDispatcherBehavior, timer?: ReactUnity.Scheduling.ITimer);
       CurrentLifecycle: ReactUnity.Scheduling.CurrentLifecycle;
       Scheduler: ReactUnity.Scheduling.IScheduler;
       Behavior: ReactUnity.Scheduling.RuntimeDispatcherBehavior;
+      Timer: ReactUnity.Scheduling.ITimer;
       Dispose(): void;
       OnEveryLateUpdate(callback: (() => void)): number;
       OnEveryUpdate(callback: (() => void)): number;
@@ -3868,8 +3888,8 @@ export declare namespace ReactUnity {
       Revert = 8,
     }
     export class CssProperties {
-      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
-      static TransitionableProperties: any; // System.Collections.Generic.HashSet`1[ReactUnity.Styling.IStyleProperty]
+      static PropertyMap: System.Collections.Generic.Dictionary;
+      static TransitionableProperties: System.Collections.Generic.HashSet;
       static AllProperties: ReactUnity.Styling.IStyleProperty[];
       static GetProperty(name: string): ReactUnity.Styling.IStyleProperty;
       static GetKey(name: string): ReactUnity.Styling.IStyleKey;
@@ -3940,6 +3960,7 @@ export declare namespace ReactUnity {
       Codepoints: UnityEngine.TextAsset;
       CharacterMap: Record<string, string>;
       ConvertTextContent(text: string): string;
+      GenerateCharactersFromCharacterMap(): void;
       SetDirty(): void;
       GetInstanceID(): number;
       GetHashCode(): number;
@@ -4001,8 +4022,8 @@ export declare namespace ReactUnity {
       RevertCalculator: ReactUnity.Styling.IRevertCalculator;
       order: number;
       opacity: number;
-      zIndex: number;
-      sortingLayer: UnityEngine.SortingLayer;
+      zIndex?: number | undefined;
+      sortingLayer?: UnityEngine.SortingLayer | undefined;
       visibility: boolean;
       position: ReactUnity.Types.PositionType;
       cursor: ReactUnity.Types.ICssValueList<ReactUnity.Types.Cursor>;
@@ -4104,7 +4125,7 @@ export declare namespace ReactUnity {
       constructor(name: string, initialValue: any, transitionable: boolean, inherited: boolean, converter: ReactUnity.Styling.Converters.StyleConverterBase);
       constructor(name: string, initialValue?: ReactUnity.Types.CssFourDirectional<T>, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
       constructor(name: string, emptyValue: T, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
-      Converter: ReactUnity.Types.CssFourDirectional<T>;
+      Converter: ReactUnity.Types.CssFourDirectional_Converter<T>;
       name: string;
       type: System.Type;
       defaultValue: any; // System.Object
@@ -4133,60 +4154,60 @@ export declare namespace ReactUnity {
       GetStyle(style: ReactUnity.Styling.NodeStyle): any;
     }
     export class LayoutProperties {
-      static StyleDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDirection]
-      static FlexDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaFlexDirection]
-      static JustifyContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaJustify]
-      static Display: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDisplay]
-      static AlignItems: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
-      static AlignSelf: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
-      static AlignContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
-      static Wrap: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaWrap]
-      static Overflow: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaOverflow]
-      static AspectRatio: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static FlexGrow: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static FlexShrink: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static FlexBasis: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Width: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Height: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MinWidth: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MinHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MaxWidth: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MaxHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Left: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Right: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Top: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Bottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Start: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static End: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Margin: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginLeft: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginRight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginTop: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginBottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginStart: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginEnd: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginHorizontal: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static MarginVertical: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static Padding: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingLeft: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingRight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingTop: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingBottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingStart: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingEnd: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingHorizontal: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static PaddingVertical: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
-      static BorderWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderLeftWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderRightWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderTopWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderBottomWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderStartWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static BorderEndWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static Order: any; // ReactUnity.Styling.LayoutProperty`1[System.Int32]
-      static RowGap: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static ColumnGap: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
-      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
+      static StyleDirection: ReactUnity.Styling.LayoutProperty;
+      static FlexDirection: ReactUnity.Styling.LayoutProperty;
+      static JustifyContent: ReactUnity.Styling.LayoutProperty;
+      static Display: ReactUnity.Styling.LayoutProperty;
+      static AlignItems: ReactUnity.Styling.LayoutProperty;
+      static AlignSelf: ReactUnity.Styling.LayoutProperty;
+      static AlignContent: ReactUnity.Styling.LayoutProperty;
+      static Wrap: ReactUnity.Styling.LayoutProperty;
+      static Overflow: ReactUnity.Styling.LayoutProperty;
+      static AspectRatio: ReactUnity.Styling.LayoutProperty;
+      static FlexGrow: ReactUnity.Styling.LayoutProperty;
+      static FlexShrink: ReactUnity.Styling.LayoutProperty;
+      static FlexBasis: ReactUnity.Styling.LayoutProperty;
+      static Width: ReactUnity.Styling.LayoutProperty;
+      static Height: ReactUnity.Styling.LayoutProperty;
+      static MinWidth: ReactUnity.Styling.LayoutProperty;
+      static MinHeight: ReactUnity.Styling.LayoutProperty;
+      static MaxWidth: ReactUnity.Styling.LayoutProperty;
+      static MaxHeight: ReactUnity.Styling.LayoutProperty;
+      static Left: ReactUnity.Styling.LayoutProperty;
+      static Right: ReactUnity.Styling.LayoutProperty;
+      static Top: ReactUnity.Styling.LayoutProperty;
+      static Bottom: ReactUnity.Styling.LayoutProperty;
+      static Start: ReactUnity.Styling.LayoutProperty;
+      static End: ReactUnity.Styling.LayoutProperty;
+      static Margin: ReactUnity.Styling.LayoutProperty;
+      static MarginLeft: ReactUnity.Styling.LayoutProperty;
+      static MarginRight: ReactUnity.Styling.LayoutProperty;
+      static MarginTop: ReactUnity.Styling.LayoutProperty;
+      static MarginBottom: ReactUnity.Styling.LayoutProperty;
+      static MarginStart: ReactUnity.Styling.LayoutProperty;
+      static MarginEnd: ReactUnity.Styling.LayoutProperty;
+      static MarginHorizontal: ReactUnity.Styling.LayoutProperty;
+      static MarginVertical: ReactUnity.Styling.LayoutProperty;
+      static Padding: ReactUnity.Styling.LayoutProperty;
+      static PaddingLeft: ReactUnity.Styling.LayoutProperty;
+      static PaddingRight: ReactUnity.Styling.LayoutProperty;
+      static PaddingTop: ReactUnity.Styling.LayoutProperty;
+      static PaddingBottom: ReactUnity.Styling.LayoutProperty;
+      static PaddingStart: ReactUnity.Styling.LayoutProperty;
+      static PaddingEnd: ReactUnity.Styling.LayoutProperty;
+      static PaddingHorizontal: ReactUnity.Styling.LayoutProperty;
+      static PaddingVertical: ReactUnity.Styling.LayoutProperty;
+      static BorderWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderLeftWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderRightWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderTopWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderBottomWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderStartWidth: ReactUnity.Styling.LayoutProperty;
+      static BorderEndWidth: ReactUnity.Styling.LayoutProperty;
+      static Order: ReactUnity.Styling.LayoutProperty;
+      static RowGap: ReactUnity.Styling.LayoutProperty;
+      static ColumnGap: ReactUnity.Styling.LayoutProperty;
+      static PropertyMap: System.Collections.Generic.Dictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4215,97 +4236,97 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class StyleProperties {
-      static opacity: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
-      static sortingLayer: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.SortingLayer]
-      static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
-      static position: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.PositionType]
-      static cursor: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.Cursor]
-      static isolation: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.Isolation]
-      static pointerEvents: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.PointerEvents]
-      static borderTopLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static borderTopRightRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static borderBottomLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static borderBottomRightRadius: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static borderLeftColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static borderRightColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static borderTopColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static borderBottomColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static borderLeftStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
-      static borderRightStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
-      static borderTopStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
-      static borderBottomStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
-      static outlineOffset: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static outlineWidth: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static outlineColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static outlineStyle: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderStyle]
-      static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static translateZ: any; // ReactUnity.Styling.StyleProperty`1[Facebook.Yoga.YogaValue]
-      static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector3]
-      static rotate: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector3]
-      static fontFamily: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.FontReference]
-      static color: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static fontWeight: any; // ReactUnity.Styling.StyleProperty`1[TMPro.FontWeight]
-      static fontStyle: any; // ReactUnity.Styling.StyleProperty`1[TMPro.FontStyles]
-      static textTransform: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.TextTransform]
-      static fontSize: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static lineHeight: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static letterSpacing: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static wordSpacing: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static textAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextAlignmentOptions]
-      static verticalAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.VerticalAlignmentOptions]
-      static textOverflow: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextOverflowModes]
-      static textWrap: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
-      static maxLines: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
-      static textStrokeWidth: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static textStrokeColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static content: any; // ReactUnity.Styling.StyleProperty`1[System.String]
-      static appearance: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.Appearance]
-      static navigation: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.UI.Navigation+Mode]
-      static stateDuration: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static objectFit: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ObjectFit]
-      static objectPosition: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
-      static boxShadow: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BoxShadow]
-      static borderImageSource: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageDefinition]
-      static borderImageSlice: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BorderImageSlice]
-      static borderImageRepeat: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
-      static borderImageOutset: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[Facebook.Yoga.YogaValue]
-      static borderImageWidth: any; // ReactUnity.Styling.FourDirectionalStyleProperty`1[Facebook.Yoga.YogaValue]
-      static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static backgroundImage: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.ImageDefinition]
-      static backgroundPositionX: any; // ReactUnity.Styling.ValueListStyleProperty`1[Facebook.Yoga.YogaValue]
-      static backgroundPositionY: any; // ReactUnity.Styling.ValueListStyleProperty`1[Facebook.Yoga.YogaValue]
-      static backgroundSize: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundSize]
-      static backgroundRepeatX: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
-      static backgroundRepeatY: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
-      static backgroundBlendMode: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BackgroundBlendMode]
-      static maskImage: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.ImageDefinition]
-      static maskPositionX: any; // ReactUnity.Styling.ValueListStyleProperty`1[Facebook.Yoga.YogaValue]
-      static maskPositionY: any; // ReactUnity.Styling.ValueListStyleProperty`1[Facebook.Yoga.YogaValue]
-      static maskSize: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundSize]
-      static maskRepeatX: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
-      static maskRepeatY: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.BackgroundRepeat]
-      static transitionProperty: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.TransitionProperty]
-      static transitionDuration: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
-      static transitionTimingFunction: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.TimingFunction]
-      static transitionDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
-      static transitionPlayState: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.AnimationPlayState]
-      static motionDuration: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static motionTimingFunction: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Styling.Animations.TimingFunction]
-      static motionDelay: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
-      static animationDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
-      static animationDirection: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.AnimationDirection]
-      static animationDuration: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
-      static animationFillMode: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.AnimationFillMode]
-      static animationIterationCount: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Int32]
-      static animationName: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.String]
-      static animationPlayState: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.AnimationPlayState]
-      static animationTimingFunction: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Styling.Animations.TimingFunction]
-      static audioClip: any; // ReactUnity.Styling.ValueListStyleProperty`1[ReactUnity.Types.AudioReference]
-      static audioIterationCount: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Int32]
-      static audioDelay: any; // ReactUnity.Styling.ValueListStyleProperty`1[System.Single]
-      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static opacity: ReactUnity.Styling.StyleProperty;
+      static zIndex?: ReactUnity.Styling.StyleProperty;
+      static sortingLayer?: ReactUnity.Styling.StyleProperty;
+      static visibility: ReactUnity.Styling.StyleProperty;
+      static position: ReactUnity.Styling.StyleProperty;
+      static cursor: ReactUnity.Styling.ValueListStyleProperty;
+      static isolation: ReactUnity.Styling.StyleProperty;
+      static pointerEvents: ReactUnity.Styling.StyleProperty;
+      static borderTopLeftRadius: ReactUnity.Styling.StyleProperty;
+      static borderTopRightRadius: ReactUnity.Styling.StyleProperty;
+      static borderBottomLeftRadius: ReactUnity.Styling.StyleProperty;
+      static borderBottomRightRadius: ReactUnity.Styling.StyleProperty;
+      static borderLeftColor: ReactUnity.Styling.StyleProperty;
+      static borderRightColor: ReactUnity.Styling.StyleProperty;
+      static borderTopColor: ReactUnity.Styling.StyleProperty;
+      static borderBottomColor: ReactUnity.Styling.StyleProperty;
+      static borderLeftStyle: ReactUnity.Styling.StyleProperty;
+      static borderRightStyle: ReactUnity.Styling.StyleProperty;
+      static borderTopStyle: ReactUnity.Styling.StyleProperty;
+      static borderBottomStyle: ReactUnity.Styling.StyleProperty;
+      static outlineOffset: ReactUnity.Styling.StyleProperty;
+      static outlineWidth: ReactUnity.Styling.StyleProperty;
+      static outlineColor: ReactUnity.Styling.StyleProperty;
+      static outlineStyle: ReactUnity.Styling.StyleProperty;
+      static transformOrigin: ReactUnity.Styling.StyleProperty;
+      static translate: ReactUnity.Styling.StyleProperty;
+      static translateZ: ReactUnity.Styling.StyleProperty;
+      static scale: ReactUnity.Styling.StyleProperty;
+      static rotate: ReactUnity.Styling.StyleProperty;
+      static fontFamily: ReactUnity.Styling.StyleProperty;
+      static color: ReactUnity.Styling.StyleProperty;
+      static fontWeight: ReactUnity.Styling.StyleProperty;
+      static fontStyle: ReactUnity.Styling.StyleProperty;
+      static textTransform: ReactUnity.Styling.StyleProperty;
+      static fontSize: ReactUnity.Styling.StyleProperty;
+      static lineHeight: ReactUnity.Styling.StyleProperty;
+      static letterSpacing: ReactUnity.Styling.StyleProperty;
+      static wordSpacing: ReactUnity.Styling.StyleProperty;
+      static textAlign: ReactUnity.Styling.StyleProperty;
+      static verticalAlign: ReactUnity.Styling.StyleProperty;
+      static textOverflow: ReactUnity.Styling.StyleProperty;
+      static textWrap: ReactUnity.Styling.StyleProperty;
+      static maxLines: ReactUnity.Styling.StyleProperty;
+      static textStrokeWidth: ReactUnity.Styling.StyleProperty;
+      static textStrokeColor: ReactUnity.Styling.StyleProperty;
+      static content: ReactUnity.Styling.StyleProperty;
+      static appearance: ReactUnity.Styling.StyleProperty;
+      static navigation: ReactUnity.Styling.StyleProperty;
+      static stateDuration: ReactUnity.Styling.StyleProperty;
+      static objectFit: ReactUnity.Styling.StyleProperty;
+      static objectPosition: ReactUnity.Styling.StyleProperty;
+      static boxShadow: ReactUnity.Styling.ValueListStyleProperty;
+      static borderImageSource: ReactUnity.Styling.StyleProperty;
+      static borderImageSlice: ReactUnity.Styling.StyleProperty;
+      static borderImageRepeat: ReactUnity.Styling.FourDirectionalStyleProperty;
+      static borderImageOutset: ReactUnity.Styling.FourDirectionalStyleProperty;
+      static borderImageWidth: ReactUnity.Styling.FourDirectionalStyleProperty;
+      static backgroundColor: ReactUnity.Styling.StyleProperty;
+      static backgroundImage: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundPositionX: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundPositionY: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundSize: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundRepeatX: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundRepeatY: ReactUnity.Styling.ValueListStyleProperty;
+      static backgroundBlendMode: ReactUnity.Styling.StyleProperty;
+      static maskImage: ReactUnity.Styling.ValueListStyleProperty;
+      static maskPositionX: ReactUnity.Styling.ValueListStyleProperty;
+      static maskPositionY: ReactUnity.Styling.ValueListStyleProperty;
+      static maskSize: ReactUnity.Styling.ValueListStyleProperty;
+      static maskRepeatX: ReactUnity.Styling.ValueListStyleProperty;
+      static maskRepeatY: ReactUnity.Styling.ValueListStyleProperty;
+      static transitionProperty: ReactUnity.Styling.ValueListStyleProperty;
+      static transitionDuration: ReactUnity.Styling.ValueListStyleProperty;
+      static transitionTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
+      static transitionDelay: ReactUnity.Styling.ValueListStyleProperty;
+      static transitionPlayState: ReactUnity.Styling.ValueListStyleProperty;
+      static motionDuration: ReactUnity.Styling.StyleProperty;
+      static motionTimingFunction: ReactUnity.Styling.StyleProperty;
+      static motionDelay: ReactUnity.Styling.StyleProperty;
+      static animationDelay: ReactUnity.Styling.ValueListStyleProperty;
+      static animationDirection: ReactUnity.Styling.ValueListStyleProperty;
+      static animationDuration: ReactUnity.Styling.ValueListStyleProperty;
+      static animationFillMode: ReactUnity.Styling.ValueListStyleProperty;
+      static animationIterationCount: ReactUnity.Styling.ValueListStyleProperty;
+      static animationName: ReactUnity.Styling.ValueListStyleProperty;
+      static animationPlayState: ReactUnity.Styling.ValueListStyleProperty;
+      static animationTimingFunction: ReactUnity.Styling.ValueListStyleProperty;
+      static audioClip: ReactUnity.Styling.ValueListStyleProperty;
+      static audioIterationCount: ReactUnity.Styling.ValueListStyleProperty;
+      static audioDelay: ReactUnity.Styling.ValueListStyleProperty;
+      static PropertyMap: System.Collections.Generic.Dictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4332,9 +4353,9 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class SVGProperties {
-      static fill: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static stroke: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static fill: ReactUnity.Styling.StyleProperty;
+      static stroke: ReactUnity.Styling.StyleProperty;
+      static PropertyMap: System.Collections.Generic.Dictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4344,7 +4365,7 @@ export declare namespace ReactUnity {
       constructor(name: string, initialValue: any, transitionable: boolean, inherited: boolean, converter: ReactUnity.Styling.Converters.StyleConverterBase);
       constructor(name: string, initialValue?: T[], transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
       constructor(name: string, emptyValue: T, transitionable?: boolean, inherited?: boolean, baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
-      Converter: ReactUnity.Types.CssValueList<T>;
+      Converter: ReactUnity.Types.CssValueList_Converter<T>;
       name: string;
       type: System.Type;
       defaultValue: any; // System.Object
@@ -4862,14 +4883,6 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
-      export class ComputedRevert {
-        static Instance: ReactUnity.Styling.Computed.ComputedRevert;
-        GetValue(prop: ReactUnity.Styling.IStyleProperty, style: ReactUnity.Styling.NodeStyle, converter: ReactUnity.Styling.Converters.IStyleConverter): any;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        ToString(): string;
-        GetType(): System.Type;
-      }
       export class ComputedRootRelative {
         constructor(ratio: number, type: ReactUnity.Styling.Computed.ComputedRootRelative_RootValueType);
         Ratio: number;
@@ -5136,7 +5149,7 @@ export declare namespace ReactUnity {
         constructor();
         AllowSuffixless: boolean;
         CalcConverter: ReactUnity.Styling.Converters.CalcConverter;
-        static UnitValueMap: any; // System.Collections.Generic.Dictionary`2[System.String,System.Single]
+        static UnitValueMap: System.Collections.Generic.Dictionary;
         StringifyTyped(value: number): string;
         StringifyInternal(value: any): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
@@ -5415,8 +5428,8 @@ export declare namespace ReactUnity {
         static NthChildRegex: System.Text.RegularExpressions.Regex;
         static ParseSelector(selector: string, negated?: boolean): ReactUnity.Styling.Rules.RuleSelectorPart[];
         static GetSpecificity(priority: any): number;
-        static ConvertStyleDeclarationToRecord(rule: any, important: boolean): any;
-        static ConvertStyleDeclarationToRecord(dc: any): any;
+        static ConvertStyleDeclarationToRecord(rule: any, important: boolean): System.Collections.Generic.Dictionary;
+        static ConvertStyleDeclarationToRecord(dc: System.Collections.Generic.IDictionary): System.Collections.Generic.Dictionary;
         static NormalizeSelector(selector: string): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -5629,14 +5642,17 @@ export declare namespace ReactUnity {
       Data = 8,
       Path = 9,
     }
-    export class BaseConverter<AssetType = any, T = any> {
-      constructor(allowWithoutUrl?: boolean);
-      AllowWithoutUrl: boolean;
-      StringifyInternal(value: any): string;
-      StringifyTyped(value: T): string;
-      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
-      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
-      Stringify(value: any): string;
+    export class AssetReference<AssetType = any> {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(url: ReactUnity.Types.Url);
+      Type: ReactUnity.Types.AssetReferenceType;
+      Value: any; // System.Object
+      IsCached: boolean;
+      CachedValue: AssetType;
+      static None: ReactUnity.Types.AssetReference;
+      Get(context: ReactUnity.ReactContext, callback: ((obj: AssetType) => void)): void;
+      Dispose(): void;
+      static SendWebRequestIfNecessary(www: UnityEngine.Networking.UnityWebRequest): System.Collections.IEnumerator;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5769,7 +5785,7 @@ export declare namespace ReactUnity {
       Right: T;
       Bottom: T;
       Left: T;
-      static Default: any; // ReactUnity.Types.CssFourDirectional`1[T]
+      static Default: ReactUnity.Types.CssFourDirectional;
       Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -5832,7 +5848,7 @@ export declare namespace ReactUnity {
       FindLastIndex(startIndex: number, match: ((obj: T) => boolean)): number;
       FindLastIndex(startIndex: number, count: number, match: ((obj: T) => boolean)): number;
       ForEach(action: ((obj: T) => void)): void;
-      GetEnumerator(): System.Collections.Generic.List<T>;
+      GetEnumerator(): System.Collections.Generic.List_Enumerator<T>;
       GetRange(index: number, count: number): T[];
       IndexOf(item: T): number;
       IndexOf(item: T, index: number): number;
@@ -6185,6 +6201,19 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class AssetReference_BaseConverter<AssetType = any, T = any> {
+      constructor(allowWithoutUrl?: boolean);
+      AllowWithoutUrl: boolean;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: T): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class AudioReference_Converter {
       constructor(allowWithoutUrl?: boolean);
       AllowWithoutUrl: boolean;
@@ -6228,6 +6257,33 @@ export declare namespace ReactUnity {
       Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
       Stringify(value: any): string;
       StringifyInternal(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CssFourDirectional_Converter<T = any> {
+      constructor(baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(baseConverter: ReactUnity.Styling.Converters.StyleConverterBase, emptyValue: T);
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: ReactUnity.Types.CssFourDirectional<T>): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CssValueList_Converter<T = any> {
+      constructor(baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase);
+      constructor(baseConverter?: ReactUnity.Styling.Converters.StyleConverterBase, emptyValue?: T);
+      FromList(list: ReactUnity.Styling.Computed.IComputedValue[], defaultValue?: T): ReactUnity.Styling.Computed.IComputedValue;
+      StringifyInternal(value: any): string;
+      StringifyTyped(value: T[]): string;
+      CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
+      Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
+      Stringify(value: any): string;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -7551,6 +7607,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       ShadowParent: ReactUnity.IReactComponent;
       Detached: boolean;
+      ReplacedLayout: Facebook.Yoga.YogaNode;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -8948,6 +9005,8 @@ export declare namespace ReactUnity {
       Timer: ReactUnity.Scheduling.ITimer;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
+      didStart: boolean;
+      didAwake: boolean;
       runInEditMode: boolean;
       enabled: boolean;
       isActiveAndEnabled: boolean;
@@ -9023,11 +9082,11 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class StylingHelpers {
-      static GetStyleFloat(style: ReactUnity.Styling.NodeStyle, prop: any): number;
-      static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any): number;
-      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: any): Facebook.Yoga.YogaValue;
-      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any): Facebook.Yoga.YogaValue;
-      static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any, prop3: any): Facebook.Yoga.YogaValue;
+      static GetStyleFloat(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): number;
+      static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): number;
+      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
+      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
+      static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
       static GetPointValue(val: Facebook.Yoga.YogaValue, fullSize: number): number;
       static GetScreenClientRect(transform: UnityEngine.RectTransform): UnityEngine.Rect;
       Equals(obj: any): boolean;
@@ -9037,7 +9096,7 @@ export declare namespace ReactUnity {
     }
     export class UGUIContext {
       constructor(options: ReactUnity.UGUI.UGUIContext_Options);
-      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUI.UGUIContext,ReactUnity.IReactComponent]]
+      static ComponentCreators: System.Collections.Generic.Dictionary;
       StateHandlers: Record<string, System.Type>;
       DefaultIconSet: ReactUnity.Styling.IconSet;
       IconSets: Record<string, ReactUnity.Styling.IconSet>;
@@ -9143,6 +9202,8 @@ export declare namespace ReactUnity {
         rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9219,6 +9280,8 @@ export declare namespace ReactUnity {
         LinkedText: ReactUnity.UGUI.TextComponent;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9289,6 +9352,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9380,6 +9445,8 @@ export declare namespace ReactUnity {
         PositionType: ReactUnity.Types.PositionType;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9453,6 +9520,8 @@ export declare namespace ReactUnity {
         Position: ReactUnity.Types.YogaValue2;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9523,6 +9592,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9598,6 +9669,8 @@ export declare namespace ReactUnity {
         Direction: ReactUnity.Types.ScrollDirection;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9670,6 +9743,8 @@ export declare namespace ReactUnity {
         EventTrigger: UnityEngine.EventSystems.EventTrigger;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9782,6 +9857,8 @@ export declare namespace ReactUnity {
         layoutPriority: number;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9887,6 +9964,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -9959,6 +10038,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10031,6 +10112,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10103,6 +10186,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10175,6 +10260,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10247,6 +10334,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10319,6 +10408,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10391,6 +10482,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10464,6 +10557,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10554,6 +10649,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10626,6 +10723,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10698,6 +10797,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10770,6 +10871,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10842,6 +10945,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10914,6 +11019,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -10987,6 +11094,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11059,6 +11168,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11131,6 +11242,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11216,6 +11329,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11288,6 +11403,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11360,6 +11477,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11432,6 +11551,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11524,6 +11645,8 @@ export declare namespace ReactUnity {
         PointerEvents: ReactUnity.Types.PointerEvents;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11597,6 +11720,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11684,6 +11809,8 @@ export declare namespace ReactUnity {
         Texture: UnityEngine.Texture;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11758,6 +11885,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11833,6 +11962,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -11957,6 +12088,8 @@ export declare namespace ReactUnity {
         defaultMaterial: UnityEngine.Material;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12088,6 +12221,8 @@ export declare namespace ReactUnity {
         materialForRendering: UnityEngine.Material;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12207,6 +12342,8 @@ export declare namespace ReactUnity {
         material: UnityEngine.Material;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12373,6 +12510,8 @@ export declare namespace ReactUnity {
         mainTexture: UnityEngine.Texture;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12537,6 +12676,8 @@ export declare namespace ReactUnity {
         mainTexture: UnityEngine.Texture;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12666,6 +12807,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12741,6 +12884,8 @@ export declare namespace ReactUnity {
         CursorShown: boolean;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12815,6 +12960,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12888,6 +13035,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -12961,6 +13110,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -13032,6 +13183,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -13105,6 +13258,8 @@ export declare namespace ReactUnity {
         constructor();
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
+        didStart: boolean;
+        didAwake: boolean;
         runInEditMode: boolean;
         enabled: boolean;
         isActiveAndEnabled: boolean;
@@ -14809,7 +14964,7 @@ export declare namespace ReactUnity {
     }
     export class EventHandlerMap {
       static GetEventType(eventName: string): System.Type;
-      static GetEventMethods(eventName: string): any;
+      static GetEventMethods(eventName: string): System.ValueTuple;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -14823,6 +14978,8 @@ export declare namespace ReactUnity {
       Timer: ReactUnity.Scheduling.ITimer;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
+      didStart: boolean;
+      didAwake: boolean;
       runInEditMode: boolean;
       enabled: boolean;
       isActiveAndEnabled: boolean;
@@ -14904,7 +15061,6 @@ export declare namespace ReactUnity {
       Script: ReactUnity.ScriptSource;
       Globals: ReactUnity.Helpers.SerializableDictionary;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
@@ -14920,6 +15076,7 @@ export declare namespace ReactUnity {
       name: string;
       enabledInHierarchy: boolean;
       enabledSelf: boolean;
+      languageDirection: UnityEngine.UIElements.LanguageDirection;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
@@ -14932,6 +15089,7 @@ export declare namespace ReactUnity {
       childCount: number;
       schedule: UnityEngine.UIElements.IVisualElementScheduler;
       style: UnityEngine.UIElements.IStyle;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       customStyle: UnityEngine.UIElements.ICustomStyle;
       styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
       tooltip: string;
@@ -14975,7 +15133,6 @@ export declare namespace ReactUnity {
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       Blur(): void;
-      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: any): boolean;
@@ -14993,18 +15150,22 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class StylingHelpers {
-      static TextAlignMap: any; // System.Collections.Generic.Dictionary`2[TMPro.TextAlignmentOptions,UnityEngine.TextAnchor]
+      static TextAlignMap: System.Collections.Generic.Dictionary;
       static YogaValueToStyleLength(value: Facebook.Yoga.YogaValue): UnityEngine.UIElements.StyleLength;
       static StyleLengthToYogaValue(value: UnityEngine.UIElements.StyleLength): Facebook.Yoga.YogaValue;
+      static ObjectFitToScaleMode(value: ReactUnity.Types.ObjectFit): UnityEngine.ScaleMode;
       static NormalizeFloat(value: number): number;
       static ConvertFontStyle(style: any, weight: any): UnityEngine.FontStyle;
-      static GetStyleColor(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleColor;
-      static GetStyleFloat(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleFloat;
-      static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any): UnityEngine.UIElements.StyleFloat;
-      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleLength;
-      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any): UnityEngine.UIElements.StyleLength;
-      static GetStyleBorderRadius(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleLength;
-      static GetStyleBorderColor(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleColor;
+      static GetStyleColor(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleColor;
+      static GetStyleFloat(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleFloat;
+      static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleFloat;
+      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
+      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
+      static GetStyleBorderRadius(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleLength;
+      static GetStyleBorderColor(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): UnityEngine.UIElements.StyleColor;
+      static GetStyleBackgroundPosition(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.ValueListStyleProperty): UnityEngine.UIElements.StyleBackgroundPosition;
+      static GetStyleBackgroundSize(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.ValueListStyleProperty): UnityEngine.UIElements.StyleBackgroundSize;
+      static GetStyleBackgroundRepeat(style: ReactUnity.Styling.NodeStyle, propX: ReactUnity.Styling.ValueListStyleProperty, propY: ReactUnity.Styling.ValueListStyleProperty): UnityEngine.UIElements.StyleBackgroundRepeat;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -15035,9 +15196,9 @@ export declare namespace ReactUnity {
       CursorSet: ReactUnity.Styling.CursorSet;
       CursorAPI: ReactUnity.Helpers.CursorAPI;
       Disposables: (() => void)[];
-      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => any);
+      static defaultCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.UIToolkit.IUIToolkitComponent);
       static textCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UIToolkit.UIToolkitContext) => ReactUnity.ITextComponent);
-      static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UIToolkit.UIToolkitContext,ReactUnity.IReactComponent]]
+      static ComponentCreators: System.Collections.Generic.Dictionary;
       Initialize(): void;
       PlayAudio(clip: UnityEngine.AudioClip): void;
       UpdateElementsRecursively(): void;
@@ -15066,7 +15227,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class UIToolkitHelpers {
-      static GenerateVectorImage(rawSvg: string): any;
+      static GenerateVectorImage(rawSvg: string): System.ValueTuple;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -15084,7 +15245,6 @@ export declare namespace ReactUnity {
       uv: UnityEngine.Rect;
       scaleMode: UnityEngine.ScaleMode;
       tintColor: UnityEngine.Color;
-      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
@@ -15100,6 +15260,7 @@ export declare namespace ReactUnity {
       name: string;
       enabledInHierarchy: boolean;
       enabledSelf: boolean;
+      languageDirection: UnityEngine.UIElements.LanguageDirection;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
@@ -15112,6 +15273,7 @@ export declare namespace ReactUnity {
       childCount: number;
       schedule: UnityEngine.UIElements.IVisualElementScheduler;
       style: UnityEngine.UIElements.IStyle;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
       customStyle: UnityEngine.UIElements.ICustomStyle;
       styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
       tooltip: string;
@@ -15150,9 +15312,46 @@ export declare namespace ReactUnity {
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       Blur(): void;
-      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class UIToolkitComponent_UITClassList<T = any> {
+      constructor(component: ReactUnity.UIToolkit.UIToolkitComponent<T>);
+      Name: string;
+      Count: number;
+      IsReadOnly: boolean;
+      Value: System.Collections.Generic.HashSet<string>;
+      ToString(): string;
+      GetArray(): string[];
+      Add(item: string): boolean;
+      Toggle(item: string): boolean;
+      ToggleWithoutNotify(item: string): boolean;
+      Toggle(item: string, toggle: boolean): boolean;
+      ToggleWithoutNotify(item: string, toggle: boolean): boolean;
+      AddWithoutNotify(item: string): boolean;
+      Remove(item: string): boolean;
+      RemoveWithoutNotify(item: string): boolean;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      Contains(item: string): boolean;
+      CopyTo(array: string[], arrayIndex: number): void;
+      ExceptWith(other: System.Collections.Generic.IEnumerable<string>): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<string>;
+      IntersectWith(other: System.Collections.Generic.IEnumerable<string>): void;
+      IsProperSubsetOf(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      IsProperSupersetOf(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      IsSubsetOf(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      IsSupersetOf(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      Overlaps(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      SetEquals(other: System.Collections.Generic.IEnumerable<string>): boolean;
+      SymmetricExceptWith(other: System.Collections.Generic.IEnumerable<string>): void;
+      UnionWith(other: System.Collections.Generic.IEnumerable<string>): void;
+      Change(): void;
+      AddListener(cb: any): (() => void);
+      AddListener(listener: ((obj: System.Collections.Generic.HashSet<string>) => void)): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
