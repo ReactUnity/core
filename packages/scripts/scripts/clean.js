@@ -30,5 +30,5 @@ const { cleanBuildDirectory } = require('./utils/cleanBuildDirectory');
 Promise.resolve().then(() => {
   const buildFolder = path.relative(process.cwd(), paths.appBuild);
   console.log(`Cleaning build directory at ${chalk.blue(buildFolder)}`);
-  cleanBuildDirectory();
+  cleanBuildDirectory(true);
 });

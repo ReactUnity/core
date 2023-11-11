@@ -12,7 +12,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const paths = require('../../config/paths');
 
-function cleanBuildDirectory() {
+function cleanBuildDirectory(cleanMetaFiles = false) {
   try {
     if (fs.existsSync(paths.appManifest)) {
       // Clean only the files inside the asset-manifest so that we avoid cleaning files belonging to user
@@ -21,26 +21,55 @@ function cleanBuildDirectory() {
 
       const keys = Object.keys(manifest.files);
 
+      const metaFiles = [];
+
       for (const key of keys) {
         const file = manifest.files[key];
         const filePath = path.join(paths.appBuild, file);
         const metaFile = filePath + '.meta';
 
         fs.removeSync(filePath);
-        fs.removeSync(metaFile);
+
+        if (fs.existsSync(metaFile)) {
+          if (cleanMetaFiles) fs.removeSync(metaFile);
+          else metaFiles.push(metaFile);
+        }
       }
 
       const manifestMeta = paths.appManifest + '.meta';
       fs.removeSync(paths.appManifest);
-      fs.removeSync(manifestMeta);
+
+      if (fs.existsSync(manifestMeta)) {
+        if (cleanMetaFiles) fs.removeSync(manifestMeta);
+        else metaFiles.push(manifestMeta);
+      }
 
       cleanEmptyFoldersRecursively(null, paths.appBuild, true);
 
-      return;
+      return metaFiles;
     }
-  } catch (err) { }
+  } catch (err) {
+    console.log('Skipped clearing output directory because asset manifest was not found. Please clean the output directory manually if necessary.');
+    return [];
+  }
+}
 
-  console.log('Skipped clearing output directory because asset manifest was not found. Please clean the output directory manually if necessary.');
+function cleanUnusedMetaFiles(metaFiles) {
+  try {
+    for (const metaFile of metaFiles) {
+      try {
+        if (!fs.existsSync(metaFile)) continue;
+
+        const nonMetaFile = metaFile.replace(/\.meta$/, '');
+        if (fs.existsSync(nonMetaFile)) continue;
+
+        fs.removeSync(metaFile);
+      } catch (err) {
+        console.log('Error while cleaning meta file: ' + metaFile);
+      }
+    }
+  } catch (err) {
+  }
 }
 
 
@@ -74,3 +103,4 @@ function cleanEmptyFoldersRecursively(parent, folder, skipFirst) {
 }
 
 module.exports.cleanBuildDirectory = cleanBuildDirectory;
+module.exports.cleanUnusedMetaFiles = cleanUnusedMetaFiles;

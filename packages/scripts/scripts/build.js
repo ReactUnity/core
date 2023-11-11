@@ -33,7 +33,7 @@ const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const { cleanBuildDirectory } = require('./utils/cleanBuildDirectory');
+const { cleanBuildDirectory, cleanUnusedMetaFiles } = require('./utils/cleanBuildDirectory');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -66,11 +66,14 @@ checkBrowsers(paths.appPath, isInteractive)
     return measureFileSizesBeforeBuild(paths.appBuild);
   })
   .then(previousFileSizes => {
-    cleanBuildDirectory();
+    const metaFiles = cleanBuildDirectory(false);
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
-    return build(previousFileSizes);
+    return build(previousFileSizes).then((res) => {
+      cleanUnusedMetaFiles(metaFiles);
+      return res;
+    });
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
