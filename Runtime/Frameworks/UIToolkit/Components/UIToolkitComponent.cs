@@ -148,10 +148,10 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.backgroundPositionY = StylingHelpers.GetStyleBackgroundPosition(computed, StyleProperties.backgroundPositionY);
             TargetElement.style.backgroundSize = StylingHelpers.GetStyleBackgroundSize(computed, StyleProperties.backgroundSize);
             TargetElement.style.backgroundRepeat = StylingHelpers.GetStyleBackgroundRepeat(computed, StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY);
-#endif
 
             TargetElement.style.letterSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.letterSpacing).value;
             TargetElement.style.wordSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.wordSpacing).value;
+#endif
 
             if (computed.HasValue(StyleProperties.backgroundImage))
             {
