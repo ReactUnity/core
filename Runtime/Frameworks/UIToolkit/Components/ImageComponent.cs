@@ -45,6 +45,11 @@ namespace ReactUnity.UIToolkit
             Element.tintColor = ComputedStyle.HasValue(StyleProperties.color)
                 ? ComputedStyle.color
                 : Color.white;
+
+
+            Element.scaleMode = ComputedStyle.HasValue(StyleProperties.objectFit)
+                ? StylingHelpers.ObjectFitToScaleMode(ComputedStyle.objectFit)
+                : ScaleMode.ScaleToFit;
         }
     }
 }

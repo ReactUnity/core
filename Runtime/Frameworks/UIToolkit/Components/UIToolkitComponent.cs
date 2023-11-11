@@ -143,6 +143,14 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderLeftColor);
             TargetElement.style.borderRightColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderRightColor);
 
+            TargetElement.style.backgroundPositionX = StylingHelpers.GetStyleBackgroundPosition(computed, StyleProperties.backgroundPositionX);
+            TargetElement.style.backgroundPositionY = StylingHelpers.GetStyleBackgroundPosition(computed, StyleProperties.backgroundPositionY);
+            TargetElement.style.backgroundSize = StylingHelpers.GetStyleBackgroundSize(computed, StyleProperties.backgroundSize);
+            TargetElement.style.backgroundRepeat = StylingHelpers.GetStyleBackgroundRepeat(computed, StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY);
+
+            TargetElement.style.letterSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.letterSpacing).value;
+            TargetElement.style.wordSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.wordSpacing).value;
+
             if (computed.HasValue(StyleProperties.backgroundImage))
             {
                 var bg = computed.backgroundImage?.Get(0);

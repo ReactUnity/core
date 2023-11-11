@@ -72,6 +72,14 @@ namespace ReactUnity.UIToolkit
             return YogaValue.Undefined();
         }
 
+        public static ScaleMode ObjectFitToScaleMode(ObjectFit value)
+        {
+            return value == ObjectFit.Cover ? ScaleMode.ScaleAndCrop :
+                value == ObjectFit.Contain ? ScaleMode.ScaleToFit :
+                value == ObjectFit.ScaleDown ? ScaleMode.ScaleToFit :
+                value == ObjectFit.Fill ? ScaleMode.StretchToFill :
+                ScaleMode.ScaleToFit;
+        }
 
         public static float NormalizeFloat(float value)
         {
@@ -117,6 +125,44 @@ namespace ReactUnity.UIToolkit
         {
             if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
             else return StyleKeyword.Null;
+        }
+
+        public static StyleBackgroundPosition GetStyleBackgroundPosition(NodeStyle style, ValueListStyleProperty<YogaValue> prop)
+        {
+            if (style.HasValue(prop))
+            {
+                var val = YogaValueToStyleLength(style.GetStyleValue(prop).Get(0, YogaValue.Auto()));
+                return new BackgroundPosition(BackgroundPositionKeyword.Center, val.value);
+            }
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleBackgroundSize GetStyleBackgroundSize(NodeStyle style, ValueListStyleProperty<Types.BackgroundSize> prop)
+        {
+            if (!style.HasValue(prop)) return StyleKeyword.Null;
+
+            var val = style.GetStyleValue(prop).Get(0, Types.BackgroundSize.Auto);
+            if (val.IsCustom) return new UnityEngine.UIElements.BackgroundSize(YogaValueToStyleLength(val.Value.X).value, YogaValueToStyleLength(val.Value.Y).value);
+            else return new UnityEngine.UIElements.BackgroundSize(
+                val.Keyword == BackgroundSizeKeyword.Cover ? BackgroundSizeType.Cover : BackgroundSizeType.Contain);
+        }
+
+        public static StyleBackgroundRepeat GetStyleBackgroundRepeat(NodeStyle style, ValueListStyleProperty<Types.BackgroundRepeat> propX, ValueListStyleProperty<Types.BackgroundRepeat> propY)
+        {
+            if (!(style.HasValue(propX) || style.HasValue(propY))) return StyleKeyword.Null;
+
+            var valX = style.GetStyleValue(propX).Get(0, Types.BackgroundRepeat.Repeat);
+            var valY = style.GetStyleValue(propY).Get(0, Types.BackgroundRepeat.Repeat);
+
+            Repeat convertRepeat(Types.BackgroundRepeat val)
+            {
+                return val == Types.BackgroundRepeat.NoRepeat ? Repeat.NoRepeat :
+                    val == Types.BackgroundRepeat.Round ? Repeat.Round :
+                    val == Types.BackgroundRepeat.Space ? Repeat.Space :
+                    Repeat.Repeat;
+            }
+
+            return new UnityEngine.UIElements.BackgroundRepeat(convertRepeat(valX), convertRepeat(valY));
         }
 
         public static StyleLength GetStyleLengthDouble(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2)
