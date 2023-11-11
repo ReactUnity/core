@@ -143,10 +143,12 @@ namespace ReactUnity.UIToolkit
             TargetElement.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderLeftColor);
             TargetElement.style.borderRightColor = StylingHelpers.GetStyleBorderColor(computed, StyleProperties.borderRightColor);
 
+#if UNITY_2022_3_OR_NEWER
             TargetElement.style.backgroundPositionX = StylingHelpers.GetStyleBackgroundPosition(computed, StyleProperties.backgroundPositionX);
             TargetElement.style.backgroundPositionY = StylingHelpers.GetStyleBackgroundPosition(computed, StyleProperties.backgroundPositionY);
             TargetElement.style.backgroundSize = StylingHelpers.GetStyleBackgroundSize(computed, StyleProperties.backgroundSize);
             TargetElement.style.backgroundRepeat = StylingHelpers.GetStyleBackgroundRepeat(computed, StyleProperties.backgroundRepeatX, StyleProperties.backgroundRepeatY);
+#endif
 
             TargetElement.style.letterSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.letterSpacing).value;
             TargetElement.style.wordSpacing = StylingHelpers.GetStyleFloat(computed, StyleProperties.wordSpacing).value;

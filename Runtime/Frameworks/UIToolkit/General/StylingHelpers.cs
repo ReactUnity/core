@@ -127,6 +127,44 @@ namespace ReactUnity.UIToolkit
             else return StyleKeyword.Null;
         }
 
+        public static StyleLength GetStyleLengthDouble(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2)
+        {
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
+            if (style.HasValue(prop2)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop2));
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleEnum<T> GetStyleEnum<T>(NodeStyle style, StyleProperty<T> prop) where T : struct, IConvertible
+        {
+            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleEnum<T> GetStyleEnumCustom<T>(NodeStyle style, IStyleProperty prop) where T : struct, IConvertible
+        {
+            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleEnum<T> GetStyleBoolToEnum<T>(NodeStyle style, StyleProperty<bool> prop, T trueValue, T falseValue) where T : struct, IConvertible
+        {
+            if (style.HasValue(prop)) return style.GetStyleValue<bool>(prop) ? trueValue : falseValue;
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<YogaValue2> prop)
+        {
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue2>(prop).X);
+            else return StyleKeyword.Null;
+        }
+
+        public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
+        {
+            if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
+            else return StyleKeyword.Null;
+        }
+
+#if UNITY_2022_3_OR_NEWER
         public static StyleBackgroundPosition GetStyleBackgroundPosition(NodeStyle style, ValueListStyleProperty<YogaValue> prop)
         {
             if (style.HasValue(prop))
@@ -164,42 +202,6 @@ namespace ReactUnity.UIToolkit
 
             return new UnityEngine.UIElements.BackgroundRepeat(convertRepeat(valX), convertRepeat(valY));
         }
-
-        public static StyleLength GetStyleLengthDouble(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2)
-        {
-            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
-            if (style.HasValue(prop2)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop2));
-            else return StyleKeyword.Null;
-        }
-
-        public static StyleEnum<T> GetStyleEnum<T>(NodeStyle style, StyleProperty<T> prop) where T : struct, IConvertible
-        {
-            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
-            else return StyleKeyword.Null;
-        }
-
-        public static StyleEnum<T> GetStyleEnumCustom<T>(NodeStyle style, IStyleProperty prop) where T : struct, IConvertible
-        {
-            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
-            else return StyleKeyword.Null;
-        }
-
-        public static StyleEnum<T> GetStyleBoolToEnum<T>(NodeStyle style, StyleProperty<bool> prop, T trueValue, T falseValue) where T : struct, IConvertible
-        {
-            if (style.HasValue(prop)) return style.GetStyleValue<bool>(prop) ? trueValue : falseValue;
-            else return StyleKeyword.Null;
-        }
-
-        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<YogaValue2> prop)
-        {
-            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue2>(prop).X);
-            else return StyleKeyword.Null;
-        }
-
-        public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
-        {
-            if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
-            else return StyleKeyword.Null;
-        }
+#endif
     }
 }
