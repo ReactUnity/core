@@ -28,7 +28,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             yield return null;
 
             Assert.AreEqual(
-                "bla%26bla%26bla",
+                "bla&bla&bla",
                 Context.Script.EvaluateScript(@"encodeURI('bla&bla&bla')")
             );
 
@@ -40,13 +40,13 @@ namespace ReactUnity.Tests.Editor.Renderer
 
 
             Assert.AreEqual(
-                "%5c%25+%2b",
+                "%5C%25%20+",
                 Context.Script.EvaluateScript(@"encodeURI('\\% +')")
             );
 
 
             Assert.AreEqual(
-                "%5c%25%20%2b",
+                "%5C%25%20%2B",
                 Context.Script.EvaluateScript(@"encodeURIComponent('\\% +')")
             );
 
