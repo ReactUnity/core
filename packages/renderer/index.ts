@@ -11,4 +11,14 @@ export {
   render, batchedUpdates as unstable_batchedUpdates
 } from './src/renderer/renderer';
 
+import { batchedUpdates, flushSync, render } from './src/renderer/renderer';
 
+
+const ReactUnityRenderer = {
+  batchedUpdates,
+  flushSync,
+  render,
+  unstable_batchedUpdates: batchedUpdates,
+};
+
+export default ReactUnityRenderer;
