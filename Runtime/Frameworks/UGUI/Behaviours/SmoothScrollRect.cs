@@ -53,6 +53,12 @@ namespace ReactUnity.UGUI.Behaviours
 
             if (transpose) data.scrollDelta = new Vector2(data.scrollDelta.y, data.scrollDelta.x);
 
+#if UNITY_2023_2_OR_NEWER
+            // In newer Unity versions, scroll delta is 120 times smaller than before
+            // TODO: check if this is a bug on Unity side
+            data.scrollDelta *= 120;
+#endif
+
             var positionBefore = normalizedPosition;
             base.OnScroll(data);
             var positionAfter = normalizedPosition;
