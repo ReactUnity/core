@@ -255,7 +255,7 @@ var LibraryWebSocket = {
   },
 
   /**
-   * Send message over WebSocket
+   * Send bytes over WebSocket
    *
    * @param instanceId Instance ID
    * @param bufferPtr Pointer to the message buffer
@@ -273,6 +273,30 @@ var LibraryWebSocket = {
       return -6;
 
     instance.ws.send(HEAPU8.buffer.slice(bufferPtr, bufferPtr + length));
+
+    return 0;
+
+  },
+
+  /**
+   * Send text over WebSocket
+   *
+   * @param instanceId Instance ID
+   * @param dataPtr Pointer to the string buffer
+   */
+  WebSocketSendString: function (instanceId, dataPtr) {
+
+    var instance = webSocketState.instances[instanceId];
+    if (!instance) return -1;
+
+    if (instance.ws === null)
+      return -3;
+
+    if (instance.ws.readyState !== 1)
+      return -6;
+
+    var data = (dataPtr ? webSocketState.stringify(dataPtr) : undefined);
+    instance.ws.send(data);
 
     return 0;
 

@@ -242,9 +242,12 @@ namespace ReactUnity.Scripting.DomProxies
 
         [DllImport("__Internal")]
         public static extern int WebSocketClose(int instanceId, int code, string reason);
-
+        
         [DllImport("__Internal")]
         public static extern int WebSocketSend(int instanceId, byte[] dataPtr, int dataLength);
+
+        [DllImport("__Internal")]
+        public static extern int WebSocketSendString(int instanceId, string data);
 
         [DllImport("__Internal")]
         public static extern int WebSocketGetState(int instanceId);
@@ -333,7 +336,7 @@ namespace ReactUnity.Scripting.DomProxies
                 throw WebSocketHelpers.GetErrorMessageFromCode(ret, null);
 
         }
-
+        
         /// <summary>
         /// Send binary data over the socket.
         /// </summary>
@@ -342,6 +345,19 @@ namespace ReactUnity.Scripting.DomProxies
         {
 
             int ret = WebSocketSend(this.instanceId, data, data.Length);
+
+            if (ret < 0)
+                throw WebSocketHelpers.GetErrorMessageFromCode(ret, null);
+
+        }
+
+        /// <summary>
+        /// Send string data over the socket.
+        /// </summary>
+        /// <param name="data">Payload data.</param>
+        public void Send(string data)
+        {
+            int ret = WebSocketSendString(this.instanceId, data);
 
             if (ret < 0)
                 throw WebSocketHelpers.GetErrorMessageFromCode(ret, null);
@@ -556,6 +572,28 @@ namespace ReactUnity.Scripting.DomProxies
         /// </summary>
         /// <param name="data">Payload data.</param>
         public void Send(byte[] data)
+        {
+
+            // Check state
+            if (this.ws.ReadyState != WebSocketSharp.WebSocketState.Open)
+                throw new WebSocketInvalidStateException("WebSocket is not in open state.");
+
+            try
+            {
+                this.ws.Send(data);
+            }
+            catch (Exception e)
+            {
+                throw new WebSocketUnexpectedException("Failed to send message.", e);
+            }
+
+        }
+
+        /// <summary>
+        /// Send string data over the socket.
+        /// </summary>
+        /// <param name="data">Payload data.</param>
+        public void Send(string data)
         {
 
             // Check state

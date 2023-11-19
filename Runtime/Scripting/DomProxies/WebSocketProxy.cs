@@ -11,9 +11,12 @@ namespace ReactUnity.Scripting.DomProxies
         public static int CLOSING = 2;
         public static int CLOSED = 3;
 
+        public string url { get; }
+        public int readyState => (int) socket.GetState();
+
         public string binaryType = "blob";
 
-        private ReactContext context;
+        public ReactContext context { get; private set; }
 
         public object onopen
         {
@@ -39,37 +42,45 @@ namespace ReactUnity.Scripting.DomProxies
             set => eventTarget.SetEventListener("close", value);
         }
 
+        public bool IsDisposed => context == null || context.IsDisposed;
+
         private EventTarget eventTarget = new EventTarget();
 
         public WebSocketProxy(ReactContext context, string url)
         {
-            socket = WebSocketFactory.CreateInstance(url);
+            this.url = url;
             this.context = context;
+            socket = WebSocketFactory.CreateInstance(url);
             context.Disposables.Add(Dispose);
 
             socket.OnOpen += () => {
-                if (context.IsDisposed) return;
-                context.Dispatcher.OnceUpdate(() =>
-                    eventTarget.DispatchEvent("open", context));
+                if (IsDisposed) return;
+
+                context.Dispatcher.OnceUpdate(() => {
+                    eventTarget.DispatchEvent("open", context);
+                });
             };
 
             socket.OnMessage += (rawData) => {
-                if (context.IsDisposed) return;
+                if (IsDisposed) return;
+
                 var arg = new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') };
                 context.Dispatcher.OnceUpdate(() =>
                     eventTarget.DispatchEvent("message", context, arg));
             };
 
             socket.OnError += (message) => {
-                if (context.IsDisposed) return;
+                if (IsDisposed) return;
+
                 var arg = new { message };
                 context.Dispatcher.OnceUpdate(() =>
                     eventTarget.DispatchEvent("error", context, arg));
             };
 
             socket.OnClose += (code, reason) => {
-                if (context.IsDisposed) return;
-                var arg = new { code, reason };
+                if (IsDisposed) return;
+
+                var arg = new { code = (int) code, reason };
                 context.Dispatcher.OnceUpdate(() =>
                     eventTarget.DispatchEvent("close", context, arg));
             };
@@ -84,9 +95,12 @@ namespace ReactUnity.Scripting.DomProxies
             socket.Close((WebSocketCloseCode) code, reason);
         }
 
-        public void send(byte[] data)
+        public void send(object data)
         {
-            socket.Send(data);
+            if (data == null) throw new ArgumentNullException("data");
+            else if (data is byte[] bytes) socket.Send(bytes);
+            else if (data is string str) socket.Send(str);
+            else UnityEngine.Debug.LogWarning($"Unknown data type in WebSocketProxy ({data.GetType()})");
         }
 
         public void Dispose()
@@ -96,6 +110,7 @@ namespace ReactUnity.Scripting.DomProxies
                 socket.Close(WebSocketCloseCode.Normal, "dispose");
                 socket = null;
             }
+            context = null;
         }
 
         public void addEventListener(string eventType, object callback, bool capture = false)

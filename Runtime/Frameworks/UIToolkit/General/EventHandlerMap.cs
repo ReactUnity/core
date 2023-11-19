@@ -23,7 +23,9 @@ namespace ReactUnity.UIToolkit
             { "onPointerOver", typeof(PointerOverEvent) },
             { "onPointerCapture", typeof(PointerCaptureEvent) },
             { "onPointerCaptureOut", typeof(PointerCaptureOutEvent) },
+#if !UNITY_2023_2_OR_NEWER
             { "onPointerStationary", typeof(PointerStationaryEvent) },
+#endif
 
             { "onMouseUp", typeof(MouseUpEvent) },
             { "onMouseDown", typeof(MouseDownEvent) },
