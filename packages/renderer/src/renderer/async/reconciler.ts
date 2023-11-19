@@ -248,7 +248,7 @@ const hostConfig: AsyncReconcilerConfig & { [key: string]: any } = {
       instance.commands.push([6, instance.refId, newText]);
     }
     else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node = { text: newText };
+      (instance.node as { text: string }).text = newText;
       updateSubContext(instance);
     }
   },
