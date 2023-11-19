@@ -57,6 +57,7 @@ const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
 const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
 const extractCss = process.env.EXTRACT_CSS === 'true';
 const generateManifest = process.env.GENERATE_MANIFEST !== 'false';
+const enableScope = process.env.ENABLE_SCOPE === 'true';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '0'
@@ -333,7 +334,7 @@ const baseConfigFactory = function (webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [
+        enableScope && new ModuleScopePlugin(paths.appSrc, [
           paths.appPackageJson,
           reactRefreshRuntimeEntry,
           reactRefreshWebpackPluginRuntimeEntry,
@@ -341,7 +342,7 @@ const baseConfigFactory = function (webpackEnv) {
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
         ]),
-      ],
+      ].filter(Boolean),
     },
     module: {
       strictExportPresence: true,
@@ -400,7 +401,7 @@ const baseConfigFactory = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              include: paths.appSrc,
+              include: paths.appPath,
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
