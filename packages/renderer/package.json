@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/renderer",
-  "version": "0.16.4",
+  "version": "0.16.5",
   "description": "React renderer for Unity3D",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
