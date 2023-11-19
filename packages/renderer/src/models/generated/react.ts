@@ -3770,6 +3770,7 @@ export declare namespace ReactUnity {
         Connect(): void;
         Close(code?: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason?: string): void;
         Send(data: Byte[]): void;
+        Send(data: string): void;
         GetState(): ReactUnity.Scripting.DomProxies.WebSocketState;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -3786,10 +3787,14 @@ export declare namespace ReactUnity {
       export class WebSocketProxy {
         constructor(context: ReactUnity.ReactContext, url: string);
         constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
+        url: string;
+        readyState: number;
+        context: ReactUnity.ReactContext;
         onopen: any; // System.Object
         onmessage: any; // System.Object
         onerror: any; // System.Object
         onclose: any; // System.Object
+        IsDisposed: boolean;
         socket: ReactUnity.Scripting.DomProxies.WebSocket;
         static CONNECTING: number;
         static OPEN: number;
@@ -3797,7 +3802,7 @@ export declare namespace ReactUnity {
         static CLOSED: number;
         binaryType: string;
         close(code?: number, reason?: string): void;
-        send(data: Byte[]): void;
+        send(data: any): void;
         Dispose(): void;
         addEventListener(eventType: string, callback: any, capture?: boolean): void;
         removeEventListener(eventType: string, callback: any, capture?: boolean): void;
