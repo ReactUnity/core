@@ -90,9 +90,10 @@ namespace ReactUnity.Scripting.DomProxies
 
         public WebSocketProxy(ReactContext context, string url, params string[] protocols) : this(context, url) { }
 
-        public void close(int code = (int) WebSocketCloseCode.Normal, string reason = null)
+        public void close(int? code = null, string reason = null)
         {
-            socket.Close((WebSocketCloseCode) code, reason);
+            if (socket.GetState() == WebSocketState.Closing || socket.GetState() == WebSocketState.Closed) return;
+            socket.Close((WebSocketCloseCode) (code ?? ((int) WebSocketCloseCode.Normal)), reason);
         }
 
         public void send(object data)
