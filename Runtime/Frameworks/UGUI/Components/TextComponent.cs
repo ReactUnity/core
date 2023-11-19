@@ -43,6 +43,7 @@ namespace ReactUnity.UGUI
                     font?.Get(Context, ft => {
                         if (font != value) return;
 
+#if REACT_TMP
                         if (ft?.TmpFontAsset)
                         {
                             var asset = ft.TmpFontAsset;
@@ -51,6 +52,7 @@ namespace ReactUnity.UGUI
                             RecalculateFontStyleAndWeight(style.fontStyle, style.fontWeight, style.textTransform);
                             RecalculateLineHeight();
                         }
+#endif
                     });
                 }
             }

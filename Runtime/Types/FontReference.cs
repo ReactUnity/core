@@ -83,15 +83,21 @@ namespace ReactUnity.Types
             }
             else
             {
-                Font altFont;
+                Font altFont = null;
 #if REACT_TMP
                 var tmpFontAsset = base.Get<TMPro.TMP_FontAsset>(context, realType, realValue);
-                altFont = tmpFontAsset?.sourceFontFile;
+                if (tmpFontAsset?.sourceFontFile != null)
+                {
+                    altFont = tmpFontAsset?.sourceFontFile;
+                }
 #endif
 
 #if REACT_TEXTCORE
                 var textCoreFontAsset = base.Get<UnityEngine.TextCore.Text.FontAsset>(context, realType, realValue);
-                altFont = textCoreFontAsset?.sourceFontFile ?? altFont;
+                if (textCoreFontAsset?.sourceFontFile != null)
+                {
+                    altFont = textCoreFontAsset?.sourceFontFile ?? altFont;
+                }
 #endif
 
                 var res = new FontSource

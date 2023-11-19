@@ -92,6 +92,16 @@
             "name": "cc.starlessnight.unity-jsb",
             "expression": "",
             "define": "REACT_QUICKJS_AVAILABLE"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP_X2"
         }
     ],
     "noEngineReferences": false

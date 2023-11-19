@@ -34,6 +34,11 @@
             "name": "com.unity.vectorgraphics",
             "expression": "",
             "define": "REACT_VECTOR_GRAPHICS"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP"
         }
     ],
     "noEngineReferences": false

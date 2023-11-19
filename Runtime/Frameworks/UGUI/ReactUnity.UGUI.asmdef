@@ -55,6 +55,16 @@
             "name": "com.nosuchstudio.rtltmpro",
             "expression": "",
             "define": "REACT_RTLTMPRO"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP"
+        },
+        {
+            "name": "Unity",
+            "expression": "2023.2",
+            "define": "REACT_TMP_X2"
         }
     ],
     "noEngineReferences": false
