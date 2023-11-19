@@ -6,6 +6,7 @@
     "esModuleInterop": false,
     "noEmit": false,
     "declaration": true,
+    "sourceMap": true,
     "lib": [
       "ES2019"
     ],
