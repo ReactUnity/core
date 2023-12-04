@@ -14,7 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 using ReactUnity.Scripting;
 using ReactUnity.Styling.Rules;
 using ReactUnity.UIToolkit;
@@ -53,7 +53,7 @@ namespace ReactUnity.Tests
         protected UIToolkitContext UGUIContext => Context as UIToolkitContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;
         protected HostComponent Host => Context?.Host as HostComponent;
-        protected SerializableDictionary Globals => Component?.Globals;
+        protected ReactiveObjectRecord Globals => Component?.Globals;
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;
 
         public readonly JavascriptEngineType EngineType;

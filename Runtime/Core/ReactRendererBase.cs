@@ -45,13 +45,19 @@ namespace ReactUnity
         public ReactContext Context { get; private set; }
         public ITimer Timer { get; set; }
 
-        public SerializableDictionary Globals = new SerializableDictionary();
+        [SerializeField]
+        [FormerlySerializedAs("Globals")]
+        protected SerializableDictionary globals = new SerializableDictionary();
+
         public ReactAdvancedOptions AdvancedOptions = new ReactAdvancedOptions();
+
+        public GlobalRecord Globals { get; } = new GlobalRecord();
 
         private Coroutine MediaProviderCoroutine;
 
         void OnEnable()
         {
+            Globals.BindSerializableDictionary(globals, true);
             if (AdvancedOptions.AutoRender) Render();
         }
 
@@ -67,7 +73,8 @@ namespace ReactUnity
 
         private void OnValidate()
         {
-            Context?.Globals.UpdateStringObjectDictionary(Globals, true);
+            Globals.BindSerializableDictionary(globals, true);
+            Context?.Dispatcher?.OnceUpdate(() => Globals.Change());
         }
 
         protected virtual void Clean()

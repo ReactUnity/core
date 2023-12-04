@@ -9,7 +9,7 @@ namespace ReactUnity.Tests.Editor
     public class TestReactWindow : ReactWindow
     {
         public Func<ScriptSource> ScriptCallback;
-        public SerializableDictionary Globals = new SerializableDictionary();
+        public GlobalRecord Globals = new GlobalRecord();
         public override bool AutoRun => false;
 
         public override JavascriptEngineType EngineType { get; set; }
@@ -31,7 +31,7 @@ namespace ReactUnity.Tests.Editor
             return ScriptCallback?.Invoke();
         }
 
-        protected override SerializableDictionary GetGlobals()
+        protected override GlobalRecord GetGlobals()
         {
             Globals["Window"] = this;
             return Globals;

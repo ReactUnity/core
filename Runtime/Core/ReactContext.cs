@@ -34,7 +34,7 @@ namespace ReactUnity
 
         public class Options
         {
-            public SerializableDictionary Globals;
+            public GlobalRecord Globals;
             public ScriptSource Source;
             public ITimer Timer;
             public IMediaProvider MediaProvider;
@@ -83,7 +83,7 @@ namespace ReactUnity
             Source = options.Source;
             Timer = options.Timer;
             Dispatcher = CreateDispatcher();
-            Globals = GlobalRecord.BindSerializableDictionary(options.Globals, Dispatcher, false);
+            Globals = options.Globals;
             OnRestart = options.OnRestart ?? (() => { });
             CalculatesLayout = options.CalculatesLayout;
             Location = new Location(this);

@@ -1,27 +1,20 @@
+using System;
 using ReactUnity.Reactive;
-using ReactUnity.Scheduling;
 
 namespace ReactUnity.Helpers
 {
     public class GlobalRecord : ReactiveObjectRecord
     {
-        private System.Action removeStringDictionaryListener;
-        private IDispatcher dispatcher;
+        private Action removeStringDictionaryListener;
 
         public GlobalRecord() { }
-
-        public static GlobalRecord BindSerializableDictionary(SerializableDictionary dict, IDispatcher dispatcher, bool isSerializing)
-        {
-            var res = new GlobalRecord();
-            res.dispatcher = dispatcher;
-            res.BindSerializableDictionary(dict, isSerializing);
-            return res;
-        }
 
         public void BindSerializableDictionary(SerializableDictionary dict, bool isSerializing)
         {
             removeStringDictionaryListener?.Invoke();
             removeStringDictionaryListener = null;
+
+            if (dict == null) return;
 
             UpdateStringObjectDictionary(dict, isSerializing);
 
@@ -38,15 +31,13 @@ namespace ReactUnity.Helpers
 
         public void UpdateStringObjectDictionary(ReactiveRecord<object> dict, bool isSerializing)
         {
-            ClearWithoutNotify();
             foreach (var entry in dict)
             {
-                SetWithoutNotify(entry.Key, entry.Value);
+                if (entry.Value == null) RemoveWithoutNotify(entry.Key);
+                else SetWithoutNotify(entry.Key, entry.Value);
             }
 
             if (!isSerializing) Change(null, default);
-            else if (dispatcher != null)
-                dispatcher.OnceUpdate(() => Change(null, default));
         }
     }
 

@@ -32,9 +32,9 @@ namespace ReactUnity.Editor.Renderer
 
         protected abstract ScriptSource GetScript();
 
-        protected virtual SerializableDictionary GetGlobals(SerializedProperty property)
+        protected virtual GlobalRecord GetGlobals(SerializedProperty property)
         {
-            return new SerializableDictionary()
+            return new GlobalRecord()
             {
                 { "Property", property },
                 { "Drawer", this },

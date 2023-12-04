@@ -17,7 +17,7 @@ using NUnit.Framework;
 using ReactUnity.Editor;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
-using ReactUnity.Helpers;
+using ReactUnity.Reactive;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Rules;
@@ -43,7 +43,7 @@ namespace ReactUnity.Tests.Editor
         protected EditorContext EditorContext => Context as EditorContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;
         protected HostComponent Host => Context?.Host as HostComponent;
-        protected GlobalRecord Globals => Context?.Globals;
+        protected ReactiveObjectRecord Globals => Context?.Globals;
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;
 
         public readonly JavascriptEngineType EngineType;

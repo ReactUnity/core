@@ -14,14 +14,14 @@ namespace ReactUnity.UIToolkit
         public IMediaProvider MediaProvider { get; private set; }
 
         public ScriptSource Script { get; }
-        public SerializableDictionary Globals { get; }
+        public GlobalRecord Globals { get; }
         public JavascriptEngineType EngineType { get; }
 
         public bool Debug = false;
         public bool AwaitDebugger = false;
 
 
-        public ReactUnityElement(ScriptSource script, SerializableDictionary globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+        public ReactUnityElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
         {
             Script = script;
             Globals = globals;

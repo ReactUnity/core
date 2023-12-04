@@ -136,6 +136,21 @@ namespace ReactUnity.Tests
         [UGUITest(Script = @"
             function App() {  };
 
+            Globals.Set('a', 5);
+            Assert.AreEqual(5, Globals.a);
+        ", AutoRender = false)]
+        public IEnumerator GlobalsGetChangedOnCsharpSide()
+        {
+            yield return null;
+            Render();
+            Assert.AreEqual(Globals, Context.Globals);
+            Assert.AreEqual(5, Globals["a"]);
+            Assert.AreEqual(5, Context.Globals["a"]);
+        }
+
+        [UGUITest(Script = @"
+            function App() {  };
+
             Assert.AreEqual(1, Globals.dict.a);
             Assert.AreEqual(2, Globals.dict.b);
             Assert.AreEqual(3, Globals.dict.c);
