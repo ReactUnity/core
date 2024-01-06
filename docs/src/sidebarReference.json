@@ -54,6 +54,10 @@
               "path": "/reference/components/icon"
             },
             {
+              "title": "image",
+              "path": "/reference/components/image"
+            },
+            {
               "title": "input",
               "path": "/reference/components/input"
             },
@@ -66,12 +70,20 @@
               "path": "/reference/components/html"
             },
             {
+              "title": "rawimage",
+              "path": "/reference/components/rawimage"
+            },
+            {
               "title": "script",
               "path": "/reference/components/script"
             },
             {
               "title": "style",
               "path": "/reference/components/style"
+            },
+            {
+              "title": "video",
+              "path": "/reference/components/video"
             }
           ]
         },
