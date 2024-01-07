@@ -9,8 +9,9 @@ layout: API
 
 ```js
 export default function App() {
+  const imageAddress = 'https://picsum.photos/200';
   return <image
-    style={{ height: 200, objectFit: 'scale-down' }}
+    style={{ height: 300, objectFit: 'fit' }}
     source={imageAddress} />;
 };
 ```
@@ -19,5 +20,5 @@ export default function App() {
 
 ### Properties
 
-- **source**: Source of the image. Can be a url or the `Texture2D` object.
+- **source**: Source of the image. Can be a url, the `Texture2D` object or the `Sprite` object.
 - **fit**: Determines how to position the image inside the element.
