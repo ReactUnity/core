@@ -87,6 +87,17 @@ namespace ReactUnity.Scripting.DomProxies
         public virtual void removeAttribute(object key) => attributes.Remove(key?.ToString() ?? "");
         public bool hasAttribute(object key) => attributes.ContainsKey(key?.ToString() ?? "");
         public object getAttribute(object key) => attributes.TryGetValue(key?.ToString() ?? "", out var val) ? val : default;
+
+
+        public object querySelector(string query)
+        {
+            return null;
+        }
+
+        public object querySelectorAll(string query)
+        {
+            return new List<object> { };
+        }
     }
 
     public class HeadProxy : DomElementProxyBase
