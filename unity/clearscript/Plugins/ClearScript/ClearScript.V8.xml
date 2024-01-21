@@ -2060,6 +2060,13 @@
             This option suppresses that behavior.
             </summary>
         </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.UseSynchronizationContexts">
+            <summary>
+            Specifies that support for synchronization contexts is to be enabled for task-promise
+            interoperability. This option is ignored if
+            <c><see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion"/></c> is not specified.
+            </summary>
+        </member>
         <member name="T:Microsoft.ClearScript.V8.V8Settings">
             <summary>
             Defines properties that comprise ClearScript's V8 configuration.

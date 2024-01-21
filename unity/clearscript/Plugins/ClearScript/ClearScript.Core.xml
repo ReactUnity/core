@@ -33,6 +33,11 @@
             Initializes a new <c><see cref="T:Microsoft.ClearScript.CustomAttributeLoader"/></c> instance.
             </summary>
         </member>
+        <member name="P:Microsoft.ClearScript.CustomAttributeLoader.Default">
+            <summary>
+            Gets the default custom attribute loader.
+            </summary>
+        </member>
         <member name="M:Microsoft.ClearScript.CustomAttributeLoader.LoadCustomAttributes``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Loads custom attributes of the specified type for the given resource.
@@ -2009,6 +2014,10 @@
             <summary>
             Gets or sets the custom attribute loader for ClearScript.
             </summary>
+            <remarks>
+            When not explicitly assigned to a non-<c>null</c> value, this property returns the
+            <see cref="P:Microsoft.ClearScript.CustomAttributeLoader.Default">default custom attribute loader.</see>.
+            </remarks>
         </member>
         <member name="T:Microsoft.ClearScript.HostTypeCollection">
             <summary>
@@ -2332,7 +2341,7 @@
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.UndefinedImportValue">
             <summary>
-            Gets or sets the engine's undefined import value.
+            Gets or sets the script engine's undefined import value.
             </summary>
             <remarks>
             Some script languages support one or more special non-<c>null</c> values that represent
@@ -2343,7 +2352,7 @@
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.NullExportValue">
             <summary>
-            Gets or sets the engine's null export value.
+            Gets or sets the script engine's null export value.
             </summary>
             <remarks>
             <para>
@@ -2364,7 +2373,7 @@
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.VoidResultValue">
             <summary>
-            Gets or sets the engine's void result export value.
+            Gets or sets the script engine's void result export value.
             </summary>
             <remarks>
             Some script languages expect every subroutine call to return a value. When script code
@@ -2402,13 +2411,27 @@
             <remarks>
             The value of this property is an object that is bound to the script engine's root
             namespace. It allows you to access global script resources via the
-            <c><see cref="T:Microsoft.ClearScript.ScriptObject"/></c> class interface. Doing so is likely to perform better than
+            <c><see cref="T:Microsoft.ClearScript.ScriptObject"/></c> class interface. Doing so is likely to outperform
             dynamic access via <c><see cref="P:Microsoft.ClearScript.IScriptEngine.Script"/></c>.
             </remarks>
         </member>
         <member name="P:Microsoft.ClearScript.IScriptEngine.DocumentSettings">
             <summary>
             Gets or sets the script engine's document settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngine.CustomAttributeLoader">
+            <summary>
+            Gets or sets the script engine's custom attribute loader.
+            </summary>
+            <remarks>
+            By default, all script engines use the
+            <see cref="P:Microsoft.ClearScript.HostSettings.CustomAttributeLoader">global custom attribute loader</see>.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.IScriptEngine.HostData">
+            <summary>
+            Allows the host to attach arbitrary data to the script engine.
             </summary>
         </member>
         <member name="M:Microsoft.ClearScript.IScriptEngine.AddHostObject(System.String,System.Object)">
@@ -4138,6 +4161,41 @@
             Occurs when a property is added or replaced, or when the collection is cleared.
             </summary>
         </member>
+        <member name="T:Microsoft.ClearScript.ConcurrentPropertyBag">
+            <summary>
+            Provides a thread-safe <c><see cref="T:Microsoft.ClearScript.IPropertyBag"/></c> implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.ConcurrentPropertyBag.#ctor">
+            <summary>
+            Initializes a new writable <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c> with the default property name comparer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.ConcurrentPropertyBag.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c> with the default property name comparer.
+            </summary>
+            <param name="isReadOnly"><c>True</c> to make the <c><see cref="T:Microsoft.ClearScript.PropertyBag"/></c> read-only, <c>false</c> to make it writable.</param>
+            <remarks>
+            The host can modify a read-only <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c> by calling
+            <c><see cref="M:Microsoft.ClearScript.PropertyBag.SetPropertyNoCheck(System.String,System.Object)">SetPropertyNoCheck</see></c>,
+            <c><see cref="M:Microsoft.ClearScript.PropertyBag.RemovePropertyNoCheck(System.String)">RemovePropertyNoCheck</see></c>, or
+            <c><see cref="M:Microsoft.ClearScript.PropertyBag.ClearNoCheck">ClearNoCheck</see></c>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.ConcurrentPropertyBag.#ctor(System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Initializes a new writable <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c>.
+            </summary>
+            <param name="comparer">The comparer to use for property names, or <c>null</c> to use the default string comparer.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.ConcurrentPropertyBag.#ctor(System.Boolean,System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Initializes a new <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c>.
+            </summary>
+            <param name="isReadOnly"><c>True</c> to make the <c><see cref="T:Microsoft.ClearScript.ConcurrentPropertyBag"/></c> read-only, <c>false</c> to make it writable.</param>
+            <param name="comparer">The comparer to use for property names, or <c>null</c> to use the default string comparer.</param>
+        </member>
         <member name="T:Microsoft.ClearScript.ScriptAccess">
             <summary>
             Defines script access settings for type members.
@@ -4199,10 +4257,10 @@
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.AccessContext">
-            <inheritdoc cref="T:Microsoft.ClearScript.ScriptEngine" />
+            <inheritdoc cref="P:Microsoft.ClearScript.IScriptEngine.AccessContext" />
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.DefaultAccess">
-            <inheritdoc cref="T:Microsoft.ClearScript.ScriptEngine" />
+            <inheritdoc cref="P:Microsoft.ClearScript.IScriptEngine.DefaultAccess" />
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.EnforceAnonymousTypeAccess">
             <inheritdoc/>
@@ -4259,6 +4317,12 @@
             <inheritdoc/>
         </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.DocumentSettings">
+            <inheritdoc/>
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.CustomAttributeLoader">
+            <inheritdoc cref="P:Microsoft.ClearScript.IScriptEngine.CustomAttributeLoader" />
+        </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.HostData">
             <inheritdoc/>
         </member>
         <member name="M:Microsoft.ClearScript.ScriptEngine.AddHostObject(System.String,System.Object)">
