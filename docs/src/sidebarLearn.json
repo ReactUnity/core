@@ -28,6 +28,10 @@
           "path": "/learn/howto/interop"
         },
         {
+          "title": "Extend ReactUnity",
+          "path": "/learn/howto/extending"
+        },
+        {
           "title": "Debugging React code",
           "path": "/learn/howto/debug"
         },
