@@ -28,7 +28,7 @@ namespace ReactUnity
             else Refs[refId] = new WeakReference<IReactComponent>(cmp);
         }
 
-        public IReactComponent GetRef(int refId, bool ensureUpdate = false)
+        public object GetRef(int refId, bool ensureUpdate = false)
         {
             if (ensureUpdate) FlushCommands();
 
@@ -236,7 +236,9 @@ namespace ReactUnity
                         var elRef = cmd[1].Value<int>();
                         var el = GetRef(elRef);
                         var hidden = cmd[2].Value<bool>();
-                        el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
+
+                        if (el is IReactComponent elr)
+                            elr?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
                     }
                     else if (key == 8)
                     {
@@ -317,7 +319,9 @@ namespace ReactUnity
                         var elRef = val["r"].Value<int>();
                         var el = GetRef(elRef);
                         var hidden = val["h"].Value<bool>();
-                        el?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
+
+                        if (el is IReactComponent elr)
+                            elr?.ClassList.Toggle("react-unity__renderer__hidden", hidden);
                     }
                     else if (key == "o")
                     {

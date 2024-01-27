@@ -78,16 +78,16 @@ namespace ReactUnity.Helpers
             {
                 if (v.IsNull() || v.IsUndefined()) return null;
                 var res = v.Engine.Invoke(v, args);
-                var converted = v.Engine.ClrTypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
+                var converted = v.Engine.TypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
                 v.Engine.RunContinuations();
                 return converted;
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
             {
                 var jintEngine = (context.Script.Engine as Scripting.JintEngine).Engine;
-                var clrf = new Jint.Runtime.Interop.ClrFunctionInstance(jintEngine, "callbackFunc", cb);
+                var clrf = new Jint.Runtime.Interop.ClrFunction(jintEngine, "callbackFunc", cb);
                 var res = jintEngine.Invoke(clrf, args);
-                var converted = jintEngine.ClrTypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
+                var converted = jintEngine.TypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
                 jintEngine.RunContinuations();
                 return converted;
             }

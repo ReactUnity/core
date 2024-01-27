@@ -32,7 +32,7 @@ namespace ReactUnity.Scripting
             if (type == typeof(Callback) || type == typeof(object))
             {
                 if (value is Func<JsValue, JsValue[], JsValue> cb) return Callback.From(cb, Context);
-                if (value is FunctionInstance oi) return Callback.From(oi, Context);
+                if (value is Function oi) return Callback.From(oi, Context);
             }
 
             return base.Convert(value, type, formatProvider);

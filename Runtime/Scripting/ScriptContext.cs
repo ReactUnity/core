@@ -231,16 +231,24 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))
             {
-                var webSocketGlobal = engine.Evaluate(@"global.WebSocket = function(url) {
-                    return new global.WebSocket.original(Context, url); }", "ReactUnity/shims/websocket");
-                engine.SetProperty(webSocketGlobal, "original", typeof(WebSocketProxy));
+                engine.SetGlobal("__WebSocketOriginal", typeof(WebSocketProxy));
+                engine.Execute(@"
+                    global.WebSocket = function(url) {
+                        return new global.__WebSocketOriginal(Context, url);
+                    }",
+                    "ReactUnity/shims/websocket"
+                );
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
             {
-                var xhrGlobal = engine.Evaluate(@"global.XMLHttpRequest = function() {
-                    return new global.XMLHttpRequest.original(Context, location.origin); }", "ReactUnity/shims/xhr");
-                engine.SetProperty(xhrGlobal, "original", typeof(XMLHttpRequest));
+                engine.SetGlobal("__XMLHttpRequestOriginal", typeof(XMLHttpRequest));
+                engine.Execute(@"
+                    global.XMLHttpRequest = function() {
+                        return new global.__XMLHttpRequestOriginal(Context, location.origin);
+                    }",
+                    "ReactUnity/shims/xhr"
+                );
                 engine.SetGlobal("FormData", typeof(FormData));
             }
 

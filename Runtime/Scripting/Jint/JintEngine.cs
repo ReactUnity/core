@@ -39,6 +39,7 @@ namespace ReactUnity.Scripting
                     typeof(Component).Assembly,
                     typeof(ReactContext).Assembly
                 );
+                opt.AllowClrWrite();
                 opt.CatchClrExceptions(ex => {
                     Debug.LogException(ex);
                     return true;
@@ -54,7 +55,7 @@ namespace ReactUnity.Scripting
 
         public object Evaluate(string code, string fileName = null)
         {
-            return Engine.ClrTypeConverter.Convert(Engine.Evaluate(code), typeof(object), CultureInfo.InvariantCulture);
+            return Engine.TypeConverter.Convert(Engine.Evaluate(code), typeof(object), CultureInfo.InvariantCulture);
         }
 
         public void Execute(string code, string fileName = null)
