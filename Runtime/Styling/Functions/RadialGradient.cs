@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
@@ -21,7 +22,7 @@ namespace ReactUnity.Styling.Functions
             var first = args[0];
             var startIndex = 0;
 
-            var isRepeating = name.StartsWith("repeating-");
+            var isRepeating = name.FastStartsWith("repeating-");
 
             IComputedValue shape = null;
             IComputedValue sizeHint = null;

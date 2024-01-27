@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
+using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -27,7 +28,7 @@ namespace ReactUnity.Tests
 
             try
             {
-                if (!name.EndsWith(".png")) name += ".png";
+                if (!name.FastEndsWith(".png")) name += ".png";
 
                 var basePath = Path.GetFullPath("Packages/com.reactunity.core/Tests/.snapshots");
                 var os = SystemInfo.operatingSystemFamily.ToString().ToLower();

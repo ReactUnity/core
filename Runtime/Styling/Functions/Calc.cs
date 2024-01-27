@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 
@@ -82,7 +83,7 @@ namespace ReactUnity.Styling.Functions
             {
                 var item = items[i];
 
-                if (item is string s && s.StartsWith("(") && s.EndsWith(")"))
+                if (item is string s && s.FastStartsWith("(") && s.FastEndsWith(")"))
                     items[i] = Parse(s, converter);
             }
 

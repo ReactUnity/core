@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Scripting
 {
@@ -165,7 +166,7 @@ namespace ReactUnity.Scripting
         private IEnumerable<string> GetKeysOfNamespaceInAssembly(Assembly assembly)
         {
             return assembly.GetTypes()
-                ?.Where(x => x.Namespace == null ? string.IsNullOrWhiteSpace(_path) : x.Namespace.StartsWith(_path))
+                ?.Where(x => x.Namespace == null ? string.IsNullOrWhiteSpace(_path) : x.Namespace.FastStartsWith(_path))
                 ?.Select(x => x.FullName.Replace(_path + ".", ""))
                 ?.Select(x => x.Contains('.') ? x.Substring(0, x.IndexOf('.')) : x)
                 ?? new string[0];

@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
@@ -64,7 +65,7 @@ namespace ReactUnity.Styling.Converters
                 }
             }
 
-            if (value.EndsWith("%"))
+            if (value.FastEndsWith("%"))
             {
                 if (float.TryParse(value.Replace("%", ""), NumberStyles.Float, culture, out var parsedValue))
                 {

@@ -27,11 +27,11 @@ namespace ReactUnity.Helpers
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             Add("System", Engine.CreateNamespaceReference("System", typeof(object).Assembly));
-            Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", assemblies.Where(x => x.FullName.StartsWith("UnityEngine.")).ToArray()));
-            Add("ReactUnity", Engine.CreateNamespaceReference("ReactUnity", assemblies.Where(x => x.FullName.StartsWith("ReactUnity.")).ToArray()));
+            Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", assemblies.Where(x => x.FullName.FastStartsWith("UnityEngine.")).ToArray()));
+            Add("ReactUnity", Engine.CreateNamespaceReference("ReactUnity", assemblies.Where(x => x.FullName.FastStartsWith("ReactUnity.")).ToArray()));
             Add("Facebook", Engine.CreateNamespaceReference("Facebook", typeof(Facebook.Yoga.YogaValue).Assembly));
 #if UNITY_EDITOR
-            Add("UnityEditor", Engine.CreateNamespaceReference("UnityEditor", assemblies.Where(x => x.FullName.StartsWith("UnityEditor.")).ToArray()));
+            Add("UnityEditor", Engine.CreateNamespaceReference("UnityEditor", assemblies.Where(x => x.FullName.FastStartsWith("UnityEditor.")).ToArray()));
 #endif
             Add("GetType", new Func<string, object>(GetType));
             Add("GetNamespace", new Func<string, object>(GetNamespace));

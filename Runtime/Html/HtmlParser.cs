@@ -38,9 +38,9 @@ namespace ReactUnity.Html
                 {
                     foreach (XmlAttribute attr in node.Attributes)
                     {
-                        if (attr.Name.StartsWith("on"))
+                        if (attr.Name.FastStartsWith("on"))
                             nodeElement.SetEventListener(attr.Name, Callback.From(attr.Value, nodeElement.Context, nodeElement));
-                        else if (attr.Name.StartsWith("data-"))
+                        else if (attr.Name.FastStartsWith("data-"))
                             nodeElement.SetData(attr.Name.Substring(5), attr.Value);
                         else nodeElement.SetProperty(attr.Name, attr.Value);
                     }

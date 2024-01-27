@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using ReactUnity.Helpers;
 using UnityEditor;
-using System.IO;
 #if REACT_UNITY_DEVELOPER
+using System.IO;
 using System.Reflection;
 #endif
 
@@ -234,7 +235,7 @@ namespace ReactUnity.Editor.Developer
         public static string GenerateCurrentProject(string filePath = null)
         {
             var compiledAssemblies = UnityEditor.Compilation.CompilationPipeline.GetAssemblies(UnityEditor.Compilation.AssembliesType.Editor);
-            var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(f => f.StartsWith("Assets/")));
+            var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(f => f.FastStartsWith("Assets/")));
             var assemblySet = new HashSet<string>(compiledAssembliesInProject.Select(x => x.name))
             {
                 "Assembly-CSharp",

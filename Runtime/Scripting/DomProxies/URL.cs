@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Scripting.DomProxies
 {
@@ -63,7 +64,7 @@ namespace ReactUnity.Scripting.DomProxies
                 {
                     var newSegments = new List<string>();
 
-                    if (!url.StartsWith("/") || string.IsNullOrWhiteSpace(baseCl.protocol))
+                    if (!url.FastStartsWith("/") || string.IsNullOrWhiteSpace(baseCl.protocol))
                     {
                         var basePathSegments = baseCl.GetPathSegments();
                         AddToPath(newSegments, basePathSegments);
@@ -112,7 +113,7 @@ namespace ReactUnity.Scripting.DomProxies
             var rawPathName = string.Join("/", hrefWithoutProtocolSplit.Skip(hasHost ? 1 : 0));
 
             var pathName = NormalizePath(rawPathName);
-            if (!pathName.StartsWith("/") && !string.IsNullOrWhiteSpace(origin)) pathName = "/" + pathName;
+            if (!pathName.FastStartsWith("/") && !string.IsNullOrWhiteSpace(origin)) pathName = "/" + pathName;
 
             var newHref = (origin ?? "") + pathName + search + hash;
 
@@ -134,7 +135,7 @@ namespace ReactUnity.Scripting.DomProxies
         {
             if (string.IsNullOrWhiteSpace(pathname)) return new string[0];
             if (pathname == "/") return new string[0];
-            //if (pathname.StartsWith("/")) pathname = pathname.Substring(1);
+            //if (pathname.FastStartsWith("/")) pathname = pathname.Substring(1);
             return pathname.Split(PathSplitArray, StringSplitOptions.None);
         }
 

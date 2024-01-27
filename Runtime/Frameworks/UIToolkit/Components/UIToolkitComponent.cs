@@ -300,7 +300,7 @@ namespace ReactUnity.UIToolkit
 
         public override Action AddEventListener(string eventName, Callback fun)
         {
-            var shouldCapture = eventName != "onPointerCapture" && eventName != "onMouseCapture" && eventName.EndsWith("Capture");
+            var shouldCapture = eventName != "onPointerCapture" && eventName != "onMouseCapture" && eventName.FastEndsWith("Capture");
             if (shouldCapture) eventName = eventName.Substring(0, eventName.Length - 7);
 
             var (register, unregister, priority) = EventHandlerMap.GetEventMethods(eventName);

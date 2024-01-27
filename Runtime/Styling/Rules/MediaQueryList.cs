@@ -138,7 +138,7 @@ namespace ReactUnity.Styling.Rules
         {
             var splits = ParserHelpers.SplitWhitespace(media);
 
-            if (splits.Count == 1 && media.StartsWith("(") && media.EndsWith(")"))
+            if (splits.Count == 1 && media.FastStartsWith("(") && media.FastEndsWith(")"))
             {
                 return ParseInner(new Regex("\\)$").Replace(new Regex("^\\(").Replace(media, ""), ""), depth + 1);
             }
@@ -170,14 +170,14 @@ namespace ReactUnity.Styling.Rules
                 {
                     if (NumberConverter.TryGetConstantValue<float>(splits[2], out var f))
                     {
-                        if (splits[0].StartsWith("min-")) return RangeMediaNode.MinQuery(splits[0].Replace("min-", ""), f, true);
-                        if (splits[0].StartsWith("max-")) return RangeMediaNode.MaxQuery(splits[0].Replace("max-", ""), f, true);
+                        if (splits[0].FastStartsWith("min-")) return RangeMediaNode.MinQuery(splits[0].Replace("min-", ""), f, true);
+                        if (splits[0].FastStartsWith("max-")) return RangeMediaNode.MaxQuery(splits[0].Replace("max-", ""), f, true);
                         return RangeMediaNode.EqualQuery(splits[0], f);
                     }
                     return new FeatureMediaNode(splits[0], splits[2]);
                 }
 
-                if (separator.StartsWith("$"))
+                if (separator.FastStartsWith("$"))
                 {
                     var reversed = false;
 
@@ -199,13 +199,13 @@ namespace ReactUnity.Styling.Rules
 
                     if (reversed)
                     {
-                        if (separator.StartsWith("$gt")) return RangeMediaNode.MaxQuery(prop, val, separator == "$gte");
-                        if (separator.StartsWith("$lt")) return RangeMediaNode.MinQuery(prop, val, separator == "$lte");
+                        if (separator.FastStartsWith("$gt")) return RangeMediaNode.MaxQuery(prop, val, separator == "$gte");
+                        if (separator.FastStartsWith("$lt")) return RangeMediaNode.MinQuery(prop, val, separator == "$lte");
                     }
                     else
                     {
-                        if (separator.StartsWith("$gt")) return RangeMediaNode.MinQuery(prop, val, separator == "$gte");
-                        if (separator.StartsWith("$lt")) return RangeMediaNode.MaxQuery(prop, val, separator == "$lte");
+                        if (separator.FastStartsWith("$gt")) return RangeMediaNode.MinQuery(prop, val, separator == "$gte");
+                        if (separator.FastStartsWith("$lt")) return RangeMediaNode.MaxQuery(prop, val, separator == "$lte");
                     }
                     return ConstantMediaNode.Never;
                 }
@@ -216,15 +216,15 @@ namespace ReactUnity.Styling.Rules
                 var separator1 = splits[1];
                 var separator3 = splits[3];
 
-                if (separator1.StartsWith("$") && separator3.StartsWith("$"))
+                if (separator1.FastStartsWith("$") && separator3.FastStartsWith("$"))
                 {
                     var prop = splits[2];
 
                     if (NumberConverter.TryGetConstantValue<float>(splits[0], out var f0) && NumberConverter.TryGetConstantValue<float>(splits[4], out var f4))
                     {
-                        if (separator1.StartsWith("$lt") && separator3.StartsWith("$lt"))
+                        if (separator1.FastStartsWith("$lt") && separator3.FastStartsWith("$lt"))
                             return new RangeMediaNode(prop, f0, separator1 == "$lte", f4, separator3 == "$lte");
-                        if (separator1.StartsWith("$gt") && separator3.StartsWith("$gt"))
+                        if (separator1.FastStartsWith("$gt") && separator3.FastStartsWith("$gt"))
                             return new RangeMediaNode(prop, f4, separator3 == "$gte", f0, separator1 == "$gte");
                     }
 

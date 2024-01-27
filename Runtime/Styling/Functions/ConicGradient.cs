@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
@@ -19,7 +20,7 @@ namespace ReactUnity.Styling.Functions
 
             IComputedValue from = null;
             IComputedValue at = null;
-            var isRepeating = name.StartsWith("repeating-");
+            var isRepeating = name.FastStartsWith("repeating-");
 
 
             var firstSplit = ParserHelpers.SplitWhitespace(first);

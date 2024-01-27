@@ -1,3 +1,4 @@
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 
 namespace ReactUnity.Styling.Converters
@@ -13,9 +14,9 @@ namespace ReactUnity.Styling.Converters
         public static string Normalize(string value)
         {
             if (string.IsNullOrWhiteSpace(value)) return value;
-            if ((value.StartsWith("\"") && value.EndsWith("\""))
-                || (value.StartsWith("'") && value.EndsWith("'"))
-                || (value.StartsWith("`") && value.EndsWith("`")))
+            if ((value.FastStartsWith("\"") && value.FastEndsWith("\""))
+                || (value.FastStartsWith("'") && value.FastEndsWith("'"))
+                || (value.FastStartsWith("`") && value.FastEndsWith("`")))
                 return value.Substring(1, value.Length - 2);
             return value;
         }

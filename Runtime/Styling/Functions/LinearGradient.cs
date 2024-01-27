@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
@@ -19,7 +20,7 @@ namespace ReactUnity.Styling.Functions
             var startIndex = 0;
 
             IComputedValue angle;
-            var isRepeating = name.StartsWith("repeating-");
+            var isRepeating = name.FastStartsWith("repeating-");
 
             if (AllConverters.AngleConverter.TryParse(first, out angle))
             {

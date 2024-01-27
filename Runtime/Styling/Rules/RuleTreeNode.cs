@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Styling.Rules
 {
@@ -113,7 +114,7 @@ namespace ReactUnity.Styling.Rules
 
         public RuleTreeNode<T> AddChildCascading(string selector, MediaQueryList mq, IReactComponent scope, int importanceOffset = 0)
         {
-            var shadowParent = selector.StartsWith(":deep ") || selector.StartsWith(">>> ");
+            var shadowParent = selector.FastStartsWith(":deep ") || selector.FastStartsWith(">>> ");
             var directParent = selector[0] == '>';
             var directSibling = selector[0] == '+';
             var sibling = selector[0] == '~';

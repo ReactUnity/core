@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Shorthands;
 
 namespace ReactUnity.Styling
@@ -30,7 +31,7 @@ namespace ReactUnity.Styling
 
         public static IStyleProperty GetProperty(string name)
         {
-            if (name.StartsWith("--"))
+            if (name.FastStartsWith("--"))
             {
                 if (VariableProperties.TryGetValue(name, out var val)) return val;
                 return VariableProperties[name] = new VariableProperty(name);

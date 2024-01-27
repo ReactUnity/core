@@ -138,7 +138,7 @@ namespace ReactUnity.UGUI
                 default:
                     var handled = false;
 
-                    if (!propertyName.StartsWith("custom-"))
+                    if (!propertyName.FastStartsWith("custom-"))
                     {
                         handled = TargetHandler != null ? TargetHandler.SetProperty(propertyName, value) : false;
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
+using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.Scripting
@@ -136,7 +137,7 @@ namespace ReactUnity.Scripting
         {
             if (string.IsNullOrWhiteSpace(fileName)) return fileName;
 
-            if (!fileName.EndsWith(".js")) return fileName + ".js";
+            if (!fileName.FastEndsWith(".js")) return fileName + ".js";
             return fileName;
         }
 

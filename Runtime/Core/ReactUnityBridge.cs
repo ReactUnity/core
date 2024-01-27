@@ -150,7 +150,7 @@ namespace ReactUnity
             {
                 var attr = updatePayload.Current.Key;
                 var value = updatePayload.Current.Value;
-                var isEvent = attr.StartsWith("on");
+                var isEvent = attr.FastStartsWith("on");
 
                 if (isEvent)
                 {
@@ -217,11 +217,11 @@ namespace ReactUnity
                 {
                     setProperty(instance, "style", value);
                 }
-                else if (attr.StartsWith("data-"))
+                else if (attr.FastStartsWith("data-"))
                 {
                     setData(instance, attr.Substring(5), value);
                 }
-                else if (attr.StartsWith("aria-"))
+                else if (attr.FastStartsWith("aria-"))
                 {
                     setData(instance, attr, value);
                 }

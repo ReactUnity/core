@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ExCSS;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Styling.Rules
 {
@@ -89,7 +90,7 @@ namespace ReactUnity.Styling.Rules
                         {
                             var splits = nm.Split(new char[] { '=' }, 2);
                             nm = splits[0].Trim();
-                            if (nm.StartsWith("data-")) nm = nm.Substring(5);
+                            if (nm.FastStartsWith("data-")) nm = nm.Substring(5);
 
                             parameter = splits.Length > 1 ? splits[1].Trim().Trim('"').Trim('\'') : null;
                         }

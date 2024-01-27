@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
+using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Reactive;
 
@@ -292,8 +293,8 @@ namespace ReactUnity.Editor.Developer
               (t.GetCustomAttribute<TypescriptExclude>() == null) &&
               (t.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
               ((t.GetCustomAttribute<TypescriptInclude>() != null) ||
-                  (IncludedNamespaces == null || IncludedNamespaces.Any(x => fullName.StartsWith(x + "."))) &&
-                  (ExcludedNamespaces == null || !ExcludedNamespaces.Any(x => (t.Namespace ?? "").StartsWith(x))) &&
+                  (IncludedNamespaces == null || IncludedNamespaces.Any(x => fullName.FastStartsWith(x + "."))) &&
+                  (ExcludedNamespaces == null || !ExcludedNamespaces.Any(x => (t.Namespace ?? "").FastStartsWith(x))) &&
                   (t.IsPublic || t.IsNestedPublic) &&
                   !typeof(Attribute).IsAssignableFrom(t)
               );
@@ -637,10 +638,10 @@ namespace ReactUnity.Editor.Developer
                     }
                 }
 
-                if (fullType.StartsWith("System.Action") || fullType.StartsWith("System.Func"))
+                if (fullType.FastStartsWith("System.Action") || fullType.FastStartsWith("System.Func"))
                 {
-                    var retType = fullType.StartsWith("System.Action") || gens.Count == 0 ? "void" : gens.Last();
-                    if (fullType.StartsWith("System.Func")) gens = gens.Take(gens.Count - 1).ToList();
+                    var retType = fullType.FastStartsWith("System.Action") || gens.Count == 0 ? "void" : gens.Last();
+                    if (fullType.FastStartsWith("System.Func")) gens = gens.Take(gens.Count - 1).ToList();
                     var args = string.Join(", ", gens.Select((x, i) => $"arg{i}: {x}"));
 
                     return string.Format("(({0}) => {1})",
@@ -650,7 +651,7 @@ namespace ReactUnity.Editor.Developer
                 }
             }
 
-            if (!skipKnownTypes && ExcludedNamespaces != null && ExcludedNamespaces.Any(x => fullType.StartsWith(x + "."))) return "any";
+            if (!skipKnownTypes && ExcludedNamespaces != null && ExcludedNamespaces.Any(x => fullType.FastStartsWith(x + "."))) return "any";
 
             if (type.IsGenericParameter)
             {
@@ -666,14 +667,14 @@ namespace ReactUnity.Editor.Developer
             var fullName = GetHandle(type, withNs) +
                 ((type.IsGenericType && allowGeneric) ? $"<{gn}>" : "");
 
-            var importing = ImportNamespaces.FirstOrDefault(x => fullType.StartsWith(x.Key + "."));
+            var importing = ImportNamespaces.FirstOrDefault(x => fullType.FastStartsWith(x.Key + "."));
             if (!string.IsNullOrWhiteSpace(importing.Key))
             {
                 Imports.Add(importing.Key);
                 return fullName;
             }
 
-            if (IncludedNamespaces != null && IncludedNamespaces.Any(x => fullType.StartsWith(x + "."))) return fullName;
+            if (IncludedNamespaces != null && IncludedNamespaces.Any(x => fullType.FastStartsWith(x + "."))) return fullName;
 
             if (IncludedNamespaces == null) return fullName;
 

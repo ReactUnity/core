@@ -415,7 +415,7 @@ namespace ReactUnity
 
         public virtual void SetProperty(string propertyName, object value)
         {
-            if (propertyName.StartsWith("custom-"))
+            if (propertyName.FastStartsWith("custom-"))
             {
                 var propName = propertyName.Substring(7);
                 SetCustomProperty(propName, value);

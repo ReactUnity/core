@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework.Interfaces;
+using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -24,7 +25,7 @@ namespace ReactUnity.Tests
 
         public static IEnumerator Initialize(string scene)
         {
-            Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
+            Debug.Assert(scene.FastEndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
 #if UNITY_EDITOR
             yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(scene, new LoadSceneParameters(LoadSceneMode.Single));
 #else
@@ -34,7 +35,7 @@ namespace ReactUnity.Tests
 
         public static IEnumerator TearDown(string scene)
         {
-            Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
+            Debug.Assert(scene.FastEndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
 #if UNITY_EDITOR
             yield return UnityEditor.SceneManagement.EditorSceneManager.UnloadSceneAsync(scene);
 #else
