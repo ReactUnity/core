@@ -2,12 +2,6 @@
 title: Extending ReactUnity
 ---
 
-<Intro>
-
-Extending ReactUnity
-
-</Intro>
-
 ## Declaring custom components
 
 You can declare custom components in ReactUnity. This is useful when you want to create a component that needs to interact with the underlying backend (`ugui` or `uitoolkit`).
@@ -15,6 +9,7 @@ You can declare custom components in ReactUnity. This is useful when you want to
 To declare a custom component, you need to create a new class extending `UGUIComponent` or `UIToolkitComponent` and register it in `UGUIContext.ComponentCreators` or `UIToolkitContext.ComponentCreators` respectively.
 
 ### Example
+
 First we create the custom component. For instance, we are declaring a custom button component that has a red background color.
 
 ```cs
@@ -53,6 +48,7 @@ public class CustomComponentInitializer : MonoBehaviour
 ```
 
 ### Typescript declaration
+
 You may also need to declare your custom component in Typescript
 
 ```ts
@@ -63,7 +59,8 @@ declare global {
 }
 ```
 
-#### Example:
+For example:
+
 ```ts
 declare global {
   interface ReactUnityCustomElements {
