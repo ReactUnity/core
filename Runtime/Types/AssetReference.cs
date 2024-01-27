@@ -182,11 +182,22 @@ namespace ReactUnity.Types
 
         protected UnityWebRequest GetWebRequest(ReactContext context, AssetReferenceType realType, object realValue)
         {
-            if (WebCache.TryGetValue(Value, out var req)) return req;
+            if (WebCache.TryGetValue(Value, out var req))
+            {
+                if (req.downloadHandler.isDone && req.downloadHandler.data == null)
+                {
+                    // Data was disposed
+                    WebCache.Remove(Value);
+                }
+                else return req;
+            }
 
             var url = realValue as string;
 
             var www = CreateWebRequest(url);
+            www.disposeCertificateHandlerOnDispose = true;
+            www.disposeDownloadHandlerOnDispose = true;
+            www.disposeUploadHandlerOnDispose = true;
 
             if (context.Script.Engine.IsScriptObject(Value))
             {
