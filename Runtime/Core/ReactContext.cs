@@ -98,11 +98,7 @@ namespace ReactUnity
 
             Dispatcher.OnEveryUpdate(UpdateElementsRecursively);
             Dispatcher.OnEveryLateUpdate(LateUpdateElementsRecursively);
-
-            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(() => {
-                Host?.Layout.CalculateLayout();
-                foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
-            });
+            if (CalculatesLayout) Dispatcher.OnEveryLateUpdate(CalculateLayoutRecursively);
 
 #if UNITY_EDITOR
             // Runtime contexts are disposed on reload (by OnDisable), but this is required for editor contexts
@@ -110,8 +106,30 @@ namespace ReactUnity
 #endif
         }
 
-        public void UpdateElementsRecursively() => Host?.Accept(UpdateVisitor.Instance);
-        public void LateUpdateElementsRecursively() => Host?.Accept(LateUpdateVisitor.Instance);
+        public void CalculateLayoutRecursively()
+        {
+            using (ReactProfiling.Layout.Auto())
+            {
+                Host?.Layout.CalculateLayout();
+                foreach (var dr in DetachedRoots) dr.Layout.CalculateLayout();
+            }
+        }
+
+        public void UpdateElementsRecursively()
+        {
+            using (ReactProfiling.Update.Auto())
+            {
+                Host?.Accept(UpdateVisitor.Instance);
+            }
+        }
+
+        public void LateUpdateElementsRecursively()
+        {
+            using (ReactProfiling.LateUpdate.Auto())
+            {
+                Host?.Accept(LateUpdateVisitor.Instance);
+            }
+        }
 
         protected virtual StyleContext CreateStyleContext() => new StyleContext(this);
 
@@ -154,41 +172,44 @@ namespace ReactUnity
 
         public void Start(Action afterStart = null)
         {
-            SetRef(0, Host);
-            Host.InstanceId = 0;
-            var renderCount = 0;
+            using (ReactProfiling.Start.Auto())
+            {
+                SetRef(0, Host);
+                Host.InstanceId = 0;
+                var renderCount = 0;
 
-            var scriptJob = Source.GetScript((code) => {
-                Location = new Location(this);
-                Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
+                var scriptJob = Source.GetScript((code) => {
+                    Location = new Location(this);
+                    Script = new ScriptContext(this, options.EngineType, options.Debug, options.AwaitDebugger);
 
-                if (renderCount > 0)
-                {
-                    Style = CreateStyleContext();
-                }
+                    if (renderCount > 0)
+                    {
+                        Style = CreateStyleContext();
+                    }
 
-                renderCount++;
+                    renderCount++;
 
-                if (Source.Language == ScriptSourceLanguage.Html)
-                {
-                    options.BeforeStart?.Invoke();
-                    Html.InsertHtml(code, Host, true);
-                    afterStart?.Invoke();
-                    options.AfterStart?.Invoke();
-                }
-                else
-                {
-                    Script.RunMainScript(code, options.BeforeStart, () => {
+                    if (Source.Language == ScriptSourceLanguage.Html)
+                    {
+                        options.BeforeStart?.Invoke();
+                        Html.InsertHtml(code, Host, true);
                         afterStart?.Invoke();
                         options.AfterStart?.Invoke();
-                    });
-                }
+                    }
+                    else
+                    {
+                        Script.RunMainScript(code, options.BeforeStart, () => {
+                            afterStart?.Invoke();
+                            options.AfterStart?.Invoke();
+                        });
+                    }
 
-                Style.ResolveStyle();
-                if (CalculatesLayout) Host.Layout?.CalculateLayout();
-            }, Dispatcher, true);
+                    Style.ResolveStyle();
+                    if (CalculatesLayout) Host.Layout?.CalculateLayout();
+                }, Dispatcher, true);
 
-            if (scriptJob != null) Disposables.Add(scriptJob.Dispose);
+                if (scriptJob != null) Disposables.Add(scriptJob.Dispose);
+            }
         }
 
         public void Dispose()
