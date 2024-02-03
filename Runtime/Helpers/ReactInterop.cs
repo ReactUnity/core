@@ -3,6 +3,7 @@
 #endif
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,7 +16,10 @@ namespace ReactUnity.Helpers
         , Microsoft.ClearScript.IPropertyBag
 #endif
     {
-        private IJavaScriptEngine Engine;
+        private readonly IJavaScriptEngine Engine;
+        ConcurrentDictionary<string, object> typeCache = new();
+        ConcurrentDictionary<string, object> namespaceCache = new();
+
 
         public ReactInterop(IJavaScriptEngine engine)
         {
@@ -38,25 +42,18 @@ namespace ReactUnity.Helpers
             Add("MakeGenericType", new Func<Type, Type[], object>(MakeGenericType));
         }
 
-        public object GetType(string typeName)
-        {
-            return Engine.CreateTypeReference(ReflectionHelpers.FindType(typeName, true));
-        }
+        public object GetType(string typeName) => typeCache.GetOrAdd(typeName, CreateType);
+        private object CreateType(string typeName) => Engine.CreateTypeReference(ReflectionHelpers.FindType(typeName, true));
 
-        public object GetNamespace(string nsName)
-        {
-            return Engine.CreateNamespaceReference(nsName);
-        }
+        public object GetNamespace(string nsName) => namespaceCache.GetOrAdd(nsName, CreateNamespace);
+        private object CreateNamespace(string nsName) => Engine.CreateNamespaceReference(nsName);
 
         public object GetNamespace(string nsName, Assembly assembly)
         {
             return Engine.CreateNamespaceReference(nsName, assembly);
         }
 
-        public object AddType<T>(string name)
-        {
-            return AddType(name, typeof(T));
-        }
+        public object AddType<T>(string name) => AddType(name, typeof(T));
 
         public object AddType(string name, Type type)
         {

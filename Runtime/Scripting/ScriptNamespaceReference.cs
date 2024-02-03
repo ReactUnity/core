@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,9 +18,10 @@ namespace ReactUnity.Scripting
         , Microsoft.ClearScript.IPropertyBag
 #endif
     {
-        IJavaScriptEngine _engine;
-        Assembly[] _allowedAssemblies;
-        private readonly string _path;
+        readonly IJavaScriptEngine _engine;
+        readonly Assembly[] _allowedAssemblies;
+        readonly ConcurrentDictionary<string, object> cache = new();
+        readonly string _path;
 
         private ICollection<string> keys;
         public ICollection<string> Keys => keys ?? (keys = CalculateKeys());
@@ -44,14 +46,14 @@ namespace ReactUnity.Scripting
             _allowedAssemblies = allowedAssemblies;
         }
 
-        public object Get(string property)
+        public object Get(string property) => cache.GetOrAdd(property, Create);
+        private object Create(string property)
         {
             var newPath = _path + "." + property;
-
-            return GetPath(newPath);
+            return GetPath(newPath, _engine, _allowedAssemblies);
         }
 
-        public object GetPath(string path)
+        static public object GetPath(string path, IJavaScriptEngine _engine, Assembly[] _allowedAssemblies)
         {
             Type type;
             var lookupAssemblies = new[] { Assembly.GetCallingAssembly(), Assembly.GetExecutingAssembly() };
