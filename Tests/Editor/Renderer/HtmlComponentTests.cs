@@ -42,7 +42,7 @@ namespace ReactUnity.Tests.Editor.Renderer
 
         [EditorInjectableTest(Script = @"
             const htmlContent = `
-                <script>Globals.value = 5</script>
+                <script>Globals.val = 5</script>
             `;
 
             export default function App() {
@@ -53,12 +53,12 @@ namespace ReactUnity.Tests.Editor.Renderer
         public IEnumerator ScriptTagShouldWorkInsideHtmlTag()
         {
             yield return null;
-            Assert.AreEqual(5, Globals["value"]);
+            Assert.AreEqual(5, Globals["val"]);
         }
 
         [EditorInjectableTest(Script = @"
             const htmlContent = `
-                <button onCustomEvent='Globals.value = 5'>Click here</button>
+                <button onCustomEvent='Globals.val = 5'>Click here</button>
             `;
 
             export default function App() {
@@ -72,7 +72,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             var button = Q("button") as ButtonComponent<Button>;
             button.FireEvent("onCustomEvent", null);
             yield return null;
-            Assert.AreEqual(5, Globals["value"]);
+            Assert.AreEqual(5, Globals["val"]);
         }
 
         [EditorInjectableTest(Script = @"
@@ -100,7 +100,7 @@ namespace ReactUnity.Tests.Editor.Renderer
         }
 
         [EditorInjectableTest(Script = @"
-            <button onCustomEvent='Globals.value = 5'>Click here</button>
+            <button onCustomEvent='Globals.val = 5'>Click here</button>
         ", Html = true)]
         public IEnumerator HtmlRendererWorks()
         {
@@ -108,7 +108,7 @@ namespace ReactUnity.Tests.Editor.Renderer
             var button = Q("button") as ButtonComponent<Button>;
             button.FireEvent("onCustomEvent", null);
             yield return null;
-            Assert.AreEqual(5, Globals["value"]);
+            Assert.AreEqual(5, Globals["val"]);
         }
     }
 }

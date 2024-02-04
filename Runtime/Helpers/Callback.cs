@@ -18,7 +18,6 @@ using System.Globalization;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
-using ReactUnity.Scripting;
 #endif
 
 namespace ReactUnity.Helpers
@@ -79,7 +78,7 @@ namespace ReactUnity.Helpers
                 if (v.IsNull() || v.IsUndefined()) return null;
                 var res = v.Engine.Invoke(v, args);
                 var converted = v.Engine.TypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
-                v.Engine.RunContinuations();
+                v.Engine.Advanced.ProcessTasks();
                 return converted;
             }
             else if (callback is Func<JsValue, JsValue[], JsValue> cb)
@@ -88,7 +87,7 @@ namespace ReactUnity.Helpers
                 var clrf = new Jint.Runtime.Interop.ClrFunction(jintEngine, "callbackFunc", cb);
                 var res = jintEngine.Invoke(clrf, args);
                 var converted = jintEngine.TypeConverter.Convert(res, typeof(object), CultureInfo.InvariantCulture);
-                jintEngine.RunContinuations();
+                jintEngine.Advanced.ProcessTasks();
                 return converted;
             }
 #endif

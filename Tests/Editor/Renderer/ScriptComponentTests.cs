@@ -24,14 +24,14 @@ namespace ReactUnity.Tests.Editor.Renderer
         [EditorInjectableTest(Script = BaseScript)]
         public IEnumerator ScriptTagExecutesOnChange()
         {
-            Globals["scriptContent"] = "Globals.value = 5";
+            Globals["scriptContent"] = "Globals.val = 5";
             yield return null;
 
-            Assert.AreEqual(5, Globals["value"]);
+            Assert.AreEqual(5, Globals["val"]);
 
-            Globals["scriptContent"] = "Globals.value = 6";
+            Globals["scriptContent"] = "Globals.val= 6";
             yield return null;
-            Assert.AreEqual(6, Globals["value"]);
+            Assert.AreEqual(6, Globals["val"]);
         }
 
 
@@ -39,12 +39,12 @@ namespace ReactUnity.Tests.Editor.Renderer
         public IEnumerator ScriptTagDoesNotCrashOnError()
         {
             LogAssert.Expect(UnityEngine.LogType.Exception, new Regex("==="));
-            Globals["scriptContent"] = "Globals.value ====== 5";
+            Globals["scriptContent"] = "Globals.val ====== 5";
             yield return null;
 
-            Globals["scriptContent"] = "Globals.value = 6";
+            Globals["scriptContent"] = "Globals.val = 6";
             yield return null;
-            Assert.AreEqual(6, Globals["value"]);
+            Assert.AreEqual(6, Globals["val"]);
         }
     }
 }

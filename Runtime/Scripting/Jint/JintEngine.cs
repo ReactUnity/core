@@ -193,7 +193,7 @@ namespace ReactUnity.Scripting
 
         public void Update()
         {
-            Engine.RunContinuations();
+            Engine.Advanced.ProcessTasks();
         }
     }
 

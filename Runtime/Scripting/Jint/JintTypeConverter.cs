@@ -21,21 +21,39 @@ namespace ReactUnity.Scripting
             Context = context;
         }
 
-        public override object Convert(object value, Type type, IFormatProvider formatProvider)
+        public override bool TryConvert(object value, Type type, IFormatProvider formatProvider, out object converted)
         {
+
             if (type == typeof(object))
             {
-                if (value is ObjectWrapper ow) return ow.Target;
-                if (value is JsString js) return js.ToString();
+                if (value is ObjectWrapper ow)
+                {
+                    converted = ow.Target;
+                    return true;
+                }
+                if (value is JsString js)
+                {
+                    converted = js.ToString();
+                    return true;
+                }
             }
 
             if (type == typeof(Callback) || type == typeof(object))
             {
-                if (value is Func<JsValue, JsValue[], JsValue> cb) return Callback.From(cb, Context);
-                if (value is Function oi) return Callback.From(oi, Context);
+                if (value is Func<JsValue, JsValue[], JsValue> cb)
+                {
+                    converted = Callback.From(cb, Context);
+                    return true;
+                }
+                if (value is Function oi)
+                {
+                    converted = Callback.From(oi, Context);
+                    return true;
+                }
             }
 
-            return base.Convert(value, type, formatProvider);
+
+            return base.TryConvert(value, type, formatProvider, out converted);
         }
     }
 }
