@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ExCSS;
+using ReactUnity.Helpers;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Styling.Rules;
 using ReactUnity.Types;
@@ -78,7 +79,7 @@ namespace ReactUnity.Styling
 
             if (!string.IsNullOrWhiteSpace(media))
             {
-                Media = MediaQueryList.Create(Context.MediaProvider, media);
+                Media = MediaQueryList.Create(Context.MediaProvider, media, Context.Context);
                 Media.OnUpdate += ResolveEnabled;
             }
 
@@ -105,57 +106,59 @@ namespace ReactUnity.Styling
 
         internal void Parse(string style)
         {
-            if (string.IsNullOrWhiteSpace(style))
+            Stylesheet parsed;
+            using (ReactProfiling.ParseStyles.Auto())
             {
-                Parsed = Context.Parser.Parse("aaaaaaaaaaaaaaaaaaaaaaaaa { teststsdts: 5; }");
+                parsed = Context.Parser.Parse(style ?? "");
             }
-            else
-            {
-                Parsed = Context.Parser.Parse(style);
-            }
+
+            Parsed = parsed;
         }
 
         private void ProcessParsed(Stylesheet stylesheet)
         {
-            MediaQueries.Clear();
-            Keyframes.Clear();
-            FontFamilies.Clear();
-            Declarations.Clear();
-
-            if (stylesheet == null) return;
-
-            foreach (var child in stylesheet.Children)
+            using (ReactProfiling.ProcessStyles.Auto())
             {
-                if (child is IMediaRule media)
+                MediaQueries.Clear();
+                Keyframes.Clear();
+                FontFamilies.Clear();
+                Declarations.Clear();
+
+                if (stylesheet == null) return;
+
+                foreach (var child in stylesheet.Children)
                 {
-                    var mediaRegex = new Regex(@"@media\s*([^\{]*){.*");
-                    var match = mediaRegex.Match(media.StylesheetText.Text);
-
-                    if (match.Groups.Count < 2) continue;
-
-                    var condition = match.Groups[1];
-                    var mql = MediaQueryList.Create(Context.MediaProvider, condition.Value);
-
-                    foreach (var rule in media.Children.OfType<StyleRule>())
+                    if (child is IMediaRule media)
                     {
-                        var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, Scope);
+                        var mediaRegex = new Regex(@"@media\s*([^\{]*){.*");
+                        var match = mediaRegex.Match(media.StylesheetText.Text);
+
+                        if (match.Groups.Count < 2) continue;
+
+                        var condition = match.Groups[1];
+                        var mql = MediaQueryList.Create(Context.MediaProvider, condition.Value, Context.Context);
+
+                        foreach (var rule in media.Children.OfType<StyleRule>())
+                        {
+                            var dcl = Context.StyleTree.AddStyle(rule, ImportanceOffset, mql, Scope);
+                            Declarations.AddRange(dcl);
+                        }
+                        MediaQueries.Add(mql);
+                    }
+                    else if (child is IKeyframesRule kfs)
+                    {
+                        Keyframes[kfs.Name] = KeyframeList.Create(kfs);
+                    }
+                    else if (child is IFontFaceRule ffr)
+                    {
+                        FontFamilies[StringConverter.Normalize(ffr.Family)] =
+                            AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
+                    }
+                    else if (child is StyleRule str)
+                    {
+                        var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, Scope);
                         Declarations.AddRange(dcl);
                     }
-                    MediaQueries.Add(mql);
-                }
-                else if (child is IKeyframesRule kfs)
-                {
-                    Keyframes[kfs.Name] = KeyframeList.Create(kfs);
-                }
-                else if (child is IFontFaceRule ffr)
-                {
-                    FontFamilies[StringConverter.Normalize(ffr.Family)] =
-                        AllConverters.FontReferenceConverter.TryGetConstantValue(ffr.Source, FontReference.None);
-                }
-                else if (child is StyleRule str)
-                {
-                    var dcl = Context.StyleTree.AddStyle(str, ImportanceOffset, null, Scope);
-                    Declarations.AddRange(dcl);
                 }
             }
         }

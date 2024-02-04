@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
+using ReactUnity.Scripting.DomProxies;
 using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Rules
@@ -10,9 +11,9 @@ namespace ReactUnity.Styling.Rules
     {
         private static LengthConverter NumberConverter = new LengthConverter();
 
-        public static MediaQueryList Create(IMediaProvider provider, string media)
+        public static MediaQueryList Create(IMediaProvider provider, string media, ReactContext context = null)
         {
-            return new MediaQueryList(provider, media);
+            return new MediaQueryList(provider, media, context);
         }
 
         public string media { get; private set; }
@@ -30,29 +31,22 @@ namespace ReactUnity.Styling.Rules
 
         public event Action OnUpdate
         {
-            add
-            {
-                EventListenersInline.Add(value);
-                if (ListenerCount == 1) Subscribe();
-            }
-            remove
-            {
-                EventListenersInline.Remove(value);
-                if (ListenerCount == 0) Unsubscribe();
-            }
+            add => addEventListener("change", value);
+            remove => removeEventListener("change", value);
         }
 
 
         private MediaNode Root = ConstantMediaNode.Never;
         private IMediaProvider Provider;
+        private ReactContext Context;
 
-        private List<Action> EventListenersInline = new List<Action>();
-        private List<Tuple<object, Action>> EventListeners = new List<Tuple<object, Action>>();
+        private int ListenerCount => eventTarget.GetAllEventListeners("change").Count;
 
-        private int ListenerCount => EventListenersInline.Count;
+        private EventTarget eventTarget = new EventTarget();
 
-        private MediaQueryList(IMediaProvider provider, string media)
+        private MediaQueryList(IMediaProvider provider, string media, ReactContext context)
         {
+            Context = context;
             Provider = provider;
             this.media = media;
             Root = Parse(media);
@@ -60,33 +54,20 @@ namespace ReactUnity.Styling.Rules
 
         public void addEventListener(string type, object listener)
         {
-            if (type != "change") return;
+            eventTarget.AddEventListener(type, listener);
+            if (ListenerCount == 1) Subscribe();
+        }
 
-            var callback = Callback.From(listener);
-            Action action = () => callback?.Call();
-            EventListeners.Add(Tuple.Create(listener, action));
-
-            OnUpdate += action;
+        public void removeEventListener(string type, object listener)
+        {
+            eventTarget.RemoveEventListener(type, listener);
+            if (ListenerCount == 0) Unsubscribe();
         }
 
         private void Subscribe()
         {
             Provider.OnUpdate += Reevaluate;
             savedMatch = Root.Matches(Provider);
-        }
-
-        public void removeEventListener(string type, object listener)
-        {
-            if (type != "change") return;
-
-            var ind = EventListeners.FindIndex(x => x.Item1 == listener);
-
-            if (ind < 0) return;
-
-            var tuple = EventListeners[ind];
-            EventListeners.RemoveAt(ind);
-
-            OnUpdate -= tuple.Item2;
         }
 
         private void Unsubscribe()
@@ -107,11 +88,7 @@ namespace ReactUnity.Styling.Rules
 
         private void Changed()
         {
-            for (int i = 0; i < EventListenersInline.Count; i++)
-            {
-                var listener = EventListenersInline[i];
-                listener.Invoke();
-            }
+            eventTarget.DispatchEvent("change", Context);
         }
 
         private static MediaNode Parse(string media)

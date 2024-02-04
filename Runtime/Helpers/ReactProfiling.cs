@@ -20,5 +20,7 @@ namespace ReactUnity.Helpers
         public static readonly ProfilerMarker Update = CreateMarker("Update");
         public static readonly ProfilerMarker LateUpdate = CreateMarker("LateUpdate");
         public static readonly ProfilerMarker FlushCommands = CreateMarker("FlushCommands");
+        public static readonly ProfilerMarker ParseStyles = CreateMarker("ParseStyles");
+        public static readonly ProfilerMarker ProcessStyles = CreateMarker("ProcessStyles");
     }
 }
