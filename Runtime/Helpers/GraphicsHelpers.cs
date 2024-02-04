@@ -16,7 +16,7 @@ namespace ReactUnity.Helpers
             SVGParser.SceneInfo sceneInfo;
             using (var stream = new StringReader(rawSvg))
             {
-                sceneInfo = SVGParser.ImportSVG(stream, ViewportOptions.DontPreserve, 0, 1, 100, 100);
+                sceneInfo = SVGParser.ImportSVG(stream, ViewportOptions.OnlyApplyRootViewBox, 0, 1, 100, 100);
             }
 
             var stepDist = 0.5f;

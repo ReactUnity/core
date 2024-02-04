@@ -93,7 +93,7 @@ const Graph = ({ arrayX, arrayY, lineWidth }) => {
   }, [arrayX, arrayY]);
 
   return (
-    <svg x='0px' y='0px' viewBox='0 0 1000 2' width='300px'>
+    <svg x='0px' y='0px' viewBox='0 0 300 2' width='300px'>
       <polyline points={polyline} fill='none' stroke={'black'} strokeWidth={lineWidth} />
 
       {arrayX.map((coordX, i) =>

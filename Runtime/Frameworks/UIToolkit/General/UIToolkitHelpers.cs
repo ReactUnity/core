@@ -27,14 +27,37 @@ namespace ReactUnity.UIToolkit
             _makeVectorImageAsset = _makeVectorImageAsset ?? VectorImageUtilsType.GetMethod("MakeVectorImageAsset",
                 BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
+        private static int ArgLength => MakeVectorImageAssetMethodInfo.GetParameters().Length;
+
 #if !ENABLE_IL2CPP
-        private static MakeVectorDelegate _makeVectorHook;
+        private static MakeVectorDelegate2 _makeVectorHook;
 
         delegate void MakeVectorDelegate(List<VectorUtils.Geometry> geometry, uint gradientResolution, out UnityEngine.Object asset,
             out Texture2D texture2D);
 
-        private static MakeVectorDelegate MakeVectorHook => _makeVectorHook = _makeVectorHook ??
-            (MakeVectorDelegate) Delegate.CreateDelegate(typeof(MakeVectorDelegate), MakeVectorImageAssetMethodInfo);
+        delegate void MakeVectorDelegate2(List<VectorUtils.Geometry> geometry, Rect rect, uint gradientResolution, out UnityEngine.Object asset,
+            out Texture2D texture2D);
+
+        private static MakeVectorDelegate2 MakeVectorHook
+        {
+            get
+            {
+                if (_makeVectorHook != null) return _makeVectorHook;
+
+                if (ArgLength != 5)
+                {
+                    var m1 = (MakeVectorDelegate) Delegate.CreateDelegate(typeof(MakeVectorDelegate), MakeVectorImageAssetMethodInfo);
+
+                    return _makeVectorHook = (MakeVectorDelegate2) Delegate.CreateDelegate(
+                        typeof(MakeVectorDelegate2),
+                        new MakeVectorDelegate2(delegate (List<VectorUtils.Geometry> geometry, Rect rect, uint gradientResolution, out UnityEngine.Object asset, out Texture2D texture2D) {
+                            m1(geometry, gradientResolution, out asset, out texture2D);
+                        }).GetMethodInfo());
+                }
+
+                return _makeVectorHook = (MakeVectorDelegate2) Delegate.CreateDelegate(typeof(MakeVectorDelegate2), MakeVectorImageAssetMethodInfo);
+            }
+        }
 #endif
 
         public static (VectorImage, Rect) GenerateVectorImage(string rawSvg)
@@ -43,9 +66,8 @@ namespace ReactUnity.UIToolkit
             {
                 if (string.IsNullOrWhiteSpace(rawSvg)) return (null, default(Rect));
                 var (geometry, rect) = GraphicsHelpers.BuildSvgGeometry(rawSvg);
-                var sourceRect = rect;
-                var vectorImage = GenerateVectorImageAsset(geometry);
-                return (vectorImage, sourceRect);
+                var vectorImage = GenerateVectorImageAsset(geometry, rect);
+                return (vectorImage, rect);
             }
             catch (Exception ex)
             {
@@ -55,17 +77,17 @@ namespace ReactUnity.UIToolkit
         }
 
 
-        private static VectorImage GenerateVectorImageAsset(List<VectorUtils.Geometry> geometry)
+        private static VectorImage GenerateVectorImageAsset(List<VectorUtils.Geometry> geometry, Rect rect)
         {
             var gradientResolution = 64u;
 
 #if !ENABLE_IL2CPP
-            MakeVectorHook(geometry, gradientResolution, out var asset, out _);
+            MakeVectorHook(geometry, rect, gradientResolution, out var asset, out _);
 #else
-            object[] vParams = { geometry, gradientResolution, null, null };
+            object[] vParams = ArgLength == 5 ? new object[] { geometry, rect, gradientResolution, null, null } : new object[] { geometry, gradientResolution, null, null };
             MakeVectorImageAssetMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, vParams, null);
 
-            var asset = vParams[2];
+            var asset = vParams[ArgLength == 5 ? 3 : 2];
 #endif
 
             if (asset == null)
