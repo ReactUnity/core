@@ -21,23 +21,9 @@ namespace ReactUnity.Scripting
             Context = context;
         }
 
+
         public override bool TryConvert(object value, Type type, IFormatProvider formatProvider, out object converted)
         {
-
-            if (type == typeof(object))
-            {
-                if (value is ObjectWrapper ow)
-                {
-                    converted = ow.Target;
-                    return true;
-                }
-                if (value is JsString js)
-                {
-                    converted = js.ToString();
-                    return true;
-                }
-            }
-
             if (type == typeof(Callback) || type == typeof(object))
             {
                 if (value is Func<JsValue, JsValue[], JsValue> cb)
@@ -52,8 +38,18 @@ namespace ReactUnity.Scripting
                 }
             }
 
-
             return base.TryConvert(value, type, formatProvider, out converted);
+        }
+
+        public override object Convert(object value, Type type, IFormatProvider formatProvider)
+        {
+            if (type == typeof(object))
+            {
+                if (value is ObjectWrapper ow) return ow.Target;
+                if (value is JsString js) return js.ToString();
+            }
+
+            return base.Convert(value, type, formatProvider);
         }
     }
 }
