@@ -9,6 +9,15 @@ namespace ReactUnity.UIToolkit
 {
     public class ReactUnityElement : VisualElement
     {
+        [Serializable]
+        public class ReactAdvancedOptions
+        {
+            public ReactContext.PoolingType Pooling = ReactContext.PoolingType.Basic;
+            public ReactContext.UnknownPropertyHandling UnknownPropertyHandling = ReactContext.UnknownPropertyHandling.Log;
+            public Action BeforeStart;
+            public Action AfterStart;
+        }
+
         public ReactContext Context { get; private set; }
         public ITimer Timer { get; protected set; }
         public IMediaProvider MediaProvider { get; private set; }
@@ -20,8 +29,10 @@ namespace ReactUnity.UIToolkit
         public bool Debug = false;
         public bool AwaitDebugger = false;
 
+        public ReactAdvancedOptions AdvancedOptions { get; set; }
 
-        public ReactUnityElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+
+        public ReactUnityElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true, ReactAdvancedOptions advancedOptions = null)
         {
             Script = script;
             Globals = globals;
@@ -30,6 +41,7 @@ namespace ReactUnity.UIToolkit
             Debug = debug;
             Timer = timer;
             AwaitDebugger = awaitDebugger;
+            AdvancedOptions = advancedOptions;
             AddToClassList("react-unity__host");
             if (autorun) Run();
         }
@@ -69,6 +81,10 @@ namespace ReactUnity.UIToolkit
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
+                BeforeStart = AdvancedOptions.BeforeStart,
+                AfterStart = AdvancedOptions.AfterStart,
+                Pooling = AdvancedOptions.Pooling,
+                UnknownPropertyHandling = AdvancedOptions.UnknownPropertyHandling,
             });
             ctx.Initialize();
             return ctx;

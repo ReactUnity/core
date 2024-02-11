@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Scheduling;
+using ReactUnity.Scripting;
+using ReactUnity.UIToolkit;
 using UnityEditor;
 using UnityEngine.TestTools;
 
@@ -51,6 +54,12 @@ namespace ReactUnity.Tests.Editor
             window.DebugEnabled = TestHelpers.IsDebugEnabled;
             window.AwaitDebugger = TestHelpers.IsDebugEnabled;
 
+            window.AdvancedOptions = new ReactUnityElement.ReactAdvancedOptions
+            {
+                BeforeStart = () => BeforeStart(window.Context.Script),
+                AfterStart = () => AfterStart(window.Context.Script),
+            };
+
             if (AutoRender)
             {
                 window.Run();
@@ -75,5 +84,23 @@ namespace ReactUnity.Tests.Editor
 
         public abstract IEnumerator<ScriptSource> GetScript();
         public virtual string GetStyle() => null;
+
+        public virtual void BeforeStart(ScriptContext ctx)
+        {
+            ctx.Engine.SetGlobal("Assert", typeof(Assert));
+            ctx.Engine.SetGlobal("Has", typeof(Has));
+            ctx.Engine.SetGlobal("Is", typeof(Is));
+            ctx.Engine.SetGlobal("Iz", typeof(Iz));
+            ctx.Engine.SetGlobal("Contains", typeof(Contains));
+            ctx.Engine.SetGlobal("Does", typeof(Does));
+            ctx.Engine.SetGlobal("Assume", typeof(Assume));
+            ctx.Engine.SetGlobal("Throws", typeof(Throws));
+            ctx.Engine.SetGlobal("LogAssert", typeof(LogAssert));
+        }
+
+
+        public virtual void AfterStart(ScriptContext runner)
+        {
+        }
     }
 }

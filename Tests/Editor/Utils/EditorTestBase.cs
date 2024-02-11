@@ -43,7 +43,7 @@ namespace ReactUnity.Tests.Editor
         protected EditorContext EditorContext => Context as EditorContext;
         protected IMediaProvider MediaProvider => Context?.MediaProvider;
         protected HostComponent Host => Context?.Host as HostComponent;
-        protected ReactiveObjectRecord Globals => Context?.Globals;
+        protected ReactiveObjectRecord Globals => Window?.Globals;
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;
 
         public readonly JavascriptEngineType EngineType;
@@ -53,7 +53,7 @@ namespace ReactUnity.Tests.Editor
             EngineType = engineType;
         }
 
-        public void Render() => Component.Run();
+        public void Render() => Window.Run();
         public StyleSheet InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
         public void RemoveStyle(StyleSheet sheet) => Context.RemoveStyle(sheet);
         public IUIToolkitComponent Q(string query, IReactComponent scope = null) =>
@@ -78,6 +78,12 @@ namespace ReactUnity.Tests.Editor
         {
             if (EditorWindow.HasOpenInstances<TestReactWindow>())
                 if (Window != null) Window.Close();
+        }
+
+        public void IgnoreForEngine(JavascriptEngineType engine)
+        {
+            if (EngineType == engine)
+                Assert.Ignore("This test does not work for " + engine);
         }
     }
 }

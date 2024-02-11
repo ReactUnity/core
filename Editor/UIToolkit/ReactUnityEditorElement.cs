@@ -13,8 +13,8 @@ namespace ReactUnity.Editor.UIToolkit
         public ReactInspector Inspector { get; internal set; }
         public ReactProperty Property { get; internal set; }
 
-        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = false)
-            : base(script, globals, timer, mediaProvider, engineType, debug, awaitDebugger, autorun)
+        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = false, ReactAdvancedOptions advancedOptions = null)
+            : base(script, globals, timer, mediaProvider, engineType, debug, awaitDebugger, autorun, advancedOptions)
         {
         }
 
@@ -34,6 +34,10 @@ namespace ReactUnity.Editor.UIToolkit
                 Debug = Debug,
                 AwaitDebugger = AwaitDebugger,
                 EngineType = EngineType,
+                BeforeStart = AdvancedOptions.BeforeStart,
+                AfterStart = AdvancedOptions.AfterStart,
+                Pooling = AdvancedOptions.Pooling,
+                UnknownPropertyHandling = AdvancedOptions.UnknownPropertyHandling,
             });
             ctx.Initialize();
             return ctx;

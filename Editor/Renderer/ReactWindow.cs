@@ -4,6 +4,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.Scripting;
 using ReactUnity.Styling.Rules;
+using ReactUnity.UIToolkit;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,6 +20,8 @@ namespace ReactUnity.Editor.Renderer
 
         public event Action<ReactWindow> SelectionChange;
         public event Action<bool, ReactWindow> VisibilityChange;
+
+        public ReactUnityElement.ReactAdvancedOptions AdvancedOptions;
 
 #if REACT_UNITY_DEVELOPER
         private readonly GUIContent enableDevServerContent = EditorGUIUtility.TrTextContent("Enable DevSever");
@@ -90,7 +93,7 @@ namespace ReactUnity.Editor.Renderer
             if (HostElement != null) OnDestroy();
             HostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
                 DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true),
-                EngineType, DebugEnabled, AwaitDebugger);
+                EngineType, DebugEnabled, AwaitDebugger, false, AdvancedOptions);
             HostElement.Window = this;
             HostElement.Run();
             (root ?? rootVisualElement).Add(HostElement);
