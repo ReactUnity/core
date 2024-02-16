@@ -83,5 +83,24 @@ namespace ReactUnity.Tests
                 Component.enabled = true;
             }
         }
+
+        [UGUITest(Script = @"
+             const camera = Interop.UnityEngine.Camera.main;
+             console.log(camera);
+             console.log(camera.GetType() != null);
+             console.log(camera.GetType().Name);
+             console.log(camera.GetType());
+
+            function App() { }
+        ")]
+        public IEnumerator PushingTypesToJavascriptShouldntCrash()
+        {
+            yield return null;
+
+            var type = Context.Script.Engine.Evaluate("Interop.UnityEngine.Camera.main.GetType()");
+            Debug.Log(type);
+
+            Assert.Pass("The test didn't throw an error");
+        }
     }
 }
