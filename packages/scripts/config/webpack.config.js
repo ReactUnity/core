@@ -384,6 +384,7 @@ const baseConfigFactory = function (webpackEnv) {
                     },
                     titleProp: true,
                     ref: true,
+                    exportType: 'default',
                   },
                 },
                 {
