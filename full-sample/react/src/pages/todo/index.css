@@ -45,12 +45,6 @@
   background-color: white;
   border: 1px solid #dedede;
   border-radius: 8px;
-
-  /* --item-animation-duration: 400ms; */
-}
-
-.todo-item:before {
-  content: var(--item-animation-duration);
 }
 
 .todo-item:not(:first-child) {
