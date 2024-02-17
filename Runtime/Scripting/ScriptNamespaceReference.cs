@@ -20,7 +20,7 @@ namespace ReactUnity.Scripting
     {
         readonly IJavaScriptEngine _engine;
         readonly Assembly[] _allowedAssemblies;
-        readonly ConcurrentDictionary<string, object> cache = new();
+        readonly ConcurrentDictionary<string, object> cache = new ConcurrentDictionary<string, object>();
         readonly string _path;
 
         private ICollection<string> keys;

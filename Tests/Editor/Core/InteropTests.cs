@@ -198,12 +198,6 @@ namespace ReactUnity.Tests.Editor
                 Globals.task3Done = true;
                 Assert.True(failed);
             })();
-
-            (async function() {
-                const res = await Globals.task4;
-                Assert.AreEqual(7, res);
-                Globals.task4Done = true;
-            })();
         ", AutoRender = false)]
         public IEnumerator TasksCanBeUsedNaturally()
         {
@@ -213,20 +207,16 @@ namespace ReactUnity.Tests.Editor
             var t1 = new TaskCompletionSource<int>();
             var t2 = new TaskCompletionSource<int>();
             var t3 = new TaskCompletionSource<int>();
-            var t4 = new TaskCompletionSource<int>();
-            var valueTask = new ValueTask(t4.Task);
 
             Globals["task0"] = t0;
             Globals["task1"] = t1.Task;
             Globals["task2"] = t2.Task;
             Globals["task3"] = t3.Task;
-            Globals["task4"] = valueTask;
 
             Globals["task0Done"] = false;
             Globals["task1Done"] = false;
             Globals["task2Done"] = false;
             Globals["task3Done"] = false;
-            Globals["task4Done"] = false;
 
             Render();
 
@@ -237,7 +227,6 @@ namespace ReactUnity.Tests.Editor
             Assert.False((bool) Globals["task1Done"]);
             Assert.False((bool) Globals["task2Done"]);
             Assert.False((bool) Globals["task3Done"]);
-            Assert.False((bool) Globals["task4Done"]);
 
             t1.SetResult(0);
             t1.Task.Wait();
@@ -259,14 +248,6 @@ namespace ReactUnity.Tests.Editor
                 try { t3.Task.Wait(); } catch { }
                 yield return null;
                 Assert.True((bool) Globals["task3Done"]);
-
-
-                // Value tasks aren't supported in ClearScript
-
-                t4.SetResult(7);
-                t4.Task.Wait();
-                yield return null;
-                Assert.True((bool) Globals["task4Done"]);
             }
         }
     }

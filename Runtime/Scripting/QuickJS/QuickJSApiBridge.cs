@@ -70,7 +70,7 @@ namespace ReactUnity.Scripting
                 {
                     proxy = CreateListProxy(context, val);
                 }
-                else if (typeof(Task).IsAssignableFrom(o.GetType()) || typeof(ValueTask).IsAssignableFrom(o.GetType()))
+                else if (typeof(Task).IsAssignableFrom(o.GetType()))
                 {
                     proxy = CreateTaskProxy(context, val);
                 }
@@ -488,9 +488,8 @@ function createTaskProxyCreator (thenFn) {
 createTaskProxyCreator;
 ", "ReactUnity/quickjs/createTaskProxy");
 
-            var then = new Action<object, Action<object>, Action<object>>(
-                (obj, resolve, reject) => {
-                    var task = obj is ValueTask vt ? vt.AsTask() : obj as Task;
+            var then = new Action<Task, Action<object>, Action<object>>(
+                (task, resolve, reject) => {
                     var awaiter = task.GetAwaiter();
                     awaiter.OnCompleted(() => {
                         if (task.IsFaulted) reject(task.Exception.InnerException);

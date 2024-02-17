@@ -202,7 +202,7 @@ namespace ReactUnity.Types
                 var dh = req.downloadHandler;
                 try
                 {
-                    if (!dh.nativeData.IsCreated || (dh.isDone && dh.data == null))
+                    if (dh.isDone && dh.data == null)
                         WebCache.Remove(Value);
                     else return req;
                 }

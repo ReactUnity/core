@@ -17,8 +17,8 @@ namespace ReactUnity.Helpers
 #endif
     {
         private readonly IJavaScriptEngine Engine;
-        ConcurrentDictionary<string, object> typeCache = new();
-        ConcurrentDictionary<string, object> namespaceCache = new();
+        ConcurrentDictionary<string, object> typeCache = new ConcurrentDictionary<string, object>();
+        ConcurrentDictionary<string, object> namespaceCache = new ConcurrentDictionary<string, object>();
 
 
         public ReactInterop(IJavaScriptEngine engine)
