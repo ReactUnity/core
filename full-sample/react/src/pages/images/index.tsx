@@ -153,7 +153,7 @@ export function ImagesPage() {
               renderCamera.transform.Translate(
                 0,
                 0,
-                Math.fround(ev.scrollDelta.y / 10),
+                Math.fround(ev.scrollDelta.y * 10),
                 Interop.UnityEngine.Space.Self
               );
             }}
