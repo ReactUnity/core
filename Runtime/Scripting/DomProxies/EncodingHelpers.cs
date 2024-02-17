@@ -10,6 +10,7 @@ namespace ReactUnity
 
         public static string encodeURI(string input)
         {
+            if (input == null) return "";
             var len = input.Length;
             if (len < EscapeLimit) return Uri.EscapeUriString(input);
 
@@ -24,11 +25,13 @@ namespace ReactUnity
 
         public static string decodeURI(string input)
         {
+            if (input == null) return "";
             return Uri.UnescapeDataString(input);
         }
 
         public static string encodeURIComponent(string input)
         {
+            if (input == null) return "";
             var len = input.Length;
             if (len < EscapeLimit) return Uri.EscapeDataString(input);
 
@@ -43,6 +46,7 @@ namespace ReactUnity
 
         public static string decodeURIComponent(string input)
         {
+            if (input == null) return "";
             return Uri.UnescapeDataString(input);
         }
     }
