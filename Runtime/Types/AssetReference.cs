@@ -30,6 +30,19 @@ namespace ReactUnity.Types
     {
         private static Dictionary<object, UnityWebRequest> WebCache = new Dictionary<object, UnityWebRequest>();
 
+
+#if UNITY_EDITOR
+        static AssetReference()
+        {
+            UnityEditor.EditorApplication.playModeStateChanged += PlayStateChanged;
+        }
+
+        private static void PlayStateChanged(UnityEditor.PlayModeStateChange obj)
+        {
+            WebCache.Clear();
+        }
+#endif
+
         public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
         private static Regex HttpRegex = new Regex("^https?://");
         private static Regex FileRegex = new Regex("^file:");
@@ -184,12 +197,19 @@ namespace ReactUnity.Types
         {
             if (WebCache.TryGetValue(Value, out var req))
             {
-                if (req.downloadHandler.isDone && req.downloadHandler.data == null)
+                // Check if data is disposed or if there are other errors
+
+                var dh = req.downloadHandler;
+                try
                 {
-                    // Data was disposed
+                    if (!dh.nativeData.IsCreated || (dh.isDone && dh.data == null))
+                        WebCache.Remove(Value);
+                    else return req;
+                }
+                catch
+                {
                     WebCache.Remove(Value);
                 }
-                else return req;
             }
 
             var url = realValue as string;
