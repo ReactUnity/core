@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using QuickJS;
 using QuickJS.Experimental;
 using QuickJS.Native;
@@ -20,6 +21,7 @@ namespace ReactUnity.Scripting
 
         private ScriptFunction createDictionaryProxy;
         private ScriptFunction createListProxy;
+        private ScriptFunction createTaskProxy;
 
         public JSPayloadHeader GetPayloadHeader(QScriptContext context, JSValue val)
         {
@@ -68,6 +70,10 @@ namespace ReactUnity.Scripting
                 {
                     proxy = CreateListProxy(context, val);
                 }
+                else if (typeof(Task).IsAssignableFrom(o.GetType()) || typeof(ValueTask).IsAssignableFrom(o.GetType()))
+                {
+                    proxy = CreateTaskProxy(context, val);
+                }
 
                 if (!proxy.IsUndefined())
                 {
@@ -109,6 +115,13 @@ namespace ReactUnity.Scripting
         {
             var creator = createListProxy ??
                 (createListProxy = CreateListProxyCreator(context));
+            return UseProxyCreator(context, target, creator);
+        }
+
+        private JSValue CreateTaskProxy(QScriptContext context, JSValue target)
+        {
+            var creator = createTaskProxy ??
+                (createTaskProxy = CreateTaskProxyCreator(context));
             return UseProxyCreator(context, target, creator);
         }
 
@@ -425,12 +438,88 @@ createListProxyCreator;
             return proxy;
         }
 
+        private static unsafe ScriptFunction CreateTaskProxyCreator(QScriptContext _context)
+        {
+            var ctx = (JSContext) _context;
+
+            var proxyCreator = _context.EvalSource<ScriptFunction>(@"
+function createTaskProxyCreator (thenFn) {
+    return function createTaskProxy(targetProxy) {
+        let promise = null;
+        function asPromise() {
+            if(!promise) promise = new Promise((rs, rj) => thenFn(targetProxy, rs, rj));
+            return promise;
+        }
+
+        const res = new Proxy(targetProxy, {
+            get(target, key, receiver) {
+                if(key === '" + KeyForCSharpIdentity + @"') return target;
+
+                if(key === 'then') return function thenProxy (resolve, reject) {
+                    return asPromise().then(resolve, reject);
+                };
+
+                if(key === 'catch') return function catchProxy (reject) {
+                    return asPromise().catch(reject);
+                };
+
+                if(key === 'finally') return function finallyProxy (settle) {
+                    return asPromise().finally(settle);
+                };
+
+                return target[key];
+            },
+        });
+
+        const originalPrototype = Object.getPrototypeOf(targetProxy);
+
+        const prototypeProxy = new Proxy(originalPrototype, {
+            get(target, key, receiver) {
+                if(key in target) return target[key];
+                return Promise.prototype[key];
+            }
+        });
+
+        Object.setPrototypeOf(res, prototypeProxy);
+
+        return res;
+    };
+}
+createTaskProxyCreator;
+", "ReactUnity/quickjs/createTaskProxy");
+
+            var then = new Action<object, Action<object>, Action<object>>(
+                (obj, resolve, reject) => {
+                    var task = obj is ValueTask vt ? vt.AsTask() : obj as Task;
+                    var awaiter = task.GetAwaiter();
+                    awaiter.OnCompleted(() => {
+                        if (task.IsFaulted) reject(task.Exception.InnerException);
+                        else
+                        {
+                            var result = task.GetType().GetProperty("Result")?.GetValue(task);
+                            resolve(result);
+                        }
+                    });
+                });
+
+            var prs = new object[] { then };
+
+
+            var proxy = proxyCreator.Invoke<ScriptFunction>(prs);
+
+            proxyCreator.Dispose();
+
+            return proxy;
+        }
+
         public void Dispose()
         {
             createDictionaryProxy?.Dispose();
             createDictionaryProxy = null;
             createListProxy?.Dispose();
             createListProxy = null;
+            createTaskProxy?.Dispose();
+            createTaskProxy = null;
         }
     }
 }

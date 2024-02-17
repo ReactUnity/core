@@ -171,6 +171,11 @@ namespace ReactUnity.Tests.Editor
             function App() {  };
 
             (async function() {
+                await Globals.task0;
+                Globals.task0Done = true;
+            })();
+
+            (async function() {
                 await Globals.task1;
                 Globals.task1Done = true;
             })();
@@ -193,43 +198,76 @@ namespace ReactUnity.Tests.Editor
                 Globals.task3Done = true;
                 Assert.True(failed);
             })();
+
+            (async function() {
+                const res = await Globals.task4;
+                Assert.AreEqual(7, res);
+                Globals.task4Done = true;
+            })();
         ", AutoRender = false)]
-        [Ignore("Not implemented")]
         public IEnumerator TasksCanBeUsedNaturally()
         {
+            IgnoreForEngine(JavascriptEngineType.Jint);
+
+            var t0 = Task.CompletedTask;
             var t1 = new TaskCompletionSource<int>();
             var t2 = new TaskCompletionSource<int>();
             var t3 = new TaskCompletionSource<int>();
+            var t4 = new TaskCompletionSource<int>();
+            var valueTask = new ValueTask(t4.Task);
 
+            Globals["task0"] = t0;
             Globals["task1"] = t1.Task;
             Globals["task2"] = t2.Task;
             Globals["task3"] = t3.Task;
+            Globals["task4"] = valueTask;
 
+            Globals["task0Done"] = false;
             Globals["task1Done"] = false;
             Globals["task2Done"] = false;
             Globals["task3Done"] = false;
+            Globals["task4Done"] = false;
 
             Render();
 
             yield return null;
+            yield return null;
 
+            Assert.True((bool) Globals["task0Done"]);
             Assert.False((bool) Globals["task1Done"]);
             Assert.False((bool) Globals["task2Done"]);
             Assert.False((bool) Globals["task3Done"]);
+            Assert.False((bool) Globals["task4Done"]);
 
             t1.SetResult(0);
+            t1.Task.Wait();
             yield return null;
             Assert.True((bool) Globals["task1Done"]);
 
 
             t2.SetResult(3);
+            t2.Task.Wait();
             yield return null;
             Assert.True((bool) Globals["task2Done"]);
 
 
-            t3.SetException(new Exception("fall"));
-            yield return null;
-            Assert.True((bool) Globals["task3Done"]);
+            if (EngineType != JavascriptEngineType.ClearScript)
+            {
+                // Doesn't work for ClearScript for some reason
+
+                t3.SetException(new Exception("fall"));
+                try { t3.Task.Wait(); } catch { }
+                yield return null;
+                Assert.True((bool) Globals["task3Done"]);
+
+
+                // Value tasks aren't supported in ClearScript
+
+                t4.SetResult(7);
+                t4.Task.Wait();
+                yield return null;
+                Assert.True((bool) Globals["task4Done"]);
+            }
         }
     }
 }
