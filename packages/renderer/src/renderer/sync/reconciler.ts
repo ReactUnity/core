@@ -1,4 +1,4 @@
-import * as Reconciler from 'react-reconciler';
+import Reconciler from 'react-reconciler';
 import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
   NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload

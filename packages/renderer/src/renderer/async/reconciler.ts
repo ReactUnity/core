@@ -1,4 +1,4 @@
-import * as Reconciler from 'react-reconciler';
+import Reconciler from 'react-reconciler';
 import { commonReconciler, getAllowedProps, stringizePoolKey, textTypes } from '../constants';
 import { diffProperties } from '../diffing';
 import { subContextRenderers } from '../subcontexts';

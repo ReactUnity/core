@@ -1,4 +1,4 @@
-import * as Reconciler from 'react-reconciler';
+import type Reconciler from 'react-reconciler';
 import { ReactUnity } from '../../models/generated';
 import {
   ChildSet, HydratableInstance, InstanceTag, NoTimeout, Props, TimeoutHandle, UpdatePayload
