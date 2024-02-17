@@ -6097,7 +6097,7 @@ if (true) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/css-loader/dist/runtime/noSourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
@@ -6450,7 +6450,8 @@ var react = __webpack_require__("../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.16.4';
+var version = '0.16.6';
+//# sourceMappingURL=version.js.map
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/error-boundary.js
@@ -6522,6 +6523,7 @@ var ErrorBoundary = /** @class */function (_super) {
   return ErrorBoundary;
 }(react.Component);
 
+//# sourceMappingURL=error-boundary.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/views/default-view.js
 
 
@@ -6535,6 +6537,7 @@ function DefaultView(_a) {
     }, renderCount)
   });
 }
+//# sourceMappingURL=default-view.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/async/objects.js
 var ObjectsRepo = /** @class */function () {
   function ObjectsRepo() {
@@ -6565,6 +6568,7 @@ var ObjectsRepo = /** @class */function () {
   return ObjectsRepo;
 }();
 
+//# sourceMappingURL=objects.js.map
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__("../../node_modules/react-reconciler/index.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/diffing.js
@@ -6640,6 +6644,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
   }
   return updatePayload;
 }
+//# sourceMappingURL=diffing.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/constants.js
 var __rest = undefined && undefined.__rest || function (s, e) {
   var t = {};
@@ -6722,6 +6727,7 @@ var commonReconciler = {
   prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
 };
 var isDevelopment = "production" === 'development';
+//# sourceMappingURL=constants.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/richtext.js
 function parametrizeValue(value) {
   if (typeof value === 'number') return value + '';
@@ -6770,6 +6776,7 @@ function stringifyRichText(node) {
   }
   return acc.join('');
 }
+//# sourceMappingURL=richtext.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/svg.js
 function kebabize(str) {
   return str.split('').map(function (letter, idx) {
@@ -6832,6 +6839,7 @@ function stringifySVG(node) {
   }
   return acc.join('');
 }
+//# sourceMappingURL=svg.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/subcontexts/index.js
 
 
@@ -6839,6 +6847,7 @@ var subContextRenderers = {
   richtext: stringifyRichText,
   svg: stringifySVG
 };
+//# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -6892,6 +6901,7 @@ var CallbacksRepo = /** @class */function (_super) {
   return CallbacksRepo;
 }(ObjectsRepo);
 
+//# sourceMappingURL=callbacks.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/async/serializer.js
 
 
@@ -6920,6 +6930,7 @@ function convertPropsToSerializable(props) {
   }
   return res;
 }
+//# sourceMappingURL=serializer.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/async/reconciler.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -7136,9 +7147,7 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
       // instance.commands.push(['x', { r: instance.refId, c: newText }]);
       instance.commands.push([6, instance.refId, newText]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node = {
-        text: newText
-      };
+      instance.node.text = newText;
       updateSubContext(instance);
     }
   },
@@ -7242,6 +7251,7 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   }
 });
 var asyncReconciler = react_reconciler(hostConfig);
+//# sourceMappingURL=reconciler.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/sync/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
@@ -7352,6 +7362,7 @@ var reconciler_hostConfig = reconciler_assign(reconciler_assign({}, commonReconc
   }
 });
 var syncReconciler = react_reconciler(reconciler_hostConfig);
+//# sourceMappingURL=reconciler.js.map
 ;// CONCATENATED MODULE: ../../renderer/dist/src/renderer/renderer.js
 
 
@@ -7464,6 +7475,7 @@ var Renderer = {
 };
 var batchedUpdates = asyncReconciler.batchedUpdates;
 var flushSync = asyncReconciler.flushSync;
+//# sourceMappingURL=renderer.js.map
 ;// CONCATENATED MODULE: ./src/assets/base64Image.txt
 /* harmony default export */ const base64Image = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAcElEQVR4AezOsREAIAjFUAs3dgAGYkj8C3g2oBTJXfo3iD419dJ2eOn5EuM6LnsFynQkb4AKQP2zlBOLpAEBAgQIECBAgAA1Au29p6aDrlPBQd3UdJA7yIcUho4KA5UBBxDHk9GwzwdiGQY6gVEwCgC3bcAZ+oXojwAAAABJRU5ErkJggg==\n");
 ;// CONCATENATED MODULE: ./src/assets/bg.png
@@ -7537,12 +7549,12 @@ options.setAttributes = (setAttributesWithoutAttributes_default());
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, options);
+var update = injectStylesIntoStyleTag_default()(index_module/* default */.A, options);
 
 
 
 
-       /* harmony default export */ const home_index_module = (index_module/* default */.Z && index_module/* default */.Z.locals ? index_module/* default */.Z.locals : undefined);
+       /* harmony default export */ const home_index_module = (index_module/* default */.A && index_module/* default */.A.locals ? index_module/* default */.A.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/uitoolkit/home/index.tsx
 /* @jsxImportSource @reactunity/renderer/uitoolkit */var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';function App(){return (0,jsx_runtime.jsx)("scroll",{children:(0,jsx_runtime.jsxs)("view",{className:home_index_module.app,children:[(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),(0,jsx_runtime.jsx)(ForwardRef,{}),(0,jsx_runtime.jsx)("svg",{source:check}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/betterplace.svg'}),(0,jsx_runtime.jsx)("svg",{source:'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/compuserver_msn_Ford_Focus.svg'}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Button"}),(0,jsx_runtime.jsx)("button",{className:home_index_module.clickButton,children:"Click"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Input"}),(0,jsx_runtime.jsx)("input",{})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),(0,jsx_runtime.jsxs)("section",{children:[(0,jsx_runtime.jsx)("h2",{children:"Image"}),(0,jsx_runtime.jsxs)("row",{children:[(0,jsx_runtime.jsx)("image",{source:bg_namespaceObject}),(0,jsx_runtime.jsx)("image",{source:base64Image}),(0,jsx_runtime.jsx)("image",{source:webImage})]})]})]})});};_render((0,jsx_runtime.jsx)(App,{}));

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = styled.button<{ toggled?: boolean }>`
+const Button = styled.button<{ $toggled?: boolean }>`
   /* This renders the buttons above... Edit me! */
   display: inline-block;
   border-radius: 3px;
@@ -12,7 +12,7 @@ const Button = styled.button<{ toggled?: boolean }>`
   color: black;
   border: 2px solid black;
 
-  ${props => props.toggled && css`
+  ${props => props.$toggled && css`
     background: white;
     color: black;
   `}
@@ -24,7 +24,7 @@ export function StyledComponentsPage() {
 
   return <>
     <div>
-      <Button toggled={toggled} onClick={() => setToggled(x => !x)}>Styled Button</Button>
+      <Button $toggled={toggled} onClick={() => setToggled(x => !x)}>Styled Button</Button>
     </div>
   </>;
 }

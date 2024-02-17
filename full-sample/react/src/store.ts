@@ -1,4 +1,4 @@
-import { Action, configureStore, createSlice, getDefaultMiddleware, ThunkAction } from '@reduxjs/toolkit';
+import { Action, configureStore, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, PersistConfig, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 const persistConfig: PersistConfig<{ count: number }> = {
@@ -37,7 +37,8 @@ export const store = configureStore({
   reducer: {
     counter,
   },
-  middleware: getDefaultMiddleware({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },

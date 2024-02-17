@@ -800,10 +800,10 @@ MonoBehaviour:
     SourcePath: react/index
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 1
+    UseDevServer: 0
     DevServer: http://localhost:3100
   EngineType: 0
-  Globals:
+  globals:
     Entries:
     - Key: renderCamera
       Value: {fileID: 315642566}

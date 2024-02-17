@@ -57,6 +57,8 @@ build/
 
 # dotenv environment variables file
 # .env
+.env.local
+.env.*.local
 
 # Typescript v1 declaration files
 # typings/
