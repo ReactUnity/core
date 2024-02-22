@@ -28,6 +28,8 @@ namespace ReactUnity.Scripting
         public bool Debug { get; set; }
         public bool AwaitDebugger { get; set; }
 
+
+        public EventTarget GlobalEventTarget { get; } = new EventTarget();
         public ReactUnityWebGLCompat WebGLCompat { get; } = new ReactUnityWebGLCompat();
         private Callback WebGLCompatDispatchEventCallback { get; set; }
 
@@ -50,11 +52,11 @@ namespace ReactUnity.Scripting
                 var beforeStartCallbacks = new List<Action>() { beforeStart };
                 var afterStartCallbacks = new List<Action<Exception>>() { (success) => afterStart?.Invoke() };
 
-                engine.SetGlobal("addEventListener", new Action<string, object>((e, f) => {
-                    var callback = Callback.From(f, Context);
-                    if (e == "DOMContentLoaded")
-                        afterStartCallbacks.Add((success) => callback.CallWithPriority(EventPriority.Discrete, success, this));
-                }));
+                engine.SetGlobal("addEventListener", new EventTarget.addEventListener((e, h, o) => GlobalEventTarget.AddEventListener(e, h)));
+                engine.SetGlobal("removeEventListener", new EventTarget.removeEventListener((e, h, o) => GlobalEventTarget.RemoveEventListener(e, h)));
+                engine.SetGlobal("dispatchEvent", new EventTarget.dispatchEvent((e, a) => GlobalEventTarget.DispatchEvent(e, Context, EventPriority.Unknown, a)));
+
+                afterStartCallbacks.Add((success) => GlobalEventTarget.DispatchEvent("DOMContentLoaded", Context, EventPriority.Discrete, success, this));
 
                 beforeStartCallbacks.ForEach(x => x?.Invoke());
                 var error = engine.TryExecute(script, "ReactUnity/main");
@@ -131,6 +133,14 @@ namespace ReactUnity.Scripting
         public object EvaluateScript(string code, string fileName = null)
         {
             return Engine.Evaluate(code, fileName);
+        }
+
+        public object AsArray(System.Collections.IList obj)
+        {
+            Engine.SetGlobal("__host_temp__", obj);
+            var res = EvaluateScript("[...__host_temp__]");
+            Engine.DeleteGlobal("__host_temp__");
+            return res;
         }
 
         public Callback CreateEventCallback(string code, object thisVal)

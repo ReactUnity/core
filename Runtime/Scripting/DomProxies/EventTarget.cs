@@ -11,6 +11,10 @@ namespace ReactUnity.Scripting.DomProxies
         protected Dictionary<string, List<object>> HandlerLists = new Dictionary<string, List<object>>();
         protected Dictionary<string, object> SingleHandlers = new Dictionary<string, object>();
 
+        public delegate Action addEventListener(string eventName, object value, object options = null);
+        public delegate void removeEventListener(string eventName, object value, object options = null);
+        public delegate void dispatchEvent(string eventName, object[] arguments);
+
         public void SetEventListener(string eventName, object fun)
         {
             if (SingleHandlers.TryGetValue(eventName, out var remover))
@@ -60,11 +64,11 @@ namespace ReactUnity.Scripting.DomProxies
                 list.Remove(fun);
         }
 
-        public void DispatchEvent(string eventName, ReactContext context, params object[] arguments)
+        public void DispatchEvent(string eventName, ReactContext context, EventPriority priority = EventPriority.Unknown, params object[] arguments)
         {
             var handlers = GetAllEventListeners(eventName);
             foreach (var loadHandler in handlers)
-                Callback.From(loadHandler, context).Call(arguments);
+                Callback.From(loadHandler, context).CallWithPriority(priority, arguments);
         }
     }
 }

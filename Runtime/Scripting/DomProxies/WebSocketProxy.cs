@@ -70,7 +70,7 @@ namespace ReactUnity.Scripting.DomProxies
 
                 var arg = new { data = System.Text.Encoding.UTF8.GetString(rawData).TrimEnd('\0') };
                 context.Dispatcher.OnceUpdate(() =>
-                    eventTarget.DispatchEvent("message", context, arg));
+                    eventTarget.DispatchEvent("message", context, EventPriority.Unknown, arg));
             };
 
             socket.OnError += (message) => {
@@ -78,7 +78,7 @@ namespace ReactUnity.Scripting.DomProxies
 
                 var arg = new { message };
                 context.Dispatcher.OnceUpdate(() =>
-                    eventTarget.DispatchEvent("error", context, arg));
+                    eventTarget.DispatchEvent("error", context, EventPriority.Unknown, arg));
             };
 
             socket.OnClose += (code, reason) => {
@@ -86,7 +86,7 @@ namespace ReactUnity.Scripting.DomProxies
 
                 var arg = new { code = (int) code, reason };
                 context.Dispatcher.OnceUpdate(() =>
-                    eventTarget.DispatchEvent("close", context, arg));
+                    eventTarget.DispatchEvent("close", context, EventPriority.Unknown, arg));
             };
 
             socket.Connect();

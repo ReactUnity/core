@@ -45,7 +45,8 @@ namespace ReactUnity.Scripting.DomProxies
         public object querySelectorAll(string query)
         {
             if (query == "head") return new List<object> { head };
-            return Context.Host.QuerySelectorAll(query);
+
+            return Context.Script.AsArray(Context.Host.QuerySelectorAll(query));
         }
 
         public object getElementById(string id)
