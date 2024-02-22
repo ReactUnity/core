@@ -121,17 +121,17 @@ namespace ReactUnity.Scripting
             return res;
         }
 
-        public void Execute(string code, string fileName = null)
+        public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             var voidedCode = code + "\n;;void 0;";
             Evaluate(voidedCode, fileName);
         }
 
-        public Exception TryExecute(string code, string fileName = null)
+        public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             try
             {
-                Execute(code, fileName);
+                Execute(code, fileName, documentType);
             }
             catch (Exception ex)
             {

@@ -50,14 +50,20 @@ namespace ReactUnity.Scripting
         QuickJS = 3,
     }
 
+    public enum JavascriptDocumentType
+    {
+        Script = 0,
+        Module = 1,
+    }
+
     public interface IJavaScriptEngine : IDisposable
     {
         string Key { get; }
         object NativeEngine { get; }
         EngineCapabilities Capabilities { get; }
 
-        void Execute(string code, string fileName = null);
-        Exception TryExecute(string code, string fileName = null);
+        void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script);
+        Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script);
         object Evaluate(string code, string fileName = null);
 
         object GetGlobal(string key);

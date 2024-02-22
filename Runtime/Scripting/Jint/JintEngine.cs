@@ -58,16 +58,16 @@ namespace ReactUnity.Scripting
             return Engine.TypeConverter.Convert(Engine.Evaluate(code), typeof(object), CultureInfo.InvariantCulture);
         }
 
-        public void Execute(string code, string fileName = null)
+        public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             Engine.Execute(code);
         }
 
-        public Exception TryExecute(string code, string fileName = null)
+        public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             try
             {
-                Execute(code, fileName);
+                Execute(code, fileName, documentType);
             }
             catch (ParserException ex)
             {

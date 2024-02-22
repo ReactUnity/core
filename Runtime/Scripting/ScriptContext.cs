@@ -123,9 +123,9 @@ namespace ReactUnity.Scripting
             return Engine.Evaluate(str);
         }
 
-        public void ExecuteScript(string code, string fileName = null)
+        public void ExecuteScript(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
-            Engine.Execute(code, fileName);
+            Engine.Execute(code, fileName, documentType);
         }
 
         public object EvaluateScript(string code, string fileName = null)

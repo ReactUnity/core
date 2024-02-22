@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.ClearScript;
+using Microsoft.ClearScript.JavaScript;
 using Microsoft.ClearScript.V8;
 using ReactUnity.Helpers;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace ReactUnity.Scripting
 
         private const string tempKey = "__$__temp_key__$__";
 
+        public V8Runtime Runtime { get; private set; }
         public V8ScriptEngine Engine { get; private set; }
         public object NativeEngine => Engine;
         private bool ShouldAwait = false;
@@ -50,7 +52,14 @@ namespace ReactUnity.Scripting
                 Application.dataPath + "/Plugins;" +
                 Application.dataPath + $"/Plugins/{GetPluginFolder()}";
 
-            Engine = new V8ScriptEngine(
+            var runtimeFlags = V8RuntimeFlags.EnableDynamicModuleImports |
+                (debug ? (V8RuntimeFlags.EnableDebugging | V8RuntimeFlags.EnableRemoteDebugging) : V8RuntimeFlags.None);
+
+            Runtime = new V8Runtime("ReactUnityRuntime", runtimeFlags, 9222);
+
+            Runtime.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableAllLoading;
+
+            Engine = Runtime.CreateScriptEngine(
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |
                 V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt |
                 V8ScriptEngineFlags.DisableGlobalMembers |
@@ -77,6 +86,7 @@ namespace ReactUnity.Scripting
             Engine.ExposeHostObjectStaticMembers = true;
             Engine.UseReflectionBindFallback = true;
             Engine.EnableNullResultWrapping = false;
+            Engine.DocumentSettings = Runtime.DocumentSettings;
 
             ShouldAwait = debug && awaitDebugger;
 
@@ -88,20 +98,21 @@ namespace ReactUnity.Scripting
             return Engine.Evaluate(AddFilenameExtension(fileName), fileName == null, code);
         }
 
-        public void Execute(string code, string fileName = null)
+        public void Execute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             var isMainFile = fileName == "ReactUnity/main";
 
-            Uri remoteUrl;
+            var remoteUrl = !isMainFile ? null : Context.Source.GetRemoteUrl();
 
-            var document = isMainFile &&
-                (remoteUrl = Context.Source.GetRemoteUrl()) != null ?
-                new DocumentInfo(remoteUrl) :
-                new DocumentInfo(AddFilenameExtension(fileName));
+            var category = documentType == JavascriptDocumentType.Module ? ModuleCategory.Standard : null;
 
-            document.Flags =
+            var flags =
                 (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
                 (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None);
+
+            var document = remoteUrl != null ?
+                new DocumentInfo(remoteUrl) { Category = category, Flags = flags } :
+                new DocumentInfo(AddFilenameExtension(fileName)) { Category = category, Flags = flags };
 
             if (ShouldAwait && isMainFile)
             {
@@ -143,11 +154,11 @@ namespace ReactUnity.Scripting
             return fileName;
         }
 
-        public Exception TryExecute(string code, string fileName = null)
+        public Exception TryExecute(string code, string fileName = null, JavascriptDocumentType documentType = JavascriptDocumentType.Script)
         {
             try
             {
-                Execute(code, fileName);
+                Execute(code, fileName, documentType);
             }
             catch (Exception ex)
             {
@@ -226,6 +237,8 @@ namespace ReactUnity.Scripting
             Engine?.CollectGarbage(true);
             Engine?.Dispose();
             Engine = null;
+            Runtime?.Dispose();
+            Runtime = null;
         }
 
         public IEnumerable<object> TraverseScriptArray(object obj)
