@@ -95,7 +95,7 @@ namespace ReactUnity.Scripting
                         global.getComputedStyle = function getComputedStyle () { return {}; };
 
                         // Required for styled-components
-                        global.HTMLElement = {};
+                        global.HTMLElement = function HTMLElement() {};
                         void 0;
 
                         global.dispatchWebGLCompatEvent = function dispatchWebGLCompatEvent (name, args) {
@@ -233,8 +233,13 @@ namespace ReactUnity.Scripting
             {
                 engine.SetGlobal("__WebSocketOriginal", typeof(WebSocketProxy));
                 engine.Execute(@"
-                    global.WebSocket = function(url) {
-                        return new global.__WebSocketOriginal(Context, url);
+                    global.WebSocket = function(url, protocols) {
+                        protocols = protocols || [];
+                        if(typeof protocols === 'string') protocols = [protocols];
+                        if(!Array.isArray(protocols)) protocols = [];
+                        protocols = protocols.map(x => String(x));
+
+                        return new global.__WebSocketOriginal(Context, url, protocols.join(','));
                     }",
                     "ReactUnity/shims/websocket"
                 );

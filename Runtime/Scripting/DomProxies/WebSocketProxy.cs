@@ -46,11 +46,15 @@ namespace ReactUnity.Scripting.DomProxies
 
         private EventTarget eventTarget = new EventTarget();
 
-        public WebSocketProxy(ReactContext context, string url)
+        public WebSocketProxy(ReactContext context, string url) : this(context, url, new string[0]) { }
+
+        public WebSocketProxy(ReactContext context, string url, string protocol) : this(context, url, protocol == null ? new string[0] : protocol.Split(',')) { }
+
+        public WebSocketProxy(ReactContext context, string url, params string[] protocols)
         {
             this.url = url;
             this.context = context;
-            socket = WebSocketFactory.CreateInstance(url);
+            socket = WebSocketFactory.CreateInstance(url, protocols);
             context.Disposables.Add(Dispose);
 
             socket.OnOpen += () => {
@@ -88,8 +92,6 @@ namespace ReactUnity.Scripting.DomProxies
             socket.Connect();
         }
 
-        public WebSocketProxy(ReactContext context, string url, params string[] protocols) : this(context, url) { }
-
         public void close(int? code = null, string reason = null)
         {
             if (socket.GetState() == WebSocketState.Closing || socket.GetState() == WebSocketState.Closed) return;
@@ -114,12 +116,13 @@ namespace ReactUnity.Scripting.DomProxies
             context = null;
         }
 
-        public void addEventListener(string eventType, object callback, bool capture = false)
+        public void addEventListener(string eventType, object callback, object options = null)
         {
+            // TODO: handle options
             eventTarget.AddEventListener(eventType, callback);
         }
 
-        public void removeEventListener(string eventType, object callback, bool capture = false)
+        public void removeEventListener(string eventType, object callback, object options = null)
         {
             eventTarget.RemoveEventListener(eventType, callback);
         }

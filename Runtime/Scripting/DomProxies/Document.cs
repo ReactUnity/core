@@ -296,6 +296,11 @@ namespace ReactUnity.Scripting.DomProxies
 
             if (enabled) ProcessNodes();
         }
+
+        public void insertAdjacentElement(string pos, IDomElementProxy style)
+        {
+            parentNode.appendChild(style);
+        }
     }
 
     public class LinkProxy : DomElementProxyBase, IDomElementProxy

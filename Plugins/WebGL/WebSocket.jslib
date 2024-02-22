@@ -83,13 +83,15 @@ var LibraryWebSocket = {
    *
    * @param url Server URL
    */
-  WebSocketAllocate: function (url) {
+  WebSocketAllocate: function (url, protocols) {
 
     var urlStr = webSocketState.stringify(url);
+    var protocolsStr = webSocketState.stringify(protocols);
     var id = webSocketState.lastId++;
 
     webSocketState.instances[id] = {
       url: urlStr,
+      protocols: protocolsStr,
       ws: null
     };
 
@@ -135,7 +137,7 @@ var LibraryWebSocket = {
     if (instance.ws !== null)
       return -2;
 
-    instance.ws = new WebSocket(instance.url);
+    instance.ws = new WebSocket(instance.url, instance.protocols ? instance.protocols.split(',') : []);
 
     instance.ws.binaryType = 'arraybuffer';
 
