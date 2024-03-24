@@ -44,6 +44,10 @@
           "sectionHeader": "Misc"
         },
         {
+          "title": "Showcase",
+          "path": "/learn/misc/showcase"
+        },
+        {
           "title": "Sponsors & Donations",
           "path": "/learn/misc/sponsors"
         },
