@@ -29,7 +29,7 @@ namespace ReactUnity.UIToolkit
         public bool Debug = false;
         public bool AwaitDebugger = false;
 
-        public ReactAdvancedOptions AdvancedOptions { get; set; }
+        public ReactAdvancedOptions AdvancedOptions { get; set; } = new ReactAdvancedOptions();
 
 
         public ReactUnityElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true, ReactAdvancedOptions advancedOptions = null)
@@ -41,7 +41,7 @@ namespace ReactUnity.UIToolkit
             Debug = debug;
             Timer = timer;
             AwaitDebugger = awaitDebugger;
-            AdvancedOptions = advancedOptions;
+            AdvancedOptions = advancedOptions ?? AdvancedOptions;
             AddToClassList("react-unity__host");
             if (autorun) Run();
         }
