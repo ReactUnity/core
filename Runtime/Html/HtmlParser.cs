@@ -16,6 +16,10 @@ namespace ReactUnity.Html
         {
             var doc = new XmlDocument();
             doc.LoadXml("<root />");
+
+
+            html = html.Replace("&", "&amp;");
+
             doc.DocumentElement.InnerXml = html;
 
             foreach (XmlNode node in doc.DocumentElement)
