@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.JavaScript;
 using Microsoft.ClearScript.V8;
@@ -58,6 +59,8 @@ namespace ReactUnity.Scripting
             Runtime = new V8Runtime("ReactUnityRuntime", runtimeFlags, 9222);
 
             Runtime.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableAllLoading;
+            Runtime.DocumentSettings.Loader = new DocumentLoader(context);
+            Runtime.DocumentSettings.ContextCallback = DocumentContextCallback;
 
             Engine = Runtime.CreateScriptEngine(
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |
@@ -110,9 +113,11 @@ namespace ReactUnity.Scripting
                 (fileName == null ? DocumentFlags.IsTransient : DocumentFlags.None) |
                 (isMainFile && ShouldAwait ? DocumentFlags.AwaitDebuggerAndPause : DocumentFlags.None);
 
-            var document = remoteUrl != null ?
-                new DocumentInfo(remoteUrl) { Category = category, Flags = flags } :
-                new DocumentInfo(AddFilenameExtension(fileName)) { Category = category, Flags = flags };
+            var hasUri = Uri.TryCreate(fileName, UriKind.RelativeOrAbsolute, out var url);
+
+            var document = remoteUrl != null || hasUri ?
+                new DocumentInfo(remoteUrl ?? url) { Category = category, Flags = flags, ContextCallback = DocumentContextCallback } :
+                new DocumentInfo(fileName) { Category = category, Flags = flags, ContextCallback = DocumentContextCallback };
 
             if (ShouldAwait && isMainFile)
             {
@@ -283,6 +288,38 @@ namespace ReactUnity.Scripting
         }
 
         public void Update() { }
+
+        public static IDictionary<string, object> DocumentContextCallback(DocumentInfo info)
+        {
+            return new Dictionary<string, object>{
+                { "url", info.Uri.ToString() }
+            };
+        }
+
+        public class DocumentLoader : DefaultDocumentLoader
+        {
+            ReactContext Context { get; set; }
+
+            public DocumentLoader(ReactContext ctx)
+            {
+                Context = ctx;
+            }
+
+            public override Task<Document> LoadDocumentAsync(DocumentSettings settings, DocumentInfo? sourceInfo, string specifier, DocumentCategory category, DocumentContextCallback contextCallback)
+            {
+                if (!specifier.StartsWith("http"))
+                {
+                    specifier = Context.ResolvePath(specifier);
+                    if (sourceInfo.HasValue) sourceInfo = new DocumentInfo(new Uri(specifier))
+                    {
+                        Category = category,
+                        ContextCallback = (di) => DocumentContextCallback((DocumentInfo) sourceInfo),
+                    };
+                }
+                return base.LoadDocumentAsync(settings, sourceInfo, specifier, category, contextCallback);
+            }
+        }
+
     }
 
     public class ClearScriptEngineFactory : IJavaScriptEngineFactory
