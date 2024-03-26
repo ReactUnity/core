@@ -48,7 +48,7 @@ namespace ReactUnity.Scripting.DomProxies
 
         public WebSocketProxy(ReactContext context, string url) : this(context, url, new string[0]) { }
 
-        public WebSocketProxy(ReactContext context, string url, string protocol) : this(context, url, protocol == null ? new string[0] : protocol.Split(',')) { }
+        public WebSocketProxy(ReactContext context, string url, string protocol) : this(context, url, string.IsNullOrEmpty(protocol) ? new string[0] : protocol.Split(',')) { }
 
         public WebSocketProxy(ReactContext context, string url, params string[] protocols)
         {

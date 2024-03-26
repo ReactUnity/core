@@ -7,6 +7,7 @@ namespace ReactUnity.Scripting
     public class ScriptComponent : SourceProxyComponent
     {
         public JavascriptDocumentType Type = JavascriptDocumentType.Script;
+        public string Url = null;
 
         public ScriptComponent(ReactContext ctx, string tag = "script", string text = null) : base(ctx, tag)
         {
@@ -24,7 +25,10 @@ namespace ReactUnity.Scripting
             if (string.IsNullOrWhiteSpace(ResolvedContent)) return;
             try
             {
-                Context.Script.ExecuteScript(ResolvedContent, "ReactUnity/scripts/" + (String.IsNullOrWhiteSpace(Name) ? "anonymous" : Name), Type);
+                var url = Url ??
+                    (Type == JavascriptDocumentType.Module ? Context.Source.GetResolvedSourceUrl() :
+                    ("ReactUnity/scripts/" + (string.IsNullOrWhiteSpace(Name) ? "anonymous" : Name)));
+                Context.Script.ExecuteScript(ResolvedContent, url, Type);
             }
             catch (Exception ex)
             {
@@ -42,7 +46,12 @@ namespace ReactUnity.Scripting
 
         public override void SetProperty(string propertyName, object value)
         {
-            if (propertyName == "type") Type = AllConverters.Get<JavascriptDocumentType>().TryGetConstantValue(value, JavascriptDocumentType.Script);
+            if ((propertyName == "source" || propertyName == "src") && value is string s) Url = Context.ResolvePath(s);
+
+            if (propertyName == "type")
+            {
+                Type = AllConverters.Get<JavascriptDocumentType>().TryGetConstantValue(value, JavascriptDocumentType.Script);
+            }
             else base.SetProperty(propertyName, value);
         }
     }
