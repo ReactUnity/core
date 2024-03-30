@@ -3,7 +3,7 @@ title: <image>
 layout: API
 ---
 
-`<image>` creates an image component. Alternatively, `<rawimage>` creates a raw image component and `<svg>` creates a svg image component (requires `Unity.VectorGraphics` package).
+`<image>` creates an image component. Alternatively, `<rawimage>` creates a raw image component and `<svgimage>` creates a svg image component (requires `Unity.VectorGraphics` package).
 
 <Sandpack>
 

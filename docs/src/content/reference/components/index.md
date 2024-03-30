@@ -13,11 +13,17 @@ This page lists the Components supported by ReactUnity in alphabetical order.
 - icon
 - image
 - input
+- prefab
+- portal
+- object
 - rawimage
 - render
+- richtext
 - script
 - scroll
 - style
+- svg
+- svgimage
 - text
 - toggle
 - video
