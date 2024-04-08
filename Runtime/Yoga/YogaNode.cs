@@ -8,8 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 
 #if __IOS__
 using ObjCRuntime;
@@ -706,17 +704,6 @@ namespace Facebook.Yoga
                 throw new InvalidOperationException("Baseline function is not defined.");
             }
             return node._baselineFunction(node, width, height);
-        }
-
-        public string Print(YogaPrintOptions options =
-            YogaPrintOptions.Layout | YogaPrintOptions.Style | YogaPrintOptions.Children)
-        {
-            StringBuilder sb = new StringBuilder();
-            Logger orig = _config.Logger;
-            _config.Logger = (config, node, level, message) => { sb.Append(message); };
-            Native.YGNodePrint(_ygNode, options);
-            _config.Logger = orig;
-            return sb.ToString();
         }
 
         public IEnumerator<YogaNode> GetEnumerator()

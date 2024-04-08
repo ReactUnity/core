@@ -6,7 +6,6 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 
 #if __IOS__
 using ObjCRuntime;
@@ -119,30 +118,12 @@ namespace Facebook.Yoga
             }
         }
 
-        public bool UseLegacyStretchBehaviour
-        {
-            get
-            {
-                return Native.YGConfigGetUseLegacyStretchBehaviour(_ygConfig);
-            }
-
-            set
-            {
-                Native.YGConfigSetUseLegacyStretchBehaviour(_ygConfig, value);
-            }
-        }
-
         public float PointScaleFactor
         {
             set
             {
                 Native.YGConfigSetPointScaleFactor(_ygConfig, value);
             }
-        }
-
-        public static int GetInstanceCount()
-        {
-            return Native.YGConfigGetInstanceCount();
         }
 
         public static void SetDefaultLogger(Logger logger)

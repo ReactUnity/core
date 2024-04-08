@@ -1,7 +1,3 @@
-#if !UNITY_EDITOR && (UNITY_WEBGL || UNITY_IOS)
-#define YOGA_LEGACY
-#endif
-
 using Facebook.Yoga;
 using ReactUnity.Types;
 using UnityEngine;
@@ -10,12 +6,6 @@ namespace ReactUnity.Helpers
 {
     public static class YogaHelpers
     {
-#if YOGA_LEGACY
-        public static bool IsLegacyYoga => true;
-#else
-        public static bool IsLegacyYoga => false;
-#endif
-
         public static bool HasValue(this YogaValue val)
         {
             return (val.Unit == YogaUnit.Point || val.Unit == YogaUnit.Percent) && !float.IsNaN(val.Value);

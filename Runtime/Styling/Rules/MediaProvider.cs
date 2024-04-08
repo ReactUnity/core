@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Helpers;
 using UnityEngine;
 
 #if REACT_INPUT_SYSTEM
@@ -443,8 +442,6 @@ namespace ReactUnity.Styling.Rules
             values["system"] = SystemInfo.operatingSystemFamily.ToString().ToLowerInvariant();
             values["language"] = Application.systemLanguage.ToString().ToLowerInvariant();
             values["install-mode"] = Application.installMode.ToString().ToLowerInvariant();
-
-            values["yoga"] = YogaHelpers.IsLegacyYoga ? "legacy" : "newest";
 
             if (Application.isConsolePlatform) types.Add("console");
             if (Application.isMobilePlatform) types.Add("console");

@@ -5,10 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#if !UNITY_EDITOR && (UNITY_WEBGL || UNITY_IOS)
-#define YOGA_LEGACY
-#endif
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -16,7 +12,7 @@ namespace Facebook.Yoga
 {
     internal static class Native
     {
-#if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || __IOS__
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_WEBGL)
         private const string DllName = "__Internal";
 #else
         private const string DllName = "yoga";
@@ -44,9 +40,6 @@ namespace Facebook.Yoga
         public static extern void YGConfigFree(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int YGConfigGetInstanceCount();
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGConfigSetExperimentalFeatureEnabled(
             YGConfigHandle config,
             YogaExperimentalFeature feature,
@@ -65,19 +58,6 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
 
-#if YOGA_LEGACY
-        public static void YGConfigSetUseLegacyStretchBehaviour(YGConfigHandle config, bool useLegacyStretchBehavior) { }
-        public static bool YGConfigGetUseLegacyStretchBehaviour(YGConfigHandle config) { return false; }
-#else
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetUseLegacyStretchBehaviour(
-            YGConfigHandle config,
-            bool useLegacyStretchBehavior);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool YGConfigGetUseLegacyStretchBehaviour(YGConfigHandle config);
-#endif
-
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGConfigSetPointScaleFactor(
             YGConfigHandle config,
@@ -92,10 +72,6 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeRemoveChild(YGNodeHandle node, YGNodeHandle child);
 
-#if YOGA_LEGACY
-        public static void YGNodeSetIsReferenceBaseline(YGNodeHandle node, bool isReferenceBaseline) { }
-        public static bool YGNodeIsReferenceBaseline(YGNodeHandle node) { return false; }
-#else
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeSetIsReferenceBaseline(
             YGNodeHandle node,
@@ -103,7 +79,6 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
-#endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeCalculateLayout(
@@ -118,9 +93,6 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool YGNodeIsDirty(YGNodeHandle node);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodePrint(YGNodeHandle node, YogaPrintOptions options);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeCopyStyle(YGNodeHandle dstNode, YGNodeHandle srcNode);
@@ -303,16 +275,11 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetAspectRatio(YGNodeHandle node);
 
-#if YOGA_LEGACY
-        public static void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gap, float position) { }
-        public static float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gap) { return 0f; }
-#else
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gutter, float gapLength);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gutter);
-#endif
 
         #endregion
 
