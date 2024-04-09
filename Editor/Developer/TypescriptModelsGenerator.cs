@@ -193,8 +193,9 @@ namespace ReactUnity.Editor.Developer
                     var methods = type.GetMethods(BindingFlags.Instance | includeStatic | BindingFlags.Public | BindingFlags.NonPublic)
                         .Where(x => !x.IsSpecialName &&
                                     !(x.ReturnType.IsByRef || (!AllowPointer && x.ReturnType.IsPointer)) &&
-                                    !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)) &&
                                     !x.IsGenericMethod &&
+                                    (!x.IsStatic || x.IsPublic) &&
+                                    !x.GetParameters().Any(p => p.ParameterType.IsByRef || (!AllowPointer && p.ParameterType.IsPointer)) &&
                                     (x.GetCustomAttribute<TypescriptExclude>() == null) &&
                                     (x.GetCustomAttribute<JsonIgnoreAttribute>() == null) &&
                                     ((x.GetCustomAttribute<TypescriptInclude>() != null) || x.IsPublic ||
