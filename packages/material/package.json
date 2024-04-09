@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@reactunity/renderer": "^0.18.0",
-    "@reactunity/scripts": "^0.18.0",
+    "@reactunity/scripts": "^0.18.3",
     "concurrently": "^8.2.2",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
