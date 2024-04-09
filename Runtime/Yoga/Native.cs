@@ -18,6 +18,8 @@ namespace Facebook.Yoga
         private const string DllName = "yoga";
 #endif
 
+        #region YGNode.h
+
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGNodeHandle YGNodeNew();
 
@@ -40,7 +42,97 @@ namespace Facebook.Yoga
         public static extern void YGNodeReset(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern YGConfigHandle YGConfigGetDefault();
+        public static extern void YGNodeCalculateLayout(YGNodeHandle node, float availableWidth, float availableHeight, YogaDirection parentDirection);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool YGNodeGetHasNewLayout(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetHasNewLayout(YGNodeHandle node, [MarshalAs(UnmanagedType.I1)] bool hasNewLayout);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool YGNodeIsDirty(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeMarkDirty(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetDirtiedFunc(YGNodeHandle node, [MarshalAs(UnmanagedType.FunctionPtr)] YogaDirtiedFunc measureFunc);
+
+        // YGNodeGetDirtiedFunc
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeInsertChild(YGNodeHandle node, YGNodeHandle child, uint index);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSwapChild(YGNodeHandle node, YGNodeHandle child, uint index);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeRemoveChild(YGNodeHandle node, YGNodeHandle child);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeRemoveAllChildren(YGNodeHandle node);
+
+        // YGNodeSetChildren
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGNodeHandle YGNodeGetChild(YGNodeHandle node, uint index);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern uint YGNodeGetChildCount(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGNodeHandle YGNodeGetOwner(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGNodeHandle YGNodeGetParent(YGNodeHandle node);
+
+        // YGNodeSetConfig
+
+        // YGNodeGetConfig
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr YGNodeGetContext(IntPtr node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetMeasureFunc(YGNodeHandle node, [MarshalAs(UnmanagedType.FunctionPtr)] YogaMeasureFunc measureFunc);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool YGNodeHasMeasureFunc(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetBaselineFunc(YGNodeHandle node, [MarshalAs(UnmanagedType.FunctionPtr)] YogaBaselineFunc baselineFunc);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool YGNodeHasBaselineFunc(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetIsReferenceBaseline(YGNodeHandle node, bool isReferenceBaseline);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
+
+        // YGNodeSetNodeType
+
+        // YGNodeGetNodeType
+
+        // YGNodeSetAlwaysFormsContainingBlock
+
+        // YGNodeGetAlwaysFormsContainingBlock
+
+        // deprecated: YGNodeCanUseCachedMeasurement
+
+        #endregion
+
+
+        #region YGConfig.h
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGConfigHandle YGConfigNew();
@@ -49,87 +141,48 @@ namespace Facebook.Yoga
         public static extern void YGConfigFree(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetExperimentalFeatureEnabled(
-            YGConfigHandle config,
-            YogaExperimentalFeature feature,
-            bool enabled);
+        public static extern YGConfigHandle YGConfigGetDefault();
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool YGConfigIsExperimentalFeatureEnabled(
-            YGConfigHandle config,
-            YogaExperimentalFeature feature);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetUseWebDefaults(
-            YGConfigHandle config,
-            bool useWebDefaults);
+        public static extern void YGConfigSetUseWebDefaults(YGConfigHandle config, bool useWebDefaults);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetPointScaleFactor(
-            YGConfigHandle config,
-            float pixelsInPoint);
+        public static extern void YGConfigSetPointScaleFactor(YGConfigHandle config, float pixelsInPoint);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeInsertChild(
-            YGNodeHandle node,
-            YGNodeHandle child,
-            uint index);
+        public static extern float YGConfigGetPointScaleFactor(YGConfigHandle config);
+
+        // YGConfigSetErrata
+
+        // YGConfigGetErrata
+
+        // YGConfigSetLogger
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeRemoveChild(YGNodeHandle node, YGNodeHandle child);
+        public static extern void YGConfigSetContext(IntPtr config, IntPtr managed);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetIsReferenceBaseline(
-            YGNodeHandle node,
-            bool isReferenceBaseline);
+        public static extern IntPtr YGConfigGetContext(IntPtr config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
+        public static extern void YGConfigSetExperimentalFeatureEnabled(YGConfigHandle config, YogaExperimentalFeature feature, bool enabled);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeCalculateLayout(
-            YGNodeHandle node,
-            float availableWidth,
-            float availableHeight,
-            YogaDirection parentDirection);
+        public static extern bool YGConfigIsExperimentalFeatureEnabled(YGConfigHandle config, YogaExperimentalFeature feature);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeMarkDirty(YGNodeHandle node);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool YGNodeIsDirty(YGNodeHandle node);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeCopyStyle(YGNodeHandle dstNode, YGNodeHandle srcNode);
-
-        #region YG_NODE_PROPERTY
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetMeasureFunc(
-            YGNodeHandle node,
-            [MarshalAs(UnmanagedType.FunctionPtr)] YogaMeasureFunc measureFunc);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetBaselineFunc(
-            YGNodeHandle node,
-            [MarshalAs(UnmanagedType.FunctionPtr)] YogaBaselineFunc baselineFunc);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetHasNewLayout(
-            YGNodeHandle node,
-            [MarshalAs(UnmanagedType.I1)] bool hasNewLayout);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool YGNodeGetHasNewLayout(YGNodeHandle node);
+        public static extern void YGConfigSetCloneNodeFunc(YGNodeHandle node, [MarshalAs(UnmanagedType.FunctionPtr)] YogaCloneNodeFunc baselineFunc);
 
         #endregion
 
-        #region YG_NODE_STYLE_PROPERTY
+
+        #region YGNodeStyle.h
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeCopyStyle(YGNodeHandle dstNode, YGNodeHandle srcNode);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetDirection(YGNodeHandle node, YogaDirection direction);
@@ -195,6 +248,9 @@ namespace Facebook.Yoga
         public static extern void YGNodeStyleSetFlex(YGNodeHandle node, float flex);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float YGNodeStyleGetFlex(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetFlexGrow(YGNodeHandle node, float flexGrow);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -217,6 +273,54 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaValue YGNodeStyleGetFlexBasis(YGNodeHandle node);
+
+
+        #region Spacings
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetPosition(YGNodeHandle node, YogaEdge edge, float position);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetPositionPercent(YGNodeHandle node, YogaEdge edge, float position);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaValue YGNodeStyleGetPosition(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMargin(YGNodeHandle node, YogaEdge edge, float margin);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMarginPercent(YGNodeHandle node, YogaEdge edge, float margin);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetMarginAuto(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaValue YGNodeStyleGetMargin(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetPadding(YGNodeHandle node, YogaEdge edge, float padding);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetPaddingPercent(YGNodeHandle node, YogaEdge edge, float padding);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaValue YGNodeStyleGetPadding(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetBorder(YGNodeHandle node, YogaEdge edge, float border);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float YGNodeStyleGetBorder(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gutter, float gapLength);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gutter);
+
+        #endregion
+
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetWidth(YGNodeHandle node, float width);
@@ -284,55 +388,10 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetAspectRatio(YGNodeHandle node);
 
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gutter, float gapLength);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gutter);
-
         #endregion
 
-        #region YG_NODE_STYLE_EDGE_PROPERTY
 
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetPosition(YGNodeHandle node, YogaEdge edge, float position);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetPositionPercent(YGNodeHandle node, YogaEdge edge, float position);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern YogaValue YGNodeStyleGetPosition(YGNodeHandle node, YogaEdge edge);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetMargin(YGNodeHandle node, YogaEdge edge, float margin);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetMarginPercent(YGNodeHandle node, YogaEdge edge, float margin);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetMarginAuto(YGNodeHandle node, YogaEdge edge);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern YogaValue YGNodeStyleGetMargin(YGNodeHandle node, YogaEdge edge);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetPadding(YGNodeHandle node, YogaEdge edge, float padding);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetPaddingPercent(YGNodeHandle node, YogaEdge edge, float padding);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern YogaValue YGNodeStyleGetPadding(YGNodeHandle node, YogaEdge edge);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetBorder(YGNodeHandle node, YogaEdge edge, float border);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern float YGNodeStyleGetBorder(YGNodeHandle node, YogaEdge edge);
-
-        #endregion
-
-        #region YG_NODE_LAYOUT_PROPERTY
+        #region YGNodeLayout.h
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeLayoutGetLeft(YGNodeHandle node);
@@ -369,22 +428,14 @@ namespace Facebook.Yoga
 
         #endregion
 
-        #region Context
 
-#if !(UNITY_WEBGL || UNITY_IOS) || UNITY_EDITOR
+        // YGPixelGrid.h
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr YGNodeGetContext(IntPtr node);
+        public static extern float YGRoundValueToPixelGrid(double value, double pointScaleFactor, [MarshalAs(UnmanagedType.I1)] bool forceCeil, [MarshalAs(UnmanagedType.I1)] bool forceFloor);
 
+
+        // YGValue.h
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
-#endif
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr YGConfigGetContext(IntPtr config);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetContext(IntPtr config, IntPtr managed);
-
-        #endregion
+        public static extern bool YGFloatIsUndefined(float value);
     }
 }
