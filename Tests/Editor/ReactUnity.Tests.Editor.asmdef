@@ -2,15 +2,15 @@
     "name": "ReactUnity.Tests.Editor",
     "rootNamespace": "ReactUnity.Tests.Editor",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "ReactUnity",
-        "ReactUnity.Editor",
-        "ReactUnity.UGUI",
-        "ReactUnity.UIToolkit",
-        "ReactUnity.Tests",
-        "Yoga",
-        "Unity.InputSystem"
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:ed4a920eac98dc342ba18a6baa202849",
+        "GUID:6932f67abfc81f047aec44e1be47024e",
+        "GUID:347a20883bb61d74abf78fec0515bb21",
+        "GUID:f3df39452b4b85c48b166389e7ca3670",
+        "GUID:1d91773c9af12264b8fcdd5d75ddeed5",
+        "GUID:9a66a2efedc711946b7428ea9b41cc0d",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [
         "Editor"

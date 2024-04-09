@@ -1,11 +1,10 @@
-using Yoga;
 using NUnit.Framework;
-
 using ReactUnity.Styling;
 using ReactUnity.Styling.Animations;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;
 using UnityEngine;
+using Yoga;
 
 namespace ReactUnity.Tests.Editor
 {
