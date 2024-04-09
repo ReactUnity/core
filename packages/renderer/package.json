@@ -49,10 +49,10 @@
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.16.1",
-    "@types/react-reconciler": "^0.28.4",
-    "react-unity-webgl": "^9.4.3",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.2.2"
+    "@reactunity/scripts": "^0.18.0",
+    "@types/react-reconciler": "^0.28.8",
+    "react-unity-webgl": "^9.5.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.4"
   }
 }
