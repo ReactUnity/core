@@ -350,6 +350,18 @@ namespace Yoga
             set => Native.YGNodeSetIsReferenceBaseline(_ygNode, value);
         }
 
+        public YogaNodeType NodeType
+        {
+            get => Native.YGNodeGetNodeType(_ygNode);
+            set => Native.YGNodeSetNodeType(_ygNode, value);
+        }
+
+        public bool AlwaysFormsContainingBlock
+        {
+            get => Native.YGNodeGetAlwaysFormsContainingBlock(_ygNode);
+            set => Native.YGNodeSetAlwaysFormsContainingBlock(_ygNode, value);
+        }
+
         public bool ValuesEqual(float f1, float f2)
         {
             if (float.IsNaN(f1) || float.IsNaN(f2))
@@ -377,6 +389,11 @@ namespace Yoga
             child._parent = null;
             _children.RemoveAt(index);
             Native.YGNodeRemoveChild(_ygNode, child._ygNode);
+        }
+
+        public void RemoveAll()
+        {
+            Native.YGNodeRemoveAllChildren(_ygNode);
         }
 
         public void AddChild(YogaNode child)

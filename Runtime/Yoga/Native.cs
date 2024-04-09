@@ -82,9 +82,11 @@ namespace Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGNodeHandle YGNodeGetParent(YGNodeHandle node);
 
-        // YGNodeSetConfig
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetConfig(YGNodeHandle node, YGConfigHandle config);
 
-        // YGNodeGetConfig
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGConfigHandle YGNodeGetConfig(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
@@ -112,13 +114,17 @@ namespace Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
 
-        // YGNodeSetNodeType
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetNodeType(YGNodeHandle node, YogaNodeType nodeType);
 
-        // YGNodeGetNodeType
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaNodeType YGNodeGetNodeType(YGNodeHandle node);
 
-        // YGNodeSetAlwaysFormsContainingBlock
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetAlwaysFormsContainingBlock(YGNodeHandle node, bool alwaysFormsContainingBlock);
 
-        // YGNodeGetAlwaysFormsContainingBlock
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGNodeGetAlwaysFormsContainingBlock(YGNodeHandle node);
 
         // deprecated: YGNodeCanUseCachedMeasurement
 
