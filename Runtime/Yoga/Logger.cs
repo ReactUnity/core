@@ -1,4 +1,4 @@
-﻿namespace Facebook.Yoga
+﻿namespace Yoga
 {
     public delegate void Logger(
         YogaConfig config,

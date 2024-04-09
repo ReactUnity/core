@@ -33,7 +33,7 @@ namespace ReactUnity.Helpers
             Add("System", Engine.CreateNamespaceReference("System", typeof(object).Assembly));
             Add("UnityEngine", Engine.CreateNamespaceReference("UnityEngine", assemblies.Where(x => x.FullName.FastStartsWith("UnityEngine.")).ToArray()));
             Add("ReactUnity", Engine.CreateNamespaceReference("ReactUnity", assemblies.Where(x => x.FullName.FastStartsWith("ReactUnity.")).ToArray()));
-            Add("Facebook", Engine.CreateNamespaceReference("Facebook", typeof(Facebook.Yoga.YogaValue).Assembly));
+            Add("Yoga", Engine.CreateNamespaceReference("Yoga", typeof(Yoga.YogaValue).Assembly));
 #if UNITY_EDITOR
             Add("UnityEditor", Engine.CreateNamespaceReference("UnityEditor", assemblies.Where(x => x.FullName.FastStartsWith("UnityEditor.")).ToArray()));
 #endif

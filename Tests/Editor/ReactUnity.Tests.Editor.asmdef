@@ -9,7 +9,7 @@
         "ReactUnity.UGUI",
         "ReactUnity.UIToolkit",
         "ReactUnity.Tests",
-        "Facebook.Yoga",
+        "Yoga",
         "Unity.InputSystem"
     ],
     "includePlatforms": [

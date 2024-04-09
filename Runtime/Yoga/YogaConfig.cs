@@ -1,10 +1,6 @@
 using System;
 
-#if ENABLE_IL2CPP
-using AOT;
-#endif
-
-namespace Facebook.Yoga
+namespace Yoga
 {
     public class YogaConfig
     {

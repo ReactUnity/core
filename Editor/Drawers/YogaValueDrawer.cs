@@ -1,4 +1,4 @@
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Editor.UIToolkit;
 using UnityEditor;
 using UnityEditor.UIElements;

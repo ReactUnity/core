@@ -1,23 +1,23 @@
-import { Facebook as FB, UnityEngine as UE } from '@reactunity/renderer';
+import { UnityEngine as UE, Yoga } from '@reactunity/renderer';
 
 const StyleLength = Interop.UnityEngine.UIElements.StyleLength;
 const StyleKeyword = Interop.UnityEngine.UIElements.StyleKeyword;
 const Length = Interop.UnityEngine.UIElements.Length;
 const LengthUnit = Interop.UnityEngine.UIElements.LengthUnit;
 
-const YogaUnit = Interop.Facebook.Yoga.YogaUnit;
+const YogaUnit = Interop.Yoga.YogaUnit;
 
 /* eslint-disable eqeqeq */
-export function convertLengthToYoga(value: UE.UIElements.StyleLength): FB.Yoga.YogaValue {
-  if (!value || value.keyword == StyleKeyword.Auto) return Interop.Facebook.Yoga.YogaValue.Auto();
+export function convertLengthToYoga(value: UE.UIElements.StyleLength): Yoga.YogaValue {
+  if (!value || value.keyword == StyleKeyword.Auto) return Interop.Yoga.YogaValue.Auto();
   if (value.keyword == StyleKeyword.Null || value.keyword == StyleKeyword.None || value.keyword == StyleKeyword.Initial)
-    return Interop.Facebook.Yoga.YogaValue.Undefined();
-  if (value.value.unit == LengthUnit.Percent) return Interop.Facebook.Yoga.YogaValue.Percent(value.value.value);
-  if (value.value.unit == LengthUnit.Pixel) return Interop.Facebook.Yoga.YogaValue.Point(value.value.value);
-  return Interop.Facebook.Yoga.YogaValue.Undefined();
+    return Interop.Yoga.YogaValue.Undefined();
+  if (value.value.unit == LengthUnit.Percent) return Interop.Yoga.YogaValue.Percent(value.value.value);
+  if (value.value.unit == LengthUnit.Pixel) return Interop.Yoga.YogaValue.Point(value.value.value);
+  return Interop.Yoga.YogaValue.Undefined();
 }
 
-export function convertYogaToLength(value: FB.Yoga.YogaValue): UE.UIElements.StyleLength {
+export function convertYogaToLength(value: Yoga.YogaValue): UE.UIElements.StyleLength {
   var len = new StyleLength(0);
   len.keyword = StyleKeyword.Initial;
 

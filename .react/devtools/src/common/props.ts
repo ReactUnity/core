@@ -64,7 +64,7 @@ const borderRadiusField = { component: YogaValue2Field };
 export const styleProps: StylePropGroup[] = [
   {
     props: [
-      { name: 'Display', component: enumComponent('Facebook.Yoga.YogaDisplay'), label: 'Display', source: 'layout' },
+      { name: 'Display', component: enumComponent('Yoga.YogaDisplay'), label: 'Display', source: 'layout' },
       { name: 'position', component: enumComponent('ReactUnity.Types.PositionType'), label: 'Position Type' },
       { name: 'backgroundColor', component: 'color', label: 'Background Color' },
       { name: 'backgroundImage', component: objectComponent('UnityEngine.Texture2D'), label: 'Background Image' },
@@ -76,7 +76,7 @@ export const styleProps: StylePropGroup[] = [
   {
     label: 'Text',
     props: [
-      { name: 'StyleDirection', component: enumComponent('Facebook.Yoga.YogaDirection'), label: 'Direction', source: 'layout' },
+      { name: 'StyleDirection', component: enumComponent('Yoga.YogaDirection'), label: 'Direction', source: 'layout' },
       { name: 'fontFamily', component: objectComponent('TMPro.TMP_FontAsset'), label: 'Font Family' },
       { name: 'color', component: 'color', label: 'Color' },
       { name: 'fontWeight', component: enumComponent('TMPro.FontWeight'), label: 'Font Weight' },
@@ -119,18 +119,18 @@ export const styleProps: StylePropGroup[] = [
 
   {
     props: [
-      { name: 'FlexDirection', component: enumComponent('Facebook.Yoga.YogaFlexDirection'), label: 'Flex Direction', source: 'layout' },
-      { name: 'Overflow', component: enumComponent('Facebook.Yoga.YogaOverflow'), label: 'Overflow', source: 'layout' },
-      { name: 'Wrap', component: enumComponent('Facebook.Yoga.YogaWrap'), label: 'Wrap', source: 'layout' },
+      { name: 'FlexDirection', component: enumComponent('Yoga.YogaFlexDirection'), label: 'Flex Direction', source: 'layout' },
+      { name: 'Overflow', component: enumComponent('Yoga.YogaOverflow'), label: 'Overflow', source: 'layout' },
+      { name: 'Wrap', component: enumComponent('Yoga.YogaWrap'), label: 'Wrap', source: 'layout' },
     ],
   },
 
   {
     props: [
-      { name: 'JustifyContent', component: enumComponent('Facebook.Yoga.YogaJustify'), label: 'Justify Content', source: 'layout' },
-      { name: 'AlignItems', component: enumComponent('Facebook.Yoga.YogaAlign'), label: 'Align Items', source: 'layout' },
-      { name: 'AlignContent', component: enumComponent('Facebook.Yoga.YogaAlign'), label: 'Align Content', source: 'layout' },
-      { name: 'AlignSelf', component: enumComponent('Facebook.Yoga.YogaAlign'), label: 'Align Self', source: 'layout' },
+      { name: 'JustifyContent', component: enumComponent('Yoga.YogaJustify'), label: 'Justify Content', source: 'layout' },
+      { name: 'AlignItems', component: enumComponent('Yoga.YogaAlign'), label: 'Align Items', source: 'layout' },
+      { name: 'AlignContent', component: enumComponent('Yoga.YogaAlign'), label: 'Align Content', source: 'layout' },
+      { name: 'AlignSelf', component: enumComponent('Yoga.YogaAlign'), label: 'Align Self', source: 'layout' },
     ],
   },
 

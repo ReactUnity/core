@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling.Computed;
 using ReactUnity.Styling.Converters;
 using ReactUnity.Types;

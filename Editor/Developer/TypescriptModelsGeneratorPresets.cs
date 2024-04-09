@@ -125,7 +125,7 @@ namespace ReactUnity.Editor.Developer
                 Assemblies = new List<Assembly> { typeof(ReactContext).Assembly, typeof(TypescriptModelsGenerator).Assembly, typeof(ReactUnity.UGUI.UGUIContext).Assembly, typeof(ReactUnity.UIToolkit.UIToolkitContext).Assembly, },
                 IncludedNamespaces = new List<string> { "ReactUnity" },
                 ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Yoga", "./yoga" }, { "System", "./system" } },
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,
@@ -142,8 +142,8 @@ namespace ReactUnity.Editor.Developer
         {
             var generator = new TypescriptModelsGenerator
             {
-                Assemblies = new List<Assembly> { typeof(Facebook.Yoga.YogaNode).Assembly, },
-                IncludedNamespaces = new List<string> { "Facebook.Yoga" },
+                Assemblies = new List<Assembly> { typeof(Yoga.YogaNode).Assembly, },
+                IncludedNamespaces = new List<string> { "Yoga" },
                 ExcludedNamespaces = new List<string> { },
                 ImportNamespaces = new Dictionary<string, string> { { "System", "./system" } },
                 ExcludedTypes = new List<string> { },
@@ -216,7 +216,7 @@ namespace ReactUnity.Editor.Developer
                     },
                     IncludedNamespaces = new List<string> { "QuickJS" },
                     ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
-                    ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Facebook", "./yoga" }, { "System", "./system" } },
+                    ImportNamespaces = new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "Yoga", "./yoga" }, { "System", "./system" } },
                     ExcludedTypes = new List<string> { },
                     AllowGeneric = true,
                     Members = TypescriptModelsGenerator.MemberFlags.All,
@@ -251,7 +251,7 @@ namespace ReactUnity.Editor.Developer
                 ExcludedNamespaces = new List<string> { "UnityEngine.InputSystem", "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
                 ImportNamespaces = new Dictionary<string, string> {
                     { "UnityEngine", "@reactunity/renderer" }, { "UnityEditor", "@reactunity/renderer" }, { "Unity", "@reactunity/renderer" },
-                    { "System", "@reactunity/renderer" }, { "ReactUnity", "@reactunity/renderer" }, { "Facebook", "@reactunity/renderer" } },
+                    { "System", "@reactunity/renderer" }, { "ReactUnity", "@reactunity/renderer" }, { "Yoga", "@reactunity/renderer" } },
                 ExcludedTypes = new List<string> { },
                 ExportAsClass = true,
                 AllowGeneric = true,

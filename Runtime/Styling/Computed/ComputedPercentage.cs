@@ -1,4 +1,4 @@
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling.Converters;
 
 namespace ReactUnity.Styling.Computed

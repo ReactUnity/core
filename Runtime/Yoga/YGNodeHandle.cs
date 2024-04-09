@@ -4,7 +4,7 @@ using System.Collections.Generic;
 #endif
 using System.Runtime.InteropServices;
 
-namespace Facebook.Yoga
+namespace Yoga
 {
     internal class YGNodeHandle : SafeHandle
     {

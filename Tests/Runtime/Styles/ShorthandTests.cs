@@ -1,5 +1,5 @@
 using System.Collections;
-using Facebook.Yoga;
+using Yoga;
 using NUnit.Framework;
 using ReactUnity.Scripting;
 using ReactUnity.Styling;

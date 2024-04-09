@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Facebook.Yoga
+namespace Yoga
 {
     internal class YGConfigHandle : SafeHandle
     {

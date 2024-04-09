@@ -1,5 +1,5 @@
 using System;
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;

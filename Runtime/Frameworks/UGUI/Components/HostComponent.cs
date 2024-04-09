@@ -1,4 +1,4 @@
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
 using UnityEngine;

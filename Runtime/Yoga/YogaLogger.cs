@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Facebook.Yoga
+namespace Yoga
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void YogaLogger(

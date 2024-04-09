@@ -1,4 +1,4 @@
-namespace Facebook.Yoga
+namespace Yoga
 {
     [System.Flags]
     public enum YogaPrintOptions

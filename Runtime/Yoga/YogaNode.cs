@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AOT;
 
-namespace Facebook.Yoga
+namespace Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
     {

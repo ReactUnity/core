@@ -1,4 +1,4 @@
-﻿namespace Facebook.Yoga
+﻿namespace Yoga
 {
     public delegate YogaSize MeasureFunction(
         YogaNode node,

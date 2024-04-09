@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Facebook.Yoga
+namespace Yoga
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct YogaSize

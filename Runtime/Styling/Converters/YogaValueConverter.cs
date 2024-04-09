@@ -1,6 +1,6 @@
 using System;
 using System.Globalization;
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling.Computed;
 

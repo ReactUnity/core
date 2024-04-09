@@ -1,4 +1,4 @@
-using Facebook.Yoga;
+using Yoga;
 using NUnit.Framework;
 
 using ReactUnity.Styling;

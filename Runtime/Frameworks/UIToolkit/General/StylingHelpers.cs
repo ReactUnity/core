@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using TMPro;

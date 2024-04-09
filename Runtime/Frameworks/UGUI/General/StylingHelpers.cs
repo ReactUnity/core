@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
-using Facebook.Yoga;
+using Yoga;
 using ReactUnity.Styling;
 using UnityEngine;
 
