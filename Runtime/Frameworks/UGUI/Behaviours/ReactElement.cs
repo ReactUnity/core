@@ -199,8 +199,8 @@ namespace ReactUnity.UGUI.Behaviours
             }
             else
             {
-                var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
-                var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
+                var posX = Layout.LayoutLeft + pivotDiff.x * Layout.LayoutWidth;
+                var posY = -Layout.LayoutTop + pivotDiff.y * Layout.LayoutHeight;
 
                 SetPositionAndSize(new Vector2(posX, posY) + tran, new Vector2(Layout.LayoutWidth, Layout.LayoutHeight), z, visible);
             }

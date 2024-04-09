@@ -59,55 +59,25 @@ namespace Facebook.Yoga
             _ygNode.SetContext(this);
         }
 
-        public bool IsDirty
-        {
-            get
-            {
-                return Native.YGNodeIsDirty(_ygNode);
-            }
-        }
+        public bool IsDirty => Native.YGNodeIsDirty(_ygNode);
 
         public virtual void MarkDirty()
         {
             Native.YGNodeMarkDirty(_ygNode);
         }
 
-        public bool HasNewLayout
-        {
-            get
-            {
-                return Native.YGNodeGetHasNewLayout(_ygNode);
-            }
-        }
+        public bool HasNewLayout => Native.YGNodeGetHasNewLayout(_ygNode);
 
         public void MarkHasNewLayout()
         {
             Native.YGNodeSetHasNewLayout(_ygNode, true);
         }
 
-        public YogaNode Parent
-        {
-            get
-            {
-                return _parent != null ? _parent.Target as YogaNode : null;
-            }
-        }
+        public YogaNode Parent => _parent != null ? _parent.Target as YogaNode : null;
 
-        public bool IsMeasureDefined
-        {
-            get
-            {
-                return _measureFunction != null;
-            }
-        }
+        public bool IsMeasureDefined => _measureFunction != null;
 
-        public bool IsBaselineDefined
-        {
-            get
-            {
-                return _baselineFunction != null;
-            }
-        }
+        public bool IsBaselineDefined => _baselineFunction != null;
 
         public void CopyStyle(YogaNode srcNode)
         {
@@ -116,63 +86,31 @@ namespace Facebook.Yoga
 
         public YogaDirection StyleDirection
         {
-            get
-            {
-                return Native.YGNodeStyleGetDirection(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetDirection(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetDirection(_ygNode);
+            set => Native.YGNodeStyleSetDirection(_ygNode, value);
         }
 
         public YogaFlexDirection FlexDirection
         {
-            get
-            {
-                return Native.YGNodeStyleGetFlexDirection(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetFlexDirection(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetFlexDirection(_ygNode);
+            set => Native.YGNodeStyleSetFlexDirection(_ygNode, value);
         }
 
         public YogaJustify JustifyContent
         {
-            get
-            {
-                return Native.YGNodeStyleGetJustifyContent(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetJustifyContent(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetJustifyContent(_ygNode);
+            set => Native.YGNodeStyleSetJustifyContent(_ygNode, value);
         }
 
         public YogaDisplay Display
         {
-            get
-            {
-                return Native.YGNodeStyleGetDisplay(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetDisplay(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetDisplay(_ygNode);
+            set => Native.YGNodeStyleSetDisplay(_ygNode, value);
         }
 
         public YogaAlign AlignItems
         {
-            get
-            {
-                return Native.YGNodeStyleGetAlignItems(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetAlignItems(_ygNode);
             set
             {
                 if (value == YogaAlign.Auto) Native.YGNodeStyleSetAlignItems(_ygNode, YogaAlign.Stretch);
@@ -182,97 +120,48 @@ namespace Facebook.Yoga
 
         public YogaAlign AlignSelf
         {
-            get
-            {
-                return Native.YGNodeStyleGetAlignSelf(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetAlignSelf(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetAlignSelf(_ygNode);
+            set => Native.YGNodeStyleSetAlignSelf(_ygNode, value);
         }
 
         public YogaAlign AlignContent
         {
-            get
-            {
-                return Native.YGNodeStyleGetAlignContent(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetAlignContent(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetAlignContent(_ygNode);
+            set => Native.YGNodeStyleSetAlignContent(_ygNode, value);
         }
 
         public YogaPositionType PositionType
         {
-            get
-            {
-                return Native.YGNodeStyleGetPositionType(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetPositionType(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetPositionType(_ygNode);
+            set => Native.YGNodeStyleSetPositionType(_ygNode, value);
         }
 
         public YogaWrap Wrap
         {
-            get
-            {
-                return Native.YGNodeStyleGetFlexWrap(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetFlexWrap(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetFlexWrap(_ygNode);
+            set => Native.YGNodeStyleSetFlexWrap(_ygNode, value);
         }
 
         public float Flex
         {
-            set
-            {
-                Native.YGNodeStyleSetFlex(_ygNode, value);
-            }
+            set => Native.YGNodeStyleSetFlex(_ygNode, value);
         }
 
         public float FlexGrow
         {
-            get
-            {
-                return Native.YGNodeStyleGetFlexGrow(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetFlexGrow(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetFlexGrow(_ygNode);
+            set => Native.YGNodeStyleSetFlexGrow(_ygNode, value);
         }
 
         public float FlexShrink
         {
-            get
-            {
-                return Native.YGNodeStyleGetFlexShrink(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetFlexShrink(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetFlexShrink(_ygNode);
+            set => Native.YGNodeStyleSetFlexShrink(_ygNode, value);
         }
 
         public YogaValue FlexBasis
         {
-            get
-            {
-                return Native.YGNodeStyleGetFlexBasis(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetFlexBasis(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -292,11 +181,7 @@ namespace Facebook.Yoga
 
         public YogaValue Width
         {
-            get
-            {
-                return Native.YGNodeStyleGetWidth(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetWidth(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -316,11 +201,7 @@ namespace Facebook.Yoga
 
         public YogaValue Height
         {
-            get
-            {
-                return Native.YGNodeStyleGetHeight(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetHeight(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -340,11 +221,7 @@ namespace Facebook.Yoga
 
         public YogaValue MaxWidth
         {
-            get
-            {
-                return Native.YGNodeStyleGetMaxWidth(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetMaxWidth(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -364,11 +241,7 @@ namespace Facebook.Yoga
 
         public YogaValue MaxHeight
         {
-            get
-            {
-                return Native.YGNodeStyleGetMaxHeight(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetMaxHeight(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -388,11 +261,7 @@ namespace Facebook.Yoga
 
         public YogaValue MinWidth
         {
-            get
-            {
-                return Native.YGNodeStyleGetMinWidth(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetMinWidth(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -412,11 +281,7 @@ namespace Facebook.Yoga
 
         public YogaValue MinHeight
         {
-            get
-            {
-                return Native.YGNodeStyleGetMinHeight(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetMinHeight(_ygNode);
             set
             {
                 if (value.Unit == YogaUnit.Percent)
@@ -436,11 +301,7 @@ namespace Facebook.Yoga
 
         public float AspectRatio
         {
-            get
-            {
-                return Native.YGNodeStyleGetAspectRatio(_ygNode);
-            }
-
+            get => Native.YGNodeStyleGetAspectRatio(_ygNode);
             set
             {
                 if (value == 0) Native.YGNodeStyleSetAspectRatio(_ygNode, float.NaN);
@@ -450,124 +311,46 @@ namespace Facebook.Yoga
 
         public float Gap
         {
-            get
-            {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.All);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value);
-            }
+            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.All);
+            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value);
         }
 
         public float ColumnGap
         {
-            get
-            {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Column);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value);
-            }
+            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Column);
+            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value);
         }
 
         public float RowGap
         {
-            get
-            {
-                return Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Row);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value);
-            }
+            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Row);
+            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value);
         }
 
-        public float LayoutX
-        {
-            get
-            {
-                return Native.YGNodeLayoutGetLeft(_ygNode);
-            }
-        }
-
-        public float LayoutY
-        {
-            get
-            {
-                return Native.YGNodeLayoutGetTop(_ygNode);
-            }
-        }
-
-        public float LayoutWidth
-        {
-            get
-            {
-                return Native.YGNodeLayoutGetWidth(_ygNode);
-            }
-        }
-
-        public float LayoutHeight
-        {
-            get
-            {
-                return Native.YGNodeLayoutGetHeight(_ygNode);
-            }
-        }
-
-        public YogaDirection LayoutDirection
-        {
-            get
-            {
-                return Native.YGNodeLayoutGetDirection(_ygNode);
-            }
-        }
+        public float LayoutLeft => Native.YGNodeLayoutGetLeft(_ygNode);
+        public float LayoutTop => Native.YGNodeLayoutGetTop(_ygNode);
+        public float LayoutRight => Native.YGNodeLayoutGetRight(_ygNode);
+        public float LayoutBottom => Native.YGNodeLayoutGetBottom(_ygNode);
+        public float LayoutWidth => Native.YGNodeLayoutGetWidth(_ygNode);
+        public float LayoutHeight => Native.YGNodeLayoutGetHeight(_ygNode);
+        public YogaDirection LayoutDirection => Native.YGNodeLayoutGetDirection(_ygNode);
+        public bool LayoutHadOverflow => Native.YGNodeLayoutGetHadOverflow(_ygNode);
 
         public YogaOverflow Overflow
         {
-            get
-            {
-                return Native.YGNodeStyleGetOverflow(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeStyleSetOverflow(_ygNode, value);
-            }
+            get => Native.YGNodeStyleGetOverflow(_ygNode);
+            set => Native.YGNodeStyleSetOverflow(_ygNode, value);
         }
 
         public object Data
         {
-            get
-            {
-                return _data;
-            }
-
-            set
-            {
-                _data = value;
-            }
+            get => _data;
+            set => _data = value;
         }
 
-        public YogaNode this[int index]
-        {
-            get
-            {
-                return _children[index];
-            }
-        }
+        public YogaNode this[int index] => _children[index];
 
-        public int Count
-        {
-            get
-            {
-                return _children != null ? _children.Count : 0;
-            }
-        }
+        public int Count => _children != null ? _children.Count : 0;
 
         public void MarkLayoutSeen()
         {
@@ -576,15 +359,8 @@ namespace Facebook.Yoga
 
         public bool IsReferenceBaseline
         {
-            get
-            {
-                return Native.YGNodeIsReferenceBaseline(_ygNode);
-            }
-
-            set
-            {
-                Native.YGNodeSetIsReferenceBaseline(_ygNode, value);
-            }
+            get => Native.YGNodeIsReferenceBaseline(_ygNode);
+            set => Native.YGNodeSetIsReferenceBaseline(_ygNode, value);
         }
 
         public bool ValuesEqual(float f1, float f2)
@@ -662,13 +438,13 @@ namespace Facebook.Yoga
         }
 
         public void CalculateLayout(
-            float width = YogaConstants.Undefined,
-            float height = YogaConstants.Undefined)
+            float availableWidth = YogaConstants.Undefined,
+            float availableHeight = YogaConstants.Undefined)
         {
             Native.YGNodeCalculateLayout(
                 _ygNode,
-                width,
-                height,
+                availableWidth,
+                availableHeight,
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 

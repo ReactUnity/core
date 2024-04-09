@@ -56,11 +56,11 @@ namespace ReactUnity.UGUI.Behaviours
             for (int i = 0; i < Layout.Count; i++)
             {
                 var child = Layout[i];
-                var xStart = child.LayoutX - child.LayoutMarginLeft;
-                var xEnd = child.LayoutX + child.LayoutWidth + child.LayoutMarginRight;
+                var xStart = child.LayoutLeft - child.LayoutMarginLeft;
+                var xEnd = child.LayoutLeft + child.LayoutWidth + child.LayoutMarginRight;
 
-                var yStart = child.LayoutY - child.LayoutMarginTop;
-                var yEnd = child.LayoutY + child.LayoutHeight + child.LayoutMarginBottom;
+                var yStart = child.LayoutTop - child.LayoutMarginTop;
+                var yEnd = child.LayoutTop + child.LayoutHeight + child.LayoutMarginBottom;
 
                 if (xStart < minX) minX = xStart;
                 if (xEnd > maxX) maxX = xEnd;

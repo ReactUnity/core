@@ -25,7 +25,16 @@ namespace Facebook.Yoga
         public static extern YGNodeHandle YGNodeNewWithConfig(YGConfigHandle config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGNodeHandle YGNodeClone(YGConfigHandle config);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeFree(IntPtr node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeFreeRecursive(IntPtr node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeFinalize(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeReset(YGNodeHandle node);
@@ -344,13 +353,19 @@ namespace Facebook.Yoga
         public static extern float YGNodeLayoutGetHeight(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaDirection YGNodeLayoutGetDirection(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGNodeLayoutGetHadOverflow(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeLayoutGetMargin(YGNodeHandle node, YogaEdge edge);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern float YGNodeLayoutGetPadding(YGNodeHandle node, YogaEdge edge);
+        public static extern float YGNodeLayoutGetBorder(YGNodeHandle node, YogaEdge edge);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern YogaDirection YGNodeLayoutGetDirection(YGNodeHandle node);
+        public static extern float YGNodeLayoutGetPadding(YGNodeHandle node, YogaEdge edge);
 
         #endregion
 

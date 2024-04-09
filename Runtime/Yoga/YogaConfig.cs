@@ -45,13 +45,7 @@ namespace Facebook.Yoga
         {
         }
 
-        internal YGConfigHandle Handle
-        {
-            get
-            {
-                return _ygConfig;
-            }
-        }
+        internal YGConfigHandle Handle => _ygConfig;
 
 #if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaLogger))]
@@ -82,15 +76,8 @@ namespace Facebook.Yoga
 
         public Logger Logger
         {
-            get
-            {
-                return _logger;
-            }
-
-            set
-            {
-                _logger = value;
-            }
+            get => _logger;
+            set => _logger = value;
         }
 
         public void SetExperimentalFeatureEnabled(
@@ -107,23 +94,13 @@ namespace Facebook.Yoga
 
         public bool UseWebDefaults
         {
-            get
-            {
-                return Native.YGConfigGetUseWebDefaults(_ygConfig);
-            }
-
-            set
-            {
-                Native.YGConfigSetUseWebDefaults(_ygConfig, value);
-            }
+            get => Native.YGConfigGetUseWebDefaults(_ygConfig);
+            set => Native.YGConfigSetUseWebDefaults(_ygConfig, value);
         }
 
         public float PointScaleFactor
         {
-            set
-            {
-                Native.YGConfigSetPointScaleFactor(_ygConfig, value);
-            }
+            set => Native.YGConfigSetPointScaleFactor(_ygConfig, value);
         }
 
         public static void SetDefaultLogger(Logger logger)
