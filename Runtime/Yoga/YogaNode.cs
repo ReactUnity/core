@@ -8,13 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
-#if __IOS__
-using ObjCRuntime;
-#endif
-#if ENABLE_IL2CPP
 using AOT;
-#endif
 
 namespace Facebook.Yoga
 {
@@ -448,9 +442,7 @@ namespace Facebook.Yoga
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 
-#if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
-#endif
         private static YogaSize MeasureInternal(
             IntPtr unmanagedNodePtr,
             float width,
@@ -466,9 +458,7 @@ namespace Facebook.Yoga
             return node._measureFunction(node, width, widthMode, height, heightMode);
         }
 
-#if ((UNITY_IOS || UNITY_WEBGL) && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
-#endif
         private static float BaselineInternal(
             IntPtr unmanagedNodePtr,
             float width,

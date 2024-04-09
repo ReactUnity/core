@@ -155,9 +155,11 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGConfigGetPointScaleFactor(YGConfigHandle config);
 
-        // YGConfigSetErrata
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetErrata(YGConfigHandle config, YogaErrata errata);
 
-        // YGConfigGetErrata
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaErrata YGConfigGetErrata(YGConfigHandle config);
 
         // YGConfigSetLogger
 
