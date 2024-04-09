@@ -1,6 +1,299 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/styles.module.scss":
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `*{white-space:normal}.styles_host__ALN9x{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.styles_logo__HHQ8z{max-height:200px;max-width:200px;align-self:center;animation:styles_appear__Lvdxd 800ms 400ms both;transform-origin:center}@keyframes styles_appear__Lvdxd{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.styles_projectPath__AhA3j{background-color:rgba(0,0,0,0);border-width:0}.styles_packageName__2xL36{opacity:.6}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:styles_spin__iAxJ4 800ms infinite;margin:10px auto;transform-origin:center}@keyframes styles_spin__iAxJ4{from{rotate:0deg}to{rotate:180deg}}.styles_checkIcon__1Fcv5,.styles_warnIcon__sxVjy,.styles_errorIcon__nZK5g,.styles_cancelIcon__THjPl{flex-shrink:0;margin-right:6px}.styles_infoButton__6aFxG{padding:4px;background-color:rgba(0,0,0,0)}.styles_infoIcon__mS0Gv{width:20px;height:20px;flex-shrink:1}.styles_checkIcon__1Fcv5{color:#73ff00}.styles_warnIcon__sxVjy{color:#fff200}.styles_errorIcon__nZK5g{color:crimson}.styles_loadingOverlay__jnak8{position:absolute;inset:0;background-color:rgba(0,0,0,.2);align-items:center;justify-content:center}`, ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"host": `styles_host__ALN9x`,
+	"logo": `styles_logo__HHQ8z`,
+	"appear": `styles_appear__Lvdxd`,
+	"projectPath": `styles_projectPath__AhA3j`,
+	"packageName": `styles_packageName__2xL36`,
+	"spin": `styles_spin__iAxJ4`,
+	"checkIcon": `styles_checkIcon__1Fcv5`,
+	"warnIcon": `styles_warnIcon__sxVjy`,
+	"errorIcon": `styles_errorIcon__nZK5g`,
+	"cancelIcon": `styles_cancelIcon__THjPl`,
+	"infoButton": `styles_infoButton__6aFxG`,
+	"infoIcon": `styles_infoIcon__mS0Gv`,
+	"loadingOverlay": `styles_loadingOverlay__jnak8`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/***/ ((module) => {
+
+"use strict";
+
+
+var stylesInDOM = [];
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+}
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var indexByIdentifier = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
+    };
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
+    } else {
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
+        identifier: identifier,
+        updater: updater,
+        references: 1
+      });
+    }
+    identifiers.push(identifier);
+  }
+  return identifiers;
+}
+function addElementStyle(obj, options) {
+  var api = options.domAPI(options);
+  api.update(obj);
+  var updater = function updater(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
+        return;
+      }
+      api.update(obj = newObj);
+    } else {
+      api.remove();
+    }
+  };
+  return updater;
+}
+module.exports = function (list, options) {
+  options = options || {};
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDOM[index].references--;
+    }
+    var newLastIdentifiers = modulesToDom(newList, options);
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+      var _index = getIndexByIdentifier(_identifier);
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
+        stylesInDOM.splice(_index, 1);
+      }
+    }
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/insertBySelector.js":
+/***/ ((module) => {
+
+"use strict";
+
+
+var memo = {};
+
+/* istanbul ignore next  */
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target);
+
+    // Special case to return head of iframe instead of iframe itself
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
+      }
+    }
+    memo[target] = styleTarget;
+  }
+  return memo[target];
+}
+
+/* istanbul ignore next  */
+function insertBySelector(insert, style) {
+  var target = getTarget(insert);
+  if (!target) {
+    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+  }
+  target.appendChild(style);
+}
+module.exports = insertBySelector;
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/insertStyleElement.js":
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function insertStyleElement(options) {
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
+}
+module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js":
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function setAttributesWithoutAttributes(styleElement) {
+  var nonce =  true ? __webpack_require__.nc : 0;
+  if (nonce) {
+    styleElement.setAttribute("nonce", nonce);
+  }
+}
+module.exports = setAttributesWithoutAttributes;
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/styleDomAPI.js":
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function apply(styleElement, options, obj) {
+  var css = "";
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
+  }
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+  var needLayer = typeof obj.layer !== "undefined";
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+  css += obj.css;
+  if (needLayer) {
+    css += "}";
+  }
+  if (obj.media) {
+    css += "}";
+  }
+  if (obj.supports) {
+    css += "}";
+  }
+  var sourceMap = obj.sourceMap;
+  if (sourceMap && typeof btoa !== "undefined") {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  }
+
+  // For old IE
+  /* istanbul ignore if  */
+  options.styleTagTransform(css, styleElement, options.options);
+}
+function removeStyleElement(styleElement) {
+  // istanbul ignore if
+  if (styleElement.parentNode === null) {
+    return false;
+  }
+  styleElement.parentNode.removeChild(styleElement);
+}
+
+/* istanbul ignore next  */
+function domAPI(options) {
+  if (typeof document === "undefined") {
+    return {
+      update: function update() {},
+      remove: function remove() {}
+    };
+  }
+  var styleElement = options.insertStyleElement(options);
+  return {
+    update: function update(obj) {
+      apply(styleElement, options, obj);
+    },
+    remove: function remove() {
+      removeStyleElement(styleElement);
+    }
+  };
+}
+module.exports = domAPI;
+
+/***/ }),
+
+/***/ "../../../node_modules/style-loader/dist/runtime/styleTagTransform.js":
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
+    }
+    styleElement.appendChild(document.createTextNode(css));
+  }
+}
+module.exports = styleTagTransform;
+
+/***/ }),
+
 /***/ "../../../node_modules/css-loader/dist/runtime/api.js":
 /***/ ((module) => {
 
@@ -6090,299 +6383,6 @@ if (true) {
   module.exports = __webpack_require__("../../../node_modules/scheduler/cjs/scheduler.production.min.js");
 } else {}
 
-/***/ }),
-
-/***/ "../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/index.module.scss":
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../../node_modules/css-loader/dist/runtime/noSourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../../node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, `*{white-space:normal}.src_host__DfQI5{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__BTD1d{max-height:200px;max-width:200px;align-self:center;animation:src_appear__uO2md 800ms 400ms both;transform-origin:center}@keyframes src_appear__uO2md{from{opacity:0%;scale:.8 .8}to{opacity:100%;scale:1 1}}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,.08);border-width:1px;border-color:rgba(0,0,0,.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__ckdJk{background-color:rgba(0,0,0,0);border-width:0}.src_packageName__8e1sS{opacity:.6}spinner{border-radius:50%;width:32px;height:32px;border:2px solid currentColor;border-top-color:rgba(0,0,0,0);border-bottom-color:rgba(0,0,0,0);animation:src_spin__94wLO 800ms infinite;margin:10px auto;transform-origin:center}@keyframes src_spin__94wLO{from{rotate:0deg}to{rotate:180deg}}.src_checkIcon__FATu-,.src_warnIcon__slMGa,.src_errorIcon__hF0IW,.src_cancelIcon__IlMNe{flex-shrink:0;margin-right:6px}.src_infoButton__Cr9JN{padding:4px;background-color:rgba(0,0,0,0)}.src_infoIcon__Zfapc{width:20px;height:20px;flex-shrink:1}.src_checkIcon__FATu-{color:#73ff00}.src_warnIcon__slMGa{color:#fff200}.src_errorIcon__hF0IW{color:crimson}.src_loadingOverlay__IbEDV{position:absolute;inset:0;background-color:rgba(0,0,0,.2);align-items:center;justify-content:center}`, ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"host": `src_host__DfQI5`,
-	"logo": `src_logo__BTD1d`,
-	"appear": `src_appear__uO2md`,
-	"projectPath": `src_projectPath__ckdJk`,
-	"packageName": `src_packageName__8e1sS`,
-	"spin": `src_spin__94wLO`,
-	"checkIcon": `src_checkIcon__FATu-`,
-	"warnIcon": `src_warnIcon__slMGa`,
-	"errorIcon": `src_errorIcon__hF0IW`,
-	"cancelIcon": `src_cancelIcon__IlMNe`,
-	"infoButton": `src_infoButton__Cr9JN`,
-	"infoIcon": `src_infoIcon__Zfapc`,
-	"loadingOverlay": `src_loadingOverlay__IbEDV`
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
-/***/ ((module) => {
-
-"use strict";
-
-
-var stylesInDOM = [];
-function getIndexByIdentifier(identifier) {
-  var result = -1;
-  for (var i = 0; i < stylesInDOM.length; i++) {
-    if (stylesInDOM[i].identifier === identifier) {
-      result = i;
-      break;
-    }
-  }
-  return result;
-}
-function modulesToDom(list, options) {
-  var idCountMap = {};
-  var identifiers = [];
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    var id = options.base ? item[0] + options.base : item[0];
-    var count = idCountMap[id] || 0;
-    var identifier = "".concat(id, " ").concat(count);
-    idCountMap[id] = count + 1;
-    var indexByIdentifier = getIndexByIdentifier(identifier);
-    var obj = {
-      css: item[1],
-      media: item[2],
-      sourceMap: item[3],
-      supports: item[4],
-      layer: item[5]
-    };
-    if (indexByIdentifier !== -1) {
-      stylesInDOM[indexByIdentifier].references++;
-      stylesInDOM[indexByIdentifier].updater(obj);
-    } else {
-      var updater = addElementStyle(obj, options);
-      options.byIndex = i;
-      stylesInDOM.splice(i, 0, {
-        identifier: identifier,
-        updater: updater,
-        references: 1
-      });
-    }
-    identifiers.push(identifier);
-  }
-  return identifiers;
-}
-function addElementStyle(obj, options) {
-  var api = options.domAPI(options);
-  api.update(obj);
-  var updater = function updater(newObj) {
-    if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
-        return;
-      }
-      api.update(obj = newObj);
-    } else {
-      api.remove();
-    }
-  };
-  return updater;
-}
-module.exports = function (list, options) {
-  options = options || {};
-  list = list || [];
-  var lastIdentifiers = modulesToDom(list, options);
-  return function update(newList) {
-    newList = newList || [];
-    for (var i = 0; i < lastIdentifiers.length; i++) {
-      var identifier = lastIdentifiers[i];
-      var index = getIndexByIdentifier(identifier);
-      stylesInDOM[index].references--;
-    }
-    var newLastIdentifiers = modulesToDom(newList, options);
-    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
-      var _identifier = lastIdentifiers[_i];
-      var _index = getIndexByIdentifier(_identifier);
-      if (stylesInDOM[_index].references === 0) {
-        stylesInDOM[_index].updater();
-        stylesInDOM.splice(_index, 1);
-      }
-    }
-    lastIdentifiers = newLastIdentifiers;
-  };
-};
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/insertBySelector.js":
-/***/ ((module) => {
-
-"use strict";
-
-
-var memo = {};
-
-/* istanbul ignore next  */
-function getTarget(target) {
-  if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target);
-
-    // Special case to return head of iframe instead of iframe itself
-    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-      try {
-        // This will throw an exception if access to iframe is blocked
-        // due to cross-origin restrictions
-        styleTarget = styleTarget.contentDocument.head;
-      } catch (e) {
-        // istanbul ignore next
-        styleTarget = null;
-      }
-    }
-    memo[target] = styleTarget;
-  }
-  return memo[target];
-}
-
-/* istanbul ignore next  */
-function insertBySelector(insert, style) {
-  var target = getTarget(insert);
-  if (!target) {
-    throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
-  }
-  target.appendChild(style);
-}
-module.exports = insertBySelector;
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/insertStyleElement.js":
-/***/ ((module) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function insertStyleElement(options) {
-  var element = document.createElement("style");
-  options.setAttributes(element, options.attributes);
-  options.insert(element, options.options);
-  return element;
-}
-module.exports = insertStyleElement;
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js":
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function setAttributesWithoutAttributes(styleElement) {
-  var nonce =  true ? __webpack_require__.nc : 0;
-  if (nonce) {
-    styleElement.setAttribute("nonce", nonce);
-  }
-}
-module.exports = setAttributesWithoutAttributes;
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/styleDomAPI.js":
-/***/ ((module) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function apply(styleElement, options, obj) {
-  var css = "";
-  if (obj.supports) {
-    css += "@supports (".concat(obj.supports, ") {");
-  }
-  if (obj.media) {
-    css += "@media ".concat(obj.media, " {");
-  }
-  var needLayer = typeof obj.layer !== "undefined";
-  if (needLayer) {
-    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
-  }
-  css += obj.css;
-  if (needLayer) {
-    css += "}";
-  }
-  if (obj.media) {
-    css += "}";
-  }
-  if (obj.supports) {
-    css += "}";
-  }
-  var sourceMap = obj.sourceMap;
-  if (sourceMap && typeof btoa !== "undefined") {
-    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  }
-
-  // For old IE
-  /* istanbul ignore if  */
-  options.styleTagTransform(css, styleElement, options.options);
-}
-function removeStyleElement(styleElement) {
-  // istanbul ignore if
-  if (styleElement.parentNode === null) {
-    return false;
-  }
-  styleElement.parentNode.removeChild(styleElement);
-}
-
-/* istanbul ignore next  */
-function domAPI(options) {
-  if (typeof document === "undefined") {
-    return {
-      update: function update() {},
-      remove: function remove() {}
-    };
-  }
-  var styleElement = options.insertStyleElement(options);
-  return {
-    update: function update(obj) {
-      apply(styleElement, options, obj);
-    },
-    remove: function remove() {
-      removeStyleElement(styleElement);
-    }
-  };
-}
-module.exports = domAPI;
-
-/***/ }),
-
-/***/ "../../../node_modules/style-loader/dist/runtime/styleTagTransform.js":
-/***/ ((module) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function styleTagTransform(css, styleElement) {
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css;
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild);
-    }
-    styleElement.appendChild(document.createTextNode(css));
-  }
-}
-module.exports = styleTagTransform;
-
 /***/ })
 
 /******/ 	});
@@ -6462,31 +6462,31 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 ;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
-function _iterableToArrayLimit(arr, i) {
-  var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
     try {
-      if (_x = (_i = _i.call(arr)).next, 0 === i) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
-    } catch (err) {
-      _d = !0, _e = err;
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
     } finally {
       try {
-        if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
       } finally {
-        if (_d) throw _e;
+        if (o) throw n;
       }
     }
-    return _arr;
+    return a;
   }
 }
 ;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
@@ -6522,7 +6522,8 @@ var react = __webpack_require__("../../../node_modules/react/index.js");
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/version.js
-var version = '0.15.2';
+var version = '0.18.0';
+//# sourceMappingURL=version.js.map
 // EXTERNAL MODULE: ../../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../../node_modules/react/jsx-runtime.js");
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/error-boundary.js
@@ -6594,6 +6595,7 @@ var ErrorBoundary = /** @class */function (_super) {
   return ErrorBoundary;
 }(react.Component);
 
+//# sourceMappingURL=error-boundary.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/views/default-view.js
 
 
@@ -6607,6 +6609,7 @@ function DefaultView(_a) {
     }, renderCount)
   });
 }
+//# sourceMappingURL=default-view.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/objects.js
 var ObjectsRepo = /** @class */function () {
   function ObjectsRepo() {
@@ -6637,8 +6640,10 @@ var ObjectsRepo = /** @class */function () {
   return ObjectsRepo;
 }();
 
+//# sourceMappingURL=objects.js.map
 // EXTERNAL MODULE: ../../../node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__("../../../node_modules/react-reconciler/index.js");
+var react_reconciler_default = /*#__PURE__*/__webpack_require__.n(react_reconciler);
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/diffing.js
 var styleStringSymbol = '__style_as_string__';
 var propDepths = {
@@ -6712,6 +6717,7 @@ function diffProperties(lastProps, nextProps, deepDiffing) {
   }
   return updatePayload;
 }
+//# sourceMappingURL=diffing.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/constants.js
 var __rest = undefined && undefined.__rest || function (s, e) {
   var t = {};
@@ -6794,6 +6800,7 @@ var commonReconciler = {
   prepareScopeUpdate: function prepareScopeUpdate(scopeInstance, instance) {}
 };
 var isDevelopment = "production" === 'development';
+//# sourceMappingURL=constants.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/richtext.js
 function parametrizeValue(value) {
   if (typeof value === 'number') return value + '';
@@ -6842,6 +6849,7 @@ function stringifyRichText(node) {
   }
   return acc.join('');
 }
+//# sourceMappingURL=richtext.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/svg.js
 function kebabize(str) {
   return str.split('').map(function (letter, idx) {
@@ -6904,6 +6912,7 @@ function stringifySVG(node) {
   }
   return acc.join('');
 }
+//# sourceMappingURL=svg.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/subcontexts/index.js
 
 
@@ -6911,6 +6920,7 @@ var subContextRenderers = {
   richtext: stringifyRichText,
   svg: stringifySVG
 };
+//# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/callbacks.js
 var callbacks_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -6964,6 +6974,7 @@ var CallbacksRepo = /** @class */function (_super) {
   return CallbacksRepo;
 }(ObjectsRepo);
 
+//# sourceMappingURL=callbacks.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/serializer.js
 
 
@@ -6992,6 +7003,7 @@ function convertPropsToSerializable(props) {
   }
   return res;
 }
+//# sourceMappingURL=serializer.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/async/reconciler.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -7021,17 +7033,13 @@ var updateSubContext = function updateSubContext(instance) {
   if (!root) return;
   var content = rend(root.subContext.node);
   if (instance.type === 'richtext') {
-    instance.hostContext.commands.push(['x', {
-      r: root.refId,
-      c: content
-    }]);
+    // instance.hostContext.commands.push(['x', { r: root.refId, c: content }]);
+    instance.hostContext.commands.push([6, root.refId, content]);
   } else if (instance.type === 'svg') {
-    instance.hostContext.commands.push(['u', __assign({
-      r: root.refId,
-      t: 'svg'
-    }, convertPropsToSerializable({
+    // instance.hostContext.commands.push(['u', { r: root.refId, t: 'svg', ...convertPropsToSerializable({ innerContent: content }) }]);
+    instance.hostContext.commands.push([5, root.refId, 'svg', convertPropsToSerializable({
       innerContent: content
-    }))]);
+    })]);
   }
 };
 var hostConfig = __assign(__assign({}, commonReconciler), {
@@ -7111,11 +7119,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     var aProps = getAllowedProps(props, type);
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['c', __assign({
-        t: type,
-        r: refId,
-        k: stringizePoolKey(props.pool)
-      }, convertPropsToSerializable(aProps))]);
+      // ctx.commands.push(['c', { t: type, r: refId, k: stringizePoolKey(props.pool), ...convertPropsToSerializable(aProps) }]);
+      ctx.commands.push([0, refId, type, convertPropsToSerializable(aProps), stringizePoolKey(props.pool)]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
       var res = __assign(__assign({}, ctx), {
         refId: refId
@@ -7160,10 +7165,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   createTextInstance: function createTextInstance(text, rootContainer, ctx, internalHandle) {
     if (ctx.type === 'native') {
       refId++;
-      ctx.commands.push(['t', {
-        r: refId,
-        c: text
-      }]);
+      // ctx.commands.push(['t', { r: refId, c: text }]);
+      ctx.commands.push([1, refId, text]);
       if (rootContainer.fiberCache) rootContainer.fiberCache.setObject(refId, internalHandle);
       return __assign(__assign({}, ctx), {
         refId: refId
@@ -7180,10 +7183,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      parent.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // parent.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      parent.commands.push([2, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
@@ -7207,10 +7208,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   commitUpdate: function commitUpdate(instance, updatePayload, type) {
     var props = getAllowedProps(updatePayload, type);
     if (instance.type === 'native') {
-      instance.commands.push(['u', __assign({
-        r: instance.refId,
-        t: type
-      }, convertPropsToSerializable(props))]);
+      // instance.commands.push(['u', { r: instance.refId, t: type, ...convertPropsToSerializable(props) }]);
+      instance.commands.push([5, instance.refId, type, convertPropsToSerializable(props)]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
       if ('attributes' in instance.node) instance.node.attributes = __assign(__assign({}, instance.node.attributes), props);
       updateSubContext(instance);
@@ -7218,14 +7217,10 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
   },
   commitTextUpdate: function commitTextUpdate(instance, oldText, newText) {
     if (instance.type === 'native') {
-      instance.commands.push(['x', {
-        r: instance.refId,
-        c: newText
-      }]);
+      // instance.commands.push(['x', { r: instance.refId, c: newText }]);
+      instance.commands.push([6, instance.refId, newText]);
     } else if (instance.type === 'richtext' || instance.type === 'svg') {
-      instance.node = {
-        text: newText
-      };
+      instance.node.text = newText;
       updateSubContext(instance);
     }
   },
@@ -7233,10 +7228,8 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['a', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) parent.node.children.push(child.node);
       child.root = parent.root;
@@ -7245,20 +7238,16 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['a', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (child.type === 'native')
+      // child.commands.push(['a', { p: parent.refId, c: child.refId }]);
+      child.commands.push([2, parent.refId, child.refId]);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native' && beforeChild.type === 'native') {
-      child.commands.push(['i', {
-        p: parent.refId,
-        c: child.refId,
-        i: beforeChild.refId
-      }]);
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' && beforeChild.type === 'richtext' || parent.type === 'svg' && child.type === 'svg' && beforeChild.type === 'svg') {
       if ('children' in parent.node) {
         var index = parent.node.children.indexOf(beforeChild.node);
@@ -7270,20 +7259,16 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    if (child.type === 'native' && beforeChild.type === 'native') child.commands.push(['i', {
-      p: parent.refId,
-      c: child.refId,
-      i: beforeChild.refId
-    }]);
+    if (child.type === 'native' && beforeChild.type === 'native')
+      // child.commands.push(['i', { p: parent.refId, c: child.refId, i: beforeChild.refId }]);
+      child.commands.push([4, parent.refId, child.refId, beforeChild.refId]);
   },
   removeChild: function removeChild(parent, child) {
     if (!child) return;
     if (parent.type === 'native' && parent.subContext) parent = parent.subContext;
     if (parent.type === 'native' && child.type === 'native') {
-      child.commands.push(['r', {
-        p: parent.refId,
-        c: child.refId
-      }]);
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
     } else if (parent.type === 'richtext' && child.type === 'richtext' || parent.type === 'svg' && child.type === 'svg') {
       if ('children' in parent.node) {
         var index = parent.node.children.indexOf(child.node);
@@ -7293,53 +7278,53 @@ var hostConfig = __assign(__assign({}, commonReconciler), {
     }
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    if (child.type === 'native') child.commands.push(['r', {
-      p: parent.refId,
-      c: child.refId
-    }]);
+    if (child.type === 'native')
+      // child.commands.push(['r', { p: parent.refId, c: child.refId }]);
+      child.commands.push([3, parent.refId, child.refId]);
   },
   resetTextContent: function resetTextContent() {},
   preparePortalMount: function preparePortalMount() {},
   detachDeletedInstance: function detachDeletedInstance() {},
   // Required for Suspense
   hideInstance: function hideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   hideTextInstance: function hideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: true
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: true }]);
+      instance.commands.push([7, instance.refId, true]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = true;
       updateSubContext(instance);
     }
   },
   unhideInstance: function unhideInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   },
   unhideTextInstance: function unhideTextInstance(instance) {
-    if (instance.type === 'native') instance.commands.push(['h', {
-      r: instance.refId,
-      h: false
-    }]);else if (instance.type === 'richtext' || instance.type === 'svg') {
+    if (instance.type === 'native') {
+      // instance.commands.push(['h', { r: instance.refId, h: false }]);
+      instance.commands.push([7, instance.refId, false]);
+    } else if (instance.type === 'richtext' || instance.type === 'svg') {
       instance.node.hidden = false;
       updateSubContext(instance);
     }
   }
 });
-var asyncReconciler = react_reconciler(hostConfig);
+var asyncReconciler = react_reconciler_default()(hostConfig);
+//# sourceMappingURL=reconciler.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/sync/reconciler.js
 var reconciler_assign = undefined && undefined.__assign || function () {
   reconciler_assign = Object.assign || function (t) {
@@ -7449,7 +7434,8 @@ var reconciler_hostConfig = reconciler_assign(reconciler_assign({}, commonReconc
     instance.ClassList.Remove(hideClass);
   }
 });
-var syncReconciler = react_reconciler(reconciler_hostConfig);
+var syncReconciler = react_reconciler_default()(reconciler_hostConfig);
+//# sourceMappingURL=reconciler.js.map
 ;// CONCATENATED MODULE: ../../../renderer/dist/src/renderer/renderer.js
 
 
@@ -7562,6 +7548,7 @@ var Renderer = {
 };
 var batchedUpdates = asyncReconciler.batchedUpdates;
 var flushSync = asyncReconciler.flushSync;
+//# sourceMappingURL=renderer.js.map
 ;// CONCATENATED MODULE: ./src/assets/check.png
 const check_namespaceObject = __webpack_require__.p + "static/media/check.png";
 ;// CONCATENATED MODULE: ./src/assets/close.png
@@ -7588,9 +7575,9 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ../../../node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__("../../../node_modules/style-loader/dist/runtime/styleTagTransform.js");
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/index.module.scss
-var index_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/index.module.scss");
-;// CONCATENATED MODULE: ./src/index.module.scss
+// EXTERNAL MODULE: ../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/styles.module.scss
+var styles_module = __webpack_require__("../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[3]!./src/styles.module.scss");
+;// CONCATENATED MODULE: ./src/styles.module.scss
 
       
       
@@ -7606,23 +7593,21 @@ var options = {};
 
 options.styleTagTransform = (styleTagTransform_default());
 options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      options.insert = insertBySelector_default().bind(null, "head");
-    
+options.insert = insertBySelector_default().bind(null, "head");
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, options);
+var update = injectStylesIntoStyleTag_default()(styles_module/* default */.A, options);
 
 
 
 
-       /* harmony default export */ const src_index_module = (index_module/* default */.Z && index_module/* default */.Z.locals ? index_module/* default */.Z.locals : undefined);
+       /* harmony default export */ const src_styles_module = (styles_module/* default */.A && styles_module/* default */.A.locals ? styles_module/* default */.A.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/common.tsx
-var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_index_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_index_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_index_module.warnIcon});var info=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_index_module.infoIcon});var Window=Globals.Window;var packageName="com.reactunity.core";var SetIsLoadingContext=/*#__PURE__*/(0,react.createContext)(undefined);
+var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:check_namespaceObject,className:src_styles_module.checkIcon});var error=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:close_namespaceObject,className:src_styles_module.errorIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:warn_namespaceObject,className:src_styles_module.warnIcon});var info=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:info_namespaceObject,className:src_styles_module.infoIcon});var Window=Globals.Window;var packageName="com.reactunity.core";var SetIsLoadingContext=/*#__PURE__*/(0,react.createContext)(undefined);
 ;// CONCATENATED MODULE: ./src/engine-plugins.tsx
-var engineTypes=[{type:Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,packageName:'com.reactunity.quickjs',recommended:true,name:'QuickJS',implicit:false,tooltip:"QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform.\nQuickJS is very fast and reliable. It supports all platforms and has decent interop features.\n\"REACT_DISABLE_QUICKJS\" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,packageName:'com.reactunity.jint',recommended:false,name:'Jint',implicit:false,tooltip:"Jint is a managed JS interpreter written entirely in C#. It consists of some managed libraries. It supports every platform.\nJint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.\n\"REACT_DISABLE_JINT\" flag can be used to exclude Jint from build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,packageName:'com.reactunity.clearscript',recommended:false,name:'ClearScript',implicit:false,tooltip:"ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.\nClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.\nClearScript is the only engine capable of debugging. JavaScript can be debugged on port 9222 with Node debuggers like Chrome Inspector or VSCode.\n\"REACT_DISABLE_CLEARSCRIPT\" flag can be used to exclude ClearScript from build. Note that native libraries must be excluded manually after build."}];var engineTypesLoaded=new Promise(function(resolve){var loadedCount=0;var _loop=function _loop(){var type=_engineTypes[_i];Window.CheckVersion(type.packageName,function(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===engineTypes.length){resolve();}});};for(var _i=0,_engineTypes=engineTypes;_i<_engineTypes.length;_i++){_loop();}});function EnginePlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),engines=_useState2[0],setEngines=_useState2[1];(0,react.useEffect)(function(){engineTypesLoaded.then(function(){return setEngines(engineTypes);});},[]);var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),loadingPlugin=_useState4[0],setLoadingPlugin=_useState4[1];var setIsLoading=(0,react.useContext)(SetIsLoadingContext);var installPlugin=(0,react.useCallback)(function(x){Window.InstallScopedPlugin(x.packageName);setLoadingPlugin(x.packageName);setIsLoading(true);},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["JavaScript Engines",!engines&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!engines&&engines.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,tooltip:x.tooltip,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.recommended?' (Recommended)':''),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_index_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.recommended?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.implicit&&!x.recommended&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.implicit?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:(loadingPlugin===x.packageName?'Updating to ':'Update to ')+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:loadingPlugin===x.packageName?'Installing':'Install'})})]},i);})]});}
+var engineTypes=[{type:Interop.ReactUnity.Scripting.JavascriptEngineType.QuickJS,packageName:'com.reactunity.quickjs',recommended:true,name:'QuickJS',implicit:false,tooltip:"QuickJS is a fast embeddable JS engine. It consists of some managed and native C++ libraries. It supports every platform.\nQuickJS is very fast and reliable. It supports all platforms and has decent interop features.\n\"REACT_DISABLE_QUICKJS\" flag can be used to exclude QuickJS from build. Note that native libraries must be excluded manually after build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.Jint,packageName:'com.reactunity.jint',recommended:false,name:'Jint',implicit:false,tooltip:"Jint is a managed JS interpreter written entirely in C#. It consists of some managed libraries. It supports every platform.\nJint is not very fast. But it is often reliable and has excellent interop features, as well as crossplatform support.\n\"REACT_DISABLE_JINT\" flag can be used to exclude Jint from build."},{type:Interop.ReactUnity.Scripting.JavascriptEngineType.ClearScript,packageName:'com.reactunity.clearscript',recommended:false,name:'ClearScript',implicit:false,tooltip:"ClearScript is a fast JS engine which uses the V8 engine. It consists of some managed and native C++ libraries. It supports only Mono platforms.\nClearScript is very fast and often reliable. It has decent interop features. It doesn't support IL2CPP platforms. Also it may have very big file sizes.\nClearScript is the only engine capable of debugging. JavaScript can be debugged on port 9222 with Node debuggers like Chrome Inspector or VSCode.\n\"REACT_DISABLE_CLEARSCRIPT\" flag can be used to exclude ClearScript from build. Note that native libraries must be excluded manually after build."}];var engineTypesLoaded=new Promise(function(resolve){var loadedCount=0;var _loop=function _loop(){var type=_engineTypes[_i];Window.CheckVersion(type.packageName,function(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===engineTypes.length){resolve();}});};for(var _i=0,_engineTypes=engineTypes;_i<_engineTypes.length;_i++){_loop();}});function EnginePlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),engines=_useState2[0],setEngines=_useState2[1];(0,react.useEffect)(function(){engineTypesLoaded.then(function(){return setEngines(engineTypes);});},[]);var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),loadingPlugin=_useState4[0],setLoadingPlugin=_useState4[1];var setIsLoading=(0,react.useContext)(SetIsLoadingContext);var installPlugin=(0,react.useCallback)(function(x){Window.InstallScopedPlugin(x.packageName);setLoadingPlugin(x.packageName);setIsLoading(true);},[]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["JavaScript Engines",!engines&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!engines&&engines.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_styles_module.infoButton,tooltip:x.tooltip,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.recommended?' (Recommended)':''),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_styles_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.recommended?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.implicit&&!x.recommended&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.implicit?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update ReactUnity to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:(loadingPlugin===x.packageName?'Updating to ':'Update to ')+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:loadingPlugin===x.packageName?'Installing':'Install'})})]},i);})]});}
 ;// CONCATENATED MODULE: ../../../node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 
 function _createForOfIteratorHelper(o, allowArrayLike) {
@@ -7677,9 +7662,9 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 ;// CONCATENATED MODULE: ./src/unity-plugins.tsx
-var pluginTypes=[{packageName:'com.unity.editorcoroutines',name:'Unity Editor Coroutines',required:true,tooltip:"Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed."},{packageName:'com.unity.vectorgraphics',name:'Unity Vector Graphics',required:false,tooltip:"Required for SVG rendering."},{packageName:'com.nosuchstudio.rtltmpro',name:'RTLTMPro',required:false,scoped:true,tooltip:"Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro."}];function initPlugins(){return new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(pluginTypes),_step;try{var _loop=function _loop(){var type=_step.value;var resolveFunc=function resolveFunc(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===pluginTypes.length){resolve();}};Window.CheckVersion(type.packageName,resolveFunc);};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});}function AdditionalPlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),plugins=_useState2[0],setPlugins=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),loadingPlugin=_useState4[0],setLoadingPlugin=_useState4[1];var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),updatePlugins=_useState6[0],setUpdatePlugins=_useState6[1];var setIsLoading=(0,react.useContext)(SetIsLoadingContext);var installPlugin=(0,react.useCallback)(function(x){var update=function update(){setIsLoading(false);setUpdatePlugins(function(x){return x+1;});};if(x.scoped)Window.InstallScopedPlugin(x.packageName,update);else Window.InstallUnityPlugin(x.packageName,update);setLoadingPlugin(x.packageName);setIsLoading(true);},[]);(0,react.useEffect)(function(){setPlugins(null);initPlugins().then(function(){return setPlugins(pluginTypes);});},[updatePlugins]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["Additional Plugins",!plugins&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!plugins&&plugins.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.required?' (Required)':' (Optional)'),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_index_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.required?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.required&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.required?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:(loadingPlugin===x.packageName?'Updating to ':'Update to ')+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:loadingPlugin===x.packageName?'Installing':'Install'})})]},i);})]});}
+var pluginTypes=[{packageName:'com.unity.editorcoroutines',name:'Unity Editor Coroutines',required:true,tooltip:"Required for running editor windows with ReactUnity (like this window). It is installed by default and highly recommended to keep it installed."},{packageName:'com.unity.vectorgraphics',name:'Unity Vector Graphics',required:false,tooltip:"Required for SVG rendering."},{packageName:'com.nosuchstudio.rtltmpro',name:'RTLTMPro',required:false,scoped:true,tooltip:"Right-To-Left Text Mesh Pro for Unity. This plugin adds support for Persian and Arabic languages to TextMeshPro."}];function initPlugins(){return new Promise(function(resolve){var loadedCount=0;var _iterator=_createForOfIteratorHelper(pluginTypes),_step;try{var _loop=function _loop(){var type=_step.value;var resolveFunc=function resolveFunc(version,latestVersion,hasUpdate){type.version=version;type.latestVersion=latestVersion;type.hasUpdate=hasUpdate;type.installed=!!type.version;loadedCount++;if(loadedCount===pluginTypes.length){resolve();}};Window.CheckVersion(type.packageName,resolveFunc);};for(_iterator.s();!(_step=_iterator.n()).done;){_loop();}}catch(err){_iterator.e(err);}finally{_iterator.f();}});}function AdditionalPlugins(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),plugins=_useState2[0],setPlugins=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),loadingPlugin=_useState4[0],setLoadingPlugin=_useState4[1];var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),updatePlugins=_useState6[0],setUpdatePlugins=_useState6[1];var setIsLoading=(0,react.useContext)(SetIsLoadingContext);var installPlugin=(0,react.useCallback)(function(x){var update=function update(){setIsLoading(false);setUpdatePlugins(function(x){return x+1;});};if(x.scoped)Window.InstallScopedPlugin(x.packageName,update);else Window.InstallUnityPlugin(x.packageName,update);setLoadingPlugin(x.packageName);setIsLoading(true);},[]);(0,react.useEffect)(function(){setPlugins(null);initPlugins().then(function(){return setPlugins(pluginTypes);});},[updatePlugins]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{flexDirection:'column',alignItems:'stretch'},children:["Additional Plugins",!plugins&&/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})}),!!plugins&&plugins.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{style:{margin:'10px 0 0 0'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{tooltip:x.tooltip,style:{flexDirection:'row'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_styles_module.infoButton,children:info}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:[x.name+(x.required?' (Required)':' (Optional)'),/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:src_styles_module.packageName,children:x.packageName})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexGrow:1,flexShrink:1,flexBasis:0}}),!x.installed?x.required?error:warn:x.hasUpdate?warn:check,!x.installed&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Not installed"}),!!x.installed?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:['Installed Version '+x.version,!x.required&&/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UninstallUnityPlugin(x.packageName);},children:"Uninstall"}),x.hasUpdate&&/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:x.required?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Update to get the latest version"}):/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:(loadingPlugin===x.packageName?'Updating to ':'Update to ')+x.latestVersion})})]}):/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return installPlugin(x);},children:loadingPlugin===x.packageName?'Installing':'Install'})})]},i);})]});}
 ;// CONCATENATED MODULE: ./src/main.tsx
-var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var createLearnUrl='https://github.com/ReactUnity/create#readme';var fullProjectPath=Window.GetProjectFullPath();function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(false),_useState14=_slicedToArray(_useState13,2),isLoading=_useState14[0],setIsLoading=_useState14[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(packageName,function(cur,latest,hasUpdate){setPackageVersion(cur);setLatestVersion(latest);setHasUpdate(hasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};return/*#__PURE__*/(0,jsx_runtime.jsx)(SetIsLoadingContext.Provider,{value:setIsLoading,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js was not detected in this computer. Make sure it is installed or ignore this message if it already is."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallScopedPlugin(packageName);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:[projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]}),!projectOk&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"React project does not exist at the default path."}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.infoButton,tooltip:"The default project path is \"".concat(fullProjectPath,"\".\nYou can ignore this message if you have a project created in another path."),children:info})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:createLearnUrl,children:"Learn How To Create"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)(EnginePlugins,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(AdditionalPlugins,{}),isLoading&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{"class":src_index_module.loadingOverlay,children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})})]})});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';var createLearnUrl='https://github.com/ReactUnity/create#readme';var fullProjectPath=Window.GetProjectFullPath();function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];var _useState13=(0,react.useState)(false),_useState14=_slicedToArray(_useState13,2),isLoading=_useState14[0],setIsLoading=_useState14[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(packageName,function(cur,latest,hasUpdate){setPackageVersion(cur);setLatestVersion(latest);setHasUpdate(hasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};return/*#__PURE__*/(0,jsx_runtime.jsx)(SetIsLoadingContext.Provider,{value:setIsLoading,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_styles_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"url(resource:ReactUnity/editor/logo)",className:src_styles_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),nodeVersion>=0&&/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_styles_module.success:src_styles_module.error,children:nodeVersion>=Window.RequiredNodeVersion?/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js was not detected in this computer. Make sure it is installed or ignore this message if it already is."}):/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js ",nodeVersion," is installed but minimum recommended version is ",Window.RequiredNodeVersion,"."]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_styles_module.success:src_styles_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.InstallScopedPlugin(packageName);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{className:projectOk?src_styles_module.success:src_styles_module.error,children:[projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]}),!projectOk&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"React project does not exist at the default path."}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_styles_module.infoButton,tooltip:"The default project path is \"".concat(fullProjectPath,"\".\nYou can ignore this message if you have a project created in another path."),children:info})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:createLearnUrl,children:"Learn How To Create"})})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_styles_module.success:src_styles_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[error,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)(EnginePlugins,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(AdditionalPlugins,{}),isLoading&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{"class":src_styles_module.loadingOverlay,children:/*#__PURE__*/(0,jsx_runtime.jsx)("spinner",{})})]})});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();

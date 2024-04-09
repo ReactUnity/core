@@ -1,8 +1,8 @@
 import { render } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
-import { check, error, info, packageName, SetIsLoadingContext, warn, Window } from './common';
+import { SetIsLoadingContext, Window, check, error, info, packageName, warn } from './common';
 import { EnginePlugins } from './engine-plugins';
-import styles from './index.module.scss';
+import styles from './styles.module.scss';
 import { AdditionalPlugins } from './unity-plugins';
 
 const vsCodePath = 'vscode://file/{path}/';

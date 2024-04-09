@@ -1,4 +1,4 @@
-import * as ReactUnityMaterialModule from '@reactunity/material/all';
+import * as ReactUnityMaterialModule from '@reactunity/material';
 import * as ReactUnityModule from '@reactunity/renderer';
 import * as ReactUnityWebGLCompat from '@reactunity/renderer/webgl-compat';
 import * as React from 'react';

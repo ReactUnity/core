@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { check, error, info, SetIsLoadingContext, warn, Window } from './common';
-import styles from './index.module.scss';
+import { SetIsLoadingContext, Window, check, error, info, warn } from './common';
+import styles from './styles.module.scss';
 
 interface PluginType {
   type: number;
