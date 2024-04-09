@@ -156,6 +156,12 @@ jobs:
         continue-on-error: true
         run: ls -A1t | tail -n +11 | xargs rm
 
+      - uses: actions/setup-dotnet@v4
+        if: matrix.performance
+        with:
+          dotnet-version: '3.1.x'
+          cache: true
+
       - name: Generate Performance Report
         if: matrix.performance
         working-directory: ./tests
