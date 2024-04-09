@@ -1,5 +1,5 @@
 import type { UnityInstance } from 'react-unity-webgl/declarations/unity-instance';
-import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from '../generated';
+import { ReactUnity, System, UnityEditor, UnityEngine, Yoga } from '../generated';
 
 export type NamespaceMap = {
   [key: string]: any;
@@ -7,7 +7,7 @@ export type NamespaceMap = {
   UnityEngine: typeof UnityEngine;
   UnityEditor: typeof UnityEditor;
   ReactUnity: typeof ReactUnity;
-  Facebook: typeof Facebook;
+  Yoga: typeof Yoga;
 };
 
 export type Namespace = keyof NamespaceMap;
@@ -18,7 +18,7 @@ declare global {
     UnityEngine: typeof UnityEngine;
     UnityEditor: typeof UnityEditor;
     ReactUnity: typeof ReactUnity;
-    Facebook: typeof Facebook;
+    Yoga: typeof Yoga;
   }
 
   var Interop: ReactUnity.Helpers.ReactInterop & DefaultInterop;

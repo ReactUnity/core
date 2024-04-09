@@ -1,13 +1,13 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 12/11/2023 01:13:26
+// Generated 09/04/2024 18:59:38
 //
 /* eslint-disable */
 
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
-import { UnityEngine } from './unity';
-import { Facebook } from './yoga';
+import { Unity, UnityEngine } from './unity';
+import { Yoga } from './yoga';
 
 type Byte = number;
 
@@ -16,7 +16,7 @@ export declare namespace ReactUnity {
     Context: ContextType;
     Parent: ReactUnity.IContainerComponent;
     Data: ReactUnity.Reactive.ReactiveObjectRecord;
-    Layout: Facebook.Yoga.YogaNode;
+    Layout: Yoga.YogaNode;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     StyleState: ReactUnity.Styling.StyleState;
     StateStyles: ReactUnity.Styling.StateStyles;
@@ -99,7 +99,7 @@ export declare namespace ReactUnity {
     Entering: boolean;
     Leaving: boolean;
     UpdatedThisFrame: boolean;
-    Layout: Facebook.Yoga.YogaNode;
+    Layout: Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     Style: ReactUnity.Styling.InlineStyles;
@@ -204,7 +204,7 @@ export declare namespace ReactUnity {
     Entering: boolean;
     Leaving: boolean;
     UpdatedThisFrame: boolean;
-    Layout: Facebook.Yoga.YogaNode;
+    Layout: Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     Style: ReactUnity.Styling.InlineStyles;
@@ -278,7 +278,7 @@ export declare namespace ReactUnity {
     Entering: boolean;
     Leaving: boolean;
     UpdatedThisFrame: boolean;
-    Layout: Facebook.Yoga.YogaNode;
+    Layout: Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     Style: ReactUnity.Styling.InlineStyles;
@@ -361,6 +361,7 @@ export declare namespace ReactUnity {
     CursorSet: ReactUnity.Styling.CursorSet;
     CursorAPI: ReactUnity.Helpers.CursorAPI;
     Disposables: (() => void)[];
+    CalculateLayoutRecursively(): void;
     UpdateElementsRecursively(): void;
     LateUpdateElementsRecursively(): void;
     InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
@@ -375,7 +376,7 @@ export declare namespace ReactUnity {
     HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
     BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
     SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-    GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
+    GetRef(refId: number, ensureUpdate?: boolean): any;
     FlushCommands(serializedCommands?: string): void;
     CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
     CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
@@ -391,6 +392,7 @@ export declare namespace ReactUnity {
     MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
     Context: ReactUnity.ReactContext;
     Timer: ReactUnity.Scheduling.ITimer;
+    Globals: ReactUnity.Helpers.GlobalRecord;
     destroyCancellationToken: System.Threading.CancellationToken;
     useGUILayout: boolean;
     didStart: boolean;
@@ -418,7 +420,6 @@ export declare namespace ReactUnity {
     hideFlags: UnityEngine.HideFlags;
     Source: ReactUnity.ScriptSource;
     EngineType: ReactUnity.Scripting.JavascriptEngineType;
-    Globals: ReactUnity.Helpers.SerializableDictionary;
     AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
     Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
     IsInvoking(): boolean;
@@ -448,6 +449,7 @@ export declare namespace ReactUnity {
     GetComponents(type: System.Type): UnityEngine.Component[];
     GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
     CompareTag(tag: string): boolean;
+    CompareTag(tag: UnityEngine.TagHandle): boolean;
     SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
     SendMessageUpwards(methodName: string, value: any): void;
     SendMessageUpwards(methodName: string): void;
@@ -541,7 +543,7 @@ export declare namespace ReactUnity {
     Entering: boolean;
     Leaving: boolean;
     UpdatedThisFrame: boolean;
-    Layout: Facebook.Yoga.YogaNode;
+    Layout: Yoga.YogaNode;
     StyleState: ReactUnity.Styling.StyleState;
     ComputedStyle: ReactUnity.Styling.NodeStyle;
     Style: ReactUnity.Styling.InlineStyles;
@@ -661,7 +663,7 @@ export declare namespace ReactUnity {
   export class ReactContext_Options {
     constructor();
     CalculatesLayout: boolean;
-    Globals: ReactUnity.Helpers.SerializableDictionary;
+    Globals: ReactUnity.Helpers.GlobalRecord;
     Source: ReactUnity.ScriptSource;
     Timer: ReactUnity.Scheduling.ITimer;
     MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
@@ -734,6 +736,7 @@ export declare namespace ReactUnity {
       RequiresConstantRepaint(): boolean;
       DrawHeader(): void;
       HasPreviewGUI(): boolean;
+      CreatePreview(inspectorPreviewWindow: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       GetPreviewTitle(): UnityEngine.GUIContent;
       RenderStaticPreview(assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number): UnityEngine.Texture2D;
       OnPreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
@@ -840,6 +843,7 @@ export declare namespace ReactUnity {
       position: UnityEngine.Rect;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
       static ShowDefaultWindow(): void;
       GetResolvedStyles(component: ReactUnity.IReactComponent): any;
       CreateStyleDictionary(): Record<string, any>;
@@ -921,6 +925,7 @@ export declare namespace ReactUnity {
       PackageVersion: string;
       LatestVersion: string;
       HasUpdate: boolean;
+      AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
       static ShowDefaultWindow(): void;
       GetProjectFullPath(): string;
       GetProjectPath(): string;
@@ -986,6 +991,7 @@ export declare namespace ReactUnity {
       RequiresConstantRepaint(): boolean;
       DrawHeader(): void;
       HasPreviewGUI(): boolean;
+      CreatePreview(inspectorPreviewWindow: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       GetPreviewTitle(): UnityEngine.GUIContent;
       RenderStaticPreview(assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number): UnityEngine.Texture2D;
       OnPreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
@@ -1235,6 +1241,7 @@ export declare namespace ReactUnity {
         static ComponentCreators: System.Collections.Generic.Dictionary;
         Initialize(): void;
         PlayAudio(clip: UnityEngine.AudioClip): void;
+        CalculateLayoutRecursively(): void;
         UpdateElementsRecursively(): void;
         LateUpdateElementsRecursively(): void;
         InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
@@ -1248,7 +1255,7 @@ export declare namespace ReactUnity {
         HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
         BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
         SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-        GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
+        GetRef(refId: number, ensureUpdate?: boolean): any;
         FlushCommands(serializedCommands?: string): void;
         CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
         CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
@@ -1298,6 +1305,7 @@ export declare namespace ReactUnity {
         position: UnityEngine.Rect;
         name: string;
         hideFlags: UnityEngine.HideFlags;
+        AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
         static ShowDefaultWindow(): void;
         Run(root?: UnityEngine.UIElements.VisualElement): void;
         Restart(root?: UnityEngine.UIElements.VisualElement): void;
@@ -1350,6 +1358,7 @@ export declare namespace ReactUnity {
         RequiresConstantRepaint(): boolean;
         DrawHeader(): void;
         HasPreviewGUI(): boolean;
+        CreatePreview(inspectorPreviewWindow: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
         GetPreviewTitle(): UnityEngine.GUIContent;
         RenderStaticPreview(assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number): UnityEngine.Texture2D;
         OnPreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
@@ -1412,6 +1421,7 @@ export declare namespace ReactUnity {
         position: UnityEngine.Rect;
         name: string;
         hideFlags: UnityEngine.HideFlags;
+        AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
         Run(root?: UnityEngine.UIElements.VisualElement): void;
         Restart(root?: UnityEngine.UIElements.VisualElement): void;
         AddSelectionChange(cb: any): (() => void);
@@ -1454,7 +1464,7 @@ export declare namespace ReactUnity {
         Property: ReactUnity.Editor.Renderer.ReactProperty;
         HostElement: UnityEngine.UIElements.VisualElement;
         OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
-        Globals: ReactUnity.Helpers.SerializableDictionary;
+        Globals: ReactUnity.Helpers.GlobalRecord;
         Source: ReactUnity.ScriptSource;
         Timer: ReactUnity.Scheduling.ITimer;
         MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
@@ -1483,7 +1493,7 @@ export declare namespace ReactUnity {
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Reactive.ReactiveObjectRecord;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
         StateStyles: ReactUnity.Styling.StateStyles;
@@ -1651,6 +1661,8 @@ export declare namespace ReactUnity {
         languageDirection: UnityEngine.UIElements.LanguageDirection;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
+        dataSource: any; // System.Object
+        dataSourcePath: Unity.Properties.PropertyPath;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -1691,6 +1703,14 @@ export declare namespace ReactUnity {
         EnableInClassList(className: string, enable: boolean): void;
         ClassListContains(cls: string): boolean;
         FindAncestorUserData(): any;
+        SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
+        GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
+        GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+        HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
+        ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
+        ClearBindings(): void;
+        GetHierarchicalDataSourceContext(): UnityEngine.UIElements.DataSourceContext;
+        GetDataSourceContext(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.DataSourceContext;
         Add(child: UnityEngine.UIElements.VisualElement): void;
         Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
         Remove(element: UnityEngine.UIElements.VisualElement): void;
@@ -1726,7 +1746,7 @@ export declare namespace ReactUnity {
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Reactive.ReactiveObjectRecord;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
         StateStyles: ReactUnity.Styling.StateStyles;
@@ -1815,7 +1835,7 @@ export declare namespace ReactUnity {
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Reactive.ReactiveObjectRecord;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
         StateStyles: ReactUnity.Styling.StateStyles;
@@ -1907,7 +1927,7 @@ export declare namespace ReactUnity {
         Context: ReactUnity.UIToolkit.UIToolkitContext;
         Parent: ReactUnity.IContainerComponent;
         Data: ReactUnity.Reactive.ReactiveObjectRecord;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         ComputedStyle: ReactUnity.Styling.NodeStyle;
         StyleState: ReactUnity.Styling.StyleState;
         StateStyles: ReactUnity.Styling.StateStyles;
@@ -1988,7 +2008,7 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class ReactUnityEditorElement {
-        constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.SerializableDictionary, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.Styling.Rules.IMediaProvider, engineType?: ReactUnity.Scripting.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
+        constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.GlobalRecord, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.Styling.Rules.IMediaProvider, engineType?: ReactUnity.Scripting.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean, advancedOptions?: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions);
         [key: string]: any;
         Window: ReactUnity.Editor.Renderer.ReactWindow;
         Inspector: ReactUnity.Editor.Renderer.ReactInspector;
@@ -1997,8 +2017,9 @@ export declare namespace ReactUnity {
         Timer: ReactUnity.Scheduling.ITimer;
         MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
         Script: ReactUnity.ScriptSource;
-        Globals: ReactUnity.Helpers.SerializableDictionary;
+        Globals: ReactUnity.Helpers.GlobalRecord;
         EngineType: ReactUnity.Scripting.JavascriptEngineType;
+        AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
         viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
@@ -2017,6 +2038,8 @@ export declare namespace ReactUnity {
         languageDirection: UnityEngine.UIElements.LanguageDirection;
         visible: boolean;
         generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
+        dataSource: any; // System.Object
+        dataSourcePath: Unity.Properties.PropertyPath;
         experimental: UnityEngine.UIElements.IExperimentalFeatures;
         hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
         cacheAsBitmap: boolean;
@@ -2054,6 +2077,14 @@ export declare namespace ReactUnity {
         EnableInClassList(className: string, enable: boolean): void;
         ClassListContains(cls: string): boolean;
         FindAncestorUserData(): any;
+        SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
+        GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
+        GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+        HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
+        ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
+        ClearBindings(): void;
+        GetHierarchicalDataSourceContext(): UnityEngine.UIElements.DataSourceContext;
+        GetDataSourceContext(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.DataSourceContext;
         Add(child: UnityEngine.UIElements.VisualElement): void;
         Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
         Remove(element: UnityEngine.UIElements.VisualElement): void;
@@ -2192,7 +2223,6 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Scheduling.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
       UpdateStringObjectDictionary(dict: ReactUnity.Reactive.ReactiveRecord<any>, isSerializing: boolean): void;
       OnExposedToScriptCode(engine: any): void;
@@ -2244,6 +2274,20 @@ export declare namespace ReactUnity {
       EnsureCapacity(capacity: number): number;
       TrimExcess(): void;
       TrimExcess(capacity: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReactProfiling {
+      constructor();
+      static Start: Unity.Profiling.ProfilerMarker;
+      static Layout: Unity.Profiling.ProfilerMarker;
+      static Update: Unity.Profiling.ProfilerMarker;
+      static LateUpdate: Unity.Profiling.ProfilerMarker;
+      static FlushCommands: Unity.Profiling.ProfilerMarker;
+      static ParseStyles: Unity.Profiling.ProfilerMarker;
+      static ProcessStyles: Unity.Profiling.ProfilerMarker;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2309,12 +2353,11 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class YogaHelpers {
-      static IsLegacyYoga: boolean;
-      static HasValue(val: Facebook.Yoga.YogaValue): boolean;
-      static IfPoint(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
-      static IfPercent(val: Facebook.Yoga.YogaValue, elseValue?: number): number;
-      static GetPointValue(val: Facebook.Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
-      static GetRatioValue(val: Facebook.Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
+      static HasValue(val: Yoga.YogaValue): boolean;
+      static IfPoint(val: Yoga.YogaValue, elseValue?: number): number;
+      static IfPercent(val: Yoga.YogaValue, elseValue?: number): number;
+      static GetPointValue(val: Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
+      static GetRatioValue(val: Yoga.YogaValue, fullSize: number, defaultValue?: number): number;
       static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
       static GetPointValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: UnityEngine.Vector2, yInverted?: boolean): UnityEngine.Vector2;
       static GetRatioValue(val: ReactUnity.Types.YogaValue2, fullSize: UnityEngine.Vector2, defaultValue?: number, yInverted?: boolean): UnityEngine.Vector2;
@@ -2367,7 +2410,7 @@ export declare namespace ReactUnity {
       Entering: boolean;
       Leaving: boolean;
       UpdatedThisFrame: boolean;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       Style: ReactUnity.Styling.InlineStyles;
@@ -2781,6 +2824,7 @@ export declare namespace ReactUnity {
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
       CompareTag(tag: string): boolean;
+      CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
       SendMessageUpwards(methodName: string, value: any): void;
       SendMessageUpwards(methodName: string): void;
@@ -2937,6 +2981,7 @@ export declare namespace ReactUnity {
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
       CompareTag(tag: string): boolean;
+      CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
       SendMessageUpwards(methodName: string, value: any): void;
       SendMessageUpwards(methodName: string): void;
@@ -3008,11 +3053,12 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean);
       Key: string;
       Capabilities: ReactUnity.Scripting.EngineCapabilities;
+      Runtime: any; // Microsoft.ClearScript.V8.V8Runtime
       Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
       NativeEngine: any; // System.Object
       Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
+      Execute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
+      TryExecute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): System.Exception;
       GetGlobal(key: string): any;
       DeleteGlobal(key: string): void;
       CreateTypeReference(type: System.Type): any;
@@ -3023,6 +3069,7 @@ export declare namespace ReactUnity {
       TraverseScriptObject(obj: any): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       IsScriptObject(obj: any): boolean;
       Update(): void;
+      static DocumentContextCallback(info: any): System.Collections.Generic.IDictionary;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3055,12 +3102,16 @@ export declare namespace ReactUnity {
       ClearScript = 2,
       QuickJS = 3,
     }
+    export enum JavascriptDocumentType {
+      Script = 0,
+      Module = 1,
+    }
     export interface IJavaScriptEngine {
       Key: string;
       NativeEngine: any; // System.Object
       Capabilities: ReactUnity.Scripting.EngineCapabilities;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
+      Execute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
+      TryExecute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): System.Exception;
       Evaluate(code: string, fileName?: string): any;
       GetGlobal(key: string): any;
       DeleteGlobal(key: string): void;
@@ -3083,8 +3134,8 @@ export declare namespace ReactUnity {
       NativeEngine: any; // System.Object
       Capabilities: ReactUnity.Scripting.EngineCapabilities;
       Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
+      Execute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
+      TryExecute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): System.Exception;
       GetGlobal(key: string): any;
       DeleteGlobal(key: string): void;
       CreateTypeReference(type: System.Type): any;
@@ -3104,13 +3155,6 @@ export declare namespace ReactUnity {
       constructor();
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
       Create(context: ReactUnity.ReactContext, debug: boolean, awaitDebugger: boolean, onInitialize: ((obj: ReactUnity.Scripting.IJavaScriptEngine) => void)): ReactUnity.Scripting.IJavaScriptEngine;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class JintExtensions {
-      static RunContinuations(engine: any): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3158,8 +3202,8 @@ export declare namespace ReactUnity {
       ApiBridge: ReactUnity.Scripting.QuickJSApiBridge;
       static InvokeReflectBinding(runtime: any): void;
       Evaluate(code: string, fileName?: string): any;
-      Execute(code: string, fileName?: string): void;
-      TryExecute(code: string, fileName?: string): System.Exception;
+      Execute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
+      TryExecute(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): System.Exception;
       GetGlobal(key: string): any;
       DeleteGlobal(key: string): void;
       CreateNativeValue(v: any): any;
@@ -3198,7 +3242,7 @@ export declare namespace ReactUnity {
       Entering: boolean;
       Leaving: boolean;
       UpdatedThisFrame: boolean;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       Style: ReactUnity.Styling.InlineStyles;
@@ -3226,6 +3270,8 @@ export declare namespace ReactUnity {
       AfterPseudo: ReactUnity.IReactComponent;
       BeforeRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
       AfterRules: ReactUnity.Styling.Rules.RuleTreeNode<ReactUnity.Styling.Rules.StyleData>[];
+      Type: ReactUnity.Scripting.JavascriptDocumentType;
+      Url: string;
       Execute(): void;
       SetParent(newParent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetProperty(propertyName: string, value: any): void;
@@ -3265,6 +3311,7 @@ export declare namespace ReactUnity {
       EngineInitialized: boolean;
       Debug: boolean;
       AwaitDebugger: boolean;
+      GlobalEventTarget: ReactUnity.Scripting.DomProxies.EventTarget;
       WebGLCompat: ReactUnity.Helpers.ReactUnityWebGLCompat;
       Context: ReactUnity.ReactContext;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
@@ -3272,8 +3319,9 @@ export declare namespace ReactUnity {
       RunMainScript(script: string, beforeStart?: (() => void), afterStart?: (() => void)): void;
       Initialize(callback: (() => void)): void;
       JsonParse(str: string): any;
-      ExecuteScript(code: string, fileName?: string): void;
+      ExecuteScript(code: string, fileName?: string, documentType?: ReactUnity.Scripting.JavascriptDocumentType): void;
       EvaluateScript(code: string, fileName?: string): any;
+      AsArray(obj: System.Collections.IList): any;
       CreateEventCallback(code: string, thisVal: any): ReactUnity.Helpers.Callback;
       WebGLCompatDispatchEvent(eventName: string, ...args: any[]): void;
       Dispose(): void;
@@ -3290,7 +3338,7 @@ export declare namespace ReactUnity {
       Count: number;
       IsReadOnly: boolean;
       Get(property: string): any;
-      GetPath(path: string): any;
+      static GetPath(path: string, _engine: ReactUnity.Scripting.IJavaScriptEngine, _allowedAssemblies: System.Reflection.Assembly[]): any;
       ToString(): string;
       Add(key: string, value: any): void;
       ContainsKey(key: string): boolean;
@@ -3304,6 +3352,19 @@ export declare namespace ReactUnity {
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
+    }
+    export class ClearScriptEngine_DocumentLoader {
+      constructor(ctx: ReactUnity.ReactContext);
+      MaxCacheSize: number;
+      LoadDocumentAsync(settings: any, sourceInfo: any | undefined, specifier: string, category: any, contextCallback: ((info: any) => Record<string, any>)): System.Threading.Tasks.Task<any>;
+      GetCachedDocument(uri: System.Uri): any;
+      CacheDocument(document: any, replace: boolean): any;
+      DiscardCachedDocuments(): void;
+      LoadDocument(settings: any, sourceInfo: any | undefined, specifier: string, category: any, contextCallback: ((info: any) => Record<string, any>)): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export namespace DomProxies {
       export class ConsoleProxy {
@@ -3358,6 +3419,8 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3378,6 +3441,8 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3405,6 +3470,8 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3434,8 +3501,11 @@ export declare namespace ReactUnity {
         appendChild(text: string): void;
         removeChild(text: string): void;
         insertBefore(child: string, before: any): void;
+        insertAdjacentElement(pos: string, style: ReactUnity.Scripting.DomProxies.IDomElementProxy): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3462,6 +3532,8 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3494,6 +3566,8 @@ export declare namespace ReactUnity {
         removeAttribute(key: any): void;
         hasAttribute(key: any): boolean;
         getAttribute(key: any): any;
+        querySelector(query: string): any;
+        querySelectorAll(query: string): any;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3506,7 +3580,7 @@ export declare namespace ReactUnity {
         GetAllEventListeners(eventName: string): any[];
         AddEventListener(eventName: string, fun: any): (() => void);
         RemoveEventListener(eventName: string, fun: any): void;
-        DispatchEvent(eventName: string, context: ReactUnity.ReactContext, ...argumentsCS: any[]): void;
+        DispatchEvent(eventName: string, context: ReactUnity.ReactContext, priority?: ReactUnity.EventPriority, ...argumentsCS: any[]): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3766,7 +3840,7 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
       }
       export class WebSocket {
-        constructor(url: string);
+        constructor(url: string, ...protocols: string[]);
         Connect(): void;
         Close(code?: ReactUnity.Scripting.DomProxies.WebSocketCloseCode, reason?: string): void;
         Send(data: Byte[]): void;
@@ -3778,7 +3852,7 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class WebSocketFactory {
-        static CreateInstance(url: string): ReactUnity.Scripting.DomProxies.WebSocket;
+        static CreateInstance(url: string, ...protocols: string[]): ReactUnity.Scripting.DomProxies.WebSocket;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3786,6 +3860,7 @@ export declare namespace ReactUnity {
       }
       export class WebSocketProxy {
         constructor(context: ReactUnity.ReactContext, url: string);
+        constructor(context: ReactUnity.ReactContext, url: string, protocol: string);
         constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
         url: string;
         readyState: number;
@@ -3801,11 +3876,11 @@ export declare namespace ReactUnity {
         static CLOSING: number;
         static CLOSED: number;
         binaryType: string;
-        close(code?: number, reason?: string): void;
+        close(code?: number | undefined, reason?: string): void;
         send(data: any): void;
         Dispose(): void;
-        addEventListener(eventType: string, callback: any, capture?: boolean): void;
-        removeEventListener(eventType: string, callback: any, capture?: boolean): void;
+        addEventListener(eventType: string, callback: any, options?: any): void;
+        removeEventListener(eventType: string, callback: any, options?: any): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3853,6 +3928,54 @@ export declare namespace ReactUnity {
         cssText: string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class EventTarget_addEventListener {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(eventName: string, value: any, options?: any): (() => void);
+        BeginInvoke(eventName: string, value: any, options: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): (() => void);
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class EventTarget_removeEventListener {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(eventName: string, value: any, options?: any): void;
+        BeginInvoke(eventName: string, value: any, options: any, callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): void;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class EventTarget_dispatchEvent {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        Invoke(eventName: string, argumentsCS: any[]): void;
+        BeginInvoke(eventName: string, argumentsCS: any[], callback: ((ar: System.IAsyncResult) => void), object: any): System.IAsyncResult;
+        EndInvoke(result: System.IAsyncResult): void;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
         GetType(): System.Type;
         ToString(): string;
       }
@@ -4053,7 +4176,7 @@ export declare namespace ReactUnity {
       boxShadow: ReactUnity.Types.ICssValueList<ReactUnity.Types.BoxShadow>;
       transformOrigin: ReactUnity.Types.YogaValue2;
       translate: ReactUnity.Types.YogaValue2;
-      translateZ: Facebook.Yoga.YogaValue;
+      translateZ: Yoga.YogaValue;
       scale: UnityEngine.Vector3;
       rotate: UnityEngine.Vector3;
       fontFamily: ReactUnity.Types.FontReference;
@@ -4081,19 +4204,19 @@ export declare namespace ReactUnity {
       borderImageSource: ReactUnity.Types.ImageDefinition;
       borderImageSlice: ReactUnity.Types.BorderImageSlice;
       borderImageRepeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
-      borderImageOutset: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
-      borderImageWidth: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
+      borderImageOutset: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
+      borderImageWidth: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
-      backgroundPositionX: ReactUnity.Types.ICssValueList<Facebook.Yoga.YogaValue>;
-      backgroundPositionY: ReactUnity.Types.ICssValueList<Facebook.Yoga.YogaValue>;
+      backgroundPositionX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
+      backgroundPositionY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
       backgroundSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       backgroundRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       backgroundRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       backgroundBlendMode: ReactUnity.Types.BackgroundBlendMode;
       maskImage: ReactUnity.Types.ICssValueList<ReactUnity.Types.ImageDefinition>;
-      maskPositionX: ReactUnity.Types.ICssValueList<Facebook.Yoga.YogaValue>;
-      maskPositionY: ReactUnity.Types.ICssValueList<Facebook.Yoga.YogaValue>;
+      maskPositionX: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
+      maskPositionY: ReactUnity.Types.ICssValueList<Yoga.YogaValue>;
       maskSize: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundSize>;
       maskRepeatX: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
       maskRepeatY: ReactUnity.Types.ICssValueList<ReactUnity.Types.BackgroundRepeat>;
@@ -4439,7 +4562,7 @@ export declare namespace ReactUnity {
       Entering: boolean;
       Leaving: boolean;
       UpdatedThisFrame: boolean;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       StyleState: ReactUnity.Styling.StyleState;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       Style: ReactUnity.Styling.InlineStyles;
@@ -4640,7 +4763,7 @@ export declare namespace ReactUnity {
         static Interpolate(from: UnityEngine.Vector3, to: UnityEngine.Vector3, t: number): UnityEngine.Vector3;
         static Interpolate(from: UnityEngine.Vector4, to: UnityEngine.Vector4, t: number): UnityEngine.Vector4;
         static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number): UnityEngine.Quaternion;
-        static Interpolate(from: Facebook.Yoga.YogaValue, to: Facebook.Yoga.YogaValue, t: number): Facebook.Yoga.YogaValue;
+        static Interpolate(from: Yoga.YogaValue, to: Yoga.YogaValue, t: number): Yoga.YogaValue;
         static Interpolate(t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType, mirror?: boolean): number;
         static Interpolate(from: number, to: number, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): number;
         static Interpolate(from: UnityEngine.Color, to: UnityEngine.Color, t: number, easeType: ReactUnity.Styling.Animations.TimingFunctionType): UnityEngine.Color;
@@ -5359,7 +5482,7 @@ export declare namespace ReactUnity {
         static Horizontal: ReactUnity.Styling.Converters.YogaValueConverter;
         static Vertical: ReactUnity.Styling.Converters.YogaValueConverter;
         StringifyInternal(value: any): string;
-        StringifyTyped(value: Facebook.Yoga.YogaValue): string;
+        StringifyTyped(value: Yoga.YogaValue): string;
         CanHandleKeyword(keyword: ReactUnity.Styling.CssKeyword): boolean;
         Convert(value: any): ReactUnity.Styling.Computed.IComputedValue;
         Stringify(value: any): string;
@@ -5419,7 +5542,7 @@ export declare namespace ReactUnity {
       export class MediaQueryList {
         media: string;
         matches: boolean;
-        static Create(provider: ReactUnity.Styling.Rules.IMediaProvider, media: string): ReactUnity.Styling.Rules.MediaQueryList;
+        static Create(provider: ReactUnity.Styling.Rules.IMediaProvider, media: string, context?: ReactUnity.ReactContext): ReactUnity.Styling.Rules.MediaQueryList;
         addEventListener(type: string, listener: any): void;
         removeEventListener(type: string, listener: any): void;
         Equals(obj: any): boolean;
@@ -5734,14 +5857,14 @@ export declare namespace ReactUnity {
       Luminosity = 15,
     }
     export class BorderImageSlice {
-      constructor(top: Facebook.Yoga.YogaValue, right: Facebook.Yoga.YogaValue, bottom: Facebook.Yoga.YogaValue, left: Facebook.Yoga.YogaValue, fill: boolean);
-      constructor(values: ReactUnity.Types.CssFourDirectional<Facebook.Yoga.YogaValue>, fill: boolean);
+      constructor(top: Yoga.YogaValue, right: Yoga.YogaValue, bottom: Yoga.YogaValue, left: Yoga.YogaValue, fill: boolean);
+      constructor(values: ReactUnity.Types.CssFourDirectional<Yoga.YogaValue>, fill: boolean);
       constructor(fill: boolean);
       static Auto: ReactUnity.Types.BorderImageSlice;
-      Top: Facebook.Yoga.YogaValue;
-      Right: Facebook.Yoga.YogaValue;
-      Bottom: Facebook.Yoga.YogaValue;
-      Left: Facebook.Yoga.YogaValue;
+      Top: Yoga.YogaValue;
+      Right: Yoga.YogaValue;
+      Bottom: Yoga.YogaValue;
+      Left: Yoga.YogaValue;
       Fill: boolean;
       Interpolate(to: any, t: number): any;
       Equals(obj: any): boolean;
@@ -5988,10 +6111,10 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class RadialGradient {
-      constructor(keys: ReactUnity.Types.BaseGradient_ColorKey[], repeating: boolean, at: ReactUnity.Types.YogaValue2, radius: Facebook.Yoga.YogaValue, sizeHint: ReactUnity.Types.RadialGradientSizeHint, shape: ReactUnity.Types.RadialGradientShape);
+      constructor(keys: ReactUnity.Types.BaseGradient_ColorKey[], repeating: boolean, at: ReactUnity.Types.YogaValue2, radius: Yoga.YogaValue, sizeHint: ReactUnity.Types.RadialGradientSizeHint, shape: ReactUnity.Types.RadialGradientShape);
       Type: ReactUnity.Types.GradientType;
       At: ReactUnity.Types.YogaValue2;
-      Radius: Facebook.Yoga.YogaValue;
+      Radius: Yoga.YogaValue;
       SizeHint: ReactUnity.Types.RadialGradientSizeHint;
       Shape: ReactUnity.Types.RadialGradientShape;
       Keys: ReactUnity.Types.BaseGradient_ColorKey[];
@@ -6186,9 +6309,9 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class YogaValue2 {
-      constructor(x: Facebook.Yoga.YogaValue, y: Facebook.Yoga.YogaValue);
-      X: Facebook.Yoga.YogaValue;
-      Y: Facebook.Yoga.YogaValue;
+      constructor(x: Yoga.YogaValue, y: Yoga.YogaValue);
+      X: Yoga.YogaValue;
+      Y: Yoga.YogaValue;
       static Zero: ReactUnity.Types.YogaValue2;
       static Undefined: ReactUnity.Types.YogaValue2;
       static Auto: ReactUnity.Types.YogaValue2;
@@ -6322,7 +6445,7 @@ export declare namespace ReactUnity {
     export class BaseGradient_ColorKey {
       constructor();
       Color?: UnityEngine.Color | undefined;
-      Offset: Facebook.Yoga.YogaValue;
+      Offset: Yoga.YogaValue;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6439,7 +6562,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -6537,7 +6660,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -6637,7 +6760,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -6739,7 +6862,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -6837,7 +6960,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -6932,7 +7055,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7029,7 +7152,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7129,7 +7252,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7229,7 +7352,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7333,7 +7456,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7430,7 +7553,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7531,7 +7654,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7612,7 +7735,7 @@ export declare namespace ReactUnity {
       constructor(context: ReactUnity.UGUI.UGUIContext, tag?: string);
       ShadowParent: ReactUnity.IReactComponent;
       Detached: boolean;
-      ReplacedLayout: Facebook.Yoga.YogaNode;
+      ReplacedLayout: Yoga.YogaNode;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Component: ReactUnity.UGUI.Behaviours.ReactElement;
@@ -7629,7 +7752,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7726,7 +7849,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7823,7 +7946,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -7923,7 +8046,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8022,7 +8145,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8116,7 +8239,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8218,7 +8341,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8316,7 +8439,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8413,7 +8536,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8515,7 +8638,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8618,7 +8741,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8719,7 +8842,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8814,7 +8937,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -8914,7 +9037,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UGUI.UGUIContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -9008,6 +9131,7 @@ export declare namespace ReactUnity {
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Context: ReactUnity.ReactContext;
       Timer: ReactUnity.Scheduling.ITimer;
+      Globals: ReactUnity.Helpers.GlobalRecord;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
       didStart: boolean;
@@ -9038,7 +9162,6 @@ export declare namespace ReactUnity {
       IconSets: ReactUnity.Styling.IconSet[];
       Source: ReactUnity.ScriptSource;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
       AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
       Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
       IsInvoking(): boolean;
@@ -9068,6 +9191,7 @@ export declare namespace ReactUnity {
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
       CompareTag(tag: string): boolean;
+      CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
       SendMessageUpwards(methodName: string, value: any): void;
       SendMessageUpwards(methodName: string): void;
@@ -9089,10 +9213,10 @@ export declare namespace ReactUnity {
     export class StylingHelpers {
       static GetStyleFloat(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): number;
       static GetStyleFloatDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): number;
-      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
-      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
-      static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): Facebook.Yoga.YogaValue;
-      static GetPointValue(val: Facebook.Yoga.YogaValue, fullSize: number): number;
+      static GetStyleLength(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty): Yoga.YogaValue;
+      static GetStyleLengthDouble(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty): Yoga.YogaValue;
+      static GetStyleLengthTriple(style: ReactUnity.Styling.NodeStyle, prop: ReactUnity.Styling.StyleProperty, prop2: ReactUnity.Styling.StyleProperty, prop3: ReactUnity.Styling.StyleProperty): Yoga.YogaValue;
+      static GetPointValue(val: Yoga.YogaValue, fullSize: number): number;
       static GetScreenClientRect(transform: UnityEngine.RectTransform): UnityEngine.Rect;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -9133,6 +9257,7 @@ export declare namespace ReactUnity {
       static textCreator: ((arg1: string, arg2: string, arg3: ReactUnity.UGUI.UGUIContext) => ReactUnity.ITextComponent);
       PlayAudio(clip: UnityEngine.AudioClip): void;
       CreateNativeObject(name: string, ...components: System.Type[]): UnityEngine.GameObject;
+      CalculateLayoutRecursively(): void;
       UpdateElementsRecursively(): void;
       LateUpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
@@ -9146,7 +9271,7 @@ export declare namespace ReactUnity {
       HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-      GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
+      GetRef(refId: number, ensureUpdate?: boolean): any;
       FlushCommands(serializedCommands?: string): void;
       CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
       CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
@@ -9177,7 +9302,7 @@ export declare namespace ReactUnity {
       IconSets: ReactUnity.Styling.IconSet[];
       DefaultIconSet: ReactUnity.Styling.IconSet;
       CursorSet: ReactUnity.Styling.CursorSet;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
+      Globals: ReactUnity.Helpers.GlobalRecord;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
@@ -9262,6 +9387,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9335,6 +9461,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9416,6 +9543,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9442,11 +9570,11 @@ export declare namespace ReactUnity {
       }
       export class ReactElement {
         constructor();
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Component: ReactUnity.UGUI.UGUIComponent;
         Text: any; // TMPro.TextMeshProUGUI
         Translate: ReactUnity.Types.YogaValue2;
-        TranslateZ: Facebook.Yoga.YogaValue;
+        TranslateZ: Yoga.YogaValue;
         PositionType: ReactUnity.Types.PositionType;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
@@ -9500,6 +9628,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9520,7 +9649,7 @@ export declare namespace ReactUnity {
       }
       export class ReactReplacedElement {
         constructor();
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Measurer: ReactUnity.UGUI.Measurers.ImageMeasurer;
         Position: ReactUnity.Types.YogaValue2;
         destroyCancellationToken: System.Threading.CancellationToken;
@@ -9575,6 +9704,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9620,7 +9750,7 @@ export declare namespace ReactUnity {
         particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Context: ReactUnity.UGUI.UGUIContext;
         Restart(): void;
         IsInvoking(): boolean;
@@ -9650,6 +9780,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9670,7 +9801,7 @@ export declare namespace ReactUnity {
       }
       export class ScrollContentResizer {
         constructor();
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Direction: ReactUnity.Types.ScrollDirection;
         destroyCancellationToken: System.Threading.CancellationToken;
         useGUILayout: boolean;
@@ -9725,6 +9856,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9805,6 +9937,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -9929,6 +10062,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10021,6 +10155,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10095,6 +10230,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10169,6 +10305,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10243,6 +10380,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10317,6 +10455,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10391,6 +10530,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10465,6 +10605,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10540,6 +10681,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10615,6 +10757,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10706,6 +10849,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10780,6 +10924,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10854,6 +10999,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -10928,6 +11074,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11002,6 +11149,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11077,6 +11225,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11151,6 +11300,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11225,6 +11375,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11300,6 +11451,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11386,6 +11538,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11460,6 +11613,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11534,6 +11688,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11608,6 +11763,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11675,7 +11831,7 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         static Create(go: UnityEngine.GameObject, comp: ReactUnity.UGUI.UGUIComponent, setContainer: ((obj: UnityEngine.RectTransform) => void)): ReactUnity.UGUI.Internal.BorderAndBackground;
         UpdateStyle(style: ReactUnity.Styling.NodeStyle): void;
-        UpdateLayout(layout: Facebook.Yoga.YogaNode): void;
+        UpdateLayout(layout: Yoga.YogaNode): void;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -11703,6 +11859,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11779,6 +11936,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11837,10 +11995,10 @@ export declare namespace ReactUnity {
         particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Context: ReactUnity.UGUI.UGUIContext;
         MarkDirty(): void;
-        Measure(node: Facebook.Yoga.YogaNode, width: number, wm: Facebook.Yoga.YogaMeasureMode, height: number, hm: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+        Measure(node: Yoga.YogaNode, width: number, wm: Yoga.YogaMeasureMode, height: number, hm: Yoga.YogaMeasureMode): Yoga.YogaSize;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -11868,6 +12026,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11913,9 +12072,9 @@ export declare namespace ReactUnity {
         particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Layout: Facebook.Yoga.YogaNode;
-        Measure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
-        static NoopMeasure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+        Layout: Yoga.YogaNode;
+        Measure(node: Yoga.YogaNode, width: number, widthMode: Yoga.YogaMeasureMode, height: number, heightMode: Yoga.YogaMeasureMode): Yoga.YogaSize;
+        static NoopMeasure(node: Yoga.YogaNode, width: number, widthMode: Yoga.YogaMeasureMode, height: number, heightMode: Yoga.YogaMeasureMode): Yoga.YogaSize;
         IsActive(): boolean;
         IsDestroyed(): boolean;
         IsInvoking(): boolean;
@@ -11945,6 +12104,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -11990,9 +12150,9 @@ export declare namespace ReactUnity {
         particleSystem: UnityEngine.Component;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Layout: Facebook.Yoga.YogaNode;
+        Layout: Yoga.YogaNode;
         Context: ReactUnity.UGUI.UGUIContext;
-        Measure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+        Measure(node: Yoga.YogaNode, width: number, widthMode: Yoga.YogaMeasureMode, height: number, heightMode: Yoga.YogaMeasureMode): Yoga.YogaSize;
         IsInvoking(): boolean;
         CancelInvoke(): void;
         Invoke(methodName: string, time: number): void;
@@ -12020,6 +12180,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12186,6 +12347,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12309,6 +12471,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12372,8 +12535,8 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         Slice: ReactUnity.Types.BorderImageSlice;
         Repeat: ReactUnity.Types.ICssFourDirectional<ReactUnity.Types.BackgroundRepeat>;
-        Outset: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
-        Width: ReactUnity.Types.ICssFourDirectional<Facebook.Yoga.YogaValue>;
+        Outset: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
+        Width: ReactUnity.Types.ICssFourDirectional<Yoga.YogaValue>;
         Context: ReactUnity.ReactContext;
         SetBorderImage(image: ReactUnity.Types.ImageDefinition): void;
         GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
@@ -12435,6 +12598,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12597,6 +12761,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12764,6 +12929,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12865,6 +13031,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -12943,6 +13110,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13018,6 +13186,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13093,6 +13262,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13166,6 +13336,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13241,6 +13412,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13316,6 +13488,7 @@ export declare namespace ReactUnity {
         GetComponents(type: System.Type): UnityEngine.Component[];
         GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
         CompareTag(tag: string): boolean;
+        CompareTag(tag: UnityEngine.TagHandle): boolean;
         SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
         SendMessageUpwards(methodName: string, value: any): void;
         SendMessageUpwards(methodName: string): void;
@@ -13349,7 +13522,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13439,7 +13612,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13533,7 +13706,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13629,7 +13802,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13721,7 +13894,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13809,7 +13982,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13897,7 +14070,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -13986,7 +14159,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14073,7 +14246,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14160,7 +14333,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14251,7 +14424,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14345,7 +14518,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14432,7 +14605,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14526,7 +14699,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14614,7 +14787,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14705,7 +14878,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14799,7 +14972,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14887,7 +15060,7 @@ export declare namespace ReactUnity {
       Context: ReactUnity.UIToolkit.UIToolkitContext;
       Parent: ReactUnity.IContainerComponent;
       Data: ReactUnity.Reactive.ReactiveObjectRecord;
-      Layout: Facebook.Yoga.YogaNode;
+      Layout: Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StyleState: ReactUnity.Styling.StyleState;
       StateStyles: ReactUnity.Styling.StateStyles;
@@ -14981,6 +15154,7 @@ export declare namespace ReactUnity {
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Context: ReactUnity.ReactContext;
       Timer: ReactUnity.Scheduling.ITimer;
+      Globals: ReactUnity.Helpers.GlobalRecord;
       destroyCancellationToken: System.Threading.CancellationToken;
       useGUILayout: boolean;
       didStart: boolean;
@@ -15008,7 +15182,6 @@ export declare namespace ReactUnity {
       hideFlags: UnityEngine.HideFlags;
       Source: ReactUnity.ScriptSource;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
       AdvancedOptions: ReactUnity.ReactRendererBase_ReactAdvancedOptions;
       PlayAudio(clip: UnityEngine.AudioClip): void;
       Render(): ReactUnity.ReactRendererBase_WaitForRenderToComplete;
@@ -15039,6 +15212,7 @@ export declare namespace ReactUnity {
       GetComponents(type: System.Type): UnityEngine.Component[];
       GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
       CompareTag(tag: string): boolean;
+      CompareTag(tag: UnityEngine.TagHandle): boolean;
       SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
       SendMessageUpwards(methodName: string, value: any): void;
       SendMessageUpwards(methodName: string): void;
@@ -15058,14 +15232,15 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class ReactUnityElement {
-      constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.SerializableDictionary, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.Styling.Rules.IMediaProvider, engineType?: ReactUnity.Scripting.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
+      constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.GlobalRecord, timer: ReactUnity.Scheduling.ITimer, mediaProvider: ReactUnity.Styling.Rules.IMediaProvider, engineType?: ReactUnity.Scripting.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean, advancedOptions?: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions);
       [key: string]: any;
       Context: ReactUnity.ReactContext;
       Timer: ReactUnity.Scheduling.ITimer;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
       Script: ReactUnity.ScriptSource;
-      Globals: ReactUnity.Helpers.SerializableDictionary;
+      Globals: ReactUnity.Helpers.GlobalRecord;
       EngineType: ReactUnity.Scripting.JavascriptEngineType;
+      AdvancedOptions: ReactUnity.UIToolkit.ReactUnityElement_ReactAdvancedOptions;
       viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
@@ -15084,6 +15259,8 @@ export declare namespace ReactUnity {
       languageDirection: UnityEngine.UIElements.LanguageDirection;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
+      dataSource: any; // System.Object
+      dataSourcePath: Unity.Properties.PropertyPath;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15121,6 +15298,14 @@ export declare namespace ReactUnity {
       EnableInClassList(className: string, enable: boolean): void;
       ClassListContains(cls: string): boolean;
       FindAncestorUserData(): any;
+      SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
+      GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
+      GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+      HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
+      ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
+      ClearBindings(): void;
+      GetHierarchicalDataSourceContext(): UnityEngine.UIElements.DataSourceContext;
+      GetDataSourceContext(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.DataSourceContext;
       Add(child: UnityEngine.UIElements.VisualElement): void;
       Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
       Remove(element: UnityEngine.UIElements.VisualElement): void;
@@ -15156,8 +15341,8 @@ export declare namespace ReactUnity {
     }
     export class StylingHelpers {
       static TextAlignMap: System.Collections.Generic.Dictionary;
-      static YogaValueToStyleLength(value: Facebook.Yoga.YogaValue): UnityEngine.UIElements.StyleLength;
-      static StyleLengthToYogaValue(value: UnityEngine.UIElements.StyleLength): Facebook.Yoga.YogaValue;
+      static YogaValueToStyleLength(value: Yoga.YogaValue): UnityEngine.UIElements.StyleLength;
+      static StyleLengthToYogaValue(value: UnityEngine.UIElements.StyleLength): Yoga.YogaValue;
       static ObjectFitToScaleMode(value: ReactUnity.Types.ObjectFit): UnityEngine.ScaleMode;
       static NormalizeFloat(value: number): number;
       static ConvertFontStyle(style: any, weight: any): UnityEngine.FontStyle;
@@ -15206,6 +15391,7 @@ export declare namespace ReactUnity {
       static ComponentCreators: System.Collections.Generic.Dictionary;
       Initialize(): void;
       PlayAudio(clip: UnityEngine.AudioClip): void;
+      CalculateLayoutRecursively(): void;
       UpdateElementsRecursively(): void;
       LateUpdateElementsRecursively(): void;
       InsertStyle(style: string): ReactUnity.Styling.StyleSheet;
@@ -15219,7 +15405,7 @@ export declare namespace ReactUnity {
       HandleUnknownProperty(cmp: ReactUnity.IReactComponent, propertyName: string, value: any): void;
       BindCommands(commandsObject: any, callbacksObject: any, getObjectCallback: any, getEventAsObjectCallback: any): void;
       SetRef(refId: number, cmp: ReactUnity.IReactComponent): void;
-      GetRef(refId: number, ensureUpdate?: boolean): ReactUnity.IReactComponent;
+      GetRef(refId: number, ensureUpdate?: boolean): any;
       FlushCommands(serializedCommands?: string): void;
       CreateText(tag?: string, text?: string, poolKey?: string): ReactUnity.ITextComponent;
       CreateDefaultComponent(tag: string, text: string, poolKey?: string): ReactUnity.IReactComponent;
@@ -15268,6 +15454,8 @@ export declare namespace ReactUnity {
       languageDirection: UnityEngine.UIElements.LanguageDirection;
       visible: boolean;
       generateVisualContent: ((obj: UnityEngine.UIElements.MeshGenerationContext) => void);
+      dataSource: any; // System.Object
+      dataSourcePath: Unity.Properties.PropertyPath;
       experimental: UnityEngine.UIElements.IExperimentalFeatures;
       hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
       cacheAsBitmap: boolean;
@@ -15300,6 +15488,14 @@ export declare namespace ReactUnity {
       EnableInClassList(className: string, enable: boolean): void;
       ClassListContains(cls: string): boolean;
       FindAncestorUserData(): any;
+      SetBinding(bindingId: UnityEngine.UIElements.BindingId, binding: UnityEngine.UIElements.Binding): void;
+      GetBinding(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.Binding;
+      GetBindingInfos(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.BindingInfo>;
+      HasBinding(bindingId: UnityEngine.UIElements.BindingId): boolean;
+      ClearBinding(bindingId: UnityEngine.UIElements.BindingId): void;
+      ClearBindings(): void;
+      GetHierarchicalDataSourceContext(): UnityEngine.UIElements.DataSourceContext;
+      GetDataSourceContext(bindingId: UnityEngine.UIElements.BindingId): UnityEngine.UIElements.DataSourceContext;
       Add(child: UnityEngine.UIElements.VisualElement): void;
       Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
       Remove(element: UnityEngine.UIElements.VisualElement): void;
@@ -15361,12 +15557,23 @@ export declare namespace ReactUnity {
       GetHashCode(): number;
       GetType(): System.Type;
     }
+    export class ReactUnityElement_ReactAdvancedOptions {
+      constructor();
+      Pooling: ReactUnity.ReactContext_PoolingType;
+      UnknownPropertyHandling: ReactUnity.ReactContext_UnknownPropertyHandling;
+      BeforeStart: (() => void);
+      AfterStart: (() => void);
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class UIToolkitContext_Options {
       constructor();
       CalculatesLayout: boolean;
       HostElement: UnityEngine.UIElements.VisualElement;
       OnAudioPlayback: ((obj: UnityEngine.AudioClip) => void);
-      Globals: ReactUnity.Helpers.SerializableDictionary;
+      Globals: ReactUnity.Helpers.GlobalRecord;
       Source: ReactUnity.ScriptSource;
       Timer: ReactUnity.Scheduling.ITimer;
       MediaProvider: ReactUnity.Styling.Rules.IMediaProvider;
