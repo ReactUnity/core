@@ -7,8 +7,10 @@ import {
 import { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
-import check from 'src/assets/check.svg';
 import styles from './index.module.scss';
+
+// @ts-expect-error
+import check from 'src/assets/check.svg?raw';
 
 const webImage =
   'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';

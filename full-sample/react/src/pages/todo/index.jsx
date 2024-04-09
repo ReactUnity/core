@@ -17,7 +17,7 @@ export function TodoItem(props) {
 export function TodoPage() {
   const lastId = useRef(3);
   const [items, setItems] = useState([
-    { id: 0, text: 'Walk the dog' },
+    { id: 0, text: 'Take a walk' },
     { id: 1, text: 'Buy groceries' },
     { id: 2, text: 'Prepare dinner' },
   ]);

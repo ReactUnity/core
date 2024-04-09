@@ -76,6 +76,7 @@ PlayerSettings:
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
   androidFullscreenMode: 1
+  androidAutoRotationBehavior: 1
   androidApplicationEntry: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
@@ -283,7 +284,6 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: d710cdcd1d3420b4495d3bc55b895ac8, type: 2}
   - {fileID: 11400000, guid: 1a73264a392f2ca4bb7a3cacb0528ea4, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -857,6 +857,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     : 
     Standalone: REACT_UNITY_DEVELOPER
+    WebGL: REACT_UNITY_DEVELOPER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
