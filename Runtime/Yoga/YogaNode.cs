@@ -414,10 +414,7 @@ namespace Yoga
         {
             if (_children != null)
             {
-                while (_children.Count > 0)
-                {
-                    RemoveAt(_children.Count - 1);
-                }
+                RemoveAll();
             }
         }
 

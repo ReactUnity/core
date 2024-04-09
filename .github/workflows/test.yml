@@ -31,12 +31,11 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - ubuntu-20.04
+          - ubuntu-latest
         unity:
           - { version: "2021.3.28f1" }
           - { version: "2021.1.28f1" }
           - { version: "2020.3.43f1" }
-          - { version: "2019.4.40f1" }
         suite:
           - {
               name: "Unit Tests",
@@ -116,10 +115,6 @@ jobs:
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.jint"]="file:../../jint"') > tests/Packages/manifest.json
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.quickjs"]="file:../../quickjs"') > tests/Packages/manifest.json
           echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.clearscript"]="file:../../clearscript"') > tests/Packages/manifest.json
-
-      - name: Install TMP v2
-        if: startsWith(matrix.unity.version, '2019')
-        run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.unity.textmeshpro"]="2.1.6"') > tests/Packages/manifest.json
 
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
