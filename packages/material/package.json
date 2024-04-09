@@ -52,17 +52,17 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.0",
     "memoize-one": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/renderer": "^0.16.1",
-    "@reactunity/scripts": "^0.16.3",
-    "concurrently": "^8.2.1",
+    "@reactunity/renderer": "^0.18.0",
+    "@reactunity/scripts": "^0.18.0",
+    "concurrently": "^8.2.2",
     "copyfiles": "^2.4.1",
     "onchange": "^7.1.0",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.2.2"
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.4"
   },
   "peerDependencies": {
     "@reactunity/renderer": "*",
