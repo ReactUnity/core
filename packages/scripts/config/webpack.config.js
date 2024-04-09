@@ -527,6 +527,8 @@ const baseConfigFactory = function (webpackEnv) {
                   : isEnvDevelopment,
                 modules: {
                   mode: 'local',
+                  namedExport: false,
+                  exportLocalsConvention: 'as-is',
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
               }),
@@ -567,6 +569,8 @@ const baseConfigFactory = function (webpackEnv) {
                     : isEnvDevelopment,
                   modules: {
                     mode: 'local',
+                    namedExport: false,
+                    exportLocalsConvention: 'as-is',
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
