@@ -82,6 +82,10 @@
               "path": "/reference/components/style"
             },
             {
+              "title": "prefab",
+              "path": "/reference/components/prefab"
+            },
+            {
               "title": "svg",
               "path": "/reference/components/svg"
             },
