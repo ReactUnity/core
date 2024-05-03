@@ -11,7 +11,7 @@ layout: API
 export default function App() {
   const imageAddress = 'https://picsum.photos/200';
   return <image
-    style={{ height: 300, objectFit: 'fit' }}
+    style={{ height: 300, objectFit: 'contain' }}
     source={imageAddress} />;
 };
 ```
@@ -21,7 +21,6 @@ export default function App() {
 ### Properties
 
 - **source**: Source of the image. Can be a url, a resource path (e.g. 'res:/path/to/file'), the `Texture2D` object or the `Sprite` object.
-- **fit**: Determines how to position the image inside the element.
 
 ### Notes
 
