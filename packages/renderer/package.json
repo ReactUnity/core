@@ -42,17 +42,17 @@
     "unity3d"
   ],
   "dependencies": {
-    "react-reconciler": "^0.29.0",
-    "use-sync-external-store": "^1.2.0"
+    "react-reconciler": "^0.29.2",
+    "use-sync-external-store": "^1.2.2"
   },
   "peerDependencies": {
     "react": "^18.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.18.0",
+    "@reactunity/scripts": "^0.18.4",
     "@types/react-reconciler": "^0.28.8",
-    "react-unity-webgl": "^9.5.1",
+    "react-unity-webgl": "^9.5.2",
     "rimraf": "^5.0.5",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   }
 }
