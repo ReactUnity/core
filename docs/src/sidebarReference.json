@@ -104,16 +104,8 @@
           "path": "/reference/css",
           "routes": [
             {
-              "title": "Animation",
-              "path": "/reference/css/animation"
-            },
-            {
               "title": "Appearance",
               "path": "/reference/css/appearance"
-            },
-            {
-              "title": "Audio",
-              "path": "/reference/css/audio"
             },
             {
               "title": "Background Color",
@@ -176,10 +168,6 @@
               "path": "/reference/css/transform-origin"
             },
             {
-              "title": "Transition",
-              "path": "/reference/css/transition"
-            },
-            {
               "title": "Translate",
               "path": "/reference/css/translate"
             },
@@ -190,6 +178,32 @@
             {
               "title": "Z Index",
               "path": "/reference/css/z-index"
+            }
+          ]
+        },
+        {
+          "title": "Animations",
+          "path": "/reference/animations",
+          "routes": [
+            {
+              "title": "CSS Keyframes",
+              "path": "/reference/animations/animation"
+            },
+            {
+              "title": "CSS Transition",
+              "path": "/reference/animations/transition"
+            },
+            {
+              "title": "Enter/Leave Animations",
+              "path": "/reference/animations/enter-leave"
+            },
+            {
+              "title": "Rect Transform Animations (motion)",
+              "path": "/reference/animations/motion"
+            },
+            {
+              "title": "Audio",
+              "path": "/reference/animations/audio"
             }
           ]
         },

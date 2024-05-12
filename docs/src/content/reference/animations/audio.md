@@ -3,7 +3,7 @@ title: Audio
 layout: API
 ---
 
-Plays audio in certain situations. This property is unique to React Unity and does not exist in web CSS.
+Plays audio in certain situations. This property is unique to React Unity and does not exist in standard CSS.
 
 The property must have the format `<url> <delay> <iteration-count | infinite>`
 - Example: `url(res:click) 400ms 1` - Meaning to play the resource named `click` after 400ms delay once
