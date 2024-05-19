@@ -67,6 +67,6 @@ namespace ReactUnity.Noop
             return tc;
         }
 
-        public override void PlayAudio(AudioClip clip) { }
+        public override void PlayAudio(AudioClip clip, float volume, float pitch) { }
     }
 }

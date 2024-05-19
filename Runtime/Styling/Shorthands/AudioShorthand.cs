@@ -22,6 +22,8 @@ namespace ReactUnity.Styling.Shorthands
             var clips = new IComputedValue[count];
             var delays = new IComputedValue[count];
             var iterations = new IComputedValue[count];
+            var volumes = new IComputedValue[count];
+            var pitches = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -33,10 +35,34 @@ namespace ReactUnity.Styling.Shorthands
                 var countSet = false;
                 var delaySet = false;
                 var clipSet = false;
+                var volumeSet = false;
+                var pitchSet = false;
 
                 for (int i = 0; i < splits.Count; i++)
                 {
                     var split = splits[i];
+
+                    if (AllConverters.FloatConverter.TryParse(split, out var fpitch))
+                    {
+                        if (!pitchSet)
+                        {
+                            pitches[ci] = fpitch;
+                            pitchSet = true;
+                        }
+                        else return null;
+                        continue;
+                    }
+
+                    if (AllConverters.FloatConverter.TryParse(split, out var fvolume))
+                    {
+                        if (!volumeSet)
+                        {
+                            volumes[ci] = fvolume;
+                            volumeSet = true;
+                        }
+                        else return null;
+                        continue;
+                    }
 
                     if (AllConverters.IterationCountConverter.TryParse(split, out var fcount))
                     {
@@ -75,11 +101,15 @@ namespace ReactUnity.Styling.Shorthands
                 if (!clipSet) return null;
                 if (!delaySet) delays[ci] = new ComputedConstant(0f);
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
+                if (!volumeSet) volumes[ci] = new ComputedConstant(1f);
+                if (!pitchSet) pitches[ci] = new ComputedConstant(1f);
             }
 
             collection[StyleProperties.audioClip] = StyleProperties.audioClip.Converter.FromList(clips);
             collection[StyleProperties.audioDelay] = StyleProperties.audioDelay.Converter.FromList(delays);
             collection[StyleProperties.audioIterationCount] = StyleProperties.audioIterationCount.Converter.FromList(iterations);
+            collection[StyleProperties.audioVolume] = StyleProperties.audioVolume.Converter.FromList(volumes);
+            collection[StyleProperties.audioPitch] = StyleProperties.audioPitch.Converter.FromList(pitches);
 
             return ModifiedProperties;
         }

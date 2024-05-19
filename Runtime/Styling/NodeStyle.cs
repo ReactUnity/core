@@ -122,6 +122,8 @@ namespace ReactUnity.Styling
         public ICssValueList<AudioReference> audioClip => GetStyleValue(StyleProperties.audioClip);
         public ICssValueList<int> audioIterationCount => GetStyleValue(StyleProperties.audioIterationCount);
         public ICssValueList<float> audioDelay => GetStyleValue(StyleProperties.audioDelay);
+        public ICssValueList<float> audioVolume => GetStyleValue(StyleProperties.audioVolume);
+        public ICssValueList<float> audioPitch => GetStyleValue(StyleProperties.audioPitch);
 
         #endregion
 

@@ -155,7 +155,7 @@ namespace ReactUnity.UGUI
             return tc;
         }
 
-        public override void PlayAudio(AudioClip clip)
+        public override void PlayAudio(AudioClip clip, float volume, float pitch)
         {
             var source = (Host as HostComponent).GetOrAddComponent<AudioSource>();
             source.PlayOneShot(clip);

@@ -64,6 +64,8 @@ namespace ReactUnity.Styling
             public bool Loaded;
             public bool Loading;
             public UnityEngine.AudioClip Clip;
+            public float Volume;
+            public float Pitch;
             public bool ShouldStart;
             public int CurrentLoop = 0;
         }
@@ -652,8 +654,10 @@ namespace ReactUnity.Styling
             var clip = Current.audioClip;
             var delay = Current.audioDelay;
             var iterationCount = Current.audioIterationCount;
+            var volume = Current.volume;
+            var pitch = Current.pitch;
 
-            var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count);
+            var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count, volume.Count, pitch.Count);
 
             if (audioStates == null) audioStates = new AudioState[maxLength];
 
@@ -669,7 +673,7 @@ namespace ReactUnity.Styling
                     if (state.Loaded && state.ShouldStart)
                     {
                         state.ShouldStart = false;
-                        Context.PlayAudio(state.Clip);
+                        Context.PlayAudio(state.Clip, state.Volume, state.Pitch);
                     }
                 };
 
@@ -683,6 +687,8 @@ namespace ReactUnity.Styling
 
                     clip.Get(i, AudioReference.None).Get(Context, (cl) => {
                         state.Clip = cl;
+                        state.Volume = volume.Get(i, 1);
+                        state.Pitch = volume.Get(i, 1);
                         state.Loaded = true;
                         state.Loading = false;
 

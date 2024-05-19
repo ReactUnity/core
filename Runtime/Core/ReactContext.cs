@@ -168,7 +168,7 @@ namespace ReactUnity
             return src;
         }
 
-        public abstract void PlayAudio(AudioClip clip);
+        public abstract void PlayAudio(AudioClip clip, float volume, float pitch);
 
         public void Start(Action afterStart = null)
         {

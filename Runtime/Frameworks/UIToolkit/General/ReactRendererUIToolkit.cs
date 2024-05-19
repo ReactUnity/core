@@ -40,10 +40,11 @@ namespace ReactUnity.UIToolkit
             return ctx;
         }
 
-        public void PlayAudio(AudioClip clip)
+        public void PlayAudio(AudioClip clip, float volume, float pitch)
         {
             var source = GetComponent<AudioSource>();
-            source.PlayOneShot(clip);
+            source.pitch = pitch;
+            source.PlayOneShot(clip, volume);
         }
 
         protected override IMediaProvider CreateMediaProvider()

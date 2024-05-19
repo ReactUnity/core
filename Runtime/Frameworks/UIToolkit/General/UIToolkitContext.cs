@@ -115,7 +115,7 @@ namespace ReactUnity.UIToolkit
             return tc;
         }
 
-        public override void PlayAudio(AudioClip clip)
+        public override void PlayAudio(AudioClip clip, float volume, float pitch)
         {
             OnAudioPlayback?.Invoke(clip);
         }
