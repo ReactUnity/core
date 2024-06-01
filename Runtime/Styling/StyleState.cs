@@ -652,8 +652,10 @@ namespace ReactUnity.Styling
             var clip = Current.audioClip;
             var delay = Current.audioDelay;
             var iterationCount = Current.audioIterationCount;
+            var volume = Current.audioVolume;
+            var pitch = Current.audioPitch;
 
-            var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count);
+            var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count, volume.Count, pitch.Count);
 
             if (audioStates == null) audioStates = new AudioState[maxLength];
 
@@ -664,12 +666,14 @@ namespace ReactUnity.Styling
 
                 var state = audioStates[i] = audioStates[i] ?? new AudioState();
 
+                var curVolume = volume.Get(i, 1);
+                var curPitch = pitch.Get(i, 1);
 
                 Action tryPlayClip = () => {
                     if (state.Loaded && state.ShouldStart)
                     {
                         state.ShouldStart = false;
-                        Context.PlayAudio(state.Clip);
+                        Context.PlayAudio(state.Clip, curVolume, curPitch);
                     }
                 };
 

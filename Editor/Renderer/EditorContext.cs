@@ -99,7 +99,7 @@ namespace ReactUnity.Editor.Renderer
             return res;
         }
 
-        public override void PlayAudio(AudioClip clip)
+        public override void PlayAudio(AudioClip clip, float volume, float pitch)
         {
             EditorSFX.PlayClip(clip);
         }

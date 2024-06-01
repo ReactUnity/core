@@ -14,7 +14,7 @@ namespace ReactUnity.Tests
         {
             var view = Q("#test");
 
-            view.Style.Set("audio", $"url({TestHelpers.ClickUrl}) 3s 5, url(https://example.com/file.ogg) infinite 2s, url(res:something)");
+            view.Style.Set("audio", $"url({TestHelpers.ClickUrl}) 3s 5, url(https://example.com/file.ogg) infinite 2s, url(res:something), url(res:something) 50%");
             yield return null;
 
             var st = view.ComputedStyle;
@@ -35,6 +35,13 @@ namespace ReactUnity.Tests
             Assert.AreEqual(1, st.audioIterationCount.Get(2));
 
 
+            Assert.AreEqual(AssetReferenceType.Resource, st.audioClip.Get(3).Type);
+            Assert.AreEqual("something", st.audioClip.Get(3).Value);
+            Assert.AreEqual(0, st.audioDelay.Get(3));
+            Assert.AreEqual(1, st.audioIterationCount.Get(3));
+            Assert.AreEqual(0.5f, st.audioVolume.Get(3));
+
+
             view.Style.Set("audio", "none");
             yield return null;
 
@@ -42,6 +49,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(null, st.audioClip.Get(0));
             Assert.AreEqual(0, st.audioDelay.Get(0));
             Assert.AreEqual(1, st.audioIterationCount.Get(0, 1));
+            Assert.AreEqual(1, st.audioVolume.Get(0, 1));
 
         }
     }

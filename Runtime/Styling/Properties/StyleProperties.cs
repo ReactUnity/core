@@ -113,6 +113,8 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<AudioReference> audioClip = new ValueListStyleProperty<AudioReference>("audioClip");
         public static readonly ValueListStyleProperty<int> audioIterationCount = new ValueListStyleProperty<int>("audioIterationCount", 1);
         public static readonly ValueListStyleProperty<float> audioDelay = new ValueListStyleProperty<float>("audioDelay");
+        public static readonly ValueListStyleProperty<float> audioVolume = new ValueListStyleProperty<float>("audioVolume", 1f, true, baseConverter: AllConverters.PercentageConverter);
+        public static readonly ValueListStyleProperty<float> audioPitch = new ValueListStyleProperty<float>("audioPitch", 1f);
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
@@ -233,10 +235,14 @@ namespace ReactUnity.Styling
             { "audioClip", audioClip },
             { "audioDelay", audioDelay },
             { "audioIterationCount", audioIterationCount },
+            { "audioVolume", audioVolume },
+            { "audioPitch", audioPitch },
 
             { "audio-clip", audioClip },
             { "audio-delay", audioDelay },
             { "audio-iteration-count", audioIterationCount },
+            { "audio-volume", audioVolume },
+            { "audio-pitch", audioPitch },
 
             { "border-image-source", borderImageSource },
             { "border-image-slice", borderImageSlice },

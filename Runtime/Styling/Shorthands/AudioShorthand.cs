@@ -22,6 +22,7 @@ namespace ReactUnity.Styling.Shorthands
             var clips = new IComputedValue[count];
             var delays = new IComputedValue[count];
             var iterations = new IComputedValue[count];
+            var volumes = new IComputedValue[count];
 
             for (int ci = 0; ci < count; ci++)
             {
@@ -33,6 +34,7 @@ namespace ReactUnity.Styling.Shorthands
                 var countSet = false;
                 var delaySet = false;
                 var clipSet = false;
+                var volumeSet = false;
 
                 for (int i = 0; i < splits.Count; i++)
                 {
@@ -44,6 +46,17 @@ namespace ReactUnity.Styling.Shorthands
                         {
                             iterations[ci] = fcount;
                             countSet = true;
+                        }
+                        else return null;
+                        continue;
+                    }
+
+                    if (AllConverters.PercentageConverter.TryParse(split, out var fvolume))
+                    {
+                        if (!volumeSet)
+                        {
+                            volumes[ci] = fvolume;
+                            volumeSet = true;
                         }
                         else return null;
                         continue;
@@ -75,11 +88,13 @@ namespace ReactUnity.Styling.Shorthands
                 if (!clipSet) return null;
                 if (!delaySet) delays[ci] = new ComputedConstant(0f);
                 if (!countSet) iterations[ci] = new ComputedConstant(1);
+                if (!volumeSet) volumes[ci] = new ComputedConstant(1f);
             }
 
             collection[StyleProperties.audioClip] = StyleProperties.audioClip.Converter.FromList(clips);
             collection[StyleProperties.audioDelay] = StyleProperties.audioDelay.Converter.FromList(delays);
             collection[StyleProperties.audioIterationCount] = StyleProperties.audioIterationCount.Converter.FromList(iterations);
+            collection[StyleProperties.audioVolume] = StyleProperties.audioVolume.Converter.FromList(volumes);
 
             return ModifiedProperties;
         }
