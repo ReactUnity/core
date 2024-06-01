@@ -64,8 +64,6 @@ namespace ReactUnity.Styling
             public bool Loaded;
             public bool Loading;
             public UnityEngine.AudioClip Clip;
-            public float Volume;
-            public float Pitch;
             public bool ShouldStart;
             public int CurrentLoop = 0;
         }
@@ -668,12 +666,14 @@ namespace ReactUnity.Styling
 
                 var state = audioStates[i] = audioStates[i] ?? new AudioState();
 
+                var curVolume = volume.Get(i, 1);
+                var curPitch = pitch.Get(i, 1);
 
                 Action tryPlayClip = () => {
                     if (state.Loaded && state.ShouldStart)
                     {
                         state.ShouldStart = false;
-                        Context.PlayAudio(state.Clip, state.Volume, state.Pitch);
+                        Context.PlayAudio(state.Clip, curVolume, curPitch);
                     }
                 };
 
@@ -687,8 +687,6 @@ namespace ReactUnity.Styling
 
                     clip.Get(i, AudioReference.None).Get(Context, (cl) => {
                         state.Clip = cl;
-                        state.Volume = volume.Get(i, 1);
-                        state.Pitch = pitch.Get(i, 1);
                         state.Loaded = true;
                         state.Loading = false;
 
