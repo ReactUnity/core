@@ -688,7 +688,7 @@ namespace ReactUnity.Styling
                     clip.Get(i, AudioReference.None).Get(Context, (cl) => {
                         state.Clip = cl;
                         state.Volume = volume.Get(i, 1);
-                        state.Pitch = volume.Get(i, 1);
+                        state.Pitch = pitch.Get(i, 1);
                         state.Loaded = true;
                         state.Loading = false;
 

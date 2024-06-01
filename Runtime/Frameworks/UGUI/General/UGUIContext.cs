@@ -158,7 +158,8 @@ namespace ReactUnity.UGUI
         public override void PlayAudio(AudioClip clip, float volume, float pitch)
         {
             var source = (Host as HostComponent).GetOrAddComponent<AudioSource>();
-            source.PlayOneShot(clip);
+            source.pitch = pitch;
+            source.PlayOneShot(clip, volume);
         }
 
         public GameObject CreateNativeObject(string name, params Type[] components)
