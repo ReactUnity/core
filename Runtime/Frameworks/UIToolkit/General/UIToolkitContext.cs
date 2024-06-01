@@ -12,7 +12,7 @@ namespace ReactUnity.UIToolkit
         public new class Options : ReactContext.Options
         {
             public VisualElement HostElement;
-            public Action<AudioClip> OnAudioPlayback;
+            public Action<AudioClip, float, float> OnAudioPlayback;
             public override bool CalculatesLayout => false;
         }
 
@@ -69,7 +69,7 @@ namespace ReactUnity.UIToolkit
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        private Action<AudioClip> OnAudioPlayback = null;
+        private Action<AudioClip, float, float> OnAudioPlayback = null;
 
         public VisualElement HostElement { get; }
 
@@ -117,7 +117,7 @@ namespace ReactUnity.UIToolkit
 
         public override void PlayAudio(AudioClip clip, float volume, float pitch)
         {
-            OnAudioPlayback?.Invoke(clip);
+            OnAudioPlayback?.Invoke(clip, volume, pitch);
         }
     }
 }

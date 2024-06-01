@@ -654,8 +654,8 @@ namespace ReactUnity.Styling
             var clip = Current.audioClip;
             var delay = Current.audioDelay;
             var iterationCount = Current.audioIterationCount;
-            var volume = Current.volume;
-            var pitch = Current.pitch;
+            var volume = Current.audioVolume;
+            var pitch = Current.audioPitch;
 
             var maxLength = Mathf.Max(delay.Count, iterationCount.Count, clip.Count, volume.Count, pitch.Count);
 
