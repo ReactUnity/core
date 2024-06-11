@@ -1,5 +1,5 @@
 ---
-title: <style>
+title: <script>
 layout: API
 ---
 
