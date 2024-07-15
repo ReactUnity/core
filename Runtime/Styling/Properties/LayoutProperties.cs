@@ -59,8 +59,8 @@ namespace ReactUnity.Styling
         public static readonly LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: AllConverters.LengthConverter);
         public static readonly LayoutProperty<int> Order = new LayoutProperty<int>("order", true);
 
-        public static readonly LayoutProperty<float> RowGap = new LayoutProperty<float>("RowGap", true, 0f, converter: AllConverters.LengthConverter);
-        public static readonly LayoutProperty<float> ColumnGap = new LayoutProperty<float>("ColumnGap", true, 0f, converter: AllConverters.LengthConverter);
+        public static readonly LayoutProperty<YogaValue> RowGap = new LayoutProperty<YogaValue>("RowGap", true);
+        public static readonly LayoutProperty<YogaValue> ColumnGap = new LayoutProperty<YogaValue>("ColumnGap", true);
 
         public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase)
         {

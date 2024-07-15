@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Yoga;
 
 namespace ReactUnity.Styling.Shorthands
 {
@@ -35,7 +36,8 @@ namespace ReactUnity.Styling.Shorthands
         internal static readonly StyleShorthand Animation = new AnimationShorthand("animation");
         internal static readonly StyleShorthand Audio = new AudioShorthand("audio");
         internal static readonly StyleShorthand Transform = new TransformShorthand("transform");
-        internal static readonly StyleShorthand Gap = new XYShorthand<float>("gap", LayoutProperties.RowGap, LayoutProperties.ColumnGap);
+        internal static readonly StyleShorthand Gap = new XYShorthand<YogaValue>("gap", LayoutProperties.RowGap, LayoutProperties.ColumnGap);
+
         internal static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "all", All },

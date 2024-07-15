@@ -296,22 +296,31 @@ namespace Yoga
             }
         }
 
-        public float Gap
+        public YogaValue Gap
         {
-            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.All);
-            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value);
+            set
+            {
+                if (value.Unit == YogaUnit.Percent) Native.YGNodeStyleSetGapPercent(_ygNode, YogaGutter.All, value.Value);
+                else Native.YGNodeStyleSetGap(_ygNode, YogaGutter.All, value.Value);
+            }
         }
 
-        public float ColumnGap
+        public YogaValue ColumnGap
         {
-            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Column);
-            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value);
+            set
+            {
+                if (value.Unit == YogaUnit.Percent) Native.YGNodeStyleSetGapPercent(_ygNode, YogaGutter.Column, value.Value);
+                else Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Column, value.Value);
+            }
         }
 
-        public float RowGap
+        public YogaValue RowGap
         {
-            get => Native.YGNodeStyleGetGap(_ygNode, YogaGutter.Row);
-            set => Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value);
+            set
+            {
+                if (value.Unit == YogaUnit.Percent) Native.YGNodeStyleSetGapPercent(_ygNode, YogaGutter.Row, value.Value);
+                else Native.YGNodeStyleSetGap(_ygNode, YogaGutter.Row, value.Value);
+            }
         }
 
         public float LayoutLeft => Native.YGNodeLayoutGetLeft(_ygNode);

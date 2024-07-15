@@ -318,6 +318,9 @@ namespace Yoga
         public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gutter, float gapLength);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetGapPercent(YGNodeHandle node, YogaGutter gutter, float percent);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gutter);
 
         #endregion
