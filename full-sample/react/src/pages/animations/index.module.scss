@@ -1,6 +1,13 @@
 .host {
   align-items: center;
 
+  button {
+    &:hover {
+      audio: url(res:click) 50%;
+      audio-pitch: 1.5;
+    }
+  }
+
   catwalk {
     width: 399px;
     height: 200px;
