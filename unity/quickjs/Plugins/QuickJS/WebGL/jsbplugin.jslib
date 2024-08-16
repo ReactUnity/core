@@ -1,6 +1,6 @@
 /**
  * Build with the following command:
- * npx -p typescript tsc
+ * npx -p typescript tsc && node postbuild.mjs
  *
  * BEWARE: Using some syntaxes will make Emscripten fail while building
  * Such known syntaxes: Object spread (...), BigInt literals
@@ -319,7 +319,6 @@ var UnityJSBPlugin = {
             stringToUTF8(arg, buffer, bufferSize);
             return [buffer, bufferSize];
         },
-        dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
         runtimes: {},
         contexts: {},
         lastRuntimeId: 1,
@@ -983,18 +982,18 @@ var UnityJSBPlugin = {
             if (cproto === 0 /* JSCFunctionEnum.JS_CFUNC_generic */) {
                 var argc = args.length;
                 var _b = refs.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
-                unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
+                {{{ makeDynCall('viiiii', 'func') }}}(ret, ctx, thisPtr, argc, argv);
                 argIds.forEach(refs.popId);
                 _free(argv);
             }
             else if (cproto === 9 /* JSCFunctionEnum.JS_CFUNC_setter */) {
                 var _c = refs.allocate(args[0]), val = _c[0], valId = _c[1];
-                unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, val]);
+                {{{ makeDynCall('viiii', 'func') }}}(ret, ctx, thisPtr, val);
                 refs.popId(valId);
                 _free(val);
             }
             else if (cproto === 8 /* JSCFunctionEnum.JS_CFUNC_getter */) {
-                unityJsbState.dynCall('viii', func, [ret, ctx, thisPtr]);
+                {{{ makeDynCall('viii', 'func') }}}(ret, ctx, thisPtr);
             }
             else {
                 throw new Error("Unknown type of function specified: name=".concat(name, " type=").concat(cproto));
@@ -1021,25 +1020,25 @@ var UnityJSBPlugin = {
             if (cproto === 1 /* JSCFunctionEnum.JS_CFUNC_generic_magic */) {
                 var argc = args.length;
                 var _b = refs.batchAllocate(Array.from(args)), argv = _b[0], argIds = _b[1];
-                unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+                {{{ makeDynCall('viiiiii', 'func') }}}(ret, ctx, thisPtr, argc, argv, magic);
                 argIds.forEach(refs.popId);
                 _free(argv);
             }
             else if (cproto === 3 /* JSCFunctionEnum.JS_CFUNC_constructor_magic */) {
                 var argc = args.length;
                 var _c = refs.batchAllocate(Array.from(args)), argv = _c[0], argIds = _c[1];
-                unityJsbState.dynCall('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+                {{{ makeDynCall('viiiiii', 'func') }}}(ret, ctx, thisPtr, argc, argv, magic);
                 argIds.forEach(refs.popId);
                 _free(argv);
             }
             else if (cproto === 11 /* JSCFunctionEnum.JS_CFUNC_setter_magic */) {
                 var _d = refs.allocate(args[0]), val = _d[0], valId = _d[1];
-                unityJsbState.dynCall('viiiii', func, [ret, ctx, thisPtr, val, magic]);
+                {{{ makeDynCall('viiiii', 'func') }}}(ret, ctx, thisPtr, val, magic);
                 refs.popId(valId);
                 _free(val);
             }
             else if (cproto === 10 /* JSCFunctionEnum.JS_CFUNC_getter_magic */) {
-                unityJsbState.dynCall('viiii', func, [ret, ctx, thisPtr, magic]);
+                {{{ makeDynCall('viiii', 'func') }}}(ret, ctx, thisPtr, magic);
             }
             else {
                 throw new Error("Unknown type of function specified: name=".concat(name, " type=").concat(cproto));

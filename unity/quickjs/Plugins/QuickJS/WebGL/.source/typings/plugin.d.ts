@@ -6,7 +6,6 @@ declare global {
   export declare type PluginState = {
     stringify: ((ptr: number | Pointer<string>, bufferLength?: number) => string);
     bufferify: ((str: string) => [number, number]);
-    dynCall: typeof dynCall;
     runtimes: Record<string, PluginRuntime | undefined>;
     contexts: Record<string, PluginContext | undefined>;
     lastRuntimeId: number;

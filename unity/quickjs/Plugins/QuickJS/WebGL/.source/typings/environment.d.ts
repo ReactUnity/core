@@ -8,11 +8,20 @@ declare global {
   const Pointer_stringify: (val: any) => string;
   const lengthBytesUTF8: (val: any) => number;
 
-  const dynCall: <T = void>(
-    signature: T extends void ? string : string,
+  type MacroArgCode = 'v' | 'i' | 'f';
+  type MacroSignature<C extends string = MacroArgCode> = `${C}` | `${C}${C}` | `${C}${C}${C}` | `${C}${C}${C}${C}`
+    | `${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}` | `${C}${C}${C}${C}${C}${C}${C}`;
+
+  type DynCallFn<T = void> = (...args: T extends void ? (number | Pointer<any>)[] : Parameters<T>) => void;
+
+  /**
+   * This is not a real function, but a macro that is replaced by the compiler.
+   */
+  const makeDynCallMacro: <T = void>(
+    signature: MacroSignature,
     ptr: number | Pointer<any>,
-    args: T extends void ? (number | Pointer<any>)[] : Parameters<T>
-  ) => void;
+  ) => DynCallFn<T>;
+
   const Runtime: any;
   const LibraryManager: any;
   const autoAddDeps: any;

@@ -1,6 +1,6 @@
 /**
  * Build with the following command:
- * npx -p typescript tsc
+ * npx -p typescript tsc && node postbuild.mjs
  *
  * BEWARE: Using some syntaxes will make Emscripten fail while building
  * Such known syntaxes: Object spread (...), BigInt literals
@@ -346,7 +346,6 @@ const UnityJSBPlugin: PluginType = {
       return [buffer, bufferSize];
     },
 
-    dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
     runtimes: {},
     contexts: {},
     lastRuntimeId: 1,
@@ -1192,18 +1191,18 @@ const UnityJSBPlugin: PluginType = {
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic) {
         const argc = args.length;
         const [argv, argIds] = refs.batchAllocate(Array.from(args));
-        unityJsbState.dynCall<typeof JSApiDelegates.JSCFunction>('viiiii', func, [ret, ctx, thisPtr, argc, argv]);
+        makeDynCallMacro<typeof JSApiDelegates.JSCFunction>('viiiii', func)(ret, ctx, thisPtr, argc, argv);
         argIds.forEach(refs.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter) {
         const [val, valId] = refs.allocate(args[0]);
-        unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunction>('viiii', func, [ret, ctx, thisPtr, val]);
+        makeDynCallMacro<typeof JSApiDelegates.JSSetterCFunction>('viiii', func)(ret, ctx, thisPtr, val);
         refs.popId(valId);
         _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter) {
-        unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunction>('viii', func, [ret, ctx, thisPtr]);
+        makeDynCallMacro<typeof JSApiDelegates.JSGetterCFunction>('viii', func)(ret, ctx, thisPtr);
       }
       else {
         throw new Error(`Unknown type of function specified: name=${name} type=${cproto}`);
@@ -1237,25 +1236,25 @@ const UnityJSBPlugin: PluginType = {
       if (cproto === JSCFunctionEnum.JS_CFUNC_generic_magic) {
         const argc = args.length;
         const [argv, argIds] = refs.batchAllocate(Array.from(args));
-        unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+        makeDynCallMacro<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func)(ret, ctx, thisPtr, argc, argv, magic);
         argIds.forEach(refs.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_constructor_magic) {
         const argc = args.length;
         const [argv, argIds] = refs.batchAllocate(Array.from(args));
-        unityJsbState.dynCall<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func, [ret, ctx, thisPtr, argc, argv, magic]);
+        makeDynCallMacro<typeof JSApiDelegates.JSCFunctionMagic>('viiiiii', func)(ret, ctx, thisPtr, argc, argv, magic);
         argIds.forEach(refs.popId);
         _free(argv);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_setter_magic) {
         const [val, valId] = refs.allocate(args[0]);
-        unityJsbState.dynCall<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func, [ret, ctx, thisPtr, val, magic]);
+        makeDynCallMacro<typeof JSApiDelegates.JSSetterCFunctionMagic>('viiiii', func)(ret, ctx, thisPtr, val, magic);
         refs.popId(valId);
         _free(val);
       }
       else if (cproto === JSCFunctionEnum.JS_CFUNC_getter_magic) {
-        unityJsbState.dynCall<typeof JSApiDelegates.JSGetterCFunctionMagic>('viiii', func, [ret, ctx, thisPtr, magic]);
+        makeDynCallMacro<typeof JSApiDelegates.JSGetterCFunctionMagic>('viiii', func)(ret, ctx, thisPtr, magic);
       }
       else {
         throw new Error(`Unknown type of function specified: name=${name} type=${cproto}`);

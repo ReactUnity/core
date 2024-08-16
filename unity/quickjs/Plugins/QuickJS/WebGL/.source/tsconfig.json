@@ -25,10 +25,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "removeComments": false,
-    "noImplicitUseStrict": true,
     "noUncheckedIndexedAccess": false,
-    "suppressExcessPropertyErrors": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noPropertyAccessFromIndexSignature": false,
     "strictNullChecks": false
   },
