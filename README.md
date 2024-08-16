@@ -12,9 +12,9 @@ It also supports a subset of CSS features and Flexbox layout system.
 
 Node is only used while developing and not required in runtime or after the project is built. Following are the minimum recommended versions. Use latest stable versions when possible.
 
-- Node 12
-- Unity 2019.4
-- TMPro v2 or v3
+- Node 20
+- Unity 2021.3
+- TMPro v3
 
 ## Installing
 
