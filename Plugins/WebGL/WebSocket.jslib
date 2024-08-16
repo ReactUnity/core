@@ -31,7 +31,6 @@ var LibraryWebSocket = {
     /* Debug mode */
     debug: false,
     stringify: function (arg) { return (typeof UTF8ToString !== 'undefined' ? UTF8ToString : Pointer_stringify)(arg); },
-    dynCall: function () { return (typeof Runtime !== 'undefined' ? Runtime.dynCall : dynCall).apply(typeof Runtime !== 'undefined' ? Runtime : undefined, arguments); },
   },
 
   /**
@@ -147,7 +146,7 @@ var LibraryWebSocket = {
         console.log("[JSLIB WebSocket] Connected.");
 
       if (webSocketState.onOpen)
-        webSocketState.dynCall('vi', webSocketState.onOpen, [instanceId]);
+        {{{ makeDynCall('vi', 'webSocketState.onOpen') }}}(instanceId);
 
     };
 
@@ -167,7 +166,7 @@ var LibraryWebSocket = {
         HEAPU8.set(dataBuffer, buffer);
 
         try {
-          webSocketState.dynCall('viii', webSocketState.onMessage, [instanceId, buffer, dataBuffer.length]);
+          {{{ makeDynCall('viii', 'webSocketState.onMessage') }}}(instanceId, buffer, dataBuffer.length);
         } finally {
           _free(buffer);
         }
@@ -178,7 +177,7 @@ var LibraryWebSocket = {
         stringToUTF8(ev.data, buffer, bufferSize);
 
         try {
-          webSocketState.dynCall('viii', webSocketState.onMessage, [instanceId, buffer, bufferSize]);
+          {{{ makeDynCall('viii', 'webSocketState.onMessage') }}}(instanceId, buffer, bufferSize);
         } finally {
           _free(buffer);
         }
@@ -198,7 +197,7 @@ var LibraryWebSocket = {
         stringToUTF8(msg, msgBuffer, msgBytes);
 
         try {
-          webSocketState.dynCall('vii', webSocketState.onError, [instanceId, msgBuffer]);
+          {{{ makeDynCall('vii', 'webSocketState.onError') }}}(instanceId, msgBuffer);
         } finally {
           _free(msgBuffer);
         }
@@ -213,7 +212,7 @@ var LibraryWebSocket = {
         console.log("[JSLIB WebSocket] Closed.");
 
       if (webSocketState.onClose)
-        webSocketState.dynCall('vii', webSocketState.onClose, [instanceId, ev.code]);
+        {{{ makeDynCall('vii', 'webSocketState.onClose') }}}(instanceId, ev.code);
 
       delete instance.ws;
 
