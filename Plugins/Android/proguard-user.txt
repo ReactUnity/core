@@ -1,0 +1,5 @@
+# Enabling Minify in Android causes native libraries in ReactUnity to break
+# To solve this, you first need to enable "Custom Proguard file" option in Project Settings
+# Then, either copy this file into "Assets/Plugins/Android/proguard-user.txt", or merge the code below with your existing file
+
+-keep class com.facebook.yoga.** { *; }
