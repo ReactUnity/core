@@ -15,5 +15,6 @@ namespace ReactUnity.Scripting
         URL = 64,
         Navigator = 128,
         Encoding = 256,
+        AbortController = 512,
     }
 }

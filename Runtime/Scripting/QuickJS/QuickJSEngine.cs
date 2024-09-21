@@ -27,6 +27,7 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.WebSocket
             | EngineCapabilities.Console
             | EngineCapabilities.Base64
+            | EngineCapabilities.AbortController
 #endif
             | EngineCapabilities.None;
 

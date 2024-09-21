@@ -208,6 +208,9 @@ namespace ReactUnity.Scripting
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Fetch))
                 engine.Execute(ResourcesHelper.GetPolyfill("fetch"), "ReactUnity/polyfills/fetch");
+
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.AbortController))
+                engine.Execute(ResourcesHelper.GetPolyfill("abortcontroller"), "ReactUnity/polyfills/abortcontroller");
         }
 
         static void CreateScheduler(IJavaScriptEngine engine, ReactContext context)

@@ -204,6 +204,43 @@ namespace ReactUnity.Tests
             Assert.AreEqual("0", text.text);
         }
 
+        public class MyClass
+        {
+            public int value = 0;
+            public MyClass(int v) { this.value = v; }
+        }
+
+        [UGUITest(Script = @"
+            export function App() {
+                const globals = ReactUnity.useGlobals();
+                const w = ReactUnity.useReactiveValue(globals.testReactive);
+                return <text>{w?.[0]?.value}</text>;
+            }
+        ")]
+        public IEnumerator TestReactiveListIndexedAccess()
+        {
+            yield return null;
+
+            var text = (Host.QuerySelector("text") as UGUI.TextComponent).Text;
+            Assert.AreEqual("", text.text);
+
+
+            var reactive = new ReactiveList<MyClass>() {
+                new MyClass(1),
+                new MyClass(2),
+            };
+
+            Globals.Set("testReactive", reactive);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("1", text.text);
+
+            reactive.RemoveAt(0);
+            yield return null;
+            yield return null;
+            Assert.AreEqual("2", text.text);
+        }
+
         [UGUITest(Script = @"
             export function App() {
                 const globals = ReactUnity.useGlobals();
