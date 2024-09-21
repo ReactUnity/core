@@ -1,4 +1,4 @@
-https://cdn.jsdelivr.net/npm/abortcontroller-polyfill@1.7.5/dist/abortcontroller-polyfill-only.js
+// https://cdn.jsdelivr.net/npm/abortcontroller-polyfill@1.7.5/dist/abortcontroller-polyfill-only.js
 (function (factory) {
   typeof define === 'function' && define.amd ? define(factory) :
   factory();
