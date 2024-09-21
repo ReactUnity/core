@@ -1,8 +1,11 @@
 import { render } from '@reactunity/renderer';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { MemoryRouter, useNavigate } from 'react-router';
 import styles from './index.module.scss';
 import { AppRoutes } from './routes';
+
+const queryClient = new QueryClient();
 
 function App() {
   const nav = useNavigate();
@@ -18,6 +21,7 @@ function App() {
       <button onClick={() => nav('style-frameworks/jss')}>Style Frameworks</button>
       <button onClick={() => nav('interop')}>Interop</button>
       <button onClick={() => nav('todo')}>Todo App Example</button>
+      <button onClick={() => nav('query')}>Tanstack Query</button>
     </scroll>
 
     <scroll className={styles.scroll}>
@@ -31,7 +35,9 @@ function App() {
 render(
   <Suspense fallback={<view>Loading</view>}>
     <MemoryRouter initialEntries={['/' + global.location.hash.replace(/^#/, '')]} initialIndex={0}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </MemoryRouter>
   </Suspense>
 );

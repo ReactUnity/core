@@ -191,7 +191,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.animations_host__xelkr{align-items:center}.animations_host__xelkr catwalk{width:399px;height:200px;margin:auto;background:rgba(0,0,0,0) url(res:catwalk);animation:animations_sprite__E\\+C6x 800ms steps(11) infinite}.animations_host__xelkr ryu{width:435px;height:267px;margin:auto;background:url(res:ryu);animation:animations_sprite__E\\+C6x 3.5s steps(45) infinite}.animations_host__xelkr pulsar{cursor:pointer;width:300px;height:300px;border-radius:50%;animation:animations_pulsate__qS9hr 6s linear infinite;box-shadow:0 0 20px #fff,-20px 0 80px #f0f,20px 0 80px aqua,inset 0 0 50px #fff,inset 50px 0 80px #f0f,inset -50px 0 80px aqua,inset 50px 0 300px #f0f,inset -50px 0 300px aqua}@keyframes animations_sprite__E\\+C6x{from{background-position:0 0%}to{background-position:0 100%}}@keyframes animations_pulsate__qS9hr{50%{box-shadow:0 0 20px #fff,20px 0 80px #f0f,-20px 0 80px aqua,inset 0 0 50px #fff,inset -50px 0 80px #f0f,inset 50px 0 80px aqua,inset -50px 0 300px #f0f,inset 50px 0 300px aqua}}.animations_items__f8kT6{margin:24px}.animations_item__cVsKR{width:160px;margin-bottom:10px;background-color:#fff;border:1px solid #000;padding:6px;font-size:20px;translate:0 0;opacity:1;transition:opacity 600ms ease-out;motion:600ms}.animations_item__cVsKR:enter{translate:100% 0;opacity:0}.animations_item__cVsKR:leave{opacity:0;translate:-100% 0;state-duration:600ms}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.animations_host__xelkr{align-items:center}.animations_host__xelkr button:hover{audio:url(res:click) 50%;audio-pitch:1.5}.animations_host__xelkr catwalk{width:399px;height:200px;margin:auto;background:rgba(0,0,0,0) url(res:catwalk);animation:animations_sprite__E\\+C6x 800ms steps(11) infinite}.animations_host__xelkr ryu{width:435px;height:267px;margin:auto;background:url(res:ryu);animation:animations_sprite__E\\+C6x 3.5s steps(45) infinite}.animations_host__xelkr pulsar{cursor:pointer;width:300px;height:300px;border-radius:50%;animation:animations_pulsate__qS9hr 6s linear infinite;box-shadow:0 0 20px #fff,-20px 0 80px #f0f,20px 0 80px aqua,inset 0 0 50px #fff,inset 50px 0 80px #f0f,inset -50px 0 80px aqua,inset 50px 0 300px #f0f,inset -50px 0 300px aqua}@keyframes animations_sprite__E\\+C6x{from{background-position:0 0%}to{background-position:0 100%}}@keyframes animations_pulsate__qS9hr{50%{box-shadow:0 0 20px #fff,20px 0 80px #f0f,-20px 0 80px aqua,inset 0 0 50px #fff,inset -50px 0 80px #f0f,inset 50px 0 80px aqua,inset -50px 0 300px #f0f,inset 50px 0 300px aqua}}.animations_items__f8kT6{margin:24px}.animations_item__cVsKR{width:160px;margin-bottom:10px;background-color:#fff;border:1px solid #000;padding:6px;font-size:20px;translate:0 0;opacity:1;transition:opacity 600ms ease-out;motion:600ms}.animations_item__cVsKR:enter{translate:100% 0;opacity:0}.animations_item__cVsKR:leave{opacity:0;translate:-100% 0;state-duration:600ms}`, ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": `animations_host__xelkr`,
@@ -1499,7 +1499,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var aa = __webpack_require__("../../node_modules/react/index.js"),
     ba = __webpack_require__("../../node_modules/scheduler/index.js"),
     ca = Object.assign;
-  function m(a) {
+  function n(a) {
     for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++) b += "&args[]=" + encodeURIComponent(arguments[c]);
     return "Minified React error #" + a + "; visit " + b + " for the full message or use the non-minified dev environment for full errors and additional helpful warnings.";
   }
@@ -1627,13 +1627,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
     return 3 === b.tag ? c : null;
   }
   function xa(a) {
-    if (wa(a) !== a) throw Error(m(188));
+    if (wa(a) !== a) throw Error(n(188));
   }
-  function ya(a) {
+  function za(a) {
     var b = a.alternate;
     if (!b) {
       b = wa(a);
-      if (null === b) throw Error(m(188));
+      if (null === b) throw Error(n(188));
       return b !== a ? null : a;
     }
     for (var c = a, d = b;;) {
@@ -1654,7 +1654,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
           if (f === d) return xa(e), b;
           f = f.sibling;
         }
-        throw Error(m(188));
+        throw Error(n(188));
       }
       if (c["return"] !== d["return"]) c = e, d = f;else {
         for (var g = !1, h = e.child; h;) {
@@ -1688,16 +1688,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
             }
             h = h.sibling;
           }
-          if (!g) throw Error(m(189));
+          if (!g) throw Error(n(189));
         }
       }
-      if (c.alternate !== d) throw Error(m(190));
+      if (c.alternate !== d) throw Error(n(190));
     }
-    if (3 !== c.tag) throw Error(m(188));
+    if (3 !== c.tag) throw Error(n(188));
     return c.stateNode.current === c ? a : b;
   }
   function Aa(a) {
-    a = ya(a);
+    a = za(a);
     return null !== a ? Ba(a) : null;
   }
   function Ba(a) {
@@ -1883,7 +1883,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
     x = ic(jc),
     z = ic(!1),
     kc = jc;
-  function lc(a, b) {
+  function mc(a, b) {
     var c = a.type.contextTypes;
     if (!c) return jc;
     var d = a.stateNode;
@@ -1898,24 +1898,24 @@ module.exports = function $$$reconciler($$$hostConfig) {
     a = a.childContextTypes;
     return null !== a && void 0 !== a;
   }
-  function mc() {
+  function nc() {
     q(z);
     q(x);
   }
-  function nc(a, b, c) {
-    if (x.current !== jc) throw Error(m(168));
+  function oc(a, b, c) {
+    if (x.current !== jc) throw Error(n(168));
     v(x, b);
     v(z, c);
   }
-  function oc(a, b, c) {
+  function pc(a, b, c) {
     var d = a.stateNode;
     b = b.childContextTypes;
     if ("function" !== typeof d.getChildContext) return c;
     d = d.getChildContext();
-    for (var e in d) if (!(e in b)) throw Error(m(108, va(a) || "Unknown", e));
+    for (var e in d) if (!(e in b)) throw Error(n(108, va(a) || "Unknown", e));
     return ca({}, c, d);
   }
-  function pc(a) {
+  function qc(a) {
     a = (a = a.stateNode) && a.__reactInternalMemoizedMergedChildContext || jc;
     kc = x.current;
     v(x, a);
@@ -1924,8 +1924,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
   }
   function rc(a, b, c) {
     var d = a.stateNode;
-    if (!d) throw Error(m(169));
-    c ? (a = oc(a, b, kc), d.__reactInternalMemoizedMergedChildContext = a, q(z), q(x), v(x, a)) : q(z);
+    if (!d) throw Error(n(169));
+    c ? (a = pc(a, b, kc), d.__reactInternalMemoizedMergedChildContext = a, q(z), q(x), v(x, a)) : q(z);
     v(z, c);
   }
   var tc = Math.clz32 ? Math.clz32 : sc,
@@ -2256,13 +2256,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
       if (b) {
         var c = b;
         if (!ud(a, b)) {
-          if (vd(a)) throw Error(m(418));
+          if (vd(a)) throw Error(n(418));
           b = Nb(c);
           var d = od;
           b && ud(a, b) ? sd(d, c) : (a.flags = a.flags & -4097 | 2, F = !1, od = a);
         }
       } else {
-        if (vd(a)) throw Error(m(418));
+        if (vd(a)) throw Error(n(418));
         a.flags = a.flags & -4097 | 2;
         F = !1;
         od = a;
@@ -2279,16 +2279,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
     if (3 !== a.tag && (5 !== a.tag || Zb(a.type) && !Na(a.type, a.memoizedProps))) {
       var b = pd;
       if (b) {
-        if (vd(a)) throw zd(), Error(m(418));
+        if (vd(a)) throw zd(), Error(n(418));
         for (; b;) sd(a, b), b = Nb(b);
       }
     }
     xd(a);
     if (13 === a.tag) {
-      if (!Va) throw Error(m(316));
+      if (!Va) throw Error(n(316));
       a = a.memoizedState;
       a = null !== a ? a.dehydrated : null;
-      if (!a) throw Error(m(317));
+      if (!a) throw Error(n(317));
       pd = Ub(a);
     } else pd = od ? Nb(a.stateNode) : null;
     return !0;
@@ -2337,31 +2337,293 @@ module.exports = function $$$reconciler($$$hostConfig) {
         return "";
     }
   }
-  function Fd(a, b) {
-    if (a && a.defaultProps) {
-      b = ca({}, b);
-      a = a.defaultProps;
-      for (var c in a) void 0 === b[c] && (b[c] = a[c]);
+  function Fd(a, b, c) {
+    a = c.ref;
+    if (null !== a && "function" !== typeof a && "object" !== typeof a) {
+      if (c._owner) {
+        c = c._owner;
+        if (c) {
+          if (1 !== c.tag) throw Error(n(309));
+          var d = c.stateNode;
+        }
+        if (!d) throw Error(n(147, a));
+        var e = d,
+          f = "" + a;
+        if (null !== b && null !== b.ref && "function" === typeof b.ref && b.ref._stringRef === f) return b.ref;
+        b = function b(a) {
+          var b = e.refs;
+          null === a ? delete b[f] : b[f] = a;
+        };
+        b._stringRef = f;
+        return b;
+      }
+      if ("string" !== typeof a) throw Error(n(284));
+      if (!c._owner) throw Error(n(290, a));
+    }
+    return a;
+  }
+  function Gd(a, b) {
+    a = Object.prototype.toString.call(b);
+    throw Error(n(31, "[object Object]" === a ? "object with keys {" + Object.keys(b).join(", ") + "}" : a));
+  }
+  function Hd(a) {
+    var b = a._init;
+    return b(a._payload);
+  }
+  function Id(a) {
+    function b(b, c) {
+      if (a) {
+        var d = b.deletions;
+        null === d ? (b.deletions = [c], b.flags |= 16) : d.push(c);
+      }
+    }
+    function c(c, d) {
+      if (!a) return null;
+      for (; null !== d;) b(c, d), d = d.sibling;
+      return null;
+    }
+    function d(a, b) {
+      for (a = new Map(); null !== b;) null !== b.key ? a.set(b.key, b) : a.set(b.index, b), b = b.sibling;
+      return a;
+    }
+    function e(a, b) {
+      a = Jd(a, b);
+      a.index = 0;
+      a.sibling = null;
+      return a;
+    }
+    function f(b, c, d) {
+      b.index = d;
+      if (!a) return b.flags |= 1048576, c;
+      d = b.alternate;
+      if (null !== d) return d = d.index, d < c ? (b.flags |= 2, c) : d;
+      b.flags |= 2;
+      return c;
+    }
+    function g(b) {
+      a && null === b.alternate && (b.flags |= 2);
       return b;
     }
-    return b;
+    function h(a, b, c, d) {
+      if (null === b || 6 !== b.tag) return b = Kd(c, a.mode, d), b["return"] = a, b;
+      b = e(b, c);
+      b["return"] = a;
+      return b;
+    }
+    function k(a, b, c, d) {
+      var f = c.type;
+      if (f === ha) return m(a, b, c.props.children, d, c.key);
+      if (null !== b && (b.elementType === f || "object" === typeof f && null !== f && f.$$typeof === qa && Hd(f) === b.type)) return d = e(b, c.props), d.ref = Fd(a, b, c), d["return"] = a, d;
+      d = Ld(c.type, c.key, c.props, null, a.mode, d);
+      d.ref = Fd(a, b, c);
+      d["return"] = a;
+      return d;
+    }
+    function l(a, b, c, d) {
+      if (null === b || 4 !== b.tag || b.stateNode.containerInfo !== c.containerInfo || b.stateNode.implementation !== c.implementation) return b = Md(c, a.mode, d), b["return"] = a, b;
+      b = e(b, c.children || []);
+      b["return"] = a;
+      return b;
+    }
+    function m(a, b, c, d, f) {
+      if (null === b || 7 !== b.tag) return b = Nd(c, a.mode, d, f), b["return"] = a, b;
+      b = e(b, c);
+      b["return"] = a;
+      return b;
+    }
+    function r(a, b, c) {
+      if ("string" === typeof b && "" !== b || "number" === typeof b) return b = Kd("" + b, a.mode, c), b["return"] = a, b;
+      if ("object" === typeof b && null !== b) {
+        switch (b.$$typeof) {
+          case ea:
+            return c = Ld(b.type, b.key, b.props, null, a.mode, c), c.ref = Fd(a, null, b), c["return"] = a, c;
+          case fa:
+            return b = Md(b, a.mode, c), b["return"] = a, b;
+          case qa:
+            var d = b._init;
+            return r(a, d(b._payload), c);
+        }
+        if (Da(b) || ta(b)) return b = Nd(b, a.mode, c, null), b["return"] = a, b;
+        Gd(a, b);
+      }
+      return null;
+    }
+    function p(a, b, c, d) {
+      var e = null !== b ? b.key : null;
+      if ("string" === typeof c && "" !== c || "number" === typeof c) return null !== e ? null : h(a, b, "" + c, d);
+      if ("object" === typeof c && null !== c) {
+        switch (c.$$typeof) {
+          case ea:
+            return c.key === e ? k(a, b, c, d) : null;
+          case fa:
+            return c.key === e ? l(a, b, c, d) : null;
+          case qa:
+            return e = c._init, p(a, b, e(c._payload), d);
+        }
+        if (Da(c) || ta(c)) return null !== e ? null : m(a, b, c, d, null);
+        Gd(a, c);
+      }
+      return null;
+    }
+    function B(a, b, c, d, e) {
+      if ("string" === typeof d && "" !== d || "number" === typeof d) return a = a.get(c) || null, h(b, a, "" + d, e);
+      if ("object" === typeof d && null !== d) {
+        switch (d.$$typeof) {
+          case ea:
+            return a = a.get(null === d.key ? c : d.key) || null, k(b, a, d, e);
+          case fa:
+            return a = a.get(null === d.key ? c : d.key) || null, l(b, a, d, e);
+          case qa:
+            var f = d._init;
+            return B(a, b, c, f(d._payload), e);
+        }
+        if (Da(d) || ta(d)) return a = a.get(c) || null, m(b, a, d, e, null);
+        Gd(b, d);
+      }
+      return null;
+    }
+    function w(e, g, h, k) {
+      for (var l = null, m = null, u = g, t = g = 0, E = null; null !== u && t < h.length; t++) {
+        u.index > t ? (E = u, u = null) : E = u.sibling;
+        var y = p(e, u, h[t], k);
+        if (null === y) {
+          null === u && (u = E);
+          break;
+        }
+        a && u && null === y.alternate && b(e, u);
+        g = f(y, g, t);
+        null === m ? l = y : m.sibling = y;
+        m = y;
+        u = E;
+      }
+      if (t === h.length) return c(e, u), F && kd(e, t), l;
+      if (null === u) {
+        for (; t < h.length; t++) u = r(e, h[t], k), null !== u && (g = f(u, g, t), null === m ? l = u : m.sibling = u, m = u);
+        F && kd(e, t);
+        return l;
+      }
+      for (u = d(e, u); t < h.length; t++) E = B(u, e, t, h[t], k), null !== E && (a && null !== E.alternate && u["delete"](null === E.key ? t : E.key), g = f(E, g, t), null === m ? l = E : m.sibling = E, m = E);
+      a && u.forEach(function (a) {
+        return b(e, a);
+      });
+      F && kd(e, t);
+      return l;
+    }
+    function Y(e, g, h, k) {
+      var l = ta(h);
+      if ("function" !== typeof l) throw Error(n(150));
+      h = l.call(h);
+      if (null == h) throw Error(n(151));
+      for (var u = l = null, m = g, t = g = 0, E = null, y = h.next(); null !== m && !y.done; t++, y = h.next()) {
+        m.index > t ? (E = m, m = null) : E = m.sibling;
+        var w = p(e, m, y.value, k);
+        if (null === w) {
+          null === m && (m = E);
+          break;
+        }
+        a && m && null === w.alternate && b(e, m);
+        g = f(w, g, t);
+        null === u ? l = w : u.sibling = w;
+        u = w;
+        m = E;
+      }
+      if (y.done) return c(e, m), F && kd(e, t), l;
+      if (null === m) {
+        for (; !y.done; t++, y = h.next()) y = r(e, y.value, k), null !== y && (g = f(y, g, t), null === u ? l = y : u.sibling = y, u = y);
+        F && kd(e, t);
+        return l;
+      }
+      for (m = d(e, m); !y.done; t++, y = h.next()) y = B(m, e, t, y.value, k), null !== y && (a && null !== y.alternate && m["delete"](null === y.key ? t : y.key), g = f(y, g, t), null === u ? l = y : u.sibling = y, u = y);
+      a && m.forEach(function (a) {
+        return b(e, a);
+      });
+      F && kd(e, t);
+      return l;
+    }
+    function ya(a, d, f, h) {
+      "object" === typeof f && null !== f && f.type === ha && null === f.key && (f = f.props.children);
+      if ("object" === typeof f && null !== f) {
+        switch (f.$$typeof) {
+          case ea:
+            a: {
+              for (var k = f.key, l = d; null !== l;) {
+                if (l.key === k) {
+                  k = f.type;
+                  if (k === ha) {
+                    if (7 === l.tag) {
+                      c(a, l.sibling);
+                      d = e(l, f.props.children);
+                      d["return"] = a;
+                      a = d;
+                      break a;
+                    }
+                  } else if (l.elementType === k || "object" === typeof k && null !== k && k.$$typeof === qa && Hd(k) === l.type) {
+                    c(a, l.sibling);
+                    d = e(l, f.props);
+                    d.ref = Fd(a, l, f);
+                    d["return"] = a;
+                    a = d;
+                    break a;
+                  }
+                  c(a, l);
+                  break;
+                } else b(a, l);
+                l = l.sibling;
+              }
+              f.type === ha ? (d = Nd(f.props.children, a.mode, h, f.key), d["return"] = a, a = d) : (h = Ld(f.type, f.key, f.props, null, a.mode, h), h.ref = Fd(a, d, f), h["return"] = a, a = h);
+            }
+            return g(a);
+          case fa:
+            a: {
+              for (l = f.key; null !== d;) {
+                if (d.key === l) {
+                  if (4 === d.tag && d.stateNode.containerInfo === f.containerInfo && d.stateNode.implementation === f.implementation) {
+                    c(a, d.sibling);
+                    d = e(d, f.children || []);
+                    d["return"] = a;
+                    a = d;
+                    break a;
+                  } else {
+                    c(a, d);
+                    break;
+                  }
+                } else b(a, d);
+                d = d.sibling;
+              }
+              d = Md(f, a.mode, h);
+              d["return"] = a;
+              a = d;
+            }
+            return g(a);
+          case qa:
+            return l = f._init, ya(a, d, l(f._payload), h);
+        }
+        if (Da(f)) return w(a, d, f, h);
+        if (ta(f)) return Y(a, d, f, h);
+        Gd(a, f);
+      }
+      return "string" === typeof f && "" !== f || "number" === typeof f ? (f = "" + f, null !== d && 6 === d.tag ? (c(a, d.sibling), d = e(d, f), d["return"] = a, a = d) : (c(a, d), d = Kd(f, a.mode, h), d["return"] = a, a = d), g(a)) : c(a, d);
+    }
+    return ya;
   }
-  var Gd = ic(null),
-    Hd = null,
-    Id = null,
-    Jd = null;
-  function Kd() {
-    Jd = Id = Hd = null;
+  var Od = Id(!0),
+    Pd = Id(!1),
+    Qd = ic(null),
+    Rd = null,
+    Sd = null,
+    Td = null;
+  function Ud() {
+    Td = Sd = Rd = null;
   }
-  function Ld(a, b, c) {
-    Sa ? (v(Gd, b._currentValue), b._currentValue = c) : (v(Gd, b._currentValue2), b._currentValue2 = c);
+  function Vd(a, b, c) {
+    Sa ? (v(Qd, b._currentValue), b._currentValue = c) : (v(Qd, b._currentValue2), b._currentValue2 = c);
   }
-  function Md(a) {
-    var b = Gd.current;
-    q(Gd);
+  function Wd(a) {
+    var b = Qd.current;
+    q(Qd);
     Sa ? a._currentValue = b : a._currentValue2 = b;
   }
-  function Nd(a, b, c) {
+  function Xd(a, b, c) {
     for (; null !== a;) {
       var d = a.alternate;
       (a.childLanes & b) !== b ? (a.childLanes |= b, null !== d && (d.childLanes |= b)) : null !== d && (d.childLanes & b) !== b && (d.childLanes |= b);
@@ -2369,39 +2631,39 @@ module.exports = function $$$reconciler($$$hostConfig) {
       a = a["return"];
     }
   }
-  function Od(a, b) {
-    Hd = a;
-    Jd = Id = null;
+  function Yd(a, b) {
+    Rd = a;
+    Td = Sd = null;
     a = a.dependencies;
     null !== a && null !== a.firstContext && (0 !== (a.lanes & b) && (G = !0), a.firstContext = null);
   }
-  function Pd(a) {
+  function Zd(a) {
     var b = Sa ? a._currentValue : a._currentValue2;
-    if (Jd !== a) if (a = {
+    if (Td !== a) if (a = {
       context: a,
       memoizedValue: b,
       next: null
-    }, null === Id) {
-      if (null === Hd) throw Error(m(308));
-      Id = a;
-      Hd.dependencies = {
+    }, null === Sd) {
+      if (null === Rd) throw Error(n(308));
+      Sd = a;
+      Rd.dependencies = {
         lanes: 0,
         firstContext: a
       };
-    } else Id = Id.next = a;
+    } else Sd = Sd.next = a;
     return b;
   }
-  var Qd = null;
-  function Rd(a) {
-    null === Qd ? Qd = [a] : Qd.push(a);
+  var $d = null;
+  function ae(a) {
+    null === $d ? $d = [a] : $d.push(a);
   }
-  function Sd(a, b, c, d) {
+  function be(a, b, c, d) {
     var e = b.interleaved;
-    null === e ? (c.next = c, Rd(b)) : (c.next = e.next, e.next = c);
+    null === e ? (c.next = c, ae(b)) : (c.next = e.next, e.next = c);
     b.interleaved = c;
-    return Td(a, d);
+    return ce(a, d);
   }
-  function Td(a, b) {
+  function ce(a, b) {
     a.lanes |= b;
     var c = a.alternate;
     null !== c && (c.lanes |= b);
@@ -2409,8 +2671,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
     for (a = a["return"]; null !== a;) a.childLanes |= b, c = a.alternate, null !== c && (c.childLanes |= b), c = a, a = a["return"];
     return 3 === c.tag ? c.stateNode : null;
   }
-  var Ud = !1;
-  function Vd(a) {
+  var de = !1;
+  function ee(a) {
     a.updateQueue = {
       baseState: a.memoizedState,
       firstBaseUpdate: null,
@@ -2423,7 +2685,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       effects: null
     };
   }
-  function Wd(a, b) {
+  function fe(a, b) {
     a = a.updateQueue;
     b.updateQueue === a && (b.updateQueue = {
       baseState: a.baseState,
@@ -2433,7 +2695,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       effects: a.effects
     });
   }
-  function Xd(a, b) {
+  function ge(a, b) {
     return {
       eventTime: a,
       lane: b,
@@ -2443,7 +2705,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       next: null
     };
   }
-  function Yd(a, b, c) {
+  function he(a, b, c) {
     var d = a.updateQueue;
     if (null === d) return null;
     d = d.shared;
@@ -2451,14 +2713,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
       var e = d.pending;
       null === e ? b.next = b : (b.next = e.next, e.next = b);
       d.pending = b;
-      return Td(a, c);
+      return ce(a, c);
     }
     e = d.interleaved;
-    null === e ? (b.next = b, Rd(d)) : (b.next = e.next, e.next = b);
+    null === e ? (b.next = b, ae(d)) : (b.next = e.next, e.next = b);
     d.interleaved = b;
-    return Td(a, c);
+    return ce(a, c);
   }
-  function Zd(a, b, c) {
+  function ie(a, b, c) {
     b = b.updateQueue;
     if (null !== b && (b = b.shared, 0 !== (c & 4194240))) {
       var d = b.lanes;
@@ -2468,7 +2730,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       Hc(a, c);
     }
   }
-  function $d(a, b) {
+  function je(a, b) {
     var c = a.updateQueue,
       d = a.alternate;
     if (null !== d && (d = d.updateQueue, c === d)) {
@@ -2504,9 +2766,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
     null === a ? c.firstBaseUpdate = b : a.next = b;
     c.lastBaseUpdate = b;
   }
-  function ae(a, b, c, d) {
+  function ke(a, b, c, d) {
     var e = a.updateQueue;
-    Ud = !1;
+    de = !1;
     var f = e.firstBaseUpdate,
       g = e.lastBaseUpdate,
       h = e.shared.pending;
@@ -2517,19 +2779,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
       k.next = null;
       null === g ? f = l : g.next = l;
       g = k;
-      var n = a.alternate;
-      null !== n && (n = n.updateQueue, h = n.lastBaseUpdate, h !== g && (null === h ? n.firstBaseUpdate = l : h.next = l, n.lastBaseUpdate = k));
+      var m = a.alternate;
+      null !== m && (m = m.updateQueue, h = m.lastBaseUpdate, h !== g && (null === h ? m.firstBaseUpdate = l : h.next = l, m.lastBaseUpdate = k));
     }
     if (null !== f) {
-      var t = e.baseState;
+      var r = e.baseState;
       g = 0;
-      n = l = k = null;
+      m = l = k = null;
       h = f;
       do {
         var p = h.lane,
           B = h.eventTime;
         if ((d & p) === p) {
-          null !== n && (n = n.next = {
+          null !== m && (m = m.next = {
             eventTime: B,
             lane: 0,
             tag: h.tag,
@@ -2539,28 +2801,28 @@ module.exports = function $$$reconciler($$$hostConfig) {
           });
           a: {
             var w = a,
-              Z = h;
+              Y = h;
             p = b;
             B = c;
-            switch (Z.tag) {
+            switch (Y.tag) {
               case 1:
-                w = Z.payload;
+                w = Y.payload;
                 if ("function" === typeof w) {
-                  t = w.call(B, t, p);
+                  r = w.call(B, r, p);
                   break a;
                 }
-                t = w;
+                r = w;
                 break a;
               case 3:
                 w.flags = w.flags & -65537 | 128;
               case 0:
-                w = Z.payload;
-                p = "function" === typeof w ? w.call(B, t, p) : w;
+                w = Y.payload;
+                p = "function" === typeof w ? w.call(B, r, p) : w;
                 if (null === p || void 0 === p) break a;
-                t = ca({}, t, p);
+                r = ca({}, r, p);
                 break a;
               case 2:
-                Ud = !0;
+                de = !0;
             }
           }
           null !== h.callback && 0 !== h.lane && (a.flags |= 64, p = e.effects, null === p ? e.effects = [h] : p.push(h));
@@ -2571,25 +2833,25 @@ module.exports = function $$$reconciler($$$hostConfig) {
           payload: h.payload,
           callback: h.callback,
           next: null
-        }, null === n ? (l = n = B, k = t) : n = n.next = B, g |= p;
+        }, null === m ? (l = m = B, k = r) : m = m.next = B, g |= p;
         h = h.next;
         if (null === h) if (h = e.shared.pending, null === h) break;else p = h, h = p.next, p.next = null, e.lastBaseUpdate = p, e.shared.pending = null;
       } while (1);
-      null === n && (k = t);
+      null === m && (k = r);
       e.baseState = k;
       e.firstBaseUpdate = l;
-      e.lastBaseUpdate = n;
+      e.lastBaseUpdate = m;
       b = e.shared.interleaved;
       if (null !== b) {
         e = b;
         do g |= e.lane, e = e.next; while (e !== b);
       } else null === f && (e.shared.lanes = 0);
-      be |= g;
+      le |= g;
       a.lanes = g;
-      a.memoizedState = t;
+      a.memoizedState = r;
     }
   }
-  function ce(a, b, c) {
+  function me(a, b, c) {
     a = b.effects;
     b.effects = null;
     if (null !== a) for (b = 0; b < a.length; b++) {
@@ -2598,396 +2860,43 @@ module.exports = function $$$reconciler($$$hostConfig) {
       if (null !== e) {
         d.callback = null;
         d = c;
-        if ("function" !== typeof e) throw Error(m(191, e));
+        if ("function" !== typeof e) throw Error(n(191, e));
         e.call(d);
       }
     }
   }
-  var de = new aa.Component().refs;
-  function ee(a, b, c, d) {
-    b = a.memoizedState;
-    c = c(d, b);
-    c = null === c || void 0 === c ? b : ca({}, b, c);
-    a.memoizedState = c;
-    0 === a.lanes && (a.updateQueue.baseState = c);
-  }
-  var he = {
-    isMounted: function isMounted(a) {
-      return (a = a._reactInternals) ? wa(a) === a : !1;
-    },
-    enqueueSetState: function enqueueSetState(a, b, c) {
-      a = a._reactInternals;
-      var d = I(),
-        e = fe(a),
-        f = Xd(d, e);
-      f.payload = b;
-      void 0 !== c && null !== c && (f.callback = c);
-      b = Yd(a, f, e);
-      null !== b && (ge(b, a, e, d), Zd(b, a, e));
-    },
-    enqueueReplaceState: function enqueueReplaceState(a, b, c) {
-      a = a._reactInternals;
-      var d = I(),
-        e = fe(a),
-        f = Xd(d, e);
-      f.tag = 1;
-      f.payload = b;
-      void 0 !== c && null !== c && (f.callback = c);
-      b = Yd(a, f, e);
-      null !== b && (ge(b, a, e, d), Zd(b, a, e));
-    },
-    enqueueForceUpdate: function enqueueForceUpdate(a, b) {
-      a = a._reactInternals;
-      var c = I(),
-        d = fe(a),
-        e = Xd(c, d);
-      e.tag = 2;
-      void 0 !== b && null !== b && (e.callback = b);
-      b = Yd(a, e, d);
-      null !== b && (ge(b, a, d, c), Zd(b, a, d));
-    }
-  };
-  function ie(a, b, c, d, e, f, g) {
-    a = a.stateNode;
-    return "function" === typeof a.shouldComponentUpdate ? a.shouldComponentUpdate(d, f, g) : b.prototype && b.prototype.isPureReactComponent ? !Dd(c, d) || !Dd(e, f) : !0;
-  }
-  function je(a, b, c) {
-    var d = !1,
-      e = jc;
-    var f = b.contextType;
-    "object" === typeof f && null !== f ? f = Pd(f) : (e = A(b) ? kc : x.current, d = b.contextTypes, f = (d = null !== d && void 0 !== d) ? lc(a, e) : jc);
-    b = new b(c, f);
-    a.memoizedState = null !== b.state && void 0 !== b.state ? b.state : null;
-    b.updater = he;
-    a.stateNode = b;
-    b._reactInternals = a;
-    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = e, a.__reactInternalMemoizedMaskedChildContext = f);
-    return b;
-  }
-  function ke(a, b, c, d) {
-    a = b.state;
-    "function" === typeof b.componentWillReceiveProps && b.componentWillReceiveProps(c, d);
-    "function" === typeof b.UNSAFE_componentWillReceiveProps && b.UNSAFE_componentWillReceiveProps(c, d);
-    b.state !== a && he.enqueueReplaceState(b, b.state, null);
-  }
-  function le(a, b, c, d) {
-    var e = a.stateNode;
-    e.props = c;
-    e.state = a.memoizedState;
-    e.refs = de;
-    Vd(a);
-    var f = b.contextType;
-    "object" === typeof f && null !== f ? e.context = Pd(f) : (f = A(b) ? kc : x.current, e.context = lc(a, f));
-    e.state = a.memoizedState;
-    f = b.getDerivedStateFromProps;
-    "function" === typeof f && (ee(a, b, f, c), e.state = a.memoizedState);
-    "function" === typeof b.getDerivedStateFromProps || "function" === typeof e.getSnapshotBeforeUpdate || "function" !== typeof e.UNSAFE_componentWillMount && "function" !== typeof e.componentWillMount || (b = e.state, "function" === typeof e.componentWillMount && e.componentWillMount(), "function" === typeof e.UNSAFE_componentWillMount && e.UNSAFE_componentWillMount(), b !== e.state && he.enqueueReplaceState(e, e.state, null), ae(a, c, e, d), e.state = a.memoizedState);
-    "function" === typeof e.componentDidMount && (a.flags |= 4194308);
-  }
-  function me(a, b, c) {
-    a = c.ref;
-    if (null !== a && "function" !== typeof a && "object" !== typeof a) {
-      if (c._owner) {
-        c = c._owner;
-        if (c) {
-          if (1 !== c.tag) throw Error(m(309));
-          var d = c.stateNode;
-        }
-        if (!d) throw Error(m(147, a));
-        var e = d,
-          f = "" + a;
-        if (null !== b && null !== b.ref && "function" === typeof b.ref && b.ref._stringRef === f) return b.ref;
-        b = function b(a) {
-          var b = e.refs;
-          b === de && (b = e.refs = {});
-          null === a ? delete b[f] : b[f] = a;
-        };
-        b._stringRef = f;
-        return b;
-      }
-      if ("string" !== typeof a) throw Error(m(284));
-      if (!c._owner) throw Error(m(290, a));
-    }
+  var ne = {},
+    oe = ic(ne),
+    pe = ic(ne),
+    qe = ic(ne);
+  function re(a) {
+    if (a === ne) throw Error(n(174));
     return a;
   }
-  function ne(a, b) {
-    a = Object.prototype.toString.call(b);
-    throw Error(m(31, "[object Object]" === a ? "object with keys {" + Object.keys(b).join(", ") + "}" : a));
-  }
-  function oe(a) {
-    var b = a._init;
-    return b(a._payload);
-  }
-  function pe(a) {
-    function b(b, c) {
-      if (a) {
-        var d = b.deletions;
-        null === d ? (b.deletions = [c], b.flags |= 16) : d.push(c);
-      }
-    }
-    function c(c, d) {
-      if (!a) return null;
-      for (; null !== d;) b(c, d), d = d.sibling;
-      return null;
-    }
-    function d(a, b) {
-      for (a = new Map(); null !== b;) null !== b.key ? a.set(b.key, b) : a.set(b.index, b), b = b.sibling;
-      return a;
-    }
-    function e(a, b) {
-      a = qe(a, b);
-      a.index = 0;
-      a.sibling = null;
-      return a;
-    }
-    function f(b, c, d) {
-      b.index = d;
-      if (!a) return b.flags |= 1048576, c;
-      d = b.alternate;
-      if (null !== d) return d = d.index, d < c ? (b.flags |= 2, c) : d;
-      b.flags |= 2;
-      return c;
-    }
-    function g(b) {
-      a && null === b.alternate && (b.flags |= 2);
-      return b;
-    }
-    function h(a, b, c, d) {
-      if (null === b || 6 !== b.tag) return b = re(c, a.mode, d), b["return"] = a, b;
-      b = e(b, c);
-      b["return"] = a;
-      return b;
-    }
-    function k(a, b, c, d) {
-      var f = c.type;
-      if (f === ha) return n(a, b, c.props.children, d, c.key);
-      if (null !== b && (b.elementType === f || "object" === typeof f && null !== f && f.$$typeof === qa && oe(f) === b.type)) return d = e(b, c.props), d.ref = me(a, b, c), d["return"] = a, d;
-      d = se(c.type, c.key, c.props, null, a.mode, d);
-      d.ref = me(a, b, c);
-      d["return"] = a;
-      return d;
-    }
-    function l(a, b, c, d) {
-      if (null === b || 4 !== b.tag || b.stateNode.containerInfo !== c.containerInfo || b.stateNode.implementation !== c.implementation) return b = te(c, a.mode, d), b["return"] = a, b;
-      b = e(b, c.children || []);
-      b["return"] = a;
-      return b;
-    }
-    function n(a, b, c, d, f) {
-      if (null === b || 7 !== b.tag) return b = ue(c, a.mode, d, f), b["return"] = a, b;
-      b = e(b, c);
-      b["return"] = a;
-      return b;
-    }
-    function t(a, b, c) {
-      if ("string" === typeof b && "" !== b || "number" === typeof b) return b = re("" + b, a.mode, c), b["return"] = a, b;
-      if ("object" === typeof b && null !== b) {
-        switch (b.$$typeof) {
-          case ea:
-            return c = se(b.type, b.key, b.props, null, a.mode, c), c.ref = me(a, null, b), c["return"] = a, c;
-          case fa:
-            return b = te(b, a.mode, c), b["return"] = a, b;
-          case qa:
-            var d = b._init;
-            return t(a, d(b._payload), c);
-        }
-        if (Da(b) || ta(b)) return b = ue(b, a.mode, c, null), b["return"] = a, b;
-        ne(a, b);
-      }
-      return null;
-    }
-    function p(a, b, c, d) {
-      var e = null !== b ? b.key : null;
-      if ("string" === typeof c && "" !== c || "number" === typeof c) return null !== e ? null : h(a, b, "" + c, d);
-      if ("object" === typeof c && null !== c) {
-        switch (c.$$typeof) {
-          case ea:
-            return c.key === e ? k(a, b, c, d) : null;
-          case fa:
-            return c.key === e ? l(a, b, c, d) : null;
-          case qa:
-            return e = c._init, p(a, b, e(c._payload), d);
-        }
-        if (Da(c) || ta(c)) return null !== e ? null : n(a, b, c, d, null);
-        ne(a, c);
-      }
-      return null;
-    }
-    function B(a, b, c, d, e) {
-      if ("string" === typeof d && "" !== d || "number" === typeof d) return a = a.get(c) || null, h(b, a, "" + d, e);
-      if ("object" === typeof d && null !== d) {
-        switch (d.$$typeof) {
-          case ea:
-            return a = a.get(null === d.key ? c : d.key) || null, k(b, a, d, e);
-          case fa:
-            return a = a.get(null === d.key ? c : d.key) || null, l(b, a, d, e);
-          case qa:
-            var f = d._init;
-            return B(a, b, c, f(d._payload), e);
-        }
-        if (Da(d) || ta(d)) return a = a.get(c) || null, n(b, a, d, e, null);
-        ne(b, d);
-      }
-      return null;
-    }
-    function w(e, g, h, k) {
-      for (var l = null, n = null, r = g, u = g = 0, E = null; null !== r && u < h.length; u++) {
-        r.index > u ? (E = r, r = null) : E = r.sibling;
-        var y = p(e, r, h[u], k);
-        if (null === y) {
-          null === r && (r = E);
-          break;
-        }
-        a && r && null === y.alternate && b(e, r);
-        g = f(y, g, u);
-        null === n ? l = y : n.sibling = y;
-        n = y;
-        r = E;
-      }
-      if (u === h.length) return c(e, r), F && kd(e, u), l;
-      if (null === r) {
-        for (; u < h.length; u++) r = t(e, h[u], k), null !== r && (g = f(r, g, u), null === n ? l = r : n.sibling = r, n = r);
-        F && kd(e, u);
-        return l;
-      }
-      for (r = d(e, r); u < h.length; u++) E = B(r, e, u, h[u], k), null !== E && (a && null !== E.alternate && r["delete"](null === E.key ? u : E.key), g = f(E, g, u), null === n ? l = E : n.sibling = E, n = E);
-      a && r.forEach(function (a) {
-        return b(e, a);
-      });
-      F && kd(e, u);
-      return l;
-    }
-    function Z(e, g, h, k) {
-      var l = ta(h);
-      if ("function" !== typeof l) throw Error(m(150));
-      h = l.call(h);
-      if (null == h) throw Error(m(151));
-      for (var n = l = null, r = g, u = g = 0, E = null, y = h.next(); null !== r && !y.done; u++, y = h.next()) {
-        r.index > u ? (E = r, r = null) : E = r.sibling;
-        var w = p(e, r, y.value, k);
-        if (null === w) {
-          null === r && (r = E);
-          break;
-        }
-        a && r && null === w.alternate && b(e, r);
-        g = f(w, g, u);
-        null === n ? l = w : n.sibling = w;
-        n = w;
-        r = E;
-      }
-      if (y.done) return c(e, r), F && kd(e, u), l;
-      if (null === r) {
-        for (; !y.done; u++, y = h.next()) y = t(e, y.value, k), null !== y && (g = f(y, g, u), null === n ? l = y : n.sibling = y, n = y);
-        F && kd(e, u);
-        return l;
-      }
-      for (r = d(e, r); !y.done; u++, y = h.next()) y = B(r, e, u, y.value, k), null !== y && (a && null !== y.alternate && r["delete"](null === y.key ? u : y.key), g = f(y, g, u), null === n ? l = y : n.sibling = y, n = y);
-      a && r.forEach(function (a) {
-        return b(e, a);
-      });
-      F && kd(e, u);
-      return l;
-    }
-    function za(a, d, f, h) {
-      "object" === typeof f && null !== f && f.type === ha && null === f.key && (f = f.props.children);
-      if ("object" === typeof f && null !== f) {
-        switch (f.$$typeof) {
-          case ea:
-            a: {
-              for (var k = f.key, l = d; null !== l;) {
-                if (l.key === k) {
-                  k = f.type;
-                  if (k === ha) {
-                    if (7 === l.tag) {
-                      c(a, l.sibling);
-                      d = e(l, f.props.children);
-                      d["return"] = a;
-                      a = d;
-                      break a;
-                    }
-                  } else if (l.elementType === k || "object" === typeof k && null !== k && k.$$typeof === qa && oe(k) === l.type) {
-                    c(a, l.sibling);
-                    d = e(l, f.props);
-                    d.ref = me(a, l, f);
-                    d["return"] = a;
-                    a = d;
-                    break a;
-                  }
-                  c(a, l);
-                  break;
-                } else b(a, l);
-                l = l.sibling;
-              }
-              f.type === ha ? (d = ue(f.props.children, a.mode, h, f.key), d["return"] = a, a = d) : (h = se(f.type, f.key, f.props, null, a.mode, h), h.ref = me(a, d, f), h["return"] = a, a = h);
-            }
-            return g(a);
-          case fa:
-            a: {
-              for (l = f.key; null !== d;) {
-                if (d.key === l) {
-                  if (4 === d.tag && d.stateNode.containerInfo === f.containerInfo && d.stateNode.implementation === f.implementation) {
-                    c(a, d.sibling);
-                    d = e(d, f.children || []);
-                    d["return"] = a;
-                    a = d;
-                    break a;
-                  } else {
-                    c(a, d);
-                    break;
-                  }
-                } else b(a, d);
-                d = d.sibling;
-              }
-              d = te(f, a.mode, h);
-              d["return"] = a;
-              a = d;
-            }
-            return g(a);
-          case qa:
-            return l = f._init, za(a, d, l(f._payload), h);
-        }
-        if (Da(f)) return w(a, d, f, h);
-        if (ta(f)) return Z(a, d, f, h);
-        ne(a, f);
-      }
-      return "string" === typeof f && "" !== f || "number" === typeof f ? (f = "" + f, null !== d && 6 === d.tag ? (c(a, d.sibling), d = e(d, f), d["return"] = a, a = d) : (c(a, d), d = re(f, a.mode, h), d["return"] = a, a = d), g(a)) : c(a, d);
-    }
-    return za;
-  }
-  var ve = pe(!0),
-    we = pe(!1),
-    xe = {},
-    ye = ic(xe),
-    ze = ic(xe),
-    Ae = ic(xe);
-  function Be(a) {
-    if (a === xe) throw Error(m(174));
-    return a;
-  }
-  function Ce(a, b) {
-    v(Ae, b);
-    v(ze, a);
-    v(ye, xe);
+  function se(a, b) {
+    v(qe, b);
+    v(pe, a);
+    v(oe, ne);
     a = Fa(b);
-    q(ye);
-    v(ye, a);
+    q(oe);
+    v(oe, a);
   }
-  function De() {
-    q(ye);
-    q(ze);
-    q(Ae);
+  function te() {
+    q(oe);
+    q(pe);
+    q(qe);
   }
-  function Ee(a) {
-    var b = Be(Ae.current),
-      c = Be(ye.current);
+  function ue(a) {
+    var b = re(qe.current),
+      c = re(oe.current);
     b = Ga(c, a.type, b);
-    c !== b && (v(ze, a), v(ye, b));
+    c !== b && (v(pe, a), v(oe, b));
   }
-  function Fe(a) {
-    ze.current === a && (q(ye), q(ze));
+  function ve(a) {
+    pe.current === a && (q(oe), q(pe));
   }
-  var J = ic(0);
-  function Ge(a) {
+  var I = ic(0);
+  function we(a) {
     for (var b = a; null !== b;) {
       if (13 === b.tag) {
         var c = b.memoizedState;
@@ -3009,67 +2918,67 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return null;
   }
-  var He = [];
-  function Ie() {
-    for (var a = 0; a < He.length; a++) {
-      var b = He[a];
+  var xe = [];
+  function ye() {
+    for (var a = 0; a < xe.length; a++) {
+      var b = xe[a];
       Sa ? b._workInProgressVersionPrimary = null : b._workInProgressVersionSecondary = null;
     }
-    He.length = 0;
+    xe.length = 0;
   }
-  var Je = da.ReactCurrentDispatcher,
-    Ke = da.ReactCurrentBatchConfig,
-    Le = 0,
+  var ze = da.ReactCurrentDispatcher,
+    Ae = da.ReactCurrentBatchConfig,
+    Be = 0,
+    J = null,
     K = null,
     L = null,
-    M = null,
-    Me = !1,
-    Ne = !1,
-    Oe = 0,
-    Pe = 0;
-  function N() {
-    throw Error(m(321));
+    Ce = !1,
+    De = !1,
+    Ee = 0,
+    Fe = 0;
+  function M() {
+    throw Error(n(321));
   }
-  function Qe(a, b) {
+  function Ge(a, b) {
     if (null === b) return !1;
     for (var c = 0; c < b.length && c < a.length; c++) if (!Vc(a[c], b[c])) return !1;
     return !0;
   }
-  function Re(a, b, c, d, e, f) {
-    Le = f;
-    K = b;
+  function He(a, b, c, d, e, f) {
+    Be = f;
+    J = b;
     b.memoizedState = null;
     b.updateQueue = null;
     b.lanes = 0;
-    Je.current = null === a || null === a.memoizedState ? Se : Te;
+    ze.current = null === a || null === a.memoizedState ? Ie : Je;
     a = c(d, e);
-    if (Ne) {
+    if (De) {
       f = 0;
       do {
-        Ne = !1;
-        Oe = 0;
-        if (25 <= f) throw Error(m(301));
+        De = !1;
+        Ee = 0;
+        if (25 <= f) throw Error(n(301));
         f += 1;
-        M = L = null;
+        L = K = null;
         b.updateQueue = null;
-        Je.current = Ue;
+        ze.current = Ke;
         a = c(d, e);
-      } while (Ne);
+      } while (De);
     }
-    Je.current = Ve;
-    b = null !== L && null !== L.next;
-    Le = 0;
-    M = L = K = null;
-    Me = !1;
-    if (b) throw Error(m(300));
+    ze.current = Le;
+    b = null !== K && null !== K.next;
+    Be = 0;
+    L = K = J = null;
+    Ce = !1;
+    if (b) throw Error(n(300));
     return a;
   }
-  function We() {
-    var a = 0 !== Oe;
-    Oe = 0;
+  function Me() {
+    var a = 0 !== Ee;
+    Ee = 0;
     return a;
   }
-  function Xe() {
+  function Ne() {
     var a = {
       memoizedState: null,
       baseState: null,
@@ -3077,38 +2986,38 @@ module.exports = function $$$reconciler($$$hostConfig) {
       queue: null,
       next: null
     };
-    null === M ? K.memoizedState = M = a : M = M.next = a;
-    return M;
+    null === L ? J.memoizedState = L = a : L = L.next = a;
+    return L;
   }
-  function Ye() {
-    if (null === L) {
-      var a = K.alternate;
+  function Oe() {
+    if (null === K) {
+      var a = J.alternate;
       a = null !== a ? a.memoizedState : null;
-    } else a = L.next;
-    var b = null === M ? K.memoizedState : M.next;
-    if (null !== b) M = b, L = a;else {
-      if (null === a) throw Error(m(310));
-      L = a;
+    } else a = K.next;
+    var b = null === L ? J.memoizedState : L.next;
+    if (null !== b) L = b, K = a;else {
+      if (null === a) throw Error(n(310));
+      K = a;
       a = {
-        memoizedState: L.memoizedState,
-        baseState: L.baseState,
-        baseQueue: L.baseQueue,
-        queue: L.queue,
+        memoizedState: K.memoizedState,
+        baseState: K.baseState,
+        baseQueue: K.baseQueue,
+        queue: K.queue,
         next: null
       };
-      null === M ? K.memoizedState = M = a : M = M.next = a;
+      null === L ? J.memoizedState = L = a : L = L.next = a;
     }
-    return M;
+    return L;
   }
-  function Ze(a, b) {
+  function Pe(a, b) {
     return "function" === typeof b ? b(a) : b;
   }
-  function $e(a) {
-    var b = Ye(),
+  function Qe(a) {
+    var b = Oe(),
       c = b.queue;
-    if (null === c) throw Error(m(311));
+    if (null === c) throw Error(n(311));
     c.lastRenderedReducer = a;
-    var d = L,
+    var d = K,
       e = d.baseQueue,
       f = c.pending;
     if (null !== f) {
@@ -3127,24 +3036,24 @@ module.exports = function $$$reconciler($$$hostConfig) {
         k = null,
         l = f;
       do {
-        var n = l.lane;
-        if ((Le & n) === n) null !== k && (k = k.next = {
+        var m = l.lane;
+        if ((Be & m) === m) null !== k && (k = k.next = {
           lane: 0,
           action: l.action,
           hasEagerState: l.hasEagerState,
           eagerState: l.eagerState,
           next: null
         }), d = l.hasEagerState ? l.eagerState : a(d, l.action);else {
-          var t = {
-            lane: n,
+          var r = {
+            lane: m,
             action: l.action,
             hasEagerState: l.hasEagerState,
             eagerState: l.eagerState,
             next: null
           };
-          null === k ? (h = k = t, g = d) : k = k.next = t;
-          K.lanes |= n;
-          be |= n;
+          null === k ? (h = k = r, g = d) : k = k.next = r;
+          J.lanes |= m;
+          le |= m;
         }
         l = l.next;
       } while (null !== l && l !== f);
@@ -3158,14 +3067,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
     a = c.interleaved;
     if (null !== a) {
       e = a;
-      do f = e.lane, K.lanes |= f, be |= f, e = e.next; while (e !== a);
+      do f = e.lane, J.lanes |= f, le |= f, e = e.next; while (e !== a);
     } else null === e && (c.lanes = 0);
     return [b.memoizedState, c.dispatch];
   }
-  function af(a) {
-    var b = Ye(),
+  function Re(a) {
+    var b = Oe(),
       c = b.queue;
-    if (null === c) throw Error(m(311));
+    if (null === c) throw Error(n(311));
     c.lastRenderedReducer = a;
     var d = c.dispatch,
       e = c.pending,
@@ -3181,46 +3090,46 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return [f, d];
   }
-  function bf() {}
-  function cf(a, b) {
-    var c = K,
-      d = Ye(),
+  function Se() {}
+  function Te(a, b) {
+    var c = J,
+      d = Oe(),
       e = b(),
       f = !Vc(d.memoizedState, e);
     f && (d.memoizedState = e, G = !0);
     d = d.queue;
-    df(ef.bind(null, c, d, a), [a]);
-    if (d.getSnapshot !== b || f || null !== M && M.memoizedState.tag & 1) {
+    Ue(Ve.bind(null, c, d, a), [a]);
+    if (d.getSnapshot !== b || f || null !== L && L.memoizedState.tag & 1) {
       c.flags |= 2048;
-      ff(9, gf.bind(null, c, d, e, b), void 0, null);
-      if (null === O) throw Error(m(349));
-      0 !== (Le & 30) || hf(c, b, e);
+      We(9, Xe.bind(null, c, d, e, b), void 0, null);
+      if (null === N) throw Error(n(349));
+      0 !== (Be & 30) || Ye(c, b, e);
     }
     return e;
   }
-  function hf(a, b, c) {
+  function Ye(a, b, c) {
     a.flags |= 16384;
     a = {
       getSnapshot: b,
       value: c
     };
-    b = K.updateQueue;
+    b = J.updateQueue;
     null === b ? (b = {
       lastEffect: null,
       stores: null
-    }, K.updateQueue = b, b.stores = [a]) : (c = b.stores, null === c ? b.stores = [a] : c.push(a));
+    }, J.updateQueue = b, b.stores = [a]) : (c = b.stores, null === c ? b.stores = [a] : c.push(a));
   }
-  function gf(a, b, c, d) {
+  function Xe(a, b, c, d) {
     b.value = c;
     b.getSnapshot = d;
-    jf(b) && kf(a);
+    Ze(b) && $e(a);
   }
-  function ef(a, b, c) {
+  function Ve(a, b, c) {
     return c(function () {
-      jf(b) && kf(a);
+      Ze(b) && $e(a);
     });
   }
-  function jf(a) {
+  function Ze(a) {
     var b = a.getSnapshot;
     a = a.value;
     try {
@@ -3230,12 +3139,12 @@ module.exports = function $$$reconciler($$$hostConfig) {
       return !0;
     }
   }
-  function kf(a) {
-    var b = Td(a, 1);
-    null !== b && ge(b, a, 1, -1);
+  function $e(a) {
+    var b = ce(a, 1);
+    null !== b && af(b, a, 1, -1);
   }
-  function lf(a) {
-    var b = Xe();
+  function bf(a) {
+    var b = Ne();
     "function" === typeof a && (a = a());
     b.memoizedState = b.baseState = a;
     a = {
@@ -3243,14 +3152,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
       interleaved: null,
       lanes: 0,
       dispatch: null,
-      lastRenderedReducer: Ze,
+      lastRenderedReducer: Pe,
       lastRenderedState: a
     };
     b.queue = a;
-    a = a.dispatch = mf.bind(null, K, a);
+    a = a.dispatch = cf.bind(null, J, a);
     return [b.memoizedState, a];
   }
-  function ff(a, b, c, d) {
+  function We(a, b, c, d) {
     a = {
       tag: a,
       create: b,
@@ -3258,49 +3167,49 @@ module.exports = function $$$reconciler($$$hostConfig) {
       deps: d,
       next: null
     };
-    b = K.updateQueue;
+    b = J.updateQueue;
     null === b ? (b = {
       lastEffect: null,
       stores: null
-    }, K.updateQueue = b, b.lastEffect = a.next = a) : (c = b.lastEffect, null === c ? b.lastEffect = a.next = a : (d = c.next, c.next = a, a.next = d, b.lastEffect = a));
+    }, J.updateQueue = b, b.lastEffect = a.next = a) : (c = b.lastEffect, null === c ? b.lastEffect = a.next = a : (d = c.next, c.next = a, a.next = d, b.lastEffect = a));
     return a;
   }
-  function nf() {
-    return Ye().memoizedState;
+  function df() {
+    return Oe().memoizedState;
   }
-  function of(a, b, c, d) {
-    var e = Xe();
-    K.flags |= a;
-    e.memoizedState = ff(1 | b, c, void 0, void 0 === d ? null : d);
+  function ef(a, b, c, d) {
+    var e = Ne();
+    J.flags |= a;
+    e.memoizedState = We(1 | b, c, void 0, void 0 === d ? null : d);
   }
-  function pf(a, b, c, d) {
-    var e = Ye();
+  function ff(a, b, c, d) {
+    var e = Oe();
     d = void 0 === d ? null : d;
     var f = void 0;
-    if (null !== L) {
-      var g = L.memoizedState;
+    if (null !== K) {
+      var g = K.memoizedState;
       f = g.destroy;
-      if (null !== d && Qe(d, g.deps)) {
-        e.memoizedState = ff(b, c, f, d);
+      if (null !== d && Ge(d, g.deps)) {
+        e.memoizedState = We(b, c, f, d);
         return;
       }
     }
-    K.flags |= a;
-    e.memoizedState = ff(1 | b, c, f, d);
+    J.flags |= a;
+    e.memoizedState = We(1 | b, c, f, d);
   }
-  function qf(a, b) {
-    return of(8390656, 8, a, b);
+  function gf(a, b) {
+    return ef(8390656, 8, a, b);
   }
-  function df(a, b) {
-    return pf(2048, 8, a, b);
+  function Ue(a, b) {
+    return ff(2048, 8, a, b);
   }
-  function rf(a, b) {
-    return pf(4, 2, a, b);
+  function hf(a, b) {
+    return ff(4, 2, a, b);
   }
-  function sf(a, b) {
-    return pf(4, 4, a, b);
+  function jf(a, b) {
+    return ff(4, 4, a, b);
   }
-  function tf(a, b) {
+  function kf(a, b) {
     if ("function" === typeof b) return a = a(), b(a), function () {
       b(null);
     };
@@ -3308,50 +3217,50 @@ module.exports = function $$$reconciler($$$hostConfig) {
       b.current = null;
     };
   }
-  function uf(a, b, c) {
+  function lf(a, b, c) {
     c = null !== c && void 0 !== c ? c.concat([a]) : null;
-    return pf(4, 4, tf.bind(null, b, a), c);
+    return ff(4, 4, kf.bind(null, b, a), c);
   }
-  function vf() {}
-  function wf(a, b) {
-    var c = Ye();
+  function mf() {}
+  function nf(a, b) {
+    var c = Oe();
     b = void 0 === b ? null : b;
     var d = c.memoizedState;
-    if (null !== d && null !== b && Qe(b, d[1])) return d[0];
+    if (null !== d && null !== b && Ge(b, d[1])) return d[0];
     c.memoizedState = [a, b];
     return a;
   }
-  function xf(a, b) {
-    var c = Ye();
+  function of(a, b) {
+    var c = Oe();
     b = void 0 === b ? null : b;
     var d = c.memoizedState;
-    if (null !== d && null !== b && Qe(b, d[1])) return d[0];
+    if (null !== d && null !== b && Ge(b, d[1])) return d[0];
     a = a();
     c.memoizedState = [a, b];
     return a;
   }
-  function yf(a, b, c) {
-    if (0 === (Le & 21)) return a.baseState && (a.baseState = !1, G = !0), a.memoizedState = c;
-    Vc(c, b) || (c = Dc(), K.lanes |= c, be |= c, a.baseState = !0);
+  function pf(a, b, c) {
+    if (0 === (Be & 21)) return a.baseState && (a.baseState = !1, G = !0), a.memoizedState = c;
+    Vc(c, b) || (c = Dc(), J.lanes |= c, le |= c, a.baseState = !0);
     return b;
   }
-  function zf(a, b) {
+  function qf(a, b) {
     var c = C;
     C = 0 !== c && 4 > c ? c : 4;
     a(!0);
-    var d = Ke.transition;
-    Ke.transition = {};
+    var d = Ae.transition;
+    Ae.transition = {};
     try {
       a(!1), b();
     } finally {
-      C = c, Ke.transition = d;
+      C = c, Ae.transition = d;
     }
   }
-  function Af() {
-    return Ye().memoizedState;
+  function rf() {
+    return Oe().memoizedState;
   }
-  function Bf(a, b, c) {
-    var d = fe(a);
+  function sf(a, b, c) {
+    var d = tf(a);
     c = {
       lane: d,
       action: c,
@@ -3359,14 +3268,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
       eagerState: null,
       next: null
     };
-    if (Cf(a)) Df(b, c);else if (c = Sd(a, b, c, d), null !== c) {
-      var e = I();
-      ge(c, a, d, e);
-      Ef(c, b, d);
+    if (uf(a)) vf(b, c);else if (c = be(a, b, c, d), null !== c) {
+      var e = O();
+      af(c, a, d, e);
+      wf(c, b, d);
     }
   }
-  function mf(a, b, c) {
-    var d = fe(a),
+  function cf(a, b, c) {
+    var d = tf(a),
       e = {
         lane: d,
         action: c,
@@ -3374,7 +3283,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
         eagerState: null,
         next: null
       };
-    if (Cf(a)) Df(b, e);else {
+    if (uf(a)) vf(b, e);else {
       var f = a.alternate;
       if (0 === a.lanes && (null === f || 0 === f.lanes) && (f = b.lastRenderedReducer, null !== f)) try {
         var g = b.lastRenderedState,
@@ -3383,26 +3292,26 @@ module.exports = function $$$reconciler($$$hostConfig) {
         e.eagerState = h;
         if (Vc(h, g)) {
           var k = b.interleaved;
-          null === k ? (e.next = e, Rd(b)) : (e.next = k.next, k.next = e);
+          null === k ? (e.next = e, ae(b)) : (e.next = k.next, k.next = e);
           b.interleaved = e;
           return;
         }
       } catch (l) {} finally {}
-      c = Sd(a, b, e, d);
-      null !== c && (e = I(), ge(c, a, d, e), Ef(c, b, d));
+      c = be(a, b, e, d);
+      null !== c && (e = O(), af(c, a, d, e), wf(c, b, d));
     }
   }
-  function Cf(a) {
+  function uf(a) {
     var b = a.alternate;
-    return a === K || null !== b && b === K;
+    return a === J || null !== b && b === J;
   }
-  function Df(a, b) {
-    Ne = Me = !0;
+  function vf(a, b) {
+    De = Ce = !0;
     var c = a.pending;
     null === c ? b.next = b : (b.next = c.next, c.next = b);
     a.pending = b;
   }
-  function Ef(a, b, c) {
+  function wf(a, b, c) {
     if (0 !== (c & 4194240)) {
       var d = b.lanes;
       d &= a.pendingLanes;
@@ -3411,53 +3320,53 @@ module.exports = function $$$reconciler($$$hostConfig) {
       Hc(a, c);
     }
   }
-  var Ve = {
-      readContext: Pd,
-      useCallback: N,
-      useContext: N,
-      useEffect: N,
-      useImperativeHandle: N,
-      useInsertionEffect: N,
-      useLayoutEffect: N,
-      useMemo: N,
-      useReducer: N,
-      useRef: N,
-      useState: N,
-      useDebugValue: N,
-      useDeferredValue: N,
-      useTransition: N,
-      useMutableSource: N,
-      useSyncExternalStore: N,
-      useId: N,
+  var Le = {
+      readContext: Zd,
+      useCallback: M,
+      useContext: M,
+      useEffect: M,
+      useImperativeHandle: M,
+      useInsertionEffect: M,
+      useLayoutEffect: M,
+      useMemo: M,
+      useReducer: M,
+      useRef: M,
+      useState: M,
+      useDebugValue: M,
+      useDeferredValue: M,
+      useTransition: M,
+      useMutableSource: M,
+      useSyncExternalStore: M,
+      useId: M,
       unstable_isNewReconciler: !1
     },
-    Se = {
-      readContext: Pd,
+    Ie = {
+      readContext: Zd,
       useCallback: function useCallback(a, b) {
-        Xe().memoizedState = [a, void 0 === b ? null : b];
+        Ne().memoizedState = [a, void 0 === b ? null : b];
         return a;
       },
-      useContext: Pd,
-      useEffect: qf,
+      useContext: Zd,
+      useEffect: gf,
       useImperativeHandle: function useImperativeHandle(a, b, c) {
         c = null !== c && void 0 !== c ? c.concat([a]) : null;
-        return of(4194308, 4, tf.bind(null, b, a), c);
+        return ef(4194308, 4, kf.bind(null, b, a), c);
       },
       useLayoutEffect: function useLayoutEffect(a, b) {
-        return of(4194308, 4, a, b);
+        return ef(4194308, 4, a, b);
       },
       useInsertionEffect: function useInsertionEffect(a, b) {
-        return of(4, 2, a, b);
+        return ef(4, 2, a, b);
       },
       useMemo: function useMemo(a, b) {
-        var c = Xe();
+        var c = Ne();
         b = void 0 === b ? null : b;
         a = a();
         c.memoizedState = [a, b];
         return a;
       },
       useReducer: function useReducer(a, b, c) {
-        var d = Xe();
+        var d = Ne();
         b = void 0 !== c ? c(b) : b;
         d.memoizedState = d.baseState = b;
         a = {
@@ -3469,39 +3378,39 @@ module.exports = function $$$reconciler($$$hostConfig) {
           lastRenderedState: b
         };
         d.queue = a;
-        a = a.dispatch = Bf.bind(null, K, a);
+        a = a.dispatch = sf.bind(null, J, a);
         return [d.memoizedState, a];
       },
       useRef: function useRef(a) {
-        var b = Xe();
+        var b = Ne();
         a = {
           current: a
         };
         return b.memoizedState = a;
       },
-      useState: lf,
-      useDebugValue: vf,
+      useState: bf,
+      useDebugValue: mf,
       useDeferredValue: function useDeferredValue(a) {
-        return Xe().memoizedState = a;
+        return Ne().memoizedState = a;
       },
       useTransition: function useTransition() {
-        var a = lf(!1),
+        var a = bf(!1),
           b = a[0];
-        a = zf.bind(null, a[1]);
-        Xe().memoizedState = a;
+        a = qf.bind(null, a[1]);
+        Ne().memoizedState = a;
         return [b, a];
       },
       useMutableSource: function useMutableSource() {},
       useSyncExternalStore: function useSyncExternalStore(a, b, c) {
-        var d = K,
-          e = Xe();
+        var d = J,
+          e = Ne();
         if (F) {
-          if (void 0 === c) throw Error(m(407));
+          if (void 0 === c) throw Error(n(407));
           c = c();
         } else {
           c = b();
-          if (null === O) throw Error(m(349));
-          0 !== (Le & 30) || hf(d, b, c);
+          if (null === N) throw Error(n(349));
+          0 !== (Be & 30) || Ye(d, b, c);
         }
         e.memoizedState = c;
         var f = {
@@ -3509,86 +3418,175 @@ module.exports = function $$$reconciler($$$hostConfig) {
           getSnapshot: b
         };
         e.queue = f;
-        qf(ef.bind(null, d, f, a), [a]);
+        gf(Ve.bind(null, d, f, a), [a]);
         d.flags |= 2048;
-        ff(9, gf.bind(null, d, f, c, b), void 0, null);
+        We(9, Xe.bind(null, d, f, c, b), void 0, null);
         return c;
       },
       useId: function useId() {
-        var a = Xe(),
-          b = O.identifierPrefix;
+        var a = Ne(),
+          b = N.identifierPrefix;
         if (F) {
           var c = jd;
           var d = id;
           c = (d & ~(1 << 32 - tc(d) - 1)).toString(32) + c;
           b = ":" + b + "R" + c;
-          c = Oe++;
+          c = Ee++;
           0 < c && (b += "H" + c.toString(32));
           b += ":";
-        } else c = Pe++, b = ":" + b + "r" + c.toString(32) + ":";
+        } else c = Fe++, b = ":" + b + "r" + c.toString(32) + ":";
         return a.memoizedState = b;
       },
       unstable_isNewReconciler: !1
     },
-    Te = {
-      readContext: Pd,
-      useCallback: wf,
-      useContext: Pd,
-      useEffect: df,
-      useImperativeHandle: uf,
-      useInsertionEffect: rf,
-      useLayoutEffect: sf,
-      useMemo: xf,
-      useReducer: $e,
-      useRef: nf,
+    Je = {
+      readContext: Zd,
+      useCallback: nf,
+      useContext: Zd,
+      useEffect: Ue,
+      useImperativeHandle: lf,
+      useInsertionEffect: hf,
+      useLayoutEffect: jf,
+      useMemo: of,
+      useReducer: Qe,
+      useRef: df,
       useState: function useState() {
-        return $e(Ze);
+        return Qe(Pe);
       },
-      useDebugValue: vf,
+      useDebugValue: mf,
       useDeferredValue: function useDeferredValue(a) {
-        var b = Ye();
-        return yf(b, L.memoizedState, a);
+        var b = Oe();
+        return pf(b, K.memoizedState, a);
       },
       useTransition: function useTransition() {
-        var a = $e(Ze)[0],
-          b = Ye().memoizedState;
+        var a = Qe(Pe)[0],
+          b = Oe().memoizedState;
         return [a, b];
       },
-      useMutableSource: bf,
-      useSyncExternalStore: cf,
-      useId: Af,
+      useMutableSource: Se,
+      useSyncExternalStore: Te,
+      useId: rf,
       unstable_isNewReconciler: !1
     },
-    Ue = {
-      readContext: Pd,
-      useCallback: wf,
-      useContext: Pd,
-      useEffect: df,
-      useImperativeHandle: uf,
-      useInsertionEffect: rf,
-      useLayoutEffect: sf,
-      useMemo: xf,
-      useReducer: af,
-      useRef: nf,
+    Ke = {
+      readContext: Zd,
+      useCallback: nf,
+      useContext: Zd,
+      useEffect: Ue,
+      useImperativeHandle: lf,
+      useInsertionEffect: hf,
+      useLayoutEffect: jf,
+      useMemo: of,
+      useReducer: Re,
+      useRef: df,
       useState: function useState() {
-        return af(Ze);
+        return Re(Pe);
       },
-      useDebugValue: vf,
+      useDebugValue: mf,
       useDeferredValue: function useDeferredValue(a) {
-        var b = Ye();
-        return null === L ? b.memoizedState = a : yf(b, L.memoizedState, a);
+        var b = Oe();
+        return null === K ? b.memoizedState = a : pf(b, K.memoizedState, a);
       },
       useTransition: function useTransition() {
-        var a = af(Ze)[0],
-          b = Ye().memoizedState;
+        var a = Re(Pe)[0],
+          b = Oe().memoizedState;
         return [a, b];
       },
-      useMutableSource: bf,
-      useSyncExternalStore: cf,
-      useId: Af,
+      useMutableSource: Se,
+      useSyncExternalStore: Te,
+      useId: rf,
       unstable_isNewReconciler: !1
     };
-  function Ff(a, b) {
+  function xf(a, b) {
+    if (a && a.defaultProps) {
+      b = ca({}, b);
+      a = a.defaultProps;
+      for (var c in a) void 0 === b[c] && (b[c] = a[c]);
+      return b;
+    }
+    return b;
+  }
+  function yf(a, b, c, d) {
+    b = a.memoizedState;
+    c = c(d, b);
+    c = null === c || void 0 === c ? b : ca({}, b, c);
+    a.memoizedState = c;
+    0 === a.lanes && (a.updateQueue.baseState = c);
+  }
+  var zf = {
+    isMounted: function isMounted(a) {
+      return (a = a._reactInternals) ? wa(a) === a : !1;
+    },
+    enqueueSetState: function enqueueSetState(a, b, c) {
+      a = a._reactInternals;
+      var d = O(),
+        e = tf(a),
+        f = ge(d, e);
+      f.payload = b;
+      void 0 !== c && null !== c && (f.callback = c);
+      b = he(a, f, e);
+      null !== b && (af(b, a, e, d), ie(b, a, e));
+    },
+    enqueueReplaceState: function enqueueReplaceState(a, b, c) {
+      a = a._reactInternals;
+      var d = O(),
+        e = tf(a),
+        f = ge(d, e);
+      f.tag = 1;
+      f.payload = b;
+      void 0 !== c && null !== c && (f.callback = c);
+      b = he(a, f, e);
+      null !== b && (af(b, a, e, d), ie(b, a, e));
+    },
+    enqueueForceUpdate: function enqueueForceUpdate(a, b) {
+      a = a._reactInternals;
+      var c = O(),
+        d = tf(a),
+        e = ge(c, d);
+      e.tag = 2;
+      void 0 !== b && null !== b && (e.callback = b);
+      b = he(a, e, d);
+      null !== b && (af(b, a, d, c), ie(b, a, d));
+    }
+  };
+  function Af(a, b, c, d, e, f, g) {
+    a = a.stateNode;
+    return "function" === typeof a.shouldComponentUpdate ? a.shouldComponentUpdate(d, f, g) : b.prototype && b.prototype.isPureReactComponent ? !Dd(c, d) || !Dd(e, f) : !0;
+  }
+  function Bf(a, b, c) {
+    var d = !1,
+      e = jc;
+    var f = b.contextType;
+    "object" === typeof f && null !== f ? f = Zd(f) : (e = A(b) ? kc : x.current, d = b.contextTypes, f = (d = null !== d && void 0 !== d) ? mc(a, e) : jc);
+    b = new b(c, f);
+    a.memoizedState = null !== b.state && void 0 !== b.state ? b.state : null;
+    b.updater = zf;
+    a.stateNode = b;
+    b._reactInternals = a;
+    d && (a = a.stateNode, a.__reactInternalMemoizedUnmaskedChildContext = e, a.__reactInternalMemoizedMaskedChildContext = f);
+    return b;
+  }
+  function Cf(a, b, c, d) {
+    a = b.state;
+    "function" === typeof b.componentWillReceiveProps && b.componentWillReceiveProps(c, d);
+    "function" === typeof b.UNSAFE_componentWillReceiveProps && b.UNSAFE_componentWillReceiveProps(c, d);
+    b.state !== a && zf.enqueueReplaceState(b, b.state, null);
+  }
+  function Df(a, b, c, d) {
+    var e = a.stateNode;
+    e.props = c;
+    e.state = a.memoizedState;
+    e.refs = {};
+    ee(a);
+    var f = b.contextType;
+    "object" === typeof f && null !== f ? e.context = Zd(f) : (f = A(b) ? kc : x.current, e.context = mc(a, f));
+    e.state = a.memoizedState;
+    f = b.getDerivedStateFromProps;
+    "function" === typeof f && (yf(a, b, f, c), e.state = a.memoizedState);
+    "function" === typeof b.getDerivedStateFromProps || "function" === typeof e.getSnapshotBeforeUpdate || "function" !== typeof e.UNSAFE_componentWillMount && "function" !== typeof e.componentWillMount || (b = e.state, "function" === typeof e.componentWillMount && e.componentWillMount(), "function" === typeof e.UNSAFE_componentWillMount && e.UNSAFE_componentWillMount(), b !== e.state && zf.enqueueReplaceState(e, e.state, null), ke(a, c, e, d), e.state = a.memoizedState);
+    "function" === typeof e.componentDidMount && (a.flags |= 4194308);
+  }
+  function Ef(a, b) {
     try {
       var c = "",
         d = b;
@@ -3604,7 +3602,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       digest: null
     };
   }
-  function Gf(a, b, c) {
+  function Ff(a, b, c) {
     return {
       value: a,
       source: null,
@@ -3612,7 +3610,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       digest: null != b ? b : null
     };
   }
-  function Hf(a, b) {
+  function Gf(a, b) {
     try {
       console.error(b.value);
     } catch (c) {
@@ -3621,22 +3619,22 @@ module.exports = function $$$reconciler($$$hostConfig) {
       });
     }
   }
-  var If = "function" === typeof WeakMap ? WeakMap : Map;
-  function Jf(a, b, c) {
-    c = Xd(-1, c);
+  var Hf = "function" === typeof WeakMap ? WeakMap : Map;
+  function If(a, b, c) {
+    c = ge(-1, c);
     c.tag = 3;
     c.payload = {
       element: null
     };
     var d = b.value;
     c.callback = function () {
-      Kf || (Kf = !0, Lf = d);
-      Hf(a, b);
+      Jf || (Jf = !0, Kf = d);
+      Gf(a, b);
     };
     return c;
   }
-  function Mf(a, b, c) {
-    c = Xd(-1, c);
+  function Lf(a, b, c) {
+    c = ge(-1, c);
     c.tag = 3;
     var d = a.type.getDerivedStateFromError;
     if ("function" === typeof d) {
@@ -3645,13 +3643,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
         return d(e);
       };
       c.callback = function () {
-        Hf(a, b);
+        Gf(a, b);
       };
     }
     var f = a.stateNode;
     null !== f && "function" === typeof f.componentDidCatch && (c.callback = function () {
-      Hf(a, b);
-      "function" !== typeof d && (null === Nf ? Nf = new Set([this]) : Nf.add(this));
+      Gf(a, b);
+      "function" !== typeof d && (null === Mf ? Mf = new Set([this]) : Mf.add(this));
       var c = b.stack;
       this.componentDidCatch(b.value, {
         componentStack: null !== c ? c : ""
@@ -3659,16 +3657,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
     });
     return c;
   }
-  function Of(a, b, c) {
+  function Nf(a, b, c) {
     var d = a.pingCache;
     if (null === d) {
-      d = a.pingCache = new If();
+      d = a.pingCache = new Hf();
       var e = new Set();
       d.set(b, e);
     } else e = d.get(b), void 0 === e && (e = new Set(), d.set(b, e));
-    e.has(c) || (e.add(c), a = Pf.bind(null, a, b, c), b.then(a, a));
+    e.has(c) || (e.add(c), a = Of.bind(null, a, b, c), b.then(a, a));
   }
-  function Qf(a) {
+  function Pf(a) {
     do {
       var b;
       if (b = 13 === a.tag) b = a.memoizedState, b = null !== b ? null !== b.dehydrated ? !0 : !1 : !0;
@@ -3677,34 +3675,34 @@ module.exports = function $$$reconciler($$$hostConfig) {
     } while (null !== a);
     return null;
   }
-  function Rf(a, b, c, d, e) {
-    if (0 === (a.mode & 1)) return a === b ? a.flags |= 65536 : (a.flags |= 128, c.flags |= 131072, c.flags &= -52805, 1 === c.tag && (null === c.alternate ? c.tag = 17 : (b = Xd(-1, 1), b.tag = 2, Yd(c, b, 1))), c.lanes |= 1), a;
+  function Qf(a, b, c, d, e) {
+    if (0 === (a.mode & 1)) return a === b ? a.flags |= 65536 : (a.flags |= 128, c.flags |= 131072, c.flags &= -52805, 1 === c.tag && (null === c.alternate ? c.tag = 17 : (b = ge(-1, 1), b.tag = 2, he(c, b, 1))), c.lanes |= 1), a;
     a.flags |= 65536;
     a.lanes = e;
     return a;
   }
-  var Sf = da.ReactCurrentOwner,
+  var Rf = da.ReactCurrentOwner,
     G = !1;
   function P(a, b, c, d) {
-    b.child = null === a ? we(b, null, c, d) : ve(b, a.child, c, d);
+    b.child = null === a ? Pd(b, null, c, d) : Od(b, a.child, c, d);
   }
-  function Tf(a, b, c, d, e) {
+  function Sf(a, b, c, d, e) {
     c = c.render;
     var f = b.ref;
-    Od(b, e);
-    d = Re(a, b, c, d, f, e);
-    c = We();
-    if (null !== a && !G) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Uf(a, b, e);
+    Yd(b, e);
+    d = He(a, b, c, d, f, e);
+    c = Me();
+    if (null !== a && !G) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Tf(a, b, e);
     F && c && md(b);
     b.flags |= 1;
     P(a, b, d, e);
     return b.child;
   }
-  function Vf(a, b, c, d, e) {
+  function Uf(a, b, c, d, e) {
     if (null === a) {
       var f = c.type;
-      if ("function" === typeof f && !Wf(f) && void 0 === f.defaultProps && null === c.compare && void 0 === c.defaultProps) return b.tag = 15, b.type = f, Xf(a, b, f, d, e);
-      a = se(c.type, null, d, b, b.mode, e);
+      if ("function" === typeof f && !Vf(f) && void 0 === f.defaultProps && null === c.compare && void 0 === c.defaultProps) return b.tag = 15, b.type = f, Wf(a, b, f, d, e);
+      a = Ld(c.type, null, d, b, b.mode, e);
       a.ref = b.ref;
       a["return"] = b;
       return b.child = a;
@@ -3714,22 +3712,22 @@ module.exports = function $$$reconciler($$$hostConfig) {
       var g = f.memoizedProps;
       c = c.compare;
       c = null !== c ? c : Dd;
-      if (c(g, d) && a.ref === b.ref) return Uf(a, b, e);
+      if (c(g, d) && a.ref === b.ref) return Tf(a, b, e);
     }
     b.flags |= 1;
-    a = qe(f, d);
+    a = Jd(f, d);
     a.ref = b.ref;
     a["return"] = b;
     return b.child = a;
   }
-  function Xf(a, b, c, d, e) {
+  function Wf(a, b, c, d, e) {
     if (null !== a) {
       var f = a.memoizedProps;
-      if (Dd(f, d) && a.ref === b.ref) if (G = !1, b.pendingProps = d = f, 0 !== (a.lanes & e)) 0 !== (a.flags & 131072) && (G = !0);else return b.lanes = a.lanes, Uf(a, b, e);
+      if (Dd(f, d) && a.ref === b.ref) if (G = !1, b.pendingProps = d = f, 0 !== (a.lanes & e)) 0 !== (a.flags & 131072) && (G = !0);else return b.lanes = a.lanes, Tf(a, b, e);
     }
-    return Yf(a, b, c, d, e);
+    return Xf(a, b, c, d, e);
   }
-  function Zf(a, b, c) {
+  function Yf(a, b, c) {
     var d = b.pendingProps,
       e = d.children,
       f = null !== a ? a.memoizedState : null;
@@ -3738,130 +3736,130 @@ module.exports = function $$$reconciler($$$hostConfig) {
         baseLanes: 0,
         cachePool: null,
         transitions: null
-      }, v($f, ag), ag |= c;else {
+      }, v(Zf, $f), $f |= c;else {
         if (0 === (c & 1073741824)) return a = null !== f ? f.baseLanes | c : c, b.lanes = b.childLanes = 1073741824, b.memoizedState = {
           baseLanes: a,
           cachePool: null,
           transitions: null
-        }, b.updateQueue = null, v($f, ag), ag |= a, null;
+        }, b.updateQueue = null, v(Zf, $f), $f |= a, null;
         b.memoizedState = {
           baseLanes: 0,
           cachePool: null,
           transitions: null
         };
         d = null !== f ? f.baseLanes : c;
-        v($f, ag);
-        ag |= d;
+        v(Zf, $f);
+        $f |= d;
       }
-    } else null !== f ? (d = f.baseLanes | c, b.memoizedState = null) : d = c, v($f, ag), ag |= d;
+    } else null !== f ? (d = f.baseLanes | c, b.memoizedState = null) : d = c, v(Zf, $f), $f |= d;
     P(a, b, e, c);
     return b.child;
   }
-  function bg(a, b) {
+  function ag(a, b) {
     var c = b.ref;
     if (null === a && null !== c || null !== a && a.ref !== c) b.flags |= 512, b.flags |= 2097152;
   }
-  function Yf(a, b, c, d, e) {
+  function Xf(a, b, c, d, e) {
     var f = A(c) ? kc : x.current;
-    f = lc(b, f);
-    Od(b, e);
-    c = Re(a, b, c, d, f, e);
-    d = We();
-    if (null !== a && !G) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Uf(a, b, e);
+    f = mc(b, f);
+    Yd(b, e);
+    c = He(a, b, c, d, f, e);
+    d = Me();
+    if (null !== a && !G) return b.updateQueue = a.updateQueue, b.flags &= -2053, a.lanes &= ~e, Tf(a, b, e);
     F && d && md(b);
     b.flags |= 1;
     P(a, b, c, e);
     return b.child;
   }
-  function cg(a, b, c, d, e) {
+  function bg(a, b, c, d, e) {
     if (A(c)) {
       var f = !0;
-      pc(b);
+      qc(b);
     } else f = !1;
-    Od(b, e);
-    if (null === b.stateNode) dg(a, b), je(b, c, d), le(b, c, d, e), d = !0;else if (null === a) {
+    Yd(b, e);
+    if (null === b.stateNode) cg(a, b), Bf(b, c, d), Df(b, c, d, e), d = !0;else if (null === a) {
       var g = b.stateNode,
         h = b.memoizedProps;
       g.props = h;
       var k = g.context,
         l = c.contextType;
-      "object" === typeof l && null !== l ? l = Pd(l) : (l = A(c) ? kc : x.current, l = lc(b, l));
-      var n = c.getDerivedStateFromProps,
-        t = "function" === typeof n || "function" === typeof g.getSnapshotBeforeUpdate;
-      t || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== d || k !== l) && ke(b, g, d, l);
-      Ud = !1;
+      "object" === typeof l && null !== l ? l = Zd(l) : (l = A(c) ? kc : x.current, l = mc(b, l));
+      var m = c.getDerivedStateFromProps,
+        r = "function" === typeof m || "function" === typeof g.getSnapshotBeforeUpdate;
+      r || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== d || k !== l) && Cf(b, g, d, l);
+      de = !1;
       var p = b.memoizedState;
       g.state = p;
-      ae(b, d, g, e);
+      ke(b, d, g, e);
       k = b.memoizedState;
-      h !== d || p !== k || z.current || Ud ? ("function" === typeof n && (ee(b, c, n, d), k = b.memoizedState), (h = Ud || ie(b, c, h, d, p, k, l)) ? (t || "function" !== typeof g.UNSAFE_componentWillMount && "function" !== typeof g.componentWillMount || ("function" === typeof g.componentWillMount && g.componentWillMount(), "function" === typeof g.UNSAFE_componentWillMount && g.UNSAFE_componentWillMount()), "function" === typeof g.componentDidMount && (b.flags |= 4194308)) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), b.memoizedProps = d, b.memoizedState = k), g.props = d, g.state = k, g.context = l, d = h) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), d = !1);
+      h !== d || p !== k || z.current || de ? ("function" === typeof m && (yf(b, c, m, d), k = b.memoizedState), (h = de || Af(b, c, h, d, p, k, l)) ? (r || "function" !== typeof g.UNSAFE_componentWillMount && "function" !== typeof g.componentWillMount || ("function" === typeof g.componentWillMount && g.componentWillMount(), "function" === typeof g.UNSAFE_componentWillMount && g.UNSAFE_componentWillMount()), "function" === typeof g.componentDidMount && (b.flags |= 4194308)) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), b.memoizedProps = d, b.memoizedState = k), g.props = d, g.state = k, g.context = l, d = h) : ("function" === typeof g.componentDidMount && (b.flags |= 4194308), d = !1);
     } else {
       g = b.stateNode;
-      Wd(a, b);
+      fe(a, b);
       h = b.memoizedProps;
-      l = b.type === b.elementType ? h : Fd(b.type, h);
+      l = b.type === b.elementType ? h : xf(b.type, h);
       g.props = l;
-      t = b.pendingProps;
+      r = b.pendingProps;
       p = g.context;
       k = c.contextType;
-      "object" === typeof k && null !== k ? k = Pd(k) : (k = A(c) ? kc : x.current, k = lc(b, k));
+      "object" === typeof k && null !== k ? k = Zd(k) : (k = A(c) ? kc : x.current, k = mc(b, k));
       var B = c.getDerivedStateFromProps;
-      (n = "function" === typeof B || "function" === typeof g.getSnapshotBeforeUpdate) || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== t || p !== k) && ke(b, g, d, k);
-      Ud = !1;
+      (m = "function" === typeof B || "function" === typeof g.getSnapshotBeforeUpdate) || "function" !== typeof g.UNSAFE_componentWillReceiveProps && "function" !== typeof g.componentWillReceiveProps || (h !== r || p !== k) && Cf(b, g, d, k);
+      de = !1;
       p = b.memoizedState;
       g.state = p;
-      ae(b, d, g, e);
+      ke(b, d, g, e);
       var w = b.memoizedState;
-      h !== t || p !== w || z.current || Ud ? ("function" === typeof B && (ee(b, c, B, d), w = b.memoizedState), (l = Ud || ie(b, c, l, d, p, w, k) || !1) ? (n || "function" !== typeof g.UNSAFE_componentWillUpdate && "function" !== typeof g.componentWillUpdate || ("function" === typeof g.componentWillUpdate && g.componentWillUpdate(d, w, k), "function" === typeof g.UNSAFE_componentWillUpdate && g.UNSAFE_componentWillUpdate(d, w, k)), "function" === typeof g.componentDidUpdate && (b.flags |= 4), "function" === typeof g.getSnapshotBeforeUpdate && (b.flags |= 1024)) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 1024), b.memoizedProps = d, b.memoizedState = w), g.props = d, g.state = w, g.context = k, d = l) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 1024), d = !1);
+      h !== r || p !== w || z.current || de ? ("function" === typeof B && (yf(b, c, B, d), w = b.memoizedState), (l = de || Af(b, c, l, d, p, w, k) || !1) ? (m || "function" !== typeof g.UNSAFE_componentWillUpdate && "function" !== typeof g.componentWillUpdate || ("function" === typeof g.componentWillUpdate && g.componentWillUpdate(d, w, k), "function" === typeof g.UNSAFE_componentWillUpdate && g.UNSAFE_componentWillUpdate(d, w, k)), "function" === typeof g.componentDidUpdate && (b.flags |= 4), "function" === typeof g.getSnapshotBeforeUpdate && (b.flags |= 1024)) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 1024), b.memoizedProps = d, b.memoizedState = w), g.props = d, g.state = w, g.context = k, d = l) : ("function" !== typeof g.componentDidUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 4), "function" !== typeof g.getSnapshotBeforeUpdate || h === a.memoizedProps && p === a.memoizedState || (b.flags |= 1024), d = !1);
     }
-    return eg(a, b, c, d, f, e);
+    return dg(a, b, c, d, f, e);
   }
-  function eg(a, b, c, d, e, f) {
-    bg(a, b);
+  function dg(a, b, c, d, e, f) {
+    ag(a, b);
     var g = 0 !== (b.flags & 128);
-    if (!d && !g) return e && rc(b, c, !1), Uf(a, b, f);
+    if (!d && !g) return e && rc(b, c, !1), Tf(a, b, f);
     d = b.stateNode;
-    Sf.current = b;
+    Rf.current = b;
     var h = g && "function" !== typeof c.getDerivedStateFromError ? null : d.render();
     b.flags |= 1;
-    null !== a && g ? (b.child = ve(b, a.child, null, f), b.child = ve(b, null, h, f)) : P(a, b, h, f);
+    null !== a && g ? (b.child = Od(b, a.child, null, f), b.child = Od(b, null, h, f)) : P(a, b, h, f);
     b.memoizedState = d.state;
     e && rc(b, c, !0);
     return b.child;
   }
-  function fg(a) {
+  function eg(a) {
     var b = a.stateNode;
-    b.pendingContext ? nc(a, b.pendingContext, b.pendingContext !== b.context) : b.context && nc(a, b.context, !1);
-    Ce(a, b.containerInfo);
+    b.pendingContext ? oc(a, b.pendingContext, b.pendingContext !== b.context) : b.context && oc(a, b.context, !1);
+    se(a, b.containerInfo);
   }
-  function gg(a, b, c, d, e) {
+  function fg(a, b, c, d, e) {
     Ad();
     Bd(e);
     b.flags |= 256;
     P(a, b, c, d);
     return b.child;
   }
-  var hg = {
+  var gg = {
     dehydrated: null,
     treeContext: null,
     retryLane: 0
   };
-  function ig(a) {
+  function hg(a) {
     return {
       baseLanes: a,
       cachePool: null,
       transitions: null
     };
   }
-  function jg(a, b, c) {
+  function ig(a, b, c) {
     var d = b.pendingProps,
-      e = J.current,
+      e = I.current,
       f = !1,
       g = 0 !== (b.flags & 128),
       h;
     (h = g) || (h = null !== a && null === a.memoizedState ? !1 : 0 !== (e & 2));
     if (h) f = !0, b.flags &= -129;else if (null === a || null !== a.memoizedState) e |= 1;
-    v(J, e & 1);
+    v(I, e & 1);
     if (null === a) {
       wd(b);
       a = b.memoizedState;
@@ -3871,10 +3869,10 @@ module.exports = function $$$reconciler($$$hostConfig) {
       return f ? (d = b.mode, f = b.child, g = {
         mode: "hidden",
         children: g
-      }, 0 === (d & 1) && null !== f ? (f.childLanes = 0, f.pendingProps = g) : f = kg(g, d, 0, null), a = ue(a, d, c, null), f["return"] = b, a["return"] = b, f.sibling = a, b.child = f, b.child.memoizedState = ig(c), b.memoizedState = hg, a) : lg(b, g);
+      }, 0 === (d & 1) && null !== f ? (f.childLanes = 0, f.pendingProps = g) : f = jg(g, d, 0, null), a = Nd(a, d, c, null), f["return"] = b, a["return"] = b, f.sibling = a, b.child = f, b.child.memoizedState = hg(c), b.memoizedState = gg, a) : kg(b, g);
     }
     e = a.memoizedState;
-    if (null !== e && (h = e.dehydrated, null !== h)) return mg(a, b, g, d, h, e, c);
+    if (null !== e && (h = e.dehydrated, null !== h)) return lg(a, b, g, d, h, e, c);
     if (f) {
       f = d.fallback;
       g = b.mode;
@@ -3884,8 +3882,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
         mode: "hidden",
         children: d.children
       };
-      0 === (g & 1) && b.child !== e ? (d = b.child, d.childLanes = 0, d.pendingProps = k, b.deletions = null) : (d = qe(e, k), d.subtreeFlags = e.subtreeFlags & 14680064);
-      null !== h ? f = qe(h, f) : (f = ue(f, g, c, null), f.flags |= 2);
+      0 === (g & 1) && b.child !== e ? (d = b.child, d.childLanes = 0, d.pendingProps = k, b.deletions = null) : (d = Jd(e, k), d.subtreeFlags = e.subtreeFlags & 14680064);
+      null !== h ? f = Jd(h, f) : (f = Nd(f, g, c, null), f.flags |= 2);
       f["return"] = b;
       d["return"] = b;
       d.sibling = f;
@@ -3893,19 +3891,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
       d = f;
       f = b.child;
       g = a.child.memoizedState;
-      g = null === g ? ig(c) : {
+      g = null === g ? hg(c) : {
         baseLanes: g.baseLanes | c,
         cachePool: null,
         transitions: g.transitions
       };
       f.memoizedState = g;
       f.childLanes = a.childLanes & ~c;
-      b.memoizedState = hg;
+      b.memoizedState = gg;
       return d;
     }
     f = a.child;
     a = f.sibling;
-    d = qe(f, {
+    d = Jd(f, {
       mode: "visible",
       children: d.children
     });
@@ -3917,48 +3915,48 @@ module.exports = function $$$reconciler($$$hostConfig) {
     b.memoizedState = null;
     return d;
   }
-  function lg(a, b) {
-    b = kg({
+  function kg(a, b) {
+    b = jg({
       mode: "visible",
       children: b
     }, a.mode, 0, null);
     b["return"] = a;
     return a.child = b;
   }
-  function ng(a, b, c, d) {
+  function mg(a, b, c, d) {
     null !== d && Bd(d);
-    ve(b, a.child, null, c);
-    a = lg(b, b.pendingProps.children);
+    Od(b, a.child, null, c);
+    a = kg(b, b.pendingProps.children);
     a.flags |= 2;
     b.memoizedState = null;
     return a;
   }
-  function mg(a, b, c, d, e, f, g) {
+  function lg(a, b, c, d, e, f, g) {
     if (c) {
-      if (b.flags & 256) return b.flags &= -257, d = Gf(Error(m(422))), ng(a, b, g, d);
+      if (b.flags & 256) return b.flags &= -257, d = Ff(Error(n(422))), mg(a, b, g, d);
       if (null !== b.memoizedState) return b.child = a.child, b.flags |= 128, null;
       f = d.fallback;
       e = b.mode;
-      d = kg({
+      d = jg({
         mode: "visible",
         children: d.children
       }, e, 0, null);
-      f = ue(f, e, g, null);
+      f = Nd(f, e, g, null);
       f.flags |= 2;
       d["return"] = b;
       f["return"] = b;
       d.sibling = f;
       b.child = d;
-      0 !== (b.mode & 1) && ve(b, a.child, null, g);
-      b.child.memoizedState = ig(g);
-      b.memoizedState = hg;
+      0 !== (b.mode & 1) && Od(b, a.child, null, g);
+      b.child.memoizedState = hg(g);
+      b.memoizedState = gg;
       return f;
     }
-    if (0 === (b.mode & 1)) return ng(a, b, g, null);
-    if (Kb(e)) return d = Lb(e).digest, f = Error(m(419)), d = Gf(f, d, void 0), ng(a, b, g, d);
+    if (0 === (b.mode & 1)) return mg(a, b, g, null);
+    if (Kb(e)) return d = Lb(e).digest, f = Error(n(419)), d = Ff(f, d, void 0), mg(a, b, g, d);
     c = 0 !== (g & a.childLanes);
     if (G || c) {
-      d = O;
+      d = N;
       if (null !== d) {
         switch (g & -g) {
           case 4:
@@ -3997,26 +3995,26 @@ module.exports = function $$$reconciler($$$hostConfig) {
             e = 0;
         }
         e = 0 !== (e & (d.suspendedLanes | g)) ? 0 : e;
-        0 !== e && e !== f.retryLane && (f.retryLane = e, Td(a, e), ge(d, a, e, -1));
+        0 !== e && e !== f.retryLane && (f.retryLane = e, ce(a, e), af(d, a, e, -1));
       }
-      og();
-      d = Gf(Error(m(421)));
-      return ng(a, b, g, d);
+      ng();
+      d = Ff(Error(n(421)));
+      return mg(a, b, g, d);
     }
-    if (Jb(e)) return b.flags |= 128, b.child = a.child, b = pg.bind(null, a), Mb(e, b), null;
+    if (Jb(e)) return b.flags |= 128, b.child = a.child, b = og.bind(null, a), Mb(e, b), null;
     a = f.treeContext;
     Va && (pd = Qb(e), od = b, F = !0, rd = null, qd = !1, null !== a && (fd[gd++] = id, fd[gd++] = jd, fd[gd++] = hd, id = a.id, jd = a.overflow, hd = b));
-    b = lg(b, d.children);
+    b = kg(b, d.children);
     b.flags |= 4096;
     return b;
   }
-  function qg(a, b, c) {
+  function pg(a, b, c) {
     a.lanes |= b;
     var d = a.alternate;
     null !== d && (d.lanes |= b);
-    Nd(a["return"], b, c);
+    Xd(a["return"], b, c);
   }
-  function rg(a, b, c, d, e) {
+  function qg(a, b, c, d, e) {
     var f = a.memoizedState;
     null === f ? a.memoizedState = {
       isBackwards: b,
@@ -4027,15 +4025,15 @@ module.exports = function $$$reconciler($$$hostConfig) {
       tailMode: e
     } : (f.isBackwards = b, f.rendering = null, f.renderingStartTime = 0, f.last = d, f.tail = c, f.tailMode = e);
   }
-  function sg(a, b, c) {
+  function rg(a, b, c) {
     var d = b.pendingProps,
       e = d.revealOrder,
       f = d.tail;
     P(a, b, d.children, c);
-    d = J.current;
+    d = I.current;
     if (0 !== (d & 2)) d = d & 1 | 2, b.flags |= 128;else {
       if (null !== a && 0 !== (a.flags & 128)) a: for (a = b.child; null !== a;) {
-        if (13 === a.tag) null !== a.memoizedState && qg(a, c, b);else if (19 === a.tag) qg(a, c, b);else if (null !== a.child) {
+        if (13 === a.tag) null !== a.memoizedState && pg(a, c, b);else if (19 === a.tag) pg(a, c, b);else if (null !== a.child) {
           a.child["return"] = a;
           a = a.child;
           continue;
@@ -4050,21 +4048,21 @@ module.exports = function $$$reconciler($$$hostConfig) {
       }
       d &= 1;
     }
-    v(J, d);
+    v(I, d);
     if (0 === (b.mode & 1)) b.memoizedState = null;else switch (e) {
       case "forwards":
         c = b.child;
-        for (e = null; null !== c;) a = c.alternate, null !== a && null === Ge(a) && (e = c), c = c.sibling;
+        for (e = null; null !== c;) a = c.alternate, null !== a && null === we(a) && (e = c), c = c.sibling;
         c = e;
         null === c ? (e = b.child, b.child = null) : (e = c.sibling, c.sibling = null);
-        rg(b, !1, e, c, f);
+        qg(b, !1, e, c, f);
         break;
       case "backwards":
         c = null;
         e = b.child;
         for (b.child = null; null !== e;) {
           a = e.alternate;
-          if (null !== a && null === Ge(a)) {
+          if (null !== a && null === we(a)) {
             b.child = e;
             break;
           }
@@ -4073,82 +4071,82 @@ module.exports = function $$$reconciler($$$hostConfig) {
           c = e;
           e = a;
         }
-        rg(b, !0, c, null, f);
+        qg(b, !0, c, null, f);
         break;
       case "together":
-        rg(b, !1, null, null, void 0);
+        qg(b, !1, null, null, void 0);
         break;
       default:
         b.memoizedState = null;
     }
     return b.child;
   }
-  function dg(a, b) {
+  function cg(a, b) {
     0 === (b.mode & 1) && null !== a && (a.alternate = null, b.alternate = null, b.flags |= 2);
   }
-  function Uf(a, b, c) {
+  function Tf(a, b, c) {
     null !== a && (b.dependencies = a.dependencies);
-    be |= b.lanes;
+    le |= b.lanes;
     if (0 === (c & b.childLanes)) return null;
-    if (null !== a && b.child !== a.child) throw Error(m(153));
+    if (null !== a && b.child !== a.child) throw Error(n(153));
     if (null !== b.child) {
       a = b.child;
-      c = qe(a, a.pendingProps);
+      c = Jd(a, a.pendingProps);
       b.child = c;
-      for (c["return"] = b; null !== a.sibling;) a = a.sibling, c = c.sibling = qe(a, a.pendingProps), c["return"] = b;
+      for (c["return"] = b; null !== a.sibling;) a = a.sibling, c = c.sibling = Jd(a, a.pendingProps), c["return"] = b;
       c.sibling = null;
     }
     return b.child;
   }
-  function tg(a, b, c) {
+  function sg(a, b, c) {
     switch (b.tag) {
       case 3:
-        fg(b);
+        eg(b);
         Ad();
         break;
       case 5:
-        Ee(b);
+        ue(b);
         break;
       case 1:
-        A(b.type) && pc(b);
+        A(b.type) && qc(b);
         break;
       case 4:
-        Ce(b, b.stateNode.containerInfo);
+        se(b, b.stateNode.containerInfo);
         break;
       case 10:
-        Ld(b, b.type._context, b.memoizedProps.value);
+        Vd(b, b.type._context, b.memoizedProps.value);
         break;
       case 13:
         var d = b.memoizedState;
         if (null !== d) {
-          if (null !== d.dehydrated) return v(J, J.current & 1), b.flags |= 128, null;
-          if (0 !== (c & b.child.childLanes)) return jg(a, b, c);
-          v(J, J.current & 1);
-          a = Uf(a, b, c);
+          if (null !== d.dehydrated) return v(I, I.current & 1), b.flags |= 128, null;
+          if (0 !== (c & b.child.childLanes)) return ig(a, b, c);
+          v(I, I.current & 1);
+          a = Tf(a, b, c);
           return null !== a ? a.sibling : null;
         }
-        v(J, J.current & 1);
+        v(I, I.current & 1);
         break;
       case 19:
         d = 0 !== (c & b.childLanes);
         if (0 !== (a.flags & 128)) {
-          if (d) return sg(a, b, c);
+          if (d) return rg(a, b, c);
           b.flags |= 128;
         }
         var e = b.memoizedState;
         null !== e && (e.rendering = null, e.tail = null, e.lastEffect = null);
-        v(J, J.current);
+        v(I, I.current);
         if (d) break;else return null;
       case 22:
       case 23:
-        return b.lanes = 0, Zf(a, b, c);
+        return b.lanes = 0, Yf(a, b, c);
     }
-    return Uf(a, b, c);
+    return Tf(a, b, c);
   }
-  function ug(a) {
+  function tg(a) {
     a.flags |= 4;
   }
-  function vg(a, b) {
+  function ug(a, b) {
     if (null !== a && a.child === b.child) return !0;
     if (0 !== (b.flags & 16)) return !1;
     for (a = b.child; null !== a;) {
@@ -4157,8 +4155,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return !0;
   }
-  var _wg, xg, yg, zg;
-  if (Ta) _wg = function wg(a, b) {
+  var _vg, wg, xg, yg;
+  if (Ta) _vg = function vg(a, b) {
     for (var c = b.child; null !== c;) {
       if (5 === c.tag || 6 === c.tag) Ka(a, c.stateNode);else if (4 !== c.tag && null !== c.child) {
         c.child["return"] = c;
@@ -4173,24 +4171,24 @@ module.exports = function $$$reconciler($$$hostConfig) {
       c.sibling["return"] = c["return"];
       c = c.sibling;
     }
-  }, xg = function xg() {}, yg = function yg(a, b, c, d, e) {
+  }, wg = function wg() {}, xg = function xg(a, b, c, d, e) {
     a = a.memoizedProps;
     if (a !== d) {
       var f = b.stateNode,
-        g = Be(ye.current);
+        g = re(oe.current);
       c = Ma(f, c, a, d, e, g);
-      (b.updateQueue = c) && ug(b);
+      (b.updateQueue = c) && tg(b);
     }
-  }, zg = function zg(a, b, c, d) {
-    c !== d && ug(b);
+  }, yg = function yg(a, b, c, d) {
+    c !== d && tg(b);
   };else if (Ua) {
-    _wg = function wg(a, b, c, d) {
+    _vg = function vg(a, b, c, d) {
       for (var e = b.child; null !== e;) {
         if (5 === e.tag) {
           var f = e.stateNode;
           c && d && (f = Eb(f, e.type, e.memoizedProps, e));
           Ka(a, f);
-        } else if (6 === e.tag) f = e.stateNode, c && d && (f = Fb(f, e.memoizedProps, e)), Ka(a, f);else if (4 !== e.tag) if (22 === e.tag && null !== e.memoizedState) f = e.child, null !== f && (f["return"] = e), _wg(a, e, !0, !0);else if (null !== e.child) {
+        } else if (6 === e.tag) f = e.stateNode, c && d && (f = Fb(f, e.memoizedProps, e)), Ka(a, f);else if (4 !== e.tag) if (22 === e.tag && null !== e.memoizedState) f = e.child, null !== f && (f["return"] = e), _vg(a, e, !0, !0);else if (null !== e.child) {
           e.child["return"] = e;
           e = e.child;
           continue;
@@ -4204,13 +4202,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
         e = e.sibling;
       }
     };
-    var Ag = function Ag(a, b, c, d) {
+    var zg = function zg(a, b, c, d) {
       for (var e = b.child; null !== e;) {
         if (5 === e.tag) {
           var f = e.stateNode;
           c && d && (f = Eb(f, e.type, e.memoizedProps, e));
           Ab(a, f);
-        } else if (6 === e.tag) f = e.stateNode, c && d && (f = Fb(f, e.memoizedProps, e)), Ab(a, f);else if (4 !== e.tag) if (22 === e.tag && null !== e.memoizedState) f = e.child, null !== f && (f["return"] = e), Ag(a, e, !0, !0);else if (null !== e.child) {
+        } else if (6 === e.tag) f = e.stateNode, c && d && (f = Fb(f, e.memoizedProps, e)), Ab(a, f);else if (4 !== e.tag) if (22 === e.tag && null !== e.memoizedState) f = e.child, null !== f && (f["return"] = e), zg(a, e, !0, !0);else if (null !== e.child) {
           e.child["return"] = e;
           e = e.child;
           continue;
@@ -4224,33 +4222,33 @@ module.exports = function $$$reconciler($$$hostConfig) {
         e = e.sibling;
       }
     };
-    xg = function xg(a, b) {
+    wg = function wg(a, b) {
       var c = b.stateNode;
-      if (!vg(a, b)) {
+      if (!ug(a, b)) {
         a = c.containerInfo;
         var d = zb(a);
-        Ag(d, b, !1, !1);
+        zg(d, b, !1, !1);
         c.pendingChildren = d;
-        ug(b);
+        tg(b);
         Bb(a, d);
       }
     };
-    yg = function yg(a, b, c, d, e) {
+    xg = function xg(a, b, c, d, e) {
       var f = a.stateNode,
         g = a.memoizedProps;
-      if ((a = vg(a, b)) && g === d) b.stateNode = f;else {
+      if ((a = ug(a, b)) && g === d) b.stateNode = f;else {
         var h = b.stateNode,
-          k = Be(ye.current),
+          k = re(oe.current),
           l = null;
         g !== d && (l = Ma(h, c, g, d, e, k));
-        a && null === l ? b.stateNode = f : (f = yb(f, l, c, g, d, b, a, h), La(f, c, d, e, k) && ug(b), b.stateNode = f, a ? ug(b) : _wg(f, b, !1, !1));
+        a && null === l ? b.stateNode = f : (f = yb(f, l, c, g, d, b, a, h), La(f, c, d, e, k) && tg(b), b.stateNode = f, a ? tg(b) : _vg(f, b, !1, !1));
       }
     };
-    zg = function zg(a, b, c, d) {
-      c !== d ? (a = Be(Ae.current), c = Be(ye.current), b.stateNode = Oa(d, a, c, b), ug(b)) : b.stateNode = a.stateNode;
+    yg = function yg(a, b, c, d) {
+      c !== d ? (a = re(qe.current), c = re(oe.current), b.stateNode = Oa(d, a, c, b), tg(b)) : b.stateNode = a.stateNode;
     };
-  } else xg = function xg() {}, yg = function yg() {}, zg = function zg() {};
-  function Bg(a, b) {
+  } else wg = function wg() {}, xg = function xg() {}, yg = function yg() {};
+  function Ag(a, b) {
     if (!F) switch (a.tailMode) {
       case "hidden":
         b = a.tail;
@@ -4272,7 +4270,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
     a.childLanes = c;
     return b;
   }
-  function Cg(a, b, c) {
+  function Bg(a, b, c) {
     var d = b.pendingProps;
     nd(b);
     switch (b.tag) {
@@ -4288,51 +4286,51 @@ module.exports = function $$$reconciler($$$hostConfig) {
       case 14:
         return Q(b), null;
       case 1:
-        return A(b.type) && mc(), Q(b), null;
+        return A(b.type) && nc(), Q(b), null;
       case 3:
         c = b.stateNode;
-        De();
+        te();
         q(z);
         q(x);
-        Ie();
+        ye();
         c.pendingContext && (c.context = c.pendingContext, c.pendingContext = null);
-        if (null === a || null === a.child) yd(b) ? ug(b) : null === a || a.memoizedState.isDehydrated && 0 === (b.flags & 256) || (b.flags |= 1024, null !== rd && (Dg(rd), rd = null));
-        xg(a, b);
+        if (null === a || null === a.child) yd(b) ? tg(b) : null === a || a.memoizedState.isDehydrated && 0 === (b.flags & 256) || (b.flags |= 1024, null !== rd && (Cg(rd), rd = null));
+        wg(a, b);
         Q(b);
         return null;
       case 5:
-        Fe(b);
-        c = Be(Ae.current);
+        ve(b);
+        c = re(qe.current);
         var e = b.type;
-        if (null !== a && null != b.stateNode) yg(a, b, e, d, c), a.ref !== b.ref && (b.flags |= 512, b.flags |= 2097152);else {
+        if (null !== a && null != b.stateNode) xg(a, b, e, d, c), a.ref !== b.ref && (b.flags |= 512, b.flags |= 2097152);else {
           if (!d) {
-            if (null === b.stateNode) throw Error(m(166));
+            if (null === b.stateNode) throw Error(n(166));
             Q(b);
             return null;
           }
-          a = Be(ye.current);
+          a = re(oe.current);
           if (yd(b)) {
-            if (!Va) throw Error(m(175));
+            if (!Va) throw Error(n(175));
             a = Rb(b.stateNode, b.type, b.memoizedProps, c, a, b, !qd);
             b.updateQueue = a;
-            null !== a && ug(b);
+            null !== a && tg(b);
           } else {
             var f = Ja(e, d, c, a, b);
-            _wg(f, b, !1, !1);
+            _vg(f, b, !1, !1);
             b.stateNode = f;
-            La(f, e, d, c, a) && ug(b);
+            La(f, e, d, c, a) && tg(b);
           }
           null !== b.ref && (b.flags |= 512, b.flags |= 2097152);
         }
         Q(b);
         return null;
       case 6:
-        if (a && null != b.stateNode) zg(a, b, a.memoizedProps, d);else {
-          if ("string" !== typeof d && null === b.stateNode) throw Error(m(166));
-          a = Be(Ae.current);
-          c = Be(ye.current);
+        if (a && null != b.stateNode) yg(a, b, a.memoizedProps, d);else {
+          if ("string" !== typeof d && null === b.stateNode) throw Error(n(166));
+          a = re(qe.current);
+          c = re(oe.current);
           if (yd(b)) {
-            if (!Va) throw Error(m(176));
+            if (!Va) throw Error(n(176));
             a = b.stateNode;
             c = b.memoizedProps;
             if (d = Sb(a, c, b, !qd)) if (e = od, null !== e) switch (e.tag) {
@@ -4342,54 +4340,54 @@ module.exports = function $$$reconciler($$$hostConfig) {
               case 5:
                 ac(e.type, e.memoizedProps, e.stateNode, a, c, 0 !== (e.mode & 1));
             }
-            d && ug(b);
+            d && tg(b);
           } else b.stateNode = Oa(d, a, c, b);
         }
         Q(b);
         return null;
       case 13:
-        q(J);
+        q(I);
         d = b.memoizedState;
         if (null === a || null !== a.memoizedState && null !== a.memoizedState.dehydrated) {
           if (F && null !== pd && 0 !== (b.mode & 1) && 0 === (b.flags & 128)) zd(), Ad(), b.flags |= 98560, e = !1;else if (e = yd(b), null !== d && null !== d.dehydrated) {
             if (null === a) {
-              if (!e) throw Error(m(318));
-              if (!Va) throw Error(m(344));
+              if (!e) throw Error(n(318));
+              if (!Va) throw Error(n(344));
               e = b.memoizedState;
               e = null !== e ? e.dehydrated : null;
-              if (!e) throw Error(m(317));
+              if (!e) throw Error(n(317));
               Tb(e, b);
             } else Ad(), 0 === (b.flags & 128) && (b.memoizedState = null), b.flags |= 4;
             Q(b);
             e = !1;
-          } else null !== rd && (Dg(rd), rd = null), e = !0;
+          } else null !== rd && (Cg(rd), rd = null), e = !0;
           if (!e) return b.flags & 65536 ? b : null;
         }
         if (0 !== (b.flags & 128)) return b.lanes = c, b;
         c = null !== d;
-        c !== (null !== a && null !== a.memoizedState) && c && (b.child.flags |= 8192, 0 !== (b.mode & 1) && (null === a || 0 !== (J.current & 1) ? 0 === R && (R = 3) : og()));
+        c !== (null !== a && null !== a.memoizedState) && c && (b.child.flags |= 8192, 0 !== (b.mode & 1) && (null === a || 0 !== (I.current & 1) ? 0 === R && (R = 3) : ng()));
         null !== b.updateQueue && (b.flags |= 4);
         Q(b);
         return null;
       case 4:
-        return De(), xg(a, b), null === a && Xa(b.stateNode.containerInfo), Q(b), null;
+        return te(), wg(a, b), null === a && Xa(b.stateNode.containerInfo), Q(b), null;
       case 10:
-        return Md(b.type._context), Q(b), null;
+        return Wd(b.type._context), Q(b), null;
       case 17:
-        return A(b.type) && mc(), Q(b), null;
+        return A(b.type) && nc(), Q(b), null;
       case 19:
-        q(J);
+        q(I);
         e = b.memoizedState;
         if (null === e) return Q(b), null;
         d = 0 !== (b.flags & 128);
         f = e.rendering;
         if (null === f) {
-          if (d) Bg(e, !1);else {
+          if (d) Ag(e, !1);else {
             if (0 !== R || null !== a && 0 !== (a.flags & 128)) for (a = b.child; null !== a;) {
-              f = Ge(a);
+              f = we(a);
               if (null !== f) {
                 b.flags |= 128;
-                Bg(e, !1);
+                Ag(e, !1);
                 a = f.updateQueue;
                 null !== a && (b.updateQueue = a, b.flags |= 4);
                 b.subtreeFlags = 0;
@@ -4398,70 +4396,70 @@ module.exports = function $$$reconciler($$$hostConfig) {
                   lanes: e.lanes,
                   firstContext: e.firstContext
                 }), c = c.sibling;
-                v(J, J.current & 1 | 2);
+                v(I, I.current & 1 | 2);
                 return b.child;
               }
               a = a.sibling;
             }
-            null !== e.tail && D() > Eg && (b.flags |= 128, d = !0, Bg(e, !1), b.lanes = 4194304);
+            null !== e.tail && D() > Dg && (b.flags |= 128, d = !0, Ag(e, !1), b.lanes = 4194304);
           }
         } else {
-          if (!d) if (a = Ge(f), null !== a) {
-            if (b.flags |= 128, d = !0, a = a.updateQueue, null !== a && (b.updateQueue = a, b.flags |= 4), Bg(e, !0), null === e.tail && "hidden" === e.tailMode && !f.alternate && !F) return Q(b), null;
-          } else 2 * D() - e.renderingStartTime > Eg && 1073741824 !== c && (b.flags |= 128, d = !0, Bg(e, !1), b.lanes = 4194304);
+          if (!d) if (a = we(f), null !== a) {
+            if (b.flags |= 128, d = !0, a = a.updateQueue, null !== a && (b.updateQueue = a, b.flags |= 4), Ag(e, !0), null === e.tail && "hidden" === e.tailMode && !f.alternate && !F) return Q(b), null;
+          } else 2 * D() - e.renderingStartTime > Dg && 1073741824 !== c && (b.flags |= 128, d = !0, Ag(e, !1), b.lanes = 4194304);
           e.isBackwards ? (f.sibling = b.child, b.child = f) : (a = e.last, null !== a ? a.sibling = f : b.child = f, e.last = f);
         }
-        if (null !== e.tail) return b = e.tail, e.rendering = b, e.tail = b.sibling, e.renderingStartTime = D(), b.sibling = null, a = J.current, v(J, d ? a & 1 | 2 : a & 1), b;
+        if (null !== e.tail) return b = e.tail, e.rendering = b, e.tail = b.sibling, e.renderingStartTime = D(), b.sibling = null, a = I.current, v(I, d ? a & 1 | 2 : a & 1), b;
         Q(b);
         return null;
       case 22:
       case 23:
-        return Fg(), c = null !== b.memoizedState, null !== a && null !== a.memoizedState !== c && (b.flags |= 8192), c && 0 !== (b.mode & 1) ? 0 !== (ag & 1073741824) && (Q(b), Ta && b.subtreeFlags & 6 && (b.flags |= 8192)) : Q(b), null;
+        return Eg(), c = null !== b.memoizedState, null !== a && null !== a.memoizedState !== c && (b.flags |= 8192), c && 0 !== (b.mode & 1) ? 0 !== ($f & 1073741824) && (Q(b), Ta && b.subtreeFlags & 6 && (b.flags |= 8192)) : Q(b), null;
       case 24:
         return null;
       case 25:
         return null;
     }
-    throw Error(m(156, b.tag));
+    throw Error(n(156, b.tag));
   }
-  function Gg(a, b) {
+  function Fg(a, b) {
     nd(b);
     switch (b.tag) {
       case 1:
-        return A(b.type) && mc(), a = b.flags, a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
+        return A(b.type) && nc(), a = b.flags, a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
       case 3:
-        return De(), q(z), q(x), Ie(), a = b.flags, 0 !== (a & 65536) && 0 === (a & 128) ? (b.flags = a & -65537 | 128, b) : null;
+        return te(), q(z), q(x), ye(), a = b.flags, 0 !== (a & 65536) && 0 === (a & 128) ? (b.flags = a & -65537 | 128, b) : null;
       case 5:
-        return Fe(b), null;
+        return ve(b), null;
       case 13:
-        q(J);
+        q(I);
         a = b.memoizedState;
         if (null !== a && null !== a.dehydrated) {
-          if (null === b.alternate) throw Error(m(340));
+          if (null === b.alternate) throw Error(n(340));
           Ad();
         }
         a = b.flags;
         return a & 65536 ? (b.flags = a & -65537 | 128, b) : null;
       case 19:
-        return q(J), null;
+        return q(I), null;
       case 4:
-        return De(), null;
+        return te(), null;
       case 10:
-        return Md(b.type._context), null;
+        return Wd(b.type._context), null;
       case 22:
       case 23:
-        return Fg(), null;
+        return Eg(), null;
       case 24:
         return null;
       default:
         return null;
     }
   }
-  var Hg = !1,
+  var Gg = !1,
     S = !1,
-    Ig = "function" === typeof WeakSet ? WeakSet : Set,
+    Hg = "function" === typeof WeakSet ? WeakSet : Set,
     T = null;
-  function Jg(a, b) {
+  function Ig(a, b) {
     var c = a.ref;
     if (null !== c) if ("function" === typeof c) try {
       c(null);
@@ -4469,15 +4467,15 @@ module.exports = function $$$reconciler($$$hostConfig) {
       U(a, b, d);
     } else c.current = null;
   }
-  function Kg(a, b, c) {
+  function Jg(a, b, c) {
     try {
       c();
     } catch (d) {
       U(a, b, d);
     }
   }
-  var Lg = !1;
-  function Mg(a, b) {
+  var Kg = !1;
+  function Lg(a, b) {
     Ha(a.containerInfo);
     for (T = b; null !== T;) if (a = T, b = a.child, 0 !== (a.subtreeFlags & 1028) && null !== b) b["return"] = a, T = b;else for (; null !== T;) {
       a = T;
@@ -4493,7 +4491,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
               var d = c.memoizedProps,
                 e = c.memoizedState,
                 f = a.stateNode,
-                g = f.getSnapshotBeforeUpdate(a.elementType === a.type ? d : Fd(a.type, d), e);
+                g = f.getSnapshotBeforeUpdate(a.elementType === a.type ? d : xf(a.type, d), e);
               f.__reactInternalSnapshotBeforeUpdate = g;
             }
             break;
@@ -4506,7 +4504,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
           case 17:
             break;
           default:
-            throw Error(m(163));
+            throw Error(n(163));
         }
       } catch (h) {
         U(a, a["return"], h);
@@ -4519,11 +4517,11 @@ module.exports = function $$$reconciler($$$hostConfig) {
       }
       T = a["return"];
     }
-    c = Lg;
-    Lg = !1;
+    c = Kg;
+    Kg = !1;
     return c;
   }
-  function Ng(a, b, c) {
+  function Mg(a, b, c) {
     var d = b.updateQueue;
     d = null !== d ? d.lastEffect : null;
     if (null !== d) {
@@ -4532,13 +4530,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
         if ((e.tag & a) === a) {
           var f = e.destroy;
           e.destroy = void 0;
-          void 0 !== f && Kg(b, c, f);
+          void 0 !== f && Jg(b, c, f);
         }
         e = e.next;
       } while (e !== d);
     }
   }
-  function Og(a, b) {
+  function Ng(a, b) {
     b = b.updateQueue;
     b = null !== b ? b.lastEffect : null;
     if (null !== b) {
@@ -4552,7 +4550,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       } while (c !== b);
     }
   }
-  function Pg(a) {
+  function Og(a) {
     var b = a.ref;
     if (null !== b) {
       var c = a.stateNode;
@@ -4566,9 +4564,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
       "function" === typeof b ? b(a) : b.current = a;
     }
   }
-  function Qg(a) {
+  function Pg(a) {
     var b = a.alternate;
-    null !== b && (a.alternate = null, Qg(b));
+    null !== b && (a.alternate = null, Pg(b));
     a.child = null;
     a.deletions = null;
     a.sibling = null;
@@ -4582,13 +4580,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
     a.stateNode = null;
     a.updateQueue = null;
   }
-  function Rg(a) {
+  function Qg(a) {
     return 5 === a.tag || 3 === a.tag || 4 === a.tag;
   }
-  function Sg(a) {
+  function Rg(a) {
     a: for (;;) {
       for (; null === a.sibling;) {
-        if (null === a["return"] || Rg(a["return"])) return null;
+        if (null === a["return"] || Qg(a["return"])) return null;
         a = a["return"];
       }
       a.sibling["return"] = a["return"];
@@ -4599,42 +4597,42 @@ module.exports = function $$$reconciler($$$hostConfig) {
       if (!(a.flags & 2)) return a.stateNode;
     }
   }
+  function Sg(a, b, c) {
+    var d = a.tag;
+    if (5 === d || 6 === d) a = a.stateNode, b ? pb(c, a, b) : kb(c, a);else if (4 !== d && (a = a.child, null !== a)) for (Sg(a, b, c), a = a.sibling; null !== a;) Sg(a, b, c), a = a.sibling;
+  }
   function Tg(a, b, c) {
     var d = a.tag;
-    if (5 === d || 6 === d) a = a.stateNode, b ? pb(c, a, b) : kb(c, a);else if (4 !== d && (a = a.child, null !== a)) for (Tg(a, b, c), a = a.sibling; null !== a;) Tg(a, b, c), a = a.sibling;
-  }
-  function Ug(a, b, c) {
-    var d = a.tag;
-    if (5 === d || 6 === d) a = a.stateNode, b ? ob(c, a, b) : jb(c, a);else if (4 !== d && (a = a.child, null !== a)) for (Ug(a, b, c), a = a.sibling; null !== a;) Ug(a, b, c), a = a.sibling;
+    if (5 === d || 6 === d) a = a.stateNode, b ? ob(c, a, b) : jb(c, a);else if (4 !== d && (a = a.child, null !== a)) for (Tg(a, b, c), a = a.sibling; null !== a;) Tg(a, b, c), a = a.sibling;
   }
   var V = null,
-    Vg = !1;
-  function Wg(a, b, c) {
-    for (c = c.child; null !== c;) Xg(a, b, c), c = c.sibling;
+    Ug = !1;
+  function Vg(a, b, c) {
+    for (c = c.child; null !== c;) Wg(a, b, c), c = c.sibling;
   }
-  function Xg(a, b, c) {
+  function Wg(a, b, c) {
     if (Sc && "function" === typeof Sc.onCommitFiberUnmount) try {
       Sc.onCommitFiberUnmount(Rc, c);
     } catch (h) {}
     switch (c.tag) {
       case 5:
-        S || Jg(c, b);
+        S || Ig(c, b);
       case 6:
         if (Ta) {
           var d = V,
-            e = Vg;
+            e = Ug;
           V = null;
-          Wg(a, b, c);
+          Vg(a, b, c);
           V = d;
-          Vg = e;
-          null !== V && (Vg ? rb(V, c.stateNode) : qb(V, c.stateNode));
-        } else Wg(a, b, c);
+          Ug = e;
+          null !== V && (Ug ? rb(V, c.stateNode) : qb(V, c.stateNode));
+        } else Vg(a, b, c);
         break;
       case 18:
-        Ta && null !== V && (Vg ? Yb(V, c.stateNode) : Xb(V, c.stateNode));
+        Ta && null !== V && (Ug ? Yb(V, c.stateNode) : Xb(V, c.stateNode));
         break;
       case 4:
-        Ta ? (d = V, e = Vg, V = c.stateNode.containerInfo, Vg = !0, Wg(a, b, c), V = d, Vg = e) : (Ua && (d = c.stateNode.containerInfo, e = zb(d), Cb(d, e)), Wg(a, b, c));
+        Ta ? (d = V, e = Ug, V = c.stateNode.containerInfo, Ug = !0, Vg(a, b, c), V = d, Ug = e) : (Ua && (d = c.stateNode.containerInfo, e = zb(d), Cb(d, e)), Vg(a, b, c));
         break;
       case 0:
       case 11:
@@ -4646,43 +4644,43 @@ module.exports = function $$$reconciler($$$hostConfig) {
             var f = e,
               g = f.destroy;
             f = f.tag;
-            void 0 !== g && (0 !== (f & 2) ? Kg(c, b, g) : 0 !== (f & 4) && Kg(c, b, g));
+            void 0 !== g && (0 !== (f & 2) ? Jg(c, b, g) : 0 !== (f & 4) && Jg(c, b, g));
             e = e.next;
           } while (e !== d);
         }
-        Wg(a, b, c);
+        Vg(a, b, c);
         break;
       case 1:
-        if (!S && (Jg(c, b), d = c.stateNode, "function" === typeof d.componentWillUnmount)) try {
+        if (!S && (Ig(c, b), d = c.stateNode, "function" === typeof d.componentWillUnmount)) try {
           d.props = c.memoizedProps, d.state = c.memoizedState, d.componentWillUnmount();
         } catch (h) {
           U(c, b, h);
         }
-        Wg(a, b, c);
+        Vg(a, b, c);
         break;
       case 21:
-        Wg(a, b, c);
+        Vg(a, b, c);
         break;
       case 22:
-        c.mode & 1 ? (S = (d = S) || null !== c.memoizedState, Wg(a, b, c), S = d) : Wg(a, b, c);
+        c.mode & 1 ? (S = (d = S) || null !== c.memoizedState, Vg(a, b, c), S = d) : Vg(a, b, c);
         break;
       default:
-        Wg(a, b, c);
+        Vg(a, b, c);
     }
   }
-  function Yg(a) {
+  function Xg(a) {
     var b = a.updateQueue;
     if (null !== b) {
       a.updateQueue = null;
       var c = a.stateNode;
-      null === c && (c = a.stateNode = new Ig());
+      null === c && (c = a.stateNode = new Hg());
       b.forEach(function (b) {
-        var d = Zg.bind(null, a, b);
+        var d = Yg.bind(null, a, b);
         c.has(b) || (c.add(b), b.then(d, d));
       });
     }
   }
-  function $g(a, b) {
+  function Zg(a, b) {
     var c = b.deletions;
     if (null !== c) for (var d = 0; d < c.length; d++) {
       var e = c[d];
@@ -4695,24 +4693,24 @@ module.exports = function $$$reconciler($$$hostConfig) {
             switch (h.tag) {
               case 5:
                 V = h.stateNode;
-                Vg = !1;
+                Ug = !1;
                 break a;
               case 3:
                 V = h.stateNode.containerInfo;
-                Vg = !0;
+                Ug = !0;
                 break a;
               case 4:
                 V = h.stateNode.containerInfo;
-                Vg = !0;
+                Ug = !0;
                 break a;
             }
             h = h["return"];
           }
-          if (null === V) throw Error(m(160));
-          Xg(f, g, e);
+          if (null === V) throw Error(n(160));
+          Wg(f, g, e);
           V = null;
-          Vg = !1;
-        } else Xg(f, g, e);
+          Ug = !1;
+        } else Wg(f, g, e);
         var k = e.alternate;
         null !== k && (k["return"] = null);
         e["return"] = null;
@@ -4720,9 +4718,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
         U(e, b, l);
       }
     }
-    if (b.subtreeFlags & 12854) for (b = b.child; null !== b;) ah(b, a), b = b.sibling;
+    if (b.subtreeFlags & 12854) for (b = b.child; null !== b;) $g(b, a), b = b.sibling;
   }
-  function ah(a, b) {
+  function $g(a, b) {
     var c = a.alternate,
       d = a.flags;
     switch (a.tag) {
@@ -4730,30 +4728,30 @@ module.exports = function $$$reconciler($$$hostConfig) {
       case 11:
       case 14:
       case 15:
-        $g(b, a);
-        bh(a);
+        Zg(b, a);
+        ah(a);
         if (d & 4) {
           try {
-            Ng(3, a, a["return"]), Og(3, a);
+            Mg(3, a, a["return"]), Ng(3, a);
           } catch (p) {
             U(a, a["return"], p);
           }
           try {
-            Ng(5, a, a["return"]);
+            Mg(5, a, a["return"]);
           } catch (p) {
             U(a, a["return"], p);
           }
         }
         break;
       case 1:
-        $g(b, a);
-        bh(a);
-        d & 512 && null !== c && Jg(c, c["return"]);
+        Zg(b, a);
+        ah(a);
+        d & 512 && null !== c && Ig(c, c["return"]);
         break;
       case 5:
-        $g(b, a);
-        bh(a);
-        d & 512 && null !== c && Jg(c, c["return"]);
+        Zg(b, a);
+        ah(a);
+        d & 512 && null !== c && Ig(c, c["return"]);
         if (Ta) {
           if (a.flags & 32) {
             var e = a.stateNode;
@@ -4778,10 +4776,10 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         break;
       case 6:
-        $g(b, a);
-        bh(a);
+        Zg(b, a);
+        ah(a);
         if (d & 4 && Ta) {
-          if (null === a.stateNode) throw Error(m(162));
+          if (null === a.stateNode) throw Error(n(162));
           e = a.stateNode;
           f = a.memoizedProps;
           c = null !== c ? c.memoizedProps : f;
@@ -4793,8 +4791,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         break;
       case 3:
-        $g(b, a);
-        bh(a);
+        Zg(b, a);
+        ah(a);
         if (d & 4) {
           if (Ta && Va && null !== c && c.memoizedState.isDehydrated) try {
             Vb(b.containerInfo);
@@ -4813,8 +4811,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         break;
       case 4:
-        $g(b, a);
-        bh(a);
+        Zg(b, a);
+        ah(a);
         if (d & 4 && Ua) {
           f = a.stateNode;
           e = f.containerInfo;
@@ -4827,16 +4825,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         break;
       case 13:
-        $g(b, a);
-        bh(a);
+        Zg(b, a);
+        ah(a);
         e = a.child;
-        e.flags & 8192 && (f = null !== e.memoizedState, e.stateNode.isHidden = f, !f || null !== e.alternate && null !== e.alternate.memoizedState || (ch = D()));
-        d & 4 && Yg(a);
+        e.flags & 8192 && (f = null !== e.memoizedState, e.stateNode.isHidden = f, !f || null !== e.alternate && null !== e.alternate.memoizedState || (bh = D()));
+        d & 4 && Xg(a);
         break;
       case 22:
         var g = null !== c && null !== c.memoizedState;
-        a.mode & 1 ? (S = (c = S) || g, $g(b, a), S = c) : $g(b, a);
-        bh(a);
+        a.mode & 1 ? (S = (c = S) || g, Zg(b, a), S = c) : Zg(b, a);
+        ah(a);
         if (d & 8192) {
           c = null !== a.memoizedState;
           if ((a.stateNode.isHidden = c) && !g && 0 !== (a.mode & 1)) for (T = a, d = a.child; null !== d;) {
@@ -4848,34 +4846,34 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 case 11:
                 case 14:
                 case 15:
-                  Ng(4, g, g["return"]);
+                  Mg(4, g, g["return"]);
                   break;
                 case 1:
-                  Jg(g, g["return"]);
+                  Ig(g, g["return"]);
                   var k = g.stateNode;
                   if ("function" === typeof k.componentWillUnmount) {
                     var l = g,
-                      n = g["return"];
+                      m = g["return"];
                     try {
-                      var t = l;
-                      k.props = t.memoizedProps;
-                      k.state = t.memoizedState;
+                      var r = l;
+                      k.props = r.memoizedProps;
+                      k.state = r.memoizedState;
                       k.componentWillUnmount();
                     } catch (p) {
-                      U(l, n, p);
+                      U(l, m, p);
                     }
                   }
                   break;
                 case 5:
-                  Jg(g, g["return"]);
+                  Ig(g, g["return"]);
                   break;
                 case 22:
                   if (null !== g.memoizedState) {
-                    dh(b);
+                    ch(b);
                     continue;
                   }
               }
-              null !== h ? (h["return"] = g, T = h) : dh(b);
+              null !== h ? (h["return"] = g, T = h) : ch(b);
             }
             d = d.sibling;
           }
@@ -4913,46 +4911,46 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         break;
       case 19:
-        $g(b, a);
-        bh(a);
-        d & 4 && Yg(a);
+        Zg(b, a);
+        ah(a);
+        d & 4 && Xg(a);
         break;
       case 21:
         break;
       default:
-        $g(b, a), bh(a);
+        Zg(b, a), ah(a);
     }
   }
-  function bh(a) {
+  function ah(a) {
     var b = a.flags;
     if (b & 2) {
       try {
         if (Ta) {
           b: {
             for (var c = a["return"]; null !== c;) {
-              if (Rg(c)) {
+              if (Qg(c)) {
                 var d = c;
                 break b;
               }
               c = c["return"];
             }
-            throw Error(m(160));
+            throw Error(n(160));
           }
           switch (d.tag) {
             case 5:
               var e = d.stateNode;
               d.flags & 32 && (sb(e), d.flags &= -33);
-              var f = Sg(a);
-              Ug(a, f, e);
+              var f = Rg(a);
+              Tg(a, f, e);
               break;
             case 3:
             case 4:
               var g = d.stateNode.containerInfo,
-                h = Sg(a);
-              Tg(a, h, g);
+                h = Rg(a);
+              Sg(a, h, g);
               break;
             default:
-              throw Error(m(161));
+              throw Error(n(161));
           }
         }
       } catch (k) {
@@ -4962,33 +4960,33 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     b & 4096 && (a.flags &= -4097);
   }
-  function eh(a, b, c) {
+  function dh(a, b, c) {
     T = a;
-    fh(a, b, c);
+    eh(a, b, c);
   }
-  function fh(a, b, c) {
+  function eh(a, b, c) {
     for (var d = 0 !== (a.mode & 1); null !== T;) {
       var e = T,
         f = e.child;
       if (22 === e.tag && d) {
-        var g = null !== e.memoizedState || Hg;
+        var g = null !== e.memoizedState || Gg;
         if (!g) {
           var h = e.alternate,
             k = null !== h && null !== h.memoizedState || S;
-          h = Hg;
+          h = Gg;
           var l = S;
-          Hg = g;
-          if ((S = k) && !l) for (T = e; null !== T;) g = T, k = g.child, 22 === g.tag && null !== g.memoizedState ? gh(e) : null !== k ? (k["return"] = g, T = k) : gh(e);
-          for (; null !== f;) T = f, fh(f, b, c), f = f.sibling;
+          Gg = g;
+          if ((S = k) && !l) for (T = e; null !== T;) g = T, k = g.child, 22 === g.tag && null !== g.memoizedState ? fh(e) : null !== k ? (k["return"] = g, T = k) : fh(e);
+          for (; null !== f;) T = f, eh(f, b, c), f = f.sibling;
           T = e;
-          Hg = h;
+          Gg = h;
           S = l;
         }
-        hh(a, b, c);
-      } else 0 !== (e.subtreeFlags & 8772) && null !== f ? (f["return"] = e, T = f) : hh(a, b, c);
+        gh(a, b, c);
+      } else 0 !== (e.subtreeFlags & 8772) && null !== f ? (f["return"] = e, T = f) : gh(a, b, c);
     }
   }
-  function hh(a) {
+  function gh(a) {
     for (; null !== T;) {
       var b = T;
       if (0 !== (b.flags & 8772)) {
@@ -4998,16 +4996,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
             case 0:
             case 11:
             case 15:
-              S || Og(5, b);
+              S || Ng(5, b);
               break;
             case 1:
               var d = b.stateNode;
               if (b.flags & 4 && !S) if (null === c) d.componentDidMount();else {
-                var e = b.elementType === b.type ? c.memoizedProps : Fd(b.type, c.memoizedProps);
+                var e = b.elementType === b.type ? c.memoizedProps : xf(b.type, c.memoizedProps);
                 d.componentDidUpdate(e, c.memoizedState, d.__reactInternalSnapshotBeforeUpdate);
               }
               var f = b.updateQueue;
-              null !== f && ce(b, f, d);
+              null !== f && me(b, f, d);
               break;
             case 3:
               var g = b.updateQueue;
@@ -5020,7 +5018,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
                   case 1:
                     c = b.child.stateNode;
                 }
-                ce(b, g, c);
+                me(b, g, c);
               }
               break;
             case 5:
@@ -5039,8 +5037,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 if (null !== k) {
                   var l = k.memoizedState;
                   if (null !== l) {
-                    var n = l.dehydrated;
-                    null !== n && Wb(n);
+                    var m = l.dehydrated;
+                    null !== m && Wb(m);
                   }
                 }
               }
@@ -5053,11 +5051,11 @@ module.exports = function $$$reconciler($$$hostConfig) {
             case 25:
               break;
             default:
-              throw Error(m(163));
+              throw Error(n(163));
           }
-          S || b.flags & 512 && Pg(b);
-        } catch (t) {
-          U(b, b["return"], t);
+          S || b.flags & 512 && Og(b);
+        } catch (r) {
+          U(b, b["return"], r);
         }
       }
       if (b === a) {
@@ -5073,7 +5071,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       T = b["return"];
     }
   }
-  function dh(a) {
+  function ch(a) {
     for (; null !== T;) {
       var b = T;
       if (b === a) {
@@ -5089,7 +5087,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       T = b["return"];
     }
   }
-  function gh(a) {
+  function fh(a) {
     for (; null !== T;) {
       var b = T;
       try {
@@ -5099,7 +5097,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
           case 15:
             var c = b["return"];
             try {
-              Og(4, b);
+              Ng(4, b);
             } catch (k) {
               U(b, c, k);
             }
@@ -5116,7 +5114,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
             }
             var f = b["return"];
             try {
-              Pg(b);
+              Og(b);
             } catch (k) {
               U(b, f, k);
             }
@@ -5124,7 +5122,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
           case 5:
             var g = b["return"];
             try {
-              Pg(b);
+              Og(b);
             } catch (k) {
               U(b, g, k);
             }
@@ -5145,35 +5143,35 @@ module.exports = function $$$reconciler($$$hostConfig) {
       T = b["return"];
     }
   }
-  var ih = 0,
-    jh = 1,
-    kh = 2,
-    lh = 3,
-    mh = 4;
+  var hh = 0,
+    ih = 1,
+    jh = 2,
+    kh = 3,
+    lh = 4;
   if ("function" === typeof Symbol && Symbol["for"]) {
-    var nh = Symbol["for"];
-    ih = nh("selector.component");
-    jh = nh("selector.has_pseudo_class");
-    kh = nh("selector.role");
-    lh = nh("selector.test_id");
-    mh = nh("selector.text");
+    var mh = Symbol["for"];
+    hh = mh("selector.component");
+    ih = mh("selector.has_pseudo_class");
+    jh = mh("selector.role");
+    kh = mh("selector.test_id");
+    lh = mh("selector.text");
   }
-  function oh(a) {
+  function nh(a) {
     var b = Wa(a);
     if (null != b) {
-      if ("string" !== typeof b.memoizedProps["data-testname"]) throw Error(m(364));
+      if ("string" !== typeof b.memoizedProps["data-testname"]) throw Error(n(364));
       return b;
     }
     a = cb(a);
-    if (null === a) throw Error(m(362));
+    if (null === a) throw Error(n(362));
     return a.stateNode.current;
   }
-  function ph(a, b) {
+  function oh(a, b) {
     switch (b.$$typeof) {
-      case ih:
+      case hh:
         if (a.type === b.value) return !0;
         break;
-      case jh:
+      case ih:
         a: {
           b = b.value;
           a = [a, 0];
@@ -5182,7 +5180,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
               e = a[c++],
               f = b[e];
             if (5 !== d.tag || !fb(d)) {
-              for (; null != f && ph(d, f);) e++, f = b[e];
+              for (; null != f && oh(d, f);) e++, f = b[e];
               if (e === b.length) {
                 b = !0;
                 break a;
@@ -5192,37 +5190,37 @@ module.exports = function $$$reconciler($$$hostConfig) {
           b = !1;
         }
         return b;
-      case kh:
+      case jh:
         if (5 === a.tag && gb(a.stateNode, b.value)) return !0;
         break;
-      case mh:
+      case lh:
         if (5 === a.tag || 6 === a.tag) if (a = eb(a), null !== a && 0 <= a.indexOf(b.value)) return !0;
         break;
-      case lh:
+      case kh:
         if (5 === a.tag && (a = a.memoizedProps["data-testname"], "string" === typeof a && a.toLowerCase() === b.value.toLowerCase())) return !0;
         break;
       default:
-        throw Error(m(365));
+        throw Error(n(365));
     }
     return !1;
   }
-  function qh(a) {
+  function ph(a) {
     switch (a.$$typeof) {
-      case ih:
+      case hh:
         return "<" + (ua(a.value) || "Unknown") + ">";
+      case ih:
+        return ":has(" + (ph(a) || "") + ")";
       case jh:
-        return ":has(" + (qh(a) || "") + ")";
-      case kh:
         return '[role="' + a.value + '"]';
-      case mh:
-        return '"' + a.value + '"';
       case lh:
+        return '"' + a.value + '"';
+      case kh:
         return '[data-testname="' + a.value + '"]';
       default:
-        throw Error(m(365));
+        throw Error(n(365));
     }
   }
-  function rh(a, b) {
+  function qh(a, b) {
     var c = [];
     a = [a, 0];
     for (var d = 0; d < a.length;) {
@@ -5230,16 +5228,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
         f = a[d++],
         g = b[f];
       if (5 !== e.tag || !fb(e)) {
-        for (; null != g && ph(e, g);) f++, g = b[f];
+        for (; null != g && oh(e, g);) f++, g = b[f];
         if (f === b.length) c.push(e);else for (e = e.child; null !== e;) a.push(e, f), e = e.sibling;
       }
     }
     return c;
   }
-  function sh(a, b) {
-    if (!bb) throw Error(m(363));
-    a = oh(a);
-    a = rh(a, b);
+  function rh(a, b) {
+    if (!bb) throw Error(n(363));
+    a = nh(a);
+    a = qh(a, b);
     b = [];
     a = Array.from(a);
     for (var c = 0; c < a.length;) {
@@ -5248,61 +5246,61 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return b;
   }
-  var th = Math.ceil,
-    uh = da.ReactCurrentDispatcher,
-    vh = da.ReactCurrentOwner,
+  var sh = Math.ceil,
+    th = da.ReactCurrentDispatcher,
+    uh = da.ReactCurrentOwner,
     W = da.ReactCurrentBatchConfig,
     H = 0,
-    O = null,
+    N = null,
     X = null,
-    Y = 0,
-    ag = 0,
-    $f = ic(0),
+    Z = 0,
+    $f = 0,
+    Zf = ic(0),
     R = 0,
-    wh = null,
-    be = 0,
+    vh = null,
+    le = 0,
+    wh = 0,
     xh = 0,
-    yh = 0,
+    yh = null,
     zh = null,
-    Ah = null,
-    ch = 0,
-    Eg = Infinity,
-    Bh = null;
-  function Ch() {
-    Eg = D() + 500;
+    bh = 0,
+    Dg = Infinity,
+    Ah = null;
+  function Bh() {
+    Dg = D() + 500;
   }
-  var Kf = !1,
-    Lf = null,
-    Nf = null,
-    Dh = !1,
-    Eh = null,
+  var Jf = !1,
+    Kf = null,
+    Mf = null,
+    Ch = !1,
+    Dh = null,
+    Eh = 0,
     Fh = 0,
-    Gh = 0,
-    Hh = null,
-    Ih = -1,
-    Jh = 0;
-  function I() {
-    return 0 !== (H & 6) ? D() : -1 !== Ih ? Ih : Ih = D();
+    Gh = null,
+    Hh = -1,
+    Ih = 0;
+  function O() {
+    return 0 !== (H & 6) ? D() : -1 !== Hh ? Hh : Hh = D();
   }
-  function fe(a) {
+  function tf(a) {
     if (0 === (a.mode & 1)) return 1;
-    if (0 !== (H & 2) && 0 !== Y) return Y & -Y;
-    if (null !== Cd.transition) return 0 === Jh && (Jh = Dc()), Jh;
+    if (0 !== (H & 2) && 0 !== Z) return Z & -Z;
+    if (null !== Cd.transition) return 0 === Ih && (Ih = Dc()), Ih;
     a = C;
     return 0 !== a ? a : Ya();
   }
-  function ge(a, b, c, d) {
-    if (50 < Gh) throw Gh = 0, Hh = null, Error(m(185));
+  function af(a, b, c, d) {
+    if (50 < Fh) throw Fh = 0, Gh = null, Error(n(185));
     Fc(a, c, d);
-    if (0 === (H & 2) || a !== O) a === O && (0 === (H & 2) && (xh |= c), 4 === R && Kh(a, Y)), Lh(a, d), 1 === c && 0 === H && 0 === (b.mode & 1) && (Ch(), Xc && ad());
+    if (0 === (H & 2) || a !== N) a === N && (0 === (H & 2) && (wh |= c), 4 === R && Jh(a, Z)), Kh(a, d), 1 === c && 0 === H && 0 === (b.mode & 1) && (Bh(), Xc && ad());
   }
-  function Lh(a, b) {
+  function Kh(a, b) {
     var c = a.callbackNode;
     Bc(a, b);
-    var d = zc(a, a === O ? Y : 0);
+    var d = zc(a, a === N ? Z : 0);
     if (0 === d) null !== c && Kc(c), a.callbackNode = null, a.callbackPriority = 0;else if (b = d & -d, a.callbackPriority !== b) {
       null != c && Kc(c);
-      if (1 === b) 0 === a.tag ? $c(Mh.bind(null, a)) : Zc(Mh.bind(null, a)), $a ? ab(function () {
+      if (1 === b) 0 === a.tag ? $c(Lh.bind(null, a)) : Zc(Lh.bind(null, a)), $a ? ab(function () {
         0 === (H & 6) && ad();
       }) : Jc(Nc, ad), c = null;else {
         switch (Ic(d)) {
@@ -5321,69 +5319,69 @@ module.exports = function $$$reconciler($$$hostConfig) {
           default:
             c = Pc;
         }
-        c = Nh(c, Oh.bind(null, a));
+        c = Mh(c, Nh.bind(null, a));
       }
       a.callbackPriority = b;
       a.callbackNode = c;
     }
   }
-  function Oh(a, b) {
-    Ih = -1;
-    Jh = 0;
-    if (0 !== (H & 6)) throw Error(m(327));
+  function Nh(a, b) {
+    Hh = -1;
+    Ih = 0;
+    if (0 !== (H & 6)) throw Error(n(327));
     var c = a.callbackNode;
-    if (Ph() && a.callbackNode !== c) return null;
-    var d = zc(a, a === O ? Y : 0);
+    if (Oh() && a.callbackNode !== c) return null;
+    var d = zc(a, a === N ? Z : 0);
     if (0 === d) return null;
-    if (0 !== (d & 30) || 0 !== (d & a.expiredLanes) || b) b = Qh(a, d);else {
+    if (0 !== (d & 30) || 0 !== (d & a.expiredLanes) || b) b = Ph(a, d);else {
       b = d;
       var e = H;
       H |= 2;
-      var f = Rh();
-      if (O !== a || Y !== b) Bh = null, Ch(), Sh(a, b);
+      var f = Qh();
+      if (N !== a || Z !== b) Ah = null, Bh(), Rh(a, b);
       do try {
-        Th();
+        Sh();
         break;
       } catch (h) {
-        Uh(a, h);
+        Th(a, h);
       } while (1);
-      Kd();
-      uh.current = f;
+      Ud();
+      th.current = f;
       H = e;
-      null !== X ? b = 0 : (O = null, Y = 0, b = R);
+      null !== X ? b = 0 : (N = null, Z = 0, b = R);
     }
     if (0 !== b) {
-      2 === b && (e = Cc(a), 0 !== e && (d = e, b = Vh(a, e)));
-      if (1 === b) throw c = wh, Sh(a, 0), Kh(a, d), Lh(a, D()), c;
-      if (6 === b) Kh(a, d);else {
+      2 === b && (e = Cc(a), 0 !== e && (d = e, b = Uh(a, e)));
+      if (1 === b) throw c = vh, Rh(a, 0), Jh(a, d), Kh(a, D()), c;
+      if (6 === b) Jh(a, d);else {
         e = a.current.alternate;
-        if (0 === (d & 30) && !Wh(e) && (b = Qh(a, d), 2 === b && (f = Cc(a), 0 !== f && (d = f, b = Vh(a, f))), 1 === b)) throw c = wh, Sh(a, 0), Kh(a, d), Lh(a, D()), c;
+        if (0 === (d & 30) && !Vh(e) && (b = Ph(a, d), 2 === b && (f = Cc(a), 0 !== f && (d = f, b = Uh(a, f))), 1 === b)) throw c = vh, Rh(a, 0), Jh(a, d), Kh(a, D()), c;
         a.finishedWork = e;
         a.finishedLanes = d;
         switch (b) {
           case 0:
           case 1:
-            throw Error(m(345));
+            throw Error(n(345));
           case 2:
-            Xh(a, Ah, Bh);
+            Wh(a, zh, Ah);
             break;
           case 3:
-            Kh(a, d);
-            if ((d & 130023424) === d && (b = ch + 500 - D(), 10 < b)) {
+            Jh(a, d);
+            if ((d & 130023424) === d && (b = bh + 500 - D(), 10 < b)) {
               if (0 !== zc(a, 0)) break;
               e = a.suspendedLanes;
               if ((e & d) !== d) {
-                I();
+                O();
                 a.pingedLanes |= a.suspendedLanes & e;
                 break;
               }
-              a.timeoutHandle = Pa(Xh.bind(null, a, Ah, Bh), b);
+              a.timeoutHandle = Pa(Wh.bind(null, a, zh, Ah), b);
               break;
             }
-            Xh(a, Ah, Bh);
+            Wh(a, zh, Ah);
             break;
           case 4:
-            Kh(a, d);
+            Jh(a, d);
             if ((d & 4194240) === d) break;
             b = a.eventTimes;
             for (e = -1; 0 < d;) {
@@ -5395,35 +5393,35 @@ module.exports = function $$$reconciler($$$hostConfig) {
             }
             d = e;
             d = D() - d;
-            d = (120 > d ? 120 : 480 > d ? 480 : 1080 > d ? 1080 : 1920 > d ? 1920 : 3E3 > d ? 3E3 : 4320 > d ? 4320 : 1960 * th(d / 1960)) - d;
+            d = (120 > d ? 120 : 480 > d ? 480 : 1080 > d ? 1080 : 1920 > d ? 1920 : 3E3 > d ? 3E3 : 4320 > d ? 4320 : 1960 * sh(d / 1960)) - d;
             if (10 < d) {
-              a.timeoutHandle = Pa(Xh.bind(null, a, Ah, Bh), d);
+              a.timeoutHandle = Pa(Wh.bind(null, a, zh, Ah), d);
               break;
             }
-            Xh(a, Ah, Bh);
+            Wh(a, zh, Ah);
             break;
           case 5:
-            Xh(a, Ah, Bh);
+            Wh(a, zh, Ah);
             break;
           default:
-            throw Error(m(329));
+            throw Error(n(329));
         }
       }
     }
-    Lh(a, D());
-    return a.callbackNode === c ? Oh.bind(null, a) : null;
+    Kh(a, D());
+    return a.callbackNode === c ? Nh.bind(null, a) : null;
   }
-  function Vh(a, b) {
-    var c = zh;
-    a.current.memoizedState.isDehydrated && (Sh(a, b).flags |= 256);
-    a = Qh(a, b);
-    2 !== a && (b = Ah, Ah = c, null !== b && Dg(b));
+  function Uh(a, b) {
+    var c = yh;
+    a.current.memoizedState.isDehydrated && (Rh(a, b).flags |= 256);
+    a = Ph(a, b);
+    2 !== a && (b = zh, zh = c, null !== b && Cg(b));
     return a;
   }
-  function Dg(a) {
-    null === Ah ? Ah = a : Ah.push.apply(Ah, a);
+  function Cg(a) {
+    null === zh ? zh = a : zh.push.apply(zh, a);
   }
-  function Wh(a) {
+  function Vh(a) {
     for (var b = a;;) {
       if (b.flags & 16384) {
         var c = b.updateQueue;
@@ -5451,9 +5449,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return !0;
   }
-  function Kh(a, b) {
-    b &= ~yh;
+  function Jh(a, b) {
     b &= ~xh;
+    b &= ~wh;
     a.suspendedLanes |= b;
     a.pingedLanes &= ~b;
     for (a = a.expirationTimes; 0 < b;) {
@@ -5463,26 +5461,26 @@ module.exports = function $$$reconciler($$$hostConfig) {
       b &= ~d;
     }
   }
-  function Mh(a) {
-    if (0 !== (H & 6)) throw Error(m(327));
-    Ph();
+  function Lh(a) {
+    if (0 !== (H & 6)) throw Error(n(327));
+    Oh();
     var b = zc(a, 0);
-    if (0 === (b & 1)) return Lh(a, D()), null;
-    var c = Qh(a, b);
+    if (0 === (b & 1)) return Kh(a, D()), null;
+    var c = Ph(a, b);
     if (0 !== a.tag && 2 === c) {
       var d = Cc(a);
-      0 !== d && (b = d, c = Vh(a, d));
+      0 !== d && (b = d, c = Uh(a, d));
     }
-    if (1 === c) throw c = wh, Sh(a, 0), Kh(a, b), Lh(a, D()), c;
-    if (6 === c) throw Error(m(345));
+    if (1 === c) throw c = vh, Rh(a, 0), Jh(a, b), Kh(a, D()), c;
+    if (6 === c) throw Error(n(345));
     a.finishedWork = a.current.alternate;
     a.finishedLanes = b;
-    Xh(a, Ah, Bh);
-    Lh(a, D());
+    Wh(a, zh, Ah);
+    Kh(a, D());
     return null;
   }
-  function Yh(a) {
-    null !== Eh && 0 === Eh.tag && 0 === (H & 6) && Ph();
+  function Xh(a) {
+    null !== Dh && 0 === Dh.tag && 0 === (H & 6) && Oh();
     var b = H;
     H |= 1;
     var c = W.transition,
@@ -5493,11 +5491,11 @@ module.exports = function $$$reconciler($$$hostConfig) {
       C = d, W.transition = c, H = b, 0 === (H & 6) && ad();
     }
   }
-  function Fg() {
-    ag = $f.current;
-    q($f);
+  function Eg() {
+    $f = Zf.current;
+    q(Zf);
   }
-  function Sh(a, b) {
+  function Rh(a, b) {
     a.finishedWork = null;
     a.finishedLanes = 0;
     var c = a.timeoutHandle;
@@ -5508,44 +5506,44 @@ module.exports = function $$$reconciler($$$hostConfig) {
       switch (d.tag) {
         case 1:
           d = d.type.childContextTypes;
-          null !== d && void 0 !== d && mc();
+          null !== d && void 0 !== d && nc();
           break;
         case 3:
-          De();
+          te();
           q(z);
           q(x);
-          Ie();
+          ye();
           break;
         case 5:
-          Fe(d);
+          ve(d);
           break;
         case 4:
-          De();
+          te();
           break;
         case 13:
-          q(J);
+          q(I);
           break;
         case 19:
-          q(J);
+          q(I);
           break;
         case 10:
-          Md(d.type._context);
+          Wd(d.type._context);
           break;
         case 22:
         case 23:
-          Fg();
+          Eg();
       }
       c = c["return"];
     }
-    O = a;
-    X = a = qe(a.current, null);
-    Y = ag = b;
+    N = a;
+    X = a = Jd(a.current, null);
+    Z = $f = b;
     R = 0;
-    wh = null;
-    yh = xh = be = 0;
-    Ah = zh = null;
-    if (null !== Qd) {
-      for (b = 0; b < Qd.length; b++) if (c = Qd[b], d = c.interleaved, null !== d) {
+    vh = null;
+    xh = wh = le = 0;
+    zh = yh = null;
+    if (null !== $d) {
+      for (b = 0; b < $d.length; b++) if (c = $d[b], d = c.interleaved, null !== d) {
         c.interleaved = null;
         var e = d.next,
           f = c.pending;
@@ -5556,32 +5554,32 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         c.pending = d;
       }
-      Qd = null;
+      $d = null;
     }
     return a;
   }
-  function Uh(a, b) {
+  function Th(a, b) {
     do {
       var c = X;
       try {
-        Kd();
-        Je.current = Ve;
-        if (Me) {
-          for (var d = K.memoizedState; null !== d;) {
+        Ud();
+        ze.current = Le;
+        if (Ce) {
+          for (var d = J.memoizedState; null !== d;) {
             var e = d.queue;
             null !== e && (e.pending = null);
             d = d.next;
           }
-          Me = !1;
+          Ce = !1;
         }
-        Le = 0;
-        M = L = K = null;
-        Ne = !1;
-        Oe = 0;
-        vh.current = null;
+        Be = 0;
+        L = K = J = null;
+        De = !1;
+        Ee = 0;
+        uh.current = null;
         if (null === c || null === c["return"]) {
           R = 1;
-          wh = b;
+          vh = b;
           X = null;
           break;
         }
@@ -5590,50 +5588,50 @@ module.exports = function $$$reconciler($$$hostConfig) {
             g = c["return"],
             h = c,
             k = b;
-          b = Y;
+          b = Z;
           h.flags |= 32768;
           if (null !== k && "object" === typeof k && "function" === typeof k.then) {
             var l = k,
-              n = h,
-              t = n.tag;
-            if (0 === (n.mode & 1) && (0 === t || 11 === t || 15 === t)) {
-              var p = n.alternate;
-              p ? (n.updateQueue = p.updateQueue, n.memoizedState = p.memoizedState, n.lanes = p.lanes) : (n.updateQueue = null, n.memoizedState = null);
+              m = h,
+              r = m.tag;
+            if (0 === (m.mode & 1) && (0 === r || 11 === r || 15 === r)) {
+              var p = m.alternate;
+              p ? (m.updateQueue = p.updateQueue, m.memoizedState = p.memoizedState, m.lanes = p.lanes) : (m.updateQueue = null, m.memoizedState = null);
             }
-            var B = Qf(g);
+            var B = Pf(g);
             if (null !== B) {
               B.flags &= -257;
-              Rf(B, g, h, f, b);
-              B.mode & 1 && Of(f, l, b);
+              Qf(B, g, h, f, b);
+              B.mode & 1 && Nf(f, l, b);
               b = B;
               k = l;
               var w = b.updateQueue;
               if (null === w) {
-                var Z = new Set();
-                Z.add(k);
-                b.updateQueue = Z;
+                var Y = new Set();
+                Y.add(k);
+                b.updateQueue = Y;
               } else w.add(k);
               break a;
             } else {
               if (0 === (b & 1)) {
-                Of(f, l, b);
-                og();
+                Nf(f, l, b);
+                ng();
                 break a;
               }
-              k = Error(m(426));
+              k = Error(n(426));
             }
           } else if (F && h.mode & 1) {
-            var za = Qf(g);
-            if (null !== za) {
-              0 === (za.flags & 65536) && (za.flags |= 256);
-              Rf(za, g, h, f, b);
-              Bd(Ff(k, h));
+            var ya = Pf(g);
+            if (null !== ya) {
+              0 === (ya.flags & 65536) && (ya.flags |= 256);
+              Qf(ya, g, h, f, b);
+              Bd(Ef(k, h));
               break a;
             }
           }
-          f = k = Ff(k, h);
+          f = k = Ef(k, h);
           4 !== R && (R = 2);
-          null === zh ? zh = [f] : zh.push(f);
+          null === yh ? yh = [f] : yh.push(f);
           f = g;
           do {
             switch (f.tag) {
@@ -5641,86 +5639,86 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 f.flags |= 65536;
                 b &= -b;
                 f.lanes |= b;
-                var E = Jf(f, k, b);
-                $d(f, E);
+                var E = If(f, k, b);
+                je(f, E);
                 break a;
               case 1:
                 h = k;
-                var r = f.type,
-                  u = f.stateNode;
-                if (0 === (f.flags & 128) && ("function" === typeof r.getDerivedStateFromError || null !== u && "function" === typeof u.componentDidCatch && (null === Nf || !Nf.has(u)))) {
+                var u = f.type,
+                  t = f.stateNode;
+                if (0 === (f.flags & 128) && ("function" === typeof u.getDerivedStateFromError || null !== t && "function" === typeof t.componentDidCatch && (null === Mf || !Mf.has(t)))) {
                   f.flags |= 65536;
                   b &= -b;
                   f.lanes |= b;
-                  var Db = Mf(f, h, b);
-                  $d(f, Db);
+                  var Db = Lf(f, h, b);
+                  je(f, Db);
                   break a;
                 }
             }
             f = f["return"];
           } while (null !== f);
         }
-        Zh(c);
-      } catch (qc) {
-        b = qc;
+        Yh(c);
+      } catch (lc) {
+        b = lc;
         X === c && null !== c && (X = c = c["return"]);
         continue;
       }
       break;
     } while (1);
   }
-  function Rh() {
-    var a = uh.current;
-    uh.current = Ve;
-    return null === a ? Ve : a;
+  function Qh() {
+    var a = th.current;
+    th.current = Le;
+    return null === a ? Le : a;
   }
-  function og() {
+  function ng() {
     if (0 === R || 3 === R || 2 === R) R = 4;
-    null === O || 0 === (be & 268435455) && 0 === (xh & 268435455) || Kh(O, Y);
+    null === N || 0 === (le & 268435455) && 0 === (wh & 268435455) || Jh(N, Z);
   }
-  function Qh(a, b) {
+  function Ph(a, b) {
     var c = H;
     H |= 2;
-    var d = Rh();
-    if (O !== a || Y !== b) Bh = null, Sh(a, b);
+    var d = Qh();
+    if (N !== a || Z !== b) Ah = null, Rh(a, b);
     do try {
-      $h();
+      Zh();
       break;
     } catch (e) {
-      Uh(a, e);
+      Th(a, e);
     } while (1);
-    Kd();
+    Ud();
     H = c;
-    uh.current = d;
-    if (null !== X) throw Error(m(261));
-    O = null;
-    Y = 0;
+    th.current = d;
+    if (null !== X) throw Error(n(261));
+    N = null;
+    Z = 0;
     return R;
   }
-  function $h() {
-    for (; null !== X;) ai(X);
+  function Zh() {
+    for (; null !== X;) $h(X);
   }
-  function Th() {
-    for (; null !== X && !Lc();) ai(X);
+  function Sh() {
+    for (; null !== X && !Lc();) $h(X);
   }
-  function ai(a) {
-    var b = bi(a.alternate, a, ag);
+  function $h(a) {
+    var b = ai(a.alternate, a, $f);
     a.memoizedProps = a.pendingProps;
-    null === b ? Zh(a) : X = b;
-    vh.current = null;
+    null === b ? Yh(a) : X = b;
+    uh.current = null;
   }
-  function Zh(a) {
+  function Yh(a) {
     var b = a;
     do {
       var c = b.alternate;
       a = b["return"];
       if (0 === (b.flags & 32768)) {
-        if (c = Cg(c, b, ag), null !== c) {
+        if (c = Bg(c, b, $f), null !== c) {
           X = c;
           return;
         }
       } else {
-        c = Gg(c, b);
+        c = Fg(c, b);
         if (null !== c) {
           c.flags &= 32767;
           X = c;
@@ -5741,32 +5739,32 @@ module.exports = function $$$reconciler($$$hostConfig) {
     } while (null !== b);
     0 === R && (R = 5);
   }
-  function Xh(a, b, c) {
+  function Wh(a, b, c) {
     var d = C,
       e = W.transition;
     try {
-      W.transition = null, C = 1, ci(a, b, c, d);
+      W.transition = null, C = 1, bi(a, b, c, d);
     } finally {
       W.transition = e, C = d;
     }
     return null;
   }
-  function ci(a, b, c, d) {
-    do Ph(); while (null !== Eh);
-    if (0 !== (H & 6)) throw Error(m(327));
+  function bi(a, b, c, d) {
+    do Oh(); while (null !== Dh);
+    if (0 !== (H & 6)) throw Error(n(327));
     c = a.finishedWork;
     var e = a.finishedLanes;
     if (null === c) return null;
     a.finishedWork = null;
     a.finishedLanes = 0;
-    if (c === a.current) throw Error(m(177));
+    if (c === a.current) throw Error(n(177));
     a.callbackNode = null;
     a.callbackPriority = 0;
     var f = c.lanes | c.childLanes;
     Gc(a, f);
-    a === O && (X = O = null, Y = 0);
-    0 === (c.subtreeFlags & 2064) && 0 === (c.flags & 2064) || Dh || (Dh = !0, Nh(Pc, function () {
-      Ph();
+    a === N && (X = N = null, Z = 0);
+    0 === (c.subtreeFlags & 2064) && 0 === (c.flags & 2064) || Ch || (Ch = !0, Mh(Pc, function () {
+      Oh();
       return null;
     }));
     f = 0 !== (c.flags & 15990);
@@ -5777,46 +5775,46 @@ module.exports = function $$$reconciler($$$hostConfig) {
       C = 1;
       var h = H;
       H |= 4;
-      vh.current = null;
-      Mg(a, c);
-      ah(c, a);
+      uh.current = null;
+      Lg(a, c);
+      $g(c, a);
       Ia(a.containerInfo);
       a.current = c;
-      eh(c, a, e);
+      dh(c, a, e);
       Mc();
       H = h;
       C = g;
       W.transition = f;
     } else a.current = c;
-    Dh && (Dh = !1, Eh = a, Fh = e);
+    Ch && (Ch = !1, Dh = a, Eh = e);
     f = a.pendingLanes;
-    0 === f && (Nf = null);
+    0 === f && (Mf = null);
     Tc(c.stateNode, d);
-    Lh(a, D());
+    Kh(a, D());
     if (null !== b) for (d = a.onRecoverableError, c = 0; c < b.length; c++) e = b[c], d(e.value, {
       componentStack: e.stack,
       digest: e.digest
     });
-    if (Kf) throw Kf = !1, a = Lf, Lf = null, a;
-    0 !== (Fh & 1) && 0 !== a.tag && Ph();
+    if (Jf) throw Jf = !1, a = Kf, Kf = null, a;
+    0 !== (Eh & 1) && 0 !== a.tag && Oh();
     f = a.pendingLanes;
-    0 !== (f & 1) ? a === Hh ? Gh++ : (Gh = 0, Hh = a) : Gh = 0;
+    0 !== (f & 1) ? a === Gh ? Fh++ : (Fh = 0, Gh = a) : Fh = 0;
     ad();
     return null;
   }
-  function Ph() {
-    if (null !== Eh) {
-      var a = Ic(Fh),
+  function Oh() {
+    if (null !== Dh) {
+      var a = Ic(Eh),
         b = W.transition,
         c = C;
       try {
         W.transition = null;
         C = 16 > a ? 16 : a;
-        if (null === Eh) var d = !1;else {
-          a = Eh;
-          Eh = null;
-          Fh = 0;
-          if (0 !== (H & 6)) throw Error(m(331));
+        if (null === Dh) var d = !1;else {
+          a = Dh;
+          Dh = null;
+          Eh = 0;
+          if (0 !== (H & 6)) throw Error(n(331));
           var e = H;
           H |= 4;
           for (T = a.current; null !== T;) {
@@ -5828,20 +5826,20 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 for (var k = 0; k < h.length; k++) {
                   var l = h[k];
                   for (T = l; null !== T;) {
-                    var n = T;
-                    switch (n.tag) {
+                    var m = T;
+                    switch (m.tag) {
                       case 0:
                       case 11:
                       case 15:
-                        Ng(8, n, f);
+                        Mg(8, m, f);
                     }
-                    var t = n.child;
-                    if (null !== t) t["return"] = n, T = t;else for (; null !== T;) {
-                      n = T;
-                      var p = n.sibling,
-                        B = n["return"];
-                      Qg(n);
-                      if (n === l) {
+                    var r = m.child;
+                    if (null !== r) r["return"] = m, T = r;else for (; null !== T;) {
+                      m = T;
+                      var p = m.sibling,
+                        B = m["return"];
+                      Pg(m);
+                      if (m === l) {
                         T = null;
                         break;
                       }
@@ -5856,14 +5854,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 }
                 var w = f.alternate;
                 if (null !== w) {
-                  var Z = w.child;
-                  if (null !== Z) {
+                  var Y = w.child;
+                  if (null !== Y) {
                     w.child = null;
                     do {
-                      var za = Z.sibling;
-                      Z.sibling = null;
-                      Z = za;
-                    } while (null !== Z);
+                      var ya = Y.sibling;
+                      Y.sibling = null;
+                      Y = ya;
+                    } while (null !== Y);
                   }
                 }
                 T = f;
@@ -5875,7 +5873,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
                 case 0:
                 case 11:
                 case 15:
-                  Ng(9, f, f["return"]);
+                  Mg(9, f, f["return"]);
               }
               var E = f.sibling;
               if (null !== E) {
@@ -5886,21 +5884,21 @@ module.exports = function $$$reconciler($$$hostConfig) {
               T = f["return"];
             }
           }
-          var r = a.current;
-          for (T = r; null !== T;) {
+          var u = a.current;
+          for (T = u; null !== T;) {
             g = T;
-            var u = g.child;
-            if (0 !== (g.subtreeFlags & 2064) && null !== u) u["return"] = g, T = u;else b: for (g = r; null !== T;) {
+            var t = g.child;
+            if (0 !== (g.subtreeFlags & 2064) && null !== t) t["return"] = g, T = t;else b: for (g = u; null !== T;) {
               h = T;
               if (0 !== (h.flags & 2048)) try {
                 switch (h.tag) {
                   case 0:
                   case 11:
                   case 15:
-                    Og(9, h);
+                    Ng(9, h);
                 }
-              } catch (qc) {
-                U(h, h["return"], qc);
+              } catch (lc) {
+                U(h, h["return"], lc);
               }
               if (h === g) {
                 T = null;
@@ -5919,7 +5917,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
           ad();
           if (Sc && "function" === typeof Sc.onPostCommitFiberRoot) try {
             Sc.onPostCommitFiberRoot(Rc, a);
-          } catch (qc) {}
+          } catch (lc) {}
           d = !0;
         }
         return d;
@@ -5929,53 +5927,53 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return !1;
   }
-  function di(a, b, c) {
-    b = Ff(c, b);
-    b = Jf(a, b, 1);
-    a = Yd(a, b, 1);
-    b = I();
-    null !== a && (Fc(a, 1, b), Lh(a, b));
+  function ci(a, b, c) {
+    b = Ef(c, b);
+    b = If(a, b, 1);
+    a = he(a, b, 1);
+    b = O();
+    null !== a && (Fc(a, 1, b), Kh(a, b));
   }
   function U(a, b, c) {
-    if (3 === a.tag) di(a, a, c);else for (; null !== b;) {
+    if (3 === a.tag) ci(a, a, c);else for (; null !== b;) {
       if (3 === b.tag) {
-        di(b, a, c);
+        ci(b, a, c);
         break;
       } else if (1 === b.tag) {
         var d = b.stateNode;
-        if ("function" === typeof b.type.getDerivedStateFromError || "function" === typeof d.componentDidCatch && (null === Nf || !Nf.has(d))) {
-          a = Ff(c, a);
-          a = Mf(b, a, 1);
-          b = Yd(b, a, 1);
-          a = I();
-          null !== b && (Fc(b, 1, a), Lh(b, a));
+        if ("function" === typeof b.type.getDerivedStateFromError || "function" === typeof d.componentDidCatch && (null === Mf || !Mf.has(d))) {
+          a = Ef(c, a);
+          a = Lf(b, a, 1);
+          b = he(b, a, 1);
+          a = O();
+          null !== b && (Fc(b, 1, a), Kh(b, a));
           break;
         }
       }
       b = b["return"];
     }
   }
-  function Pf(a, b, c) {
+  function Of(a, b, c) {
     var d = a.pingCache;
     null !== d && d["delete"](b);
-    b = I();
+    b = O();
     a.pingedLanes |= a.suspendedLanes & c;
-    O === a && (Y & c) === c && (4 === R || 3 === R && (Y & 130023424) === Y && 500 > D() - ch ? Sh(a, 0) : yh |= c);
-    Lh(a, b);
+    N === a && (Z & c) === c && (4 === R || 3 === R && (Z & 130023424) === Z && 500 > D() - bh ? Rh(a, 0) : xh |= c);
+    Kh(a, b);
   }
-  function ei(a, b) {
+  function di(a, b) {
     0 === b && (0 === (a.mode & 1) ? b = 1 : (b = xc, xc <<= 1, 0 === (xc & 130023424) && (xc = 4194304)));
-    var c = I();
-    a = Td(a, b);
-    null !== a && (Fc(a, b, c), Lh(a, c));
+    var c = O();
+    a = ce(a, b);
+    null !== a && (Fc(a, b, c), Kh(a, c));
   }
-  function pg(a) {
+  function og(a) {
     var b = a.memoizedState,
       c = 0;
     null !== b && (c = b.retryLane);
-    ei(a, c);
+    di(a, c);
   }
-  function Zg(a, b) {
+  function Yg(a, b) {
     var c = 0;
     switch (a.tag) {
       case 13:
@@ -5987,16 +5985,16 @@ module.exports = function $$$reconciler($$$hostConfig) {
         d = a.stateNode;
         break;
       default:
-        throw Error(m(314));
+        throw Error(n(314));
     }
     null !== d && d["delete"](b);
-    ei(a, c);
+    di(a, c);
   }
-  var bi;
-  bi = function bi(a, b, c) {
+  var ai;
+  ai = function ai(a, b, c) {
     if (null !== a) {
       if (a.memoizedProps !== b.pendingProps || z.current) G = !0;else {
-        if (0 === (a.lanes & c) && 0 === (b.flags & 128)) return G = !1, tg(a, b, c);
+        if (0 === (a.lanes & c) && 0 === (b.flags & 128)) return G = !1, sg(a, b, c);
         G = 0 !== (a.flags & 131072) ? !0 : !1;
       }
     } else G = !1, F && 0 !== (b.flags & 1048576) && ld(b, ed, b.index);
@@ -6004,55 +6002,55 @@ module.exports = function $$$reconciler($$$hostConfig) {
     switch (b.tag) {
       case 2:
         var d = b.type;
-        dg(a, b);
+        cg(a, b);
         a = b.pendingProps;
-        var e = lc(b, x.current);
-        Od(b, c);
-        e = Re(null, b, d, a, e, c);
-        var f = We();
+        var e = mc(b, x.current);
+        Yd(b, c);
+        e = He(null, b, d, a, e, c);
+        var f = Me();
         b.flags |= 1;
-        "object" === typeof e && null !== e && "function" === typeof e.render && void 0 === e.$$typeof ? (b.tag = 1, b.memoizedState = null, b.updateQueue = null, A(d) ? (f = !0, pc(b)) : f = !1, b.memoizedState = null !== e.state && void 0 !== e.state ? e.state : null, Vd(b), e.updater = he, b.stateNode = e, e._reactInternals = b, le(b, d, a, c), b = eg(null, b, d, !0, f, c)) : (b.tag = 0, F && f && md(b), P(null, b, e, c), b = b.child);
+        "object" === typeof e && null !== e && "function" === typeof e.render && void 0 === e.$$typeof ? (b.tag = 1, b.memoizedState = null, b.updateQueue = null, A(d) ? (f = !0, qc(b)) : f = !1, b.memoizedState = null !== e.state && void 0 !== e.state ? e.state : null, ee(b), e.updater = zf, b.stateNode = e, e._reactInternals = b, Df(b, d, a, c), b = dg(null, b, d, !0, f, c)) : (b.tag = 0, F && f && md(b), P(null, b, e, c), b = b.child);
         return b;
       case 16:
         d = b.elementType;
         a: {
-          dg(a, b);
+          cg(a, b);
           a = b.pendingProps;
           e = d._init;
           d = e(d._payload);
           b.type = d;
-          e = b.tag = fi(d);
-          a = Fd(d, a);
+          e = b.tag = ei(d);
+          a = xf(d, a);
           switch (e) {
             case 0:
-              b = Yf(null, b, d, a, c);
+              b = Xf(null, b, d, a, c);
               break a;
             case 1:
-              b = cg(null, b, d, a, c);
+              b = bg(null, b, d, a, c);
               break a;
             case 11:
-              b = Tf(null, b, d, a, c);
+              b = Sf(null, b, d, a, c);
               break a;
             case 14:
-              b = Vf(null, b, d, Fd(d.type, a), c);
+              b = Uf(null, b, d, xf(d.type, a), c);
               break a;
           }
-          throw Error(m(306, d, ""));
+          throw Error(n(306, d, ""));
         }
         return b;
       case 0:
-        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Fd(d, e), Yf(a, b, d, e, c);
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : xf(d, e), Xf(a, b, d, e, c);
       case 1:
-        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Fd(d, e), cg(a, b, d, e, c);
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : xf(d, e), bg(a, b, d, e, c);
       case 3:
         a: {
-          fg(b);
-          if (null === a) throw Error(m(387));
+          eg(b);
+          if (null === a) throw Error(n(387));
           d = b.pendingProps;
           f = b.memoizedState;
           e = f.element;
-          Wd(a, b);
-          ae(b, d, null, c);
+          fe(a, b);
+          ke(b, d, null, c);
           var g = b.memoizedState;
           d = g.element;
           if (Va && f.isDehydrated) {
@@ -6063,18 +6061,18 @@ module.exports = function $$$reconciler($$$hostConfig) {
               pendingSuspenseBoundaries: g.pendingSuspenseBoundaries,
               transitions: g.transitions
             }, b.updateQueue.baseState = f, b.memoizedState = f, b.flags & 256) {
-              e = Ff(Error(m(423)), b);
-              b = gg(a, b, d, c, e);
+              e = Ef(Error(n(423)), b);
+              b = fg(a, b, d, c, e);
               break a;
             } else if (d !== e) {
-              e = Ff(Error(m(424)), b);
-              b = gg(a, b, d, c, e);
+              e = Ef(Error(n(424)), b);
+              b = fg(a, b, d, c, e);
               break a;
-            } else for (Va && (pd = Pb(b.stateNode.containerInfo), od = b, F = !0, rd = null, qd = !1), c = we(b, null, d, c), b.child = c; c;) c.flags = c.flags & -3 | 4096, c = c.sibling;
+            } else for (Va && (pd = Pb(b.stateNode.containerInfo), od = b, F = !0, rd = null, qd = !1), c = Pd(b, null, d, c), b.child = c; c;) c.flags = c.flags & -3 | 4096, c = c.sibling;
           } else {
             Ad();
             if (d === e) {
-              b = Uf(a, b, c);
+              b = Tf(a, b, c);
               break a;
             }
             P(a, b, d, c);
@@ -6083,15 +6081,15 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         return b;
       case 5:
-        return Ee(b), null === a && wd(b), d = b.type, e = b.pendingProps, f = null !== a ? a.memoizedProps : null, g = e.children, Na(d, e) ? g = null : null !== f && Na(d, f) && (b.flags |= 32), bg(a, b), P(a, b, g, c), b.child;
+        return ue(b), null === a && wd(b), d = b.type, e = b.pendingProps, f = null !== a ? a.memoizedProps : null, g = e.children, Na(d, e) ? g = null : null !== f && Na(d, f) && (b.flags |= 32), ag(a, b), P(a, b, g, c), b.child;
       case 6:
         return null === a && wd(b), null;
       case 13:
-        return jg(a, b, c);
+        return ig(a, b, c);
       case 4:
-        return Ce(b, b.stateNode.containerInfo), d = b.pendingProps, null === a ? b.child = ve(b, null, d, c) : P(a, b, d, c), b.child;
+        return se(b, b.stateNode.containerInfo), d = b.pendingProps, null === a ? b.child = Od(b, null, d, c) : P(a, b, d, c), b.child;
       case 11:
-        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Fd(d, e), Tf(a, b, d, e, c);
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : xf(d, e), Sf(a, b, d, e, c);
       case 7:
         return P(a, b, b.pendingProps, c), b.child;
       case 8:
@@ -6104,10 +6102,10 @@ module.exports = function $$$reconciler($$$hostConfig) {
           e = b.pendingProps;
           f = b.memoizedProps;
           g = e.value;
-          Ld(b, d, g);
+          Vd(b, d, g);
           if (null !== f) if (Vc(f.value, g)) {
             if (f.children === e.children && !z.current) {
-              b = Uf(a, b, c);
+              b = Tf(a, b, c);
               break a;
             }
           } else for (f = b.child, null !== f && (f["return"] = b); null !== f;) {
@@ -6117,20 +6115,20 @@ module.exports = function $$$reconciler($$$hostConfig) {
               for (var k = h.firstContext; null !== k;) {
                 if (k.context === d) {
                   if (1 === f.tag) {
-                    k = Xd(-1, c & -c);
+                    k = ge(-1, c & -c);
                     k.tag = 2;
                     var l = f.updateQueue;
                     if (null !== l) {
                       l = l.shared;
-                      var n = l.pending;
-                      null === n ? k.next = k : (k.next = n.next, n.next = k);
+                      var m = l.pending;
+                      null === m ? k.next = k : (k.next = m.next, m.next = k);
                       l.pending = k;
                     }
                   }
                   f.lanes |= c;
                   k = f.alternate;
                   null !== k && (k.lanes |= c);
-                  Nd(f["return"], c, b);
+                  Xd(f["return"], c, b);
                   h.lanes |= c;
                   break;
                 }
@@ -6138,11 +6136,11 @@ module.exports = function $$$reconciler($$$hostConfig) {
               }
             } else if (10 === f.tag) g = f.type === b.type ? null : f.child;else if (18 === f.tag) {
               g = f["return"];
-              if (null === g) throw Error(m(341));
+              if (null === g) throw Error(n(341));
               g.lanes |= c;
               h = g.alternate;
               null !== h && (h.lanes |= c);
-              Nd(g, c, b);
+              Xd(g, c, b);
               g = f.sibling;
             } else g = f.child;
             if (null !== g) g["return"] = f;else for (g = f; null !== g;) {
@@ -6165,24 +6163,24 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         return b;
       case 9:
-        return e = b.type, d = b.pendingProps.children, Od(b, c), e = Pd(e), d = d(e), b.flags |= 1, P(a, b, d, c), b.child;
+        return e = b.type, d = b.pendingProps.children, Yd(b, c), e = Zd(e), d = d(e), b.flags |= 1, P(a, b, d, c), b.child;
       case 14:
-        return d = b.type, e = Fd(d, b.pendingProps), e = Fd(d.type, e), Vf(a, b, d, e, c);
+        return d = b.type, e = xf(d, b.pendingProps), e = xf(d.type, e), Uf(a, b, d, e, c);
       case 15:
-        return Xf(a, b, b.type, b.pendingProps, c);
+        return Wf(a, b, b.type, b.pendingProps, c);
       case 17:
-        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : Fd(d, e), dg(a, b), b.tag = 1, A(d) ? (a = !0, pc(b)) : a = !1, Od(b, c), je(b, d, e), le(b, d, e, c), eg(null, b, d, !0, a, c);
+        return d = b.type, e = b.pendingProps, e = b.elementType === d ? e : xf(d, e), cg(a, b), b.tag = 1, A(d) ? (a = !0, qc(b)) : a = !1, Yd(b, c), Bf(b, d, e), Df(b, d, e, c), dg(null, b, d, !0, a, c);
       case 19:
-        return sg(a, b, c);
+        return rg(a, b, c);
       case 22:
-        return Zf(a, b, c);
+        return Yf(a, b, c);
     }
-    throw Error(m(156, b.tag));
+    throw Error(n(156, b.tag));
   };
-  function Nh(a, b) {
+  function Mh(a, b) {
     return Jc(a, b);
   }
-  function gi(a, b, c, d) {
+  function fi(a, b, c, d) {
     this.tag = a;
     this.key = c;
     this.sibling = this.child = this["return"] = this.stateNode = this.type = this.elementType = null;
@@ -6197,14 +6195,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
     this.alternate = null;
   }
   function td(a, b, c, d) {
-    return new gi(a, b, c, d);
+    return new fi(a, b, c, d);
   }
-  function Wf(a) {
+  function Vf(a) {
     a = a.prototype;
     return !(!a || !a.isReactComponent);
   }
-  function fi(a) {
-    if ("function" === typeof a) return Wf(a) ? 1 : 0;
+  function ei(a) {
+    if ("function" === typeof a) return Vf(a) ? 1 : 0;
     if (void 0 !== a && null !== a) {
       a = a.$$typeof;
       if (a === ma) return 11;
@@ -6212,7 +6210,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return 2;
   }
-  function qe(a, b) {
+  function Jd(a, b) {
     var c = a.alternate;
     null === c ? (c = td(a.tag, b, a.key, a.mode), c.elementType = a.elementType, c.type = a.type, c.stateNode = a.stateNode, c.alternate = a, a.alternate = c) : (c.pendingProps = b, c.type = a.type, c.flags = 0, c.subtreeFlags = 0, c.deletions = null);
     c.flags = a.flags & 14680064;
@@ -6232,12 +6230,12 @@ module.exports = function $$$reconciler($$$hostConfig) {
     c.ref = a.ref;
     return c;
   }
-  function se(a, b, c, d, e, f) {
+  function Ld(a, b, c, d, e, f) {
     var g = 2;
     d = a;
-    if ("function" === typeof a) Wf(a) && (g = 1);else if ("string" === typeof a) g = 5;else a: switch (a) {
+    if ("function" === typeof a) Vf(a) && (g = 1);else if ("string" === typeof a) g = 5;else a: switch (a) {
       case ha:
-        return ue(c.children, e, f, b);
+        return Nd(c.children, e, f, b);
       case ia:
         g = 8;
         e |= 8;
@@ -6249,7 +6247,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
       case oa:
         return a = td(19, c, b, e), a.elementType = oa, a.lanes = f, a;
       case ra:
-        return kg(c, e, f, b);
+        return jg(c, e, f, b);
       default:
         if ("object" === typeof a && null !== a) switch (a.$$typeof) {
           case ka:
@@ -6269,7 +6267,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
             d = null;
             break a;
         }
-        throw Error(m(130, null == a ? a : typeof a, ""));
+        throw Error(n(130, null == a ? a : typeof a, ""));
     }
     b = td(g, c, b, e);
     b.elementType = a;
@@ -6277,12 +6275,12 @@ module.exports = function $$$reconciler($$$hostConfig) {
     b.lanes = f;
     return b;
   }
-  function ue(a, b, c, d) {
+  function Nd(a, b, c, d) {
     a = td(7, a, d, b);
     a.lanes = c;
     return a;
   }
-  function kg(a, b, c, d) {
+  function jg(a, b, c, d) {
     a = td(22, a, d, b);
     a.elementType = ra;
     a.lanes = c;
@@ -6291,12 +6289,12 @@ module.exports = function $$$reconciler($$$hostConfig) {
     };
     return a;
   }
-  function re(a, b, c) {
+  function Kd(a, b, c) {
     a = td(6, a, null, b);
     a.lanes = c;
     return a;
   }
-  function te(a, b, c) {
+  function Md(a, b, c) {
     b = td(4, null !== a.children ? a.children : [], a.key, b);
     b.lanes = c;
     b.stateNode = {
@@ -6306,7 +6304,7 @@ module.exports = function $$$reconciler($$$hostConfig) {
     };
     return b;
   }
-  function hi(a, b, c, d, e) {
+  function gi(a, b, c, d, e) {
     this.tag = b;
     this.containerInfo = a;
     this.finishedWork = this.pingCache = this.current = this.pendingChildren = null;
@@ -6321,8 +6319,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
     this.onRecoverableError = e;
     Va && (this.mutableSourceEagerHydrationData = null);
   }
-  function ii(a, b, c, d, e, f, g, h, k) {
-    a = new hi(a, b, c, h, k);
+  function hi(a, b, c, d, e, f, g, h, k) {
+    a = new gi(a, b, c, h, k);
     1 === b ? (b = 1, !0 === f && (b |= 8)) : b = 0;
     f = td(3, null, null, b);
     a.current = f;
@@ -6334,14 +6332,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
       transitions: null,
       pendingSuspenseBoundaries: null
     };
-    Vd(f);
+    ee(f);
     return a;
   }
-  function ji(a) {
+  function ii(a) {
     if (!a) return jc;
     a = a._reactInternals;
     a: {
-      if (wa(a) !== a || 1 !== a.tag) throw Error(m(170));
+      if (wa(a) !== a || 1 !== a.tag) throw Error(n(170));
       var b = a;
       do {
         switch (b.tag) {
@@ -6356,71 +6354,71 @@ module.exports = function $$$reconciler($$$hostConfig) {
         }
         b = b["return"];
       } while (null !== b);
-      throw Error(m(171));
+      throw Error(n(171));
     }
     if (1 === a.tag) {
       var c = a.type;
-      if (A(c)) return oc(a, c, b);
+      if (A(c)) return pc(a, c, b);
     }
     return b;
   }
-  function ki(a) {
+  function ji(a) {
     var b = a._reactInternals;
     if (void 0 === b) {
-      if ("function" === typeof a.render) throw Error(m(188));
+      if ("function" === typeof a.render) throw Error(n(188));
       a = Object.keys(a).join(",");
-      throw Error(m(268, a));
+      throw Error(n(268, a));
     }
     a = Aa(b);
     return null === a ? null : a.stateNode;
   }
-  function li(a, b) {
+  function ki(a, b) {
     a = a.memoizedState;
     if (null !== a && null !== a.dehydrated) {
       var c = a.retryLane;
       a.retryLane = 0 !== c && c < b ? c : b;
     }
   }
-  function mi(a, b) {
-    li(a, b);
-    (a = a.alternate) && li(a, b);
+  function li(a, b) {
+    ki(a, b);
+    (a = a.alternate) && ki(a, b);
   }
-  function ni(a) {
+  function mi(a) {
     a = Aa(a);
     return null === a ? null : a.stateNode;
   }
-  function oi() {
+  function ni() {
     return null;
   }
   exports.attemptContinuousHydration = function (a) {
     if (13 === a.tag) {
-      var b = Td(a, 134217728);
+      var b = ce(a, 134217728);
       if (null !== b) {
-        var c = I();
-        ge(b, a, 134217728, c);
+        var c = O();
+        af(b, a, 134217728, c);
       }
-      mi(a, 134217728);
+      li(a, 134217728);
     }
   };
   exports.attemptDiscreteHydration = function (a) {
     if (13 === a.tag) {
-      var b = Td(a, 1);
+      var b = ce(a, 1);
       if (null !== b) {
-        var c = I();
-        ge(b, a, 1, c);
+        var c = O();
+        af(b, a, 1, c);
       }
-      mi(a, 1);
+      li(a, 1);
     }
   };
   exports.attemptHydrationAtCurrentPriority = function (a) {
     if (13 === a.tag) {
-      var b = fe(a),
-        c = Td(a, b);
+      var b = tf(a),
+        c = ce(a, b);
       if (null !== c) {
-        var d = I();
-        ge(c, a, b, d);
+        var d = O();
+        af(c, a, b, d);
       }
-      mi(a, b);
+      li(a, b);
     }
   };
   exports.attemptSynchronousHydration = function (a) {
@@ -6429,17 +6427,17 @@ module.exports = function $$$reconciler($$$hostConfig) {
         var b = a.stateNode;
         if (b.current.memoizedState.isDehydrated) {
           var c = yc(b.pendingLanes);
-          0 !== c && (Hc(b, c | 1), Lh(b, D()), 0 === (H & 6) && (Ch(), ad()));
+          0 !== c && (Hc(b, c | 1), Kh(b, D()), 0 === (H & 6) && (Bh(), ad()));
         }
         break;
       case 13:
-        Yh(function () {
-          var b = Td(a, 1);
+        Xh(function () {
+          var b = ce(a, 1);
           if (null !== b) {
-            var c = I();
-            ge(b, a, 1, c);
+            var c = O();
+            af(b, a, 1, c);
           }
-        }), mi(a, 1);
+        }), li(a, 1);
     }
   };
   exports.batchedUpdates = function (a, b) {
@@ -6448,36 +6446,36 @@ module.exports = function $$$reconciler($$$hostConfig) {
     try {
       return a(b);
     } finally {
-      H = c, 0 === H && (Ch(), Xc && ad());
+      H = c, 0 === H && (Bh(), Xc && ad());
     }
   };
   exports.createComponentSelector = function (a) {
+    return {
+      $$typeof: hh,
+      value: a
+    };
+  };
+  exports.createContainer = function (a, b, c, d, e, f, g) {
+    return hi(a, b, !1, null, c, d, e, f, g);
+  };
+  exports.createHasPseudoClassSelector = function (a) {
     return {
       $$typeof: ih,
       value: a
     };
   };
-  exports.createContainer = function (a, b, c, d, e, f, g) {
-    return ii(a, b, !1, null, c, d, e, f, g);
-  };
-  exports.createHasPseudoClassSelector = function (a) {
-    return {
-      $$typeof: jh,
-      value: a
-    };
-  };
   exports.createHydrationContainer = function (a, b, c, d, e, f, g, h, k) {
-    a = ii(c, d, !0, a, e, f, g, h, k);
-    a.context = ji(null);
+    a = hi(c, d, !0, a, e, f, g, h, k);
+    a.context = ii(null);
     c = a.current;
-    d = I();
-    e = fe(c);
-    f = Xd(d, e);
+    d = O();
+    e = tf(c);
+    f = ge(d, e);
     f.callback = void 0 !== b && null !== b ? b : null;
-    Yd(c, f, e);
+    he(c, f, e);
     a.current.lanes = e;
     Fc(a, e, d);
-    Lh(a, d);
+    Kh(a, d);
     return a;
   };
   exports.createPortal = function (a, b, c) {
@@ -6492,19 +6490,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
   };
   exports.createRoleSelector = function (a) {
     return {
-      $$typeof: kh,
+      $$typeof: jh,
       value: a
     };
   };
   exports.createTestNameSelector = function (a) {
     return {
-      $$typeof: lh,
+      $$typeof: kh,
       value: a
     };
   };
   exports.createTextSelector = function (a) {
     return {
-      $$typeof: mh,
+      $$typeof: lh,
       value: a
     };
   };
@@ -6523,13 +6521,13 @@ module.exports = function $$$reconciler($$$hostConfig) {
     try {
       return W.transition = null, C = 1, a(b, c, d, e);
     } finally {
-      C = f, W.transition = g, 0 === H && Ch();
+      C = f, W.transition = g, 0 === H && Bh();
     }
   };
-  exports.findAllNodes = sh;
+  exports.findAllNodes = rh;
   exports.findBoundingRects = function (a, b) {
-    if (!bb) throw Error(m(363));
-    b = sh(a, b);
+    if (!bb) throw Error(n(363));
+    b = rh(a, b);
     a = [];
     for (var c = 0; c < b.length; c++) a.push(db(b[c]));
     for (b = a.length - 1; 0 < b; b--) {
@@ -6537,20 +6535,20 @@ module.exports = function $$$reconciler($$$hostConfig) {
       for (var d = c.x, e = d + c.width, f = c.y, g = f + c.height, h = b - 1; 0 <= h; h--) if (b !== h) {
         var k = a[h],
           l = k.x,
-          n = l + k.width,
-          t = k.y,
-          p = t + k.height;
-        if (d >= l && f >= t && e <= n && g <= p) {
+          m = l + k.width,
+          r = k.y,
+          p = r + k.height;
+        if (d >= l && f >= r && e <= m && g <= p) {
           a.splice(b, 1);
           break;
-        } else if (!(d !== l || c.width !== k.width || p < f || t > g)) {
-          t > f && (k.height += t - f, k.y = f);
-          p < g && (k.height = g - t);
+        } else if (!(d !== l || c.width !== k.width || p < f || r > g)) {
+          r > f && (k.height += r - f, k.y = f);
+          p < g && (k.height = g - r);
           a.splice(b, 1);
           break;
-        } else if (!(f !== t || c.height !== k.height || n < d || l > e)) {
+        } else if (!(f !== r || c.height !== k.height || m < d || l > e)) {
           l > d && (k.width += l - d, k.x = d);
-          n < e && (k.width = e - l);
+          m < e && (k.width = e - l);
           a.splice(b, 1);
           break;
         }
@@ -6558,14 +6556,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
     }
     return a;
   };
-  exports.findHostInstance = ki;
+  exports.findHostInstance = ji;
   exports.findHostInstanceWithNoPortals = function (a) {
-    a = ya(a);
+    a = za(a);
     a = null !== a ? Ca(a) : null;
     return null === a ? null : a.stateNode;
   };
   exports.findHostInstanceWithWarning = function (a) {
-    return ki(a);
+    return ji(a);
   };
   exports.flushControlled = function (a) {
     var b = H;
@@ -6575,15 +6573,15 @@ module.exports = function $$$reconciler($$$hostConfig) {
     try {
       W.transition = null, C = 1, a();
     } finally {
-      C = d, W.transition = c, H = b, 0 === H && (Ch(), ad());
+      C = d, W.transition = c, H = b, 0 === H && (Bh(), ad());
     }
   };
-  exports.flushPassiveEffects = Ph;
-  exports.flushSync = Yh;
+  exports.flushPassiveEffects = Oh;
+  exports.flushSync = Xh;
   exports.focusWithin = function (a, b) {
-    if (!bb) throw Error(m(363));
-    a = oh(a);
-    b = rh(a, b);
+    if (!bb) throw Error(n(363));
+    a = nh(a);
+    b = qh(a, b);
     b = Array.from(b);
     for (a = 0; a < b.length;) {
       var c = b[a++];
@@ -6598,18 +6596,18 @@ module.exports = function $$$reconciler($$$hostConfig) {
     return C;
   };
   exports.getFindAllNodesFailureDescription = function (a, b) {
-    if (!bb) throw Error(m(363));
+    if (!bb) throw Error(n(363));
     var c = 0,
       d = [];
-    a = [oh(a), 0];
+    a = [nh(a), 0];
     for (var e = 0; e < a.length;) {
       var f = a[e++],
         g = a[e++],
         h = b[g];
-      if (5 !== f.tag || !fb(f)) if (ph(f, h) && (d.push(qh(h)), g++, g > c && (c = g)), g < b.length) for (f = f.child; null !== f;) a.push(f, g), f = f.sibling;
+      if (5 !== f.tag || !fb(f)) if (oh(f, h) && (d.push(ph(h)), g++, g > c && (c = g)), g < b.length) for (f = f.child; null !== f;) a.push(f, g), f = f.sibling;
     }
     if (c < b.length) {
-      for (a = []; c < b.length; c++) a.push(qh(b[c]));
+      for (a = []; c < b.length; c++) a.push(ph(b[c]));
       return "findAllNodes was able to match part of the selector:\n  " + (d.join(" > ") + "\n\nNo matching component was found for:\n  ") + a.join(" > ");
     }
     return null;
@@ -6640,14 +6638,14 @@ module.exports = function $$$reconciler($$$hostConfig) {
       setSuspenseHandler: null,
       scheduleUpdate: null,
       currentDispatcherRef: da.ReactCurrentDispatcher,
-      findHostInstanceByFiber: ni,
-      findFiberByHostInstance: a.findFiberByHostInstance || oi,
+      findHostInstanceByFiber: mi,
+      findFiberByHostInstance: a.findFiberByHostInstance || ni,
       findHostInstancesForRefresh: null,
       scheduleRefresh: null,
       scheduleRoot: null,
       setRefreshHandler: null,
       getCurrentFiber: null,
-      reconcilerVersion: "18.2.0"
+      reconcilerVersion: "18.3.1"
     };
     if ("undefined" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__) a = !1;else {
       var b = __REACT_DEVTOOLS_GLOBAL_HOOK__;
@@ -6664,8 +6662,8 @@ module.exports = function $$$reconciler($$$hostConfig) {
     return !1;
   };
   exports.observeVisibleRects = function (a, b, c, d) {
-    if (!bb) throw Error(m(363));
-    a = sh(a, b);
+    if (!bb) throw Error(n(363));
+    a = rh(a, b);
     var e = ib(a, c, d).disconnect;
     return {
       disconnect: function disconnect() {
@@ -6694,18 +6692,18 @@ module.exports = function $$$reconciler($$$hostConfig) {
   };
   exports.updateContainer = function (a, b, c, d) {
     var e = b.current,
-      f = I(),
-      g = fe(e);
-    c = ji(c);
+      f = O(),
+      g = tf(e);
+    c = ii(c);
     null === b.context ? b.context = c : b.pendingContext = c;
-    b = Xd(f, g);
+    b = ge(f, g);
     b.payload = {
       element: a
     };
     d = void 0 === d ? null : d;
     null !== d && (b.callback = d);
-    a = Yd(e, b, g);
-    null !== a && (ge(a, e, g, f), Zd(a, e, g));
+    a = he(e, b, g);
+    null !== a && (af(a, e, g, f), ie(a, e, g));
     return g;
   };
   return exports;
@@ -6976,6 +6974,9 @@ var U = {
     ReactCurrentBatchConfig: V,
     ReactCurrentOwner: K
   };
+function X() {
+  throw Error("act(...) is not supported in production builds of React.");
+}
 exports.Children = {
   map: S,
   forEach: function forEach(a, b, e) {
@@ -7007,6 +7008,7 @@ exports.PureComponent = G;
 exports.StrictMode = q;
 exports.Suspense = w;
 exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W;
+exports.act = X;
 exports.cloneElement = function (a, b, e) {
   if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
   var d = C({}, a.props),
@@ -7095,9 +7097,7 @@ exports.startTransition = function (a) {
     V.transition = b;
   }
 };
-exports.unstable_act = function () {
-  throw Error("act(...) is not supported in production builds of React.");
-};
+exports.unstable_act = X;
 exports.useCallback = function (a, b) {
   return U.current.useCallback(a, b);
 };
@@ -7141,7 +7141,7 @@ exports.useSyncExternalStore = function (a, b, e) {
 exports.useTransition = function () {
   return U.current.useTransition();
 };
-exports.version = "18.2.0";
+exports.version = "18.3.1";
 
 /***/ }),
 
@@ -7531,7 +7531,7 @@ var result = symbolObservablePonyfill(root);
 
 /***/ }),
 
-/***/ "../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js":
+/***/ "../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7603,7 +7603,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ "../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
+/***/ "../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7677,26 +7677,26 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ "../../node_modules/use-sync-external-store/shim/index.js":
+/***/ "../../renderer/node_modules/use-sync-external-store/shim/index.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__("../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js");
+  module.exports = __webpack_require__("../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js");
 } else {}
 
 /***/ }),
 
-/***/ "../../node_modules/use-sync-external-store/with-selector.js":
+/***/ "../../renderer/node_modules/use-sync-external-store/with-selector.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__("../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
+  module.exports = __webpack_require__("../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
 } else {}
 
 /***/ }),
@@ -8079,7 +8079,7 @@ var react_namespaceObject = /*#__PURE__*/__webpack_require__.t(react, 2);
 // EXTERNAL MODULE: ../../node_modules/react-reconciler/constants.js
 var constants = __webpack_require__("../../node_modules/react-reconciler/constants.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/version.js
-var version = '0.18.0';
+var version = '0.18.1';
 //# sourceMappingURL=version.js.map
 // EXTERNAL MODULE: ../../node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__("../../node_modules/react/jsx-runtime.js");
@@ -9143,56 +9143,6 @@ function _nonIterableSpread() {
 function toConsumableArray_toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
-function _iterableToArrayLimit(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = !0,
-      o = !1;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      o = !0, n = r;
-    } finally {
-      try {
-        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
-
-
-
-
-function slicedToArray_slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-function classCallCheck_classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/typeof.js
 function _typeof(o) {
   "@babel/helpers - typeof";
@@ -9222,6 +9172,386 @@ function toPropertyKey(t) {
   var i = toPrimitive(t, "string");
   return "symbol" == _typeof(i) ? i : String(i);
 }
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+
+function defineProperty_defineProperty(obj, key, value) {
+  key = toPropertyKey(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
+      defineProperty_defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/regeneratorRuntime.js
+
+function regeneratorRuntime_regeneratorRuntime() {
+  "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+  regeneratorRuntime_regeneratorRuntime = function _regeneratorRuntime() {
+    return e;
+  };
+  var t,
+    e = {},
+    r = Object.prototype,
+    n = r.hasOwnProperty,
+    o = Object.defineProperty || function (t, e, r) {
+      t[e] = r.value;
+    },
+    i = "function" == typeof Symbol ? Symbol : {},
+    a = i.iterator || "@@iterator",
+    c = i.asyncIterator || "@@asyncIterator",
+    u = i.toStringTag || "@@toStringTag";
+  function define(t, e, r) {
+    return Object.defineProperty(t, e, {
+      value: r,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), t[e];
+  }
+  try {
+    define({}, "");
+  } catch (t) {
+    define = function define(t, e, r) {
+      return t[e] = r;
+    };
+  }
+  function wrap(t, e, r, n) {
+    var i = e && e.prototype instanceof Generator ? e : Generator,
+      a = Object.create(i.prototype),
+      c = new Context(n || []);
+    return o(a, "_invoke", {
+      value: makeInvokeMethod(t, r, c)
+    }), a;
+  }
+  function tryCatch(t, e, r) {
+    try {
+      return {
+        type: "normal",
+        arg: t.call(e, r)
+      };
+    } catch (t) {
+      return {
+        type: "throw",
+        arg: t
+      };
+    }
+  }
+  e.wrap = wrap;
+  var h = "suspendedStart",
+    l = "suspendedYield",
+    f = "executing",
+    s = "completed",
+    y = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  var p = {};
+  define(p, a, function () {
+    return this;
+  });
+  var d = Object.getPrototypeOf,
+    v = d && d(d(values([])));
+  v && v !== r && n.call(v, a) && (p = v);
+  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
+  function defineIteratorMethods(t) {
+    ["next", "throw", "return"].forEach(function (e) {
+      define(t, e, function (t) {
+        return this._invoke(e, t);
+      });
+    });
+  }
+  function AsyncIterator(t, e) {
+    function invoke(r, o, i, a) {
+      var c = tryCatch(t[r], t, o);
+      if ("throw" !== c.type) {
+        var u = c.arg,
+          h = u.value;
+        return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) {
+          invoke("next", t, i, a);
+        }, function (t) {
+          invoke("throw", t, i, a);
+        }) : e.resolve(h).then(function (t) {
+          u.value = t, i(u);
+        }, function (t) {
+          return invoke("throw", t, i, a);
+        });
+      }
+      a(c.arg);
+    }
+    var r;
+    o(this, "_invoke", {
+      value: function value(t, n) {
+        function callInvokeWithMethodAndArg() {
+          return new e(function (e, r) {
+            invoke(t, n, e, r);
+          });
+        }
+        return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+      }
+    });
+  }
+  function makeInvokeMethod(e, r, n) {
+    var o = h;
+    return function (i, a) {
+      if (o === f) throw new Error("Generator is already running");
+      if (o === s) {
+        if ("throw" === i) throw a;
+        return {
+          value: t,
+          done: !0
+        };
+      }
+      for (n.method = i, n.arg = a;;) {
+        var c = n.delegate;
+        if (c) {
+          var u = maybeInvokeDelegate(c, n);
+          if (u) {
+            if (u === y) continue;
+            return u;
+          }
+        }
+        if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) {
+          if (o === h) throw o = s, n.arg;
+          n.dispatchException(n.arg);
+        } else "return" === n.method && n.abrupt("return", n.arg);
+        o = f;
+        var p = tryCatch(e, r, n);
+        if ("normal" === p.type) {
+          if (o = n.done ? s : l, p.arg === y) continue;
+          return {
+            value: p.arg,
+            done: n.done
+          };
+        }
+        "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg);
+      }
+    };
+  }
+  function maybeInvokeDelegate(e, r) {
+    var n = r.method,
+      o = e.iterator[n];
+    if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y;
+    var i = tryCatch(o, e.iterator, r.arg);
+    if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y;
+    var a = i.arg;
+    return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y);
+  }
+  function pushTryEntry(t) {
+    var e = {
+      tryLoc: t[0]
+    };
+    1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e);
+  }
+  function resetTryEntry(t) {
+    var e = t.completion || {};
+    e.type = "normal", delete e.arg, t.completion = e;
+  }
+  function Context(t) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], t.forEach(pushTryEntry, this), this.reset(!0);
+  }
+  function values(e) {
+    if (e || "" === e) {
+      var r = e[a];
+      if (r) return r.call(e);
+      if ("function" == typeof e.next) return e;
+      if (!isNaN(e.length)) {
+        var o = -1,
+          i = function next() {
+            for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next;
+            return next.value = t, next.done = !0, next;
+          };
+        return i.next = i;
+      }
+    }
+    throw new TypeError(_typeof(e) + " is not iterable");
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", {
+    value: GeneratorFunctionPrototype,
+    configurable: !0
+  }), o(GeneratorFunctionPrototype, "constructor", {
+    value: GeneratorFunction,
+    configurable: !0
+  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) {
+    var e = "function" == typeof t && t.constructor;
+    return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name));
+  }, e.mark = function (t) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t;
+  }, e.awrap = function (t) {
+    return {
+      __await: t
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () {
+    return this;
+  }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) {
+    void 0 === i && (i = Promise);
+    var a = new AsyncIterator(wrap(t, r, n, o), i);
+    return e.isGeneratorFunction(r) ? a : a.next().then(function (t) {
+      return t.done ? t.value : a.next();
+    });
+  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () {
+    return this;
+  }), define(g, "toString", function () {
+    return "[object Generator]";
+  }), e.keys = function (t) {
+    var e = Object(t),
+      r = [];
+    for (var n in e) r.push(n);
+    return r.reverse(), function next() {
+      for (; r.length;) {
+        var t = r.pop();
+        if (t in e) return next.value = t, next.done = !1, next;
+      }
+      return next.done = !0, next;
+    };
+  }, e.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function reset(e) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t);
+    },
+    stop: function stop() {
+      this.done = !0;
+      var t = this.tryEntries[0].completion;
+      if ("throw" === t.type) throw t.arg;
+      return this.rval;
+    },
+    dispatchException: function dispatchException(e) {
+      if (this.done) throw e;
+      var r = this;
+      function handle(n, o) {
+        return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o;
+      }
+      for (var o = this.tryEntries.length - 1; o >= 0; --o) {
+        var i = this.tryEntries[o],
+          a = i.completion;
+        if ("root" === i.tryLoc) return handle("end");
+        if (i.tryLoc <= this.prev) {
+          var c = n.call(i, "catchLoc"),
+            u = n.call(i, "finallyLoc");
+          if (c && u) {
+            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
+            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
+          } else if (c) {
+            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
+          } else {
+            if (!u) throw new Error("try statement without catch or finally");
+            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function abrupt(t, e) {
+      for (var r = this.tryEntries.length - 1; r >= 0; --r) {
+        var o = this.tryEntries[r];
+        if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) {
+          var i = o;
+          break;
+        }
+      }
+      i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null);
+      var a = i ? i.completion : {};
+      return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a);
+    },
+    complete: function complete(t, e) {
+      if ("throw" === t.type) throw t.arg;
+      return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y;
+    },
+    finish: function finish(t) {
+      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+        var r = this.tryEntries[e];
+        if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y;
+      }
+    },
+    "catch": function _catch(t) {
+      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+        var r = this.tryEntries[e];
+        if (r.tryLoc === t) {
+          var n = r.completion;
+          if ("throw" === n.type) {
+            var o = n.arg;
+            resetTryEntry(r);
+          }
+          return o;
+        }
+      }
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function delegateYield(e, r, n) {
+      return this.delegate = {
+        iterator: values(e),
+        resultName: r,
+        nextLoc: n
+      }, "next" === this.method && (this.arg = t), y;
+    }
+  }, e;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+function asyncToGenerator_asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+function classCallCheck_classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js
 
 function _defineProperties(target, props) {
@@ -9241,6 +9571,277 @@ function createClass_createClass(Constructor, protoProps, staticProps) {
   });
   return Constructor;
 }
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/checkPrivateRedeclaration.js
+function _checkPrivateRedeclaration(obj, privateCollection) {
+  if (privateCollection.has(obj)) {
+    throw new TypeError("Cannot initialize the same private elements twice on an object");
+  }
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classPrivateFieldInitSpec.js
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) {
+  _checkPrivateRedeclaration(obj, privateMap);
+  privateMap.set(obj, value);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classApplyDescriptorGet.js
+function _classApplyDescriptorGet(receiver, descriptor) {
+  if (descriptor.get) {
+    return descriptor.get.call(receiver);
+  }
+  return descriptor.value;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js
+function _classExtractFieldDescriptor(receiver, privateMap, action) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to " + action + " private field on non-instance");
+  }
+  return privateMap.get(receiver);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js
+
+
+function _classPrivateFieldGet(receiver, privateMap) {
+  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get");
+  return _classApplyDescriptorGet(receiver, descriptor);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classApplyDescriptorSet.js
+function _classApplyDescriptorSet(receiver, descriptor, value) {
+  if (descriptor.set) {
+    descriptor.set.call(receiver, value);
+  } else {
+    if (!descriptor.writable) {
+      throw new TypeError("attempted to set read only private field");
+    }
+    descriptor.value = value;
+  }
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js
+
+
+function _classPrivateFieldSet(receiver, privateMap, value) {
+  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set");
+  _classApplyDescriptorSet(receiver, descriptor, value);
+  return value;
+}
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/utils.js
+
+// src/utils.ts
+var isServer = typeof window === "undefined" || "Deno" in globalThis;
+function noop() {
+  return void 0;
+}
+function functionalUpdate(updater, input) {
+  return typeof updater === "function" ? updater(input) : updater;
+}
+function isValidTimeout(value) {
+  return typeof value === "number" && value >= 0 && value !== Infinity;
+}
+function timeUntilStale(updatedAt, staleTime) {
+  return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
+}
+function resolveStaleTime(staleTime, query) {
+  return typeof staleTime === "function" ? staleTime(query) : staleTime;
+}
+function resolveEnabled(enabled, query) {
+  return typeof enabled === "function" ? enabled(query) : enabled;
+}
+function matchQuery(filters, query) {
+  var _filters$type = filters.type,
+    type = _filters$type === void 0 ? "all" : _filters$type,
+    exact = filters.exact,
+    fetchStatus = filters.fetchStatus,
+    predicate = filters.predicate,
+    queryKey = filters.queryKey,
+    stale = filters.stale;
+  if (queryKey) {
+    if (exact) {
+      if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
+        return false;
+      }
+    } else if (!partialMatchKey(query.queryKey, queryKey)) {
+      return false;
+    }
+  }
+  if (type !== "all") {
+    var isActive = query.isActive();
+    if (type === "active" && !isActive) {
+      return false;
+    }
+    if (type === "inactive" && isActive) {
+      return false;
+    }
+  }
+  if (typeof stale === "boolean" && query.isStale() !== stale) {
+    return false;
+  }
+  if (fetchStatus && fetchStatus !== query.state.fetchStatus) {
+    return false;
+  }
+  if (predicate && !predicate(query)) {
+    return false;
+  }
+  return true;
+}
+function matchMutation(filters, mutation) {
+  var exact = filters.exact,
+    status = filters.status,
+    predicate = filters.predicate,
+    mutationKey = filters.mutationKey;
+  if (mutationKey) {
+    if (!mutation.options.mutationKey) {
+      return false;
+    }
+    if (exact) {
+      if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) {
+        return false;
+      }
+    } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
+      return false;
+    }
+  }
+  if (status && mutation.state.status !== status) {
+    return false;
+  }
+  if (predicate && !predicate(mutation)) {
+    return false;
+  }
+  return true;
+}
+function hashQueryKeyByOptions(queryKey, options) {
+  var hashFn = (options === null || options === void 0 ? void 0 : options.queryKeyHashFn) || hashKey;
+  return hashFn(queryKey);
+}
+function hashKey(queryKey) {
+  return JSON.stringify(queryKey, function (_, val) {
+    return isPlainObject(val) ? Object.keys(val).sort().reduce(function (result, key) {
+      result[key] = val[key];
+      return result;
+    }, {}) : val;
+  });
+}
+function partialMatchKey(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (a && b && typeof a === "object" && typeof b === "object") {
+    return !Object.keys(b).some(function (key) {
+      return !partialMatchKey(a[key], b[key]);
+    });
+  }
+  return false;
+}
+function replaceEqualDeep(a, b) {
+  if (a === b) {
+    return a;
+  }
+  var array = isPlainArray(a) && isPlainArray(b);
+  if (array || isPlainObject(a) && isPlainObject(b)) {
+    var aItems = array ? a : Object.keys(a);
+    var aSize = aItems.length;
+    var bItems = array ? b : Object.keys(b);
+    var bSize = bItems.length;
+    var copy = array ? [] : {};
+    var equalItems = 0;
+    for (var i = 0; i < bSize; i++) {
+      var key = array ? i : bItems[i];
+      if ((!array && aItems.includes(key) || array) && a[key] === void 0 && b[key] === void 0) {
+        copy[key] = void 0;
+        equalItems++;
+      } else {
+        copy[key] = replaceEqualDeep(a[key], b[key]);
+        if (copy[key] === a[key] && a[key] !== void 0) {
+          equalItems++;
+        }
+      }
+    }
+    return aSize === bSize && equalItems === aSize ? a : copy;
+  }
+  return b;
+}
+function utils_shallowEqualObjects(a, b) {
+  if (!b || Object.keys(a).length !== Object.keys(b).length) {
+    return false;
+  }
+  for (var key in a) {
+    if (a[key] !== b[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+function isPlainArray(value) {
+  return Array.isArray(value) && value.length === Object.keys(value).length;
+}
+function isPlainObject(o) {
+  if (!hasObjectPrototype(o)) {
+    return false;
+  }
+  var ctor = o.constructor;
+  if (ctor === void 0) {
+    return true;
+  }
+  var prot = ctor.prototype;
+  if (!hasObjectPrototype(prot)) {
+    return false;
+  }
+  if (!prot.hasOwnProperty("isPrototypeOf")) {
+    return false;
+  }
+  if (Object.getPrototypeOf(o) !== Object.prototype) {
+    return false;
+  }
+  return true;
+}
+function hasObjectPrototype(o) {
+  return Object.prototype.toString.call(o) === "[object Object]";
+}
+function sleep(timeout) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, timeout);
+  });
+}
+function replaceData(prevData, data, options) {
+  if (typeof options.structuralSharing === "function") {
+    return options.structuralSharing(prevData, data);
+  } else if (options.structuralSharing !== false) {
+    if (false) {}
+    return replaceEqualDeep(prevData, data);
+  }
+  return data;
+}
+function keepPreviousData(previousData) {
+  return previousData;
+}
+function addToEnd(items, item) {
+  var max = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var newItems = [].concat(toConsumableArray_toConsumableArray(items), [item]);
+  return max && newItems.length > max ? newItems.slice(1) : newItems;
+}
+function addToStart(items, item) {
+  var max = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var newItems = [item].concat(toConsumableArray_toConsumableArray(items));
+  return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
+}
+var skipToken = Symbol();
+function ensureQueryFn(options, fetchOptions) {
+  if (false) {}
+  if (!options.queryFn && fetchOptions !== null && fetchOptions !== void 0 && fetchOptions.initialPromise) {
+    return function () {
+      return fetchOptions.initialPromise;
+    };
+  }
+  if (!options.queryFn || options.queryFn === skipToken) {
+    return function () {
+      return Promise.reject(new Error("Missing queryFn: '".concat(options.queryHash, "'")));
+    };
+  }
+  return options.queryFn;
+}
+
+//# sourceMappingURL=utils.js.map
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
 function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
@@ -9308,6 +9909,132 @@ function _inherits(subClass, superClass) {
   });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/superPropBase.js
+
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = _getPrototypeOf(object);
+    if (object === null) break;
+  }
+  return object;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/get.js
+
+function _get() {
+  if (typeof Reflect !== "undefined" && Reflect.get) {
+    _get = Reflect.get.bind();
+  } else {
+    _get = function _get(target, property, receiver) {
+      var base = _superPropBase(target, property);
+      if (!base) return;
+      var desc = Object.getOwnPropertyDescriptor(base, property);
+      if (desc.get) {
+        return desc.get.call(arguments.length < 3 ? target : receiver);
+      }
+      return desc.value;
+    };
+  }
+  return _get.apply(this, arguments);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classPrivateMethodInitSpec.js
+
+function _classPrivateMethodInitSpec(obj, privateSet) {
+  _checkPrivateRedeclaration(obj, privateSet);
+  privateSet.add(obj);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classPrivateMethodGet.js
+function _classPrivateMethodGet(receiver, privateSet, fn) {
+  if (!privateSet.has(receiver)) {
+    throw new TypeError("attempted to get private field on non-instance");
+  }
+  return fn;
+}
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/notifyManager.js
+// src/notifyManager.ts
+function createNotifyManager() {
+  var queue = [];
+  var transactions = 0;
+  var notifyFn = function notifyFn(callback) {
+    callback();
+  };
+  var batchNotifyFn = function batchNotifyFn(callback) {
+    callback();
+  };
+  var scheduleFn = function scheduleFn(cb) {
+    return setTimeout(cb, 0);
+  };
+  var schedule = function schedule(callback) {
+    if (transactions) {
+      queue.push(callback);
+    } else {
+      scheduleFn(function () {
+        notifyFn(callback);
+      });
+    }
+  };
+  var flush = function flush() {
+    var originalQueue = queue;
+    queue = [];
+    if (originalQueue.length) {
+      scheduleFn(function () {
+        batchNotifyFn(function () {
+          originalQueue.forEach(function (callback) {
+            notifyFn(callback);
+          });
+        });
+      });
+    }
+  };
+  return {
+    batch: function batch(callback) {
+      var result;
+      transactions++;
+      try {
+        result = callback();
+      } finally {
+        transactions--;
+        if (!transactions) {
+          flush();
+        }
+      }
+      return result;
+    },
+    /**
+     * All calls to the wrapped function will be batched.
+     */
+    batchCalls: function batchCalls(callback) {
+      return function () {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+        schedule(function () {
+          callback.apply(void 0, args);
+        });
+      };
+    },
+    schedule: schedule,
+    /**
+     * Use this method to set a custom notify function.
+     * This can be used to for example wrap notifications with `React.act` while running tests.
+     */
+    setNotifyFunction: function setNotifyFunction(fn) {
+      notifyFn = fn;
+    },
+    /**
+     * Use this method to set a custom function to batch notifications together into a single tick.
+     * By default React Query will use the batch function provided by ReactDOM or React Native.
+     */
+    setBatchNotifyFunction: function setBatchNotifyFunction(fn) {
+      batchNotifyFn = fn;
+    },
+    setScheduler: function setScheduler(fn) {
+      scheduleFn = fn;
+    }
+  };
+}
+var notifyManager = createNotifyManager();
+
+//# sourceMappingURL=notifyManager.js.map
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/isNativeFunction.js
 function _isNativeFunction(fn) {
   try {
@@ -9357,12 +10084,2260 @@ function _wrapNativeSuper(Class) {
   };
   return _wrapNativeSuper(Class);
 }
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/subscribable.js
+
+
+// src/subscribable.ts
+var Subscribable = /*#__PURE__*/function () {
+  function Subscribable() {
+    classCallCheck_classCallCheck(this, Subscribable);
+    this.listeners = /* @__PURE__ */new Set();
+    this.subscribe = this.subscribe.bind(this);
+  }
+  createClass_createClass(Subscribable, [{
+    key: "subscribe",
+    value: function subscribe(listener) {
+      var _this = this;
+      this.listeners.add(listener);
+      this.onSubscribe();
+      return function () {
+        _this.listeners["delete"](listener);
+        _this.onUnsubscribe();
+      };
+    }
+  }, {
+    key: "hasListeners",
+    value: function hasListeners() {
+      return this.listeners.size > 0;
+    }
+  }, {
+    key: "onSubscribe",
+    value: function onSubscribe() {}
+  }, {
+    key: "onUnsubscribe",
+    value: function onUnsubscribe() {}
+  }]);
+  return Subscribable;
+}();
+
+//# sourceMappingURL=subscribable.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/focusManager.js
+
+
+
+
+
+
+
+
+var _focused, _cleanup, _setup;
+// src/focusManager.ts
+
+
+var FocusManager = (_focused = /*#__PURE__*/new WeakMap(), _cleanup = /*#__PURE__*/new WeakMap(), _setup = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
+  _inherits(FocusManager, _Subscribable);
+  function FocusManager() {
+    var _this;
+    classCallCheck_classCallCheck(this, FocusManager);
+    _this = _callSuper(this, FocusManager);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _focused, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _cleanup, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _setup, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldSet(_assertThisInitialized(_this), _setup, function (onFocus) {
+      if (!isServer && window.addEventListener) {
+        var listener = function listener() {
+          return onFocus();
+        };
+        window.addEventListener("visibilitychange", listener, false);
+        return function () {
+          window.removeEventListener("visibilitychange", listener);
+        };
+      }
+      return;
+    });
+    return _this;
+  }
+  createClass_createClass(FocusManager, [{
+    key: "onSubscribe",
+    value: function onSubscribe() {
+      if (!_classPrivateFieldGet(this, _cleanup)) {
+        this.setEventListener(_classPrivateFieldGet(this, _setup));
+      }
+    }
+  }, {
+    key: "onUnsubscribe",
+    value: function onUnsubscribe() {
+      if (!this.hasListeners()) {
+        var _classPrivateFieldGet2;
+        (_classPrivateFieldGet2 = _classPrivateFieldGet(this, _cleanup)) === null || _classPrivateFieldGet2 === void 0 || _classPrivateFieldGet2.call(this);
+        _classPrivateFieldSet(this, _cleanup, void 0);
+      }
+    }
+  }, {
+    key: "setEventListener",
+    value: function setEventListener(setup) {
+      var _classPrivateFieldGet3,
+        _this2 = this;
+      _classPrivateFieldSet(this, _setup, setup);
+      (_classPrivateFieldGet3 = _classPrivateFieldGet(this, _cleanup)) === null || _classPrivateFieldGet3 === void 0 || _classPrivateFieldGet3.call(this);
+      _classPrivateFieldSet(this, _cleanup, setup(function (focused) {
+        if (typeof focused === "boolean") {
+          _this2.setFocused(focused);
+        } else {
+          _this2.onFocus();
+        }
+      }));
+    }
+  }, {
+    key: "setFocused",
+    value: function setFocused(focused) {
+      var changed = _classPrivateFieldGet(this, _focused) !== focused;
+      if (changed) {
+        _classPrivateFieldSet(this, _focused, focused);
+        this.onFocus();
+      }
+    }
+  }, {
+    key: "onFocus",
+    value: function onFocus() {
+      var isFocused = this.isFocused();
+      this.listeners.forEach(function (listener) {
+        listener(isFocused);
+      });
+    }
+  }, {
+    key: "isFocused",
+    value: function isFocused() {
+      var _globalThis$document;
+      if (typeof _classPrivateFieldGet(this, _focused) === "boolean") {
+        return _classPrivateFieldGet(this, _focused);
+      }
+      return ((_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.visibilityState) !== "hidden";
+    }
+  }]);
+  return FocusManager;
+}(Subscribable));
+var focusManager = new FocusManager();
+
+//# sourceMappingURL=focusManager.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/onlineManager.js
+
+
+
+
+
+
+
+
+var _online, onlineManager_cleanup, onlineManager_setup;
+// src/onlineManager.ts
+
+
+var OnlineManager = (_online = /*#__PURE__*/new WeakMap(), onlineManager_cleanup = /*#__PURE__*/new WeakMap(), onlineManager_setup = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
+  _inherits(OnlineManager, _Subscribable);
+  function OnlineManager() {
+    var _this;
+    classCallCheck_classCallCheck(this, OnlineManager);
+    _this = _callSuper(this, OnlineManager);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _online, {
+      writable: true,
+      value: true
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), onlineManager_cleanup, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), onlineManager_setup, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldSet(_assertThisInitialized(_this), onlineManager_setup, function (onOnline) {
+      if (!isServer && window.addEventListener) {
+        var onlineListener = function onlineListener() {
+          return onOnline(true);
+        };
+        var offlineListener = function offlineListener() {
+          return onOnline(false);
+        };
+        window.addEventListener("online", onlineListener, false);
+        window.addEventListener("offline", offlineListener, false);
+        return function () {
+          window.removeEventListener("online", onlineListener);
+          window.removeEventListener("offline", offlineListener);
+        };
+      }
+      return;
+    });
+    return _this;
+  }
+  createClass_createClass(OnlineManager, [{
+    key: "onSubscribe",
+    value: function onSubscribe() {
+      if (!_classPrivateFieldGet(this, onlineManager_cleanup)) {
+        this.setEventListener(_classPrivateFieldGet(this, onlineManager_setup));
+      }
+    }
+  }, {
+    key: "onUnsubscribe",
+    value: function onUnsubscribe() {
+      if (!this.hasListeners()) {
+        var _classPrivateFieldGet2;
+        (_classPrivateFieldGet2 = _classPrivateFieldGet(this, onlineManager_cleanup)) === null || _classPrivateFieldGet2 === void 0 || _classPrivateFieldGet2.call(this);
+        _classPrivateFieldSet(this, onlineManager_cleanup, void 0);
+      }
+    }
+  }, {
+    key: "setEventListener",
+    value: function setEventListener(setup) {
+      var _classPrivateFieldGet3;
+      _classPrivateFieldSet(this, onlineManager_setup, setup);
+      (_classPrivateFieldGet3 = _classPrivateFieldGet(this, onlineManager_cleanup)) === null || _classPrivateFieldGet3 === void 0 || _classPrivateFieldGet3.call(this);
+      _classPrivateFieldSet(this, onlineManager_cleanup, setup(this.setOnline.bind(this)));
+    }
+  }, {
+    key: "setOnline",
+    value: function setOnline(online) {
+      var changed = _classPrivateFieldGet(this, _online) !== online;
+      if (changed) {
+        _classPrivateFieldSet(this, _online, online);
+        this.listeners.forEach(function (listener) {
+          listener(online);
+        });
+      }
+    }
+  }, {
+    key: "isOnline",
+    value: function isOnline() {
+      return _classPrivateFieldGet(this, _online);
+    }
+  }]);
+  return OnlineManager;
+}(Subscribable));
+var onlineManager = new OnlineManager();
+
+//# sourceMappingURL=onlineManager.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/retryer.js
+
+
+
+
+
+// src/retryer.ts
+
+
+
+function defaultRetryDelay(failureCount) {
+  return Math.min(1e3 * Math.pow(2, failureCount), 3e4);
+}
+function canFetch(networkMode) {
+  return (networkMode !== null && networkMode !== void 0 ? networkMode : "online") === "online" ? onlineManager.isOnline() : true;
+}
+var CancelledError = /*#__PURE__*/function (_Error) {
+  _inherits(CancelledError, _Error);
+  function CancelledError(options) {
+    var _this;
+    classCallCheck_classCallCheck(this, CancelledError);
+    _this = _callSuper(this, CancelledError, ["CancelledError"]);
+    _this.revert = options === null || options === void 0 ? void 0 : options.revert;
+    _this.silent = options === null || options === void 0 ? void 0 : options.silent;
+    return _this;
+  }
+  return createClass_createClass(CancelledError);
+}( /*#__PURE__*/_wrapNativeSuper(Error));
+function isCancelledError(value) {
+  return value instanceof CancelledError;
+}
+function createRetryer(config) {
+  var isRetryCancelled = false;
+  var failureCount = 0;
+  var isResolved = false;
+  var continueFn;
+  var promiseResolve;
+  var promiseReject;
+  var promise = new Promise(function (outerResolve, outerReject) {
+    promiseResolve = outerResolve;
+    promiseReject = outerReject;
+  });
+  var cancel = function cancel(cancelOptions) {
+    if (!isResolved) {
+      var _config$abort;
+      reject(new CancelledError(cancelOptions));
+      (_config$abort = config.abort) === null || _config$abort === void 0 || _config$abort.call(config);
+    }
+  };
+  var cancelRetry = function cancelRetry() {
+    isRetryCancelled = true;
+  };
+  var continueRetry = function continueRetry() {
+    isRetryCancelled = false;
+  };
+  var canContinue = function canContinue() {
+    return focusManager.isFocused() && (config.networkMode === "always" || onlineManager.isOnline()) && config.canRun();
+  };
+  var canStart = function canStart() {
+    return canFetch(config.networkMode) && config.canRun();
+  };
+  var resolve = function resolve(value) {
+    if (!isResolved) {
+      var _config$onSuccess, _continueFn;
+      isResolved = true;
+      (_config$onSuccess = config.onSuccess) === null || _config$onSuccess === void 0 || _config$onSuccess.call(config, value);
+      (_continueFn = continueFn) === null || _continueFn === void 0 || _continueFn();
+      promiseResolve(value);
+    }
+  };
+  var reject = function reject(value) {
+    if (!isResolved) {
+      var _config$onError, _continueFn2;
+      isResolved = true;
+      (_config$onError = config.onError) === null || _config$onError === void 0 || _config$onError.call(config, value);
+      (_continueFn2 = continueFn) === null || _continueFn2 === void 0 || _continueFn2();
+      promiseReject(value);
+    }
+  };
+  var pause = function pause() {
+    return new Promise(function (continueResolve) {
+      var _config$onPause;
+      continueFn = function continueFn(value) {
+        if (isResolved || canContinue()) {
+          continueResolve(value);
+        }
+      };
+      (_config$onPause = config.onPause) === null || _config$onPause === void 0 || _config$onPause.call(config);
+    }).then(function () {
+      continueFn = void 0;
+      if (!isResolved) {
+        var _config$onContinue;
+        (_config$onContinue = config.onContinue) === null || _config$onContinue === void 0 || _config$onContinue.call(config);
+      }
+    });
+  };
+  var run = function run() {
+    if (isResolved) {
+      return;
+    }
+    var promiseOrValue;
+    var initialPromise = failureCount === 0 ? config.initialPromise : void 0;
+    try {
+      promiseOrValue = initialPromise !== null && initialPromise !== void 0 ? initialPromise : config.fn();
+    } catch (error) {
+      promiseOrValue = Promise.reject(error);
+    }
+    Promise.resolve(promiseOrValue).then(resolve)["catch"](function (error) {
+      var _config$retry, _config$retryDelay, _config$onFail;
+      if (isResolved) {
+        return;
+      }
+      var retry = (_config$retry = config.retry) !== null && _config$retry !== void 0 ? _config$retry : isServer ? 0 : 3;
+      var retryDelay = (_config$retryDelay = config.retryDelay) !== null && _config$retryDelay !== void 0 ? _config$retryDelay : defaultRetryDelay;
+      var delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
+      var shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
+      if (isRetryCancelled || !shouldRetry) {
+        reject(error);
+        return;
+      }
+      failureCount++;
+      (_config$onFail = config.onFail) === null || _config$onFail === void 0 || _config$onFail.call(config, failureCount, error);
+      sleep(delay).then(function () {
+        return canContinue() ? void 0 : pause();
+      }).then(function () {
+        if (isRetryCancelled) {
+          reject(error);
+        } else {
+          run();
+        }
+      });
+    });
+  };
+  return {
+    promise: promise,
+    cancel: cancel,
+    "continue": function _continue() {
+      var _continueFn3;
+      (_continueFn3 = continueFn) === null || _continueFn3 === void 0 || _continueFn3();
+      return promise;
+    },
+    cancelRetry: cancelRetry,
+    continueRetry: continueRetry,
+    canStart: canStart,
+    start: function start() {
+      if (canStart()) {
+        run();
+      } else {
+        pause().then(run);
+      }
+      return promise;
+    }
+  };
+}
+
+//# sourceMappingURL=retryer.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/removable.js
+
+
+
+
+
+var _gcTimeout;
+// src/removable.ts
+
+var Removable = (_gcTimeout = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function () {
+  function Removable() {
+    classCallCheck_classCallCheck(this, Removable);
+    _classPrivateFieldInitSpec(this, _gcTimeout, {
+      writable: true,
+      value: void 0
+    });
+  }
+  createClass_createClass(Removable, [{
+    key: "destroy",
+    value: function destroy() {
+      this.clearGcTimeout();
+    }
+  }, {
+    key: "scheduleGc",
+    value: function scheduleGc() {
+      var _this = this;
+      this.clearGcTimeout();
+      if (isValidTimeout(this.gcTime)) {
+        _classPrivateFieldSet(this, _gcTimeout, setTimeout(function () {
+          _this.optionalRemove();
+        }, this.gcTime));
+      }
+    }
+  }, {
+    key: "updateGcTime",
+    value: function updateGcTime(newGcTime) {
+      this.gcTime = Math.max(this.gcTime || 0, newGcTime !== null && newGcTime !== void 0 ? newGcTime : isServer ? Infinity : 5 * 60 * 1e3);
+    }
+  }, {
+    key: "clearGcTimeout",
+    value: function clearGcTimeout() {
+      if (_classPrivateFieldGet(this, _gcTimeout)) {
+        clearTimeout(_classPrivateFieldGet(this, _gcTimeout));
+        _classPrivateFieldSet(this, _gcTimeout, void 0);
+      }
+    }
+  }]);
+  return Removable;
+}());
+
+//# sourceMappingURL=removable.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/query.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _initialState, _revertState, _cache, _retryer, _defaultOptions, _abortSignalConsumed, _dispatch;
+// src/query.ts
+
+
+
+
+var Query = (_initialState = /*#__PURE__*/new WeakMap(), _revertState = /*#__PURE__*/new WeakMap(), _cache = /*#__PURE__*/new WeakMap(), _retryer = /*#__PURE__*/new WeakMap(), _defaultOptions = /*#__PURE__*/new WeakMap(), _abortSignalConsumed = /*#__PURE__*/new WeakMap(), _dispatch = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Removable) {
+  _inherits(Query, _Removable);
+  function Query(config) {
+    var _config$state;
+    var _this;
+    classCallCheck_classCallCheck(this, Query);
+    _this = _callSuper(this, Query);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _dispatch);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _initialState, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _revertState, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _cache, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _retryer, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _defaultOptions, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _abortSignalConsumed, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldSet(_assertThisInitialized(_this), _abortSignalConsumed, false);
+    _classPrivateFieldSet(_assertThisInitialized(_this), _defaultOptions, config.defaultOptions);
+    _this.setOptions(config.options);
+    _this.observers = [];
+    _classPrivateFieldSet(_assertThisInitialized(_this), _cache, config.cache);
+    _this.queryKey = config.queryKey;
+    _this.queryHash = config.queryHash;
+    _classPrivateFieldSet(_assertThisInitialized(_this), _initialState, getDefaultState(_this.options));
+    _this.state = (_config$state = config.state) !== null && _config$state !== void 0 ? _config$state : _classPrivateFieldGet(_assertThisInitialized(_this), _initialState);
+    _this.scheduleGc();
+    return _this;
+  }
+  createClass_createClass(Query, [{
+    key: "meta",
+    get: function get() {
+      return this.options.meta;
+    }
+  }, {
+    key: "promise",
+    get: function get() {
+      var _classPrivateFieldGet2;
+      return (_classPrivateFieldGet2 = _classPrivateFieldGet(this, _retryer)) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.promise;
+    }
+  }, {
+    key: "setOptions",
+    value: function setOptions(options) {
+      this.options = _objectSpread2(_objectSpread2({}, _classPrivateFieldGet(this, _defaultOptions)), options);
+      this.updateGcTime(this.options.gcTime);
+    }
+  }, {
+    key: "optionalRemove",
+    value: function optionalRemove() {
+      if (!this.observers.length && this.state.fetchStatus === "idle") {
+        _classPrivateFieldGet(this, _cache).remove(this);
+      }
+    }
+  }, {
+    key: "setData",
+    value: function setData(newData, options) {
+      var data = replaceData(this.state.data, newData, this.options);
+      _classPrivateMethodGet(this, _dispatch, _dispatch2).call(this, {
+        data: data,
+        type: "success",
+        dataUpdatedAt: options === null || options === void 0 ? void 0 : options.updatedAt,
+        manual: options === null || options === void 0 ? void 0 : options.manual
+      });
+      return data;
+    }
+  }, {
+    key: "setState",
+    value: function setState(state, setStateOptions) {
+      _classPrivateMethodGet(this, _dispatch, _dispatch2).call(this, {
+        type: "setState",
+        state: state,
+        setStateOptions: setStateOptions
+      });
+    }
+  }, {
+    key: "cancel",
+    value: function cancel(options) {
+      var _classPrivateFieldGet3, _classPrivateFieldGet4;
+      var promise = (_classPrivateFieldGet3 = _classPrivateFieldGet(this, _retryer)) === null || _classPrivateFieldGet3 === void 0 ? void 0 : _classPrivateFieldGet3.promise;
+      (_classPrivateFieldGet4 = _classPrivateFieldGet(this, _retryer)) === null || _classPrivateFieldGet4 === void 0 || _classPrivateFieldGet4.cancel(options);
+      return promise ? promise.then(noop)["catch"](noop) : Promise.resolve();
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      _get(_getPrototypeOf(Query.prototype), "destroy", this).call(this);
+      this.cancel({
+        silent: true
+      });
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.destroy();
+      this.setState(_classPrivateFieldGet(this, _initialState));
+    }
+  }, {
+    key: "isActive",
+    value: function isActive() {
+      var _this2 = this;
+      return this.observers.some(function (observer) {
+        return resolveEnabled(observer.options.enabled, _this2) !== false;
+      });
+    }
+  }, {
+    key: "isDisabled",
+    value: function isDisabled() {
+      return this.getObserversCount() > 0 && !this.isActive();
+    }
+  }, {
+    key: "isStale",
+    value: function isStale() {
+      if (this.state.isInvalidated) {
+        return true;
+      }
+      if (this.getObserversCount() > 0) {
+        return this.observers.some(function (observer) {
+          return observer.getCurrentResult().isStale;
+        });
+      }
+      return this.state.data === void 0;
+    }
+  }, {
+    key: "isStaleByTime",
+    value: function isStaleByTime() {
+      var staleTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      return this.state.isInvalidated || this.state.data === void 0 || !timeUntilStale(this.state.dataUpdatedAt, staleTime);
+    }
+  }, {
+    key: "onFocus",
+    value: function onFocus() {
+      var _classPrivateFieldGet5;
+      var observer = this.observers.find(function (x) {
+        return x.shouldFetchOnWindowFocus();
+      });
+      observer === null || observer === void 0 || observer.refetch({
+        cancelRefetch: false
+      });
+      (_classPrivateFieldGet5 = _classPrivateFieldGet(this, _retryer)) === null || _classPrivateFieldGet5 === void 0 || _classPrivateFieldGet5["continue"]();
+    }
+  }, {
+    key: "onOnline",
+    value: function onOnline() {
+      var _classPrivateFieldGet6;
+      var observer = this.observers.find(function (x) {
+        return x.shouldFetchOnReconnect();
+      });
+      observer === null || observer === void 0 || observer.refetch({
+        cancelRefetch: false
+      });
+      (_classPrivateFieldGet6 = _classPrivateFieldGet(this, _retryer)) === null || _classPrivateFieldGet6 === void 0 || _classPrivateFieldGet6["continue"]();
+    }
+  }, {
+    key: "addObserver",
+    value: function addObserver(observer) {
+      if (!this.observers.includes(observer)) {
+        this.observers.push(observer);
+        this.clearGcTimeout();
+        _classPrivateFieldGet(this, _cache).notify({
+          type: "observerAdded",
+          query: this,
+          observer: observer
+        });
+      }
+    }
+  }, {
+    key: "removeObserver",
+    value: function removeObserver(observer) {
+      if (this.observers.includes(observer)) {
+        this.observers = this.observers.filter(function (x) {
+          return x !== observer;
+        });
+        if (!this.observers.length) {
+          if (_classPrivateFieldGet(this, _retryer)) {
+            if (_classPrivateFieldGet(this, _abortSignalConsumed)) {
+              _classPrivateFieldGet(this, _retryer).cancel({
+                revert: true
+              });
+            } else {
+              _classPrivateFieldGet(this, _retryer).cancelRetry();
+            }
+          }
+          this.scheduleGc();
+        }
+        _classPrivateFieldGet(this, _cache).notify({
+          type: "observerRemoved",
+          query: this,
+          observer: observer
+        });
+      }
+    }
+  }, {
+    key: "getObserversCount",
+    value: function getObserversCount() {
+      return this.observers.length;
+    }
+  }, {
+    key: "invalidate",
+    value: function invalidate() {
+      if (!this.state.isInvalidated) {
+        _classPrivateMethodGet(this, _dispatch, _dispatch2).call(this, {
+          type: "invalidate"
+        });
+      }
+    }
+  }, {
+    key: "fetch",
+    value: function fetch(options, fetchOptions) {
+      var _this3 = this,
+        _this$options$behavio,
+        _context$fetchOptions;
+      if (this.state.fetchStatus !== "idle") {
+        if (this.state.data !== void 0 && fetchOptions !== null && fetchOptions !== void 0 && fetchOptions.cancelRefetch) {
+          this.cancel({
+            silent: true
+          });
+        } else if (_classPrivateFieldGet(this, _retryer)) {
+          _classPrivateFieldGet(this, _retryer).continueRetry();
+          return _classPrivateFieldGet(this, _retryer).promise;
+        }
+      }
+      if (options) {
+        this.setOptions(options);
+      }
+      if (!this.options.queryFn) {
+        var observer = this.observers.find(function (x) {
+          return x.options.queryFn;
+        });
+        if (observer) {
+          this.setOptions(observer.options);
+        }
+      }
+      if (false) {}
+      var abortController = new AbortController();
+      var addSignalProperty = function addSignalProperty(object) {
+        Object.defineProperty(object, "signal", {
+          enumerable: true,
+          get: function get() {
+            _classPrivateFieldSet(_this3, _abortSignalConsumed, true);
+            return abortController.signal;
+          }
+        });
+      };
+      var fetchFn = function fetchFn() {
+        var queryFn = ensureQueryFn(_this3.options, fetchOptions);
+        var queryFnContext = {
+          queryKey: _this3.queryKey,
+          meta: _this3.meta
+        };
+        addSignalProperty(queryFnContext);
+        _classPrivateFieldSet(_this3, _abortSignalConsumed, false);
+        if (_this3.options.persister) {
+          return _this3.options.persister(queryFn, queryFnContext, _this3);
+        }
+        return queryFn(queryFnContext);
+      };
+      var context = {
+        fetchOptions: fetchOptions,
+        options: this.options,
+        queryKey: this.queryKey,
+        state: this.state,
+        fetchFn: fetchFn
+      };
+      addSignalProperty(context);
+      (_this$options$behavio = this.options.behavior) === null || _this$options$behavio === void 0 || _this$options$behavio.onFetch(context, this);
+      _classPrivateFieldSet(this, _revertState, this.state);
+      if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== ((_context$fetchOptions = context.fetchOptions) === null || _context$fetchOptions === void 0 ? void 0 : _context$fetchOptions.meta)) {
+        var _context$fetchOptions2;
+        _classPrivateMethodGet(this, _dispatch, _dispatch2).call(this, {
+          type: "fetch",
+          meta: (_context$fetchOptions2 = context.fetchOptions) === null || _context$fetchOptions2 === void 0 ? void 0 : _context$fetchOptions2.meta
+        });
+      }
+      var onError = function onError(error) {
+        if (!(isCancelledError(error) && error.silent)) {
+          _classPrivateMethodGet(_this3, _dispatch, _dispatch2).call(_this3, {
+            type: "error",
+            error: error
+          });
+        }
+        if (!isCancelledError(error)) {
+          var _classPrivateFieldGet7, _classPrivateFieldGet8, _classPrivateFieldGet9, _classPrivateFieldGet10;
+          (_classPrivateFieldGet7 = (_classPrivateFieldGet8 = _classPrivateFieldGet(_this3, _cache).config).onError) === null || _classPrivateFieldGet7 === void 0 || _classPrivateFieldGet7.call(_classPrivateFieldGet8, error, _this3);
+          (_classPrivateFieldGet9 = (_classPrivateFieldGet10 = _classPrivateFieldGet(_this3, _cache).config).onSettled) === null || _classPrivateFieldGet9 === void 0 || _classPrivateFieldGet9.call(_classPrivateFieldGet10, _this3.state.data, error, _this3);
+        }
+        if (!_this3.isFetchingOptimistic) {
+          _this3.scheduleGc();
+        }
+        _this3.isFetchingOptimistic = false;
+      };
+      _classPrivateFieldSet(this, _retryer, createRetryer({
+        initialPromise: fetchOptions === null || fetchOptions === void 0 ? void 0 : fetchOptions.initialPromise,
+        fn: context.fetchFn,
+        abort: abortController.abort.bind(abortController),
+        onSuccess: function onSuccess(data) {
+          var _classPrivateFieldGet11, _classPrivateFieldGet12, _classPrivateFieldGet13, _classPrivateFieldGet14;
+          if (data === void 0) {
+            if (false) {}
+            onError(new Error("".concat(_this3.queryHash, " data is undefined")));
+            return;
+          }
+          try {
+            _this3.setData(data);
+          } catch (error) {
+            onError(error);
+            return;
+          }
+          (_classPrivateFieldGet11 = (_classPrivateFieldGet12 = _classPrivateFieldGet(_this3, _cache).config).onSuccess) === null || _classPrivateFieldGet11 === void 0 || _classPrivateFieldGet11.call(_classPrivateFieldGet12, data, _this3);
+          (_classPrivateFieldGet13 = (_classPrivateFieldGet14 = _classPrivateFieldGet(_this3, _cache).config).onSettled) === null || _classPrivateFieldGet13 === void 0 || _classPrivateFieldGet13.call(_classPrivateFieldGet14, data, _this3.state.error, _this3);
+          if (!_this3.isFetchingOptimistic) {
+            _this3.scheduleGc();
+          }
+          _this3.isFetchingOptimistic = false;
+        },
+        onError: onError,
+        onFail: function onFail(failureCount, error) {
+          _classPrivateMethodGet(_this3, _dispatch, _dispatch2).call(_this3, {
+            type: "failed",
+            failureCount: failureCount,
+            error: error
+          });
+        },
+        onPause: function onPause() {
+          _classPrivateMethodGet(_this3, _dispatch, _dispatch2).call(_this3, {
+            type: "pause"
+          });
+        },
+        onContinue: function onContinue() {
+          _classPrivateMethodGet(_this3, _dispatch, _dispatch2).call(_this3, {
+            type: "continue"
+          });
+        },
+        retry: context.options.retry,
+        retryDelay: context.options.retryDelay,
+        networkMode: context.options.networkMode,
+        canRun: function canRun() {
+          return true;
+        }
+      }));
+      return _classPrivateFieldGet(this, _retryer).start();
+    }
+  }]);
+  return Query;
+}(Removable));
+function _dispatch2(action) {
+  var _this4 = this;
+  var reducer = function reducer(state) {
+    var _action$meta, _action$dataUpdatedAt;
+    switch (action.type) {
+      case "failed":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          fetchFailureCount: action.failureCount,
+          fetchFailureReason: action.error
+        });
+      case "pause":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          fetchStatus: "paused"
+        });
+      case "continue":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          fetchStatus: "fetching"
+        });
+      case "fetch":
+        return _objectSpread2(_objectSpread2(_objectSpread2({}, state), fetchState(state.data, _this4.options)), {}, {
+          fetchMeta: (_action$meta = action.meta) !== null && _action$meta !== void 0 ? _action$meta : null
+        });
+      case "success":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          data: action.data,
+          dataUpdateCount: state.dataUpdateCount + 1,
+          dataUpdatedAt: (_action$dataUpdatedAt = action.dataUpdatedAt) !== null && _action$dataUpdatedAt !== void 0 ? _action$dataUpdatedAt : Date.now(),
+          error: null,
+          isInvalidated: false,
+          status: "success"
+        }, !action.manual && {
+          fetchStatus: "idle",
+          fetchFailureCount: 0,
+          fetchFailureReason: null
+        });
+      case "error":
+        var error = action.error;
+        if (isCancelledError(error) && error.revert && _classPrivateFieldGet(_this4, _revertState)) {
+          return _objectSpread2(_objectSpread2({}, _classPrivateFieldGet(_this4, _revertState)), {}, {
+            fetchStatus: "idle"
+          });
+        }
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          error: error,
+          errorUpdateCount: state.errorUpdateCount + 1,
+          errorUpdatedAt: Date.now(),
+          fetchFailureCount: state.fetchFailureCount + 1,
+          fetchFailureReason: error,
+          fetchStatus: "idle",
+          status: "error"
+        });
+      case "invalidate":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          isInvalidated: true
+        });
+      case "setState":
+        return _objectSpread2(_objectSpread2({}, state), action.state);
+    }
+  };
+  this.state = reducer(this.state);
+  notifyManager.batch(function () {
+    _this4.observers.forEach(function (observer) {
+      observer.onQueryUpdate();
+    });
+    _classPrivateFieldGet(_this4, _cache).notify({
+      query: _this4,
+      type: "updated",
+      action: action
+    });
+  });
+}
+function fetchState(data, options) {
+  return _objectSpread2({
+    fetchFailureCount: 0,
+    fetchFailureReason: null,
+    fetchStatus: canFetch(options.networkMode) ? "fetching" : "paused"
+  }, data === void 0 && {
+    error: null,
+    status: "pending"
+  });
+}
+function getDefaultState(options) {
+  var data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
+  var hasData = data !== void 0;
+  var initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
+  return {
+    data: data,
+    dataUpdateCount: 0,
+    dataUpdatedAt: hasData ? initialDataUpdatedAt !== null && initialDataUpdatedAt !== void 0 ? initialDataUpdatedAt : Date.now() : 0,
+    error: null,
+    errorUpdateCount: 0,
+    errorUpdatedAt: 0,
+    fetchFailureCount: 0,
+    fetchFailureReason: null,
+    fetchMeta: null,
+    isInvalidated: false,
+    status: hasData ? "success" : "pending",
+    fetchStatus: "idle"
+  };
+}
+
+//# sourceMappingURL=query.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/queryCache.js
+
+
+
+
+
+
+
+
+
+
+var _queries;
+// src/queryCache.ts
+
+
+
+
+var QueryCache = (_queries = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
+  _inherits(QueryCache, _Subscribable);
+  function QueryCache() {
+    var _this;
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    classCallCheck_classCallCheck(this, QueryCache);
+    _this = _callSuper(this, QueryCache);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _queries, {
+      writable: true,
+      value: void 0
+    });
+    _this.config = config;
+    _classPrivateFieldSet(_assertThisInitialized(_this), _queries, /* @__PURE__ */new Map());
+    return _this;
+  }
+  createClass_createClass(QueryCache, [{
+    key: "build",
+    value: function build(client, options, state) {
+      var _options$queryHash;
+      var queryKey = options.queryKey;
+      var queryHash = (_options$queryHash = options.queryHash) !== null && _options$queryHash !== void 0 ? _options$queryHash : hashQueryKeyByOptions(queryKey, options);
+      var query = this.get(queryHash);
+      if (!query) {
+        query = new Query({
+          cache: this,
+          queryKey: queryKey,
+          queryHash: queryHash,
+          options: client.defaultQueryOptions(options),
+          state: state,
+          defaultOptions: client.getQueryDefaults(queryKey)
+        });
+        this.add(query);
+      }
+      return query;
+    }
+  }, {
+    key: "add",
+    value: function add(query) {
+      if (!_classPrivateFieldGet(this, _queries).has(query.queryHash)) {
+        _classPrivateFieldGet(this, _queries).set(query.queryHash, query);
+        this.notify({
+          type: "added",
+          query: query
+        });
+      }
+    }
+  }, {
+    key: "remove",
+    value: function remove(query) {
+      var queryInMap = _classPrivateFieldGet(this, _queries).get(query.queryHash);
+      if (queryInMap) {
+        query.destroy();
+        if (queryInMap === query) {
+          _classPrivateFieldGet(this, _queries)["delete"](query.queryHash);
+        }
+        this.notify({
+          type: "removed",
+          query: query
+        });
+      }
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      var _this2 = this;
+      notifyManager.batch(function () {
+        _this2.getAll().forEach(function (query) {
+          _this2.remove(query);
+        });
+      });
+    }
+  }, {
+    key: "get",
+    value: function get(queryHash) {
+      return _classPrivateFieldGet(this, _queries).get(queryHash);
+    }
+  }, {
+    key: "getAll",
+    value: function getAll() {
+      return toConsumableArray_toConsumableArray(_classPrivateFieldGet(this, _queries).values());
+    }
+  }, {
+    key: "find",
+    value: function find(filters) {
+      var defaultedFilters = _objectSpread2({
+        exact: true
+      }, filters);
+      return this.getAll().find(function (query) {
+        return matchQuery(defaultedFilters, query);
+      });
+    }
+  }, {
+    key: "findAll",
+    value: function findAll() {
+      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var queries = this.getAll();
+      return Object.keys(filters).length > 0 ? queries.filter(function (query) {
+        return matchQuery(filters, query);
+      }) : queries;
+    }
+  }, {
+    key: "notify",
+    value: function notify(event) {
+      var _this3 = this;
+      notifyManager.batch(function () {
+        _this3.listeners.forEach(function (listener) {
+          listener(event);
+        });
+      });
+    }
+  }, {
+    key: "onFocus",
+    value: function onFocus() {
+      var _this4 = this;
+      notifyManager.batch(function () {
+        _this4.getAll().forEach(function (query) {
+          query.onFocus();
+        });
+      });
+    }
+  }, {
+    key: "onOnline",
+    value: function onOnline() {
+      var _this5 = this;
+      notifyManager.batch(function () {
+        _this5.getAll().forEach(function (query) {
+          query.onOnline();
+        });
+      });
+    }
+  }]);
+  return QueryCache;
+}(Subscribable));
+
+//# sourceMappingURL=queryCache.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/mutation.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _observers, _mutationCache, mutation_retryer, mutation_dispatch;
+// src/mutation.ts
+
+
+
+var Mutation = (_observers = /*#__PURE__*/new WeakMap(), _mutationCache = /*#__PURE__*/new WeakMap(), mutation_retryer = /*#__PURE__*/new WeakMap(), mutation_dispatch = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Removable) {
+  _inherits(Mutation, _Removable);
+  function Mutation(config) {
+    var _this;
+    classCallCheck_classCallCheck(this, Mutation);
+    _this = _callSuper(this, Mutation);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), mutation_dispatch);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _observers, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutationCache, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), mutation_retryer, {
+      writable: true,
+      value: void 0
+    });
+    _this.mutationId = config.mutationId;
+    _classPrivateFieldSet(_assertThisInitialized(_this), _mutationCache, config.mutationCache);
+    _classPrivateFieldSet(_assertThisInitialized(_this), _observers, []);
+    _this.state = config.state || mutation_getDefaultState();
+    _this.setOptions(config.options);
+    _this.scheduleGc();
+    return _this;
+  }
+  createClass_createClass(Mutation, [{
+    key: "setOptions",
+    value: function setOptions(options) {
+      this.options = options;
+      this.updateGcTime(this.options.gcTime);
+    }
+  }, {
+    key: "meta",
+    get: function get() {
+      return this.options.meta;
+    }
+  }, {
+    key: "addObserver",
+    value: function addObserver(observer) {
+      if (!_classPrivateFieldGet(this, _observers).includes(observer)) {
+        _classPrivateFieldGet(this, _observers).push(observer);
+        this.clearGcTimeout();
+        _classPrivateFieldGet(this, _mutationCache).notify({
+          type: "observerAdded",
+          mutation: this,
+          observer: observer
+        });
+      }
+    }
+  }, {
+    key: "removeObserver",
+    value: function removeObserver(observer) {
+      _classPrivateFieldSet(this, _observers, _classPrivateFieldGet(this, _observers).filter(function (x) {
+        return x !== observer;
+      }));
+      this.scheduleGc();
+      _classPrivateFieldGet(this, _mutationCache).notify({
+        type: "observerRemoved",
+        mutation: this,
+        observer: observer
+      });
+    }
+  }, {
+    key: "optionalRemove",
+    value: function optionalRemove() {
+      if (!_classPrivateFieldGet(this, _observers).length) {
+        if (this.state.status === "pending") {
+          this.scheduleGc();
+        } else {
+          _classPrivateFieldGet(this, _mutationCache).remove(this);
+        }
+      }
+    }
+  }, {
+    key: "continue",
+    value: function _continue() {
+      var _classPrivateFieldGet2, _classPrivateFieldGet3;
+      return (_classPrivateFieldGet2 = (_classPrivateFieldGet3 = _classPrivateFieldGet(this, mutation_retryer)) === null || _classPrivateFieldGet3 === void 0 ? void 0 : _classPrivateFieldGet3["continue"]()) !== null && _classPrivateFieldGet2 !== void 0 ? _classPrivateFieldGet2 :
+      // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
+      this.execute(this.state.variables);
+    }
+  }, {
+    key: "execute",
+    value: function () {
+      var _execute = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee(variables) {
+        var _this2 = this,
+          _this$options$retry;
+        var restored, isPaused, _classPrivateFieldGet6, _classPrivateFieldGet7, _this$options$onSucce, _this$options2, _classPrivateFieldGet8, _classPrivateFieldGet9, _this$options$onSettl, _this$options3, _classPrivateFieldGet4, _classPrivateFieldGet5, _this$options$onMutat, _this$options, context, data, _classPrivateFieldGet10, _classPrivateFieldGet11, _this$options$onError, _this$options4, _classPrivateFieldGet12, _classPrivateFieldGet13, _this$options$onSettl2, _this$options5;
+        return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _classPrivateFieldSet(this, mutation_retryer, createRetryer({
+                fn: function fn() {
+                  if (!_this2.options.mutationFn) {
+                    return Promise.reject(new Error("No mutationFn found"));
+                  }
+                  return _this2.options.mutationFn(variables);
+                },
+                onFail: function onFail(failureCount, error) {
+                  _classPrivateMethodGet(_this2, mutation_dispatch, mutation_dispatch2).call(_this2, {
+                    type: "failed",
+                    failureCount: failureCount,
+                    error: error
+                  });
+                },
+                onPause: function onPause() {
+                  _classPrivateMethodGet(_this2, mutation_dispatch, mutation_dispatch2).call(_this2, {
+                    type: "pause"
+                  });
+                },
+                onContinue: function onContinue() {
+                  _classPrivateMethodGet(_this2, mutation_dispatch, mutation_dispatch2).call(_this2, {
+                    type: "continue"
+                  });
+                },
+                retry: (_this$options$retry = this.options.retry) !== null && _this$options$retry !== void 0 ? _this$options$retry : 0,
+                retryDelay: this.options.retryDelay,
+                networkMode: this.options.networkMode,
+                canRun: function canRun() {
+                  return _classPrivateFieldGet(_this2, _mutationCache).canRun(_this2);
+                }
+              }));
+              restored = this.state.status === "pending";
+              isPaused = !_classPrivateFieldGet(this, mutation_retryer).canStart();
+              _context.prev = 3;
+              if (restored) {
+                _context.next = 12;
+                break;
+              }
+              _classPrivateMethodGet(this, mutation_dispatch, mutation_dispatch2).call(this, {
+                type: "pending",
+                variables: variables,
+                isPaused: isPaused
+              });
+              _context.next = 8;
+              return (_classPrivateFieldGet4 = (_classPrivateFieldGet5 = _classPrivateFieldGet(this, _mutationCache).config).onMutate) === null || _classPrivateFieldGet4 === void 0 ? void 0 : _classPrivateFieldGet4.call(_classPrivateFieldGet5, variables, this);
+            case 8:
+              _context.next = 10;
+              return (_this$options$onMutat = (_this$options = this.options).onMutate) === null || _this$options$onMutat === void 0 ? void 0 : _this$options$onMutat.call(_this$options, variables);
+            case 10:
+              context = _context.sent;
+              if (context !== this.state.context) {
+                _classPrivateMethodGet(this, mutation_dispatch, mutation_dispatch2).call(this, {
+                  type: "pending",
+                  context: context,
+                  variables: variables,
+                  isPaused: isPaused
+                });
+              }
+            case 12:
+              _context.next = 14;
+              return _classPrivateFieldGet(this, mutation_retryer).start();
+            case 14:
+              data = _context.sent;
+              _context.next = 17;
+              return (_classPrivateFieldGet6 = (_classPrivateFieldGet7 = _classPrivateFieldGet(this, _mutationCache).config).onSuccess) === null || _classPrivateFieldGet6 === void 0 ? void 0 : _classPrivateFieldGet6.call(_classPrivateFieldGet7, data, variables, this.state.context, this);
+            case 17:
+              _context.next = 19;
+              return (_this$options$onSucce = (_this$options2 = this.options).onSuccess) === null || _this$options$onSucce === void 0 ? void 0 : _this$options$onSucce.call(_this$options2, data, variables, this.state.context);
+            case 19:
+              _context.next = 21;
+              return (_classPrivateFieldGet8 = (_classPrivateFieldGet9 = _classPrivateFieldGet(this, _mutationCache).config).onSettled) === null || _classPrivateFieldGet8 === void 0 ? void 0 : _classPrivateFieldGet8.call(_classPrivateFieldGet9, data, null, this.state.variables, this.state.context, this);
+            case 21:
+              _context.next = 23;
+              return (_this$options$onSettl = (_this$options3 = this.options).onSettled) === null || _this$options$onSettl === void 0 ? void 0 : _this$options$onSettl.call(_this$options3, data, null, variables, this.state.context);
+            case 23:
+              _classPrivateMethodGet(this, mutation_dispatch, mutation_dispatch2).call(this, {
+                type: "success",
+                data: data
+              });
+              return _context.abrupt("return", data);
+            case 27:
+              _context.prev = 27;
+              _context.t0 = _context["catch"](3);
+              _context.prev = 29;
+              _context.next = 32;
+              return (_classPrivateFieldGet10 = (_classPrivateFieldGet11 = _classPrivateFieldGet(this, _mutationCache).config).onError) === null || _classPrivateFieldGet10 === void 0 ? void 0 : _classPrivateFieldGet10.call(_classPrivateFieldGet11, _context.t0, variables, this.state.context, this);
+            case 32:
+              _context.next = 34;
+              return (_this$options$onError = (_this$options4 = this.options).onError) === null || _this$options$onError === void 0 ? void 0 : _this$options$onError.call(_this$options4, _context.t0, variables, this.state.context);
+            case 34:
+              _context.next = 36;
+              return (_classPrivateFieldGet12 = (_classPrivateFieldGet13 = _classPrivateFieldGet(this, _mutationCache).config).onSettled) === null || _classPrivateFieldGet12 === void 0 ? void 0 : _classPrivateFieldGet12.call(_classPrivateFieldGet13, void 0, _context.t0, this.state.variables, this.state.context, this);
+            case 36:
+              _context.next = 38;
+              return (_this$options$onSettl2 = (_this$options5 = this.options).onSettled) === null || _this$options$onSettl2 === void 0 ? void 0 : _this$options$onSettl2.call(_this$options5, void 0, _context.t0, variables, this.state.context);
+            case 38:
+              throw _context.t0;
+            case 39:
+              _context.prev = 39;
+              _classPrivateMethodGet(this, mutation_dispatch, mutation_dispatch2).call(this, {
+                type: "error",
+                error: _context.t0
+              });
+              return _context.finish(39);
+            case 42:
+              _context.prev = 42;
+              _classPrivateFieldGet(this, _mutationCache).runNext(this);
+              return _context.finish(42);
+            case 45:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[3, 27, 42, 45], [29,, 39, 42]]);
+      }));
+      function execute(_x) {
+        return _execute.apply(this, arguments);
+      }
+      return execute;
+    }()
+  }]);
+  return Mutation;
+}(Removable));
+function mutation_dispatch2(action) {
+  var _this3 = this;
+  var reducer = function reducer(state) {
+    switch (action.type) {
+      case "failed":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          failureCount: action.failureCount,
+          failureReason: action.error
+        });
+      case "pause":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          isPaused: true
+        });
+      case "continue":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          isPaused: false
+        });
+      case "pending":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          context: action.context,
+          data: void 0,
+          failureCount: 0,
+          failureReason: null,
+          error: null,
+          isPaused: action.isPaused,
+          status: "pending",
+          variables: action.variables,
+          submittedAt: Date.now()
+        });
+      case "success":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          data: action.data,
+          failureCount: 0,
+          failureReason: null,
+          error: null,
+          status: "success",
+          isPaused: false
+        });
+      case "error":
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          data: void 0,
+          error: action.error,
+          failureCount: state.failureCount + 1,
+          failureReason: action.error,
+          isPaused: false,
+          status: "error"
+        });
+    }
+  };
+  this.state = reducer(this.state);
+  notifyManager.batch(function () {
+    _classPrivateFieldGet(_this3, _observers).forEach(function (observer) {
+      observer.onMutationUpdate(action);
+    });
+    _classPrivateFieldGet(_this3, _mutationCache).notify({
+      mutation: _this3,
+      type: "updated",
+      action: action
+    });
+  });
+}
+function mutation_getDefaultState() {
+  return {
+    context: void 0,
+    data: void 0,
+    error: null,
+    failureCount: 0,
+    failureReason: null,
+    isPaused: false,
+    status: "idle",
+    variables: void 0,
+    submittedAt: 0
+  };
+}
+
+//# sourceMappingURL=mutation.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/mutationCache.js
+
+
+
+
+
+
+
+
+
+
+var _mutations, _mutationId;
+// src/mutationCache.ts
+
+
+
+
+var MutationCache = (_mutations = /*#__PURE__*/new WeakMap(), _mutationId = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
+  _inherits(MutationCache, _Subscribable);
+  function MutationCache() {
+    var _this;
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    classCallCheck_classCallCheck(this, MutationCache);
+    _this = _callSuper(this, MutationCache);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutations, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutationId, {
+      writable: true,
+      value: void 0
+    });
+    _this.config = config;
+    _classPrivateFieldSet(_assertThisInitialized(_this), _mutations, /* @__PURE__ */new Map());
+    _classPrivateFieldSet(_assertThisInitialized(_this), _mutationId, Date.now());
+    return _this;
+  }
+  createClass_createClass(MutationCache, [{
+    key: "build",
+    value: function build(client, options, state) {
+      var _this$mutationId;
+      var mutation = new Mutation({
+        mutationCache: this,
+        mutationId: _classPrivateFieldSet(this, _mutationId, (_this$mutationId = _classPrivateFieldGet(this, _mutationId), ++_this$mutationId)),
+        options: client.defaultMutationOptions(options),
+        state: state
+      });
+      this.add(mutation);
+      return mutation;
+    }
+  }, {
+    key: "add",
+    value: function add(mutation) {
+      var _classPrivateFieldGet2;
+      var scope = scopeFor(mutation);
+      var mutations = (_classPrivateFieldGet2 = _classPrivateFieldGet(this, _mutations).get(scope)) !== null && _classPrivateFieldGet2 !== void 0 ? _classPrivateFieldGet2 : [];
+      mutations.push(mutation);
+      _classPrivateFieldGet(this, _mutations).set(scope, mutations);
+      this.notify({
+        type: "added",
+        mutation: mutation
+      });
+    }
+  }, {
+    key: "remove",
+    value: function remove(mutation) {
+      var scope = scopeFor(mutation);
+      if (_classPrivateFieldGet(this, _mutations).has(scope)) {
+        var _classPrivateFieldGet3;
+        var mutations = (_classPrivateFieldGet3 = _classPrivateFieldGet(this, _mutations).get(scope)) === null || _classPrivateFieldGet3 === void 0 ? void 0 : _classPrivateFieldGet3.filter(function (x) {
+          return x !== mutation;
+        });
+        if (mutations) {
+          if (mutations.length === 0) {
+            _classPrivateFieldGet(this, _mutations)["delete"](scope);
+          } else {
+            _classPrivateFieldGet(this, _mutations).set(scope, mutations);
+          }
+        }
+      }
+      this.notify({
+        type: "removed",
+        mutation: mutation
+      });
+    }
+  }, {
+    key: "canRun",
+    value: function canRun(mutation) {
+      var _classPrivateFieldGet4;
+      var firstPendingMutation = (_classPrivateFieldGet4 = _classPrivateFieldGet(this, _mutations).get(scopeFor(mutation))) === null || _classPrivateFieldGet4 === void 0 ? void 0 : _classPrivateFieldGet4.find(function (m) {
+        return m.state.status === "pending";
+      });
+      return !firstPendingMutation || firstPendingMutation === mutation;
+    }
+  }, {
+    key: "runNext",
+    value: function runNext(mutation) {
+      var _classPrivateFieldGet5, _foundMutation$contin;
+      var foundMutation = (_classPrivateFieldGet5 = _classPrivateFieldGet(this, _mutations).get(scopeFor(mutation))) === null || _classPrivateFieldGet5 === void 0 ? void 0 : _classPrivateFieldGet5.find(function (m) {
+        return m !== mutation && m.state.isPaused;
+      });
+      return (_foundMutation$contin = foundMutation === null || foundMutation === void 0 ? void 0 : foundMutation["continue"]()) !== null && _foundMutation$contin !== void 0 ? _foundMutation$contin : Promise.resolve();
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      var _this2 = this;
+      notifyManager.batch(function () {
+        _this2.getAll().forEach(function (mutation) {
+          _this2.remove(mutation);
+        });
+      });
+    }
+  }, {
+    key: "getAll",
+    value: function getAll() {
+      return toConsumableArray_toConsumableArray(_classPrivateFieldGet(this, _mutations).values()).flat();
+    }
+  }, {
+    key: "find",
+    value: function find(filters) {
+      var defaultedFilters = _objectSpread2({
+        exact: true
+      }, filters);
+      return this.getAll().find(function (mutation) {
+        return matchMutation(defaultedFilters, mutation);
+      });
+    }
+  }, {
+    key: "findAll",
+    value: function findAll() {
+      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      return this.getAll().filter(function (mutation) {
+        return matchMutation(filters, mutation);
+      });
+    }
+  }, {
+    key: "notify",
+    value: function notify(event) {
+      var _this3 = this;
+      notifyManager.batch(function () {
+        _this3.listeners.forEach(function (listener) {
+          listener(event);
+        });
+      });
+    }
+  }, {
+    key: "resumePausedMutations",
+    value: function resumePausedMutations() {
+      var pausedMutations = this.getAll().filter(function (x) {
+        return x.state.isPaused;
+      });
+      return notifyManager.batch(function () {
+        return Promise.all(pausedMutations.map(function (mutation) {
+          return mutation["continue"]()["catch"](noop);
+        }));
+      });
+    }
+  }]);
+  return MutationCache;
+}(Subscribable));
+function scopeFor(mutation) {
+  var _mutation$options$sco, _mutation$options$sco2;
+  return (_mutation$options$sco = (_mutation$options$sco2 = mutation.options.scope) === null || _mutation$options$sco2 === void 0 ? void 0 : _mutation$options$sco2.id) !== null && _mutation$options$sco !== void 0 ? _mutation$options$sco : String(mutation.mutationId);
+}
+
+//# sourceMappingURL=mutationCache.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js
+
+
+// src/infiniteQueryBehavior.ts
+
+function infiniteQueryBehavior(pages) {
+  return {
+    onFetch: function onFetch(context, query) {
+      var _context$fetchOptions, _context$state$data, _context$state$data2;
+      var options = context.options;
+      var direction = (_context$fetchOptions = context.fetchOptions) === null || _context$fetchOptions === void 0 || (_context$fetchOptions = _context$fetchOptions.meta) === null || _context$fetchOptions === void 0 || (_context$fetchOptions = _context$fetchOptions.fetchMore) === null || _context$fetchOptions === void 0 ? void 0 : _context$fetchOptions.direction;
+      var oldPages = ((_context$state$data = context.state.data) === null || _context$state$data === void 0 ? void 0 : _context$state$data.pages) || [];
+      var oldPageParams = ((_context$state$data2 = context.state.data) === null || _context$state$data2 === void 0 ? void 0 : _context$state$data2.pageParams) || [];
+      var result = {
+        pages: [],
+        pageParams: []
+      };
+      var currentPage = 0;
+      var fetchFn = /*#__PURE__*/function () {
+        var _ref = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee2() {
+          var cancelled, addSignalProperty, queryFn, fetchPage, previous, pageParamFn, oldData, param, remainingPages, _oldPageParams$, _param;
+          return regeneratorRuntime_regeneratorRuntime().wrap(function _callee2$(_context2) {
+            while (1) switch (_context2.prev = _context2.next) {
+              case 0:
+                cancelled = false;
+                addSignalProperty = function addSignalProperty(object) {
+                  Object.defineProperty(object, "signal", {
+                    enumerable: true,
+                    get: function get() {
+                      if (context.signal.aborted) {
+                        cancelled = true;
+                      } else {
+                        context.signal.addEventListener("abort", function () {
+                          cancelled = true;
+                        });
+                      }
+                      return context.signal;
+                    }
+                  });
+                };
+                queryFn = ensureQueryFn(context.options, context.fetchOptions);
+                fetchPage = /*#__PURE__*/function () {
+                  var _ref2 = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee(data, param, previous) {
+                    var queryFnContext, page, maxPages, addTo;
+                    return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context) {
+                      while (1) switch (_context.prev = _context.next) {
+                        case 0:
+                          if (!cancelled) {
+                            _context.next = 2;
+                            break;
+                          }
+                          return _context.abrupt("return", Promise.reject());
+                        case 2:
+                          if (!(param == null && data.pages.length)) {
+                            _context.next = 4;
+                            break;
+                          }
+                          return _context.abrupt("return", Promise.resolve(data));
+                        case 4:
+                          queryFnContext = {
+                            queryKey: context.queryKey,
+                            pageParam: param,
+                            direction: previous ? "backward" : "forward",
+                            meta: context.options.meta
+                          };
+                          addSignalProperty(queryFnContext);
+                          _context.next = 8;
+                          return queryFn(queryFnContext);
+                        case 8:
+                          page = _context.sent;
+                          maxPages = context.options.maxPages;
+                          addTo = previous ? addToStart : addToEnd;
+                          return _context.abrupt("return", {
+                            pages: addTo(data.pages, page, maxPages),
+                            pageParams: addTo(data.pageParams, param, maxPages)
+                          });
+                        case 12:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }, _callee);
+                  }));
+                  return function fetchPage(_x, _x2, _x3) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }();
+                if (!(direction && oldPages.length)) {
+                  _context2.next = 14;
+                  break;
+                }
+                previous = direction === "backward";
+                pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
+                oldData = {
+                  pages: oldPages,
+                  pageParams: oldPageParams
+                };
+                param = pageParamFn(options, oldData);
+                _context2.next = 11;
+                return fetchPage(oldData, param, previous);
+              case 11:
+                result = _context2.sent;
+                _context2.next = 23;
+                break;
+              case 14:
+                remainingPages = pages !== null && pages !== void 0 ? pages : oldPages.length;
+              case 15:
+                _param = currentPage === 0 ? (_oldPageParams$ = oldPageParams[0]) !== null && _oldPageParams$ !== void 0 ? _oldPageParams$ : options.initialPageParam : getNextPageParam(options, result);
+                if (!(currentPage > 0 && _param == null)) {
+                  _context2.next = 18;
+                  break;
+                }
+                return _context2.abrupt("break", 23);
+              case 18:
+                _context2.next = 20;
+                return fetchPage(result, _param);
+              case 20:
+                result = _context2.sent;
+                currentPage++;
+              case 22:
+                if (currentPage < remainingPages) {
+                  _context2.next = 15;
+                  break;
+                }
+              case 23:
+                return _context2.abrupt("return", result);
+              case 24:
+              case "end":
+                return _context2.stop();
+            }
+          }, _callee2);
+        }));
+        return function fetchFn() {
+          return _ref.apply(this, arguments);
+        };
+      }();
+      if (context.options.persister) {
+        context.fetchFn = function () {
+          var _context$options$pers, _context$options;
+          return (_context$options$pers = (_context$options = context.options).persister) === null || _context$options$pers === void 0 ? void 0 : _context$options$pers.call(_context$options, fetchFn, {
+            queryKey: context.queryKey,
+            meta: context.options.meta,
+            signal: context.signal
+          }, query);
+        };
+      } else {
+        context.fetchFn = fetchFn;
+      }
+    }
+  };
+}
+function getNextPageParam(options, _ref3) {
+  var pages = _ref3.pages,
+    pageParams = _ref3.pageParams;
+  var lastIndex = pages.length - 1;
+  return pages.length > 0 ? options.getNextPageParam(pages[lastIndex], pages, pageParams[lastIndex], pageParams) : void 0;
+}
+function getPreviousPageParam(options, _ref4) {
+  var _options$getPreviousP;
+  var pages = _ref4.pages,
+    pageParams = _ref4.pageParams;
+  return pages.length > 0 ? (_options$getPreviousP = options.getPreviousPageParam) === null || _options$getPreviousP === void 0 ? void 0 : _options$getPreviousP.call(options, pages[0], pages, pageParams[0], pageParams) : void 0;
+}
+function hasNextPage(options, data) {
+  if (!data) return false;
+  return getNextPageParam(options, data) != null;
+}
+function hasPreviousPage(options, data) {
+  if (!data || !options.getPreviousPageParam) return false;
+  return getPreviousPageParam(options, data) != null;
+}
+
+//# sourceMappingURL=infiniteQueryBehavior.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/queryClient.js
+
+
+
+
+
+
+
+
+
+var _queryCache, queryClient_mutationCache, queryClient_defaultOptions, _queryDefaults, _mutationDefaults, _mountCount, _unsubscribeFocus, _unsubscribeOnline;
+// src/queryClient.ts
+
+
+
+
+
+
+
+var QueryClient = (_queryCache = /*#__PURE__*/new WeakMap(), queryClient_mutationCache = /*#__PURE__*/new WeakMap(), queryClient_defaultOptions = /*#__PURE__*/new WeakMap(), _queryDefaults = /*#__PURE__*/new WeakMap(), _mutationDefaults = /*#__PURE__*/new WeakMap(), _mountCount = /*#__PURE__*/new WeakMap(), _unsubscribeFocus = /*#__PURE__*/new WeakMap(), _unsubscribeOnline = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function () {
+  function QueryClient() {
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    classCallCheck_classCallCheck(this, QueryClient);
+    _classPrivateFieldInitSpec(this, _queryCache, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, queryClient_mutationCache, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, queryClient_defaultOptions, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, _queryDefaults, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, _mutationDefaults, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, _mountCount, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, _unsubscribeFocus, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(this, _unsubscribeOnline, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldSet(this, _queryCache, config.queryCache || new QueryCache());
+    _classPrivateFieldSet(this, queryClient_mutationCache, config.mutationCache || new MutationCache());
+    _classPrivateFieldSet(this, queryClient_defaultOptions, config.defaultOptions || {});
+    _classPrivateFieldSet(this, _queryDefaults, /* @__PURE__ */new Map());
+    _classPrivateFieldSet(this, _mutationDefaults, /* @__PURE__ */new Map());
+    _classPrivateFieldSet(this, _mountCount, 0);
+  }
+  createClass_createClass(QueryClient, [{
+    key: "mount",
+    value: function mount() {
+      var _this$mountCount,
+        _this$mountCount2,
+        _this = this;
+      _classPrivateFieldSet(this, _mountCount, (_this$mountCount = _classPrivateFieldGet(this, _mountCount), _this$mountCount2 = _this$mountCount++, _this$mountCount)), _this$mountCount2;
+      if (_classPrivateFieldGet(this, _mountCount) !== 1) return;
+      _classPrivateFieldSet(this, _unsubscribeFocus, focusManager.subscribe( /*#__PURE__*/function () {
+        var _ref = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee(focused) {
+          return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context) {
+            while (1) switch (_context.prev = _context.next) {
+              case 0:
+                if (!focused) {
+                  _context.next = 4;
+                  break;
+                }
+                _context.next = 3;
+                return _this.resumePausedMutations();
+              case 3:
+                _classPrivateFieldGet(_this, _queryCache).onFocus();
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }, _callee);
+        }));
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }()));
+      _classPrivateFieldSet(this, _unsubscribeOnline, onlineManager.subscribe( /*#__PURE__*/function () {
+        var _ref2 = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee2(online) {
+          return regeneratorRuntime_regeneratorRuntime().wrap(function _callee2$(_context2) {
+            while (1) switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!online) {
+                  _context2.next = 4;
+                  break;
+                }
+                _context2.next = 3;
+                return _this.resumePausedMutations();
+              case 3:
+                _classPrivateFieldGet(_this, _queryCache).onOnline();
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }, _callee2);
+        }));
+        return function (_x2) {
+          return _ref2.apply(this, arguments);
+        };
+      }()));
+    }
+  }, {
+    key: "unmount",
+    value: function unmount() {
+      var _this$mountCount3, _this$mountCount4, _classPrivateFieldGet2, _classPrivateFieldGet3;
+      _classPrivateFieldSet(this, _mountCount, (_this$mountCount3 = _classPrivateFieldGet(this, _mountCount), _this$mountCount4 = _this$mountCount3--, _this$mountCount3)), _this$mountCount4;
+      if (_classPrivateFieldGet(this, _mountCount) !== 0) return;
+      (_classPrivateFieldGet2 = _classPrivateFieldGet(this, _unsubscribeFocus)) === null || _classPrivateFieldGet2 === void 0 || _classPrivateFieldGet2.call(this);
+      _classPrivateFieldSet(this, _unsubscribeFocus, void 0);
+      (_classPrivateFieldGet3 = _classPrivateFieldGet(this, _unsubscribeOnline)) === null || _classPrivateFieldGet3 === void 0 || _classPrivateFieldGet3.call(this);
+      _classPrivateFieldSet(this, _unsubscribeOnline, void 0);
+    }
+  }, {
+    key: "isFetching",
+    value: function isFetching(filters) {
+      return _classPrivateFieldGet(this, _queryCache).findAll(_objectSpread2(_objectSpread2({}, filters), {}, {
+        fetchStatus: "fetching"
+      })).length;
+    }
+  }, {
+    key: "isMutating",
+    value: function isMutating(filters) {
+      return _classPrivateFieldGet(this, queryClient_mutationCache).findAll(_objectSpread2(_objectSpread2({}, filters), {}, {
+        status: "pending"
+      })).length;
+    }
+  }, {
+    key: "getQueryData",
+    value: function getQueryData(queryKey) {
+      var _classPrivateFieldGet4;
+      var options = this.defaultQueryOptions({
+        queryKey: queryKey
+      });
+      return (_classPrivateFieldGet4 = _classPrivateFieldGet(this, _queryCache).get(options.queryHash)) === null || _classPrivateFieldGet4 === void 0 ? void 0 : _classPrivateFieldGet4.state.data;
+    }
+  }, {
+    key: "ensureQueryData",
+    value: function ensureQueryData(options) {
+      var cachedData = this.getQueryData(options.queryKey);
+      if (cachedData === void 0) return this.fetchQuery(options);else {
+        var defaultedOptions = this.defaultQueryOptions(options);
+        var query = _classPrivateFieldGet(this, _queryCache).build(this, defaultedOptions);
+        if (options.revalidateIfStale && query.isStaleByTime(resolveStaleTime(defaultedOptions.staleTime, query))) {
+          void this.prefetchQuery(defaultedOptions);
+        }
+        return Promise.resolve(cachedData);
+      }
+    }
+  }, {
+    key: "getQueriesData",
+    value: function getQueriesData(filters) {
+      return _classPrivateFieldGet(this, _queryCache).findAll(filters).map(function (_ref3) {
+        var queryKey = _ref3.queryKey,
+          state = _ref3.state;
+        var data = state.data;
+        return [queryKey, data];
+      });
+    }
+  }, {
+    key: "setQueryData",
+    value: function setQueryData(queryKey, updater, options) {
+      var defaultedOptions = this.defaultQueryOptions({
+        queryKey: queryKey
+      });
+      var query = _classPrivateFieldGet(this, _queryCache).get(defaultedOptions.queryHash);
+      var prevData = query === null || query === void 0 ? void 0 : query.state.data;
+      var data = functionalUpdate(updater, prevData);
+      if (data === void 0) {
+        return void 0;
+      }
+      return _classPrivateFieldGet(this, _queryCache).build(this, defaultedOptions).setData(data, _objectSpread2(_objectSpread2({}, options), {}, {
+        manual: true
+      }));
+    }
+  }, {
+    key: "setQueriesData",
+    value: function setQueriesData(filters, updater, options) {
+      var _this2 = this;
+      return notifyManager.batch(function () {
+        return _classPrivateFieldGet(_this2, _queryCache).findAll(filters).map(function (_ref4) {
+          var queryKey = _ref4.queryKey;
+          return [queryKey, _this2.setQueryData(queryKey, updater, options)];
+        });
+      });
+    }
+  }, {
+    key: "getQueryState",
+    value: function getQueryState(queryKey) {
+      var _classPrivateFieldGet5;
+      var options = this.defaultQueryOptions({
+        queryKey: queryKey
+      });
+      return (_classPrivateFieldGet5 = _classPrivateFieldGet(this, _queryCache).get(options.queryHash)) === null || _classPrivateFieldGet5 === void 0 ? void 0 : _classPrivateFieldGet5.state;
+    }
+  }, {
+    key: "removeQueries",
+    value: function removeQueries(filters) {
+      var queryCache = _classPrivateFieldGet(this, _queryCache);
+      notifyManager.batch(function () {
+        queryCache.findAll(filters).forEach(function (query) {
+          queryCache.remove(query);
+        });
+      });
+    }
+  }, {
+    key: "resetQueries",
+    value: function resetQueries(filters, options) {
+      var _this3 = this;
+      var queryCache = _classPrivateFieldGet(this, _queryCache);
+      var refetchFilters = _objectSpread2({
+        type: "active"
+      }, filters);
+      return notifyManager.batch(function () {
+        queryCache.findAll(filters).forEach(function (query) {
+          query.reset();
+        });
+        return _this3.refetchQueries(refetchFilters, options);
+      });
+    }
+  }, {
+    key: "cancelQueries",
+    value: function cancelQueries() {
+      var _this4 = this;
+      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var cancelOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var defaultedCancelOptions = _objectSpread2({
+        revert: true
+      }, cancelOptions);
+      var promises = notifyManager.batch(function () {
+        return _classPrivateFieldGet(_this4, _queryCache).findAll(filters).map(function (query) {
+          return query.cancel(defaultedCancelOptions);
+        });
+      });
+      return Promise.all(promises).then(noop)["catch"](noop);
+    }
+  }, {
+    key: "invalidateQueries",
+    value: function invalidateQueries() {
+      var _this5 = this;
+      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return notifyManager.batch(function () {
+        var _ref5, _filters$refetchType;
+        _classPrivateFieldGet(_this5, _queryCache).findAll(filters).forEach(function (query) {
+          query.invalidate();
+        });
+        if (filters.refetchType === "none") {
+          return Promise.resolve();
+        }
+        var refetchFilters = _objectSpread2(_objectSpread2({}, filters), {}, {
+          type: (_ref5 = (_filters$refetchType = filters.refetchType) !== null && _filters$refetchType !== void 0 ? _filters$refetchType : filters.type) !== null && _ref5 !== void 0 ? _ref5 : "active"
+        });
+        return _this5.refetchQueries(refetchFilters, options);
+      });
+    }
+  }, {
+    key: "refetchQueries",
+    value: function refetchQueries() {
+      var _options$cancelRefetc,
+        _this6 = this;
+      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options = arguments.length > 1 ? arguments[1] : undefined;
+      var fetchOptions = _objectSpread2(_objectSpread2({}, options), {}, {
+        cancelRefetch: (_options$cancelRefetc = options === null || options === void 0 ? void 0 : options.cancelRefetch) !== null && _options$cancelRefetc !== void 0 ? _options$cancelRefetc : true
+      });
+      var promises = notifyManager.batch(function () {
+        return _classPrivateFieldGet(_this6, _queryCache).findAll(filters).filter(function (query) {
+          return !query.isDisabled();
+        }).map(function (query) {
+          var promise = query.fetch(void 0, fetchOptions);
+          if (!fetchOptions.throwOnError) {
+            promise = promise["catch"](noop);
+          }
+          return query.state.fetchStatus === "paused" ? Promise.resolve() : promise;
+        });
+      });
+      return Promise.all(promises).then(noop);
+    }
+  }, {
+    key: "fetchQuery",
+    value: function fetchQuery(options) {
+      var defaultedOptions = this.defaultQueryOptions(options);
+      if (defaultedOptions.retry === void 0) {
+        defaultedOptions.retry = false;
+      }
+      var query = _classPrivateFieldGet(this, _queryCache).build(this, defaultedOptions);
+      return query.isStaleByTime(resolveStaleTime(defaultedOptions.staleTime, query)) ? query.fetch(defaultedOptions) : Promise.resolve(query.state.data);
+    }
+  }, {
+    key: "prefetchQuery",
+    value: function prefetchQuery(options) {
+      return this.fetchQuery(options).then(noop)["catch"](noop);
+    }
+  }, {
+    key: "fetchInfiniteQuery",
+    value: function fetchInfiniteQuery(options) {
+      options.behavior = infiniteQueryBehavior(options.pages);
+      return this.fetchQuery(options);
+    }
+  }, {
+    key: "prefetchInfiniteQuery",
+    value: function prefetchInfiniteQuery(options) {
+      return this.fetchInfiniteQuery(options).then(noop)["catch"](noop);
+    }
+  }, {
+    key: "ensureInfiniteQueryData",
+    value: function ensureInfiniteQueryData(options) {
+      options.behavior = infiniteQueryBehavior(options.pages);
+      return this.ensureQueryData(options);
+    }
+  }, {
+    key: "resumePausedMutations",
+    value: function resumePausedMutations() {
+      if (onlineManager.isOnline()) {
+        return _classPrivateFieldGet(this, queryClient_mutationCache).resumePausedMutations();
+      }
+      return Promise.resolve();
+    }
+  }, {
+    key: "getQueryCache",
+    value: function getQueryCache() {
+      return _classPrivateFieldGet(this, _queryCache);
+    }
+  }, {
+    key: "getMutationCache",
+    value: function getMutationCache() {
+      return _classPrivateFieldGet(this, queryClient_mutationCache);
+    }
+  }, {
+    key: "getDefaultOptions",
+    value: function getDefaultOptions() {
+      return _classPrivateFieldGet(this, queryClient_defaultOptions);
+    }
+  }, {
+    key: "setDefaultOptions",
+    value: function setDefaultOptions(options) {
+      _classPrivateFieldSet(this, queryClient_defaultOptions, options);
+    }
+  }, {
+    key: "setQueryDefaults",
+    value: function setQueryDefaults(queryKey, options) {
+      _classPrivateFieldGet(this, _queryDefaults).set(hashKey(queryKey), {
+        queryKey: queryKey,
+        defaultOptions: options
+      });
+    }
+  }, {
+    key: "getQueryDefaults",
+    value: function getQueryDefaults(queryKey) {
+      var defaults = toConsumableArray_toConsumableArray(_classPrivateFieldGet(this, _queryDefaults).values());
+      var result = {};
+      defaults.forEach(function (queryDefault) {
+        if (partialMatchKey(queryKey, queryDefault.queryKey)) {
+          result = _objectSpread2(_objectSpread2({}, result), queryDefault.defaultOptions);
+        }
+      });
+      return result;
+    }
+  }, {
+    key: "setMutationDefaults",
+    value: function setMutationDefaults(mutationKey, options) {
+      _classPrivateFieldGet(this, _mutationDefaults).set(hashKey(mutationKey), {
+        mutationKey: mutationKey,
+        defaultOptions: options
+      });
+    }
+  }, {
+    key: "getMutationDefaults",
+    value: function getMutationDefaults(mutationKey) {
+      var defaults = toConsumableArray_toConsumableArray(_classPrivateFieldGet(this, _mutationDefaults).values());
+      var result = {};
+      defaults.forEach(function (queryDefault) {
+        if (partialMatchKey(mutationKey, queryDefault.mutationKey)) {
+          result = _objectSpread2(_objectSpread2({}, result), queryDefault.defaultOptions);
+        }
+      });
+      return result;
+    }
+  }, {
+    key: "defaultQueryOptions",
+    value: function defaultQueryOptions(options) {
+      if (options._defaulted) {
+        return options;
+      }
+      var defaultedOptions = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, _classPrivateFieldGet(this, queryClient_defaultOptions).queries), this.getQueryDefaults(options.queryKey)), options), {}, {
+        _defaulted: true
+      });
+      if (!defaultedOptions.queryHash) {
+        defaultedOptions.queryHash = hashQueryKeyByOptions(defaultedOptions.queryKey, defaultedOptions);
+      }
+      if (defaultedOptions.refetchOnReconnect === void 0) {
+        defaultedOptions.refetchOnReconnect = defaultedOptions.networkMode !== "always";
+      }
+      if (defaultedOptions.throwOnError === void 0) {
+        defaultedOptions.throwOnError = !!defaultedOptions.suspense;
+      }
+      if (!defaultedOptions.networkMode && defaultedOptions.persister) {
+        defaultedOptions.networkMode = "offlineFirst";
+      }
+      if (defaultedOptions.enabled !== true && defaultedOptions.queryFn === skipToken) {
+        defaultedOptions.enabled = false;
+      }
+      return defaultedOptions;
+    }
+  }, {
+    key: "defaultMutationOptions",
+    value: function defaultMutationOptions(options) {
+      if (options !== null && options !== void 0 && options._defaulted) {
+        return options;
+      }
+      return _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, _classPrivateFieldGet(this, queryClient_defaultOptions).mutations), (options === null || options === void 0 ? void 0 : options.mutationKey) && this.getMutationDefaults(options.mutationKey)), options), {}, {
+        _defaulted: true
+      });
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      _classPrivateFieldGet(this, _queryCache).clear();
+      _classPrivateFieldGet(this, queryClient_mutationCache).clear();
+    }
+  }]);
+  return QueryClient;
+}());
+
+//# sourceMappingURL=queryClient.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
+"use client";
+
+// src/QueryClientProvider.tsx
+
+
+var QueryClientContext = react.createContext(void 0);
+var useQueryClient = function useQueryClient(queryClient) {
+  var client = react.useContext(QueryClientContext);
+  if (queryClient) {
+    return queryClient;
+  }
+  if (!client) {
+    throw new Error("No QueryClient set, use QueryClientProvider to set one");
+  }
+  return client;
+};
+var QueryClientProvider = function QueryClientProvider(_ref) {
+  var client = _ref.client,
+    children = _ref.children;
+  react.useEffect(function () {
+    client.mount();
+    return function () {
+      client.unmount();
+    };
+  }, [client]);
+  return /* @__PURE__ */(0,jsx_runtime.jsx)(QueryClientContext.Provider, {
+    value: client,
+    children: children
+  });
+};
+
+//# sourceMappingURL=QueryClientProvider.js.map
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = !0, n = r;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function slicedToArray_slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/toArray.js
 
 
 
 
-function _toArray(arr) {
+function toArray_toArray(arr) {
   return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
@@ -9432,7 +12407,7 @@ function createForOfIteratorHelper_createForOfIteratorHelper(o, allowArrayLike) 
 
 
 /**
- * @remix-run/router v1.15.3
+ * @remix-run/router v1.16.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -10072,7 +13047,7 @@ function flattenRoutes(routes, branches, parentsMeta, parentPath) {
 function explodeOptionalSegments(path) {
   var segments = path.split("/");
   if (segments.length === 0) return [];
-  var _segments = _toArray(segments),
+  var _segments = toArray_toArray(segments),
     first = _segments[0],
     rest = _segments.slice(1);
   // Optional path segments are denoted by a trailing `?`
@@ -10892,13 +13867,15 @@ function router_createRouter(init) {
   var dataRoutes = convertRoutesToDataRoutes(init.routes, mapRouteProperties, undefined, manifest);
   var inFlightDataRoutes;
   var basename = init.basename || "/";
+  var dataStrategyImpl = init.unstable_dataStrategy || defaultDataStrategy;
   // Config driven behavior flags
   var future = router_extends({
     v7_fetcherPersist: false,
     v7_normalizeFormMethod: false,
     v7_partialHydration: false,
     v7_prependBasename: false,
-    v7_relativeSplatPath: false
+    v7_relativeSplatPath: false,
+    unstable_skipActionErrorRevalidation: false
   }, init.future);
   // Cleanup function for history
   var unlistenHistory = null;
@@ -10953,9 +13930,13 @@ function router_createRouter(init) {
     var errors = init.hydrationData ? init.hydrationData.errors : null;
     var isRouteInitialized = function isRouteInitialized(m) {
       // No loader, nothing to initialize
-      if (!m.route.loader) return true;
+      if (!m.route.loader) {
+        return true;
+      }
       // Explicitly opting-in to running on hydration
-      if (m.route.loader.hydrate === true) return false;
+      if (typeof m.route.loader === "function" && m.route.loader.hydrate === true) {
+        return false;
+      }
       // Otherwise, initialized if hydrated with data or an error
       return loaderData && loaderData[m.route.id] !== undefined || errors && errors[m.route.id] !== undefined;
     };
@@ -11432,7 +14413,7 @@ function router_createRouter(init) {
   // redirects/errors
   function _startNavigation() {
     _startNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(historyAction, location, opts) {
-      var routesToUse, loadingNavigation, matches, flushSync, _error, _getShortCircuitMatch2, notFoundMatches, _route, request, pendingActionData, pendingError, actionOutput, _yield$handleLoaders, shortCircuited, loaderData, errors;
+      var routesToUse, loadingNavigation, matches, flushSync, _error, _getShortCircuitMatch2, notFoundMatches, _route, request, pendingActionResult, actionResult, _yield$handleLoaders, shortCircuited, loaderData, errors;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
@@ -11492,12 +14473,15 @@ function router_createRouter(init) {
             // with binary FormData so assign here and skip to handleLoaders.  That
             // way we handle calling loaders above the boundary etc.  It's not really
             // different from an actionError in that sense.
-            pendingError = _defineProperty({}, findNearestBoundary(matches).route.id, opts.pendingError);
-            _context3.next = 37;
+            pendingActionResult = [findNearestBoundary(matches).route.id, {
+              type: ResultType.error,
+              error: opts.pendingError
+            }];
+            _context3.next = 36;
             break;
           case 26:
             if (!(opts && opts.submission && isMutationMethod(opts.submission.formMethod))) {
-              _context3.next = 37;
+              _context3.next = 36;
               break;
             }
             _context3.next = 29;
@@ -11506,48 +14490,43 @@ function router_createRouter(init) {
               flushSync: flushSync
             });
           case 29:
-            actionOutput = _context3.sent;
-            if (!actionOutput.shortCircuited) {
+            actionResult = _context3.sent;
+            if (!actionResult.shortCircuited) {
               _context3.next = 32;
               break;
             }
             return _context3.abrupt("return");
           case 32:
-            pendingActionData = actionOutput.pendingActionData;
-            pendingError = actionOutput.pendingActionError;
+            pendingActionResult = actionResult.pendingActionResult;
             loadingNavigation = getLoadingNavigation(location, opts.submission);
             flushSync = false;
             // Create a GET request for the loaders
-            request = new Request(request.url, {
-              signal: request.signal
-            });
-          case 37:
-            _context3.next = 39;
-            return handleLoaders(request, location, matches, loadingNavigation, opts && opts.submission, opts && opts.fetcherSubmission, opts && opts.replace, opts && opts.initialHydration === true, flushSync, pendingActionData, pendingError);
-          case 39:
+            request = createClientSideRequest(init.history, request.url, request.signal);
+          case 36:
+            _context3.next = 38;
+            return handleLoaders(request, location, matches, loadingNavigation, opts && opts.submission, opts && opts.fetcherSubmission, opts && opts.replace, opts && opts.initialHydration === true, flushSync, pendingActionResult);
+          case 38:
             _yield$handleLoaders = _context3.sent;
             shortCircuited = _yield$handleLoaders.shortCircuited;
             loaderData = _yield$handleLoaders.loaderData;
             errors = _yield$handleLoaders.errors;
             if (!shortCircuited) {
-              _context3.next = 45;
+              _context3.next = 44;
               break;
             }
             return _context3.abrupt("return");
-          case 45:
+          case 44:
             // Clean up now that the action/loaders have completed.  Don't clean up if
             // we short circuited because pendingNavigationController will have already
             // been assigned to a new controller for the next navigation
             pendingNavigationController = null;
             completeNavigation(location, router_extends({
               matches: matches
-            }, pendingActionData ? {
-              actionData: pendingActionData
-            } : {}, {
+            }, getActionDataForCommit(pendingActionResult), {
               loaderData: loaderData,
               errors: errors
             }));
-          case 47:
+          case 46:
           case "end":
             return _context3.stop();
         }
@@ -11561,7 +14540,7 @@ function router_createRouter(init) {
   // errors, etc.
   function _handleAction() {
     _handleAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(request, location, submission, matches, opts) {
-      var navigation, result, actionMatch, replace, boundaryMatch;
+      var navigation, result, actionMatch, results, replace, _location, boundaryMatch;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
@@ -11590,23 +14569,24 @@ function router_createRouter(init) {
                 routeId: actionMatch.route.id
               })
             };
-            _context4.next = 14;
+            _context4.next = 15;
             break;
           case 9:
             _context4.next = 11;
-            return callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath);
+            return callDataStrategy("action", request, [actionMatch], matches);
           case 11:
-            result = _context4.sent;
+            results = _context4.sent;
+            result = results[0];
             if (!request.signal.aborted) {
-              _context4.next = 14;
+              _context4.next = 15;
               break;
             }
             return _context4.abrupt("return", {
               shortCircuited: true
             });
-          case 14:
+          case 15:
             if (!isRedirectResult(result)) {
-              _context4.next = 19;
+              _context4.next = 20;
               break;
             }
             if (opts && opts.replace != null) {
@@ -11615,20 +14595,29 @@ function router_createRouter(init) {
               // If the user didn't explicity indicate replace behavior, replace if
               // we redirected to the exact same location we're currently at to avoid
               // double back-buttons
-              replace = result.location === state.location.pathname + state.location.search;
+              _location = normalizeRedirectLocation(result.response.headers.get("Location"), new URL(request.url), basename);
+              replace = _location === state.location.pathname + state.location.search;
             }
-            _context4.next = 18;
-            return startRedirectNavigation(state, result, {
+            _context4.next = 19;
+            return startRedirectNavigation(request, result, {
               submission: submission,
               replace: replace
             });
-          case 18:
+          case 19:
             return _context4.abrupt("return", {
               shortCircuited: true
             });
-          case 19:
+          case 20:
+            if (!isDeferredResult(result)) {
+              _context4.next = 22;
+              break;
+            }
+            throw getInternalRouterError(400, {
+              type: "defer-action"
+            });
+          case 22:
             if (!isErrorResult(result)) {
-              _context4.next = 23;
+              _context4.next = 26;
               break;
             }
             // Store off the pending error - we use it to determine which loaders
@@ -11641,23 +14630,13 @@ function router_createRouter(init) {
               pendingAction = Action.Push;
             }
             return _context4.abrupt("return", {
-              // Send back an empty object we can use to clear out any prior actionData
-              pendingActionData: {},
-              pendingActionError: _defineProperty({}, boundaryMatch.route.id, result.error)
-            });
-          case 23:
-            if (!isDeferredResult(result)) {
-              _context4.next = 25;
-              break;
-            }
-            throw getInternalRouterError(400, {
-              type: "defer-action"
-            });
-          case 25:
-            return _context4.abrupt("return", {
-              pendingActionData: _defineProperty({}, actionMatch.route.id, result.data)
+              pendingActionResult: [boundaryMatch.route.id, result]
             });
           case 26:
+            return _context4.abrupt("return", {
+              pendingActionResult: [actionMatch.route.id, result]
+            });
+          case 27:
           case "end":
             return _context4.stop();
         }
@@ -11665,12 +14644,12 @@ function router_createRouter(init) {
     }));
     return _handleAction.apply(this, arguments);
   }
-  function handleLoaders(_x12, _x13, _x14, _x15, _x16, _x17, _x18, _x19, _x20, _x21, _x22) {
+  function handleLoaders(_x12, _x13, _x14, _x15, _x16, _x17, _x18, _x19, _x20, _x21) {
     return _handleLoaders.apply(this, arguments);
   } // Trigger a fetcher load/submit for the given fetcher key
   function _handleLoaders() {
-    _handleLoaders = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(request, location, matches, overrideNavigation, submission, fetcherSubmission, replace, initialHydration, flushSync, pendingActionData, pendingError) {
-      var loadingNavigation, activeSubmission, routesToUse, _getMatchesToLoad, _getMatchesToLoad2, matchesToLoad, revalidatingFetchers, _updatedFetchers, actionData, abortPendingFetchRevalidations, _yield$callLoadersAnd, results, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData, loaderData, errors, updatedFetchers, didAbortFetchLoads, shouldUpdateFetchers;
+    _handleLoaders = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(request, location, matches, overrideNavigation, submission, fetcherSubmission, replace, initialHydration, flushSync, pendingActionResult) {
+      var loadingNavigation, activeSubmission, routesToUse, _getMatchesToLoad, _getMatchesToLoad2, matchesToLoad, revalidatingFetchers, _updatedFetchers, actionData, abortPendingFetchRevalidations, _yield$callLoadersAnd, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData, loaderData, errors, updatedFetchers, didAbortFetchLoads, shouldUpdateFetchers;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
@@ -11679,7 +14658,7 @@ function router_createRouter(init) {
             // we have it on the loading navigation so use that if available
             activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
             routesToUse = inFlightDataRoutes || dataRoutes;
-            _getMatchesToLoad = getMatchesToLoad(init.history, state, matches, activeSubmission, location, future.v7_partialHydration && initialHydration === true, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError), _getMatchesToLoad2 = _slicedToArray(_getMatchesToLoad, 2), matchesToLoad = _getMatchesToLoad2[0], revalidatingFetchers = _getMatchesToLoad2[1]; // Cancel pending deferreds for no-longer-matched routes or routes we're
+            _getMatchesToLoad = getMatchesToLoad(init.history, state, matches, activeSubmission, location, future.v7_partialHydration && initialHydration === true, future.unstable_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult), _getMatchesToLoad2 = _slicedToArray(_getMatchesToLoad, 2), matchesToLoad = _getMatchesToLoad2[0], revalidatingFetchers = _getMatchesToLoad2[1]; // Cancel pending deferreds for no-longer-matched routes or routes we're
             // about to reload.  Note that if this is an action reload we would have
             // already cancelled all pending deferreds so this would be a no-op
             cancelActiveDeferreds(function (routeId) {
@@ -11700,10 +14679,8 @@ function router_createRouter(init) {
               matches: matches,
               loaderData: {},
               // Commit pending error if we're short circuiting
-              errors: pendingError || null
-            }, pendingActionData ? {
-              actionData: pendingActionData
-            } : {}, _updatedFetchers ? {
+              errors: pendingActionResult && isErrorResult(pendingActionResult[1]) ? _defineProperty({}, pendingActionResult[0], pendingActionResult[1].error) : null
+            }, getActionDataForCommit(pendingActionResult), _updatedFetchers ? {
               fetchers: new Map(state.fetchers)
             } : {}), {
               flushSync: flushSync
@@ -11724,12 +14701,21 @@ function router_createRouter(init) {
                 var revalidatingFetcher = getLoadingFetcher(undefined, fetcher ? fetcher.data : undefined);
                 state.fetchers.set(rf.key, revalidatingFetcher);
               });
-              actionData = pendingActionData || state.actionData;
+              if (pendingActionResult && !isErrorResult(pendingActionResult[1])) {
+                // This is cast to `any` currently because `RouteData`uses any and it
+                // would be a breaking change to use any.
+                // TODO: v7 - change `RouteData` to use `unknown` instead of `any`
+                actionData = _defineProperty({}, pendingActionResult[0], pendingActionResult[1].data);
+              } else if (state.actionData) {
+                if (Object.keys(state.actionData).length === 0) {
+                  actionData = null;
+                } else {
+                  actionData = state.actionData;
+                }
+              }
               updateState(router_extends({
                 navigation: loadingNavigation
-              }, actionData ? Object.keys(actionData).length === 0 ? {
-                actionData: null
-              } : {
+              }, actionData !== undefined ? {
                 actionData: actionData
               } : {}, revalidatingFetchers.length > 0 ? {
                 fetchers: new Map(state.fetchers)
@@ -11761,17 +14747,16 @@ function router_createRouter(init) {
             return callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, request);
           case 16:
             _yield$callLoadersAnd = _context5.sent;
-            results = _yield$callLoadersAnd.results;
             loaderResults = _yield$callLoadersAnd.loaderResults;
             fetcherResults = _yield$callLoadersAnd.fetcherResults;
             if (!request.signal.aborted) {
-              _context5.next = 22;
+              _context5.next = 21;
               break;
             }
             return _context5.abrupt("return", {
               shortCircuited: true
             });
-          case 22:
+          case 21:
             // Clean up _after_ loaders have completed.  Don't clean up if we short
             // circuited because fetchControllers would have been aborted and
             // reassigned to new controllers for the next navigation
@@ -11782,9 +14767,9 @@ function router_createRouter(init) {
               return fetchControllers["delete"](rf.key);
             });
             // If any loaders returned a redirect Response, start a new REPLACE navigation
-            redirect = findRedirect(results);
+            redirect = findRedirect([].concat(_toConsumableArray(loaderResults), _toConsumableArray(fetcherResults)));
             if (!redirect) {
-              _context5.next = 30;
+              _context5.next = 29;
               break;
             }
             if (redirect.idx >= matchesToLoad.length) {
@@ -11794,17 +14779,17 @@ function router_createRouter(init) {
               fetcherKey = revalidatingFetchers[redirect.idx - matchesToLoad.length].key;
               fetchRedirectIds.add(fetcherKey);
             }
-            _context5.next = 29;
-            return startRedirectNavigation(state, redirect.result, {
+            _context5.next = 28;
+            return startRedirectNavigation(request, redirect.result, {
               replace: replace
             });
-          case 29:
+          case 28:
             return _context5.abrupt("return", {
               shortCircuited: true
             });
-          case 30:
+          case 29:
             // Process and commit output from loaders
-            _processLoaderData = processLoaderData(state, matches, matchesToLoad, loaderResults, pendingError, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData.loaderData, errors = _processLoaderData.errors; // Wire up subscribers to update loaderData as promises settle
+            _processLoaderData = processLoaderData(state, matches, matchesToLoad, loaderResults, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData.loaderData, errors = _processLoaderData.errors; // Wire up subscribers to update loaderData as promises settle
             activeDeferreds.forEach(function (deferredData, routeId) {
               deferredData.subscribe(function (aborted) {
                 // Note: No need to updateState here since the TrackedPromise on
@@ -11818,15 +14803,15 @@ function router_createRouter(init) {
             // During partial hydration, preserve SSR errors for routes that don't re-run
             if (future.v7_partialHydration && initialHydration && state.errors) {
               Object.entries(state.errors).filter(function (_ref2) {
-                var _ref10 = _slicedToArray(_ref2, 1),
-                  id = _ref10[0];
+                var _ref11 = _slicedToArray(_ref2, 1),
+                  id = _ref11[0];
                 return !matchesToLoad.some(function (m) {
                   return m.route.id === id;
                 });
               }).forEach(function (_ref3) {
-                var _ref11 = _slicedToArray(_ref3, 2),
-                  routeId = _ref11[0],
-                  error = _ref11[1];
+                var _ref12 = _slicedToArray(_ref3, 2),
+                  routeId = _ref12[0],
+                  error = _ref12[1];
                 errors = Object.assign(errors || {}, _defineProperty({}, routeId, error));
               });
             }
@@ -11839,7 +14824,7 @@ function router_createRouter(init) {
             }, shouldUpdateFetchers ? {
               fetchers: new Map(state.fetchers)
             } : {}));
-          case 37:
+          case 36:
           case "end":
             return _context5.stop();
         }
@@ -11890,12 +14875,12 @@ function router_createRouter(init) {
   }
   // Call the action for the matched fetcher.submit(), and then handle redirects,
   // errors, and revalidation
-  function handleFetcherAction(_x23, _x24, _x25, _x26, _x27, _x28, _x29) {
+  function handleFetcherAction(_x22, _x23, _x24, _x25, _x26, _x27, _x28) {
     return _handleFetcherAction.apply(this, arguments);
   } // Call the matched loader for fetcher.load(), handling redirects, errors, etc.
   function _handleFetcherAction() {
     _handleFetcherAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(key, routeId, path, match, requestMatches, flushSync, submission) {
-      var _error2, existingFetcher, abortController, fetchRequest, originatingLoadId, actionResult, nextLocation, revalidationRequest, routesToUse, matches, loadId, loadFetcher, _getMatchesToLoad3, _getMatchesToLoad4, matchesToLoad, revalidatingFetchers, abortPendingFetchRevalidations, _yield$callLoadersAnd2, results, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData2, loaderData, errors, doneFetcher;
+      var _error2, existingFetcher, abortController, fetchRequest, originatingLoadId, actionResults, actionResult, nextLocation, revalidationRequest, routesToUse, matches, loadId, loadFetcher, _getMatchesToLoad3, _getMatchesToLoad4, matchesToLoad, revalidatingFetchers, abortPendingFetchRevalidations, _yield$callLoadersAnd2, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData2, loaderData, errors, doneFetcher;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) switch (_context6.prev = _context6.next) {
           case 0:
@@ -11926,11 +14911,12 @@ function router_createRouter(init) {
             fetchControllers.set(key, abortController);
             originatingLoadId = incrementingLoadId;
             _context6.next = 14;
-            return callLoaderOrAction("action", fetchRequest, match, requestMatches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath);
+            return callDataStrategy("action", fetchRequest, [match], requestMatches);
           case 14:
-            actionResult = _context6.sent;
+            actionResults = _context6.sent;
+            actionResult = actionResults[0];
             if (!fetchRequest.signal.aborted) {
-              _context6.next = 18;
+              _context6.next = 19;
               break;
             }
             // We can delete this so long as we weren't aborted by our own fetcher
@@ -11939,28 +14925,28 @@ function router_createRouter(init) {
               fetchControllers["delete"](key);
             }
             return _context6.abrupt("return");
-          case 18:
+          case 19:
             if (!(future.v7_fetcherPersist && deletedFetchers.has(key))) {
-              _context6.next = 24;
+              _context6.next = 25;
               break;
             }
             if (!(isRedirectResult(actionResult) || isErrorResult(actionResult))) {
-              _context6.next = 22;
+              _context6.next = 23;
               break;
             }
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context6.abrupt("return");
-          case 22:
-            _context6.next = 37;
+          case 23:
+            _context6.next = 38;
             break;
-          case 24:
+          case 25:
             if (!isRedirectResult(actionResult)) {
-              _context6.next = 34;
+              _context6.next = 35;
               break;
             }
             fetchControllers["delete"](key);
             if (!(pendingNavigationLoadId > originatingLoadId)) {
-              _context6.next = 31;
+              _context6.next = 32;
               break;
             }
             // A new navigation was kicked off after our action started, so that
@@ -11969,28 +14955,28 @@ function router_createRouter(init) {
             // fire unless opted out via shouldRevalidate
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context6.abrupt("return");
-          case 31:
+          case 32:
             fetchRedirectIds.add(key);
             updateFetcherState(key, getLoadingFetcher(submission));
-            return _context6.abrupt("return", startRedirectNavigation(state, actionResult, {
+            return _context6.abrupt("return", startRedirectNavigation(fetchRequest, actionResult, {
               fetcherSubmission: submission
             }));
-          case 34:
+          case 35:
             if (!isErrorResult(actionResult)) {
-              _context6.next = 37;
+              _context6.next = 38;
               break;
             }
             setFetcherError(key, routeId, actionResult.error);
             return _context6.abrupt("return");
-          case 37:
+          case 38:
             if (!isDeferredResult(actionResult)) {
-              _context6.next = 39;
+              _context6.next = 40;
               break;
             }
             throw getInternalRouterError(400, {
               type: "defer-action"
             });
-          case 39:
+          case 40:
             // Start the data load for current matches, or the next location if we're
             // in the middle of a navigation
             nextLocation = state.navigation.location || state.location;
@@ -12002,8 +14988,7 @@ function router_createRouter(init) {
             fetchReloadIds.set(key, loadId);
             loadFetcher = getLoadingFetcher(submission, actionResult.data);
             state.fetchers.set(key, loadFetcher);
-            _getMatchesToLoad3 = getMatchesToLoad(init.history, state, matches, submission, nextLocation, false, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, _defineProperty({}, match.route.id, actionResult.data), undefined // No need to send through errors since we short circuit above
-            ), _getMatchesToLoad4 = _slicedToArray(_getMatchesToLoad3, 2), matchesToLoad = _getMatchesToLoad4[0], revalidatingFetchers = _getMatchesToLoad4[1]; // Put all revalidating fetchers into the loading state, except for the
+            _getMatchesToLoad3 = getMatchesToLoad(init.history, state, matches, submission, nextLocation, false, future.unstable_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, [match.route.id, actionResult]), _getMatchesToLoad4 = _slicedToArray(_getMatchesToLoad3, 2), matchesToLoad = _getMatchesToLoad4[0], revalidatingFetchers = _getMatchesToLoad4[1]; // Put all revalidating fetchers into the loading state, except for the
             // current fetcher which we want to keep in it's current loading state which
             // contains it's action submission info + action data
             revalidatingFetchers.filter(function (rf) {
@@ -12029,11 +15014,10 @@ function router_createRouter(init) {
               });
             };
             abortController.signal.addEventListener("abort", abortPendingFetchRevalidations);
-            _context6.next = 55;
+            _context6.next = 56;
             return callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, revalidationRequest);
-          case 55:
+          case 56:
             _yield$callLoadersAnd2 = _context6.sent;
-            results = _yield$callLoadersAnd2.results;
             loaderResults = _yield$callLoadersAnd2.loaderResults;
             fetcherResults = _yield$callLoadersAnd2.fetcherResults;
             if (!abortController.signal.aborted) {
@@ -12048,7 +15032,7 @@ function router_createRouter(init) {
             revalidatingFetchers.forEach(function (r) {
               return fetchControllers["delete"](r.key);
             });
-            redirect = findRedirect(results);
+            redirect = findRedirect([].concat(_toConsumableArray(loaderResults), _toConsumableArray(fetcherResults)));
             if (!redirect) {
               _context6.next = 69;
               break;
@@ -12060,7 +15044,7 @@ function router_createRouter(init) {
               fetcherKey = revalidatingFetchers[redirect.idx - matchesToLoad.length].key;
               fetchRedirectIds.add(fetcherKey);
             }
-            return _context6.abrupt("return", startRedirectNavigation(state, redirect.result));
+            return _context6.abrupt("return", startRedirectNavigation(revalidationRequest, redirect.result));
           case 69:
             // Process and commit output from loaders
             _processLoaderData2 = processLoaderData(state, state.matches, matchesToLoad, loaderResults, undefined, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData2.loaderData, errors = _processLoaderData2.errors; // Since we let revalidations complete even if the submitting fetcher was
@@ -12101,7 +15085,7 @@ function router_createRouter(init) {
     }));
     return _handleFetcherAction.apply(this, arguments);
   }
-  function handleFetcherLoader(_x30, _x31, _x32, _x33, _x34, _x35, _x36) {
+  function handleFetcherLoader(_x29, _x30, _x31, _x32, _x33, _x34, _x35) {
     return _handleFetcherLoader.apply(this, arguments);
   }
   /**
@@ -12125,7 +15109,7 @@ function router_createRouter(init) {
    */
   function _handleFetcherLoader() {
     _handleFetcherLoader = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(key, routeId, path, match, matches, flushSync, submission) {
-      var existingFetcher, abortController, fetchRequest, originatingLoadId, result;
+      var existingFetcher, abortController, fetchRequest, originatingLoadId, results, result;
       return _regeneratorRuntime().wrap(function _callee7$(_context7) {
         while (1) switch (_context7.prev = _context7.next) {
           case 0:
@@ -12139,73 +15123,77 @@ function router_createRouter(init) {
             fetchControllers.set(key, abortController);
             originatingLoadId = incrementingLoadId;
             _context7.next = 8;
-            return callLoaderOrAction("loader", fetchRequest, match, matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath);
+            return callDataStrategy("loader", fetchRequest, [match], matches);
           case 8:
-            result = _context7.sent;
+            results = _context7.sent;
+            result = results[0]; // Deferred isn't supported for fetcher loads, await everything and treat it
+            // as a normal load.  resolveDeferredData will return undefined if this
+            // fetcher gets aborted, so we just leave result untouched and short circuit
+            // below if that happens
             if (!isDeferredResult(result)) {
+              _context7.next = 17;
+              break;
+            }
+            _context7.next = 13;
+            return resolveDeferredData(result, fetchRequest.signal, true);
+          case 13:
+            _context7.t0 = _context7.sent;
+            if (_context7.t0) {
               _context7.next = 16;
               break;
             }
-            _context7.next = 12;
-            return resolveDeferredData(result, fetchRequest.signal, true);
-          case 12:
-            _context7.t0 = _context7.sent;
-            if (_context7.t0) {
-              _context7.next = 15;
-              break;
-            }
             _context7.t0 = result;
-          case 15:
-            result = _context7.t0;
           case 16:
+            result = _context7.t0;
+          case 17:
             // We can delete this so long as we weren't aborted by our our own fetcher
             // re-load which would have put _new_ controller is in fetchControllers
             if (fetchControllers.get(key) === abortController) {
               fetchControllers["delete"](key);
             }
             if (!fetchRequest.signal.aborted) {
-              _context7.next = 19;
+              _context7.next = 20;
               break;
             }
             return _context7.abrupt("return");
-          case 19:
+          case 20:
             if (!deletedFetchers.has(key)) {
-              _context7.next = 22;
+              _context7.next = 23;
               break;
             }
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context7.abrupt("return");
-          case 22:
+          case 23:
             if (!isRedirectResult(result)) {
-              _context7.next = 32;
+              _context7.next = 33;
               break;
             }
             if (!(pendingNavigationLoadId > originatingLoadId)) {
-              _context7.next = 28;
+              _context7.next = 29;
               break;
             }
             // A new navigation was kicked off after our loader started, so that
             // should take precedence over this redirect navigation
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context7.abrupt("return");
-          case 28:
+          case 29:
             fetchRedirectIds.add(key);
-            _context7.next = 31;
-            return startRedirectNavigation(state, result);
-          case 31:
-            return _context7.abrupt("return");
+            _context7.next = 32;
+            return startRedirectNavigation(fetchRequest, result);
           case 32:
+            return _context7.abrupt("return");
+          case 33:
             if (!isErrorResult(result)) {
-              _context7.next = 35;
+              _context7.next = 36;
               break;
             }
             setFetcherError(key, routeId, result.error);
             return _context7.abrupt("return");
-          case 35:
+          case 36:
             invariant(!isDeferredResult(result), "Unhandled fetcher deferred data");
             // Put the fetcher back into an idle state
             updateFetcherState(key, getDoneFetcher(result.data));
-          case 37:
+          case 38:
           case "end":
             return _context7.stop();
         }
@@ -12213,33 +15201,36 @@ function router_createRouter(init) {
     }));
     return _handleFetcherLoader.apply(this, arguments);
   }
-  function startRedirectNavigation(_x37, _x38, _x39) {
+  function startRedirectNavigation(_x36, _x37, _x38) {
     return _startRedirectNavigation.apply(this, arguments);
-  }
+  } // Utility wrapper for calling dataStrategy client-side without having to
+  // pass around the manifest, mapRouteProperties, etc.
   function _startRedirectNavigation() {
-    _startRedirectNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(state, redirect, _temp2) {
-      var _ref12, submission, fetcherSubmission, replace, redirectLocation, isDocumentReload, url, redirectHistoryAction, _state$navigation, formMethod, formAction, formEncType, activeSubmission, overrideNavigation;
+    _startRedirectNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(request, redirect, _temp2) {
+      var _ref13, submission, fetcherSubmission, replace, location, redirectLocation, isDocumentReload, url, redirectHistoryAction, _state$navigation, formMethod, formAction, formEncType, activeSubmission, overrideNavigation;
       return _regeneratorRuntime().wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            _ref12 = _temp2 === void 0 ? {} : _temp2, submission = _ref12.submission, fetcherSubmission = _ref12.fetcherSubmission, replace = _ref12.replace;
-            if (redirect.revalidate) {
+            _ref13 = _temp2 === void 0 ? {} : _temp2, submission = _ref13.submission, fetcherSubmission = _ref13.fetcherSubmission, replace = _ref13.replace;
+            if (redirect.response.headers.has("X-Remix-Revalidate")) {
               isRevalidationRequired = true;
             }
-            redirectLocation = createLocation(state.location, redirect.location, {
+            location = redirect.response.headers.get("Location");
+            invariant(location, "Expected a Location header on the redirect Response");
+            location = normalizeRedirectLocation(location, new URL(request.url), basename);
+            redirectLocation = createLocation(state.location, location, {
               _isRedirect: true
             });
-            invariant(redirectLocation, "Expected a location on the redirect navigation");
             if (!isBrowser) {
-              _context8.next = 10;
+              _context8.next = 12;
               break;
             }
             isDocumentReload = false;
-            if (redirect.reloadDocument) {
+            if (redirect.response.headers.has("X-Remix-Reload-Document")) {
               // Hard reload if the response contained X-Remix-Reload-Document
               isDocumentReload = true;
-            } else if (ABSOLUTE_URL_REGEX.test(redirect.location)) {
-              url = init.history.createURL(redirect.location);
+            } else if (ABSOLUTE_URL_REGEX.test(location)) {
+              url = init.history.createURL(location);
               isDocumentReload =
               // Hard reload if it's an absolute URL to a new origin
               url.origin !== routerWindow.location.origin ||
@@ -12247,16 +15238,16 @@ function router_createRouter(init) {
               router_stripBasename(url.pathname, basename) == null;
             }
             if (!isDocumentReload) {
-              _context8.next = 10;
+              _context8.next = 12;
               break;
             }
             if (replace) {
-              routerWindow.location.replace(redirect.location);
+              routerWindow.location.replace(location);
             } else {
-              routerWindow.location.assign(redirect.location);
+              routerWindow.location.assign(location);
             }
             return _context8.abrupt("return");
-          case 10:
+          case 12:
             // There's no need to abort on redirects, since we don't detect the
             // redirect until the action/loaders have settled
             pendingNavigationController = null;
@@ -12270,26 +15261,26 @@ function router_createRouter(init) {
             // re-submit the GET/POST/PUT/PATCH/DELETE as a submission navigation to the
             // redirected location
             activeSubmission = submission || fetcherSubmission;
-            if (!(redirectPreserveMethodStatusCodes.has(redirect.status) && activeSubmission && isMutationMethod(activeSubmission.formMethod))) {
-              _context8.next = 20;
+            if (!(redirectPreserveMethodStatusCodes.has(redirect.response.status) && activeSubmission && isMutationMethod(activeSubmission.formMethod))) {
+              _context8.next = 22;
               break;
             }
-            _context8.next = 18;
+            _context8.next = 20;
             return startNavigation(redirectHistoryAction, redirectLocation, {
               submission: router_extends({}, activeSubmission, {
-                formAction: redirect.location
+                formAction: location
               }),
               // Preserve this flag across redirects
               preventScrollReset: pendingPreventScrollReset
             });
-          case 18:
-            _context8.next = 23;
-            break;
           case 20:
+            _context8.next = 25;
+            break;
+          case 22:
             // If we have a navigation submission, we will preserve it through the
             // redirect navigation
             overrideNavigation = getLoadingNavigation(redirectLocation, submission);
-            _context8.next = 23;
+            _context8.next = 25;
             return startNavigation(redirectHistoryAction, redirectLocation, {
               overrideNavigation: overrideNavigation,
               // Send fetcher submissions through for shouldRevalidate
@@ -12297,7 +15288,7 @@ function router_createRouter(init) {
               // Preserve this flag across redirects
               preventScrollReset: pendingPreventScrollReset
             });
-          case 23:
+          case 25:
           case "end":
             return _context8.stop();
         }
@@ -12305,36 +15296,81 @@ function router_createRouter(init) {
     }));
     return _startRedirectNavigation.apply(this, arguments);
   }
-  function callLoadersAndMaybeResolveData(_x40, _x41, _x42, _x43, _x44) {
-    return _callLoadersAndMaybeResolveData.apply(this, arguments);
+  function callDataStrategy(_x39, _x40, _x41, _x42) {
+    return _callDataStrategy.apply(this, arguments);
   }
-  function _callLoadersAndMaybeResolveData() {
-    _callLoadersAndMaybeResolveData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(currentMatches, matches, matchesToLoad, fetchersToLoad, request) {
-      var results, loaderResults, fetcherResults;
+  function _callDataStrategy() {
+    _callDataStrategy = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(type, request, matchesToLoad, matches) {
+      var results;
       return _regeneratorRuntime().wrap(function _callee9$(_context9) {
         while (1) switch (_context9.prev = _context9.next) {
           case 0:
-            _context9.next = 2;
-            return Promise.all([].concat(_toConsumableArray(matchesToLoad.map(function (match) {
-              return callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath);
-            })), _toConsumableArray(fetchersToLoad.map(function (f) {
+            _context9.prev = 0;
+            _context9.next = 3;
+            return callDataStrategyImpl(dataStrategyImpl, type, request, matchesToLoad, matches, manifest, mapRouteProperties);
+          case 3:
+            results = _context9.sent;
+            _context9.next = 6;
+            return Promise.all(results.map(function (result, i) {
+              if (isRedirectHandlerResult(result)) {
+                var response = result.result;
+                return {
+                  type: ResultType.redirect,
+                  response: normalizeRelativeRoutingRedirectResponse(response, request, matchesToLoad[i].route.id, matches, basename, future.v7_relativeSplatPath)
+                };
+              }
+              return convertHandlerResultToDataResult(result);
+            }));
+          case 6:
+            return _context9.abrupt("return", _context9.sent);
+          case 9:
+            _context9.prev = 9;
+            _context9.t0 = _context9["catch"](0);
+            return _context9.abrupt("return", matchesToLoad.map(function () {
+              return {
+                type: ResultType.error,
+                error: _context9.t0
+              };
+            }));
+          case 12:
+          case "end":
+            return _context9.stop();
+        }
+      }, _callee9, null, [[0, 9]]);
+    }));
+    return _callDataStrategy.apply(this, arguments);
+  }
+  function callLoadersAndMaybeResolveData(_x43, _x44, _x45, _x46, _x47) {
+    return _callLoadersAndMaybeResolveData.apply(this, arguments);
+  }
+  function _callLoadersAndMaybeResolveData() {
+    _callLoadersAndMaybeResolveData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(currentMatches, matches, matchesToLoad, fetchersToLoad, request) {
+      var _yield$Promise$all, _yield$Promise$all2, loaderResults, fetcherResults;
+      return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+        while (1) switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.next = 2;
+            return Promise.all([matchesToLoad.length ? callDataStrategy("loader", request, matchesToLoad, matches) : []].concat(_toConsumableArray(fetchersToLoad.map(function (f) {
               if (f.matches && f.match && f.controller) {
-                return callLoaderOrAction("loader", createClientSideRequest(init.history, f.path, f.controller.signal), f.match, f.matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath);
+                var fetcherRequest = createClientSideRequest(init.history, f.path, f.controller.signal);
+                return callDataStrategy("loader", fetcherRequest, [f.match], f.matches).then(function (r) {
+                  return r[0];
+                });
               } else {
-                var _error3 = {
+                return Promise.resolve({
                   type: ResultType.error,
                   error: getInternalRouterError(404, {
                     pathname: f.path
                   })
-                };
-                return _error3;
+                });
               }
             }))));
           case 2:
-            results = _context9.sent;
-            loaderResults = results.slice(0, matchesToLoad.length);
-            fetcherResults = results.slice(matchesToLoad.length);
-            _context9.next = 7;
+            _yield$Promise$all = _context10.sent;
+            _yield$Promise$all2 = _toArray(_yield$Promise$all);
+            loaderResults = _yield$Promise$all2[0];
+            fetcherResults = _yield$Promise$all2.slice(1);
+            _context10.next = 8;
             return Promise.all([resolveDeferredResults(currentMatches, matchesToLoad, loaderResults, loaderResults.map(function () {
               return request.signal;
             }), false, state.loaderData), resolveDeferredResults(currentMatches, fetchersToLoad.map(function (f) {
@@ -12342,17 +15378,16 @@ function router_createRouter(init) {
             }), fetcherResults, fetchersToLoad.map(function (f) {
               return f.controller ? f.controller.signal : null;
             }), true)]);
-          case 7:
-            return _context9.abrupt("return", {
-              results: results,
+          case 8:
+            return _context10.abrupt("return", {
               loaderResults: loaderResults,
               fetcherResults: fetcherResults
             });
-          case 8:
+          case 9:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
-      }, _callee9);
+      }, _callee10);
     }));
     return _callLoadersAndMaybeResolveData.apply(this, arguments);
   }
@@ -12721,8 +15756,15 @@ function createStaticHandler(routes, opts) {
    * redirect response is returned or thrown from any action/loader.  We
    * propagate that out and return the raw Response so the HTTP server can
    * return it directly.
+   *
+   * - `opts.requestContext` is an optional server context that will be passed
+   *   to actions/loaders in the `context` parameter
+   * - `opts.skipLoaderErrorBubbling` is an optional parameter that will prevent
+   *   the bubbling of errors which allows single-fetch-type implementations
+   *   where the client will handle the bubbling and we may need to return data
+   *   for the handling route
    */
-  function query(_x45, _x46) {
+  function query(_x48, _x49) {
     return _query.apply(this, arguments);
   }
   /**
@@ -12744,27 +15786,33 @@ function createStaticHandler(routes, opts) {
    * serialize the error as they see fit while including the proper response
    * code.  Examples here are 404 and 405 errors that occur prior to reaching
    * any user-defined loaders.
+   *
+   * - `opts.routeId` allows you to specify the specific route handler to call.
+   *   If not provided the handler will determine the proper route by matching
+   *   against `request.url`
+   * - `opts.requestContext` is an optional server context that will be passed
+   *    to actions/loaders in the `context` parameter
    */
   function _query() {
-    _query = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(request, _temp3) {
-      var _ref13, requestContext, url, method, location, matches, error, _getShortCircuitMatch3, methodNotAllowedMatches, route, _error4, _getShortCircuitMatch4, notFoundMatches, _route2, result;
-      return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-        while (1) switch (_context10.prev = _context10.next) {
+    _query = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(request, _temp3) {
+      var _ref14, requestContext, skipLoaderErrorBubbling, unstable_dataStrategy, url, method, location, matches, error, _getShortCircuitMatch3, methodNotAllowedMatches, route, _error3, _getShortCircuitMatch4, notFoundMatches, _route2, result;
+      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+        while (1) switch (_context11.prev = _context11.next) {
           case 0:
-            _ref13 = _temp3 === void 0 ? {} : _temp3, requestContext = _ref13.requestContext;
+            _ref14 = _temp3 === void 0 ? {} : _temp3, requestContext = _ref14.requestContext, skipLoaderErrorBubbling = _ref14.skipLoaderErrorBubbling, unstable_dataStrategy = _ref14.unstable_dataStrategy;
             url = new URL(request.url);
             method = request.method;
             location = createLocation("", createPath(url), null, "default");
             matches = matchRoutes(dataRoutes, location, basename); // SSR supports HEAD requests while SPA doesn't
             if (!(!isValidMethod(method) && method !== "HEAD")) {
-              _context10.next = 11;
+              _context11.next = 11;
               break;
             }
             error = getInternalRouterError(405, {
               method: method
             });
             _getShortCircuitMatch3 = getShortCircuitMatches(dataRoutes), methodNotAllowedMatches = _getShortCircuitMatch3.matches, route = _getShortCircuitMatch3.route;
-            return _context10.abrupt("return", {
+            return _context11.abrupt("return", {
               basename: basename,
               location: location,
               matches: methodNotAllowedMatches,
@@ -12778,64 +15826,64 @@ function createStaticHandler(routes, opts) {
             });
           case 11:
             if (matches) {
-              _context10.next = 15;
+              _context11.next = 15;
               break;
             }
-            _error4 = getInternalRouterError(404, {
+            _error3 = getInternalRouterError(404, {
               pathname: location.pathname
             });
             _getShortCircuitMatch4 = getShortCircuitMatches(dataRoutes), notFoundMatches = _getShortCircuitMatch4.matches, _route2 = _getShortCircuitMatch4.route;
-            return _context10.abrupt("return", {
+            return _context11.abrupt("return", {
               basename: basename,
               location: location,
               matches: notFoundMatches,
               loaderData: {},
               actionData: null,
-              errors: _defineProperty({}, _route2.id, _error4),
-              statusCode: _error4.status,
+              errors: _defineProperty({}, _route2.id, _error3),
+              statusCode: _error3.status,
               loaderHeaders: {},
               actionHeaders: {},
               activeDeferreds: null
             });
           case 15:
-            _context10.next = 17;
-            return queryImpl(request, location, matches, requestContext);
+            _context11.next = 17;
+            return queryImpl(request, location, matches, requestContext, unstable_dataStrategy || null, skipLoaderErrorBubbling === true, null);
           case 17:
-            result = _context10.sent;
+            result = _context11.sent;
             if (!isResponse(result)) {
-              _context10.next = 20;
+              _context11.next = 20;
               break;
             }
-            return _context10.abrupt("return", result);
+            return _context11.abrupt("return", result);
           case 20:
-            return _context10.abrupt("return", router_extends({
+            return _context11.abrupt("return", router_extends({
               location: location,
               basename: basename
             }, result));
           case 21:
           case "end":
-            return _context10.stop();
+            return _context11.stop();
         }
-      }, _callee10);
+      }, _callee11);
     }));
     return _query.apply(this, arguments);
   }
-  function queryRoute(_x47, _x48) {
+  function queryRoute(_x50, _x51) {
     return _queryRoute.apply(this, arguments);
   }
   function _queryRoute() {
-    _queryRoute = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(request, _temp4) {
-      var _ref14, routeId, requestContext, url, method, location, matches, match, result, error, _result$activeDeferre, data;
-      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-        while (1) switch (_context11.prev = _context11.next) {
+    _queryRoute = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(request, _temp4) {
+      var _ref15, routeId, requestContext, url, method, location, matches, match, result, error, _result$activeDeferre, data;
+      return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+        while (1) switch (_context12.prev = _context12.next) {
           case 0:
-            _ref14 = _temp4 === void 0 ? {} : _temp4, routeId = _ref14.routeId, requestContext = _ref14.requestContext;
+            _ref15 = _temp4 === void 0 ? {} : _temp4, routeId = _ref15.routeId, requestContext = _ref15.requestContext;
             url = new URL(request.url);
             method = request.method;
             location = createLocation("", createPath(url), null, "default");
             matches = matchRoutes(dataRoutes, location, basename); // SSR supports HEAD requests while SPA doesn't
             if (!(!isValidMethod(method) && method !== "HEAD" && method !== "OPTIONS")) {
-              _context11.next = 9;
+              _context12.next = 9;
               break;
             }
             throw getInternalRouterError(405, {
@@ -12843,7 +15891,7 @@ function createStaticHandler(routes, opts) {
             });
           case 9:
             if (matches) {
-              _context11.next = 11;
+              _context12.next = 11;
               break;
             }
             throw getInternalRouterError(404, {
@@ -12854,7 +15902,7 @@ function createStaticHandler(routes, opts) {
               return m.route.id === routeId;
             }) : getTargetMatch(matches, location);
             if (!(routeId && !match)) {
-              _context11.next = 16;
+              _context12.next = 16;
               break;
             }
             throw getInternalRouterError(403, {
@@ -12863,125 +15911,125 @@ function createStaticHandler(routes, opts) {
             });
           case 16:
             if (match) {
-              _context11.next = 18;
+              _context12.next = 18;
               break;
             }
             throw getInternalRouterError(404, {
               pathname: location.pathname
             });
           case 18:
-            _context11.next = 20;
-            return queryImpl(request, location, matches, requestContext, match);
+            _context12.next = 20;
+            return queryImpl(request, location, matches, requestContext, null, false, match);
           case 20:
-            result = _context11.sent;
+            result = _context12.sent;
             if (!isResponse(result)) {
-              _context11.next = 23;
+              _context12.next = 23;
               break;
             }
-            return _context11.abrupt("return", result);
+            return _context12.abrupt("return", result);
           case 23:
             error = result.errors ? Object.values(result.errors)[0] : undefined;
             if (!(error !== undefined)) {
-              _context11.next = 26;
+              _context12.next = 26;
               break;
             }
             throw error;
           case 26:
             if (!result.actionData) {
-              _context11.next = 28;
+              _context12.next = 28;
               break;
             }
-            return _context11.abrupt("return", Object.values(result.actionData)[0]);
+            return _context12.abrupt("return", Object.values(result.actionData)[0]);
           case 28:
             if (!result.loaderData) {
-              _context11.next = 32;
+              _context12.next = 32;
               break;
             }
             data = Object.values(result.loaderData)[0];
             if ((_result$activeDeferre = result.activeDeferreds) != null && _result$activeDeferre[match.route.id]) {
               data[UNSAFE_DEFERRED_SYMBOL] = result.activeDeferreds[match.route.id];
             }
-            return _context11.abrupt("return", data);
+            return _context12.abrupt("return", data);
           case 32:
-            return _context11.abrupt("return", undefined);
+            return _context12.abrupt("return", undefined);
           case 33:
           case "end":
-            return _context11.stop();
+            return _context12.stop();
         }
-      }, _callee11);
+      }, _callee12);
     }));
     return _queryRoute.apply(this, arguments);
   }
-  function queryImpl(_x49, _x50, _x51, _x52, _x53) {
+  function queryImpl(_x52, _x53, _x54, _x55, _x56, _x57, _x58) {
     return _queryImpl.apply(this, arguments);
   }
   function _queryImpl() {
-    _queryImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(request, location, matches, requestContext, routeMatch) {
+    _queryImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(request, location, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch) {
       var _result, result;
-      return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-        while (1) switch (_context12.prev = _context12.next) {
+      return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+        while (1) switch (_context13.prev = _context13.next) {
           case 0:
             invariant(request.signal, "query()/queryRoute() requests must contain an AbortController signal");
-            _context12.prev = 1;
+            _context13.prev = 1;
             if (!isMutationMethod(request.method.toLowerCase())) {
-              _context12.next = 7;
+              _context13.next = 7;
               break;
             }
-            _context12.next = 5;
-            return submit(request, matches, routeMatch || getTargetMatch(matches, location), requestContext, routeMatch != null);
+            _context13.next = 5;
+            return submit(request, matches, routeMatch || getTargetMatch(matches, location), requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch != null);
           case 5:
-            _result = _context12.sent;
-            return _context12.abrupt("return", _result);
+            _result = _context13.sent;
+            return _context13.abrupt("return", _result);
           case 7:
-            _context12.next = 9;
-            return loadRouteData(request, matches, requestContext, routeMatch);
+            _context13.next = 9;
+            return loadRouteData(request, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch);
           case 9:
-            result = _context12.sent;
-            return _context12.abrupt("return", isResponse(result) ? result : router_extends({}, result, {
+            result = _context13.sent;
+            return _context13.abrupt("return", isResponse(result) ? result : router_extends({}, result, {
               actionData: null,
               actionHeaders: {}
             }));
           case 13:
-            _context12.prev = 13;
-            _context12.t0 = _context12["catch"](1);
-            if (!isQueryRouteResponse(_context12.t0)) {
-              _context12.next = 19;
+            _context13.prev = 13;
+            _context13.t0 = _context13["catch"](1);
+            if (!(isHandlerResult(_context13.t0) && isResponse(_context13.t0.result))) {
+              _context13.next = 19;
               break;
             }
-            if (!(_context12.t0.type === ResultType.error)) {
-              _context12.next = 18;
+            if (!(_context13.t0.type === ResultType.error)) {
+              _context13.next = 18;
               break;
             }
-            throw _context12.t0.response;
+            throw _context13.t0.result;
           case 18:
-            return _context12.abrupt("return", _context12.t0.response);
+            return _context13.abrupt("return", _context13.t0.result);
           case 19:
-            if (!isRedirectResponse(_context12.t0)) {
-              _context12.next = 21;
+            if (!isRedirectResponse(_context13.t0)) {
+              _context13.next = 21;
               break;
             }
-            return _context12.abrupt("return", _context12.t0);
+            return _context13.abrupt("return", _context13.t0);
           case 21:
-            throw _context12.t0;
+            throw _context13.t0;
           case 22:
           case "end":
-            return _context12.stop();
+            return _context13.stop();
         }
-      }, _callee12, null, [[1, 13]]);
+      }, _callee13, null, [[1, 13]]);
     }));
     return _queryImpl.apply(this, arguments);
   }
-  function submit(_x54, _x55, _x56, _x57, _x58) {
+  function submit(_x59, _x60, _x61, _x62, _x63, _x64, _x65) {
     return _submit.apply(this, arguments);
   }
   function _submit() {
-    _submit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(request, matches, actionMatch, requestContext, isRouteRequest) {
-      var result, error, _error5, boundaryMatch, _context13, loaderRequest, context;
-      return _regeneratorRuntime().wrap(function _callee13$(_context14) {
-        while (1) switch (_context14.prev = _context14.next) {
+    _submit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(request, matches, actionMatch, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, isRouteRequest) {
+      var result, error, results, _error4, loaderRequest, boundaryMatch, _context14, context;
+      return _regeneratorRuntime().wrap(function _callee14$(_context15) {
+        while (1) switch (_context15.prev = _context15.next) {
           case 0:
             if (!(!actionMatch.route.action && !actionMatch.route.lazy)) {
-              _context14.next = 7;
+              _context15.next = 7;
               break;
             }
             error = getInternalRouterError(405, {
@@ -12990,7 +16038,7 @@ function createStaticHandler(routes, opts) {
               routeId: actionMatch.route.id
             });
             if (!isRouteRequest) {
-              _context14.next = 4;
+              _context15.next = 4;
               break;
             }
             throw error;
@@ -12999,61 +16047,58 @@ function createStaticHandler(routes, opts) {
               type: ResultType.error,
               error: error
             };
-            _context14.next = 11;
+            _context15.next = 12;
             break;
           case 7:
-            _context14.next = 9;
-            return callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath, {
-              isStaticRequest: true,
-              isRouteRequest: isRouteRequest,
-              requestContext: requestContext
-            });
+            _context15.next = 9;
+            return callDataStrategy("action", request, [actionMatch], matches, isRouteRequest, requestContext, unstable_dataStrategy);
           case 9:
-            result = _context14.sent;
+            results = _context15.sent;
+            result = results[0];
             if (request.signal.aborted) {
               throwStaticHandlerAbortedError(request, isRouteRequest, future);
             }
-          case 11:
+          case 12:
             if (!isRedirectResult(result)) {
-              _context14.next = 13;
+              _context15.next = 14;
               break;
             }
             throw new Response(null, {
-              status: result.status,
+              status: result.response.status,
               headers: {
-                Location: result.location
+                Location: result.response.headers.get("Location")
               }
             });
-          case 13:
+          case 14:
             if (!isDeferredResult(result)) {
-              _context14.next = 18;
+              _context15.next = 19;
               break;
             }
-            _error5 = getInternalRouterError(400, {
+            _error4 = getInternalRouterError(400, {
               type: "defer-action"
             });
             if (!isRouteRequest) {
-              _context14.next = 17;
+              _context15.next = 18;
               break;
             }
-            throw _error5;
-          case 17:
+            throw _error4;
+          case 18:
             result = {
               type: ResultType.error,
-              error: _error5
+              error: _error4
             };
-          case 18:
+          case 19:
             if (!isRouteRequest) {
-              _context14.next = 22;
+              _context15.next = 23;
               break;
             }
             if (!isErrorResult(result)) {
-              _context14.next = 21;
+              _context15.next = 22;
               break;
             }
             throw result.error;
-          case 21:
-            return _context14.abrupt("return", {
+          case 22:
+            return _context15.abrupt("return", {
               matches: [actionMatch],
               loaderData: {},
               actionData: _defineProperty({}, actionMatch.route.id, result.data),
@@ -13065,60 +16110,62 @@ function createStaticHandler(routes, opts) {
               actionHeaders: {},
               activeDeferreds: null
             });
-          case 22:
-            if (!isErrorResult(result)) {
-              _context14.next = 28;
-              break;
-            }
-            // Store off the pending error - we use it to determine which loaders
-            // to call and will commit it when we complete the navigation
-            boundaryMatch = findNearestBoundary(matches, actionMatch.route.id);
-            _context14.next = 26;
-            return loadRouteData(request, matches, requestContext, undefined, _defineProperty({}, boundaryMatch.route.id, result.error));
-          case 26:
-            _context13 = _context14.sent;
-            return _context14.abrupt("return", router_extends({}, _context13, {
-              statusCode: isRouteErrorResponse(result.error) ? result.error.status : 500,
-              actionData: null,
-              actionHeaders: router_extends({}, result.headers ? _defineProperty({}, actionMatch.route.id, result.headers) : {})
-            }));
-          case 28:
+          case 23:
             // Create a GET request for the loaders
             loaderRequest = new Request(request.url, {
               headers: request.headers,
               redirect: request.redirect,
               signal: request.signal
             });
-            _context14.next = 31;
-            return loadRouteData(loaderRequest, matches, requestContext);
-          case 31:
-            context = _context14.sent;
-            return _context14.abrupt("return", router_extends({}, context, result.statusCode ? {
-              statusCode: result.statusCode
-            } : {}, {
-              actionData: _defineProperty({}, actionMatch.route.id, result.data),
+            if (!isErrorResult(result)) {
+              _context15.next = 30;
+              break;
+            }
+            // Store off the pending error - we use it to determine which loaders
+            // to call and will commit it when we complete the navigation
+            boundaryMatch = skipLoaderErrorBubbling ? actionMatch : findNearestBoundary(matches, actionMatch.route.id);
+            _context15.next = 28;
+            return loadRouteData(loaderRequest, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, null, [boundaryMatch.route.id, result]);
+          case 28:
+            _context14 = _context15.sent;
+            return _context15.abrupt("return", router_extends({}, _context14, {
+              statusCode: isRouteErrorResponse(result.error) ? result.error.status : result.statusCode != null ? result.statusCode : 500,
+              actionData: null,
               actionHeaders: router_extends({}, result.headers ? _defineProperty({}, actionMatch.route.id, result.headers) : {})
             }));
-          case 33:
+          case 30:
+            _context15.next = 32;
+            return loadRouteData(loaderRequest, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, null);
+          case 32:
+            context = _context15.sent;
+            return _context15.abrupt("return", router_extends({}, context, {
+              actionData: _defineProperty({}, actionMatch.route.id, result.data)
+            }, result.statusCode ? {
+              statusCode: result.statusCode
+            } : {}, {
+              actionHeaders: result.headers ? _defineProperty({}, actionMatch.route.id, result.headers) : {}
+            }));
+          case 34:
           case "end":
-            return _context14.stop();
+            return _context15.stop();
         }
-      }, _callee13);
+      }, _callee14);
     }));
     return _submit.apply(this, arguments);
   }
-  function loadRouteData(_x59, _x60, _x61, _x62, _x63) {
+  function loadRouteData(_x66, _x67, _x68, _x69, _x70, _x71, _x72) {
     return _loadRouteData.apply(this, arguments);
-  }
+  } // Utility wrapper for calling dataStrategy server-side without having to
+  // pass around the manifest, mapRouteProperties, etc.
   function _loadRouteData() {
-    _loadRouteData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(request, matches, requestContext, routeMatch, pendingActionError) {
+    _loadRouteData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(request, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch, pendingActionResult) {
       var isRouteRequest, requestMatches, matchesToLoad, results, activeDeferreds, context, executedLoaders;
-      return _regeneratorRuntime().wrap(function _callee14$(_context15) {
-        while (1) switch (_context15.prev = _context15.next) {
+      return _regeneratorRuntime().wrap(function _callee15$(_context16) {
+        while (1) switch (_context16.prev = _context16.next) {
           case 0:
             isRouteRequest = routeMatch != null; // Short circuit if we have no loaders to run (queryRoute())
             if (!(isRouteRequest && !(routeMatch != null && routeMatch.route.loader) && !(routeMatch != null && routeMatch.route.lazy))) {
-              _context15.next = 3;
+              _context16.next = 3;
               break;
             }
             throw getInternalRouterError(400, {
@@ -13127,42 +16174,36 @@ function createStaticHandler(routes, opts) {
               routeId: routeMatch == null ? void 0 : routeMatch.route.id
             });
           case 3:
-            requestMatches = routeMatch ? [routeMatch] : getLoaderMatchesUntilBoundary(matches, Object.keys(pendingActionError || {})[0]);
+            requestMatches = routeMatch ? [routeMatch] : pendingActionResult && isErrorResult(pendingActionResult[1]) ? getLoaderMatchesUntilBoundary(matches, pendingActionResult[0]) : matches;
             matchesToLoad = requestMatches.filter(function (m) {
               return m.route.loader || m.route.lazy;
             }); // Short circuit if we have no loaders to run (query())
             if (!(matchesToLoad.length === 0)) {
-              _context15.next = 7;
+              _context16.next = 7;
               break;
             }
-            return _context15.abrupt("return", {
+            return _context16.abrupt("return", {
               matches: matches,
               // Add a null for all matched routes for proper revalidation on the client
               loaderData: matches.reduce(function (acc, m) {
                 return Object.assign(acc, _defineProperty({}, m.route.id, null));
               }, {}),
-              errors: pendingActionError || null,
+              errors: pendingActionResult && isErrorResult(pendingActionResult[1]) ? _defineProperty({}, pendingActionResult[0], pendingActionResult[1].error) : null,
               statusCode: 200,
               loaderHeaders: {},
               activeDeferreds: null
             });
           case 7:
-            _context15.next = 9;
-            return Promise.all(_toConsumableArray(matchesToLoad.map(function (match) {
-              return callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename, future.v7_relativeSplatPath, {
-                isStaticRequest: true,
-                isRouteRequest: isRouteRequest,
-                requestContext: requestContext
-              });
-            })));
+            _context16.next = 9;
+            return callDataStrategy("loader", request, matchesToLoad, matches, isRouteRequest, requestContext, unstable_dataStrategy);
           case 9:
-            results = _context15.sent;
+            results = _context16.sent;
             if (request.signal.aborted) {
               throwStaticHandlerAbortedError(request, isRouteRequest, future);
             }
             // Process and commit output from loaders
             activeDeferreds = new Map();
-            context = processRouteLoaderData(matches, matchesToLoad, results, pendingActionError, activeDeferreds); // Add a null for any non-loader matches for proper revalidation on the client
+            context = processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling); // Add a null for any non-loader matches for proper revalidation on the client
             executedLoaders = new Set(matchesToLoad.map(function (match) {
               return match.route.id;
             }));
@@ -13171,17 +16212,54 @@ function createStaticHandler(routes, opts) {
                 context.loaderData[match.route.id] = null;
               }
             });
-            return _context15.abrupt("return", router_extends({}, context, {
+            return _context16.abrupt("return", router_extends({}, context, {
               matches: matches,
               activeDeferreds: activeDeferreds.size > 0 ? Object.fromEntries(activeDeferreds.entries()) : null
             }));
           case 16:
           case "end":
-            return _context15.stop();
+            return _context16.stop();
         }
-      }, _callee14);
+      }, _callee15);
     }));
     return _loadRouteData.apply(this, arguments);
+  }
+  function callDataStrategy(_x73, _x74, _x75, _x76, _x77, _x78, _x79) {
+    return _callDataStrategy2.apply(this, arguments);
+  }
+  function _callDataStrategy2() {
+    _callDataStrategy2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(type, request, matchesToLoad, matches, isRouteRequest, requestContext, unstable_dataStrategy) {
+      var results;
+      return _regeneratorRuntime().wrap(function _callee16$(_context17) {
+        while (1) switch (_context17.prev = _context17.next) {
+          case 0:
+            _context17.next = 2;
+            return callDataStrategyImpl(unstable_dataStrategy || defaultDataStrategy, type, request, matchesToLoad, matches, manifest, mapRouteProperties, requestContext);
+          case 2:
+            results = _context17.sent;
+            _context17.next = 5;
+            return Promise.all(results.map(function (result, i) {
+              if (isRedirectHandlerResult(result)) {
+                var response = result.result;
+                // Throw redirects and let the server handle them with an HTTP redirect
+                throw normalizeRelativeRoutingRedirectResponse(response, request, matchesToLoad[i].route.id, matches, basename, future.v7_relativeSplatPath);
+              }
+              if (isResponse(result.result) && isRouteRequest) {
+                // For SSR single-route requests, we want to hand Responses back
+                // directly without unwrapping
+                throw result;
+              }
+              return convertHandlerResultToDataResult(result);
+            }));
+          case 5:
+            return _context17.abrupt("return", _context17.sent);
+          case 6:
+          case "end":
+            return _context17.stop();
+        }
+      }, _callee16);
+    }));
+    return _callDataStrategy2.apply(this, arguments);
   }
   return {
     dataRoutes: dataRoutes,
@@ -13301,9 +16379,9 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
       var text = typeof opts.body === "string" ? opts.body : opts.body instanceof FormData || opts.body instanceof URLSearchParams ?
       // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#plain-text-form-data
       Array.from(opts.body.entries()).reduce(function (acc, _ref5) {
-        var _ref17 = _slicedToArray(_ref5, 2),
-          name = _ref17[0],
-          value = _ref17[1];
+        var _ref19 = _slicedToArray(_ref5, 2),
+          name = _ref19[0],
+          value = _ref19[1];
         return "" + acc + name + "=" + value + "\n";
       }, "") : String(opts.body);
       return {
@@ -13405,13 +16483,18 @@ function getLoaderMatchesUntilBoundary(matches, boundaryId) {
   }
   return boundaryMatches;
 }
-function getMatchesToLoad(history, state, matches, submission, location, isInitialLoad, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError) {
-  var actionResult = pendingError ? Object.values(pendingError)[0] : pendingActionData ? Object.values(pendingActionData)[0] : undefined;
+function getMatchesToLoad(history, state, matches, submission, location, isInitialLoad, skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult) {
+  var actionResult = pendingActionResult ? isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : pendingActionResult[1].data : undefined;
   var currentUrl = history.createURL(state.location);
   var nextUrl = history.createURL(location);
   // Pick navigation matches that are net-new or qualify for revalidation
-  var boundaryId = pendingError ? Object.keys(pendingError)[0] : undefined;
-  var boundaryMatches = getLoaderMatchesUntilBoundary(matches, boundaryId);
+  var boundaryId = pendingActionResult && isErrorResult(pendingActionResult[1]) ? pendingActionResult[0] : undefined;
+  var boundaryMatches = boundaryId ? getLoaderMatchesUntilBoundary(matches, boundaryId) : matches;
+  // Don't revalidate loaders by default after action 4xx/5xx responses
+  // when the flag is enabled.  They can still opt-into revalidation via
+  // `shouldRevalidate` via `actionResult`
+  var actionStatus = pendingActionResult ? pendingActionResult[1].statusCode : undefined;
+  var shouldSkipRevalidation = skipActionErrorRevalidation && actionStatus && actionStatus >= 400;
   var navigationMatches = boundaryMatches.filter(function (match, index) {
     var route = match.route;
     if (route.lazy) {
@@ -13422,7 +16505,7 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
       return false;
     }
     if (isInitialLoad) {
-      if (route.loader.hydrate) {
+      if (typeof route.loader !== "function" || route.loader.hydrate) {
         return true;
       }
       return state.loaderData[route.id] === undefined && (
@@ -13448,11 +16531,10 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
       nextParams: nextRouteMatch.params
     }, submission, {
       actionResult: actionResult,
-      defaultShouldRevalidate:
+      unstable_actionStatus: actionStatus,
+      defaultShouldRevalidate: shouldSkipRevalidation ? false :
       // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
-      isRevalidationRequired ||
-      // Clicked the same link, resubmitted a GET form
-      currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search ||
+      isRevalidationRequired || currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search ||
       // Search params affect all loaders
       currentUrl.search !== nextUrl.search || isNewRouteInstance(currentRouteMatch, nextRouteMatch)
     }));
@@ -13513,7 +16595,8 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
         nextParams: matches[matches.length - 1].params
       }, submission, {
         actionResult: actionResult,
-        defaultShouldRevalidate: isRevalidationRequired
+        unstable_actionStatus: actionStatus,
+        defaultShouldRevalidate: shouldSkipRevalidation ? false : isRevalidationRequired
       }));
     }
     if (shouldRevalidate) {
@@ -13565,30 +16648,30 @@ function shouldRevalidateLoader(loaderMatch, arg) {
  * shouldRevalidate) and update the routeManifest in place which shares objects
  * with dataRoutes so those get updated as well.
  */
-function loadLazyRouteModule(_x64, _x65, _x66) {
+function loadLazyRouteModule(_x80, _x81, _x82) {
   return _loadLazyRouteModule.apply(this, arguments);
-}
+} // Default implementation of `dataStrategy` which fetches all loaders in parallel
 function _loadLazyRouteModule() {
-  _loadLazyRouteModule = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(route, mapRouteProperties, manifest) {
+  _loadLazyRouteModule = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(route, mapRouteProperties, manifest) {
     var lazyRoute, routeToUpdate, routeUpdates, lazyRouteProperty, staticRouteValue, isPropertyStaticallyDefined;
-    return _regeneratorRuntime().wrap(function _callee15$(_context16) {
-      while (1) switch (_context16.prev = _context16.next) {
+    return _regeneratorRuntime().wrap(function _callee17$(_context18) {
+      while (1) switch (_context18.prev = _context18.next) {
         case 0:
           if (route.lazy) {
-            _context16.next = 2;
+            _context18.next = 2;
             break;
           }
-          return _context16.abrupt("return");
+          return _context18.abrupt("return");
         case 2:
-          _context16.next = 4;
+          _context18.next = 4;
           return route.lazy();
         case 4:
-          lazyRoute = _context16.sent;
+          lazyRoute = _context18.sent;
           if (route.lazy) {
-            _context16.next = 7;
+            _context18.next = 7;
             break;
           }
-          return _context16.abrupt("return");
+          return _context18.abrupt("return");
         case 7:
           routeToUpdate = manifest[route.id];
           invariant(routeToUpdate, "No route found in manifest");
@@ -13623,29 +16706,89 @@ function _loadLazyRouteModule() {
           }));
         case 13:
         case "end":
-          return _context16.stop();
+          return _context18.stop();
       }
-    }, _callee15);
+    }, _callee17);
   }));
   return _loadLazyRouteModule.apply(this, arguments);
 }
-function callLoaderOrAction(_x67, _x68, _x69, _x70, _x71, _x72, _x73, _x74, _x75) {
-  return _callLoaderOrAction.apply(this, arguments);
-} // Utility method for creating the Request instances for loaders/actions during
-// client-side navigations and fetches.  During SSR we will always have a
-// Request instance from the static handler (query/queryRoute)
-function _callLoaderOrAction() {
-  _callLoaderOrAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(type, request, match, matches, manifest, mapRouteProperties, basename, v7_relativeSplatPath, opts) {
-    var resultType, result, onReject, runHandler, handler, handlerError, values, url, pathname, _url, _pathname, status, location, currentUrl, _url2, isSameBasename, queryRouteResponse, data, contentType, _result$init, _result$init2;
-    return _regeneratorRuntime().wrap(function _callee16$(_context17) {
-      while (1) switch (_context17.prev = _context17.next) {
+function defaultDataStrategy(opts) {
+  return Promise.all(opts.matches.map(function (m) {
+    return m.resolve();
+  }));
+}
+function callDataStrategyImpl(_x83, _x84, _x85, _x86, _x87, _x88, _x89, _x90) {
+  return _callDataStrategyImpl.apply(this, arguments);
+} // Default logic for calling a loader/action is the user has no specified a dataStrategy
+function _callDataStrategyImpl() {
+  _callDataStrategyImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(dataStrategyImpl, type, request, matchesToLoad, matches, manifest, mapRouteProperties, requestContext) {
+    var routeIdsToLoad, loadedMatches, results;
+    return _regeneratorRuntime().wrap(function _callee18$(_context19) {
+      while (1) switch (_context19.prev = _context19.next) {
         case 0:
-          if (opts === void 0) {
-            opts = {};
-          }
+          routeIdsToLoad = matchesToLoad.reduce(function (acc, m) {
+            return acc.add(m.route.id);
+          }, new Set());
+          loadedMatches = new Set(); // Send all matches here to allow for a middleware-type implementation.
+          // handler will be a no-op for unneeded routes and we filter those results
+          // back out below.
+          _context19.next = 4;
+          return dataStrategyImpl({
+            matches: matches.map(function (match) {
+              var shouldLoad = routeIdsToLoad.has(match.route.id);
+              // `resolve` encapsulates the route.lazy, executing the
+              // loader/action, and mapping return values/thrown errors to a
+              // HandlerResult.  Users can pass a callback to take fine-grained control
+              // over the execution of the loader/action
+              var resolve = function resolve(handlerOverride) {
+                loadedMatches.add(match.route.id);
+                return shouldLoad ? callLoaderOrAction(type, request, match, manifest, mapRouteProperties, handlerOverride, requestContext) : Promise.resolve({
+                  type: ResultType.data,
+                  result: undefined
+                });
+              };
+              return router_extends({}, match, {
+                shouldLoad: shouldLoad,
+                resolve: resolve
+              });
+            }),
+            request: request,
+            params: matches[0].params,
+            context: requestContext
+          });
+        case 4:
+          results = _context19.sent;
+          // Throw if any loadRoute implementations not called since they are what
+          // ensures a route is fully loaded
+          matches.forEach(function (m) {
+            return invariant(loadedMatches.has(m.route.id), "`match.resolve()` was not called for route id \"" + m.route.id + "\". " + "You must call `match.resolve()` on every match passed to " + "`dataStrategy` to ensure all routes are properly loaded.");
+          });
+          // Filter out any middleware-only matches for which we didn't need to run handlers
+          return _context19.abrupt("return", results.filter(function (_, i) {
+            return routeIdsToLoad.has(matches[i].route.id);
+          }));
+        case 7:
+        case "end":
+          return _context19.stop();
+      }
+    }, _callee18);
+  }));
+  return _callDataStrategyImpl.apply(this, arguments);
+}
+function callLoaderOrAction(_x91, _x92, _x93, _x94, _x95, _x96, _x97) {
+  return _callLoaderOrAction.apply(this, arguments);
+}
+function _callLoaderOrAction() {
+  _callLoaderOrAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee20(type, request, match, manifest, mapRouteProperties, handlerOverride, staticContext) {
+    var result, onReject, runHandler, handler, handlerError, _yield$Promise$all3, _yield$Promise$all4, value, url, pathname, _url, _pathname;
+    return _regeneratorRuntime().wrap(function _callee20$(_context21) {
+      while (1) switch (_context21.prev = _context21.next) {
+        case 0:
           runHandler = function runHandler(handler) {
             // Setup a promise we can race against so that abort signals short circuit
             var reject;
+            // This will never resolve so safe to type it as Promise<HandlerResult> to
+            // satisfy the function return value
             var abortPromise = new Promise(function (_, r) {
               return reject = r;
             });
@@ -13653,23 +16796,63 @@ function _callLoaderOrAction() {
               return reject();
             };
             request.signal.addEventListener("abort", onReject);
-            return Promise.race([handler({
-              request: request,
-              params: match.params,
-              context: opts.requestContext
-            }), abortPromise]);
+            var actualHandler = function actualHandler(ctx) {
+              if (typeof handler !== "function") {
+                return Promise.reject(new Error("You cannot call the handler for a route which defines a boolean " + ("\"" + type + "\" [routeId: " + match.route.id + "]")));
+              }
+              return handler.apply(void 0, [{
+                request: request,
+                params: match.params,
+                context: staticContext
+              }].concat(_toConsumableArray(ctx !== undefined ? [ctx] : [])));
+            };
+            var handlerPromise;
+            if (handlerOverride) {
+              handlerPromise = handlerOverride(function (ctx) {
+                return actualHandler(ctx);
+              });
+            } else {
+              handlerPromise = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
+                var val;
+                return _regeneratorRuntime().wrap(function _callee19$(_context20) {
+                  while (1) switch (_context20.prev = _context20.next) {
+                    case 0:
+                      _context20.prev = 0;
+                      _context20.next = 3;
+                      return actualHandler();
+                    case 3:
+                      val = _context20.sent;
+                      return _context20.abrupt("return", {
+                        type: "data",
+                        result: val
+                      });
+                    case 7:
+                      _context20.prev = 7;
+                      _context20.t0 = _context20["catch"](0);
+                      return _context20.abrupt("return", {
+                        type: "error",
+                        result: _context20.t0
+                      });
+                    case 10:
+                    case "end":
+                      return _context20.stop();
+                  }
+                }, _callee19, null, [[0, 7]]);
+              }))();
+            }
+            return Promise.race([handlerPromise, abortPromise]);
           };
-          _context17.prev = 2;
+          _context21.prev = 1;
           handler = match.route[type];
           if (!match.route.lazy) {
-            _context17.next = 32;
+            _context21.next = 33;
             break;
           }
           if (!handler) {
-            _context17.next = 14;
+            _context21.next = 15;
             break;
           }
-          _context17.next = 8;
+          _context21.next = 7;
           return Promise.all([
           // If the handler throws, don't let it immediately bubble out,
           // since we need to let the lazy() execution finish so we know if this
@@ -13677,35 +16860,37 @@ function _callLoaderOrAction() {
           runHandler(handler)["catch"](function (e) {
             handlerError = e;
           }), loadLazyRouteModule(match.route, mapRouteProperties, manifest)]);
-        case 8:
-          values = _context17.sent;
-          if (!handlerError) {
-            _context17.next = 11;
+        case 7:
+          _yield$Promise$all3 = _context21.sent;
+          _yield$Promise$all4 = _slicedToArray(_yield$Promise$all3, 1);
+          value = _yield$Promise$all4[0];
+          if (!(handlerError !== undefined)) {
+            _context21.next = 12;
             break;
           }
           throw handlerError;
-        case 11:
-          result = values[0];
-          _context17.next = 30;
+        case 12:
+          result = value;
+          _context21.next = 31;
           break;
-        case 14:
-          _context17.next = 16;
+        case 15:
+          _context21.next = 17;
           return loadLazyRouteModule(match.route, mapRouteProperties, manifest);
-        case 16:
+        case 17:
           handler = match.route[type];
           if (!handler) {
-            _context17.next = 23;
+            _context21.next = 24;
             break;
           }
-          _context17.next = 20;
+          _context21.next = 21;
           return runHandler(handler);
-        case 20:
-          result = _context17.sent;
-          _context17.next = 30;
+        case 21:
+          result = _context21.sent;
+          _context21.next = 31;
           break;
-        case 23:
+        case 24:
           if (!(type === "action")) {
-            _context17.next = 29;
+            _context21.next = 30;
             break;
           }
           url = new URL(request.url);
@@ -13715,17 +16900,17 @@ function _callLoaderOrAction() {
             pathname: pathname,
             routeId: match.route.id
           });
-        case 29:
-          return _context17.abrupt("return", {
-            type: ResultType.data,
-            data: undefined
-          });
         case 30:
-          _context17.next = 41;
+          return _context21.abrupt("return", {
+            type: ResultType.data,
+            result: undefined
+          });
+        case 31:
+          _context21.next = 42;
           break;
-        case 32:
+        case 33:
           if (handler) {
-            _context17.next = 38;
+            _context21.next = 39;
             break;
           }
           _url = new URL(request.url);
@@ -13733,168 +16918,169 @@ function _callLoaderOrAction() {
           throw getInternalRouterError(404, {
             pathname: _pathname
           });
-        case 38:
-          _context17.next = 40;
+        case 39:
+          _context21.next = 41;
           return runHandler(handler);
-        case 40:
-          result = _context17.sent;
         case 41:
-          invariant(result !== undefined, "You defined " + (type === "action" ? "an action" : "a loader") + " for route " + ("\"" + match.route.id + "\" but didn't return anything from your `" + type + "` ") + "function. Please return a value or `null`.");
-          _context17.next = 48;
+          result = _context21.sent;
+        case 42:
+          invariant(result.result !== undefined, "You defined " + (type === "action" ? "an action" : "a loader") + " for route " + ("\"" + match.route.id + "\" but didn't return anything from your `" + type + "` ") + "function. Please return a value or `null`.");
+          _context21.next = 48;
           break;
-        case 44:
-          _context17.prev = 44;
-          _context17.t0 = _context17["catch"](2);
-          resultType = ResultType.error;
-          result = _context17.t0;
+        case 45:
+          _context21.prev = 45;
+          _context21.t0 = _context21["catch"](1);
+          return _context21.abrupt("return", {
+            type: ResultType.error,
+            result: _context21.t0
+          });
         case 48:
-          _context17.prev = 48;
+          _context21.prev = 48;
           if (onReject) {
             request.signal.removeEventListener("abort", onReject);
           }
-          return _context17.finish(48);
+          return _context21.finish(48);
         case 51:
+          return _context21.abrupt("return", result);
+        case 52:
+        case "end":
+          return _context21.stop();
+      }
+    }, _callee20, null, [[1, 45, 48, 51]]);
+  }));
+  return _callLoaderOrAction.apply(this, arguments);
+}
+function convertHandlerResultToDataResult(_x98) {
+  return _convertHandlerResultToDataResult.apply(this, arguments);
+} // Support relative routing in internal redirects
+function _convertHandlerResultToDataResult() {
+  _convertHandlerResultToDataResult = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21(handlerResult) {
+    var result, type, status, data, contentType, _result$init, _result$init2;
+    return _regeneratorRuntime().wrap(function _callee21$(_context22) {
+      while (1) switch (_context22.prev = _context22.next) {
+        case 0:
+          result = handlerResult.result, type = handlerResult.type, status = handlerResult.status;
           if (!isResponse(result)) {
-            _context17.next = 87;
+            _context22.next = 25;
             break;
           }
-          status = result.status; // Process redirects
-          if (!redirectStatusCodes.has(status)) {
-            _context17.next = 61;
-            break;
-          }
-          location = result.headers.get("Location");
-          invariant(location, "Redirects returned/thrown from loaders/actions must have a Location header");
-          // Support relative routing in internal redirects
-          if (!ABSOLUTE_URL_REGEX.test(location)) {
-            location = normalizeTo(new URL(request.url), matches.slice(0, matches.indexOf(match) + 1), basename, true, location, v7_relativeSplatPath);
-          } else if (!opts.isStaticRequest) {
-            // Strip off the protocol+origin for same-origin + same-basename absolute
-            // redirects. If this is a static request, we can let it go back to the
-            // browser as-is
-            currentUrl = new URL(request.url);
-            _url2 = location.startsWith("//") ? new URL(currentUrl.protocol + location) : new URL(location);
-            isSameBasename = router_stripBasename(_url2.pathname, basename) != null;
-            if (_url2.origin === currentUrl.origin && isSameBasename) {
-              location = _url2.pathname + _url2.search + _url2.hash;
-            }
-          }
-          // Don't process redirects in the router during static requests requests.
-          // Instead, throw the Response and let the server handle it with an HTTP
-          // redirect.  We also update the Location header in place in this flow so
-          // basename and relative routing is taken into account
-          if (!opts.isStaticRequest) {
-            _context17.next = 60;
-            break;
-          }
-          result.headers.set("Location", location);
-          throw result;
-        case 60:
-          return _context17.abrupt("return", {
-            type: ResultType.redirect,
-            status: status,
-            location: location,
-            revalidate: result.headers.get("X-Remix-Revalidate") !== null,
-            reloadDocument: result.headers.get("X-Remix-Reload-Document") !== null
-          });
-        case 61:
-          if (!opts.isRouteRequest) {
-            _context17.next = 64;
-            break;
-          }
-          queryRouteResponse = {
-            type: resultType === ResultType.error ? ResultType.error : ResultType.data,
-            response: result
-          };
-          throw queryRouteResponse;
-        case 64:
-          _context17.prev = 64;
+          _context22.prev = 2;
           contentType = result.headers.get("Content-Type"); // Check between word boundaries instead of startsWith() due to the last
           // paragraph of https://httpwg.org/specs/rfc9110.html#field.content-type
           if (!(contentType && /\bapplication\/json\b/.test(contentType))) {
-            _context17.next = 76;
+            _context22.next = 14;
             break;
           }
           if (!(result.body == null)) {
-            _context17.next = 71;
+            _context22.next = 9;
             break;
           }
           data = null;
-          _context17.next = 74;
+          _context22.next = 12;
           break;
-        case 71:
-          _context17.next = 73;
+        case 9:
+          _context22.next = 11;
           return result.json();
-        case 73:
-          data = _context17.sent;
-        case 74:
-          _context17.next = 79;
+        case 11:
+          data = _context22.sent;
+        case 12:
+          _context22.next = 17;
           break;
-        case 76:
-          _context17.next = 78;
+        case 14:
+          _context22.next = 16;
           return result.text();
-        case 78:
-          data = _context17.sent;
-        case 79:
-          _context17.next = 84;
+        case 16:
+          data = _context22.sent;
+        case 17:
+          _context22.next = 22;
           break;
-        case 81:
-          _context17.prev = 81;
-          _context17.t1 = _context17["catch"](64);
-          return _context17.abrupt("return", {
+        case 19:
+          _context22.prev = 19;
+          _context22.t0 = _context22["catch"](2);
+          return _context22.abrupt("return", {
             type: ResultType.error,
-            error: _context17.t1
+            error: _context22.t0
           });
-        case 84:
-          if (!(resultType === ResultType.error)) {
-            _context17.next = 86;
+        case 22:
+          if (!(type === ResultType.error)) {
+            _context22.next = 24;
             break;
           }
-          return _context17.abrupt("return", {
-            type: resultType,
-            error: new ErrorResponseImpl(status, result.statusText, data),
+          return _context22.abrupt("return", {
+            type: ResultType.error,
+            error: new ErrorResponseImpl(result.status, result.statusText, data),
+            statusCode: result.status,
             headers: result.headers
           });
-        case 86:
-          return _context17.abrupt("return", {
+        case 24:
+          return _context22.abrupt("return", {
             type: ResultType.data,
             data: data,
             statusCode: result.status,
             headers: result.headers
           });
-        case 87:
-          if (!(resultType === ResultType.error)) {
-            _context17.next = 89;
+        case 25:
+          if (!(type === ResultType.error)) {
+            _context22.next = 27;
             break;
           }
-          return _context17.abrupt("return", {
-            type: resultType,
-            error: result
+          return _context22.abrupt("return", {
+            type: ResultType.error,
+            error: result,
+            statusCode: isRouteErrorResponse(result) ? result.status : status
           });
-        case 89:
+        case 27:
           if (!isDeferredData(result)) {
-            _context17.next = 91;
+            _context22.next = 29;
             break;
           }
-          return _context17.abrupt("return", {
+          return _context22.abrupt("return", {
             type: ResultType.deferred,
             deferredData: result,
             statusCode: (_result$init = result.init) == null ? void 0 : _result$init.status,
             headers: ((_result$init2 = result.init) == null ? void 0 : _result$init2.headers) && new Headers(result.init.headers)
           });
-        case 91:
-          return _context17.abrupt("return", {
+        case 29:
+          return _context22.abrupt("return", {
             type: ResultType.data,
-            data: result
+            data: result,
+            statusCode: status
           });
-        case 92:
+        case 30:
         case "end":
-          return _context17.stop();
+          return _context22.stop();
       }
-    }, _callee16, null, [[2, 44, 48, 51], [64, 81]]);
+    }, _callee21, null, [[2, 19]]);
   }));
-  return _callLoaderOrAction.apply(this, arguments);
+  return _convertHandlerResultToDataResult.apply(this, arguments);
 }
+function normalizeRelativeRoutingRedirectResponse(response, request, routeId, matches, basename, v7_relativeSplatPath) {
+  var location = response.headers.get("Location");
+  invariant(location, "Redirects returned/thrown from loaders/actions must have a Location header");
+  if (!ABSOLUTE_URL_REGEX.test(location)) {
+    var trimmedMatches = matches.slice(0, matches.findIndex(function (m) {
+      return m.route.id === routeId;
+    }) + 1);
+    location = normalizeTo(new URL(request.url), trimmedMatches, basename, true, location, v7_relativeSplatPath);
+    response.headers.set("Location", location);
+  }
+  return response;
+}
+function normalizeRedirectLocation(location, currentUrl, basename) {
+  if (ABSOLUTE_URL_REGEX.test(location)) {
+    // Strip off the protocol+origin for same-origin + same-basename absolute redirects
+    var normalizedLocation = location;
+    var url = normalizedLocation.startsWith("//") ? new URL(currentUrl.protocol + normalizedLocation) : new URL(normalizedLocation);
+    var isSameBasename = router_stripBasename(url.pathname, basename) != null;
+    if (url.origin === currentUrl.origin && isSameBasename) {
+      return url.pathname + url.search + url.hash;
+    }
+  }
+  return location;
+}
+// Utility method for creating the Request instances for loaders/actions during
+// client-side navigations and fetches.  During SSR we will always have a
+// Request instance from the static handler (query/queryRoute)
 function createClientSideRequest(history, location, signal, submission) {
   var url = history.createURL(stripHashFromPath(location)).toString();
   var init = {
@@ -13962,33 +17148,38 @@ function convertSearchParamsToFormData(searchParams) {
   }
   return formData;
 }
-function processRouteLoaderData(matches, matchesToLoad, results, pendingError, activeDeferreds) {
+function processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling) {
   // Fill in loaderData/errors from our loaders
   var loaderData = {};
   var errors = null;
   var statusCode;
   var foundError = false;
   var loaderHeaders = {};
+  var pendingError = pendingActionResult && isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : undefined;
   // Process loader results into state.loaderData/state.errors
   results.forEach(function (result, index) {
     var id = matchesToLoad[index].route.id;
     invariant(!isRedirectResult(result), "Cannot handle redirect results in processLoaderData");
     if (isErrorResult(result)) {
-      // Look upwards from the matched route for the closest ancestor
-      // error boundary, defaulting to the root match
-      var boundaryMatch = findNearestBoundary(matches, id);
       var error = result.error;
       // If we have a pending action error, we report it at the highest-route
       // that throws a loader error, and then clear it out to indicate that
       // it was consumed
-      if (pendingError) {
-        error = Object.values(pendingError)[0];
+      if (pendingError !== undefined) {
+        error = pendingError;
         pendingError = undefined;
       }
       errors = errors || {};
-      // Prefer higher error values if lower errors bubble to the same boundary
-      if (errors[boundaryMatch.route.id] == null) {
-        errors[boundaryMatch.route.id] = error;
+      if (skipLoaderErrorBubbling) {
+        errors[id] = error;
+      } else {
+        // Look upwards from the matched route for the closest ancestor error
+        // boundary, defaulting to the root match.  Prefer higher error values
+        // if lower errors bubble to the same boundary
+        var boundaryMatch = findNearestBoundary(matches, id);
+        if (errors[boundaryMatch.route.id] == null) {
+          errors[boundaryMatch.route.id] = error;
+        }
       }
       // Clear our any prior loaderData for the throwing route
       loaderData[id] = undefined;
@@ -14005,25 +17196,33 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
       if (isDeferredResult(result)) {
         activeDeferreds.set(id, result.deferredData);
         loaderData[id] = result.deferredData.data;
+        // Error status codes always override success status codes, but if all
+        // loaders are successful we take the deepest status code.
+        if (result.statusCode != null && result.statusCode !== 200 && !foundError) {
+          statusCode = result.statusCode;
+        }
+        if (result.headers) {
+          loaderHeaders[id] = result.headers;
+        }
       } else {
         loaderData[id] = result.data;
-      }
-      // Error status codes always override success status codes, but if all
-      // loaders are successful we take the deepest status code.
-      if (result.statusCode != null && result.statusCode !== 200 && !foundError) {
-        statusCode = result.statusCode;
-      }
-      if (result.headers) {
-        loaderHeaders[id] = result.headers;
+        // Error status codes always override success status codes, but if all
+        // loaders are successful we take the deepest status code.
+        if (result.statusCode && result.statusCode !== 200 && !foundError) {
+          statusCode = result.statusCode;
+        }
+        if (result.headers) {
+          loaderHeaders[id] = result.headers;
+        }
       }
     }
   });
   // If we didn't consume the pending action error (i.e., all loaders
   // resolved), then consume it here.  Also clear out any loaderData for the
   // throwing route
-  if (pendingError) {
-    errors = pendingError;
-    loaderData[Object.keys(pendingError)[0]] = undefined;
+  if (pendingError !== undefined && pendingActionResult) {
+    errors = _defineProperty({}, pendingActionResult[0], pendingError);
+    loaderData[pendingActionResult[0]] = undefined;
   }
   return {
     loaderData: loaderData,
@@ -14032,8 +17231,9 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
     loaderHeaders: loaderHeaders
   };
 }
-function processLoaderData(state, matches, matchesToLoad, results, pendingError, revalidatingFetchers, fetcherResults, activeDeferreds) {
-  var _processRouteLoaderDa = processRouteLoaderData(matches, matchesToLoad, results, pendingError, activeDeferreds),
+function processLoaderData(state, matches, matchesToLoad, results, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds) {
+  var _processRouteLoaderDa = processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, false // This method is only called client side so we always want to bubble
+    ),
     loaderData = _processRouteLoaderDa.loaderData,
     errors = _processRouteLoaderDa.errors;
   // Process results from our revalidating fetchers
@@ -14101,6 +17301,17 @@ function mergeLoaderData(loaderData, newLoaderData, matches, errors) {
   }
   return mergedLoaderData;
 }
+function getActionDataForCommit(pendingActionResult) {
+  if (!pendingActionResult) {
+    return {};
+  }
+  return isErrorResult(pendingActionResult[1]) ? {
+    // Clear out prior actionData on errors
+    actionData: {}
+  } : {
+    actionData: _defineProperty({}, pendingActionResult[0], pendingActionResult[1].data)
+  };
+}
 // Find the nearest error boundary, looking upwards from the leaf route (or the
 // route specified by routeId) for the closest ancestor error boundary,
 // defaulting to the root match
@@ -14130,11 +17341,11 @@ function getShortCircuitMatches(routes) {
   };
 }
 function getInternalRouterError(status, _temp5) {
-  var _ref18 = _temp5 === void 0 ? {} : _temp5,
-    pathname = _ref18.pathname,
-    routeId = _ref18.routeId,
-    method = _ref18.method,
-    type = _ref18.type;
+  var _ref20 = _temp5 === void 0 ? {} : _temp5,
+    pathname = _ref20.pathname,
+    routeId = _ref20.routeId,
+    method = _ref20.method,
+    type = _ref20.type;
   var statusText = "Unknown Server Error";
   var errorMessage = "Unknown @remix-run/router error";
   if (status === 400) {
@@ -14198,6 +17409,12 @@ function isHashChangeOnly(a, b) {
   // /page#hash -> /page
   return false;
 }
+function isHandlerResult(result) {
+  return result != null && typeof result === "object" && "type" in result && "result" in result && (result.type === ResultType.data || result.type === ResultType.error);
+}
+function isRedirectHandlerResult(result) {
+  return isResponse(result.result) && redirectStatusCodes.has(result.result.status);
+}
 function isDeferredResult(result) {
   return result.type === ResultType.deferred;
 }
@@ -14222,45 +17439,42 @@ function isRedirectResponse(result) {
   var location = result.headers.get("Location");
   return status >= 300 && status <= 399 && location != null;
 }
-function isQueryRouteResponse(obj) {
-  return obj && isResponse(obj.response) && (obj.type === ResultType.data || obj.type === ResultType.error);
-}
 function isValidMethod(method) {
   return validRequestMethods.has(method.toLowerCase());
 }
 function isMutationMethod(method) {
   return validMutationMethods.has(method.toLowerCase());
 }
-function resolveDeferredResults(_x76, _x77, _x78, _x79, _x80, _x81) {
+function resolveDeferredResults(_x99, _x100, _x101, _x102, _x103, _x104) {
   return _resolveDeferredResults.apply(this, arguments);
 }
 function _resolveDeferredResults() {
-  _resolveDeferredResults = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(currentMatches, matchesToLoad, results, signals, isFetcher, currentLoaderData) {
+  _resolveDeferredResults = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee22(currentMatches, matchesToLoad, results, signals, isFetcher, currentLoaderData) {
     var _loop, index;
-    return _regeneratorRuntime().wrap(function _callee17$(_context19) {
-      while (1) switch (_context19.prev = _context19.next) {
+    return _regeneratorRuntime().wrap(function _callee22$(_context24) {
+      while (1) switch (_context24.prev = _context24.next) {
         case 0:
           _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop(index) {
             var result, match, currentMatch, isRevalidatingLoader, signal;
-            return _regeneratorRuntime().wrap(function _loop$(_context18) {
-              while (1) switch (_context18.prev = _context18.next) {
+            return _regeneratorRuntime().wrap(function _loop$(_context23) {
+              while (1) switch (_context23.prev = _context23.next) {
                 case 0:
                   result = results[index];
                   match = matchesToLoad[index]; // If we don't have a match, then we can have a deferred result to do
                   // anything with.  This is for revalidating fetchers where the route was
                   // removed during HMR
                   if (match) {
-                    _context18.next = 4;
+                    _context23.next = 4;
                     break;
                   }
-                  return _context18.abrupt("return", 1);
+                  return _context23.abrupt("return", 1);
                 case 4:
                   currentMatch = currentMatches.find(function (m) {
                     return m.route.id === match.route.id;
                   });
                   isRevalidatingLoader = currentMatch != null && !isNewRouteInstance(currentMatch, match) && (currentLoaderData && currentLoaderData[match.route.id]) !== undefined;
                   if (!(isDeferredResult(result) && (isFetcher || isRevalidatingLoader))) {
-                    _context18.next = 11;
+                    _context23.next = 11;
                     break;
                   }
                   // Note: we do not have to touch activeDeferreds here since we race them
@@ -14268,7 +17482,7 @@ function _resolveDeferredResults() {
                   // there if needed
                   signal = signals[index];
                   invariant(signal, "Expected an AbortSignal for revalidating fetcher deferred result");
-                  _context18.next = 11;
+                  _context23.next = 11;
                   return resolveDeferredData(result, signal, isFetcher).then(function (result) {
                     if (result) {
                       results[index] = result || results[index];
@@ -14276,83 +17490,83 @@ function _resolveDeferredResults() {
                   });
                 case 11:
                 case "end":
-                  return _context18.stop();
+                  return _context23.stop();
               }
             }, _loop);
           });
           index = 0;
         case 2:
           if (!(index < results.length)) {
-            _context19.next = 9;
+            _context24.next = 9;
             break;
           }
-          return _context19.delegateYield(_loop(index), "t0", 4);
+          return _context24.delegateYield(_loop(index), "t0", 4);
         case 4:
-          if (!_context19.t0) {
-            _context19.next = 6;
+          if (!_context24.t0) {
+            _context24.next = 6;
             break;
           }
-          return _context19.abrupt("continue", 6);
+          return _context24.abrupt("continue", 6);
         case 6:
           index++;
-          _context19.next = 2;
+          _context24.next = 2;
           break;
         case 9:
         case "end":
-          return _context19.stop();
+          return _context24.stop();
       }
-    }, _callee17);
+    }, _callee22);
   }));
   return _resolveDeferredResults.apply(this, arguments);
 }
-function resolveDeferredData(_x82, _x83, _x84) {
+function resolveDeferredData(_x105, _x106, _x107) {
   return _resolveDeferredData.apply(this, arguments);
 }
 function _resolveDeferredData() {
-  _resolveDeferredData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(result, signal, unwrap) {
+  _resolveDeferredData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(result, signal, unwrap) {
     var aborted;
-    return _regeneratorRuntime().wrap(function _callee18$(_context20) {
-      while (1) switch (_context20.prev = _context20.next) {
+    return _regeneratorRuntime().wrap(function _callee23$(_context25) {
+      while (1) switch (_context25.prev = _context25.next) {
         case 0:
           if (unwrap === void 0) {
             unwrap = false;
           }
-          _context20.next = 3;
+          _context25.next = 3;
           return result.deferredData.resolveData(signal);
         case 3:
-          aborted = _context20.sent;
+          aborted = _context25.sent;
           if (!aborted) {
-            _context20.next = 6;
+            _context25.next = 6;
             break;
           }
-          return _context20.abrupt("return");
+          return _context25.abrupt("return");
         case 6:
           if (!unwrap) {
-            _context20.next = 14;
+            _context25.next = 14;
             break;
           }
-          _context20.prev = 7;
-          return _context20.abrupt("return", {
+          _context25.prev = 7;
+          return _context25.abrupt("return", {
             type: ResultType.data,
             data: result.deferredData.unwrappedData
           });
         case 11:
-          _context20.prev = 11;
-          _context20.t0 = _context20["catch"](7);
-          return _context20.abrupt("return", {
+          _context25.prev = 11;
+          _context25.t0 = _context25["catch"](7);
+          return _context25.abrupt("return", {
             type: ResultType.error,
-            error: _context20.t0
+            error: _context25.t0
           });
         case 14:
-          return _context20.abrupt("return", {
+          return _context25.abrupt("return", {
             type: ResultType.data,
             data: result.deferredData.data
           });
         case 15:
         case "end":
-          return _context20.stop();
+          return _context25.stop();
       }
-    }, _callee18, null, [[7, 11]]);
+    }, _callee23, null, [[7, 11]]);
   }));
   return _resolveDeferredData.apply(this, arguments);
 }
@@ -14558,7 +17772,7 @@ function persistAppliedTransitions(_window, transitions) {
 
 
 /**
- * React Router v6.22.3
+ * React Router v6.23.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -15060,7 +18274,7 @@ function _renderMatches(matches, parentMatches, dataRouterState, future) {
   var errors = (_dataRouterState2 = dataRouterState) == null ? void 0 : _dataRouterState2.errors;
   if (errors != null) {
     var errorIndex = renderedMatches.findIndex(function (m) {
-      return m.route.id && (errors == null ? void 0 : errors[m.route.id]);
+      return m.route.id && (errors == null ? void 0 : errors[m.route.id]) !== undefined;
     });
     !(errorIndex >= 0) ?  false ? 0 : invariant(false) : void 0;
     renderedMatches = renderedMatches.slice(0, Math.min(renderedMatches.length, errorIndex + 1));
@@ -15983,7 +19197,8 @@ function createMemoryRouter(routes, opts) {
     }),
     hydrationData: opts == null ? void 0 : opts.hydrationData,
     routes: routes,
-    mapRouteProperties: mapRouteProperties
+    mapRouteProperties: mapRouteProperties,
+    unstable_dataStrategy: opts == null ? void 0 : opts.unstable_dataStrategy
   }).initialize();
 }
 
@@ -16035,22 +19250,8 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.A, opt
 
        /* harmony default export */ const app_index_module = (index_module/* default */.A && index_module/* default */.A.locals ? index_module/* default */.A.locals : undefined);
 
-;// CONCATENATED MODULE: ../../node_modules/clsx/dist/clsx.mjs
-function r(e) {
-  var t,
-    f,
-    n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == typeof e) if (Array.isArray(e)) {
-    var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-  } else for (f in e) e[f] && (n && (n += " "), n += f);
-  return n;
-}
-function clsx() {
-  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-  return n;
-}
-/* harmony default export */ const dist_clsx = (clsx);
+;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
+function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f);}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n;}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n;}/* harmony default export */ const dist_clsx = (clsx);
 // EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/animations/index.module.scss
 var animations_index_module = __webpack_require__("../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/animations/index.module.scss");
 ;// CONCATENATED MODULE: ./src/pages/animations/index.module.scss
@@ -16144,10 +19345,10 @@ var home_index_module_update = injectStylesIntoStyleTag_default()(home_index_mod
 
 ;// CONCATENATED MODULE: ./src/pages/home/index.tsx
 var HomePage=function HomePage(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:pages_home_index_module.host,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("richtext",{onPointerClick:function onPointerClick(ev,sender){var linkId=sender.GetLinkInfo(ev);if(linkId==='svgs')nav('svgs');},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:'32',children:"Welcome to ReactUnity \uD83D\uDE0E"}),/*#__PURE__*/(0,jsx_runtime.jsx)("br",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("br",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:"24",children:/*#__PURE__*/(0,jsx_runtime.jsxs)("color",{value:'blue',children:["Click an item in the",/*#__PURE__*/(0,jsx_runtime.jsx)("color",{value:"red",children:/*#__PURE__*/(0,jsx_runtime.jsx)("uppercase",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("margin",{value:"20",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("nbsp",{}),"left menu",/*#__PURE__*/(0,jsx_runtime.jsx)("nbsp",{})]})})}),"to see examples."]})}),"Check out the new ",/*#__PURE__*/(0,jsx_runtime.jsx)("link",{value:'svgs',children:/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:24,children:/*#__PURE__*/(0,jsx_runtime.jsx)("color",{value:"blue",children:"SVG"})})})," feature for example."]})});};/* harmony default export */ const home = (HomePage);
-// EXTERNAL MODULE: ../../node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__("../../node_modules/use-sync-external-store/shim/index.js");
-// EXTERNAL MODULE: ../../node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__("../../node_modules/use-sync-external-store/with-selector.js");
+// EXTERNAL MODULE: ../../renderer/node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__("../../renderer/node_modules/use-sync-external-store/shim/index.js");
+// EXTERNAL MODULE: ../../renderer/node_modules/use-sync-external-store/with-selector.js
+var with_selector = __webpack_require__("../../renderer/node_modules/use-sync-external-store/with-selector.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/helpers/dictionary-watcher.js
 var dictionary_watcher_assign = undefined && undefined.__assign || function () {
   dictionary_watcher_assign = Object.assign || function (t) {
@@ -16605,6 +19806,22 @@ var interop_index_module_update = injectStylesIntoStyleTag_default()(interop_ind
 
 ;// CONCATENATED MODULE: ./src/pages/interop/index.tsx
 var InteropPage=function InteropPage(){var _useState=(0,react.useState)(true),_useState2=slicedToArray_slicedToArray(_useState,2),shouldListen=_useState2[0],setShouldListen=_useState2[1];var _useState3=(0,react.useState)(null),_useState4=slicedToArray_slicedToArray(_useState3,2),pressedKey=_useState4[0],setPressedKey=_useState4[1];var _useUnityContext=useUnityContext({}),addEventListener=_useUnityContext.addEventListener,removeEventListener=_useUnityContext.removeEventListener;(0,react.useEffect)(function(){if(shouldListen){var remove=Globals.InteropTest.AddKeyPressListener(function(key){setPressedKey(key);});Interop.GetType('MyInterop.InteropTest').TestDebug();return function(){return remove();};}},[shouldListen]);(0,react.useEffect)(function(){var fn=function fn(key){console.log('Pressed key is: '+key);};addEventListener('OnKeyPress',fn);return function(){return removeEventListener('OnKeyPress',fn);};},[addEventListener,removeEventListener]);return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:pages_interop_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return setShouldListen(function(x){return!x;});},children:shouldListen?'Remove Listener':'Add Listener'}),!!pressedKey&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Pressed key is: ",pressedKey]})})]});};/* harmony default export */ const interop = (InteropPage);
+;// CONCATENATED MODULE: ../../node_modules/clsx/dist/clsx.mjs
+function clsx_r(e) {
+  var t,
+    f,
+    n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = clsx_r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx_clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = clsx_r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+/* harmony default export */ const clsx_dist_clsx = (clsx_clsx);
 ;// CONCATENATED MODULE: ../../material/dist/src/util/helpers.js
 
 function getChildrenOfType(children, type) {
@@ -16702,11 +19919,11 @@ function _Accordion(_a) {
   }, [opened]);
   return (0,jsx_runtime.jsxs)("view", accordion_assign({
     name: "<Accordion>",
-    className: dist_clsx(className, src_accordion_index_module.host, opened && [src_accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
+    className: clsx_dist_clsx(className, src_accordion_index_module.host, opened && [src_accordion_index_module.expanded, 'mat-expanded'], getElevationClass(elevation), 'mat-accordion')
   }, props, {
     children: [(0,jsx_runtime.jsxs)("view", {
       name: "<AccordionHeader>",
-      className: dist_clsx(src_accordion_index_module.header, 'mat-accordion-header'),
+      className: clsx_dist_clsx(src_accordion_index_module.header, 'mat-accordion-header'),
       onPointerClick: function onPointerClick() {
         return setOpened(function (x) {
           return !x;
@@ -16716,7 +19933,7 @@ function _Accordion(_a) {
         children: "expand_more"
       })]
     }), (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_accordion_index_module.expander, 'mat-accordion-expander'),
+      className: clsx_dist_clsx(src_accordion_index_module.expander, 'mat-accordion-expander'),
       ref: expanderRef,
       style: expanderBaseStyle,
       children: (0,jsx_runtime.jsx)("view", {
@@ -16733,7 +19950,7 @@ function _Summary(_a) {
     props = accordion_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", accordion_assign({
     name: "<Accordion.Summary>",
-    className: dist_clsx(className, src_accordion_index_module.summary, 'mat-accordion-summary')
+    className: clsx_dist_clsx(className, src_accordion_index_module.summary, 'mat-accordion-summary')
   }, props));
 }
 function _Content(_a) {
@@ -16741,7 +19958,7 @@ function _Content(_a) {
     props = accordion_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", accordion_assign({
     name: "<Accordion.Content>",
-    className: dist_clsx(className, src_accordion_index_module.content, 'mat-accordion-content')
+    className: clsx_dist_clsx(className, src_accordion_index_module.content, 'mat-accordion-content')
   }, props));
 }
 var Accordion = react.memo(_Accordion);
@@ -16917,7 +20134,7 @@ var _Button = (0,react.forwardRef)(function _Button(_a, ref) {
     name: "<Button>"
   }, props, ripple, {
     ref: ref,
-    className: dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant),
+    className: clsx_dist_clsx(className, src_button_index_module.host, getElevationClass(elevation), 'mat-button', src_button_index_module[variant], 'mat-variant-' + variant),
     children: children
   }));
 });
@@ -16927,7 +20144,7 @@ var Button = react.memo(_Button);
 
 
 function useRootClass(className) {
-  var classes = dist_clsx(className);
+  var classes = clsx_dist_clsx(className);
   (0,react.useEffect)(function () {
     var classArray = classes.split(' ').filter(function (x) {
       return x;
@@ -17012,14 +20229,14 @@ function Modal(_a) {
     if (open && portalRef.current) portalRef.current.SetProperty('active', !!open);
   }, [open]);
   return (0,jsx_runtime.jsx)("portal", {
-    className: dist_clsx(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
+    className: clsx_dist_clsx(src_modal_index_module.host, 'mat-modal', className, open && src_modal_index_module.opened, !open && openedOnce.current && src_modal_index_module.closed),
     onPointerClick: onClickBackdrop ? click : null,
     onKeyDown: onEscape ? keyup : null,
     active: initialOpen.current,
     onAnimationEnd: onAnimationEnd,
     ref: portalRef,
     children: (0,jsx_runtime.jsxs)("view", {
-      className: dist_clsx(src_modal_index_module.content, 'mat-modal-content'),
+      className: clsx_dist_clsx(src_modal_index_module.content, 'mat-modal-content'),
       onPointerClick: clickContent,
       children: [children, onCloseButton && (0,jsx_runtime.jsx)("button", {
         className: src_modal_index_module.close,
@@ -17099,18 +20316,18 @@ function AlertDialog(_a) {
     if (onClickBackdrop) onClickBackdrop();
   };
   return (0,jsx_runtime.jsxs)(Modal, alert_assign({}, props, {
-    className: dist_clsx('mat-alert-dialog', src_alert_index_module.host, props.className),
+    className: clsx_dist_clsx('mat-alert-dialog', src_alert_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-title', src_alert_index_module.title),
+      className: clsx_dist_clsx('mat-alert-dialog-title', src_alert_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-text', src_alert_index_module.text),
+      className: clsx_dist_clsx('mat-alert-dialog-text', src_alert_index_module.text),
       children: text
     }), button && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-alert-dialog-buttons', src_alert_index_module.buttons),
+      className: clsx_dist_clsx('mat-alert-dialog-buttons', src_alert_index_module.buttons),
       children: (0,jsx_runtime.jsx)(Button, {
-        className: dist_clsx(src_alert_index_module.button),
+        className: clsx_dist_clsx(src_alert_index_module.button),
         onClick: function onClick() {
           return onClose();
         },
@@ -17181,7 +20398,7 @@ function _Card(_a) {
     props = card_rest(_a, ["children", "className", "elevation"]);
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card>",
-    className: dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
+    className: clsx_dist_clsx(className, src_card_index_module.host, getElevationClass(elevation), 'mat-card')
   }, props, {
     children: children
   }));
@@ -17191,7 +20408,7 @@ function card_Content(_a) {
     props = card_rest(_a, ["className"]);
   return (0,jsx_runtime.jsx)("view", card_assign({
     name: "<Card.Content>",
-    className: dist_clsx(className, src_card_index_module.content, 'mat-card-content')
+    className: clsx_dist_clsx(className, src_card_index_module.content, 'mat-card-content')
   }, props));
 }
 var Card = react.memo(_Card);
@@ -17279,22 +20496,22 @@ function ConfirmDialog(_a) {
     if (onClickBackdrop) onClickBackdrop();
   };
   return (0,jsx_runtime.jsxs)(Modal, confirm_assign({}, props, {
-    className: dist_clsx('mat-confirm-dialog', src_confirm_index_module.host, props.className),
+    className: clsx_dist_clsx('mat-confirm-dialog', src_confirm_index_module.host, props.className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-title', src_confirm_index_module.title),
+      className: clsx_dist_clsx('mat-confirm-dialog-title', src_confirm_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-text', src_confirm_index_module.text),
+      className: clsx_dist_clsx('mat-confirm-dialog-text', src_confirm_index_module.text),
       children: text
     }), error && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-modal-dialog-error', src_confirm_index_module.error),
+      className: clsx_dist_clsx('mat-modal-dialog-error', src_confirm_index_module.error),
       children: error
     }), (buttons === null || buttons === void 0 ? void 0 : buttons.length) > 0 && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-confirm-dialog-buttons', src_confirm_index_module.buttons),
+      className: clsx_dist_clsx('mat-confirm-dialog-buttons', src_confirm_index_module.buttons),
       children: buttons.map(function (btn, ind) {
         return (0,jsx_runtime.jsx)(Button, {
-          className: dist_clsx(src_confirm_index_module.button),
+          className: clsx_dist_clsx(src_confirm_index_module.button),
           onClick: function onClick() {
             return onClose(btn.value);
           },
@@ -17366,7 +20583,7 @@ function _Paper(_a) {
     props = paper_rest(_a, ["children", "className", "elevation"]);
   return (0,jsx_runtime.jsx)("view", paper_assign({
     name: "<Paper>",
-    className: dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
+    className: clsx_dist_clsx(className, src_paper_index_module.host, getElevationClass(elevation), 'mat-paper')
   }, props, {
     children: children
   }));
@@ -17451,21 +20668,21 @@ var InputField = (0,react.forwardRef)(function InputField(_a, ref) {
     name: "<InputField>"
   }, other, {
     ref: hostRef,
-    className: dist_clsx(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-".concat(_float || 'auto'), !emptyRef.current && [src_input_index_module["float"], 'float']),
+    className: clsx_dist_clsx(src_input_index_module.host, 'mat-input-field', className, src_input_index_module[variant], 'mat-text-field-' + variant, !!placeholder && src_input_index_module.hasPlaceholder, src_input_index_module['float-' + (_float || 'auto')], "float-".concat(_float || 'auto'), !emptyRef.current && [src_input_index_module["float"], 'float']),
     children: [(0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_input_index_module.content, 'mat-input-content'),
+      className: clsx_dist_clsx(src_input_index_module.content, 'mat-input-content'),
       children: children
     }), variant === 'outlined' && (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_input_index_module.inputFrame, 'mat-input-frame')
+      className: clsx_dist_clsx(src_input_index_module.inputFrame, 'mat-input-frame')
     }), !!placeholder && (0,jsx_runtime.jsxs)("view", {
-      className: dist_clsx(src_input_index_module.placeholder, 'mat-input-placeholder'),
+      className: clsx_dist_clsx(src_input_index_module.placeholder, 'mat-input-placeholder'),
       children: [(0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost'),
+        className: clsx_dist_clsx(src_input_index_module.placeholderGhost, 'mat-input-placeholder-ghost'),
         children: placeholder
       }), (0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_input_index_module.placeholderContent, 'mat-input-placeholder-content'),
+        className: clsx_dist_clsx(src_input_index_module.placeholderContent, 'mat-input-placeholder-content'),
         children: (0,jsx_runtime.jsx)("view", {
-          className: dist_clsx(src_input_index_module.placeholderText, 'mat-input-placeholder-text'),
+          className: clsx_dist_clsx(src_input_index_module.placeholderText, 'mat-input-placeholder-text'),
           children: placeholder
         })
       })]
@@ -17562,14 +20779,14 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
     onValue === null || onValue === void 0 ? void 0 : onValue(val);
   }, [fieldRef, onChange, onValue]);
   return (0,jsx_runtime.jsxs)(InputField, {
-    className: dist_clsx(className, src_text_index_module.host, 'mat-text-field', src_text_index_module[variant]),
+    className: clsx_dist_clsx(className, src_text_index_module.host, 'mat-text-field', src_text_index_module[variant]),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
     ref: fieldRef,
     name: "<TextField>",
     children: [(0,jsx_runtime.jsx)("input", text_assign({
-      className: dist_clsx(src_text_index_module.input, 'mat-text-input', 'mat-input-field-target'),
+      className: clsx_dist_clsx(src_text_index_module.input, 'mat-text-input', 'mat-input-field-target'),
       contentType: realType,
       ref: ref,
       placeholder: ' ',
@@ -17582,7 +20799,7 @@ var TextField = (0,react.forwardRef)(function TextField(_a, ref) {
           return !st;
         });
       },
-      className: dist_clsx(src_text_index_module.passwordToggle, 'mat-text-password-toggle'),
+      className: clsx_dist_clsx(src_text_index_module.passwordToggle, 'mat-text-password-toggle'),
       children: (0,jsx_runtime.jsx)("icon", {
         children: passwordShown ? 'visibility' : 'visibility_off'
       })
@@ -17666,23 +20883,23 @@ function PromptDialog(_a) {
   };
   return (0,jsx_runtime.jsxs)(Modal, {
     open: open,
-    className: dist_clsx('mat-prompt-dialog', src_prompt_index_module.host, className),
+    className: clsx_dist_clsx('mat-prompt-dialog', src_prompt_index_module.host, className),
     onClickBackdrop: clickBackdrop,
     children: [title && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-title', src_prompt_index_module.title),
+      className: clsx_dist_clsx('mat-prompt-dialog-title', src_prompt_index_module.title),
       children: title
     }), text && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-text', src_prompt_index_module.text),
+      className: clsx_dist_clsx('mat-prompt-dialog-text', src_prompt_index_module.text),
       children: text
     }), (0,jsx_runtime.jsx)(TextField, prompt_assign({
-      className: dist_clsx('mat-prompt-dialog-input', src_prompt_index_module.input),
+      className: clsx_dist_clsx('mat-prompt-dialog-input', src_prompt_index_module.input),
       placeholder: placeholder,
       ref: inputRef
     }, inputProps)), error && (0,jsx_runtime.jsx)("div", {
-      className: dist_clsx('mat-prompt-dialog-error', src_prompt_index_module.error),
+      className: clsx_dist_clsx('mat-prompt-dialog-error', src_prompt_index_module.error),
       children: error
     }), (0,jsx_runtime.jsxs)("div", {
-      className: dist_clsx('mat-prompt-dialog-buttons', src_prompt_index_module.buttons),
+      className: clsx_dist_clsx('mat-prompt-dialog-buttons', src_prompt_index_module.buttons),
       children: [(0,jsx_runtime.jsx)(Button, {
         onClick: function onClick() {
           return onClose(inputRef.current.Value, false);
@@ -17950,20 +21167,20 @@ var _Toggle = react.forwardRef(function _Toggle(_a, ref) {
   }, [ctx, selectionRef]);
   var NativeToggle = 'toggle';
   return (0,jsx_runtime.jsxs)("label", toggle_assign({
-    className: dist_clsx(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
+    className: clsx_dist_clsx(className, src_toggle_index_module.label, 'mat-toggle-label', src_toggle_index_module[type], 'mat-toggle-' + type, 'mat-variant-' + variant)
   }, ripple, {
     children: [(0,jsx_runtime.jsx)(NativeToggle, toggle_assign({
       name: "<Toggle>",
       ref: innerRef
     }, ripple, {
-      className: dist_clsx(src_toggle_index_module.toggle, 'mat-toggle')
+      className: clsx_dist_clsx(src_toggle_index_module.toggle, 'mat-toggle')
     }, props, {
       children: (0,jsx_runtime.jsx)("view", {
-        className: dist_clsx(src_toggle_index_module.ring, 'mat-toggle-ring'),
+        className: clsx_dist_clsx(src_toggle_index_module.ring, 'mat-toggle-ring'),
         ref: ringRef
       })
     })), !!children && (0,jsx_runtime.jsx)("view", {
-      className: dist_clsx(src_toggle_index_module.labelContent, 'mat-toggle-label-content'),
+      className: clsx_dist_clsx(src_toggle_index_module.labelContent, 'mat-toggle-label-content'),
       children: children
     })]
   }));
@@ -18006,12 +21223,12 @@ var _ToggleGroup = react.forwardRef(function _ToggleGroupOrig(_a, ref) {
     value: state,
     children: (0,jsx_runtime.jsxs)("view", {
       name: "<ToggleGroup>",
-      className: dist_clsx('mat-toggle-group'),
+      className: clsx_dist_clsx('mat-toggle-group'),
       children: [!!(multiple && showSelectAll) && (0,jsx_runtime.jsx)(Toggle, {
         ref: selectAllRef,
         independent: true,
         onChange: selectAllCallback,
-        className: dist_clsx('mat-toggle-select-all', src_toggle_index_module.selectAllToggle),
+        className: clsx_dist_clsx('mat-toggle-select-all', src_toggle_index_module.selectAllToggle),
         children: selectAllLabel || 'Select All'
       }), children]
     })
@@ -18147,7 +21364,7 @@ function _Select(_a) {
     (_a = fieldRef.current) === null || _a === void 0 ? void 0 : _a.setEmpty(multiple ? ((_b = init.current) === null || _b === void 0 ? void 0 : _b.length) === 0 : typeof init.current === 'undefined');
   }, [multiple]);
   return (0,jsx_runtime.jsxs)(InputField, {
-    className: dist_clsx(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
+    className: clsx_dist_clsx(className, src_select_index_module.host, 'mat-select-field', src_select_index_module[variant], chips && src_select_index_module.chips, opened && [src_select_index_module.opened, 'mat-select-opened']),
     variant: variant,
     placeholder: placeholder,
     "float": _float,
@@ -18156,7 +21373,7 @@ function _Select(_a) {
     children: [(0,jsx_runtime.jsxs)("button", select_assign({
       name: "<Select>",
       onClick: toggle,
-      className: dist_clsx(src_select_index_module.trigger, 'mat-input-field-target')
+      className: clsx_dist_clsx(src_select_index_module.trigger, 'mat-input-field-target')
     }, otherProps, {
       children: [(0,jsx_runtime.jsx)("view", {
         className: src_select_index_module.triggerContent,
@@ -18169,22 +21386,22 @@ function _Select(_a) {
           }, i);
         })
       }), (0,jsx_runtime.jsxs)("view", {
-        className: dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
+        className: clsx_dist_clsx(src_select_index_module.menuRoot, opened && src_select_index_module.opened),
         children: [(0,jsx_runtime.jsx)("button", {
           name: "<SelectBackdrop>",
           onClick: close,
-          className: dist_clsx(src_select_index_module.backdrop)
+          className: clsx_dist_clsx(src_select_index_module.backdrop)
         }), (0,jsx_runtime.jsx)(SelectContext.Provider, {
           value: state,
           children: (0,jsx_runtime.jsx)("scroll", {
             name: "<SelectMenu>",
-            className: dist_clsx(src_select_index_module.menu, getElevationClass(4)),
+            className: clsx_dist_clsx(src_select_index_module.menu, getElevationClass(4)),
             children: children
           })
         })]
       })]
     })), !hideCaret && (0,jsx_runtime.jsx)("icon", {
-      className: dist_clsx(src_select_index_module.caret, 'mat-select-caret'),
+      className: clsx_dist_clsx(src_select_index_module.caret, 'mat-select-caret'),
       children: 'keyboard_arrow_down'
     })]
   });
@@ -18252,9 +21469,9 @@ function _Option(_a) {
   return (0,jsx_runtime.jsxs)(Button, {
     onClick: onClick,
     variant: "text",
-    className: dist_clsx(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className),
+    className: clsx_dist_clsx(src_select_index_module.option, 'mat-select-option', selected && ['mat-select-option-selected', src_select_index_module.selected], className),
     children: [shouldShowToggle && (0,jsx_runtime.jsx)(Toggle, {
-      className: dist_clsx(src_select_index_module.toggle, 'mat-select-option-toggle'),
+      className: clsx_dist_clsx(src_select_index_module.toggle, 'mat-select-option-toggle'),
       type: ctx.allowMultiple ? 'checkbox' : 'radio',
       checked: selected,
       independent: true
@@ -18492,24 +21709,24 @@ var _Slider = (0,react.forwardRef)(function _Slider(_a, ref) {
     onPotentialDrag: dragCallback,
     onMove: moveCallback,
     onScroll: scrollCallback,
-    className: dist_clsx(src_slider_index_module.host, otherProps.className, 'mat-slider'),
+    className: clsx_dist_clsx(src_slider_index_module.host, otherProps.className, 'mat-slider'),
     children: (0,jsx_runtime.jsx)("view", {
       name: "<Slider-Track>",
-      className: dist_clsx(src_slider_index_module.track, 'mat-slider-track'),
+      className: clsx_dist_clsx(src_slider_index_module.track, 'mat-slider-track'),
       children: (0,jsx_runtime.jsx)("view", {
         name: "<Slider-Fill>",
-        className: dist_clsx(src_slider_index_module.fill, 'mat-slider-fill'),
+        className: clsx_dist_clsx(src_slider_index_module.fill, 'mat-slider-fill'),
         ref: fillRef,
         style: (_b = {}, _b[sizeProp] = 100 * (curValue.current - min) / range + '%', _b),
         children: (0,jsx_runtime.jsx)("view", {
           name: "<Slider-Thumb-Container>",
-          className: dist_clsx(src_slider_index_module.thumbContainer, 'mat-slider-thumb-container'),
+          className: clsx_dist_clsx(src_slider_index_module.thumbContainer, 'mat-slider-thumb-container'),
           children: (0,jsx_runtime.jsx)("view", {
             name: "<Slider-Thumb>",
-            className: dist_clsx(src_slider_index_module.thumb, 'mat-slider-thumb'),
+            className: clsx_dist_clsx(src_slider_index_module.thumb, 'mat-slider-thumb'),
             children: (0,jsx_runtime.jsx)("view", {
               name: "<Slider-Value>",
-              className: dist_clsx(src_slider_index_module.value, 'mat-slider-value'),
+              className: clsx_dist_clsx(src_slider_index_module.value, 'mat-slider-value'),
               children: typeof children === 'function' ? (0,jsx_runtime.jsx)(SliderChild, {
                 defaultValue: curValue.current,
                 callback: children,
@@ -18685,10 +21902,10 @@ function addTooltip(target, props, withBackdrop, hide) {
   target = props.target ? props.target.current : target;
   if (!target) return null;
   var anchor = UnityBridge.createElement('view', '', HostContainer);
-  anchor.ClassName = dist_clsx(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
+  anchor.ClassName = clsx_dist_clsx(src_tooltip_index_module.anchor, 'mat-tooltip-anchor', props.interactive && src_tooltip_index_module.interactive);
   anchor.Name = '<TooltipAnchor>';
   var tooltip = UnityBridge.createElement('view', '', HostContainer);
-  tooltip.ClassName = dist_clsx(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
+  tooltip.ClassName = clsx_dist_clsx(src_tooltip_index_module.tooltip, 'mat-tooltip', props.className);
   tooltip.Name = '<Tooltip>';
   var pos = positions[props.position];
   anchor.Style.Set('translate', props.anchor || (pos === null || pos === void 0 ? void 0 : pos.anchor) || 'bottom');
@@ -18697,7 +21914,7 @@ function addTooltip(target, props, withBackdrop, hide) {
   tooltip.Style.Set('translate', convertToTransform(pivotOriginal, true));
   if (withBackdrop) {
     var backdrop = UnityBridge.createElement('portal', '', HostContainer);
-    backdrop.ClassName = dist_clsx(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
+    backdrop.ClassName = clsx_dist_clsx(src_tooltip_index_module.backdrop, 'mat-tooltip-backdrop');
     backdrop.Name = '<TooltipBackdrop>';
     UnityBridge.addEventListener(backdrop, 'onPointerClick', hide);
     UnityBridge.appendChild(anchor, backdrop);
@@ -20255,6 +23472,721 @@ var Row=function Row(_ref){var index=_ref.index,style=_ref.style;return/*#__PURE
 var rowHeights=new Array(1000).fill(true).map(function(){return 25+Math.round(Math.random()*50);});var getItemSize=function getItemSize(index){return rowHeights[index];};var FixedSizeExample=function FixedSizeExample(){return/*#__PURE__*/(0,jsx_runtime.jsx)(FixedSizeList,{height:450,itemCount:1000,itemSize:30,width:300,smoothness:0,children:Row});};var VariableSizeExample=function VariableSizeExample(){return/*#__PURE__*/(0,jsx_runtime.jsx)(VariableSizeList,{height:450,itemCount:1000,itemSize:getItemSize,width:300,children:Row});};function VirtualScrolls(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Virtual Scrolls"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Paper,{elevation:2,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row',justifyContent:'space-around'},children:[/*#__PURE__*/(0,jsx_runtime.jsx)(FixedSizeExample,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(VariableSizeExample,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(FixedGridExample,{})]})})]});}
 ;// CONCATENATED MODULE: ./src/pages/material/index.tsx
 function MaterialPage(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:pages_material_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"Material Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Sliders,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Inputs,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Dropdowns,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Checkboxes,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Cards,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Dialogs,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(VirtualScrolls,{})]});};function Dialogs(){var _React$useState=react.useState(0),_React$useState2=slicedToArray_slicedToArray(_React$useState,2),dlOpen=_React$useState2[0],setDlOpen=_React$useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dialogs"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(1);},children:"Open Alert With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(2);},children:"Open Alert With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(3);},children:"Open Alert With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===1,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===2,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some alert title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(AlertDialog,{open:dlOpen===3,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some alert text',title:'Some alert title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(4);},children:"Open Confirm With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(5);},children:"Open Confirm With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(6);},children:"Open Confirm With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===4,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===5,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some confirm title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(ConfirmDialog,{open:dlOpen===6,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some confirm text',title:'Some confirm title'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Paper,{elevation:2,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(7);},children:"Open Prompt With Text Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(8);},children:"Open Prompt With Title Only"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{onClick:function onClick(){return setDlOpen(9);},children:"Open Prompt With Text & Title"}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===7,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{open:dlOpen===8,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,title:'Some prompt title'}),/*#__PURE__*/(0,jsx_runtime.jsx)(PromptDialog,{placeholder:"Some placeholder",open:dlOpen===9,onClose:function onClose(){return setDlOpen(0);},backdropClose:true,text:'Some prompt text',title:'Some prompt title'})]})]});}function Cards(){return/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Cards"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Card,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(Card.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltips,{}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Accordion"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Accordion,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Summary,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Some stuff is happening"})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Accordion.Content,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})})]})]})]});}function Sliders(){var _useState=(0,react.useState)(60),_useState2=slicedToArray_slicedToArray(_useState,2),sliderVal=_useState2[0],setSliderVal=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Sliders"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"normal",max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"diff",defaultValue:20,max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal-reverse",mode:"normal",defaultValue:40,max:100,step:20,children:"asdf"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{onChange:function onChange(x){return console.log(x);},allowScroll:true,direction:"horizontal-reverse",mode:"diff",max:100,step:20,children:"asdf"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"normal",value:sliderVal,onChange:setSliderVal,max:100,step:20,children:function children(val){return val*val;}}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{allowScroll:true,direction:"horizontal",mode:"normal",value:sliderVal,readOnly:true,onChange:setSliderVal,max:100,step:20,children:function children(val){return val*val;}})]});}function Inputs(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Inputs"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Standard with placeholder",variant:"standard"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Outlined with placeholder",variant:"outlined"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Filled with placeholder",variant:"filled"}),/*#__PURE__*/(0,jsx_runtime.jsx)(TextField,{placeholder:"Password Input",contentType:"password"})]});}function Checkboxes(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggles"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Checkbox"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{indeterminate:true,children:"Indeterminate"}),"Radio Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{children:"Option 3"})]}),"Checkbox Group:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{multiple:true,initialValue:['val1','val2'],showSelectAll:true,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"val3",children:"Option 3"})]})]});}function Tooltips(){var _useState3=(0,react.useState)('auto'),_useState4=slicedToArray_slicedToArray(_useState3,2),trigger=_useState4[0],setTrigger=_useState4[1];var tt=useDataTooltip(trigger);return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltips"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row',justifyContent:'space-around'},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:["Show on:",/*#__PURE__*/(0,jsx_runtime.jsxs)(ToggleGroup,{initialValue:trigger,onChange:function onChange(res){return setTrigger(res);},children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"auto",children:"Auto"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"hover",children:"Hover"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"press",children:"Press"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"click",children:"Click"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Toggle,{value:"focus",children:"Focus"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{flexDirection:'row',justifyContent:'space-around'},children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{alignItems:'center',gap:10},children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":0,"data-tooltip-offset":20,"data-tooltip-position":"top","data-tooltip-content":"This is shown on top",children:"Top"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":200,"data-tooltip-position":"bottom","data-tooltip-content":"This is shown on bottom",children:"Bottom"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":400,"data-tooltip-position":"left","data-tooltip-content":"This is shown on left",children:"Left"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":600,"data-tooltip-position":"right","data-tooltip-content":"This is shown on right",children:"Right"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":600,"data-tooltip-position":"center","data-tooltip-content":"This is shown on center",children:"Center"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Button,{variant:'filled',ref:tt.register,"data-tooltip-delay":600,"data-tooltip-anchor":"bottom right","data-tooltip-pivot":"top left","data-tooltip-content":"This is shown on right bottom corner",children:"Custom"})]})})]})]});}var initialValue=['val1','val2'];function Dropdowns(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdowns"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{placeholder:'Regular select',initialValue:"val1",children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val4",children:"Option 4"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val5",children:"Option 5"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val6",children:"Option 6"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val7",children:"Option 7"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val8",children:"Option 8"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val9",children:"Option 9"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val10",children:"Option 10"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val11",children:"Option 11"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val12",children:"Option 12"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val13",children:"Option 13"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{multiple:true,placeholder:'Multiple with initial value',children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Select,{multiple:true,chips:true,initialValue:initialValue,placeholder:'Chips selection',children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val1",children:"Option 1"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val2",children:"Option 2"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val3",children:"Option 3"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val4",children:"Option 4"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Select.Option,{value:"val5",children:"Option 5"})]})]});}/* harmony default export */ const material = (MaterialPage);
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectDestructuringEmpty.js
+function objectDestructuringEmpty_objectDestructuringEmpty(obj) {
+  if (obj == null) throw new TypeError("Cannot destructure " + obj);
+}
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/queryObserver.js
+
+
+
+
+
+
+
+
+
+
+
+
+var _client, _currentQuery, _currentQueryInitialState, _currentResult, _currentResultState, _currentResultOptions, _selectError, _selectFn, _selectResult, _lastQueryWithDefinedData, _staleTimeoutId, _refetchIntervalId, _currentRefetchInterval, _trackedProps, _executeFetch, _updateStaleTimeout, _computeRefetchInterval, _updateRefetchInterval, _updateTimers, _clearStaleTimeout, _clearRefetchInterval, _updateQuery, _notify;
+// src/queryObserver.ts
+
+
+
+
+
+var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__PURE__*/new WeakMap(), _currentQueryInitialState = /*#__PURE__*/new WeakMap(), _currentResult = /*#__PURE__*/new WeakMap(), _currentResultState = /*#__PURE__*/new WeakMap(), _currentResultOptions = /*#__PURE__*/new WeakMap(), _selectError = /*#__PURE__*/new WeakMap(), _selectFn = /*#__PURE__*/new WeakMap(), _selectResult = /*#__PURE__*/new WeakMap(), _lastQueryWithDefinedData = /*#__PURE__*/new WeakMap(), _staleTimeoutId = /*#__PURE__*/new WeakMap(), _refetchIntervalId = /*#__PURE__*/new WeakMap(), _currentRefetchInterval = /*#__PURE__*/new WeakMap(), _trackedProps = /*#__PURE__*/new WeakMap(), _executeFetch = /*#__PURE__*/new WeakSet(), _updateStaleTimeout = /*#__PURE__*/new WeakSet(), _computeRefetchInterval = /*#__PURE__*/new WeakSet(), _updateRefetchInterval = /*#__PURE__*/new WeakSet(), _updateTimers = /*#__PURE__*/new WeakSet(), _clearStaleTimeout = /*#__PURE__*/new WeakSet(), _clearRefetchInterval = /*#__PURE__*/new WeakSet(), _updateQuery = /*#__PURE__*/new WeakSet(), _notify = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Subscribable) {
+  _inherits(QueryObserver, _Subscribable);
+  function QueryObserver(client, options) {
+    var _this;
+    classCallCheck_classCallCheck(this, QueryObserver);
+    _this = _callSuper(this, QueryObserver);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _notify);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateQuery);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _clearRefetchInterval);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _clearStaleTimeout);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateTimers);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateRefetchInterval);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _computeRefetchInterval);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateStaleTimeout);
+    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _executeFetch);
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _client, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentQuery, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentQueryInitialState, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResult, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResultState, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResultOptions, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectError, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectFn, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectResult, {
+      writable: true,
+      value: void 0
+    });
+    // This property keeps track of the last query with defined data.
+    // It will be used to pass the previous data and query to the placeholder function between renders.
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _lastQueryWithDefinedData, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _staleTimeoutId, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _refetchIntervalId, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentRefetchInterval, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _trackedProps, {
+      writable: true,
+      value: /* @__PURE__ */new Set()
+    });
+    _this.options = options;
+    _classPrivateFieldSet(_assertThisInitialized(_this), _client, client);
+    _classPrivateFieldSet(_assertThisInitialized(_this), _selectError, null);
+    _this.bindMethods();
+    _this.setOptions(options);
+    return _this;
+  }
+  createClass_createClass(QueryObserver, [{
+    key: "bindMethods",
+    value: function bindMethods() {
+      this.refetch = this.refetch.bind(this);
+    }
+  }, {
+    key: "onSubscribe",
+    value: function onSubscribe() {
+      if (this.listeners.size === 1) {
+        _classPrivateFieldGet(this, _currentQuery).addObserver(this);
+        if (shouldFetchOnMount(_classPrivateFieldGet(this, _currentQuery), this.options)) {
+          _classPrivateMethodGet(this, _executeFetch, _executeFetch2).call(this);
+        } else {
+          this.updateResult();
+        }
+        _classPrivateMethodGet(this, _updateTimers, _updateTimers2).call(this);
+      }
+    }
+  }, {
+    key: "onUnsubscribe",
+    value: function onUnsubscribe() {
+      if (!this.hasListeners()) {
+        this.destroy();
+      }
+    }
+  }, {
+    key: "shouldFetchOnReconnect",
+    value: function shouldFetchOnReconnect() {
+      return shouldFetchOn(_classPrivateFieldGet(this, _currentQuery), this.options, this.options.refetchOnReconnect);
+    }
+  }, {
+    key: "shouldFetchOnWindowFocus",
+    value: function shouldFetchOnWindowFocus() {
+      return shouldFetchOn(_classPrivateFieldGet(this, _currentQuery), this.options, this.options.refetchOnWindowFocus);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.listeners = /* @__PURE__ */new Set();
+      _classPrivateMethodGet(this, _clearStaleTimeout, _clearStaleTimeout2).call(this);
+      _classPrivateMethodGet(this, _clearRefetchInterval, _clearRefetchInterval2).call(this);
+      _classPrivateFieldGet(this, _currentQuery).removeObserver(this);
+    }
+  }, {
+    key: "setOptions",
+    value: function setOptions(options, notifyOptions) {
+      var prevOptions = this.options;
+      var prevQuery = _classPrivateFieldGet(this, _currentQuery);
+      this.options = _classPrivateFieldGet(this, _client).defaultQueryOptions(options);
+      if (this.options.enabled !== void 0 && typeof this.options.enabled !== "boolean" && typeof this.options.enabled !== "function" && typeof resolveEnabled(this.options.enabled, _classPrivateFieldGet(this, _currentQuery)) !== "boolean") {
+        throw new Error("Expected enabled to be a boolean or a callback that returns a boolean");
+      }
+      _classPrivateMethodGet(this, _updateQuery, _updateQuery2).call(this);
+      _classPrivateFieldGet(this, _currentQuery).setOptions(this.options);
+      if (prevOptions._defaulted && !utils_shallowEqualObjects(this.options, prevOptions)) {
+        _classPrivateFieldGet(this, _client).getQueryCache().notify({
+          type: "observerOptionsUpdated",
+          query: _classPrivateFieldGet(this, _currentQuery),
+          observer: this
+        });
+      }
+      var mounted = this.hasListeners();
+      if (mounted && shouldFetchOptionally(_classPrivateFieldGet(this, _currentQuery), prevQuery, this.options, prevOptions)) {
+        _classPrivateMethodGet(this, _executeFetch, _executeFetch2).call(this);
+      }
+      this.updateResult(notifyOptions);
+      if (mounted && (_classPrivateFieldGet(this, _currentQuery) !== prevQuery || resolveEnabled(this.options.enabled, _classPrivateFieldGet(this, _currentQuery)) !== resolveEnabled(prevOptions.enabled, _classPrivateFieldGet(this, _currentQuery)) || resolveStaleTime(this.options.staleTime, _classPrivateFieldGet(this, _currentQuery)) !== resolveStaleTime(prevOptions.staleTime, _classPrivateFieldGet(this, _currentQuery)))) {
+        _classPrivateMethodGet(this, _updateStaleTimeout, _updateStaleTimeout2).call(this);
+      }
+      var nextRefetchInterval = _classPrivateMethodGet(this, _computeRefetchInterval, _computeRefetchInterval2).call(this);
+      if (mounted && (_classPrivateFieldGet(this, _currentQuery) !== prevQuery || resolveEnabled(this.options.enabled, _classPrivateFieldGet(this, _currentQuery)) !== resolveEnabled(prevOptions.enabled, _classPrivateFieldGet(this, _currentQuery)) || nextRefetchInterval !== _classPrivateFieldGet(this, _currentRefetchInterval))) {
+        _classPrivateMethodGet(this, _updateRefetchInterval, _updateRefetchInterval2).call(this, nextRefetchInterval);
+      }
+    }
+  }, {
+    key: "getOptimisticResult",
+    value: function getOptimisticResult(options) {
+      var query = _classPrivateFieldGet(this, _client).getQueryCache().build(_classPrivateFieldGet(this, _client), options);
+      var result = this.createResult(query, options);
+      if (shouldAssignObserverCurrentProperties(this, result)) {
+        _classPrivateFieldSet(this, _currentResult, result);
+        _classPrivateFieldSet(this, _currentResultOptions, this.options);
+        _classPrivateFieldSet(this, _currentResultState, _classPrivateFieldGet(this, _currentQuery).state);
+      }
+      return result;
+    }
+  }, {
+    key: "getCurrentResult",
+    value: function getCurrentResult() {
+      return _classPrivateFieldGet(this, _currentResult);
+    }
+  }, {
+    key: "trackResult",
+    value: function trackResult(result, onPropTracked) {
+      var _this2 = this;
+      var trackedResult = {};
+      Object.keys(result).forEach(function (key) {
+        Object.defineProperty(trackedResult, key, {
+          configurable: false,
+          enumerable: true,
+          get: function get() {
+            _this2.trackProp(key);
+            onPropTracked === null || onPropTracked === void 0 || onPropTracked(key);
+            return result[key];
+          }
+        });
+      });
+      return trackedResult;
+    }
+  }, {
+    key: "trackProp",
+    value: function trackProp(key) {
+      _classPrivateFieldGet(this, _trackedProps).add(key);
+    }
+  }, {
+    key: "getCurrentQuery",
+    value: function getCurrentQuery() {
+      return _classPrivateFieldGet(this, _currentQuery);
+    }
+  }, {
+    key: "refetch",
+    value: function refetch() {
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        options = Object.assign({}, (objectDestructuringEmpty_objectDestructuringEmpty(_ref), _ref));
+      return this.fetch(_objectSpread2({}, options));
+    }
+  }, {
+    key: "fetchOptimistic",
+    value: function fetchOptimistic(options) {
+      var _this3 = this;
+      var defaultedOptions = _classPrivateFieldGet(this, _client).defaultQueryOptions(options);
+      var query = _classPrivateFieldGet(this, _client).getQueryCache().build(_classPrivateFieldGet(this, _client), defaultedOptions);
+      query.isFetchingOptimistic = true;
+      return query.fetch().then(function () {
+        return _this3.createResult(query, defaultedOptions);
+      });
+    }
+  }, {
+    key: "fetch",
+    value: function fetch(fetchOptions) {
+      var _fetchOptions$cancelR,
+        _this4 = this;
+      return _classPrivateMethodGet(this, _executeFetch, _executeFetch2).call(this, _objectSpread2(_objectSpread2({}, fetchOptions), {}, {
+        cancelRefetch: (_fetchOptions$cancelR = fetchOptions.cancelRefetch) !== null && _fetchOptions$cancelR !== void 0 ? _fetchOptions$cancelR : true
+      })).then(function () {
+        _this4.updateResult();
+        return _classPrivateFieldGet(_this4, _currentResult);
+      });
+    }
+  }, {
+    key: "createResult",
+    value: function createResult(query, options) {
+      var prevQuery = _classPrivateFieldGet(this, _currentQuery);
+      var prevOptions = this.options;
+      var prevResult = _classPrivateFieldGet(this, _currentResult);
+      var prevResultState = _classPrivateFieldGet(this, _currentResultState);
+      var prevResultOptions = _classPrivateFieldGet(this, _currentResultOptions);
+      var queryChange = query !== prevQuery;
+      var queryInitialState = queryChange ? query.state : _classPrivateFieldGet(this, _currentQueryInitialState);
+      var state = query.state;
+      var newState = _objectSpread2({}, state);
+      var isPlaceholderData = false;
+      var data;
+      if (options._optimisticResults) {
+        var mounted = this.hasListeners();
+        var fetchOnMount = !mounted && shouldFetchOnMount(query, options);
+        var fetchOptionally = mounted && shouldFetchOptionally(query, prevQuery, options, prevOptions);
+        if (fetchOnMount || fetchOptionally) {
+          newState = _objectSpread2(_objectSpread2({}, newState), fetchState(state.data, query.options));
+        }
+        if (options._optimisticResults === "isRestoring") {
+          newState.fetchStatus = "idle";
+        }
+      }
+      var _newState = newState,
+        error = _newState.error,
+        errorUpdatedAt = _newState.errorUpdatedAt,
+        status = _newState.status;
+      if (options.select && newState.data !== void 0) {
+        if (prevResult && newState.data === (prevResultState === null || prevResultState === void 0 ? void 0 : prevResultState.data) && options.select === _classPrivateFieldGet(this, _selectFn)) {
+          data = _classPrivateFieldGet(this, _selectResult);
+        } else {
+          try {
+            _classPrivateFieldSet(this, _selectFn, options.select);
+            data = options.select(newState.data);
+            data = replaceData(prevResult === null || prevResult === void 0 ? void 0 : prevResult.data, data, options);
+            _classPrivateFieldSet(this, _selectResult, data);
+            _classPrivateFieldSet(this, _selectError, null);
+          } catch (selectError) {
+            _classPrivateFieldSet(this, _selectError, selectError);
+          }
+        }
+      } else {
+        data = newState.data;
+      }
+      if (options.placeholderData !== void 0 && data === void 0 && status === "pending") {
+        var placeholderData;
+        if (prevResult !== null && prevResult !== void 0 && prevResult.isPlaceholderData && options.placeholderData === (prevResultOptions === null || prevResultOptions === void 0 ? void 0 : prevResultOptions.placeholderData)) {
+          placeholderData = prevResult.data;
+        } else {
+          var _classPrivateFieldGet2;
+          placeholderData = typeof options.placeholderData === "function" ? options.placeholderData((_classPrivateFieldGet2 = _classPrivateFieldGet(this, _lastQueryWithDefinedData)) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.state.data, _classPrivateFieldGet(this, _lastQueryWithDefinedData)) : options.placeholderData;
+          if (options.select && placeholderData !== void 0) {
+            try {
+              placeholderData = options.select(placeholderData);
+              _classPrivateFieldSet(this, _selectError, null);
+            } catch (selectError) {
+              _classPrivateFieldSet(this, _selectError, selectError);
+            }
+          }
+        }
+        if (placeholderData !== void 0) {
+          status = "success";
+          data = replaceData(prevResult === null || prevResult === void 0 ? void 0 : prevResult.data, placeholderData, options);
+          isPlaceholderData = true;
+        }
+      }
+      if (_classPrivateFieldGet(this, _selectError)) {
+        error = _classPrivateFieldGet(this, _selectError);
+        data = _classPrivateFieldGet(this, _selectResult);
+        errorUpdatedAt = Date.now();
+        status = "error";
+      }
+      var isFetching = newState.fetchStatus === "fetching";
+      var isPending = status === "pending";
+      var isError = status === "error";
+      var isLoading = isPending && isFetching;
+      var hasData = data !== void 0;
+      var result = {
+        status: status,
+        fetchStatus: newState.fetchStatus,
+        isPending: isPending,
+        isSuccess: status === "success",
+        isError: isError,
+        isInitialLoading: isLoading,
+        isLoading: isLoading,
+        data: data,
+        dataUpdatedAt: newState.dataUpdatedAt,
+        error: error,
+        errorUpdatedAt: errorUpdatedAt,
+        failureCount: newState.fetchFailureCount,
+        failureReason: newState.fetchFailureReason,
+        errorUpdateCount: newState.errorUpdateCount,
+        isFetched: newState.dataUpdateCount > 0 || newState.errorUpdateCount > 0,
+        isFetchedAfterMount: newState.dataUpdateCount > queryInitialState.dataUpdateCount || newState.errorUpdateCount > queryInitialState.errorUpdateCount,
+        isFetching: isFetching,
+        isRefetching: isFetching && !isPending,
+        isLoadingError: isError && !hasData,
+        isPaused: newState.fetchStatus === "paused",
+        isPlaceholderData: isPlaceholderData,
+        isRefetchError: isError && hasData,
+        isStale: isStale(query, options),
+        refetch: this.refetch
+      };
+      return result;
+    }
+  }, {
+    key: "updateResult",
+    value: function updateResult(notifyOptions) {
+      var _this5 = this;
+      var prevResult = _classPrivateFieldGet(this, _currentResult);
+      var nextResult = this.createResult(_classPrivateFieldGet(this, _currentQuery), this.options);
+      _classPrivateFieldSet(this, _currentResultState, _classPrivateFieldGet(this, _currentQuery).state);
+      _classPrivateFieldSet(this, _currentResultOptions, this.options);
+      if (_classPrivateFieldGet(this, _currentResultState).data !== void 0) {
+        _classPrivateFieldSet(this, _lastQueryWithDefinedData, _classPrivateFieldGet(this, _currentQuery));
+      }
+      if (utils_shallowEqualObjects(nextResult, prevResult)) {
+        return;
+      }
+      _classPrivateFieldSet(this, _currentResult, nextResult);
+      var defaultNotifyOptions = {};
+      var shouldNotifyListeners = function shouldNotifyListeners() {
+        if (!prevResult) {
+          return true;
+        }
+        var notifyOnChangeProps = _this5.options.notifyOnChangeProps;
+        var notifyOnChangePropsValue = typeof notifyOnChangeProps === "function" ? notifyOnChangeProps() : notifyOnChangeProps;
+        if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !_classPrivateFieldGet(_this5, _trackedProps).size) {
+          return true;
+        }
+        var includedProps = new Set(notifyOnChangePropsValue !== null && notifyOnChangePropsValue !== void 0 ? notifyOnChangePropsValue : _classPrivateFieldGet(_this5, _trackedProps));
+        if (_this5.options.throwOnError) {
+          includedProps.add("error");
+        }
+        return Object.keys(_classPrivateFieldGet(_this5, _currentResult)).some(function (key) {
+          var typedKey = key;
+          var changed = _classPrivateFieldGet(_this5, _currentResult)[typedKey] !== prevResult[typedKey];
+          return changed && includedProps.has(typedKey);
+        });
+      };
+      if ((notifyOptions === null || notifyOptions === void 0 ? void 0 : notifyOptions.listeners) !== false && shouldNotifyListeners()) {
+        defaultNotifyOptions.listeners = true;
+      }
+      _classPrivateMethodGet(this, _notify, _notify2).call(this, _objectSpread2(_objectSpread2({}, defaultNotifyOptions), notifyOptions));
+    }
+  }, {
+    key: "onQueryUpdate",
+    value: function onQueryUpdate() {
+      this.updateResult();
+      if (this.hasListeners()) {
+        _classPrivateMethodGet(this, _updateTimers, _updateTimers2).call(this);
+      }
+    }
+  }]);
+  return QueryObserver;
+}(Subscribable));
+function _executeFetch2(fetchOptions) {
+  _classPrivateMethodGet(this, _updateQuery, _updateQuery2).call(this);
+  var promise = _classPrivateFieldGet(this, _currentQuery).fetch(this.options, fetchOptions);
+  if (!(fetchOptions !== null && fetchOptions !== void 0 && fetchOptions.throwOnError)) {
+    promise = promise["catch"](noop);
+  }
+  return promise;
+}
+function _updateStaleTimeout2() {
+  var _this6 = this;
+  _classPrivateMethodGet(this, _clearStaleTimeout, _clearStaleTimeout2).call(this);
+  var staleTime = resolveStaleTime(this.options.staleTime, _classPrivateFieldGet(this, _currentQuery));
+  if (isServer || _classPrivateFieldGet(this, _currentResult).isStale || !isValidTimeout(staleTime)) {
+    return;
+  }
+  var time = timeUntilStale(_classPrivateFieldGet(this, _currentResult).dataUpdatedAt, staleTime);
+  var timeout = time + 1;
+  _classPrivateFieldSet(this, _staleTimeoutId, setTimeout(function () {
+    if (!_classPrivateFieldGet(_this6, _currentResult).isStale) {
+      _this6.updateResult();
+    }
+  }, timeout));
+}
+function _computeRefetchInterval2() {
+  var _ref2;
+  return (_ref2 = typeof this.options.refetchInterval === "function" ? this.options.refetchInterval(_classPrivateFieldGet(this, _currentQuery)) : this.options.refetchInterval) !== null && _ref2 !== void 0 ? _ref2 : false;
+}
+function _updateRefetchInterval2(nextInterval) {
+  var _this7 = this;
+  _classPrivateMethodGet(this, _clearRefetchInterval, _clearRefetchInterval2).call(this);
+  _classPrivateFieldSet(this, _currentRefetchInterval, nextInterval);
+  if (isServer || resolveEnabled(this.options.enabled, _classPrivateFieldGet(this, _currentQuery)) === false || !isValidTimeout(_classPrivateFieldGet(this, _currentRefetchInterval)) || _classPrivateFieldGet(this, _currentRefetchInterval) === 0) {
+    return;
+  }
+  _classPrivateFieldSet(this, _refetchIntervalId, setInterval(function () {
+    if (_this7.options.refetchIntervalInBackground || focusManager.isFocused()) {
+      _classPrivateMethodGet(_this7, _executeFetch, _executeFetch2).call(_this7);
+    }
+  }, _classPrivateFieldGet(this, _currentRefetchInterval)));
+}
+function _updateTimers2() {
+  _classPrivateMethodGet(this, _updateStaleTimeout, _updateStaleTimeout2).call(this);
+  _classPrivateMethodGet(this, _updateRefetchInterval, _updateRefetchInterval2).call(this, _classPrivateMethodGet(this, _computeRefetchInterval, _computeRefetchInterval2).call(this));
+}
+function _clearStaleTimeout2() {
+  if (_classPrivateFieldGet(this, _staleTimeoutId)) {
+    clearTimeout(_classPrivateFieldGet(this, _staleTimeoutId));
+    _classPrivateFieldSet(this, _staleTimeoutId, void 0);
+  }
+}
+function _clearRefetchInterval2() {
+  if (_classPrivateFieldGet(this, _refetchIntervalId)) {
+    clearInterval(_classPrivateFieldGet(this, _refetchIntervalId));
+    _classPrivateFieldSet(this, _refetchIntervalId, void 0);
+  }
+}
+function _updateQuery2() {
+  var query = _classPrivateFieldGet(this, _client).getQueryCache().build(_classPrivateFieldGet(this, _client), this.options);
+  if (query === _classPrivateFieldGet(this, _currentQuery)) {
+    return;
+  }
+  var prevQuery = _classPrivateFieldGet(this, _currentQuery);
+  _classPrivateFieldSet(this, _currentQuery, query);
+  _classPrivateFieldSet(this, _currentQueryInitialState, query.state);
+  if (this.hasListeners()) {
+    prevQuery === null || prevQuery === void 0 || prevQuery.removeObserver(this);
+    query.addObserver(this);
+  }
+}
+function _notify2(notifyOptions) {
+  var _this8 = this;
+  notifyManager.batch(function () {
+    if (notifyOptions.listeners) {
+      _this8.listeners.forEach(function (listener) {
+        listener(_classPrivateFieldGet(_this8, _currentResult));
+      });
+    }
+    _classPrivateFieldGet(_this8, _client).getQueryCache().notify({
+      query: _classPrivateFieldGet(_this8, _currentQuery),
+      type: "observerResultsUpdated"
+    });
+  });
+}
+function shouldLoadOnMount(query, options) {
+  return resolveEnabled(options.enabled, query) !== false && query.state.data === void 0 && !(query.state.status === "error" && options.retryOnMount === false);
+}
+function shouldFetchOnMount(query, options) {
+  return shouldLoadOnMount(query, options) || query.state.data !== void 0 && shouldFetchOn(query, options, options.refetchOnMount);
+}
+function shouldFetchOn(query, options, field) {
+  if (resolveEnabled(options.enabled, query) !== false) {
+    var value = typeof field === "function" ? field(query) : field;
+    return value === "always" || value !== false && isStale(query, options);
+  }
+  return false;
+}
+function shouldFetchOptionally(query, prevQuery, options, prevOptions) {
+  return (query !== prevQuery || resolveEnabled(prevOptions.enabled, query) === false) && (!options.suspense || query.state.status !== "error") && isStale(query, options);
+}
+function isStale(query, options) {
+  return resolveEnabled(options.enabled, query) !== false && query.isStaleByTime(resolveStaleTime(options.staleTime, query));
+}
+function shouldAssignObserverCurrentProperties(observer, optimisticResult) {
+  if (!utils_shallowEqualObjects(observer.getCurrentResult(), optimisticResult)) {
+    return true;
+  }
+  return false;
+}
+
+//# sourceMappingURL=queryObserver.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
+"use client";
+
+// src/QueryErrorResetBoundary.tsx
+
+
+
+function createValue() {
+  var _isReset = false;
+  return {
+    clearReset: function clearReset() {
+      _isReset = false;
+    },
+    reset: function reset() {
+      _isReset = true;
+    },
+    isReset: function isReset() {
+      return _isReset;
+    }
+  };
+}
+var QueryErrorResetBoundaryContext = react.createContext(createValue());
+var useQueryErrorResetBoundary = function useQueryErrorResetBoundary() {
+  return react.useContext(QueryErrorResetBoundaryContext);
+};
+var QueryErrorResetBoundary = function QueryErrorResetBoundary(_ref) {
+  var children = _ref.children;
+  var _React$useState = React.useState(function () {
+      return createValue();
+    }),
+    _React$useState2 = _slicedToArray(_React$useState, 1),
+    value = _React$useState2[0];
+  return /* @__PURE__ */jsx(QueryErrorResetBoundaryContext.Provider, {
+    value: value,
+    children: typeof children === "function" ? children(value) : children
+  });
+};
+
+//# sourceMappingURL=QueryErrorResetBoundary.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/isRestoring.js
+"use client";
+
+// src/isRestoring.ts
+
+var IsRestoringContext = react.createContext(false);
+var useIsRestoring = function useIsRestoring() {
+  return react.useContext(IsRestoringContext);
+};
+var IsRestoringProvider = IsRestoringContext.Provider;
+
+//# sourceMappingURL=isRestoring.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/utils.js
+
+// src/utils.ts
+function shouldThrowError(throwError, params) {
+  if (typeof throwError === "function") {
+    return throwError.apply(void 0, toConsumableArray_toConsumableArray(params));
+  }
+  return !!throwError;
+}
+function utils_noop() {}
+
+//# sourceMappingURL=utils.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
+"use client";
+
+// src/errorBoundaryUtils.ts
+
+
+var ensurePreventErrorBoundaryRetry = function ensurePreventErrorBoundaryRetry(options, errorResetBoundary) {
+  if (options.suspense || options.throwOnError) {
+    if (!errorResetBoundary.isReset()) {
+      options.retryOnMount = false;
+    }
+  }
+};
+var useClearResetErrorBoundary = function useClearResetErrorBoundary(errorResetBoundary) {
+  react.useEffect(function () {
+    errorResetBoundary.clearReset();
+  }, [errorResetBoundary]);
+};
+var getHasError = function getHasError(_ref) {
+  var result = _ref.result,
+    errorResetBoundary = _ref.errorResetBoundary,
+    throwOnError = _ref.throwOnError,
+    query = _ref.query;
+  return result.isError && !errorResetBoundary.isReset() && !result.isFetching && query && shouldThrowError(throwOnError, [result.error, query]);
+};
+
+//# sourceMappingURL=errorBoundaryUtils.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/suspense.js
+// src/suspense.ts
+var defaultThrowOnError = function defaultThrowOnError(_error, query) {
+  return query.state.data === void 0;
+};
+var ensureSuspenseTimers = function ensureSuspenseTimers(defaultedOptions) {
+  if (defaultedOptions.suspense) {
+    if (typeof defaultedOptions.staleTime !== "number") {
+      defaultedOptions.staleTime = 1e3;
+    }
+    if (typeof defaultedOptions.gcTime === "number") {
+      defaultedOptions.gcTime = Math.max(defaultedOptions.gcTime, 1e3);
+    }
+  }
+};
+var willFetch = function willFetch(result, isRestoring) {
+  return result.isLoading && result.isFetching && !isRestoring;
+};
+var shouldSuspend = function shouldSuspend(defaultedOptions, result) {
+  return (defaultedOptions === null || defaultedOptions === void 0 ? void 0 : defaultedOptions.suspense) && result.isPending;
+};
+var fetchOptimistic = function fetchOptimistic(defaultedOptions, observer, errorResetBoundary) {
+  return observer.fetchOptimistic(defaultedOptions)["catch"](function () {
+    errorResetBoundary.clearReset();
+  });
+};
+
+//# sourceMappingURL=suspense.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
+"use client";
+
+// src/useBaseQuery.ts
+
+
+
+
+
+
+
+
+function useBaseQuery(options, Observer, queryClient) {
+  var _client$getDefaultOpt, _client$getDefaultOpt2, _client$getDefaultOpt3, _client$getDefaultOpt4;
+  if (false) {}
+  var client = useQueryClient(queryClient);
+  var isRestoring = useIsRestoring();
+  var errorResetBoundary = useQueryErrorResetBoundary();
+  var defaultedOptions = client.defaultQueryOptions(options);
+  (_client$getDefaultOpt = client.getDefaultOptions().queries) === null || _client$getDefaultOpt === void 0 || (_client$getDefaultOpt2 = _client$getDefaultOpt._experimental_beforeQuery) === null || _client$getDefaultOpt2 === void 0 || _client$getDefaultOpt2.call(_client$getDefaultOpt, defaultedOptions);
+  defaultedOptions._optimisticResults = isRestoring ? "isRestoring" : "optimistic";
+  ensureSuspenseTimers(defaultedOptions);
+  ensurePreventErrorBoundaryRetry(defaultedOptions, errorResetBoundary);
+  useClearResetErrorBoundary(errorResetBoundary);
+  var _React$useState = react.useState(function () {
+      return new Observer(client, defaultedOptions);
+    }),
+    _React$useState2 = slicedToArray_slicedToArray(_React$useState, 1),
+    observer = _React$useState2[0];
+  var result = observer.getOptimisticResult(defaultedOptions);
+  react.useSyncExternalStore(react.useCallback(function (onStoreChange) {
+    var unsubscribe = isRestoring ? function () {
+      return void 0;
+    } : observer.subscribe(notifyManager.batchCalls(onStoreChange));
+    observer.updateResult();
+    return unsubscribe;
+  }, [observer, isRestoring]), function () {
+    return observer.getCurrentResult();
+  }, function () {
+    return observer.getCurrentResult();
+  });
+  react.useEffect(function () {
+    observer.setOptions(defaultedOptions, {
+      listeners: false
+    });
+  }, [defaultedOptions, observer]);
+  if (shouldSuspend(defaultedOptions, result)) {
+    throw fetchOptimistic(defaultedOptions, observer, errorResetBoundary);
+  }
+  if (getHasError({
+    result: result,
+    errorResetBoundary: errorResetBoundary,
+    throwOnError: defaultedOptions.throwOnError,
+    query: client.getQueryCache().get(defaultedOptions.queryHash)
+  })) {
+    throw result.error;
+  }
+  ;
+  (_client$getDefaultOpt3 = client.getDefaultOptions().queries) === null || _client$getDefaultOpt3 === void 0 || (_client$getDefaultOpt4 = _client$getDefaultOpt3._experimental_afterQuery) === null || _client$getDefaultOpt4 === void 0 || _client$getDefaultOpt4.call(_client$getDefaultOpt3, defaultedOptions, result);
+  return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
+}
+
+//# sourceMappingURL=useBaseQuery.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/useQuery.js
+"use client";
+
+// src/useQuery.ts
+
+
+function useQuery(options, queryClient) {
+  return useBaseQuery(options, QueryObserver, queryClient);
+}
+
+//# sourceMappingURL=useQuery.js.map
+;// CONCATENATED MODULE: ./src/pages/query/QueryPage.tsx
+function QueryPage(){var _useQuery=useQuery({queryKey:['repoData'],queryFn:function(){var _queryFn=asyncToGenerator_asyncToGenerator(/*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee(){var response;return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:_context.next=2;return fetch('https://api.github.com/repos/TanStack/query');case 2:response=_context.sent;_context.next=5;return response.json();case 5:return _context.abrupt("return",_context.sent);case 6:case"end":return _context.stop();}},_callee);}));function queryFn(){return _queryFn.apply(this,arguments);}return queryFn;}()}),isPending=_useQuery.isPending,error=_useQuery.error,data=_useQuery.data,isFetching=_useQuery.isFetching,refetch=_useQuery.refetch;if(isPending)return'Loading...';if(error)return'An error has occurred: '+error.message;return/*#__PURE__*/(0,jsx_runtime.jsxs)("div",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:data.full_name}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Subscribers: ",data.subscribers_count]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Stargazers: ",data.stargazers_count]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Forks: ",data.forks_count]}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return refetch();},disabled:isFetching,children:isFetching?'Refreshing...':'Refresh'})]});}
 // EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/style-frameworks/index.module.scss
 var style_frameworks_index_module = __webpack_require__("../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/style-frameworks/index.module.scss");
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/index.module.scss
@@ -20286,45 +24218,6 @@ var style_frameworks_index_module_update = injectStylesIntoStyleTag_default()(st
 
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/index.tsx
 var CustomNavLink=function CustomNavLink(_ref){var to=_ref.to,children=_ref.children;var nav=useNavigate();var resolved=useResolvedPath(to);var match=useMatch({path:resolved.pathname,end:true});return/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav(to);},className:match&&pages_style_frameworks_index_module.active,children:children});};function StyleFrameworksPage(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:dist_clsx(pages_style_frameworks_index_module.host),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{className:dist_clsx(pages_style_frameworks_index_module.tabs),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./jss',children:"JSS"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./styled-components',children:"Styled Components"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./emotion',children:"Emotion"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./tailwind',children:"Tailwind"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./bootstrap',children:"Bootstrap"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Outlet,{})]});}/* harmony default export */ const style_frameworks = (StyleFrameworksPage);
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js
-
-function defineProperty_defineProperty(obj, key, value) {
-  key = toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), !0).forEach(function (r) {
-      defineProperty_defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
@@ -22011,7 +25904,7 @@ function murmur2(str) {
   return ((h ^ h >>> 15) >>> 0).toString(36);
 }
 
-;// CONCATENATED MODULE: ../../node_modules/@emotion/serialize/node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
 var unitlessKeys = {
   animationIterationCount: 1,
   aspectRatio: 1,
@@ -27511,7 +31404,7 @@ var react_jss_esm_create = function create(css) {
     return react.createElement.apply(undefined, args);
   };
 };
-var jsx = react_jss_esm_create();
+var react_jss_esm_jsx = react_jss_esm_create();
 /* harmony default export */ const react_jss_esm = ((/* unused pure expression or super */ null && (createWithStyles)));
 
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/jss/index.tsx
@@ -28934,56 +32827,6 @@ function Parser_comment(value, root, parent, siblings) {
 function Parser_declaration(value, root, parent, length, siblings) {
   return Tokenizer_node(value, root, parent, src_Enum_DECLARATION, src_Utility_substr(value, 0, length), src_Utility_substr(value, length + 1, -1), length, siblings);
 }
-;// CONCATENATED MODULE: ../../node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
-var emotion_unitless_esm_unitlessKeys = {
-  animationIterationCount: 1,
-  borderImageOutset: 1,
-  borderImageSlice: 1,
-  borderImageWidth: 1,
-  boxFlex: 1,
-  boxFlexGroup: 1,
-  boxOrdinalGroup: 1,
-  columnCount: 1,
-  columns: 1,
-  flex: 1,
-  flexGrow: 1,
-  flexPositive: 1,
-  flexShrink: 1,
-  flexNegative: 1,
-  flexOrder: 1,
-  gridRow: 1,
-  gridRowEnd: 1,
-  gridRowSpan: 1,
-  gridRowStart: 1,
-  gridColumn: 1,
-  gridColumnEnd: 1,
-  gridColumnSpan: 1,
-  gridColumnStart: 1,
-  msGridRow: 1,
-  msGridRowSpan: 1,
-  msGridColumn: 1,
-  msGridColumnSpan: 1,
-  fontWeight: 1,
-  lineHeight: 1,
-  opacity: 1,
-  order: 1,
-  orphans: 1,
-  tabSize: 1,
-  widows: 1,
-  zIndex: 1,
-  zoom: 1,
-  WebkitLineClamp: 1,
-  // SVG-related properties
-  fillOpacity: 1,
-  floodOpacity: 1,
-  stopOpacity: 1,
-  strokeDasharray: 1,
-  strokeDashoffset: 1,
-  strokeMiterlimit: 1,
-  strokeOpacity: 1,
-  strokeWidth: 1
-};
-/* harmony default export */ const emotion_unitless_esm = (emotion_unitless_esm_unitlessKeys);
 ;// CONCATENATED MODULE: ../../node_modules/styled-components/dist/styled-components.browser.esm.js
 
 
@@ -28994,7 +32837,7 @@ var emotion_unitless_esm_unitlessKeys = {
 var f = "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && (({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_ATTR || ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_ATTR) || "data-styled",
   m = "active",
   y = "data-styled-version",
-  v = "6.1.8",
+  v = "6.1.9",
   g = "/*!sc*/\n",
   S = "undefined" != typeof window && "HTMLElement" in window,
   w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY : "production" !== "production"),
@@ -29469,7 +33312,7 @@ var qe = function qe(e) {
       r = [];
     for (var s in t) {
       var i = t[s];
-      t.hasOwnProperty(s) && !qe(i) && (Array.isArray(i) && i.isCss || re(i) ? r.push("".concat(We(s), ":"), i, ";") : ce(i) ? r.push.apply(r, tslib_es6_spreadArray(tslib_es6_spreadArray(["".concat(s, " {")], He(i), !1), ["}"], !1)) : r.push("".concat(We(s), ": ").concat((n = s, null == (o = i) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || n in emotion_unitless_esm || n.startsWith("--") ? String(o).trim() : "".concat(o, "px")), ";")));
+      t.hasOwnProperty(s) && !qe(i) && (Array.isArray(i) && i.isCss || re(i) ? r.push("".concat(We(s), ":"), i, ";") : ce(i) ? r.push.apply(r, tslib_es6_spreadArray(tslib_es6_spreadArray(["".concat(s, " {")], He(i), !1), ["}"], !1)) : r.push("".concat(We(s), ": ").concat((n = s, null == (o = i) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || n in unitlessKeys || n.startsWith("--") ? String(o).trim() : "".concat(o, "px")), ";")));
     }
     return r;
   };
@@ -30002,12 +33845,11 @@ function iconBase_objectWithoutProperties(source, excluded) {
 function iconBase_objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+  for (var key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
   }
   return target;
 }
@@ -30060,19 +33902,19 @@ function iconBase_defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return typeof key === "symbol" ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive(input, hint) {
-  if (typeof input !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (typeof res !== "object") return res;
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return (hint === "string" ? String : Number)(input);
+  return ("string" === r ? String : Number)(t);
 }
 
 
@@ -30084,7 +33926,6 @@ function Tree2Element(tree) {
   });
 }
 function iconBase_GenIcon(data) {
-  // eslint-disable-next-line react/display-name
   return function (props) {
     return /*#__PURE__*/react.createElement(IconBase, iconBase_extends({
       attr: iconBase_objectSpread({}, data.attr)
@@ -75912,9 +79753,9 @@ var todo_update = injectStylesIntoStyleTag_default()(todo/* default */.A, todo_o
 ;// CONCATENATED MODULE: ./src/pages/todo/index.jsx
 function TodoItem(props){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:"todo-item",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-item-name",children:props.item.text}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:"todo-remove-button",onClick:function onClick(){return props.onRemove(props.item.id);},children:/*#__PURE__*/(0,jsx_runtime.jsx)("icon",{children:"delete"})})]});}function TodoPage(){var lastId=(0,react.useRef)(3);var _useState=(0,react.useState)([{id:0,text:'Take a walk'},{id:1,text:'Buy groceries'},{id:2,text:'Prepare dinner'}]),_useState2=slicedToArray_slicedToArray(_useState,2),items=_useState2[0],setItems=_useState2[1];var inputRef=(0,react.useRef)();function addTodo(item){inputRef.current.Value='';setItems(function(oldItems){var newItems=toConsumableArray_toConsumableArray(oldItems);newItems.push({id:lastId.current++,text:item});return newItems;});}function removeTodo(id){setItems(function(oldItems){return oldItems.filter(function(x){return x.id!==id;});});}return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:"todo-root",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-header",children:"TODO app example"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:"todo-input-section",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("input",{className:"todo-input",ref:inputRef,placeholder:"Enter a new todo",onSubmit:function onSubmit(ev,sender){return addTodo(sender.Value);}}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:"todo-add-button",onClick:function onClick(){return addTodo(inputRef.current.Value);},children:/*#__PURE__*/(0,jsx_runtime.jsx)("icon",{children:"add"})})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-items",children:items.map(function(item){return/*#__PURE__*/(0,jsx_runtime.jsx)(TodoItem,{item:item,onRemove:removeTodo},item.id);})})]});}/* harmony default export */ const src_pages_todo = (TodoPage);
 ;// CONCATENATED MODULE: ./src/app/routes.tsx
-var TailwindPage=/*#__PURE__*/react.lazy(function(){return __webpack_require__.e(/* import() */ "src_pages_style-frameworks_tailwind_index_tsx").then(__webpack_require__.bind(__webpack_require__, "./src/pages/style-frameworks/tailwind/index.tsx"));});function AppRoutes(){return/*#__PURE__*/(0,jsx_runtime.jsxs)(Routes,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'',element:/*#__PURE__*/(0,jsx_runtime.jsx)(home,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'material',element:/*#__PURE__*/(0,jsx_runtime.jsx)(material,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'animations',element:/*#__PURE__*/(0,jsx_runtime.jsx)(animations,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'images',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_images,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bg-patterns',element:/*#__PURE__*/(0,jsx_runtime.jsx)(bg_patterns,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'svgs',element:/*#__PURE__*/(0,jsx_runtime.jsx)(svgs,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'interop',element:/*#__PURE__*/(0,jsx_runtime.jsx)(interop,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'todo',element:/*#__PURE__*/(0,jsx_runtime.jsx)(src_pages_todo,{})}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Route,{path:'style-frameworks',element:/*#__PURE__*/(0,jsx_runtime.jsx)(style_frameworks,{}),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'jss',element:/*#__PURE__*/(0,jsx_runtime.jsx)(jss,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'styled-components',element:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'emotion',element:/*#__PURE__*/(0,jsx_runtime.jsx)(emotion,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bootstrap',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_style_frameworks_bootstrap,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'tailwind',element:/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(TailwindPage,{})})})]})]});}
+var TailwindPage=/*#__PURE__*/react.lazy(function(){return __webpack_require__.e(/* import() */ "src_pages_style-frameworks_tailwind_index_tsx").then(__webpack_require__.bind(__webpack_require__, "./src/pages/style-frameworks/tailwind/index.tsx"));});function AppRoutes(){return/*#__PURE__*/(0,jsx_runtime.jsxs)(Routes,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'',element:/*#__PURE__*/(0,jsx_runtime.jsx)(home,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'material',element:/*#__PURE__*/(0,jsx_runtime.jsx)(material,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'animations',element:/*#__PURE__*/(0,jsx_runtime.jsx)(animations,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'images',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_images,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bg-patterns',element:/*#__PURE__*/(0,jsx_runtime.jsx)(bg_patterns,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'svgs',element:/*#__PURE__*/(0,jsx_runtime.jsx)(svgs,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'interop',element:/*#__PURE__*/(0,jsx_runtime.jsx)(interop,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'todo',element:/*#__PURE__*/(0,jsx_runtime.jsx)(src_pages_todo,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'query',element:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryPage,{})}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Route,{path:'style-frameworks',element:/*#__PURE__*/(0,jsx_runtime.jsx)(style_frameworks,{}),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'jss',element:/*#__PURE__*/(0,jsx_runtime.jsx)(jss,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'styled-components',element:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'emotion',element:/*#__PURE__*/(0,jsx_runtime.jsx)(emotion,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bootstrap',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_style_frameworks_bootstrap,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'tailwind',element:/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(TailwindPage,{})})})]})]});}
 ;// CONCATENATED MODULE: ./src/app/index.tsx
-function App(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:app_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:app_index_module.sidepanel,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('');},children:"Home"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('material');},children:"Material"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('animations');},children:"Animations"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('images');},children:"Images"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('bg-patterns');},children:"Background Patterns"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('svgs');},children:"SVGs"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('style-frameworks/jss');},children:"Style Frameworks"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('interop');},children:"Interop"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('todo');},children:"Todo App Example"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:app_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:app_index_module.content,children:/*#__PURE__*/(0,jsx_runtime.jsx)(AppRoutes,{})})})]});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(MemoryRouter,{initialEntries:['/'+__webpack_require__.g.location.hash.replace(/^#/,'')],initialIndex:0,children:/*#__PURE__*/(0,jsx_runtime.jsx)(App,{})})}));
+var queryClient=new QueryClient();function App(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:app_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:app_index_module.sidepanel,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('');},children:"Home"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('material');},children:"Material"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('animations');},children:"Animations"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('images');},children:"Images"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('bg-patterns');},children:"Background Patterns"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('svgs');},children:"SVGs"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('style-frameworks/jss');},children:"Style Frameworks"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('interop');},children:"Interop"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('todo');},children:"Todo App Example"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('query');},children:"Tanstack Query"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:app_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:app_index_module.content,children:/*#__PURE__*/(0,jsx_runtime.jsx)(AppRoutes,{})})})]});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(MemoryRouter,{initialEntries:['/'+__webpack_require__.g.location.hash.replace(/^#/,'')],initialIndex:0,children:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryClientProvider,{client:queryClient,children:/*#__PURE__*/(0,jsx_runtime.jsx)(App,{})})})}));
 ;// CONCATENATED MODULE: ./src/index.tsx
 
 })();

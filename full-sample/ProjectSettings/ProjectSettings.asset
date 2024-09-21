@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 27
+  serializedVersion: 28
   productGUID: 117f153d6166fbb4bb913f95874ec294
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -70,18 +70,18 @@ PlayerSettings:
   androidRenderOutsideSafeArea: 1
   androidUseSwappy: 0
   androidBlitType: 0
-  androidResizableWindow: 0
+  androidResizeableActivity: 0
   androidDefaultWindowWidth: 1920
   androidDefaultWindowHeight: 1080
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
   androidFullscreenMode: 1
   androidAutoRotationBehavior: 1
+  androidPredictiveBackSupport: 0
   androidApplicationEntry: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 1
-  captureSingleScreen: 0
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
   Force IOS Speakers When Recording: 0
@@ -137,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 0.1
   preloadedAssets:
   - {fileID: 0}
@@ -311,6 +313,7 @@ PlayerSettings:
   buildNumber:
     Bratwurst: 0
     Standalone: 0
+    VisionOS: 0
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
@@ -331,12 +334,14 @@ PlayerSettings:
   strictShaderVariantMatching: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
+  iOSSimulatorArchitecture: 0
   iOSTargetOSVersionString: 13.0
   tvOSSdkVersion: 0
+  tvOSSimulatorArchitecture: 0
   tvOSRequireExtendedGameController: 0
   tvOSTargetOSVersionString: 13.0
-  bratwurstSdkVersion: 0
-  bratwurstTargetOSVersionString: 13.0
+  VisionOSSdkVersion: 0
+  VisionOSTargetOSVersionString: 1.0
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
   uIRequiresFullScreen: 1
@@ -361,7 +366,6 @@ PlayerSettings:
     rgba: 0
   iOSLaunchScreenFillPct: 100
   iOSLaunchScreenSize: 100
-  iOSLaunchScreenCustomXibPath: 
   iOSLaunchScreeniPadType: 0
   iOSLaunchScreeniPadImage: {fileID: 0}
   iOSLaunchScreeniPadBackgroundColor:
@@ -369,7 +373,6 @@ PlayerSettings:
     rgba: 0
   iOSLaunchScreeniPadFillPct: 100
   iOSLaunchScreeniPadSize: 100
-  iOSLaunchScreeniPadCustomXibPath: 
   iOSLaunchScreenCustomStoryboardPath: 
   iOSLaunchScreeniPadCustomStoryboardPath: 
   iOSDeviceRequirements: []
@@ -379,15 +382,16 @@ PlayerSettings:
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
   metalAPIValidation: 1
+  metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
-  bratwurstManualSigningProvisioningProfileID: 
+  VisionOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0
   tvOSManualSigningProvisioningProfileType: 0
-  bratwurstManualSigningProvisioningProfileType: 0
+  VisionOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 0
   iOSRequireARKit: 0
   iOSAutomaticallyDetectAndAddCapabilities: 1
@@ -403,9 +407,8 @@ PlayerSettings:
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomGradleSettingsTemplate: 0
-  useCustomProguardFile: 0
+  useCustomProguardFile: 1
   AndroidTargetArchitectures: 1
-  AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
@@ -424,12 +427,12 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  chromeosInputEmulation: 1
-  AndroidMinifyRelease: 0
+  AndroidMinifyRelease: 1
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
   AndroidReportGooglePlayAppDependencies: 1
+  androidSymbolsSizeThreshold: 800
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
@@ -587,11 +590,16 @@ PlayerSettings:
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality: []
-  m_BuildTargetGroupHDRCubemapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
-  m_BuildTargetDefaultTextureCompressionFormat: []
+  m_BuildTargetDefaultTextureCompressionFormat:
+  - serializedVersion: 3
+    m_BuildTarget: WebGL
+    m_Formats: 05000000
+  - serializedVersion: 3
+    m_BuildTarget: Android
+    m_Formats: 01000000
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -602,7 +610,7 @@ PlayerSettings:
   locationUsageDescription: 
   microphoneUsageDescription: 
   bluetoothUsageDescription: 
-  macOSTargetOSVersion: 10.13.0
+  macOSTargetOSVersion: 11.0
   switchNMETAOverride: 
   switchNetLibKey: 
   switchSocketMemoryPoolSize: 6144
@@ -747,6 +755,7 @@ PlayerSettings:
   switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
   switchRamDiskSpaceSize: 12
+  switchUpgradedPlayerSettingsToNMETA: 0
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -854,6 +863,7 @@ PlayerSettings:
   webGLWebAssemblyTable: 0
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
+  webWasm2023: 1
   scriptingDefineSymbols:
     : 
     Standalone: REACT_UNITY_DEVELOPER
@@ -861,10 +871,12 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Android: 0
+    Android: 1
     Standalone: 0
   il2cppCompilerConfiguration: {}
-  il2cppCodeGeneration: {}
+  il2cppCodeGeneration:
+    Android: 1
+    WebGL: 1
   il2cppStacktraceInformation: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
@@ -975,3 +987,5 @@ PlayerSettings:
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
   insecureHttpOption: 2
+  androidVulkanDenyFilterList: []
+  androidVulkanAllowFilterList: []

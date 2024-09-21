@@ -21,6 +21,7 @@
     "@reactunity/material": "^0.18.1",
     "@reactunity/renderer": "^0.18.1",
     "@reduxjs/toolkit": "^2.2.3",
+    "@tanstack/react-query": "^5.56.2",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
