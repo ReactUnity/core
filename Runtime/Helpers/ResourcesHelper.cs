@@ -17,6 +17,10 @@ namespace ReactUnity.Helpers
         public static Material BackgroundImageMaterial => backgroundImageMaterial = backgroundImageMaterial ??
             Resources.Load<Material>("ReactUnity/materials/BackgroundImage");
 
+        private static Material backdropFilterMaterial;
+        public static Material BackdropFilterMaterial => backdropFilterMaterial = backdropFilterMaterial ??
+            Resources.Load<Material>("ReactUnity/materials/BackdropFilter");
+
         private static Texture2D borderTexture;
         public static Texture2D BorderTexture => borderTexture = borderTexture ??
             Resources.Load<Texture2D>("ReactUnity/sprites/border");

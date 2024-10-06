@@ -91,6 +91,9 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatX = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatX", BackgroundRepeat.Repeat);
         public static readonly ValueListStyleProperty<BackgroundRepeat> maskRepeatY = new ValueListStyleProperty<BackgroundRepeat>("maskRepeatY", BackgroundRepeat.Repeat);
 
+        public static readonly StyleProperty<FilterDefinition> filter = new StyleProperty<FilterDefinition>("filter");
+        public static readonly StyleProperty<FilterDefinition> backdropFilter = new StyleProperty<FilterDefinition>("backdropFilter");
+
         public static readonly ValueListStyleProperty<TransitionProperty> transitionProperty = new ValueListStyleProperty<TransitionProperty>("transitionProperty");
         public static readonly ValueListStyleProperty<float> transitionDuration = new ValueListStyleProperty<float>("transitionDuration", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<TimingFunction> transitionTimingFunction = new ValueListStyleProperty<TimingFunction>("transitionTimingFunction", TimingFunctions.Default);
@@ -194,6 +197,9 @@ namespace ReactUnity.Styling
             { "maskRepeatX", maskRepeatX },
             { "maskRepeatY", maskRepeatY },
 
+            { "filter", filter },
+            { "backdropFilter", backdropFilter },
+
             { "transitionProperty", transitionProperty },
             { "transitionDuration", transitionDuration },
             { "transitionTimingFunction", transitionTimingFunction },
@@ -267,6 +273,7 @@ namespace ReactUnity.Styling
             { "mask-size", maskSize },
             { "mask-repeat-x", maskRepeatX },
             { "mask-repeat-y", maskRepeatY },
+            { "backdrop-filter", backdropFilter },
             { "border-top-left-radius", borderTopLeftRadius },
             { "border-top-right-radius", borderTopRightRadius },
             { "border-bottom-left-radius", borderBottomLeftRadius },

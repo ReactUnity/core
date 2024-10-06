@@ -101,6 +101,9 @@ namespace ReactUnity.Styling
         public ICssValueList<BackgroundRepeat> maskRepeatX => GetStyleValue(StyleProperties.maskRepeatX);
         public ICssValueList<BackgroundRepeat> maskRepeatY => GetStyleValue(StyleProperties.maskRepeatY);
 
+        public FilterDefinition filter => GetStyleValue(StyleProperties.filter);
+        public FilterDefinition backdropFilter => GetStyleValue(StyleProperties.backdropFilter);
+
         public ICssValueList<TransitionProperty> transitionProperty => GetStyleValue(StyleProperties.transitionProperty);
         public ICssValueList<float> transitionDuration => GetStyleValue(StyleProperties.transitionDuration);
         public ICssValueList<TimingFunction> transitionTimingFunction => GetStyleValue(StyleProperties.transitionTimingFunction);

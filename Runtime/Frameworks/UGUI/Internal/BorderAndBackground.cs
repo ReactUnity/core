@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Shapes;
 using UnityEngine;
 using UnityEngine.UI;
+using Yoga;
 
 namespace ReactUnity.UGUI.Internal
 {
@@ -17,10 +17,12 @@ namespace ReactUnity.UGUI.Internal
         private RectTransform outlineRoot;
         private RectTransform borderImageRoot;
         private RectTransform backgroundRoot;
+        private RectTransform backdrop;
         private RectTransform shadowRoot;
         public RectTransform Root => EnsureRoot();
         public RectTransform BorderRoot => EnsureBorderRoot();
         public RectTransform BackgroundRoot => EnsureBackgroundRoot();
+        public RectTransform Backdrop => EnsureBackdrop();
         public RectTransform ShadowRoot => EnsureShadowRoot();
 
         private UGUIComponent Component;
@@ -29,6 +31,9 @@ namespace ReactUnity.UGUI.Internal
 
         private RawImage bgImage;
         public RawImage BgImage => bgImage ?? (bgImage = EnsureBackgroundRoot().GetComponent<RawImage>());
+
+        private WebFilter backdropFilter;
+        public WebFilter BackdropFilter => backdropFilter ?? (backdropFilter = EnsureBackdrop().GetComponent<WebFilter>());
 
         private WebBorder borderGraphic;
         public WebBorder BorderGraphic => borderGraphic ?? (borderGraphic = EnsureBorderRoot().GetComponent<WebBorder>());
@@ -207,6 +212,22 @@ namespace ReactUnity.UGUI.Internal
             return shadowRoot;
         }
 
+        private RectTransform EnsureBackdrop()
+        {
+            if (backdrop) return backdrop;
+
+            var bg = Context.CreateNativeObject("[Backdrop]", typeof(RectTransform), typeof(WebFilter));
+
+            backdrop = bg.transform as RectTransform;
+
+            BackdropFilter.IsBackdrop = true;
+            BackdropFilter.MaskRoot = transform;
+
+            FullStretch(backdrop, Root, backgroundRoot ? backgroundRoot.GetSiblingIndex() : 1);
+
+            return backdrop;
+        }
+
         private RectTransform EnsureBackgroundRoot()
         {
             if (backgroundRoot) return backgroundRoot;
@@ -216,7 +237,7 @@ namespace ReactUnity.UGUI.Internal
             bgImage.color = Color.clear;
 
             backgroundRoot = bg.transform as RectTransform;
-            FullStretch(backgroundRoot, Root, 1);
+            FullStretch(backgroundRoot, Root, 2);
 
             BorderSize = BorderSize;
 
@@ -297,6 +318,8 @@ namespace ReactUnity.UGUI.Internal
             pointerEvents = style.pointerEvents;
             UpdateBgColor();
 
+            var bgFilter = style.backdropFilter;
+            if(bgFilter != null) SetBackdropFilter(bgFilter);
             SetBackground(bgColor, style.backgroundImage, style.backgroundPositionX, style.backgroundPositionY, style.backgroundSize, style.backgroundRepeatX, style.backgroundRepeatY);
             SetBoxShadow(style.boxShadow);
 
@@ -420,6 +443,11 @@ namespace ReactUnity.UGUI.Internal
                 Bottom = bottom,
                 Left = left,
             };
+        }
+
+        private void SetBackdropFilter(FilterDefinition filter)
+        {
+            BackdropFilter.Definition = filter;
         }
 
         private void SetBackground(

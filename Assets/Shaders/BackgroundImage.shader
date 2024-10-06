@@ -2,6 +2,7 @@ Shader "ReactUnity/BackgroundImage"
 {
   Properties{
     _MainTex("Texture", 2D) = "white" {}
+
     _angle("Angle", Float) = 0
     _from("From", Float) = 0
     _offset("Offset", Float) = 0

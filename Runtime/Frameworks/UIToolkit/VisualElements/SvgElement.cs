@@ -41,20 +41,5 @@ namespace ReactUnity.UIToolkit
             sourceRect = rect;
             vectorImage = image;
         }
-
-        new internal class UxmlFactory : UxmlFactory<SvgElement, UxmlTraits> { }
-
-        new internal class UxmlTraits : VisualElement.UxmlTraits
-        {
-            private readonly UxmlStringAttributeDescription Svg = new UxmlStringAttributeDescription { name = "svg" };
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-                SvgElement item = ve as SvgElement;
-
-                item.RawSvg = Svg.GetValueFromBag(bag, cc);
-            }
-        }
     }
 }
