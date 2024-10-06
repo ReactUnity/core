@@ -34,7 +34,8 @@ https://github.com/ReactUnity/core.git#latest
 
 - Create a canvas and add `ReactRendererUGUI` component to it
 - Run [`npx @reactunity/create@latest`](https://github.com/ReactUnity/create) in your Unity project root to create a React project
-- Run `npm start` from React project
+- Install all dependencies `npm intall` from React project
+- Run `npm run start` from React project
 - Click play in Unity
 
 Visit the documentation on the [main website](https://reactunity.github.io) to learn more.
