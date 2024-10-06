@@ -108,6 +108,10 @@
               "path": "/reference/css/appearance"
             },
             {
+              "title": "Backdrop Filter",
+              "path": "/reference/css/backdrop-filter"
+            },
+            {
               "title": "Background Color",
               "path": "/reference/css/background-color"
             },

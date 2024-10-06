@@ -1,5 +1,5 @@
 ---
-title: Border
+title: Border Color
 layout: API
 ---
 

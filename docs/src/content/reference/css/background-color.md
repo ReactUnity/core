@@ -1,5 +1,5 @@
 ---
-title: Background
+title: Background Color
 layout: API
 ---
 
