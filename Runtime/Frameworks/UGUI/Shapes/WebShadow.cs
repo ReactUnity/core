@@ -48,7 +48,7 @@ namespace ReactUnity.UGUI.Shapes
                 else
                 {
                     mat.SetInt("_StencilReadMask", StencilId);
-                    mat.SetInt("_StencilComp", (int) CompareFunction.LessEqual);
+                    mat.SetInt("_StencilComp", (int) CompareFunction.Greater);
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace ReactUnity.UGUI.Shapes
                 {
                     var depth = MaskUtilities.GetStencilDepth(MaskRoot, MaskRoot.GetComponentInParent<Canvas>()?.transform ?? MaskRoot.root);
                     var id = 0;
-                    for (int i = 0; i < depth; i++) id |= 1 << i;
+                    for (int i = 0; i <= depth; i++) id |= 1 << i;
                     stencilId = id;
                 }
 
