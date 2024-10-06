@@ -62,6 +62,7 @@ Shader "ReactUnity/BackdropFilter"
         #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
         #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
         #include "UnityCG.cginc"
         #include "ShaderSetup.cginc"
 
@@ -70,11 +71,11 @@ Shader "ReactUnity/BackdropFilter"
         float4 _GrabTexture_TexelSize;
 
         float4 frag( v2f i ) : COLOR {
-          if(_Blur == 0) return tex2D(_GrabTexture, i.uv);
+          if(_Blur == 0) return float4(0,0,0,0);
 
           float3 sum = float3(0,0,0);
 
-          #define GRABPIXEL(weight,kernelx) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uv.x + _GrabTexture_TexelSize.x * kernelx*_Blur, i.uv.y))) * weight
+          #define GRABPIXEL(weight,kernelx) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx*_Blur, i.uvgrab.y))) * weight
 
           sum += GRABPIXEL(0.05, -4.0);
           sum += GRABPIXEL(0.09, -3.0);
@@ -101,6 +102,7 @@ Shader "ReactUnity/BackdropFilter"
         #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
         #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
         #include "UnityCG.cginc"
         #include "ShaderSetup.cginc"
 
@@ -109,11 +111,11 @@ Shader "ReactUnity/BackdropFilter"
         float4 _GrabTexture_TexelSize;
 
         float4 frag( v2f i ) : COLOR {
-          if(_Blur == 0) return tex2D(_GrabTexture, i.uv);
+          if(_Blur == 0) return float4(0,0,0,0);
 
           float3 sum = float3(0,0,0);
 
-          #define GRABPIXEL(weight,kernely) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uv.x, i.uv.y + _GrabTexture_TexelSize.y * kernely*_Blur))) * weight
+          #define GRABPIXEL(weight,kernely) tex2D( _GrabTexture, UNITY_PROJ_COORD(float2(i.uvgrab.x, i.uvgrab.y + _GrabTexture_TexelSize.y * kernely*_Blur))) * weight
 
           sum += GRABPIXEL(0.05, -4.0);
           sum += GRABPIXEL(0.09, -3.0);
@@ -141,6 +143,7 @@ Shader "ReactUnity/BackdropFilter"
         #pragma shader_feature_local _SPECULARHIGHLIGHTS_OFF
         #pragma shader_feature_local _GLOSSYREFLECTIONS_OFF
         #pragma fragmentoption ARB_precision_hint_fastest
+        #define GRAB_POS
         #include "UnityCG.cginc"
         #include "UnityUI.cginc"
         #include "ShaderSetup.cginc"
@@ -197,16 +200,17 @@ Shader "ReactUnity/BackdropFilter"
 
         float4 frag(v2f i) : SV_Target
         {
-          // Grab the texture from behind the current object
-          float3 color = tex2D(_GrabTexture, i.uv).rgb;
+          float2 uvgrab = i.uvgrab;
 
           // Apply pixelate effect
           if (_Pixelate > 0)
           {
             float4 ts = _GrabTexture_TexelSize * _Pixelate;
-            float2 uv = round(i.uv / ts.xy) * ts.xy;
-            color = tex2D(_GrabTexture, uv).rgb;
+            uvgrab = round(i.uvgrab / ts.xy) * ts.xy;
           }
+
+          // Grab the texture from behind the current object
+          float3 color = tex2D(_GrabTexture, uvgrab).rgb;
 
           // Convert to grayscale if needed
           if (_Grayscale > 0)

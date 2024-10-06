@@ -14,6 +14,9 @@ struct v2f {
   float4 vertex : SV_POSITION;
   float4 color : COLOR;
   float4 worldPosition : TEXCOORD1;
+  #ifdef GRAB_POS
+  float2 uvgrab : TEXCOORD2;
+  #endif
   UNITY_VERTEX_INPUT_INSTANCE_ID
   UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -28,6 +31,10 @@ v2f vert (appdata v) {
   o.vertex = UnityObjectToClipPos(v.vertex);
   // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
   o.uv = v.uv;
+  #ifdef GRAB_POS
+  o.uvgrab = ComputeGrabScreenPos(o.vertex);
+  #endif
+
   // o.uv1 = v.uv1;
   // o.uv2 = v.uv2;
   o.color = v.color;
