@@ -246,27 +246,35 @@ namespace ReactUnity.Scripting
             {
                 engine.SetGlobal("__WebSocketOriginal", typeof(WebSocketProxy));
                 engine.Execute(@"
-                    global.WebSocket = function(url, protocols) {
+                    global.WebSocket = function WebSocket(url, protocols) {
                         protocols = protocols || [];
                         if(typeof protocols === 'string') protocols = [protocols];
                         if(!Array.isArray(protocols)) protocols = [];
                         protocols = protocols.map(x => String(x));
 
                         return new global.__WebSocketOriginal(Context, url, protocols.join(','));
-                    }",
-                    "ReactUnity/shims/websocket"
-                );
+                    }
+
+                    global.WebSocket.CONNECTING = 0;
+                    global.WebSocket.OPEN = 1;
+                    global.WebSocket.CLOSING = 2;
+                    global.WebSocket.CLOSED = 3;
+                ", "ReactUnity/shims/websocket");
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.XHR))
             {
                 engine.SetGlobal("__XMLHttpRequestOriginal", typeof(XMLHttpRequest));
                 engine.Execute(@"
-                    global.XMLHttpRequest = function() {
+                    global.XMLHttpRequest = function XMLHttpRequest() {
                         return new global.__XMLHttpRequestOriginal(Context, location.origin);
-                    }",
-                    "ReactUnity/shims/xhr"
-                );
+                    }
+                    global.XMLHttpRequest.UNSENT = 0;
+                    global.XMLHttpRequest.OPENED = 1;
+                    global.XMLHttpRequest.HEADERS_RECEIVED = 2;
+                    global.XMLHttpRequest.LOADING = 3;
+                    global.XMLHttpRequest.DONE = 4;
+                ", "ReactUnity/shims/xhr");
                 engine.SetGlobal("FormData", typeof(FormData));
             }
 
