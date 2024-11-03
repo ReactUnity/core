@@ -314,7 +314,7 @@ const baseConfigFactory = function (webpackEnv) {
         'react-native': 'react-native-web',
         // react-redux will normally try to access react-dom but will error.
         // This is a different entry point for custom renderers
-        'react-redux': 'react-redux/es/alternate-renderers',
+        'react-redux': 'react-redux/alternate-renderers',
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
