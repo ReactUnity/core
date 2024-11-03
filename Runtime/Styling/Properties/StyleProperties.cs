@@ -100,9 +100,9 @@ namespace ReactUnity.Styling
         public static readonly ValueListStyleProperty<float> transitionDelay = new ValueListStyleProperty<float>("transitionDelay", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<AnimationPlayState> transitionPlayState = new ValueListStyleProperty<AnimationPlayState>("transitionPlayState");
 
-        public static readonly StyleProperty<float> motionDuration = new StyleProperty<float>("motionDuration", 0f, false);
+        public static readonly StyleProperty<float> motionDuration = new StyleProperty<float>("motionDuration", 0f, false, false, AllConverters.DurationConverter);
         public static readonly StyleProperty<TimingFunction> motionTimingFunction = new StyleProperty<TimingFunction>("motionTimingFunction", TimingFunctions.Default, false);
-        public static readonly StyleProperty<float> motionDelay = new StyleProperty<float>("motionDelay", 0f, false);
+        public static readonly StyleProperty<float> motionDelay = new StyleProperty<float>("motionDelay", 0f, false, false,  AllConverters.DurationConverter);
 
         public static readonly ValueListStyleProperty<float> animationDelay = new ValueListStyleProperty<float>("animationDelay", baseConverter: AllConverters.DurationConverter);
         public static readonly ValueListStyleProperty<AnimationDirection> animationDirection = new ValueListStyleProperty<AnimationDirection>("animationDirection");
