@@ -1,29 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
 public class VREnabler : MonoBehaviour
 {
     public string deviceName = "Oculus";
-
-    IEnumerator LoadDevice(string newDevice, bool enable)
-    {
-        XRSettings.LoadDeviceByName(newDevice);
-        yield return null;
-        XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
-        XRGeneralSettings.Instance.Manager.StartSubsystems();
-    }
-
-    void EnableVR()
-    {
-        StartXR();
-    }
-
-    void DisableVR()
-    {
-        StopXR();
-    }
 
     Coroutine StartXR()
     {

@@ -7,6 +7,7 @@ import ImagesPage from 'src/pages/images';
 import InteropPage from 'src/pages/interop';
 import MaterialPage from 'src/pages/material';
 import { QueryPage } from 'src/pages/query/QueryPage';
+import { Redux } from 'src/pages/redux';
 import StyleFrameworksPage from 'src/pages/style-frameworks';
 import BootstrapPage from 'src/pages/style-frameworks/bootstrap';
 import EmotionPage from 'src/pages/style-frameworks/emotion';
@@ -28,6 +29,7 @@ export function AppRoutes() {
     <Route path={'interop'} element={<InteropPage />} />
     <Route path={'todo'} element={<TodoPage />} />
     <Route path={'query'} element={<QueryPage />} />
+    <Route path={'redux'} element={<Redux />} />
 
     <Route path={'style-frameworks'} element={< StyleFrameworksPage />}>
       <Route path={'jss'} element={<JSSPage />} />

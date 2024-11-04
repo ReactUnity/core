@@ -6735,6 +6735,92 @@ if (true) {
 
 /***/ }),
 
+/***/ "../../node_modules/react-redux/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * @license React
+ * use-sync-external-store-with-selector.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+var g = __webpack_require__("../../node_modules/react/index.js");
+function n(a, b) {
+  return a === b && (0 !== a || 1 / a === 1 / b) || a !== a && b !== b;
+}
+var p = "function" === typeof Object.is ? Object.is : n,
+  q = g.useSyncExternalStore,
+  r = g.useRef,
+  t = g.useEffect,
+  u = g.useMemo,
+  v = g.useDebugValue;
+exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
+  var c = r(null);
+  if (null === c.current) {
+    var f = {
+      hasValue: !1,
+      value: null
+    };
+    c.current = f;
+  } else f = c.current;
+  c = u(function () {
+    function a(a) {
+      if (!c) {
+        c = !0;
+        d = a;
+        a = l(a);
+        if (void 0 !== h && f.hasValue) {
+          var b = f.value;
+          if (h(b, a)) return k = b;
+        }
+        return k = a;
+      }
+      b = k;
+      if (p(d, a)) return b;
+      var e = l(a);
+      if (void 0 !== h && h(b, e)) return b;
+      d = a;
+      return k = e;
+    }
+    var c = !1,
+      d,
+      k,
+      m = void 0 === e ? null : e;
+    return [function () {
+      return a(b());
+    }, null === m ? void 0 : function () {
+      return a(m());
+    }];
+  }, [b, e, l, h]);
+  var d = q(a, c[0], c[1]);
+  t(function () {
+    f.hasValue = !0;
+    f.value = d;
+  }, [d]);
+  v(d);
+  return d;
+};
+
+/***/ }),
+
+/***/ "../../node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js":
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+if (true) {
+  module.exports = __webpack_require__("../../node_modules/react-redux/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
+} else {}
+
+/***/ }),
+
 /***/ "../../node_modules/react/cjs/react-jsx-runtime.production.min.js":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -7531,7 +7617,7 @@ var result = symbolObservablePonyfill(root);
 
 /***/ }),
 
-/***/ "../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js":
+/***/ "../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7603,7 +7689,7 @@ exports.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExte
 
 /***/ }),
 
-/***/ "../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
+/***/ "../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7677,26 +7763,26 @@ exports.useSyncExternalStoreWithSelector = function (a, b, e, l, h) {
 
 /***/ }),
 
-/***/ "../../renderer/node_modules/use-sync-external-store/shim/index.js":
+/***/ "../../node_modules/use-sync-external-store/shim/index.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__("../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js");
+  module.exports = __webpack_require__("../../node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js");
 } else {}
 
 /***/ }),
 
-/***/ "../../renderer/node_modules/use-sync-external-store/with-selector.js":
+/***/ "../../node_modules/use-sync-external-store/with-selector.js":
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__("../../renderer/node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
+  module.exports = __webpack_require__("../../node_modules/use-sync-external-store/cjs/use-sync-external-store-with-selector.production.min.js");
 } else {}
 
 /***/ }),
@@ -9713,7 +9799,7 @@ function hashQueryKeyByOptions(queryKey, options) {
 }
 function hashKey(queryKey) {
   return JSON.stringify(queryKey, function (_, val) {
-    return isPlainObject(val) ? Object.keys(val).sort().reduce(function (result, key) {
+    return utils_isPlainObject(val) ? Object.keys(val).sort().reduce(function (result, key) {
       result[key] = val[key];
       return result;
     }, {}) : val;
@@ -9738,7 +9824,7 @@ function replaceEqualDeep(a, b) {
     return a;
   }
   var array = isPlainArray(a) && isPlainArray(b);
-  if (array || isPlainObject(a) && isPlainObject(b)) {
+  if (array || utils_isPlainObject(a) && utils_isPlainObject(b)) {
     var aItems = array ? a : Object.keys(a);
     var aSize = aItems.length;
     var bItems = array ? b : Object.keys(b);
@@ -9775,7 +9861,7 @@ function utils_shallowEqualObjects(a, b) {
 function isPlainArray(value) {
   return Array.isArray(value) && value.length === Object.keys(value).length;
 }
-function isPlainObject(o) {
+function utils_isPlainObject(o) {
   if (!hasObjectPrototype(o)) {
     return false;
   }
@@ -9859,7 +9945,7 @@ function _isNativeReflectConstruct() {
   })();
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-function _assertThisInitialized(self) {
+function assertThisInitialized_assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
@@ -9874,13 +9960,13 @@ function _possibleConstructorReturn(self, call) {
   } else if (call !== void 0) {
     throw new TypeError("Derived constructors may only return object or undefined");
   }
-  return _assertThisInitialized(self);
+  return assertThisInitialized_assertThisInitialized(self);
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/callSuper.js
 
 
 
-function _callSuper(t, o, e) {
+function callSuper_callSuper(t, o, e) {
   return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
@@ -9893,7 +9979,7 @@ function _setPrototypeOf(o, p) {
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js
 
-function _inherits(subClass, superClass) {
+function inherits_inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
   }
@@ -10058,9 +10144,9 @@ function _construct(t, e, r) {
 
 
 
-function _wrapNativeSuper(Class) {
+function wrapNativeSuper_wrapNativeSuper(Class) {
   var _cache = typeof Map === "function" ? new Map() : undefined;
-  _wrapNativeSuper = function _wrapNativeSuper(Class) {
+  wrapNativeSuper_wrapNativeSuper = function _wrapNativeSuper(Class) {
     if (Class === null || !_isNativeFunction(Class)) return Class;
     if (typeof Class !== "function") {
       throw new TypeError("Super expression must either be null or a function");
@@ -10082,7 +10168,7 @@ function _wrapNativeSuper(Class) {
     });
     return _setPrototypeOf(Wrapper, Class);
   };
-  return _wrapNativeSuper(Class);
+  return wrapNativeSuper_wrapNativeSuper(Class);
 }
 ;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/subscribable.js
 
@@ -10135,24 +10221,24 @@ var _focused, _cleanup, _setup;
 
 
 var FocusManager = (_focused = /*#__PURE__*/new WeakMap(), _cleanup = /*#__PURE__*/new WeakMap(), _setup = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
-  _inherits(FocusManager, _Subscribable);
+  inherits_inherits(FocusManager, _Subscribable);
   function FocusManager() {
     var _this;
     classCallCheck_classCallCheck(this, FocusManager);
-    _this = _callSuper(this, FocusManager);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _focused, {
+    _this = callSuper_callSuper(this, FocusManager);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _focused, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _cleanup, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _cleanup, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _setup, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _setup, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldSet(_assertThisInitialized(_this), _setup, function (onFocus) {
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _setup, function (onFocus) {
       if (!isServer && window.addEventListener) {
         var listener = function listener() {
           return onFocus();
@@ -10243,24 +10329,24 @@ var _online, onlineManager_cleanup, onlineManager_setup;
 
 
 var OnlineManager = (_online = /*#__PURE__*/new WeakMap(), onlineManager_cleanup = /*#__PURE__*/new WeakMap(), onlineManager_setup = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
-  _inherits(OnlineManager, _Subscribable);
+  inherits_inherits(OnlineManager, _Subscribable);
   function OnlineManager() {
     var _this;
     classCallCheck_classCallCheck(this, OnlineManager);
-    _this = _callSuper(this, OnlineManager);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _online, {
+    _this = callSuper_callSuper(this, OnlineManager);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _online, {
       writable: true,
       value: true
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), onlineManager_cleanup, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), onlineManager_cleanup, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), onlineManager_setup, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), onlineManager_setup, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldSet(_assertThisInitialized(_this), onlineManager_setup, function (onOnline) {
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), onlineManager_setup, function (onOnline) {
       if (!isServer && window.addEventListener) {
         var onlineListener = function onlineListener() {
           return onOnline(true);
@@ -10325,6 +10411,40 @@ var OnlineManager = (_online = /*#__PURE__*/new WeakMap(), onlineManager_cleanup
 var onlineManager = new OnlineManager();
 
 //# sourceMappingURL=onlineManager.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/thenable.js
+// src/thenable.ts
+function pendingThenable() {
+  var resolve;
+  var reject;
+  var thenable = new Promise(function (_resolve, _reject) {
+    resolve = _resolve;
+    reject = _reject;
+  });
+  thenable.status = "pending";
+  thenable["catch"](function () {});
+  function finalize(data) {
+    Object.assign(thenable, data);
+    delete thenable.resolve;
+    delete thenable.reject;
+  }
+  thenable.resolve = function (value) {
+    finalize({
+      status: "fulfilled",
+      value: value
+    });
+    resolve(value);
+  };
+  thenable.reject = function (reason) {
+    finalize({
+      status: "rejected",
+      reason: reason
+    });
+    reject(reason);
+  };
+  return thenable;
+}
+
+//# sourceMappingURL=thenable.js.map
 ;// CONCATENATED MODULE: ../../node_modules/@tanstack/query-core/build/modern/retryer.js
 
 
@@ -10335,6 +10455,7 @@ var onlineManager = new OnlineManager();
 
 
 
+
 function defaultRetryDelay(failureCount) {
   return Math.min(1e3 * Math.pow(2, failureCount), 3e4);
 }
@@ -10342,17 +10463,17 @@ function canFetch(networkMode) {
   return (networkMode !== null && networkMode !== void 0 ? networkMode : "online") === "online" ? onlineManager.isOnline() : true;
 }
 var CancelledError = /*#__PURE__*/function (_Error) {
-  _inherits(CancelledError, _Error);
+  inherits_inherits(CancelledError, _Error);
   function CancelledError(options) {
     var _this;
     classCallCheck_classCallCheck(this, CancelledError);
-    _this = _callSuper(this, CancelledError, ["CancelledError"]);
+    _this = callSuper_callSuper(this, CancelledError, ["CancelledError"]);
     _this.revert = options === null || options === void 0 ? void 0 : options.revert;
     _this.silent = options === null || options === void 0 ? void 0 : options.silent;
     return _this;
   }
   return createClass_createClass(CancelledError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/wrapNativeSuper_wrapNativeSuper(Error));
 function isCancelledError(value) {
   return value instanceof CancelledError;
 }
@@ -10361,12 +10482,7 @@ function createRetryer(config) {
   var failureCount = 0;
   var isResolved = false;
   var continueFn;
-  var promiseResolve;
-  var promiseReject;
-  var promise = new Promise(function (outerResolve, outerReject) {
-    promiseResolve = outerResolve;
-    promiseReject = outerReject;
-  });
+  var thenable = pendingThenable();
   var cancel = function cancel(cancelOptions) {
     if (!isResolved) {
       var _config$abort;
@@ -10392,7 +10508,7 @@ function createRetryer(config) {
       isResolved = true;
       (_config$onSuccess = config.onSuccess) === null || _config$onSuccess === void 0 || _config$onSuccess.call(config, value);
       (_continueFn = continueFn) === null || _continueFn === void 0 || _continueFn();
-      promiseResolve(value);
+      thenable.resolve(value);
     }
   };
   var reject = function reject(value) {
@@ -10401,7 +10517,7 @@ function createRetryer(config) {
       isResolved = true;
       (_config$onError = config.onError) === null || _config$onError === void 0 || _config$onError.call(config, value);
       (_continueFn2 = continueFn) === null || _continueFn2 === void 0 || _continueFn2();
-      promiseReject(value);
+      thenable.reject(value);
     }
   };
   var pause = function pause() {
@@ -10459,12 +10575,12 @@ function createRetryer(config) {
     });
   };
   return {
-    promise: promise,
+    promise: thenable,
     cancel: cancel,
     "continue": function _continue() {
       var _continueFn3;
       (_continueFn3 = continueFn) === null || _continueFn3 === void 0 || _continueFn3();
-      return promise;
+      return thenable;
     },
     cancelRetry: cancelRetry,
     continueRetry: continueRetry,
@@ -10475,7 +10591,7 @@ function createRetryer(config) {
       } else {
         pause().then(run);
       }
-      return promise;
+      return thenable;
     }
   };
 }
@@ -10553,46 +10669,46 @@ var _initialState, _revertState, _cache, _retryer, _defaultOptions, _abortSignal
 
 
 var Query = (_initialState = /*#__PURE__*/new WeakMap(), _revertState = /*#__PURE__*/new WeakMap(), _cache = /*#__PURE__*/new WeakMap(), _retryer = /*#__PURE__*/new WeakMap(), _defaultOptions = /*#__PURE__*/new WeakMap(), _abortSignalConsumed = /*#__PURE__*/new WeakMap(), _dispatch = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Removable) {
-  _inherits(Query, _Removable);
+  inherits_inherits(Query, _Removable);
   function Query(config) {
     var _config$state;
     var _this;
     classCallCheck_classCallCheck(this, Query);
-    _this = _callSuper(this, Query);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _dispatch);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _initialState, {
+    _this = callSuper_callSuper(this, Query);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _dispatch);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _initialState, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _revertState, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _revertState, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _cache, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _cache, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _retryer, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _retryer, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _defaultOptions, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _defaultOptions, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _abortSignalConsumed, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _abortSignalConsumed, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldSet(_assertThisInitialized(_this), _abortSignalConsumed, false);
-    _classPrivateFieldSet(_assertThisInitialized(_this), _defaultOptions, config.defaultOptions);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _abortSignalConsumed, false);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _defaultOptions, config.defaultOptions);
     _this.setOptions(config.options);
     _this.observers = [];
-    _classPrivateFieldSet(_assertThisInitialized(_this), _cache, config.cache);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _cache, config.cache);
     _this.queryKey = config.queryKey;
     _this.queryHash = config.queryHash;
-    _classPrivateFieldSet(_assertThisInitialized(_this), _initialState, getDefaultState(_this.options));
-    _this.state = (_config$state = config.state) !== null && _config$state !== void 0 ? _config$state : _classPrivateFieldGet(_assertThisInitialized(_this), _initialState);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _initialState, getDefaultState(_this.options));
+    _this.state = (_config$state = config.state) !== null && _config$state !== void 0 ? _config$state : _classPrivateFieldGet(assertThisInitialized_assertThisInitialized(_this), _initialState);
     _this.scheduleGc();
     return _this;
   }
@@ -10674,7 +10790,10 @@ var Query = (_initialState = /*#__PURE__*/new WeakMap(), _revertState = /*#__PUR
   }, {
     key: "isDisabled",
     value: function isDisabled() {
-      return this.getObserversCount() > 0 && !this.isActive();
+      if (this.getObserversCount() > 0) {
+        return !this.isActive();
+      }
+      return this.options.queryFn === skipToken || this.state.dataUpdateCount + this.state.errorUpdateCount === 0;
     }
   }, {
     key: "isStale",
@@ -10852,10 +10971,7 @@ var Query = (_initialState = /*#__PURE__*/new WeakMap(), _revertState = /*#__PUR
           (_classPrivateFieldGet7 = (_classPrivateFieldGet8 = _classPrivateFieldGet(_this3, _cache).config).onError) === null || _classPrivateFieldGet7 === void 0 || _classPrivateFieldGet7.call(_classPrivateFieldGet8, error, _this3);
           (_classPrivateFieldGet9 = (_classPrivateFieldGet10 = _classPrivateFieldGet(_this3, _cache).config).onSettled) === null || _classPrivateFieldGet9 === void 0 || _classPrivateFieldGet9.call(_classPrivateFieldGet10, _this3.state.data, error, _this3);
         }
-        if (!_this3.isFetchingOptimistic) {
-          _this3.scheduleGc();
-        }
-        _this3.isFetchingOptimistic = false;
+        _this3.scheduleGc();
       };
       _classPrivateFieldSet(this, _retryer, createRetryer({
         initialPromise: fetchOptions === null || fetchOptions === void 0 ? void 0 : fetchOptions.initialPromise,
@@ -10876,10 +10992,7 @@ var Query = (_initialState = /*#__PURE__*/new WeakMap(), _revertState = /*#__PUR
           }
           (_classPrivateFieldGet11 = (_classPrivateFieldGet12 = _classPrivateFieldGet(_this3, _cache).config).onSuccess) === null || _classPrivateFieldGet11 === void 0 || _classPrivateFieldGet11.call(_classPrivateFieldGet12, data, _this3);
           (_classPrivateFieldGet13 = (_classPrivateFieldGet14 = _classPrivateFieldGet(_this3, _cache).config).onSettled) === null || _classPrivateFieldGet13 === void 0 || _classPrivateFieldGet13.call(_classPrivateFieldGet14, data, _this3.state.error, _this3);
-          if (!_this3.isFetchingOptimistic) {
-            _this3.scheduleGc();
-          }
-          _this3.isFetchingOptimistic = false;
+          _this3.scheduleGc();
         },
         onError: onError,
         onFail: function onFail(failureCount, error) {
@@ -11031,18 +11144,18 @@ var _queries;
 
 
 var QueryCache = (_queries = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
-  _inherits(QueryCache, _Subscribable);
+  inherits_inherits(QueryCache, _Subscribable);
   function QueryCache() {
     var _this;
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     classCallCheck_classCallCheck(this, QueryCache);
-    _this = _callSuper(this, QueryCache);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _queries, {
+    _this = callSuper_callSuper(this, QueryCache);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _queries, {
       writable: true,
       value: void 0
     });
     _this.config = config;
-    _classPrivateFieldSet(_assertThisInitialized(_this), _queries, /* @__PURE__ */new Map());
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _queries, /* @__PURE__ */new Map());
     return _this;
   }
   createClass_createClass(QueryCache, [{
@@ -11185,27 +11298,27 @@ var _observers, _mutationCache, mutation_retryer, mutation_dispatch;
 
 
 var Mutation = (_observers = /*#__PURE__*/new WeakMap(), _mutationCache = /*#__PURE__*/new WeakMap(), mutation_retryer = /*#__PURE__*/new WeakMap(), mutation_dispatch = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Removable) {
-  _inherits(Mutation, _Removable);
+  inherits_inherits(Mutation, _Removable);
   function Mutation(config) {
     var _this;
     classCallCheck_classCallCheck(this, Mutation);
-    _this = _callSuper(this, Mutation);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), mutation_dispatch);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _observers, {
+    _this = callSuper_callSuper(this, Mutation);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), mutation_dispatch);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _observers, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutationCache, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _mutationCache, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), mutation_retryer, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), mutation_retryer, {
       writable: true,
       value: void 0
     });
     _this.mutationId = config.mutationId;
-    _classPrivateFieldSet(_assertThisInitialized(_this), _mutationCache, config.mutationCache);
-    _classPrivateFieldSet(_assertThisInitialized(_this), _observers, []);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _mutationCache, config.mutationCache);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _observers, []);
     _this.state = config.state || mutation_getDefaultState();
     _this.setOptions(config.options);
     _this.scheduleGc();
@@ -11493,23 +11606,23 @@ var _mutations, _mutationId;
 
 
 var MutationCache = (_mutations = /*#__PURE__*/new WeakMap(), _mutationId = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function (_Subscribable) {
-  _inherits(MutationCache, _Subscribable);
+  inherits_inherits(MutationCache, _Subscribable);
   function MutationCache() {
     var _this;
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     classCallCheck_classCallCheck(this, MutationCache);
-    _this = _callSuper(this, MutationCache);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutations, {
+    _this = callSuper_callSuper(this, MutationCache);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _mutations, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _mutationId, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _mutationId, {
       writable: true,
       value: void 0
     });
     _this.config = config;
-    _classPrivateFieldSet(_assertThisInitialized(_this), _mutations, /* @__PURE__ */new Map());
-    _classPrivateFieldSet(_assertThisInitialized(_this), _mutationId, Date.now());
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _mutations, /* @__PURE__ */new Map());
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _mutationId, Date.now());
     return _this;
   }
   createClass_createClass(MutationCache, [{
@@ -12337,7 +12450,7 @@ function slicedToArray_slicedToArray(arr, i) {
 
 
 
-function toArray_toArray(arr) {
+function _toArray(arr) {
   return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
 }
 ;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
@@ -12407,7 +12520,7 @@ function createForOfIteratorHelper_createForOfIteratorHelper(o, allowArrayLike) 
 
 
 /**
- * @remix-run/router v1.16.0
+ * @remix-run/router v1.20.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -12900,7 +13013,7 @@ function convertRoutesToDataRoutes(routes, mapRouteProperties, parentPath, manif
     manifest = {};
   }
   return routes.map(function (route, index) {
-    var treePath = [].concat(_toConsumableArray(parentPath), [index]);
+    var treePath = [].concat(_toConsumableArray(parentPath), [String(index)]);
     var id = typeof route.id === "string" ? route.id : treePath.join("-");
     invariant(route.index !== true || !route.children, "Cannot specify children on an index route");
     invariant(!manifest[id], "Found a route id collision on id \"" + id + "\".  Route " + "id's must be globally unique within Data Router usages");
@@ -12932,6 +13045,9 @@ function matchRoutes(routes, locationArg, basename) {
   if (basename === void 0) {
     basename = "/";
   }
+  return matchRoutesImpl(routes, locationArg, basename, false);
+}
+function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
   var location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
   var pathname = router_stripBasename(location.pathname || "/", basename);
   if (pathname == null) {
@@ -12948,7 +13064,7 @@ function matchRoutes(routes, locationArg, basename) {
     // should be a safe operation.  This avoids needing matchRoutes to be
     // history-aware.
     var decoded = decodePath(pathname);
-    matches = matchRouteBranch(branches[i], decoded);
+    matches = matchRouteBranch(branches[i], decoded, allowPartial);
   }
   return matches;
 }
@@ -13047,7 +13163,7 @@ function flattenRoutes(routes, branches, parentsMeta, parentPath) {
 function explodeOptionalSegments(path) {
   var segments = path.split("/");
   if (segments.length === 0) return [];
-  var _segments = toArray_toArray(segments),
+  var _segments = _toArray(segments),
     first = _segments[0],
     rest = _segments.slice(1);
   // Optional path segments are denoted by a trailing `?`
@@ -13128,7 +13244,10 @@ function compareIndexes(a, b) {
   // so they sort equally.
   0;
 }
-function matchRouteBranch(branch, pathname) {
+function matchRouteBranch(branch, pathname, allowPartial) {
+  if (allowPartial === void 0) {
+    allowPartial = false;
+  }
   var routesMeta = branch.routesMeta;
   var matchedParams = {};
   var matchedPathname = "/";
@@ -13142,9 +13261,18 @@ function matchRouteBranch(branch, pathname) {
       caseSensitive: meta.caseSensitive,
       end: end
     }, remainingPathname);
-    if (!match) return null;
-    Object.assign(matchedParams, match.params);
     var route = meta.route;
+    if (!match && end && allowPartial && !routesMeta[routesMeta.length - 1].route.index) {
+      match = matchPath({
+        path: meta.relativePath,
+        caseSensitive: meta.caseSensitive,
+        end: false
+      }, remainingPathname);
+    }
+    if (!match) {
+      return null;
+    }
+    Object.assign(matchedParams, match.params);
     matches.push({
       // TODO: Can this as be avoided?
       params: matchedParams,
@@ -13328,12 +13456,12 @@ function resolvePath(to, fromPathname) {
   if (fromPathname === void 0) {
     fromPathname = "/";
   }
-  var _ref6 = typeof to === "string" ? parsePath(to) : to,
-    toPathname = _ref6.pathname,
-    _ref6$search = _ref6.search,
-    search = _ref6$search === void 0 ? "" : _ref6$search,
-    _ref6$hash = _ref6.hash,
-    hash = _ref6$hash === void 0 ? "" : _ref6$hash;
+  var _ref5 = typeof to === "string" ? parsePath(to) : to,
+    toPathname = _ref5.pathname,
+    _ref5$search = _ref5.search,
+    search = _ref5$search === void 0 ? "" : _ref5$search,
+    _ref5$hash = _ref5.hash,
+    hash = _ref5$hash === void 0 ? "" : _ref5$hash;
   var pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
   return {
     pathname: pathname,
@@ -13394,7 +13522,7 @@ function getResolveToMatches(matches, v7_relativeSplatPath) {
   // https://github.com/remix-run/react-router/issues/11052#issuecomment-1836589329
   if (v7_relativeSplatPath) {
     return pathMatches.map(function (match, idx) {
-      return idx === matches.length - 1 ? match.pathname : match.pathnameBase;
+      return idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase;
     });
   }
   return pathMatches.map(function (match) {
@@ -13507,14 +13635,29 @@ var json = function json(data, init) {
     headers: headers
   }));
 };
+var DataWithResponseInit = /*#__PURE__*/(/* unused pure expression or super */ null && (_createClass(function DataWithResponseInit(data, init) {
+  _classCallCheck(this, DataWithResponseInit);
+  this.type = "DataWithResponseInit";
+  this.data = data;
+  this.init = init || null;
+})));
+/**
+ * Create "responses" that contain `status`/`headers` without forcing
+ * serialization into an actual `Response` - used by Remix single fetch
+ */
+function data(data, init) {
+  return new DataWithResponseInit(data, typeof init === "number" ? {
+    status: init
+  } : init);
+}
 var AbortedDeferredError = /*#__PURE__*/function (_Error) {
-  _inherits(AbortedDeferredError, _Error);
+  inherits_inherits(AbortedDeferredError, _Error);
   function AbortedDeferredError() {
     classCallCheck_classCallCheck(this, AbortedDeferredError);
-    return _callSuper(this, AbortedDeferredError, arguments);
+    return callSuper_callSuper(this, AbortedDeferredError, arguments);
   }
   return createClass_createClass(AbortedDeferredError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/wrapNativeSuper_wrapNativeSuper(Error));
 var DeferredData = /*#__PURE__*/(/* unused pure expression or super */ null && (function () {
   function DeferredData(data, responseInit) {
     var _this = this;
@@ -13538,9 +13681,9 @@ var DeferredData = /*#__PURE__*/(/* unused pure expression or super */ null && (
     };
     this.controller.signal.addEventListener("abort", onAbort);
     this.data = Object.entries(data).reduce(function (acc, _ref2) {
-      var _ref7 = _slicedToArray(_ref2, 2),
-        key = _ref7[0],
-        value = _ref7[1];
+      var _ref6 = _slicedToArray(_ref2, 2),
+        key = _ref6[0],
+        value = _ref6[1];
       return Object.assign(acc, _defineProperty({}, key, _this.trackPromise(key, value)));
     }, {});
     if (this.done) {
@@ -13699,9 +13842,9 @@ var DeferredData = /*#__PURE__*/(/* unused pure expression or super */ null && (
     get: function get() {
       invariant(this.data !== null && this.done, "Can only unwrap data on initialized and settled deferreds");
       return Object.entries(this.data).reduce(function (acc, _ref3) {
-        var _ref8 = _slicedToArray(_ref3, 2),
-          key = _ref8[0],
-          value = _ref8[1];
+        var _ref7 = _slicedToArray(_ref3, 2),
+          key = _ref7[0],
+          value = _ref7[1];
         return Object.assign(acc, _defineProperty({}, key, unwrapTrackedPromise(value)));
       }, {});
     }
@@ -13764,6 +13907,17 @@ var redirect = function redirect(url, init) {
 var redirectDocument = function redirectDocument(url, init) {
   var response = redirect(url, init);
   response.headers.set("X-Remix-Reload-Document", "true");
+  return response;
+};
+/**
+ * A redirect response that will perform a `history.replaceState` instead of a
+ * `history.pushState` for client-side navigation redirects.
+ * Sets the status code and the `Location` header.
+ * Defaults to "302 Found".
+ */
+var router_replace = function replace(url, init) {
+  var response = redirect(url, init);
+  response.headers.set("X-Remix-Replace", "true");
   return response;
 };
 /**
@@ -13867,7 +14021,8 @@ function router_createRouter(init) {
   var dataRoutes = convertRoutesToDataRoutes(init.routes, mapRouteProperties, undefined, manifest);
   var inFlightDataRoutes;
   var basename = init.basename || "/";
-  var dataStrategyImpl = init.unstable_dataStrategy || defaultDataStrategy;
+  var dataStrategyImpl = init.dataStrategy || defaultDataStrategy;
+  var patchRoutesOnNavigationImpl = init.patchRoutesOnNavigation;
   // Config driven behavior flags
   var future = router_extends({
     v7_fetcherPersist: false,
@@ -13875,7 +14030,7 @@ function router_createRouter(init) {
     v7_partialHydration: false,
     v7_prependBasename: false,
     v7_relativeSplatPath: false,
-    unstable_skipActionErrorRevalidation: false
+    v7_skipActionErrorRevalidation: false
   }, init.future);
   // Cleanup function for history
   var unlistenHistory = null;
@@ -13896,7 +14051,7 @@ function router_createRouter(init) {
   var initialScrollRestored = init.hydrationData != null;
   var initialMatches = matchRoutes(dataRoutes, init.history.location, basename);
   var initialErrors = null;
-  if (initialMatches == null) {
+  if (initialMatches == null && !patchRoutesOnNavigationImpl) {
     // If we do not match a user-provided-route, fall back to the root
     // to allow the error boundary to take over
     var error = getInternalRouterError(404, {
@@ -13908,18 +14063,40 @@ function router_createRouter(init) {
     initialMatches = matches;
     initialErrors = _defineProperty({}, route.id, error);
   }
+  // In SPA apps, if the user provided a patchRoutesOnNavigation implementation and
+  // our initial match is a splat route, clear them out so we run through lazy
+  // discovery on hydration in case there's a more accurate lazy route match.
+  // In SSR apps (with `hydrationData`), we expect that the server will send
+  // up the proper matched routes so we don't want to run lazy discovery on
+  // initial hydration and want to hydrate into the splat route.
+  if (initialMatches && !init.hydrationData) {
+    var fogOfWar = checkFogOfWar(initialMatches, dataRoutes, init.history.location.pathname);
+    if (fogOfWar.active) {
+      initialMatches = null;
+    }
+  }
   var initialized;
-  var hasLazyRoutes = initialMatches.some(function (m) {
+  if (!initialMatches) {
+    initialized = false;
+    initialMatches = [];
+    // If partial hydration and fog of war is enabled, we will be running
+    // `patchRoutesOnNavigation` during hydration so include any partial matches as
+    // the initial matches so we can properly render `HydrateFallback`'s
+    if (future.v7_partialHydration) {
+      var _fogOfWar = checkFogOfWar(null, dataRoutes, init.history.location.pathname);
+      if (_fogOfWar.active && _fogOfWar.matches) {
+        initialMatches = _fogOfWar.matches;
+      }
+    }
+  } else if (initialMatches.some(function (m) {
     return m.route.lazy;
-  });
-  var hasLoaders = initialMatches.some(function (m) {
-    return m.route.loader;
-  });
-  if (hasLazyRoutes) {
+  })) {
     // All initialMatches need to be loaded before we're ready.  If we have lazy
     // functions around still then we'll need to run them in initialize()
     initialized = false;
-  } else if (!hasLoaders) {
+  } else if (!initialMatches.some(function (m) {
+    return m.route.loader;
+  })) {
     // If we've got no loaders to run, then we're good to go
     initialized = true;
   } else if (future.v7_partialHydration) {
@@ -13928,26 +14105,18 @@ function router_createRouter(init) {
     // were marked for explicit hydration
     var loaderData = init.hydrationData ? init.hydrationData.loaderData : null;
     var errors = init.hydrationData ? init.hydrationData.errors : null;
-    var isRouteInitialized = function isRouteInitialized(m) {
-      // No loader, nothing to initialize
-      if (!m.route.loader) {
-        return true;
-      }
-      // Explicitly opting-in to running on hydration
-      if (typeof m.route.loader === "function" && m.route.loader.hydrate === true) {
-        return false;
-      }
-      // Otherwise, initialized if hydrated with data or an error
-      return loaderData && loaderData[m.route.id] !== undefined || errors && errors[m.route.id] !== undefined;
-    };
     // If errors exist, don't consider routes below the boundary
     if (errors) {
       var idx = initialMatches.findIndex(function (m) {
         return errors[m.route.id] !== undefined;
       });
-      initialized = initialMatches.slice(0, idx + 1).every(isRouteInitialized);
+      initialized = initialMatches.slice(0, idx + 1).every(function (m) {
+        return !shouldLoadRouteOnHydration(m.route, loaderData, errors);
+      });
     } else {
-      initialized = initialMatches.every(isRouteInitialized);
+      initialized = initialMatches.every(function (m) {
+        return !shouldLoadRouteOnHydration(m.route, loaderData, errors);
+      });
     }
   } else {
     // Without partial hydration - we're initialized if we were provided any
@@ -13998,7 +14167,7 @@ function router_createRouter(init) {
   var cancelledDeferredRoutes = [];
   // Use this internal array to capture fetcher loads that were cancelled by an
   // action navigation and require revalidation
-  var cancelledFetcherLoads = [];
+  var cancelledFetcherLoads = new Set();
   // AbortControllers for any in-flight fetchers
   var fetchControllers = new Map();
   // Track loads based on the order in which they started
@@ -14028,7 +14197,7 @@ function router_createRouter(init) {
   var blockerFunctions = new Map();
   // Flag to ignore the next history update, so we can revert the URL change on
   // a POP navigation that was blocked by the user without touching router state
-  var ignoreNextHistoryUpdate = false;
+  var unblockBlockerHistoryUpdate = undefined;
   // Initialize the router, all side effects should be kicked off from here.
   // Implemented as a Fluent API for ease of:
   //   let router = createRouter(init).initialize();
@@ -14041,8 +14210,9 @@ function router_createRouter(init) {
         delta = _ref.delta;
       // Ignore this event if it was just us resetting the URL from a
       // blocked POP navigation
-      if (ignoreNextHistoryUpdate) {
-        ignoreNextHistoryUpdate = false;
+      if (unblockBlockerHistoryUpdate) {
+        unblockBlockerHistoryUpdate();
+        unblockBlockerHistoryUpdate = undefined;
         return;
       }
       warning(blockerFunctions.size === 0 || delta != null, "You are trying to use a blocker on a POP navigation to a location " + "that was not created by @remix-run/router. This will fail silently in " + "production. This can happen if you are navigating outside the router " + "via `window.history.pushState`/`window.location.hash` instead of using " + "router navigation APIs.  This can also happen if you are using " + "createHashRouter and the user manually changes the URL.");
@@ -14053,7 +14223,9 @@ function router_createRouter(init) {
       });
       if (blockerKey && delta != null) {
         // Restore the URL to match the current UI, but don't update router state
-        ignoreNextHistoryUpdate = true;
+        var nextHistoryUpdatePromise = new Promise(function (resolve) {
+          unblockBlockerHistoryUpdate = resolve;
+        });
         init.history.go(delta * -1);
         // Put the blocker into a blocked state
         updateBlocker(blockerKey, {
@@ -14066,8 +14238,12 @@ function router_createRouter(init) {
               reset: undefined,
               location: location
             });
-            // Re-do the same POP navigation we just blocked
-            init.history.go(delta);
+            // Re-do the same POP navigation we just blocked, after the url
+            // restoration is also complete.  See:
+            // https://github.com/remix-run/react-router/issues/11613
+            nextHistoryUpdatePromise.then(function () {
+              return init.history.go(delta);
+            });
           },
           reset: function reset() {
             var blockers = new Map(state.blockers);
@@ -14159,8 +14335,8 @@ function router_createRouter(init) {
     _toConsumableArray(subscribers).forEach(function (subscriber) {
       return subscriber(state, {
         deletedFetchers: deletedFetchersKeys,
-        unstable_viewTransitionOpts: opts.viewTransitionOpts,
-        unstable_flushSync: opts.flushSync === true
+        viewTransitionOpts: opts.viewTransitionOpts,
+        flushSync: opts.flushSync === true
       });
     });
     // Remove idle fetchers from state since we only care about in-flight fetchers.
@@ -14180,8 +14356,8 @@ function router_createRouter(init) {
   // - Can pass any other state in newState
   function completeNavigation(location, newState, _temp) {
     var _location$state, _location$state2;
-    var _ref9 = _temp === void 0 ? {} : _temp,
-      flushSync = _ref9.flushSync;
+    var _ref8 = _temp === void 0 ? {} : _temp,
+      flushSync = _ref8.flushSync;
     // Deduce if we're in a loading/actionReload state:
     // - We have committed actionData in the store
     // - The current navigation was a mutation submission
@@ -14217,6 +14393,7 @@ function router_createRouter(init) {
     // Always respect the user flag.  Otherwise don't reset on mutation
     // submission navigations unless they redirect
     var preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && ((_location$state2 = location.state) == null ? void 0 : _location$state2._isRedirect) !== true;
+    // Commit any in-flight routes at the end of the HMR revalidation "navigation"
     if (inFlightDataRoutes) {
       dataRoutes = inFlightDataRoutes;
       inFlightDataRoutes = undefined;
@@ -14280,7 +14457,6 @@ function router_createRouter(init) {
     isUninterruptedRevalidation = false;
     isRevalidationRequired = false;
     cancelledDeferredRoutes = [];
-    cancelledFetcherLoads = [];
   }
   // Trigger a navigation event, which can either be a numerical POP or a PUSH
   // replace with an optional submission
@@ -14323,7 +14499,7 @@ function router_createRouter(init) {
               historyAction = Action.Replace;
             }
             preventScrollReset = opts && "preventScrollReset" in opts ? opts.preventScrollReset === true : undefined;
-            flushSync = (opts && opts.unstable_flushSync) === true;
+            flushSync = (opts && opts.flushSync) === true;
             blockerKey = shouldBlockNavigation({
               currentLocation: currentLocation,
               nextLocation: nextLocation,
@@ -14365,7 +14541,7 @@ function router_createRouter(init) {
               pendingError: error,
               preventScrollReset: preventScrollReset,
               replace: opts && opts.replace,
-              enableViewTransition: opts && opts.unstable_viewTransition,
+              enableViewTransition: opts && opts.viewTransition,
               flushSync: flushSync
             });
           case 19:
@@ -14401,7 +14577,9 @@ function router_createRouter(init) {
     // navigation to the navigation.location but do not trigger an uninterrupted
     // revalidation so that history correctly updates once the navigation completes
     startNavigation(pendingAction || state.historyAction, state.navigation.location, {
-      overrideNavigation: state.navigation
+      overrideNavigation: state.navigation,
+      // Proxy through any rending view transition
+      enableViewTransition: pendingViewTransitionEnabled === true
     });
   }
   // Start a navigation to the given action/location.  Can optionally provide a
@@ -14413,7 +14591,7 @@ function router_createRouter(init) {
   // redirects/errors
   function _startNavigation() {
     _startNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(historyAction, location, opts) {
-      var routesToUse, loadingNavigation, matches, flushSync, _error, _getShortCircuitMatch2, notFoundMatches, _route, request, pendingActionResult, actionResult, _yield$handleLoaders, shortCircuited, loaderData, errors;
+      var routesToUse, loadingNavigation, matches, flushSync, fogOfWar, _handleNavigational, _error, notFoundMatches, _route, request, pendingActionResult, actionResult, _actionResult$pending, routeId, result, _yield$handleLoaders, shortCircuited, updatedMatches, loaderData, errors;
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) switch (_context3.prev = _context3.next) {
           case 0:
@@ -14432,16 +14610,17 @@ function router_createRouter(init) {
             routesToUse = inFlightDataRoutes || dataRoutes;
             loadingNavigation = opts && opts.overrideNavigation;
             matches = matchRoutes(routesToUse, location, basename);
-            flushSync = (opts && opts.flushSync) === true; // Short circuit with a 404 on the root error boundary if we match nothing
+            flushSync = (opts && opts.flushSync) === true;
+            fogOfWar = checkFogOfWar(matches, routesToUse, location.pathname);
+            if (fogOfWar.active && fogOfWar.matches) {
+              matches = fogOfWar.matches;
+            }
+            // Short circuit with a 404 on the root error boundary if we match nothing
             if (matches) {
               _context3.next = 17;
               break;
             }
-            _error = getInternalRouterError(404, {
-              pathname: location.pathname
-            });
-            _getShortCircuitMatch2 = getShortCircuitMatches(routesToUse), notFoundMatches = _getShortCircuitMatch2.matches, _route = _getShortCircuitMatch2.route; // Cancel all pending deferred on 404s since we don't keep any routes
-            cancelActiveDeferreds();
+            _handleNavigational = handleNavigational404(location.pathname), _error = _handleNavigational.error, notFoundMatches = _handleNavigational.notFoundMatches, _route = _handleNavigational.route;
             completeNavigation(location, {
               matches: notFoundMatches,
               loaderData: {},
@@ -14477,15 +14656,15 @@ function router_createRouter(init) {
               type: ResultType.error,
               error: opts.pendingError
             }];
-            _context3.next = 36;
+            _context3.next = 44;
             break;
           case 26:
             if (!(opts && opts.submission && isMutationMethod(opts.submission.formMethod))) {
-              _context3.next = 36;
+              _context3.next = 44;
               break;
             }
             _context3.next = 29;
-            return handleAction(request, location, opts.submission, matches, {
+            return handleAction(request, location, opts.submission, matches, fogOfWar.active, {
               replace: opts.replace,
               flushSync: flushSync
             });
@@ -14497,36 +14676,57 @@ function router_createRouter(init) {
             }
             return _context3.abrupt("return");
           case 32:
+            if (!actionResult.pendingActionResult) {
+              _context3.next = 38;
+              break;
+            }
+            _actionResult$pending = _slicedToArray(actionResult.pendingActionResult, 2), routeId = _actionResult$pending[0], result = _actionResult$pending[1];
+            if (!(isErrorResult(result) && isRouteErrorResponse(result.error) && result.error.status === 404)) {
+              _context3.next = 38;
+              break;
+            }
+            pendingNavigationController = null;
+            completeNavigation(location, {
+              matches: actionResult.matches,
+              loaderData: {},
+              errors: _defineProperty({}, routeId, result.error)
+            });
+            return _context3.abrupt("return");
+          case 38:
+            matches = actionResult.matches || matches;
             pendingActionResult = actionResult.pendingActionResult;
             loadingNavigation = getLoadingNavigation(location, opts.submission);
             flushSync = false;
+            // No need to do fog of war matching again on loader execution
+            fogOfWar.active = false;
             // Create a GET request for the loaders
             request = createClientSideRequest(init.history, request.url, request.signal);
-          case 36:
-            _context3.next = 38;
-            return handleLoaders(request, location, matches, loadingNavigation, opts && opts.submission, opts && opts.fetcherSubmission, opts && opts.replace, opts && opts.initialHydration === true, flushSync, pendingActionResult);
-          case 38:
+          case 44:
+            _context3.next = 46;
+            return handleLoaders(request, location, matches, fogOfWar.active, loadingNavigation, opts && opts.submission, opts && opts.fetcherSubmission, opts && opts.replace, opts && opts.initialHydration === true, flushSync, pendingActionResult);
+          case 46:
             _yield$handleLoaders = _context3.sent;
             shortCircuited = _yield$handleLoaders.shortCircuited;
+            updatedMatches = _yield$handleLoaders.matches;
             loaderData = _yield$handleLoaders.loaderData;
             errors = _yield$handleLoaders.errors;
             if (!shortCircuited) {
-              _context3.next = 44;
+              _context3.next = 53;
               break;
             }
             return _context3.abrupt("return");
-          case 44:
+          case 53:
             // Clean up now that the action/loaders have completed.  Don't clean up if
             // we short circuited because pendingNavigationController will have already
             // been assigned to a new controller for the next navigation
             pendingNavigationController = null;
             completeNavigation(location, router_extends({
-              matches: matches
+              matches: updatedMatches || matches
             }, getActionDataForCommit(pendingActionResult), {
               loaderData: loaderData,
               errors: errors
             }));
-          case 46:
+          case 55:
           case "end":
             return _context3.stop();
         }
@@ -14534,13 +14734,13 @@ function router_createRouter(init) {
     }));
     return _startNavigation.apply(this, arguments);
   }
-  function handleAction(_x7, _x8, _x9, _x10, _x11) {
+  function handleAction(_x7, _x8, _x9, _x10, _x11, _x12) {
     return _handleAction.apply(this, arguments);
   } // Call all applicable loaders for the given matches, handling redirects,
   // errors, etc.
   function _handleAction() {
-    _handleAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(request, location, submission, matches, opts) {
-      var navigation, result, actionMatch, results, replace, _location, boundaryMatch;
+    _handleAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(request, location, submission, matches, isFogOfWar, opts) {
+      var navigation, discoverResult, boundaryId, _handleNavigational2, notFoundMatches, _error2, _route2, result, actionMatch, results, _replace, _location, boundaryMatch;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
@@ -14555,10 +14755,53 @@ function router_createRouter(init) {
             }, {
               flushSync: opts.flushSync === true
             });
-            // Call our action and get the result
+            if (!isFogOfWar) {
+              _context4.next = 23;
+              break;
+            }
+            _context4.next = 7;
+            return discoverRoutes(matches, location.pathname, request.signal);
+          case 7:
+            discoverResult = _context4.sent;
+            if (!(discoverResult.type === "aborted")) {
+              _context4.next = 12;
+              break;
+            }
+            return _context4.abrupt("return", {
+              shortCircuited: true
+            });
+          case 12:
+            if (!(discoverResult.type === "error")) {
+              _context4.next = 17;
+              break;
+            }
+            boundaryId = findNearestBoundary(discoverResult.partialMatches).route.id;
+            return _context4.abrupt("return", {
+              matches: discoverResult.partialMatches,
+              pendingActionResult: [boundaryId, {
+                type: ResultType.error,
+                error: discoverResult.error
+              }]
+            });
+          case 17:
+            if (discoverResult.matches) {
+              _context4.next = 22;
+              break;
+            }
+            _handleNavigational2 = handleNavigational404(location.pathname), notFoundMatches = _handleNavigational2.notFoundMatches, _error2 = _handleNavigational2.error, _route2 = _handleNavigational2.route;
+            return _context4.abrupt("return", {
+              matches: notFoundMatches,
+              pendingActionResult: [_route2.id, {
+                type: ResultType.error,
+                error: _error2
+              }]
+            });
+          case 22:
+            matches = discoverResult.matches;
+          case 23:
             actionMatch = getTargetMatch(matches, location);
             if (!(!actionMatch.route.action && !actionMatch.route.lazy)) {
-              _context4.next = 9;
+              _context4.next = 28;
               break;
             }
             result = {
@@ -14569,74 +14812,77 @@ function router_createRouter(init) {
                 routeId: actionMatch.route.id
               })
             };
-            _context4.next = 15;
+            _context4.next = 34;
             break;
-          case 9:
-            _context4.next = 11;
-            return callDataStrategy("action", request, [actionMatch], matches);
-          case 11:
+          case 28:
+            _context4.next = 30;
+            return callDataStrategy("action", state, request, [actionMatch], matches, null);
+          case 30:
             results = _context4.sent;
-            result = results[0];
+            result = results[actionMatch.route.id];
             if (!request.signal.aborted) {
-              _context4.next = 15;
+              _context4.next = 34;
               break;
             }
             return _context4.abrupt("return", {
               shortCircuited: true
             });
-          case 15:
+          case 34:
             if (!isRedirectResult(result)) {
-              _context4.next = 20;
+              _context4.next = 39;
               break;
             }
             if (opts && opts.replace != null) {
-              replace = opts.replace;
+              _replace = opts.replace;
             } else {
               // If the user didn't explicity indicate replace behavior, replace if
               // we redirected to the exact same location we're currently at to avoid
               // double back-buttons
               _location = normalizeRedirectLocation(result.response.headers.get("Location"), new URL(request.url), basename);
-              replace = _location === state.location.pathname + state.location.search;
+              _replace = _location === state.location.pathname + state.location.search;
             }
-            _context4.next = 19;
-            return startRedirectNavigation(request, result, {
+            _context4.next = 38;
+            return startRedirectNavigation(request, result, true, {
               submission: submission,
-              replace: replace
+              replace: _replace
             });
-          case 19:
+          case 38:
             return _context4.abrupt("return", {
               shortCircuited: true
             });
-          case 20:
+          case 39:
             if (!isDeferredResult(result)) {
-              _context4.next = 22;
+              _context4.next = 41;
               break;
             }
             throw getInternalRouterError(400, {
               type: "defer-action"
             });
-          case 22:
+          case 41:
             if (!isErrorResult(result)) {
-              _context4.next = 26;
+              _context4.next = 45;
               break;
             }
             // Store off the pending error - we use it to determine which loaders
             // to call and will commit it when we complete the navigation
-            boundaryMatch = findNearestBoundary(matches, actionMatch.route.id); // By default, all submissions are REPLACE navigations, but if the
-            // action threw an error that'll be rendered in an errorElement, we fall
-            // back to PUSH so that the user can use the back button to get back to
-            // the pre-submission form location to try again
+            boundaryMatch = findNearestBoundary(matches, actionMatch.route.id); // By default, all submissions to the current location are REPLACE
+            // navigations, but if the action threw an error that'll be rendered in
+            // an errorElement, we fall back to PUSH so that the user can use the
+            // back button to get back to the pre-submission form location to try
+            // again
             if ((opts && opts.replace) !== true) {
               pendingAction = Action.Push;
             }
             return _context4.abrupt("return", {
+              matches: matches,
               pendingActionResult: [boundaryMatch.route.id, result]
             });
-          case 26:
+          case 45:
             return _context4.abrupt("return", {
+              matches: matches,
               pendingActionResult: [actionMatch.route.id, result]
             });
-          case 27:
+          case 46:
           case "end":
             return _context4.stop();
         }
@@ -14644,21 +14890,81 @@ function router_createRouter(init) {
     }));
     return _handleAction.apply(this, arguments);
   }
-  function handleLoaders(_x12, _x13, _x14, _x15, _x16, _x17, _x18, _x19, _x20, _x21) {
+  function handleLoaders(_x13, _x14, _x15, _x16, _x17, _x18, _x19, _x20, _x21, _x22, _x23) {
     return _handleLoaders.apply(this, arguments);
-  } // Trigger a fetcher load/submit for the given fetcher key
+  }
   function _handleLoaders() {
-    _handleLoaders = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(request, location, matches, overrideNavigation, submission, fetcherSubmission, replace, initialHydration, flushSync, pendingActionResult) {
-      var loadingNavigation, activeSubmission, routesToUse, _getMatchesToLoad, _getMatchesToLoad2, matchesToLoad, revalidatingFetchers, _updatedFetchers, actionData, abortPendingFetchRevalidations, _yield$callLoadersAnd, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData, loaderData, errors, updatedFetchers, didAbortFetchLoads, shouldUpdateFetchers;
+    _handleLoaders = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(request, location, matches, isFogOfWar, overrideNavigation, submission, fetcherSubmission, replace, initialHydration, flushSync, pendingActionResult) {
+      var loadingNavigation, activeSubmission, shouldUpdateNavigationState, actionData, discoverResult, boundaryId, _handleNavigational3, _error3, notFoundMatches, _route3, routesToUse, _getMatchesToLoad, _getMatchesToLoad2, matchesToLoad, revalidatingFetchers, _updatedFetchers, updates, _actionData, abortPendingFetchRevalidations, _yield$callLoadersAnd, loaderResults, fetcherResults, redirect, _processLoaderData, loaderData, errors, updatedFetchers, didAbortFetchLoads, shouldUpdateFetchers;
       return _regeneratorRuntime().wrap(function _callee5$(_context5) {
         while (1) switch (_context5.prev = _context5.next) {
           case 0:
             // Figure out the right navigation we want to use for data loading
             loadingNavigation = overrideNavigation || getLoadingNavigation(location, submission); // If this was a redirect from an action we don't have a "submission" but
             // we have it on the loading navigation so use that if available
-            activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
+            activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation); // If this is an uninterrupted revalidation, we remain in our current idle
+            // state.  If not, we need to switch to our loading state and load data,
+            // preserving any new action data or existing action data (in the case of
+            // a revalidation interrupting an actionReload)
+            // If we have partialHydration enabled, then don't update the state for the
+            // initial data load since it's not a "navigation"
+            shouldUpdateNavigationState = !isUninterruptedRevalidation && (!future.v7_partialHydration || !initialHydration); // When fog of war is enabled, we enter our `loading` state earlier so we
+            // can discover new routes during the `loading` state.  We skip this if
+            // we've already run actions since we would have done our matching already.
+            // If the children() function threw then, we want to proceed with the
+            // partial matches it discovered.
+            if (!isFogOfWar) {
+              _context5.next = 23;
+              break;
+            }
+            if (shouldUpdateNavigationState) {
+              actionData = getUpdatedActionData(pendingActionResult);
+              updateState(router_extends({
+                navigation: loadingNavigation
+              }, actionData !== undefined ? {
+                actionData: actionData
+              } : {}), {
+                flushSync: flushSync
+              });
+            }
+            _context5.next = 7;
+            return discoverRoutes(matches, location.pathname, request.signal);
+          case 7:
+            discoverResult = _context5.sent;
+            if (!(discoverResult.type === "aborted")) {
+              _context5.next = 12;
+              break;
+            }
+            return _context5.abrupt("return", {
+              shortCircuited: true
+            });
+          case 12:
+            if (!(discoverResult.type === "error")) {
+              _context5.next = 17;
+              break;
+            }
+            boundaryId = findNearestBoundary(discoverResult.partialMatches).route.id;
+            return _context5.abrupt("return", {
+              matches: discoverResult.partialMatches,
+              loaderData: {},
+              errors: _defineProperty({}, boundaryId, discoverResult.error)
+            });
+          case 17:
+            if (discoverResult.matches) {
+              _context5.next = 22;
+              break;
+            }
+            _handleNavigational3 = handleNavigational404(location.pathname), _error3 = _handleNavigational3.error, notFoundMatches = _handleNavigational3.notFoundMatches, _route3 = _handleNavigational3.route;
+            return _context5.abrupt("return", {
+              matches: notFoundMatches,
+              loaderData: {},
+              errors: _defineProperty({}, _route3.id, _error3)
+            });
+          case 22:
+            matches = discoverResult.matches;
+          case 23:
             routesToUse = inFlightDataRoutes || dataRoutes;
-            _getMatchesToLoad = getMatchesToLoad(init.history, state, matches, activeSubmission, location, future.v7_partialHydration && initialHydration === true, future.unstable_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult), _getMatchesToLoad2 = _slicedToArray(_getMatchesToLoad, 2), matchesToLoad = _getMatchesToLoad2[0], revalidatingFetchers = _getMatchesToLoad2[1]; // Cancel pending deferreds for no-longer-matched routes or routes we're
+            _getMatchesToLoad = getMatchesToLoad(init.history, state, matches, activeSubmission, location, future.v7_partialHydration && initialHydration === true, future.v7_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult), _getMatchesToLoad2 = _slicedToArray(_getMatchesToLoad, 2), matchesToLoad = _getMatchesToLoad2[0], revalidatingFetchers = _getMatchesToLoad2[1]; // Cancel pending deferreds for no-longer-matched routes or routes we're
             // about to reload.  Note that if this is an action reload we would have
             // already cancelled all pending deferreds so this would be a no-op
             cancelActiveDeferreds(function (routeId) {
@@ -14671,7 +14977,7 @@ function router_createRouter(init) {
             pendingNavigationLoadId = ++incrementingLoadId;
             // Short circuit if we have no loaders to run
             if (!(matchesToLoad.length === 0 && revalidatingFetchers.length === 0)) {
-              _context5.next = 10;
+              _context5.next = 31;
               break;
             }
             _updatedFetchers = markFetchRedirectsDone();
@@ -14688,45 +14994,26 @@ function router_createRouter(init) {
             return _context5.abrupt("return", {
               shortCircuited: true
             });
-          case 10:
-            // If this is an uninterrupted revalidation, we remain in our current idle
-            // state.  If not, we need to switch to our loading state and load data,
-            // preserving any new action data or existing action data (in the case of
-            // a revalidation interrupting an actionReload)
-            // If we have partialHydration enabled, then don't update the state for the
-            // initial data load since it's not a "navigation"
-            if (!isUninterruptedRevalidation && (!future.v7_partialHydration || !initialHydration)) {
-              revalidatingFetchers.forEach(function (rf) {
-                var fetcher = state.fetchers.get(rf.key);
-                var revalidatingFetcher = getLoadingFetcher(undefined, fetcher ? fetcher.data : undefined);
-                state.fetchers.set(rf.key, revalidatingFetcher);
-              });
-              if (pendingActionResult && !isErrorResult(pendingActionResult[1])) {
-                // This is cast to `any` currently because `RouteData`uses any and it
-                // would be a breaking change to use any.
-                // TODO: v7 - change `RouteData` to use `unknown` instead of `any`
-                actionData = _defineProperty({}, pendingActionResult[0], pendingActionResult[1].data);
-              } else if (state.actionData) {
-                if (Object.keys(state.actionData).length === 0) {
-                  actionData = null;
-                } else {
-                  actionData = state.actionData;
+          case 31:
+            if (shouldUpdateNavigationState) {
+              updates = {};
+              if (!isFogOfWar) {
+                // Only update navigation/actionNData if we didn't already do it above
+                updates.navigation = loadingNavigation;
+                _actionData = getUpdatedActionData(pendingActionResult);
+                if (_actionData !== undefined) {
+                  updates.actionData = _actionData;
                 }
               }
-              updateState(router_extends({
-                navigation: loadingNavigation
-              }, actionData !== undefined ? {
-                actionData: actionData
-              } : {}, revalidatingFetchers.length > 0 ? {
-                fetchers: new Map(state.fetchers)
-              } : {}), {
+              if (revalidatingFetchers.length > 0) {
+                updates.fetchers = getUpdatedRevalidatingFetchers(revalidatingFetchers);
+              }
+              updateState(updates, {
                 flushSync: flushSync
               });
             }
             revalidatingFetchers.forEach(function (rf) {
-              if (fetchControllers.has(rf.key)) {
-                abortFetcher(rf.key);
-              }
+              abortFetcher(rf.key);
               if (rf.controller) {
                 // Fetchers use an independent AbortController so that aborting a fetcher
                 // (via deleteFetcher) does not abort the triggering navigation that
@@ -14743,20 +15030,20 @@ function router_createRouter(init) {
             if (pendingNavigationController) {
               pendingNavigationController.signal.addEventListener("abort", abortPendingFetchRevalidations);
             }
-            _context5.next = 16;
-            return callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, request);
-          case 16:
+            _context5.next = 37;
+            return callLoadersAndMaybeResolveData(state, matches, matchesToLoad, revalidatingFetchers, request);
+          case 37:
             _yield$callLoadersAnd = _context5.sent;
             loaderResults = _yield$callLoadersAnd.loaderResults;
             fetcherResults = _yield$callLoadersAnd.fetcherResults;
             if (!request.signal.aborted) {
-              _context5.next = 21;
+              _context5.next = 42;
               break;
             }
             return _context5.abrupt("return", {
               shortCircuited: true
             });
-          case 21:
+          case 42:
             // Clean up _after_ loaders have completed.  Don't clean up if we short
             // circuited because fetchControllers would have been aborted and
             // reassigned to new controllers for the next navigation
@@ -14767,29 +15054,40 @@ function router_createRouter(init) {
               return fetchControllers["delete"](rf.key);
             });
             // If any loaders returned a redirect Response, start a new REPLACE navigation
-            redirect = findRedirect([].concat(_toConsumableArray(loaderResults), _toConsumableArray(fetcherResults)));
+            redirect = findRedirect(loaderResults);
             if (!redirect) {
-              _context5.next = 29;
+              _context5.next = 49;
               break;
             }
-            if (redirect.idx >= matchesToLoad.length) {
-              // If this redirect came from a fetcher make sure we mark it in
-              // fetchRedirectIds so it doesn't get revalidated on the next set of
-              // loader executions
-              fetcherKey = revalidatingFetchers[redirect.idx - matchesToLoad.length].key;
-              fetchRedirectIds.add(fetcherKey);
-            }
-            _context5.next = 28;
-            return startRedirectNavigation(request, redirect.result, {
+            _context5.next = 48;
+            return startRedirectNavigation(request, redirect.result, true, {
               replace: replace
             });
-          case 28:
+          case 48:
             return _context5.abrupt("return", {
               shortCircuited: true
             });
-          case 29:
+          case 49:
+            redirect = findRedirect(fetcherResults);
+            if (!redirect) {
+              _context5.next = 55;
+              break;
+            }
+            // If this redirect came from a fetcher make sure we mark it in
+            // fetchRedirectIds so it doesn't get revalidated on the next set of
+            // loader executions
+            fetchRedirectIds.add(redirect.key);
+            _context5.next = 54;
+            return startRedirectNavigation(request, redirect.result, true, {
+              replace: replace
+            });
+          case 54:
+            return _context5.abrupt("return", {
+              shortCircuited: true
+            });
+          case 55:
             // Process and commit output from loaders
-            _processLoaderData = processLoaderData(state, matches, matchesToLoad, loaderResults, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData.loaderData, errors = _processLoaderData.errors; // Wire up subscribers to update loaderData as promises settle
+            _processLoaderData = processLoaderData(state, matches, loaderResults, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData.loaderData, errors = _processLoaderData.errors; // Wire up subscribers to update loaderData as promises settle
             activeDeferreds.forEach(function (deferredData, routeId) {
               deferredData.subscribe(function (aborted) {
                 // Note: No need to updateState here since the TrackedPromise on
@@ -14800,31 +15098,21 @@ function router_createRouter(init) {
                 }
               });
             });
-            // During partial hydration, preserve SSR errors for routes that don't re-run
+            // Preserve SSR errors during partial hydration
             if (future.v7_partialHydration && initialHydration && state.errors) {
-              Object.entries(state.errors).filter(function (_ref2) {
-                var _ref11 = _slicedToArray(_ref2, 1),
-                  id = _ref11[0];
-                return !matchesToLoad.some(function (m) {
-                  return m.route.id === id;
-                });
-              }).forEach(function (_ref3) {
-                var _ref12 = _slicedToArray(_ref3, 2),
-                  routeId = _ref12[0],
-                  error = _ref12[1];
-                errors = Object.assign(errors || {}, _defineProperty({}, routeId, error));
-              });
+              errors = router_extends({}, state.errors, errors);
             }
             updatedFetchers = markFetchRedirectsDone();
             didAbortFetchLoads = abortStaleFetchLoads(pendingNavigationLoadId);
             shouldUpdateFetchers = updatedFetchers || didAbortFetchLoads || revalidatingFetchers.length > 0;
             return _context5.abrupt("return", router_extends({
+              matches: matches,
               loaderData: loaderData,
               errors: errors
             }, shouldUpdateFetchers ? {
               fetchers: new Map(state.fetchers)
             } : {}));
-          case 36:
+          case 62:
           case "end":
             return _context5.stop();
         }
@@ -14832,15 +15120,42 @@ function router_createRouter(init) {
     }));
     return _handleLoaders.apply(this, arguments);
   }
+  function getUpdatedActionData(pendingActionResult) {
+    if (pendingActionResult && !isErrorResult(pendingActionResult[1])) {
+      // This is cast to `any` currently because `RouteData`uses any and it
+      // would be a breaking change to use any.
+      // TODO: v7 - change `RouteData` to use `unknown` instead of `any`
+      return _defineProperty({}, pendingActionResult[0], pendingActionResult[1].data);
+    } else if (state.actionData) {
+      if (Object.keys(state.actionData).length === 0) {
+        return null;
+      } else {
+        return state.actionData;
+      }
+    }
+  }
+  function getUpdatedRevalidatingFetchers(revalidatingFetchers) {
+    revalidatingFetchers.forEach(function (rf) {
+      var fetcher = state.fetchers.get(rf.key);
+      var revalidatingFetcher = getLoadingFetcher(undefined, fetcher ? fetcher.data : undefined);
+      state.fetchers.set(rf.key, revalidatingFetcher);
+    });
+    return new Map(state.fetchers);
+  }
+  // Trigger a fetcher load/submit for the given fetcher key
   function fetch(key, routeId, href, opts) {
     if (isServer) {
       throw new Error("router.fetch() was called during the server render, but it shouldn't be. " + "You are likely calling a useFetcher() method in the body of your component. " + "Try moving it to a useEffect or a callback.");
     }
-    if (fetchControllers.has(key)) abortFetcher(key);
-    var flushSync = (opts && opts.unstable_flushSync) === true;
+    abortFetcher(key);
+    var flushSync = (opts && opts.flushSync) === true;
     var routesToUse = inFlightDataRoutes || dataRoutes;
     var normalizedPath = normalizeTo(state.location, state.matches, basename, future.v7_prependBasename, href, future.v7_relativeSplatPath, routeId, opts == null ? void 0 : opts.relative);
     var matches = matchRoutes(routesToUse, normalizedPath, basename);
+    var fogOfWar = checkFogOfWar(matches, routesToUse, normalizedPath);
+    if (fogOfWar.active && fogOfWar.matches) {
+      matches = fogOfWar.matches;
+    }
     if (!matches) {
       setFetcherError(key, routeId, getInternalRouterError(404, {
         pathname: normalizedPath
@@ -14860,9 +15175,9 @@ function router_createRouter(init) {
       return;
     }
     var match = getTargetMatch(matches, path);
-    pendingPreventScrollReset = (opts && opts.preventScrollReset) === true;
+    var preventScrollReset = (opts && opts.preventScrollReset) === true;
     if (submission && isMutationMethod(submission.formMethod)) {
-      handleFetcherAction(key, routeId, path, match, matches, flushSync, submission);
+      handleFetcherAction(key, routeId, path, match, matches, fogOfWar.active, flushSync, preventScrollReset, submission);
       return;
     }
     // Store off the match so we can call it's shouldRevalidate on subsequent
@@ -14871,52 +15186,100 @@ function router_createRouter(init) {
       routeId: routeId,
       path: path
     });
-    handleFetcherLoader(key, routeId, path, match, matches, flushSync, submission);
+    handleFetcherLoader(key, routeId, path, match, matches, fogOfWar.active, flushSync, preventScrollReset, submission);
   }
   // Call the action for the matched fetcher.submit(), and then handle redirects,
   // errors, and revalidation
-  function handleFetcherAction(_x22, _x23, _x24, _x25, _x26, _x27, _x28) {
+  function handleFetcherAction(_x24, _x25, _x26, _x27, _x28, _x29, _x30, _x31, _x32) {
     return _handleFetcherAction.apply(this, arguments);
   } // Call the matched loader for fetcher.load(), handling redirects, errors, etc.
   function _handleFetcherAction() {
-    _handleFetcherAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(key, routeId, path, match, requestMatches, flushSync, submission) {
-      var _error2, existingFetcher, abortController, fetchRequest, originatingLoadId, actionResults, actionResult, nextLocation, revalidationRequest, routesToUse, matches, loadId, loadFetcher, _getMatchesToLoad3, _getMatchesToLoad4, matchesToLoad, revalidatingFetchers, abortPendingFetchRevalidations, _yield$callLoadersAnd2, loaderResults, fetcherResults, redirect, fetcherKey, _processLoaderData2, loaderData, errors, doneFetcher;
+    _handleFetcherAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(key, routeId, path, match, requestMatches, isFogOfWar, flushSync, preventScrollReset, submission) {
+      var detectAndHandle405Error, existingFetcher, abortController, fetchRequest, discoverResult, originatingLoadId, actionResults, actionResult, nextLocation, revalidationRequest, routesToUse, matches, loadId, loadFetcher, _getMatchesToLoad3, _getMatchesToLoad4, matchesToLoad, revalidatingFetchers, abortPendingFetchRevalidations, _yield$callLoadersAnd2, loaderResults, fetcherResults, redirect, _processLoaderData2, loaderData, errors, doneFetcher;
       return _regeneratorRuntime().wrap(function _callee6$(_context6) {
         while (1) switch (_context6.prev = _context6.next) {
           case 0:
+            detectAndHandle405Error = function _detectAndHandle405Er(m) {
+              if (!m.route.action && !m.route.lazy) {
+                var _error4 = getInternalRouterError(405, {
+                  method: submission.formMethod,
+                  pathname: path,
+                  routeId: routeId
+                });
+                setFetcherError(key, routeId, _error4, {
+                  flushSync: flushSync
+                });
+                return true;
+              }
+              return false;
+            };
             interruptActiveLoads();
             fetchLoadMatches["delete"](key);
-            if (!(!match.route.action && !match.route.lazy)) {
-              _context6.next = 6;
+            if (!(!isFogOfWar && detectAndHandle405Error(match))) {
+              _context6.next = 5;
               break;
             }
-            _error2 = getInternalRouterError(405, {
-              method: submission.formMethod,
-              pathname: path,
-              routeId: routeId
-            });
-            setFetcherError(key, routeId, _error2, {
-              flushSync: flushSync
-            });
             return _context6.abrupt("return");
-          case 6:
+          case 5:
             // Put this fetcher into it's submitting state
             existingFetcher = state.fetchers.get(key);
             updateFetcherState(key, getSubmittingFetcher(submission, existingFetcher), {
               flushSync: flushSync
             });
-            // Call the action for the fetcher
             abortController = new AbortController();
             fetchRequest = createClientSideRequest(init.history, path, abortController.signal, submission);
+            if (!isFogOfWar) {
+              _context6.next = 31;
+              break;
+            }
+            _context6.next = 12;
+            return discoverRoutes(requestMatches, path, fetchRequest.signal);
+          case 12:
+            discoverResult = _context6.sent;
+            if (!(discoverResult.type === "aborted")) {
+              _context6.next = 17;
+              break;
+            }
+            return _context6.abrupt("return");
+          case 17:
+            if (!(discoverResult.type === "error")) {
+              _context6.next = 22;
+              break;
+            }
+            setFetcherError(key, routeId, discoverResult.error, {
+              flushSync: flushSync
+            });
+            return _context6.abrupt("return");
+          case 22:
+            if (discoverResult.matches) {
+              _context6.next = 27;
+              break;
+            }
+            setFetcherError(key, routeId, getInternalRouterError(404, {
+              pathname: path
+            }), {
+              flushSync: flushSync
+            });
+            return _context6.abrupt("return");
+          case 27:
+            requestMatches = discoverResult.matches;
+            match = getTargetMatch(requestMatches, path);
+            if (!detectAndHandle405Error(match)) {
+              _context6.next = 31;
+              break;
+            }
+            return _context6.abrupt("return");
+          case 31:
+            // Call the action for the fetcher
             fetchControllers.set(key, abortController);
             originatingLoadId = incrementingLoadId;
-            _context6.next = 14;
-            return callDataStrategy("action", fetchRequest, [match], requestMatches);
-          case 14:
+            _context6.next = 35;
+            return callDataStrategy("action", state, fetchRequest, [match], requestMatches, key);
+          case 35:
             actionResults = _context6.sent;
-            actionResult = actionResults[0];
+            actionResult = actionResults[match.route.id];
             if (!fetchRequest.signal.aborted) {
-              _context6.next = 19;
+              _context6.next = 40;
               break;
             }
             // We can delete this so long as we weren't aborted by our own fetcher
@@ -14925,28 +15288,28 @@ function router_createRouter(init) {
               fetchControllers["delete"](key);
             }
             return _context6.abrupt("return");
-          case 19:
+          case 40:
             if (!(future.v7_fetcherPersist && deletedFetchers.has(key))) {
-              _context6.next = 25;
+              _context6.next = 46;
               break;
             }
             if (!(isRedirectResult(actionResult) || isErrorResult(actionResult))) {
-              _context6.next = 23;
+              _context6.next = 44;
               break;
             }
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context6.abrupt("return");
-          case 23:
-            _context6.next = 38;
+          case 44:
+            _context6.next = 59;
             break;
-          case 25:
+          case 46:
             if (!isRedirectResult(actionResult)) {
-              _context6.next = 35;
+              _context6.next = 56;
               break;
             }
             fetchControllers["delete"](key);
             if (!(pendingNavigationLoadId > originatingLoadId)) {
-              _context6.next = 32;
+              _context6.next = 53;
               break;
             }
             // A new navigation was kicked off after our action started, so that
@@ -14955,28 +15318,29 @@ function router_createRouter(init) {
             // fire unless opted out via shouldRevalidate
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context6.abrupt("return");
-          case 32:
+          case 53:
             fetchRedirectIds.add(key);
             updateFetcherState(key, getLoadingFetcher(submission));
-            return _context6.abrupt("return", startRedirectNavigation(fetchRequest, actionResult, {
-              fetcherSubmission: submission
+            return _context6.abrupt("return", startRedirectNavigation(fetchRequest, actionResult, false, {
+              fetcherSubmission: submission,
+              preventScrollReset: preventScrollReset
             }));
-          case 35:
+          case 56:
             if (!isErrorResult(actionResult)) {
-              _context6.next = 38;
+              _context6.next = 59;
               break;
             }
             setFetcherError(key, routeId, actionResult.error);
             return _context6.abrupt("return");
-          case 38:
+          case 59:
             if (!isDeferredResult(actionResult)) {
-              _context6.next = 40;
+              _context6.next = 61;
               break;
             }
             throw getInternalRouterError(400, {
               type: "defer-action"
             });
-          case 40:
+          case 61:
             // Start the data load for current matches, or the next location if we're
             // in the middle of a navigation
             nextLocation = state.navigation.location || state.location;
@@ -14988,7 +15352,7 @@ function router_createRouter(init) {
             fetchReloadIds.set(key, loadId);
             loadFetcher = getLoadingFetcher(submission, actionResult.data);
             state.fetchers.set(key, loadFetcher);
-            _getMatchesToLoad3 = getMatchesToLoad(init.history, state, matches, submission, nextLocation, false, future.unstable_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, [match.route.id, actionResult]), _getMatchesToLoad4 = _slicedToArray(_getMatchesToLoad3, 2), matchesToLoad = _getMatchesToLoad4[0], revalidatingFetchers = _getMatchesToLoad4[1]; // Put all revalidating fetchers into the loading state, except for the
+            _getMatchesToLoad3 = getMatchesToLoad(init.history, state, matches, submission, nextLocation, false, future.v7_skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, [match.route.id, actionResult]), _getMatchesToLoad4 = _slicedToArray(_getMatchesToLoad3, 2), matchesToLoad = _getMatchesToLoad4[0], revalidatingFetchers = _getMatchesToLoad4[1]; // Put all revalidating fetchers into the loading state, except for the
             // current fetcher which we want to keep in it's current loading state which
             // contains it's action submission info + action data
             revalidatingFetchers.filter(function (rf) {
@@ -14998,9 +15362,7 @@ function router_createRouter(init) {
               var existingFetcher = state.fetchers.get(staleKey);
               var revalidatingFetcher = getLoadingFetcher(undefined, existingFetcher ? existingFetcher.data : undefined);
               state.fetchers.set(staleKey, revalidatingFetcher);
-              if (fetchControllers.has(staleKey)) {
-                abortFetcher(staleKey);
-              }
+              abortFetcher(staleKey);
               if (rf.controller) {
                 fetchControllers.set(staleKey, rf.controller);
               }
@@ -15014,40 +15376,48 @@ function router_createRouter(init) {
               });
             };
             abortController.signal.addEventListener("abort", abortPendingFetchRevalidations);
-            _context6.next = 56;
-            return callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, revalidationRequest);
-          case 56:
+            _context6.next = 77;
+            return callLoadersAndMaybeResolveData(state, matches, matchesToLoad, revalidatingFetchers, revalidationRequest);
+          case 77:
             _yield$callLoadersAnd2 = _context6.sent;
             loaderResults = _yield$callLoadersAnd2.loaderResults;
             fetcherResults = _yield$callLoadersAnd2.fetcherResults;
             if (!abortController.signal.aborted) {
-              _context6.next = 61;
+              _context6.next = 82;
               break;
             }
             return _context6.abrupt("return");
-          case 61:
+          case 82:
             abortController.signal.removeEventListener("abort", abortPendingFetchRevalidations);
             fetchReloadIds["delete"](key);
             fetchControllers["delete"](key);
             revalidatingFetchers.forEach(function (r) {
               return fetchControllers["delete"](r.key);
             });
-            redirect = findRedirect([].concat(_toConsumableArray(loaderResults), _toConsumableArray(fetcherResults)));
+            redirect = findRedirect(loaderResults);
             if (!redirect) {
-              _context6.next = 69;
+              _context6.next = 89;
               break;
             }
-            if (redirect.idx >= matchesToLoad.length) {
-              // If this redirect came from a fetcher make sure we mark it in
-              // fetchRedirectIds so it doesn't get revalidated on the next set of
-              // loader executions
-              fetcherKey = revalidatingFetchers[redirect.idx - matchesToLoad.length].key;
-              fetchRedirectIds.add(fetcherKey);
+            return _context6.abrupt("return", startRedirectNavigation(revalidationRequest, redirect.result, false, {
+              preventScrollReset: preventScrollReset
+            }));
+          case 89:
+            redirect = findRedirect(fetcherResults);
+            if (!redirect) {
+              _context6.next = 93;
+              break;
             }
-            return _context6.abrupt("return", startRedirectNavigation(revalidationRequest, redirect.result));
-          case 69:
+            // If this redirect came from a fetcher make sure we mark it in
+            // fetchRedirectIds so it doesn't get revalidated on the next set of
+            // loader executions
+            fetchRedirectIds.add(redirect.key);
+            return _context6.abrupt("return", startRedirectNavigation(revalidationRequest, redirect.result, false, {
+              preventScrollReset: preventScrollReset
+            }));
+          case 93:
             // Process and commit output from loaders
-            _processLoaderData2 = processLoaderData(state, state.matches, matchesToLoad, loaderResults, undefined, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData2.loaderData, errors = _processLoaderData2.errors; // Since we let revalidations complete even if the submitting fetcher was
+            _processLoaderData2 = processLoaderData(state, matches, loaderResults, undefined, revalidatingFetchers, fetcherResults, activeDeferreds), loaderData = _processLoaderData2.loaderData, errors = _processLoaderData2.errors; // Since we let revalidations complete even if the submitting fetcher was
             // deleted, only put it back to idle if it hasn't been deleted
             if (state.fetchers.has(key)) {
               doneFetcher = getDoneFetcher(actionResult.data);
@@ -15077,7 +15447,7 @@ function router_createRouter(init) {
               });
               isRevalidationRequired = false;
             }
-          case 73:
+          case 97:
           case "end":
             return _context6.stop();
         }
@@ -15085,7 +15455,7 @@ function router_createRouter(init) {
     }));
     return _handleFetcherAction.apply(this, arguments);
   }
-  function handleFetcherLoader(_x29, _x30, _x31, _x32, _x33, _x34, _x35) {
+  function handleFetcherLoader(_x33, _x34, _x35, _x36, _x37, _x38, _x39, _x40, _x41) {
     return _handleFetcherLoader.apply(this, arguments);
   }
   /**
@@ -15108,8 +15478,8 @@ function router_createRouter(init) {
    * the history action from the original navigation (PUSH or REPLACE).
    */
   function _handleFetcherLoader() {
-    _handleFetcherLoader = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(key, routeId, path, match, matches, flushSync, submission) {
-      var existingFetcher, abortController, fetchRequest, originatingLoadId, results, result;
+    _handleFetcherLoader = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(key, routeId, path, match, matches, isFogOfWar, flushSync, preventScrollReset, submission) {
+      var existingFetcher, abortController, fetchRequest, discoverResult, originatingLoadId, results, result;
       return _regeneratorRuntime().wrap(function _callee7$(_context7) {
         while (1) switch (_context7.prev = _context7.next) {
           case 0:
@@ -15117,83 +15487,122 @@ function router_createRouter(init) {
             updateFetcherState(key, getLoadingFetcher(submission, existingFetcher ? existingFetcher.data : undefined), {
               flushSync: flushSync
             });
-            // Call the loader for this fetcher route match
             abortController = new AbortController();
             fetchRequest = createClientSideRequest(init.history, path, abortController.signal);
+            if (!isFogOfWar) {
+              _context7.next = 24;
+              break;
+            }
+            _context7.next = 7;
+            return discoverRoutes(matches, path, fetchRequest.signal);
+          case 7:
+            discoverResult = _context7.sent;
+            if (!(discoverResult.type === "aborted")) {
+              _context7.next = 12;
+              break;
+            }
+            return _context7.abrupt("return");
+          case 12:
+            if (!(discoverResult.type === "error")) {
+              _context7.next = 17;
+              break;
+            }
+            setFetcherError(key, routeId, discoverResult.error, {
+              flushSync: flushSync
+            });
+            return _context7.abrupt("return");
+          case 17:
+            if (discoverResult.matches) {
+              _context7.next = 22;
+              break;
+            }
+            setFetcherError(key, routeId, getInternalRouterError(404, {
+              pathname: path
+            }), {
+              flushSync: flushSync
+            });
+            return _context7.abrupt("return");
+          case 22:
+            matches = discoverResult.matches;
+            match = getTargetMatch(matches, path);
+          case 24:
+            // Call the loader for this fetcher route match
             fetchControllers.set(key, abortController);
             originatingLoadId = incrementingLoadId;
-            _context7.next = 8;
-            return callDataStrategy("loader", fetchRequest, [match], matches);
-          case 8:
+            _context7.next = 28;
+            return callDataStrategy("loader", state, fetchRequest, [match], matches, key);
+          case 28:
             results = _context7.sent;
-            result = results[0]; // Deferred isn't supported for fetcher loads, await everything and treat it
+            result = results[match.route.id]; // Deferred isn't supported for fetcher loads, await everything and treat it
             // as a normal load.  resolveDeferredData will return undefined if this
             // fetcher gets aborted, so we just leave result untouched and short circuit
             // below if that happens
             if (!isDeferredResult(result)) {
-              _context7.next = 17;
+              _context7.next = 37;
               break;
             }
-            _context7.next = 13;
+            _context7.next = 33;
             return resolveDeferredData(result, fetchRequest.signal, true);
-          case 13:
+          case 33:
             _context7.t0 = _context7.sent;
             if (_context7.t0) {
-              _context7.next = 16;
+              _context7.next = 36;
               break;
             }
             _context7.t0 = result;
-          case 16:
+          case 36:
             result = _context7.t0;
-          case 17:
+          case 37:
             // We can delete this so long as we weren't aborted by our our own fetcher
             // re-load which would have put _new_ controller is in fetchControllers
             if (fetchControllers.get(key) === abortController) {
               fetchControllers["delete"](key);
             }
             if (!fetchRequest.signal.aborted) {
-              _context7.next = 20;
+              _context7.next = 40;
               break;
             }
             return _context7.abrupt("return");
-          case 20:
+          case 40:
             if (!deletedFetchers.has(key)) {
-              _context7.next = 23;
+              _context7.next = 43;
               break;
             }
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context7.abrupt("return");
-          case 23:
+          case 43:
             if (!isRedirectResult(result)) {
-              _context7.next = 33;
+              _context7.next = 53;
               break;
             }
             if (!(pendingNavigationLoadId > originatingLoadId)) {
-              _context7.next = 29;
+              _context7.next = 49;
               break;
             }
             // A new navigation was kicked off after our loader started, so that
             // should take precedence over this redirect navigation
             updateFetcherState(key, getDoneFetcher(undefined));
             return _context7.abrupt("return");
-          case 29:
+          case 49:
             fetchRedirectIds.add(key);
-            _context7.next = 32;
-            return startRedirectNavigation(fetchRequest, result);
-          case 32:
+            _context7.next = 52;
+            return startRedirectNavigation(fetchRequest, result, false, {
+              preventScrollReset: preventScrollReset
+            });
+          case 52:
             return _context7.abrupt("return");
-          case 33:
+          case 53:
             if (!isErrorResult(result)) {
-              _context7.next = 36;
+              _context7.next = 56;
               break;
             }
             setFetcherError(key, routeId, result.error);
             return _context7.abrupt("return");
-          case 36:
+          case 56:
             invariant(!isDeferredResult(result), "Unhandled fetcher deferred data");
             // Put the fetcher back into an idle state
             updateFetcherState(key, getDoneFetcher(result.data));
-          case 38:
+          case 58:
           case "end":
             return _context7.stop();
         }
@@ -15201,17 +15610,17 @@ function router_createRouter(init) {
     }));
     return _handleFetcherLoader.apply(this, arguments);
   }
-  function startRedirectNavigation(_x36, _x37, _x38) {
+  function startRedirectNavigation(_x42, _x43, _x44, _x45) {
     return _startRedirectNavigation.apply(this, arguments);
   } // Utility wrapper for calling dataStrategy client-side without having to
   // pass around the manifest, mapRouteProperties, etc.
   function _startRedirectNavigation() {
-    _startRedirectNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(request, redirect, _temp2) {
-      var _ref13, submission, fetcherSubmission, replace, location, redirectLocation, isDocumentReload, url, redirectHistoryAction, _state$navigation, formMethod, formAction, formEncType, activeSubmission, overrideNavigation;
+    _startRedirectNavigation = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(request, redirect, isNavigation, _temp2) {
+      var _ref11, submission, fetcherSubmission, preventScrollReset, replace, location, redirectLocation, isDocumentReload, url, redirectHistoryAction, _state$navigation, formMethod, formAction, formEncType, activeSubmission, overrideNavigation;
       return _regeneratorRuntime().wrap(function _callee8$(_context8) {
         while (1) switch (_context8.prev = _context8.next) {
           case 0:
-            _ref13 = _temp2 === void 0 ? {} : _temp2, submission = _ref13.submission, fetcherSubmission = _ref13.fetcherSubmission, replace = _ref13.replace;
+            _ref11 = _temp2 === void 0 ? {} : _temp2, submission = _ref11.submission, fetcherSubmission = _ref11.fetcherSubmission, preventScrollReset = _ref11.preventScrollReset, replace = _ref11.replace;
             if (redirect.response.headers.has("X-Remix-Revalidate")) {
               isRevalidationRequired = true;
             }
@@ -15251,7 +15660,7 @@ function router_createRouter(init) {
             // There's no need to abort on redirects, since we don't detect the
             // redirect until the action/loaders have settled
             pendingNavigationController = null;
-            redirectHistoryAction = replace === true ? Action.Replace : Action.Push; // Use the incoming submission if provided, fallback on the active one in
+            redirectHistoryAction = replace === true || redirect.response.headers.has("X-Remix-Replace") ? Action.Replace : Action.Push; // Use the incoming submission if provided, fallback on the active one in
             // state.navigation
             _state$navigation = state.navigation, formMethod = _state$navigation.formMethod, formAction = _state$navigation.formAction, formEncType = _state$navigation.formEncType;
             if (!submission && !fetcherSubmission && formMethod && formAction && formEncType) {
@@ -15270,8 +15679,9 @@ function router_createRouter(init) {
               submission: router_extends({}, activeSubmission, {
                 formAction: location
               }),
-              // Preserve this flag across redirects
-              preventScrollReset: pendingPreventScrollReset
+              // Preserve these flags across redirects
+              preventScrollReset: preventScrollReset || pendingPreventScrollReset,
+              enableViewTransition: isNavigation ? pendingViewTransitionEnabled : undefined
             });
           case 20:
             _context8.next = 25;
@@ -15285,8 +15695,9 @@ function router_createRouter(init) {
               overrideNavigation: overrideNavigation,
               // Send fetcher submissions through for shouldRevalidate
               fetcherSubmission: fetcherSubmission,
-              // Preserve this flag across redirects
-              preventScrollReset: pendingPreventScrollReset
+              // Preserve these flags across redirects
+              preventScrollReset: preventScrollReset || pendingPreventScrollReset,
+              enableViewTransition: isNavigation ? pendingViewTransitionEnabled : undefined
             });
           case 25:
           case "end":
@@ -15296,98 +15707,139 @@ function router_createRouter(init) {
     }));
     return _startRedirectNavigation.apply(this, arguments);
   }
-  function callDataStrategy(_x39, _x40, _x41, _x42) {
+  function callDataStrategy(_x46, _x47, _x48, _x49, _x50, _x51) {
     return _callDataStrategy.apply(this, arguments);
   }
   function _callDataStrategy() {
-    _callDataStrategy = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(type, request, matchesToLoad, matches) {
-      var results;
+    _callDataStrategy = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(type, state, request, matchesToLoad, matches, fetcherKey) {
+      var results, dataResults, _i, _Object$entries, _Object$entries$_i, routeId, result, response;
       return _regeneratorRuntime().wrap(function _callee9$(_context9) {
         while (1) switch (_context9.prev = _context9.next) {
           case 0:
-            _context9.prev = 0;
-            _context9.next = 3;
-            return callDataStrategyImpl(dataStrategyImpl, type, request, matchesToLoad, matches, manifest, mapRouteProperties);
-          case 3:
+            dataResults = {};
+            _context9.prev = 1;
+            _context9.next = 4;
+            return callDataStrategyImpl(dataStrategyImpl, type, state, request, matchesToLoad, matches, fetcherKey, manifest, mapRouteProperties);
+          case 4:
             results = _context9.sent;
-            _context9.next = 6;
-            return Promise.all(results.map(function (result, i) {
-              if (isRedirectHandlerResult(result)) {
-                var response = result.result;
-                return {
-                  type: ResultType.redirect,
-                  response: normalizeRelativeRoutingRedirectResponse(response, request, matchesToLoad[i].route.id, matches, basename, future.v7_relativeSplatPath)
-                };
-              }
-              return convertHandlerResultToDataResult(result);
-            }));
-          case 6:
-            return _context9.abrupt("return", _context9.sent);
-          case 9:
-            _context9.prev = 9;
-            _context9.t0 = _context9["catch"](0);
-            return _context9.abrupt("return", matchesToLoad.map(function () {
-              return {
+            _context9.next = 11;
+            break;
+          case 7:
+            _context9.prev = 7;
+            _context9.t0 = _context9["catch"](1);
+            // If the outer dataStrategy method throws, just return the error for all
+            // matches - and it'll naturally bubble to the root
+            matchesToLoad.forEach(function (m) {
+              dataResults[m.route.id] = {
                 type: ResultType.error,
                 error: _context9.t0
               };
-            }));
+            });
+            return _context9.abrupt("return", dataResults);
+          case 11:
+            _i = 0, _Object$entries = Object.entries(results);
           case 12:
+            if (!(_i < _Object$entries.length)) {
+              _context9.next = 25;
+              break;
+            }
+            _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), routeId = _Object$entries$_i[0], result = _Object$entries$_i[1];
+            if (!isRedirectDataStrategyResultResult(result)) {
+              _context9.next = 19;
+              break;
+            }
+            response = result.result;
+            dataResults[routeId] = {
+              type: ResultType.redirect,
+              response: normalizeRelativeRoutingRedirectResponse(response, request, routeId, matches, basename, future.v7_relativeSplatPath)
+            };
+            _context9.next = 22;
+            break;
+          case 19:
+            _context9.next = 21;
+            return convertDataStrategyResultToDataResult(result);
+          case 21:
+            dataResults[routeId] = _context9.sent;
+          case 22:
+            _i++;
+            _context9.next = 12;
+            break;
+          case 25:
+            return _context9.abrupt("return", dataResults);
+          case 26:
           case "end":
             return _context9.stop();
         }
-      }, _callee9, null, [[0, 9]]);
+      }, _callee9, null, [[1, 7]]);
     }));
     return _callDataStrategy.apply(this, arguments);
   }
-  function callLoadersAndMaybeResolveData(_x43, _x44, _x45, _x46, _x47) {
+  function callLoadersAndMaybeResolveData(_x52, _x53, _x54, _x55, _x56) {
     return _callLoadersAndMaybeResolveData.apply(this, arguments);
   }
   function _callLoadersAndMaybeResolveData() {
-    _callLoadersAndMaybeResolveData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(currentMatches, matches, matchesToLoad, fetchersToLoad, request) {
-      var _yield$Promise$all, _yield$Promise$all2, loaderResults, fetcherResults;
-      return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-        while (1) switch (_context10.prev = _context10.next) {
+    _callLoadersAndMaybeResolveData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(state, matches, matchesToLoad, fetchersToLoad, request) {
+      var currentMatches, loaderResultsPromise, fetcherResultsPromise, loaderResults, fetcherResults;
+      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+        while (1) switch (_context11.prev = _context11.next) {
           case 0:
-            _context10.next = 2;
-            return Promise.all([matchesToLoad.length ? callDataStrategy("loader", request, matchesToLoad, matches) : []].concat(_toConsumableArray(fetchersToLoad.map(function (f) {
-              if (f.matches && f.match && f.controller) {
-                var fetcherRequest = createClientSideRequest(init.history, f.path, f.controller.signal);
-                return callDataStrategy("loader", fetcherRequest, [f.match], f.matches).then(function (r) {
-                  return r[0];
-                });
-              } else {
-                return Promise.resolve({
-                  type: ResultType.error,
-                  error: getInternalRouterError(404, {
-                    pathname: f.path
-                  })
-                });
-              }
-            }))));
-          case 2:
-            _yield$Promise$all = _context10.sent;
-            _yield$Promise$all2 = _toArray(_yield$Promise$all);
-            loaderResults = _yield$Promise$all2[0];
-            fetcherResults = _yield$Promise$all2.slice(1);
-            _context10.next = 8;
-            return Promise.all([resolveDeferredResults(currentMatches, matchesToLoad, loaderResults, loaderResults.map(function () {
-              return request.signal;
-            }), false, state.loaderData), resolveDeferredResults(currentMatches, fetchersToLoad.map(function (f) {
-              return f.match;
-            }), fetcherResults, fetchersToLoad.map(function (f) {
-              return f.controller ? f.controller.signal : null;
-            }), true)]);
+            currentMatches = state.matches; // Kick off loaders and fetchers in parallel
+            loaderResultsPromise = callDataStrategy("loader", state, request, matchesToLoad, matches, null);
+            fetcherResultsPromise = Promise.all(fetchersToLoad.map( /*#__PURE__*/function () {
+              var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(f) {
+                var results, result;
+                return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+                  while (1) switch (_context10.prev = _context10.next) {
+                    case 0:
+                      if (!(f.matches && f.match && f.controller)) {
+                        _context10.next = 8;
+                        break;
+                      }
+                      _context10.next = 3;
+                      return callDataStrategy("loader", state, createClientSideRequest(init.history, f.path, f.controller.signal), [f.match], f.matches, f.key);
+                    case 3:
+                      results = _context10.sent;
+                      result = results[f.match.route.id]; // Fetcher results are keyed by fetcher key from here on out, not routeId
+                      return _context10.abrupt("return", _defineProperty({}, f.key, result));
+                    case 8:
+                      return _context10.abrupt("return", Promise.resolve(_defineProperty({}, f.key, {
+                        type: ResultType.error,
+                        error: getInternalRouterError(404, {
+                          pathname: f.path
+                        })
+                      })));
+                    case 9:
+                    case "end":
+                      return _context10.stop();
+                  }
+                }, _callee10);
+              }));
+              return function (_x60) {
+                return _ref12.apply(this, arguments);
+              };
+            }()));
+            _context11.next = 5;
+            return loaderResultsPromise;
+          case 5:
+            loaderResults = _context11.sent;
+            _context11.next = 8;
+            return fetcherResultsPromise;
           case 8:
-            return _context10.abrupt("return", {
+            fetcherResults = _context11.sent.reduce(function (acc, r) {
+              return Object.assign(acc, r);
+            }, {});
+            _context11.next = 11;
+            return Promise.all([resolveNavigationDeferredResults(matches, loaderResults, request.signal, currentMatches, state.loaderData), resolveFetcherDeferredResults(matches, fetcherResults, fetchersToLoad)]);
+          case 11:
+            return _context11.abrupt("return", {
               loaderResults: loaderResults,
               fetcherResults: fetcherResults
             });
-          case 9:
+          case 12:
           case "end":
-            return _context10.stop();
+            return _context11.stop();
         }
-      }, _callee10);
+      }, _callee11);
     }));
     return _callLoadersAndMaybeResolveData.apply(this, arguments);
   }
@@ -15401,9 +15853,9 @@ function router_createRouter(init) {
     // Abort in-flight fetcher loads
     fetchLoadMatches.forEach(function (_, key) {
       if (fetchControllers.has(key)) {
-        cancelledFetcherLoads.push(key);
-        abortFetcher(key);
+        cancelledFetcherLoads.add(key);
       }
+      abortFetcher(key);
     });
   }
   function updateFetcherState(key, fetcher, opts) {
@@ -15453,6 +15905,7 @@ function router_createRouter(init) {
     fetchReloadIds["delete"](key);
     fetchRedirectIds["delete"](key);
     deletedFetchers["delete"](key);
+    cancelledFetcherLoads["delete"](key);
     state.fetchers["delete"](key);
   }
   function deleteFetcherAndUpdateState(key) {
@@ -15473,9 +15926,10 @@ function router_createRouter(init) {
   }
   function abortFetcher(key) {
     var controller = fetchControllers.get(key);
-    invariant(controller, "Expected fetch controller: " + key);
-    controller.abort();
-    fetchControllers["delete"](key);
+    if (controller) {
+      controller.abort();
+      fetchControllers["delete"](key);
+    }
   }
   function markFetchersDone(keys) {
     var _iterator2 = _createForOfIteratorHelper(keys),
@@ -15567,10 +16021,10 @@ function router_createRouter(init) {
       blockers: blockers
     });
   }
-  function shouldBlockNavigation(_ref4) {
-    var currentLocation = _ref4.currentLocation,
-      nextLocation = _ref4.nextLocation,
-      historyAction = _ref4.historyAction;
+  function shouldBlockNavigation(_ref2) {
+    var currentLocation = _ref2.currentLocation,
+      nextLocation = _ref2.nextLocation,
+      historyAction = _ref2.historyAction;
     if (blockerFunctions.size === 0) {
       return;
     }
@@ -15598,6 +16052,22 @@ function router_createRouter(init) {
     })) {
       return blockerKey;
     }
+  }
+  function handleNavigational404(pathname) {
+    var error = getInternalRouterError(404, {
+      pathname: pathname
+    });
+    var routesToUse = inFlightDataRoutes || dataRoutes;
+    var _getShortCircuitMatch2 = getShortCircuitMatches(routesToUse),
+      matches = _getShortCircuitMatch2.matches,
+      route = _getShortCircuitMatch2.route;
+    // Cancel all pending deferred on 404s since we don't keep any routes
+    cancelActiveDeferreds();
+    return {
+      notFoundMatches: matches,
+      route: route,
+      error: error
+    };
   }
   function cancelActiveDeferreds(predicate) {
     var cancelledRouteIds = [];
@@ -15662,9 +16132,176 @@ function router_createRouter(init) {
     }
     return null;
   }
+  function checkFogOfWar(matches, routesToUse, pathname) {
+    if (patchRoutesOnNavigationImpl) {
+      if (!matches) {
+        var fogMatches = matchRoutesImpl(routesToUse, pathname, basename, true);
+        return {
+          active: true,
+          matches: fogMatches || []
+        };
+      } else {
+        if (Object.keys(matches[0].params).length > 0) {
+          // If we matched a dynamic param or a splat, it might only be because
+          // we haven't yet discovered other routes that would match with a
+          // higher score.  Call patchRoutesOnNavigation just to be sure
+          var partialMatches = matchRoutesImpl(routesToUse, pathname, basename, true);
+          return {
+            active: true,
+            matches: partialMatches
+          };
+        }
+      }
+    }
+    return {
+      active: false,
+      matches: null
+    };
+  }
+  function discoverRoutes(_x57, _x58, _x59) {
+    return _discoverRoutes.apply(this, arguments);
+  }
+  function _discoverRoutes() {
+    _discoverRoutes = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(matches, pathname, signal) {
+      var partialMatches, _loop, _ret;
+      return _regeneratorRuntime().wrap(function _callee12$(_context13) {
+        while (1) switch (_context13.prev = _context13.next) {
+          case 0:
+            if (patchRoutesOnNavigationImpl) {
+              _context13.next = 2;
+              break;
+            }
+            return _context13.abrupt("return", {
+              type: "success",
+              matches: matches
+            });
+          case 2:
+            partialMatches = matches;
+            _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
+              var isNonHMR, routesToUse, localManifest, newMatches, newPartialMatches;
+              return _regeneratorRuntime().wrap(function _loop$(_context12) {
+                while (1) switch (_context12.prev = _context12.next) {
+                  case 0:
+                    isNonHMR = inFlightDataRoutes == null;
+                    routesToUse = inFlightDataRoutes || dataRoutes;
+                    localManifest = manifest;
+                    _context12.prev = 3;
+                    _context12.next = 6;
+                    return patchRoutesOnNavigationImpl({
+                      path: pathname,
+                      matches: partialMatches,
+                      patch: function patch(routeId, children) {
+                        if (signal.aborted) return;
+                        patchRoutesImpl(routeId, children, routesToUse, localManifest, mapRouteProperties);
+                      }
+                    });
+                  case 6:
+                    _context12.next = 11;
+                    break;
+                  case 8:
+                    _context12.prev = 8;
+                    _context12.t0 = _context12["catch"](3);
+                    return _context12.abrupt("return", {
+                      v: {
+                        type: "error",
+                        error: _context12.t0,
+                        partialMatches: partialMatches
+                      }
+                    });
+                  case 11:
+                    _context12.prev = 11;
+                    // If we are not in the middle of an HMR revalidation and we changed the
+                    // routes, provide a new identity so when we `updateState` at the end of
+                    // this navigation/fetch `router.routes` will be a new identity and
+                    // trigger a re-run of memoized `router.routes` dependencies.
+                    // HMR will already update the identity and reflow when it lands
+                    // `inFlightDataRoutes` in `completeNavigation`
+                    if (isNonHMR && !signal.aborted) {
+                      dataRoutes = _toConsumableArray(dataRoutes);
+                    }
+                    return _context12.finish(11);
+                  case 14:
+                    if (!signal.aborted) {
+                      _context12.next = 16;
+                      break;
+                    }
+                    return _context12.abrupt("return", {
+                      v: {
+                        type: "aborted"
+                      }
+                    });
+                  case 16:
+                    newMatches = matchRoutes(routesToUse, pathname, basename);
+                    if (!newMatches) {
+                      _context12.next = 19;
+                      break;
+                    }
+                    return _context12.abrupt("return", {
+                      v: {
+                        type: "success",
+                        matches: newMatches
+                      }
+                    });
+                  case 19:
+                    newPartialMatches = matchRoutesImpl(routesToUse, pathname, basename, true); // Avoid loops if the second pass results in the same partial matches
+                    if (!(!newPartialMatches || partialMatches.length === newPartialMatches.length && partialMatches.every(function (m, i) {
+                      return m.route.id === newPartialMatches[i].route.id;
+                    }))) {
+                      _context12.next = 22;
+                      break;
+                    }
+                    return _context12.abrupt("return", {
+                      v: {
+                        type: "success",
+                        matches: null
+                      }
+                    });
+                  case 22:
+                    partialMatches = newPartialMatches;
+                  case 23:
+                  case "end":
+                    return _context12.stop();
+                }
+              }, _loop, null, [[3, 8, 11, 14]]);
+            });
+          case 4:
+            if (false) {}
+            return _context13.delegateYield(_loop(), "t0", 6);
+          case 6:
+            _ret = _context13.t0;
+            if (!_ret) {
+              _context13.next = 9;
+              break;
+            }
+            return _context13.abrupt("return", _ret.v);
+          case 9:
+            _context13.next = 4;
+            break;
+          case 11:
+          case "end":
+            return _context13.stop();
+        }
+      }, _callee12);
+    }));
+    return _discoverRoutes.apply(this, arguments);
+  }
   function _internalSetRoutes(newRoutes) {
     manifest = {};
     inFlightDataRoutes = convertRoutesToDataRoutes(newRoutes, mapRouteProperties, undefined, manifest);
+  }
+  function patchRoutes(routeId, children) {
+    var isNonHMR = inFlightDataRoutes == null;
+    var routesToUse = inFlightDataRoutes || dataRoutes;
+    patchRoutesImpl(routeId, children, routesToUse, manifest, mapRouteProperties);
+    // If we are not in the middle of an HMR revalidation and we changed the
+    // routes, provide a new identity and trigger a reflow via `updateState`
+    // to re-run memoized `router.routes` dependencies.
+    // HMR will already update the identity and reflow when it lands
+    // `inFlightDataRoutes` in `completeNavigation`
+    if (isNonHMR) {
+      dataRoutes = _toConsumableArray(dataRoutes);
+      updateState({});
+    }
   }
   router = {
     get basename() {
@@ -15701,6 +16338,7 @@ function router_createRouter(init) {
     dispose: dispose,
     getBlocker: getBlocker,
     deleteBlocker: deleteBlocker,
+    patchRoutes: patchRoutes,
     _internalFetchControllers: fetchControllers,
     _internalActiveDeferreds: activeDeferreds,
     // TODO: Remove setRoutes, it's temporary to avoid dealing with
@@ -15764,7 +16402,7 @@ function createStaticHandler(routes, opts) {
    *   where the client will handle the bubbling and we may need to return data
    *   for the handling route
    */
-  function query(_x48, _x49) {
+  function query(_x61, _x62) {
     return _query.apply(this, arguments);
   }
   /**
@@ -15794,25 +16432,25 @@ function createStaticHandler(routes, opts) {
    *    to actions/loaders in the `context` parameter
    */
   function _query() {
-    _query = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(request, _temp3) {
-      var _ref14, requestContext, skipLoaderErrorBubbling, unstable_dataStrategy, url, method, location, matches, error, _getShortCircuitMatch3, methodNotAllowedMatches, route, _error3, _getShortCircuitMatch4, notFoundMatches, _route2, result;
-      return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-        while (1) switch (_context11.prev = _context11.next) {
+    _query = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(request, _temp3) {
+      var _ref14, requestContext, skipLoaderErrorBubbling, dataStrategy, url, method, location, matches, error, _getShortCircuitMatch3, methodNotAllowedMatches, route, _error5, _getShortCircuitMatch4, notFoundMatches, _route4, result;
+      return _regeneratorRuntime().wrap(function _callee13$(_context14) {
+        while (1) switch (_context14.prev = _context14.next) {
           case 0:
-            _ref14 = _temp3 === void 0 ? {} : _temp3, requestContext = _ref14.requestContext, skipLoaderErrorBubbling = _ref14.skipLoaderErrorBubbling, unstable_dataStrategy = _ref14.unstable_dataStrategy;
+            _ref14 = _temp3 === void 0 ? {} : _temp3, requestContext = _ref14.requestContext, skipLoaderErrorBubbling = _ref14.skipLoaderErrorBubbling, dataStrategy = _ref14.dataStrategy;
             url = new URL(request.url);
             method = request.method;
             location = createLocation("", createPath(url), null, "default");
             matches = matchRoutes(dataRoutes, location, basename); // SSR supports HEAD requests while SPA doesn't
             if (!(!isValidMethod(method) && method !== "HEAD")) {
-              _context11.next = 11;
+              _context14.next = 11;
               break;
             }
             error = getInternalRouterError(405, {
               method: method
             });
             _getShortCircuitMatch3 = getShortCircuitMatches(dataRoutes), methodNotAllowedMatches = _getShortCircuitMatch3.matches, route = _getShortCircuitMatch3.route;
-            return _context11.abrupt("return", {
+            return _context14.abrupt("return", {
               basename: basename,
               location: location,
               matches: methodNotAllowedMatches,
@@ -15826,64 +16464,64 @@ function createStaticHandler(routes, opts) {
             });
           case 11:
             if (matches) {
-              _context11.next = 15;
+              _context14.next = 15;
               break;
             }
-            _error3 = getInternalRouterError(404, {
+            _error5 = getInternalRouterError(404, {
               pathname: location.pathname
             });
-            _getShortCircuitMatch4 = getShortCircuitMatches(dataRoutes), notFoundMatches = _getShortCircuitMatch4.matches, _route2 = _getShortCircuitMatch4.route;
-            return _context11.abrupt("return", {
+            _getShortCircuitMatch4 = getShortCircuitMatches(dataRoutes), notFoundMatches = _getShortCircuitMatch4.matches, _route4 = _getShortCircuitMatch4.route;
+            return _context14.abrupt("return", {
               basename: basename,
               location: location,
               matches: notFoundMatches,
               loaderData: {},
               actionData: null,
-              errors: _defineProperty({}, _route2.id, _error3),
-              statusCode: _error3.status,
+              errors: _defineProperty({}, _route4.id, _error5),
+              statusCode: _error5.status,
               loaderHeaders: {},
               actionHeaders: {},
               activeDeferreds: null
             });
           case 15:
-            _context11.next = 17;
-            return queryImpl(request, location, matches, requestContext, unstable_dataStrategy || null, skipLoaderErrorBubbling === true, null);
+            _context14.next = 17;
+            return queryImpl(request, location, matches, requestContext, dataStrategy || null, skipLoaderErrorBubbling === true, null);
           case 17:
-            result = _context11.sent;
+            result = _context14.sent;
             if (!isResponse(result)) {
-              _context11.next = 20;
+              _context14.next = 20;
               break;
             }
-            return _context11.abrupt("return", result);
+            return _context14.abrupt("return", result);
           case 20:
-            return _context11.abrupt("return", router_extends({
+            return _context14.abrupt("return", router_extends({
               location: location,
               basename: basename
             }, result));
           case 21:
           case "end":
-            return _context11.stop();
+            return _context14.stop();
         }
-      }, _callee11);
+      }, _callee13);
     }));
     return _query.apply(this, arguments);
   }
-  function queryRoute(_x50, _x51) {
+  function queryRoute(_x63, _x64) {
     return _queryRoute.apply(this, arguments);
   }
   function _queryRoute() {
-    _queryRoute = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(request, _temp4) {
-      var _ref15, routeId, requestContext, url, method, location, matches, match, result, error, _result$activeDeferre, data;
-      return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-        while (1) switch (_context12.prev = _context12.next) {
+    _queryRoute = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(request, _temp4) {
+      var _ref15, routeId, requestContext, dataStrategy, url, method, location, matches, match, result, error, _result$activeDeferre, _data;
+      return _regeneratorRuntime().wrap(function _callee14$(_context15) {
+        while (1) switch (_context15.prev = _context15.next) {
           case 0:
-            _ref15 = _temp4 === void 0 ? {} : _temp4, routeId = _ref15.routeId, requestContext = _ref15.requestContext;
+            _ref15 = _temp4 === void 0 ? {} : _temp4, routeId = _ref15.routeId, requestContext = _ref15.requestContext, dataStrategy = _ref15.dataStrategy;
             url = new URL(request.url);
             method = request.method;
             location = createLocation("", createPath(url), null, "default");
             matches = matchRoutes(dataRoutes, location, basename); // SSR supports HEAD requests while SPA doesn't
             if (!(!isValidMethod(method) && method !== "HEAD" && method !== "OPTIONS")) {
-              _context12.next = 9;
+              _context15.next = 9;
               break;
             }
             throw getInternalRouterError(405, {
@@ -15891,7 +16529,7 @@ function createStaticHandler(routes, opts) {
             });
           case 9:
             if (matches) {
-              _context12.next = 11;
+              _context15.next = 11;
               break;
             }
             throw getInternalRouterError(404, {
@@ -15902,7 +16540,7 @@ function createStaticHandler(routes, opts) {
               return m.route.id === routeId;
             }) : getTargetMatch(matches, location);
             if (!(routeId && !match)) {
-              _context12.next = 16;
+              _context15.next = 16;
               break;
             }
             throw getInternalRouterError(403, {
@@ -15911,125 +16549,125 @@ function createStaticHandler(routes, opts) {
             });
           case 16:
             if (match) {
-              _context12.next = 18;
+              _context15.next = 18;
               break;
             }
             throw getInternalRouterError(404, {
               pathname: location.pathname
             });
           case 18:
-            _context12.next = 20;
-            return queryImpl(request, location, matches, requestContext, null, false, match);
+            _context15.next = 20;
+            return queryImpl(request, location, matches, requestContext, dataStrategy || null, false, match);
           case 20:
-            result = _context12.sent;
+            result = _context15.sent;
             if (!isResponse(result)) {
-              _context12.next = 23;
+              _context15.next = 23;
               break;
             }
-            return _context12.abrupt("return", result);
+            return _context15.abrupt("return", result);
           case 23:
             error = result.errors ? Object.values(result.errors)[0] : undefined;
             if (!(error !== undefined)) {
-              _context12.next = 26;
+              _context15.next = 26;
               break;
             }
             throw error;
           case 26:
             if (!result.actionData) {
-              _context12.next = 28;
+              _context15.next = 28;
               break;
             }
-            return _context12.abrupt("return", Object.values(result.actionData)[0]);
+            return _context15.abrupt("return", Object.values(result.actionData)[0]);
           case 28:
             if (!result.loaderData) {
-              _context12.next = 32;
+              _context15.next = 32;
               break;
             }
-            data = Object.values(result.loaderData)[0];
+            _data = Object.values(result.loaderData)[0];
             if ((_result$activeDeferre = result.activeDeferreds) != null && _result$activeDeferre[match.route.id]) {
-              data[UNSAFE_DEFERRED_SYMBOL] = result.activeDeferreds[match.route.id];
+              _data[UNSAFE_DEFERRED_SYMBOL] = result.activeDeferreds[match.route.id];
             }
-            return _context12.abrupt("return", data);
+            return _context15.abrupt("return", _data);
           case 32:
-            return _context12.abrupt("return", undefined);
+            return _context15.abrupt("return", undefined);
           case 33:
           case "end":
-            return _context12.stop();
+            return _context15.stop();
         }
-      }, _callee12);
+      }, _callee14);
     }));
     return _queryRoute.apply(this, arguments);
   }
-  function queryImpl(_x52, _x53, _x54, _x55, _x56, _x57, _x58) {
+  function queryImpl(_x65, _x66, _x67, _x68, _x69, _x70, _x71) {
     return _queryImpl.apply(this, arguments);
   }
   function _queryImpl() {
-    _queryImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(request, location, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch) {
+    _queryImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(request, location, matches, requestContext, dataStrategy, skipLoaderErrorBubbling, routeMatch) {
       var _result, result;
-      return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-        while (1) switch (_context13.prev = _context13.next) {
+      return _regeneratorRuntime().wrap(function _callee15$(_context16) {
+        while (1) switch (_context16.prev = _context16.next) {
           case 0:
             invariant(request.signal, "query()/queryRoute() requests must contain an AbortController signal");
-            _context13.prev = 1;
+            _context16.prev = 1;
             if (!isMutationMethod(request.method.toLowerCase())) {
-              _context13.next = 7;
+              _context16.next = 7;
               break;
             }
-            _context13.next = 5;
-            return submit(request, matches, routeMatch || getTargetMatch(matches, location), requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch != null);
+            _context16.next = 5;
+            return submit(request, matches, routeMatch || getTargetMatch(matches, location), requestContext, dataStrategy, skipLoaderErrorBubbling, routeMatch != null);
           case 5:
-            _result = _context13.sent;
-            return _context13.abrupt("return", _result);
+            _result = _context16.sent;
+            return _context16.abrupt("return", _result);
           case 7:
-            _context13.next = 9;
-            return loadRouteData(request, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch);
+            _context16.next = 9;
+            return loadRouteData(request, matches, requestContext, dataStrategy, skipLoaderErrorBubbling, routeMatch);
           case 9:
-            result = _context13.sent;
-            return _context13.abrupt("return", isResponse(result) ? result : router_extends({}, result, {
+            result = _context16.sent;
+            return _context16.abrupt("return", isResponse(result) ? result : router_extends({}, result, {
               actionData: null,
               actionHeaders: {}
             }));
           case 13:
-            _context13.prev = 13;
-            _context13.t0 = _context13["catch"](1);
-            if (!(isHandlerResult(_context13.t0) && isResponse(_context13.t0.result))) {
-              _context13.next = 19;
+            _context16.prev = 13;
+            _context16.t0 = _context16["catch"](1);
+            if (!(isDataStrategyResult(_context16.t0) && isResponse(_context16.t0.result))) {
+              _context16.next = 19;
               break;
             }
-            if (!(_context13.t0.type === ResultType.error)) {
-              _context13.next = 18;
+            if (!(_context16.t0.type === ResultType.error)) {
+              _context16.next = 18;
               break;
             }
-            throw _context13.t0.result;
+            throw _context16.t0.result;
           case 18:
-            return _context13.abrupt("return", _context13.t0.result);
+            return _context16.abrupt("return", _context16.t0.result);
           case 19:
-            if (!isRedirectResponse(_context13.t0)) {
-              _context13.next = 21;
+            if (!isRedirectResponse(_context16.t0)) {
+              _context16.next = 21;
               break;
             }
-            return _context13.abrupt("return", _context13.t0);
+            return _context16.abrupt("return", _context16.t0);
           case 21:
-            throw _context13.t0;
+            throw _context16.t0;
           case 22:
           case "end":
-            return _context13.stop();
+            return _context16.stop();
         }
-      }, _callee13, null, [[1, 13]]);
+      }, _callee15, null, [[1, 13]]);
     }));
     return _queryImpl.apply(this, arguments);
   }
-  function submit(_x59, _x60, _x61, _x62, _x63, _x64, _x65) {
+  function submit(_x72, _x73, _x74, _x75, _x76, _x77, _x78) {
     return _submit.apply(this, arguments);
   }
   function _submit() {
-    _submit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(request, matches, actionMatch, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, isRouteRequest) {
-      var result, error, results, _error4, loaderRequest, boundaryMatch, _context14, context;
-      return _regeneratorRuntime().wrap(function _callee14$(_context15) {
-        while (1) switch (_context15.prev = _context15.next) {
+    _submit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(request, matches, actionMatch, requestContext, dataStrategy, skipLoaderErrorBubbling, isRouteRequest) {
+      var result, error, results, _error6, loaderRequest, boundaryMatch, _context17, context;
+      return _regeneratorRuntime().wrap(function _callee16$(_context18) {
+        while (1) switch (_context18.prev = _context18.next) {
           case 0:
             if (!(!actionMatch.route.action && !actionMatch.route.lazy)) {
-              _context15.next = 7;
+              _context18.next = 7;
               break;
             }
             error = getInternalRouterError(405, {
@@ -16038,7 +16676,7 @@ function createStaticHandler(routes, opts) {
               routeId: actionMatch.route.id
             });
             if (!isRouteRequest) {
-              _context15.next = 4;
+              _context18.next = 4;
               break;
             }
             throw error;
@@ -16047,20 +16685,20 @@ function createStaticHandler(routes, opts) {
               type: ResultType.error,
               error: error
             };
-            _context15.next = 12;
+            _context18.next = 12;
             break;
           case 7:
-            _context15.next = 9;
-            return callDataStrategy("action", request, [actionMatch], matches, isRouteRequest, requestContext, unstable_dataStrategy);
+            _context18.next = 9;
+            return callDataStrategy("action", request, [actionMatch], matches, isRouteRequest, requestContext, dataStrategy);
           case 9:
-            results = _context15.sent;
-            result = results[0];
+            results = _context18.sent;
+            result = results[actionMatch.route.id];
             if (request.signal.aborted) {
               throwStaticHandlerAbortedError(request, isRouteRequest, future);
             }
           case 12:
             if (!isRedirectResult(result)) {
-              _context15.next = 14;
+              _context18.next = 14;
               break;
             }
             throw new Response(null, {
@@ -16071,34 +16709,34 @@ function createStaticHandler(routes, opts) {
             });
           case 14:
             if (!isDeferredResult(result)) {
-              _context15.next = 19;
+              _context18.next = 19;
               break;
             }
-            _error4 = getInternalRouterError(400, {
+            _error6 = getInternalRouterError(400, {
               type: "defer-action"
             });
             if (!isRouteRequest) {
-              _context15.next = 18;
+              _context18.next = 18;
               break;
             }
-            throw _error4;
+            throw _error6;
           case 18:
             result = {
               type: ResultType.error,
-              error: _error4
+              error: _error6
             };
           case 19:
             if (!isRouteRequest) {
-              _context15.next = 23;
+              _context18.next = 23;
               break;
             }
             if (!isErrorResult(result)) {
-              _context15.next = 22;
+              _context18.next = 22;
               break;
             }
             throw result.error;
           case 22:
-            return _context15.abrupt("return", {
+            return _context18.abrupt("return", {
               matches: [actionMatch],
               loaderData: {},
               actionData: _defineProperty({}, actionMatch.route.id, result.data),
@@ -16118,27 +16756,27 @@ function createStaticHandler(routes, opts) {
               signal: request.signal
             });
             if (!isErrorResult(result)) {
-              _context15.next = 30;
+              _context18.next = 30;
               break;
             }
             // Store off the pending error - we use it to determine which loaders
             // to call and will commit it when we complete the navigation
             boundaryMatch = skipLoaderErrorBubbling ? actionMatch : findNearestBoundary(matches, actionMatch.route.id);
-            _context15.next = 28;
-            return loadRouteData(loaderRequest, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, null, [boundaryMatch.route.id, result]);
+            _context18.next = 28;
+            return loadRouteData(loaderRequest, matches, requestContext, dataStrategy, skipLoaderErrorBubbling, null, [boundaryMatch.route.id, result]);
           case 28:
-            _context14 = _context15.sent;
-            return _context15.abrupt("return", router_extends({}, _context14, {
+            _context17 = _context18.sent;
+            return _context18.abrupt("return", router_extends({}, _context17, {
               statusCode: isRouteErrorResponse(result.error) ? result.error.status : result.statusCode != null ? result.statusCode : 500,
               actionData: null,
               actionHeaders: router_extends({}, result.headers ? _defineProperty({}, actionMatch.route.id, result.headers) : {})
             }));
           case 30:
-            _context15.next = 32;
-            return loadRouteData(loaderRequest, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, null);
+            _context18.next = 32;
+            return loadRouteData(loaderRequest, matches, requestContext, dataStrategy, skipLoaderErrorBubbling, null);
           case 32:
-            context = _context15.sent;
-            return _context15.abrupt("return", router_extends({}, context, {
+            context = _context18.sent;
+            return _context18.abrupt("return", router_extends({}, context, {
               actionData: _defineProperty({}, actionMatch.route.id, result.data)
             }, result.statusCode ? {
               statusCode: result.statusCode
@@ -16147,25 +16785,25 @@ function createStaticHandler(routes, opts) {
             }));
           case 34:
           case "end":
-            return _context15.stop();
+            return _context18.stop();
         }
-      }, _callee14);
+      }, _callee16);
     }));
     return _submit.apply(this, arguments);
   }
-  function loadRouteData(_x66, _x67, _x68, _x69, _x70, _x71, _x72) {
+  function loadRouteData(_x79, _x80, _x81, _x82, _x83, _x84, _x85) {
     return _loadRouteData.apply(this, arguments);
   } // Utility wrapper for calling dataStrategy server-side without having to
   // pass around the manifest, mapRouteProperties, etc.
   function _loadRouteData() {
-    _loadRouteData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(request, matches, requestContext, unstable_dataStrategy, skipLoaderErrorBubbling, routeMatch, pendingActionResult) {
+    _loadRouteData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(request, matches, requestContext, dataStrategy, skipLoaderErrorBubbling, routeMatch, pendingActionResult) {
       var isRouteRequest, requestMatches, matchesToLoad, results, activeDeferreds, context, executedLoaders;
-      return _regeneratorRuntime().wrap(function _callee15$(_context16) {
-        while (1) switch (_context16.prev = _context16.next) {
+      return _regeneratorRuntime().wrap(function _callee17$(_context19) {
+        while (1) switch (_context19.prev = _context19.next) {
           case 0:
             isRouteRequest = routeMatch != null; // Short circuit if we have no loaders to run (queryRoute())
             if (!(isRouteRequest && !(routeMatch != null && routeMatch.route.loader) && !(routeMatch != null && routeMatch.route.lazy))) {
-              _context16.next = 3;
+              _context19.next = 3;
               break;
             }
             throw getInternalRouterError(400, {
@@ -16179,10 +16817,10 @@ function createStaticHandler(routes, opts) {
               return m.route.loader || m.route.lazy;
             }); // Short circuit if we have no loaders to run (query())
             if (!(matchesToLoad.length === 0)) {
-              _context16.next = 7;
+              _context19.next = 7;
               break;
             }
-            return _context16.abrupt("return", {
+            return _context19.abrupt("return", {
               matches: matches,
               // Add a null for all matched routes for proper revalidation on the client
               loaderData: matches.reduce(function (acc, m) {
@@ -16194,16 +16832,16 @@ function createStaticHandler(routes, opts) {
               activeDeferreds: null
             });
           case 7:
-            _context16.next = 9;
-            return callDataStrategy("loader", request, matchesToLoad, matches, isRouteRequest, requestContext, unstable_dataStrategy);
+            _context19.next = 9;
+            return callDataStrategy("loader", request, matchesToLoad, matches, isRouteRequest, requestContext, dataStrategy);
           case 9:
-            results = _context16.sent;
+            results = _context19.sent;
             if (request.signal.aborted) {
               throwStaticHandlerAbortedError(request, isRouteRequest, future);
             }
             // Process and commit output from loaders
             activeDeferreds = new Map();
-            context = processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling); // Add a null for any non-loader matches for proper revalidation on the client
+            context = processRouteLoaderData(matches, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling); // Add a null for any non-loader matches for proper revalidation on the client
             executedLoaders = new Set(matchesToLoad.map(function (match) {
               return match.route.id;
             }));
@@ -16212,52 +16850,80 @@ function createStaticHandler(routes, opts) {
                 context.loaderData[match.route.id] = null;
               }
             });
-            return _context16.abrupt("return", router_extends({}, context, {
+            return _context19.abrupt("return", router_extends({}, context, {
               matches: matches,
               activeDeferreds: activeDeferreds.size > 0 ? Object.fromEntries(activeDeferreds.entries()) : null
             }));
           case 16:
           case "end":
-            return _context16.stop();
+            return _context19.stop();
         }
-      }, _callee15);
+      }, _callee17);
     }));
     return _loadRouteData.apply(this, arguments);
   }
-  function callDataStrategy(_x73, _x74, _x75, _x76, _x77, _x78, _x79) {
+  function callDataStrategy(_x86, _x87, _x88, _x89, _x90, _x91, _x92) {
     return _callDataStrategy2.apply(this, arguments);
   }
   function _callDataStrategy2() {
-    _callDataStrategy2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(type, request, matchesToLoad, matches, isRouteRequest, requestContext, unstable_dataStrategy) {
-      var results;
-      return _regeneratorRuntime().wrap(function _callee16$(_context17) {
-        while (1) switch (_context17.prev = _context17.next) {
+    _callDataStrategy2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee19(type, request, matchesToLoad, matches, isRouteRequest, requestContext, dataStrategy) {
+      var results, dataResults;
+      return _regeneratorRuntime().wrap(function _callee19$(_context21) {
+        while (1) switch (_context21.prev = _context21.next) {
           case 0:
-            _context17.next = 2;
-            return callDataStrategyImpl(unstable_dataStrategy || defaultDataStrategy, type, request, matchesToLoad, matches, manifest, mapRouteProperties, requestContext);
+            _context21.next = 2;
+            return callDataStrategyImpl(dataStrategy || defaultDataStrategy, type, null, request, matchesToLoad, matches, null, manifest, mapRouteProperties, requestContext);
           case 2:
-            results = _context17.sent;
-            _context17.next = 5;
-            return Promise.all(results.map(function (result, i) {
-              if (isRedirectHandlerResult(result)) {
-                var response = result.result;
-                // Throw redirects and let the server handle them with an HTTP redirect
-                throw normalizeRelativeRoutingRedirectResponse(response, request, matchesToLoad[i].route.id, matches, basename, future.v7_relativeSplatPath);
-              }
-              if (isResponse(result.result) && isRouteRequest) {
-                // For SSR single-route requests, we want to hand Responses back
-                // directly without unwrapping
-                throw result;
-              }
-              return convertHandlerResultToDataResult(result);
-            }));
-          case 5:
-            return _context17.abrupt("return", _context17.sent);
+            results = _context21.sent;
+            dataResults = {};
+            _context21.next = 6;
+            return Promise.all(matches.map( /*#__PURE__*/function () {
+              var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(match) {
+                var result, response;
+                return _regeneratorRuntime().wrap(function _callee18$(_context20) {
+                  while (1) switch (_context20.prev = _context20.next) {
+                    case 0:
+                      if (match.route.id in results) {
+                        _context20.next = 2;
+                        break;
+                      }
+                      return _context20.abrupt("return");
+                    case 2:
+                      result = results[match.route.id];
+                      if (!isRedirectDataStrategyResultResult(result)) {
+                        _context20.next = 6;
+                        break;
+                      }
+                      response = result.result; // Throw redirects and let the server handle them with an HTTP redirect
+                      throw normalizeRelativeRoutingRedirectResponse(response, request, match.route.id, matches, basename, future.v7_relativeSplatPath);
+                    case 6:
+                      if (!(isResponse(result.result) && isRouteRequest)) {
+                        _context20.next = 8;
+                        break;
+                      }
+                      throw result;
+                    case 8:
+                      _context20.next = 10;
+                      return convertDataStrategyResultToDataResult(result);
+                    case 10:
+                      dataResults[match.route.id] = _context20.sent;
+                    case 11:
+                    case "end":
+                      return _context20.stop();
+                  }
+                }, _callee18);
+              }));
+              return function (_x93) {
+                return _ref19.apply(this, arguments);
+              };
+            }()));
           case 6:
+            return _context21.abrupt("return", dataResults);
+          case 7:
           case "end":
-            return _context17.stop();
+            return _context21.stop();
         }
-      }, _callee16);
+      }, _callee19);
     }));
     return _callDataStrategy2.apply(this, arguments);
   }
@@ -16328,9 +16994,25 @@ function normalizeTo(location, matches, basename, prependBasename, to, v7_relati
     path.search = location.search;
     path.hash = location.hash;
   }
-  // Add an ?index param for matched index routes if we don't already have one
-  if ((to == null || to === "" || to === ".") && activeRouteMatch && activeRouteMatch.route.index && !hasNakedIndexQuery(path.search)) {
-    path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
+  // Account for `?index` params when routing to the current location
+  if ((to == null || to === "" || to === ".") && activeRouteMatch) {
+    var nakedIndex = hasNakedIndexQuery(path.search);
+    if (activeRouteMatch.route.index && !nakedIndex) {
+      // Add one when we're targeting an index route
+      path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
+    } else if (!activeRouteMatch.route.index && nakedIndex) {
+      // Remove existing ones when we're not
+      var params = new URLSearchParams(path.search);
+      var indexValues = params.getAll("index");
+      params["delete"]("index");
+      indexValues.filter(function (v) {
+        return v;
+      }).forEach(function (v) {
+        return params.append("index", v);
+      });
+      var qs = params.toString();
+      path.search = qs ? "?" + qs : "";
+    }
   }
   // If we're operating within a basename, prepend it to the pathname.  If
   // this is a root navigation, then just use the raw basename which allows
@@ -16378,10 +17060,10 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
       }
       var text = typeof opts.body === "string" ? opts.body : opts.body instanceof FormData || opts.body instanceof URLSearchParams ?
       // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#plain-text-form-data
-      Array.from(opts.body.entries()).reduce(function (acc, _ref5) {
-        var _ref19 = _slicedToArray(_ref5, 2),
-          name = _ref19[0],
-          value = _ref19[1];
+      Array.from(opts.body.entries()).reduce(function (acc, _ref3) {
+        var _ref20 = _slicedToArray(_ref3, 2),
+          name = _ref20[0],
+          value = _ref20[1];
         return "" + acc + name + "=" + value + "\n";
       }, "") : String(opts.body);
       return {
@@ -16469,27 +17151,38 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
     submission: submission
   };
 }
-// Filter out all routes below any caught error as they aren't going to
+// Filter out all routes at/below any caught error as they aren't going to
 // render so we don't need to load them
-function getLoaderMatchesUntilBoundary(matches, boundaryId) {
-  var boundaryMatches = matches;
-  if (boundaryId) {
-    var index = matches.findIndex(function (m) {
-      return m.route.id === boundaryId;
-    });
-    if (index >= 0) {
-      boundaryMatches = matches.slice(0, index);
-    }
+function getLoaderMatchesUntilBoundary(matches, boundaryId, includeBoundary) {
+  if (includeBoundary === void 0) {
+    includeBoundary = false;
   }
-  return boundaryMatches;
+  var index = matches.findIndex(function (m) {
+    return m.route.id === boundaryId;
+  });
+  if (index >= 0) {
+    return matches.slice(0, includeBoundary ? index + 1 : index);
+  }
+  return matches;
 }
-function getMatchesToLoad(history, state, matches, submission, location, isInitialLoad, skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult) {
+function getMatchesToLoad(history, state, matches, submission, location, initialHydration, skipActionErrorRevalidation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, deletedFetchers, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult) {
   var actionResult = pendingActionResult ? isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : pendingActionResult[1].data : undefined;
   var currentUrl = history.createURL(state.location);
   var nextUrl = history.createURL(location);
   // Pick navigation matches that are net-new or qualify for revalidation
-  var boundaryId = pendingActionResult && isErrorResult(pendingActionResult[1]) ? pendingActionResult[0] : undefined;
-  var boundaryMatches = boundaryId ? getLoaderMatchesUntilBoundary(matches, boundaryId) : matches;
+  var boundaryMatches = matches;
+  if (initialHydration && state.errors) {
+    // On initial hydration, only consider matches up to _and including_ the boundary.
+    // This is inclusive to handle cases where a server loader ran successfully,
+    // a child server loader bubbled up to this route, but this route has
+    // `clientLoader.hydrate` so we want to still run the `clientLoader` so that
+    // we have a complete version of `loaderData`
+    boundaryMatches = getLoaderMatchesUntilBoundary(matches, Object.keys(state.errors)[0], true);
+  } else if (pendingActionResult && isErrorResult(pendingActionResult[1])) {
+    // If an action threw an error, we call loaders up to, but not including the
+    // boundary
+    boundaryMatches = getLoaderMatchesUntilBoundary(matches, pendingActionResult[0]);
+  }
   // Don't revalidate loaders by default after action 4xx/5xx responses
   // when the flag is enabled.  They can still opt-into revalidation via
   // `shouldRevalidate` via `actionResult`
@@ -16504,13 +17197,8 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
     if (route.loader == null) {
       return false;
     }
-    if (isInitialLoad) {
-      if (typeof route.loader !== "function" || route.loader.hydrate) {
-        return true;
-      }
-      return state.loaderData[route.id] === undefined && (
-      // Don't re-run if the loader ran and threw an error
-      !state.errors || state.errors[route.id] === undefined);
+    if (initialHydration) {
+      return shouldLoadRouteOnHydration(route, state.loaderData, state.errors);
     }
     // Always call the loader on new route instances and pending defer cancellations
     if (isNewLoader(state.loaderData, state.matches[index], match) || cancelledDeferredRoutes.some(function (id) {
@@ -16531,7 +17219,7 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
       nextParams: nextRouteMatch.params
     }, submission, {
       actionResult: actionResult,
-      unstable_actionStatus: actionStatus,
+      actionStatus: actionStatus,
       defaultShouldRevalidate: shouldSkipRevalidation ? false :
       // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
       isRevalidationRequired || currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search ||
@@ -16543,11 +17231,11 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
   var revalidatingFetchers = [];
   fetchLoadMatches.forEach(function (f, key) {
     // Don't revalidate:
-    //  - on initial load (shouldn't be any fetchers then anyway)
+    //  - on initial hydration (shouldn't be any fetchers then anyway)
     //  - if fetcher won't be present in the subsequent render
     //    - no longer matches the URL (v7_fetcherPersist=false)
     //    - was unmounted but persisted due to v7_fetcherPersist=true
-    if (isInitialLoad || !matches.some(function (m) {
+    if (initialHydration || !matches.some(function (m) {
       return m.route.id === f.routeId;
     }) || deletedFetchers.has(key)) {
       return;
@@ -16577,8 +17265,9 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
     if (fetchRedirectIds.has(key)) {
       // Never trigger a revalidation of an actively redirecting fetcher
       shouldRevalidate = false;
-    } else if (cancelledFetcherLoads.includes(key)) {
-      // Always revalidate if the fetcher was cancelled
+    } else if (cancelledFetcherLoads.has(key)) {
+      // Always mark for revalidation if the fetcher was cancelled
+      cancelledFetcherLoads["delete"](key);
       shouldRevalidate = true;
     } else if (fetcher && fetcher.state !== "idle" && fetcher.data === undefined) {
       // If the fetcher hasn't ever completed loading yet, then this isn't a
@@ -16595,7 +17284,7 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
         nextParams: matches[matches.length - 1].params
       }, submission, {
         actionResult: actionResult,
-        unstable_actionStatus: actionStatus,
+        actionStatus: actionStatus,
         defaultShouldRevalidate: shouldSkipRevalidation ? false : isRevalidationRequired
       }));
     }
@@ -16611,6 +17300,28 @@ function getMatchesToLoad(history, state, matches, submission, location, isIniti
     }
   });
   return [navigationMatches, revalidatingFetchers];
+}
+function shouldLoadRouteOnHydration(route, loaderData, errors) {
+  // We dunno if we have a loader - gotta find out!
+  if (route.lazy) {
+    return true;
+  }
+  // No loader, nothing to initialize
+  if (!route.loader) {
+    return false;
+  }
+  var hasData = loaderData != null && loaderData[route.id] !== undefined;
+  var hasError = errors != null && errors[route.id] !== undefined;
+  // Don't run if we error'd during SSR
+  if (!hasData && hasError) {
+    return false;
+  }
+  // Explicitly opting-in to running on hydration
+  if (typeof route.loader === "function" && route.loader.hydrate === true) {
+    return true;
+  }
+  // Otherwise, run if we're not yet initialized with anything
+  return !hasData && !hasError;
 }
 function isNewLoader(currentLoaderData, currentMatch, match) {
   var isNew =
@@ -16643,35 +17354,83 @@ function shouldRevalidateLoader(loaderMatch, arg) {
   }
   return arg.defaultShouldRevalidate;
 }
+function patchRoutesImpl(routeId, children, routesToUse, manifest, mapRouteProperties) {
+  var _childrenToPatch2;
+  var _childrenToPatch;
+  var childrenToPatch;
+  if (routeId) {
+    var route = manifest[routeId];
+    invariant(route, "No route found to patch children into: routeId = " + routeId);
+    if (!route.children) {
+      route.children = [];
+    }
+    childrenToPatch = route.children;
+  } else {
+    childrenToPatch = routesToUse;
+  }
+  // Don't patch in routes we already know about so that `patch` is idempotent
+  // to simplify user-land code. This is useful because we re-call the
+  // `patchRoutesOnNavigation` function for matched routes with params.
+  var uniqueChildren = children.filter(function (newRoute) {
+    return !childrenToPatch.some(function (existingRoute) {
+      return isSameRoute(newRoute, existingRoute);
+    });
+  });
+  var newRoutes = convertRoutesToDataRoutes(uniqueChildren, mapRouteProperties, [routeId || "_", "patch", String(((_childrenToPatch = childrenToPatch) == null ? void 0 : _childrenToPatch.length) || "0")], manifest);
+  (_childrenToPatch2 = childrenToPatch).push.apply(_childrenToPatch2, _toConsumableArray(newRoutes));
+}
+function isSameRoute(newRoute, existingRoute) {
+  // Most optimal check is by id
+  if ("id" in newRoute && "id" in existingRoute && newRoute.id === existingRoute.id) {
+    return true;
+  }
+  // Second is by pathing differences
+  if (!(newRoute.index === existingRoute.index && newRoute.path === existingRoute.path && newRoute.caseSensitive === existingRoute.caseSensitive)) {
+    return false;
+  }
+  // Pathless layout routes are trickier since we need to check children.
+  // If they have no children then they're the same as far as we can tell
+  if ((!newRoute.children || newRoute.children.length === 0) && (!existingRoute.children || existingRoute.children.length === 0)) {
+    return true;
+  }
+  // Otherwise, we look to see if every child in the new route is already
+  // represented in the existing route's children
+  return newRoute.children.every(function (aChild, i) {
+    var _existingRoute$childr;
+    return (_existingRoute$childr = existingRoute.children) == null ? void 0 : _existingRoute$childr.some(function (bChild) {
+      return isSameRoute(aChild, bChild);
+    });
+  });
+}
 /**
  * Execute route.lazy() methods to lazily load route modules (loader, action,
  * shouldRevalidate) and update the routeManifest in place which shares objects
  * with dataRoutes so those get updated as well.
  */
-function loadLazyRouteModule(_x80, _x81, _x82) {
+function loadLazyRouteModule(_x94, _x95, _x96) {
   return _loadLazyRouteModule.apply(this, arguments);
 } // Default implementation of `dataStrategy` which fetches all loaders in parallel
 function _loadLazyRouteModule() {
-  _loadLazyRouteModule = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(route, mapRouteProperties, manifest) {
+  _loadLazyRouteModule = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee20(route, mapRouteProperties, manifest) {
     var lazyRoute, routeToUpdate, routeUpdates, lazyRouteProperty, staticRouteValue, isPropertyStaticallyDefined;
-    return _regeneratorRuntime().wrap(function _callee17$(_context18) {
-      while (1) switch (_context18.prev = _context18.next) {
+    return _regeneratorRuntime().wrap(function _callee20$(_context22) {
+      while (1) switch (_context22.prev = _context22.next) {
         case 0:
           if (route.lazy) {
-            _context18.next = 2;
+            _context22.next = 2;
             break;
           }
-          return _context18.abrupt("return");
+          return _context22.abrupt("return");
         case 2:
-          _context18.next = 4;
+          _context22.next = 4;
           return route.lazy();
         case 4:
-          lazyRoute = _context18.sent;
+          lazyRoute = _context22.sent;
           if (route.lazy) {
-            _context18.next = 7;
+            _context22.next = 7;
             break;
           }
-          return _context18.abrupt("return");
+          return _context22.abrupt("return");
         case 7:
           routeToUpdate = manifest[route.id];
           invariant(routeToUpdate, "No route found in manifest");
@@ -16706,88 +17465,134 @@ function _loadLazyRouteModule() {
           }));
         case 13:
         case "end":
-          return _context18.stop();
+          return _context22.stop();
       }
-    }, _callee17);
+    }, _callee20);
   }));
   return _loadLazyRouteModule.apply(this, arguments);
 }
-function defaultDataStrategy(opts) {
-  return Promise.all(opts.matches.map(function (m) {
-    return m.resolve();
-  }));
+function defaultDataStrategy(_x97) {
+  return _defaultDataStrategy.apply(this, arguments);
 }
-function callDataStrategyImpl(_x83, _x84, _x85, _x86, _x87, _x88, _x89, _x90) {
+function _defaultDataStrategy() {
+  _defaultDataStrategy = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21(_ref4) {
+    var matches, matchesToLoad, results;
+    return _regeneratorRuntime().wrap(function _callee21$(_context23) {
+      while (1) switch (_context23.prev = _context23.next) {
+        case 0:
+          matches = _ref4.matches;
+          matchesToLoad = matches.filter(function (m) {
+            return m.shouldLoad;
+          });
+          _context23.next = 4;
+          return Promise.all(matchesToLoad.map(function (m) {
+            return m.resolve();
+          }));
+        case 4:
+          results = _context23.sent;
+          return _context23.abrupt("return", results.reduce(function (acc, result, i) {
+            return Object.assign(acc, _defineProperty({}, matchesToLoad[i].route.id, result));
+          }, {}));
+        case 6:
+        case "end":
+          return _context23.stop();
+      }
+    }, _callee21);
+  }));
+  return _defaultDataStrategy.apply(this, arguments);
+}
+function callDataStrategyImpl(_x98, _x99, _x100, _x101, _x102, _x103, _x104, _x105, _x106, _x107) {
   return _callDataStrategyImpl.apply(this, arguments);
 } // Default logic for calling a loader/action is the user has no specified a dataStrategy
 function _callDataStrategyImpl() {
-  _callDataStrategyImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(dataStrategyImpl, type, request, matchesToLoad, matches, manifest, mapRouteProperties, requestContext) {
-    var routeIdsToLoad, loadedMatches, results;
-    return _regeneratorRuntime().wrap(function _callee18$(_context19) {
-      while (1) switch (_context19.prev = _context19.next) {
+  _callDataStrategyImpl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(dataStrategyImpl, type, state, request, matchesToLoad, matches, fetcherKey, manifest, mapRouteProperties, requestContext) {
+    var loadRouteDefinitionsPromises, dsMatches, results;
+    return _regeneratorRuntime().wrap(function _callee23$(_context25) {
+      while (1) switch (_context25.prev = _context25.next) {
         case 0:
-          routeIdsToLoad = matchesToLoad.reduce(function (acc, m) {
-            return acc.add(m.route.id);
-          }, new Set());
-          loadedMatches = new Set(); // Send all matches here to allow for a middleware-type implementation.
+          loadRouteDefinitionsPromises = matches.map(function (m) {
+            return m.route.lazy ? loadLazyRouteModule(m.route, mapRouteProperties, manifest) : undefined;
+          });
+          dsMatches = matches.map(function (match, i) {
+            var loadRoutePromise = loadRouteDefinitionsPromises[i];
+            var shouldLoad = matchesToLoad.some(function (m) {
+              return m.route.id === match.route.id;
+            });
+            // `resolve` encapsulates route.lazy(), executing the loader/action,
+            // and mapping return values/thrown errors to a `DataStrategyResult`.  Users
+            // can pass a callback to take fine-grained control over the execution
+            // of the loader/action
+            var resolve = /*#__PURE__*/function () {
+              var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee22(handlerOverride) {
+                return _regeneratorRuntime().wrap(function _callee22$(_context24) {
+                  while (1) switch (_context24.prev = _context24.next) {
+                    case 0:
+                      if (handlerOverride && request.method === "GET" && (match.route.lazy || match.route.loader)) {
+                        shouldLoad = true;
+                      }
+                      return _context24.abrupt("return", shouldLoad ? callLoaderOrAction(type, request, match, loadRoutePromise, handlerOverride, requestContext) : Promise.resolve({
+                        type: ResultType.data,
+                        result: undefined
+                      }));
+                    case 2:
+                    case "end":
+                      return _context24.stop();
+                  }
+                }, _callee22);
+              }));
+              return function resolve(_x126) {
+                return _ref22.apply(this, arguments);
+              };
+            }();
+            return router_extends({}, match, {
+              shouldLoad: shouldLoad,
+              resolve: resolve
+            });
+          }); // Send all matches here to allow for a middleware-type implementation.
           // handler will be a no-op for unneeded routes and we filter those results
           // back out below.
-          _context19.next = 4;
+          _context25.next = 4;
           return dataStrategyImpl({
-            matches: matches.map(function (match) {
-              var shouldLoad = routeIdsToLoad.has(match.route.id);
-              // `resolve` encapsulates the route.lazy, executing the
-              // loader/action, and mapping return values/thrown errors to a
-              // HandlerResult.  Users can pass a callback to take fine-grained control
-              // over the execution of the loader/action
-              var resolve = function resolve(handlerOverride) {
-                loadedMatches.add(match.route.id);
-                return shouldLoad ? callLoaderOrAction(type, request, match, manifest, mapRouteProperties, handlerOverride, requestContext) : Promise.resolve({
-                  type: ResultType.data,
-                  result: undefined
-                });
-              };
-              return router_extends({}, match, {
-                shouldLoad: shouldLoad,
-                resolve: resolve
-              });
-            }),
+            matches: dsMatches,
             request: request,
             params: matches[0].params,
+            fetcherKey: fetcherKey,
             context: requestContext
           });
         case 4:
-          results = _context19.sent;
-          // Throw if any loadRoute implementations not called since they are what
-          // ensures a route is fully loaded
-          matches.forEach(function (m) {
-            return invariant(loadedMatches.has(m.route.id), "`match.resolve()` was not called for route id \"" + m.route.id + "\". " + "You must call `match.resolve()` on every match passed to " + "`dataStrategy` to ensure all routes are properly loaded.");
-          });
-          // Filter out any middleware-only matches for which we didn't need to run handlers
-          return _context19.abrupt("return", results.filter(function (_, i) {
-            return routeIdsToLoad.has(matches[i].route.id);
-          }));
-        case 7:
+          results = _context25.sent;
+          _context25.prev = 5;
+          _context25.next = 8;
+          return Promise.all(loadRouteDefinitionsPromises);
+        case 8:
+          _context25.next = 12;
+          break;
+        case 10:
+          _context25.prev = 10;
+          _context25.t0 = _context25["catch"](5);
+        case 12:
+          return _context25.abrupt("return", results);
+        case 13:
         case "end":
-          return _context19.stop();
+          return _context25.stop();
       }
-    }, _callee18);
+    }, _callee23, null, [[5, 10]]);
   }));
   return _callDataStrategyImpl.apply(this, arguments);
 }
-function callLoaderOrAction(_x91, _x92, _x93, _x94, _x95, _x96, _x97) {
+function callLoaderOrAction(_x108, _x109, _x110, _x111, _x112, _x113) {
   return _callLoaderOrAction.apply(this, arguments);
 }
 function _callLoaderOrAction() {
-  _callLoaderOrAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee20(type, request, match, manifest, mapRouteProperties, handlerOverride, staticContext) {
-    var result, onReject, runHandler, handler, handlerError, _yield$Promise$all3, _yield$Promise$all4, value, url, pathname, _url, _pathname;
-    return _regeneratorRuntime().wrap(function _callee20$(_context21) {
-      while (1) switch (_context21.prev = _context21.next) {
+  _callLoaderOrAction = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee25(type, request, match, loadRoutePromise, handlerOverride, staticContext) {
+    var result, onReject, runHandler, handler, handlerError, _yield$Promise$all, _yield$Promise$all2, value, url, pathname, _url, _pathname;
+    return _regeneratorRuntime().wrap(function _callee25$(_context27) {
+      while (1) switch (_context27.prev = _context27.next) {
         case 0:
           runHandler = function runHandler(handler) {
             // Setup a promise we can race against so that abort signals short circuit
             var reject;
-            // This will never resolve so safe to type it as Promise<HandlerResult> to
+            // This will never resolve so safe to type it as Promise<DataStrategyResult> to
             // satisfy the function return value
             var abortPromise = new Promise(function (_, r) {
               return reject = r;
@@ -16806,91 +17611,86 @@ function _callLoaderOrAction() {
                 context: staticContext
               }].concat(_toConsumableArray(ctx !== undefined ? [ctx] : [])));
             };
-            var handlerPromise;
-            if (handlerOverride) {
-              handlerPromise = handlerOverride(function (ctx) {
-                return actualHandler(ctx);
-              });
-            } else {
-              handlerPromise = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
-                var val;
-                return _regeneratorRuntime().wrap(function _callee19$(_context20) {
-                  while (1) switch (_context20.prev = _context20.next) {
-                    case 0:
-                      _context20.prev = 0;
-                      _context20.next = 3;
-                      return actualHandler();
-                    case 3:
-                      val = _context20.sent;
-                      return _context20.abrupt("return", {
-                        type: "data",
-                        result: val
-                      });
-                    case 7:
-                      _context20.prev = 7;
-                      _context20.t0 = _context20["catch"](0);
-                      return _context20.abrupt("return", {
-                        type: "error",
-                        result: _context20.t0
-                      });
-                    case 10:
-                    case "end":
-                      return _context20.stop();
-                  }
-                }, _callee19, null, [[0, 7]]);
-              }))();
-            }
+            var handlerPromise = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee24() {
+              var val;
+              return _regeneratorRuntime().wrap(function _callee24$(_context26) {
+                while (1) switch (_context26.prev = _context26.next) {
+                  case 0:
+                    _context26.prev = 0;
+                    _context26.next = 3;
+                    return handlerOverride ? handlerOverride(function (ctx) {
+                      return actualHandler(ctx);
+                    }) : actualHandler();
+                  case 3:
+                    val = _context26.sent;
+                    return _context26.abrupt("return", {
+                      type: "data",
+                      result: val
+                    });
+                  case 7:
+                    _context26.prev = 7;
+                    _context26.t0 = _context26["catch"](0);
+                    return _context26.abrupt("return", {
+                      type: "error",
+                      result: _context26.t0
+                    });
+                  case 10:
+                  case "end":
+                    return _context26.stop();
+                }
+              }, _callee24, null, [[0, 7]]);
+            }))();
             return Promise.race([handlerPromise, abortPromise]);
           };
-          _context21.prev = 1;
-          handler = match.route[type];
-          if (!match.route.lazy) {
-            _context21.next = 33;
+          _context27.prev = 1;
+          handler = match.route[type]; // If we have a route.lazy promise, await that first
+          if (!loadRoutePromise) {
+            _context27.next = 33;
             break;
           }
           if (!handler) {
-            _context21.next = 15;
+            _context27.next = 15;
             break;
           }
-          _context21.next = 7;
+          _context27.next = 7;
           return Promise.all([
           // If the handler throws, don't let it immediately bubble out,
           // since we need to let the lazy() execution finish so we know if this
           // route has a boundary that can handle the error
           runHandler(handler)["catch"](function (e) {
             handlerError = e;
-          }), loadLazyRouteModule(match.route, mapRouteProperties, manifest)]);
+          }), loadRoutePromise]);
         case 7:
-          _yield$Promise$all3 = _context21.sent;
-          _yield$Promise$all4 = _slicedToArray(_yield$Promise$all3, 1);
-          value = _yield$Promise$all4[0];
+          _yield$Promise$all = _context27.sent;
+          _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 1);
+          value = _yield$Promise$all2[0];
           if (!(handlerError !== undefined)) {
-            _context21.next = 12;
+            _context27.next = 12;
             break;
           }
           throw handlerError;
         case 12:
           result = value;
-          _context21.next = 31;
+          _context27.next = 31;
           break;
         case 15:
-          _context21.next = 17;
-          return loadLazyRouteModule(match.route, mapRouteProperties, manifest);
+          _context27.next = 17;
+          return loadRoutePromise;
         case 17:
           handler = match.route[type];
           if (!handler) {
-            _context21.next = 24;
+            _context27.next = 24;
             break;
           }
-          _context21.next = 21;
+          _context27.next = 21;
           return runHandler(handler);
         case 21:
-          result = _context21.sent;
-          _context21.next = 31;
+          result = _context27.sent;
+          _context27.next = 31;
           break;
         case 24:
           if (!(type === "action")) {
-            _context21.next = 30;
+            _context27.next = 30;
             break;
           }
           url = new URL(request.url);
@@ -16901,16 +17701,16 @@ function _callLoaderOrAction() {
             routeId: match.route.id
           });
         case 30:
-          return _context21.abrupt("return", {
+          return _context27.abrupt("return", {
             type: ResultType.data,
             result: undefined
           });
         case 31:
-          _context21.next = 42;
+          _context27.next = 42;
           break;
         case 33:
           if (handler) {
-            _context21.next = 39;
+            _context27.next = 39;
             break;
           }
           _url = new URL(request.url);
@@ -16919,140 +17719,167 @@ function _callLoaderOrAction() {
             pathname: _pathname
           });
         case 39:
-          _context21.next = 41;
+          _context27.next = 41;
           return runHandler(handler);
         case 41:
-          result = _context21.sent;
+          result = _context27.sent;
         case 42:
           invariant(result.result !== undefined, "You defined " + (type === "action" ? "an action" : "a loader") + " for route " + ("\"" + match.route.id + "\" but didn't return anything from your `" + type + "` ") + "function. Please return a value or `null`.");
-          _context21.next = 48;
+          _context27.next = 48;
           break;
         case 45:
-          _context21.prev = 45;
-          _context21.t0 = _context21["catch"](1);
-          return _context21.abrupt("return", {
+          _context27.prev = 45;
+          _context27.t0 = _context27["catch"](1);
+          return _context27.abrupt("return", {
             type: ResultType.error,
-            result: _context21.t0
+            result: _context27.t0
           });
         case 48:
-          _context21.prev = 48;
+          _context27.prev = 48;
           if (onReject) {
             request.signal.removeEventListener("abort", onReject);
           }
-          return _context21.finish(48);
+          return _context27.finish(48);
         case 51:
-          return _context21.abrupt("return", result);
+          return _context27.abrupt("return", result);
         case 52:
         case "end":
-          return _context21.stop();
+          return _context27.stop();
       }
-    }, _callee20, null, [[1, 45, 48, 51]]);
+    }, _callee25, null, [[1, 45, 48, 51]]);
   }));
   return _callLoaderOrAction.apply(this, arguments);
 }
-function convertHandlerResultToDataResult(_x98) {
-  return _convertHandlerResultToDataResult.apply(this, arguments);
+function convertDataStrategyResultToDataResult(_x114) {
+  return _convertDataStrategyResultToDataResult.apply(this, arguments);
 } // Support relative routing in internal redirects
-function _convertHandlerResultToDataResult() {
-  _convertHandlerResultToDataResult = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21(handlerResult) {
-    var result, type, status, data, contentType, _result$init, _result$init2;
-    return _regeneratorRuntime().wrap(function _callee21$(_context22) {
-      while (1) switch (_context22.prev = _context22.next) {
+function _convertDataStrategyResultToDataResult() {
+  _convertDataStrategyResultToDataResult = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee26(dataStrategyResult) {
+    var result, type, _data2, contentType, _result$init2, _result$init, _result$init3, _result$init4, _result$init5, _result$init6;
+    return _regeneratorRuntime().wrap(function _callee26$(_context28) {
+      while (1) switch (_context28.prev = _context28.next) {
         case 0:
-          result = handlerResult.result, type = handlerResult.type, status = handlerResult.status;
+          result = dataStrategyResult.result, type = dataStrategyResult.type;
           if (!isResponse(result)) {
-            _context22.next = 25;
+            _context28.next = 25;
             break;
           }
-          _context22.prev = 2;
+          _context28.prev = 2;
           contentType = result.headers.get("Content-Type"); // Check between word boundaries instead of startsWith() due to the last
           // paragraph of https://httpwg.org/specs/rfc9110.html#field.content-type
           if (!(contentType && /\bapplication\/json\b/.test(contentType))) {
-            _context22.next = 14;
+            _context28.next = 14;
             break;
           }
           if (!(result.body == null)) {
-            _context22.next = 9;
+            _context28.next = 9;
             break;
           }
-          data = null;
-          _context22.next = 12;
+          _data2 = null;
+          _context28.next = 12;
           break;
         case 9:
-          _context22.next = 11;
+          _context28.next = 11;
           return result.json();
         case 11:
-          data = _context22.sent;
+          _data2 = _context28.sent;
         case 12:
-          _context22.next = 17;
+          _context28.next = 17;
           break;
         case 14:
-          _context22.next = 16;
+          _context28.next = 16;
           return result.text();
         case 16:
-          data = _context22.sent;
+          _data2 = _context28.sent;
         case 17:
-          _context22.next = 22;
+          _context28.next = 22;
           break;
         case 19:
-          _context22.prev = 19;
-          _context22.t0 = _context22["catch"](2);
-          return _context22.abrupt("return", {
+          _context28.prev = 19;
+          _context28.t0 = _context28["catch"](2);
+          return _context28.abrupt("return", {
             type: ResultType.error,
-            error: _context22.t0
+            error: _context28.t0
           });
         case 22:
           if (!(type === ResultType.error)) {
-            _context22.next = 24;
+            _context28.next = 24;
             break;
           }
-          return _context22.abrupt("return", {
+          return _context28.abrupt("return", {
             type: ResultType.error,
-            error: new ErrorResponseImpl(result.status, result.statusText, data),
+            error: new ErrorResponseImpl(result.status, result.statusText, _data2),
             statusCode: result.status,
             headers: result.headers
           });
         case 24:
-          return _context22.abrupt("return", {
+          return _context28.abrupt("return", {
             type: ResultType.data,
-            data: data,
+            data: _data2,
             statusCode: result.status,
             headers: result.headers
           });
         case 25:
           if (!(type === ResultType.error)) {
-            _context22.next = 27;
+            _context28.next = 31;
             break;
           }
-          return _context22.abrupt("return", {
+          if (!isDataWithResponseInit(result)) {
+            _context28.next = 30;
+            break;
+          }
+          if (!(result.data instanceof Error)) {
+            _context28.next = 29;
+            break;
+          }
+          return _context28.abrupt("return", {
             type: ResultType.error,
-            error: result,
-            statusCode: isRouteErrorResponse(result) ? result.status : status
-          });
-        case 27:
-          if (!isDeferredData(result)) {
-            _context22.next = 29;
-            break;
-          }
-          return _context22.abrupt("return", {
-            type: ResultType.deferred,
-            deferredData: result,
-            statusCode: (_result$init = result.init) == null ? void 0 : _result$init.status,
-            headers: ((_result$init2 = result.init) == null ? void 0 : _result$init2.headers) && new Headers(result.init.headers)
+            error: result.data,
+            statusCode: (_result$init = result.init) == null ? void 0 : _result$init.status
           });
         case 29:
-          return _context22.abrupt("return", {
-            type: ResultType.data,
-            data: result,
-            statusCode: status
-          });
+          // Convert thrown data() to ErrorResponse instances
+          result = new ErrorResponseImpl(((_result$init2 = result.init) == null ? void 0 : _result$init2.status) || 500, undefined, result.data);
         case 30:
+          return _context28.abrupt("return", {
+            type: ResultType.error,
+            error: result,
+            statusCode: isRouteErrorResponse(result) ? result.status : undefined
+          });
+        case 31:
+          if (!isDeferredData(result)) {
+            _context28.next = 33;
+            break;
+          }
+          return _context28.abrupt("return", {
+            type: ResultType.deferred,
+            deferredData: result,
+            statusCode: (_result$init3 = result.init) == null ? void 0 : _result$init3.status,
+            headers: ((_result$init4 = result.init) == null ? void 0 : _result$init4.headers) && new Headers(result.init.headers)
+          });
+        case 33:
+          if (!isDataWithResponseInit(result)) {
+            _context28.next = 35;
+            break;
+          }
+          return _context28.abrupt("return", {
+            type: ResultType.data,
+            data: result.data,
+            statusCode: (_result$init5 = result.init) == null ? void 0 : _result$init5.status,
+            headers: (_result$init6 = result.init) != null && _result$init6.headers ? new Headers(result.init.headers) : undefined
+          });
+        case 35:
+          return _context28.abrupt("return", {
+            type: ResultType.data,
+            data: result
+          });
+        case 36:
         case "end":
-          return _context22.stop();
+          return _context28.stop();
       }
-    }, _callee21, null, [[2, 19]]);
+    }, _callee26, null, [[2, 19]]);
   }));
-  return _convertHandlerResultToDataResult.apply(this, arguments);
+  return _convertDataStrategyResultToDataResult.apply(this, arguments);
 }
 function normalizeRelativeRoutingRedirectResponse(response, request, routeId, matches, basename, v7_relativeSplatPath) {
   var location = response.headers.get("Location");
@@ -17148,7 +17975,7 @@ function convertSearchParamsToFormData(searchParams) {
   }
   return formData;
 }
-function processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling) {
+function processRouteLoaderData(matches, results, pendingActionResult, activeDeferreds, skipLoaderErrorBubbling) {
   // Fill in loaderData/errors from our loaders
   var loaderData = {};
   var errors = null;
@@ -17157,8 +17984,12 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingActionRe
   var loaderHeaders = {};
   var pendingError = pendingActionResult && isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : undefined;
   // Process loader results into state.loaderData/state.errors
-  results.forEach(function (result, index) {
-    var id = matchesToLoad[index].route.id;
+  matches.forEach(function (match) {
+    if (!(match.route.id in results)) {
+      return;
+    }
+    var id = match.route.id;
+    var result = results[id];
     invariant(!isRedirectResult(result), "Cannot handle redirect results in processLoaderData");
     if (isErrorResult(result)) {
       var error = result.error;
@@ -17231,23 +18062,22 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingActionRe
     loaderHeaders: loaderHeaders
   };
 }
-function processLoaderData(state, matches, matchesToLoad, results, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds) {
-  var _processRouteLoaderDa = processRouteLoaderData(matches, matchesToLoad, results, pendingActionResult, activeDeferreds, false // This method is only called client side so we always want to bubble
+function processLoaderData(state, matches, results, pendingActionResult, revalidatingFetchers, fetcherResults, activeDeferreds) {
+  var _processRouteLoaderDa = processRouteLoaderData(matches, results, pendingActionResult, activeDeferreds, false // This method is only called client side so we always want to bubble
     ),
     loaderData = _processRouteLoaderDa.loaderData,
     errors = _processRouteLoaderDa.errors;
   // Process results from our revalidating fetchers
-  for (var index = 0; index < revalidatingFetchers.length; index++) {
-    var _revalidatingFetchers = revalidatingFetchers[index],
-      key = _revalidatingFetchers.key,
-      match = _revalidatingFetchers.match,
-      controller = _revalidatingFetchers.controller;
-    invariant(fetcherResults !== undefined && fetcherResults[index] !== undefined, "Did not find corresponding fetcher result");
-    var result = fetcherResults[index];
+  revalidatingFetchers.forEach(function (rf) {
+    var key = rf.key,
+      match = rf.match,
+      controller = rf.controller;
+    var result = fetcherResults[key];
+    invariant(result, "Did not find corresponding fetcher result");
     // Process fetcher non-redirect errors
     if (controller && controller.signal.aborted) {
       // Nothing to do for aborted fetchers
-      continue;
+      return;
     } else if (isErrorResult(result)) {
       var boundaryMatch = findNearestBoundary(state.matches, match == null ? void 0 : match.route.id);
       if (!(errors && errors[boundaryMatch.route.id])) {
@@ -17266,7 +18096,7 @@ function processLoaderData(state, matches, matchesToLoad, results, pendingAction
       var doneFetcher = getDoneFetcher(result.data);
       state.fetchers.set(key, doneFetcher);
     }
-  }
+  });
   return {
     loaderData: loaderData,
     errors: errors
@@ -17341,11 +18171,12 @@ function getShortCircuitMatches(routes) {
   };
 }
 function getInternalRouterError(status, _temp5) {
-  var _ref20 = _temp5 === void 0 ? {} : _temp5,
-    pathname = _ref20.pathname,
-    routeId = _ref20.routeId,
-    method = _ref20.method,
-    type = _ref20.type;
+  var _ref21 = _temp5 === void 0 ? {} : _temp5,
+    pathname = _ref21.pathname,
+    routeId = _ref21.routeId,
+    method = _ref21.method,
+    type = _ref21.type,
+    message = _ref21.message;
   var statusText = "Unknown Server Error";
   var errorMessage = "Unknown @remix-run/router error";
   if (status === 400) {
@@ -17375,12 +18206,15 @@ function getInternalRouterError(status, _temp5) {
 }
 // Find any returned redirect errors, starting from the lowest match
 function findRedirect(results) {
-  for (var i = results.length - 1; i >= 0; i--) {
-    var result = results[i];
+  var entries = Object.entries(results);
+  for (var i = entries.length - 1; i >= 0; i--) {
+    var _entries$i = _slicedToArray(entries[i], 2),
+      key = _entries$i[0],
+      result = _entries$i[1];
     if (isRedirectResult(result)) {
       return {
-        result: result,
-        idx: i
+        key: key,
+        result: result
       };
     }
   }
@@ -17409,10 +18243,10 @@ function isHashChangeOnly(a, b) {
   // /page#hash -> /page
   return false;
 }
-function isHandlerResult(result) {
+function isDataStrategyResult(result) {
   return result != null && typeof result === "object" && "type" in result && "result" in result && (result.type === ResultType.data || result.type === ResultType.error);
 }
-function isRedirectHandlerResult(result) {
+function isRedirectDataStrategyResultResult(result) {
   return isResponse(result.result) && redirectStatusCodes.has(result.result.status);
 }
 function isDeferredResult(result) {
@@ -17423,6 +18257,9 @@ function isErrorResult(result) {
 }
 function isRedirectResult(result) {
   return (result && result.type) === ResultType.redirect;
+}
+function isDataWithResponseInit(value) {
+  return typeof value === "object" && value != null && "type" in value && "data" in value && "init" in value && value.type === "DataWithResponseInit";
 }
 function isDeferredData(value) {
   var deferred = value;
@@ -17445,128 +18282,198 @@ function isValidMethod(method) {
 function isMutationMethod(method) {
   return validMutationMethods.has(method.toLowerCase());
 }
-function resolveDeferredResults(_x99, _x100, _x101, _x102, _x103, _x104) {
-  return _resolveDeferredResults.apply(this, arguments);
+function resolveNavigationDeferredResults(_x115, _x116, _x117, _x118, _x119) {
+  return _resolveNavigationDeferredResults.apply(this, arguments);
 }
-function _resolveDeferredResults() {
-  _resolveDeferredResults = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee22(currentMatches, matchesToLoad, results, signals, isFetcher, currentLoaderData) {
-    var _loop, index;
-    return _regeneratorRuntime().wrap(function _callee22$(_context24) {
-      while (1) switch (_context24.prev = _context24.next) {
+function _resolveNavigationDeferredResults() {
+  _resolveNavigationDeferredResults = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee27(matches, results, signal, currentMatches, currentLoaderData) {
+    var entries, _loop2, index;
+    return _regeneratorRuntime().wrap(function _callee27$(_context30) {
+      while (1) switch (_context30.prev = _context30.next) {
         case 0:
-          _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop(index) {
-            var result, match, currentMatch, isRevalidatingLoader, signal;
-            return _regeneratorRuntime().wrap(function _loop$(_context23) {
-              while (1) switch (_context23.prev = _context23.next) {
+          entries = Object.entries(results);
+          _loop2 = /*#__PURE__*/_regeneratorRuntime().mark(function _loop2() {
+            var _entries$index, routeId, result, match, currentMatch, isRevalidatingLoader;
+            return _regeneratorRuntime().wrap(function _loop2$(_context29) {
+              while (1) switch (_context29.prev = _context29.next) {
                 case 0:
-                  result = results[index];
-                  match = matchesToLoad[index]; // If we don't have a match, then we can have a deferred result to do
+                  _entries$index = _slicedToArray(entries[index], 2), routeId = _entries$index[0], result = _entries$index[1];
+                  match = matches.find(function (m) {
+                    return (m == null ? void 0 : m.route.id) === routeId;
+                  }); // If we don't have a match, then we can have a deferred result to do
                   // anything with.  This is for revalidating fetchers where the route was
                   // removed during HMR
                   if (match) {
-                    _context23.next = 4;
+                    _context29.next = 4;
                     break;
                   }
-                  return _context23.abrupt("return", 1);
+                  return _context29.abrupt("return", 1);
                 case 4:
                   currentMatch = currentMatches.find(function (m) {
                     return m.route.id === match.route.id;
                   });
                   isRevalidatingLoader = currentMatch != null && !isNewRouteInstance(currentMatch, match) && (currentLoaderData && currentLoaderData[match.route.id]) !== undefined;
-                  if (!(isDeferredResult(result) && (isFetcher || isRevalidatingLoader))) {
-                    _context23.next = 11;
+                  if (!(isDeferredResult(result) && isRevalidatingLoader)) {
+                    _context29.next = 9;
+                    break;
+                  }
+                  _context29.next = 9;
+                  return resolveDeferredData(result, signal, false).then(function (result) {
+                    if (result) {
+                      results[routeId] = result;
+                    }
+                  });
+                case 9:
+                case "end":
+                  return _context29.stop();
+              }
+            }, _loop2);
+          });
+          index = 0;
+        case 3:
+          if (!(index < entries.length)) {
+            _context30.next = 10;
+            break;
+          }
+          return _context30.delegateYield(_loop2(), "t0", 5);
+        case 5:
+          if (!_context30.t0) {
+            _context30.next = 7;
+            break;
+          }
+          return _context30.abrupt("continue", 7);
+        case 7:
+          index++;
+          _context30.next = 3;
+          break;
+        case 10:
+        case "end":
+          return _context30.stop();
+      }
+    }, _callee27);
+  }));
+  return _resolveNavigationDeferredResults.apply(this, arguments);
+}
+function resolveFetcherDeferredResults(_x120, _x121, _x122) {
+  return _resolveFetcherDeferredResults.apply(this, arguments);
+}
+function _resolveFetcherDeferredResults() {
+  _resolveFetcherDeferredResults = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee28(matches, results, revalidatingFetchers) {
+    var _loop3, index;
+    return _regeneratorRuntime().wrap(function _callee28$(_context32) {
+      while (1) switch (_context32.prev = _context32.next) {
+        case 0:
+          _loop3 = /*#__PURE__*/_regeneratorRuntime().mark(function _loop3() {
+            var _revalidatingFetchers, key, routeId, controller, result, match;
+            return _regeneratorRuntime().wrap(function _loop3$(_context31) {
+              while (1) switch (_context31.prev = _context31.next) {
+                case 0:
+                  _revalidatingFetchers = revalidatingFetchers[index], key = _revalidatingFetchers.key, routeId = _revalidatingFetchers.routeId, controller = _revalidatingFetchers.controller;
+                  result = results[key];
+                  match = matches.find(function (m) {
+                    return (m == null ? void 0 : m.route.id) === routeId;
+                  }); // If we don't have a match, then we can have a deferred result to do
+                  // anything with.  This is for revalidating fetchers where the route was
+                  // removed during HMR
+                  if (match) {
+                    _context31.next = 5;
+                    break;
+                  }
+                  return _context31.abrupt("return", 1);
+                case 5:
+                  if (!isDeferredResult(result)) {
+                    _context31.next = 9;
                     break;
                   }
                   // Note: we do not have to touch activeDeferreds here since we race them
                   // against the signal in resolveDeferredData and they'll get aborted
                   // there if needed
-                  signal = signals[index];
-                  invariant(signal, "Expected an AbortSignal for revalidating fetcher deferred result");
-                  _context23.next = 11;
-                  return resolveDeferredData(result, signal, isFetcher).then(function (result) {
+                  invariant(controller, "Expected an AbortController for revalidating fetcher deferred result");
+                  _context31.next = 9;
+                  return resolveDeferredData(result, controller.signal, true).then(function (result) {
                     if (result) {
-                      results[index] = result || results[index];
+                      results[key] = result;
                     }
                   });
-                case 11:
+                case 9:
                 case "end":
-                  return _context23.stop();
+                  return _context31.stop();
               }
-            }, _loop);
+            }, _loop3);
           });
           index = 0;
         case 2:
-          if (!(index < results.length)) {
-            _context24.next = 9;
+          if (!(index < revalidatingFetchers.length)) {
+            _context32.next = 9;
             break;
           }
-          return _context24.delegateYield(_loop(index), "t0", 4);
+          return _context32.delegateYield(_loop3(), "t0", 4);
         case 4:
-          if (!_context24.t0) {
-            _context24.next = 6;
+          if (!_context32.t0) {
+            _context32.next = 6;
             break;
           }
-          return _context24.abrupt("continue", 6);
+          return _context32.abrupt("continue", 6);
         case 6:
           index++;
-          _context24.next = 2;
+          _context32.next = 2;
           break;
         case 9:
         case "end":
-          return _context24.stop();
+          return _context32.stop();
       }
-    }, _callee22);
+    }, _callee28);
   }));
-  return _resolveDeferredResults.apply(this, arguments);
+  return _resolveFetcherDeferredResults.apply(this, arguments);
 }
-function resolveDeferredData(_x105, _x106, _x107) {
+function resolveDeferredData(_x123, _x124, _x125) {
   return _resolveDeferredData.apply(this, arguments);
 }
 function _resolveDeferredData() {
-  _resolveDeferredData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(result, signal, unwrap) {
+  _resolveDeferredData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee29(result, signal, unwrap) {
     var aborted;
-    return _regeneratorRuntime().wrap(function _callee23$(_context25) {
-      while (1) switch (_context25.prev = _context25.next) {
+    return _regeneratorRuntime().wrap(function _callee29$(_context33) {
+      while (1) switch (_context33.prev = _context33.next) {
         case 0:
           if (unwrap === void 0) {
             unwrap = false;
           }
-          _context25.next = 3;
+          _context33.next = 3;
           return result.deferredData.resolveData(signal);
         case 3:
-          aborted = _context25.sent;
+          aborted = _context33.sent;
           if (!aborted) {
-            _context25.next = 6;
+            _context33.next = 6;
             break;
           }
-          return _context25.abrupt("return");
+          return _context33.abrupt("return");
         case 6:
           if (!unwrap) {
-            _context25.next = 14;
+            _context33.next = 14;
             break;
           }
-          _context25.prev = 7;
-          return _context25.abrupt("return", {
+          _context33.prev = 7;
+          return _context33.abrupt("return", {
             type: ResultType.data,
             data: result.deferredData.unwrappedData
           });
         case 11:
-          _context25.prev = 11;
-          _context25.t0 = _context25["catch"](7);
-          return _context25.abrupt("return", {
+          _context33.prev = 11;
+          _context33.t0 = _context33["catch"](7);
+          return _context33.abrupt("return", {
             type: ResultType.error,
-            error: _context25.t0
+            error: _context33.t0
           });
         case 14:
-          return _context25.abrupt("return", {
+          return _context33.abrupt("return", {
             type: ResultType.data,
             data: result.deferredData.data
           });
         case 15:
         case "end":
-          return _context25.stop();
+          return _context33.stop();
       }
-    }, _callee23, null, [[7, 11]]);
+    }, _callee29, null, [[7, 11]]);
   }));
   return _resolveDeferredData.apply(this, arguments);
 }
@@ -17723,10 +18630,10 @@ function restoreAppliedTransitions(_window, transitions) {
     var sessionPositions = _window.sessionStorage.getItem(TRANSITIONS_STORAGE_KEY);
     if (sessionPositions) {
       var _json2 = JSON.parse(sessionPositions);
-      for (var _i = 0, _Object$entries = Object.entries(_json2 || {}); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-          k = _Object$entries$_i[0],
-          v = _Object$entries$_i[1];
+      for (var _i2 = 0, _Object$entries2 = Object.entries(_json2 || {}); _i2 < _Object$entries2.length; _i2++) {
+        var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+          k = _Object$entries2$_i[0],
+          v = _Object$entries2$_i[1];
         if (v && Array.isArray(v)) {
           transitions.set(k, new Set(v || []));
         }
@@ -17772,7 +18679,7 @@ function persistAppliedTransitions(_window, transitions) {
 
 
 /**
- * React Router v6.23.0
+ * React Router v6.27.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -17912,7 +18819,7 @@ function useMatch(pattern) {
   var _useLocation = useLocation(),
     pathname = _useLocation.pathname;
   return react.useMemo(function () {
-    return matchPath(pattern, pathname);
+    return matchPath(pattern, decodePath(pathname));
   }, [pathname, pattern]);
 }
 
@@ -18166,11 +19073,11 @@ function DefaultErrorComponent() {
 }
 var defaultErrorElement = /*#__PURE__*/react.createElement(DefaultErrorComponent, null);
 var RenderErrorBoundary = /*#__PURE__*/function (_React$Component) {
-  _inherits(RenderErrorBoundary, _React$Component);
+  inherits_inherits(RenderErrorBoundary, _React$Component);
   function RenderErrorBoundary(props) {
     var _this;
     classCallCheck_classCallCheck(this, RenderErrorBoundary);
-    _this = _callSuper(this, RenderErrorBoundary, [props]);
+    _this = callSuper_callSuper(this, RenderErrorBoundary, [props]);
     _this.state = {
       location: props.location,
       revalidation: props.revalidation,
@@ -18248,7 +19155,7 @@ function RenderedRoute(_ref) {
   }, children);
 }
 function _renderMatches(matches, parentMatches, dataRouterState, future) {
-  var _dataRouterState2;
+  var _dataRouterState;
   if (parentMatches === void 0) {
     parentMatches = [];
   }
@@ -18259,10 +19166,21 @@ function _renderMatches(matches, parentMatches, dataRouterState, future) {
     future = null;
   }
   if (matches == null) {
-    var _dataRouterState;
-    if ((_dataRouterState = dataRouterState) != null && _dataRouterState.errors) {
+    var _future;
+    if (!dataRouterState) {
+      return null;
+    }
+    if (dataRouterState.errors) {
       // Don't bail if we have data router errors so we can render them in the
       // boundary.  Use the pre-matched (or shimmed) matches
+      matches = dataRouterState.matches;
+    } else if ((_future = future) != null && _future.v7_partialHydration && parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
+      // Don't bail if we're initializing with partial hydration and we have
+      // router matches.  That means we're actively running `patchRoutesOnNavigation`
+      // so we should render down the partial matches to the appropriate
+      // `HydrateFallback`.  We only do this if `parentMatches` is empty so it
+      // only impacts the root matches for `RouterProvider` and no descendant
+      // `<Routes>`
       matches = dataRouterState.matches;
     } else {
       return null;
@@ -18271,7 +19189,7 @@ function _renderMatches(matches, parentMatches, dataRouterState, future) {
   var renderedMatches = matches;
 
   // If we have data errors, trim matches to the highest error boundary
-  var errors = (_dataRouterState2 = dataRouterState) == null ? void 0 : _dataRouterState2.errors;
+  var errors = (_dataRouterState = dataRouterState) == null ? void 0 : _dataRouterState.errors;
   if (errors != null) {
     var errorIndex = renderedMatches.findIndex(function (m) {
       return m.route.id && (errors == null ? void 0 : errors[m.route.id]) !== undefined;
@@ -18292,9 +19210,9 @@ function _renderMatches(matches, parentMatches, dataRouterState, future) {
         fallbackIndex = i;
       }
       if (match.route.id) {
-        var _dataRouterState3 = dataRouterState,
-          loaderData = _dataRouterState3.loaderData,
-          _errors = _dataRouterState3.errors;
+        var _dataRouterState2 = dataRouterState,
+          loaderData = _dataRouterState2.loaderData,
+          _errors = _dataRouterState2.errors;
         var needsToRunLoader = match.route.loader && loaderData[match.route.id] === undefined && (!_errors || _errors[match.route.id] === undefined);
         if (match.route.lazy || needsToRunLoader) {
           // We found the first route that's not ready to render (waiting on
@@ -18970,11 +19888,11 @@ var AwaitRenderStatus = /*#__PURE__*/function (AwaitRenderStatus) {
 }(AwaitRenderStatus || {});
 var neverSettledPromise = new Promise(function () {});
 var AwaitErrorBoundary = /*#__PURE__*/function (_React$Component2) {
-  _inherits(AwaitErrorBoundary, _React$Component2);
+  inherits_inherits(AwaitErrorBoundary, _React$Component2);
   function AwaitErrorBoundary(props) {
     var _this2;
     classCallCheck_classCallCheck(this, AwaitErrorBoundary);
-    _this2 = _callSuper(this, AwaitErrorBoundary, [props]);
+    _this2 = callSuper_callSuper(this, AwaitErrorBoundary, [props]);
     _this2.state = {
       error: null
     };
@@ -19026,7 +19944,7 @@ var AwaitErrorBoundary = /*#__PURE__*/function (_React$Component2) {
       } else if (resolve._tracked) {
         // Already tracked promise - check contents
         promise = resolve;
-        status = promise._error !== undefined ? AwaitRenderStatus.error : promise._data !== undefined ? AwaitRenderStatus.success : AwaitRenderStatus.pending;
+        status = "_error" in promise ? AwaitRenderStatus.error : "_data" in promise ? AwaitRenderStatus.success : AwaitRenderStatus.pending;
       } else {
         // Raw (untracked) promise - track it
         status = AwaitRenderStatus.pending;
@@ -19198,7 +20116,8 @@ function createMemoryRouter(routes, opts) {
     hydrationData: opts == null ? void 0 : opts.hydrationData,
     routes: routes,
     mapRouteProperties: mapRouteProperties,
-    unstable_dataStrategy: opts == null ? void 0 : opts.unstable_dataStrategy
+    dataStrategy: opts == null ? void 0 : opts.dataStrategy,
+    patchRoutesOnNavigation: opts == null ? void 0 : opts.patchRoutesOnNavigation
   }).initialize();
 }
 
@@ -19345,10 +20264,10 @@ var home_index_module_update = injectStylesIntoStyleTag_default()(home_index_mod
 
 ;// CONCATENATED MODULE: ./src/pages/home/index.tsx
 var HomePage=function HomePage(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:pages_home_index_module.host,children:/*#__PURE__*/(0,jsx_runtime.jsxs)("richtext",{onPointerClick:function onPointerClick(ev,sender){var linkId=sender.GetLinkInfo(ev);if(linkId==='svgs')nav('svgs');},children:[/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:'32',children:"Welcome to ReactUnity \uD83D\uDE0E"}),/*#__PURE__*/(0,jsx_runtime.jsx)("br",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("br",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:"24",children:/*#__PURE__*/(0,jsx_runtime.jsxs)("color",{value:'blue',children:["Click an item in the",/*#__PURE__*/(0,jsx_runtime.jsx)("color",{value:"red",children:/*#__PURE__*/(0,jsx_runtime.jsx)("uppercase",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("margin",{value:"20",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("nbsp",{}),"left menu",/*#__PURE__*/(0,jsx_runtime.jsx)("nbsp",{})]})})}),"to see examples."]})}),"Check out the new ",/*#__PURE__*/(0,jsx_runtime.jsx)("link",{value:'svgs',children:/*#__PURE__*/(0,jsx_runtime.jsx)("size",{value:24,children:/*#__PURE__*/(0,jsx_runtime.jsx)("color",{value:"blue",children:"SVG"})})})," feature for example."]})});};/* harmony default export */ const home = (HomePage);
-// EXTERNAL MODULE: ../../renderer/node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__("../../renderer/node_modules/use-sync-external-store/shim/index.js");
-// EXTERNAL MODULE: ../../renderer/node_modules/use-sync-external-store/with-selector.js
-var with_selector = __webpack_require__("../../renderer/node_modules/use-sync-external-store/with-selector.js");
+// EXTERNAL MODULE: ../../node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__("../../node_modules/use-sync-external-store/shim/index.js");
+// EXTERNAL MODULE: ../../node_modules/use-sync-external-store/with-selector.js
+var with_selector = __webpack_require__("../../node_modules/use-sync-external-store/with-selector.js");
 ;// CONCATENATED MODULE: ../../renderer/dist/src/helpers/dictionary-watcher.js
 var dictionary_watcher_assign = undefined && undefined.__assign || function () {
   dictionary_watcher_assign = Object.assign || function (t) {
@@ -19539,14 +20458,14 @@ var images_index_module_update = injectStylesIntoStyleTag_default()(images_index
 var _path;
 var _excluded = (/* unused pure expression or super */ null && (["title", "titleId"]));
 function checkraw_extends() { checkraw_extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return checkraw_extends.apply(this, arguments); }
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = checkraw_objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function checkraw_objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = checkraw_objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function checkraw_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 var SvgCheck = function SvgCheck(_ref, ref) {
   var title = _ref.title,
     titleId = _ref.titleId,
-    props = _objectWithoutProperties(_ref, _excluded);
+    props = checkraw_objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/React.createElement("svg", checkraw_extends({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 32 32",
@@ -23489,89 +24408,98 @@ function objectDestructuringEmpty_objectDestructuringEmpty(obj) {
 
 
 
-var _client, _currentQuery, _currentQueryInitialState, _currentResult, _currentResultState, _currentResultOptions, _selectError, _selectFn, _selectResult, _lastQueryWithDefinedData, _staleTimeoutId, _refetchIntervalId, _currentRefetchInterval, _trackedProps, _executeFetch, _updateStaleTimeout, _computeRefetchInterval, _updateRefetchInterval, _updateTimers, _clearStaleTimeout, _clearRefetchInterval, _updateQuery, _notify;
+var _client, _currentQuery, _currentQueryInitialState, _currentResult, _currentResultState, _currentResultOptions, _currentThenable, _selectError, _selectFn, _selectResult, _lastQueryWithDefinedData, _staleTimeoutId, _refetchIntervalId, _currentRefetchInterval, _trackedProps, _executeFetch, _updateStaleTimeout, _computeRefetchInterval, _updateRefetchInterval, _updateTimers, _clearStaleTimeout, _clearRefetchInterval, _updateQuery, _notify;
 // src/queryObserver.ts
 
 
 
 
 
-var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__PURE__*/new WeakMap(), _currentQueryInitialState = /*#__PURE__*/new WeakMap(), _currentResult = /*#__PURE__*/new WeakMap(), _currentResultState = /*#__PURE__*/new WeakMap(), _currentResultOptions = /*#__PURE__*/new WeakMap(), _selectError = /*#__PURE__*/new WeakMap(), _selectFn = /*#__PURE__*/new WeakMap(), _selectResult = /*#__PURE__*/new WeakMap(), _lastQueryWithDefinedData = /*#__PURE__*/new WeakMap(), _staleTimeoutId = /*#__PURE__*/new WeakMap(), _refetchIntervalId = /*#__PURE__*/new WeakMap(), _currentRefetchInterval = /*#__PURE__*/new WeakMap(), _trackedProps = /*#__PURE__*/new WeakMap(), _executeFetch = /*#__PURE__*/new WeakSet(), _updateStaleTimeout = /*#__PURE__*/new WeakSet(), _computeRefetchInterval = /*#__PURE__*/new WeakSet(), _updateRefetchInterval = /*#__PURE__*/new WeakSet(), _updateTimers = /*#__PURE__*/new WeakSet(), _clearStaleTimeout = /*#__PURE__*/new WeakSet(), _clearRefetchInterval = /*#__PURE__*/new WeakSet(), _updateQuery = /*#__PURE__*/new WeakSet(), _notify = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Subscribable) {
-  _inherits(QueryObserver, _Subscribable);
+
+var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__PURE__*/new WeakMap(), _currentQueryInitialState = /*#__PURE__*/new WeakMap(), _currentResult = /*#__PURE__*/new WeakMap(), _currentResultState = /*#__PURE__*/new WeakMap(), _currentResultOptions = /*#__PURE__*/new WeakMap(), _currentThenable = /*#__PURE__*/new WeakMap(), _selectError = /*#__PURE__*/new WeakMap(), _selectFn = /*#__PURE__*/new WeakMap(), _selectResult = /*#__PURE__*/new WeakMap(), _lastQueryWithDefinedData = /*#__PURE__*/new WeakMap(), _staleTimeoutId = /*#__PURE__*/new WeakMap(), _refetchIntervalId = /*#__PURE__*/new WeakMap(), _currentRefetchInterval = /*#__PURE__*/new WeakMap(), _trackedProps = /*#__PURE__*/new WeakMap(), _executeFetch = /*#__PURE__*/new WeakSet(), _updateStaleTimeout = /*#__PURE__*/new WeakSet(), _computeRefetchInterval = /*#__PURE__*/new WeakSet(), _updateRefetchInterval = /*#__PURE__*/new WeakSet(), _updateTimers = /*#__PURE__*/new WeakSet(), _clearStaleTimeout = /*#__PURE__*/new WeakSet(), _clearRefetchInterval = /*#__PURE__*/new WeakSet(), _updateQuery = /*#__PURE__*/new WeakSet(), _notify = /*#__PURE__*/new WeakSet(), /*#__PURE__*/function (_Subscribable) {
+  inherits_inherits(QueryObserver, _Subscribable);
   function QueryObserver(client, options) {
     var _this;
     classCallCheck_classCallCheck(this, QueryObserver);
-    _this = _callSuper(this, QueryObserver);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _notify);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateQuery);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _clearRefetchInterval);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _clearStaleTimeout);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateTimers);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateRefetchInterval);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _computeRefetchInterval);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _updateStaleTimeout);
-    _classPrivateMethodInitSpec(_assertThisInitialized(_this), _executeFetch);
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _client, {
+    _this = callSuper_callSuper(this, QueryObserver);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _notify);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _updateQuery);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _clearRefetchInterval);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _clearStaleTimeout);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _updateTimers);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _updateRefetchInterval);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _computeRefetchInterval);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _updateStaleTimeout);
+    _classPrivateMethodInitSpec(assertThisInitialized_assertThisInitialized(_this), _executeFetch);
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _client, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentQuery, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentQuery, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentQueryInitialState, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentQueryInitialState, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResult, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentResult, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResultState, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentResultState, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentResultOptions, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentResultOptions, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectError, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentThenable, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectFn, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _selectError, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _selectResult, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _selectFn, {
+      writable: true,
+      value: void 0
+    });
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _selectResult, {
       writable: true,
       value: void 0
     });
     // This property keeps track of the last query with defined data.
     // It will be used to pass the previous data and query to the placeholder function between renders.
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _lastQueryWithDefinedData, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _lastQueryWithDefinedData, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _staleTimeoutId, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _staleTimeoutId, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _refetchIntervalId, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _refetchIntervalId, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _currentRefetchInterval, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _currentRefetchInterval, {
       writable: true,
       value: void 0
     });
-    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _trackedProps, {
+    _classPrivateFieldInitSpec(assertThisInitialized_assertThisInitialized(_this), _trackedProps, {
       writable: true,
       value: /* @__PURE__ */new Set()
     });
     _this.options = options;
-    _classPrivateFieldSet(_assertThisInitialized(_this), _client, client);
-    _classPrivateFieldSet(_assertThisInitialized(_this), _selectError, null);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _client, client);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _selectError, null);
+    _classPrivateFieldSet(assertThisInitialized_assertThisInitialized(_this), _currentThenable, pendingThenable());
+    if (!_this.options.experimental_prefetchInRender) {
+      _classPrivateFieldGet(assertThisInitialized_assertThisInitialized(_this), _currentThenable).reject(new Error("experimental_prefetchInRender feature flag is not enabled"));
+    }
     _this.bindMethods();
     _this.setOptions(options);
     return _this;
@@ -23708,7 +24636,6 @@ var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__
       var _this3 = this;
       var defaultedOptions = _classPrivateFieldGet(this, _client).defaultQueryOptions(options);
       var query = _classPrivateFieldGet(this, _client).getQueryCache().build(_classPrivateFieldGet(this, _client), defaultedOptions);
-      query.isFetchingOptimistic = true;
       return query.fetch().then(function () {
         return _this3.createResult(query, defaultedOptions);
       });
@@ -23728,6 +24655,7 @@ var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__
   }, {
     key: "createResult",
     value: function createResult(query, options) {
+      var _this5 = this;
       var prevQuery = _classPrivateFieldGet(this, _currentQuery);
       var prevOptions = this.options;
       var prevResult = _classPrivateFieldGet(this, _currentResult);
@@ -23828,14 +24756,47 @@ var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__
         isPlaceholderData: isPlaceholderData,
         isRefetchError: isError && hasData,
         isStale: isStale(query, options),
-        refetch: this.refetch
+        refetch: this.refetch,
+        promise: _classPrivateFieldGet(this, _currentThenable)
       };
-      return result;
+      var nextResult = result;
+      if (this.options.experimental_prefetchInRender) {
+        var finalizeThenableIfPossible = function finalizeThenableIfPossible(thenable) {
+          if (nextResult.status === "error") {
+            thenable.reject(nextResult.error);
+          } else if (nextResult.data !== void 0) {
+            thenable.resolve(nextResult.data);
+          }
+        };
+        var recreateThenable = function recreateThenable() {
+          var pending = _classPrivateFieldSet(_this5, _currentThenable, nextResult.promise = pendingThenable());
+          finalizeThenableIfPossible(pending);
+        };
+        var prevThenable = _classPrivateFieldGet(this, _currentThenable);
+        switch (prevThenable.status) {
+          case "pending":
+            if (query.queryHash === prevQuery.queryHash) {
+              finalizeThenableIfPossible(prevThenable);
+            }
+            break;
+          case "fulfilled":
+            if (nextResult.status === "error" || nextResult.data !== prevThenable.value) {
+              recreateThenable();
+            }
+            break;
+          case "rejected":
+            if (nextResult.status !== "error" || nextResult.error !== prevThenable.reason) {
+              recreateThenable();
+            }
+            break;
+        }
+      }
+      return nextResult;
     }
   }, {
     key: "updateResult",
     value: function updateResult(notifyOptions) {
-      var _this5 = this;
+      var _this6 = this;
       var prevResult = _classPrivateFieldGet(this, _currentResult);
       var nextResult = this.createResult(_classPrivateFieldGet(this, _currentQuery), this.options);
       _classPrivateFieldSet(this, _currentResultState, _classPrivateFieldGet(this, _currentQuery).state);
@@ -23852,18 +24813,18 @@ var QueryObserver = (_client = /*#__PURE__*/new WeakMap(), _currentQuery = /*#__
         if (!prevResult) {
           return true;
         }
-        var notifyOnChangeProps = _this5.options.notifyOnChangeProps;
+        var notifyOnChangeProps = _this6.options.notifyOnChangeProps;
         var notifyOnChangePropsValue = typeof notifyOnChangeProps === "function" ? notifyOnChangeProps() : notifyOnChangeProps;
-        if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !_classPrivateFieldGet(_this5, _trackedProps).size) {
+        if (notifyOnChangePropsValue === "all" || !notifyOnChangePropsValue && !_classPrivateFieldGet(_this6, _trackedProps).size) {
           return true;
         }
-        var includedProps = new Set(notifyOnChangePropsValue !== null && notifyOnChangePropsValue !== void 0 ? notifyOnChangePropsValue : _classPrivateFieldGet(_this5, _trackedProps));
-        if (_this5.options.throwOnError) {
+        var includedProps = new Set(notifyOnChangePropsValue !== null && notifyOnChangePropsValue !== void 0 ? notifyOnChangePropsValue : _classPrivateFieldGet(_this6, _trackedProps));
+        if (_this6.options.throwOnError) {
           includedProps.add("error");
         }
-        return Object.keys(_classPrivateFieldGet(_this5, _currentResult)).some(function (key) {
+        return Object.keys(_classPrivateFieldGet(_this6, _currentResult)).some(function (key) {
           var typedKey = key;
-          var changed = _classPrivateFieldGet(_this5, _currentResult)[typedKey] !== prevResult[typedKey];
+          var changed = _classPrivateFieldGet(_this6, _currentResult)[typedKey] !== prevResult[typedKey];
           return changed && includedProps.has(typedKey);
         });
       };
@@ -23892,7 +24853,7 @@ function _executeFetch2(fetchOptions) {
   return promise;
 }
 function _updateStaleTimeout2() {
-  var _this6 = this;
+  var _this7 = this;
   _classPrivateMethodGet(this, _clearStaleTimeout, _clearStaleTimeout2).call(this);
   var staleTime = resolveStaleTime(this.options.staleTime, _classPrivateFieldGet(this, _currentQuery));
   if (isServer || _classPrivateFieldGet(this, _currentResult).isStale || !isValidTimeout(staleTime)) {
@@ -23901,8 +24862,8 @@ function _updateStaleTimeout2() {
   var time = timeUntilStale(_classPrivateFieldGet(this, _currentResult).dataUpdatedAt, staleTime);
   var timeout = time + 1;
   _classPrivateFieldSet(this, _staleTimeoutId, setTimeout(function () {
-    if (!_classPrivateFieldGet(_this6, _currentResult).isStale) {
-      _this6.updateResult();
+    if (!_classPrivateFieldGet(_this7, _currentResult).isStale) {
+      _this7.updateResult();
     }
   }, timeout));
 }
@@ -23911,15 +24872,15 @@ function _computeRefetchInterval2() {
   return (_ref2 = typeof this.options.refetchInterval === "function" ? this.options.refetchInterval(_classPrivateFieldGet(this, _currentQuery)) : this.options.refetchInterval) !== null && _ref2 !== void 0 ? _ref2 : false;
 }
 function _updateRefetchInterval2(nextInterval) {
-  var _this7 = this;
+  var _this8 = this;
   _classPrivateMethodGet(this, _clearRefetchInterval, _clearRefetchInterval2).call(this);
   _classPrivateFieldSet(this, _currentRefetchInterval, nextInterval);
   if (isServer || resolveEnabled(this.options.enabled, _classPrivateFieldGet(this, _currentQuery)) === false || !isValidTimeout(_classPrivateFieldGet(this, _currentRefetchInterval)) || _classPrivateFieldGet(this, _currentRefetchInterval) === 0) {
     return;
   }
   _classPrivateFieldSet(this, _refetchIntervalId, setInterval(function () {
-    if (_this7.options.refetchIntervalInBackground || focusManager.isFocused()) {
-      _classPrivateMethodGet(_this7, _executeFetch, _executeFetch2).call(_this7);
+    if (_this8.options.refetchIntervalInBackground || focusManager.isFocused()) {
+      _classPrivateMethodGet(_this8, _executeFetch, _executeFetch2).call(_this8);
     }
   }, _classPrivateFieldGet(this, _currentRefetchInterval)));
 }
@@ -23953,15 +24914,15 @@ function _updateQuery2() {
   }
 }
 function _notify2(notifyOptions) {
-  var _this8 = this;
+  var _this9 = this;
   notifyManager.batch(function () {
     if (notifyOptions.listeners) {
-      _this8.listeners.forEach(function (listener) {
-        listener(_classPrivateFieldGet(_this8, _currentResult));
+      _this9.listeners.forEach(function (listener) {
+        listener(_classPrivateFieldGet(_this9, _currentResult));
       });
     }
-    _classPrivateFieldGet(_this8, _client).getQueryCache().notify({
-      query: _classPrivateFieldGet(_this8, _currentQuery),
+    _classPrivateFieldGet(_this9, _client).getQueryCache().notify({
+      query: _classPrivateFieldGet(_this9, _currentQuery),
       type: "observerResultsUpdated"
     });
   });
@@ -24032,18 +24993,6 @@ var QueryErrorResetBoundary = function QueryErrorResetBoundary(_ref) {
 };
 
 //# sourceMappingURL=QueryErrorResetBoundary.js.map
-;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/isRestoring.js
-"use client";
-
-// src/isRestoring.ts
-
-var IsRestoringContext = react.createContext(false);
-var useIsRestoring = function useIsRestoring() {
-  return react.useContext(IsRestoringContext);
-};
-var IsRestoringProvider = IsRestoringContext.Provider;
-
-//# sourceMappingURL=isRestoring.js.map
 ;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/utils.js
 
 // src/utils.ts
@@ -24063,7 +25012,7 @@ function utils_noop() {}
 
 
 var ensurePreventErrorBoundaryRetry = function ensurePreventErrorBoundaryRetry(options, errorResetBoundary) {
-  if (options.suspense || options.throwOnError) {
+  if (options.suspense || options.throwOnError || options.experimental_prefetchInRender) {
     if (!errorResetBoundary.isReset()) {
       options.retryOnMount = false;
     }
@@ -24083,6 +25032,18 @@ var getHasError = function getHasError(_ref) {
 };
 
 //# sourceMappingURL=errorBoundaryUtils.js.map
+;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/isRestoring.js
+"use client";
+
+// src/isRestoring.ts
+
+var IsRestoringContext = react.createContext(false);
+var useIsRestoring = function useIsRestoring() {
+  return react.useContext(IsRestoringContext);
+};
+var IsRestoringProvider = IsRestoringContext.Provider;
+
+//# sourceMappingURL=isRestoring.js.map
 ;// CONCATENATED MODULE: ../../node_modules/@tanstack/react-query/build/modern/suspense.js
 // src/suspense.ts
 var defaultThrowOnError = function defaultThrowOnError(_error, query) {
@@ -24090,7 +25051,7 @@ var defaultThrowOnError = function defaultThrowOnError(_error, query) {
 };
 var ensureSuspenseTimers = function ensureSuspenseTimers(defaultedOptions) {
   if (defaultedOptions.suspense) {
-    if (typeof defaultedOptions.staleTime !== "number") {
+    if (defaultedOptions.staleTime === void 0) {
       defaultedOptions.staleTime = 1e3;
     }
     if (typeof defaultedOptions.gcTime === "number") {
@@ -24123,6 +25084,7 @@ var fetchOptimistic = function fetchOptimistic(defaultedOptions, observer, error
 
 
 
+
 function useBaseQuery(options, Observer, queryClient) {
   var _client$getDefaultOpt, _client$getDefaultOpt2, _client$getDefaultOpt3, _client$getDefaultOpt4;
   if (false) {}
@@ -24135,6 +25097,7 @@ function useBaseQuery(options, Observer, queryClient) {
   ensureSuspenseTimers(defaultedOptions);
   ensurePreventErrorBoundaryRetry(defaultedOptions, errorResetBoundary);
   useClearResetErrorBoundary(errorResetBoundary);
+  var isNewCacheEntry = !client.getQueryCache().get(defaultedOptions.queryHash);
   var _React$useState = react.useState(function () {
       return new Observer(client, defaultedOptions);
     }),
@@ -24170,6 +25133,16 @@ function useBaseQuery(options, Observer, queryClient) {
   }
   ;
   (_client$getDefaultOpt3 = client.getDefaultOptions().queries) === null || _client$getDefaultOpt3 === void 0 || (_client$getDefaultOpt4 = _client$getDefaultOpt3._experimental_afterQuery) === null || _client$getDefaultOpt4 === void 0 || _client$getDefaultOpt4.call(_client$getDefaultOpt3, defaultedOptions, result);
+  if (defaultedOptions.experimental_prefetchInRender && !isServer && willFetch(result, isRestoring)) {
+    var _client$getQueryCache;
+    var promise = isNewCacheEntry ?
+    // Fetch immediately on render in order to ensure `.promise` is resolved even if the component is unmounted
+    fetchOptimistic(defaultedOptions, observer, errorResetBoundary) : // subscribe to the "cache promise" so that we can finalize the currentThenable once data comes in
+    (_client$getQueryCache = client.getQueryCache().get(defaultedOptions.queryHash)) === null || _client$getQueryCache === void 0 ? void 0 : _client$getQueryCache.promise;
+    promise === null || promise === void 0 || promise["catch"](utils_noop)["finally"](function () {
+      observer.updateResult();
+    });
+  }
   return !defaultedOptions.notifyOnChangeProps ? observer.trackResult(result) : result;
 }
 
@@ -24187,6 +25160,5968 @@ function useQuery(options, queryClient) {
 //# sourceMappingURL=useQuery.js.map
 ;// CONCATENATED MODULE: ./src/pages/query/QueryPage.tsx
 function QueryPage(){var _useQuery=useQuery({queryKey:['repoData'],queryFn:function(){var _queryFn=asyncToGenerator_asyncToGenerator(/*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee(){var response;return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:_context.next=2;return fetch('https://api.github.com/repos/TanStack/query');case 2:response=_context.sent;_context.next=5;return response.json();case 5:return _context.abrupt("return",_context.sent);case 6:case"end":return _context.stop();}},_callee);}));function queryFn(){return _queryFn.apply(this,arguments);}return queryFn;}()}),isPending=_useQuery.isPending,error=_useQuery.error,data=_useQuery.data,isFetching=_useQuery.isFetching,refetch=_useQuery.refetch;if(isPending)return'Loading...';if(error)return'An error has occurred: '+error.message;return/*#__PURE__*/(0,jsx_runtime.jsxs)("div",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:data.full_name}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Subscribers: ",data.subscribers_count]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Stargazers: ",data.stargazers_count]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Forks: ",data.forks_count]}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return refetch();},disabled:isFetching,children:isFetching?'Refreshing...':'Refresh'})]});}
+// EXTERNAL MODULE: ../../node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js
+var use_sync_external_store_with_selector = __webpack_require__("../../node_modules/react-redux/node_modules/use-sync-external-store/with-selector.js");
+;// CONCATENATED MODULE: ../../node_modules/react-redux/dist/react-redux.mjs
+
+
+
+
+
+var react_redux_excluded = (/* unused pure expression or super */ null && (["initMapStateToProps", "initMapDispatchToProps", "initMergeProps"])),
+  _excluded2 = (/* unused pure expression or super */ null && (["reactReduxForwardedRef"]));
+// src/index.ts
+
+
+
+// src/utils/react.ts
+
+var react_redux_React =
+// prettier-ignore
+// @ts-ignore
+ true ? react : react_namespaceObject;
+
+// src/components/Context.ts
+var ContextKey = Symbol["for"]("react-redux-context");
+var gT = typeof globalThis !== "undefined" ? globalThis : ( /* fall back to a per-module scope (pre-8.1 behaviour) if `globalThis` is not available */
+{});
+function getContext() {
+  var _gT$ContextKey;
+  if (!react_redux_React.createContext) return {};
+  var contextMap = (_gT$ContextKey = gT[ContextKey]) !== null && _gT$ContextKey !== void 0 ? _gT$ContextKey : gT[ContextKey] = /* @__PURE__ */new Map();
+  var realContext = contextMap.get(react_redux_React.createContext);
+  if (!realContext) {
+    realContext = react_redux_React.createContext(null);
+    if (false) {}
+    contextMap.set(react_redux_React.createContext, realContext);
+  }
+  return realContext;
+}
+var ReactReduxContext = /* @__PURE__ */getContext();
+
+// src/utils/useSyncExternalStore.ts
+var notInitialized = function notInitialized() {
+  throw new Error("uSES not initialized!");
+};
+
+// src/hooks/useReduxContext.ts
+function createReduxContextHook() {
+  var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ReactReduxContext;
+  return function useReduxContext2() {
+    var contextValue = react_redux_React.useContext(context);
+    if (false) {}
+    return contextValue;
+  };
+}
+var useReduxContext = /* @__PURE__ */createReduxContextHook();
+
+// src/hooks/useSelector.ts
+var useSyncExternalStoreWithSelector = notInitialized;
+var initializeUseSelector = function initializeUseSelector(fn) {
+  useSyncExternalStoreWithSelector = fn;
+};
+var refEquality = function refEquality(a, b) {
+  return a === b;
+};
+function createSelectorHook() {
+  var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ReactReduxContext;
+  var useReduxContext2 = context === ReactReduxContext ? useReduxContext : createReduxContextHook(context);
+  var useSelector2 = function useSelector2(selector) {
+    var equalityFnOrOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var _ref = typeof equalityFnOrOptions === "function" ? {
+        equalityFn: equalityFnOrOptions
+      } : equalityFnOrOptions,
+      _ref$equalityFn = _ref.equalityFn,
+      equalityFn = _ref$equalityFn === void 0 ? refEquality : _ref$equalityFn,
+      _ref$devModeChecks = _ref.devModeChecks,
+      devModeChecks = _ref$devModeChecks === void 0 ? {} : _ref$devModeChecks;
+    if (false) {}
+    var _useReduxContext = useReduxContext2(),
+      store = _useReduxContext.store,
+      subscription = _useReduxContext.subscription,
+      getServerState = _useReduxContext.getServerState,
+      stabilityCheck = _useReduxContext.stabilityCheck,
+      identityFunctionCheck = _useReduxContext.identityFunctionCheck;
+    var firstRun = react_redux_React.useRef(true);
+    var wrappedSelector = react_redux_React.useCallback(defineProperty_defineProperty({}, selector.name, function (state) {
+      var selected = selector(state);
+      if (false) { var _stack, stack, toCompare, _stabilityCheck$ident, finalIdentityFunctionCheck, finalStabilityCheck; }
+      return selected;
+    })[selector.name], [selector, stabilityCheck, devModeChecks.stabilityCheck]);
+    var selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, wrappedSelector, equalityFn);
+    react_redux_React.useDebugValue(selectedState);
+    return selectedState;
+  };
+  Object.assign(useSelector2, {
+    withTypes: function withTypes() {
+      return useSelector2;
+    }
+  });
+  return useSelector2;
+}
+var useSelector = /* @__PURE__ */createSelectorHook();
+
+// src/utils/react-is.ts
+var REACT_ELEMENT_TYPE = Symbol["for"]("react.element");
+var REACT_PORTAL_TYPE = Symbol["for"]("react.portal");
+var REACT_FRAGMENT_TYPE = Symbol["for"]("react.fragment");
+var REACT_STRICT_MODE_TYPE = Symbol["for"]("react.strict_mode");
+var REACT_PROFILER_TYPE = Symbol["for"]("react.profiler");
+var REACT_PROVIDER_TYPE = Symbol["for"]("react.provider");
+var REACT_CONTEXT_TYPE = Symbol["for"]("react.context");
+var REACT_SERVER_CONTEXT_TYPE = Symbol["for"]("react.server_context");
+var REACT_FORWARD_REF_TYPE = Symbol["for"]("react.forward_ref");
+var REACT_SUSPENSE_TYPE = Symbol["for"]("react.suspense");
+var REACT_SUSPENSE_LIST_TYPE = Symbol["for"]("react.suspense_list");
+var REACT_MEMO_TYPE = Symbol["for"]("react.memo");
+var REACT_LAZY_TYPE = Symbol["for"]("react.lazy");
+var REACT_OFFSCREEN_TYPE = Symbol["for"]("react.offscreen");
+var REACT_CLIENT_REFERENCE = Symbol["for"]("react.client.reference");
+var react_redux_ForwardRef = REACT_FORWARD_REF_TYPE;
+var Memo = REACT_MEMO_TYPE;
+function isValidElementType(type) {
+  if (typeof type === "string" || typeof type === "function") {
+    return true;
+  }
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE) {
+    return true;
+  }
+  if (typeof type === "object" && type !== null) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE ||
+    // This needs to include all possible module reference object
+    // types supported by any Flight configuration anywhere since
+    // we don't know which Flight build this will end up being used
+    // with.
+    type.$$typeof === REACT_CLIENT_REFERENCE || type.getModuleId !== void 0) {
+      return true;
+    }
+  }
+  return false;
+}
+function typeOf(object) {
+  if (typeof object === "object" && object !== null) {
+    var $$typeof = object.$$typeof;
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE:
+        {
+          var type = object.type;
+          switch (type) {
+            case REACT_FRAGMENT_TYPE:
+            case REACT_PROFILER_TYPE:
+            case REACT_STRICT_MODE_TYPE:
+            case REACT_SUSPENSE_TYPE:
+            case REACT_SUSPENSE_LIST_TYPE:
+              return type;
+            default:
+              {
+                var $$typeofType = type && type.$$typeof;
+                switch ($$typeofType) {
+                  case REACT_SERVER_CONTEXT_TYPE:
+                  case REACT_CONTEXT_TYPE:
+                  case REACT_FORWARD_REF_TYPE:
+                  case REACT_LAZY_TYPE:
+                  case REACT_MEMO_TYPE:
+                  case REACT_PROVIDER_TYPE:
+                    return $$typeofType;
+                  default:
+                    return $$typeof;
+                }
+              }
+          }
+        }
+      case REACT_PORTAL_TYPE:
+        {
+          return $$typeof;
+        }
+    }
+  }
+  return void 0;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isMemo(object) {
+  return typeOf(object) === REACT_MEMO_TYPE;
+}
+
+// src/utils/warning.ts
+function react_redux_warning(message) {
+  if (typeof console !== "undefined" && typeof console.error === "function") {
+    console.error(message);
+  }
+  try {
+    throw new Error(message);
+  } catch (e) {}
+}
+
+// src/connect/verifySubselectors.ts
+function verify(selector, methodName) {
+  if (!selector) {
+    throw new Error("Unexpected value for ".concat(methodName, " in connect."));
+  } else if (methodName === "mapStateToProps" || methodName === "mapDispatchToProps") {
+    if (!Object.prototype.hasOwnProperty.call(selector, "dependsOnOwnProps")) {
+      react_redux_warning("The selector for ".concat(methodName, " of connect did not specify a value for dependsOnOwnProps."));
+    }
+  }
+}
+function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps) {
+  verify(mapStateToProps, "mapStateToProps");
+  verify(mapDispatchToProps, "mapDispatchToProps");
+  verify(mergeProps, "mergeProps");
+}
+
+// src/connect/selectorFactory.ts
+function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, _ref2) {
+  var areStatesEqual = _ref2.areStatesEqual,
+    areOwnPropsEqual = _ref2.areOwnPropsEqual,
+    areStatePropsEqual = _ref2.areStatePropsEqual;
+  var hasRunAtLeastOnce = false;
+  var state;
+  var ownProps;
+  var stateProps;
+  var dispatchProps;
+  var mergedProps;
+  function handleFirstCall(firstState, firstOwnProps) {
+    state = firstState;
+    ownProps = firstOwnProps;
+    stateProps = mapStateToProps(state, ownProps);
+    dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    hasRunAtLeastOnce = true;
+    return mergedProps;
+  }
+  function handleNewPropsAndNewState() {
+    stateProps = mapStateToProps(state, ownProps);
+    if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleNewProps() {
+    if (mapStateToProps.dependsOnOwnProps) stateProps = mapStateToProps(state, ownProps);
+    if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+    mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleNewState() {
+    var nextStateProps = mapStateToProps(state, ownProps);
+    var statePropsChanged = !areStatePropsEqual(nextStateProps, stateProps);
+    stateProps = nextStateProps;
+    if (statePropsChanged) mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+    return mergedProps;
+  }
+  function handleSubsequentCalls(nextState, nextOwnProps) {
+    var propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
+    var stateChanged = !areStatesEqual(nextState, state, nextOwnProps, ownProps);
+    state = nextState;
+    ownProps = nextOwnProps;
+    if (propsChanged && stateChanged) return handleNewPropsAndNewState();
+    if (propsChanged) return handleNewProps();
+    if (stateChanged) return handleNewState();
+    return mergedProps;
+  }
+  return function pureFinalPropsSelector(nextState, nextOwnProps) {
+    return hasRunAtLeastOnce ? handleSubsequentCalls(nextState, nextOwnProps) : handleFirstCall(nextState, nextOwnProps);
+  };
+}
+function finalPropsSelectorFactory(dispatch, _ref3) {
+  var initMapStateToProps = _ref3.initMapStateToProps,
+    initMapDispatchToProps = _ref3.initMapDispatchToProps,
+    initMergeProps = _ref3.initMergeProps,
+    options = _objectWithoutProperties(_ref3, react_redux_excluded);
+  var mapStateToProps = initMapStateToProps(dispatch, options);
+  var mapDispatchToProps = initMapDispatchToProps(dispatch, options);
+  var mergeProps = initMergeProps(dispatch, options);
+  if (false) {}
+  return pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
+}
+
+// src/utils/bindActionCreators.ts
+function bindActionCreators(actionCreators, dispatch) {
+  var boundActionCreators = {};
+  var _loop = function _loop() {
+    var actionCreator = actionCreators[key];
+    if (typeof actionCreator === "function") {
+      boundActionCreators[key] = function () {
+        return dispatch(actionCreator.apply(void 0, arguments));
+      };
+    }
+  };
+  for (var key in actionCreators) {
+    _loop();
+  }
+  return boundActionCreators;
+}
+
+// src/utils/isPlainObject.ts
+function react_redux_isPlainObject(obj) {
+  if (typeof obj !== "object" || obj === null) return false;
+  var proto = Object.getPrototypeOf(obj);
+  if (proto === null) return true;
+  var baseProto = proto;
+  while (Object.getPrototypeOf(baseProto) !== null) {
+    baseProto = Object.getPrototypeOf(baseProto);
+  }
+  return proto === baseProto;
+}
+
+// src/utils/verifyPlainObject.ts
+function verifyPlainObject(value, displayName, methodName) {
+  if (!react_redux_isPlainObject(value)) {
+    react_redux_warning("".concat(methodName, "() in ").concat(displayName, " must return a plain object. Instead received ").concat(value, "."));
+  }
+}
+
+// src/connect/wrapMapToProps.ts
+function wrapMapToPropsConstant(getConstant) {
+  return function initConstantSelector(dispatch) {
+    var constant = getConstant(dispatch);
+    function constantSelector() {
+      return constant;
+    }
+    constantSelector.dependsOnOwnProps = false;
+    return constantSelector;
+  };
+}
+function getDependsOnOwnProps(mapToProps) {
+  return mapToProps.dependsOnOwnProps ? Boolean(mapToProps.dependsOnOwnProps) : mapToProps.length !== 1;
+}
+function wrapMapToPropsFunc(mapToProps, methodName) {
+  return function initProxySelector(dispatch, _ref4) {
+    var displayName = _ref4.displayName;
+    var proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
+      return proxy.dependsOnOwnProps ? proxy.mapToProps(stateOrDispatch, ownProps) : proxy.mapToProps(stateOrDispatch, void 0);
+    };
+    proxy.dependsOnOwnProps = true;
+    proxy.mapToProps = function detectFactoryAndVerify(stateOrDispatch, ownProps) {
+      proxy.mapToProps = mapToProps;
+      proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps);
+      var props = proxy(stateOrDispatch, ownProps);
+      if (typeof props === "function") {
+        proxy.mapToProps = props;
+        proxy.dependsOnOwnProps = getDependsOnOwnProps(props);
+        props = proxy(stateOrDispatch, ownProps);
+      }
+      if (false) {}
+      return props;
+    };
+    return proxy;
+  };
+}
+
+// src/connect/invalidArgFactory.ts
+function createInvalidArgFactory(arg, name) {
+  return function (dispatch, options) {
+    throw new Error("Invalid value of type ".concat(typeof arg, " for ").concat(name, " argument when connecting component ").concat(options.wrappedComponentName, "."));
+  };
+}
+
+// src/connect/mapDispatchToProps.ts
+function mapDispatchToPropsFactory(mapDispatchToProps) {
+  return mapDispatchToProps && typeof mapDispatchToProps === "object" ? wrapMapToPropsConstant(function (dispatch) {
+    return (
+      // @ts-ignore
+      bindActionCreators(mapDispatchToProps, dispatch)
+    );
+  }) : !mapDispatchToProps ? wrapMapToPropsConstant(function (dispatch) {
+    return {
+      dispatch: dispatch
+    };
+  }) : typeof mapDispatchToProps === "function" ?
+  // @ts-ignore
+  wrapMapToPropsFunc(mapDispatchToProps, "mapDispatchToProps") : createInvalidArgFactory(mapDispatchToProps, "mapDispatchToProps");
+}
+
+// src/connect/mapStateToProps.ts
+function mapStateToPropsFactory(mapStateToProps) {
+  return !mapStateToProps ? wrapMapToPropsConstant(function () {
+    return {};
+  }) : typeof mapStateToProps === "function" ?
+  // @ts-ignore
+  wrapMapToPropsFunc(mapStateToProps, "mapStateToProps") : createInvalidArgFactory(mapStateToProps, "mapStateToProps");
+}
+
+// src/connect/mergeProps.ts
+function defaultMergeProps(stateProps, dispatchProps, ownProps) {
+  return _objectSpread(_objectSpread(_objectSpread({}, ownProps), stateProps), dispatchProps);
+}
+function wrapMergePropsFunc(mergeProps) {
+  return function initMergePropsProxy(dispatch, _ref5) {
+    var displayName = _ref5.displayName,
+      areMergedPropsEqual = _ref5.areMergedPropsEqual;
+    var hasRunOnce = false;
+    var mergedProps;
+    return function mergePropsProxy(stateProps, dispatchProps, ownProps) {
+      var nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+      if (hasRunOnce) {
+        if (!areMergedPropsEqual(nextMergedProps, mergedProps)) mergedProps = nextMergedProps;
+      } else {
+        hasRunOnce = true;
+        mergedProps = nextMergedProps;
+        if (false) {}
+      }
+      return mergedProps;
+    };
+  };
+}
+function mergePropsFactory(mergeProps) {
+  return !mergeProps ? function () {
+    return defaultMergeProps;
+  } : typeof mergeProps === "function" ? wrapMergePropsFunc(mergeProps) : createInvalidArgFactory(mergeProps, "mergeProps");
+}
+
+// src/utils/batch.ts
+function defaultNoopBatch(callback) {
+  callback();
+}
+
+// src/utils/Subscription.ts
+function createListenerCollection() {
+  var first = null;
+  var last = null;
+  return {
+    clear: function clear() {
+      first = null;
+      last = null;
+    },
+    notify: function notify() {
+      defaultNoopBatch(function () {
+        var listener = first;
+        while (listener) {
+          listener.callback();
+          listener = listener.next;
+        }
+      });
+    },
+    get: function get() {
+      var listeners = [];
+      var listener = first;
+      while (listener) {
+        listeners.push(listener);
+        listener = listener.next;
+      }
+      return listeners;
+    },
+    subscribe: function subscribe(callback) {
+      var isSubscribed = true;
+      var listener = last = {
+        callback: callback,
+        next: null,
+        prev: last
+      };
+      if (listener.prev) {
+        listener.prev.next = listener;
+      } else {
+        first = listener;
+      }
+      return function unsubscribe() {
+        if (!isSubscribed || first === null) return;
+        isSubscribed = false;
+        if (listener.next) {
+          listener.next.prev = listener.prev;
+        } else {
+          last = listener.prev;
+        }
+        if (listener.prev) {
+          listener.prev.next = listener.next;
+        } else {
+          first = listener.next;
+        }
+      };
+    }
+  };
+}
+var nullListeners = {
+  notify: function notify() {},
+  get: function get() {
+    return [];
+  }
+};
+function createSubscription(store, parentSub) {
+  var unsubscribe;
+  var listeners = nullListeners;
+  var subscriptionsAmount = 0;
+  var selfSubscribed = false;
+  function addNestedSub(listener) {
+    trySubscribe();
+    var cleanupListener = listeners.subscribe(listener);
+    var removed = false;
+    return function () {
+      if (!removed) {
+        removed = true;
+        cleanupListener();
+        tryUnsubscribe();
+      }
+    };
+  }
+  function notifyNestedSubs() {
+    listeners.notify();
+  }
+  function handleChangeWrapper() {
+    if (subscription.onStateChange) {
+      subscription.onStateChange();
+    }
+  }
+  function isSubscribed() {
+    return selfSubscribed;
+  }
+  function trySubscribe() {
+    subscriptionsAmount++;
+    if (!unsubscribe) {
+      unsubscribe = parentSub ? parentSub.addNestedSub(handleChangeWrapper) : store.subscribe(handleChangeWrapper);
+      listeners = createListenerCollection();
+    }
+  }
+  function tryUnsubscribe() {
+    subscriptionsAmount--;
+    if (unsubscribe && subscriptionsAmount === 0) {
+      unsubscribe();
+      unsubscribe = void 0;
+      listeners.clear();
+      listeners = nullListeners;
+    }
+  }
+  function trySubscribeSelf() {
+    if (!selfSubscribed) {
+      selfSubscribed = true;
+      trySubscribe();
+    }
+  }
+  function tryUnsubscribeSelf() {
+    if (selfSubscribed) {
+      selfSubscribed = false;
+      tryUnsubscribe();
+    }
+  }
+  var subscription = {
+    addNestedSub: addNestedSub,
+    notifyNestedSubs: notifyNestedSubs,
+    handleChangeWrapper: handleChangeWrapper,
+    isSubscribed: isSubscribed,
+    trySubscribe: trySubscribeSelf,
+    tryUnsubscribe: tryUnsubscribeSelf,
+    getListeners: function getListeners() {
+      return listeners;
+    }
+  };
+  return subscription;
+}
+
+// src/utils/useIsomorphicLayoutEffect.ts
+var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
+var isReactNative = typeof navigator !== "undefined" && navigator.product === "ReactNative";
+var react_redux_useIsomorphicLayoutEffect = canUseDOM || isReactNative ? react_redux_React.useLayoutEffect : react_redux_React.useEffect;
+
+// src/utils/shallowEqual.ts
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) return true;
+  if (typeof objA !== "object" || objA === null || typeof objB !== "object" || objB === null) {
+    return false;
+  }
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+  if (keysA.length !== keysB.length) return false;
+  for (var i = 0; i < keysA.length; i++) {
+    if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// src/utils/hoistStatics.ts
+var REACT_STATICS = {
+  childContextTypes: true,
+  contextType: true,
+  contextTypes: true,
+  defaultProps: true,
+  displayName: true,
+  getDefaultProps: true,
+  getDerivedStateFromError: true,
+  getDerivedStateFromProps: true,
+  mixins: true,
+  propTypes: true,
+  type: true
+};
+var KNOWN_STATICS = {
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
+};
+var FORWARD_REF_STATICS = {
+  $$typeof: true,
+  render: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true
+};
+var MEMO_STATICS = {
+  $$typeof: true,
+  compare: true,
+  defaultProps: true,
+  displayName: true,
+  propTypes: true,
+  type: true
+};
+var TYPE_STATICS = defineProperty_defineProperty(defineProperty_defineProperty({}, react_redux_ForwardRef, FORWARD_REF_STATICS), Memo, MEMO_STATICS);
+function getStatics(component) {
+  if (isMemo(component)) {
+    return MEMO_STATICS;
+  }
+  return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
+}
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function react_redux_hoistNonReactStatics(targetComponent, sourceComponent) {
+  if (typeof sourceComponent !== "string") {
+    if (objectPrototype) {
+      var inheritedComponent = getPrototypeOf(sourceComponent);
+      if (inheritedComponent && inheritedComponent !== objectPrototype) {
+        react_redux_hoistNonReactStatics(targetComponent, inheritedComponent);
+      }
+    }
+    var keys = getOwnPropertyNames(sourceComponent);
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+    }
+    var targetStatics = getStatics(targetComponent);
+    var sourceStatics = getStatics(sourceComponent);
+    for (var i = 0; i < keys.length; ++i) {
+      var key = keys[i];
+      if (!KNOWN_STATICS[key] && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+        var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+        try {
+          defineProperty(targetComponent, key, descriptor);
+        } catch (e) {}
+      }
+    }
+  }
+  return targetComponent;
+}
+
+// src/components/connect.tsx
+var useSyncExternalStore = (/* unused pure expression or super */ null && (notInitialized));
+var initializeConnect = function initializeConnect(fn) {
+  useSyncExternalStore = fn;
+};
+var NO_SUBSCRIPTION_ARRAY = (/* unused pure expression or super */ null && ([null, null]));
+var stringifyComponent = function stringifyComponent(Comp) {
+  try {
+    return JSON.stringify(Comp);
+  } catch (err) {
+    return String(Comp);
+  }
+};
+function useIsomorphicLayoutEffectWithArgs(effectFunc, effectArgs, dependencies) {
+  react_redux_useIsomorphicLayoutEffect(function () {
+    return effectFunc.apply(void 0, _toConsumableArray(effectArgs));
+  }, dependencies);
+}
+function captureWrapperProps(lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs) {
+  lastWrapperProps.current = wrapperProps;
+  renderIsScheduled.current = false;
+  if (childPropsFromStoreUpdate.current) {
+    childPropsFromStoreUpdate.current = null;
+    notifyNestedSubs();
+  }
+}
+function subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, additionalSubscribeListener) {
+  if (!shouldHandleStateChanges) return function () {};
+  var didUnsubscribe = false;
+  var lastThrownError = null;
+  var checkForUpdates = function checkForUpdates() {
+    if (didUnsubscribe || !isMounted.current) {
+      return;
+    }
+    var latestStoreState = store.getState();
+    var newChildProps, error;
+    try {
+      newChildProps = childPropsSelector(latestStoreState, lastWrapperProps.current);
+    } catch (e) {
+      error = e;
+      lastThrownError = e;
+    }
+    if (!error) {
+      lastThrownError = null;
+    }
+    if (newChildProps === lastChildProps.current) {
+      if (!renderIsScheduled.current) {
+        notifyNestedSubs();
+      }
+    } else {
+      lastChildProps.current = newChildProps;
+      childPropsFromStoreUpdate.current = newChildProps;
+      renderIsScheduled.current = true;
+      additionalSubscribeListener();
+    }
+  };
+  subscription.onStateChange = checkForUpdates;
+  subscription.trySubscribe();
+  checkForUpdates();
+  var unsubscribeWrapper = function unsubscribeWrapper() {
+    didUnsubscribe = true;
+    subscription.tryUnsubscribe();
+    subscription.onStateChange = null;
+    if (lastThrownError) {
+      throw lastThrownError;
+    }
+  };
+  return unsubscribeWrapper;
+}
+function strictEqual(a, b) {
+  return a === b;
+}
+var hasWarnedAboutDeprecatedPureOption = false;
+function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
+  var _ref6 = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+    pure = _ref6.pure,
+    _ref6$areStatesEqual = _ref6.areStatesEqual,
+    areStatesEqual = _ref6$areStatesEqual === void 0 ? strictEqual : _ref6$areStatesEqual,
+    _ref6$areOwnPropsEqua = _ref6.areOwnPropsEqual,
+    areOwnPropsEqual = _ref6$areOwnPropsEqua === void 0 ? shallowEqual : _ref6$areOwnPropsEqua,
+    _ref6$areStatePropsEq = _ref6.areStatePropsEqual,
+    areStatePropsEqual = _ref6$areStatePropsEq === void 0 ? shallowEqual : _ref6$areStatePropsEq,
+    _ref6$areMergedPropsE = _ref6.areMergedPropsEqual,
+    areMergedPropsEqual = _ref6$areMergedPropsE === void 0 ? shallowEqual : _ref6$areMergedPropsE,
+    _ref6$forwardRef = _ref6.forwardRef,
+    forwardRef = _ref6$forwardRef === void 0 ? false : _ref6$forwardRef,
+    _ref6$context = _ref6.context,
+    context = _ref6$context === void 0 ? ReactReduxContext : _ref6$context;
+  if (false) {}
+  var Context = context;
+  var initMapStateToProps = mapStateToPropsFactory(mapStateToProps);
+  var initMapDispatchToProps = mapDispatchToPropsFactory(mapDispatchToProps);
+  var initMergeProps = mergePropsFactory(mergeProps);
+  var shouldHandleStateChanges = Boolean(mapStateToProps);
+  var wrapWithConnect = function wrapWithConnect(WrappedComponent) {
+    if (false) { var isValid; }
+    var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || "Component";
+    var displayName = "Connect(".concat(wrappedComponentName, ")");
+    var selectorFactoryOptions = {
+      shouldHandleStateChanges: shouldHandleStateChanges,
+      displayName: displayName,
+      wrappedComponentName: wrappedComponentName,
+      WrappedComponent: WrappedComponent,
+      // @ts-ignore
+      initMapStateToProps: initMapStateToProps,
+      // @ts-ignore
+      initMapDispatchToProps: initMapDispatchToProps,
+      initMergeProps: initMergeProps,
+      areStatesEqual: areStatesEqual,
+      areStatePropsEqual: areStatePropsEqual,
+      areOwnPropsEqual: areOwnPropsEqual,
+      areMergedPropsEqual: areMergedPropsEqual
+    };
+    function ConnectFunction(props) {
+      var _React$useMemo = react_redux_React.useMemo(function () {
+          var reactReduxForwardedRef2 = props.reactReduxForwardedRef,
+            wrapperProps2 = _objectWithoutProperties(props, _excluded2);
+          return [props.context, reactReduxForwardedRef2, wrapperProps2];
+        }, [props]),
+        _React$useMemo2 = _slicedToArray(_React$useMemo, 3),
+        propsContext = _React$useMemo2[0],
+        reactReduxForwardedRef = _React$useMemo2[1],
+        wrapperProps = _React$useMemo2[2];
+      var ContextToUse = react_redux_React.useMemo(function () {
+        var ResultContext = Context;
+        if (propsContext !== null && propsContext !== void 0 && propsContext.Consumer) {
+          if (false) { var _isValid; }
+        }
+        return ResultContext;
+      }, [propsContext, Context]);
+      var contextValue = react_redux_React.useContext(ContextToUse);
+      var didStoreComeFromProps = Boolean(props.store) && Boolean(props.store.getState) && Boolean(props.store.dispatch);
+      var didStoreComeFromContext = Boolean(contextValue) && Boolean(contextValue.store);
+      if (false) {}
+      var store = didStoreComeFromProps ? props.store : contextValue.store;
+      var getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
+      var childPropsSelector = react_redux_React.useMemo(function () {
+        return finalPropsSelectorFactory(store.dispatch, selectorFactoryOptions);
+      }, [store]);
+      var _React$useMemo3 = react_redux_React.useMemo(function () {
+          if (!shouldHandleStateChanges) return NO_SUBSCRIPTION_ARRAY;
+          var subscription2 = createSubscription(store, didStoreComeFromProps ? void 0 : contextValue.subscription);
+          var notifyNestedSubs2 = subscription2.notifyNestedSubs.bind(subscription2);
+          return [subscription2, notifyNestedSubs2];
+        }, [store, didStoreComeFromProps, contextValue]),
+        _React$useMemo4 = _slicedToArray(_React$useMemo3, 2),
+        subscription = _React$useMemo4[0],
+        notifyNestedSubs = _React$useMemo4[1];
+      var overriddenContextValue = react_redux_React.useMemo(function () {
+        if (didStoreComeFromProps) {
+          return contextValue;
+        }
+        return _objectSpread(_objectSpread({}, contextValue), {}, {
+          subscription: subscription
+        });
+      }, [didStoreComeFromProps, contextValue, subscription]);
+      var lastChildProps = react_redux_React.useRef(void 0);
+      var lastWrapperProps = react_redux_React.useRef(wrapperProps);
+      var childPropsFromStoreUpdate = react_redux_React.useRef(void 0);
+      var renderIsScheduled = react_redux_React.useRef(false);
+      var isMounted = react_redux_React.useRef(false);
+      var latestSubscriptionCallbackError = react_redux_React.useRef(void 0);
+      react_redux_useIsomorphicLayoutEffect(function () {
+        isMounted.current = true;
+        return function () {
+          isMounted.current = false;
+        };
+      }, []);
+      var actualChildPropsSelector = react_redux_React.useMemo(function () {
+        var selector = function selector() {
+          if (childPropsFromStoreUpdate.current && wrapperProps === lastWrapperProps.current) {
+            return childPropsFromStoreUpdate.current;
+          }
+          return childPropsSelector(store.getState(), wrapperProps);
+        };
+        return selector;
+      }, [store, wrapperProps]);
+      var subscribeForReact = react_redux_React.useMemo(function () {
+        var subscribe = function subscribe(reactListener) {
+          if (!subscription) {
+            return function () {};
+          }
+          return subscribeUpdates(shouldHandleStateChanges, store, subscription,
+          // @ts-ignore
+          childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, reactListener);
+        };
+        return subscribe;
+      }, [subscription]);
+      useIsomorphicLayoutEffectWithArgs(captureWrapperProps, [lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs]);
+      var actualChildProps;
+      try {
+        actualChildProps = useSyncExternalStore(
+        // TODO We're passing through a big wrapper that does a bunch of extra side effects besides subscribing
+        subscribeForReact,
+        // TODO This is incredibly hacky. We've already processed the store update and calculated new child props,
+        // TODO and we're just passing that through so it triggers a re-render for us rather than relying on `uSES`.
+        actualChildPropsSelector, getServerState ? function () {
+          return childPropsSelector(getServerState(), wrapperProps);
+        } : actualChildPropsSelector);
+      } catch (err) {
+        if (latestSubscriptionCallbackError.current) {
+          ;
+          err.message += "\nThe error may be correlated with this previous error:\n".concat(latestSubscriptionCallbackError.current.stack, "\n\n");
+        }
+        throw err;
+      }
+      react_redux_useIsomorphicLayoutEffect(function () {
+        latestSubscriptionCallbackError.current = void 0;
+        childPropsFromStoreUpdate.current = void 0;
+        lastChildProps.current = actualChildProps;
+      });
+      var renderedWrappedComponent = react_redux_React.useMemo(function () {
+        return (
+          // @ts-ignore
+          /* @__PURE__ */
+          react_redux_React.createElement(WrappedComponent, _objectSpread(_objectSpread({}, actualChildProps), {}, {
+            ref: reactReduxForwardedRef
+          }))
+        );
+      }, [reactReduxForwardedRef, WrappedComponent, actualChildProps]);
+      var renderedChild = react_redux_React.useMemo(function () {
+        if (shouldHandleStateChanges) {
+          return /* @__PURE__ */react_redux_React.createElement(ContextToUse.Provider, {
+            value: overriddenContextValue
+          }, renderedWrappedComponent);
+        }
+        return renderedWrappedComponent;
+      }, [ContextToUse, renderedWrappedComponent, overriddenContextValue]);
+      return renderedChild;
+    }
+    var _Connect = react_redux_React.memo(ConnectFunction);
+    var Connect = _Connect;
+    Connect.WrappedComponent = WrappedComponent;
+    Connect.displayName = ConnectFunction.displayName = displayName;
+    if (forwardRef) {
+      var _forwarded = react_redux_React.forwardRef(function forwardConnectRef(props, ref) {
+        return /* @__PURE__ */react_redux_React.createElement(Connect, _objectSpread(_objectSpread({}, props), {}, {
+          reactReduxForwardedRef: ref
+        }));
+      });
+      var forwarded = _forwarded;
+      forwarded.displayName = displayName;
+      forwarded.WrappedComponent = WrappedComponent;
+      return /* @__PURE__ */react_redux_hoistNonReactStatics(forwarded, WrappedComponent);
+    }
+    return /* @__PURE__ */react_redux_hoistNonReactStatics(Connect, WrappedComponent);
+  };
+  return wrapWithConnect;
+}
+var connect_default = (/* unused pure expression or super */ null && (connect));
+
+// src/components/Provider.tsx
+function Provider(_ref7) {
+  var store = _ref7.store,
+    context = _ref7.context,
+    children = _ref7.children,
+    serverState = _ref7.serverState,
+    _ref7$stabilityCheck = _ref7.stabilityCheck,
+    stabilityCheck = _ref7$stabilityCheck === void 0 ? "once" : _ref7$stabilityCheck,
+    _ref7$identityFunctio = _ref7.identityFunctionCheck,
+    identityFunctionCheck = _ref7$identityFunctio === void 0 ? "once" : _ref7$identityFunctio;
+  var contextValue = react_redux_React.useMemo(function () {
+    var subscription = createSubscription(store);
+    return {
+      store: store,
+      subscription: subscription,
+      getServerState: serverState ? function () {
+        return serverState;
+      } : void 0,
+      stabilityCheck: stabilityCheck,
+      identityFunctionCheck: identityFunctionCheck
+    };
+  }, [store, serverState, stabilityCheck, identityFunctionCheck]);
+  var previousState = react_redux_React.useMemo(function () {
+    return store.getState();
+  }, [store]);
+  react_redux_useIsomorphicLayoutEffect(function () {
+    var subscription = contextValue.subscription;
+    subscription.onStateChange = subscription.notifyNestedSubs;
+    subscription.trySubscribe();
+    if (previousState !== store.getState()) {
+      subscription.notifyNestedSubs();
+    }
+    return function () {
+      subscription.tryUnsubscribe();
+      subscription.onStateChange = void 0;
+    };
+  }, [contextValue, previousState]);
+  var Context = context || ReactReduxContext;
+  return /* @__PURE__ */react_redux_React.createElement(Context.Provider, {
+    value: contextValue
+  }, children);
+}
+var Provider_default = Provider;
+
+// src/hooks/useStore.ts
+function createStoreHook() {
+  var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ReactReduxContext;
+  var useReduxContext2 = context === ReactReduxContext ? useReduxContext :
+  // @ts-ignore
+  createReduxContextHook(context);
+  var useStore2 = function useStore2() {
+    var _useReduxContext2 = useReduxContext2(),
+      store = _useReduxContext2.store;
+    return store;
+  };
+  Object.assign(useStore2, {
+    withTypes: function withTypes() {
+      return useStore2;
+    }
+  });
+  return useStore2;
+}
+var useStore = /* @__PURE__ */createStoreHook();
+
+// src/hooks/useDispatch.ts
+function createDispatchHook() {
+  var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ReactReduxContext;
+  var useStore2 = context === ReactReduxContext ? useStore : createStoreHook(context);
+  var useDispatch2 = function useDispatch2() {
+    var store = useStore2();
+    return store.dispatch;
+  };
+  Object.assign(useDispatch2, {
+    withTypes: function withTypes() {
+      return useDispatch2;
+    }
+  });
+  return useDispatch2;
+}
+var useDispatch = /* @__PURE__ */createDispatchHook();
+
+// src/exports.ts
+var batch = (/* unused pure expression or super */ null && (defaultNoopBatch));
+
+// src/index.ts
+initializeUseSelector(use_sync_external_store_with_selector.useSyncExternalStoreWithSelector);
+initializeConnect(react.useSyncExternalStore);
+
+//# sourceMappingURL=react-redux.mjs.map
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/integration/react.js
+function react_typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    react_typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    react_typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+  return react_typeof(obj);
+}
+function react_classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+function react_defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+function react_createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) react_defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) react_defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+function react_possibleConstructorReturn(self, call) {
+  if (call && (react_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+  return react_assertThisInitialized(self);
+}
+function react_getPrototypeOf(o) {
+  react_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return react_getPrototypeOf(o);
+}
+function react_assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return self;
+}
+function react_inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) react_setPrototypeOf(subClass, superClass);
+}
+function react_setPrototypeOf(o, p) {
+  react_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return react_setPrototypeOf(o, p);
+}
+function react_defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+ // eslint-disable-line import/no-unresolved
+
+var PersistGate = /*#__PURE__*/
+function (_PureComponent) {
+  react_inherits(PersistGate, _PureComponent);
+  function PersistGate() {
+    var _getPrototypeOf2;
+    var _this;
+    react_classCallCheck(this, PersistGate);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = react_possibleConstructorReturn(this, (_getPrototypeOf2 = react_getPrototypeOf(PersistGate)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    react_defineProperty(react_assertThisInitialized(_this), "state", {
+      bootstrapped: false
+    });
+    react_defineProperty(react_assertThisInitialized(_this), "_unsubscribe", void 0);
+    react_defineProperty(react_assertThisInitialized(_this), "handlePersistorState", function () {
+      var persistor = _this.props.persistor;
+      var _persistor$getState = persistor.getState(),
+        bootstrapped = _persistor$getState.bootstrapped;
+      if (bootstrapped) {
+        if (_this.props.onBeforeLift) {
+          Promise.resolve(_this.props.onBeforeLift())["finally"](function () {
+            return _this.setState({
+              bootstrapped: true
+            });
+          });
+        } else {
+          _this.setState({
+            bootstrapped: true
+          });
+        }
+        _this._unsubscribe && _this._unsubscribe();
+      }
+    });
+    return _this;
+  }
+  react_createClass(PersistGate, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this._unsubscribe = this.props.persistor.subscribe(this.handlePersistorState);
+      this.handlePersistorState();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this._unsubscribe && this._unsubscribe();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (false) {}
+      if (typeof this.props.children === 'function') {
+        return this.props.children(this.state.bootstrapped);
+      }
+      return this.state.bootstrapped ? this.props.children : this.props.loading;
+    }
+  }]);
+  return PersistGate;
+}(react.PureComponent);
+react_defineProperty(PersistGate, "defaultProps", {
+  children: null,
+  loading: null
+});
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+
+function objectWithoutProperties_objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+;// CONCATENATED MODULE: ../../node_modules/redux/dist/redux.mjs
+
+
+
+// src/utils/formatProdErrorMessage.ts
+function formatProdErrorMessage(code) {
+  return "Minified Redux error #".concat(code, "; visit https://redux.js.org/Errors?code=").concat(code, " for the full message or use the non-minified dev environment for full errors. ");
+}
+
+// src/utils/symbol-observable.ts
+var $$observable = /* @__PURE__ */function () {
+  return typeof Symbol === "function" && Symbol.observable || "@@observable";
+}();
+var symbol_observable_default = $$observable;
+
+// src/utils/actionTypes.ts
+var randomString = function randomString() {
+  return Math.random().toString(36).substring(7).split("").join(".");
+};
+var ActionTypes = {
+  INIT: "@@redux/INIT".concat( /* @__PURE__ */randomString()),
+  REPLACE: "@@redux/REPLACE".concat( /* @__PURE__ */randomString()),
+  PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+    return "@@redux/PROBE_UNKNOWN_ACTION".concat(randomString());
+  }
+};
+var actionTypes_default = ActionTypes;
+
+// src/utils/isPlainObject.ts
+function redux_isPlainObject(obj) {
+  if (typeof obj !== "object" || obj === null) return false;
+  var proto = obj;
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+  return Object.getPrototypeOf(obj) === proto || Object.getPrototypeOf(obj) === null;
+}
+
+// src/utils/kindOf.ts
+function miniKindOf(val) {
+  if (val === void 0) return "undefined";
+  if (val === null) return "null";
+  var type = typeof val;
+  switch (type) {
+    case "boolean":
+    case "string":
+    case "number":
+    case "symbol":
+    case "function":
+      {
+        return type;
+      }
+  }
+  if (Array.isArray(val)) return "array";
+  if (isDate(val)) return "date";
+  if (isError(val)) return "error";
+  var constructorName = ctorName(val);
+  switch (constructorName) {
+    case "Symbol":
+    case "Promise":
+    case "WeakMap":
+    case "WeakSet":
+    case "Map":
+    case "Set":
+      return constructorName;
+  }
+  return Object.prototype.toString.call(val).slice(8, -1).toLowerCase().replace(/\s/g, "");
+}
+function ctorName(val) {
+  return typeof val.constructor === "function" ? val.constructor.name : null;
+}
+function isError(val) {
+  return val instanceof Error || typeof val.message === "string" && val.constructor && typeof val.constructor.stackTraceLimit === "number";
+}
+function isDate(val) {
+  if (val instanceof Date) return true;
+  return typeof val.toDateString === "function" && typeof val.getDate === "function" && typeof val.setDate === "function";
+}
+function kindOf(val) {
+  var typeOfVal = typeof val;
+  if (false) {}
+  return typeOfVal;
+}
+
+// src/createStore.ts
+function createStore(reducer, preloadedState, enhancer) {
+  if (typeof reducer !== "function") {
+    throw new Error( true ? formatProdErrorMessage(2) : 0);
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "function" || typeof enhancer === "function" && typeof arguments[3] === "function") {
+    throw new Error( true ? formatProdErrorMessage(0) : 0);
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "undefined") {
+    enhancer = preloadedState;
+    preloadedState = void 0;
+  }
+  if (typeof enhancer !== "undefined") {
+    if (typeof enhancer !== "function") {
+      throw new Error( true ? formatProdErrorMessage(1) : 0);
+    }
+    return enhancer(createStore)(reducer, preloadedState);
+  }
+  var currentReducer = reducer;
+  var currentState = preloadedState;
+  var currentListeners = /* @__PURE__ */new Map();
+  var nextListeners = currentListeners;
+  var listenerIdCounter = 0;
+  var isDispatching = false;
+  function ensureCanMutateNextListeners() {
+    if (nextListeners === currentListeners) {
+      nextListeners = /* @__PURE__ */new Map();
+      currentListeners.forEach(function (listener, key) {
+        nextListeners.set(key, listener);
+      });
+    }
+  }
+  function getState() {
+    if (isDispatching) {
+      throw new Error( true ? formatProdErrorMessage(3) : 0);
+    }
+    return currentState;
+  }
+  function subscribe(listener) {
+    if (typeof listener !== "function") {
+      throw new Error( true ? formatProdErrorMessage(4) : 0);
+    }
+    if (isDispatching) {
+      throw new Error( true ? formatProdErrorMessage(5) : 0);
+    }
+    var isSubscribed = true;
+    ensureCanMutateNextListeners();
+    var listenerId = listenerIdCounter++;
+    nextListeners.set(listenerId, listener);
+    return function unsubscribe() {
+      if (!isSubscribed) {
+        return;
+      }
+      if (isDispatching) {
+        throw new Error( true ? formatProdErrorMessage(6) : 0);
+      }
+      isSubscribed = false;
+      ensureCanMutateNextListeners();
+      nextListeners["delete"](listenerId);
+      currentListeners = null;
+    };
+  }
+  function dispatch(action) {
+    if (!redux_isPlainObject(action)) {
+      throw new Error( true ? formatProdErrorMessage(7) : 0);
+    }
+    if (typeof action.type === "undefined") {
+      throw new Error( true ? formatProdErrorMessage(8) : 0);
+    }
+    if (typeof action.type !== "string") {
+      throw new Error( true ? formatProdErrorMessage(17) : 0);
+    }
+    if (isDispatching) {
+      throw new Error( true ? formatProdErrorMessage(9) : 0);
+    }
+    try {
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
+    } finally {
+      isDispatching = false;
+    }
+    var listeners = currentListeners = nextListeners;
+    listeners.forEach(function (listener) {
+      listener();
+    });
+    return action;
+  }
+  function replaceReducer(nextReducer) {
+    if (typeof nextReducer !== "function") {
+      throw new Error( true ? formatProdErrorMessage(10) : 0);
+    }
+    currentReducer = nextReducer;
+    dispatch({
+      type: actionTypes_default.REPLACE
+    });
+  }
+  function observable() {
+    var outerSubscribe = subscribe;
+    return defineProperty_defineProperty({
+      /**
+       * The minimal observable subscription method.
+       * @param observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== "object" || observer === null) {
+          throw new Error( true ? formatProdErrorMessage(11) : 0);
+        }
+        function observeState() {
+          var observerAsObserver = observer;
+          if (observerAsObserver.next) {
+            observerAsObserver.next(getState());
+          }
+        }
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return {
+          unsubscribe: unsubscribe
+        };
+      }
+    }, symbol_observable_default, function () {
+      return this;
+    });
+  }
+  dispatch({
+    type: actionTypes_default.INIT
+  });
+  var store = defineProperty_defineProperty({
+    dispatch: dispatch,
+    subscribe: subscribe,
+    getState: getState,
+    replaceReducer: replaceReducer
+  }, symbol_observable_default, observable);
+  return store;
+}
+function legacy_createStore(reducer, preloadedState, enhancer) {
+  return createStore(reducer, preloadedState, enhancer);
+}
+
+// src/utils/warning.ts
+function redux_warning(message) {
+  if (typeof console !== "undefined" && typeof console.error === "function") {
+    console.error(message);
+  }
+  try {
+    throw new Error(message);
+  } catch (e) {}
+}
+
+// src/combineReducers.ts
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+  var reducerKeys = Object.keys(reducers);
+  var argumentName = action && action.type === actionTypes_default.INIT ? "preloadedState argument passed to createStore" : "previous state received by the reducer";
+  if (reducerKeys.length === 0) {
+    return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
+  }
+  if (!redux_isPlainObject(inputState)) {
+    return "The ".concat(argumentName, " has unexpected type of \"").concat(kindOf(inputState), "\". Expected argument to be an object with the following keys: \"").concat(reducerKeys.join('", "'), "\"");
+  }
+  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
+    return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
+  });
+  unexpectedKeys.forEach(function (key) {
+    unexpectedKeyCache[key] = true;
+  });
+  if (action && action.type === actionTypes_default.REPLACE) return;
+  if (unexpectedKeys.length > 0) {
+    return "Unexpected ".concat(unexpectedKeys.length > 1 ? "keys" : "key", " \"").concat(unexpectedKeys.join('", "'), "\" found in ").concat(argumentName, ". Expected to find one of the known reducer keys instead: \"").concat(reducerKeys.join('", "'), "\". Unexpected keys will be ignored.");
+  }
+}
+function assertReducerShape(reducers) {
+  Object.keys(reducers).forEach(function (key) {
+    var reducer = reducers[key];
+    var initialState = reducer(void 0, {
+      type: actionTypes_default.INIT
+    });
+    if (typeof initialState === "undefined") {
+      throw new Error( true ? formatProdErrorMessage(12) : 0);
+    }
+    if (typeof reducer(void 0, {
+      type: actionTypes_default.PROBE_UNKNOWN_ACTION()
+    }) === "undefined") {
+      throw new Error( true ? formatProdErrorMessage(13) : 0);
+    }
+  });
+}
+function combineReducers(reducers) {
+  var reducerKeys = Object.keys(reducers);
+  var finalReducers = {};
+  for (var i = 0; i < reducerKeys.length; i++) {
+    var key = reducerKeys[i];
+    if (false) {}
+    if (typeof reducers[key] === "function") {
+      finalReducers[key] = reducers[key];
+    }
+  }
+  var finalReducerKeys = Object.keys(finalReducers);
+  var unexpectedKeyCache;
+  if (false) {}
+  var shapeAssertionError;
+  try {
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+  return function combination() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var action = arguments.length > 1 ? arguments[1] : undefined;
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+    if (false) { var warningMessage; }
+    var hasChanged = false;
+    var nextState = {};
+    for (var _i = 0; _i < finalReducerKeys.length; _i++) {
+      var _key = finalReducerKeys[_i];
+      var reducer = finalReducers[_key];
+      var previousStateForKey = state[_key];
+      var nextStateForKey = reducer(previousStateForKey, action);
+      if (typeof nextStateForKey === "undefined") {
+        var actionType = action && action.type;
+        throw new Error( true ? formatProdErrorMessage(14) : 0);
+      }
+      nextState[_key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  };
+}
+
+// src/bindActionCreators.ts
+function bindActionCreator(actionCreator, dispatch) {
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+    return dispatch(actionCreator.apply(this, args));
+  };
+}
+function redux_bindActionCreators(actionCreators, dispatch) {
+  if (typeof actionCreators === "function") {
+    return bindActionCreator(actionCreators, dispatch);
+  }
+  if (typeof actionCreators !== "object" || actionCreators === null) {
+    throw new Error( true ? formatProdErrorMessage(16) : 0);
+  }
+  var boundActionCreators = {};
+  for (var key in actionCreators) {
+    var actionCreator = actionCreators[key];
+    if (typeof actionCreator === "function") {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+  }
+  return boundActionCreators;
+}
+
+// src/compose.ts
+function compose() {
+  for (var _len2 = arguments.length, funcs = new Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+    funcs[_key3] = arguments[_key3];
+  }
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  }
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+  return funcs.reduce(function (a, b) {
+    return function () {
+      return a(b.apply(void 0, arguments));
+    };
+  });
+}
+
+// src/applyMiddleware.ts
+function applyMiddleware() {
+  for (var _len3 = arguments.length, middlewares = new Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
+    middlewares[_key4] = arguments[_key4];
+  }
+  return function (createStore2) {
+    return function (reducer, preloadedState) {
+      var store = createStore2(reducer, preloadedState);
+      var _dispatch = function dispatch() {
+        throw new Error( true ? formatProdErrorMessage(15) : 0);
+      };
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: function dispatch(action) {
+          for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key5 = 1; _key5 < _len4; _key5++) {
+            args[_key5 - 1] = arguments[_key5];
+          }
+          return _dispatch.apply(void 0, [action].concat(args));
+        }
+      };
+      var chain = middlewares.map(function (middleware) {
+        return middleware(middlewareAPI);
+      });
+      _dispatch = compose.apply(void 0, toConsumableArray_toConsumableArray(chain))(store.dispatch);
+      return _objectSpread2(_objectSpread2({}, store), {}, {
+        dispatch: _dispatch
+      });
+    };
+  };
+}
+
+// src/utils/isAction.ts
+function redux_isAction(action) {
+  return redux_isPlainObject(action) && "type" in action && typeof action.type === "string";
+}
+
+//# sourceMappingURL=redux.mjs.map
+;// CONCATENATED MODULE: ../../node_modules/redux-thunk/dist/redux-thunk.mjs
+// src/index.ts
+function createThunkMiddleware(extraArgument) {
+  var middleware = function middleware(_ref) {
+    var dispatch = _ref.dispatch,
+      getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === "function") {
+          return action(dispatch, getState, extraArgument);
+        }
+        return next(action);
+      };
+    };
+  };
+  return middleware;
+}
+var redux_thunk_thunk = createThunkMiddleware();
+var withExtraArgument = createThunkMiddleware;
+
+;// CONCATENATED MODULE: ../../node_modules/immer/dist/immer.mjs
+
+
+
+
+
+
+
+
+
+// src/utils/env.ts
+var NOTHING = Symbol["for"]("immer-nothing");
+var DRAFTABLE = Symbol["for"]("immer-draftable");
+var DRAFT_STATE = Symbol["for"]("immer-state");
+
+// src/utils/errors.ts
+var errors =  false ? 0 : [];
+function die(error) {
+  if (false) { var msg, _len, args, _key, e; }
+  throw new Error("[Immer] minified error nr: ".concat(error, ". Full error at: https://bit.ly/3cXEKWf"));
+}
+
+// src/utils/common.ts
+var immer_getPrototypeOf = Object.getPrototypeOf;
+function immer_isDraft(value) {
+  return !!value && !!value[DRAFT_STATE];
+}
+function isDraftable(value) {
+  var _value$constructor;
+  if (!value) return false;
+  return immer_isPlainObject(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!((_value$constructor = value.constructor) !== null && _value$constructor !== void 0 && _value$constructor[DRAFTABLE]) || isMap(value) || isSet(value);
+}
+var objectCtorString = Object.prototype.constructor.toString();
+function immer_isPlainObject(value) {
+  if (!value || typeof value !== "object") return false;
+  var proto = immer_getPrototypeOf(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  if (Ctor === Object) return true;
+  return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+}
+function original(value) {
+  if (!immer_isDraft(value)) die(15, value);
+  return value[DRAFT_STATE].base_;
+}
+function each(obj, iter) {
+  if (getArchtype(obj) === 0 /* Object */) {
+    Reflect.ownKeys(obj).forEach(function (key) {
+      iter(key, obj[key], obj);
+    });
+  } else {
+    obj.forEach(function (entry, index) {
+      return iter(index, entry, obj);
+    });
+  }
+}
+function getArchtype(thing) {
+  var state = thing[DRAFT_STATE];
+  return state ? state.type_ : Array.isArray(thing) ? 1 /* Array */ : isMap(thing) ? 2 /* Map */ : isSet(thing) ? 3 /* Set */ : 0 /* Object */;
+}
+function has(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.has(prop) : Object.prototype.hasOwnProperty.call(thing, prop);
+}
+function get(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.get(prop) : thing[prop];
+}
+function set(thing, propOrOldValue, value) {
+  var t = getArchtype(thing);
+  if (t === 2 /* Map */) thing.set(propOrOldValue, value);else if (t === 3 /* Set */) {
+    thing.add(value);
+  } else thing[propOrOldValue] = value;
+}
+function immer_is(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function isMap(target) {
+  return target instanceof Map;
+}
+function isSet(target) {
+  return target instanceof Set;
+}
+function latest(state) {
+  return state.copy_ || state.base_;
+}
+function shallowCopy(base, strict) {
+  if (isMap(base)) {
+    return new Map(base);
+  }
+  if (isSet(base)) {
+    return new Set(base);
+  }
+  if (Array.isArray(base)) return Array.prototype.slice.call(base);
+  if (!strict && immer_isPlainObject(base)) {
+    if (!immer_getPrototypeOf(base)) {
+      var obj = /* @__PURE__ */Object.create(null);
+      return Object.assign(obj, base);
+    }
+    return _objectSpread2({}, base);
+  }
+  var descriptors = Object.getOwnPropertyDescriptors(base);
+  delete descriptors[DRAFT_STATE];
+  var keys = Reflect.ownKeys(descriptors);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var desc = descriptors[key];
+    if (desc.writable === false) {
+      desc.writable = true;
+      desc.configurable = true;
+    }
+    if (desc.get || desc.set) descriptors[key] = {
+      configurable: true,
+      writable: true,
+      // could live with !!desc.set as well here...
+      enumerable: desc.enumerable,
+      value: base[key]
+    };
+  }
+  return Object.create(immer_getPrototypeOf(base), descriptors);
+}
+function freeze(obj) {
+  var deep = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  if (isFrozen(obj) || immer_isDraft(obj) || !isDraftable(obj)) return obj;
+  if (getArchtype(obj) > 1) {
+    obj.set = obj.add = obj.clear = obj["delete"] = dontMutateFrozenCollections;
+  }
+  Object.freeze(obj);
+  if (deep) Object.entries(obj).forEach(function (_ref) {
+    var _ref2 = slicedToArray_slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
+    return freeze(value, true);
+  });
+  return obj;
+}
+function dontMutateFrozenCollections() {
+  die(2);
+}
+function isFrozen(obj) {
+  return Object.isFrozen(obj);
+}
+
+// src/utils/plugins.ts
+var plugins = {};
+function getPlugin(pluginKey) {
+  var plugin = plugins[pluginKey];
+  if (!plugin) {
+    die(0, pluginKey);
+  }
+  return plugin;
+}
+function loadPlugin(pluginKey, implementation) {
+  if (!plugins[pluginKey]) plugins[pluginKey] = implementation;
+}
+
+// src/core/scope.ts
+var currentScope;
+function getCurrentScope() {
+  return currentScope;
+}
+function createScope(parent_, immer_) {
+  return {
+    drafts_: [],
+    parent_: parent_,
+    immer_: immer_,
+    // Whenever the modified draft contains a draft from another scope, we
+    // need to prevent auto-freezing so the unowned draft can be finalized.
+    canAutoFreeze_: true,
+    unfinalizedDrafts_: 0
+  };
+}
+function usePatchesInScope(scope, patchListener) {
+  if (patchListener) {
+    getPlugin("Patches");
+    scope.patches_ = [];
+    scope.inversePatches_ = [];
+    scope.patchListener_ = patchListener;
+  }
+}
+function revokeScope(scope) {
+  leaveScope(scope);
+  scope.drafts_.forEach(revokeDraft);
+  scope.drafts_ = null;
+}
+function leaveScope(scope) {
+  if (scope === currentScope) {
+    currentScope = scope.parent_;
+  }
+}
+function enterScope(immer2) {
+  return currentScope = createScope(currentScope, immer2);
+}
+function revokeDraft(draft) {
+  var state = draft[DRAFT_STATE];
+  if (state.type_ === 0 /* Object */ || state.type_ === 1 /* Array */) state.revoke_();else state.revoked_ = true;
+}
+
+// src/core/finalize.ts
+function processResult(result, scope) {
+  scope.unfinalizedDrafts_ = scope.drafts_.length;
+  var baseDraft = scope.drafts_[0];
+  var isReplaced = result !== void 0 && result !== baseDraft;
+  if (isReplaced) {
+    if (baseDraft[DRAFT_STATE].modified_) {
+      revokeScope(scope);
+      die(4);
+    }
+    if (isDraftable(result)) {
+      result = finalize(scope, result);
+      if (!scope.parent_) maybeFreeze(scope, result);
+    }
+    if (scope.patches_) {
+      getPlugin("Patches").generateReplacementPatches_(baseDraft[DRAFT_STATE].base_, result, scope.patches_, scope.inversePatches_);
+    }
+  } else {
+    result = finalize(scope, baseDraft, []);
+  }
+  revokeScope(scope);
+  if (scope.patches_) {
+    scope.patchListener_(scope.patches_, scope.inversePatches_);
+  }
+  return result !== NOTHING ? result : void 0;
+}
+function finalize(rootScope, value, path) {
+  if (isFrozen(value)) return value;
+  var state = value[DRAFT_STATE];
+  if (!state) {
+    each(value, function (key, childValue) {
+      return finalizeProperty(rootScope, state, value, key, childValue, path);
+    });
+    return value;
+  }
+  if (state.scope_ !== rootScope) return value;
+  if (!state.modified_) {
+    maybeFreeze(rootScope, state.base_, true);
+    return state.base_;
+  }
+  if (!state.finalized_) {
+    state.finalized_ = true;
+    state.scope_.unfinalizedDrafts_--;
+    var result = state.copy_;
+    var resultEach = result;
+    var isSet2 = false;
+    if (state.type_ === 3 /* Set */) {
+      resultEach = new Set(result);
+      result.clear();
+      isSet2 = true;
+    }
+    each(resultEach, function (key, childValue) {
+      return finalizeProperty(rootScope, state, result, key, childValue, path, isSet2);
+    });
+    maybeFreeze(rootScope, result, false);
+    if (path && rootScope.patches_) {
+      getPlugin("Patches").generatePatches_(state, path, rootScope.patches_, rootScope.inversePatches_);
+    }
+  }
+  return state.copy_;
+}
+function finalizeProperty(rootScope, parentState, targetObject, prop, childValue, rootPath, targetIsSet) {
+  if (false) {}
+  if (immer_isDraft(childValue)) {
+    var path = rootPath && parentState && parentState.type_ !== 3 /* Set */ &&
+    // Set objects are atomic since they have no keys.
+    !has(parentState.assigned_, prop) ? rootPath.concat(prop) : void 0;
+    var res = finalize(rootScope, childValue, path);
+    set(targetObject, prop, res);
+    if (immer_isDraft(res)) {
+      rootScope.canAutoFreeze_ = false;
+    } else return;
+  } else if (targetIsSet) {
+    targetObject.add(childValue);
+  }
+  if (isDraftable(childValue) && !isFrozen(childValue)) {
+    if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+      return;
+    }
+    finalize(rootScope, childValue);
+    if ((!parentState || !parentState.scope_.parent_) && typeof prop !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop)) maybeFreeze(rootScope, childValue);
+  }
+}
+function maybeFreeze(scope, value) {
+  var deep = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  if (!scope.parent_ && scope.immer_.autoFreeze_ && scope.canAutoFreeze_) {
+    freeze(value, deep);
+  }
+}
+
+// src/core/proxy.ts
+function createProxyProxy(base, parent) {
+  var isArray = Array.isArray(base);
+  var state = {
+    type_: isArray ? 1 /* Array */ : 0 /* Object */,
+
+    // Track which produce call this is associated with.
+    scope_: parent ? parent.scope_ : getCurrentScope(),
+    // True for both shallow and deep changes.
+    modified_: false,
+    // Used during finalization.
+    finalized_: false,
+    // Track which properties have been assigned (true) or deleted (false).
+    assigned_: {},
+    // The parent draft state.
+    parent_: parent,
+    // The base state.
+    base_: base,
+    // The base proxy.
+    draft_: null,
+    // set below
+    // The base copy with any updated values.
+    copy_: null,
+    // Called by the `produce` function.
+    revoke_: null,
+    isManual_: false
+  };
+  var target = state;
+  var traps = objectTraps;
+  if (isArray) {
+    target = [state];
+    traps = arrayTraps;
+  }
+  var _Proxy$revocable = Proxy.revocable(target, traps),
+    revoke = _Proxy$revocable.revoke,
+    proxy = _Proxy$revocable.proxy;
+  state.draft_ = proxy;
+  state.revoke_ = revoke;
+  return proxy;
+}
+var objectTraps = {
+  get: function get(state, prop) {
+    if (prop === DRAFT_STATE) return state;
+    var source = latest(state);
+    if (!has(source, prop)) {
+      return readPropFromProto(state, source, prop);
+    }
+    var value = source[prop];
+    if (state.finalized_ || !isDraftable(value)) {
+      return value;
+    }
+    if (value === peek(state.base_, prop)) {
+      prepareCopy(state);
+      return state.copy_[prop] = createProxy(value, state);
+    }
+    return value;
+  },
+  has: function has(state, prop) {
+    return prop in latest(state);
+  },
+  ownKeys: function ownKeys(state) {
+    return Reflect.ownKeys(latest(state));
+  },
+  set: function set(state, prop, value) {
+    var desc = getDescriptorFromProto(latest(state), prop);
+    if (desc !== null && desc !== void 0 && desc.set) {
+      desc.set.call(state.draft_, value);
+      return true;
+    }
+    if (!state.modified_) {
+      var current2 = peek(latest(state), prop);
+      var currentState = current2 === null || current2 === void 0 ? void 0 : current2[DRAFT_STATE];
+      if (currentState && currentState.base_ === value) {
+        state.copy_[prop] = value;
+        state.assigned_[prop] = false;
+        return true;
+      }
+      if (immer_is(value, current2) && (value !== void 0 || has(state.base_, prop))) return true;
+      prepareCopy(state);
+      markChanged(state);
+    }
+    if (state.copy_[prop] === value && (
+    // special case: handle new props with value 'undefined'
+    value !== void 0 || prop in state.copy_) ||
+    // special case: NaN
+    Number.isNaN(value) && Number.isNaN(state.copy_[prop])) return true;
+    state.copy_[prop] = value;
+    state.assigned_[prop] = true;
+    return true;
+  },
+  deleteProperty: function deleteProperty(state, prop) {
+    if (peek(state.base_, prop) !== void 0 || prop in state.base_) {
+      state.assigned_[prop] = false;
+      prepareCopy(state);
+      markChanged(state);
+    } else {
+      delete state.assigned_[prop];
+    }
+    if (state.copy_) {
+      delete state.copy_[prop];
+    }
+    return true;
+  },
+  // Note: We never coerce `desc.value` into an Immer draft, because we can't make
+  // the same guarantee in ES5 mode.
+  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(state, prop) {
+    var owner = latest(state);
+    var desc = Reflect.getOwnPropertyDescriptor(owner, prop);
+    if (!desc) return desc;
+    return {
+      writable: true,
+      configurable: state.type_ !== 1 /* Array */ || prop !== "length",
+      enumerable: desc.enumerable,
+      value: owner[prop]
+    };
+  },
+  defineProperty: function defineProperty() {
+    die(11);
+  },
+  getPrototypeOf: function getPrototypeOf(state) {
+    return immer_getPrototypeOf(state.base_);
+  },
+  setPrototypeOf: function setPrototypeOf() {
+    die(12);
+  }
+};
+var arrayTraps = {};
+each(objectTraps, function (key, fn) {
+  arrayTraps[key] = function () {
+    arguments[0] = arguments[0][0];
+    return fn.apply(this, arguments);
+  };
+});
+arrayTraps.deleteProperty = function (state, prop) {
+  if (false) {}
+  return arrayTraps.set.call(this, state, prop, void 0);
+};
+arrayTraps.set = function (state, prop, value) {
+  if (false) {}
+  return objectTraps.set.call(this, state[0], prop, value, state[0]);
+};
+function peek(draft, prop) {
+  var state = draft[DRAFT_STATE];
+  var source = state ? latest(state) : draft;
+  return source[prop];
+}
+function readPropFromProto(state, source, prop) {
+  var _desc$get;
+  var desc = getDescriptorFromProto(source, prop);
+  return desc ? "value" in desc ? desc.value : // This is a very special case, if the prop is a getter defined by the
+  // prototype, we should invoke it with the draft as context!
+  (_desc$get = desc.get) === null || _desc$get === void 0 ? void 0 : _desc$get.call(state.draft_) : void 0;
+}
+function getDescriptorFromProto(source, prop) {
+  if (!(prop in source)) return void 0;
+  var proto = immer_getPrototypeOf(source);
+  while (proto) {
+    var desc = Object.getOwnPropertyDescriptor(proto, prop);
+    if (desc) return desc;
+    proto = immer_getPrototypeOf(proto);
+  }
+  return void 0;
+}
+function markChanged(state) {
+  if (!state.modified_) {
+    state.modified_ = true;
+    if (state.parent_) {
+      markChanged(state.parent_);
+    }
+  }
+}
+function prepareCopy(state) {
+  if (!state.copy_) {
+    state.copy_ = shallowCopy(state.base_, state.scope_.immer_.useStrictShallowCopy_);
+  }
+}
+
+// src/core/immerClass.ts
+var Immer2 = /*#__PURE__*/function () {
+  function Immer2(config) {
+    var _this = this;
+    classCallCheck_classCallCheck(this, Immer2);
+    this.autoFreeze_ = true;
+    this.useStrictShallowCopy_ = false;
+    /**
+     * The `produce` function takes a value and a "recipe function" (whose
+     * return value often depends on the base state). The recipe function is
+     * free to mutate its first argument however it wants. All mutations are
+     * only ever applied to a __copy__ of the base state.
+     *
+     * Pass only a function to create a "curried producer" which relieves you
+     * from passing the recipe function every time.
+     *
+     * Only plain objects and arrays are made mutable. All other objects are
+     * considered uncopyable.
+     *
+     * Note: This function is __bound__ to its `Immer` instance.
+     *
+     * @param {any} base - the initial state
+     * @param {Function} recipe - function that receives a proxy of the base state as first argument and which can be freely modified
+     * @param {Function} patchListener - optional function that will be called with all the patches produced here
+     * @returns {any} a new state, or the initial state if nothing was modified
+     */
+    this.produce = function (base, recipe, patchListener) {
+      if (typeof base === "function" && typeof recipe !== "function") {
+        var defaultBase = recipe;
+        recipe = base;
+        var self = _this;
+        return function curriedProduce() {
+          var _this2 = this;
+          var base2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultBase;
+          for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            args[_key2 - 1] = arguments[_key2];
+          }
+          return self.produce(base2, function (draft) {
+            var _recipe;
+            return (_recipe = recipe).call.apply(_recipe, [_this2, draft].concat(args));
+          });
+        };
+      }
+      if (typeof recipe !== "function") die(6);
+      if (patchListener !== void 0 && typeof patchListener !== "function") die(7);
+      var result;
+      if (isDraftable(base)) {
+        var scope = enterScope(_this);
+        var proxy = createProxy(base, void 0);
+        var hasError = true;
+        try {
+          result = recipe(proxy);
+          hasError = false;
+        } finally {
+          if (hasError) revokeScope(scope);else leaveScope(scope);
+        }
+        usePatchesInScope(scope, patchListener);
+        return processResult(result, scope);
+      } else if (!base || typeof base !== "object") {
+        result = recipe(base);
+        if (result === void 0) result = base;
+        if (result === NOTHING) result = void 0;
+        if (_this.autoFreeze_) freeze(result, true);
+        if (patchListener) {
+          var p = [];
+          var ip = [];
+          getPlugin("Patches").generateReplacementPatches_(base, result, p, ip);
+          patchListener(p, ip);
+        }
+        return result;
+      } else die(1, base);
+    };
+    this.produceWithPatches = function (base, recipe) {
+      if (typeof base === "function") {
+        return function (state) {
+          for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+            args[_key3 - 1] = arguments[_key3];
+          }
+          return _this.produceWithPatches(state, function (draft) {
+            return base.apply(void 0, [draft].concat(args));
+          });
+        };
+      }
+      var patches, inversePatches;
+      var result = _this.produce(base, recipe, function (p, ip) {
+        patches = p;
+        inversePatches = ip;
+      });
+      return [result, patches, inversePatches];
+    };
+    if (typeof (config === null || config === void 0 ? void 0 : config.autoFreeze) === "boolean") this.setAutoFreeze(config.autoFreeze);
+    if (typeof (config === null || config === void 0 ? void 0 : config.useStrictShallowCopy) === "boolean") this.setUseStrictShallowCopy(config.useStrictShallowCopy);
+  }
+  createClass_createClass(Immer2, [{
+    key: "createDraft",
+    value: function createDraft(base) {
+      if (!isDraftable(base)) die(8);
+      if (immer_isDraft(base)) base = immer_current(base);
+      var scope = enterScope(this);
+      var proxy = createProxy(base, void 0);
+      proxy[DRAFT_STATE].isManual_ = true;
+      leaveScope(scope);
+      return proxy;
+    }
+  }, {
+    key: "finishDraft",
+    value: function finishDraft(draft, patchListener) {
+      var state = draft && draft[DRAFT_STATE];
+      if (!state || !state.isManual_) die(9);
+      var scope = state.scope_;
+      usePatchesInScope(scope, patchListener);
+      return processResult(void 0, scope);
+    }
+    /**
+     * Pass true to automatically freeze all copies created by Immer.
+     *
+     * By default, auto-freezing is enabled.
+     */
+  }, {
+    key: "setAutoFreeze",
+    value: function setAutoFreeze(value) {
+      this.autoFreeze_ = value;
+    }
+    /**
+     * Pass true to enable strict shallow copy.
+     *
+     * By default, immer does not copy the object descriptors such as getter, setter and non-enumrable properties.
+     */
+  }, {
+    key: "setUseStrictShallowCopy",
+    value: function setUseStrictShallowCopy(value) {
+      this.useStrictShallowCopy_ = value;
+    }
+  }, {
+    key: "applyPatches",
+    value: function applyPatches(base, patches) {
+      var i;
+      for (i = patches.length - 1; i >= 0; i--) {
+        var patch = patches[i];
+        if (patch.path.length === 0 && patch.op === "replace") {
+          base = patch.value;
+          break;
+        }
+      }
+      if (i > -1) {
+        patches = patches.slice(i + 1);
+      }
+      var applyPatchesImpl = getPlugin("Patches").applyPatches_;
+      if (immer_isDraft(base)) {
+        return applyPatchesImpl(base, patches);
+      }
+      return this.produce(base, function (draft) {
+        return applyPatchesImpl(draft, patches);
+      });
+    }
+  }]);
+  return Immer2;
+}();
+function createProxy(value, parent) {
+  var draft = isMap(value) ? getPlugin("MapSet").proxyMap_(value, parent) : isSet(value) ? getPlugin("MapSet").proxySet_(value, parent) : createProxyProxy(value, parent);
+  var scope = parent ? parent.scope_ : getCurrentScope();
+  scope.drafts_.push(draft);
+  return draft;
+}
+
+// src/core/current.ts
+function immer_current(value) {
+  if (!immer_isDraft(value)) die(10, value);
+  return currentImpl(value);
+}
+function currentImpl(value) {
+  if (!isDraftable(value) || isFrozen(value)) return value;
+  var state = value[DRAFT_STATE];
+  var copy;
+  if (state) {
+    if (!state.modified_) return state.base_;
+    state.finalized_ = true;
+    copy = shallowCopy(value, state.scope_.immer_.useStrictShallowCopy_);
+  } else {
+    copy = shallowCopy(value, true);
+  }
+  each(copy, function (key, childValue) {
+    set(copy, key, currentImpl(childValue));
+  });
+  if (state) {
+    state.finalized_ = false;
+  }
+  return copy;
+}
+
+// src/plugins/patches.ts
+function enablePatches() {
+  var errorOffset = 16;
+  if (false) {}
+  var REPLACE = "replace";
+  var ADD = "add";
+  var REMOVE = "remove";
+  function generatePatches_(state, basePath, patches, inversePatches) {
+    switch (state.type_) {
+      case 0 /* Object */:
+      case 2 /* Map */:
+        return generatePatchesFromAssigned(state, basePath, patches, inversePatches);
+      case 1 /* Array */:
+        return generateArrayPatches(state, basePath, patches, inversePatches);
+      case 3 /* Set */:
+        return generateSetPatches(state, basePath, patches, inversePatches);
+    }
+  }
+  function generateArrayPatches(state, basePath, patches, inversePatches) {
+    var base_ = state.base_,
+      assigned_ = state.assigned_;
+    var copy_ = state.copy_;
+    if (copy_.length < base_.length) {
+      ;
+      var _ref3 = [copy_, base_];
+      base_ = _ref3[0];
+      copy_ = _ref3[1];
+      var _ref4 = [inversePatches, patches];
+      patches = _ref4[0];
+      inversePatches = _ref4[1];
+    }
+    for (var i = 0; i < base_.length; i++) {
+      if (assigned_[i] && copy_[i] !== base_[i]) {
+        var path = basePath.concat([i]);
+        patches.push({
+          op: REPLACE,
+          path: path,
+          // Need to maybe clone it, as it can in fact be the original value
+          // due to the base/copy inversion at the start of this function
+          value: clonePatchValueIfNeeded(copy_[i])
+        });
+        inversePatches.push({
+          op: REPLACE,
+          path: path,
+          value: clonePatchValueIfNeeded(base_[i])
+        });
+      }
+    }
+    for (var _i = base_.length; _i < copy_.length; _i++) {
+      var _path = basePath.concat([_i]);
+      patches.push({
+        op: ADD,
+        path: _path,
+        // Need to maybe clone it, as it can in fact be the original value
+        // due to the base/copy inversion at the start of this function
+        value: clonePatchValueIfNeeded(copy_[_i])
+      });
+    }
+    for (var _i2 = copy_.length - 1; base_.length <= _i2; --_i2) {
+      var _path2 = basePath.concat([_i2]);
+      inversePatches.push({
+        op: REMOVE,
+        path: _path2
+      });
+    }
+  }
+  function generatePatchesFromAssigned(state, basePath, patches, inversePatches) {
+    var base_ = state.base_,
+      copy_ = state.copy_;
+    each(state.assigned_, function (key, assignedValue) {
+      var origValue = get(base_, key);
+      var value = get(copy_, key);
+      var op = !assignedValue ? REMOVE : has(base_, key) ? REPLACE : ADD;
+      if (origValue === value && op === REPLACE) return;
+      var path = basePath.concat(key);
+      patches.push(op === REMOVE ? {
+        op: op,
+        path: path
+      } : {
+        op: op,
+        path: path,
+        value: value
+      });
+      inversePatches.push(op === ADD ? {
+        op: REMOVE,
+        path: path
+      } : op === REMOVE ? {
+        op: ADD,
+        path: path,
+        value: clonePatchValueIfNeeded(origValue)
+      } : {
+        op: REPLACE,
+        path: path,
+        value: clonePatchValueIfNeeded(origValue)
+      });
+    });
+  }
+  function generateSetPatches(state, basePath, patches, inversePatches) {
+    var base_ = state.base_,
+      copy_ = state.copy_;
+    var i = 0;
+    base_.forEach(function (value) {
+      if (!copy_.has(value)) {
+        var path = basePath.concat([i]);
+        patches.push({
+          op: REMOVE,
+          path: path,
+          value: value
+        });
+        inversePatches.unshift({
+          op: ADD,
+          path: path,
+          value: value
+        });
+      }
+      i++;
+    });
+    i = 0;
+    copy_.forEach(function (value) {
+      if (!base_.has(value)) {
+        var path = basePath.concat([i]);
+        patches.push({
+          op: ADD,
+          path: path,
+          value: value
+        });
+        inversePatches.unshift({
+          op: REMOVE,
+          path: path,
+          value: value
+        });
+      }
+      i++;
+    });
+  }
+  function generateReplacementPatches_(baseValue, replacement, patches, inversePatches) {
+    patches.push({
+      op: REPLACE,
+      path: [],
+      value: replacement === NOTHING ? void 0 : replacement
+    });
+    inversePatches.push({
+      op: REPLACE,
+      path: [],
+      value: baseValue
+    });
+  }
+  function applyPatches_(draft, patches) {
+    patches.forEach(function (patch) {
+      var path = patch.path,
+        op = patch.op;
+      var base = draft;
+      for (var i = 0; i < path.length - 1; i++) {
+        var parentType = getArchtype(base);
+        var p = path[i];
+        if (typeof p !== "string" && typeof p !== "number") {
+          p = "" + p;
+        }
+        if ((parentType === 0 /* Object */ || parentType === 1 /* Array */) && (p === "__proto__" || p === "constructor")) die(errorOffset + 3);
+        if (typeof base === "function" && p === "prototype") die(errorOffset + 3);
+        base = get(base, p);
+        if (typeof base !== "object") die(errorOffset + 2, path.join("/"));
+      }
+      var type = getArchtype(base);
+      var value = deepClonePatchValue(patch.value);
+      var key = path[path.length - 1];
+      switch (op) {
+        case REPLACE:
+          switch (type) {
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              die(errorOffset);
+            default:
+              return base[key] = value;
+          }
+        case ADD:
+          switch (type) {
+            case 1 /* Array */:
+              return key === "-" ? base.push(value) : base.splice(key, 0, value);
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              return base.add(value);
+            default:
+              return base[key] = value;
+          }
+        case REMOVE:
+          switch (type) {
+            case 1 /* Array */:
+              return base.splice(key, 1);
+            case 2 /* Map */:
+              return base["delete"](key);
+            case 3 /* Set */:
+              return base["delete"](patch.value);
+            default:
+              return delete base[key];
+          }
+        default:
+          die(errorOffset + 1, op);
+      }
+    });
+    return draft;
+  }
+  function deepClonePatchValue(obj) {
+    if (!isDraftable(obj)) return obj;
+    if (Array.isArray(obj)) return obj.map(deepClonePatchValue);
+    if (isMap(obj)) return new Map(Array.from(obj.entries()).map(function (_ref5) {
+      var _ref6 = _slicedToArray(_ref5, 2),
+        k = _ref6[0],
+        v = _ref6[1];
+      return [k, deepClonePatchValue(v)];
+    }));
+    if (isSet(obj)) return new Set(Array.from(obj).map(deepClonePatchValue));
+    var cloned = Object.create(immer_getPrototypeOf(obj));
+    for (var key in obj) cloned[key] = deepClonePatchValue(obj[key]);
+    if (has(obj, DRAFTABLE)) cloned[DRAFTABLE] = obj[DRAFTABLE];
+    return cloned;
+  }
+  function clonePatchValueIfNeeded(obj) {
+    if (immer_isDraft(obj)) {
+      return deepClonePatchValue(obj);
+    } else return obj;
+  }
+  loadPlugin("Patches", {
+    applyPatches_: applyPatches_,
+    generatePatches_: generatePatches_,
+    generateReplacementPatches_: generateReplacementPatches_
+  });
+}
+
+// src/plugins/mapset.ts
+function enableMapSet() {
+  var DraftMap = /*#__PURE__*/function (_Map, _ref7) {
+    _inherits(DraftMap, _Map);
+    function DraftMap(target, parent) {
+      var _this3;
+      _classCallCheck(this, DraftMap);
+      _this3 = _callSuper(this, DraftMap);
+      _this3[DRAFT_STATE] = {
+        type_: 2 /* Map */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        assigned_: void 0,
+        base_: target,
+        draft_: _assertThisInitialized(_this3),
+        isManual_: false,
+        revoked_: false
+      };
+      return _this3;
+    }
+    _createClass(DraftMap, [{
+      key: "size",
+      get: function get() {
+        return latest(this[DRAFT_STATE]).size;
+      }
+    }, {
+      key: "has",
+      value: function has(key) {
+        return latest(this[DRAFT_STATE]).has(key);
+      }
+    }, {
+      key: "set",
+      value: function set(key, value) {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        if (!latest(state).has(key) || latest(state).get(key) !== value) {
+          prepareMapCopy(state);
+          markChanged(state);
+          state.assigned_.set(key, true);
+          state.copy_.set(key, value);
+          state.assigned_.set(key, true);
+        }
+        return this;
+      }
+    }, {
+      key: "delete",
+      value: function _delete(key) {
+        if (!this.has(key)) {
+          return false;
+        }
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        prepareMapCopy(state);
+        markChanged(state);
+        if (state.base_.has(key)) {
+          state.assigned_.set(key, false);
+        } else {
+          state.assigned_["delete"](key);
+        }
+        state.copy_["delete"](key);
+        return true;
+      }
+    }, {
+      key: "clear",
+      value: function clear() {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        if (latest(state).size) {
+          prepareMapCopy(state);
+          markChanged(state);
+          state.assigned_ = /* @__PURE__ */new Map();
+          each(state.base_, function (key) {
+            state.assigned_.set(key, false);
+          });
+          state.copy_.clear();
+        }
+      }
+    }, {
+      key: "forEach",
+      value: function forEach(cb, thisArg) {
+        var _this4 = this;
+        var state = this[DRAFT_STATE];
+        latest(state).forEach(function (_value, key, _map) {
+          cb.call(thisArg, _this4.get(key), key, _this4);
+        });
+      }
+    }, {
+      key: "get",
+      value: function get(key) {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        var value = latest(state).get(key);
+        if (state.finalized_ || !isDraftable(value)) {
+          return value;
+        }
+        if (value !== state.base_.get(key)) {
+          return value;
+        }
+        var draft = createProxy(value, state);
+        prepareMapCopy(state);
+        state.copy_.set(key, draft);
+        return draft;
+      }
+    }, {
+      key: "keys",
+      value: function keys() {
+        return latest(this[DRAFT_STATE]).keys();
+      }
+    }, {
+      key: "values",
+      value: function values() {
+        var _this5 = this;
+        var iterator = this.keys();
+        return _defineProperty(_defineProperty({}, Symbol.iterator, function () {
+          return _this5.values();
+        }), "next", function next() {
+          var r = iterator.next();
+          if (r.done) return r;
+          var value = _this5.get(r.value);
+          return {
+            done: false,
+            value: value
+          };
+        });
+      }
+    }, {
+      key: "entries",
+      value: function entries() {
+        var _this6 = this;
+        var iterator = this.keys();
+        return _defineProperty(_defineProperty({}, Symbol.iterator, function () {
+          return _this6.entries();
+        }), "next", function next() {
+          var r = iterator.next();
+          if (r.done) return r;
+          var value = _this6.get(r.value);
+          return {
+            done: false,
+            value: [r.value, value]
+          };
+        });
+      }
+    }, {
+      key: _ref7,
+      value: function value() {
+        return this.entries();
+      }
+    }]);
+    return DraftMap;
+  }( /*#__PURE__*/_wrapNativeSuper(Map), (DRAFT_STATE, Symbol.iterator));
+  function proxyMap_(target, parent) {
+    return new DraftMap(target, parent);
+  }
+  function prepareMapCopy(state) {
+    if (!state.copy_) {
+      state.assigned_ = /* @__PURE__ */new Map();
+      state.copy_ = new Map(state.base_);
+    }
+  }
+  var DraftSet = /*#__PURE__*/function (_Set, _ref10) {
+    _inherits(DraftSet, _Set);
+    function DraftSet(target, parent) {
+      var _this7;
+      _classCallCheck(this, DraftSet);
+      _this7 = _callSuper(this, DraftSet);
+      _this7[DRAFT_STATE] = {
+        type_: 3 /* Set */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        base_: target,
+        draft_: _assertThisInitialized(_this7),
+        drafts_: /* @__PURE__ */new Map(),
+        revoked_: false,
+        isManual_: false
+      };
+      return _this7;
+    }
+    _createClass(DraftSet, [{
+      key: "size",
+      get: function get() {
+        return latest(this[DRAFT_STATE]).size;
+      }
+    }, {
+      key: "has",
+      value: function has(value) {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        if (!state.copy_) {
+          return state.base_.has(value);
+        }
+        if (state.copy_.has(value)) return true;
+        if (state.drafts_.has(value) && state.copy_.has(state.drafts_.get(value))) return true;
+        return false;
+      }
+    }, {
+      key: "add",
+      value: function add(value) {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        if (!this.has(value)) {
+          prepareSetCopy(state);
+          markChanged(state);
+          state.copy_.add(value);
+        }
+        return this;
+      }
+    }, {
+      key: "delete",
+      value: function _delete(value) {
+        if (!this.has(value)) {
+          return false;
+        }
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        prepareSetCopy(state);
+        markChanged(state);
+        return state.copy_["delete"](value) || (state.drafts_.has(value) ? state.copy_["delete"](state.drafts_.get(value)) : ( /* istanbul ignore next */
+        false));
+      }
+    }, {
+      key: "clear",
+      value: function clear() {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        if (latest(state).size) {
+          prepareSetCopy(state);
+          markChanged(state);
+          state.copy_.clear();
+        }
+      }
+    }, {
+      key: "values",
+      value: function values() {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        prepareSetCopy(state);
+        return state.copy_.values();
+      }
+    }, {
+      key: "entries",
+      value: function entries() {
+        var state = this[DRAFT_STATE];
+        assertUnrevoked(state);
+        prepareSetCopy(state);
+        return state.copy_.entries();
+      }
+    }, {
+      key: "keys",
+      value: function keys() {
+        return this.values();
+      }
+    }, {
+      key: _ref10,
+      value: function value() {
+        return this.values();
+      }
+    }, {
+      key: "forEach",
+      value: function forEach(cb, thisArg) {
+        var iterator = this.values();
+        var result = iterator.next();
+        while (!result.done) {
+          cb.call(thisArg, result.value, result.value, this);
+          result = iterator.next();
+        }
+      }
+    }]);
+    return DraftSet;
+  }( /*#__PURE__*/_wrapNativeSuper(Set), (DRAFT_STATE, Symbol.iterator));
+  function proxySet_(target, parent) {
+    return new DraftSet(target, parent);
+  }
+  function prepareSetCopy(state) {
+    if (!state.copy_) {
+      state.copy_ = /* @__PURE__ */new Set();
+      state.base_.forEach(function (value) {
+        if (isDraftable(value)) {
+          var draft = createProxy(value, state);
+          state.drafts_.set(value, draft);
+          state.copy_.add(draft);
+        } else {
+          state.copy_.add(value);
+        }
+      });
+    }
+  }
+  function assertUnrevoked(state) {
+    if (state.revoked_) die(3, JSON.stringify(latest(state)));
+  }
+  loadPlugin("MapSet", {
+    proxyMap_: proxyMap_,
+    proxySet_: proxySet_
+  });
+}
+
+// src/immer.ts
+var immer = new Immer2();
+var produce = immer.produce;
+var produceWithPatches = immer.produceWithPatches.bind(immer);
+var setAutoFreeze = immer.setAutoFreeze.bind(immer);
+var setUseStrictShallowCopy = immer.setUseStrictShallowCopy.bind(immer);
+var applyPatches = immer.applyPatches.bind(immer);
+var createDraft = immer.createDraft.bind(immer);
+var finishDraft = immer.finishDraft.bind(immer);
+function castDraft(value) {
+  return value;
+}
+function castImmutable(value) {
+  return value;
+}
+
+//# sourceMappingURL=immer.mjs.map
+;// CONCATENATED MODULE: ../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var redux_toolkit_modern_excluded = ["reducerPath"];
+// src/index.ts
+
+
+
+
+// src/createDraftSafeSelector.ts
+
+
+var createDraftSafeSelectorCreator = function createDraftSafeSelectorCreator() {
+  var createSelector2 = createSelectorCreator.apply(void 0, arguments);
+  var createDraftSafeSelector2 = Object.assign(function () {
+    var selector = createSelector2.apply(void 0, arguments);
+    var wrappedSelector = function wrappedSelector(value) {
+      for (var _len = arguments.length, rest = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        rest[_key - 1] = arguments[_key];
+      }
+      return selector.apply(void 0, [isDraft(value) ? current(value) : value].concat(rest));
+    };
+    Object.assign(wrappedSelector, selector);
+    return wrappedSelector;
+  }, {
+    withTypes: function withTypes() {
+      return createDraftSafeSelector2;
+    }
+  });
+  return createDraftSafeSelector2;
+};
+var createDraftSafeSelector = /* @__PURE__ */(/* unused pure expression or super */ null && (createDraftSafeSelectorCreator(weakMapMemoize)));
+
+// src/configureStore.ts
+
+
+// src/devtoolsExtension.ts
+
+var composeWithDevTools = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : function () {
+  if (arguments.length === 0) return void 0;
+  if (typeof arguments[0] === "object") return compose;
+  return compose.apply(null, arguments);
+};
+var devToolsEnhancer = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ : function () {
+  return function (noop3) {
+    return noop3;
+  };
+};
+
+// src/getDefaultMiddleware.ts
+
+
+// src/createAction.ts
+
+
+// src/tsHelpers.ts
+var hasMatchFunction = function hasMatchFunction(v) {
+  return v && typeof v.match === "function";
+};
+
+// src/createAction.ts
+function createAction(type, prepareAction) {
+  function actionCreator() {
+    if (prepareAction) {
+      var prepared = prepareAction.apply(void 0, arguments);
+      if (!prepared) {
+        throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(0) : 0);
+      }
+      return _objectSpread2(_objectSpread2({
+        type: type,
+        payload: prepared.payload
+      }, "meta" in prepared && {
+        meta: prepared.meta
+      }), "error" in prepared && {
+        error: prepared.error
+      });
+    }
+    return {
+      type: type,
+      payload: arguments.length <= 0 ? undefined : arguments[0]
+    };
+  }
+  actionCreator.toString = function () {
+    return "".concat(type);
+  };
+  actionCreator.type = type;
+  actionCreator.match = function (action) {
+    return redux_isAction(action) && action.type === type;
+  };
+  return actionCreator;
+}
+function isActionCreator(action) {
+  return typeof action === "function" && "type" in action &&
+  // hasMatchFunction only wants Matchers but I don't see the point in rewriting it
+  hasMatchFunction(action);
+}
+function isFSA(action) {
+  return isAction(action) && Object.keys(action).every(isValidKey);
+}
+function isValidKey(key) {
+  return ["type", "payload", "error", "meta"].indexOf(key) > -1;
+}
+
+// src/actionCreatorInvariantMiddleware.ts
+function getMessage(type) {
+  var splitType = type ? "".concat(type).split("/") : [];
+  var actionName = splitType[splitType.length - 1] || "actionCreator";
+  return "Detected an action creator with type \"".concat(type || "unknown", "\" being dispatched. \nMake sure you're calling the action creator before dispatching, i.e. `dispatch(").concat(actionName, "())` instead of `dispatch(").concat(actionName, ")`. This is necessary even if the action has no payload.");
+}
+function createActionCreatorInvariantMiddleware() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (true) {
+    return function () {
+      return function (next) {
+        return function (action) {
+          return next(action);
+        };
+      };
+    };
+  }
+  var _options$isActionCrea = options.isActionCreator,
+    isActionCreator2 = _options$isActionCrea === void 0 ? isActionCreator : _options$isActionCrea;
+  return function () {
+    return function (next) {
+      return function (action) {
+        if (isActionCreator2(action)) {
+          console.warn(getMessage(action.type));
+        }
+        return next(action);
+      };
+    };
+  };
+}
+
+// src/utils.ts
+
+function getTimeMeasureUtils(maxDelay, fnName) {
+  var elapsed = 0;
+  return {
+    measureTime: function measureTime(fn) {
+      var started = Date.now();
+      try {
+        return fn();
+      } finally {
+        var finished = Date.now();
+        elapsed += finished - started;
+      }
+    },
+    warnIfExceeded: function warnIfExceeded() {
+      if (elapsed > maxDelay) {
+        console.warn("".concat(fnName, " took ").concat(elapsed, "ms, which is more than the warning threshold of ").concat(maxDelay, "ms. \nIf your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.\nIt is disabled in production builds, so you don't need to worry about that."));
+      }
+    }
+  };
+}
+function find(iterable, comparator) {
+  var _iterator = _createForOfIteratorHelper(iterable),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var entry = _step.value;
+      if (comparator(entry)) {
+        return entry;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return void 0;
+}
+var Tuple = /*#__PURE__*/function (_Array) {
+  inherits_inherits(_Tuple, _Array);
+  function _Tuple() {
+    var _this;
+    classCallCheck_classCallCheck(this, _Tuple);
+    for (var _len2 = arguments.length, items = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      items[_key2] = arguments[_key2];
+    }
+    _this = callSuper_callSuper(this, _Tuple, [].concat(items));
+    Object.setPrototypeOf(assertThisInitialized_assertThisInitialized(_this), _Tuple.prototype);
+    return _this;
+  }
+  createClass_createClass(_Tuple, [{
+    key: "concat",
+    value: function concat() {
+      for (var _len3 = arguments.length, arr = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        arr[_key3] = arguments[_key3];
+      }
+      return _get(_getPrototypeOf(_Tuple.prototype), "concat", this).apply(this, arr);
+    }
+  }, {
+    key: "prepend",
+    value: function prepend() {
+      for (var _len4 = arguments.length, arr = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        arr[_key4] = arguments[_key4];
+      }
+      if (arr.length === 1 && Array.isArray(arr[0])) {
+        return _construct(_Tuple, toConsumableArray_toConsumableArray(arr[0].concat(this)));
+      }
+      return _construct(_Tuple, toConsumableArray_toConsumableArray(arr.concat(this)));
+    }
+  }], [{
+    key: Symbol.species,
+    get: function get() {
+      return _Tuple;
+    }
+  }]);
+  return _Tuple;
+}( /*#__PURE__*/wrapNativeSuper_wrapNativeSuper(Array));
+function freezeDraftable(val) {
+  return isDraftable(val) ? produce(val, function () {}) : val;
+}
+function emplace(map, key, handler) {
+  if (map.has(key)) {
+    var value = map.get(key);
+    if (handler.update) {
+      value = handler.update(value, key, map);
+      map.set(key, value);
+    }
+    return value;
+  }
+  if (!handler.insert) throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(10) : 0);
+  var inserted = handler.insert(key, map);
+  map.set(key, inserted);
+  return inserted;
+}
+
+// src/immutableStateInvariantMiddleware.ts
+function isImmutableDefault(value) {
+  return typeof value !== "object" || value == null || Object.isFrozen(value);
+}
+function trackForMutations(isImmutable, ignorePaths, obj) {
+  var trackedProperties = trackProperties(isImmutable, ignorePaths, obj);
+  return {
+    detectMutations: function detectMutations() {
+      return _detectMutations(isImmutable, ignorePaths, trackedProperties, obj);
+    }
+  };
+}
+function trackProperties(isImmutable) {
+  var ignorePaths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var obj = arguments.length > 2 ? arguments[2] : undefined;
+  var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+  var checkedObjects = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : /* @__PURE__ */new Set();
+  var tracked = {
+    value: obj
+  };
+  if (!isImmutable(obj) && !checkedObjects.has(obj)) {
+    checkedObjects.add(obj);
+    tracked.children = {};
+    for (var key in obj) {
+      var childPath = path ? path + "." + key : key;
+      if (ignorePaths.length && ignorePaths.indexOf(childPath) !== -1) {
+        continue;
+      }
+      tracked.children[key] = trackProperties(isImmutable, ignorePaths, obj[key], childPath);
+    }
+  }
+  return tracked;
+}
+function _detectMutations(isImmutable) {
+  var ignoredPaths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var trackedProperty = arguments.length > 2 ? arguments[2] : undefined;
+  var obj = arguments.length > 3 ? arguments[3] : undefined;
+  var sameParentRef = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  var path = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+  var prevObj = trackedProperty ? trackedProperty.value : void 0;
+  var sameRef = prevObj === obj;
+  if (sameParentRef && !sameRef && !Number.isNaN(obj)) {
+    return {
+      wasMutated: true,
+      path: path
+    };
+  }
+  if (isImmutable(prevObj) || isImmutable(obj)) {
+    return {
+      wasMutated: false
+    };
+  }
+  var keysToDetect = {};
+  for (var key in trackedProperty.children) {
+    keysToDetect[key] = true;
+  }
+  for (var _key5 in obj) {
+    keysToDetect[_key5] = true;
+  }
+  var hasIgnoredPaths = ignoredPaths.length > 0;
+  var _loop = function _loop() {
+      var nestedPath = path ? path + "." + _key6 : _key6;
+      if (hasIgnoredPaths) {
+        var hasMatches = ignoredPaths.some(function (ignored) {
+          if (ignored instanceof RegExp) {
+            return ignored.test(nestedPath);
+          }
+          return nestedPath === ignored;
+        });
+        if (hasMatches) {
+          return 0; // continue
+        }
+      }
+      var result = _detectMutations(isImmutable, ignoredPaths, trackedProperty.children[_key6], obj[_key6], sameRef, nestedPath);
+      if (result.wasMutated) {
+        return {
+          v: result
+        };
+      }
+    },
+    _ret;
+  for (var _key6 in keysToDetect) {
+    _ret = _loop();
+    if (_ret === 0) continue;
+    if (_ret) return _ret.v;
+  }
+  return {
+    wasMutated: false
+  };
+}
+function createImmutableStateInvariantMiddleware() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (true) {
+    return function () {
+      return function (next) {
+        return function (action) {
+          return next(action);
+        };
+      };
+    };
+  } else { var track, _options$isImmutable, isImmutable, ignoredPaths, _options$warnAfter, warnAfter, stringify, getSerialize, stringify2, getSerialize2; }
+}
+
+// src/serializableStateInvariantMiddleware.ts
+
+function isPlain(val) {
+  var type = typeof val;
+  return val == null || type === "string" || type === "boolean" || type === "number" || Array.isArray(val) || isPlainObject(val);
+}
+function findNonSerializableValue(value) {
+  var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var isSerializable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : isPlain;
+  var getEntries = arguments.length > 3 ? arguments[3] : undefined;
+  var ignoredPaths = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+  var cache = arguments.length > 5 ? arguments[5] : undefined;
+  var foundNestedSerializable;
+  if (!isSerializable(value)) {
+    return {
+      keyPath: path || "<root>",
+      value: value
+    };
+  }
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  if (cache !== null && cache !== void 0 && cache.has(value)) return false;
+  var entries = getEntries != null ? getEntries(value) : Object.entries(value);
+  var hasIgnoredPaths = ignoredPaths.length > 0;
+  var _iterator2 = _createForOfIteratorHelper(entries),
+    _step2;
+  try {
+    var _loop2 = function _loop2() {
+        var _step2$value = _slicedToArray(_step2.value, 2),
+          key = _step2$value[0],
+          nestedValue = _step2$value[1];
+        var nestedPath = path ? path + "." + key : key;
+        if (hasIgnoredPaths) {
+          var hasMatches = ignoredPaths.some(function (ignored) {
+            if (ignored instanceof RegExp) {
+              return ignored.test(nestedPath);
+            }
+            return nestedPath === ignored;
+          });
+          if (hasMatches) {
+            return 0; // continue
+          }
+        }
+        if (!isSerializable(nestedValue)) {
+          return {
+            v: {
+              keyPath: nestedPath,
+              value: nestedValue
+            }
+          };
+        }
+        if (typeof nestedValue === "object") {
+          foundNestedSerializable = findNonSerializableValue(nestedValue, nestedPath, isSerializable, getEntries, ignoredPaths, cache);
+          if (foundNestedSerializable) {
+            return {
+              v: foundNestedSerializable
+            };
+          }
+        }
+      },
+      _ret2;
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      _ret2 = _loop2();
+      if (_ret2 === 0) continue;
+      if (_ret2) return _ret2.v;
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+  if (cache && isNestedFrozen(value)) cache.add(value);
+  return false;
+}
+function isNestedFrozen(value) {
+  if (!Object.isFrozen(value)) return false;
+  for (var _i = 0, _Object$values = Object.values(value); _i < _Object$values.length; _i++) {
+    var nestedValue = _Object$values[_i];
+    if (typeof nestedValue !== "object" || nestedValue === null) continue;
+    if (!isNestedFrozen(nestedValue)) return false;
+  }
+  return true;
+}
+function createSerializableStateInvariantMiddleware() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (true) {
+    return function () {
+      return function (next) {
+        return function (action) {
+          return next(action);
+        };
+      };
+    };
+  } else { var cache, _options$isSerializab, isSerializable, getEntries, _options$ignoredActio, ignoredActions, _options$ignoredActio2, ignoredActionPaths, _options$ignoredPaths, ignoredPaths, _options$warnAfter2, warnAfter, _options$ignoreState, ignoreState, _options$ignoreAction, ignoreActions, _options$disableCache, disableCache; }
+}
+
+// src/getDefaultMiddleware.ts
+function isBoolean(x) {
+  return typeof x === "boolean";
+}
+var buildGetDefaultMiddleware = function buildGetDefaultMiddleware() {
+  return function getDefaultMiddleware(options) {
+    var _ref2 = options !== null && options !== void 0 ? options : {},
+      _ref2$thunk = _ref2.thunk,
+      thunk = _ref2$thunk === void 0 ? true : _ref2$thunk,
+      _ref2$immutableCheck = _ref2.immutableCheck,
+      immutableCheck = _ref2$immutableCheck === void 0 ? true : _ref2$immutableCheck,
+      _ref2$serializableChe = _ref2.serializableCheck,
+      serializableCheck = _ref2$serializableChe === void 0 ? true : _ref2$serializableChe,
+      _ref2$actionCreatorCh = _ref2.actionCreatorCheck,
+      actionCreatorCheck = _ref2$actionCreatorCh === void 0 ? true : _ref2$actionCreatorCh;
+    var middlewareArray = new Tuple();
+    if (thunk) {
+      if (isBoolean(thunk)) {
+        middlewareArray.push(redux_thunk_thunk);
+      } else {
+        middlewareArray.push(withExtraArgument(thunk.extraArgument));
+      }
+    }
+    if (false) { var actionCreatorOptions, serializableOptions, immutableOptions; }
+    return middlewareArray;
+  };
+};
+
+// src/autoBatchEnhancer.ts
+var SHOULD_AUTOBATCH = "RTK_autoBatch";
+var prepareAutoBatched = function prepareAutoBatched() {
+  return function (payload) {
+    return {
+      payload: payload,
+      meta: _defineProperty({}, SHOULD_AUTOBATCH, true)
+    };
+  };
+};
+var createQueueWithTimer = function createQueueWithTimer(timeout) {
+  return function (notify) {
+    setTimeout(notify, timeout);
+  };
+};
+var rAF = typeof window !== "undefined" && window.requestAnimationFrame ? window.requestAnimationFrame : createQueueWithTimer(10);
+var autoBatchEnhancer = function autoBatchEnhancer() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    type: "raf"
+  };
+  return function (next) {
+    return function () {
+      var store = next.apply(void 0, arguments);
+      var notifying = true;
+      var shouldNotifyAtEndOfTick = false;
+      var notificationQueued = false;
+      var listeners = /* @__PURE__ */new Set();
+      var queueCallback = options.type === "tick" ? queueMicrotask : options.type === "raf" ? rAF : options.type === "callback" ? options.queueNotification : createQueueWithTimer(options.timeout);
+      var notifyListeners = function notifyListeners() {
+        notificationQueued = false;
+        if (shouldNotifyAtEndOfTick) {
+          shouldNotifyAtEndOfTick = false;
+          listeners.forEach(function (l) {
+            return l();
+          });
+        }
+      };
+      return Object.assign({}, store, {
+        // Override the base `store.subscribe` method to keep original listeners
+        // from running if we're delaying notifications
+        subscribe: function subscribe(listener2) {
+          var wrappedListener = function wrappedListener() {
+            return notifying && listener2();
+          };
+          var unsubscribe = store.subscribe(wrappedListener);
+          listeners.add(listener2);
+          return function () {
+            unsubscribe();
+            listeners["delete"](listener2);
+          };
+        },
+        // Override the base `store.dispatch` method so that we can check actions
+        // for the `shouldAutoBatch` flag and determine if batching is active
+        dispatch: function dispatch(action) {
+          try {
+            var _action$meta;
+            notifying = !(action !== null && action !== void 0 && (_action$meta = action.meta) !== null && _action$meta !== void 0 && _action$meta[SHOULD_AUTOBATCH]);
+            shouldNotifyAtEndOfTick = !notifying;
+            if (shouldNotifyAtEndOfTick) {
+              if (!notificationQueued) {
+                notificationQueued = true;
+                queueCallback(notifyListeners);
+              }
+            }
+            return store.dispatch(action);
+          } finally {
+            notifying = true;
+          }
+        }
+      });
+    };
+  };
+};
+
+// src/getDefaultEnhancers.ts
+var buildGetDefaultEnhancers = function buildGetDefaultEnhancers(middlewareEnhancer) {
+  return function getDefaultEnhancers(options) {
+    var _ref3 = options !== null && options !== void 0 ? options : {},
+      _ref3$autoBatch = _ref3.autoBatch,
+      autoBatch = _ref3$autoBatch === void 0 ? true : _ref3$autoBatch;
+    var enhancerArray = new Tuple(middlewareEnhancer);
+    if (autoBatch) {
+      enhancerArray.push(autoBatchEnhancer(typeof autoBatch === "object" ? autoBatch : void 0));
+    }
+    return enhancerArray;
+  };
+};
+
+// src/configureStore.ts
+function configureStore(options) {
+  var getDefaultMiddleware = buildGetDefaultMiddleware();
+  var _ref4 = options || {},
+    _ref4$reducer = _ref4.reducer,
+    reducer = _ref4$reducer === void 0 ? void 0 : _ref4$reducer,
+    middleware = _ref4.middleware,
+    _ref4$devTools = _ref4.devTools,
+    devTools = _ref4$devTools === void 0 ? true : _ref4$devTools,
+    _ref4$preloadedState = _ref4.preloadedState,
+    preloadedState = _ref4$preloadedState === void 0 ? void 0 : _ref4$preloadedState,
+    _ref4$enhancers = _ref4.enhancers,
+    enhancers = _ref4$enhancers === void 0 ? void 0 : _ref4$enhancers;
+  var rootReducer;
+  if (typeof reducer === "function") {
+    rootReducer = reducer;
+  } else if (redux_isPlainObject(reducer)) {
+    rootReducer = combineReducers(reducer);
+  } else {
+    throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(1) : 0);
+  }
+  if (false) {}
+  var finalMiddleware;
+  if (typeof middleware === "function") {
+    finalMiddleware = middleware(getDefaultMiddleware);
+    if (false) {}
+  } else {
+    finalMiddleware = getDefaultMiddleware();
+  }
+  if (false) {}
+  var finalCompose = compose;
+  if (devTools) {
+    finalCompose = composeWithDevTools(_objectSpread2({
+      // Enable capture of stack traces for dispatched Redux actions
+      trace: "production" !== "production"
+    }, typeof devTools === "object" && devTools));
+  }
+  var middlewareEnhancer = applyMiddleware.apply(void 0, toConsumableArray_toConsumableArray(finalMiddleware));
+  var getDefaultEnhancers = buildGetDefaultEnhancers(middlewareEnhancer);
+  if (false) {}
+  var storeEnhancers = typeof enhancers === "function" ? enhancers(getDefaultEnhancers) : getDefaultEnhancers();
+  if (false) {}
+  if (false) {}
+  if (false) {}
+  var composedEnhancer = finalCompose.apply(void 0, toConsumableArray_toConsumableArray(storeEnhancers));
+  return createStore(rootReducer, preloadedState, composedEnhancer);
+}
+
+// src/createReducer.ts
+
+
+// src/mapBuilders.ts
+function executeReducerBuilderCallback(builderCallback) {
+  var actionsMap = {};
+  var actionMatchers = [];
+  var defaultCaseReducer;
+  var builder = {
+    addCase: function addCase(typeOrActionCreator, reducer) {
+      if (false) {}
+      var type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+      if (!type) {
+        throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(28) : 0);
+      }
+      if (type in actionsMap) {
+        throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(29) : 0);
+      }
+      actionsMap[type] = reducer;
+      return builder;
+    },
+    addMatcher: function addMatcher(matcher, reducer) {
+      if (false) {}
+      actionMatchers.push({
+        matcher: matcher,
+        reducer: reducer
+      });
+      return builder;
+    },
+    addDefaultCase: function addDefaultCase(reducer) {
+      if (false) {}
+      defaultCaseReducer = reducer;
+      return builder;
+    }
+  };
+  builderCallback(builder);
+  return [actionsMap, actionMatchers, defaultCaseReducer];
+}
+
+// src/createReducer.ts
+function isStateFunction(x) {
+  return typeof x === "function";
+}
+function createReducer(initialState, mapOrBuilderCallback) {
+  if (false) {}
+  var _executeReducerBuilde = executeReducerBuilderCallback(mapOrBuilderCallback),
+    _executeReducerBuilde2 = slicedToArray_slicedToArray(_executeReducerBuilde, 3),
+    actionsMap = _executeReducerBuilde2[0],
+    finalActionMatchers = _executeReducerBuilde2[1],
+    finalDefaultCaseReducer = _executeReducerBuilde2[2];
+  var getInitialState;
+  if (isStateFunction(initialState)) {
+    getInitialState = function getInitialState() {
+      return freezeDraftable(initialState());
+    };
+  } else {
+    var frozenInitialState = freezeDraftable(initialState);
+    getInitialState = function getInitialState() {
+      return frozenInitialState;
+    };
+  }
+  function reducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getInitialState();
+    var action = arguments.length > 1 ? arguments[1] : undefined;
+    var caseReducers = [actionsMap[action.type]].concat(toConsumableArray_toConsumableArray(finalActionMatchers.filter(function (_ref5) {
+      var matcher = _ref5.matcher;
+      return matcher(action);
+    }).map(function (_ref6) {
+      var reducer2 = _ref6.reducer;
+      return reducer2;
+    })));
+    if (caseReducers.filter(function (cr) {
+      return !!cr;
+    }).length === 0) {
+      caseReducers = [finalDefaultCaseReducer];
+    }
+    return caseReducers.reduce(function (previousState, caseReducer) {
+      if (caseReducer) {
+        if (immer_isDraft(previousState)) {
+          var draft = previousState;
+          var result = caseReducer(draft, action);
+          if (result === void 0) {
+            return previousState;
+          }
+          return result;
+        } else if (!isDraftable(previousState)) {
+          var _result = caseReducer(previousState, action);
+          if (_result === void 0) {
+            if (previousState === null) {
+              return previousState;
+            }
+            throw Error("A case reducer on a non-draftable value must not return undefined");
+          }
+          return _result;
+        } else {
+          return produce(previousState, function (draft) {
+            return caseReducer(draft, action);
+          });
+        }
+      }
+      return previousState;
+    }, state);
+  }
+  reducer.getInitialState = getInitialState;
+  return reducer;
+}
+
+// src/matchers.ts
+var matches = function matches(matcher, action) {
+  if (hasMatchFunction(matcher)) {
+    return matcher.match(action);
+  } else {
+    return matcher(action);
+  }
+};
+function isAnyOf() {
+  for (var _len5 = arguments.length, matchers = new Array(_len5), _key7 = 0; _key7 < _len5; _key7++) {
+    matchers[_key7] = arguments[_key7];
+  }
+  return function (action) {
+    return matchers.some(function (matcher) {
+      return matches(matcher, action);
+    });
+  };
+}
+function isAllOf() {
+  for (var _len6 = arguments.length, matchers = new Array(_len6), _key8 = 0; _key8 < _len6; _key8++) {
+    matchers[_key8] = arguments[_key8];
+  }
+  return function (action) {
+    return matchers.every(function (matcher) {
+      return matches(matcher, action);
+    });
+  };
+}
+function hasExpectedRequestMetadata(action, validStatus) {
+  if (!action || !action.meta) return false;
+  var hasValidRequestId = typeof action.meta.requestId === "string";
+  var hasValidRequestStatus = validStatus.indexOf(action.meta.requestStatus) > -1;
+  return hasValidRequestId && hasValidRequestStatus;
+}
+function isAsyncThunkArray(a) {
+  return typeof a[0] === "function" && "pending" in a[0] && "fulfilled" in a[0] && "rejected" in a[0];
+}
+function isPending() {
+  for (var _len7 = arguments.length, asyncThunks = new Array(_len7), _key9 = 0; _key9 < _len7; _key9++) {
+    asyncThunks[_key9] = arguments[_key9];
+  }
+  if (asyncThunks.length === 0) {
+    return function (action) {
+      return hasExpectedRequestMetadata(action, ["pending"]);
+    };
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isPending()(asyncThunks[0]);
+  }
+  return isAnyOf.apply(void 0, _toConsumableArray(asyncThunks.map(function (asyncThunk) {
+    return asyncThunk.pending;
+  })));
+}
+function isRejected() {
+  for (var _len8 = arguments.length, asyncThunks = new Array(_len8), _key10 = 0; _key10 < _len8; _key10++) {
+    asyncThunks[_key10] = arguments[_key10];
+  }
+  if (asyncThunks.length === 0) {
+    return function (action) {
+      return hasExpectedRequestMetadata(action, ["rejected"]);
+    };
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejected()(asyncThunks[0]);
+  }
+  return isAnyOf.apply(void 0, _toConsumableArray(asyncThunks.map(function (asyncThunk) {
+    return asyncThunk.rejected;
+  })));
+}
+function isRejectedWithValue() {
+  var hasFlag = function hasFlag(action) {
+    return action && action.meta && action.meta.rejectedWithValue;
+  };
+  for (var _len9 = arguments.length, asyncThunks = new Array(_len9), _key11 = 0; _key11 < _len9; _key11++) {
+    asyncThunks[_key11] = arguments[_key11];
+  }
+  if (asyncThunks.length === 0) {
+    return isAllOf(isRejected.apply(void 0, asyncThunks), hasFlag);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejectedWithValue()(asyncThunks[0]);
+  }
+  return isAllOf(isRejected.apply(void 0, asyncThunks), hasFlag);
+}
+function isFulfilled() {
+  for (var _len10 = arguments.length, asyncThunks = new Array(_len10), _key12 = 0; _key12 < _len10; _key12++) {
+    asyncThunks[_key12] = arguments[_key12];
+  }
+  if (asyncThunks.length === 0) {
+    return function (action) {
+      return hasExpectedRequestMetadata(action, ["fulfilled"]);
+    };
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isFulfilled()(asyncThunks[0]);
+  }
+  return isAnyOf.apply(void 0, _toConsumableArray(asyncThunks.map(function (asyncThunk) {
+    return asyncThunk.fulfilled;
+  })));
+}
+function isAsyncThunkAction() {
+  for (var _len11 = arguments.length, asyncThunks = new Array(_len11), _key13 = 0; _key13 < _len11; _key13++) {
+    asyncThunks[_key13] = arguments[_key13];
+  }
+  if (asyncThunks.length === 0) {
+    return function (action) {
+      return hasExpectedRequestMetadata(action, ["pending", "fulfilled", "rejected"]);
+    };
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isAsyncThunkAction()(asyncThunks[0]);
+  }
+  return isAnyOf.apply(void 0, _toConsumableArray(asyncThunks.flatMap(function (asyncThunk) {
+    return [asyncThunk.pending, asyncThunk.rejected, asyncThunk.fulfilled];
+  })));
+}
+
+// src/nanoid.ts
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+var nanoid = function nanoid() {
+  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 21;
+  var id = "";
+  var i = size;
+  while (i--) {
+    id += urlAlphabet[Math.random() * 64 | 0];
+  }
+  return id;
+};
+
+// src/createAsyncThunk.ts
+var commonProperties = ["name", "message", "stack", "code"];
+var RejectWithValue = /*#__PURE__*/createClass_createClass(function RejectWithValue(payload, meta) {
+  classCallCheck_classCallCheck(this, RejectWithValue);
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  defineProperty_defineProperty(this, "_type", void 0);
+  this.payload = payload;
+  this.meta = meta;
+});
+var FulfillWithMeta = /*#__PURE__*/createClass_createClass(function FulfillWithMeta(payload, meta) {
+  classCallCheck_classCallCheck(this, FulfillWithMeta);
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  defineProperty_defineProperty(this, "_type", void 0);
+  this.payload = payload;
+  this.meta = meta;
+});
+var miniSerializeError = function miniSerializeError(value) {
+  if (typeof value === "object" && value !== null) {
+    var simpleError = {};
+    for (var _i2 = 0, _commonProperties = commonProperties; _i2 < _commonProperties.length; _i2++) {
+      var property = _commonProperties[_i2];
+      if (typeof value[property] === "string") {
+        simpleError[property] = value[property];
+      }
+    }
+    return simpleError;
+  }
+  return {
+    message: String(value)
+  };
+};
+var createAsyncThunk = /* @__PURE__ */function () {
+  function createAsyncThunk2(typePrefix, payloadCreator, options) {
+    var fulfilled = createAction(typePrefix + "/fulfilled", function (payload, requestId, arg, meta) {
+      return {
+        payload: payload,
+        meta: _objectSpread2(_objectSpread2({}, meta || {}), {}, {
+          arg: arg,
+          requestId: requestId,
+          requestStatus: "fulfilled"
+        })
+      };
+    });
+    var pending = createAction(typePrefix + "/pending", function (requestId, arg, meta) {
+      return {
+        payload: void 0,
+        meta: _objectSpread2(_objectSpread2({}, meta || {}), {}, {
+          arg: arg,
+          requestId: requestId,
+          requestStatus: "pending"
+        })
+      };
+    });
+    var rejected = createAction(typePrefix + "/rejected", function (error, requestId, arg, payload, meta) {
+      return {
+        payload: payload,
+        error: (options && options.serializeError || miniSerializeError)(error || "Rejected"),
+        meta: _objectSpread2(_objectSpread2({}, meta || {}), {}, {
+          arg: arg,
+          requestId: requestId,
+          rejectedWithValue: !!payload,
+          requestStatus: "rejected",
+          aborted: (error === null || error === void 0 ? void 0 : error.name) === "AbortError",
+          condition: (error === null || error === void 0 ? void 0 : error.name) === "ConditionError"
+        })
+      };
+    });
+    function actionCreator(arg) {
+      return function (dispatch, getState, extra) {
+        var requestId = options !== null && options !== void 0 && options.idGenerator ? options.idGenerator(arg) : nanoid();
+        var abortController = new AbortController();
+        var abortHandler;
+        var abortReason;
+        function abort(reason) {
+          abortReason = reason;
+          abortController.abort();
+        }
+        var promise = asyncToGenerator_asyncToGenerator( /*#__PURE__*/regeneratorRuntime_regeneratorRuntime().mark(function _callee() {
+          var finalAction, _options$condition, _options$getPendingMe, conditionResult, abortedPromise, skipDispatch;
+          return regeneratorRuntime_regeneratorRuntime().wrap(function _callee$(_context) {
+            while (1) switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                conditionResult = options === null || options === void 0 || (_options$condition = options.condition) === null || _options$condition === void 0 ? void 0 : _options$condition.call(options, arg, {
+                  getState: getState,
+                  extra: extra
+                });
+                if (!isThenable(conditionResult)) {
+                  _context.next = 6;
+                  break;
+                }
+                _context.next = 5;
+                return conditionResult;
+              case 5:
+                conditionResult = _context.sent;
+              case 6:
+                if (!(conditionResult === false || abortController.signal.aborted)) {
+                  _context.next = 8;
+                  break;
+                }
+                throw {
+                  name: "ConditionError",
+                  message: "Aborted due to condition callback returning false."
+                };
+              case 8:
+                abortedPromise = new Promise(function (_, reject) {
+                  abortHandler = function abortHandler() {
+                    reject({
+                      name: "AbortError",
+                      message: abortReason || "Aborted"
+                    });
+                  };
+                  abortController.signal.addEventListener("abort", abortHandler);
+                });
+                dispatch(pending(requestId, arg, options === null || options === void 0 || (_options$getPendingMe = options.getPendingMeta) === null || _options$getPendingMe === void 0 ? void 0 : _options$getPendingMe.call(options, {
+                  requestId: requestId,
+                  arg: arg
+                }, {
+                  getState: getState,
+                  extra: extra
+                })));
+                _context.next = 12;
+                return Promise.race([abortedPromise, Promise.resolve(payloadCreator(arg, {
+                  dispatch: dispatch,
+                  getState: getState,
+                  extra: extra,
+                  requestId: requestId,
+                  signal: abortController.signal,
+                  abort: abort,
+                  rejectWithValue: function rejectWithValue(value, meta) {
+                    return new RejectWithValue(value, meta);
+                  },
+                  fulfillWithValue: function fulfillWithValue(value, meta) {
+                    return new FulfillWithMeta(value, meta);
+                  }
+                })).then(function (result) {
+                  if (result instanceof RejectWithValue) {
+                    throw result;
+                  }
+                  if (result instanceof FulfillWithMeta) {
+                    return fulfilled(result.payload, requestId, arg, result.meta);
+                  }
+                  return fulfilled(result, requestId, arg);
+                })]);
+              case 12:
+                finalAction = _context.sent;
+                _context.next = 18;
+                break;
+              case 15:
+                _context.prev = 15;
+                _context.t0 = _context["catch"](0);
+                finalAction = _context.t0 instanceof RejectWithValue ? rejected(null, requestId, arg, _context.t0.payload, _context.t0.meta) : rejected(_context.t0, requestId, arg);
+              case 18:
+                _context.prev = 18;
+                if (abortHandler) {
+                  abortController.signal.removeEventListener("abort", abortHandler);
+                }
+                return _context.finish(18);
+              case 21:
+                skipDispatch = options && !options.dispatchConditionRejection && rejected.match(finalAction) && finalAction.meta.condition;
+                if (!skipDispatch) {
+                  dispatch(finalAction);
+                }
+                return _context.abrupt("return", finalAction);
+              case 24:
+              case "end":
+                return _context.stop();
+            }
+          }, _callee, null, [[0, 15, 18, 21]]);
+        }))();
+        return Object.assign(promise, {
+          abort: abort,
+          requestId: requestId,
+          arg: arg,
+          unwrap: function unwrap() {
+            return promise.then(unwrapResult);
+          }
+        });
+      };
+    }
+    return Object.assign(actionCreator, {
+      pending: pending,
+      rejected: rejected,
+      fulfilled: fulfilled,
+      settled: isAnyOf(rejected, fulfilled),
+      typePrefix: typePrefix
+    });
+  }
+  createAsyncThunk2.withTypes = function () {
+    return createAsyncThunk2;
+  };
+  return createAsyncThunk2;
+}();
+function unwrapResult(action) {
+  if (action.meta && action.meta.rejectedWithValue) {
+    throw action.payload;
+  }
+  if (action.error) {
+    throw action.error;
+  }
+  return action.payload;
+}
+function isThenable(value) {
+  return value !== null && typeof value === "object" && typeof value.then === "function";
+}
+
+// src/createSlice.ts
+var asyncThunkSymbol = /* @__PURE__ */Symbol["for"]("rtk-slice-createasyncthunk");
+var asyncThunkCreator = defineProperty_defineProperty({}, asyncThunkSymbol, createAsyncThunk);
+var ReducerType = /* @__PURE__ */function (ReducerType2) {
+  ReducerType2["reducer"] = "reducer";
+  ReducerType2["reducerWithPrepare"] = "reducerWithPrepare";
+  ReducerType2["asyncThunk"] = "asyncThunk";
+  return ReducerType2;
+}(ReducerType || {});
+function getType(slice, actionKey) {
+  return "".concat(slice, "/").concat(actionKey);
+}
+function buildCreateSlice() {
+  var _creators$asyncThunk;
+  var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    creators = _ref8.creators;
+  var cAT = creators === null || creators === void 0 || (_creators$asyncThunk = creators.asyncThunk) === null || _creators$asyncThunk === void 0 ? void 0 : _creators$asyncThunk[asyncThunkSymbol];
+  return function createSlice2(options) {
+    var name = options.name,
+      _options$reducerPath = options.reducerPath,
+      reducerPath = _options$reducerPath === void 0 ? name : _options$reducerPath;
+    if (!name) {
+      throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(11) : 0);
+    }
+    if (typeof process !== "undefined" && "production" === "development") {}
+    var reducers = (typeof options.reducers === "function" ? options.reducers(buildReducerCreators()) : options.reducers) || {};
+    var reducerNames = Object.keys(reducers);
+    var context = {
+      sliceCaseReducersByName: {},
+      sliceCaseReducersByType: {},
+      actionCreators: {},
+      sliceMatchers: []
+    };
+    var contextMethods = {
+      addCase: function addCase(typeOrActionCreator, reducer2) {
+        var type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+        if (!type) {
+          throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(12) : 0);
+        }
+        if (type in context.sliceCaseReducersByType) {
+          throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(13) : 0);
+        }
+        context.sliceCaseReducersByType[type] = reducer2;
+        return contextMethods;
+      },
+      addMatcher: function addMatcher(matcher, reducer2) {
+        context.sliceMatchers.push({
+          matcher: matcher,
+          reducer: reducer2
+        });
+        return contextMethods;
+      },
+      exposeAction: function exposeAction(name2, actionCreator) {
+        context.actionCreators[name2] = actionCreator;
+        return contextMethods;
+      },
+      exposeCaseReducer: function exposeCaseReducer(name2, reducer2) {
+        context.sliceCaseReducersByName[name2] = reducer2;
+        return contextMethods;
+      }
+    };
+    reducerNames.forEach(function (reducerName) {
+      var reducerDefinition = reducers[reducerName];
+      var reducerDetails = {
+        reducerName: reducerName,
+        type: getType(name, reducerName),
+        createNotation: typeof options.reducers === "function"
+      };
+      if (isAsyncThunkSliceReducerDefinition(reducerDefinition)) {
+        handleThunkCaseReducerDefinition(reducerDetails, reducerDefinition, contextMethods, cAT);
+      } else {
+        handleNormalReducerDefinition(reducerDetails, reducerDefinition, contextMethods);
+      }
+    });
+    function buildReducer() {
+      if (false) {}
+      var _ref9 = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [options.extraReducers],
+        _ref10 = slicedToArray_slicedToArray(_ref9, 3),
+        _ref10$ = _ref10[0],
+        extraReducers = _ref10$ === void 0 ? {} : _ref10$,
+        _ref10$2 = _ref10[1],
+        actionMatchers = _ref10$2 === void 0 ? [] : _ref10$2,
+        _ref10$3 = _ref10[2],
+        defaultCaseReducer = _ref10$3 === void 0 ? void 0 : _ref10$3;
+      var finalCaseReducers = _objectSpread2(_objectSpread2({}, extraReducers), context.sliceCaseReducersByType);
+      return createReducer(options.initialState, function (builder) {
+        for (var key in finalCaseReducers) {
+          builder.addCase(key, finalCaseReducers[key]);
+        }
+        var _iterator3 = createForOfIteratorHelper_createForOfIteratorHelper(context.sliceMatchers),
+          _step3;
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var sM = _step3.value;
+            builder.addMatcher(sM.matcher, sM.reducer);
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+        var _iterator4 = createForOfIteratorHelper_createForOfIteratorHelper(actionMatchers),
+          _step4;
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var m = _step4.value;
+            builder.addMatcher(m.matcher, m.reducer);
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+        if (defaultCaseReducer) {
+          builder.addDefaultCase(defaultCaseReducer);
+        }
+      });
+    }
+    var selectSelf = function selectSelf(state) {
+      return state;
+    };
+    var injectedSelectorCache = /* @__PURE__ */new Map();
+    var _reducer;
+    function reducer(state, action) {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer(state, action);
+    }
+    function getInitialState() {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer.getInitialState();
+    }
+    function makeSelectorProps(reducerPath2) {
+      var injected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      function selectSlice(state) {
+        var sliceState = state[reducerPath2];
+        if (typeof sliceState === "undefined") {
+          if (injected) {
+            sliceState = getInitialState();
+          } else if (false) {}
+        }
+        return sliceState;
+      }
+      function getSelectors() {
+        var selectState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : selectSelf;
+        var selectorCache = emplace(injectedSelectorCache, injected, {
+          insert: function insert() {
+            return /* @__PURE__ */new WeakMap();
+          }
+        });
+        return emplace(selectorCache, selectState, {
+          insert: function insert() {
+            var map = {};
+            for (var _i3 = 0, _Object$entries = Object.entries((_options$selectors = options.selectors) !== null && _options$selectors !== void 0 ? _options$selectors : {}); _i3 < _Object$entries.length; _i3++) {
+              var _options$selectors;
+              var _Object$entries$_i = slicedToArray_slicedToArray(_Object$entries[_i3], 2),
+                name2 = _Object$entries$_i[0],
+                selector = _Object$entries$_i[1];
+              map[name2] = wrapSelector(selector, selectState, getInitialState, injected);
+            }
+            return map;
+          }
+        });
+      }
+      return {
+        reducerPath: reducerPath2,
+        getSelectors: getSelectors,
+        get selectors() {
+          return getSelectors(selectSlice);
+        },
+        selectSlice: selectSlice
+      };
+    }
+    var slice = _objectSpread2(_objectSpread2({
+      name: name,
+      reducer: reducer,
+      actions: context.actionCreators,
+      caseReducers: context.sliceCaseReducersByName,
+      getInitialState: getInitialState
+    }, makeSelectorProps(reducerPath)), {}, {
+      injectInto: function injectInto(injectable) {
+        var _ref11 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          pathOpt = _ref11.reducerPath,
+          config = objectWithoutProperties_objectWithoutProperties(_ref11, redux_toolkit_modern_excluded);
+        var newReducerPath = pathOpt !== null && pathOpt !== void 0 ? pathOpt : reducerPath;
+        injectable.inject({
+          reducerPath: newReducerPath,
+          reducer: reducer
+        }, config);
+        return _objectSpread2(_objectSpread2({}, slice), makeSelectorProps(newReducerPath, true));
+      }
+    });
+    return slice;
+  };
+}
+function wrapSelector(selector, selectState, getInitialState, injected) {
+  function wrapper(rootState) {
+    var sliceState = selectState(rootState);
+    if (typeof sliceState === "undefined") {
+      if (injected) {
+        sliceState = getInitialState();
+      } else if (false) {}
+    }
+    for (var _len12 = arguments.length, args = new Array(_len12 > 1 ? _len12 - 1 : 0), _key14 = 1; _key14 < _len12; _key14++) {
+      args[_key14 - 1] = arguments[_key14];
+    }
+    return selector.apply(void 0, [sliceState].concat(args));
+  }
+  wrapper.unwrapped = selector;
+  return wrapper;
+}
+var createSlice = /* @__PURE__ */buildCreateSlice();
+function buildReducerCreators() {
+  function asyncThunk(payloadCreator, config) {
+    return _objectSpread2({
+      _reducerDefinitionType: "asyncThunk" /* asyncThunk */,
+      payloadCreator: payloadCreator
+    }, config);
+  }
+  asyncThunk.withTypes = function () {
+    return asyncThunk;
+  };
+  return {
+    reducer: function reducer(caseReducer) {
+      return Object.assign(defineProperty_defineProperty({}, caseReducer.name, function () {
+        return caseReducer.apply(void 0, arguments);
+      })[caseReducer.name], {
+        _reducerDefinitionType: "reducer" /* reducer */
+      });
+    },
+    preparedReducer: function preparedReducer(prepare, reducer) {
+      return {
+        _reducerDefinitionType: "reducerWithPrepare" /* reducerWithPrepare */,
+        prepare: prepare,
+        reducer: reducer
+      };
+    },
+    asyncThunk: asyncThunk
+  };
+}
+function handleNormalReducerDefinition(_ref12, maybeReducerWithPrepare, context) {
+  var type = _ref12.type,
+    reducerName = _ref12.reducerName,
+    createNotation = _ref12.createNotation;
+  var caseReducer;
+  var prepareCallback;
+  if ("reducer" in maybeReducerWithPrepare) {
+    if (createNotation && !isCaseReducerWithPrepareDefinition(maybeReducerWithPrepare)) {
+      throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(17) : 0);
+    }
+    caseReducer = maybeReducerWithPrepare.reducer;
+    prepareCallback = maybeReducerWithPrepare.prepare;
+  } else {
+    caseReducer = maybeReducerWithPrepare;
+  }
+  context.addCase(type, caseReducer).exposeCaseReducer(reducerName, caseReducer).exposeAction(reducerName, prepareCallback ? createAction(type, prepareCallback) : createAction(type));
+}
+function isAsyncThunkSliceReducerDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "asyncThunk" /* asyncThunk */;
+}
+function isCaseReducerWithPrepareDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "reducerWithPrepare" /* reducerWithPrepare */;
+}
+function handleThunkCaseReducerDefinition(_ref13, reducerDefinition, context, cAT) {
+  var type = _ref13.type,
+    reducerName = _ref13.reducerName;
+  if (!cAT) {
+    throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(18) : 0);
+  }
+  var payloadCreator = reducerDefinition.payloadCreator,
+    fulfilled = reducerDefinition.fulfilled,
+    pending = reducerDefinition.pending,
+    rejected = reducerDefinition.rejected,
+    settled = reducerDefinition.settled,
+    options = reducerDefinition.options;
+  var thunk = cAT(type, payloadCreator, options);
+  context.exposeAction(reducerName, thunk);
+  if (fulfilled) {
+    context.addCase(thunk.fulfilled, fulfilled);
+  }
+  if (pending) {
+    context.addCase(thunk.pending, pending);
+  }
+  if (rejected) {
+    context.addCase(thunk.rejected, rejected);
+  }
+  if (settled) {
+    context.addMatcher(thunk.settled, settled);
+  }
+  context.exposeCaseReducer(reducerName, {
+    fulfilled: fulfilled || redux_toolkit_modern_noop,
+    pending: pending || redux_toolkit_modern_noop,
+    rejected: rejected || redux_toolkit_modern_noop,
+    settled: settled || redux_toolkit_modern_noop
+  });
+}
+function redux_toolkit_modern_noop() {}
+
+// src/entities/entity_state.ts
+function getInitialEntityState() {
+  return {
+    ids: [],
+    entities: {}
+  };
+}
+function createInitialStateFactory(stateAdapter) {
+  function getInitialState() {
+    var additionalState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var entities = arguments.length > 1 ? arguments[1] : undefined;
+    var state = Object.assign(getInitialEntityState(), additionalState);
+    return entities ? stateAdapter.setAll(state, entities) : state;
+  }
+  return {
+    getInitialState: getInitialState
+  };
+}
+
+// src/entities/state_selectors.ts
+function createSelectorsFactory() {
+  function getSelectors(selectState) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var _options$createSelect = options.createSelector,
+      createSelector2 = _options$createSelect === void 0 ? createDraftSafeSelector : _options$createSelect;
+    var selectIds = function selectIds(state) {
+      return state.ids;
+    };
+    var selectEntities = function selectEntities(state) {
+      return state.entities;
+    };
+    var selectAll = createSelector2(selectIds, selectEntities, function (ids, entities) {
+      return ids.map(function (id) {
+        return entities[id];
+      });
+    });
+    var selectId = function selectId(_, id) {
+      return id;
+    };
+    var selectById = function selectById(entities, id) {
+      return entities[id];
+    };
+    var selectTotal = createSelector2(selectIds, function (ids) {
+      return ids.length;
+    });
+    if (!selectState) {
+      return {
+        selectIds: selectIds,
+        selectEntities: selectEntities,
+        selectAll: selectAll,
+        selectTotal: selectTotal,
+        selectById: createSelector2(selectEntities, selectId, selectById)
+      };
+    }
+    var selectGlobalizedEntities = createSelector2(selectState, selectEntities);
+    return {
+      selectIds: createSelector2(selectState, selectIds),
+      selectEntities: selectGlobalizedEntities,
+      selectAll: createSelector2(selectState, selectAll),
+      selectTotal: createSelector2(selectState, selectTotal),
+      selectById: createSelector2(selectGlobalizedEntities, selectId, selectById)
+    };
+  }
+  return {
+    getSelectors: getSelectors
+  };
+}
+
+// src/entities/state_adapter.ts
+
+var isDraftTyped = (/* unused pure expression or super */ null && (isDraft3));
+function createSingleArgumentStateOperator(mutator) {
+  var operator = createStateOperator(function (_, state) {
+    return mutator(state);
+  });
+  return function operation(state) {
+    return operator(state, void 0);
+  };
+}
+function createStateOperator(mutator) {
+  return function operation(state, arg) {
+    function isPayloadActionArgument(arg2) {
+      return isFSA(arg2);
+    }
+    var runMutator = function runMutator(draft) {
+      if (isPayloadActionArgument(arg)) {
+        mutator(arg.payload, draft);
+      } else {
+        mutator(arg, draft);
+      }
+    };
+    if (isDraftTyped(state)) {
+      runMutator(state);
+      return state;
+    }
+    return createNextState3(state, runMutator);
+  };
+}
+
+// src/entities/utils.ts
+
+function selectIdValue(entity, selectId) {
+  var key = selectId(entity);
+  if (false) {}
+  return key;
+}
+function ensureEntitiesArray(entities) {
+  if (!Array.isArray(entities)) {
+    entities = Object.values(entities);
+  }
+  return entities;
+}
+function getCurrent(value) {
+  return isDraft4(value) ? current2(value) : value;
+}
+function splitAddedUpdatedEntities(newEntities, selectId, state) {
+  newEntities = ensureEntitiesArray(newEntities);
+  var existingIdsArray = getCurrent(state.ids);
+  var existingIds = new Set(existingIdsArray);
+  var added = [];
+  var updated = [];
+  var _iterator5 = _createForOfIteratorHelper(newEntities),
+    _step5;
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var entity = _step5.value;
+      var id = selectIdValue(entity, selectId);
+      if (existingIds.has(id)) {
+        updated.push({
+          id: id,
+          changes: entity
+        });
+      } else {
+        added.push(entity);
+      }
+    }
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
+  return [added, updated, existingIdsArray];
+}
+
+// src/entities/unsorted_state_adapter.ts
+function createUnsortedStateAdapter(selectId) {
+  function addOneMutably(entity, state) {
+    var key = selectIdValue(entity, selectId);
+    if (key in state.entities) {
+      return;
+    }
+    state.ids.push(key);
+    state.entities[key] = entity;
+  }
+  function addManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    var _iterator6 = _createForOfIteratorHelper(newEntities),
+      _step6;
+    try {
+      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+        var entity = _step6.value;
+        addOneMutably(entity, state);
+      }
+    } catch (err) {
+      _iterator6.e(err);
+    } finally {
+      _iterator6.f();
+    }
+  }
+  function setOneMutably(entity, state) {
+    var key = selectIdValue(entity, selectId);
+    if (!(key in state.entities)) {
+      state.ids.push(key);
+    }
+    ;
+    state.entities[key] = entity;
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    var _iterator7 = _createForOfIteratorHelper(newEntities),
+      _step7;
+    try {
+      for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+        var entity = _step7.value;
+        setOneMutably(entity, state);
+      }
+    } catch (err) {
+      _iterator7.e(err);
+    } finally {
+      _iterator7.f();
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.ids = [];
+    state.entities = {};
+    addManyMutably(newEntities, state);
+  }
+  function removeOneMutably(key, state) {
+    return removeManyMutably([key], state);
+  }
+  function removeManyMutably(keys, state) {
+    var didMutate = false;
+    keys.forEach(function (key) {
+      if (key in state.entities) {
+        delete state.entities[key];
+        didMutate = true;
+      }
+    });
+    if (didMutate) {
+      state.ids = state.ids.filter(function (id) {
+        return id in state.entities;
+      });
+    }
+  }
+  function removeAllMutably(state) {
+    Object.assign(state, {
+      ids: [],
+      entities: {}
+    });
+  }
+  function takeNewKey(keys, update, state) {
+    var original3 = state.entities[update.id];
+    if (original3 === void 0) {
+      return false;
+    }
+    var updated = Object.assign({}, original3, update.changes);
+    var newKey = selectIdValue(updated, selectId);
+    var hasNewKey = newKey !== update.id;
+    if (hasNewKey) {
+      keys[update.id] = newKey;
+      delete state.entities[update.id];
+    }
+    ;
+    state.entities[newKey] = updated;
+    return hasNewKey;
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    var newKeys = {};
+    var updatesPerEntity = {};
+    updates.forEach(function (update) {
+      if (update.id in state.entities) {
+        var _updatesPerEntity$upd;
+        updatesPerEntity[update.id] = {
+          id: update.id,
+          // Spreads ignore falsy values, so this works even if there isn't
+          // an existing update already at this key
+          changes: _objectSpread(_objectSpread({}, (_updatesPerEntity$upd = updatesPerEntity[update.id]) === null || _updatesPerEntity$upd === void 0 ? void 0 : _updatesPerEntity$upd.changes), update.changes)
+        };
+      }
+    });
+    updates = Object.values(updatesPerEntity);
+    var didMutateEntities = updates.length > 0;
+    if (didMutateEntities) {
+      var didMutateIds = updates.filter(function (update) {
+        return takeNewKey(newKeys, update, state);
+      }).length > 0;
+      if (didMutateIds) {
+        state.ids = Object.values(state.entities).map(function (e) {
+          return selectIdValue(e, selectId);
+        });
+      }
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    var _splitAddedUpdatedEnt = splitAddedUpdatedEntities(newEntities, selectId, state),
+      _splitAddedUpdatedEnt2 = _slicedToArray(_splitAddedUpdatedEnt, 2),
+      added = _splitAddedUpdatedEnt2[0],
+      updated = _splitAddedUpdatedEnt2[1];
+    updateManyMutably(updated, state);
+    addManyMutably(added, state);
+  }
+  return {
+    removeAll: createSingleArgumentStateOperator(removeAllMutably),
+    addOne: createStateOperator(addOneMutably),
+    addMany: createStateOperator(addManyMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
+    removeOne: createStateOperator(removeOneMutably),
+    removeMany: createStateOperator(removeManyMutably)
+  };
+}
+
+// src/entities/sorted_state_adapter.ts
+function findInsertIndex(sortedItems, item, comparisonFunction) {
+  var lowIndex = 0;
+  var highIndex = sortedItems.length;
+  while (lowIndex < highIndex) {
+    var middleIndex = lowIndex + highIndex >>> 1;
+    var currentItem = sortedItems[middleIndex];
+    var res = comparisonFunction(item, currentItem);
+    if (res >= 0) {
+      lowIndex = middleIndex + 1;
+    } else {
+      highIndex = middleIndex;
+    }
+  }
+  return lowIndex;
+}
+function insert(sortedItems, item, comparisonFunction) {
+  var insertAtIndex = findInsertIndex(sortedItems, item, comparisonFunction);
+  sortedItems.splice(insertAtIndex, 0, item);
+  return sortedItems;
+}
+function createSortedStateAdapter(selectId, comparer) {
+  var _createUnsortedStateA = createUnsortedStateAdapter(selectId),
+    removeOne = _createUnsortedStateA.removeOne,
+    removeMany = _createUnsortedStateA.removeMany,
+    removeAll = _createUnsortedStateA.removeAll;
+  function addOneMutably(entity, state) {
+    return addManyMutably([entity], state);
+  }
+  function addManyMutably(newEntities, state, existingIds) {
+    newEntities = ensureEntitiesArray(newEntities);
+    var existingKeys = new Set(existingIds !== null && existingIds !== void 0 ? existingIds : getCurrent(state.ids));
+    var models = newEntities.filter(function (model) {
+      return !existingKeys.has(selectIdValue(model, selectId));
+    });
+    if (models.length !== 0) {
+      mergeFunction(state, models);
+    }
+  }
+  function setOneMutably(entity, state) {
+    return setManyMutably([entity], state);
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    if (newEntities.length !== 0) {
+      var _iterator8 = _createForOfIteratorHelper(newEntities),
+        _step8;
+      try {
+        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+          var item = _step8.value;
+          delete state.entities[selectId(item)];
+        }
+      } catch (err) {
+        _iterator8.e(err);
+      } finally {
+        _iterator8.f();
+      }
+      mergeFunction(state, newEntities);
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.entities = {};
+    state.ids = [];
+    addManyMutably(newEntities, state, []);
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    var appliedUpdates = false;
+    var replacedIds = false;
+    var _iterator9 = _createForOfIteratorHelper(updates),
+      _step9;
+    try {
+      for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+        var update = _step9.value;
+        var entity = state.entities[update.id];
+        if (!entity) {
+          continue;
+        }
+        appliedUpdates = true;
+        Object.assign(entity, update.changes);
+        var newId = selectId(entity);
+        if (update.id !== newId) {
+          replacedIds = true;
+          delete state.entities[update.id];
+          var oldIndex = state.ids.indexOf(update.id);
+          state.ids[oldIndex] = newId;
+          state.entities[newId] = entity;
+        }
+      }
+    } catch (err) {
+      _iterator9.e(err);
+    } finally {
+      _iterator9.f();
+    }
+    if (appliedUpdates) {
+      mergeFunction(state, [], appliedUpdates, replacedIds);
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    var _splitAddedUpdatedEnt3 = splitAddedUpdatedEntities(newEntities, selectId, state),
+      _splitAddedUpdatedEnt4 = _slicedToArray(_splitAddedUpdatedEnt3, 3),
+      added = _splitAddedUpdatedEnt4[0],
+      updated = _splitAddedUpdatedEnt4[1],
+      existingIdsArray = _splitAddedUpdatedEnt4[2];
+    if (updated.length) {
+      updateManyMutably(updated, state);
+    }
+    if (added.length) {
+      addManyMutably(added, state, existingIdsArray);
+    }
+  }
+  function areArraysEqual(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] === b[i]) {
+        continue;
+      }
+      return false;
+    }
+    return true;
+  }
+  var mergeFunction = function mergeFunction(state, addedItems, appliedUpdates, replacedIds) {
+    var currentEntities = getCurrent(state.entities);
+    var currentIds = getCurrent(state.ids);
+    var stateEntities = state.entities;
+    var ids = currentIds;
+    if (replacedIds) {
+      ids = new Set(currentIds);
+    }
+    var sortedEntities = [];
+    var _iterator10 = _createForOfIteratorHelper(ids),
+      _step10;
+    try {
+      for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+        var id = _step10.value;
+        var entity = currentEntities[id];
+        if (entity) {
+          sortedEntities.push(entity);
+        }
+      }
+    } catch (err) {
+      _iterator10.e(err);
+    } finally {
+      _iterator10.f();
+    }
+    var wasPreviouslyEmpty = sortedEntities.length === 0;
+    var _iterator11 = _createForOfIteratorHelper(addedItems),
+      _step11;
+    try {
+      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+        var item = _step11.value;
+        stateEntities[selectId(item)] = item;
+        if (!wasPreviouslyEmpty) {
+          insert(sortedEntities, item, comparer);
+        }
+      }
+    } catch (err) {
+      _iterator11.e(err);
+    } finally {
+      _iterator11.f();
+    }
+    if (wasPreviouslyEmpty) {
+      sortedEntities = addedItems.slice().sort(comparer);
+    } else if (appliedUpdates) {
+      sortedEntities.sort(comparer);
+    }
+    var newSortedIds = sortedEntities.map(selectId);
+    if (!areArraysEqual(currentIds, newSortedIds)) {
+      state.ids = newSortedIds;
+    }
+  };
+  return {
+    removeOne: removeOne,
+    removeMany: removeMany,
+    removeAll: removeAll,
+    addOne: createStateOperator(addOneMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    addMany: createStateOperator(addManyMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertMany: createStateOperator(upsertManyMutably)
+  };
+}
+
+// src/entities/create_adapter.ts
+function createEntityAdapter() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _sortComparer$selectI = _objectSpread({
+      sortComparer: false,
+      selectId: function selectId(instance) {
+        return instance.id;
+      }
+    }, options),
+    selectId = _sortComparer$selectI.selectId,
+    sortComparer = _sortComparer$selectI.sortComparer;
+  var stateAdapter = sortComparer ? createSortedStateAdapter(selectId, sortComparer) : createUnsortedStateAdapter(selectId);
+  var stateFactory = createInitialStateFactory(stateAdapter);
+  var selectorsFactory = createSelectorsFactory();
+  return _objectSpread(_objectSpread(_objectSpread({
+    selectId: selectId,
+    sortComparer: sortComparer
+  }, stateFactory), selectorsFactory), stateAdapter);
+}
+
+// src/listenerMiddleware/index.ts
+
+
+// src/listenerMiddleware/exceptions.ts
+var task = "task";
+var listener = "listener";
+var completed = "completed";
+var cancelled = "cancelled";
+var taskCancelled = "task-".concat(cancelled);
+var taskCompleted = "task-".concat(completed);
+var listenerCancelled = "".concat(listener, "-").concat(cancelled);
+var listenerCompleted = "".concat(listener, "-").concat(completed);
+var TaskAbortError = /*#__PURE__*/(/* unused pure expression or super */ null && (_createClass(function TaskAbortError(code) {
+  _classCallCheck(this, TaskAbortError);
+  _defineProperty(this, "name", "TaskAbortError");
+  _defineProperty(this, "message", void 0);
+  this.code = code;
+  this.message = "".concat(task, " ").concat(cancelled, " (reason: ").concat(code, ")");
+})));
+
+// src/listenerMiddleware/utils.ts
+var assertFunction = function assertFunction(func, expected) {
+  if (typeof func !== "function") {
+    throw new TypeError( true ? redux_toolkit_modern_formatProdErrorMessage(32) : 0);
+  }
+};
+var noop2 = function noop2() {};
+var catchRejection = function catchRejection(promise) {
+  var onError = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : noop2;
+  promise["catch"](onError);
+  return promise;
+};
+var addAbortSignalListener = function addAbortSignalListener(abortSignal, callback) {
+  abortSignal.addEventListener("abort", callback, {
+    once: true
+  });
+  return function () {
+    return abortSignal.removeEventListener("abort", callback);
+  };
+};
+var abortControllerWithReason = function abortControllerWithReason(abortController, reason) {
+  var signal = abortController.signal;
+  if (signal.aborted) {
+    return;
+  }
+  if (!("reason" in signal)) {
+    Object.defineProperty(signal, "reason", {
+      enumerable: true,
+      value: reason,
+      configurable: true,
+      writable: true
+    });
+  }
+  ;
+  abortController.abort(reason);
+};
+
+// src/listenerMiddleware/task.ts
+var validateActive = function validateActive(signal) {
+  if (signal.aborted) {
+    var reason = signal.reason;
+    throw new TaskAbortError(reason);
+  }
+};
+function raceWithSignal(signal, promise) {
+  var cleanup = noop2;
+  return new Promise(function (resolve, reject) {
+    var notifyRejection = function notifyRejection() {
+      return reject(new TaskAbortError(signal.reason));
+    };
+    if (signal.aborted) {
+      notifyRejection();
+      return;
+    }
+    cleanup = addAbortSignalListener(signal, notifyRejection);
+    promise["finally"](function () {
+      return cleanup();
+    }).then(resolve, reject);
+  })["finally"](function () {
+    cleanup = noop2;
+  });
+}
+var runTask = /*#__PURE__*/(/* unused pure expression or super */ null && (function () {
+  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(task2, cleanUp) {
+    var value;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.prev = 0;
+          _context2.next = 3;
+          return Promise.resolve();
+        case 3:
+          _context2.next = 5;
+          return task2();
+        case 5:
+          value = _context2.sent;
+          return _context2.abrupt("return", {
+            status: "ok",
+            value: value
+          });
+        case 9:
+          _context2.prev = 9;
+          _context2.t0 = _context2["catch"](0);
+          return _context2.abrupt("return", {
+            status: _context2.t0 instanceof TaskAbortError ? "cancelled" : "rejected",
+            error: _context2.t0
+          });
+        case 12:
+          _context2.prev = 12;
+          cleanUp === null || cleanUp === void 0 || cleanUp();
+          return _context2.finish(12);
+        case 15:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2, null, [[0, 9, 12, 15]]);
+  }));
+  return function runTask(_x, _x2) {
+    return _ref14.apply(this, arguments);
+  };
+}()));
+var createPause = function createPause(signal) {
+  return function (promise) {
+    return catchRejection(raceWithSignal(signal, promise).then(function (output) {
+      validateActive(signal);
+      return output;
+    }));
+  };
+};
+var createDelay = function createDelay(signal) {
+  var pause = createPause(signal);
+  return function (timeoutMs) {
+    return pause(new Promise(function (resolve) {
+      return setTimeout(resolve, timeoutMs);
+    }));
+  };
+};
+
+// src/listenerMiddleware/index.ts
+var redux_toolkit_modern_assign = Object.assign;
+var INTERNAL_NIL_TOKEN = {};
+var alm = "listenerMiddleware";
+var createFork = function createFork(parentAbortSignal, parentBlockingPromises) {
+  var linkControllers = function linkControllers(controller) {
+    return addAbortSignalListener(parentAbortSignal, function () {
+      return abortControllerWithReason(controller, parentAbortSignal.reason);
+    });
+  };
+  return function (taskExecutor, opts) {
+    assertFunction(taskExecutor, "taskExecutor");
+    var childAbortController = new AbortController();
+    linkControllers(childAbortController);
+    var result = runTask( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var result2;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            validateActive(parentAbortSignal);
+            validateActive(childAbortController.signal);
+            _context3.next = 4;
+            return taskExecutor({
+              pause: createPause(childAbortController.signal),
+              delay: createDelay(childAbortController.signal),
+              signal: childAbortController.signal
+            });
+          case 4:
+            result2 = _context3.sent;
+            validateActive(childAbortController.signal);
+            return _context3.abrupt("return", result2);
+          case 7:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3);
+    })), function () {
+      return abortControllerWithReason(childAbortController, taskCompleted);
+    });
+    if (opts !== null && opts !== void 0 && opts.autoJoin) {
+      parentBlockingPromises.push(result["catch"](noop2));
+    }
+    return {
+      result: createPause(parentAbortSignal)(result),
+      cancel: function cancel() {
+        abortControllerWithReason(childAbortController, taskCancelled);
+      }
+    };
+  };
+};
+var createTakePattern = function createTakePattern(startListening, signal) {
+  var take = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(predicate, timeout) {
+      var unsubscribe, tuplePromise, promises, output;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            validateActive(signal);
+            unsubscribe = function unsubscribe() {};
+            tuplePromise = new Promise(function (resolve, reject) {
+              var stopListening = startListening({
+                predicate: predicate,
+                effect: function effect(action, listenerApi) {
+                  listenerApi.unsubscribe();
+                  resolve([action, listenerApi.getState(), listenerApi.getOriginalState()]);
+                }
+              });
+              unsubscribe = function unsubscribe() {
+                stopListening();
+                reject();
+              };
+            });
+            promises = [tuplePromise];
+            if (timeout != null) {
+              promises.push(new Promise(function (resolve) {
+                return setTimeout(resolve, timeout, null);
+              }));
+            }
+            _context4.prev = 5;
+            _context4.next = 8;
+            return raceWithSignal(signal, Promise.race(promises));
+          case 8:
+            output = _context4.sent;
+            validateActive(signal);
+            return _context4.abrupt("return", output);
+          case 11:
+            _context4.prev = 11;
+            unsubscribe();
+            return _context4.finish(11);
+          case 14:
+          case "end":
+            return _context4.stop();
+        }
+      }, _callee4, null, [[5,, 11, 14]]);
+    }));
+    return function take(_x3, _x4) {
+      return _ref15.apply(this, arguments);
+    };
+  }();
+  return function (predicate, timeout) {
+    return catchRejection(take(predicate, timeout));
+  };
+};
+var getListenerEntryPropsFrom = function getListenerEntryPropsFrom(options) {
+  var type = options.type,
+    actionCreator = options.actionCreator,
+    matcher = options.matcher,
+    predicate = options.predicate,
+    effect = options.effect;
+  if (type) {
+    predicate = createAction(type).match;
+  } else if (actionCreator) {
+    type = actionCreator.type;
+    predicate = actionCreator.match;
+  } else if (matcher) {
+    predicate = matcher;
+  } else if (predicate) {} else {
+    throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(21) : 0);
+  }
+  assertFunction(effect, "options.listener");
+  return {
+    predicate: predicate,
+    type: type,
+    effect: effect
+  };
+};
+var createListenerEntry = /* @__PURE__ */redux_toolkit_modern_assign(function (options) {
+  var _getListenerEntryProp = getListenerEntryPropsFrom(options),
+    type = _getListenerEntryProp.type,
+    predicate = _getListenerEntryProp.predicate,
+    effect = _getListenerEntryProp.effect;
+  var id = nanoid();
+  var entry = {
+    id: id,
+    effect: effect,
+    type: type,
+    predicate: predicate,
+    pending: /* @__PURE__ */new Set(),
+    unsubscribe: function unsubscribe() {
+      throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(22) : 0);
+    }
+  };
+  return entry;
+}, {
+  withTypes: function withTypes() {
+    return createListenerEntry;
+  }
+});
+var cancelActiveListeners = function cancelActiveListeners(entry) {
+  entry.pending.forEach(function (controller) {
+    abortControllerWithReason(controller, listenerCancelled);
+  });
+};
+var createClearListenerMiddleware = function createClearListenerMiddleware(listenerMap) {
+  return function () {
+    listenerMap.forEach(cancelActiveListeners);
+    listenerMap.clear();
+  };
+};
+var safelyNotifyError = function safelyNotifyError(errorHandler, errorToNotify, errorInfo) {
+  try {
+    errorHandler(errorToNotify, errorInfo);
+  } catch (errorHandlerError) {
+    setTimeout(function () {
+      throw errorHandlerError;
+    }, 0);
+  }
+};
+var addListener = /* @__PURE__ */redux_toolkit_modern_assign( /* @__PURE__ */createAction("".concat(alm, "/add")), {
+  withTypes: function withTypes() {
+    return addListener;
+  }
+});
+var clearAllListeners = /* @__PURE__ */createAction("".concat(alm, "/removeAll"));
+var removeListener = /* @__PURE__ */redux_toolkit_modern_assign( /* @__PURE__ */createAction("".concat(alm, "/remove")), {
+  withTypes: function withTypes() {
+    return removeListener;
+  }
+});
+var defaultErrorHandler = function defaultErrorHandler() {
+  var _console;
+  for (var _len13 = arguments.length, args = new Array(_len13), _key15 = 0; _key15 < _len13; _key15++) {
+    args[_key15] = arguments[_key15];
+  }
+  (_console = console).error.apply(_console, ["".concat(alm, "/error")].concat(args));
+};
+var createListenerMiddleware = function createListenerMiddleware() {
+  var middlewareOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var listenerMap = /* @__PURE__ */new Map();
+  var extra = middlewareOptions.extra,
+    _middlewareOptions$on = middlewareOptions.onError,
+    onError = _middlewareOptions$on === void 0 ? defaultErrorHandler : _middlewareOptions$on;
+  assertFunction(onError, "onError");
+  var insertEntry = function insertEntry(entry) {
+    entry.unsubscribe = function () {
+      return listenerMap["delete"](entry.id);
+    };
+    listenerMap.set(entry.id, entry);
+    return function (cancelOptions) {
+      entry.unsubscribe();
+      if (cancelOptions !== null && cancelOptions !== void 0 && cancelOptions.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    };
+  };
+  var startListening = function startListening(options) {
+    var entry = find(Array.from(listenerMap.values()), function (existingEntry) {
+      return existingEntry.effect === options.effect;
+    });
+    if (!entry) {
+      entry = createListenerEntry(options);
+    }
+    return insertEntry(entry);
+  };
+  redux_toolkit_modern_assign(startListening, {
+    withTypes: function withTypes() {
+      return startListening;
+    }
+  });
+  var stopListening = function stopListening(options) {
+    var _getListenerEntryProp2 = getListenerEntryPropsFrom(options),
+      type = _getListenerEntryProp2.type,
+      effect = _getListenerEntryProp2.effect,
+      predicate = _getListenerEntryProp2.predicate;
+    var entry = find(Array.from(listenerMap.values()), function (entry2) {
+      var matchPredicateOrType = typeof type === "string" ? entry2.type === type : entry2.predicate === predicate;
+      return matchPredicateOrType && entry2.effect === effect;
+    });
+    if (entry) {
+      entry.unsubscribe();
+      if (options.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    }
+    return !!entry;
+  };
+  redux_toolkit_modern_assign(stopListening, {
+    withTypes: function withTypes() {
+      return stopListening;
+    }
+  });
+  var notifyListener = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(entry, action, api, getOriginalState) {
+      var internalTaskController, take, autoJoinPromises;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            internalTaskController = new AbortController();
+            take = createTakePattern(startListening, internalTaskController.signal);
+            autoJoinPromises = [];
+            _context5.prev = 3;
+            entry.pending.add(internalTaskController);
+            _context5.next = 7;
+            return Promise.resolve(entry.effect(action,
+            // Use assign() rather than ... to avoid extra helper functions added to bundle
+            redux_toolkit_modern_assign({}, api, {
+              getOriginalState: getOriginalState,
+              condition: function condition(predicate, timeout) {
+                return take(predicate, timeout).then(Boolean);
+              },
+              take: take,
+              delay: createDelay(internalTaskController.signal),
+              pause: createPause(internalTaskController.signal),
+              extra: extra,
+              signal: internalTaskController.signal,
+              fork: createFork(internalTaskController.signal, autoJoinPromises),
+              unsubscribe: entry.unsubscribe,
+              subscribe: function subscribe() {
+                listenerMap.set(entry.id, entry);
+              },
+              cancelActiveListeners: function cancelActiveListeners() {
+                entry.pending.forEach(function (controller, _, set) {
+                  if (controller !== internalTaskController) {
+                    abortControllerWithReason(controller, listenerCancelled);
+                    set["delete"](controller);
+                  }
+                });
+              },
+              cancel: function cancel() {
+                abortControllerWithReason(internalTaskController, listenerCancelled);
+                entry.pending["delete"](internalTaskController);
+              },
+              throwIfCancelled: function throwIfCancelled() {
+                validateActive(internalTaskController.signal);
+              }
+            })));
+          case 7:
+            _context5.next = 12;
+            break;
+          case 9:
+            _context5.prev = 9;
+            _context5.t0 = _context5["catch"](3);
+            if (!(_context5.t0 instanceof TaskAbortError)) {
+              safelyNotifyError(onError, _context5.t0, {
+                raisedBy: "effect"
+              });
+            }
+          case 12:
+            _context5.prev = 12;
+            _context5.next = 15;
+            return Promise.all(autoJoinPromises);
+          case 15:
+            abortControllerWithReason(internalTaskController, listenerCompleted);
+            entry.pending["delete"](internalTaskController);
+            return _context5.finish(12);
+          case 18:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee5, null, [[3, 9, 12, 18]]);
+    }));
+    return function notifyListener(_x5, _x6, _x7, _x8) {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var clearListenerMiddleware = createClearListenerMiddleware(listenerMap);
+  var middleware = function middleware(api) {
+    return function (next) {
+      return function (action) {
+        if (!isAction3(action)) {
+          return next(action);
+        }
+        if (addListener.match(action)) {
+          return startListening(action.payload);
+        }
+        if (clearAllListeners.match(action)) {
+          clearListenerMiddleware();
+          return;
+        }
+        if (removeListener.match(action)) {
+          return stopListening(action.payload);
+        }
+        var originalState = api.getState();
+        var getOriginalState = function getOriginalState() {
+          if (originalState === INTERNAL_NIL_TOKEN) {
+            throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(23) : 0);
+          }
+          return originalState;
+        };
+        var result;
+        try {
+          result = next(action);
+          if (listenerMap.size > 0) {
+            var currentState = api.getState();
+            var listenerEntries = Array.from(listenerMap.values());
+            for (var _i4 = 0, _listenerEntries = listenerEntries; _i4 < _listenerEntries.length; _i4++) {
+              var entry = _listenerEntries[_i4];
+              var runListener = false;
+              try {
+                runListener = entry.predicate(action, currentState, originalState);
+              } catch (predicateError) {
+                runListener = false;
+                safelyNotifyError(onError, predicateError, {
+                  raisedBy: "predicate"
+                });
+              }
+              if (!runListener) {
+                continue;
+              }
+              notifyListener(entry, action, api, getOriginalState);
+            }
+          }
+        } finally {
+          originalState = INTERNAL_NIL_TOKEN;
+        }
+        return result;
+      };
+    };
+  };
+  return {
+    middleware: middleware,
+    startListening: startListening,
+    stopListening: stopListening,
+    clearListeners: clearListenerMiddleware
+  };
+};
+
+// src/dynamicMiddleware/index.ts
+
+var createMiddlewareEntry = function createMiddlewareEntry(middleware) {
+  return {
+    id: nanoid(),
+    middleware: middleware,
+    applied: /* @__PURE__ */new Map()
+  };
+};
+var matchInstance = function matchInstance(instanceId) {
+  return function (action) {
+    var _action$meta2;
+    return (action === null || action === void 0 || (_action$meta2 = action.meta) === null || _action$meta2 === void 0 ? void 0 : _action$meta2.instanceId) === instanceId;
+  };
+};
+var createDynamicMiddleware = function createDynamicMiddleware() {
+  var instanceId = nanoid();
+  var middlewareMap = /* @__PURE__ */new Map();
+  var withMiddleware = Object.assign(createAction("dynamicMiddleware/add", function () {
+    for (var _len14 = arguments.length, middlewares = new Array(_len14), _key16 = 0; _key16 < _len14; _key16++) {
+      middlewares[_key16] = arguments[_key16];
+    }
+    return {
+      payload: middlewares,
+      meta: {
+        instanceId: instanceId
+      }
+    };
+  }), {
+    withTypes: function withTypes() {
+      return withMiddleware;
+    }
+  });
+  var addMiddleware = Object.assign(function addMiddleware2() {
+    for (var _len15 = arguments.length, middlewares = new Array(_len15), _key17 = 0; _key17 < _len15; _key17++) {
+      middlewares[_key17] = arguments[_key17];
+    }
+    middlewares.forEach(function (middleware2) {
+      var entry = find(Array.from(middlewareMap.values()), function (entry2) {
+        return entry2.middleware === middleware2;
+      });
+      if (!entry) {
+        entry = createMiddlewareEntry(middleware2);
+      }
+      middlewareMap.set(entry.id, entry);
+    });
+  }, {
+    withTypes: function withTypes() {
+      return addMiddleware;
+    }
+  });
+  var getFinalMiddleware = function getFinalMiddleware(api) {
+    var appliedMiddleware = Array.from(middlewareMap.values()).map(function (entry) {
+      return emplace(entry.applied, api, {
+        insert: function insert() {
+          return entry.middleware(api);
+        }
+      });
+    });
+    return compose3.apply(void 0, _toConsumableArray(appliedMiddleware));
+  };
+  var isWithMiddleware = isAllOf(withMiddleware, matchInstance(instanceId));
+  var middleware = function middleware(api) {
+    return function (next) {
+      return function (action) {
+        if (isWithMiddleware(action)) {
+          addMiddleware.apply(void 0, _toConsumableArray(action.payload));
+          return api.dispatch;
+        }
+        return getFinalMiddleware(api)(next)(action);
+      };
+    };
+  };
+  return {
+    middleware: middleware,
+    addMiddleware: addMiddleware,
+    withMiddleware: withMiddleware,
+    instanceId: instanceId
+  };
+};
+
+// src/combineSlices.ts
+
+var isSliceLike = function isSliceLike(maybeSliceLike) {
+  return "reducerPath" in maybeSliceLike && typeof maybeSliceLike.reducerPath === "string";
+};
+var getReducers = function getReducers(slices) {
+  return slices.flatMap(function (sliceOrMap) {
+    return isSliceLike(sliceOrMap) ? [[sliceOrMap.reducerPath, sliceOrMap.reducer]] : Object.entries(sliceOrMap);
+  });
+};
+var ORIGINAL_STATE = Symbol["for"]("rtk-state-proxy-original");
+var isStateProxy = function isStateProxy(value) {
+  return !!value && !!value[ORIGINAL_STATE];
+};
+var stateProxyMap = /* @__PURE__ */new WeakMap();
+var createStateProxy = function createStateProxy(state, reducerMap) {
+  return emplace(stateProxyMap, state, {
+    insert: function insert() {
+      return new Proxy(state, {
+        get: function get(target, prop, receiver) {
+          if (prop === ORIGINAL_STATE) return target;
+          var result = Reflect.get(target, prop, receiver);
+          if (typeof result === "undefined") {
+            var reducer = reducerMap[prop.toString()];
+            if (reducer) {
+              var reducerResult = reducer(void 0, {
+                type: nanoid()
+              });
+              if (typeof reducerResult === "undefined") {
+                throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(24) : 0);
+              }
+              return reducerResult;
+            }
+          }
+          return result;
+        }
+      });
+    }
+  });
+};
+var redux_toolkit_modern_original = function original(state) {
+  if (!isStateProxy(state)) {
+    throw new Error( true ? redux_toolkit_modern_formatProdErrorMessage(25) : 0);
+  }
+  return state[ORIGINAL_STATE];
+};
+var noopReducer = function noopReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return state;
+};
+function combineSlices() {
+  for (var _len16 = arguments.length, slices = new Array(_len16), _key18 = 0; _key18 < _len16; _key18++) {
+    slices[_key18] = arguments[_key18];
+  }
+  var reducerMap = Object.fromEntries(getReducers(slices));
+  var getReducer = function getReducer() {
+    return Object.keys(reducerMap).length ? combineReducers2(reducerMap) : noopReducer;
+  };
+  var reducer = getReducer();
+  function combinedReducer(state, action) {
+    return reducer(state, action);
+  }
+  combinedReducer.withLazyLoadedSlices = function () {
+    return combinedReducer;
+  };
+  var inject = function inject(slice) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var reducerPath = slice.reducerPath,
+      reducerToInject = slice.reducer;
+    var currentReducer = reducerMap[reducerPath];
+    if (!config.overrideExisting && currentReducer && currentReducer !== reducerToInject) {
+      if (typeof process !== "undefined" && "production" === "development") {}
+      return combinedReducer;
+    }
+    reducerMap[reducerPath] = reducerToInject;
+    reducer = getReducer();
+    return combinedReducer;
+  };
+  var selector = Object.assign(function makeSelector(selectorFn, selectState) {
+    return function selector2(state) {
+      for (var _len17 = arguments.length, args = new Array(_len17 > 1 ? _len17 - 1 : 0), _key19 = 1; _key19 < _len17; _key19++) {
+        args[_key19 - 1] = arguments[_key19];
+      }
+      return selectorFn.apply(void 0, [createStateProxy(selectState ? selectState.apply(void 0, [state].concat(args)) : state, reducerMap)].concat(args));
+    };
+  }, {
+    original: redux_toolkit_modern_original
+  });
+  return Object.assign(combinedReducer, {
+    inject: inject,
+    selector: selector
+  });
+}
+
+// src/formatProdErrorMessage.ts
+function redux_toolkit_modern_formatProdErrorMessage(code) {
+  return "Minified Redux Toolkit error #".concat(code, "; visit https://redux-toolkit.js.org/Errors?code=").concat(code, " for the full message or use the non-minified dev environment for full errors. ");
+}
+
+//# sourceMappingURL=redux-toolkit.modern.mjs.map
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/constants.js
+var KEY_PREFIX = 'persist:';
+var FLUSH = 'persist/FLUSH';
+var REHYDRATE = 'persist/REHYDRATE';
+var PAUSE = 'persist/PAUSE';
+var PERSIST = 'persist/PERSIST';
+var PURGE = 'persist/PURGE';
+var REGISTER = 'persist/REGISTER';
+var DEFAULT_VERSION = -1;
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/stateReconciler/autoMergeLevel1.js
+function autoMergeLevel1_typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    autoMergeLevel1_typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    autoMergeLevel1_typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+  return autoMergeLevel1_typeof(obj);
+}
+function autoMergeLevel1_ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function autoMergeLevel1_objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      autoMergeLevel1_ownKeys(source, true).forEach(function (key) {
+        autoMergeLevel1_defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      autoMergeLevel1_ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+function autoMergeLevel1_defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+/*
+  autoMergeLevel1: 
+    - merges 1 level of substate
+    - skips substate if already modified
+*/
+function autoMergeLevel1(inboundState, originalState, reducedState, _ref) {
+  var debug = _ref.debug;
+  var newState = autoMergeLevel1_objectSpread({}, reducedState); // only rehydrate if inboundState exists and is an object
+
+  if (inboundState && autoMergeLevel1_typeof(inboundState) === 'object') {
+    Object.keys(inboundState).forEach(function (key) {
+      // ignore _persist data
+      if (key === '_persist') return; // if reducer modifies substate, skip auto rehydration
+
+      if (originalState[key] !== reducedState[key]) {
+        if (false) {}
+        return;
+      } // otherwise hard set the new value
+
+      newState[key] = inboundState[key];
+    });
+  }
+  if (false) {}
+  return newState;
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/createPersistoid.js
+
+// @TODO remove once flow < 0.63 support is no longer required.
+function createPersistoid(config) {
+  // defaults
+  var blacklist = config.blacklist || null;
+  var whitelist = config.whitelist || null;
+  var transforms = config.transforms || [];
+  var throttle = config.throttle || 0;
+  var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : KEY_PREFIX).concat(config.key);
+  var storage = config.storage;
+  var serialize;
+  if (config.serialize === false) {
+    serialize = function serialize(x) {
+      return x;
+    };
+  } else if (typeof config.serialize === 'function') {
+    serialize = config.serialize;
+  } else {
+    serialize = defaultSerialize;
+  }
+  var writeFailHandler = config.writeFailHandler || null; // initialize stateful values
+
+  var lastState = {};
+  var stagedState = {};
+  var keysToProcess = [];
+  var timeIterator = null;
+  var writePromise = null;
+  var update = function update(state) {
+    // add any changed keys to the queue
+    Object.keys(state).forEach(function (key) {
+      if (!passWhitelistBlacklist(key)) return; // is keyspace ignored? noop
+
+      if (lastState[key] === state[key]) return; // value unchanged? noop
+
+      if (keysToProcess.indexOf(key) !== -1) return; // is key already queued? noop
+
+      keysToProcess.push(key); // add key to queue
+    }); //if any key is missing in the new state which was present in the lastState,
+    //add it for processing too
+
+    Object.keys(lastState).forEach(function (key) {
+      if (state[key] === undefined && passWhitelistBlacklist(key) && keysToProcess.indexOf(key) === -1 && lastState[key] !== undefined) {
+        keysToProcess.push(key);
+      }
+    }); // start the time iterator if not running (read: throttle)
+
+    if (timeIterator === null) {
+      timeIterator = setInterval(processNextKey, throttle);
+    }
+    lastState = state;
+  };
+  function processNextKey() {
+    if (keysToProcess.length === 0) {
+      if (timeIterator) clearInterval(timeIterator);
+      timeIterator = null;
+      return;
+    }
+    var key = keysToProcess.shift();
+    var endState = transforms.reduce(function (subState, transformer) {
+      return transformer["in"](subState, key, lastState);
+    }, lastState[key]);
+    if (endState !== undefined) {
+      try {
+        stagedState[key] = serialize(endState);
+      } catch (err) {
+        console.error('redux-persist/createPersistoid: error serializing state', err);
+      }
+    } else {
+      //if the endState is undefined, no need to persist the existing serialized content
+      delete stagedState[key];
+    }
+    if (keysToProcess.length === 0) {
+      writeStagedState();
+    }
+  }
+  function writeStagedState() {
+    // cleanup any removed keys just before write.
+    Object.keys(stagedState).forEach(function (key) {
+      if (lastState[key] === undefined) {
+        delete stagedState[key];
+      }
+    });
+    writePromise = storage.setItem(storageKey, serialize(stagedState))["catch"](onWriteFail);
+  }
+  function passWhitelistBlacklist(key) {
+    if (whitelist && whitelist.indexOf(key) === -1 && key !== '_persist') return false;
+    if (blacklist && blacklist.indexOf(key) !== -1) return false;
+    return true;
+  }
+  function onWriteFail(err) {
+    // @TODO add fail handlers (typically storage full)
+    if (writeFailHandler) writeFailHandler(err);
+    if (err && "production" !== 'production') {}
+  }
+  var flush = function flush() {
+    while (keysToProcess.length !== 0) {
+      processNextKey();
+    }
+    return writePromise || Promise.resolve();
+  }; // return `persistoid`
+
+  return {
+    update: update,
+    flush: flush
+  };
+} // @NOTE in the future this may be exposed via config
+
+function defaultSerialize(data) {
+  return JSON.stringify(data);
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/getStoredState.js
+
+function getStoredState_getStoredState(config) {
+  var transforms = config.transforms || [];
+  var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : KEY_PREFIX).concat(config.key);
+  var storage = config.storage;
+  var debug = config.debug;
+  var deserialize;
+  if (config.deserialize === false) {
+    deserialize = function deserialize(x) {
+      return x;
+    };
+  } else if (typeof config.deserialize === 'function') {
+    deserialize = config.deserialize;
+  } else {
+    deserialize = defaultDeserialize;
+  }
+  return storage.getItem(storageKey).then(function (serialized) {
+    if (!serialized) return undefined;else {
+      try {
+        var state = {};
+        var rawState = deserialize(serialized);
+        Object.keys(rawState).forEach(function (key) {
+          state[key] = transforms.reduceRight(function (subState, transformer) {
+            return transformer.out(subState, key, rawState);
+          }, deserialize(rawState[key]));
+        });
+        return state;
+      } catch (err) {
+        if (false) {}
+        throw err;
+      }
+    }
+  });
+}
+function defaultDeserialize(serial) {
+  return JSON.parse(serial);
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/purgeStoredState.js
+
+function purgeStoredState(config) {
+  var storage = config.storage;
+  var storageKey = "".concat(config.keyPrefix !== undefined ? config.keyPrefix : KEY_PREFIX).concat(config.key);
+  return storage.removeItem(storageKey, warnIfRemoveError);
+}
+function warnIfRemoveError(err) {
+  if (err && "production" !== 'production') {}
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/persistReducer.js
+function persistReducer_ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function persistReducer_objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      persistReducer_ownKeys(source, true).forEach(function (key) {
+        persistReducer_defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      persistReducer_ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+function persistReducer_defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+function persistReducer_objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = persistReducer_objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+function persistReducer_objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+
+
+
+
+
+var DEFAULT_TIMEOUT = 5000;
+/*
+  @TODO add validation / handling for:
+  - persisting a reducer which has nested _persist
+  - handling actions that fire before reydrate is called
+*/
+
+function persistReducer(config, baseReducer) {
+  if (false) {}
+  var version = config.version !== undefined ? config.version : DEFAULT_VERSION;
+  var debug = config.debug || false;
+  var stateReconciler = config.stateReconciler === undefined ? autoMergeLevel1 : config.stateReconciler;
+  var getStoredState = config.getStoredState || getStoredState_getStoredState;
+  var timeout = config.timeout !== undefined ? config.timeout : DEFAULT_TIMEOUT;
+  var _persistoid = null;
+  var _purge = false;
+  var _paused = true;
+  var conditionalUpdate = function conditionalUpdate(state) {
+    // update the persistoid only if we are rehydrated and not paused
+    state._persist.rehydrated && _persistoid && !_paused && _persistoid.update(state);
+    return state;
+  };
+  return function (state, action) {
+    var _ref = state || {},
+      _persist = _ref._persist,
+      rest = persistReducer_objectWithoutProperties(_ref, ["_persist"]); // $FlowIgnore need to update State type
+
+    var restState = rest;
+    if (action.type === PERSIST) {
+      var _sealed = false;
+      var _rehydrate = function _rehydrate(payload, err) {
+        // dev warning if we are already sealed
+        if (false) {} // only rehydrate if we are not already sealed
+
+        if (!_sealed) {
+          action.rehydrate(config.key, payload, err);
+          _sealed = true;
+        }
+      };
+      timeout && setTimeout(function () {
+        !_sealed && _rehydrate(undefined, new Error("redux-persist: persist timed out for persist key \"".concat(config.key, "\"")));
+      }, timeout); // @NOTE PERSIST resumes if paused.
+
+      _paused = false; // @NOTE only ever create persistoid once, ensure we call it at least once, even if _persist has already been set
+
+      if (!_persistoid) _persistoid = createPersistoid(config); // @NOTE PERSIST can be called multiple times, noop after the first
+
+      if (_persist) {
+        // We still need to call the base reducer because there might be nested
+        // uses of persistReducer which need to be aware of the PERSIST action
+        return persistReducer_objectSpread({}, baseReducer(restState, action), {
+          _persist: _persist
+        });
+      }
+      if (typeof action.rehydrate !== 'function' || typeof action.register !== 'function') throw new Error('redux-persist: either rehydrate or register is not a function on the PERSIST action. This can happen if the action is being replayed. This is an unexplored use case, please open an issue and we will figure out a resolution.');
+      action.register(config.key);
+      getStoredState(config).then(function (restoredState) {
+        var migrate = config.migrate || function (s, v) {
+          return Promise.resolve(s);
+        };
+        migrate(restoredState, version).then(function (migratedState) {
+          _rehydrate(migratedState);
+        }, function (migrateErr) {
+          if (false) {}
+          _rehydrate(undefined, migrateErr);
+        });
+      }, function (err) {
+        _rehydrate(undefined, err);
+      });
+      return persistReducer_objectSpread({}, baseReducer(restState, action), {
+        _persist: {
+          version: version,
+          rehydrated: false
+        }
+      });
+    } else if (action.type === PURGE) {
+      _purge = true;
+      action.result(purgeStoredState(config));
+      return persistReducer_objectSpread({}, baseReducer(restState, action), {
+        _persist: _persist
+      });
+    } else if (action.type === FLUSH) {
+      action.result(_persistoid && _persistoid.flush());
+      return persistReducer_objectSpread({}, baseReducer(restState, action), {
+        _persist: _persist
+      });
+    } else if (action.type === PAUSE) {
+      _paused = true;
+    } else if (action.type === REHYDRATE) {
+      // noop on restState if purging
+      if (_purge) return persistReducer_objectSpread({}, restState, {
+        _persist: persistReducer_objectSpread({}, _persist, {
+          rehydrated: true
+        }) // @NOTE if key does not match, will continue to default else below
+      });
+      if (action.key === config.key) {
+        var reducedState = baseReducer(restState, action);
+        var inboundState = action.payload; // only reconcile state if stateReconciler and inboundState are both defined
+
+        var reconciledRest = stateReconciler !== false && inboundState !== undefined ? stateReconciler(inboundState, state, reducedState, config) : reducedState;
+        var _newState = persistReducer_objectSpread({}, reconciledRest, {
+          _persist: persistReducer_objectSpread({}, _persist, {
+            rehydrated: true
+          })
+        });
+        return conditionalUpdate(_newState);
+      }
+    } // if we have not already handled PERSIST, straight passthrough
+
+    if (!_persist) return baseReducer(state, action); // run base reducer:
+    // is state modified ? return original : return updated
+
+    var newState = baseReducer(restState, action);
+    if (newState === restState) return state;
+    return conditionalUpdate(persistReducer_objectSpread({}, newState, {
+      _persist: _persist
+    }));
+  };
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/persistStore.js
+function persistStore_toConsumableArray(arr) {
+  return persistStore_arrayWithoutHoles(arr) || persistStore_iterableToArray(arr) || persistStore_nonIterableSpread();
+}
+function persistStore_nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+function persistStore_iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+function persistStore_arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  }
+}
+function persistStore_ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function persistStore_objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      persistStore_ownKeys(source, true).forEach(function (key) {
+        persistStore_defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      persistStore_ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+function persistStore_defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+
+var initialState = {
+  registry: [],
+  bootstrapped: false
+};
+var persistorReducer = function persistorReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  switch (action.type) {
+    case REGISTER:
+      return persistStore_objectSpread({}, state, {
+        registry: [].concat(persistStore_toConsumableArray(state.registry), [action.key])
+      });
+    case REHYDRATE:
+      var firstIndex = state.registry.indexOf(action.key);
+      var registry = persistStore_toConsumableArray(state.registry);
+      registry.splice(firstIndex, 1);
+      return persistStore_objectSpread({}, state, {
+        registry: registry,
+        bootstrapped: registry.length === 0
+      });
+    default:
+      return state;
+  }
+};
+function persistStore(store, options, cb) {
+  // help catch incorrect usage of passing PersistConfig in as PersistorOptions
+  if (false) { var bannedKeys, optionsToTest; }
+  var boostrappedCb = cb || false;
+  var _pStore = createStore(persistorReducer, initialState, options && options.enhancer ? options.enhancer : undefined);
+  var register = function register(key) {
+    _pStore.dispatch({
+      type: REGISTER,
+      key: key
+    });
+  };
+  var rehydrate = function rehydrate(key, payload, err) {
+    var rehydrateAction = {
+      type: REHYDRATE,
+      payload: payload,
+      err: err,
+      key: key // dispatch to `store` to rehydrate and `persistor` to track result
+    };
+    store.dispatch(rehydrateAction);
+    _pStore.dispatch(rehydrateAction);
+    if (boostrappedCb && persistor.getState().bootstrapped) {
+      boostrappedCb();
+      boostrappedCb = false;
+    }
+  };
+  var persistor = persistStore_objectSpread({}, _pStore, {
+    purge: function purge() {
+      var results = [];
+      store.dispatch({
+        type: PURGE,
+        result: function result(purgeResult) {
+          results.push(purgeResult);
+        }
+      });
+      return Promise.all(results);
+    },
+    flush: function flush() {
+      var results = [];
+      store.dispatch({
+        type: FLUSH,
+        result: function result(flushResult) {
+          results.push(flushResult);
+        }
+      });
+      return Promise.all(results);
+    },
+    pause: function pause() {
+      store.dispatch({
+        type: PAUSE
+      });
+    },
+    persist: function persist() {
+      store.dispatch({
+        type: PERSIST,
+        register: register,
+        rehydrate: rehydrate
+      });
+    }
+  });
+  if (!(options && options.manualPersist)) {
+    persistor.persist();
+  }
+  return persistor;
+}
+;// CONCATENATED MODULE: ../../node_modules/redux-persist/es/index.js
+
+
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/store.ts
+var persistConfig={key:'counter',storage:{getItem:function getItem(x){var item=localStorage.getItem(x);if(item){try{return Promise.resolve(JSON.parse(item));}catch(_unused){}}return Promise.resolve(null);},setItem:function setItem(x,v){localStorage.setItem(x,JSON.stringify(v));return Promise.resolve();},removeItem:function removeItem(x){localStorage.removeItem(x);return Promise.resolve();}}};var counterSlice=createSlice({name:'counter',initialState:{count:0},reducers:{increment:function increment(state){return{count:(state.count||0)+1};},decrement:function decrement(state){return{count:(state.count||0)-1};}}});var counter=persistReducer(persistConfig,counterSlice.reducer);var _counterSlice$actions=counterSlice.actions,increment=_counterSlice$actions.increment,decrement=_counterSlice$actions.decrement;var store=configureStore({reducer:{counter:counter},middleware:function middleware(getDefaultMiddleware){return getDefaultMiddleware({serializableCheck:{ignoredActions:[FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER]}});},devTools:false});var persistor=persistStore(store);var selectCount=function selectCount(x){return x.counter.count;};
+;// CONCATENATED MODULE: ./src/pages/redux/index.tsx
+function Redux(){return/*#__PURE__*/(0,jsx_runtime.jsx)(Provider_default,{store:store,children:/*#__PURE__*/(0,jsx_runtime.jsx)(ReduxCore,{})});}function ReduxCore(){var dispatch=useDispatch();var count=useSelector(selectCount);return/*#__PURE__*/(0,jsx_runtime.jsxs)(PersistGate,{persistor:persistor,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:["Count: ",count===null||count===void 0?void 0:count.toString()]}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return dispatch(increment());},children:"Increment"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return dispatch(decrement());},children:"Decrement"})]});}
 // EXTERNAL MODULE: ../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/style-frameworks/index.module.scss
 var style_frameworks_index_module = __webpack_require__("../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[1]!../../scripts/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[2]!../../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[0].oneOf[7].use[3]!../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].oneOf[7].use[4]!./src/pages/style-frameworks/index.module.scss");
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/index.module.scss
@@ -24218,53 +31153,20 @@ var style_frameworks_index_module_update = injectStylesIntoStyleTag_default()(st
 
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/index.tsx
 var CustomNavLink=function CustomNavLink(_ref){var to=_ref.to,children=_ref.children;var nav=useNavigate();var resolved=useResolvedPath(to);var match=useMatch({path:resolved.pathname,end:true});return/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav(to);},className:match&&pages_style_frameworks_index_module.active,children:children});};function StyleFrameworksPage(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:dist_clsx(pages_style_frameworks_index_module.host),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{className:dist_clsx(pages_style_frameworks_index_module.tabs),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./jss',children:"JSS"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./styled-components',children:"Styled Components"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./emotion',children:"Emotion"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./tailwind',children:"Tailwind"}),/*#__PURE__*/(0,jsx_runtime.jsx)(CustomNavLink,{to:'./bootstrap',children:"Bootstrap"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)(Outlet,{})]});}/* harmony default export */ const style_frameworks = (StyleFrameworksPage);
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
-
-function objectWithoutProperties_objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-  return target;
-}
 // EXTERNAL MODULE: ../../node_modules/classnames/index.js
 var classnames = __webpack_require__("../../node_modules/classnames/index.js");
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 ;// CONCATENATED MODULE: ../../node_modules/@restart/ui/esm/Button.js
 
 var Button_excluded = ["as", "disabled"];
-function Button_objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+function Button_objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.indexOf(n) >= 0) continue;
+    t[n] = r[n];
   }
-  return target;
+  return t;
 }
 
 
@@ -24368,7 +31270,7 @@ var ThemeProvider_ThemeContext = /*#__PURE__*/react.createContext({
   minBreakpoint: DEFAULT_MIN_BREAKPOINT
 });
 var Consumer = ThemeProvider_ThemeContext.Consumer,
-  Provider = ThemeProvider_ThemeContext.Provider;
+  ThemeProvider_Provider = ThemeProvider_ThemeContext.Provider;
 function ThemeProvider(_ref) {
   var _ref$prefixes = _ref.prefixes,
     prefixes = _ref$prefixes === void 0 ? {} : _ref$prefixes,
@@ -24386,7 +31288,7 @@ function ThemeProvider(_ref) {
       dir: dir
     };
   }, [prefixes, breakpoints, minBreakpoint, dir]);
-  return /*#__PURE__*/_jsx(Provider, {
+  return /*#__PURE__*/_jsx(ThemeProvider_Provider, {
     value: contextValue,
     children: children
   });
@@ -24520,7 +31422,9 @@ function _taggedTemplateLiteral(strings, raw) {
     }
   }));
 }
-;// CONCATENATED MODULE: ../../node_modules/@emotion/sheet/dist/emotion-sheet.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/sheet/dist/emotion-sheet.esm.js
+var emotion_sheet_esm_isDevelopment = false;
+
 /*
 
 Based off glamor's StyleSheet, thanks Sunil ❤️
@@ -24543,10 +31447,9 @@ styleSheet.flush()
 - empties the stylesheet of all its contents
 
 */
-// $FlowFixMe
+
 function sheetForTag(tag) {
   if (tag.sheet) {
-    // $FlowFixMe
     return tag.sheet;
   } // this weirdness brought to you by firefox
 
@@ -24554,10 +31457,12 @@ function sheetForTag(tag) {
 
   for (var i = 0; i < document.styleSheets.length; i++) {
     if (document.styleSheets[i].ownerNode === tag) {
-      // $FlowFixMe
       return document.styleSheets[i];
     }
-  }
+  } // this function should always return with a value
+  // TS can't understand it though so we make it stop complaining here
+
+  return undefined;
 }
 function createStyleElement(options) {
   var tag = document.createElement('style');
@@ -24589,7 +31494,7 @@ var StyleSheet = /*#__PURE__*/function () {
       _this.container.insertBefore(tag, before);
       _this.tags.push(tag);
     };
-    this.isSpeedy = options.speedy === undefined ? "production" === 'production' : options.speedy;
+    this.isSpeedy = options.speedy === undefined ? !emotion_sheet_esm_isDevelopment : options.speedy;
     this.tags = [];
     this.ctr = 0;
     this.nonce = options.nonce; // key is the value of the data-emotion attribute, it's used to identify different sheets
@@ -24612,29 +31517,25 @@ var StyleSheet = /*#__PURE__*/function () {
       this._insertTag(createStyleElement(this));
     }
     var tag = this.tags[this.tags.length - 1];
-    if (false) { var isImportRule; }
     if (this.isSpeedy) {
       var sheet = sheetForTag(tag);
       try {
         // this is the ultrafast version, works across browsers
         // the big drawback is that the css won't be editable in devtools
         sheet.insertRule(rule, sheet.cssRules.length);
-      } catch (e) {
-        if (false) {}
-      }
+      } catch (e) {}
     } else {
       tag.appendChild(document.createTextNode(rule));
     }
     this.ctr++;
   };
   _proto.flush = function flush() {
-    // $FlowFixMe
     this.tags.forEach(function (tag) {
-      return tag.parentNode && tag.parentNode.removeChild(tag);
+      var _tag$parentNode;
+      return (_tag$parentNode = tag.parentNode) == null ? void 0 : _tag$parentNode.removeChild(tag);
     });
     this.tags = [];
     this.ctr = 0;
-    if (false) {}
   };
   return StyleSheet;
 }();
@@ -24828,7 +31729,7 @@ function next() {
 /**
  * @return {number}
  */
-function peek() {
+function Tokenizer_peek() {
   return Utility_charat(characters, position);
 }
 
@@ -24928,7 +31829,7 @@ function Tokenizer_tokenize(value) {
  * @return {string}
  */
 function whitespace(type) {
-  while (character = peek()) if (character < 33) next();else break;
+  while (character = Tokenizer_peek()) if (character < 33) next();else break;
   return token(type) > 2 || token(character) > 3 ? '' : ' ';
 }
 
@@ -24959,7 +31860,7 @@ function escaping(index, count) {
   while (--count && next())
   // not 0-9 A-F a-f
   if (character < 48 || character > 102 || character > 57 && character < 65 || character > 70 && character < 97) break;
-  return slice(index, caret() + (count < 6 && peek() == 32 && next() == 32));
+  return slice(index, caret() + (count < 6 && Tokenizer_peek() == 32 && next() == 32));
 }
 
 /**
@@ -24998,7 +31899,7 @@ function commenter(type, index) {
   // //
   if (type + character === 47 + 10) break;
   // /*
-  else if (type + character === 42 + 42 && peek() === 47) break;
+  else if (type + character === 42 + 42 && Tokenizer_peek() === 47) break;
   return '/*' + slice(index, position - 1) + '*' + Utility_from(type === 47 ? type : next());
 }
 
@@ -25007,7 +31908,7 @@ function commenter(type, index) {
  * @return {string}
  */
 function identifier(index) {
-  while (!token(peek())) next();
+  while (!token(Tokenizer_peek())) next();
   return slice(index, position);
 }
 ;// CONCATENATED MODULE: ../../node_modules/stylis/src/Enum.js
@@ -25248,7 +32149,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
       continue;
     // /
     case 47:
-      switch (peek()) {
+      switch (Tokenizer_peek()) {
         case 42:
         case 47:
           Utility_append(comment(commenter(next(), caret()), root, parent), declarations);
@@ -25311,8 +32212,8 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
         // @
         case 64:
           // -
-          if (peek() === 45) characters += delimit(next());
-          atrule = peek(), offset = length = Utility_strlen(type = characters += identifier(caret())), character++;
+          if (Tokenizer_peek() === 45) characters += delimit(next());
+          atrule = Tokenizer_peek(), offset = length = Utility_strlen(type = characters += identifier(caret())), character++;
           break;
         // -
         case 45:
@@ -25374,7 +32275,7 @@ var identifierWithPointTracking = function identifierWithPointTracking(begin, po
   var character = 0;
   while (true) {
     previous = character;
-    character = peek(); // &\f
+    character = Tokenizer_peek(); // &\f
 
     if (previous === 38 && character === 12) {
       points[index] = 1;
@@ -25394,7 +32295,7 @@ var toRules = function toRules(parsed, points) {
     switch (token(character)) {
       case 0:
         // &\f
-        if (character === 38 && peek() === 12) {
+        if (character === 38 && Tokenizer_peek() === 12) {
           // this is not 100% correct, we don't account for literal sequences here - like for example quoted strings
           // stylis inserts \f after & to know when & where it should replace this sequence with the context selector
           // and when it should just concatenate the outer and inner selectors
@@ -25410,7 +32311,7 @@ var toRules = function toRules(parsed, points) {
         // comma
         if (character === 44) {
           // colon
-          parsed[++index] = peek() === 58 ? '&\f' : '';
+          parsed[++index] = Tokenizer_peek() === 58 ? '&\f' : '';
           points[index] = parsed[index].length;
           break;
         }
@@ -25474,101 +32375,6 @@ var removeLabel = function removeLabel(element) {
       element["return"] = '';
       element.value = '';
     }
-  }
-};
-var ignoreFlag = 'emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason';
-var isIgnoringComment = function isIgnoringComment(element) {
-  return element.type === 'comm' && element.children.indexOf(ignoreFlag) > -1;
-};
-var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm(cache) {
-  return function (element, index, children) {
-    if (element.type !== 'rule' || cache.compat) return;
-    var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
-    if (unsafePseudoClasses) {
-      var isNested = !!element.parent; // in nested rules comments become children of the "auto-inserted" rule and that's always the `element.parent`
-      //
-      // considering this input:
-      // .a {
-      //   .b /* comm */ {}
-      //   color: hotpink;
-      // }
-      // we get output corresponding to this:
-      // .a {
-      //   & {
-      //     /* comm */
-      //     color: hotpink;
-      //   }
-      //   .b {}
-      // }
-
-      var commentContainer = isNested ? element.parent.children :
-      // global rule at the root level
-      children;
-      for (var i = commentContainer.length - 1; i >= 0; i--) {
-        var node = commentContainer[i];
-        if (node.line < element.line) {
-          break;
-        } // it is quite weird but comments are *usually* put at `column: element.column - 1`
-        // so we seek *from the end* for the node that is earlier than the rule's `element` and check that
-        // this will also match inputs like this:
-        // .a {
-        //   /* comm */
-        //   .b {}
-        // }
-        //
-        // but that is fine
-        //
-        // it would be the easiest to change the placement of the comment to be the first child of the rule:
-        // .a {
-        //   .b { /* comm */ }
-        // }
-        // with such inputs we wouldn't have to search for the comment at all
-        // TODO: consider changing this comment placement in the next major version
-
-        if (node.column < element.column) {
-          if (isIgnoringComment(node)) {
-            return;
-          }
-          break;
-        }
-      }
-      unsafePseudoClasses.forEach(function (unsafePseudoClass) {
-        console.error("The pseudo class \"" + unsafePseudoClass + "\" is potentially unsafe when doing server-side rendering. Try changing it to \"" + unsafePseudoClass.split('-child')[0] + "-of-type\".");
-      });
-    }
-  };
-};
-var isImportRule = function isImportRule(element) {
-  return element.type.charCodeAt(1) === 105 && element.type.charCodeAt(0) === 64;
-};
-var isPrependedWithRegularRules = function isPrependedWithRegularRules(index, children) {
-  for (var i = index - 1; i >= 0; i--) {
-    if (!isImportRule(children[i])) {
-      return true;
-    }
-  }
-  return false;
-}; // use this to remove incorrect elements from further processing
-// so they don't get handed to the `sheet` (or anything else)
-// as that could potentially lead to additional logs which in turn could be overhelming to the user
-
-var nullifyElement = function nullifyElement(element) {
-  element.type = '';
-  element.value = '';
-  element["return"] = '';
-  element.children = '';
-  element.props = '';
-};
-var incorrectImportAlarm = function incorrectImportAlarm(element, index, children) {
-  if (!isImportRule(element)) {
-    return;
-  }
-  if (element.parent) {
-    console.error("`@import` rules can't be nested inside other rules. Please move it to the top level and put it before regular rules. Keep in mind that they can only be used within global styles.");
-    nullifyElement(element);
-  } else if (isPrependedWithRegularRules(index, children)) {
-    console.error("`@import` rules can't be after other rules. Please put your `@import` rules before your other rules.");
-    nullifyElement(element);
   }
 };
 
@@ -25777,16 +32583,18 @@ var emotion_cache_browser_esm_prefixer = function prefixer(element, index, child
   }
 };
 var defaultStylisPlugins = [emotion_cache_browser_esm_prefixer];
-var createCache = function createCache(options) {
+var createCache = function /*: EmotionCache */
+createCache(options
+/*: Options */) {
   var key = options.key;
-  if (false) {}
   if (key === 'css') {
     var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])"); // get SSRed styles out of the way of React's hydration
     // document.head is a safe place to move them to(though note document.head is not necessarily the last place they will be)
     // note this very very intentionally targets all style elements regardless of the key to ensure
     // that creating a cache works inside of render of a React component
 
-    Array.prototype.forEach.call(ssrStyles, function (node) {
+    Array.prototype.forEach.call(ssrStyles, function (node
+    /*: HTMLStyleElement */) {
       // we want to only move elements which have a space in the data-emotion attribute value
       // because that indicates that it is an Emotion 11 server-side rendered style elements
       // while we will already ignore Emotion 11 client-side inserted styles because of the :not([data-s]) part in the selector
@@ -25802,18 +32610,19 @@ var createCache = function createCache(options) {
     });
   }
   var stylisPlugins = options.stylisPlugins || defaultStylisPlugins;
-  if (false) {}
   var inserted = {};
   var container;
+  /* : Node */
+
   var nodesToHydrate = [];
   {
     container = options.container || document.head;
     Array.prototype.forEach.call(
     // this means we will ignore elements which don't have a space in them which
     // means that the style elements we're looking at are only Emotion 11 server-rendered style elements
-    document.querySelectorAll("style[data-emotion^=\"" + key + " \"]"), function (node) {
-      var attrib = node.getAttribute("data-emotion").split(' '); // $FlowFixMe
-
+    document.querySelectorAll("style[data-emotion^=\"" + key + " \"]"), function (node
+    /*: HTMLStyleElement */) {
+      var attrib = node.getAttribute("data-emotion").split(' ');
       for (var i = 1; i < attrib.length; i++) {
         inserted[attrib[i]] = true;
       }
@@ -25821,27 +32630,38 @@ var createCache = function createCache(options) {
     });
   }
   var _insert;
+  /*: (
+  selector: string,
+  serialized: SerializedStyles,
+  sheet: StyleSheet,
+  shouldCache: boolean
+  ) => string | void */
+
   var omnipresentPlugins = [compat, removeLabel];
-  if (false) {}
   {
     var currentSheet;
-    var finalizingPlugins = [stringify,  false ? 0 : rulesheet(function (rule) {
+    var finalizingPlugins = [stringify, rulesheet(function (rule) {
       currentSheet.insert(rule);
     })];
     var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
     var stylis = function stylis(styles) {
       return Serializer_serialize(compile(styles), serializer);
     };
-    _insert = function insert(selector, serialized, sheet, shouldCache) {
+    _insert = function /*: void */
+    insert(selector
+    /*: string */, serialized
+    /*: SerializedStyles */, sheet
+    /*: StyleSheet */, shouldCache
+    /*: boolean */) {
       currentSheet = sheet;
-      if (false) {}
       stylis(selector ? selector + "{" + serialized.styles + "}" : serialized.styles);
       if (shouldCache) {
         cache.inserted[serialized.name] = true;
       }
     };
   }
-  var cache = {
+  var cache
+  /*: EmotionCache */ = {
     key: key,
     sheet: new StyleSheet({
       key: key,
@@ -25904,7 +32724,7 @@ function murmur2(str) {
   return ((h ^ h >>> 15) >>> 0).toString(36);
 }
 
-;// CONCATENATED MODULE: ../../node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/serialize/node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
 var unitlessKeys = {
   animationIterationCount: 1,
   aspectRatio: 1,
@@ -25939,6 +32759,7 @@ var unitlessKeys = {
   opacity: 1,
   order: 1,
   orphans: 1,
+  scale: 1,
   tabSize: 1,
   widows: 1,
   zIndex: 1,
@@ -25964,12 +32785,11 @@ function memoize(fn) {
   };
 }
 
-;// CONCATENATED MODULE: ../../node_modules/@emotion/serialize/dist/emotion-serialize.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/serialize/dist/emotion-serialize.esm.js
 
 
 
-var ILLEGAL_ESCAPE_SEQUENCE_ERROR = "You have illegal escape sequence in your template literal, most likely inside content's property value.\nBecause you write your CSS inside a JavaScript string you actually have to do double escaping, so for example \"content: '\\00d7';\" should become \"content: '\\\\00d7';\".\nYou can read more about this here:\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences";
-var UNDEFINED_AS_OBJECT_KEY_ERROR = "You have passed in falsy value as style object's key (can happen when in example you pass unexported component as computed key).";
+var emotion_serialize_esm_isDevelopment = false;
 var hyphenateRegex = /[A-Z]|^ms/g;
 var animationRegex = /_EMO_([^_]+?)_([^]*?)_EMO_/g;
 var isCustomProperty = function isCustomProperty(property) {
@@ -26003,15 +32823,14 @@ var processStyleValue = function processStyleValue(key, value) {
   }
   return value;
 };
-if (false) { var hyphenatedCache, hyphenPattern, msPattern, oldProcessStyleValue, contentValues, contentValuePattern; }
-var noComponentSelectorMessage = (/* unused pure expression or super */ null && ('Component selectors can only be used in conjunction with ' + '@emotion/babel-plugin, the swc Emotion plugin, or another Emotion-aware ' + 'compiler transform.'));
+var noComponentSelectorMessage = 'Component selectors can only be used in conjunction with ' + '@emotion/babel-plugin, the swc Emotion plugin, or another Emotion-aware ' + 'compiler transform.';
 function handleInterpolation(mergedProps, registered, interpolation) {
   if (interpolation == null) {
     return '';
   }
-  if (interpolation.__emotion_styles !== undefined) {
-    if (false) {}
-    return interpolation;
+  var componentSelector = interpolation;
+  if (componentSelector.__emotion_styles !== undefined) {
+    return componentSelector;
   }
   switch (typeof interpolation) {
     case 'boolean':
@@ -26020,16 +32839,18 @@ function handleInterpolation(mergedProps, registered, interpolation) {
       }
     case 'object':
       {
-        if (interpolation.anim === 1) {
+        var keyframes = interpolation;
+        if (keyframes.anim === 1) {
           cursor = {
-            name: interpolation.name,
-            styles: interpolation.styles,
+            name: keyframes.name,
+            styles: keyframes.styles,
             next: cursor
           };
-          return interpolation.name;
+          return keyframes.name;
         }
-        if (interpolation.styles !== undefined) {
-          var next = interpolation.next;
+        var serializedStyles = interpolation;
+        if (serializedStyles.styles !== undefined) {
+          var next = serializedStyles.next;
           if (next !== undefined) {
             // not the most efficient thing ever but this is a pretty rare case
             // and there will be very few iterations of this generally
@@ -26042,8 +32863,7 @@ function handleInterpolation(mergedProps, registered, interpolation) {
               next = next.next;
             }
           }
-          var styles = interpolation.styles + ";";
-          if (false) {}
+          var styles = serializedStyles.styles + ";";
           return styles;
         }
         return createStringFromObject(mergedProps, registered, interpolation);
@@ -26055,19 +32875,17 @@ function handleInterpolation(mergedProps, registered, interpolation) {
           var result = interpolation(mergedProps);
           cursor = previousCursor;
           return handleInterpolation(mergedProps, registered, result);
-        } else if (false) {}
+        }
         break;
       }
-    case 'string':
-      if (false) { var replaced, matched; }
-      break;
   } // finalize string values (regular strings and functions interpolated into css calls)
 
+  var asString = interpolation;
   if (registered == null) {
-    return interpolation;
+    return asString;
   }
-  var cached = registered[interpolation];
-  return cached !== undefined ? cached : interpolation;
+  var cached = registered[asString];
+  return cached !== undefined ? cached : asString;
 }
 function createStringFromObject(mergedProps, registered, obj) {
   var string = '';
@@ -26076,35 +32894,37 @@ function createStringFromObject(mergedProps, registered, obj) {
       string += handleInterpolation(mergedProps, registered, obj[i]) + ";";
     }
   } else {
-    for (var _key in obj) {
-      var value = obj[_key];
+    for (var key in obj) {
+      var value = obj[key];
       if (typeof value !== 'object') {
-        if (registered != null && registered[value] !== undefined) {
-          string += _key + "{" + registered[value] + "}";
-        } else if (isProcessableValue(value)) {
-          string += processStyleName(_key) + ":" + processStyleValue(_key, value) + ";";
+        var asString = value;
+        if (registered != null && registered[asString] !== undefined) {
+          string += key + "{" + registered[asString] + "}";
+        } else if (isProcessableValue(asString)) {
+          string += processStyleName(key) + ":" + processStyleValue(key, asString) + ";";
         }
       } else {
-        if (_key === 'NO_COMPONENT_SELECTOR' && "production" !== 'production') {}
+        if (key === 'NO_COMPONENT_SELECTOR' && emotion_serialize_esm_isDevelopment) {
+          throw new Error(noComponentSelectorMessage);
+        }
         if (Array.isArray(value) && typeof value[0] === 'string' && (registered == null || registered[value[0]] === undefined)) {
           for (var _i = 0; _i < value.length; _i++) {
             if (isProcessableValue(value[_i])) {
-              string += processStyleName(_key) + ":" + processStyleValue(_key, value[_i]) + ";";
+              string += processStyleName(key) + ":" + processStyleValue(key, value[_i]) + ";";
             }
           }
         } else {
           var interpolated = handleInterpolation(mergedProps, registered, value);
-          switch (_key) {
+          switch (key) {
             case 'animation':
             case 'animationName':
               {
-                string += processStyleName(_key) + ":" + interpolated + ";";
+                string += processStyleName(key) + ":" + interpolated + ";";
                 break;
               }
             default:
               {
-                if (false) {}
-                string += _key + "{" + interpolated + "}";
+                string += key + "{" + interpolated + "}";
               }
           }
         }
@@ -26113,13 +32933,11 @@ function createStringFromObject(mergedProps, registered, obj) {
   }
   return string;
 }
-var labelPattern = /label:\s*([^\s;\n{]+)\s*(;|$)/g;
-var sourceMapPattern;
-if (false) {} // this is the cursor for keyframes
+var labelPattern = /label:\s*([^\s;{]+)\s*(;|$)/g;
 // keyframes are stored on the SerializedStyles object as a linked list
 
 var cursor;
-var emotion_serialize_browser_esm_serializeStyles = function serializeStyles(args, registered, mergedProps) {
+function emotion_serialize_esm_serializeStyles(args, registered, mergedProps) {
   if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && args[0].styles !== undefined) {
     return args[0];
   }
@@ -26131,46 +32949,40 @@ var emotion_serialize_browser_esm_serializeStyles = function serializeStyles(arg
     stringMode = false;
     styles += handleInterpolation(mergedProps, registered, strings);
   } else {
-    if (false) {}
-    styles += strings[0];
+    var asTemplateStringsArr = strings;
+    styles += asTemplateStringsArr[0];
   } // we start at 1 since we've already handled the first arg
 
   for (var i = 1; i < args.length; i++) {
     styles += handleInterpolation(mergedProps, registered, args[i]);
     if (stringMode) {
-      if (false) {}
-      styles += strings[i];
+      var templateStringsArr = strings;
+      styles += templateStringsArr[i];
     }
   }
-  var sourceMap;
-  if (false) {} // using a global regex with .exec is stateful so lastIndex has to be reset each time
-
   labelPattern.lastIndex = 0;
   var identifierName = '';
   var match; // https://esbench.com/bench/5b809c2cf2949800a0f61fb5
 
   while ((match = labelPattern.exec(styles)) !== null) {
-    identifierName += '-' +
-    // $FlowFixMe we know it's not null
-    match[1];
+    identifierName += '-' + match[1];
   }
   var name = murmur2(styles) + identifierName;
-  if (false) {}
   return {
     name: name,
     styles: styles,
     next: cursor
   };
-};
+}
 
 ;// CONCATENATED MODULE: ../../node_modules/@emotion/utils/dist/emotion-utils.browser.esm.js
-var isBrowser = "object" !== 'undefined';
+var isBrowser = true;
 function emotion_utils_browser_esm_getRegisteredStyles(registered, registeredStyles, classNames) {
   var rawClassName = '';
   classNames.split(' ').forEach(function (className) {
     if (registered[className] !== undefined) {
       registeredStyles.push(registered[className] + ";");
-    } else {
+    } else if (className) {
       rawClassName += className + " ";
     }
   });
@@ -26223,10 +33035,8 @@ function merge(registered, css, className) {
   return rawClassName + css(registeredStyles);
 }
 var createEmotion = function createEmotion(options) {
-  var cache = createCache(options); // $FlowFixMe
-
+  var cache = createCache(options);
   cache.sheet.speedy = function (value) {
-    if (false) {}
     this.isSpeedy = value;
   };
   cache.compat = true;
@@ -26234,7 +33044,7 @@ var createEmotion = function createEmotion(options) {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-    var serialized = emotion_serialize_browser_esm_serializeStyles(args, cache.registered, undefined);
+    var serialized = emotion_serialize_esm_serializeStyles(args, cache.registered, undefined);
     emotion_utils_browser_esm_insertStyles(cache, serialized, false);
     return cache.key + "-" + serialized.name;
   };
@@ -26242,7 +33052,7 @@ var createEmotion = function createEmotion(options) {
     for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
       args[_key2] = arguments[_key2];
     }
-    var serialized = emotion_serialize_browser_esm_serializeStyles(args, cache.registered);
+    var serialized = emotion_serialize_esm_serializeStyles(args, cache.registered);
     var animation = "animation-" + serialized.name;
     insertWithoutScoping(cache, {
       name: serialized.name,
@@ -26254,7 +33064,7 @@ var createEmotion = function createEmotion(options) {
     for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       args[_key3] = arguments[_key3];
     }
-    var serialized = emotion_serialize_browser_esm_serializeStyles(args, cache.registered);
+    var serialized = emotion_serialize_esm_serializeStyles(args, cache.registered);
     insertWithoutScoping(cache, serialized);
   };
   var cx = function cx() {
@@ -26278,7 +33088,6 @@ var createEmotion = function createEmotion(options) {
       cache.inserted = {};
       cache.sheet.flush();
     },
-    // $FlowFixMe
     sheet: cache.sheet,
     cache: cache,
     getRegisteredStyles: emotion_utils_browser_esm_getRegisteredStyles.bind(null, cache.registered),
@@ -26358,7 +33167,9 @@ function extends_extends() {
 }
 ;// CONCATENATED MODULE: ../../node_modules/@emotion/styled/node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js
 
-var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
+
+// eslint-disable-next-line no-undef
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
 
 var emotion_is_prop_valid_esm_isPropValid = /* #__PURE__ */memoize(function (prop) {
   return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111
@@ -26376,7 +33187,7 @@ var useInsertionEffect = react_namespaceObject['useInsertion' + 'Effect'] ? reac
 var emotion_use_insertion_effect_with_fallbacks_browser_esm_useInsertionEffectAlwaysWithSyncFallback = useInsertionEffect || syncFallback;
 var useInsertionEffectWithLayoutFallback = useInsertionEffect || react.useLayoutEffect;
 
-;// CONCATENATED MODULE: ../../node_modules/@emotion/react/dist/emotion-element-43c6fea0.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/react/dist/emotion-element-5486c51c.browser.esm.js
 
 
 
@@ -26386,9 +33197,11 @@ var useInsertionEffectWithLayoutFallback = useInsertionEffect || react.useLayout
 
 
 
-var emotion_element_43c6fea0_browser_esm_isBrowser = "object" !== 'undefined';
-var hasOwn = {}.hasOwnProperty;
-var EmotionCacheContext = /* #__PURE__ */react.createContext(
+var emotion_element_5486c51c_browser_esm_isDevelopment = false;
+
+/* import { type EmotionCache } from '@emotion/utils' */
+var EmotionCacheContext
+/*: React.Context<EmotionCache | null> */ = /* #__PURE__ */react.createContext(
 // we're doing this to avoid preconstruct's dead code elimination in this one case
 // because this module is primarily intended for the browser and node
 // but it's also required in react native and similar environments sometimes
@@ -26398,53 +33211,34 @@ var EmotionCacheContext = /* #__PURE__ */react.createContext(
 typeof HTMLElement !== 'undefined' ? /* #__PURE__ */createCache({
   key: 'css'
 }) : null);
-if (false) {}
 var CacheProvider = EmotionCacheContext.Provider;
-var __unsafe_useEmotionCache = function useEmotionCache() {
+var __unsafe_useEmotionCache = function useEmotionCache() /*: EmotionCache | null*/
+{
   return useContext(EmotionCacheContext);
 };
-var withEmotionCache = function withEmotionCache(func) {
-  // $FlowFixMe
-  return /*#__PURE__*/(0,react.forwardRef)(function (props, ref) {
+var withEmotionCache = function withEmotionCache
+/* <Props, Ref: React.Ref<*>> */(func
+/*: (props: Props, cache: EmotionCache, ref: Ref) => React.Node */) /*: React.AbstractComponent<Props> */
+{
+  return /*#__PURE__*/(0,react.forwardRef)(function (props
+  /*: Props */, ref
+  /*: Ref */) {
     // the cache will never be null in the browser
     var cache = (0,react.useContext)(EmotionCacheContext);
     return func(props, cache, ref);
   });
 };
-if (!emotion_element_43c6fea0_browser_esm_isBrowser) {
-  withEmotionCache = function withEmotionCache(func) {
-    return function (props) {
-      var cache = (0,react.useContext)(EmotionCacheContext);
-      if (cache === null) {
-        // yes, we're potentially creating this on every render
-        // it doesn't actually matter though since it's only on the server
-        // so there will only every be a single render
-        // that could change in the future because of suspense and etc. but for now,
-        // this works and i don't want to optimise for a future thing that we aren't sure about
-        cache = createCache({
-          key: 'css'
-        });
-        return /*#__PURE__*/react.createElement(EmotionCacheContext.Provider, {
-          value: cache
-        }, func(props, cache));
-      } else {
-        return func(props, cache);
-      }
-    };
-  };
-}
-var emotion_element_43c6fea0_browser_esm_ThemeContext = /* #__PURE__ */react.createContext({});
-if (false) {}
+var emotion_element_5486c51c_browser_esm_ThemeContext = /* #__PURE__ */react.createContext({});
 var useTheme = function useTheme() {
-  return React.useContext(emotion_element_43c6fea0_browser_esm_ThemeContext);
+  return React.useContext(emotion_element_5486c51c_browser_esm_ThemeContext);
 };
-var getTheme = function getTheme(outerTheme, theme) {
+var getTheme = function getTheme(outerTheme
+/*: Object */, theme
+/*: Object | (Object => Object) */) {
   if (typeof theme === 'function') {
     var mergedTheme = theme(outerTheme);
-    if (false) {}
     return mergedTheme;
   }
-  if (false) {}
   return _extends({}, outerTheme, theme);
 };
 var createCacheWithTheme = /* #__PURE__ */(/* unused pure expression or super */ null && (weakMemoize(function (outerTheme) {
@@ -26452,80 +33246,53 @@ var createCacheWithTheme = /* #__PURE__ */(/* unused pure expression or super */
     return getTheme(outerTheme, theme);
   });
 })));
-var emotion_element_43c6fea0_browser_esm_ThemeProvider = function ThemeProvider(props) {
-  var theme = React.useContext(emotion_element_43c6fea0_browser_esm_ThemeContext);
+/*
+type ThemeProviderProps = {
+  theme: Object | (Object => Object),
+  children: React.Node
+}
+*/
+
+var emotion_element_5486c51c_browser_esm_ThemeProvider = function ThemeProvider(props
+/*: ThemeProviderProps */) {
+  var theme = React.useContext(emotion_element_5486c51c_browser_esm_ThemeContext);
   if (props.theme !== theme) {
     theme = createCacheWithTheme(theme)(props.theme);
   }
-  return /*#__PURE__*/React.createElement(emotion_element_43c6fea0_browser_esm_ThemeContext.Provider, {
+  return /*#__PURE__*/React.createElement(emotion_element_5486c51c_browser_esm_ThemeContext.Provider, {
     value: theme
   }, props.children);
 };
-function withTheme(Component) {
+function withTheme
+/* <Config: {}> */(Component
+/*: React.AbstractComponent<Config> */) /*: React.AbstractComponent<$Diff<Config, { theme: Object }>> */
+{
   var componentName = Component.displayName || Component.name || 'Component';
   var render = function render(props, ref) {
-    var theme = React.useContext(emotion_element_43c6fea0_browser_esm_ThemeContext);
+    var theme = React.useContext(emotion_element_5486c51c_browser_esm_ThemeContext);
     return /*#__PURE__*/React.createElement(Component, _extends({
       theme: theme,
       ref: ref
     }, props));
-  }; // $FlowFixMe
-
+  };
   var WithTheme = /*#__PURE__*/React.forwardRef(render);
   WithTheme.displayName = "WithTheme(" + componentName + ")";
   return hoistNonReactStatics(WithTheme, Component);
 }
-var getLastPart = function getLastPart(functionName) {
-  // The match may be something like 'Object.createEmotionProps' or
-  // 'Loader.prototype.render'
-  var parts = functionName.split('.');
-  return parts[parts.length - 1];
-};
-var getFunctionNameFromStackTraceLine = function getFunctionNameFromStackTraceLine(line) {
-  // V8
-  var match = /^\s+at\s+([A-Za-z0-9$.]+)\s/.exec(line);
-  if (match) return getLastPart(match[1]); // Safari / Firefox
-
-  match = /^([A-Za-z0-9$.]+)@/.exec(line);
-  if (match) return getLastPart(match[1]);
-  return undefined;
-};
-var internalReactFunctionNames = /* #__PURE__ */new Set(['renderWithHooks', 'processChild', 'finishClassComponent', 'renderToString']); // These identifiers come from error stacks, so they have to be valid JS
-// identifiers, thus we only need to replace what is a valid character for JS,
-// but not for CSS.
-
-var sanitizeIdentifier = function sanitizeIdentifier(identifier) {
-  return identifier.replace(/\$/g, '-');
-};
-var getLabelFromStackTrace = function getLabelFromStackTrace(stackTrace) {
-  if (!stackTrace) return undefined;
-  var lines = stackTrace.split('\n');
-  for (var i = 0; i < lines.length; i++) {
-    var functionName = getFunctionNameFromStackTraceLine(lines[i]); // The first line of V8 stack traces is just "Error"
-
-    if (!functionName) continue; // If we reach one of these, we have gone too far and should quit
-
-    if (internalReactFunctionNames.has(functionName)) break; // The component name is the first function in the stack that starts with an
-    // uppercase letter
-
-    if (/^[A-Z]/.test(functionName)) return sanitizeIdentifier(functionName);
-  }
-  return undefined;
-};
+var hasOwn = {}.hasOwnProperty;
 var typePropName = '__EMOTION_TYPE_PLEASE_DO_NOT_USE__';
-var labelPropName = '__EMOTION_LABEL_PLEASE_DO_NOT_USE__';
-var createEmotionProps = function createEmotionProps(type, props) {
-  if (false) {}
-  var newProps = {};
+var createEmotionProps = function createEmotionProps(type
+/*: React.ElementType */, props
+/*: Object */) {
+  var newProps
+  /*: any */ = {};
   for (var key in props) {
     if (hasOwn.call(props, key)) {
       newProps[key] = props[key];
     }
   }
-  newProps[typePropName] = type; // For performance, only call getLabelFromStackTrace in development and when
-  // the label hasn't already been computed
+  newProps[typePropName] = type; // Runtime labeling is an opt-in feature because:
 
-  if (false) { var label; }
   return newProps;
 };
 var Insertion = function Insertion(_ref) {
@@ -26538,7 +33305,8 @@ var Insertion = function Insertion(_ref) {
   });
   return null;
 };
-var Emotion = /* #__PURE__ */(/* unused pure expression or super */ null && (withEmotionCache(function (props, cache, ref) {
+var Emotion = /* #__PURE__ */(/* unused pure expression or super */ null && (withEmotionCache( /* <any, any> */
+function (props, cache, ref) {
   var cssProp = props.css; // so that using `css` from `emotion` and passing the result to the css prop works
   // not passing the registered cache to serializeStyles because it would
   // make certain babel optimisations not possible
@@ -26554,24 +33322,24 @@ var Emotion = /* #__PURE__ */(/* unused pure expression or super */ null && (wit
   } else if (props.className != null) {
     className = props.className + " ";
   }
-  var serialized = serializeStyles(registeredStyles, undefined, React.useContext(emotion_element_43c6fea0_browser_esm_ThemeContext));
-  if (false) { var labelFromStack; }
+  var serialized = serializeStyles(registeredStyles, undefined, React.useContext(emotion_element_5486c51c_browser_esm_ThemeContext));
   className += cache.key + "-" + serialized.name;
   var newProps = {};
   for (var key in props) {
-    if (hasOwn.call(props, key) && key !== 'css' && key !== typePropName && ( true || 0)) {
+    if (hasOwn.call(props, key) && key !== 'css' && key !== typePropName && !emotion_element_5486c51c_browser_esm_isDevelopment) {
       newProps[key] = props[key];
     }
   }
-  newProps.ref = ref;
   newProps.className = className;
+  if (ref) {
+    newProps.ref = ref;
+  }
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Insertion, {
     cache: cache,
     serialized: serialized,
     isStringTag: typeof WrappedComponent === 'string'
   }), /*#__PURE__*/React.createElement(WrappedComponent, newProps));
 })));
-if (false) {}
 var Emotion$1 = (/* unused pure expression or super */ null && (Emotion));
 
 ;// CONCATENATED MODULE: ../../node_modules/@emotion/styled/base/dist/emotion-styled-base.browser.esm.js
@@ -26582,22 +33350,64 @@ var Emotion$1 = (/* unused pure expression or super */ null && (Emotion));
 
 
 
+
+/* import type {
+  ElementType,
+  StatelessFunctionalComponent,
+  AbstractComponent
+} from 'react' */
+/*
+export type Interpolations = Array<any>
+
+export type StyledElementType<Props> =
+  | string
+  | AbstractComponent<{ ...Props, className: string }, mixed>
+
+export type StyledOptions = {
+  label?: string,
+  shouldForwardProp?: string => boolean,
+  target?: string
+}
+
+export type StyledComponent<Props> = StatelessFunctionalComponent<Props> & {
+  defaultProps: any,
+  toString: () => string,
+  withComponent: (
+    nextTag: StyledElementType<Props>,
+    nextOptions?: StyledOptions
+  ) => StyledComponent<Props>
+}
+
+export type PrivateStyledComponent<Props> = StyledComponent<Props> & {
+  __emotion_real: StyledComponent<Props>,
+  __emotion_base: any,
+  __emotion_styles: any,
+  __emotion_forwardProp: any
+}
+*/
+
 var testOmitPropsOnStringTag = emotion_is_prop_valid_esm_isPropValid;
-var testOmitPropsOnComponent = function testOmitPropsOnComponent(key) {
+var testOmitPropsOnComponent = function testOmitPropsOnComponent(key
+/*: string */) {
   return key !== 'theme';
 };
-var getDefaultShouldForwardProp = function getDefaultShouldForwardProp(tag) {
+var getDefaultShouldForwardProp = function getDefaultShouldForwardProp(tag
+/*: ElementType */) {
   return typeof tag === 'string' &&
   // 96 is one less than the char code
   // for "a" so this is checking that
   // it's a lowercase character
   tag.charCodeAt(0) > 96 ? testOmitPropsOnStringTag : testOmitPropsOnComponent;
 };
-var composeShouldForwardProps = function composeShouldForwardProps(tag, options, isReal) {
+var composeShouldForwardProps = function composeShouldForwardProps(tag
+/*: PrivateStyledComponent<any> */, options
+/*: StyledOptions | void */, isReal
+/*: boolean */) {
   var shouldForwardProp;
   if (options) {
     var optionsShouldForwardProp = options.shouldForwardProp;
-    shouldForwardProp = tag.__emotion_forwardProp && optionsShouldForwardProp ? function (propName) {
+    shouldForwardProp = tag.__emotion_forwardProp && optionsShouldForwardProp ? function (propName
+    /*: string */) {
       return tag.__emotion_forwardProp(propName) && optionsShouldForwardProp(propName);
     } : optionsShouldForwardProp;
   }
@@ -26606,7 +33416,22 @@ var composeShouldForwardProps = function composeShouldForwardProps(tag, options,
   }
   return shouldForwardProp;
 };
-var emotion_styled_base_browser_esm_ILLEGAL_ESCAPE_SEQUENCE_ERROR = "You have illegal escape sequence in your template literal, most likely inside content's property value.\nBecause you write your CSS inside a JavaScript string you actually have to do double escaping, so for example \"content: '\\00d7';\" should become \"content: '\\\\00d7';\".\nYou can read more about this here:\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#ES2018_revision_of_illegal_escape_sequences";
+/*
+export type CreateStyledComponent = <Props>(
+  ...args: Interpolations
+) => StyledComponent<Props>
+
+export type CreateStyled = {
+  <Props>(
+    tag: StyledElementType<Props>,
+    options?: StyledOptions
+  ): (...args: Interpolations) => StyledComponent<Props>,
+  [key: string]: CreateStyledComponent,
+  bind: () => CreateStyled
+}
+*/
+
+var emotion_styled_base_browser_esm_isDevelopment = false;
 var emotion_styled_base_browser_esm_Insertion = function Insertion(_ref) {
   var cache = _ref.cache,
     serialized = _ref.serialized,
@@ -26617,8 +33442,11 @@ var emotion_styled_base_browser_esm_Insertion = function Insertion(_ref) {
   });
   return null;
 };
-var createStyled = function createStyled(tag, options) {
-  if (false) {}
+var createStyled
+/*: CreateStyled */ = function createStyled
+/*: CreateStyled */(tag
+/*: any */, options
+/* ?: StyledOptions */) {
   var isReal = tag.__emotion_real === tag;
   var baseTag = isReal && tag.__emotion_base || tag;
   var identifierName;
@@ -26630,6 +33458,8 @@ var createStyled = function createStyled(tag, options) {
   var shouldForwardProp = composeShouldForwardProps(tag, options, isReal);
   var defaultShouldForwardProp = shouldForwardProp || getDefaultShouldForwardProp(baseTag);
   var shouldUseAs = !defaultShouldForwardProp('as');
+  /* return function<Props>(): PrivateStyledComponent<Props> { */
+
   return function () {
     var args = arguments;
     var styles = isReal && tag.__emotion_styles !== undefined ? tag.__emotion_styles.slice(0) : [];
@@ -26639,17 +33469,15 @@ var createStyled = function createStyled(tag, options) {
     if (args[0] == null || args[0].raw === undefined) {
       styles.push.apply(styles, args);
     } else {
-      if (false) {}
       styles.push(args[0][0]);
       var len = args.length;
       var i = 1;
       for (; i < len; i++) {
-        if (false) {}
         styles.push(args[i], args[0][i]);
       }
-    } // $FlowFixMe: we need to cast StatelessFunctionalComponent to our PrivateStyledComponent class
-
-    var Styled = withEmotionCache(function (props, cache, ref) {
+    }
+    var Styled
+    /*: PrivateStyledComponent<Props> */ = withEmotionCache(function (props, cache, ref) {
       var FinalTag = shouldUseAs && props.as || baseTag;
       var className = '';
       var classInterpolations = [];
@@ -26659,14 +33487,14 @@ var createStyled = function createStyled(tag, options) {
         for (var key in props) {
           mergedProps[key] = props[key];
         }
-        mergedProps.theme = react.useContext(emotion_element_43c6fea0_browser_esm_ThemeContext);
+        mergedProps.theme = react.useContext(emotion_element_5486c51c_browser_esm_ThemeContext);
       }
       if (typeof props.className === 'string') {
         className = emotion_utils_browser_esm_getRegisteredStyles(cache.registered, classInterpolations, props.className);
       } else if (props.className != null) {
         className = props.className + " ";
       }
-      var serialized = emotion_serialize_browser_esm_serializeStyles(styles.concat(classInterpolations), cache.registered, mergedProps);
+      var serialized = emotion_serialize_esm_serializeStyles(styles.concat(classInterpolations), cache.registered, mergedProps);
       className += cache.key + "-" + serialized.name;
       if (targetClassName !== undefined) {
         className += " " + targetClassName;
@@ -26675,14 +33503,14 @@ var createStyled = function createStyled(tag, options) {
       var newProps = {};
       for (var _key in props) {
         if (shouldUseAs && _key === 'as') continue;
-        if (
-        // $FlowFixMe
-        finalShouldForwardProp(_key)) {
+        if (finalShouldForwardProp(_key)) {
           newProps[_key] = props[_key];
         }
       }
       newProps.className = className;
-      newProps.ref = ref;
+      if (ref) {
+        newProps.ref = ref;
+      }
       return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(emotion_styled_base_browser_esm_Insertion, {
         cache: cache,
         serialized: serialized,
@@ -26697,12 +33525,15 @@ var createStyled = function createStyled(tag, options) {
     Styled.__emotion_forwardProp = shouldForwardProp;
     Object.defineProperty(Styled, 'toString', {
       value: function value() {
-        if (targetClassName === undefined && "production" !== 'production') {} // $FlowFixMe: coerce undefined to string
-
+        if (targetClassName === undefined && emotion_styled_base_browser_esm_isDevelopment) {
+          return 'NO_COMPONENT_SELECTOR';
+        }
         return "." + targetClassName;
       }
     });
-    Styled.withComponent = function (nextTag, nextOptions) {
+    Styled.withComponent = function (nextTag
+    /*: StyledElementType<Props> */, nextOptions
+    /* ?: StyledOptions */) {
       return createStyled(nextTag, extends_extends({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       })).apply(void 0, styles);
@@ -26725,7 +33556,6 @@ var tags = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'b
 'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
 var newStyled = createStyled.bind();
 tags.forEach(function (tagName) {
-  // $FlowFixMe: we can ignore this because its exposed type is defined by the CreateStyled type
   newStyled[tagName] = newStyled(tagName);
 });
 
@@ -26976,7 +33806,7 @@ function inheritsLoose_inheritsLoose(subClass, superClass) {
   setPrototypeOf_setPrototypeOf(subClass, superClass);
 }
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-function assertThisInitialized_assertThisInitialized(self) {
+function esm_assertThisInitialized_assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
@@ -27207,7 +34037,7 @@ function (_BaseStyleRule) {
     if (selector) {
       _this.selectorText = selector;
     } else if (scoped !== false) {
-      _this.id = generateId(assertThisInitialized_assertThisInitialized(assertThisInitialized_assertThisInitialized(_this)), sheet);
+      _this.id = generateId(esm_assertThisInitialized_assertThisInitialized(esm_assertThisInitialized_assertThisInitialized(_this)), sheet);
       _this.selectorText = "." + jss_esm_escape(_this.id);
     }
     return _this;
@@ -27612,7 +34442,7 @@ var pluginSimpleRule = {
     return key in keysMap ? new SimpleRule(key, value, options) : null;
   }
 };
-var plugins = [pluginStyleRule, pluginConditionalRule, pluginKeyframesRule, pluginKeyframeRule, pluginFontFaceRule, pluginViewportRule, pluginSimpleRule];
+var jss_esm_plugins = [pluginStyleRule, pluginConditionalRule, pluginKeyframesRule, pluginKeyframeRule, pluginFontFaceRule, pluginViewportRule, pluginSimpleRule];
 var defaultUpdateOptions = {
   process: true
 };
@@ -28668,8 +35498,8 @@ function () {
     this.generateId = jss_esm_createGenerateId({
       minify: false
     });
-    for (var i = 0; i < plugins.length; i++) {
-      this.plugins.use(plugins[i], {
+    for (var i = 0; i < jss_esm_plugins.length; i++) {
+      this.plugins.use(jss_esm_plugins[i], {
         queue: 'internal'
       });
     }
@@ -29428,7 +36258,7 @@ function jssCompose() {
 ;// CONCATENATED MODULE: ../../node_modules/hyphenate-style-name/index.js
 /* eslint-disable no-var, prefer-template */
 var uppercasePattern = /[A-Z]/g;
-var hyphenate_style_name_msPattern = /^ms-/;
+var msPattern = /^ms-/;
 var hyphenate_style_name_cache = {};
 function toHyphenLower(match) {
   return '-' + match.toLowerCase();
@@ -29438,7 +36268,7 @@ function hyphenateStyleName(name) {
     return hyphenate_style_name_cache[name];
   }
   var hName = name.replace(uppercasePattern, toHyphenLower);
-  return hyphenate_style_name_cache[name] = hyphenate_style_name_msPattern.test(hName) ? '-' + hName : hName;
+  return hyphenate_style_name_cache[name] = msPattern.test(hName) ? '-' + hName : hName;
 }
 /* harmony default export */ const hyphenate_style_name = (hyphenateStyleName);
 ;// CONCATENATED MODULE: ../../node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js
@@ -31418,7 +38248,7 @@ fontWeight:'bold'// jss-plugin-camel-case turns this into 'font-weight'
 }},myLabel:{fontStyle:'italic'},'@media (max-width: 600px)':{myButton:{backgroundColor:'yellow'}}});// Define the component using these styles and pass it the 'classes' prop.
 // Use this to assign scoped class names.
 var jss_Button=function Button(_ref){var children=_ref.children;var _useState=(0,react.useState)(true),_useState2=slicedToArray_slicedToArray(_useState,2),enabled=_useState2[0],setEnabled=_useState2[1];var classes=useStyles({enabled:enabled});return/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:classes.myButton,onClick:function onClick(){return setEnabled(function(x){return!x;});},children:/*#__PURE__*/(0,jsx_runtime.jsx)("span",{className:classes.myLabel,children:children})});};
-;// CONCATENATED MODULE: ../../node_modules/styled-components/node_modules/tslib/tslib.es6.js
+;// CONCATENATED MODULE: ../../node_modules/tslib/tslib.es6.mjs
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -31433,7 +38263,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise */
+/* global Reflect, Promise, SuppressedError, Symbol */
 
 var _extendStatics = function extendStatics(d, b) {
   _extendStatics = Object.setPrototypeOf || {
@@ -31512,9 +38342,9 @@ function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, e
       if (result === null || typeof result !== "object") throw new TypeError("Object expected");
       if (_ = accept(result.get)) descriptor.get = _;
       if (_ = accept(result.set)) descriptor.set = _;
-      if (_ = accept(result.init)) initializers.push(_);
+      if (_ = accept(result.init)) initializers.unshift(_);
     } else if (_ = accept(result)) {
-      if (kind === "field") initializers.push(_);else descriptor[key] = _;
+      if (kind === "field") initializers.unshift(_);else descriptor[key] = _;
     }
   }
   if (target) Object.defineProperty(target, contextIn.name, descriptor);
@@ -31861,6 +38691,86 @@ function __classPrivateFieldIn(state, receiver) {
   if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function") throw new TypeError("Cannot use 'in' operator on non-object");
   return typeof state === "function" ? receiver === state : state.has(receiver);
 }
+function __addDisposableResource(env, value, async) {
+  if (value !== null && value !== void 0) {
+    if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+    var dispose;
+    if (async) {
+      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+      dispose = value[Symbol.asyncDispose];
+    }
+    if (dispose === void 0) {
+      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+      dispose = value[Symbol.dispose];
+    }
+    if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+    env.stack.push({
+      value: value,
+      dispose: dispose,
+      async: async
+    });
+  } else if (async) {
+    env.stack.push({
+      async: true
+    });
+  }
+  return value;
+}
+var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+function __disposeResources(env) {
+  function fail(e) {
+    env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+    env.hasError = true;
+  }
+  function next() {
+    while (env.stack.length) {
+      var rec = env.stack.pop();
+      try {
+        var result = rec.dispose && rec.dispose.call(rec.value);
+        if (rec.async) return Promise.resolve(result).then(next, function (e) {
+          fail(e);
+          return next();
+        });
+      } catch (e) {
+        fail(e);
+      }
+    }
+    if (env.hasError) throw env.error;
+  }
+  return next();
+}
+/* harmony default export */ const tslib_es6 = ({
+  __extends: tslib_es6_extends,
+  __assign: _assign,
+  __rest: tslib_es6_rest,
+  __decorate: __decorate,
+  __param: __param,
+  __metadata: __metadata,
+  __awaiter: __awaiter,
+  __generator: __generator,
+  __createBinding: __createBinding,
+  __exportStar: __exportStar,
+  __values: __values,
+  __read: __read,
+  __spread: __spread,
+  __spreadArrays: __spreadArrays,
+  __spreadArray: tslib_es6_spreadArray,
+  __await: __await,
+  __asyncGenerator: __asyncGenerator,
+  __asyncDelegator: __asyncDelegator,
+  __asyncValues: __asyncValues,
+  __makeTemplateObject: __makeTemplateObject,
+  __importStar: __importStar,
+  __importDefault: __importDefault,
+  __classPrivateFieldGet: __classPrivateFieldGet,
+  __classPrivateFieldSet: __classPrivateFieldSet,
+  __classPrivateFieldIn: __classPrivateFieldIn,
+  __addDisposableResource: __addDisposableResource,
+  __disposeResources: __disposeResources
+});
 // EXTERNAL MODULE: ../../node_modules/shallowequal/index.js
 var shallowequal = __webpack_require__("../../node_modules/shallowequal/index.js");
 var shallowequal_default = /*#__PURE__*/__webpack_require__.n(shallowequal);
@@ -31884,6 +38794,7 @@ var Enum_FONT_FACE = '@font-face';
 var Enum_COUNTER_STYLE = '@counter-style';
 var Enum_FONT_FEATURE_VALUES = '@font-feature-values';
 var Enum_LAYER = '@layer';
+var SCOPE = '@scope';
 ;// CONCATENATED MODULE: ../../node_modules/styled-components/node_modules/stylis/src/Utility.js
 /**
  * @param {number}
@@ -32097,7 +39008,7 @@ function Tokenizer_next() {
 /**
  * @return {number}
  */
-function Tokenizer_peek() {
+function src_Tokenizer_peek() {
   return src_Utility_charat(Tokenizer_characters, Tokenizer_position);
 }
 
@@ -32197,7 +39108,7 @@ function src_Tokenizer_tokenize(value) {
  * @return {string}
  */
 function Tokenizer_whitespace(type) {
-  while (Tokenizer_character = Tokenizer_peek()) if (Tokenizer_character < 33) Tokenizer_next();else break;
+  while (Tokenizer_character = src_Tokenizer_peek()) if (Tokenizer_character < 33) Tokenizer_next();else break;
   return Tokenizer_token(type) > 2 || Tokenizer_token(Tokenizer_character) > 3 ? '' : ' ';
 }
 
@@ -32228,7 +39139,7 @@ function Tokenizer_escaping(index, count) {
   while (--count && Tokenizer_next())
   // not 0-9 A-F a-f
   if (Tokenizer_character < 48 || Tokenizer_character > 102 || Tokenizer_character > 57 && Tokenizer_character < 65 || Tokenizer_character > 70 && Tokenizer_character < 97) break;
-  return Tokenizer_slice(index, Tokenizer_caret() + (count < 6 && Tokenizer_peek() == 32 && Tokenizer_next() == 32));
+  return Tokenizer_slice(index, Tokenizer_caret() + (count < 6 && src_Tokenizer_peek() == 32 && Tokenizer_next() == 32));
 }
 
 /**
@@ -32267,7 +39178,7 @@ function Tokenizer_commenter(type, index) {
   // //
   if (type + Tokenizer_character === 47 + 10) break;
   // /*
-  else if (type + Tokenizer_character === 42 + 42 && Tokenizer_peek() === 47) break;
+  else if (type + Tokenizer_character === 42 + 42 && src_Tokenizer_peek() === 47) break;
   return '/*' + Tokenizer_slice(index, Tokenizer_position - 1) + '*' + src_Utility_from(type === 47 ? type : Tokenizer_next());
 }
 
@@ -32276,7 +39187,7 @@ function Tokenizer_commenter(type, index) {
  * @return {string}
  */
 function Tokenizer_identifier(index) {
-  while (!Tokenizer_token(Tokenizer_peek())) Tokenizer_next();
+  while (!Tokenizer_token(src_Tokenizer_peek())) Tokenizer_next();
   return Tokenizer_slice(index, Tokenizer_position);
 }
 ;// CONCATENATED MODULE: ../../node_modules/styled-components/node_modules/stylis/src/Serializer.js
@@ -32708,7 +39619,7 @@ function Parser_parse(value, root, parent, rule, rules, rulesets, pseudo, points
       continue;
     // /
     case 47:
-      switch (Tokenizer_peek()) {
+      switch (src_Tokenizer_peek()) {
         case 42:
         case 47:
           src_Utility_append(Parser_comment(Tokenizer_commenter(Tokenizer_next(), Tokenizer_caret()), root, parent, declarations), declarations);
@@ -32771,8 +39682,8 @@ function Parser_parse(value, root, parent, rule, rules, rulesets, pseudo, points
         // @
         case 64:
           // -
-          if (Tokenizer_peek() === 45) characters += Tokenizer_delimit(Tokenizer_next());
-          atrule = Tokenizer_peek(), offset = length = src_Utility_strlen(type = characters += Tokenizer_identifier(Tokenizer_caret())), character++;
+          if (src_Tokenizer_peek() === 45) characters += Tokenizer_delimit(Tokenizer_next());
+          atrule = src_Tokenizer_peek(), offset = length = src_Utility_strlen(type = characters += Tokenizer_identifier(Tokenizer_caret())), character++;
           break;
         // -
         case 45:
@@ -32827,6 +39738,57 @@ function Parser_comment(value, root, parent, siblings) {
 function Parser_declaration(value, root, parent, length, siblings) {
   return Tokenizer_node(value, root, parent, src_Enum_DECLARATION, src_Utility_substr(value, 0, length), src_Utility_substr(value, length + 1, -1), length, siblings);
 }
+;// CONCATENATED MODULE: ../../node_modules/@emotion/unitless/dist/emotion-unitless.esm.js
+var emotion_unitless_esm_unitlessKeys = {
+  animationIterationCount: 1,
+  aspectRatio: 1,
+  borderImageOutset: 1,
+  borderImageSlice: 1,
+  borderImageWidth: 1,
+  boxFlex: 1,
+  boxFlexGroup: 1,
+  boxOrdinalGroup: 1,
+  columnCount: 1,
+  columns: 1,
+  flex: 1,
+  flexGrow: 1,
+  flexPositive: 1,
+  flexShrink: 1,
+  flexNegative: 1,
+  flexOrder: 1,
+  gridRow: 1,
+  gridRowEnd: 1,
+  gridRowSpan: 1,
+  gridRowStart: 1,
+  gridColumn: 1,
+  gridColumnEnd: 1,
+  gridColumnSpan: 1,
+  gridColumnStart: 1,
+  msGridRow: 1,
+  msGridRowSpan: 1,
+  msGridColumn: 1,
+  msGridColumnSpan: 1,
+  fontWeight: 1,
+  lineHeight: 1,
+  opacity: 1,
+  order: 1,
+  orphans: 1,
+  tabSize: 1,
+  widows: 1,
+  zIndex: 1,
+  zoom: 1,
+  WebkitLineClamp: 1,
+  // SVG-related properties
+  fillOpacity: 1,
+  floodOpacity: 1,
+  stopOpacity: 1,
+  strokeDasharray: 1,
+  strokeDashoffset: 1,
+  strokeMiterlimit: 1,
+  strokeOpacity: 1,
+  strokeWidth: 1
+};
+
 ;// CONCATENATED MODULE: ../../node_modules/styled-components/dist/styled-components.browser.esm.js
 
 
@@ -32837,7 +39799,7 @@ function Parser_declaration(value, root, parent, length, siblings) {
 var f = "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && (({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_ATTR || ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_ATTR) || "data-styled",
   m = "active",
   y = "data-styled-version",
-  v = "6.1.9",
+  v = "6.1.13",
   g = "/*!sc*/\n",
   S = "undefined" != typeof window && "HTMLElement" in window,
   w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}) && void 0 !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && "" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY ? "false" !== ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY && ({"NODE_ENV":"production","PUBLIC_URL":"","WDS_SOCKET_HOST":undefined,"WDS_SOCKET_PATH":undefined,"WDS_SOCKET_PORT":undefined,"FAST_REFRESH":true}).SC_DISABLE_SPEEDY : "production" !== "production"),
@@ -32875,11 +39837,11 @@ var V,
     for (var n = t.length; n;) e = 33 * e ^ t.charCodeAt(--n);
     return e;
   },
-  $ = function $(e) {
+  z = function z(e) {
     return M(F, e);
   };
-function z(e) {
-  return x($(e) >>> 0);
+function $(e) {
+  return x(z(e) >>> 0);
 }
 function B(e) {
   return  false || e.displayName || e.name || "Component";
@@ -33025,41 +39987,48 @@ var fe = function () {
       return t;
     }, e;
   }(),
-  me = new Map(),
+  me = (/* unused pure expression or super */ null && (1 << 30)),
   ye = new Map(),
-  ve = 1,
-  ge = function ge(e) {
-    if (me.has(e)) return me.get(e);
-    for (; ye.has(ve);) ve++;
-    var t = ve++;
+  ve = new Map(),
+  ge = 1,
+  Se = function Se(e) {
+    if (ye.has(e)) return ye.get(e);
+    for (; ve.has(ge);) ge++;
+    var t = ge++;
     if (false) {}
-    return me.set(e, t), ye.set(t, e), t;
+    return ye.set(e, t), ve.set(t, e), t;
   },
-  Se = function Se(e, t) {
-    ve = t + 1, me.set(e, t), ye.set(t, e);
+  we = function we(e, t) {
+    ge = t + 1, ye.set(e, t), ve.set(t, e);
   },
-  we = "style[".concat(f, "][").concat(y, '="').concat(v, '"]'),
-  be = new RegExp("^".concat(f, '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)')),
-  Ee = function Ee(e, t, n) {
+  be = "style[".concat(f, "][").concat(y, '="').concat(v, '"]'),
+  Ee = new RegExp("^".concat(f, '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)')),
+  Ne = function Ne(e, t, n) {
     for (var o, r = n.split(","), s = 0, i = r.length; s < i; s++) (o = r[s]) && e.registerName(t, o);
   },
-  Ne = function Ne(e, t) {
+  Pe = function Pe(e, t) {
     for (var n, o = (null !== (n = t.textContent) && void 0 !== n ? n : "").split(g), r = [], s = 0, i = o.length; s < i; s++) {
       var a = o[s].trim();
       if (a) {
-        var c = a.match(be);
+        var c = a.match(Ee);
         if (c) {
           var l = 0 | parseInt(c[1], 10),
             u = c[2];
-          0 !== l && (Se(u, l), Ee(e, u, c[3]), e.getTag().insertRules(l, r)), r.length = 0;
+          0 !== l && (we(u, l), Ne(e, u, c[3]), e.getTag().insertRules(l, r)), r.length = 0;
         } else r.push(a);
       }
     }
+  },
+  _e = function _e(e) {
+    for (var t = document.querySelectorAll(be), n = 0, o = t.length; n < o; n++) {
+      var r = t[n];
+      r && r.getAttribute(f) !== m && (Pe(e, r), r.parentNode && r.parentNode.removeChild(r));
+    }
   };
-function Pe() {
+function Ce() {
   return  true ? __webpack_require__.nc : 0;
 }
-var _e = function _e(e) {
+var Ie = function Ie(e) {
     var t = document.head,
       n = e || t,
       o = document.createElement("style"),
@@ -33069,12 +40038,12 @@ var _e = function _e(e) {
       }(n),
       s = void 0 !== r ? r.nextSibling : null;
     o.setAttribute(f, m), o.setAttribute(y, v);
-    var i = Pe();
+    var i = Ce();
     return i && o.setAttribute("nonce", i), n.insertBefore(o, s), o;
   },
-  Ce = function () {
+  Ae = function () {
     function e(e) {
-      this.element = _e(e), this.element.appendChild(document.createTextNode("")), this.sheet = function (e) {
+      this.element = Ie(e), this.element.appendChild(document.createTextNode("")), this.sheet = function (e) {
         if (e.sheet) return e.sheet;
         for (var t = document.styleSheets, n = 0, o = t.length; n < o; n++) {
           var r = t[n];
@@ -33096,9 +40065,9 @@ var _e = function _e(e) {
       return t && t.cssText ? t.cssText : "";
     }, e;
   }(),
-  Ie = function () {
+  Oe = function () {
     function e(e) {
-      this.element = _e(e), this.nodes = this.element.childNodes, this.length = 0;
+      this.element = Ie(e), this.nodes = this.element.childNodes, this.length = 0;
     }
     return e.prototype.insertRule = function (e, t) {
       if (e <= this.length && e >= 0) {
@@ -33112,7 +40081,7 @@ var _e = function _e(e) {
       return e < this.length ? this.nodes[e].textContent : "";
     }, e;
   }(),
-  Ae = function () {
+  De = function () {
     function e(e) {
       this.rules = [], this.length = 0;
     }
@@ -33124,30 +40093,25 @@ var _e = function _e(e) {
       return e < this.length ? this.rules[e] : "";
     }, e;
   }(),
-  Oe = S,
-  De = {
+  Re = S,
+  Te = {
     isServer: !S,
     useCSSOMInjection: !w
   },
-  Re = function () {
+  ke = function () {
     function e(e, n, o) {
       void 0 === e && (e = C), void 0 === n && (n = {});
       var r = this;
-      this.options = _assign(_assign({}, De), e), this.gs = n, this.names = new Map(o), this.server = !!e.isServer, !this.server && S && Oe && (Oe = !1, function (e) {
-        for (var t = document.querySelectorAll(we), n = 0, o = t.length; n < o; n++) {
-          var r = t[n];
-          r && r.getAttribute(f) !== m && (Ne(e, r), r.parentNode && r.parentNode.removeChild(r));
-        }
-      }(this)), ue(this, function () {
+      this.options = _assign(_assign({}, Te), e), this.gs = n, this.names = new Map(o), this.server = !!e.isServer, !this.server && S && Re && (Re = !1, _e(this)), ue(this, function () {
         return function (e) {
           for (var t = e.getTag(), n = t.length, o = "", r = function r(n) {
               var r = function (e) {
-                return ye.get(e);
+                return ve.get(e);
               }(n);
               if (void 0 === r) return "continue";
               var s = e.names.get(r),
                 i = t.getGroup(n);
-              if (void 0 === s || 0 === i.length) return "continue";
+              if (void 0 === s || !s.size || 0 === i.length) return "continue";
               var a = "".concat(f, ".g").concat(n, '[id="').concat(r, '"]'),
                 c = "";
               void 0 !== s && s.forEach(function (e) {
@@ -33159,7 +40123,9 @@ var _e = function _e(e) {
       });
     }
     return e.registerId = function (e) {
-      return ge(e);
+      return Se(e);
+    }, e.prototype.rehydrate = function () {
+      !this.server && S && _e(this);
     }, e.prototype.reconstructWithOptions = function (n, o) {
       return void 0 === o && (o = !0), new e(_assign(_assign({}, this.options), n), this.gs, o && this.names || void 0);
     }, e.prototype.allocateGSInstance = function (e) {
@@ -33168,36 +40134,36 @@ var _e = function _e(e) {
       return this.tag || (this.tag = (e = function (e) {
         var t = e.useCSSOMInjection,
           n = e.target;
-        return e.isServer ? new Ae(n) : t ? new Ce(n) : new Ie(n);
+        return e.isServer ? new De(n) : t ? new Ae(n) : new Oe(n);
       }(this.options), new fe(e)));
       var e;
     }, e.prototype.hasNameForId = function (e, t) {
       return this.names.has(e) && this.names.get(e).has(t);
     }, e.prototype.registerName = function (e, t) {
-      if (ge(e), this.names.has(e)) this.names.get(e).add(t);else {
+      if (Se(e), this.names.has(e)) this.names.get(e).add(t);else {
         var n = new Set();
         n.add(t), this.names.set(e, n);
       }
     }, e.prototype.insertRules = function (e, t, n) {
-      this.registerName(e, t), this.getTag().insertRules(ge(e), n);
+      this.registerName(e, t), this.getTag().insertRules(Se(e), n);
     }, e.prototype.clearNames = function (e) {
       this.names.has(e) && this.names.get(e).clear();
     }, e.prototype.clearRules = function (e) {
-      this.getTag().clearGroup(ge(e)), this.clearNames(e);
+      this.getTag().clearGroup(Se(e)), this.clearNames(e);
     }, e.prototype.clearTag = function () {
       this.tag = void 0;
     }, e;
   }(),
-  Te = /&/g,
-  ke = /^\s*\/\/.*$/gm;
-function je(e, t) {
+  je = /&/g,
+  xe = /^\s*\/\/.*$/gm;
+function Ve(e, t) {
   return e.map(function (e) {
     return "rule" === e.type && (e.value = "".concat(t, " ").concat(e.value), e.value = e.value.replaceAll(",", ",".concat(t, " ")), e.props = e.props.map(function (e) {
       return "".concat(t, " ").concat(e);
-    })), Array.isArray(e.children) && "@keyframes" !== e.type && (e.children = je(e.children, t)), e;
+    })), Array.isArray(e.children) && "@keyframes" !== e.type && (e.children = Ve(e.children, t)), e;
   });
 }
-function xe(e) {
+function Fe(e) {
   var t,
     n,
     o,
@@ -33211,13 +40177,13 @@ function xe(e) {
     },
     u = c.slice();
   u.push(function (e) {
-    e.type === src_Enum_RULESET && e.value.includes("&") && (e.props[0] = e.props[0].replace(Te, n).replace(o, l));
+    e.type === src_Enum_RULESET && e.value.includes("&") && (e.props[0] = e.props[0].replace(je, n).replace(o, l));
   }), i.prefix && u.push(Middleware_prefixer), u.push(Serializer_stringify);
   var p = function p(e, r, s, a) {
     void 0 === r && (r = ""), void 0 === s && (s = ""), void 0 === a && (a = "&"), t = a, n = r, o = new RegExp("\\".concat(n, "\\b"), "g");
-    var c = e.replace(ke, ""),
+    var c = e.replace(xe, ""),
       l = Parser_compile(s || r ? "".concat(s, " ").concat(r, " { ").concat(c, " }") : c);
-    i.namespace && (l = je(l, i.namespace));
+    i.namespace && (l = Ve(l, i.namespace));
     var p = [];
     return src_Serializer_serialize(l, Middleware_middleware(u.concat(Middleware_rulesheet(function (e) {
       return p.push(e);
@@ -33227,23 +40193,23 @@ function xe(e) {
     return t.name || he(15), M(e, t.name);
   }, F).toString() : "", p;
 }
-var Ve = new Re(),
-  Fe = xe(),
-  Me = react.createContext({
+var Me = new ke(),
+  ze = Fe(),
+  $e = react.createContext({
     shouldForwardProp: void 0,
-    styleSheet: Ve,
-    stylis: Fe
+    styleSheet: Me,
+    stylis: ze
   }),
-  $e = Me.Consumer,
-  ze = react.createContext(void 0);
-function Be() {
-  return (0,react.useContext)(Me);
+  Be = $e.Consumer,
+  Le = react.createContext(void 0);
+function Ge() {
+  return (0,react.useContext)($e);
 }
-function Le(e) {
+function Ye(e) {
   var t = (0,react.useState)(e.stylisPlugins),
     n = t[0],
     r = t[1],
-    c = Be().styleSheet,
+    c = Ge().styleSheet,
     l = (0,react.useMemo)(function () {
       var t = c;
       return e.sheet ? t = e.sheet : e.target && (t = t.reconstructWithOptions({
@@ -33253,7 +40219,7 @@ function Le(e) {
       })), t;
     }, [e.disableCSSOMInjection, e.sheet, e.target, c]),
     u = (0,react.useMemo)(function () {
-      return xe({
+      return Fe({
         options: {
           namespace: e.namespace,
           prefix: e.enableVendorPrefixes
@@ -33271,17 +40237,17 @@ function Le(e) {
       stylis: u
     };
   }, [e.shouldForwardProp, l, u]);
-  return react.createElement(Me.Provider, {
+  return react.createElement($e.Provider, {
     value: d
-  }, react.createElement(ze.Provider, {
+  }, react.createElement(Le.Provider, {
     value: u
   }, e.children));
 }
-var Ge = function () {
+var We = function () {
     function e(e, t) {
       var n = this;
       this.inject = function (e, t) {
-        void 0 === t && (t = Fe);
+        void 0 === t && (t = ze);
         var o = n.name + t.hash;
         e.hasNameForId(n.id, o) || e.insertRules(n.id, o, t(n.rules, o, "@keyframes"));
       }, this.name = e, this.id = "sc-keyframes-".concat(e), this.rules = t, ue(this, function () {
@@ -33289,63 +40255,63 @@ var Ge = function () {
       });
     }
     return e.prototype.getName = function (e) {
-      return void 0 === e && (e = Fe), this.name + e.hash;
+      return void 0 === e && (e = ze), this.name + e.hash;
     }, e;
   }(),
-  Ye = function Ye(e) {
+  qe = function qe(e) {
     return e >= "A" && e <= "Z";
   };
-function We(e) {
+function He(e) {
   for (var t = "", n = 0; n < e.length; n++) {
     var o = e[n];
     if (1 === n && "-" === o && "-" === e[0]) return e;
-    Ye(o) ? t += "-" + o.toLowerCase() : t += o;
+    qe(o) ? t += "-" + o.toLowerCase() : t += o;
   }
   return t.startsWith("ms-") ? "-" + t : t;
 }
-var qe = function qe(e) {
+var Ue = function Ue(e) {
     return null == e || !1 === e || "" === e;
   },
-  He = function He(t) {
+  Je = function Je(t) {
     var n,
       o,
       r = [];
     for (var s in t) {
       var i = t[s];
-      t.hasOwnProperty(s) && !qe(i) && (Array.isArray(i) && i.isCss || re(i) ? r.push("".concat(We(s), ":"), i, ";") : ce(i) ? r.push.apply(r, tslib_es6_spreadArray(tslib_es6_spreadArray(["".concat(s, " {")], He(i), !1), ["}"], !1)) : r.push("".concat(We(s), ": ").concat((n = s, null == (o = i) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || n in unitlessKeys || n.startsWith("--") ? String(o).trim() : "".concat(o, "px")), ";")));
+      t.hasOwnProperty(s) && !Ue(i) && (Array.isArray(i) && i.isCss || re(i) ? r.push("".concat(He(s), ":"), i, ";") : ce(i) ? r.push.apply(r, tslib_es6_spreadArray(tslib_es6_spreadArray(["".concat(s, " {")], Je(i), !1), ["}"], !1)) : r.push("".concat(He(s), ": ").concat((n = s, null == (o = i) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || n in emotion_unitless_esm_unitlessKeys || n.startsWith("--") ? String(o).trim() : "".concat(o, "px")), ";")));
     }
     return r;
   };
-function Ue(e, t, n, o) {
-  if (qe(e)) return [];
+function Xe(e, t, n, o) {
+  if (Ue(e)) return [];
   if (se(e)) return [".".concat(e.styledComponentId)];
   if (re(e)) {
     if (!re(s = e) || s.prototype && s.prototype.isReactComponent || !t) return [e];
     var r = e(t);
-    return  true || 0, Ue(r, t, n, o);
+    return  true || 0, Xe(r, t, n, o);
   }
   var s;
-  return e instanceof Ge ? n ? (e.inject(n, o), [e.getName(o)]) : [e] : ce(e) ? He(e) : Array.isArray(e) ? Array.prototype.concat.apply(_, e.map(function (e) {
-    return Ue(e, t, n, o);
+  return e instanceof We ? n ? (e.inject(n, o), [e.getName(o)]) : [e] : ce(e) ? Je(e) : Array.isArray(e) ? Array.prototype.concat.apply(_, e.map(function (e) {
+    return Xe(e, t, n, o);
   })) : [e.toString()];
 }
-function Je(e) {
+function Ze(e) {
   for (var t = 0; t < e.length; t += 1) {
     var n = e[t];
     if (re(n) && !se(n)) return !1;
   }
   return !0;
 }
-var Xe = $(v),
-  Ze = function () {
+var Ke = z(v),
+  Qe = function () {
     function e(e, t, n) {
-      this.rules = e, this.staticRulesId = "", this.isStatic =  true && (void 0 === n || n.isStatic) && Je(e), this.componentId = t, this.baseHash = M(Xe, t), this.baseStyle = n, Re.registerId(t);
+      this.rules = e, this.staticRulesId = "", this.isStatic =  true && (void 0 === n || n.isStatic) && Ze(e), this.componentId = t, this.baseHash = M(Ke, t), this.baseStyle = n, ke.registerId(t);
     }
     return e.prototype.generateAndInjectStyles = function (e, t, n) {
       var o = this.baseStyle ? this.baseStyle.generateAndInjectStyles(e, t, n) : "";
       if (this.isStatic && !n.hash) {
         if (this.staticRulesId && t.hasNameForId(this.componentId, this.staticRulesId)) o = ie(o, this.staticRulesId);else {
-          var r = ae(Ue(this.rules, e, t, n)),
+          var r = ae(Xe(this.rules, e, t, n)),
             s = x(M(this.baseHash, r) >>> 0);
           if (!t.hasNameForId(this.componentId, s)) {
             var i = n(r, ".".concat(s), void 0, this.componentId);
@@ -33357,7 +40323,7 @@ var Xe = $(v),
         for (var a = M(this.baseHash, n.hash), c = "", l = 0; l < this.rules.length; l++) {
           var u = this.rules[l];
           if ("string" == typeof u) c += u,  false && (0);else if (u) {
-            var p = ae(Ue(u, e, t, n));
+            var p = ae(Xe(u, e, t, n));
             a = M(a, p + l), c += p;
           }
         }
@@ -33369,15 +40335,15 @@ var Xe = $(v),
       return o;
     }, e;
   }(),
-  Ke = react.createContext(void 0),
-  Qe = Ke.Consumer;
-function et() {
-  var e = c(Ke);
+  et = react.createContext(void 0),
+  tt = et.Consumer;
+function nt() {
+  var e = c(et);
   if (!e) throw he(18);
   return e;
 }
-function tt(e) {
-  var n = o.useContext(Ke),
+function ot(e) {
+  var n = o.useContext(et),
     r = i(function () {
       return function (e, n) {
         if (!e) throw he(14);
@@ -33390,13 +40356,13 @@ function tt(e) {
         return n ? t(t({}, n), e) : e;
       }(e.theme, n);
     }, [e.theme, n]);
-  return e.children ? o.createElement(Ke.Provider, {
+  return e.children ? o.createElement(et.Provider, {
     value: r
   }, e.children) : null;
 }
-var nt = {},
-  ot = new Set();
-function rt(e, r, s) {
+var rt = {},
+  st = new Set();
+function it(e, r, s) {
   var i = se(e),
     a = e,
     c = !L(e),
@@ -33405,8 +40371,8 @@ function rt(e, r, s) {
     h = r.componentId,
     f = void 0 === h ? function (e, t) {
       var n = "string" != typeof e ? "sc" : R(e);
-      nt[n] = (nt[n] || 0) + 1;
-      var o = "".concat(n, "-").concat(z(v + n + nt[n]));
+      rt[n] = (rt[n] || 0) + 1;
+      var o = "".concat(n, "-").concat($(v + n + rt[n]));
       return t ? "".concat(t, "-").concat(o) : o;
     }(r.displayName, r.parentComponentId) : h,
     m = r.displayName,
@@ -33425,7 +40391,7 @@ function rt(e, r, s) {
       };
     } else w = b;
   }
-  var N = new Ze(s, g, i ? a.componentStyle : void 0);
+  var N = new Qe(s, g, i ? a.componentStyle : void 0);
   function O(e, r) {
     return function (e, r, s) {
       var i = e.attrs,
@@ -33434,8 +40400,8 @@ function rt(e, r, s) {
         p = e.foldedComponentIds,
         d = e.styledComponentId,
         h = e.target,
-        f = react.useContext(Ke),
-        m = Be(),
+        f = react.useContext(et),
+        m = Ge(),
         y = e.shouldForwardProp || m.shouldForwardProp;
        false && 0;
       var v = I(r, f, c) || C,
@@ -33453,7 +40419,7 @@ function rt(e, r, s) {
         w = {};
       for (var b in g) void 0 === g[b] || "$" === b[0] || "as" === b || "theme" === b && g.theme === v || ("forwardedAs" === b ? w.as = g.forwardedAs : y && !y(b, S) || (w[b] = g[b], y || "development" !== "production" || 0 || 0 || 0 || (0)));
       var E = function (e, t) {
-        var n = Be(),
+        var n = Ge(),
           o = e.generateAndInjectStyles(t, n.styleSheet, n.stylis);
         return  false && 0, o;
       }(a, g);
@@ -33487,65 +40453,65 @@ function rt(e, r, s) {
     target: !0
   }), D;
 }
-function st(e, t) {
+function styled_components_browser_esm_at(e, t) {
   for (var n = [e[0]], o = 0, r = t.length; o < r; o += 1) n.push(t[o], e[o + 1]);
   return n;
 }
-var it = function it(e) {
+var ct = function ct(e) {
   return Object.assign(e, {
     isCss: !0
   });
 };
-function styled_components_browser_esm_at(t) {
+function lt(t) {
   for (var n = [], o = 1; o < arguments.length; o++) n[o - 1] = arguments[o];
-  if (re(t) || ce(t)) return it(Ue(st(_, tslib_es6_spreadArray([t], n, !0))));
+  if (re(t) || ce(t)) return ct(Xe(styled_components_browser_esm_at(_, tslib_es6_spreadArray([t], n, !0))));
   var r = t;
-  return 0 === n.length && 1 === r.length && "string" == typeof r[0] ? Ue(r) : it(Ue(st(r, n)));
+  return 0 === n.length && 1 === r.length && "string" == typeof r[0] ? Xe(r) : ct(Xe(styled_components_browser_esm_at(r, n)));
 }
-function ct(n, o, r) {
+function ut(n, o, r) {
   if (void 0 === r && (r = C), !o) throw he(1, o);
   var s = function s(t) {
     for (var s = [], i = 1; i < arguments.length; i++) s[i - 1] = arguments[i];
-    return n(o, r, styled_components_browser_esm_at.apply(void 0, tslib_es6_spreadArray([t], s, !1)));
+    return n(o, r, lt.apply(void 0, tslib_es6_spreadArray([t], s, !1)));
   };
   return s.attrs = function (e) {
-    return ct(n, o, _assign(_assign({}, r), {
+    return ut(n, o, _assign(_assign({}, r), {
       attrs: Array.prototype.concat(r.attrs, e).filter(Boolean)
     }));
   }, s.withConfig = function (e) {
-    return ct(n, o, _assign(_assign({}, r), e));
+    return ut(n, o, _assign(_assign({}, r), e));
   }, s;
 }
-var lt = function lt(e) {
-    return ct(rt, e);
+var pt = function pt(e) {
+    return ut(it, e);
   },
-  ut = lt;
+  dt = pt;
 A.forEach(function (e) {
-  ut[e] = lt(e);
+  dt[e] = pt(e);
 });
-var pt = function () {
+var ht = function () {
   function e(e, t) {
-    this.rules = e, this.componentId = t, this.isStatic = Je(e), Re.registerId(this.componentId + 1);
+    this.rules = e, this.componentId = t, this.isStatic = Ze(e), ke.registerId(this.componentId + 1);
   }
   return e.prototype.createStyles = function (e, t, n, o) {
-    var r = o(ae(Ue(this.rules, t, n, o)), ""),
+    var r = o(ae(Xe(this.rules, t, n, o)), ""),
       s = this.componentId + e;
     n.insertRules(s, s, r);
   }, e.prototype.removeStyles = function (e, t) {
     t.clearRules(this.componentId + e);
   }, e.prototype.renderStyles = function (e, t, n, o) {
-    e > 2 && Re.registerId(this.componentId + e), this.removeStyles(e, n), this.createStyles(e, t, n, o);
+    e > 2 && ke.registerId(this.componentId + e), this.removeStyles(e, n), this.createStyles(e, t, n, o);
   }, e;
 }();
-function dt(n) {
+function ft(n) {
   for (var r = [], s = 1; s < arguments.length; s++) r[s - 1] = arguments[s];
-  var i = styled_components_browser_esm_at.apply(void 0, e([n], r, !1)),
-    a = "sc-global-".concat(z(JSON.stringify(i))),
-    c = new pt(i, a);
+  var i = lt.apply(void 0, e([n], r, !1)),
+    a = "sc-global-".concat($(JSON.stringify(i))),
+    c = new ht(i, a);
    false && 0;
   var l = function l(e) {
-    var t = Be(),
-      n = o.useContext(Ke),
+    var t = Ge(),
+      n = o.useContext(et),
       r = o.useRef(t.styleSheet.allocateGSInstance(a)).current;
     return  false && 0,  false && 0, t.styleSheet.server && u(r, e, t.styleSheet, n, t.stylis), o.useLayoutEffect(function () {
       if (!t.styleSheet.server) return u(r, e, t.styleSheet, n, t.stylis), function () {
@@ -33563,16 +40529,16 @@ function dt(n) {
   }
   return o.memo(l);
 }
-function ht(t) {
+function mt(t) {
   for (var n = [], o = 1; o < arguments.length; o++) n[o - 1] = arguments[o];
    false && 0;
-  var r = ae(styled_components_browser_esm_at.apply(void 0, e([t], n, !1))),
-    s = z(r);
-  return new Ge(s, r);
+  var r = ae(lt.apply(void 0, e([t], n, !1))),
+    s = $(r);
+  return new We(s, r);
 }
-function ft(e) {
+function yt(e) {
   var n = o.forwardRef(function (n, r) {
-    var s = I(n, o.useContext(Ke), e.defaultProps);
+    var s = I(n, o.useContext(et), e.defaultProps);
     return  false && 0, o.createElement(e, t({}, n, {
       theme: s,
       ref: r
@@ -33580,12 +40546,13 @@ function ft(e) {
   });
   return n.displayName = "WithTheme(".concat(B(e), ")"), oe(n, e);
 }
-var mt = function () {
+var vt = function () {
     function e() {
       var e = this;
       this._emitSheetCSS = function () {
-        var t = e.instance.toString(),
-          n = Pe(),
+        var t = e.instance.toString();
+        if (!t) return "";
+        var n = Ce(),
           o = ae([n && 'nonce="'.concat(n, '"'), "".concat(f, '="true"'), "".concat(y, '="').concat(v, '"')].filter(Boolean), " ");
         return "<style ".concat(o, ">").concat(t, "</style>");
       }, this.getStyleTags = function () {
@@ -33594,39 +40561,41 @@ var mt = function () {
       }, this.getStyleElement = function () {
         var n;
         if (e.sealed) throw he(2);
-        var r = ((n = {})[f] = "", n[y] = v, n.dangerouslySetInnerHTML = {
-            __html: e.instance.toString()
+        var r = e.instance.toString();
+        if (!r) return [];
+        var s = ((n = {})[f] = "", n[y] = v, n.dangerouslySetInnerHTML = {
+            __html: r
           }, n),
-          s = Pe();
-        return s && (r.nonce = s), [react.createElement("style", _assign({}, r, {
+          i = Ce();
+        return i && (s.nonce = i), [react.createElement("style", _assign({}, s, {
           key: "sc-0-0"
         }))];
       }, this.seal = function () {
         e.sealed = !0;
-      }, this.instance = new Re({
+      }, this.instance = new ke({
         isServer: !0
       }), this.sealed = !1;
     }
     return e.prototype.collectStyles = function (e) {
       if (this.sealed) throw he(2);
-      return react.createElement(Le, {
+      return react.createElement(Ye, {
         sheet: this.instance
       }, e);
     }, e.prototype.interleaveWithNodeStream = function (e) {
       throw he(3);
     }, e;
   }(),
-  yt = {
-    StyleSheet: Re,
-    mainSheet: Ve
+  gt = {
+    StyleSheet: ke,
+    mainSheet: Me
   };
  false && 0;
-var vt = "__sc-".concat(f, "__");
+var St = "__sc-".concat(f, "__");
  false && (0);
 
 //# sourceMappingURL=styled-components.browser.esm.js.map
 ;// CONCATENATED MODULE: ./src/pages/style-frameworks/styled-components/index.tsx
-var styled_components_templateObject,styled_components_templateObject2;var styled_components_Button=ut.button(styled_components_templateObject||(styled_components_templateObject=_taggedTemplateLiteral(["\n  /* This renders the buttons above... Edit me! */\n  display: inline-block;\n  border-radius: 3px;\n  padding: 0.5rem 0;\n  margin: 0.5rem 1rem;\n  width: 11rem;\n  background: yellow;\n  color: black;\n  border: 2px solid black;\n\n  ","\n"])),function(props){return props.$toggled&&styled_components_browser_esm_at(styled_components_templateObject2||(styled_components_templateObject2=_taggedTemplateLiteral(["\n    background: white;\n    color: black;\n  "])));});function StyledComponentsPage(){var _useState=(0,react.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),toggled=_useState2[0],setToggled=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components_Button,{$toggled:toggled,onClick:function onClick(){return setToggled(function(x){return!x;});},children:"Styled Button"})})});}/* harmony default export */ const styled_components = (StyledComponentsPage);
+var styled_components_templateObject,styled_components_templateObject2;var styled_components_Button=dt.button(styled_components_templateObject||(styled_components_templateObject=_taggedTemplateLiteral(["\n  /* This renders the buttons above... Edit me! */\n  display: inline-block;\n  border-radius: 3px;\n  padding: 0.5rem 0;\n  margin: 0.5rem 1rem;\n  width: 11rem;\n  background: yellow;\n  color: black;\n  border: 2px solid black;\n\n  ","\n"])),function(props){return props.$toggled&&lt(styled_components_templateObject2||(styled_components_templateObject2=_taggedTemplateLiteral(["\n    background: white;\n    color: black;\n  "])));});function StyledComponentsPage(){var _useState=(0,react.useState)(false),_useState2=slicedToArray_slicedToArray(_useState,2),toggled=_useState2[0],setToggled=_useState2[1];return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("div",{children:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components_Button,{$toggled:toggled,onClick:function onClick(){return setToggled(function(x){return!x;});},children:"Styled Button"})})});}/* harmony default export */ const styled_components = (StyledComponentsPage);
 ;// CONCATENATED MODULE: ../../node_modules/react-icons/lib/iconsManifest.mjs
 var IconsManifest = [{
   "id": "ci",
@@ -79753,9 +86722,9 @@ var todo_update = injectStylesIntoStyleTag_default()(todo/* default */.A, todo_o
 ;// CONCATENATED MODULE: ./src/pages/todo/index.jsx
 function TodoItem(props){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:"todo-item",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-item-name",children:props.item.text}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:"todo-remove-button",onClick:function onClick(){return props.onRemove(props.item.id);},children:/*#__PURE__*/(0,jsx_runtime.jsx)("icon",{children:"delete"})})]});}function TodoPage(){var lastId=(0,react.useRef)(3);var _useState=(0,react.useState)([{id:0,text:'Take a walk'},{id:1,text:'Buy groceries'},{id:2,text:'Prepare dinner'}]),_useState2=slicedToArray_slicedToArray(_useState,2),items=_useState2[0],setItems=_useState2[1];var inputRef=(0,react.useRef)();function addTodo(item){inputRef.current.Value='';setItems(function(oldItems){var newItems=toConsumableArray_toConsumableArray(oldItems);newItems.push({id:lastId.current++,text:item});return newItems;});}function removeTodo(id){setItems(function(oldItems){return oldItems.filter(function(x){return x.id!==id;});});}return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:"todo-root",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-header",children:"TODO app example"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:"todo-input-section",children:[/*#__PURE__*/(0,jsx_runtime.jsx)("input",{className:"todo-input",ref:inputRef,placeholder:"Enter a new todo",onSubmit:function onSubmit(ev,sender){return addTodo(sender.Value);}}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:"todo-add-button",onClick:function onClick(){return addTodo(inputRef.current.Value);},children:/*#__PURE__*/(0,jsx_runtime.jsx)("icon",{children:"add"})})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"todo-items",children:items.map(function(item){return/*#__PURE__*/(0,jsx_runtime.jsx)(TodoItem,{item:item,onRemove:removeTodo},item.id);})})]});}/* harmony default export */ const src_pages_todo = (TodoPage);
 ;// CONCATENATED MODULE: ./src/app/routes.tsx
-var TailwindPage=/*#__PURE__*/react.lazy(function(){return __webpack_require__.e(/* import() */ "src_pages_style-frameworks_tailwind_index_tsx").then(__webpack_require__.bind(__webpack_require__, "./src/pages/style-frameworks/tailwind/index.tsx"));});function AppRoutes(){return/*#__PURE__*/(0,jsx_runtime.jsxs)(Routes,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'',element:/*#__PURE__*/(0,jsx_runtime.jsx)(home,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'material',element:/*#__PURE__*/(0,jsx_runtime.jsx)(material,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'animations',element:/*#__PURE__*/(0,jsx_runtime.jsx)(animations,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'images',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_images,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bg-patterns',element:/*#__PURE__*/(0,jsx_runtime.jsx)(bg_patterns,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'svgs',element:/*#__PURE__*/(0,jsx_runtime.jsx)(svgs,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'interop',element:/*#__PURE__*/(0,jsx_runtime.jsx)(interop,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'todo',element:/*#__PURE__*/(0,jsx_runtime.jsx)(src_pages_todo,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'query',element:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryPage,{})}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Route,{path:'style-frameworks',element:/*#__PURE__*/(0,jsx_runtime.jsx)(style_frameworks,{}),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'jss',element:/*#__PURE__*/(0,jsx_runtime.jsx)(jss,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'styled-components',element:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'emotion',element:/*#__PURE__*/(0,jsx_runtime.jsx)(emotion,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bootstrap',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_style_frameworks_bootstrap,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'tailwind',element:/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(TailwindPage,{})})})]})]});}
+var TailwindPage=/*#__PURE__*/react.lazy(function(){return __webpack_require__.e(/* import() */ "src_pages_style-frameworks_tailwind_index_tsx").then(__webpack_require__.bind(__webpack_require__, "./src/pages/style-frameworks/tailwind/index.tsx"));});function AppRoutes(){return/*#__PURE__*/(0,jsx_runtime.jsxs)(Routes,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'',element:/*#__PURE__*/(0,jsx_runtime.jsx)(home,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'material',element:/*#__PURE__*/(0,jsx_runtime.jsx)(material,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'animations',element:/*#__PURE__*/(0,jsx_runtime.jsx)(animations,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'images',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_images,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bg-patterns',element:/*#__PURE__*/(0,jsx_runtime.jsx)(bg_patterns,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'svgs',element:/*#__PURE__*/(0,jsx_runtime.jsx)(svgs,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'interop',element:/*#__PURE__*/(0,jsx_runtime.jsx)(interop,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'todo',element:/*#__PURE__*/(0,jsx_runtime.jsx)(src_pages_todo,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'query',element:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryPage,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'redux',element:/*#__PURE__*/(0,jsx_runtime.jsx)(Redux,{})}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Route,{path:'style-frameworks',element:/*#__PURE__*/(0,jsx_runtime.jsx)(style_frameworks,{}),children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'jss',element:/*#__PURE__*/(0,jsx_runtime.jsx)(jss,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'styled-components',element:/*#__PURE__*/(0,jsx_runtime.jsx)(styled_components,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'emotion',element:/*#__PURE__*/(0,jsx_runtime.jsx)(emotion,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'bootstrap',element:/*#__PURE__*/(0,jsx_runtime.jsx)(pages_style_frameworks_bootstrap,{})}),/*#__PURE__*/(0,jsx_runtime.jsx)(Route,{path:'tailwind',element:/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(TailwindPage,{})})})]})]});}
 ;// CONCATENATED MODULE: ./src/app/index.tsx
-var queryClient=new QueryClient();function App(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:app_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:app_index_module.sidepanel,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('');},children:"Home"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('material');},children:"Material"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('animations');},children:"Animations"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('images');},children:"Images"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('bg-patterns');},children:"Background Patterns"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('svgs');},children:"SVGs"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('style-frameworks/jss');},children:"Style Frameworks"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('interop');},children:"Interop"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('todo');},children:"Todo App Example"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('query');},children:"Tanstack Query"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:app_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:app_index_module.content,children:/*#__PURE__*/(0,jsx_runtime.jsx)(AppRoutes,{})})})]});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(MemoryRouter,{initialEntries:['/'+__webpack_require__.g.location.hash.replace(/^#/,'')],initialIndex:0,children:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryClientProvider,{client:queryClient,children:/*#__PURE__*/(0,jsx_runtime.jsx)(App,{})})})}));
+var queryClient=new QueryClient();function App(){var nav=useNavigate();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:app_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:app_index_module.sidepanel,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('');},children:"Home"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('material');},children:"Material"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('animations');},children:"Animations"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('images');},children:"Images"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('bg-patterns');},children:"Background Patterns"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('svgs');},children:"SVGs"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('style-frameworks/jss');},children:"Style Frameworks"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('interop');},children:"Interop"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('todo');},children:"Todo App Example"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('query');},children:"Tanstack Query"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return nav('redux');},children:"Redux"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:app_index_module.scroll,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:app_index_module.content,children:/*#__PURE__*/(0,jsx_runtime.jsx)(AppRoutes,{})})})]});}_render(/*#__PURE__*/(0,jsx_runtime.jsx)(react.Suspense,{fallback:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"Loading"}),children:/*#__PURE__*/(0,jsx_runtime.jsx)(MemoryRouter,{initialEntries:['/'+__webpack_require__.g.location.hash.replace(/^#/,'')],initialIndex:0,children:/*#__PURE__*/(0,jsx_runtime.jsx)(QueryClientProvider,{client:queryClient,children:/*#__PURE__*/(0,jsx_runtime.jsx)(App,{})})})}));
 ;// CONCATENATED MODULE: ./src/index.tsx
 
 })();
