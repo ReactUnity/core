@@ -40,6 +40,10 @@
           "path": "/learn/howto/fonts"
         },
         {
+          "title": "Troubleshooting",
+          "path": "/learn/howto/troubleshooting"
+        },
+        {
           "hasSectionHeader": true,
           "sectionHeader": "Misc"
         },
