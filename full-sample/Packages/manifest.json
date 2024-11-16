@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": "0.17.0",
-    "com.reactunity.core": "0.19.6",
+    "com.reactunity.core": "0.19.7",
     "com.reactunity.jint": "0.17.0",
     "com.reactunity.quickjs": "0.19.0",
     "com.unity.2d.sprite": "1.0.0",
@@ -15,10 +15,10 @@
     "com.unity.render-pipelines.universal": "17.0.3",
     "com.unity.test-framework": "1.4.5",
     "com.unity.test-framework.performance": "3.0.3",
-    "com.unity.vectorgraphics": "2.0.0-preview.24",
-    "com.unity.xr.interaction.toolkit": "3.0.6",
+    "com.unity.vectorgraphics": "2.0.0-preview.25",
+    "com.unity.xr.interaction.toolkit": "3.0.7",
     "com.unity.xr.mock-hmd": "1.4.0-preview.2",
-    "com.unity.xr.oculus": "4.3.0",
+    "com.unity.xr.oculus": "4.4.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

@@ -3,7 +3,7 @@
     "index.js": "/index.js",
     "uitoolkit.js": "/uitoolkit.js",
     "static/js/src_pages_style-frameworks_tailwind_index_tsx.chunk.js": "/static/js/src_pages_style-frameworks_tailwind_index_tsx.chunk.js",
-    "static/media/bg.png": "/static/media/bg.png",
+    "static/media/bg.png": "/static/media/bg.png.png",
     "static/media/check.svg": "/static/media/check.4701752daa56435b75dc4edd7886d403.svg"
   },
   "entrypoints": [

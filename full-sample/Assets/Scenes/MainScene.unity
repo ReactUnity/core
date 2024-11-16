@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -896,7 +897,7 @@ MonoBehaviour:
     SourcePath: react/index
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 2
+    UseDevServer: 1
     DevServer: http://localhost:3100
   EngineType: 0
   globals:
@@ -923,6 +924,8 @@ MonoBehaviour:
       Value: {fileID: 315642566}
     - Key: InteropTest
       Value: {fileID: 314699167}
+    - Key: images
+      Value: {fileID: 11400000, guid: 18b31596afcd2cd4d9e26f60ae596c26, type: 2}
   AdvancedOptions:
     Pooling: 1
     MediaUpdateInterval: 0.5
@@ -1176,6 +1179,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!114 &328694441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,7 +3163,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 8
+  serializedVersion: 9
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1

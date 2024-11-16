@@ -39,7 +39,8 @@
 
 .borderImage {
   border: 1px solid transparent;
-  border-image-source: url('resource:border-image');
+  // border-image-source: url('resource:border-image');
+  border-image-source: url('pool:images/myBorder');
   border-image-width: calc(80 / 2) calc(72 / 2) calc(84 / 2);
   border-image-slice: 80 72 84 fill;
   border-image-repeat: round repeat;

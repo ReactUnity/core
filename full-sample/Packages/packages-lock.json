@@ -8,7 +8,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.19.6",
+      "version": "0.19.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -231,7 +231,7 @@
       }
     },
     "com.unity.vectorgraphics": {
-      "version": "2.0.0-preview.24",
+      "version": "2.0.0-preview.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -259,7 +259,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.interaction.toolkit": {
-      "version": "3.0.6",
+      "version": "3.0.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -306,7 +306,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.oculus": {
-      "version": "4.3.0",
+      "version": "4.4.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
