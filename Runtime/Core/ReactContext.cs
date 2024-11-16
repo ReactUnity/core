@@ -168,6 +168,26 @@ namespace ReactUnity
             return src;
         }
 
+        public bool TryGetAssetFromPool(string path, out object res)
+        {
+            if(string.IsNullOrEmpty(path)) {
+                res = null;
+                return false;
+            }
+
+            var paths = path.Split("/", 2);
+            Globals.TryGetValue(paths[0], out var poolObj);
+            var pool = poolObj as IAssetPool;
+
+            if (pool == null)
+            {
+                res = null;
+                return false;
+            }
+
+            return pool.Assets.TryGetValue(paths[1], out res);
+        }
+
         public abstract void PlayAudio(AudioClip clip, float volume, float pitch);
 
         public void Start(Action afterStart = null)

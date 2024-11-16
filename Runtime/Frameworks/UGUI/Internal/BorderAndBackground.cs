@@ -269,6 +269,7 @@ namespace ReactUnity.UGUI.Internal
 
             var border = Context.CreateNativeObject("[BorderImage]", typeof(RectTransform), typeof(WebBorderImage));
             borderImage = border.GetComponent<WebBorderImage>();
+            borderImage.Context = Context;
 
             borderImageRoot = border.transform as RectTransform;
 

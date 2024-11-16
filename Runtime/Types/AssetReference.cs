@@ -24,6 +24,7 @@ namespace ReactUnity.Types
         Procedural = 7,
         Data = 8,
         Path = 9,
+        Pool = 10,
     }
 
     public class AssetReference<AssetType> : IDisposable where AssetType : class
@@ -94,6 +95,9 @@ namespace ReactUnity.Types
                     break;
                 case UrlProtocol.Global:
                     Type = AssetReferenceType.Global;
+                    break;
+                case UrlProtocol.Pool:
+                    Type = AssetReferenceType.Pool;
                     break;
                 case UrlProtocol.None:
                 default:
@@ -173,7 +177,10 @@ namespace ReactUnity.Types
                 case AssetReferenceType.Resource:
                     return ResourcesHelper.LoadResource<T>(realValue as string);
                 case AssetReferenceType.Global:
-                    if (context.Globals.TryGetValue(realValue as string, out var res)) return res as T;
+                    if (context != null && context.Globals.TryGetValue(realValue as string, out var res)) return res as T;
+                    else return default;
+                case AssetReferenceType.Pool:
+                    if (context != null && context.TryGetAssetFromPool(realValue as string, out var resp)) return resp as T;
                     else return default;
                 case AssetReferenceType.Object:
                     return realValue as T;

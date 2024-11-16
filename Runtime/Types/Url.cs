@@ -64,6 +64,10 @@ namespace ReactUnity.Types
             {
                 Protocol = UrlProtocol.Global;
             }
+            else if (protocol == "pool" || protocol == "assetpool")
+            {
+                Protocol = UrlProtocol.Pool;
+            }
             else
             {
                 Protocol = defaultProtocol;
@@ -102,5 +106,6 @@ namespace ReactUnity.Types
         File = 4,
         Data = 5,
         Global = 6,
+        Pool = 7,
     }
 }
