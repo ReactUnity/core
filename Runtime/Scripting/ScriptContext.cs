@@ -240,6 +240,7 @@ namespace ReactUnity.Scripting
             if (!engine.Capabilities.HasFlag(EngineCapabilities.URL))
             {
                 engine.SetGlobal("URL", typeof(URL));
+                engine.SetGlobal("URLSearchParams", typeof(URLSearchParams));
             }
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.WebSocket))

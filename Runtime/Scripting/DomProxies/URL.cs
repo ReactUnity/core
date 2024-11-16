@@ -22,10 +22,30 @@ namespace ReactUnity.Scripting.DomProxies
         public string origin { get; protected set; }
         public string host { get; protected set; }
         public string port { get; protected set; }
-        public string search { get; protected set; }
-        public string hash { get; protected set; }
         public string pathname { get; protected set; }
         public string rawPathname { get; protected set; }
+
+
+
+        public string _search;
+        public string _hash;
+        public string search {
+            get => _search;
+            set {
+                _search = NormalizeWithPrefix(value, "?");
+                RebuildHref();
+            }
+        }
+        public string hash {
+            get => _hash;
+            set {
+                _hash = NormalizeWithPrefix(value, "#");
+                RebuildHref();
+            }
+        }
+
+        private URLSearchParams _searchParams;
+        public URLSearchParams searchParams => _searchParams = _searchParams ?? new URLSearchParams(this);
 
 
         public URL(string url) : this(url, null)
@@ -123,10 +143,23 @@ namespace ReactUnity.Scripting.DomProxies
             this.origin = origin;
             this.host = host;
             this.port = port;
-            this.search = search;
-            this.hash = hash;
+            this._search = search;
+            this._hash = hash;
             this.pathname = pathName;
             this.rawPathname = rawPathName;
+        }
+
+        protected void RebuildHref()
+        {
+            var newHref = (origin ?? "") + pathname + search + hash;
+            SetHref(newHref);
+        }
+
+        private string NormalizeWithPrefix(string value, string prefix)
+        {
+            if (string.IsNullOrEmpty(value)) return "";
+            if (value.FastStartsWith(prefix)) return value;
+            return prefix + value;
         }
 
         private string[] GetPathSegments() => GetPathSegments(pathname);
@@ -181,5 +214,7 @@ namespace ReactUnity.Scripting.DomProxies
 
             if (addFolderAtEnd) path.Add("");
         }
+
+        public override String ToString() => _href;
     }
 }
