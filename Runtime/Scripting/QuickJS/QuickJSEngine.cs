@@ -28,6 +28,7 @@ namespace ReactUnity.Scripting
             | EngineCapabilities.Console
             | EngineCapabilities.Base64
             | EngineCapabilities.AbortController
+            | EngineCapabilities.QueueMicrotask
 #endif
             | EngineCapabilities.None;
 

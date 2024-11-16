@@ -16,5 +16,6 @@ namespace ReactUnity.Scripting
         Navigator = 128,
         Encoding = 256,
         AbortController = 512,
+        QueueMicrotask = 1024,
     }
 }

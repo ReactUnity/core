@@ -202,6 +202,8 @@ namespace ReactUnity.Scripting
         static void CreatePolyfills(IJavaScriptEngine engine)
         {
             // Load essential polyfills
+            if (!engine.Capabilities.HasFlag(EngineCapabilities.QueueMicrotask))
+                engine.Execute(ResourcesHelper.GetPolyfill("queue-microtask"), "ReactUnity/polyfills/queue-microtask");
 
             if (!engine.Capabilities.HasFlag(EngineCapabilities.Base64))
                 engine.Execute(ResourcesHelper.GetPolyfill("base64"), "ReactUnity/polyfills/base64");
