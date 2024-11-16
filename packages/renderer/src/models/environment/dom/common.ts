@@ -1,6 +1,3 @@
-
-// TODO: May implement this in the future
-export type URLSearchParams = string;
 export type BufferSource = string;
 
 export type BlobPart = ArrayBuffer | ArrayBufferView | Blob | string;
@@ -104,4 +101,23 @@ export declare var URL: {
   new(url: string | URL, base?: string | URL): URL;
   createObjectURL(obj: Blob): string;
   revokeObjectURL(url: string): void;
+};
+
+
+interface URLSearchParams {
+  readonly size: number;
+  append(name: string, value: string): void;
+  delete(name: string, value?: string): void;
+  get(name: string): string | null;
+  getAll(name: string): string[];
+  has(name: string, value?: string): boolean;
+  set(name: string, value: string): void;
+  sort(): void;
+  toString(): string;
+  forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any): void;
+}
+
+declare var URLSearchParams: {
+  prototype: URLSearchParams;
+  new(init?: string[][] | Record<string, string> | string | URLSearchParams): URLSearchParams;
 };

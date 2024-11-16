@@ -5769,6 +5769,7 @@ export declare namespace ReactUnity {
       Procedural = 7,
       Data = 8,
       Path = 9,
+      Pool = 10,
     }
     export class AssetReference<AssetType = any> {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
@@ -6280,6 +6281,7 @@ export declare namespace ReactUnity {
       File = 4,
       Data = 5,
       Global = 6,
+      Pool = 7,
     }
     export class VideoComponentSource {
       constructor(other: ReactUnity.Types.VideoComponentSource);
