@@ -102,6 +102,7 @@ const createUnityContext = (unityConfig: UnityConfig): UnityContextType => {
     unload,
     takeScreenshot,
     quitUnityInstance: unload,
+    UNSAFE__detachAndUnloadImmediate: unload,
     send: sendMessage,
     unityConfig,
     ...eventSystem,

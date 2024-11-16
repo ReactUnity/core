@@ -104,7 +104,7 @@ export declare var URL: {
 };
 
 
-interface URLSearchParams {
+export interface URLSearchParams {
   readonly size: number;
   append(name: string, value: string): void;
   delete(name: string, value?: string): void;
@@ -117,7 +117,7 @@ interface URLSearchParams {
   forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any): void;
 }
 
-declare var URLSearchParams: {
+export declare var URLSearchParams: {
   prototype: URLSearchParams;
   new(init?: string[][] | Record<string, string> | string | URLSearchParams): URLSearchParams;
 };
