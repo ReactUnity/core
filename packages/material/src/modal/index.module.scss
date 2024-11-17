@@ -1,4 +1,4 @@
-@import "../styles";
+@use "../styles" as helpers;
 
 .host {
   z-index: 1000;
@@ -11,7 +11,7 @@
   overflow: auto;
   overscroll-behavior: contain;
 
-  @include fullCover();
+  @include helpers.fullCover();
 
   &.opened {
     animation: appearAnim 400ms both;
@@ -54,7 +54,7 @@
 }
 
 .content {
-  @include elevation(5);
+  @include helpers.elevation(5);
 
   font-size: 1rem;
   box-sizing: border-box;
@@ -70,7 +70,7 @@
   border-radius: 50%;
   background-color: #bfbcbc;
   color: black;
-  @include elevation(2);
+  @include helpers.elevation(2);
 
   position: absolute;
   transform: translate(50%, -50%) scale(0.8);

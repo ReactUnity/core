@@ -1,4 +1,4 @@
-@import "./elevation";
+@use "./elevation" as el;
 
 .mat-elevation-0 {
   box-shadow: none;
@@ -6,7 +6,7 @@
 
 @for $var from 1 to 24 {
   .mat-elevation-#{$var} {
-    @include elevation($var);
+    @include el.elevation($var);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   }
 }

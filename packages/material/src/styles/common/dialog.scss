@@ -1,4 +1,4 @@
-@import "..";
+@use "../index.scss" as index;
 
 .host :global(.mat-modal-content) {
   padding: 18px;
@@ -24,7 +24,7 @@
 .error {
   font-size: 1em;
   margin-top: 8px;
-  color: $error;
+  color: index.$error;
 }
 
 .buttons {
