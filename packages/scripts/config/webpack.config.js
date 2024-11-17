@@ -175,7 +175,9 @@ const baseConfigFactory = function (webpackEnv) {
         {
           loader: require.resolve(preProcessor),
           options: {
+            api: 'modern',
             sourceMap: true,
+            warnRuleAsWarning: false,
           },
         }
       );
