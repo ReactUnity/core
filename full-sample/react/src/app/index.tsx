@@ -35,7 +35,10 @@ function App() {
 
 render(
   <Suspense fallback={<view>Loading</view>}>
-    <MemoryRouter initialEntries={['/' + global.location.hash.replace(/^#/, '')]} initialIndex={0}>
+    <MemoryRouter initialEntries={['/' + global.location.hash.replace(/^#/, '')]} initialIndex={0} future={{
+      v7_relativeSplatPath: true,
+      v7_startTransition: true,
+    }}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>

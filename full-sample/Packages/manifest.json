@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.reactunity.clearscript": "0.17.0",
-    "com.reactunity.core": "0.19.7",
+    "com.reactunity.core": "0.19.8",
     "com.reactunity.jint": "0.17.0",
     "com.reactunity.quickjs": "0.19.0",
     "com.unity.2d.sprite": "1.0.0",

@@ -8,7 +8,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.19.7",
+      "version": "0.19.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

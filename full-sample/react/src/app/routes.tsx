@@ -38,6 +38,6 @@ export function AppRoutes() {
       <Route path={'bootstrap'} element={<BootstrapPage />} />
       <Route path={'tailwind'} element={
         <Suspense fallback={<>Loading</>}><TailwindPage /></Suspense>} />
-    </Route >
-  </Routes >;
+    </Route>
+  </Routes>;
 }
