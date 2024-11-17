@@ -175,7 +175,7 @@ namespace ReactUnity
                 return false;
             }
 
-            var paths = path.Split("/", 2);
+            var paths = path.Split(new char[] { '/' }, 2, StringSplitOptions.RemoveEmptyEntries);
             Globals.TryGetValue(paths[0], out var poolObj);
             var pool = poolObj as IAssetPool;
 
