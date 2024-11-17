@@ -111,6 +111,14 @@ namespace ReactUnity.Scripting.DomProxies
         public string[] keys() => _values.Select(p => p.Key).Distinct().ToArray();
         public string[] values() => _values.Select(p => p.Value).ToArray();
         public string[][] entries() => _values.Select(p => new[] { p.Key, p.Value }).ToArray();
+
+        public void forEach(object callback, object thisArg = null)
+        {
+            var cb = Callback.From(callback, null, thisArg);
+
+            foreach (var pair in _values) cb.Call(pair.Value, pair.Key, this);
+        }
+
         public IEnumerator<string[]> GetEnumerator() => ((IEnumerable<string[]>) entries()).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => entries().GetEnumerator();
 
