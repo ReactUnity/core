@@ -8,7 +8,7 @@
       "url": "https://package.openupm.com"
     },
     "com.reactunity.core": {
-      "version": "0.19.8",
+      "version": "0.19.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -106,7 +106,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.android-logcat": {
-      "version": "1.4.3",
+      "version": "1.4.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

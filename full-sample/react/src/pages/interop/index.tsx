@@ -1,4 +1,5 @@
 
+import { useGlobals, useReactiveValue } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
 import { useUnityContext } from 'react-unity-webgl';
 import styles from './index.module.scss';
@@ -8,6 +9,10 @@ export const InteropPage = () => {
   const [pressedKey, setPressedKey] = useState(null);
 
   const { addEventListener, removeEventListener } = useUnityContext({} as any);
+
+
+  const { InteropTest }= useGlobals();
+  const deltaTime = useReactiveValue(InteropTest.DeltaTime);
 
   useEffect(() => {
     if (shouldListen) {
@@ -39,6 +44,8 @@ export const InteropPage = () => {
     {!!pressedKey && <view>
       <text>Pressed key is: {pressedKey}</text>
     </view>}
+
+    Delta Time: {deltaTime}
   </view>;
 };
 
