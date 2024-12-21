@@ -6,7 +6,7 @@
     "url": "https://github.com/KurtGokhan"
   },
   "displayName": "React Unity",
-  "version": "0.19.9",
+  "version": "0.19.10",
   "unity": "2021.3",
   "description": "React renderer for Unity",
   "keywords": [
