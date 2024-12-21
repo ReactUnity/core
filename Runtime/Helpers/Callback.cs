@@ -104,7 +104,7 @@ namespace ReactUnity.Helpers
             {
                 var res = context.FireEventByRefCallback?.Call(i, args);
 #if REACT_QUICKJS
-                (context.Script.Engine as Scripting.QuickJSEngine)?.Runtime.ExecutePendingJob();
+                (context.Script.Engine as Scripting.QuickJSEngine)?.Runtime?.ExecutePendingJob();
 #endif
                 return res;
             }
@@ -114,7 +114,7 @@ namespace ReactUnity.Helpers
                 // TODO: because of an error in ClearScipt, arrays cannot be iterated (Mono bug?)
                 so.Engine.Global.SetProperty("__temp__", so);
                 so.Engine.Global.SetProperty("__args__", args?.ToList());
-                var res = so.Engine.Evaluate(null, true, "var res = __temp__(...(__args__ || [])); delete __temp__; delete __args__; res;");
+                var res = so.Engine?.Evaluate(null, true, "var res = __temp__(...(__args__ || [])); delete __temp__; delete __args__; res;");
                 return res;
             }
 #endif
@@ -122,7 +122,7 @@ namespace ReactUnity.Helpers
             else if (callback is QuickJS.ScriptFunction sf)
             {
                 var res = sf.Invoke<object>(args);
-                QuickJS.ScriptEngine.GetRuntime(sf.ctx).ExecutePendingJob();
+                QuickJS.ScriptEngine.GetRuntime(sf.ctx)?.ExecutePendingJob();
                 return res;
             }
             else if (callback is QuickJS.ScriptValue sv)
@@ -130,17 +130,17 @@ namespace ReactUnity.Helpers
                 var sff = new QuickJS.ScriptFunction(QuickJS.ScriptEngine.GetContext(sv.ctx), sv);
                 var res = sff.Invoke<object>(args);
                 sff.Dispose();
-                QuickJS.ScriptEngine.GetRuntime(sv.ctx).ExecutePendingJob();
+                QuickJS.ScriptEngine.GetRuntime(sv.ctx)?.ExecutePendingJob();
                 return res;
             }
             else if (callback is QuickJS.Native.JSValue qf)
             {
-                var eg = (context?.Script.Engine as Scripting.QuickJSEngine);
+                var eg = (context?.Script?.Engine as Scripting.QuickJSEngine);
                 if (eg == null) return null;
                 var sff = new QuickJS.ScriptFunction(eg.MainContext, qf);
                 var res = sff.Invoke<object>(args);
                 sff.Dispose();
-                eg?.Runtime.ExecutePendingJob();
+                eg?.Runtime?.ExecutePendingJob();
                 return res;
             }
 #endif
