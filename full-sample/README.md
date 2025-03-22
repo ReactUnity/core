@@ -11,7 +11,7 @@ Open the project in Unity. Open MainScene and click Play. Navigate the examples 
 To make changes to the UI:
 
 - Go to `<ProjectRoot>/react`
-- Run `yarn install` and `yarn start` from this folder
+- Run `npm install` and `npm start` from this folder
 - Make changes to React files (e.g. `src/pages/home/index.tsx`)
 - Click "Play" in Unity. The changes you make to the source code will be automatically applied to the UI.
 
