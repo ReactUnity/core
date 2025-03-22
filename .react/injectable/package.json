@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "react-unity-scripts start",
-    "build": "yarn build:self && yarn build:replace",
+    "build": "npm run build:self && npm run build:replace",
     "build:self": "react-unity-scripts build",
     "build:replace": "node scripts/replace-injectable.mjs",
     "postyalc": "yarn"
