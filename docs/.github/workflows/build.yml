@@ -15,11 +15,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          cache: 'yarn'
+          cache: 'npm'
 
-      - run: yarn
+      - run: npm i
 
-      - run: yarn build && yarn export
+      - run: npm run build && npm run export
         env:
           NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.ANALYTICS_ID }}
 

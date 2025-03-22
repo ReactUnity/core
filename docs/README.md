@@ -8,18 +8,17 @@ This repo contains the source code and documentation powering [react.dev](https:
 ### Prerequisites
 
 1. Git
-1. Node: any 12.x version starting with v12.0.0 or greater
-1. Yarn: See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/)
+1. Node and NPM
 1. A fork of the repo (for any contributions)
 1. A clone of the [reactjs.org repo](https://github.com/reactjs/reactjs.org) on your local machine
 
 ### Installation
 
-`yarn` to install the website's npm dependencies
+`npm i` to install the website's npm dependencies
 
 ### Running locally
 
-1. `yarn dev` to start the development server (powered by [Next.js](https://nextjs.org/))
+1. `npm run dev` to start the development server (powered by [Next.js](https://nextjs.org/))
 2. `open http://localhost:3000` to open the site in your favorite browser
 
 ## Contributing
@@ -45,7 +44,7 @@ The documentation is divided into several sections with a different tone and pur
 ### Test the change
 
 1. If possible, test any visual changes in all latest versions of common browsers, on both desktop and mobile.
-2. Run `yarn check-all`. (This will run Prettier, ESLint and validate types.)
+2. Run `npm run check-all`. (This will run Prettier, ESLint and validate types.)
 
 ### Push it
 
@@ -61,10 +60,6 @@ If you are interested in translating `reactjs.org`, please see the current trans
 
 
 If your language does not have a translation and you would like to create one, please follow the instructions at [reactjs.org Translations](https://github.com/reactjs/reactjs.org-translation#translating-reactjsorg).
-
-## Troubleshooting
-
-- `yarn reset` to clear the local cache
 
 ## Acknowledgements
 

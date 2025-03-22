@@ -16,7 +16,7 @@ It is available as [`@reactunity/material`](https://www.npmjs.com/package/@react
 
 <TerminalBlock>
 
-yarn add @reactunity/material
+npm i @reactunity/material
 
 </TerminalBlock>
 
