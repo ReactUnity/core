@@ -29,3 +29,8 @@
 .unity-base-text-field__input {
   -unity-text-align: upper-left;
 }
+
+.unity-base-field__input {
+  border-width: 0;
+  background-color: transparent;
+}
