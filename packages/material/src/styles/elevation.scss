@@ -1,4 +1,5 @@
 // From: https://github.com/material-components/material-components-web/blob/master/packages/mdc-elevation/_elevation-theme.scss
+@use "sass:map";
 
 $baseline-color: black !default;
 $umbra-opacity: 0.2 !default;
@@ -98,9 +99,9 @@ $ambient-map: (
     @error "$z-value must be between 0 and 24, but received '#{$z-value}'";
   }
 
-  $umbra-z-value: map-get($umbra-map, $z-value);
-  $penumbra-z-value: map-get($penumbra-map, $z-value);
-  $ambient-z-value: map-get($ambient-map, $z-value);
+  $umbra-z-value: map.get($umbra-map, $z-value);
+  $penumbra-z-value: map.get($penumbra-map, $z-value);
+  $ambient-z-value: map.get($ambient-map, $z-value);
 
   $umbra-color: rgba($color, $umbra-opacity + $opacity-boost);
   $penumbra-color: rgba($color, $penumbra-opacity + $opacity-boost);
