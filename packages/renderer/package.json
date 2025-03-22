@@ -23,8 +23,8 @@
   "scripts": {
     "build:clean": "rimraf dist",
     "build:base": "tsc",
-    "build": "yarn build:clean && yarn build:base",
-    "prepare": "yarn build",
+    "build": "npm run build:clean && npm run build:base",
+    "prepack": "npm run build",
     "watch": "tsc --watch",
     "lint": "react-unity-scripts lint",
     "version": "node version.js && git add src/version.ts"
