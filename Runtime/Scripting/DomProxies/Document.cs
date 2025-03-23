@@ -333,6 +333,9 @@ namespace ReactUnity.Scripting.DomProxies
             get => new Action(() => onerrorCallback.Call());
         }
 
+        public object relList = new {
+            supports = new Func<object, Boolean>((object val) => true),
+        };
 
         public LinkProxy(DocumentProxy document)
         {
