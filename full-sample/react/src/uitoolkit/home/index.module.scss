@@ -2,6 +2,11 @@
   background-color: #fafafa;
 }
 
+@font-face {
+  font-family: Underdog;
+  src: url(res:Underdog);
+}
+
 .app {
   padding: 20px;
   max-width: 960px;
@@ -14,6 +19,7 @@
     font-style: smallcaps, bold;
     color: #582a9c;
     margin-bottom: 12px;
+    font-family: Underdog;
   }
 
   h2 {
