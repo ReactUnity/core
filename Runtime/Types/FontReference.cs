@@ -113,7 +113,7 @@ namespace ReactUnity.Types
 
                 if (res.Valid) callback(res);
                 else callback(null);
-            };
+            }
         }
 
 
@@ -139,7 +139,8 @@ namespace ReactUnity.Types
             protected override bool ParseFallback(string value, out IComputedValue result)
             {
                 return ComputedMapper.Create(out result, value, AllConverters.StringConverter,
-                    (resolvedValue) => {
+                    (resolvedValue) =>
+                    {
                         if (resolvedValue is string u) return new FontReference(AssetReferenceType.Procedural, u);
                         return null;
                     });

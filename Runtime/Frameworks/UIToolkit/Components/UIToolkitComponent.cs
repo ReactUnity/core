@@ -158,7 +158,8 @@ namespace ReactUnity.UIToolkit
                 var bg = computed.backgroundImage?.Get(0);
 
                 TargetElement.style.backgroundImage = null;
-                bg?.ResolveImage(Context, TargetElement.layout.size, tx => {
+                bg?.ResolveImage(Context, TargetElement.layout.size, tx =>
+                {
                     if (bg != ComputedStyle.backgroundImage?.Get(0)) return;
                     TargetElement.style.backgroundImage = tx?.Texture;
                 });
@@ -185,15 +186,27 @@ namespace ReactUnity.UIToolkit
 
             if (computed.HasValue(StyleProperties.fontFamily))
             {
-                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x => {
-                    if (x?.Font != null) TargetElement.style.unityFont = x?.Font;
+                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x =>
+                {
+                    if (x?.Font != null)
+                    {
+                        TargetElement.style.unityFont = x.Font;
 #if REACT_TEXTCORE
-                    else if (x?.TextCoreFontAsset != null) TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+                        TargetElement.style.unityFontDefinition = FontDefinition.FromFont(x.Font);
 #endif
+                    }
 #if REACT_TMP
-                    else if (x?.TmpFontAsset != null) TargetElement.style.unityFont = x?.TmpFontAsset?.sourceFontFile;
+                    else if (x?.TmpFontAsset != null) {
+                        TargetElement.style.unityFont = x?.TmpFontAsset?.sourceFontFile;
+#if REACT_TEXTCORE
+                        TargetElement.style.unityFontDefinition = FontDefinition.FromFont(x?.TmpFontAsset?.sourceFontFile);
+#endif
+                    }
 #endif
                     else TargetElement.style.unityFont = ResourcesHelper.DefaultFont;
+#if REACT_TEXTCORE
+                    if (x?.TextCoreFontAsset != null) TargetElement.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);
+#endif
                 });
             }
             else TargetElement.style.unityFont = StyleKeyword.Null;
