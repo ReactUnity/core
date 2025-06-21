@@ -41,3 +41,88 @@
 .markdown a {
   @apply inline text-link dark:text-link-dark break-normal border-b border-link border-opacity-0 hover:border-opacity-100 duration-100 ease-in transition leading-normal;
 }
+
+.embla {
+  position: relative;
+}
+.emblaViewport {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+.emblaContainer {
+  display: flex;
+  height: 100%;
+}
+.emblaSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.emblaPrev,
+.emblaNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0;
+  color: transparent;
+}
+
+.emblaPrev:before,
+.emblaNext:before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 3px;
+  rotate: 45deg;
+}
+
+.emblaPrev {
+  left: 10px;
+}
+.emblaPrev:before {
+  border-color: transparent transparent black black;
+}
+.emblaNext:before {
+  border-color: black black transparent transparent;
+}
+
+.emblaNext {
+  right: 10px;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
