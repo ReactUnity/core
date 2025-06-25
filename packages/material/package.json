@@ -1,19 +1,35 @@
 {
   "name": "@reactunity/material",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Material Design components and utilities for React Unity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
-  "sideEffects": ["./src/styles", "./src/styles/**/*.*", "./dist/src/styles", "./dist/src/styles/**/*.*", "**/*.css", "**/*.scss"],
+  "sideEffects": [
+    "./src/styles",
+    "./src/styles/**/*.*",
+    "./dist/src/styles",
+    "./dist/src/styles/**/*.*",
+    "**/*.css",
+    "**/*.scss"
+  ],
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/ReactUnity/material"
   },
-  "keywords": ["react", "material", "material-design", "material-ui", "unity", "unity3d"],
+  "keywords": [
+    "react",
+    "material",
+    "material-design",
+    "material-ui",
+    "unity",
+    "unity3d"
+  ],
   "license": "MIT",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./dist/index.js",
     "./styles": {
