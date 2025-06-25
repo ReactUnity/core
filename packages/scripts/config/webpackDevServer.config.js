@@ -1,12 +1,4 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -32,7 +24,7 @@ function servePreviewerIfExists() {
   return [];
 }
 
-module.exports = function (proxy, allowedHost) {
+module.exports = (proxy, allowedHost) => {
   const disableFirewall = !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote

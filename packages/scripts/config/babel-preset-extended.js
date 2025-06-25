@@ -3,7 +3,7 @@ const babelPresetReactApp = require('babel-preset-react-app');
 
 // Extend babel-preset-react-app to accept custom jsxImportSource. This is required for things like @emotion/react
 
-module.exports = function (api, opts) {
+module.exports = (api, opts) => {
   const original = babelPresetReactApp(api, opts);
   const jsxImportSource = process.env.JSX_IMPORT_SOURCE;
 

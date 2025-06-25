@@ -1,14 +1,14 @@
 function registerUnityMiddleware(app) {
   // Allow serving Unity builds
   function contentEncodingShorthand(pattern, encoding) {
-    app.get(pattern, function (req, res, next) {
+    app.get(pattern, (req, res, next) => {
       res.set('Content-Encoding', encoding);
       next();
     });
   }
 
   function contentTypeShorthand(pattern, type) {
-    app.get(pattern, function (req, res, next) {
+    app.get(pattern, (req, res, next) => {
       res.set('Content-Type', type);
       next();
     });
